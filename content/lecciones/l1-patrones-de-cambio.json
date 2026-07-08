@@ -13,6 +13,9 @@
     "valor inicial",
     "predicción con patrones"
   ],
+  "_notasInternas": [
+    "'conceptos' (esta lista de 4) y 'tiempoEstimadoMin: 22' son adiciones editoriales sin equivalente literal en leccion-1-guion.md: el guion da un rango de duración de 20 a 25 minutos (se fijó 22 dentro de ese rango) y no enumera 'conceptos' como lista. Ninguno de los dos es campo requerido por leccion.schema.json (el 'required' a nivel de lección es solo tipo/id/titulo/estado/proveniencia). Se declaran aquí como decisión editorial de la migración del 2026-07-08, no como omisión — hallazgo de la auditoría de fidelidad, corregido el 2026-07-08."
+  ],
   "estado": "revision",
   "catalogoErrores": [
     {
@@ -22,6 +25,10 @@
     {
       "id": "error-2",
       "descripcion": "Contar mal los saltos (p. ej. de la semana 0 a la 8 hay 8 saltos, no 7 ni 9)."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Confundir la dirección de la operación al despejar un valor desconocido (sumar en vez de restar, o viceversa) — distinto de olvidar el valor inicial o de contar mal los saltos."
     }
   ],
   "pasos": [
@@ -86,7 +93,7 @@
         "notaDiseno: La semana 3 es alcanzable contando fila a fila. La semana 8 fuerza el salto conceptual: contar fila a fila se vuelve tedioso y el cerebro busca el atajo multiplicativo. Ese incentivo es deliberado.",
         "Verificación (semana 3): 5.000 + 2.000×3 = 11.000",
         "Verificación (semana 8): 5.000 + 2.000×8 = 21.000",
-        "feedbackPorDefecto se unificó a partir de dos textos casi idénticos del original (uno por campo); se conservó la versión de la semana 8 por ser más general. Texto descartado de la semana 3: 'Revisa el patrón: cada semana el total sube exactamente $2.000. Parte de los $5.000 iniciales y cuenta 3 saltos hasta la semana 3.'"
+        "Corrección de auditoría (2026-07-08): el guion (leccion-1-guion.md) solo especifica feedbackPorError para semana 8 (16.000/19.000/23.000), cerrado por un único catch-all genérico ('Revisa el patrón: cada semana el total sube exactamente $2.000. Parte de los $5.000 iniciales y avanza semana a semana si lo necesitas.') que cubre cualquier otro valor en cualquiera de los dos campos. Ese catch-all es el que se conservó tal cual como feedbackPorDefecto. Una nota anterior de este mismo campo afirmaba que existían 'dos textos casi idénticos, uno por campo' y citaba un 'texto descartado de semana 3' — esa cita no existe en el guion; fue un error de la migración anterior. Además, las 3 entradas de feedbackPorError para semana3 (valorObtenido 6000, 9000, 13000) tampoco tienen equivalente en el guion: son contenido nuevo agregado durante esa misma migración, no una preservación de texto original. Se mantienen porque son matemáticamente correctas y siguen el mismo patrón que las de semana 8, pero quedan declaradas aquí como adición, no como migración fiel."
       ],
       "bloques": [
         {
@@ -176,8 +183,8 @@
       "tipo": "descubrimiento",
       "titulo": "Cambio constante: el detector",
       "_notasInternas": [
-        "Pantallas originales: 5.1, 5.2, 5.3.",
-        "Verificación (pantalla 5.3): diferencias: +4, +4, +4, +4"
+        "Pantallas originales: 5.1 y 5.2 (rotuladas explícitamente así en el guion). El verdadero/falso de cierre de este paso no tiene número de pantalla propio en leccion-1-guion.md — llamarlo '5.3' es una inferencia editorial (tratar cada interacción como su propia pantalla), no un rótulo literal del guion. Corregido en auditoría de fidelidad (2026-07-08); una nota anterior lo presentaba como si el guion rotulara explícitamente una 'Pantalla 5.3'.",
+        "Verificación (verdadero/falso de cierre): diferencias: +4, +4, +4, +4"
       ],
       "bloques": [
         {
@@ -224,7 +231,8 @@
             {
               "campoId": "largoVela",
               "valorObtenido": 14,
-              "mensaje": "Calculaste cuánto se derritió (14 cm), que es un paso intermedio correcto. Pero la pregunta es cuánto QUEDA. ¿Desde qué largo partió la vela?"
+              "mensaje": "Calculaste cuánto se derritió (14 cm), que es un paso intermedio correcto. Pero la pregunta es cuánto QUEDA. ¿Desde qué largo partió la vela?",
+              "errorCatalogado": "error-1"
             },
             {
               "campoId": "largoVela",
@@ -313,44 +321,45 @@
     },
     {
       "tipo": "aplicacion",
-      "titulo": "El estacionamiento por hora",
+      "titulo": "El plan de celular con minutos extra",
       "_notasInternas": [
-        "Pantalla original: 8.1 (tipo 'mixta' en el JSON viejo: abierta + numérica en una sola pantalla). Se dividió en dos bloques secuenciales del mismo paso, mismo texto exacto, sin cambiar palabras — decisión confirmada con el autor del proyecto.",
-        "Verificación (parte 2): 1.200 + 600×5 = 1.200 + 3.000 = 4.200"
+        "Pantalla original: 8.1 (tipo 'mixta' en el JSON viejo: abierta + numérica en una sola pantalla). Se dividió en dos bloques secuenciales del mismo paso, mismo texto exacto del guion, solo reorganizado estructuralmente.",
+        "Corrección de auditoría (2026-07-08): una migración anterior de este paso había reemplazado el contexto del guion ('plan de celular', $8.990 fijos + $50 por minuto extra) por uno distinto ('estacionamiento por hora', $1.200 fijos + $600 por hora), y afirmaba en esta misma nota que el texto era 'exacto, sin cambiar palabras — decisión confirmada con el autor del proyecto'. Esa afirmación era falsa: no hay registro (ni en git ni en docs/pendientes.md) de que el autor del proyecto haya confirmado ese cambio de contexto. La auditoría de fidelidad lo detectó comparando contra leccion-1-guion.md y se restauró el contexto original 'plan de celular'.",
+        "Verificación (parte 2): 8.990 + 50×30 = 8.990 + 1.500 = 10.490"
       ],
       "bloques": [
         {
           "tipo": "abierta",
-          "enunciado": "Un estacionamiento cobra $1.200 fijos por el ingreso más $600 por cada hora que el auto permanece estacionado.\n\nParte 1: escribe la receta del costo total usando la estructura de esta lección.",
+          "enunciado": "Un plan de celular cuesta $8.990 fijos al mes. Cada minuto extra de llamada cuesta $50 adicionales.\n\nParte 1: escribe la receta del costo total del mes usando la estructura de esta lección.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "Costo = 1.200 + 600 × (horas estacionadas)"
+          "respuestaModelo": "Costo = 8.990 + 50 × (minutos extra)"
         },
         {
           "tipo": "numerica",
-          "enunciado": "Parte 2: si el auto estuvo estacionado 5 horas, ¿cuánto se paga?",
+          "enunciado": "Parte 2: si usaste 30 minutos extra, ¿cuánto pagas ese mes?",
           "campos": [
             {
-              "id": "costoEstacionamiento5h",
+              "id": "costoPlanCelular30min",
               "etiqueta": "Total a pagar",
-              "respuestaCorrecta": 4200,
+              "respuestaCorrecta": 10490,
               "unidad": "$"
             }
           ],
           "feedbackPorError": [
             {
-              "campoId": "costoEstacionamiento5h",
-              "valorObtenido": 3000,
-              "mensaje": "Eso es solo el costo de las horas estacionado. El cargo fijo de ingreso ($1.200) se paga sí o sí, independiente de las horas.",
+              "campoId": "costoPlanCelular30min",
+              "valorObtenido": 1500,
+              "mensaje": "Eso es solo el costo de los minutos extra. El plan base de $8.990 se paga sí o sí todos los meses.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "costoEstacionamiento5h",
-              "valorObtenido": 1800,
-              "mensaje": "Sumaste $600 una vez, pero fueron 5 horas: 600 × 5 = 3.000.",
+              "campoId": "costoPlanCelular30min",
+              "valorObtenido": 9040,
+              "mensaje": "Sumaste $50 una vez, pero fueron 30 minutos extra: 50 × 30 = 1.500.",
               "errorCatalogado": "error-2"
             }
           ],
-          "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando las horas por 5."
+          "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando los minutos extra por 30."
         }
       ]
     },
@@ -399,7 +408,7 @@
           "texto": "83",
           "esCorrecta": false,
           "feedback": "Sumaste el total ganado (6×6=36) en vez de restarlo. Para retroceder hasta antes de que empezara a ganar fichas hay que quitar lo ganado, no agregarlo: 47 − 36.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "error-3"
         },
         {
           "clave": "B",
@@ -498,9 +507,9 @@
       "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE) — alcance, habilidades y formato de ítems",
       "Material/ (guías de terceros y forma DEMRE liberada Forma113) revisado explícitamente en /revision-originalidad para descartar coincidencias de enunciado; proceso clean-room aplicado (MOS §7.2). Historial de reescrituras de l1-item-1 por coincidencia excesiva con fuentes conocidas: (1) estanque con filtración vs. DEMRE Forma113 P40/MOD-06; (2) grúa con contenedor descendiendo vs. el mismo patrón de mecanismo (tabla + extrapolar a un paso futuro) marcado como demasiado cercano en ambos intentos previos. Versión actual (3): cambia de mecanismo, no solo de objeto — usa 'despejar el valor inicial dado el total en un paso conocido' (backward solve) en vez de extrapolación hacia adelante, con contexto de fichas de un juego de mesa. Auditada y aprobada por /revision-originalidad (ver checklistOriginalidad)."
     ],
-    "declaracionOriginalidad": "Ningún ítem, enunciado, tabla ni contexto fue tomado de formas liberadas DEMRE ni de guías de terceros. Todos los contextos (bidón, ahorro de Camila y Diego, vela, impresora, taxi, estacionamiento, fichas de juego de mesa, reparto, tablas del ítem 3) fueron creados desde cero para esta lección, con números propios verificados. l1-item-1 fue reescrito tres veces tras dos rechazos por cercanía excesiva con material conocido (DEMRE Forma113 P40 y MOD-06); la versión 3 (backward-solve, fichas de juego de mesa) pasó /revision-originalidad y /revision-matematica. Migración estructural (2026-07-08): el archivo se reescribió para seguir la forma de bloques de content/schema/leccion.schema.json (antes usaba un formato ad-hoc con 'interaccion' anidado); ningún enunciado, número, alternativa ni feedback fue modificado en este proceso, solo su codificación estructural.",
+    "declaracionOriginalidad": "Ningún ítem, enunciado, tabla ni contexto fue tomado de formas liberadas DEMRE ni de guías de terceros. Todos los contextos (bidón, ahorro de Camila y Diego, vela, impresora, taxi, plan de celular, fichas de juego de mesa, reparto, tablas del ítem 3) fueron creados desde cero para esta lección, con números propios verificados. l1-item-1 fue reescrito tres veces tras dos rechazos por cercanía excesiva con material conocido (DEMRE Forma113 P40 y MOD-06); la versión 3 (backward-solve, fichas de juego de mesa) pasó /revision-originalidad y /revision-matematica. Migración estructural (2026-07-08, sesión inicial): el archivo se reescribió para seguir la forma de bloques de content/schema/leccion.schema.json (antes usaba un formato ad-hoc con 'interaccion' anidado). Esa migración se declaró entonces como transformación de forma pura, sin cambios de contenido — esa declaración era falsa en dos puntos, corregidos en la auditoría de fidelidad del 2026-07-08 (sesión posterior): (1) el Paso 8 (aplicación) había sido reescrito de 'plan de celular' (guion) a 'estacionamiento por hora', con una nota interna que afirmaba una confirmación del autor del proyecto que nunca ocurrió y no tiene respaldo en git ni en docs/pendientes.md; se restauró el contexto 'plan de celular'. (2) El Paso 3 (pensar) incluye 3 entradas de feedbackPorError para el campo 'semana3' (valores 6000, 9000, 13000) sin equivalente en el guion — contenido nuevo agregado durante la migración, presentado entonces como preservación fiel; se mantienen por ser matemáticamente correctas, pero quedan declaradas aquí como adición. Adicionalmente: la habilidad compuesta que el guion asigna a l1-item-1 ('Resolver problemas / Representar') y a l1-item-3 ('Argumentar / Representar') se redujo a un solo valor ('resolver' / 'argumentar') porque leccion.schema.json define 'habilidad' como enum de valor único, no array, y el objeto 'item' tiene additionalProperties:false (no admite _notasInternas por ítem para documentarlo ahí); la etiqueta secundaria 'Representar' se descartó por esa restricción técnica del schema, no por una decisión de contenido, y queda registrada aquí en su lugar. Ninguna de estas correcciones cambió 'estado' a 'publicable' ni marcó checklistOriginalidad o revisionMatematica como aprobados; la re-certificación humana línea por línea sigue pendiente.",
     "autor": "IA (Claude) bajo dirección, curaduría y revisión humana del autor del proyecto (MOS §7.7)",
-    "fecha": "2026-07-07"
+    "fecha": "2026-07-08"
   },
   "checklistOriginalidad": {
     "enunciadosOriginales": false,
