@@ -261,7 +261,8 @@
       "_notasInternas": [
         "Pantallas/ítems originales: 7.1 (P1), 7.2 (P2), 7.3 (P3).",
         "Verificación (P1): diferencias +7 constantes; 12 + 7×6 = 54",
-        "Verificación (P2): 8−5 = 3, pero 12−8 = 4. Diferencias distintas"
+        "Verificación (P2): 8−5 = 3, pero 12−8 = 4. Diferencias distintas",
+        "Reescritura de la opción (b) del ítem P3 (taxi), auditoría de fidelidad 2026-07-08: el texto original ('Un taxi que cobra $300 de bajada de bandera más $130 por cada 200 metros') compartía el esqueleto sintáctico '[sujeto] cobra $[fijo] de [descriptor] más $[variable] por cada [unidad]' — el mismo patrón que causó los bloqueos de Paso 8. Hallazgo DUDOSO (sin colisión de frase literal, solo de familia estructural), no bloqueante, pero se reescribió preventivamente rompiendo ese esqueleto, con los mismos números ($300, $130, 200 metros) y el mismo punto pedagógico (cargo fijo + salto constante). Verificado limpio (dominio, cifras y plantilla) contra fuentes-analisis-aisladas/ completo por auditor-originalidad. leccion-1-guion.md ya fue actualizado con este mismo texto."
       ],
       "bloques": [
         {
@@ -310,7 +311,7 @@
             },
             {
               "id": "b",
-              "texto": "Un taxi que cobra $300 de bajada de bandera más $130 por cada 200 metros.",
+              "texto": "Un taxímetro parte marcando $300 apenas subes, y después agrega $130 cada 200 metros que avanza el auto.",
               "esCorrecta": true,
               "feedback": "Eso es. Cada 200 metros el precio sube exactamente $130, siempre igual. Cargo fijo + salto constante: la misma estructura de la impresora y del ahorro de Camila."
             },
