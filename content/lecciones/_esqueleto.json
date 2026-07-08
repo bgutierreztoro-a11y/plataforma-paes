@@ -1,0 +1,119 @@
+{
+  "tipo": "leccion",
+  "id": "lx-nombre-corto-en-kebab-case",
+  "titulo": "",
+  "objetivo": "Qué será capaz de hacer el estudiante al terminar (verbo observable, no 'entender')",
+  "tiempoEstimadoMin": 20,
+  "prerrequisitos": [],
+  "conceptos": [],
+  "estado": "borrador",
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "",
+      "_nota": "Gancho breve: un fenómeno, pregunta o situación que el estudiante quiera resolver. Sin teoría todavía.",
+      "bloques": [{ "tipo": "texto", "contenido": "" }]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "",
+      "_nota": "Un problema concreto y original que el concepto resuelve. El estudiante aún no tiene la herramienta.",
+      "bloques": [{ "tipo": "pregunta", "contenido": "" }]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "",
+      "_nota": "Espacio para intentar. Pregunta abierta o de opción; se registra el intento antes de ayudar.",
+      "bloques": [{ "tipo": "pregunta", "contenido": "" }]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "",
+      "_nota": "2–3 pistas graduadas que reorientan sin regalar la respuesta.",
+      "bloques": [{ "tipo": "pistas", "pistas": ["", ""] }]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "",
+      "_nota": "EL CORAZÓN DE LA LECCIÓN: el insight que el estudiante construye por sí mismo. Definir este paso ANTES de redactar el resto y validarlo con el usuario.",
+      "bloques": [{ "tipo": "interactivo", "contenido": "" }]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "",
+      "_nota": "Recién aquí se nombra y formaliza el concepto (definición, notación, fórmula).",
+      "bloques": [{ "tipo": "texto", "contenido": "" }]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "",
+      "_nota": "Ejercicios cortos con feedback inmediato, dificultad progresiva.",
+      "bloques": [{ "tipo": "pregunta", "contenido": "" }]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "",
+      "_nota": "El concepto en un contexto realista distinto al del descubrimiento.",
+      "bloques": [{ "tipo": "pregunta", "contenido": "" }]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "",
+      "_nota": "Metacognición: qué cambió en tu forma de ver el problema inicial.",
+      "bloques": [{ "tipo": "pregunta", "contenido": "" }]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "",
+      "_nota": "Síntesis breve + puente explícito al formato PAES (los itemsPAES de abajo).",
+      "bloques": [{ "tipo": "texto", "contenido": "" }]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "",
+      "alternativas": [
+        { "clave": "A", "texto": "", "esCorrecta": false, "feedback": "" },
+        { "clave": "B", "texto": "", "esCorrecta": true, "feedback": "" },
+        { "clave": "C", "texto": "", "esCorrecta": false, "feedback": "" },
+        { "clave": "D", "texto": "", "esCorrecta": false, "feedback": "" }
+      ],
+      "solucion": ""
+    },
+    {
+      "id": "item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "",
+      "alternativas": [
+        { "clave": "A", "texto": "", "esCorrecta": true, "feedback": "" },
+        { "clave": "B", "texto": "", "esCorrecta": false, "feedback": "" },
+        { "clave": "C", "texto": "", "esCorrecta": false, "feedback": "" },
+        { "clave": "D", "texto": "", "esCorrecta": false, "feedback": "" }
+      ],
+      "solucion": ""
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": ["Temario oficial DEMRE M1 (solo calibración de formato y cobertura)"],
+    "declaracionOriginalidad": "",
+    "autor": "",
+    "fecha": ""
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  },
+  "revisionMatematica": {
+    "aprobada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  }
+}

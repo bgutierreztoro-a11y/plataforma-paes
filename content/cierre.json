@@ -1,0 +1,278 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-v0",
+  "titulo": "Cierre — pendiente e intercepto",
+  "estado": "revision",
+  "items": [
+    {
+      "id": "cierre-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Si y = 5x + 2, ¿cuál es el valor de y cuando x = 3?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "17",
+          "esCorrecta": true,
+          "feedback": "Correcto: 5×3 + 2 = 15 + 2 = 17."
+        },
+        {
+          "clave": "B",
+          "texto": "15",
+          "esCorrecta": false,
+          "feedback": "Calculaste 5×3 pero olvidaste sumar el 2."
+        },
+        {
+          "clave": "C",
+          "texto": "7",
+          "esCorrecta": false,
+          "feedback": "Sumaste 5+2 sin multiplicar por x. Primero multiplica 5×3, luego suma 2."
+        },
+        {
+          "clave": "D",
+          "texto": "13",
+          "esCorrecta": false,
+          "feedback": "Restaste en vez de sumar: 5×3 − 2 = 13. La ecuación indica sumar 2, no restarlo."
+        }
+      ],
+      "solucion": "y = 5(3) + 2 = 15 + 2 = 17."
+    },
+    {
+      "id": "cierre-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Tabla: x = 0, 1, 2 con y = 4, 6, 8. ¿Cuál es el intercepto de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4",
+          "esCorrecta": true,
+          "feedback": "Correcto: el intercepto es el valor de y cuando x = 0, es decir, 4."
+        },
+        {
+          "clave": "B",
+          "texto": "2",
+          "esCorrecta": false,
+          "feedback": "2 es la pendiente (la diferencia entre valores consecutivos de y), no el intercepto."
+        },
+        {
+          "clave": "C",
+          "texto": "6",
+          "esCorrecta": false,
+          "feedback": "6 es el valor de y cuando x = 1, no cuando x = 0."
+        },
+        {
+          "clave": "D",
+          "texto": "8",
+          "esCorrecta": false,
+          "feedback": "8 es el valor de y cuando x = 2, no cuando x = 0."
+        }
+      ],
+      "solucion": "El intercepto es el valor de y en x = 0: según la tabla, y = 4."
+    },
+    {
+      "id": "cierre-3",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un taxi cobra $400 de bajada de bandera más $150 por kilómetro. ¿Cuánto cuesta un viaje de 5 km?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$1.150",
+          "esCorrecta": true,
+          "feedback": "Correcto: 400 + 150×5 = 400 + 750 = 1.150."
+        },
+        {
+          "clave": "B",
+          "texto": "$750",
+          "esCorrecta": false,
+          "feedback": "Ese es solo el costo de los kilómetros (150×5); falta sumar la bajada de bandera de $400."
+        },
+        {
+          "clave": "C",
+          "texto": "$400",
+          "esCorrecta": false,
+          "feedback": "Ese es solo el cargo fijo; falta sumar el costo de los 5 km recorridos."
+        },
+        {
+          "clave": "D",
+          "texto": "$2.750",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste (400 + 150) × 5, pero la bajada de bandera se cobra una sola vez, no se multiplica por los kilómetros."
+        }
+      ],
+      "solucion": "Costo = 400 + 150×5 = 400 + 750 = 1.150."
+    },
+    {
+      "id": "cierre-4",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "¿Cuál de las siguientes ecuaciones describe una recta con pendiente negativa?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = −2x + 5",
+          "esCorrecta": true,
+          "feedback": "Correcto: el coeficiente que acompaña a x es −2, negativo."
+        },
+        {
+          "clave": "B",
+          "texto": "y = 2x − 5",
+          "esCorrecta": false,
+          "feedback": "Aquí la pendiente es +2 (positiva); el signo negativo acompaña al intercepto, no a la pendiente."
+        },
+        {
+          "clave": "C",
+          "texto": "y = 5",
+          "esCorrecta": false,
+          "feedback": "Esta es una recta horizontal: su pendiente es 0, ni positiva ni negativa."
+        },
+        {
+          "clave": "D",
+          "texto": "x = 5",
+          "esCorrecta": false,
+          "feedback": "Esta es una recta vertical: no tiene pendiente definida (no es una función de x)."
+        }
+      ],
+      "solucion": "En y = mx + b, la pendiente es el coeficiente de x. Solo y = −2x + 5 tiene ese coeficiente negativo (−2)."
+    },
+    {
+      "id": "cierre-5",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una recta pasa por los puntos (2, 3) y (5, 12). ¿Cuál es su pendiente?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3",
+          "esCorrecta": true,
+          "feedback": "Correcto: (12−3)/(5−2) = 9/3 = 3."
+        },
+        {
+          "clave": "B",
+          "texto": "9",
+          "esCorrecta": false,
+          "feedback": "Calculaste solo la diferencia de las alturas (12−3=9) pero olvidaste dividir por la diferencia de las x (5−2=3)."
+        },
+        {
+          "clave": "C",
+          "texto": "0,33",
+          "esCorrecta": false,
+          "feedback": "Invertiste la razón: calculaste (5−2)/(12−3) en vez de (12−3)/(5−2)."
+        },
+        {
+          "clave": "D",
+          "texto": "10",
+          "esCorrecta": false,
+          "feedback": "Mezclaste una coordenada y con una coordenada x. Compara siempre valores y con y, y valores x con x, en el mismo orden."
+        }
+      ],
+      "solucion": "Pendiente = (y2−y1)/(x2−x1) = (12−3)/(5−2) = 9/3 = 3."
+    },
+    {
+      "id": "cierre-6",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Tabla: x = 0, 1, 2 con y = 10, 7, 4. ¿Cuál ecuación representa esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = −3x + 10",
+          "esCorrecta": true,
+          "feedback": "Correcto: y baja 3 por cada paso de x (pendiente −3) y parte en 10 cuando x = 0 (intercepto 10)."
+        },
+        {
+          "clave": "B",
+          "texto": "y = 3x + 10",
+          "esCorrecta": false,
+          "feedback": "El signo de la pendiente está invertido: y disminuye al aumentar x, así que la pendiente debe ser negativa."
+        },
+        {
+          "clave": "C",
+          "texto": "y = −3x − 10",
+          "esCorrecta": false,
+          "feedback": "El intercepto está mal: cuando x = 0, la tabla muestra y = 10, no y = −10."
+        },
+        {
+          "clave": "D",
+          "texto": "y = 10x − 3",
+          "esCorrecta": false,
+          "feedback": "Invertiste los roles de m y b: 10 es el intercepto (va sumado o restado solo), y −3 es la pendiente (va multiplicando a x)."
+        }
+      ],
+      "solucion": "Diferencias consecutivas: 7−10=−3, 4−7=−3 (pendiente constante −3). Valor en x=0 es 10 (intercepto). Ecuación: y = −3x + 10."
+    },
+    {
+      "id": "cierre-7",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "Una piscina tiene 500 litros y se vacía a razón de 25 litros por minuto. ¿Cuántos litros quedan después de 8 minutos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "300 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto: 500 − 25×8 = 500 − 200 = 300."
+        },
+        {
+          "clave": "B",
+          "texto": "200 litros",
+          "esCorrecta": false,
+          "feedback": "Calculaste solo lo que se vació (25×8=200), pero la pregunta pide cuánto queda, no cuánto salió."
+        },
+        {
+          "clave": "C",
+          "texto": "700 litros",
+          "esCorrecta": false,
+          "feedback": "Sumaste en vez de restar. La piscina se vacía, así que el cambio se resta: 500 − 25×8."
+        },
+        {
+          "clave": "D",
+          "texto": "475 litros",
+          "esCorrecta": false,
+          "feedback": "Restaste el vaciado de un solo minuto (500−25), pero son 8 minutos completos: 500 − 25×8 = 300."
+        }
+      ],
+      "solucion": "Litros restantes = 500 − 25×8 = 500 − 200 = 300."
+    },
+    {
+      "id": "cierre-8",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "Dos rectas están dadas por y = 4x + 1 e y = 4x + 1. ¿Qué relación tienen?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Son la misma recta",
+          "esCorrecta": true,
+          "feedback": "Correcto: tienen exactamente la misma pendiente (4) y el mismo intercepto (1), así que son idénticas."
+        },
+        {
+          "clave": "B",
+          "texto": "Son paralelas pero distintas",
+          "esCorrecta": false,
+          "feedback": "Paralelas distintas significa misma pendiente pero distinto intercepto. Aquí el intercepto también coincide: son la misma recta."
+        },
+        {
+          "clave": "C",
+          "texto": "Son perpendiculares",
+          "esCorrecta": false,
+          "feedback": "Perpendicular es una relación entre pendientes inversas y de signo opuesto, muy distinta a tener la misma ecuación."
+        },
+        {
+          "clave": "D",
+          "texto": "Se cruzan en un único punto",
+          "esCorrecta": false,
+          "feedback": "Dos rectas que se cruzan en un único punto tienen pendientes distintas. Aquí ambas ecuaciones son idénticas."
+        }
+      ],
+      "solucion": "Ambas ecuaciones tienen la misma pendiente (4) y el mismo intercepto (1): representan exactamente la misma recta."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [],
+    "declaracionOriginalidad": "Set de cierre de demostración técnica, creado desde cero para probar la cáscara del MVP. No es contenido pedagógico real ni pasa a estado publicable.",
+    "autor": "IA (Claude) bajo dirección del autor del proyecto — andamiaje técnico, no contenido curatorial",
+    "fecha": "2026-07-08"
+  }
+}

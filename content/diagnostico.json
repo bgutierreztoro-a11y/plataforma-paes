@@ -1,0 +1,179 @@
+{
+  "tipo": "diagnostico",
+  "id": "diagnostico-v0",
+  "titulo": "Diagnóstico — antes de empezar",
+  "estado": "revision",
+  "items": [
+    {
+      "id": "diag-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Si y = 3x − 1, ¿cuál es el valor de y cuando x = 4?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "11",
+          "esCorrecta": true,
+          "feedback": "Correcto: 3×4 − 1 = 12 − 1 = 11."
+        },
+        {
+          "clave": "B",
+          "texto": "12",
+          "esCorrecta": false,
+          "feedback": "Calculaste 3×4 pero olvidaste restar 1."
+        },
+        {
+          "clave": "C",
+          "texto": "9",
+          "esCorrecta": false,
+          "feedback": "Corresponde a restar antes de multiplicar: 3×(4−1). El orden correcto es multiplicar primero."
+        },
+        {
+          "clave": "D",
+          "texto": "6",
+          "esCorrecta": false,
+          "feedback": "Sumaste 3 + 4 − 1 en vez de multiplicar 3 por 4 antes de restar 1."
+        }
+      ],
+      "solucion": "y = 3(4) − 1 = 12 − 1 = 11."
+    },
+    {
+      "id": "diag-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Tabla: x = 0, 1, 2 con y = 5, 8, 11. ¿Cuál es la pendiente de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3",
+          "esCorrecta": true,
+          "feedback": "Correcto: 8−5=3 y 11−8=3, diferencia constante."
+        },
+        {
+          "clave": "B",
+          "texto": "5",
+          "esCorrecta": false,
+          "feedback": "5 es el intercepto (el valor de y cuando x=0), no la pendiente."
+        },
+        {
+          "clave": "C",
+          "texto": "8",
+          "esCorrecta": false,
+          "feedback": "8 es un valor de y en la tabla, no la diferencia entre valores consecutivos."
+        },
+        {
+          "clave": "D",
+          "texto": "11",
+          "esCorrecta": false,
+          "feedback": "11 es un valor de y en la tabla, no la pendiente."
+        }
+      ],
+      "solucion": "Pendiente = diferencia entre valores consecutivos de y = 8−5 = 3 (o 11−8 = 3)."
+    },
+    {
+      "id": "diag-3",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un estacionamiento cobra $2.000 fijos más $500 por cada hora. ¿Cuánto cuesta estacionar 3 horas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$3.500",
+          "esCorrecta": true,
+          "feedback": "Correcto: 2.000 + 500×3 = 2.000 + 1.500 = 3.500."
+        },
+        {
+          "clave": "B",
+          "texto": "$1.500",
+          "esCorrecta": false,
+          "feedback": "Ese es solo el costo de las horas (500×3); falta sumar el cargo fijo de $2.000."
+        },
+        {
+          "clave": "C",
+          "texto": "$2.000",
+          "esCorrecta": false,
+          "feedback": "Ese es solo el cargo fijo; falta sumar el costo de las 3 horas (500×3)."
+        },
+        {
+          "clave": "D",
+          "texto": "$7.500",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste (2.000 + 500) × 3, pero el cargo fijo se paga una sola vez, no se multiplica por las horas."
+        }
+      ],
+      "solucion": "Costo = 2.000 + 500×3 = 2.000 + 1.500 = 3.500."
+    },
+    {
+      "id": "diag-4",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Las rectas y = 2x + 1 e y = 2x − 3 tienen la misma pendiente. ¿Qué relación describe mejor esta situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Son paralelas: suben al mismo ritmo pero parten de puntos distintos",
+          "esCorrecta": true,
+          "feedback": "Correcto: misma pendiente significa mismo ritmo de cambio; distinto intercepto significa que parten de puntos distintos en el eje y."
+        },
+        {
+          "clave": "B",
+          "texto": "Son perpendiculares",
+          "esCorrecta": false,
+          "feedback": "Perpendicular es una relación entre pendientes inversas y opuestas en signo, no entre pendientes iguales."
+        },
+        {
+          "clave": "C",
+          "texto": "Se cruzan en exactamente un punto",
+          "esCorrecta": false,
+          "feedback": "Dos rectas con la misma pendiente y distinto intercepto nunca se cruzan: son paralelas."
+        },
+        {
+          "clave": "D",
+          "texto": "Son la misma recta",
+          "esCorrecta": false,
+          "feedback": "Tienen distinto intercepto (1 versus −3), así que no son la misma recta aunque compartan pendiente."
+        }
+      ],
+      "solucion": "Misma pendiente (2) y distinto intercepto (1 y −3): las rectas son paralelas y no se cruzan nunca."
+    },
+    {
+      "id": "diag-5",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una recta pasa por los puntos (1, 2) y (3, 8). ¿Cuál es su pendiente?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3",
+          "esCorrecta": true,
+          "feedback": "Correcto: (8−2)/(3−1) = 6/2 = 3."
+        },
+        {
+          "clave": "B",
+          "texto": "6",
+          "esCorrecta": false,
+          "feedback": "Calculaste solo la diferencia de las alturas (8−2=6) pero olvidaste dividir por la diferencia de las x (3−1=2)."
+        },
+        {
+          "clave": "C",
+          "texto": "0,33",
+          "esCorrecta": false,
+          "feedback": "Invertiste la razón: calculaste (3−1)/(8−2) en vez de (8−2)/(3−1)."
+        },
+        {
+          "clave": "D",
+          "texto": "5",
+          "esCorrecta": false,
+          "feedback": "Corresponde a restar 8−3, mezclando una coordenada y con una coordenada x. Compara siempre y con y, x con x."
+        }
+      ],
+      "solucion": "Pendiente = (y2−y1)/(x2−x1) = (8−2)/(3−1) = 6/2 = 3."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [],
+    "declaracionOriginalidad": "Set de diagnóstico de demostración técnica, creado desde cero para probar la cáscara del MVP. No es contenido pedagógico real ni pasa a estado publicable.",
+    "autor": "IA (Claude) bajo dirección del autor del proyecto — andamiaje técnico, no contenido curatorial",
+    "fecha": "2026-07-08"
+  }
+}

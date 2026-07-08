@@ -1,0 +1,518 @@
+{
+  "tipo": "leccion",
+  "id": "l1-patrones-de-cambio",
+  "titulo": "El patrón que se repite",
+  "objetivo": "Detectar si una situación o tabla tiene cambio constante mirando las diferencias entre valores consecutivos; predecir valores futuros usando la estructura 'valor inicial + cambio por paso × cantidad de pasos'; y distinguir cambio constante de otros tipos de crecimiento.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "Operatoria básica con enteros (suma, resta, multiplicación)"
+  ],
+  "conceptos": [
+    "cambio constante",
+    "diferencias consecutivas",
+    "valor inicial",
+    "predicción con patrones"
+  ],
+  "estado": "revision",
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Olvidar el valor inicial (p. ej. el bidón partía con 4 litros; Camila, con $5.000)."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Contar mal los saltos (p. ej. de la semana 0 a la 8 hay 8 saltos, no 7 ni 9)."
+    }
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "El bidón que se llena",
+      "_notasInternas": [
+        "Pantallas originales: 1.1, 1.2.",
+        "notaDiseno (pantalla 1.2, sin campo equivalente en bloqueTexto): No se corrige aún. La predicción crea inversión emocional; la corrección llega con el descubrimiento del Paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Un bidón se está llenando con una manguera. Alguien anota cuánta agua tiene cada minuto:\n\n| Minuto | Litros |\n|--------|--------|\n| 0 | 4 |\n| 1 | 7 |\n| 2 | 10 |\n\nSin calcular nada todavía: ¿te atreves a adivinar cuántos litros tendrá en el minuto 5?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "| Minuto | Litros |\n|--------|--------|\n| 3 | 13 |\n| 4 | 16 |\n| 5 | 19 |\n\nSi dijiste 19, ya viste el patrón sin que nadie te lo explicara. Si dijiste otro número, en un par de pantallas vas a ver exactamente qué se te escapó. En ambos casos: lo que acabas de hacer (o intentar) es la habilidad central de esta lección."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Camila y Diego ahorran para el mismo festival",
+      "_notasInternas": [
+        "Pantalla original: 2.1.",
+        "Verificación interna (no visible al estudiante): Camila (total): 5.000, 7.000, 9.000, 11.000, 13.000 → diferencias +2.000 constantes. Diego (total): 0, 1.000, 3.000, 6.000, 10.000 → diferencias +1.000, +2.000, +3.000, +4.000, crecientes."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Camila y Diego deciden ahorrar para el mismo festival.\n\nCamila parte con $5.000 guardados y deposita $2.000 cada semana, siempre lo mismo.\n\nDiego parte con $0. La semana 1 deposita $1.000, la semana 2 deposita $2.000, la semana 3 deposita $3.000... cada semana deposita $1.000 más que la anterior.\n\nPregunta: ¿el ahorro de cuál de los dos crece con un patrón que se repite igual semana a semana?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Camila",
+              "esCorrecta": true,
+              "feedback": "Exacto. El total de Camila sube $2.000 cada semana, sin excepción. Eso es lo que vamos a llamar cambio constante. Diego también sigue un patrón, pero no es el mismo salto cada vez: sus depósitos crecen."
+            },
+            {
+              "id": "b",
+              "texto": "Diego",
+              "esCorrecta": false,
+              "feedback": "Diego sí sigue un patrón, pero fíjate en sus saltos: su total sube $1.000, luego $2.000, luego $3.000... El salto cambia cada semana. Compáralo con Camila: ¿cuánto sube el total de ella entre una semana y la siguiente?"
+            },
+            {
+              "id": "c",
+              "texto": "Los dos",
+              "esCorrecta": false,
+              "feedback": "Los dos siguen un patrón, es verdad. Pero la pregunta es más fina: ¿cuál de los dos repite el mismo salto cada semana? Anota los totales de cada uno semana a semana y resta valores consecutivos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Completa la tabla del ahorro de Camila",
+      "_notasInternas": [
+        "Pantalla original: 3.1.",
+        "notaDiseno: La semana 3 es alcanzable contando fila a fila. La semana 8 fuerza el salto conceptual: contar fila a fila se vuelve tedioso y el cerebro busca el atajo multiplicativo. Ese incentivo es deliberado.",
+        "Verificación (semana 3): 5.000 + 2.000×3 = 11.000",
+        "Verificación (semana 8): 5.000 + 2.000×8 = 21.000",
+        "feedbackPorDefecto se unificó a partir de dos textos casi idénticos del original (uno por campo); se conservó la versión de la semana 8 por ser más general. Texto descartado de la semana 3: 'Revisa el patrón: cada semana el total sube exactamente $2.000. Parte de los $5.000 iniciales y cuenta 3 saltos hasta la semana 3.'"
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora tú. Completa la tabla del ahorro de Camila:\n\n| Semana | Total ahorrado |\n|--------|----------------|\n| 0 | $5.000 |\n| 1 | $7.000 |\n| 2 | $9.000 |\n| 3 | ? |\n| 8 | ? |",
+          "campos": [
+            {
+              "id": "semana3",
+              "etiqueta": "Total ahorrado (semana 3)",
+              "respuestaCorrecta": 11000,
+              "unidad": "$"
+            },
+            {
+              "id": "semana8",
+              "etiqueta": "Total ahorrado (semana 8)",
+              "respuestaCorrecta": 21000,
+              "unidad": "$"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "semana3",
+              "valorObtenido": 6000,
+              "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "semana3",
+              "valorObtenido": 9000,
+              "mensaje": "Ese es el total de la semana 2, no de la 3. Cuenta de nuevo: de la semana 0 a la semana 3 hay 3 saltos de $2.000.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "semana3",
+              "valorObtenido": 13000,
+              "mensaje": "Te pasaste por un salto. De la semana 0 a la 3 hay exactamente 3 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 3 × 2.000?",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "semana8",
+              "valorObtenido": 16000,
+              "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "semana8",
+              "valorObtenido": 19000,
+              "mensaje": "Estás cerca. Cuenta con cuidado: de la semana 0 a la semana 8 hay 8 saltos de $2.000, no 7. Un truco: semana 1 tiene 1 salto, semana 2 tiene 2 saltos... semana 8 tiene 8.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "semana8",
+              "valorObtenido": 23000,
+              "mensaje": "Te pasaste por un salto. De la semana 0 a la 8 hay exactamente 8 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 8 × 2.000?",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Revisa el patrón: cada semana el total sube exactamente $2.000. Parte de los $5.000 iniciales y avanza semana a semana si lo necesitas."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para completar la tabla de Camila",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Mira las diferencias: $7.000 − $5.000 = $2.000. Y $9.000 − $7.000 = $2.000 otra vez. ¿Qué te dice eso sobre cómo llegar a la semana 3?"
+            },
+            {
+              "nivel": 2,
+              "texto": "Para la semana 8 no necesitas escribir 8 filas. Piensa: ¿cuántas veces se sumaron $2.000 desde la semana 0 hasta la semana 8? ¿Y desde dónde partió Camila?"
+            },
+            {
+              "nivel": 3,
+              "texto": "Total = lo que ya tenía + (salto semanal × número de semanas). Es decir: 5.000 + 2.000 × 8. Calcula eso."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Cambio constante: el detector",
+      "_notasInternas": [
+        "Pantallas originales: 5.1, 5.2, 5.3.",
+        "Verificación (pantalla 5.3): diferencias: +4, +4, +4, +4"
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que encontraste tiene nombre: cambio constante.\n\nUna situación tiene cambio constante cuando, al avanzar un paso (un minuto, una semana, un kilómetro), la cantidad sube o baja siempre lo mismo.\n\n¿Y cómo se detecta? Con una sola operación: restar valores consecutivos. Si todas las restas dan lo mismo, hay cambio constante. Si alguna da distinto, no lo hay. Así de directo."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Volvamos al bidón del inicio: 4, 7, 10, 13...\n\n7 − 4 = 3. 10 − 7 = 3. 13 − 10 = 3.\n\nCambio constante de +3 litros por minuto. Por eso el minuto 5 tenía que ser 4 + 3×5 = 19. Si tu predicción inicial falló, lo más probable es que haya sido por una de estas dos: olvidar los 4 litros con los que partió el bidón, o contar mal los saltos. Los dos errores van a reaparecer en la PAES, disfrazados de alternativas."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "La secuencia 2, 6, 10, 14, 18 tiene cambio constante.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto: todas las diferencias dan +4.",
+          "feedbackFalso": "Resta consecutivos: 6−2, 10−6, 14−10, 18−14. Todas dan 4. Cuando todas las restas coinciden, el cambio es constante, aunque los números de la secuencia en sí vayan cambiando. Ojo con eso: lo constante es el salto, no los valores."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La receta general del cambio constante",
+      "_notasInternas": [
+        "Pantallas originales: 6.1, 6.2.",
+        "Verificación (pantalla 6.2): 20 − 2×7 = 20 − 14 = 6"
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El patrón que descubriste funciona igual en el bidón, en el ahorro de Camila y en cualquier situación con cambio constante. La receta general:\n\nTotal = valor inicial + (cambio por paso) × (número de pasos)\n\nEn el bidón: 4 + 3 × minutos.\nEn el ahorro de Camila: 5.000 + 2.000 × semanas.\n\nTodavía no le pongas nombre técnico. En la próxima lección esta receta se va a convertir en una ecuación con gráfico propio, y el 'cambio por paso' va a resultar ser una de las ideas más importantes de toda la PAES."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una cosa más. El cambio constante también puede ser hacia abajo.\n\nUna vela mide 20 cm y se acorta 2 cm por hora. Misma receta, salto negativo:\n\nLargo = 20 − 2 × horas.\n\n¿Cuánto mide la vela después de 7 horas?",
+          "campos": [
+            {
+              "id": "largoVela",
+              "etiqueta": "Largo de la vela",
+              "respuestaCorrecta": 6,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "largoVela",
+              "valorObtenido": 14,
+              "mensaje": "Calculaste cuánto se derritió (14 cm), que es un paso intermedio correcto. Pero la pregunta es cuánto QUEDA. ¿Desde qué largo partió la vela?"
+            },
+            {
+              "campoId": "largoVela",
+              "valorObtenido": 34,
+              "mensaje": "Sumaste, pero la vela se está acortando. Cuando el cambio es hacia abajo, se resta: 20 − 2×7."
+            },
+            {
+              "campoId": "largoVela",
+              "valorObtenido": 8,
+              "mensaje": "Revisa el conteo de horas: son 7 horas completas, entonces 2×7 = 14 cm derretidos. 20 − 14 = ?",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Estructura: largo inicial (20) menos lo derretido (2 cm por cada una de las 7 horas)."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: tres situaciones, un solo detector",
+      "_notasInternas": [
+        "Pantallas/ítems originales: 7.1 (P1), 7.2 (P2), 7.3 (P3).",
+        "Verificación (P1): diferencias +7 constantes; 12 + 7×6 = 54",
+        "Verificación (P2): 8−5 = 3, pero 12−8 = 4. Diferencias distintas"
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "La tabla muestra el costo total de una impresión según el número de páginas:\n\n| Páginas | Costo |\n|---------|-------|\n| 0 | $12 |\n| 1 | $19 |\n| 2 | $26 |\n| 3 | $33 |\n\nNota: el costo en 0 páginas es el cargo fijo por usar la máquina. Si el patrón continúa, ¿cuál es el costo de imprimir 6 páginas?",
+          "campos": [
+            {
+              "id": "costoImpresion6paginas",
+              "etiqueta": "Costo de imprimir 6 páginas",
+              "respuestaCorrecta": 54,
+              "unidad": "$"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "costoImpresion6paginas",
+              "valorObtenido": 42,
+              "mensaje": "Calculaste bien el costo de las páginas ($42), pero la tabla parte en $12 con cero páginas: ese cargo fijo se paga siempre. Súmalo.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "costoImpresion6paginas",
+              "valorObtenido": 47,
+              "mensaje": "Contaste un salto de menos. De 0 a 6 páginas hay 6 aumentos de $7.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Primero detecta el salto restando filas consecutivas. Luego: valor inicial + salto × 6."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Esta tabla tiene cambio constante:\n\n| x | y |\n|---|----|\n| 1 | 5 |\n| 2 | 8 |\n| 3 | 12 |",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Aplica el detector: 8−5 = 3 y 12−8 = 4. No dan lo mismo. Que los números crezcan de forma 'pareja' a simple vista no basta: hay que restar y comparar.",
+          "feedbackFalso": "Bien visto. De 5 a 8 hay +3, pero de 8 a 12 hay +4. Basta UNA diferencia distinta para que el cambio no sea constante."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál de estas situaciones tiene cambio constante?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Una población de bacterias que se duplica cada hora.",
+              "esCorrecta": false,
+              "feedback": "Duplicarse no es sumar lo mismo. Si hay 100 bacterias, en una hora se suman 100; a la siguiente se suman 200. El salto crece. Eso es otro tipo de crecimiento (lo verás más adelante en el temario, con las potencias)."
+            },
+            {
+              "id": "b",
+              "texto": "Un taxi que cobra $300 de bajada de bandera más $130 por cada 200 metros.",
+              "esCorrecta": true,
+              "feedback": "Eso es. Cada 200 metros el precio sube exactamente $130, siempre igual. Cargo fijo + salto constante: la misma estructura de la impresora y del ahorro de Camila."
+            },
+            {
+              "id": "c",
+              "texto": "Un auto que acelera: cada segundo avanza más metros que el segundo anterior.",
+              "esCorrecta": false,
+              "feedback": "Si cada segundo avanza MÁS que el anterior, el salto está creciendo. Cambio, sí; constante, no."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El estacionamiento por hora",
+      "_notasInternas": [
+        "Pantalla original: 8.1 (tipo 'mixta' en el JSON viejo: abierta + numérica en una sola pantalla). Se dividió en dos bloques secuenciales del mismo paso, mismo texto exacto, sin cambiar palabras — decisión confirmada con el autor del proyecto.",
+        "Verificación (parte 2): 1.200 + 600×5 = 1.200 + 3.000 = 4.200"
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Un estacionamiento cobra $1.200 fijos por el ingreso más $600 por cada hora que el auto permanece estacionado.\n\nParte 1: escribe la receta del costo total usando la estructura de esta lección.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Costo = 1.200 + 600 × (horas estacionadas)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: si el auto estuvo estacionado 5 horas, ¿cuánto se paga?",
+          "campos": [
+            {
+              "id": "costoEstacionamiento5h",
+              "etiqueta": "Total a pagar",
+              "respuestaCorrecta": 4200,
+              "unidad": "$"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "costoEstacionamiento5h",
+              "valorObtenido": 3000,
+              "mensaje": "Eso es solo el costo de las horas estacionado. El cargo fijo de ingreso ($1.200) se paga sí o sí, independiente de las horas.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "costoEstacionamiento5h",
+              "valorObtenido": 1800,
+              "mensaje": "Sumaste $600 una vez, pero fueron 5 horas: 600 × 5 = 3.000.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando las horas por 5."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Explícaselo a un compañero",
+      "_notasInternas": [
+        "Pantallas originales: 9.1, 9.2."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus propias palabras: ¿cómo le explicarías a un compañero la forma más rápida de saber si una tabla tiene cambio constante, sin usar la palabra 'constante'?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto: es el mejor termómetro de si el concepto se entendió o solo se ejecutó. Una respuesta tipo 'restas los de al lado y ves si da siempre lo mismo' indica comprensión."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los dos errores que más se repiten con este tema, y que viste en carne propia:\n\n1. Olvidar el valor inicial (el bidón partía con 4 litros; Camila, con $5.000).\n2. Contar mal los saltos (de la semana 0 a la 8 hay 8 saltos, no 7 ni 9).\n\nLa PAES construye alternativas incorrectas exactamente con esos dos errores. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Pantalla original: 10.1."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Cambio constante = el mismo salto en cada paso (puede ser hacia arriba o hacia abajo).\n- Detector: restar valores consecutivos; todas las restas deben coincidir.\n- Receta: Total = valor inicial + cambio por paso × número de pasos.\n- Trampas clásicas: valor inicial olvidado y saltos mal contados.\n\nLo que viene (Lección 2): esta receta tiene un gráfico. El 'cambio por paso' se va a llamar pendiente, el 'valor inicial' se va a llamar intercepto, y vas a poder moverlos con tus propias manos."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "En un juego de mesa, cada jugador gana siempre la misma cantidad de fichas al terminar una ronda. Después de jugar 6 rondas completas, un jugador tiene 47 fichas. Si en cada ronda gana 6 fichas, ¿cuántas fichas tenía antes de empezar a jugar (ronda 0)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "83",
+          "esCorrecta": false,
+          "feedback": "Sumaste el total ganado (6×6=36) en vez de restarlo. Para retroceder hasta antes de que empezara a ganar fichas hay que quitar lo ganado, no agregarlo: 47 − 36.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "B",
+          "texto": "11",
+          "esCorrecta": true,
+          "feedback": "Correcto. En 6 rondas ganó 6×6 = 36 fichas. Para saber cuántas tenía al empezar, se resta lo ganado del total final: 47 − 36 = 11."
+        },
+        {
+          "clave": "C",
+          "texto": "17",
+          "esCorrecta": false,
+          "feedback": "Contaste 5 rondas en vez de 6 (47 − 6×5 = 17). Desde la ronda 0 hasta después de la ronda 6 hay exactamente 6 aumentos de 6 fichas, no 5.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "41",
+          "esCorrecta": false,
+          "feedback": "Restaste la ganancia de una sola ronda (6 fichas), pero fueron 6 rondas completas. Hay que restar lo ganado en las 6 rondas juntas: 6×6 = 36, no solo 6.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Cambio constante de +6 fichas por ronda. En 6 rondas ganó en total 6×6 = 36 fichas. La cantidad inicial se obtiene retrocediendo: 47 − 36 = 11 fichas. Verificación: 11 + 6×6 = 11 + 36 = 47. ✓"
+    },
+    {
+      "id": "l1-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un servicio de reparto cobra una tarifa base de $1.500 por retirar el pedido, más $700 por cada kilómetro recorrido. ¿Cuánto cuesta un reparto de 6 kilómetros?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$2.200",
+          "esCorrecta": false,
+          "feedback": "Sumaste 1.500 + 700 como si fuera UN kilómetro. Son 6: el cargo por distancia es 700×6 = 4.200.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "$4.200",
+          "esCorrecta": false,
+          "feedback": "Ese es solo el costo de los kilómetros (700×6). Falta la tarifa base de $1.500, que se cobra siempre. Es el error del valor inicial olvidado.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "$5.700",
+          "esCorrecta": true,
+          "feedback": "Correcto: tarifa base + costo por kilómetro × kilómetros. La misma receta de la lección aplicada a un modelo de cobro real."
+        },
+        {
+          "clave": "D",
+          "texto": "$13.200",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste absolutamente todo por 6, incluida la tarifa base: (1.500+700)×6. Pero la tarifa base se paga una sola vez; solo los kilómetros se multiplican."
+        }
+      ],
+      "solucion": "Costo = tarifa base + costo por km × km = 1.500 + 700×6 = 1.500 + 4.200 = 5.700."
+    },
+    {
+      "id": "l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "¿Cuál de las siguientes tablas representa una cantidad con cambio constante?\n\nA)\n| x | 0 | 1 | 2 | 3 |\n|---|---|---|----|----|\n| y | 3 | 6 | 12 | 24 |\n\nB)\n| x | 0 | 1 | 2 | 3 |\n|---|----|---|---|---|\n| y | 10 | 8 | 7 | 5 |\n\nC)\n| x | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| y | 2 | 3 | 5 | 8 |\n\nD)\n| x | 0 | 1 | 2 | 3 |\n|---|---|---|----|----|\n| y | 5 | 9 | 13 | 17 |",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tabla A",
+          "esCorrecta": false,
+          "feedback": "Cada valor es el doble del anterior. Las diferencias son +3, +6, +12: crecen. Duplicar no es sumar lo mismo."
+        },
+        {
+          "clave": "B",
+          "texto": "Tabla B",
+          "esCorrecta": false,
+          "feedback": "Esta es la trampa fina del ítem. La tabla baja, y bajar con cambio constante es posible (la vela). Pero resta: −2, −1, −2. La diferencia del medio es distinta. TODAS las restas deben coincidir, sin excepción."
+        },
+        {
+          "clave": "C",
+          "texto": "Tabla C",
+          "esCorrecta": false,
+          "feedback": "Las diferencias son +1, +2, +3. Igual que Diego con sus depósitos: hay patrón, pero el salto crece. Patrón no es lo mismo que cambio constante."
+        },
+        {
+          "clave": "D",
+          "texto": "Tabla D",
+          "esCorrecta": true,
+          "feedback": "Todas las diferencias dan +4. Ese es el único criterio que importa, y lo aplicaste bien."
+        }
+      ],
+      "solucion": "Se calculan las diferencias consecutivas de cada tabla: A) +3,+6,+12 (crecientes, descartada). B) −2,−1,−2 (no todas iguales, descartada). C) +1,+2,+3 (crecientes, descartada). D) +4,+4,+4 (todas iguales → cambio constante). Respuesta: D."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE) — alcance, habilidades y formato de ítems",
+      "Material/ (guías de terceros y forma DEMRE liberada Forma113) revisado explícitamente en /revision-originalidad para descartar coincidencias de enunciado; proceso clean-room aplicado (MOS §7.2). Historial de reescrituras de l1-item-1 por coincidencia excesiva con fuentes conocidas: (1) estanque con filtración vs. DEMRE Forma113 P40/MOD-06; (2) grúa con contenedor descendiendo vs. el mismo patrón de mecanismo (tabla + extrapolar a un paso futuro) marcado como demasiado cercano en ambos intentos previos. Versión actual (3): cambia de mecanismo, no solo de objeto — usa 'despejar el valor inicial dado el total en un paso conocido' (backward solve) en vez de extrapolación hacia adelante, con contexto de fichas de un juego de mesa. Auditada y aprobada por /revision-originalidad (ver checklistOriginalidad)."
+    ],
+    "declaracionOriginalidad": "Ningún ítem, enunciado, tabla ni contexto fue tomado de formas liberadas DEMRE ni de guías de terceros. Todos los contextos (bidón, ahorro de Camila y Diego, vela, impresora, taxi, estacionamiento, fichas de juego de mesa, reparto, tablas del ítem 3) fueron creados desde cero para esta lección, con números propios verificados. l1-item-1 fue reescrito tres veces tras dos rechazos por cercanía excesiva con material conocido (DEMRE Forma113 P40 y MOD-06); la versión 3 (backward-solve, fichas de juego de mesa) pasó /revision-originalidad y /revision-matematica. Migración estructural (2026-07-08): el archivo se reescribió para seguir la forma de bloques de content/schema/leccion.schema.json (antes usaba un formato ad-hoc con 'interaccion' anidado); ningún enunciado, número, alternativa ni feedback fue modificado en este proceso, solo su codificación estructural.",
+    "autor": "IA (Claude) bajo dirección, curaduría y revisión humana del autor del proyecto (MOS §7.7)",
+    "fecha": "2026-07-07"
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  },
+  "revisionMatematica": {
+    "aprobada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  }
+}

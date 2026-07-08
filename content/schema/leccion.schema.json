@@ -1,0 +1,426 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "leccion.schema.json",
+  "title": "Contenido Plataforma M1 (lección, diagnóstico o cierre)",
+  "$comment": "Schema v0. Los bloques de la sección 'pasos.bloques' fueron extraídos de leccion-1-guion.md y leccion-2-guion.md (no diseñados en abstracto). El validador (scripts/validar-contenido.mjs) aplica exigencia gradual según 'estado': borrador = estructura básica; revision = contrato completo; publicable = además checklist de originalidad, revisión matemática y cero placeholders. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan.",
+  "type": "object",
+  "required": ["tipo", "id", "titulo", "estado", "proveniencia"],
+  "properties": {
+    "tipo": { "enum": ["leccion", "diagnostico", "cierre"] },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, p. ej. l2-pendiente-intercepto" },
+    "titulo": { "type": "string", "minLength": 1 },
+    "estado": {
+      "enum": ["borrador", "revision", "publicable"],
+      "description": "Nivel de madurez. Solo 'publicable' puede mostrarse a estudiantes."
+    },
+    "objetivo": { "type": "string", "description": "Qué será capaz de hacer el estudiante al terminar (solo lecciones)" },
+    "tiempoEstimadoMin": { "type": "number", "exclusiveMinimum": 0 },
+    "prerrequisitos": { "type": "array", "items": { "type": "string" } },
+    "conceptos": { "type": "array", "items": { "type": "string" } },
+    "pasos": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "description": "Exactamente 10 pasos, en este orden pedagógico fijo (MOS §4)",
+      "items": { "$ref": "#/definitions/paso" }
+    },
+    "itemsPAES": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "description": "Cierre de lección: 2–3 ítems originales formato PAES (solo lecciones)",
+      "items": { "$ref": "#/definitions/item" }
+    },
+    "items": {
+      "type": "array",
+      "description": "Ítems del set: 5 para diagnostico, 8 para cierre",
+      "items": { "$ref": "#/definitions/item" }
+    },
+    "catalogoErrores": {
+      "type": "array",
+      "description": "Errores frecuentes documentados para esta lección. Todo distractor de itemsPAES y todo feedbackPorError debe referenciar un id de aquí (MOS: 'no se inventan errores nuevos en el cierre').",
+      "items": {
+        "type": "object",
+        "required": ["id", "descripcion"],
+        "properties": {
+          "id": { "type": "string", "description": "p. ej. 'error-1', referenciado desde errorCatalogado en bloques e items" },
+          "descripcion": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "contextosNumericos": {
+      "type": "array",
+      "description": "Registro de contextos y números usados, para que otras lecciones no los repitan.",
+      "items": { "type": "string" }
+    },
+    "proveniencia": { "$ref": "#/definitions/proveniencia" },
+    "checklistOriginalidad": { "$ref": "#/definitions/checklistOriginalidad" },
+    "revisionMatematica": { "$ref": "#/definitions/revisionMatematica" }
+  },
+  "definitions": {
+
+    "paso": {
+      "type": "object",
+      "required": ["tipo", "titulo", "bloques"],
+      "properties": {
+        "tipo": {
+          "enum": ["curiosidad", "problema", "pensar", "pistas", "descubrimiento", "generalizacion", "practica", "aplicacion", "reflexion", "consolidacion"]
+        },
+        "titulo": { "type": "string", "minLength": 1 },
+        "bloques": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Unidades de pantalla. Cada bloque es uno de los tipos concretos definidos abajo, discriminados por 'tipo'.",
+          "items": { "$ref": "#/definitions/bloque" }
+        }
+      },
+      "additionalProperties": true
+    },
+
+    "bloque": {
+      "type": "object",
+      "required": ["tipo"],
+      "oneOf": [
+        { "$ref": "#/definitions/bloqueTexto" },
+        { "$ref": "#/definitions/bloquePrediccion" },
+        { "$ref": "#/definitions/bloqueSeleccion" },
+        { "$ref": "#/definitions/bloqueNumerica" },
+        { "$ref": "#/definitions/bloqueVerdaderoFalso" },
+        { "$ref": "#/definitions/bloqueAbierta" },
+        { "$ref": "#/definitions/bloquePregunta" },
+        { "$ref": "#/definitions/bloqueInteractivoSlider" },
+        { "$ref": "#/definitions/bloquePistas" },
+        { "$ref": "#/definitions/bloqueVisualizacion" }
+      ]
+    },
+
+    "bloqueTexto": {
+      "type": "object",
+      "description": "Narrativa, contexto, o revelación. No evaluado. Ej: Paso 1.1/1.2 de Lección 1, Paso 2 de Lección 2.",
+      "required": ["tipo", "contenido"],
+      "properties": {
+        "tipo": { "const": "texto" },
+        "contenido": { "type": "string", "minLength": 1, "description": "Markdown. Puede incluir tablas simples inline." },
+        "imagen": { "type": "string", "description": "Descripción de la imagen/ilustración a mostrar, si aplica." }
+      },
+      "additionalProperties": false
+    },
+
+    "bloquePrediccion": {
+      "type": "object",
+      "description": "Predicción libre, sin corrección. Se guarda para comparar más adelante en la lección. Ej: Paso 1 Lección 1, Paso 3 Lección 2.",
+      "required": ["tipo", "enunciado", "tipoRespuesta"],
+      "properties": {
+        "tipo": { "const": "prediccion" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "tipoRespuesta": { "enum": ["numero", "texto", "seleccionSimple"] },
+        "opciones": {
+          "type": "array",
+          "description": "Solo si tipoRespuesta = seleccionSimple.",
+          "items": { "type": "string" }
+        },
+        "eventoAnalytics": { "type": "string", "default": "prediccion_registrada" }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueSeleccion": {
+      "type": "object",
+      "description": "Opción múltiple pedagógica (NO formato PAES): número de opciones libre, evaluada, con feedback por opción. Ej: Paso 2 Lección 1 (3 opciones).",
+      "required": ["tipo", "enunciado", "opciones"],
+      "properties": {
+        "tipo": { "const": "seleccion" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "opciones": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["id", "texto", "esCorrecta", "feedback"],
+            "properties": {
+              "id": { "type": "string" },
+              "texto": { "type": "string", "minLength": 1 },
+              "esCorrecta": { "type": "boolean" },
+              "feedback": { "type": "string", "minLength": 1, "description": "Obligatorio en todas las opciones, incluida la correcta (refuerza el porqué)." },
+              "errorCatalogado": { "type": "string", "description": "id de catalogoErrores, si la opción codifica un error específico." }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueNumerica": {
+      "type": "object",
+      "description": "Uno o más campos de respuesta numérica. Feedback por VALOR específico obtenido (no por alternativa fija), más un catch-all obligatorio. Ej: Paso 3 Lección 1.",
+      "required": ["tipo", "enunciado", "campos", "feedbackPorDefecto"],
+      "properties": {
+        "tipo": { "const": "numerica" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "campos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "etiqueta", "respuestaCorrecta"],
+            "properties": {
+              "id": { "type": "string" },
+              "etiqueta": { "type": "string", "minLength": 1 },
+              "respuestaCorrecta": { "type": "number" },
+              "unidad": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "feedbackPorError": {
+          "type": "array",
+          "description": "Errores frecuentes anticipados, cada uno con el valor exacto que produciría ese error y por qué.",
+          "items": {
+            "type": "object",
+            "required": ["valorObtenido", "campoId", "mensaje"],
+            "properties": {
+              "campoId": { "type": "string", "description": "A qué campo corresponde este valor esperado de error." },
+              "valorObtenido": { "type": "number" },
+              "mensaje": { "type": "string", "minLength": 1 },
+              "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "feedbackPorDefecto": {
+          "type": "string",
+          "minLength": 1,
+          "description": "OBLIGATORIO. Cubre cualquier valor no anticipado en feedbackPorError. Nunca dejar al estudiante sin retroalimentación."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueVerdaderoFalso": {
+      "type": "object",
+      "description": "Chequeo rápido verdadero/falso. Ej: Paso 5 Lección 1, chequeo de secuencia.",
+      "required": ["tipo", "enunciado", "respuestaCorrecta", "feedbackVerdadero", "feedbackFalso"],
+      "properties": {
+        "tipo": { "const": "verdaderoFalso" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "respuestaCorrecta": { "type": "boolean" },
+        "feedbackVerdadero": { "type": "string", "minLength": 1 },
+        "feedbackFalso": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueAbierta": {
+      "type": "object",
+      "description": "Pregunta abierta, no corregida automáticamente. Dato cualitativo a instrumentación (PostHog). Ej: Paso 9 en ambas lecciones.",
+      "required": ["tipo", "enunciado"],
+      "properties": {
+        "tipo": { "const": "abierta" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "mostrarRespuestaModelo": { "type": "boolean", "default": false },
+        "respuestaModelo": { "type": "string", "description": "Requerido si mostrarRespuestaModelo = true." },
+        "notaDiseno": { "type": "string", "description": "Nota interna, no visible al estudiante, sobre qué busca esta pregunta." }
+      },
+      "additionalProperties": false
+    },
+
+    "bloquePregunta": {
+      "type": "object",
+      "description": "Ítem formato PAES (A-D) EMBEBIDO dentro de un paso (no en el cierre). Ej: Paso 7 y Paso 8 de Lección 2. Reutiliza la misma estructura de alternativas que 'item'.",
+      "required": ["tipo", "enunciado", "alternativas"],
+      "properties": {
+        "tipo": { "const": "pregunta" },
+        "enunciado": { "type": "string", "minLength": 1 },
+        "alternativas": { "$ref": "#/definitions/alternativasABCD" },
+        "notaVerificacionMatematica": { "type": "string", "description": "Verificación interna recalculada desde cero, para revisor-matematico." }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueInteractivoSlider": {
+      "type": "object",
+      "description": "Gráfico interactivo con control(es) deslizante(s). Dos variantes: unaVariable (todo fijo menos un control, con umbral de exploración mínima) y dosVariables (ambos controles habilitados, con secuencia de micro-preguntas predice-mueve-compara). Ej: Pasos 4 y 5 de Lección 2.",
+      "required": ["tipo", "variante", "variables"],
+      "properties": {
+        "tipo": { "const": "interactivoSlider" },
+        "variante": { "enum": ["unaVariable", "dosVariables"] },
+        "variables": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["nombre", "min", "max", "editable"],
+            "properties": {
+              "nombre": { "type": "string" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "valorInicial": { "type": "number" },
+              "editable": { "type": "boolean", "description": "false para el control fijo en la variante unaVariable." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "instruccion": { "type": "string", "description": "Texto guía inicial, ej. '¿Qué cambia? ¿Qué se queda igual?'" },
+        "exploracionMinima": {
+          "type": "integer",
+          "description": "Solo variante unaVariable. Número mínimo de valores distintos que debe probar antes de avanzar."
+        },
+        "feedbackExploracionInsuficiente": {
+          "type": "string",
+          "description": "Solo variante unaVariable. Requerido si exploracionMinima está presente."
+        },
+        "secuenciaMicropreguntas": {
+          "type": "array",
+          "description": "Solo variante dosVariables. Secuencia predice → mueve → comprueba.",
+          "items": {
+            "type": "object",
+            "required": ["id", "enunciado", "feedbackPorPrediccion"],
+            "properties": {
+              "id": { "type": "string" },
+              "enunciado": { "type": "string", "minLength": 1 },
+              "feedbackPorPrediccion": {
+                "type": "array",
+                "description": "Feedback por cada predicción incorrecta prevista. Guía al estudiante a comprobar moviendo el control, no revela la respuesta.",
+                "items": {
+                  "type": "object",
+                  "required": ["prediccion", "mensaje"],
+                  "properties": {
+                    "prediccion": { "type": "string", "description": "Qué predicción del estudiante dispara este mensaje." },
+                    "mensaje": { "type": "string", "minLength": 1 },
+                    "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "bloquePistas": {
+      "type": "object",
+      "description": "Sistema de pistas graduales. Ej: Paso 4 de Lección 1 (3 niveles, activadas por demanda o por 2 fallos).",
+      "required": ["tipo", "condicionActivacion", "niveles"],
+      "properties": {
+        "tipo": { "const": "pistas" },
+        "condicionActivacion": { "enum": ["bajoDemanda", "dosIntentosFallidos", "ambos"] },
+        "niveles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["nivel", "texto"],
+            "properties": {
+              "nivel": { "type": "integer", "minimum": 1 },
+              "texto": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "bloqueVisualizacion": {
+      "type": "object",
+      "description": "Visual no interactivo: tabla, gráfico estático, diagrama. Ej: tabla de Camila con flechas +$2.000 en Paso 5 de Lección 1.",
+      "required": ["tipo", "variante", "descripcion"],
+      "properties": {
+        "tipo": { "const": "visualizacion" },
+        "variante": { "enum": ["tabla", "grafico", "diagrama"] },
+        "descripcion": { "type": "string", "minLength": 1, "description": "Qué debe mostrarse, en términos suficientes para que diseño/desarrollo lo construya." },
+        "datos": { "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante." }
+      },
+      "additionalProperties": false
+    },
+
+    "alternativasABCD": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Formato PAES M1: exactamente 4 alternativas (A–D), respuesta única",
+      "items": {
+        "type": "object",
+        "required": ["clave", "texto", "esCorrecta"],
+        "properties": {
+          "clave": { "enum": ["A", "B", "C", "D"] },
+          "texto": { "type": "string", "minLength": 1 },
+          "esCorrecta": { "type": "boolean" },
+          "feedback": {
+            "type": "string",
+            "description": "OBLIGATORIO en distractores: feedback artesanal que nombra el error específico que produce esa alternativa y reorienta sin regalar la respuesta (MOS §4). Opcional en la correcta (refuerzo breve)."
+          },
+          "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "item": {
+      "type": "object",
+      "required": ["id", "habilidad", "dificultad", "enunciado", "alternativas", "solucion"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "habilidad": {
+          "enum": ["resolver", "modelar", "representar", "argumentar"],
+          "description": "Las 4 habilidades evaluadas por la PAES de Competencia Matemática"
+        },
+        "dificultad": { "enum": ["baja", "media", "alta"] },
+        "enunciado": { "type": "string", "minLength": 1, "description": "100% original. Contexto realista cuando aplique. Jamás material DEMRE ni de terceros." },
+        "alternativas": { "$ref": "#/definitions/alternativasABCD" },
+        "solucion": { "type": "string", "minLength": 1, "description": "Resolución paso a paso, verificada recalculando desde cero" }
+      },
+      "additionalProperties": false
+    },
+
+    "proveniencia": {
+      "type": "object",
+      "required": ["fuentesAnalisis", "declaracionOriginalidad"],
+      "description": "Registro de proveniencia obligatorio (MOS §7.2)",
+      "properties": {
+        "fuentesAnalisis": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Qué fuentes se usaron SOLO para análisis/calibración (p. ej. 'temario DEMRE M1'). Nunca como origen de texto, ejemplos o diagramas."
+        },
+        "declaracionOriginalidad": { "type": "string", "description": "Declaración explícita de que todo el contenido fue creado desde cero" },
+        "autor": { "type": "string" },
+        "fecha": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "checklistOriginalidad": {
+      "type": "object",
+      "description": "Checklist MOS §7.3. Las 4 respuestas deben ser true (= sin problema) para publicar. Ante duda: no se publica.",
+      "required": ["enunciadosOriginales", "diagramasOriginales", "secuenciaOriginal", "provenienciaRegistrada"],
+      "properties": {
+        "enunciadosOriginales": { "type": "boolean", "description": "Ningún enunciado/ejercicio es sustancialmente similar a una fuente conocida (cambiar palabras o números NO basta)" },
+        "diagramasOriginales": { "type": "boolean", "description": "Ningún diagrama/visualización replica la composición de uno existente" },
+        "secuenciaOriginal": { "type": "boolean", "description": "La secuencia interna no copia la estructura expresiva de una guía específica" },
+        "provenienciaRegistrada": { "type": "boolean" },
+        "revisadoPor": { "type": "string" },
+        "fecha": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "revisionMatematica": {
+      "type": "object",
+      "description": "Revisión independiente: recalcular todo desde cero antes de publicar",
+      "required": ["aprobada"],
+      "properties": {
+        "aprobada": { "type": "boolean" },
+        "revisadoPor": { "type": "string" },
+        "fecha": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

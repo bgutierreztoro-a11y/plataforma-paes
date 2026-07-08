@@ -1,0 +1,296 @@
+{
+  "tipo": "leccion",
+  "id": "l0-demo",
+  "titulo": "Lección de demostración",
+  "objetivo": "Andamiaje técnico para probar la cáscara de la plataforma de punta a punta. No es contenido pedagógico real: será reemplazado por el pipeline /nueva-leccion.",
+  "tiempoEstimadoMin": 15,
+  "prerrequisitos": [
+    "Operatoria básica con enteros"
+  ],
+  "conceptos": [
+    "pendiente",
+    "intercepto",
+    "ecuación de la recta y = mx + b"
+  ],
+  "estado": "revision",
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Una planta que crece parejo",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un vivero registra la altura de una planta día por medio:\n\n| Día | Altura (cm) |\n|-----|-------------|\n| 0 | 3 |\n| 1 | 5 |\n| 2 | 7 |\n\nLa planta ya medía algo antes de empezar a medirla, y desde entonces crece siempre lo mismo cada día."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Cuánto medirá el día 5?",
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular todavía: ¿cuántos centímetros crees que medirá la planta el día 5?",
+          "tipoRespuesta": "numero"
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Cómo encontramos cuánto crece por día?",
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mirando la tabla del vivero, ¿qué operación te dice cuánto crece la planta cada día?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Restar alturas de días consecutivos (5 − 3, 7 − 5)",
+              "esCorrecta": true,
+              "feedback": "Exacto. Cada resta da 2: eso es lo que crece la planta por día, siempre lo mismo."
+            },
+            {
+              "id": "b",
+              "texto": "Sumar todas las alturas de la tabla",
+              "esCorrecta": false,
+              "feedback": "Sumar todas las alturas mezcla días distintos en un solo número que no representa el crecimiento diario. Prueba comparando un día con el siguiente."
+            },
+            {
+              "id": "c",
+              "texto": "Dividir el número del día por su altura",
+              "esCorrecta": false,
+              "feedback": "Esa división no compara un día con el siguiente, así que no aísla cuánto cambia la altura de un día a otro."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para predecir el día 5",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La planta ya medía 3 cm antes del día 0. Ese valor inicial no se puede perder en el cálculo."
+            },
+            {
+              "nivel": 2,
+              "texto": "Cada día suma 2 cm. Del día 0 al día 5 hay 5 saltos de 2 cm. Altura = 3 + 2 × 5."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Mueve la recta hasta calzarla con la planta",
+      "bloques": [
+        {
+          "tipo": "interactivoSlider",
+          "variante": "dosVariables",
+          "variables": [
+            { "nombre": "pendiente (m)", "min": -5, "max": 5, "valorInicial": 0, "editable": true },
+            { "nombre": "intercepto (b)", "min": -8, "max": 8, "valorInicial": 0, "editable": true }
+          ],
+          "instruccion": "La planta pasa por (0, 3) y (1, 5). Mueve los sliders m y b hasta que la recta y = mx + b pase por esos dos puntos."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La ecuación de la recta",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que ajustaste con los sliders tiene nombre:\n\ny = mx + b\n\n- **m** es la pendiente: cuánto sube (o baja) y por cada unidad que avanza x. En la planta, m = 2 (crece 2 cm por día).\n- **b** es el intercepto: el valor de y cuando x = 0. En la planta, b = 3 (medía 3 cm al empezar a contar los días)."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si la pendiente es 2 y el intercepto es 3, la recta y = mx + b pasa por el punto (0, 3).",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto: al reemplazar x = 0, y = m×0 + b = b = 3.",
+          "feedbackFalso": "Reemplaza x = 0 en y = mx + b: queda y = m×0 + b, y como cualquier número por 0 es 0, y = b = 3. Sí pasa por (0, 3)."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Practica con la misma planta",
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Usando y = 2x + 3, ¿cuántos centímetros medirá la planta el día 10?",
+          "campos": [
+            { "id": "altura10", "etiqueta": "Altura", "respuestaCorrecta": 23, "unidad": "cm" }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "altura10",
+              "valorObtenido": 20,
+              "mensaje": "Calculaste 2×10 pero olvidaste sumar los 3 cm iniciales (el intercepto). Altura = 2×10 + 3."
+            },
+            {
+              "campoId": "altura10",
+              "valorObtenido": 25,
+              "mensaje": "Contaste un salto de más. Del día 0 al día 10 hay 10 saltos de 2 cm, no 11: 3 + 2×10."
+            }
+          ],
+          "feedbackPorDefecto": "Usa la ecuación y = 2x + 3 reemplazando x por 10."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Otro contexto: la misma idea",
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un estanque tiene 4 litros de agua y una llave lo llena a razón de 3 litros por minuto. ¿Cuántos litros tendrá a los 6 minutos?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "18 litros",
+              "esCorrecta": false,
+              "feedback": "Calculaste solo 3×6, pero el estanque no partió vacío: ya tenía 4 litros antes de abrir la llave."
+            },
+            {
+              "clave": "B",
+              "texto": "22 litros",
+              "esCorrecta": true,
+              "feedback": "Correcto: 4 + 3×6 = 4 + 18 = 22 litros."
+            },
+            {
+              "clave": "C",
+              "texto": "42 litros",
+              "esCorrecta": false,
+              "feedback": "Multiplicaste (4 + 3) × 6, pero los 4 litros iniciales se suman una sola vez, no se multiplican por los minutos."
+            },
+            {
+              "clave": "D",
+              "texto": "10 litros",
+              "esCorrecta": false,
+              "feedback": "Ese valor corresponde a 6 minutos contados como si el estanque llenara 1 litro por minuto. La llave llena 3 litros por minuto, no 1."
+            }
+          ],
+          "notaVerificacionMatematica": "y = 3x + 4 con x = 6: y = 3×6 + 4 = 22."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "En tus palabras",
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "¿Cómo le explicarías a un compañero qué es la pendiente de una recta, sin usar la palabra 'pendiente'?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática; solo se registra para el piloto, igual que en las lecciones reales."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla resumen de la altura de la planta día por día, del día 0 al día 5, mostrando el salto constante de +2 entre filas.",
+          "datos": {
+            "columnas": ["Día", "Altura (cm)"],
+            "filas": [
+              [0, 3],
+              [1, 5],
+              [2, 7],
+              [3, 9],
+              [4, 11],
+              [5, 13]
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- y = mx + b: m es la pendiente (cuánto cambia y por cada paso de x), b es el intercepto (el valor de y cuando x = 0).\n- La pendiente se detecta restando valores consecutivos.\n- Esta es una lección de demostración técnica: el contenido real de la plataforma se redacta y revisa aparte."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l0-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Una vela mide 20 cm y se consume a razón de 2 cm por hora. Si y representa el largo de la vela (en cm) después de x horas, ¿cuál es el largo de la vela después de 6 horas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8 cm",
+          "esCorrecta": true,
+          "feedback": "Correcto: y = 20 − 2x, con x = 6: y = 20 − 12 = 8."
+        },
+        {
+          "clave": "B",
+          "texto": "12 cm",
+          "esCorrecta": false,
+          "feedback": "Calculaste solo lo consumido (2×6 = 12), pero la pregunta pide cuánto queda, no cuánto se gastó."
+        },
+        {
+          "clave": "C",
+          "texto": "32 cm",
+          "esCorrecta": false,
+          "feedback": "Sumaste en vez de restar. La vela se acorta, así que el cambio se resta: 20 − 2×6."
+        },
+        {
+          "clave": "D",
+          "texto": "18 cm",
+          "esCorrecta": false,
+          "feedback": "Corresponde a restar solo una hora (20 − 2). Son 6 horas completas: 20 − 2×6 = 8."
+        }
+      ],
+      "solucion": "y = 20 − 2x. Con x = 6: y = 20 − 2(6) = 20 − 12 = 8 cm."
+    },
+    {
+      "id": "l0-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "La tabla muestra el costo total de arriendo de una bicicleta según las horas de uso:\n\n| Horas | Costo |\n|-------|-------|\n| 0 | $1.000 |\n| 1 | $1.400 |\n| 2 | $1.800 |\n\n¿Cuál ecuación representa el costo y en función de las horas x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = 1.000x + 400",
+          "esCorrecta": false,
+          "feedback": "Invertiste los roles: 400 es lo que sube cada hora (la pendiente), no lo que se multiplica por x. El monto fijo es 1.000."
+        },
+        {
+          "clave": "B",
+          "texto": "y = 400x + 1.000",
+          "esCorrecta": true,
+          "feedback": "Correcto: el costo sube $400 por hora (pendiente) partiendo de un cargo fijo de $1.000 (intercepto)."
+        },
+        {
+          "clave": "C",
+          "texto": "y = 1.400x",
+          "esCorrecta": false,
+          "feedback": "Esto ignora que hay un cargo fijo de $1.000 incluso con 0 horas de uso: el intercepto no puede ser 0."
+        },
+        {
+          "clave": "D",
+          "texto": "y = 1.000x",
+          "esCorrecta": false,
+          "feedback": "Con esta ecuación, a 0 horas el costo sería $0, pero la tabla muestra que a 0 horas ya se cobran $1.000."
+        }
+      ],
+      "solucion": "Diferencias consecutivas: 1.400−1.000=400, 1.800−1.400=400 (pendiente constante). El valor en x=0 es 1.000 (intercepto). Ecuación: y = 400x + 1.000."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [],
+    "declaracionOriginalidad": "Contenido de demostración técnica creado desde cero para probar la cáscara del MVP de punta a punta (checkpoints del PROMPT 1 de docs/prompt-mvp.md). No es contenido pedagógico real, nunca pasará a estado publicable, y será reemplazado por el pipeline /nueva-leccion.",
+    "autor": "IA (Claude) bajo dirección del autor del proyecto — andamiaje técnico, no contenido curatorial",
+    "fecha": "2026-07-08"
+  }
+}

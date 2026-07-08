@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  /* superficie: fondo casi blanco frío, el mundo visual del plano cartesiano */
+  --color-bg: #f6f8fc;
+  --color-surface: #ffffff;
+  --color-border: #dce3ee;
+
+  /* texto */
+  --color-ink: #16213a;
+  --color-ink-suave: #4b5c78;
+
+  /* acento único: azul tinta, confiable y serio */
+  --color-accent: #1e4fd8;
+  --color-accent-fuerte: #143aa6;
+  --color-accent-suave: #e8edfc;
+
+  /* estado: siempre acompañado de ícono, nunca solo color */
+  --color-success: #146c43;
+  --color-success-suave: #e4f3ea;
+  --color-error: #b3261e;
+  --color-error-suave: #fbeae9;
+
+  /* cuadrícula tipo papel milimetrado */
+  --color-grid-fina: #e4eaf5;
+  --color-grid-fuerte: #c7d3ea;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --radius-tarjeta: 0.75rem;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* Textura de fondo tipo papel milimetrado: dos pares de líneas repetidas
+   (finas cada 24px, fuertes cada 120px). Solo se aplica donde el diseño lo
+   pide explícitamente (portada, transiciones entre pasos) — nunca detrás de
+   texto denso, para no competir con la lectura. */
+.fondo-cuadricula {
+  background-color: var(--color-bg);
+  background-image: linear-gradient(
+      to right,
+      var(--color-grid-fuerte) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--color-grid-fuerte) 1px, transparent 1px),
+    linear-gradient(to right, var(--color-grid-fina) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-fina) 1px, transparent 1px);
+  background-size:
+    120px 120px,
+    120px 120px,
+    24px 24px,
+    24px 24px;
+}
+
+/* Utilidad de accesibilidad: oculta visualmente sin ocultar de lectores de
+   pantalla (usada por la región aria-live de GraficoPendiente). */
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Microinteracción sobria de transición entre pasos del runner. */
+@keyframes fade-in-paso {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transicion-paso {
+  animation: fade-in-paso 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transicion-paso {
+    animation: none;
+  }
+}

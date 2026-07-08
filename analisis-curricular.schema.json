@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Análisis Curricular Abstracto",
+  "description": "Salida permitida del agente analista-curricular. Nunca contiene texto expresivo de la fuente (enunciados, ejemplos numéricos, diagramas, soluciones desarrolladas).",
+  "type": "object",
+  "required": ["proveniencia", "conceptos", "notas_para_humano"],
+  "properties": {
+    "proveniencia": {
+      "type": "object",
+      "required": ["fuente", "fecha_analisis", "tipo_fuente", "nivel_riesgo"],
+      "properties": {
+        "fuente": { "type": "string" },
+        "fecha_analisis": { "type": "string", "format": "date" },
+        "tipo_fuente": {
+          "type": "string",
+          "enum": [
+            "demre_temario",
+            "demre_forma_liberada",
+            "curriculum_nacional",
+            "educarchile",
+            "oer_cc",
+            "phet",
+            "guia_terceros"
+          ]
+        },
+        "licencia": {
+          "type": "string",
+          "description": "Licencia declarada de la fuente. Obligatorio para oer_cc (ej: 'CC BY-SA 4.0', 'CC BY-NC-SA 4.0'). Para fuentes públicas de gobierno, usar 'publica_gobierno'.",
+          "examples": ["publica_gobierno", "CC BY-SA 4.0", "CC BY-NC-SA 4.0", "propietaria"]
+        },
+        "nivel_riesgo": {
+          "type": "string",
+          "enum": ["bajo", "medio", "alto"]
+        }
+      }
+    },
+    "conceptos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "nombre", "prerrequisitos", "secuencia_sugerida", "habilidades_demre", "dificultad"],
+        "properties": {
+          "id": { "type": "string" },
+          "nombre": { "type": "string" },
+          "prerrequisitos": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "secuencia_sugerida": { "type": "integer" },
+          "subhabilidades_ordenadas": {
+            "type": "array",
+            "description": "Micro-conceptos o pasos de dominio en el orden en que la fuente los enseña. Se extrae la SECUENCIA (qué antes de qué), nunca el texto que la fuente usa para enseñar cada paso. Ejemplo permitido: 'leer pendiente desde un gráfico' -> 'leer pendiente desde dos puntos' -> 'leer pendiente desde la ecuación'. La secuencia pedagógica no es objeto de copyright (MOS v2 §7.2).",
+            "items": {
+              "type": "object",
+              "required": ["orden", "subhabilidad"],
+              "properties": {
+                "orden": { "type": "integer" },
+                "subhabilidad": {
+                  "type": "string",
+                  "description": "Descripción abstracta del micro-concepto, en palabras propias, nunca citando la fuente."
+                }
+              }
+            }
+          },
+          "habilidades_demre": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["resolver", "modelar", "representar", "argumentar"]
+            }
+          },
+          "errores_frecuentes_patron": {
+            "type": "array",
+            "description": "Descritos como patrón general, nunca como enunciado literal.",
+            "items": { "type": "string" }
+          },
+          "dificultad": {
+            "type": "string",
+            "enum": ["bajo", "medio", "alto"]
+          },
+          "base_calibracion_dificultad": { "type": "string" },
+          "omitido_por_riesgo_originalidad": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "elemento": { "type": "string" },
+                "razon": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "notas_para_humano": {
+      "type": "string",
+      "description": "Advertencias, limitaciones del análisis, o recordatorios de verificación (obligatorio si tipo_fuente es guia_terceros)."
+    }
+  }
+}
