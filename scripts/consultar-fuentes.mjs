@@ -20,7 +20,7 @@
  * puede terminar con contenido real de la fuente en su contexto aunque quiera.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, sep, resolve, dirname } from 'node:path';
+import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
