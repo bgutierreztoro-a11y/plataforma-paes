@@ -6,6 +6,7 @@ import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
+import { mezclarAlternativas } from "@/lib/mezclar";
 import type { BloquePregunta as BloquePreguntaTipo } from "@/lib/tipos";
 
 export function BloquePregunta({
@@ -19,13 +20,22 @@ export function BloquePregunta({
   const [revelado, setRevelado] = useState(false);
   const [intento, setIntento] = useState(0);
   const inicio = useRef(0);
+  // Orden inicial = original (idéntico servidor/cliente); la mezcla real
+  // ocurre en el efecto de abajo, solo en el cliente tras hidratar (ver
+  // nota en ItemPAES.tsx sobre por qué no mezclar directo en useState).
+  // "Intentar de nuevo" no remonta el componente, así que una vez mezclado
+  // el orden se mantiene estable entre reintentos de la misma pregunta.
+  const [alternativas, setAlternativas] = useState(bloque.alternativas);
   // Ver lib/useMontado.ts: mismo guard de hidratación que ItemPAES.
   const montado = useMontado();
   useEffect(() => {
     inicio.current = performance.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- mezcla de una sola vez al montar, ver comentario arriba
+    setAlternativas(mezclarAlternativas(bloque.alternativas));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- solo al montar
   }, []);
 
-  const alternativaElegida = bloque.alternativas.find((a) => a.clave === seleccion);
+  const alternativaElegida = alternativas.find((a) => a.clave === seleccion);
 
   function revisar() {
     if (!alternativaElegida) return;
@@ -55,7 +65,7 @@ export function BloquePregunta({
       </div>
       <fieldset className="space-y-2" disabled={revelado || !montado}>
         <legend className="sr-only">Alternativas</legend>
-        {bloque.alternativas.map((alt) => (
+        {alternativas.map((alt) => (
           <label
             key={alt.clave}
             className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${

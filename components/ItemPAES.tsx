@@ -6,6 +6,7 @@ import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
+import { mezclarAlternativas } from "@/lib/mezclar";
 import type { Item } from "@/lib/tipos";
 
 interface ItemPAESProps {
@@ -19,14 +20,24 @@ export function ItemPAES({ item, mostrarFeedback, onSiguiente }: ItemPAESProps) 
   const [revelado, setRevelado] = useState(false);
   const [intento, setIntento] = useState(0);
   const inicio = useRef(0);
+  // El orden inicial es el original (idéntico en servidor y cliente, sin
+  // Math.random en el render: mezclarlo aquí causaría un mismatch de
+  // hidratación). La mezcla real ocurre en el efecto de abajo, que solo
+  // corre en el cliente después de hidratar — coincide con la misma
+  // ventana en la que el fieldset ya está deshabilitado por !montado, así
+  // que no hay tap posible sobre el orden sin mezclar.
+  const [alternativas, setAlternativas] = useState(item.alternativas);
   // Ver lib/useMontado.ts: evita ofrecer las alternativas como tocables
   // antes de que React haya hidratado y conectado sus listeners de verdad.
   const montado = useMontado();
   useEffect(() => {
     inicio.current = performance.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- mezcla de una sola vez al montar, ver comentario arriba
+    setAlternativas(mezclarAlternativas(item.alternativas));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- solo al montar
   }, []);
 
-  const alternativaElegida = item.alternativas.find((a) => a.clave === seleccion);
+  const alternativaElegida = alternativas.find((a) => a.clave === seleccion);
 
   function revisar() {
     if (!alternativaElegida) return;
@@ -51,7 +62,7 @@ export function ItemPAES({ item, mostrarFeedback, onSiguiente }: ItemPAESProps) 
       </div>
       <fieldset className="space-y-2" disabled={revelado || !montado}>
         <legend className="sr-only">Alternativas</legend>
-        {item.alternativas.map((alt) => (
+        {alternativas.map((alt) => (
           <label
             key={alt.clave}
             className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border border-border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${
