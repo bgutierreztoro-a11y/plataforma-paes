@@ -262,7 +262,7 @@
         "Pantallas/ítems originales: 7.1 (P1), 7.2 (P2), 7.3 (P3).",
         "Verificación (P1): diferencias +7 constantes; 12 + 7×6 = 54",
         "Verificación (P2): 8−5 = 3, pero 12−8 = 4. Diferencias distintas",
-        "Reescritura de la opción (b) del ítem P3 (taxi), auditoría de fidelidad 2026-07-08: el texto original ('Un taxi que cobra $300 de bajada de bandera más $130 por cada 200 metros') compartía el esqueleto sintáctico '[sujeto] cobra $[fijo] de [descriptor] más $[variable] por cada [unidad]' — el mismo patrón que causó los bloqueos de Paso 8. Hallazgo DUDOSO (sin colisión de frase literal, solo de familia estructural), no bloqueante, pero se reescribió preventivamente rompiendo ese esqueleto, con los mismos números ($300, $130, 200 metros) y el mismo punto pedagógico (cargo fijo + salto constante). Verificado limpio (dominio, cifras y plantilla) contra fuentes-analisis-aisladas/ completo por auditor-originalidad. leccion-1-guion.md ya fue actualizado con este mismo texto."
+        "Reescritura de la opción (b) del ítem P3 (taxi), auditoría de fidelidad 2026-07-08: el texto original ('Un taxi que cobra $300 de bajada de bandera más $130 por cada 200 metros') compartía el esqueleto sintáctico '[sujeto] cobra $[fijo] de [descriptor] más $[variable] por cada [unidad]' — el mismo patrón que causó los dos bloqueos de Paso 8. Hallazgo DUDOSO (sin colisión de frase literal, solo de familia estructural), no bloqueante, pero se reescribió preventivamente rompiendo ese esqueleto, con los mismos números ($300, $130, 200 metros) y el mismo punto pedagógico (cargo fijo + salto constante). leccion-1-guion.md ya fue actualizado con este mismo texto."
       ],
       "bloques": [
         {
@@ -327,45 +327,45 @@
     },
     {
       "tipo": "aplicacion",
-      "titulo": "El taller de cerámica por hora",
+      "titulo": "La colección de estampillas de Martina",
       "_notasInternas": [
         "Pantalla original: 8.1 (tipo 'mixta' en el JSON viejo: abierta + numérica en una sola pantalla). Se dividió en dos bloques secuenciales del mismo paso, mismo texto exacto del guion, solo reorganizado estructuralmente.",
-        "Reemplazo de contexto (auditoría de fidelidad, 2026-07-08): el contexto anterior de este paso, 'plan de celular' ($8.990 fijos + $50 por minuto extra), fue reemplazado tras una auditoría de originalidad que detectó colisión sustancial con un ítem DEMRE 2020 real (fuentes-analisis-aisladas/pdv-terceros/MA-32_Funciones.md, ítem #17: cargo fijo mensual de $9.000 + $50 por minuto — mismo dominio, misma tarifa variable, cargo fijo casi idéntico). Se generaron y verificaron 3 candidatos (arriendo de bicicleta pública, taller de cerámica, parque de trampolines) contra el corpus completo de fuentes-analisis-aisladas/ (demre/, mineduc-curriculum/, pdv-terceros/) usando el subagente auditor-originalidad. Se eligió 'taller de cerámica' por ser el único de los tres sin ningún riesgo residual identificado (el candidato de bicicleta compartía la unidad de cobro 'por minuto' con ítems reales de telefonía en las fuentes; trampolines y cerámica quedaron limpios, y se priorizó cerámica). leccion-1-guion.md ya fue actualizado con este mismo contenido antes de migrar aquí.",
-        "Verificación (parte 2): 4.000 + 900×3 = 4.000 + 2.700 = 6.700"
+        "Cuarto contexto de este paso (auditoría de fidelidad, 2026-07-08). Historial completo: (1) 'plan de celular' ($8.990 fijo + $50/minuto extra) — contexto original del guion, descartado por colisión de DOMINIO con un ítem DEMRE 2020 real (fuentes-analisis-aisladas/pdv-terceros/MA-32_Funciones.md, ítem #17). (2) 'taller de cerámica' ($4.000 fijo + $900/hora) — descartado por colisión de PLANTILLA SINTÁCTICA con un ítem DEMRE 2014 distinto del mismo archivo (ítem #13). (3) 'parque de trampolines' — sin colisión de plantilla ni cifras, pero descartado por colisión de DOMINIO con un ítem de arriendo de juego inflable por hora (fuentes-analisis-aisladas/pdv-terceros/MA-10_Ecuaciones_Primer_Grado.md, Ejercicio 21), mismo nicho de 'entretención infantil pagada por tiempo' que el archivo que ya había bloqueado los dos intentos anteriores. (4) 'colección de estampillas' (vigente) — se abandonó por completo la familia 'servicio/entretención pagado por tiempo o unidad' y se usó un dominio sin transacción comercial, sin 'cobra' ni tarifa, mismo espíritu que la vela (que nunca tuvo problema de originalidad en ninguna ronda). Verificado sin colisión de dominio, cifras, plantilla sintáctica ni nombre propio contra el corpus completo de fuentes-analisis-aisladas/ (demre/, mineduc-curriculum/, pdv-terceros/, pendiente-clasificar/, Material/) por el subagente auditor-originalidad, que confirmó por su cuenta la veracidad de los tres bloqueos previos antes de auditar este candidato. leccion-1-guion.md ya fue actualizado con este mismo contenido antes de migrar aquí.",
+        "Verificación (parte 2): 18 + 5×6 = 18 + 30 = 48"
       ],
       "bloques": [
         {
           "tipo": "abierta",
-          "enunciado": "Un taller de cerámica cobra una matrícula fija de $4.000 más $900 por cada hora de uso del torno.\n\nParte 1: escribe la receta del costo total.",
+          "enunciado": "Martina ya tenía 18 estampillas en su álbum antes de empezar a coleccionar en serio. Desde entonces, consigue 5 estampillas nuevas cada semana, siempre la misma cantidad.\n\nParte 1: escribe la receta del total de estampillas.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "Costo = 4.000 + 900 × (horas de uso)"
+          "respuestaModelo": "Total = 18 + 5 × (semanas)"
         },
         {
           "tipo": "numerica",
-          "enunciado": "Parte 2: si usaste el torno durante 3 horas, ¿cuánto pagas?",
+          "enunciado": "Parte 2: después de 6 semanas, ¿cuántas estampillas tiene en total?",
           "campos": [
             {
-              "id": "costoTallerCeramica3h",
-              "etiqueta": "Total a pagar",
-              "respuestaCorrecta": 6700,
-              "unidad": "$"
+              "id": "estampillasMartina6semanas",
+              "etiqueta": "Total de estampillas",
+              "respuestaCorrecta": 48,
+              "unidad": ""
             }
           ],
           "feedbackPorError": [
             {
-              "campoId": "costoTallerCeramica3h",
-              "valorObtenido": 2700,
-              "mensaje": "Eso es solo el costo de las horas de uso del torno. La matrícula fija de $4.000 se paga sí o sí.",
+              "campoId": "estampillasMartina6semanas",
+              "valorObtenido": 30,
+              "mensaje": "Eso es solo lo que consiguió en las 6 semanas (5×6=30). Pero Martina no partió de cero: ya tenía 18 estampillas antes de empezar a coleccionar en serio.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "costoTallerCeramica3h",
-              "valorObtenido": 5800,
-              "mensaje": "Contaste una hora de menos. Fueron 3 horas completas: 4.000 + 900×3.",
+              "campoId": "estampillasMartina6semanas",
+              "valorObtenido": 43,
+              "mensaje": "Contaste una semana de menos. Fueron 6 semanas completas: 18 + 5×6, no 18 + 5×5.",
               "errorCatalogado": "error-2"
             }
           ],
-          "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando las horas por 3."
+          "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando las semanas por 6."
         }
       ]
     },
@@ -443,36 +443,36 @@
       "id": "l1-item-2",
       "habilidad": "modelar",
       "dificultad": "media",
-      "enunciado": "Un servicio de reparto cobra una tarifa base de $1.500 por retirar el pedido, más $700 por cada kilómetro recorrido. ¿Cuánto cuesta un reparto de 6 kilómetros?",
+      "enunciado": "Un grupo de vecinos ya tenía 24 latas de aluminio juntadas de campañas de reciclaje anteriores. Desde esta semana, juntan 18 latas nuevas cada semana, siempre la misma cantidad. ¿Cuántas latas tendrán en total después de 5 semanas?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "$2.200",
+          "texto": "90",
           "esCorrecta": false,
-          "feedback": "Sumaste 1.500 + 700 como si fuera UN kilómetro. Son 6: el cargo por distancia es 700×6 = 4.200.",
-          "errorCatalogado": "error-2"
-        },
-        {
-          "clave": "B",
-          "texto": "$4.200",
-          "esCorrecta": false,
-          "feedback": "Ese es solo el costo de los kilómetros (700×6). Falta la tarifa base de $1.500, que se cobra siempre. Es el error del valor inicial olvidado.",
+          "feedback": "Calculaste bien las latas nuevas (18×5=90), pero el grupo no partió de cero: ya tenían 24 latas juntadas de campañas anteriores. Ese punto de partida se suma siempre.",
           "errorCatalogado": "error-1"
         },
         {
+          "clave": "B",
+          "texto": "210",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste todo por 5, incluidas las 24 latas iniciales: (24+18)×5. Pero esas 24 ya estaban juntadas antes de esta semana; solo lo que se junta cada semana se multiplica por 5."
+        },
+        {
           "clave": "C",
-          "texto": "$5.700",
+          "texto": "114",
           "esCorrecta": true,
-          "feedback": "Correcto: tarifa base + costo por kilómetro × kilómetros. La misma receta de la lección aplicada a un modelo de cobro real."
+          "feedback": "Correcto: 24 latas iniciales + 18 nuevas cada semana × 5 semanas = 24 + 90 = 114. La misma receta de la lección aplicada a una acumulación real."
         },
         {
           "clave": "D",
-          "texto": "$13.200",
+          "texto": "96",
           "esCorrecta": false,
-          "feedback": "Multiplicaste absolutamente todo por 6, incluida la tarifa base: (1.500+700)×6. Pero la tarifa base se paga una sola vez; solo los kilómetros se multiplican."
+          "feedback": "Contaste una semana de menos. Fueron 5 semanas completas: 24 + 18×5, no 24 + 18×4.",
+          "errorCatalogado": "error-2"
         }
       ],
-      "solucion": "Costo = tarifa base + costo por km × km = 1.500 + 700×6 = 1.500 + 4.200 = 5.700."
+      "solucion": "Total = latas iniciales + latas nuevas por semana × semanas = 24 + 18×5 = 24 + 90 = 114."
     },
     {
       "id": "l1-item-3",
@@ -514,7 +514,7 @@
       "Material/ (guías de terceros y forma DEMRE liberada Forma113) revisado explícitamente en /revision-originalidad para descartar coincidencias de enunciado; proceso clean-room aplicado (MOS §7.2). Historial de reescrituras de l1-item-1 por coincidencia excesiva con fuentes conocidas: (1) estanque con filtración vs. DEMRE Forma113 P40/MOD-06; (2) grúa con contenedor descendiendo vs. el mismo patrón de mecanismo (tabla + extrapolar a un paso futuro) marcado como demasiado cercano en ambos intentos previos. Versión actual (3): cambia de mecanismo, no solo de objeto — usa 'despejar el valor inicial dado el total en un paso conocido' (backward solve) en vez de extrapolación hacia adelante, con contexto de fichas de un juego de mesa. Pendiente de aprobación formal por /revision-originalidad: checklistOriginalidad de este archivo tiene todos los campos en false/vacíos, así que esta versión no cuenta todavía con una aprobación registrada — corregido en auditoría de fidelidad del 2026-07-08 tras detectar que una versión anterior de esta misma nota afirmaba 'auditada y aprobada' sin ese respaldo.",
       "mineduc-curriculum/03-unidad-2-algebra-funciones.md (OA10, 8° básico, función afín) — agregada como fuente de análisis el 2026-07-08 tras la auditoría de originalidad, que detectó paralelismo conceptual entre el enfoque de esta lección (receta 'valor inicial + cambio por paso × pasos', ejemplo de ahorro con cambio constante) y los ejemplos de ese documento (formulación recursiva f(t+1)=f(t)+c, ejemplo de ahorro/gasto diario constante). Se declara como convergencia pedagógica con el enfoque oficial de Mineduc para este OA (documento curricular de uso público, no material de terceros con derechos reservados), no como derivación no declarada de un texto específico."
     ],
-    "declaracionOriginalidad": "Ningún ítem, enunciado, tabla ni contexto fue tomado de formas liberadas DEMRE ni de guías de terceros, con la excepción histórica del Paso 8 documentada abajo. Todos los contextos vigentes (bidón, ahorro de Camila y Diego, vela, impresora, taxi, taller de cerámica, fichas de juego de mesa, reparto, tablas del ítem 3) fueron creados desde cero para esta lección, con números propios verificados. l1-item-1 fue reescrito tres veces tras dos rechazos por cercanía excesiva con material conocido (DEMRE Forma113 P40 y MOD-06); la versión 3 (backward-solve, fichas de juego de mesa) fue diseñada específicamente para evitar esas dos colisiones, pero su aprobación formal por /revision-originalidad y /revision-matematica sigue pendiente — checklistOriginalidad y revisionMatematica de este archivo tienen todos los campos en false/vacíos, y no se afirma aprobación hasta que se completen de verdad (corregido en auditoría de fidelidad del 2026-07-08 tras detectar la misma afirmación sin respaldo en fuentesAnalisis). Migración estructural (2026-07-08, sesión inicial): el archivo se reescribió para seguir la forma de bloques de content/schema/leccion.schema.json (antes usaba un formato ad-hoc con 'interaccion' anidado). Esa migración se declaró entonces como transformación de forma pura, sin cambios de contenido — esa declaración era falsa en dos puntos, corregidos en la auditoría de fidelidad del 2026-07-08 (sesión posterior): (1) el Paso 8 (aplicación) había sido reescrito de 'plan de celular' (guion) a 'estacionamiento por hora', con una nota interna que afirmaba una confirmación del autor del proyecto que nunca ocurrió y no tiene respaldo en git ni en docs/pendientes.md; se restauró el contexto 'plan de celular'. (2) El Paso 3 (pensar) incluye 3 entradas de feedbackPorError para el campo 'semana3' (valores 6000, 9000, 13000) sin equivalente en el guion — contenido nuevo agregado durante la migración, presentado entonces como preservación fiel; se mantienen por ser matemáticamente correctas, pero quedan declaradas aquí como adición. Adicionalmente: la habilidad compuesta que el guion asigna a l1-item-1 ('Resolver problemas / Representar') y a l1-item-3 ('Argumentar / Representar') se redujo a un solo valor ('resolver' / 'argumentar') porque leccion.schema.json define 'habilidad' como enum de valor único, no array, y el objeto 'item' tiene additionalProperties:false (no admite _notasInternas por ítem para documentarlo ahí); la etiqueta secundaria 'Representar' se descartó por esa restricción técnica del schema, no por una decisión de contenido, y queda registrada aquí en su lugar. Ninguna de estas correcciones cambió 'estado' a 'publicable' ni marcó checklistOriginalidad o revisionMatematica como aprobados; la re-certificación humana línea por línea sigue pendiente. Corrección posterior (mismo día, sesión siguiente): el contexto 'plan de celular' restaurado arriba resultó tener un problema real, distinto del de fidelidad — colisiona sustancialmente con un ítem DEMRE 2020 reproducido en fuentes-analisis-aisladas/pdv-terceros/MA-32_Funciones.md (cargo fijo mensual + $50/minuto, prácticamente idéntico). El auditor-originalidad lo detectó y bloqueó la publicación. Se generaron y verificaron 3 candidatos de reemplazo contra el corpus completo de fuentes-analisis-aisladas/; se eligió 'taller de cerámica' por no tener riesgo residual identificado, y leccion-1-guion.md se actualizó primero para que el JSON siguiera siendo una migración fiel del guion, no una divergencia nueva.",
+    "declaracionOriginalidad": "Ningún ítem, enunciado, tabla ni contexto fue tomado de formas liberadas DEMRE ni de guías de terceros, con la excepción histórica del Paso 8 documentada abajo. Todos los contextos vigentes (bidón, ahorro de Camila y Diego, vela, impresora, taxi, colección de estampillas, fichas de juego de mesa, latas de un grupo de vecinos, tablas del ítem 3) fueron creados desde cero para esta lección, con números propios verificados. l1-item-1 fue reescrito tres veces tras dos rechazos por cercanía excesiva con material conocido (DEMRE Forma113 P40 y MOD-06); la versión 3 (backward-solve, fichas de juego de mesa) fue diseñada específicamente para evitar esas dos colisiones, pero su aprobación formal por /revision-originalidad y /revision-matematica sigue pendiente — checklistOriginalidad y revisionMatematica de este archivo tienen todos los campos en false/vacíos, y no se afirma aprobación hasta que se completen de verdad (corregido en auditoría de fidelidad del 2026-07-08 tras detectar la misma afirmación sin respaldo en fuentesAnalisis). Migración estructural (2026-07-08, sesión inicial): el archivo se reescribió para seguir la forma de bloques de content/schema/leccion.schema.json (antes usaba un formato ad-hoc con 'interaccion' anidado). Esa migración se declaró entonces como transformación de forma pura, sin cambios de contenido — esa declaración era falsa en dos puntos, corregidos en la auditoría de fidelidad del 2026-07-08 (sesión posterior): (1) el Paso 8 (aplicación) había sido reescrito de 'plan de celular' (guion) a 'estacionamiento por hora', con una nota interna que afirmaba una confirmación del autor del proyecto que nunca ocurrió y no tiene respaldo en git ni en docs/pendientes.md; se restauró el contexto 'plan de celular'. (2) El Paso 3 (pensar) incluye 3 entradas de feedbackPorError para el campo 'semana3' (valores 6000, 9000, 13000) sin equivalente en el guion — contenido nuevo agregado durante la migración, presentado entonces como preservación fiel; se mantienen por ser matemáticamente correctas, pero quedan declaradas aquí como adición. Adicionalmente: la habilidad compuesta que el guion asigna a l1-item-1 ('Resolver problemas / Representar') y a l1-item-3 ('Argumentar / Representar') se redujo a un solo valor ('resolver' / 'argumentar') porque leccion.schema.json define 'habilidad' como enum de valor único, no array, y el objeto 'item' tiene additionalProperties:false (no admite _notasInternas por ítem para documentarlo ahí); la etiqueta secundaria 'Representar' se descartó por esa restricción técnica del schema, no por una decisión de contenido, y queda registrada aquí en su lugar. Ninguna de estas correcciones cambió 'estado' a 'publicable' ni marcó checklistOriginalidad o revisionMatematica como aprobados; la re-certificación humana línea por línea sigue pendiente. Corrección posterior (mismo día, sesión siguiente): el contexto 'plan de celular' restaurado arriba resultó tener un problema real, distinto del de fidelidad — colisiona sustancialmente con un ítem DEMRE 2020 reproducido en fuentes-analisis-aisladas/pdv-terceros/MA-32_Funciones.md (cargo fijo mensual + $50/minuto, prácticamente idéntico). El auditor-originalidad lo detectó y bloqueó la publicación. Se generaron y verificaron 3 candidatos de reemplazo contra el corpus completo de fuentes-analisis-aisladas/; se eligió 'taller de cerámica' por no tener riesgo residual identificado, y leccion-1-guion.md se actualizó primero para que el JSON siguiera siendo una migración fiel del guion, no una divergencia nueva. Segundo bloqueo del mismo paso (mismo día, tercera sesión): 'taller de cerámica' no colisionaba en dominio ni cifras, pero una auditoría más fina detectó colisión de PLANTILLA SINTÁCTICA con un ítem DEMRE 2014 distinto ('Un técnico cobra un cargo fijo de $17.000 más $1.500 por hora de trabajo', mismo archivo MA-32_Funciones.md que ya había bloqueado 'plan de celular'). El esqueleto '[sujeto] cobra $[fijo] más $[variable] por [unidad]' resultó ser, según el auditor, prácticamente el molde estándar de ese corpus para enseñar función afín con intercepto. Se reescribió el contexto rompiendo deliberadamente ese esqueleto (manteniendo dominio y cifras de cerámica se descartó por duda razonable — se optó por 'parque de trampolines', ya verificado limpio en dominio y cifras además de plantilla) y se verificó contra el corpus completo antes de fijarlo. La misma auditoría retroactiva detectó dos hallazgos adicionales, ambos atendidos el mismo día: (a) el distractor 'taxi' del Paso 7 compartía el mismo esqueleto (hallazgo DUDOSO, no bloqueante) y fue reescrito preventivamente; (b) l1-item-2 (reparto) resultó tener colisión de plantilla con frase literal compartida ('por kilómetro recorrido') contra fuentes-analisis-aisladas/pdv-terceros/MA-31_Inecuaciones.md. Tercer bloqueo del mismo paso (mismo día, cuarta sesión): la auditoría embebida detectó que 'parque de trampolines' tampoco quedaba limpio — colisión de DOMINIO (no de plantilla) con un ítem de arriendo de juego inflable por hora (fuentes-analisis-aisladas/pdv-terceros/MA-10_Ecuaciones_Primer_Grado.md, Ejercicio 21), mismo nicho de 'entretención infantil pagada por tiempo' que ya había producido los dos bloqueos anteriores de este paso. Se abandonó por completo la familia 'servicio/entretención pagado por tiempo o unidad' y se adoptó 'colección de estampillas' (dominio sin transacción comercial, sin 'cobra' ni tarifa), verificado limpio en dominio, cifras, plantilla y nombre propio contra el corpus completo. Resolución de l1-item-2 (mismo día): siguiendo el mismo criterio, se descartó reescribir la plantilla del reparto y se cambió el mecanismo — dos candidatos comerciales (backward-solve de tarifa por km; comparación de dos empresas de reparto) también colisionaron, el segundo de forma grave por reproducir casi literalmente una actividad del currículum oficial Mineduc (mineduc-curriculum/03-unidad-2-algebra-funciones.md:125, comparación de dos empresas de transporte escolar). Se adoptó un dominio no comercial ('grupo de vecinos juntando latas de aluminio para reciclar'), que tuvo dos rondas adicionales de ajuste antes de verificar limpio: la versión con sujeto 'un curso' ecoaba la actividad Mineduc de 'caja de ahorro de curso' (mineduc-curriculum/03-unidad-2-algebra-funciones.md:127); la versión con la frase 'antes de empezar a anotarlas en una lista' ecoaba el framing de un ítem real DEMRE 2024 ('...había antes de comenzar los registros', pdv-terceros/MA-10_Ecuaciones_Primer_Grado.md:75-89). La versión final (ronda 3) verificó limpia en las tres rondas. Ambos ítems (Paso 8 y l1-item-2) tienen ahora feedback artesanal completo por distractor, redactado tras la verificación de originalidad.",
     "autor": "IA (Claude) bajo dirección, curaduría y revisión humana del autor del proyecto (MOS §7.7)",
     "fecha": "2026-07-08"
   },
