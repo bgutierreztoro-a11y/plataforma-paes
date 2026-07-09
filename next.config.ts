@@ -8,6 +8,23 @@ const nextConfig: NextConfig = {
   // hidrata — no es una vulnerabilidad real en un servidor de desarrollo
   // dentro de una red local de confianza.
   allowedDevOrigins: ["192.168.0.174"],
+  // lib/contenido.ts lee content/ con readdirSync/readFileSync sobre rutas
+  // armadas con process.cwd(), que el tracer de Turbopack no puede resolver
+  // estáticamente. Sin esto, el build empaqueta el repo completo (docs
+  // internos, guiones de lecciones en progreso) dentro de la función de
+  // /leccion/[id]. Se excluye todo lo que no sea código de la app o contenido
+  // publicable.
+  outputFileTracingExcludes: {
+    "*": [
+      "./docs/**",
+      "./MD_Conversiones/**",
+      "./*.md",
+      "./scripts/consultar-fuentes.mjs",
+      "./scripts/check-fuentes-aisladas.mjs",
+      "./instalar-kit.sh",
+      "./.claude/**",
+    ],
+  },
 };
 
 export default nextConfig;
