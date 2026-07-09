@@ -7,10 +7,10 @@ import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarAlternativas } from "@/lib/mezclar";
-import type { Item } from "@/lib/tipos";
+import type { ItemCliente } from "@/lib/sanitizar";
 
 interface ItemPAESProps {
-  item: Item;
+  item: ItemCliente;
   mostrarFeedback: boolean;
   onSiguiente: (correcta: boolean) => void;
 }

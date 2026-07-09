@@ -1,4 +1,5 @@
 import { obtenerLeccion, idsDeLecciones } from "@/lib/contenido";
+import { sanitizarLeccion } from "@/lib/sanitizar";
 import { RunnerLeccion } from "@/components/RunnerLeccion";
 
 export async function generateStaticParams() {
@@ -14,5 +15,5 @@ export default async function PaginaLeccion({
 }) {
   const { id } = await params;
   const leccion = obtenerLeccion(id);
-  return <RunnerLeccion leccion={leccion} />;
+  return <RunnerLeccion leccion={sanitizarLeccion(leccion)} />;
 }

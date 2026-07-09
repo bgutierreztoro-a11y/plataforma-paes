@@ -4,10 +4,10 @@ import { useReducer, type ReactNode } from "react";
 import { ItemPAES } from "@/components/ItemPAES";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { estadoInicialSetItems, reducerSetItems, type RespuestaRegistrada } from "@/lib/estadoSetItems";
-import type { Item } from "@/lib/tipos";
+import type { ItemCliente } from "@/lib/sanitizar";
 
 interface EjecutorSetItemsProps {
-  items: Item[];
+  items: ItemCliente[];
   mostrarFeedback: boolean;
   renderFinal: (respuestas: RespuestaRegistrada[]) => ReactNode;
 }

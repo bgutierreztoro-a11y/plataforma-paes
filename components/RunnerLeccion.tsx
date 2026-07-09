@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
@@ -8,10 +8,13 @@ import { BannerDemostracion } from "@/components/ui/Banner";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
 import { PasoLeccion } from "@/components/PasoLeccion";
-import type { Leccion } from "@/lib/tipos";
+import { EjecutorSetItems } from "@/components/EjecutorSetItems";
+import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
+import type { LeccionCliente } from "@/lib/sanitizar";
 
-export function RunnerLeccion({ leccion }: { leccion: Leccion }) {
+export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
+  const [fase, setFase] = useState<"pasos" | "itemsPAES">("pasos");
   const router = useRouter();
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
@@ -33,6 +36,29 @@ export function RunnerLeccion({ leccion }: { leccion: Leccion }) {
   function irAlCierre() {
     registrarEvento({ nombre: "leccion_fin", props: { leccion_id: leccion.id } });
     router.push("/cierre");
+  }
+
+  function terminarPasos() {
+    if (leccion.itemsPAES.length > 0) {
+      setFase("itemsPAES");
+    } else {
+      irAlCierre();
+    }
+  }
+
+  if (fase === "itemsPAES") {
+    return (
+      <div className="flex min-h-full flex-col">
+        {leccion.estado !== "publicable" && <BannerDemostracion />}
+        <EjecutorSetItems
+          items={leccion.itemsPAES}
+          mostrarFeedback={true}
+          renderFinal={(respuestas) => (
+            <ItemsPAESFinal respuestas={respuestas} onContinuar={irAlCierre} />
+          )}
+        />
+      </div>
+    );
   }
 
   return (
@@ -58,7 +84,7 @@ export function RunnerLeccion({ leccion }: { leccion: Leccion }) {
             Paso anterior
           </Boton>
           {esUltimoPaso ? (
-            <Boton onClick={irAlCierre}>Ir al cierre</Boton>
+            <Boton onClick={terminarPasos}>Ir al cierre</Boton>
           ) : (
             <Boton onClick={() => dispatch({ type: "IR_SIGUIENTE" })}>Siguiente paso</Boton>
           )}
