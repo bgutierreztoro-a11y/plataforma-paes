@@ -45,3 +45,15 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# know-how interno / setup local — no debe entrar al repo público
+docs/protocolo-revision-aislada.md
+posthog-setup-report.md
+.posthog-events.json
+instrumentation-client.ts
+
+# fuentes de análisis aisladas — defensa en profundidad (viven fuera del árbol;
+# esto solo protege contra que se copien por error dentro del repo)
+Material/
+fuentes-analisis-aisladas/
+pendiente-clasificar/
