@@ -1,0 +1,559 @@
+{
+  "tipo": "leccion",
+  "id": "l3-ecuaciones-lineales",
+  "titulo": "La balanza que esconde un número",
+  "objetivo": "Resolver ecuaciones lineales de una incógnita aplicando la misma operación a ambos lados para conservar la igualdad, hasta despejar la incógnita; traducir situaciones a una ecuación y resolverla; y justificar cuándo una transformación conserva (o no) la solución.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "Operatoria básica con enteros, incluidos negativos (suma, resta, multiplicación y división)"
+  ],
+  "conceptos": [
+    "ecuación lineal de una incógnita",
+    "igualdad como equilibrio",
+    "misma operación en ambos lados",
+    "despejar la incógnita",
+    "ecuaciones equivalentes"
+  ],
+  "_notasInternas": [
+    "Lección 3 del módulo. No requiere estrictamente L2 (pendiente/intercepto): se apoya en la intuición de 'operaciones que mantienen el equilibrio', no en el gráfico. Prerrequisito real: operar con enteros negativos, porque la generalización y un ítem PAES usan solución negativa.",
+    "'conceptos' y 'tiempoEstimadoMin' son decisiones editoriales, no campos requeridos por el schema para lección (required: tipo/id/titulo/estado/proveniencia). Se declaran aquí explícitamente.",
+    "Dominio deliberadamente NO transaccional en todos los pasos e ítems: balanza con bolsas de bolitas, gatos por jaula, cuentos por sala. Se evitó la familia 'cargo fijo + tarifa variable' (saturada en DEMRE M1) pedida explícitamente por el autor.",
+    "Estado 'borrador': checklistOriginalidad y revisionMatematica en false a propósito. Pendiente /revision-matematica y /revision-originalidad antes de subir a revision/publicable."
+  ],
+  "estado": "borrador",
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Aplicar una operación a un solo lado de la ecuación, rompiendo el equilibrio (p. ej. quitar bolitas de un solo platillo, o 'borrar' el +5 de la izquierda sin tocar la derecha)."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Equivocarse en el signo o la dirección al mover un término al otro lado: sumar cuando corresponde restar, o restar cuando corresponde sumar."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Repartir (dividir) solo una parte de un lado en vez del lado completo, o dividir por el coeficiente antes de haber quitado las bolitas sueltas (la constante)."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Olvidar dividir por el número de bolsas (el coeficiente): quedarse en 'a·x = c' y entregar c como respuesta sin repartir entre las a bolsas."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas (o contar mal cuántas bolsas quedan al pasarlas a un solo lado)."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: 1 bolsa + 3 bolitas = 10 bolitas (x=7)",
+    "problema/pensar/pistas/descubrimiento: 3 bolsas + 6 bolitas = 21 bolitas (x=5)",
+    "generalizacion: ejemplo trabajado 2x + 10 = 4 (x=-3); ejercicio 2x + 7 = -1 (x=-4) — corregido 2026-07-20 para no repetir la ecuación del ejemplo",
+    "practica: 4x - 8 = 20 (x=7); 2x + 3 = 11; equivalencia +5 a ambos lados",
+    "aplicacion: 6 jaulas iguales + 3 gatos en enfermería = 27 gatos (x=4)",
+    "itemsPAES: 5x + 8 = x - 4 (x=-3); 4 salas iguales + 8 cuentos de reserva = 40 (x=8); 3x + 5 = 20 (equivalencia)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "La bolsa misteriosa",
+      "_notasInternas": [
+        "Gancho: predecir el contenido de la bolsa antes de tener método. Verificación: 1 bolsa + 3 = 10 → bolsa = 7. La corrección/confirmación llega en el mismo paso, pero el METODO recién se nombra en el descubrimiento (Paso 5).",
+        "notaDiseno: la predicción crea inversión emocional. Aquí el estudiante puede acertar 'a ojo'; el punto de la lección es que 'a ojo' no escala, lo que se hace evidente en el Paso 2 con 3 bolsas."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Una balanza está en equilibrio: los dos platillos pesan exactamente lo mismo.\n\nEn el platillo izquierdo hay **una bolsa cerrada** (no sabes cuántas bolitas tiene adentro) **más 3 bolitas sueltas**.\nEn el platillo derecho hay **10 bolitas sueltas**.\n\nTodas las bolitas pesan igual y la bolsa por sí sola no pesa nada. Sin resolver nada todavía: ¿cuántas bolitas crees que hay dentro de la bolsa?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Adentro había **7 bolitas**.\n\nSi dijiste 7, mira lo que hiciste sin que nadie te lo enseñara: la bolsa más 3 bolitas equilibra a 10 bolitas, así que la bolsa *sola* tiene que equilibrar a 10 − 3 = 7.\n\nAcabas de resolver una **ecuación**: encontraste un número escondido usando que los dos lados están en equilibrio. En esta lección vas a convertir eso que hiciste 'a ojo' en un método que nunca falla, ni siquiera cuando adivinar se vuelve imposible."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Ahora hay tres bolsas",
+      "_notasInternas": [
+        "Se sube la dificultad para que adivinar deje de ser viable y aparezca la necesidad de un método. Situación: 3 bolsas iguales + 6 bolitas sueltas = 21 bolitas. La pregunta NO pide resolver todavía, sino elegir la ESTRATEGIA válida — siembra el principio del equilibrio antes de nombrarlo.",
+        "Verificación: 3x + 6 = 21 → 3x = 15 → x = 5. Comprobación: 3·5 + 6 = 21. ✓"
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Otra balanza en equilibrio.\n\nIzquierda: **3 bolsas idénticas** (la misma cantidad desconocida de bolitas en cada una) **más 6 bolitas sueltas**.\nDerecha: **21 bolitas sueltas**.\n\nAhora adivinar es difícil. ¿Cuál de estas acciones te deja *seguro* del contenido de cada bolsa, sin adivinar?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Quitar las 6 bolitas sueltas solo del platillo izquierdo, para dejar las bolsas solas.",
+              "esCorrecta": false,
+              "feedback": "Si sacas 6 bolitas de un solo platillo, ese lado se aliviana y la balanza se desnivela: ya no es la misma situación. Para que siga valiendo, todo lo que le hagas a un platillo tienes que hacérselo también al otro. ¿Qué pasaría si quitaras 6 de cada lado?",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "b",
+              "texto": "Quitar 6 bolitas sueltas de cada platillo a la vez, y después repartir lo que quede en partes iguales.",
+              "esCorrecta": true,
+              "feedback": "Exacto. Si quitas lo mismo de ambos lados, el equilibrio se conserva: quedan 3 bolsas equilibrando 15 bolitas. Reparte cada lado en 3 partes iguales y cada bolsa queda equilibrando 5 bolitas. Esa es la idea central de toda la lección."
+            },
+            {
+              "id": "c",
+              "texto": "Ir probando números para la bolsa (¿5? ¿6? ¿7?) hasta que los dos lados den lo mismo.",
+              "esCorrecta": false,
+              "feedback": "Probar puede funcionar en casos fáciles, pero es lento y no garantiza nada: con números grandes, decimales o negativos te puedes pasar horas. Existe una acción sobre la balanza que te da la respuesta directo, sin tanteo. ¿Cuál de las otras dos la describe?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra el contenido de la bolsa",
+      "_notasInternas": [
+        "Registrar el intento antes de ayudar. Misma situación del Paso 2: 3x + 6 = 21 → x = 5.",
+        "Verificación de cada distractor numérico: 15 = quitó las 6 pero no repartió entre las 3 bolsas (error-4). 7 = repartió las 21 entre 3 sin quitar antes las 6 sueltas: 21/3 (error-3). 9 = sumó las 6 en vez de restarlas: (21+6)/3 (error-2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "La misma balanza: **3 bolsas iguales + 6 bolitas** en la izquierda equilibran **21 bolitas** en la derecha.\n\n¿Cuántas bolitas hay dentro de cada bolsa? Inténtalo antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "bolitasPorBolsa",
+              "etiqueta": "Bolitas dentro de cada bolsa",
+              "respuestaCorrecta": 5,
+              "unidad": "bolitas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "bolitasPorBolsa",
+              "valorObtenido": 15,
+              "mensaje": "Vas por buen camino: quitaste bien las 6 bolitas sueltas de ambos lados y llegaste a que 3 bolsas equilibran 15 bolitas. Pero 15 es el peso de las TRES bolsas juntas, no de una. Todavía falta repartir entre las 3 bolsas.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "bolitasPorBolsa",
+              "valorObtenido": 7,
+              "mensaje": "Repartiste las 21 bolitas entre las 3 bolsas (21 ÷ 3 = 7), pero saltaste un paso: en la izquierda no hay solo bolsas, hay 3 bolsas MÁS 6 bolitas sueltas. Primero quita esas 6 de ambos lados; recién ahí puedes repartir.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "bolitasPorBolsa",
+              "valorObtenido": 9,
+              "mensaje": "Sumaste las 6 bolitas en vez de quitarlas: usaste 21 + 6 = 27 y repartiste. Pero las 6 sueltas están del lado de las bolsas, así que para dejar las bolsas solas hay que RESTARLAS de ambos lados, no sumarlas.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Piensa en la balanza: primero quita las 6 bolitas sueltas de los DOS platillos a la vez, y fíjate qué queda equilibrando qué. Después reparte en partes iguales según cuántas bolsas hay."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para vaciar la bolsa",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "En el lado izquierdo hay 6 bolitas sueltas que estorban. ¿Puedes sacarlas sin romper el equilibrio? Recuerda la regla de oro: lo que le hagas a un platillo, háselo idéntico al otro."
+            },
+            {
+              "nivel": 2,
+              "texto": "Si quitas 6 bolitas de cada lado, la izquierda queda con 3 bolsas y la derecha con 21 − 6 = 15 bolitas. O sea: 3 bolsas equilibran 15 bolitas."
+            },
+            {
+              "nivel": 3,
+              "texto": "3 bolsas iguales pesan lo mismo que 15 bolitas. Reparte cada lado en 3 grupos iguales: 1 bolsa pesa lo mismo que 15 ÷ 3 = 5 bolitas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El signo igual es una balanza",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN (aprobado por el autor 2026-07-20): una ecuación es una balanza en equilibrio; el = dice que ambos lados pesan lo mismo. Por eso se puede hacer cualquier operación siempre que sea idéntica en ambos lados: el equilibrio se conserva. Resolver = usar esa libertad para dejar la incógnita sola. La regla escolar 'lo que suma pasa restando' es un síntoma del principio, no el principio.",
+        "Verificación del verdadero/falso: quitar de un solo lado SIEMPRE desnivela; respuesta correcta = Falso.",
+        "La balanza es andamio para números positivos. El salto a negativos se hace en la generalización (Paso 6), no aquí, para no forzar una balanza físicamente imposible (bolsas con cantidades negativas)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que hiciste tiene un nombre, y cambia todo: **el signo `=` no es una orden de 'calcula esto'. Dice que los dos lados pesan exactamente lo mismo**, como los dos platillos de una balanza en equilibrio.\n\nLa bolsa misteriosa es la **incógnita**. Se le suele poner la letra **x**. La balanza del paso anterior, escrita con símbolos, es:\n\n**3x + 6 = 21**\n\n'3x' son las 3 bolsas, '+ 6' las bolitas sueltas, y '= 21' es el otro platillo."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Secuencia de tres balanzas, de arriba hacia abajo, mostrando cómo se despeja x conservando el equilibrio en cada paso. Cada fila muestra el platillo izquierdo, el fiel de la balanza en equilibrio, y el platillo derecho.",
+          "datos": {
+            "pasos": [
+              {
+                "izquierda": "3 bolsas + 6 bolitas",
+                "derecha": "21 bolitas",
+                "accion": "Situación inicial: 3x + 6 = 21"
+              },
+              {
+                "izquierda": "3 bolsas",
+                "derecha": "15 bolitas",
+                "accion": "Quito 6 bolitas de CADA lado (−6 en ambos): 3x = 15. Sigue equilibrada."
+              },
+              {
+                "izquierda": "1 bolsa",
+                "derecha": "5 bolitas",
+                "accion": "Reparto CADA lado en 3 partes iguales (÷3 en ambos): x = 5. La bolsa quedó sola: tiene 5 bolitas."
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ese es el método completo, y cabe en una sola idea:\n\n> **Puedes hacerle cualquier operación a una ecuación —sumar, restar, multiplicar, dividir— siempre que se la hagas idéntica a los dos lados. El equilibrio, y por lo tanto la solución, no cambia.**\n\nResolver es usar esa libertad para ir sacando todo lo que rodea a la x, hasta dejarla sola en un lado. Lo que quede en el otro lado **es** su valor.\n\nQuizás te enseñaron 'lo que está sumando pasa al otro lado restando'. Eso es solo el atajo de escritura de lo que acabas de hacer: quitar 6 de ambos lados *se ve* como que el +6 'viajó' y se volvió −6. Pero el que entiende la balanza nunca se equivoca de signo, porque no está moviendo cosas de lado: está quitando lo mismo a ambos."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Una balanza está en equilibrio. Si le quitas 3 bolitas a un solo platillo, sigue en equilibrio.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Piénsalo físicamente: si sacas peso de un solo lado, ese lado sube y el otro baja. Se desnivela. Solo se mantiene el equilibrio si quitas (o agregas) lo mismo en AMBOS platillos a la vez. Ese es justo el corazón de resolver ecuaciones.",
+          "feedbackFalso": "Correcto. Quitar de un solo lado rompe el equilibrio. Por eso, al resolver una ecuación, toda operación se aplica a los dos lados a la vez: es la única forma de que la igualdad —y la solución— se conserven."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla que sobrevive a los números negativos",
+      "_notasInternas": [
+        "Se nombra y formaliza; luego el salto explícito a negativos, donde la balanza física ya no sirve pero el principio sí.",
+        "Ejemplo trabajado: 2x + 10 = 4 → 2x = 4 − 10 = −6 → x = −6 ÷ 2 = −3. Comprobación: 2·(−3) + 10 = −6 + 10 = 4. ✓",
+        "Corrección 2026-07-20: el bloque numérico usaba originalmente la MISMA ecuación del ejemplo trabajado (2x + 10 = 4), lo que permitía copiar el procedimiento recién mostrado sin razonar. Se cambió el ejercicio (no el ejemplo trabajado, para no tocar la prosa pedagógica del salto a negativos, que está entretejida con el límite de la balanza) a 2x + 7 = −1 (x = −4): misma estructura (ax + b = c, un solo paso de resta seguido de división, coeficiente 2, solución negativa), números y resultado distintos del ejemplo.",
+        "Verificación del ejercicio corregido (2x + 7 = −1, x = −4): 2x = −1 − 7 = −8 → x = −8 ÷ 2 = −4. Comprobación: 2·(−4) + 7 = −8 + 7 = −1. ✓",
+        "Verificación de distractores del bloque numérico corregido: −8 = quedó en 2x = −8 sin dividir por 2 (error-4). 3 = sumó 7 en vez de restarlo: (−1+7)/2 (error-2). 4 = obtuvo el tamaño correcto pero con signo cambiado, como si fuera (7−(−1))/2 (error-2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una **ecuación lineal de una incógnita** es una igualdad donde aparece un número desconocido (la x) que no está elevado a ninguna potencia ni multiplicándose por sí mismo. Resolverla es encontrar el valor de x que hace que los dos lados sean realmente iguales.\n\nSolo tienes dos movimientos permitidos, y los dos ya los descubriste con la balanza:\n\n1. **Sumar o restar** el mismo número en ambos lados.\n2. **Multiplicar o dividir** ambos lados por el mismo número (distinto de cero).\n\nCon esos dos movimientos puedes despejar cualquier ecuación lineal."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La balanza fue el andamio para entenderlo, pero tiene un límite: no existe una bolsa con −3 bolitas ni un platillo con peso negativo. **El principio, en cambio, no tiene ese límite.**\n\nMira: **2x + 10 = 4**.\n\nNo hay balanza física posible (¿4 bolitas equilibrando 2 bolsas y 10 sueltas?), pero la regla sigue viva. Resto 10 en ambos lados: 2x = 4 − 10 = **−6**. Divido ambos lados por 2: x = **−3**.\n\nComprobación (siempre): 2·(−3) + 10 = −6 + 10 = 4. ✓\n\nCuando ya no puedes dibujar la balanza, te aferras a la regla: *misma operación en ambos lados*. Nunca falla, ni con negativos."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Tú ahora, con negativos de por medio. Resuelve:\n\n**2x + 7 = −1**\n\n¿Cuánto vale x?",
+          "campos": [
+            {
+              "id": "valorX",
+              "etiqueta": "x",
+              "respuestaCorrecta": -4,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "valorX",
+              "valorObtenido": -8,
+              "mensaje": "Casi: llegaste bien a 2x = −8, pero ahí te detuviste. Todavía falta repartir: hay 2 equis, así que divide ambos lados por 2. x = −8 ÷ 2.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "valorX",
+              "valorObtenido": 3,
+              "mensaje": "Sumaste el 7 en vez de restarlo: hiciste (−1 + 7) ÷ 2 = 3. Pero el +7 está acompañando a la x, así que para dejarla sola hay que restar 7 en ambos lados: −1 − 7.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "valorX",
+              "valorObtenido": 4,
+              "mensaje": "El tamaño (4) está bien, pero te falló el signo: calculaste 7 − (−1) en vez de −1 − 7. Al restar 7 de ambos lados queda −1 − 7 = −8, que es negativo. Por eso x sale negativo.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Dos pasos: primero resta 7 en ambos lados (ojo con el signo: −1 − 7 es negativo), y después divide ambos lados por 2."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios, un solo principio",
+      "_notasInternas": [
+        "P1 (numérica): 4x − 8 = 20 → 4x = 28 → x = 7. Comprobación: 4·7 − 8 = 20. ✓ Distractores: 3 = restó 8 en vez de sumarlo, (20−8)/4 (error-2). 28 = llegó a 4x = 28 y no dividió (error-4).",
+        "P2 (verdadero/falso): sumar el mismo número a ambos lados NO cambia la solución → la afirmación 'sí la cambia' es Falsa.",
+        "P3 (selección): en 2x + 3 = 11, el paso que NO conserva el equilibrio es restar 3 a un solo lado (error-1)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 1.** Resuelve:\n\n**4x − 8 = 20**",
+          "campos": [
+            {
+              "id": "valorXp1",
+              "etiqueta": "x",
+              "respuestaCorrecta": 7,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "valorXp1",
+              "valorObtenido": 3,
+              "mensaje": "Restaste el 8 cuando había que sumarlo. Aquí el término es −8, así que para eliminarlo se suma 8 en ambos lados: 4x = 20 + 8 = 28. Revisa esa dirección.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "valorXp1",
+              "valorObtenido": 28,
+              "mensaje": "Llegaste bien a 4x = 28, pero eso es el peso de las 4 equis juntas. Falta repartir: divide ambos lados por 4.",
+              "errorCatalogado": "error-4"
+            }
+          ],
+          "feedbackPorDefecto": "Primero suma 8 en ambos lados (porque el término es −8), llegando a 4x = 28. Después divide ambos lados por 4."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Sumar el mismo número a los dos lados de una ecuación cambia su solución.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Justo al revés: sumar lo mismo a ambos lados conserva el equilibrio, así que la solución NO cambia. Por ejemplo, x = 4 y x + 5 = 9 tienen la misma solución (x = 4). Lo que cambiaría la solución sería sumar solo a un lado.",
+          "feedbackFalso": "Correcto. Mientras la operación sea idéntica en ambos lados, la balanza se mantiene y la solución es la misma. Se obtiene una ecuación distinta 'por fuera', pero con exactamente la misma x."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para resolver **2x + 3 = 11**, ¿cuál de estos pasos **rompe** el equilibrio (y por lo tanto NO se puede hacer)?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Restar 3 en ambos lados, quedando 2x = 8.",
+              "esCorrecta": false,
+              "feedback": "Ese paso es válido: restas lo mismo (3) a los dos lados, así que el equilibrio se conserva y llegas a 2x = 8. La pregunta pide el paso que SÍ rompe el equilibrio."
+            },
+            {
+              "id": "b",
+              "texto": "Restar 3 solo al lado izquierdo, quedando 2x = 11.",
+              "esCorrecta": true,
+              "feedback": "Ese es el que rompe el equilibrio: quitaste 3 de la izquierda pero no de la derecha, así que los dos lados dejan de pesar lo mismo. 2x = 11 ya no tiene la misma solución que la ecuación original.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "Dividir ambos lados por 2 después de dejar 2x = 8.",
+              "esCorrecta": false,
+              "feedback": "Ese paso es válido: divides ambos lados por lo mismo (2), el equilibrio se mantiene y llegas a x = 4. No es el paso que rompe la igualdad."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Los gatos del refugio",
+      "_notasInternas": [
+        "Contexto NO transaccional (sin dinero, sin tarifa): reparto en partes iguales. Distinto del contexto del descubrimiento (bolsas/bolitas).",
+        "Parte 1 (abierta): escribir la ecuación 6x + 3 = 27. Parte 2 (numérica): resolver → x = 4. Comprobación: 6·4 + 3 = 27. ✓",
+        "Verificación de distractores (6x + 3 = 27, x = 4): 24 = llegó a 6x = 24 y no dividió por 6 (error-4). 5 = sumó los 3 en vez de restarlos: (27+3)/6 (error-2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Un refugio de animales tiene el **mismo número de gatos en cada una de sus 6 jaulas**, y además **3 gatos en la enfermería** (fuera de las jaulas). En total hay **27 gatos**.\n\nParte 1: llama x al número de gatos que hay en cada jaula y escribe la ecuación que representa la situación.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "6x + 3 = 27  (los 6 grupos iguales de x gatos, más los 3 de enfermería, suman 27)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: resuelve tu ecuación. ¿Cuántos gatos hay en cada jaula?",
+          "campos": [
+            {
+              "id": "gatosPorJaula",
+              "etiqueta": "Gatos por jaula",
+              "respuestaCorrecta": 4,
+              "unidad": "gatos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "gatosPorJaula",
+              "valorObtenido": 24,
+              "mensaje": "Quitaste bien los 3 de enfermería de ambos lados y llegaste a 6x = 24. Pero 24 es el total de gatos que están en jaulas, no los de UNA jaula. Falta repartir entre las 6 jaulas: 24 ÷ 6.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "gatosPorJaula",
+              "valorObtenido": 5,
+              "mensaje": "Sumaste los 3 de enfermería en vez de restarlos: usaste (27 + 3) ÷ 6 = 5. Pero esos 3 gatos ya están contados dentro de los 27, así que para aislar las jaulas hay que restarlos: 27 − 3.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Con tu ecuación 6x + 3 = 27: primero resta 3 en ambos lados (6x = 24) y después divide ambos lados por 6."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Por qué funciona?",
+      "_notasInternas": [
+        "Metacognición sobre el principio, no sobre un cálculo. La abierta se guarda anonimizada para el piloto: mide si entendió el PORQUÉ (equilibrio) o solo ejecutó reglas.",
+        "El texto de cierre nombra explícitamente los errores clásicos que la PAES explota, en línea con L1."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué hacer *la misma* operación a los dos lados de una ecuación **no** cambia cuál es la solución? Explícalo usando la balanza.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto: es el mejor termómetro de comprensión real. Una respuesta tipo 'si los dos lados pesan lo mismo y les hago lo mismo a ambos, siguen pesando lo mismo, así que la x que servía sigue sirviendo' indica que entendió el principio, no solo el procedimiento."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los tres errores que más se repiten con ecuaciones —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Operar en un solo lado** y romper el equilibrio.\n2. **Equivocarse de signo** al mover un término (sumar donde había que restar, o al revés).\n3. **Olvidar dividir** por el número que multiplica a la x (quedarse en '3x = 15' y responder 15).\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + puente a los itemsPAES de abajo y al resto del módulo (resolver f(x)=k es resolver una ecuación). No se compromete el tema exacto de una eventual Lección 4."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Una ecuación es una **balanza**: el `=` dice que los dos lados pesan lo mismo.\n- Regla de oro: **la misma operación en ambos lados** conserva la igualdad (y la solución).\n- Para despejar la x: quita/agrega lo que la rodea (restando o sumando en ambos lados) y luego reparte (dividiendo ambos lados por el número que la multiplica).\n- El principio sobrevive a los **negativos**, aunque ya no puedas dibujar la balanza.\n- Trampas clásicas: operar en un solo lado, equivocarse de signo, y olvidar dividir por el coeficiente.\n\nDónde se conecta: cada vez que preguntas '¿en qué valor esta función llega a tal número?' —lo que en Lección 2 verías como cruzar una recta con una altura fija— estás resolviendo una ecuación lineal. Este método es la herramienta que hace funcionar todo lo demás.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "enunciado": "¿Cuál es el valor de x en la ecuación 5x + 8 = x − 4?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x = −3",
+          "esCorrecta": true,
+          "feedback": "Correcto. Se resta x en ambos lados (5x − x = 4x): 4x + 8 = −4. Se resta 8 en ambos lados: 4x = −12. Se divide por 4: x = −3. Comprobación: 5·(−3) + 8 = −7 y (−3) − 4 = −7. ✓"
+        },
+        {
+          "clave": "B",
+          "texto": "x = −12",
+          "esCorrecta": false,
+          "feedback": "Llegaste bien a 4x = −12, pero te quedaste ahí: falta dividir ambos lados por 4. La x está multiplicada por 4, así que x = −12 ÷ 4, no −12.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "x = −2",
+          "esCorrecta": false,
+          "feedback": "Al juntar las equis de los dos lados las sumaste (5x + x = 6x) en vez de restarlas. La x de la derecha se pasa a la izquierda restando: 5x − x = 4x, no 6x. Con 4x llegas a otro resultado.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "x = 3",
+          "esCorrecta": false,
+          "feedback": "Acertaste el tamaño (3) pero no el signo. Al despejar queda 4x = −12: el lado derecho es negativo (−4 − 8 = −12), así que x tiene que ser negativo. Revisa los signos al mover el 8 y el −4.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Se reúnen las incógnitas restando x en ambos lados: 5x − x + 8 = −4, es decir 4x + 8 = −4. Se resta 8 en ambos lados: 4x = −4 − 8 = −12. Se divide por 4: x = −3. Comprobación: 5·(−3) + 8 = −15 + 8 = −7; (−3) − 4 = −7. Ambos lados dan −7. ✓"
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Una bibliotecaria reparte la misma cantidad de cuentos a cada una de las 4 salas de un jardín infantil y aparta 8 cuentos para la sala de lectura. Si en total tiene 40 cuentos, ¿cuántos cuentos recibe cada sala?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8 cuentos",
+          "esCorrecta": true,
+          "feedback": "Correcto. La ecuación es 4x + 8 = 40. Se restan los 8 apartados: 4x = 32. Se reparte entre las 4 salas: x = 8. Comprobación: 4·8 + 8 = 40. ✓"
+        },
+        {
+          "clave": "B",
+          "texto": "10 cuentos",
+          "esCorrecta": false,
+          "feedback": "Repartiste los 40 cuentos entre las 4 salas (40 ÷ 4 = 10) sin apartar primero los 8 de la sala de lectura. Esos 8 no se reparten; hay que restarlos antes: 40 − 8 = 32, y recién ahí dividir por 4.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "12 cuentos",
+          "esCorrecta": false,
+          "feedback": "Sumaste los 8 en vez de restarlos: (40 + 8) ÷ 4 = 12. Pero los 8 apartados ya están incluidos en los 40 del total, así que para saber lo que va a las salas hay que quitarlos: 40 − 8.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "32 cuentos",
+          "esCorrecta": false,
+          "feedback": "Restaste bien los 8 apartados (40 − 8 = 32), pero 32 es el total de cuentos que se reparten entre TODAS las salas, no lo que recibe una. Falta dividir por las 4 salas: 32 ÷ 4.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Si x es la cantidad de cuentos por sala: 4 salas iguales más 8 apartados suman 40, es decir 4x + 8 = 40. Se resta 8 en ambos lados: 4x = 32. Se divide por 4: x = 8. Comprobación: 4·8 + 8 = 32 + 8 = 40. ✓"
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Se quiere transformar la ecuación 3x + 5 = 20 en una ecuación más simple que tenga exactamente la misma solución. ¿Cuál de los siguientes pasos lo logra correctamente?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Restar 5 en ambos lados, obteniendo 3x = 15.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Restar lo mismo (5) a los dos lados conserva el equilibrio, así que 3x = 15 tiene la misma solución que la ecuación original (x = 5 en ambas)."
+        },
+        {
+          "clave": "B",
+          "texto": "Restar 5 solo al lado izquierdo, obteniendo 3x = 20.",
+          "esCorrecta": false,
+          "feedback": "Restaste solo en un lado y rompiste el equilibrio: la igualdad deja de valer. 3x = 20 tiene otra solución (x = 20/3), distinta de la original. Para eliminar el +5 hay que restar 5 en AMBOS lados.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Dividir por 3 solo el término 3x y dejar el 5 igual, obteniendo x + 5 = 20.",
+          "esCorrecta": false,
+          "feedback": "Dividiste solo una parte del lado izquierdo. Para dividir por 3 hay que dividir TODO cada lado (los tres términos), no solo el 3x. Al hacerlo a medias cambias la solución: x + 5 = 20 no equivale a la original.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "Sumar 5 en ambos lados para eliminar el +5, obteniendo 3x = 25.",
+          "esCorrecta": false,
+          "feedback": "Para eliminar un +5 se resta 5, no se suma. Además, sumar 5 a ambos lados daría 3x + 10 = 25, no 3x = 25: ni siquiera elimina el término. La operación correcta para cancelar un +5 es −5 en ambos lados.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Transformar sin cambiar la solución exige aplicar la misma operación a ambos lados. Restar 5 a ambos lados de 3x + 5 = 20 da 3x = 15 (alternativa A), que conserva la solución x = 5. B rompe el equilibrio (opera un solo lado). C divide solo un término en vez del lado completo. D usa la operación equivocada (suma en vez de resta) y ni siquiera cancela el término. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Álgebra y funciones: ecuaciones lineales de una incógnita), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Borrador. Enunciados, contextos (balanza con bolsas de bolitas, gatos por jaula, cuentos por sala) y la secuencia didáctica creados desde cero por el autor del proyecto, deliberadamente en dominios NO transaccionales para evitar la familia 'cargo fijo + tarifa variable'. Aún NO auditado: pendiente /revision-originalidad (verificar ausencia de colisión con fuentes del corpus) y /revision-matematica (recalcular todo desde cero) antes de subir de 'borrador'.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-07-20"
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  },
+  "revisionMatematica": {
+    "aprobada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  }
+}
