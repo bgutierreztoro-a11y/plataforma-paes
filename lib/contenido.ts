@@ -63,9 +63,7 @@ function cargarYValidar<T extends Contenido>(rutaAbsoluta: string): T {
  * Solo devuelve ids de lecciones que el runner puede efectivamente pintar
  * (pasan cargarYValidar completo, incluida la forma de bloques). Una lección
  * con contenido inválido queda excluida de las rutas estáticas — y por lo
- * tanto cae en el 404 normal — en vez de tumbar el build completo. Ver
- * docs/pendientes.md: hoy excluye a l1-patrones-de-cambio.json, que usa una
- * forma de bloques anterior al schema actual.
+ * tanto cae en el 404 normal — en vez de tumbar el build completo.
  */
 export function idsDeLecciones(): string[] {
   const dir = path.join(process.cwd(), "content", "lecciones");
