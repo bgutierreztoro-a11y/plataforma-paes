@@ -8,6 +8,11 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return { title: obtenerLeccion(id).titulo };
+}
+
 export default async function PaginaLeccion({
   params,
 }: {

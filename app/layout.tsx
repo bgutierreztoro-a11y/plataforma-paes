@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Plataforma M1 — Piloto privado",
-  description: "Módulo de funciones lineales y afines para la PAES M1.",
+  title: {
+    default: "Plataforma M1 — Piloto privado",
+    template: "%s — Plataforma M1",
+  },
+  description:
+    "Módulo interactivo de funciones lineales y afines para la PAES M1: diagnóstico, lecciones paso a paso y cierre con preguntas formato PAES.",
   robots: {
     index: false,
     follow: false,

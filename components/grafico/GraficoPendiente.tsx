@@ -81,7 +81,7 @@ export function GraficoPendiente({
           type="checkbox"
           checked={mostrarCambio}
           onChange={(e) => setMostrarCambio(e.target.checked)}
-          className="h-5 w-5 accent-accent"
+          className="h-5 w-5 accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         />
         Ver el cambio (Δx / Δy)
       </label>

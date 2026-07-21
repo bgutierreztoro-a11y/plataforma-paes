@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { GrillaLecciones } from "@/components/GrillaLecciones";
+
+export const metadata: Metadata = {
+  title: "Lecciones",
+  description: "Lecciones interactivas de funciones lineales y afines, paso a paso.",
+};
 
 export default function IndiceLecciones() {
   return (
