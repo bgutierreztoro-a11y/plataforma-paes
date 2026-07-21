@@ -5,10 +5,12 @@
   --color-bg: #f6f8fc;
   --color-surface: #ffffff;
   --color-border: #dce3ee;
+  --color-border-fuerte: #c7d3ea;
 
   /* texto */
   --color-ink: #16213a;
   --color-ink-suave: #4b5c78;
+  --color-ink-tenue: #8291ad;
 
   /* acento único: azul tinta, confiable y serio */
   --color-accent: #1e4fd8;
@@ -29,6 +31,12 @@
   --font-mono: var(--font-geist-mono);
 
   --radius-tarjeta: 0.75rem;
+
+  /* sombras: una de reposo y una de hover, siempre derivadas de ink */
+  --shadow-tarjeta:
+    0 1px 2px rgb(22 33 58 / 0.05), 0 4px 16px rgb(22 33 58 / 0.06);
+  --shadow-tarjeta-hover:
+    0 2px 4px rgb(22 33 58 / 0.06), 0 8px 24px rgb(22 33 58 / 0.09);
 }
 
 body {
@@ -55,6 +63,38 @@ body {
     120px 120px,
     24px 24px,
     24px 24px;
+}
+
+/* En pantallas grandes las celdas crecen para mantener la misma densidad
+   visual percibida (24px se siente ruidoso a 1280px). */
+@media (min-width: 1024px) {
+  .fondo-cuadricula {
+    background-size:
+      160px 160px,
+      160px 160px,
+      32px 32px,
+      32px 32px;
+  }
+}
+
+/* Desvanecido radial de la cuadrícula: el centro respira y la textura nunca
+   compite con el contenido del hero. Se combina con .fondo-cuadricula. */
+.cuadricula-desvanecida {
+  position: relative;
+  isolation: isolate;
+}
+
+.cuadricula-desvanecida::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    var(--color-bg) 0%,
+    rgb(246 248 252 / 0.6) 55%,
+    transparent 100%
+  );
 }
 
 /* Utilidad de accesibilidad: oculta visualmente sin ocultar de lectores de
