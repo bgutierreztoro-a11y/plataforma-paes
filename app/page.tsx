@@ -6,7 +6,7 @@ export default function Portada() {
     <div className="flex min-h-full flex-1 flex-col">
       {/* Hero sobre papel milimetrado con desvanecido central */}
       <section className="fondo-cuadricula cuadricula-desvanecida flex flex-col items-center gap-6 px-4 py-24 text-center lg:py-32">
-        <p className="font-mono text-xs uppercase tracking-widest text-ink-suave">
+        <p className="text-sm font-medium uppercase tracking-wide text-ink-suave">
           Matemática M1 · Piloto privado
         </p>
         <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-ink lg:text-5xl">

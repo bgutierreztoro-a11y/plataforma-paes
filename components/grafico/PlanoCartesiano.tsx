@@ -26,11 +26,9 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
   return (
     <svg
       viewBox={`0 0 ${TAMANO_SVG} ${TAMANO_SVG}`}
-      width={TAMANO_SVG}
-      height={TAMANO_SVG}
       role="img"
       aria-label={`Plano cartesiano con la recta y = ${m}x + ${b}`}
-      className="rounded-tarjeta bg-surface"
+      className="aspect-square h-auto w-full max-w-md rounded-tarjeta border border-border bg-surface"
     >
       {ENTEROS.map((n) => (
         <line

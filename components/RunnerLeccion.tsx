@@ -4,6 +4,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
+import { marcarLeccionCompletada } from "@/lib/progresoSesion";
 import { BannerDemostracion } from "@/components/ui/Banner";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
@@ -35,6 +36,7 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
 
   function irAlCierre() {
     registrarEvento({ nombre: "leccion_fin", props: { leccion_id: leccion.id } });
+    marcarLeccionCompletada(leccion.id);
     router.push("/cierre");
   }
 
@@ -61,13 +63,29 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
     );
   }
 
+  const paso = leccion.pasos[estado.pasoActual];
+  /* El paso usa dos columnas en desktop (y necesita más ancho) solo cuando
+     mezcla bloque visual con bloques de lectura — mismo criterio que
+     PasoLeccion. */
+  const esVisual = (t: string) => t === "interactivoSlider" || t === "visualizacion";
+  const pasoConVisual =
+    paso.bloques.some((b) => esVisual(b.tipo)) && paso.bloques.some((b) => !esVisual(b.tipo));
+
   return (
     <div className="flex min-h-full flex-col">
       {leccion.estado !== "publicable" && <BannerDemostracion />}
-      <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
-        <div className="mb-6 space-y-2">
-          <h1 className="text-2xl font-semibold text-ink">{leccion.titulo}</h1>
-          <BarraProgreso pasoActual={estado.pasoActual} total={totalPasos} />
+      <div
+        className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${
+          pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"
+        }`}
+      >
+        <div className="mb-8 space-y-4">
+          <h1 className="text-2xl font-semibold tracking-tight text-ink">{leccion.titulo}</h1>
+          <BarraProgreso
+            pasoActual={estado.pasoActual}
+            total={totalPasos}
+            detalle={paso.tipo}
+          />
         </div>
         <PasoLeccion
           key={estado.pasoActual}

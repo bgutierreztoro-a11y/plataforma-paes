@@ -1,6 +1,7 @@
 import { idsDeLecciones, obtenerLeccion } from "@/lib/contenido";
 import { presentacionDeLeccion } from "@/lib/descripcionesLecciones";
 import { Tarjeta } from "@/components/ui/Tarjeta";
+import { ChipLeccionCompletada } from "@/components/ChipLeccionCompletada";
 
 /** Grilla de tarjetas de lección (portada e índice /lecciones).
  *  Server component: lee el contenido directo del disco. */
@@ -20,6 +21,7 @@ export function GrillaLecciones() {
               descripcion={descripcion}
               meta={`${leccion.tiempoEstimadoMin} min aprox.`}
               esDemostracion={leccion.estado !== "publicable"}
+              indicador={<ChipLeccionCompletada leccionId={leccion.id} />}
             />
           </li>
         );

@@ -34,8 +34,10 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
         {opciones.map((op) => (
           <label
             key={op.id}
-            className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border border-border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${
-              revelado ? "cursor-not-allowed" : ""
+            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${
+              revelado
+                ? "cursor-not-allowed"
+                : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
             }`}
           >
             <input
@@ -57,7 +59,7 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
       {revelado && opcionElegida && (
         <div
           role="status"
-          className={`flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
+          className={`transicion-paso flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
             opcionElegida.esCorrecta ? "bg-success-suave" : "bg-error-suave"
           }`}
         >

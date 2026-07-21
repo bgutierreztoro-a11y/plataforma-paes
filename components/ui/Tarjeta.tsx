@@ -11,6 +11,8 @@ interface TarjetaProps {
   meta?: string;
   /* Muestra la cinta DEMOSTRACIÓN (contenido no publicable). */
   esDemostracion?: boolean;
+  /* Indicador de estado extra en la fila de metadatos (ej. chip Completada). */
+  indicador?: ReactNode;
   /* Si existe, toda la tarjeta es un enlace con hover/focus propios. */
   href?: string;
   /* Contenido extra bajo la descripción (ej. un CTA). */
@@ -29,6 +31,7 @@ function CuerpoTarjeta({
   descripcion,
   meta,
   esDemostracion,
+  indicador,
   children,
 }: Omit<TarjetaProps, "href">) {
   return (
@@ -41,16 +44,17 @@ function CuerpoTarjeta({
         {descripcion && (
           <p className="text-sm leading-relaxed text-ink-suave">{descripcion}</p>
         )}
-        {(meta || esDemostracion) && (
-          <div className="mt-auto flex items-center gap-3 pt-3">
+        {(meta || esDemostracion || indicador) && (
+          <div className="mt-auto flex flex-wrap items-center gap-3 pt-3">
             {meta && (
-              <span className="font-mono text-xs tabular-nums text-ink-suave">{meta}</span>
+              <span className="text-sm tabular-nums text-ink-suave">{meta}</span>
             )}
             {esDemostracion && (
-              <span className="rounded-lg bg-accent-suave px-2 py-0.5 font-mono text-xs font-medium uppercase tracking-widest text-accent-fuerte">
+              <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-xs font-medium text-accent-fuerte">
                 Demostración
               </span>
             )}
+            {indicador}
           </div>
         )}
         {children}

@@ -68,9 +68,11 @@ export function BloquePregunta({
         {alternativas.map((alt) => (
           <label
             key={alt.clave}
-            className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${
-              revelado || !montado ? "cursor-not-allowed" : ""
-            } border-border`}
+            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:checked]:border-accent has-[:checked]:bg-accent-suave has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+              revelado || !montado
+                ? "cursor-not-allowed"
+                : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
+            }`}
           >
             <input
               type="radio"
@@ -78,9 +80,11 @@ export function BloquePregunta({
               value={alt.clave}
               checked={seleccion === alt.clave}
               onChange={() => setSeleccion(alt.clave)}
-              className="h-5 w-5 accent-accent"
+              className="peer sr-only"
             />
-            <span className="font-mono text-sm text-ink-suave">{alt.clave}</span>
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte font-mono text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
+              {alt.clave}
+            </span>
             <span>{alt.texto}</span>
           </label>
         ))}
@@ -93,7 +97,7 @@ export function BloquePregunta({
       {revelado && alternativaElegida && (
         <div
           role="status"
-          className={`flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
+          className={`transicion-paso flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
             alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-error-suave"
           }`}
         >
