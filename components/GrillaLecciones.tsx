@@ -20,7 +20,9 @@ export function GrillaLecciones() {
               titulo={leccion.titulo}
               descripcion={descripcion}
               meta={`${leccion.tiempoEstimadoMin} min aprox.`}
-              esDemostracion={leccion.estado !== "publicable"}
+              // Cinta oculta a pedido del usuario (piloto): decisión visual,
+              // el campo leccion.estado sigue siendo la fuente de verdad.
+              esDemostracion={false}
               indicador={<ChipLeccionCompletada leccionId={leccion.id} />}
             />
           </li>

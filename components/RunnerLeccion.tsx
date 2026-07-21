@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
 import { marcarLeccionCompletada } from "@/lib/progresoSesion";
-import { BannerDemostracion } from "@/components/ui/Banner";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
 import { PasoLeccion } from "@/components/PasoLeccion";
@@ -51,7 +50,6 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
   if (fase === "itemsPAES") {
     return (
       <div className="flex min-h-full flex-col">
-        {leccion.estado !== "publicable" && <BannerDemostracion />}
         <EjecutorSetItems
           items={leccion.itemsPAES}
           mostrarFeedback={true}
@@ -73,7 +71,6 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
 
   return (
     <div className="flex min-h-full flex-col">
-      {leccion.estado !== "publicable" && <BannerDemostracion />}
       <div
         className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${
           pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"
