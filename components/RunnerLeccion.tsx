@@ -11,10 +11,17 @@ import { PasoLeccion } from "@/components/PasoLeccion";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
 import type { LeccionCliente } from "@/lib/sanitizar";
+import type { BloqueInteractivoSlider } from "@/lib/tipos";
 
 export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
   const [fase, setFase] = useState<"pasos" | "itemsPAES">("pasos");
+  /* Gate de exploración: un paso con slider de variante unaVariable no deja
+     avanzar hasta que el estudiante probó `exploracionMinima` valores
+     distintos. Sin ese piso, el paso se puede pasar de largo sin mirar el
+     gráfico, que es justo lo único que el paso enseña. */
+  const [exploracionCumplida, setExploracionCumplida] = useState(false);
+  const [mostrarAvisoExploracion, setMostrarAvisoExploracion] = useState(false);
   const router = useRouter();
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
@@ -69,6 +76,28 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
   const pasoConVisual =
     paso.bloques.some((b) => esVisual(b.tipo)) && paso.bloques.some((b) => !esVisual(b.tipo));
 
+  const bloqueConGate = paso.bloques.find(
+    (b): b is BloqueInteractivoSlider =>
+      b.tipo === "interactivoSlider" && typeof b.exploracionMinima === "number",
+  );
+  const avanceBloqueado = bloqueConGate !== undefined && !exploracionCumplida;
+
+  /* El gate se reinicia al cambiar de paso, en el handler y no en un efecto:
+     el cambio de paso lo dispara siempre un click, no hay otra fuente. */
+  function irA(accion: "IR_SIGUIENTE" | "IR_ANTERIOR") {
+    dispatch({ type: accion });
+    setExploracionCumplida(false);
+    setMostrarAvisoExploracion(false);
+  }
+
+  function avanzar() {
+    if (avanceBloqueado) {
+      setMostrarAvisoExploracion(true);
+      return;
+    }
+    irA("IR_SIGUIENTE");
+  }
+
   return (
     <div className="flex min-h-full flex-col">
       <div
@@ -89,11 +118,15 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
           paso={leccion.pasos[estado.pasoActual]}
           leccionId={leccion.id}
           numeroPaso={estado.pasoActual + 1}
+          onExploracionCompleta={() => {
+            setExploracionCumplida(true);
+            setMostrarAvisoExploracion(false);
+          }}
         />
         <div className="mt-8 flex justify-between gap-3">
           <Boton
             variante="secundario"
-            onClick={() => dispatch({ type: "IR_ANTERIOR" })}
+            onClick={() => irA("IR_ANTERIOR")}
             disabled={estado.pasoActual === 0}
           >
             Paso anterior
@@ -101,9 +134,19 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
           {esUltimoPaso ? (
             <Boton onClick={terminarPasos}>Ir al cierre</Boton>
           ) : (
-            <Boton onClick={() => dispatch({ type: "IR_SIGUIENTE" })}>Siguiente paso</Boton>
+            <Boton onClick={avanzar}>Siguiente paso</Boton>
           )}
         </div>
+        {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
+            en el guion: el botón no se deshabilita sin explicación. */}
+        {mostrarAvisoExploracion && avanceBloqueado && (
+          <p
+            role="status"
+            className="mt-4 rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink"
+          >
+            {bloqueConGate.feedbackExploracionInsuficiente}
+          </p>
+        )}
       </div>
     </div>
   );

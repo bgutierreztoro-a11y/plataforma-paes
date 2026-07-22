@@ -15,9 +15,18 @@ interface BloqueProps {
   leccionId: string;
   paso: number;
   indiceBloque: number;
+  /* Solo lo usa interactivoSlider con exploracionMinima: avisa al runner que
+     el estudiante ya exploró lo suficiente y puede avanzar de paso. */
+  onExploracionCompleta?: () => void;
 }
 
-export function Bloque({ bloque, leccionId, paso, indiceBloque }: BloqueProps) {
+export function Bloque({
+  bloque,
+  leccionId,
+  paso,
+  indiceBloque,
+  onExploracionCompleta,
+}: BloqueProps) {
   const itemId = `${leccionId}-p${paso}-b${indiceBloque}`;
 
   switch (bloque.tipo) {
@@ -36,7 +45,7 @@ export function Bloque({ bloque, leccionId, paso, indiceBloque }: BloqueProps) {
     case "pregunta":
       return <BloquePregunta bloque={bloque} itemId={itemId} />;
     case "interactivoSlider":
-      return <BloqueInteractivo bloque={bloque} />;
+      return <BloqueInteractivo bloque={bloque} onExploracionCompleta={onExploracionCompleta} />;
     case "pistas":
       return <BloquePistas bloque={bloque} paso={paso} />;
     case "visualizacion":

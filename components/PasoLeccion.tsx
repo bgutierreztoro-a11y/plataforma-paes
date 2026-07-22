@@ -5,11 +5,17 @@ interface PasoLeccionProps {
   paso: Paso;
   leccionId: string;
   numeroPaso: number;
+  onExploracionCompleta?: () => void;
 }
 
 const TIPOS_VISUALES: BloqueTipo["tipo"][] = ["interactivoSlider", "visualizacion"];
 
-export function PasoLeccion({ paso, leccionId, numeroPaso }: PasoLeccionProps) {
+export function PasoLeccion({
+  paso,
+  leccionId,
+  numeroPaso,
+  onExploracionCompleta,
+}: PasoLeccionProps) {
   /* Los bloques visuales (gráfico interactivo, tablas/diagramas) van arriba en
      mobile y al costado en desktop; el resto conserva su orden de lectura.
      Se separan preservando el índice original para que las keys y los eventos
@@ -20,7 +26,14 @@ export function PasoLeccion({ paso, leccionId, numeroPaso }: PasoLeccionProps) {
 
   function pintar({ bloque, i }: { bloque: BloqueTipo; i: number }) {
     return (
-      <Bloque key={i} bloque={bloque} leccionId={leccionId} paso={numeroPaso} indiceBloque={i} />
+      <Bloque
+        key={i}
+        bloque={bloque}
+        leccionId={leccionId}
+        paso={numeroPaso}
+        indiceBloque={i}
+        onExploracionCompleta={onExploracionCompleta}
+      />
     );
   }
 

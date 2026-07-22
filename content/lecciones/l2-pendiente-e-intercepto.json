@@ -89,23 +89,41 @@
       "tipo": "pistas",
       "titulo": "Mueve solo la pendiente",
       "_notasInternas": [
-        "Pantalla original: Paso 4. Slider de UNA variable (pendiente); el intercepto queda fijo y visible. El feedback por comportamiento del guion (exploración insuficiente / 'se mueve para el lado') es lógica de la interacción, se conserva como niveles de pista textual."
+        "Pantalla original: Paso 4. Slider de UNA variable (pendiente); el intercepto queda fijo y visible.",
+        "2026-07-22: hasta ahora este paso simulaba la interacción con texto y pistas. Se reemplazó por el bloque interactivoSlider real (variante unaVariable). El feedback de exploración insuficiente del guion pasó a ser el umbral exploracionMinima (la interacción lo detecta sola); queda como pista textual solo la confusión 'la recta se mueve para el lado', que no es detectable desde la interacción porque el estudiante no ingresa nada aquí.",
+        "Intercepto fijo en 2, no en 0: así se ve que el cruce con el eje Y queda clavado en un punto visible mientras la pendiente gira. Con 0 el cruce coincidiría con el origen y la invariancia sería menos evidente.",
+        "Pendiente inicial 1 (no 0) para que la recta empiece inclinada: desde una recta horizontal el primer movimiento se lee como 'aparece' inclinación, no como 'cambia'."
       ],
       "bloques": [
         {
-          "tipo": "texto",
-          "contenido": "Aparece el gráfico interactivo. Por ahora solo se mueve la pendiente; el intercepto queda fijo en un valor visible.\n\nMueve este control y observa la recta. ¿Qué cambia? ¿Qué se queda exactamente igual?"
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "variables": [
+            {
+              "nombre": "pendiente (m)",
+              "min": -5,
+              "max": 5,
+              "valorInicial": 1,
+              "editable": true
+            },
+            {
+              "nombre": "intercepto (b)",
+              "min": -8,
+              "max": 8,
+              "valorInicial": 2,
+              "editable": false
+            }
+          ],
+          "instruccion": "El intercepto está fijo por ahora: ese control no se mueve. Mueve solo el de la pendiente y observa la recta. ¿Qué cambia? ¿Qué se queda exactamente igual?",
+          "exploracionMinima": 3,
+          "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba llevar el control al mínimo, al máximo y a un valor del medio antes de decidir qué cambia."
         },
         {
           "tipo": "pistas",
-          "condicionActivacion": "ambos",
+          "condicionActivacion": "bajoDemanda",
           "niveles": [
             {
               "nivel": 1,
-              "texto": "Todavía no exploraste lo suficiente. Prueba llevar el control al mínimo, al máximo y a un valor del medio antes de decidir qué cambia."
-            },
-            {
-              "nivel": 2,
               "texto": "Mira con cuidado: ¿la recta se traslada entera, o cambia su inclinación? Fíjate en el punto donde toca el eje Y mientras mueves el control."
             }
           ]
