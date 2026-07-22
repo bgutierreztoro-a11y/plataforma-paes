@@ -5,12 +5,35 @@ interface DatosTabla {
   filas: (string | number)[][];
 }
 
+/* Diagrama por etapas: cada paso es un estado con dos lados y la acción que
+   lleva de uno al siguiente. Se usa para la secuencia de balanzas de la
+   Lección 3, pero no menciona balanzas: sirve para cualquier proceso de dos
+   lados que se transforma paso a paso. */
+interface PasoDiagrama {
+  izquierda: string;
+  derecha: string;
+  accion?: string;
+}
+
+interface DatosPasos {
+  pasos: PasoDiagrama[];
+}
+
 function esDatosTabla(datos: unknown): datos is DatosTabla {
   return (
     typeof datos === "object" &&
     datos !== null &&
     Array.isArray((datos as DatosTabla).columnas) &&
     Array.isArray((datos as DatosTabla).filas)
+  );
+}
+
+function esDatosPasos(datos: unknown): datos is DatosPasos {
+  const pasos = (datos as DatosPasos | null)?.pasos;
+  return (
+    Array.isArray(pasos) &&
+    pasos.length > 0 &&
+    pasos.every((p) => typeof p?.izquierda === "string" && typeof p?.derecha === "string")
   );
 }
 
@@ -42,6 +65,38 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
           </tbody>
         </table>
       </div>
+    );
+  }
+
+  if (bloque.variante === "diagrama" && esDatosPasos(bloque.datos)) {
+    return (
+      <figure className="space-y-3">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        {bloque.datos.pasos.map((paso, i) => (
+          <div key={i} className="space-y-2">
+            {i > 0 && paso.accion && (
+              <p className="px-1 text-center text-sm text-ink-suave">↓ {paso.accion}</p>
+            )}
+            <div className="flex items-stretch gap-2 rounded-tarjeta border border-border bg-surface p-3">
+              <p className="flex flex-1 items-center justify-center rounded-tarjeta bg-accent-suave px-3 py-3 text-center text-sm text-ink">
+                {paso.izquierda}
+              </p>
+              <span
+                aria-hidden="true"
+                className="flex items-center px-1 font-mono text-xl text-ink-suave"
+              >
+                =
+              </span>
+              <p className="flex flex-1 items-center justify-center rounded-tarjeta bg-accent-suave px-3 py-3 text-center text-sm text-ink">
+                {paso.derecha}
+              </p>
+            </div>
+            {i === 0 && paso.accion && (
+              <p className="px-1 text-center text-sm text-ink-suave">{paso.accion}</p>
+            )}
+          </div>
+        ))}
+      </figure>
     );
   }
 

@@ -178,13 +178,27 @@
       "titulo": "El signo igual es una balanza",
       "_notasInternas": [
         "CORAZÓN DE LA LECCIÓN (aprobado por el autor 2026-07-20): una ecuación es una balanza en equilibrio; el = dice que ambos lados pesan lo mismo. Por eso se puede hacer cualquier operación siempre que sea idéntica en ambos lados: el equilibrio se conserva. Resolver = usar esa libertad para dejar la incógnita sola. La regla escolar 'lo que suma pasa restando' es un síntoma del principio, no el principio.",
-        "Verificación del verdadero/falso: quitar de un solo lado SIEMPRE desnivela; respuesta correcta = Falso.",
-        "La balanza es andamio para números positivos. El salto a negativos se hace en la generalización (Paso 6), no aquí, para no forzar una balanza físicamente imposible (bolsas con cantidades negativas)."
+        "La balanza es andamio para números positivos. El salto a negativos se hace en la generalización (Paso 6), no aquí, para no forzar una balanza físicamente imposible (bolsas con cantidades negativas).",
+        "REESTRUCTURACIÓN 2026-07-22 (candidato B, elegido por el autor): el paso enunciaba el principio del equilibrio en el primer bloque, mostraba la solución completa y recién al final preguntaba. O sea que contaba el descubrimiento antes de pedirlo y el verdadero/falso final verificaba algo ya respondido dos veces. Nueva secuencia: montaje mínimo (solo notación) → predicción comprometida → diagrama → pregunta de 4 alternativas → recién ahí la regla. El estudiante ahora sostiene una postura antes de que se le confirme.",
+        "El primer bloque de texto se recortó a propósito: solo nombra la incógnita y traduce la balanza a símbolos. La afirmación '_el = dice que ambos lados pesan lo mismo_' se movió al bloque de cierre, porque ES el descubrimiento y no puede ir antes de la predicción.",
+        "El verdadero/falso se reemplazó por bloquePregunta: 4 alternativas con feedback por distractor en vez de un binario que se acierta al azar la mitad de las veces, y emite item_respuesta a PostHog (el paso antes no producía ningún dato de aprendizaje).",
+        "Verificación matemática de la pregunta (balanza 3x + 6 = 21, x = 5): A agregar 5 a cada lado → 3x + 11 = 26; en x=5: 15+11=26 y 26=26 ✓ equilibrio conservado, solución intacta (movimiento legal pero inútil: no acerca a despejar). B agregar 5 solo a la derecha → 3x + 6 = 26 → x = 20/3, cambia la solución ✗. C quitar 6 izquierda y agregar 6 derecha → 3x = 27 → x = 9 ≠ 5 ✗. D duplicar solo la izquierda → 6x + 12 = 21 → x = 1,5 ≠ 5 ✗. Única correcta: A.",
+        "La alternativa A es deliberadamente un movimiento INÚTIL: separa 'conserva el equilibrio' de 'sirve para resolver', que es justo la confusión que hace que el estudiante crea que solo valen los pasos del procedimiento memorizado. La alternativa C es la ejecución literal del mito 'lo que está sumando pasa al otro lado restando', que el bloque de cierre desarma inmediatamente después."
       ],
       "bloques": [
         {
           "tipo": "texto",
-          "contenido": "Lo que hiciste tiene un nombre, y cambia todo: **el signo `=` no es una orden de 'calcula esto'. Dice que los dos lados pesan exactamente lo mismo**, como los dos platillos de una balanza en equilibrio.\n\nLa bolsa misteriosa es la **incógnita**. Se le suele poner la letra **x**. La balanza del paso anterior, escrita con símbolos, es:\n\n**3x + 6 = 21**\n\n'3x' son las 3 bolsas, '+ 6' las bolitas sueltas, y '= 21' es el otro platillo."
+          "contenido": "Antes de seguir, pongámosle símbolos a lo que ya resolviste.\n\nLa bolsa misteriosa es la **incógnita**. Se le suele poner la letra **x**. La balanza del paso anterior, escrita con símbolos, es:\n\n**3x + 6 = 21**\n\n'3x' son las 3 bolsas, '+ 6' las bolitas sueltas, y '= 21' es el otro platillo."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "La balanza está en equilibrio. Ahora imagina que **quitas 6 bolitas del platillo izquierdo y no tocas el derecho**. ¿Qué pasa? Comprométete con una respuesta antes de seguir.",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sigue en equilibrio",
+            "Se inclina hacia la izquierda",
+            "Se inclina hacia la derecha"
+          ]
         },
         {
           "tipo": "visualizacion",
@@ -211,15 +225,42 @@
           }
         },
         {
-          "tipo": "texto",
-          "contenido": "Ese es el método completo, y cabe en una sola idea:\n\n> **Puedes hacerle cualquier operación a una ecuación —sumar, restar, multiplicar, dividir— siempre que se la hagas idéntica a los dos lados. El equilibrio, y por lo tanto la solución, no cambia.**\n\nResolver es usar esa libertad para ir sacando todo lo que rodea a la x, hasta dejarla sola en un lado. Lo que quede en el otro lado **es** su valor.\n\nQuizás te enseñaron 'lo que está sumando pasa al otro lado restando'. Eso es solo el atajo de escritura de lo que acabas de hacer: quitar 6 de ambos lados *se ve* como que el +6 'viajó' y se volvió −6. Pero el que entiende la balanza nunca se equivoca de signo, porque no está moviendo cosas de lado: está quitando lo mismo a ambos."
+          "tipo": "pregunta",
+          "enunciado": "Volvamos a la balanza original: **3 bolsas + 6 bolitas = 21 bolitas**, en equilibrio.\n\n¿Cuál de estos movimientos la deja **en equilibrio**? Ojo: no preguntamos cuál sirve para despejar la x, sino cuál no la desnivela.",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Agregar 5 bolitas a cada platillo.",
+              "esCorrecta": true,
+              "feedback": "Exacto, y fíjate en lo que acabas de aceptar: ese movimiento no te acerca ni un poco a despejar la x, y aun así es perfectamente válido. Lo que hace legal a un movimiento no es que sirva, sino que sea idéntico en los dos lados."
+            },
+            {
+              "clave": "B",
+              "texto": "Agregar 5 bolitas solo al platillo derecho.",
+              "esCorrecta": false,
+              "feedback": "Piénsalo con el peso en las manos: si le agregas a un solo lado, ese lado baja. La balanza se desnivela y ya no dice lo mismo que decía. ¿Qué habría que hacerle al otro platillo para compensar?",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "C",
+              "texto": "Quitar 6 bolitas del platillo izquierdo y agregar 6 al derecho.",
+              "esCorrecta": false,
+              "feedback": "Esto suena a 'lo que está sumando pasa al otro lado restando', pero cuenta los pesos: le sacaste 6 a un platillo Y le pusiste 6 al otro. La diferencia entre los dos lados no cambió en 6, cambió en 12. ¿Es lo mismo mover una bolita de lado que quitar una en cada lado?",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "D",
+              "texto": "Duplicar el contenido del platillo izquierdo.",
+              "esCorrecta": false,
+              "feedback": "Multiplicar también es una operación, y también hay que hacerla en los dos lados. Duplicaste uno solo: ese platillo ahora pesa el doble y el otro sigue igual. ¿Qué le faltó al platillo derecho?",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "notaVerificacionMatematica": "Balanza 3x + 6 = 21, x = 5. A: +5 a ambos lados → 3x + 11 = 26; en x = 5, 15 + 11 = 26 ✓ (equilibrio y solución intactos). B: 3x + 6 = 26 → x = 20/3 ≠ 5 ✗. C: 3x = 27 → x = 9 ≠ 5 ✗. D: 6x + 12 = 21 → x = 1,5 ≠ 5 ✗. Única correcta: A."
         },
         {
-          "tipo": "verdaderoFalso",
-          "enunciado": "Una balanza está en equilibrio. Si le quitas 3 bolitas a un solo platillo, sigue en equilibrio.",
-          "respuestaCorrecta": false,
-          "feedbackVerdadero": "Piénsalo físicamente: si sacas peso de un solo lado, ese lado sube y el otro baja. Se desnivela. Solo se mantiene el equilibrio si quitas (o agregas) lo mismo en AMBOS platillos a la vez. Ese es justo el corazón de resolver ecuaciones.",
-          "feedbackFalso": "Correcto. Quitar de un solo lado rompe el equilibrio. Por eso, al resolver una ecuación, toda operación se aplica a los dos lados a la vez: es la única forma de que la igualdad —y la solución— se conserven."
+          "tipo": "texto",
+          "contenido": "Primero, tu predicción de más arriba: quitar 6 bolitas de un solo platillo **sí desnivela** la balanza. Si dijiste que se inclinaba, ya tenías el principio en la mano.\n\nPorque eso es lo que significa el signo `=`: **no es una orden de 'calcula esto'. Dice que los dos lados pesan exactamente lo mismo.** Y de ahí sale todo el método:\n\n> **Puedes hacerle cualquier operación a una ecuación —sumar, restar, multiplicar, dividir— siempre que se la hagas idéntica a los dos lados. El equilibrio, y por lo tanto la solución, no cambia.**\n\nResolver es usar esa libertad para ir sacando todo lo que rodea a la x, hasta dejarla sola en un lado. Lo que quede en el otro lado **es** su valor.\n\nQuizás te enseñaron 'lo que está sumando pasa al otro lado restando'. Eso es solo el atajo de escritura de lo que acabas de hacer: quitar 6 de ambos lados *se ve* como que el +6 'viajó' y se volvió −6. Pero el que entiende la balanza nunca se equivoca de signo, porque no está moviendo cosas de lado: está quitando lo mismo a ambos."
         }
       ]
     },
