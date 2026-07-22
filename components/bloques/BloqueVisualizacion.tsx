@@ -45,9 +45,13 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
     );
   }
 
+  // Sin datos de tabla, la descripción ES el contenido que lee el estudiante
+  // (y el texto alternativo de la figura). Se presenta como figura descrita,
+  // no como recuadro punteado de "falta algo".
   return (
-    <div className="rounded-tarjeta border border-dashed border-border p-4 text-sm text-ink-suave">
-      {bloque.descripcion}
-    </div>
+    <figure className="rounded-tarjeta border border-border bg-surface p-4">
+      <figcaption className="mb-1.5 text-sm font-medium text-ink-tenue">Figura</figcaption>
+      <p className="text-sm leading-relaxed text-ink-suave">{bloque.descripcion}</p>
+    </figure>
   );
 }

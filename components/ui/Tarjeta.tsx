@@ -37,7 +37,11 @@ function CuerpoTarjeta({
   return (
     <>
       {ilustracion && (
-        <div className="border-b border-border bg-bg px-6 py-4">{ilustracion}</div>
+        <div className="border-b border-border bg-bg px-6 py-5">
+          {/* Tope al ancho natural del viewBox (240px): sin esto la
+              ilustración se estira y domina la tarjeta en desktop. */}
+          <div className="mx-auto max-w-60">{ilustracion}</div>
+        </div>
       )}
       <div className="flex flex-1 flex-col gap-2 p-6">
         <h3 className="text-lg font-semibold">{titulo}</h3>

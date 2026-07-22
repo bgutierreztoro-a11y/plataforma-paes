@@ -6,8 +6,9 @@ const nextConfig: NextConfig = {
   // bloquea en dev los recursos internos (_next/*, incluidos los chunks de
   // JS) para cualquier origen que no sea localhost, y la página nunca
   // hidrata — no es una vulnerabilidad real en un servidor de desarrollo
-  // dentro de una red local de confianza.
-  allowedDevOrigins: ["192.168.0.174"],
+  // dentro de una red local de confianza. IP en DEV_LAN_IP (.env.local) para
+  // no dejarla hardcodeada en un repo público.
+  allowedDevOrigins: process.env.DEV_LAN_IP ? [process.env.DEV_LAN_IP] : [],
   // lib/contenido.ts lee content/ con readdirSync/readFileSync sobre rutas
   // armadas con process.cwd(), que el tracer de Turbopack no puede resolver
   // estáticamente. Sin esto, el build empaqueta el repo completo (docs
