@@ -18,7 +18,9 @@
     "Migración del guion leccion-2-guion.md (raíz del repo) a JSON, 2026-07-20. Estado inicial 'borrador': estructura completa pero SIN firmar checklistOriginalidad ni revisionMatematica (booleanos en false, autor/fecha vacíos), pendiente de /revision-originalidad real en sesión interactiva aislada según docs/protocolo-revision-aislada.md.",
     "'conceptos' (lista de 5) y 'tiempoEstimadoMin: 24' son adiciones editoriales sin equivalente literal en el guion (que no enumera 'conceptos' y no fija duración exacta). Ninguno es campo requerido por leccion.schema.json. Se declaran como decisión de migración, no como omisión.",
     "EXCEPCIÓN de dominio en Ítem 10.2 (l2-item-2): el guion trae un contexto de ESTACIONAMIENTO ($1.500 fijo + $600/hora). Se reemplazó por un dominio nuevo aprobado —huerta escolar, plantines por sembrar que decrecen por cantero sembrado (función afín DECRECIENTE)— por decisión de producto (contexto no comercial, MOS §7.1), no por colisión detectada en el estacionamiento. Números nuevos (160 inicial, 25 por cantero) verificados sin repetición contra Lección 1, Paso 8 de esta lección ni los otros ítems del cierre. Dominio verificado sin colisión léxica vía subagente consulta-fuentes (huerta/plantines/canteros/sembrar = NO); se evitó la palabra 'cultivo' (colisión) y 'curso' (colisión genérica). NO se usó 'cultivo' en ningún campo. Verificación de originalidad profunda sobre el texto redactado queda PENDIENTE de /revision-originalidad.",
-    "Los otros dos ítems del cierre (10.1 tabla→ecuación y 10.3 argumentar rectas paralelas) y los 9 pasos previos se migran fieles al guion, con sus mismos números."
+    "Los otros dos ítems del cierre (10.1 tabla→ecuación y 10.3 argumentar rectas paralelas) y los 9 pasos previos se migran fieles al guion, con sus mismos números.",
+    "AUDITORÍA DE SOLAPAMIENTO TEMÁTICO 2026-07-22: el Paso 8 exigía el mismo procedimiento algebraico que l3-item-1 (reunir incógnitas de ambos lados, después las constantes, después dividir), y lo exigía sin haberlo enseñado nunca, una lección antes de que la Lección 3 lo introduzca. Se reescribió para evaluar lectura e interpretación de m y n, que es lo que esta lección sí enseña. Ver la nota del Paso 8 para el detalle y la verificación matemática. La Lección 3 no se tocó.",
+    "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios."
   ],
   "estado": "borrador",
   "catalogoErrores": [
@@ -36,7 +38,7 @@
     },
     {
       "id": "error-4",
-      "descripcion": "Al comparar dos costos para igualarlos, suma en vez de restar (o usa solo el término variable de un plan en lugar de la diferencia entre ambos)."
+      "descripcion": "Interpreta mal qué significa el punto donde dos rectas se cruzan: sabe que ahí ambas valen lo mismo, pero se equivoca en cuál conviene antes y cuál después, o le atribuye al cruce un significado que no tiene en el contexto. No es un error de cálculo de dónde ocurre el cruce, sino de lectura de qué dice."
     },
     {
       "id": "error-5",
@@ -253,40 +255,44 @@
       "tipo": "aplicacion",
       "titulo": "Los dos planes, ahora con precios",
       "_notasInternas": [
-        "Pantalla original: Paso 8. Habilidad modelar, dos pasos, retoma el contexto del Paso 2.",
-        "Verificación matemática: Plan A: y = 300x + 4800. Plan B: y = 900x + 1200. Igualar: 300x + 4800 = 900x + 1200 → 3600 = 600x → x = 6. Comprobación x=6: A = 300·6+4800 = 6600; B = 900·6+1200 = 6600. Iguales. ✓ Distractores: 3600/900 = 4 (A); 3600/300 = 12 (D); (4800+1200)/(900+300) = 6000/1200 = 5 (B). Todos enteros, cada uno mapea a un error real.",
-        "Números de este paso (4.800/300/1.200/900 → cruce 6) NO se repiten en los ítems del cierre ni en el Ítem 10.2 nuevo (huerta 160/25)."
+        "Pantalla original: Paso 8. Retoma el contexto del Paso 2.",
+        "REESCRITO 2026-07-22 tras la auditoría de solapamiento temático entre lecciones. El bloque pedía '¿con cuántos gigas ambos planes cuestan lo mismo?', o sea igualar 300x + 4800 = 900x + 1200 y despejar: reunir incógnitas de ambos lados, después las constantes, después dividir. Ese procedimiento es paso a paso intercambiable con l3-item-1 (5x + 8 = x − 4) y es lo que la Lección 3 existe para enseñar. Peor que la duplicación: L2 tiene como prerrequisito a L1, no a L3, así que el paso exigía ejecutar sin ningún andamio el procedimiento más difícil de una lección que el estudiante todavía no ha visto, y que allá está reservado para el ítem de dificultad alta. Corroboración de que no fue deliberado: L2 error-4 y L3 error-5 describían la misma confusión con ids distintos en archivos distintos.",
+        "El paso ahora evalúa lo que L2 sí enseña: leer m y n de dos ecuaciones ya escritas e interpretar qué significa su punto de cruce en el contexto. No pide despejar x ni igualar las ecuaciones; ese procedimiento queda como exclusivo de L3.",
+        "CORRECCIÓN DE COHERENCIA 2026-07-22: el Paso 2 declara 'Plan A cobra un cargo fijo bajo pero cobra caro cada giga; Plan B cobra un cargo fijo alto pero cada giga sale barato', y este paso tenía las etiquetas al revés (A = 4.800 fijo + 300/giga). Con el enunciado anterior el desajuste era casi invisible porque la respuesta era un número y las etiquetas apenas intervenían, pero el enunciado nuevo trata precisamente de cuál plan tiene el cargo fijo más alto y cuál sube más rápido: un estudiante que recordara el Paso 2 habría respondido mal por hacerle caso a la lección. Se intercambió qué ecuación lleva cada etiqueta. Los cuatro números y el cruce en x = 6 no cambian. El guion (leccion-2-guion.md, Pasos 2 y 8) arrastra la misma inversión y sigue sin corregir.",
+        "Verificación matemática. Plan A: y = 900x + 1200 (fijo bajo 1.200, giga caro 900). Plan B: y = 300x + 4800 (fijo alto 4.800, giga barato 300). Cargo fijo: 1200 < 4800, el más alto es el del Plan B. Ritmo por giga: 900 > 300, el que sube más rápido es el Plan A. Cruce: 900x + 1200 = 300x + 4800 → 600x = 3600 → x = 6; en x = 6 ambos dan 6.600. ✓ Dirección de conveniencia: en x = 0, A = 1.200 y B = 4.800 → conviene A; en x = 10, A = 10.200 y B = 7.800 → conviene B. O sea que con menos de 6 gigas conviene A y con más de 6 conviene B, y la alternativa D (que afirma lo contrario a partir del cruce) es falsa. ✓",
+        "Alternativa D usa error-4 en su definición redefinida (interpretar mal qué significa la intersección en el contexto, no calcularla mal). Alternativas B y C son las dos direcciones de error-1: leer la pendiente como si fuera el cargo fijo, y leer el cargo fijo como si fuera el ritmo.",
+        "Números de este paso (1.200/900/4.800/300 → cruce 6) NO se repiten en los ítems del cierre ni en el ítem de la huerta (160/25)."
       ],
       "bloques": [
         {
           "tipo": "seleccion",
-          "enunciado": "Volvamos a tus dos planes, ahora con precios:\n\nPlan A: $4.800 fijo + $300 por giga.\nPlan B: $1.200 fijo + $900 por giga.\n\n¿Con cuántos gigas al mes ambos planes cuestan exactamente lo mismo?",
+          "enunciado": "Volvamos a tus dos planes, ahora con precios. Escritos como ecuaciones, donde x son los gigas que usas en el mes e y el costo total del mes:\n\nPlan A: y = 900x + 1200\nPlan B: y = 300x + 4800\n\nSin calcular nada, solo leyendo los números de cada ecuación: ¿cuál de estas afirmaciones es correcta?",
           "opciones": [
             {
               "id": "a",
-              "texto": "4 gigas",
-              "esCorrecta": false,
-              "feedback": "Fíjate que restaste bien los cargos fijos, pero al dividir usaste solo el precio por giga de un plan. La diferencia de precio por giga entre AMBOS planes es lo que importa. ¿Cuánto más caro es un giga en el Plan B respecto del Plan A?",
-              "errorCatalogado": "error-4"
+              "texto": "Hay un consumo en que ambos planes cuestan exactamente lo mismo: con menos gigas que ese conviene el Plan A, y con más gigas conviene el Plan B.",
+              "esCorrecta": true,
+              "feedback": "Correcto, y lo leíste sin calcular nada. El Plan A empieza más barato (1200 contra 4800), pero sube más rápido (900 por giga contra 300). Un plan que parte abajo y sube más rápido termina alcanzando al otro: ese punto de encuentro es el cruce de las dos rectas, y a partir de ahí conviene el que sube más lento."
             },
             {
               "id": "b",
-              "texto": "5 gigas",
+              "texto": "El Plan B cobra el cargo fijo más bajo, porque cobra solo $300 por cada giga.",
               "esCorrecta": false,
-              "feedback": "Cuidado: para igualar dos costos se RESTAN, no se suman. Escribe las dos ecuaciones de costo y déjalas iguales: ¿qué te queda al pasar todo a un lado?",
-              "errorCatalogado": "error-4"
+              "feedback": "Estás leyendo el número que acompaña a la x como si fuera el cargo fijo. En y = mx + n, el 300 es lo que se paga por cada giga; el cargo fijo es lo que se paga aunque uses 0 gigas. ¿Qué queda de cada ecuación cuando x = 0?",
+              "errorCatalogado": "error-1"
             },
             {
               "id": "c",
-              "texto": "6 gigas",
-              "esCorrecta": true,
-              "feedback": "Correcto. Igualando 300x + 4800 = 900x + 1200 queda 3600 = 600x, o sea x = 6. En 6 gigas ambos cuestan $6.600."
+              "texto": "El Plan B sube más rápido por cada giga, porque su costo empieza en un número más alto.",
+              "esCorrecta": false,
+              "feedback": "Empezar más arriba y subir más rápido son dos cosas distintas, y las controla un número distinto cada una. El Plan B efectivamente empieza más arriba, pero eso no dice nada sobre su ritmo. ¿Cuál de los dos números de la ecuación te dice cuánto sube el costo por cada giga?",
+              "errorCatalogado": "error-1"
             },
             {
               "id": "d",
-              "texto": "12 gigas",
+              "texto": "El punto donde las dos rectas se cruzan marca el consumo a partir del cual el Plan A pasa a ser el más barato.",
               "esCorrecta": false,
-              "feedback": "Mismo detalle que la alternativa A pero al revés: usaste solo el precio por giga de un plan. Necesitas la diferencia entre los dos.",
+              "feedback": "Tienes bien qué es el cruce, pero al revés la dirección. Fíjate en el ritmo: el Plan A sube $900 por giga y el Plan B sube $300. Después del cruce, ¿cuál de los dos se dispara y cuál se queda atrás?",
               "errorCatalogado": "error-4"
             }
           ]
@@ -390,7 +396,7 @@
           "texto": "y = 160 + 25x",
           "esCorrecta": false,
           "feedback": "Fíjate en la dirección: los plantines que quedan por sembrar ¿aumentan o disminuyen a medida que se siembran más canteros? Si disminuyen, el 25 se resta, no se suma.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "error-2"
         }
       ],
       "solucion": "Cantidad inicial (intercepto) = 160 plantines por sembrar. Por cada cantero se siembran 25, así que los que quedan bajan 25 por cantero (pendiente −25). Modelo: y = 160 − 25x. Comprobación x=4: 160 − 25·4 = 160 − 100 = 60 plantines quedan; sembrados 100, total 160. ✓ Resultado entero para todo x entero."
