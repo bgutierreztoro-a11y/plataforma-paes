@@ -153,22 +153,22 @@ Ahora con números. Se retoma el problema de los planes de datos.
 
 Enunciado:
 > "Volvamos a tus dos planes, ahora con precios:
-> **Plan A:** $4.800 fijo + $300 por giga.
-> **Plan B:** $1.200 fijo + $900 por giga.
+> **Plan A:** $1.200 fijo + $900 por giga.
+> **Plan B:** $4.800 fijo + $300 por giga.
 > ¿Con cuántos gigas al mes ambos planes cuestan exactamente lo mismo?"
 
 | Alt | Opción | Correcta | Error asociado |
 |-----|--------|----------|----------------|
-| A | 4 gigas | ❌ | usa solo el variable del Plan B |
+| A | 4 gigas | ❌ | usa solo el variable del Plan A |
 | B | 5 gigas | ❌ | suma en vez de restar |
 | C | 6 gigas | ✅ | — |
-| D | 12 gigas | ❌ | usa solo el variable del Plan A |
+| D | 12 gigas | ❌ | usa solo el variable del Plan B |
 
 Feedback:
 - **A:** "Fíjate que restaste bien los cargos fijos, pero al dividir usaste
   solo el precio por giga de un plan. La diferencia de precio por giga
   entre AMBOS planes es lo que importa. ¿Cuánto más caro es un giga en el
-  Plan B respecto del Plan A?"
+  Plan A respecto del Plan B?"
 - **B:** "Cuidado: para igualar dos costos se RESTAN, no se suman. Escribe
   las dos ecuaciones de costo y déjalas iguales: ¿qué te queda al pasar
   todo a un lado?"
@@ -176,10 +176,10 @@ Feedback:
   precio por giga de un plan. Necesitas la diferencia entre los dos."
 
 **Nota de verificación matemática:**
-Plan A: y = 300x + 4800. Plan B: y = 900x + 1200.
-Igualar: 300x + 4800 = 900x + 1200 → 4800 − 1200 = 900x − 300x →
+Plan A: y = 900x + 1200. Plan B: y = 300x + 4800.
+Igualar: 900x + 1200 = 300x + 4800 → 4800 − 1200 = 900x − 300x →
 3600 = 600x → x = 6. ✓
-Comprobación en x = 6: A = 300·6+4800 = 6600; B = 900·6+1200 = 6600. Iguales. ✓
+Comprobación en x = 6: A = 900·6+1200 = 6600; B = 300·6+4800 = 6600. Iguales. ✓
 Distractores: 3600/900 = 4 (A); 3600/300 = 12 (D); (4800+1200)/(900+300) =
 6000/1200 = 5 (B). Todos enteros, cada uno mapea a un error real. ✓
 
