@@ -110,6 +110,9 @@ Si alguna respuesta es dudosa, el contenido no se publica.
 
 **7.5 Datos personales.** Los usuarios serán en su mayoría menores de 18. Reglas desde el día uno:
 - Minimización: para el piloto no se recolectan nombres completos, RUT ni datos sensibles. Analítica anonimizada.
+- Persistencia de progreso pedagógico (permitida desde la fase de cuentas, 2026-07-23). Se puede guardar el avance de aprendizaje del estudiante: id de lección, índice de paso, respuestas por item id, si la respuesta fue correcta, número de intento, tiempo por ítem y timestamps. Son datos de desempeño, no de identidad. Guardarlos es lo que permite medir el delta pre/post de la sección 6 más allá de una sola sesión, y es la razón por la que se levanta la restricción anterior. Sin cuenta se guardan en el dispositivo, en localStorage, bajo una única clave versionada. Con cuenta se guardan en el servidor asociados al user id opaco del proveedor de identidad. Si el almacenamiento local no está disponible, la aplicación funciona igual, sin persistir y sin romperse.
+- Frontera exacta de lo que se persiste: desempeño sí, identidad no. Queda prohibido guardar, tanto en el dispositivo como en el servidor de progreso, cualquiera de estos campos: nombre, apellido, email, RUT, fecha de nacimiento, colegio, curso, y cualquier texto libre escrito por el estudiante. Email y nombre existen únicamente en la tabla de usuarios que sincroniza el proveedor de identidad, y nunca salen de ahí hacia el dispositivo, la analítica ni los logs.
+- La analítica no cambia. Autocapture y session recording siguen desactivados. PostHog se mantiene en persistencia en memoria: la persistencia de progreso es de la aplicación, no de la analítica, y las dos no se mezclan. Si en algún momento se llama a identify(), es solo con el user id opaco del proveedor de identidad, nunca con email, nombre ni ninguna propiedad que permita identificar a la persona.
 - Consentimiento del apoderado para participantes menores de edad, por escrito aunque sea simple.
 - La nueva ley de protección de datos (21.719) entra en vigencia el 1 de diciembre de 2026, justo en nuestra primera temporada de venta, con una agencia fiscalizadora ya operativa y multas altas. Las empresas pequeñas reciben amonestación en el primer año en vez de multa, pero diseñamos como si aplicara completa: inventario de qué datos guardamos, dónde, para qué y por cuánto tiempo, más política de privacidad y términos publicados antes de cobrar a desconocidos.
 
@@ -125,7 +128,11 @@ PostHog con eventos por pantalla: inicio, respuesta por ítem, uso de pistas, ab
 
 ## 9. Lo que no se construye todavía
 
-Pipeline industrial de descomposición de guías, grafo de conocimiento, motor de variantes, tutor LLM, login, pagos automatizados, dashboard del estudiante, repetición espaciada, gamificación, app móvil, M2 y otras materias, contenido en video. Cada uno de estos ítems necesita pasar un gate y justificar qué incertidumbre elimina.
+Pipeline industrial de descomposición de guías, grafo de conocimiento, motor de variantes, tutor LLM, pagos automatizados, dashboard del estudiante, repetición espaciada, gamificación, app móvil, M2 y otras materias, contenido en video. Cada uno de estos ítems necesita pasar un gate y justificar qué incertidumbre elimina.
+
+**Excepción acotada: autenticación (gate cruzado el 2026-07-23).** El login sale de esta lista, pero solo en la forma acotada que se describe acá. Se permite una cuenta opcional, con email y código de verificación, sin login social, cuyo único propósito es (a) que el progreso pedagógico del estudiante sobreviva al cambio de dispositivo o al borrado del navegador, y (b) sostener una tabla de entitlements que distinga acceso gratuito, de cortesía y comprado. La incertidumbre que elimina es comercial: sin entitlements no se puede vender el ciclo PAES, y sin persistencia entre sesiones no se puede medir si un estudiante realmente completó el módulo o solo una sesión suelta.
+
+Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del login; nunca se muestra un muro de registro al entrar; la cuenta es opcional en todo momento y la aplicación completa debe funcionar sin ella. Los pagos automatizados siguen en la lista negra y esta excepción no los toca.
 
 ## 10. Gates del roadmap
 
@@ -133,6 +140,8 @@ Pipeline industrial de descomposición de guías, grafo de conocimiento, motor d
 - **Gate 2 (semanas 3 a 6):** piloto completo del módulo de funciones con la cohorte pagada. Umbrales de la sección 6 cumplidos.
 - **Gate 3 (temporada 2026):** cohorte fundadora completa el curso, medimos su percepción de mejora en ensayos reales. Recién aquí se evalúan: segundo tema de M1, capa modo ensayo, tutor IA.
 - **Gate 4 (2027):** decisión de escala con datos de una temporada completa: más temas, automatización, canal de distribución propio.
+
+**Nota de gates cruzados.** 2026-07-23: se cruza el gate de autenticación en la forma acotada de la sección 9. No adelanta ningún otro gate: los pagos automatizados, el tutor IA y el dashboard del estudiante siguen donde estaban.
 
 ## 11. Reglas de trabajo
 
