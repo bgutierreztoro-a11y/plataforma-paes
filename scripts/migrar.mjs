@@ -53,8 +53,17 @@ function salirConError(mensaje) {
 // Ante un error asincrónico, el driver de Neon emite un evento cuyo volcado por
 // defecto incluye el objeto de conexión ENTERO, con la contraseña en claro. En
 // una terminal compartida o un log de CI eso es una fuga de credenciales. Se
-// atrapa todo lo que escape y se imprime solo el mensaje.
-const soloMensaje = (e) => salirConError(e?.message ?? String(e));
+// atrapa todo lo que escape y se imprime SOLO texto de la lista de abajo.
+//
+// Nunca se hace String(e) ni se interpola el objeto: es justamente lo que
+// arrastraría la cadena de conexión. Si ninguna de estas fuentes da algo
+// legible, se imprime un texto fijo — perder el detalle es preferible a
+// filtrar la clave.
+const soloMensaje = (e) =>
+  salirConError(
+    e?.message || e?.error?.message || e?.reason?.message || e?.code || e?.type ||
+    'error asincrónico del driver, sin mensaje (revisa la conectividad a Neon)',
+  );
 process.on('uncaughtException', soloMensaje);
 process.on('unhandledRejection', soloMensaje);
 
