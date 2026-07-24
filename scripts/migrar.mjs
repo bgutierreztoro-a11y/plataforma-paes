@@ -50,6 +50,14 @@ function salirConError(mensaje) {
   process.exit(1);
 }
 
+// Ante un error asincrónico, el driver de Neon emite un evento cuyo volcado por
+// defecto incluye el objeto de conexión ENTERO, con la contraseña en claro. En
+// una terminal compartida o un log de CI eso es una fuga de credenciales. Se
+// atrapa todo lo que escape y se imprime solo el mensaje.
+const soloMensaje = (e) => salirConError(e?.message ?? String(e));
+process.on('uncaughtException', soloMensaje);
+process.on('unhandledRejection', soloMensaje);
+
 function cargarEnv() {
   for (const archivo of ['.env.local', '.env']) {
     const ruta = join(RAIZ, archivo);
@@ -91,7 +99,9 @@ async function abrirPool(url) {
     salirConError(`Este Node (${process.version}) no expone WebSocket global. Usa Node 22 o superior.`);
   }
   neon.neonConfig.webSocketConstructor = globalThis.WebSocket;
-  return new neon.Pool({ connectionString: url });
+  const pool = new neon.Pool({ connectionString: url });
+  pool.on('error', soloMensaje);
+  return pool;
 }
 
 async function main() {
