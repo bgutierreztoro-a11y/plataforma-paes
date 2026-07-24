@@ -143,6 +143,22 @@ Integración de Clerk iniciada como exploración **sin gate aprobado** (autentic
 
 **Trampa de nombres que sigue vigente:** no confundir `lib/sanitizar.ts` (filtro de payload RSC, en master desde siempre) con `lib/sanitizarEntrada.ts` (input de los formularios custom de Clerk, quedó solo en el branch y no se rescató, porque los componentes prearmados validan por su cuenta). Son archivos distintos.
 
+## PASO 3 (Clerk): código listo, falta configurar el webhook a mano (2026-07-23)
+
+**Estado: el código está completo y empujado.** Commit `6c3bced`, junto con los 11 anteriores de la sesión, ya está en `origin/master` — Vercel tiene con qué desplegar. `build`, `lint`, `validar` y `tsc` en verde; las tres páginas nuevas salen estáticas y las lecciones siguen SSG, así que nada quedó detrás de la sesión.
+
+**Lo único que falta lo hace Benja a mano en el dashboard de Clerk**, y no se puede automatizar ni probar antes, porque necesita una URL desplegada de verdad:
+
+1. Clerk → **Webhooks → Add Endpoint**, apuntando a `https://<dominio-de-producción>/api/webhooks/clerk`.
+2. Suscribir **solo** `user.created`, `user.updated` y `user.deleted`.
+3. Copiar el **Signing Secret** (empieza con `whsec_`) y ponerlo en dos lugares: `.env.local` para desarrollo, y las variables de entorno del proyecto en Vercel para producción. Si falta el segundo, el webhook funciona local y falla desplegado.
+
+Con `localhost` no llega nada: Clerk necesita alcanzar la URL desde fuera.
+
+**Lo que queda sin verificar hasta entonces:** el camino feliz completo. Todo lo demás está probado contra el build de producción — las rutas públicas responden 200 sin sesión, el webhook devuelve 401 sin firma y 429 pasado el umbral, y ninguno de esos intentos escribió en la base. Falta comprobar que un registro real crea la fila en `usuarios`, otorga el entitlement `m1-libre`, escribe exactamente una fila de auditoría y hace que `tieneAcceso()` devuelva `true`.
+
+**Cómo se almacena el contador del rate limiting del webhook:** es un `Map` en memoria del módulo `lib/rateLimit.ts`, o sea **por instancia de función serverless y volátil** — se pierde en cada arranque en frío y no se comparte entre instancias, así que el techo real es `LÍMITE × instancias activas`, no `LÍMITE`. Alcanza porque solo cuenta fallos de verificación de firma y la defensa de verdad es la firma; si esto se abriera al público, el reemplazo es una regla del WAF de Vercel antes que Redis.
+
 ## Borrados de cuenta pendientes de purga real — hasta la migración 007 (2026-07-23)
 
 `app_m1` no tiene `DELETE` sobre `usuarios`. Ese permiso llega en la **007**, y solo después de que la verificación de firma svix del webhook exista y esté probada — el permiso llega después de la defensa, nunca antes.
