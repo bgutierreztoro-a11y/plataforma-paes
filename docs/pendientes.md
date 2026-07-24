@@ -127,14 +127,42 @@ Test A del MOS §7 (apuesta comercial): validar demanda antes de construir más.
 
 **Nota técnica del embed:** `dynamicHeight=1` va en la URL pero no auto-redimensiona porque no se carga el script `widgets.js` de Tally (dependencia externa fuera del plan). El iframe queda fijo en 200px, suficiente para un formulario de un campo. Si el form crece y corta contenido, cargar `widgets.js` con `next/script`.
 
-## Integración de Clerk: exploración sin gate, guardada en branch aparte (2026-07-20)
+## Integración de Clerk: exploración sin gate, guardada en branch aparte (2026-07-20) — CERRADO
 
-Integración de Clerk iniciada como exploración **sin gate aprobado** (autenticación está en la lista negra del MOS §9–10; el alcance v1 dice explícitamente "sin login"). Guardada en el branch local `wip/clerk-auth` (commit `79051b6`), **no fusionada a master ni pusheada**. Retomar solo después de validar demanda con la preventa (solo captura de correo, sin cobro).
+> **Obsoleto desde 2026-07-23.** El gate de autenticación se cruzó ese día (MOS §9, excepción acotada) y Clerk se integró en master en el PASO 3. Este bloque se conserva porque resuelve una duda técnica que quedó abierta, no porque siga vigente. **El branch `wip/clerk-auth` quedó superado y se puede borrar.**
 
-**Build roto en el branch:** `SignedOut` no está exportado en `@clerk/nextjs ^7.5.16` (`components/cuenta/ControlesCuenta.tsx` lo importa). `npm run build` falla con exit 1. Al retomar: revisar la versión/API de Clerk (probablemente cambió el punto de importación de los control components entre v5→v7) antes de continuar.
+Integración de Clerk iniciada como exploración **sin gate aprobado** (autenticación estaba en la lista negra del MOS §9–10; el alcance v1 decía explícitamente "sin login"). Guardada en el branch local `wip/clerk-auth` (commit `79051b6`), **no fusionada a master ni pusheada**.
+
+**Build roto en el branch — causa encontrada.** `SignedOut` no está exportado en `@clerk/nextjs` v7. La hipótesis anotada entonces ("probablemente cambió el punto de importación") era incorrecta: **el componente ya no existe**. En v7, `SignedIn`, `SignedOut` y `Protect` se unificaron en `<Show when="signed-in" | "signed-out">`, exportado desde `@clerk/nextjs`. Ojo al usarlo: la documentación de Clerk advierte que `<Show>` solo **oculta visualmente** — el contenido sigue en el HTML. Nunca sirve para proteger datos; para eso está `lib/datos/`.
+
+**Qué se rescató del branch al integrar en master:** `lib/rateLimit.ts` (adaptado a penalizar solo fallos de firma), `app/privacidad/page.tsx` (corregido) y el `matcher` del middleware con su exclusión de `/ingest`. Lo demás se descartó: los formularios custom de `components/cuenta/` (~490 líneas) se reemplazaron por los componentes prearmados de Clerk, y `app/api/progreso/` + `lib/progreso.ts` quedaron cubiertos por `lib/datos/`.
 
 **Qué se movió al branch:** `package.json`/`package-lock.json` (dep `@clerk/nextjs`), `app/layout.tsx` (ClerkProvider), `middleware.ts` (clerkMiddleware protegiendo solo `/api/progreso`), rutas `app/ingreso/` `app/registro/` `app/api/progreso/`, `components/cuenta/*`, `components/ui/Avatar.tsx`, `lib/progreso.ts` `lib/useGuardarProgreso.ts` `lib/rateLimit.ts` `lib/sanitizarEntrada.ts`, y los diffs de Clerk en `app/page.tsx` (ControlesCuenta) y `components/RunnerLeccion.tsx` (guardado de progreso).
 
-**`app/privacidad/` también se movió al branch, no a master.** Su aviso describe el flujo de cuentas de Clerk (correo como identificador, códigos de acceso, borrado de cuenta, casilla de 16 años). Dejarlo en master publicaría un aviso de privacidad sobre recolección de datos y un sistema de login que master no tiene desplegado — riesgo legal (MOS prioridad #1), y contradice lo que el propio aviso predica ("no ocupar ningún dato para algo que no esté escrito acá"). La landing de preventa necesitará su propio aviso ajustado a lo que realmente hace (solo capturar correo).
+**Sobre `app/privacidad/`:** en su momento se dejó fuera de master porque el aviso describía un sistema de login que master no tenía desplegado — publicar eso habría sido riesgo legal (MOS prioridad #1). **Eso ya no aplica:** master tiene el flujo de cuentas desde el PASO 3, así que el aviso corregido vive en `app/privacidad/page.tsx`. La landing de preventa sigue necesitando su propio aviso ajustado a lo que ella hace (solo capturar correo en Tally) — eso sí queda pendiente.
 
-**Master quedó limpio y buildeando** (`npm run build` exit 0; rutas generadas: `/`, `/cierre`, `/diagnostico`, `/leccion/[id]` — ninguna de Clerk). Se conservaron en master los cambios no-Clerk sin commitear (proxy PostHog en `PostHogProvider.tsx`, `lib/errores.ts`, `l1-patrones-de-cambio.json`). Ojo al no confundir `lib/sanitizar.ts` (filtro de payload RSC, **sigue en master**) con `lib/sanitizarEntrada.ts` (input de formularios Clerk, **movido al branch**) — son archivos distintos.
+**Trampa de nombres que sigue vigente:** no confundir `lib/sanitizar.ts` (filtro de payload RSC, en master desde siempre) con `lib/sanitizarEntrada.ts` (input de los formularios custom de Clerk, quedó solo en el branch y no se rescató, porque los componentes prearmados validan por su cuenta). Son archivos distintos.
+
+## Borrados de cuenta pendientes de purga real — hasta la migración 007 (2026-07-23)
+
+`app_m1` no tiene `DELETE` sobre `usuarios`. Ese permiso llega en la **007**, y solo después de que la verificación de firma svix del webhook exista y esté probada — el permiso llega después de la defensa, nunca antes.
+
+Mientras tanto, cuando llega `user.deleted`, `app/api/webhooks/clerk/route.ts` responde 200 y **neutraliza la PII con el `UPDATE` que sí tenemos**: el correo pasa a una lápida y el nombre a `NULL`. El progreso y las respuestas quedan colgando de un id opaco que ya no apunta a ninguna persona.
+
+**Cómo encontrar las filas que faltan purgar de verdad.** Esta consulta es la fuente de verdad durable, no los logs — el `console.warn` con prefijo `[BORRADO-PENDIENTE]` sirve para enterarse en el momento, pero los logs de Vercel se rotan y desaparecen:
+
+```sql
+SELECT id, actualizado_en
+  FROM usuarios
+ WHERE email LIKE 'borrado-%@invalido.local'
+ ORDER BY actualizado_en;
+```
+
+**Lo que esta decisión NO resuelve, y hay que cerrar junto con la 007:** `entitlements.notas` es texto libre para justificar cortesías y puede contener datos identificatorios de un usuario ya "borrado" —o de terceros, tipo "cortesía para el hermano de la profesora de 2°B"—. Neutralizar `usuarios` no lo toca. Al implementar el `DELETE` completo hay que decidir qué pasa con esa columna. Relacionado: el retrato jsonb que va a `entitlements_auditoria` ya excluye `notas` a propósito (ver `lib/datos/entitlements.ts`), así que el problema está acotado a la tabla `entitlements` misma.
+
+## Higiene de datos de prueba (2026-07-23)
+
+Al verificar el PASO 3 apareció un usuario huérfano en `usuarios`: `user_test_ff7b26ac-…`, correo `@invalido.test`, sin entitlement ni auditoría. Venía de la **primera corrida del script de verificación del PASO 2**, la que abortó con `permission denied` antes de llegar a su bloque de limpieza. La segunda corrida usó otro id y sí se limpió, así que el informe de "51 ok" no lo detectó: **el script solo verificaba el usuario que él mismo había creado.**
+
+Ya está borrado y las cinco tablas quedaron en cero. La lección para el próximo script de verificación contra la base real: limpiar por patrón (`id LIKE 'user_test_%' AND email LIKE '%@invalido.test'`), no solo el id de la corrida en curso, y hacerlo al **empezar** además de al terminar — una corrida que se cae no ejecuta su limpieza.
+
