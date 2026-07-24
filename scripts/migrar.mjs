@@ -7,7 +7,14 @@
  *   npm run migrar               aplica las migraciones pendientes
  *   npm run migrar -- --estado   lista qué está aplicado y qué falta, sin escribir
  *
- * Lee DATABASE_URL de .env.local, de .env o del entorno, en ese orden.
+ * Lee DATABASE_URL_MIGRACIONES de .env.local, de .env o del entorno, en ese
+ * orden. Es la conexión del rol DUEÑO, distinta de la DATABASE_URL que usa la
+ * app: el dueño crea y altera tablas, la app solo lee y escribe filas. Si este
+ * script usara la conexión de la app, el rol restringido tendría que poder
+ * hacer DDL y la separación no serviría de nada.
+ *
+ * Conviene que sea la cadena directa de Neon (sin "-pooler" en el host): el
+ * pooler trabaja en modo transacción y el DDL se lleva mal con eso.
  *
  * Cómo decide qué aplicar: lleva un registro en la tabla _migraciones, con el
  * nombre del archivo y el sha256 de su contenido. Aplica en orden alfabético
@@ -89,9 +96,13 @@ async function abrirPool(url) {
 
 async function main() {
   cargarEnv();
-  const url = process.env.DATABASE_URL;
+  const url = process.env.DATABASE_URL_MIGRACIONES;
   if (!url) {
-    salirConError('Falta DATABASE_URL. Defínela en .env.local (ver .env.example) o en el entorno.');
+    salirConError(
+      'Falta DATABASE_URL_MIGRACIONES (la conexión del rol dueño).\n' +
+      '       Defínela en .env.local; ver .env.example. No sirve DATABASE_URL:\n' +
+      '       esa es la del rol restringido de la app y no puede crear tablas.',
+    );
   }
 
   const enDisco = migracionesEnDisco();
