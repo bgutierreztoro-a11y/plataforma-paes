@@ -27,7 +27,7 @@ npm run build     # build de producción
 - Los tipos TypeScript en `lib/tipos.ts` son un espejo manual de ese schema (sin codegen); si el schema cambia, este archivo se actualiza a mano.
 - `lib/contenido.ts` carga y valida el contenido en el servidor (reutiliza `scripts/validar-contenido.mjs` y agrega una verificación de la forma interna de los bloques que el validador de CLI no cubre).
 
-Ver `docs/pendientes.md` para un pendiente técnico conocido: `l1-patrones-de-cambio.json` (contenido real ya aprobado) usa una forma de bloques anterior al schema actual y no se renderiza todavía en esta app.
+`l1-patrones-de-cambio.json` (contenido real) está migrado a la forma de bloques del schema y en `"estado": "publicable"`: `checklistOriginalidad` y `revisionMatematica` firmadas (Benjamín Gutiérrez, 2026-07-08). `idsDeLecciones()` no lo excluye, la ruta `/leccion/l1-patrones-de-cambio` se genera como SSG y renderiza correctamente (verificada e2e).
 
 ## Analítica
 

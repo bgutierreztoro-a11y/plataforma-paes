@@ -1,6 +1,6 @@
 # Pendientes técnicos
 
-## Migración de `content/lecciones/l1-patrones-de-cambio.json` — hecha, pendiente de re-certificación humana
+## Migración de `content/lecciones/l1-patrones-de-cambio.json` — hecha y re-certificada (`publicable`)
 
 **Resuelto estructuralmente el 2026-07-08.** El archivo usaba una forma ad-hoc (`"interaccion": {...}` anidada) que no coincidía con los bloques discriminados por `tipo` de `content/schema/leccion.schema.json`. Se migró a la forma del schema (`prediccion`, `seleccion`, `numerica`, `verdaderoFalso`, `abierta`, `pistas`, `texto`), preservando enunciados, números, alternativas y feedback exactos — transformación de forma, no de contenido. `npm run validar` pasa, y `idsDeLecciones()` ya no la excluye de `generateStaticParams()`: `/leccion/l1-patrones-de-cambio` se genera y navega correctamente.
 
@@ -9,11 +9,11 @@ Decisiones tomadas durante la migración (todas confirmadas con el autor del pro
 - El paso 8 (aplicación), que combinaba una pregunta abierta y una numérica en un solo bloque tipo `"mixta"` (inexistente en el schema), se dividió en dos bloques secuenciales dentro del mismo paso — mismo texto exacto, solo reorganizado.
 - Notas internas sin campo equivalente en el schema (`notaDiseno` fuera de bloques `abierta`, verificaciones aritméticas de control) se preservaron en `_notasInternas` a nivel de cada `paso` (que sí admite campos extra), en vez de perderse.
 - Se creó `catalogoErrores` con los 2 errores que la propia lección nombra en su cierre ("olvidar el valor inicial", "contar mal los saltos"), referenciados vía `errorCatalogado` donde el feedback ya existente coincide claramente.
-- `estado` quedó en `"revision"` (no `"publicable"`); `checklistOriginalidad` y `revisionMatematica` se resetearon a sin confirmar, porque una migración estructural hecha por IA no reemplaza la re-certificación humana línea por línea contra el original.
+- Al terminar la migración, `estado` se dejó en `"revision"` y `checklistOriginalidad`/`revisionMatematica` se resetearon a sin confirmar, porque una migración estructural hecha por IA no reemplaza la re-certificación humana línea por línea contra el original. (Esa re-certificación se completó después ese mismo día; ver el cierre de esta sección.)
 
 **Adición fuera de lo estrictamente pedido, a revisar**: además de los 2 errores del catálogo, se agregó `errorCatalogado` a algunas alternativas de `itemsPAES` cuyo feedback ya existente coincidía claramente con esos errores (no se tocó ningún texto, solo se sumó la referencia). Confirmar si se quiere mantener.
 
-**Pendiente real, ahora**: revisión humana línea por línea del archivo migrado contra `leccion-1-guion.md` y la versión anterior, y volver a correr `/revision-matematica` y `/revision-originalidad` antes de reactivar `"estado": "publicable"`.
+**Re-certificación completada (2026-07-08).** La revisión humana línea por línea del archivo migrado contra `leccion-1-guion.md` y la versión anterior, más `/revision-matematica` y `/revision-originalidad`, se hicieron: `content/lecciones/l1-patrones-de-cambio.json` está en `"estado": "publicable"`, con `checklistOriginalidad` (cuatro campos en `true`) y `revisionMatematica` (`aprobada: true`) firmadas por Benjamín Gutiérrez. Fuente de verdad: los campos del propio JSON, no este documento.
 
 ## Limitación de schema: `habilidad` no admite valores compuestos en `itemsPAES`
 
@@ -181,4 +181,23 @@ SELECT id, actualizado_en
 Al verificar el PASO 3 apareció un usuario huérfano en `usuarios`: `user_test_ff7b26ac-…`, correo `@invalido.test`, sin entitlement ni auditoría. Venía de la **primera corrida del script de verificación del PASO 2**, la que abortó con `permission denied` antes de llegar a su bloque de limpieza. La segunda corrida usó otro id y sí se limpió, así que el informe de "51 ok" no lo detectó: **el script solo verificaba el usuario que él mismo había creado.**
 
 Ya está borrado y las cinco tablas quedaron en cero. La lección para el próximo script de verificación contra la base real: limpiar por patrón (`id LIKE 'user_test_%' AND email LIKE '%@invalido.test'`), no solo el id de la corrida en curso, y hacerlo al **empezar** además de al terminar — una corrida que se cae no ejecuta su limpieza.
+
+## Webhook Clerk — instancia development (temporal)
+
+Fecha: 2026-07-24
+
+El webhook de Clerk (`/api/webhooks/clerk`, eventos `user.created`, `user.updated`, `user.deleted`) se configuró en la instancia de development de Clerk, no en producción.
+
+Por qué: Clerk no permite crear instancia de producción con dominio `*.vercel.app` — exige un dominio propio verificable por DNS (CNAME/TXT). Confirmado contra la documentación oficial de Clerk (2026-07-24). No es un problema de formato del campo, es una restricción real de la plataforma.
+
+Implicancia: el signing secret guardado en `.env.local` y Vercel corresponde a la instancia de development (`whsec_...` de dev), no a producción. Las claves públicas/secretas de Clerk en uso son `pk_test_` / `sk_test_`.
+
+Pendiente real cuando se compre el dominio propio:
+
+1. Crear instancia de producción en Clerk con el dominio nuevo.
+2. Repetir la configuración del endpoint del webhook en esa instancia (URL de producción con el dominio propio, mismos 3 eventos).
+3. Nuevo signing secret → actualizar `.env.local` y Vercel (entorno Production).
+4. Cambiar claves públicas/secretas de `pk_test_`/`sk_test_` a `pk_live_`/`sk_live_` en las variables de entorno de Vercel.
+
+No asumir que "ya está configurado" solo porque development funciona — son dos endpoints y dos secrets independientes.
 

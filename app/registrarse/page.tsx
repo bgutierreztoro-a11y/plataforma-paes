@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PuertaDeEdad } from "@/components/cuenta/PuertaDeEdad";
+import { EnlaceBoton } from "@/components/ui/Boton";
 
 export const metadata: Metadata = {
   title: "Crear cuenta",
@@ -16,16 +16,15 @@ export default function Registrarse() {
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-4 py-16">
       <PuertaDeEdad />
-      <p className="text-center text-sm leading-6 text-ink-suave">
-        La cuenta es opcional y sirve para una sola cosa: que no pierdas tu avance si
-        cambias de teléfono o borras el navegador.{" "}
-        <Link
-          href="/lecciones"
-          className="font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte"
-        >
-          Estudiar sin cuenta
-        </Link>
-      </p>
+      <div className="flex w-full flex-col items-center gap-3">
+        <p className="text-center text-sm leading-6 text-ink-suave">
+          La cuenta es opcional. Todo lo que está publicado es gratis y no requiere
+          cuenta.
+        </p>
+        <EnlaceBoton href="/lecciones" variante="secundario" className="w-full sm:w-auto">
+          Seguir sin cuenta
+        </EnlaceBoton>
+      </div>
     </main>
   );
 }
