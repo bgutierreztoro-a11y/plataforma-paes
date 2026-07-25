@@ -100,7 +100,7 @@ export function CierreFinal({
               >
                 el diagnóstico
               </Link>
-              .
+              , hoy una versión de demostración.
             </p>
           </>
         )}
