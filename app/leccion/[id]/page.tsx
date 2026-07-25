@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { obtenerLeccion, idsPublicables, esPublicable } from "@/lib/contenido";
+import { obtenerLeccion, idsPublicables, esPublicable, obtenerCierre } from "@/lib/contenido";
 import { sanitizarLeccion } from "@/lib/sanitizar";
 import { RunnerLeccion } from "@/components/RunnerLeccion";
 
@@ -26,5 +26,16 @@ export default async function PaginaLeccion({
   // invariante explícito en el propio handler y lo mantiene aunque cambie la
   // configuración de rutas: nunca se renderiza contenido no publicable.
   if (!esPublicable(leccion)) notFound();
-  return <RunnerLeccion leccion={sanitizarLeccion(leccion)} />;
+  /* El runner empuja a /cierre al terminar la lección, sin click elegido. Se
+     resuelve acá si ese destino muestra el banner de demostración para poder
+     avisarlo antes. Baja como booleano y no como contenido: el cierre completo
+     viajaría en el payload RSC de cada lección sin renderizarse. `obtenerCierre`
+     ya posee la ruta, así que el id no se escribe a mano. */
+  const cierreEnDemostracion = !esPublicable(obtenerCierre());
+  return (
+    <RunnerLeccion
+      leccion={sanitizarLeccion(leccion)}
+      cierreEnDemostracion={cierreEnDemostracion}
+    />
+  );
 }

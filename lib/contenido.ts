@@ -6,7 +6,13 @@ import path from "node:path";
 import { validarDatos } from "../scripts/validar-contenido.mjs";
 import { ContenidoInvalidoError } from "./errores";
 import { TIPOS_BLOQUE_VALIDOS } from "./tipos";
-import type { Contenido, Leccion, DiagnosticoContenido, CierreContenido } from "./tipos";
+import type {
+  Contenido,
+  Estado,
+  Leccion,
+  DiagnosticoContenido,
+  CierreContenido,
+} from "./tipos";
 
 /**
  * El validador de scripts/validar-contenido.mjs no chequea la forma interna
@@ -98,12 +104,16 @@ export function obtenerLeccion(id: string): Leccion {
 const ID_DEMO = "l0-demo";
 
 /**
- * `true` si la lección puede mostrarse a un estudiante. La fuente de verdad es
+ * `true` si el contenido puede mostrarse a un estudiante. La fuente de verdad es
  * el `estado` del propio JSON: el schema declara "Solo 'publicable' puede
  * mostrarse a estudiantes" (content/schema/leccion.schema.json).
+ *
+ * Pide solo `estado` (el campo que comparte todo `ContenidoBase`) en vez de una
+ * `Leccion` completa: lección, diagnóstico y cierre se preguntan lo mismo, y así
+ * la comparación con "publicable" vive en un único lugar.
  */
-export function esPublicable(leccion: Leccion): boolean {
-  return leccion.estado === "publicable";
+export function esPublicable(contenido: { estado: Estado }): boolean {
+  return contenido.estado === "publicable";
 }
 
 /**

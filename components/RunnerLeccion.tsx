@@ -7,13 +7,23 @@ import { registrarEvento } from "@/lib/eventos";
 import { marcarLeccionCompletada } from "@/lib/progresoSesion";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
+import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { PasoLeccion } from "@/components/PasoLeccion";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
 import type { LeccionCliente } from "@/lib/sanitizar";
 import type { BloqueInteractivoSlider } from "@/lib/tipos";
 
-export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
+export function RunnerLeccion({
+  leccion,
+  cierreEnDemostracion = false,
+}: {
+  leccion: LeccionCliente;
+  /* `true` si /cierre va a mostrar el banner de demostración. Lo resuelve
+     app/leccion/[id]/page.tsx en servidor. Sirve para avisarlo antes del click
+     que navega, no después de aterrizar. */
+  cierreEnDemostracion?: boolean;
+}) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
   const [fase, setFase] = useState<"pasos" | "itemsPAES">("pasos");
   /* Gate de exploración: un paso con slider de variante unaVariable no deja
@@ -25,6 +35,10 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
   const router = useRouter();
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
+  /* "Ir al cierre" solo navega de verdad a /cierre cuando la lección no tiene
+     itemsPAES; si los tiene, abre esa fase y el aviso le toca a ItemsPAESFinal,
+     que sí es el último click antes de irAlCierre(). */
+  const botonFinalVaAlCierre = esUltimoPaso && leccion.itemsPAES.length === 0;
 
   useEffect(() => {
     registrarEvento({ nombre: "leccion_inicio", props: { leccion_id: leccion.id } });
@@ -61,7 +75,11 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
           items={leccion.itemsPAES}
           mostrarFeedback={true}
           renderFinal={(respuestas) => (
-            <ItemsPAESFinal respuestas={respuestas} onContinuar={irAlCierre} />
+            <ItemsPAESFinal
+              respuestas={respuestas}
+              onContinuar={irAlCierre}
+              cierreEnDemostracion={cierreEnDemostracion}
+            />
           )}
         />
       </div>
@@ -137,6 +155,11 @@ export function RunnerLeccion({ leccion }: { leccion: LeccionCliente }) {
             <Boton onClick={avanzar}>Siguiente paso</Boton>
           )}
         </div>
+        {botonFinalVaAlCierre && cierreEnDemostracion && (
+          <div className="mt-4">
+            <AvisoCierreDemostracion />
+          </div>
+        )}
         {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
             en el guion: el botón no se deshabilita sin explicación. */}
         {mostrarAvisoExploracion && avanceBloqueado && (

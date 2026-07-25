@@ -1,6 +1,7 @@
 "use client";
 
 import { Boton } from "@/components/ui/Boton";
+import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 
 function formatoTiempo(ms: number): string {
@@ -13,9 +14,13 @@ function formatoTiempo(ms: number): string {
 export function ItemsPAESFinal({
   respuestas,
   onContinuar,
+  cierreEnDemostracion = false,
 }: {
   respuestas: RespuestaRegistrada[];
   onContinuar: () => void;
+  /* "Continuar" navega a /cierre: si allá espera el banner de demostración, se
+     nombra acá, antes del click. */
+  cierreEnDemostracion?: boolean;
 }) {
   const aciertos = respuestas.filter((r) => r.correcta).length;
   const promedioMs =
@@ -37,7 +42,10 @@ export function ItemsPAESFinal({
           <span className="font-mono tabular-nums">{formatoTiempo(promedioMs)}</span> por pregunta
         </p>
       </div>
-      <Boton onClick={onContinuar}>Continuar</Boton>
+      <div className="flex flex-col items-center gap-3">
+        {cierreEnDemostracion && <AvisoCierreDemostracion />}
+        <Boton onClick={onContinuar}>Continuar</Boton>
+      </div>
     </div>
   );
 }
