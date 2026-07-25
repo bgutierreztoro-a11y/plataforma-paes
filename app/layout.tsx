@@ -143,9 +143,16 @@ export default function RootLayout({
         {/* `appearance` alinea los componentes de Clerk con la paleta y la
             tipografía de la plataforma (ver const `apariencia`). Es solo
             cosmética: no cambia auth, roles ni entitlements. */}
+        {/* Los dos *FallbackRedirectUrl son solo el destino por defecto cuando
+            no hay uno explícito en la URL: mandan a /inicio, el punto de
+            partida, en vez de dejar al estudiante en la página de auth. No
+            introducen ninguna redirección de entrada — nadie es empujado a
+            /ingresar, y / sigue siendo hero público. */}
         <ClerkProvider
           signInUrl="/ingresar"
           signUpUrl="/registrarse"
+          signInFallbackRedirectUrl="/inicio"
+          signUpFallbackRedirectUrl="/inicio"
           localization={localizacion}
           appearance={apariencia}
         >

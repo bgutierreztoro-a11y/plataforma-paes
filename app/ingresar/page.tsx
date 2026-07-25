@@ -26,7 +26,7 @@ export default function Ingresar() {
           No necesitas cuenta: todo lo que está publicado es gratis y no requiere
           registro.
         </p>
-        <EnlaceBoton href="/lecciones" variante="secundario" className="w-full sm:w-auto">
+        <EnlaceBoton href="/inicio" variante="secundario" className="w-full sm:w-auto">
           Seguir sin cuenta
         </EnlaceBoton>
       </div>
