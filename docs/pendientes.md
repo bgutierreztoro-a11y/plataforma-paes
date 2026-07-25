@@ -182,6 +182,27 @@ Al verificar el PASO 3 apareció un usuario huérfano en `usuarios`: `user_test_
 
 Ya está borrado y las cinco tablas quedaron en cero. La lección para el próximo script de verificación contra la base real: limpiar por patrón (`id LIKE 'user_test_%' AND email LIKE '%@invalido.test'`), no solo el id de la corrida en curso, y hacerlo al **empezar** además de al terminar — una corrida que se cae no ejecuta su limpieza.
 
+## CTA principal de `/` empuja a contenido no publicable (2026-07-25) — ABIERTO
+
+El CTA principal de la portada (`app/page.tsx`) es "Comenzar diagnóstico" y
+apunta a `/diagnostico`, cuyo contenido (`content/diagnostico.json`) está en
+`estado: revision`, no `publicable`.
+
+Contradice lo que hizo Fase 1 (`0d3f7e7`): el camino se limpió para que solo las
+lecciones publicables fueran navegables, y la portada sigue empujando contenido
+en revisión como acción primaria. También choca con la decisión de producto de
+`plan-rediseno-entrada.md:19-22` (arranque directo a l1, diagnóstico secundario
+mientras haya una sola lección publicable — un test de ubicación con un solo
+destino no ubica).
+
+**Decidir:** o el diagnóstico sube a `publicable` (con checklist de originalidad
+y revisión matemática, como cualquier contenido), o el CTA deja de ser primario
+en `/`. No decidir por default.
+
+Sacado explícitamente del alcance de Fase 3 el 2026-07-25 para no mezclar una
+decisión de contenido con una de navegación. Ver `docs/plan-fase-3-navegacion.md`
+§8.
+
 ## Webhook Clerk — instancia development (temporal)
 
 Fecha: 2026-07-24
