@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ClerkAppearanceTheme } from "@clerk/shared/types";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
@@ -50,6 +51,56 @@ const localizacion = {
   },
 };
 
+/**
+ * Apariencia de los componentes de Clerk, alineada con la identidad visual de
+ * la plataforma. Es puramente cosmética: no toca auth, roles ni entitlements.
+ *
+ * Cada valor es un token ya existente en app/globals.css (@theme) o en
+ * components/ui/Boton.tsx; el comentario al lado nombra su origen. NO hay
+ * colores nuevos. Se pasan en hex literal, no como `var(--color-…)`, a
+ * propósito: Clerk deriva las escalas de hover/activo/foco calculando sobre el
+ * color base (colorPrimary, colorDanger, colorSuccess, colorNeutral), y un
+ * var() no es parseable por esa aritmética de color — rompería los estados.
+ * Los nombres de variable son los de Clerk v7 (varios cambiaron respecto a v6),
+ * verificados contra @clerk/shared/types.
+ */
+const apariencia: ClerkAppearanceTheme = {
+  variables: {
+    colorPrimary: "#1e4fd8", // --color-accent
+    colorPrimaryForeground: "#ffffff", // texto sobre accent (Boton: text-white)
+    colorForeground: "#16213a", // --color-ink
+    colorMutedForeground: "#4b5c78", // --color-ink-suave
+    colorBackground: "#ffffff", // --color-surface
+    colorInput: "#ffffff", // --color-surface
+    colorInputForeground: "#16213a", // --color-ink
+    colorBorder: "#dce3ee", // --color-border
+    colorNeutral: "#16213a", // --color-ink: base de bordes/sombras/estados neutros
+    colorDanger: "#b3261e", // --color-error
+    colorSuccess: "#146c43", // --color-success
+    colorRing: "#1e4fd8", // --color-accent: anillo de foco, igual que Boton (outline-accent)
+    fontFamily: "var(--font-geist-sans)", // --font-sans
+    fontFamilyButtons: "var(--font-geist-sans)", // --font-sans
+    fontSize: "1rem", // text-base, la escala de texto de la plataforma (Boton, labels)
+    borderRadius: "0.75rem", // --radius-tarjeta (0.75rem); literal para que Clerk derive sm/lg/xl
+  },
+  elements: {
+    // El botón primario del formulario ("Continuar") debe leerse como un CTA
+    // real de la plataforma, no como el botón chico por defecto de Clerk:
+    // mismo alto, peso y prominencia que Boton variante "primario".
+    // colorPrimary + borderRadius ya vienen de variables; acá solo se igualan
+    // tamaño y tipografía. El hover/activo los sigue derivando Clerk desde
+    // colorPrimary, que ya es nuestro accent-fuerte aproximado.
+    formButtonPrimary: {
+      minHeight: "2.75rem", // min-h-11
+      fontSize: "1rem", // text-base
+      fontWeight: 500, // font-medium
+      textTransform: "none", // Boton no usa mayúsculas ni versalitas
+      letterSpacing: "0",
+      boxShadow: "none", // el CTA de la plataforma es plano
+    },
+  },
+};
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -89,14 +140,14 @@ export default function RootLayout({
             auth() en el servidor, así que las lecciones se siguen
             prerenderizando estáticas — eso es lo que hay que verificar en la
             tabla de rutas del build, no dar por sentado. */}
-        {/* Sin prop `appearance`: los componentes de Clerk quedan con su estilo
-            por defecto. El rediseño visual es una fase aparte, y media paleta
-            aplicada a mano se ve peor que ninguna. Varios nombres de variables
-            cambiaron en v7, así que tampoco conviene copiarlos de memoria. */}
+        {/* `appearance` alinea los componentes de Clerk con la paleta y la
+            tipografía de la plataforma (ver const `apariencia`). Es solo
+            cosmética: no cambia auth, roles ni entitlements. */}
         <ClerkProvider
           signInUrl="/ingresar"
           signUpUrl="/registrarse"
           localization={localizacion}
+          appearance={apariencia}
         >
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
