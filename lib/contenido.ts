@@ -89,6 +89,45 @@ export function obtenerLeccion(id: string): Leccion {
   return cargarYValidar<Leccion>(ruta);
 }
 
+/**
+ * Lección de demostración: se conserva en el repo para pruebas internas, pero
+ * queda fuera del alcance del estudiante — no aparece en el camino ni es
+ * navegable. Retirarla por id (y no borrar el archivo) es una decisión de
+ * producto, no una limitación del schema.
+ */
+const ID_DEMO = "l0-demo";
+
+/**
+ * `true` si la lección puede mostrarse a un estudiante. La fuente de verdad es
+ * el `estado` del propio JSON: el schema declara "Solo 'publicable' puede
+ * mostrarse a estudiantes" (content/schema/leccion.schema.json).
+ */
+export function esPublicable(leccion: Leccion): boolean {
+  return leccion.estado === "publicable";
+}
+
+/**
+ * Ids del camino del estudiante, en orden de curso (l1 → l2 → l3), excluida la
+ * demo. Incluye a propósito lecciones aún no publicables: el camino las muestra
+ * como "En preparación" en vez de ocultarlas, para que el curso se lea como en
+ * construcción y no como abandonado. El orden sale del prefijo del id (l1, l2,
+ * l3), que ya codifica la secuencia.
+ */
+export function idsDelCamino(): string[] {
+  return idsDeLecciones()
+    .filter((id) => id !== ID_DEMO)
+    .sort();
+}
+
+/**
+ * Ids efectivamente navegables: solo las publicables del camino. Alimenta
+ * `generateStaticParams`; con `dynamicParams = false`, cualquier otro id —la
+ * demo o una lección en borrador/revisión— cae en el 404 normal.
+ */
+export function idsPublicables(): string[] {
+  return idsDelCamino().filter((id) => esPublicable(obtenerLeccion(id)));
+}
+
 export function obtenerDiagnostico(): DiagnosticoContenido {
   return cargarYValidar<DiagnosticoContenido>(
     path.join(process.cwd(), "content", "diagnostico.json"),

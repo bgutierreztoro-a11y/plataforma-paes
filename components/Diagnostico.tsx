@@ -28,7 +28,7 @@ function FinalDiagnostico({ respuestas }: { respuestas: RespuestaRegistrada[] })
         Guardamos tu resultado para esta sesión: cuando termines el módulo y rindas el cierre,
         vas a poder ver cuánto avanzaste.
       </p>
-      <EnlaceBoton href="/leccion/l0-demo">Empezar la lección</EnlaceBoton>
+      <EnlaceBoton href="/leccion/l1-patrones-de-cambio">Empezar la primera lección</EnlaceBoton>
     </div>
   );
 }

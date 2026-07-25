@@ -15,6 +15,11 @@ interface TarjetaProps {
   indicador?: ReactNode;
   /* Si existe, toda la tarjeta es un enlace con hover/focus propios. */
   href?: string;
+  /* Estado inequívocamente inactivo (ej. lección en preparación): atenúa la
+     ilustración, marca cursor-default y expone aria-disabled en el contenedor.
+     No aplica atenuación al texto — el copy debe seguir legible. Solo tiene
+     sentido sin href. */
+  inactiva?: boolean;
   /* Contenido extra bajo la descripción (ej. un CTA). */
   children?: ReactNode;
 }
@@ -32,6 +37,7 @@ function CuerpoTarjeta({
   meta,
   esDemostracion,
   indicador,
+  inactiva,
   children,
 }: Omit<TarjetaProps, "href">) {
   return (
@@ -39,8 +45,9 @@ function CuerpoTarjeta({
       {ilustracion && (
         <div className="border-b border-border bg-bg px-6 py-5">
           {/* Tope al ancho natural del viewBox (240px): sin esto la
-              ilustración se estira y domina la tarjeta en desktop. */}
-          <div className="mx-auto max-w-60">{ilustracion}</div>
+              ilustración se estira y domina la tarjeta en desktop.
+              `inactiva` atenúa solo la ilustración, no el texto. */}
+          <div className={`mx-auto max-w-60${inactiva ? " opacity-70" : ""}`}>{ilustracion}</div>
         </div>
       )}
       <div className="flex flex-1 flex-col gap-2 p-6">
@@ -78,7 +85,10 @@ export function Tarjeta({ href, ...props }: TarjetaProps) {
     );
   }
   return (
-    <div className={CLASES_BASE}>
+    <div
+      className={`${CLASES_BASE}${props.inactiva ? " cursor-default" : ""}`}
+      aria-disabled={props.inactiva || undefined}
+    >
       <CuerpoTarjeta {...props} />
     </div>
   );
