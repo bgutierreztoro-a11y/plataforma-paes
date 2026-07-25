@@ -220,7 +220,35 @@ ubique al estudiante, es contenido nuevo desde cero, con checklist de originalid
 y revisión matemática como cualquier lección. Tiene sentido recién cuando haya
 varias lecciones publicables entre las cuales enrutar (`plan-rediseno-entrada.md:19-22`).
 
-## Webhook Clerk — instancia development (temporal)
+## `/cierre` empuja al banner de demostración sin aviso — PENDIENTE DE DECISIÓN (2026-07-25)
+
+Al resolver el caso de `/diagnostico` (sección anterior) apareció un caso emparentado
+que no se tocó: `content/cierre.json:5` también está en `"estado": "revision"`, y
+`components/Cierre.tsx:19` monta `<BannerDemostracion />` cuando el estado no es
+`publicable` — el mismo cartel "DEMOSTRACIÓN — contenido no revisado"
+(`components/ui/Banner.tsx:7`) que se venía avisando de antemano en los dos enlaces
+a `/diagnostico`.
+
+**En qué se diferencia del caso ya resuelto.** En `/diagnostico` el estudiante llega
+por un click que él elige, y ahora ambos puntos de entrada (`app/page.tsx:40` y
+`components/CierreFinal.tsx:98`) avisan "hoy una versión de demostración" antes de
+ese click. En `/cierre` no hay click del estudiante: `components/RunnerLeccion.tsx:46`
+hace `router.push("/cierre")` automáticamente al terminar la lección
+(`irAlCierre()`, disparado desde `terminarPasos()` cuando no quedan `itemsPAES`, o
+desde `renderFinal` de `EjecutorSetItems` cuando sí los hay). El estudiante no decide
+ir a `/cierre` — el flujo lo empuja ahí, y el banner aparece sin que nada se lo haya
+anunciado antes.
+
+Adicional, ya anotado antes de ahora pero relacionado: `content/cierre.json:4`
+declara `"titulo": "Cierre — pendiente e intercepto"`, que es el tema de la Lección 2
+(`borrador`, no del cierre del módulo completo). Verificado que hoy no se renderiza
+en ningún componente (`Cierre.tsx`, `CierreFinal.tsx`, `app/cierre/page.tsx` no leen
+`.titulo`), así que no es visible todavía, pero queda inconsistente si algún día se
+muestra.
+
+**Pendiente de decisión de Benjamín — no propuesta de solución acá:** qué hacer con
+el banner sin aviso previo en un flujo empujado (a diferencia de un click elegido), y
+qué hacer con el título de L2 dentro de `cierre.json`.
 
 Fecha: 2026-07-24
 
