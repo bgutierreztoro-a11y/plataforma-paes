@@ -56,3 +56,6 @@ instrumentation-client.ts
 Material/
 fuentes-analisis-aisladas/
 pendiente-clasificar/
+
+# clerk configuration (can include secrets)
+/.clerk/
