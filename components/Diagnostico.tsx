@@ -10,7 +10,15 @@ import type { DiagnosticoCliente } from "@/lib/sanitizar";
 
 /* Guarda el resultado en memoria de sesión al montar (efecto, no durante el
    render). Es la medición "pre" que el cierre compara al final del módulo. */
-function FinalDiagnostico({ respuestas }: { respuestas: RespuestaRegistrada[] }) {
+function FinalDiagnostico({
+  respuestas,
+  primeraLeccionId,
+}: {
+  respuestas: RespuestaRegistrada[];
+  /* Primera lección abierta del camino (la calcula app/diagnostico/page.tsx).
+     Puede venir indefinida si no hay ninguna publicable. */
+  primeraLeccionId?: string;
+}) {
   useEffect(() => {
     guardarResultadoDiagnostico({
       aciertos: respuestas.filter((r) => r.correcta).length,
@@ -31,12 +39,25 @@ function FinalDiagnostico({ respuestas }: { respuestas: RespuestaRegistrada[] })
         Este resultado vive solo en esta visita: si recargas la página, se pierde. Si llegas
         al cierre sin recargar, lo vas a ver comparado con tus respuestas del final.
       </p>
-      <EnlaceBoton href="/leccion/l1-patrones-de-cambio">Empezar la primera lección</EnlaceBoton>
+      {/* Sin lección publicable no hay a dónde mandar un enlace directo: se
+          manda al índice, que ya sabe mostrar "En preparación" por lección,
+          en vez de arriesgar /leccion/undefined. */}
+      {primeraLeccionId ? (
+        <EnlaceBoton href={`/leccion/${primeraLeccionId}`}>Empezar la primera lección</EnlaceBoton>
+      ) : (
+        <EnlaceBoton href="/lecciones">Ver el camino</EnlaceBoton>
+      )}
     </div>
   );
 }
 
-export function Diagnostico({ diagnostico }: { diagnostico: DiagnosticoCliente }) {
+export function Diagnostico({
+  diagnostico,
+  primeraLeccionId,
+}: {
+  diagnostico: DiagnosticoCliente;
+  primeraLeccionId?: string;
+}) {
   const [fase, setFase] = useState<"entrada" | "items">("entrada");
 
   if (fase === "entrada") {
@@ -74,7 +95,9 @@ export function Diagnostico({ diagnostico }: { diagnostico: DiagnosticoCliente }
       <EjecutorSetItems
         items={diagnostico.items}
         mostrarFeedback={false}
-        renderFinal={(respuestas) => <FinalDiagnostico respuestas={respuestas} />}
+        renderFinal={(respuestas) => (
+          <FinalDiagnostico respuestas={respuestas} primeraLeccionId={primeraLeccionId} />
+        )}
       />
     </div>
   );
