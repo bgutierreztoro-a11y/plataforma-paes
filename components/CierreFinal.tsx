@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Boton } from "@/components/ui/Boton";
 import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre";
@@ -14,7 +15,15 @@ function formatoTiempo(ms: number): string {
   return `${min}:${String(seg).padStart(2, "0")}`;
 }
 
-export function CierreFinal({ respuestas }: { respuestas: RespuestaRegistrada[] }) {
+export function CierreFinal({
+  respuestas,
+  ultimaLeccionId,
+}: {
+  respuestas: RespuestaRegistrada[];
+  /* Última lección abierta del camino (la calcula app/cierre/page.tsx). Puede
+     venir indefinida si no hay ninguna publicable. */
+  ultimaLeccionId?: string;
+}) {
   const router = useRouter();
   const aciertos = respuestas.filter((r) => r.correcta).length;
   const diagnostico = obtenerResultadoDiagnostico();
@@ -24,10 +33,14 @@ export function CierreFinal({ respuestas }: { respuestas: RespuestaRegistrada[] 
       : 0;
 
   function solicitarSiguienteLeccion() {
-    registrarEvento({
-      nombre: "solicitud_siguiente_leccion",
-      props: { leccion_id: "l0-demo" },
-    });
+    /* Sin lecciones abiertas no hay id honesto que mandar: se prefiere perder
+       el evento antes que atribuir la solicitud a una lección inventada. */
+    if (ultimaLeccionId) {
+      registrarEvento({
+        nombre: "solicitud_siguiente_leccion",
+        props: { leccion_id: ultimaLeccionId },
+      });
+    }
     router.push("/");
   }
 
@@ -79,8 +92,15 @@ export function CierreFinal({ respuestas }: { respuestas: RespuestaRegistrada[] 
               <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
             </p>
             <p className="mt-3 text-sm leading-relaxed text-ink-suave">
-              Esta vez no rendiste el diagnóstico en esta sesión, así que no hay con qué comparar.
-              La próxima vez, pártelo desde la portada para ver tu avance completo.
+              No rendiste el diagnóstico en esta sesión, así que no hay con qué comparar. Se
+              rinde antes de las lecciones: está en{" "}
+              <Link
+                href="/diagnostico"
+                className="font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                el diagnóstico
+              </Link>
+              .
             </p>
           </>
         )}

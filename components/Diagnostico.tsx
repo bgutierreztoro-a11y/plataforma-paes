@@ -24,9 +24,12 @@ function FinalDiagnostico({ respuestas }: { respuestas: RespuestaRegistrada[] })
       <h1 className="text-2xl font-semibold tracking-tight text-ink">
         Listo, ya tenemos tu punto de partida
       </h1>
+      {/* Nada de verbos de guardado: el resultado vive en memoria de módulo
+          (lib/progresoSesion.ts) y muere al recargar. La frase tiene que seguir
+          siendo cierta justo después de una recarga. */}
       <p className="max-w-md text-base leading-relaxed text-ink-suave">
-        Guardamos tu resultado para esta sesión: cuando termines el módulo y rindas el cierre,
-        vas a poder ver cuánto avanzaste.
+        Este resultado vive solo en esta visita: si recargas la página, se pierde. Si llegas
+        al cierre sin recargar, lo vas a ver comparado con tus respuestas del final.
       </p>
       <EnlaceBoton href="/leccion/l1-patrones-de-cambio">Empezar la primera lección</EnlaceBoton>
     </div>

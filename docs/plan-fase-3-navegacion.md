@@ -194,12 +194,20 @@ Sin gamificación. No tocar `content/*.json` ni campos de certificación
 
 ---
 
-## 8. Fuera de alcance, agendado aparte
+## 8. Fuera de alcance — resuelto antes de esta fase
 
-**El CTA principal de `/` empuja a `/diagnostico`, que está en `estado: revision`.**
-Fase 1 sacó del camino todo lo no publicable, pero la portada sigue mandando ahí
-como acción primaria. Decidido el 2026-07-25: **no se aborda en Fase 3.**
-Anotado como ítem abierto en `docs/pendientes.md`.
+**El CTA principal de `/` empujaba a `/diagnostico`, que está en `estado: revision`.**
+Fase 1 sacó del camino todo lo no publicable, pero la portada seguía mandando ahí
+como acción primaria — y, por no ser `publicable`, ese destino monta
+`BannerDemostracion` (`components/Diagnostico.tsx:42`), así que el estudiante veía
+**"DEMOSTRACIÓN — contenido no revisado"** (`components/ui/Banner.tsx:7`) al primer
+clic.
+
+Decidido el 2026-07-25: no se aborda *dentro* de Fase 3, pero tampoco queda
+esperando — se resolvió **antes**, en su propio commit. El CTA de `/` pasó a la
+primera lección abierta del camino y el diagnóstico quedó como opción secundaria
+con etiqueta honesta. Detalle y lo que sigue abierto: `docs/pendientes.md`, sección
+"CTA principal de `/` empujaba a contenido no publicable".
 
 ---
 

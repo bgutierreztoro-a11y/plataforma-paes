@@ -182,26 +182,43 @@ Al verificar el PASO 3 apareció un usuario huérfano en `usuarios`: `user_test_
 
 Ya está borrado y las cinco tablas quedaron en cero. La lección para el próximo script de verificación contra la base real: limpiar por patrón (`id LIKE 'user_test_%' AND email LIKE '%@invalido.test'`), no solo el id de la corrida en curso, y hacerlo al **empezar** además de al terminar — una corrida que se cae no ejecuta su limpieza.
 
-## CTA principal de `/` empuja a contenido no publicable (2026-07-25) — ABIERTO
+## CTA principal de `/` empujaba a contenido no publicable (2026-07-25) — RESUELTO EN PARTE
 
-El CTA principal de la portada (`app/page.tsx`) es "Comenzar diagnóstico" y
-apunta a `/diagnostico`, cuyo contenido (`content/diagnostico.json`) está en
+El CTA principal de la portada (`app/page.tsx`) era "Comenzar diagnóstico" y
+apuntaba a `/diagnostico`, cuyo contenido (`content/diagnostico.json`) está en
 `estado: revision`, no `publicable`.
 
-Contradice lo que hizo Fase 1 (`0d3f7e7`): el camino se limpió para que solo las
-lecciones publicables fueran navegables, y la portada sigue empujando contenido
-en revisión como acción primaria. También choca con la decisión de producto de
+**Lo que veía el estudiante, y que la primera redacción de este ítem omitía:** al
+no ser `publicable`, `components/Diagnostico.tsx:42` monta `BannerDemostracion`,
+así que la acción principal del producto abría con el cartel **"DEMOSTRACIÓN —
+contenido no revisado"** (`components/ui/Banner.tsx:7`). No era deuda abstracta de
+contenido: era una advertencia en pantalla en el primer clic.
+
+Contradecía lo que hizo Fase 1 (`0d3f7e7`): el camino se limpió para que solo las
+lecciones publicables fueran navegables, y la portada seguía empujando contenido
+en revisión como acción primaria. También chocaba con la decisión de producto de
 `plan-rediseno-entrada.md:19-22` (arranque directo a l1, diagnóstico secundario
 mientras haya una sola lección publicable — un test de ubicación con un solo
 destino no ubica).
 
-**Decidir:** o el diagnóstico sube a `publicable` (con checklist de originalidad
-y revisión matemática, como cualquier contenido), o el CTA deja de ser primario
-en `/`. No decidir por default.
+**Corrección de cómo estaba planteado este ítem.** La versión original ofrecía dos
+ramas: "o el diagnóstico sube a `publicable`, o el CTA deja de ser primario". La
+primera rama no existe para este archivo:
+`content/diagnostico.json:175` declara textualmente que es *"Set de diagnóstico de
+demostración técnica… No es contenido pedagógico real ni pasa a estado
+publicable"*. No es contenido esperando revisión, es andamiaje declarado como tal.
+Subirlo a `publicable` exigiría **escribir un diagnóstico nuevo**, no revisar este.
 
-Sacado explícitamente del alcance de Fase 3 el 2026-07-25 para no mezclar una
-decisión de contenido con una de navegación. Ver `docs/plan-fase-3-navegacion.md`
-§8.
+**Decidido el 2026-07-25 (Benjamín):** el diagnóstico pierde el lugar primario. El
+CTA de `/` pasa a la primera lección abierta del camino, derivada de
+`idsPublicables()`. El archivo **no** se borra ni se despublica: `/diagnostico`
+sigue existiendo y accesible como opción secundaria, y la portada ahora nombra que
+es una versión de demostración **antes** de que el estudiante vea el banner.
+
+**Lo que queda abierto:** si en algún momento se quiere un diagnóstico real que sí
+ubique al estudiante, es contenido nuevo desde cero, con checklist de originalidad
+y revisión matemática como cualquier lección. Tiene sentido recién cuando haya
+varias lecciones publicables entre las cuales enrutar (`plan-rediseno-entrada.md:19-22`).
 
 ## Webhook Clerk — instancia development (temporal)
 
