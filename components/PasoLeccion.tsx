@@ -42,7 +42,12 @@ export function PasoLeccion({
       <h2 className="text-lg font-semibold text-ink">{paso.titulo}</h2>
       {visuales.length > 0 && lectura.length > 0 ? (
         <div className="mt-6 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-10">
-          <div className="space-y-8 lg:sticky lg:top-6 lg:col-start-2 lg:row-start-1">
+          <div
+            // top-28 (112px) despeja el header sticky de RunnerLeccion.tsx
+            // (link "Salir al camino" + BarraProgreso, 97px medidos) para
+            // que no se pisen al hacer scroll en desktop.
+            className="space-y-8 lg:sticky lg:top-28 lg:col-start-2 lg:row-start-1"
+          >
             {visuales.map(pintar)}
           </div>
           <div className="space-y-8 lg:col-start-1 lg:row-start-1">{lectura.map(pintar)}</div>

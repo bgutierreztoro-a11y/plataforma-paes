@@ -124,7 +124,15 @@ export function RunnerLeccion({
           pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"
         }`}
       >
-        <div className="mb-8 space-y-4">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-ink">
+          {leccion.titulo}
+        </h1>
+        {/* Sticky: header pinneado (link de salida + progreso) mientras se
+            hace scroll dentro del paso. El título queda afuera, arriba, para
+            no inflar la altura fija en mobile. top-28 en
+            PasoLeccion.tsx:45 depende de la altura de este bloque — si se
+            edita el padding o el gap, hay que revisar ese offset también. */}
+        <div className="sticky top-0 z-10 mb-8 space-y-4 border-b border-border bg-surface py-3">
           {/* Modo foco: acá adentro no hay barra de navegación persistente
               (Navegacion.tsx no se monta en /leccion/[id]). Este es el único
               enlace de salida — discreto a propósito, para no competir con el
@@ -135,7 +143,6 @@ export function RunnerLeccion({
           >
             ← Salir al camino
           </Link>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">{leccion.titulo}</h1>
           <BarraProgreso
             pasoActual={estado.pasoActual}
             total={totalPasos}

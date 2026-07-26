@@ -165,6 +165,11 @@ export default function RootLayout({
           <Navegacion />
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
+        <footer className="border-t border-border px-4 py-6 text-center text-xs text-ink-tenue">
+          Plataforma independiente, sin vínculo con DEMRE, la Universidad de
+          Chile ni ningún preuniversitario. &quot;PAES&quot; se usa solo para
+          describir el formato de los ítems.
+        </footer>
       </body>
     </html>
   );
