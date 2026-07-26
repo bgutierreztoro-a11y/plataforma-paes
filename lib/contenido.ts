@@ -6,6 +6,12 @@ import path from "node:path";
 import { validarDatos } from "../scripts/validar-contenido.mjs";
 import { ContenidoInvalidoError } from "./errores";
 import { TIPOS_BLOQUE_VALIDOS } from "./tipos";
+import {
+  IDS_LECCION,
+  idsDeLeccionesEnOrden,
+  temaDeLeccion,
+  todosLosTemas,
+} from "./temas";
 import type {
   Contenido,
   Estado,
@@ -66,18 +72,30 @@ function cargarYValidar<T extends Contenido>(rutaAbsoluta: string): T {
 }
 
 /**
+ * Ids de los archivos de lección que existen en disco, sin validar su
+ * contenido. Los que empiezan con `_` son plantillas y no cuentan.
+ *
+ * Se separa de `idsDeLecciones()` porque el barrido de temas necesita comparar
+ * contra los **archivos**, no contra los archivos válidos: si no, una lección
+ * con un error de contenido se reportaría como "declarada en lib/temas.ts pero
+ * inexistente", que es un diagnóstico falso y manda a buscar al lugar
+ * equivocado.
+ */
+function idsEnDisco(): string[] {
+  const dir = path.join(process.cwd(), "content", "lecciones");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => f.replace(/\.json$/, ""));
+}
+
+/**
  * Solo devuelve ids de lecciones que el runner puede efectivamente pintar
  * (pasan cargarYValidar completo, incluida la forma de bloques). Una lección
  * con contenido inválido queda excluida de las rutas estáticas — y por lo
  * tanto cae en el 404 normal — en vez de tumbar el build completo.
  */
 export function idsDeLecciones(): string[] {
-  const dir = path.join(process.cwd(), "content", "lecciones");
-  const candidatos = readdirSync(dir)
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .map((f) => f.replace(/\.json$/, ""));
-
-  return candidatos.filter((id) => {
+  return idsEnDisco().filter((id) => {
     try {
       obtenerLeccion(id);
       return true;
@@ -117,16 +135,82 @@ export function esPublicable(contenido: { estado: Estado }): boolean {
 }
 
 /**
- * Ids del camino del estudiante, en orden de curso (l1 → l2 → l3), excluida la
- * demo. Incluye a propósito lecciones aún no publicables: el camino las muestra
- * como "En preparación" en vez de ocultarlas, para que el curso se lea como en
- * construcción y no como abandonado. El orden sale del prefijo del id (l1, l2,
- * l3), que ya codifica la secuencia.
+ * Cruza el registro de temas (`lib/temas.ts`, estático) contra los archivos que
+ * existen en disco. Es la mitad de la garantía que TypeScript no puede dar: el
+ * compilador impide escribir un id que no esté en `IDS_LECCION`, pero no sabe
+ * si ese archivo existe ni si alguien lo dejó huérfano.
+ *
+ * Se verifica en las dos direcciones porque los dos errores son igual de
+ * silenciosos: un id declarado que no existe pinta un nodo hacia un 404, y una
+ * lección real que ningún tema reclama simplemente desaparece del camino sin
+ * que nada falle.
+ *
+ * Lanza en vez de advertir: esto corre al construir el camino, así que una
+ * desincronización rompe el build en lugar de publicar un temario con hoyos.
+ */
+export function verificarRegistroDeTemas(): void {
+  const enDisco = new Set(idsEnDisco());
+  const declarados = new Set<string>(IDS_LECCION);
+  const problemas: string[] = [];
+
+  for (const id of declarados) {
+    if (!enDisco.has(id)) {
+      problemas.push(`"${id}" está en IDS_LECCION pero no existe content/lecciones/${id}.json`);
+    }
+  }
+  for (const id of enDisco) {
+    if (!declarados.has(id)) {
+      problemas.push(`content/lecciones/${id}.json existe pero no está en IDS_LECCION`);
+    }
+  }
+
+  // La demo se conserva en el repo para pruebas internas y por decisión de
+  // producto queda fuera del alcance del estudiante, así que es la única
+  // lección que legítimamente no pertenece a ningún tema.
+  for (const id of enDisco) {
+    if (id === ID_DEMO) continue;
+    if (!temaDeLeccion(id)) {
+      problemas.push(`"${id}" no está asignada a ningún tema en lib/temas.ts`);
+    }
+  }
+
+  const asignaciones = new Map<string, string[]>();
+  for (const tema of todosLosTemas()) {
+    for (const id of tema.lecciones) {
+      asignaciones.set(id, [...(asignaciones.get(id) ?? []), tema.id]);
+    }
+  }
+  for (const [id, temas] of asignaciones) {
+    if (temas.length > 1) {
+      problemas.push(`"${id}" está asignada a más de un tema: ${temas.join(", ")}`);
+    }
+  }
+
+  if (problemas.length > 0) {
+    throw new ContenidoInvalidoError(
+      `lib/temas.ts no calza con content/lecciones/:\n${problemas.map((p) => ` - ${p}`).join("\n")}`,
+    );
+  }
+}
+
+/**
+ * Ids del camino del estudiante en orden de temario (eje → tema → posición
+ * dentro del tema), excluida la demo. Incluye a propósito lecciones aún no
+ * publicables: el camino las muestra como "En preparación" en vez de ocultarlas,
+ * para que el curso se lea como en construcción y no como abandonado.
+ *
+ * El orden lo da `lib/temas.ts`, no el prefijo del id ni un sort alfabético.
+ * Ese prefijo (`l1-`, `l2-`, `l3-`) quedó como resto histórico y ya no codifica
+ * la secuencia: `l3-ecuaciones-lineales` pertenece a otro tema que `l1` y `l2`,
+ * así que un número global no significaba nada. Además el sort se caía en `l10`.
+ *
+ * Se filtra contra `idsDeLecciones()` para no perder la propiedad de que una
+ * lección con contenido inválido queda fuera del camino sin tumbar el build.
  */
 export function idsDelCamino(): string[] {
-  return idsDeLecciones()
-    .filter((id) => id !== ID_DEMO)
-    .sort();
+  verificarRegistroDeTemas();
+  const validas = new Set(idsDeLecciones());
+  return idsDeLeccionesEnOrden().filter((id) => id !== ID_DEMO && validas.has(id));
 }
 
 /**
