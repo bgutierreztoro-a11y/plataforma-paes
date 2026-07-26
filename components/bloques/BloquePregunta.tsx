@@ -98,7 +98,7 @@ export function BloquePregunta({
         <div
           role="status"
           className={`transicion-paso flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-            alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-error-suave"
+            alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-attention-suave"
           }`}
         >
           {alternativaElegida.esCorrecta ? <IconoCorrecto /> : <IconoIncorrecto />}

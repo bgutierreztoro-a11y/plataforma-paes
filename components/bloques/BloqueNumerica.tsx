@@ -49,7 +49,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
                 <div
                   role="status"
                   className={`flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-                    esCorrecto ? "bg-success-suave" : "bg-error-suave"
+                    esCorrecto ? "bg-success-suave" : "bg-attention-suave"
                   }`}
                 >
                   {esCorrecto ? <IconoCorrecto /> : <IconoIncorrecto />}

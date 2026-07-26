@@ -93,7 +93,7 @@ export function ItemPAES({
         alt.esCorrecta && mostrarFeedback
           ? "border-success bg-success-suave"
           : !alt.esCorrecta && mostrarFeedback
-            ? "border-error bg-error-suave"
+            ? "border-attention bg-attention-suave"
             : "border-accent bg-accent-suave"
       }`;
     }
@@ -156,7 +156,7 @@ export function ItemPAES({
             <div
               role="status"
               className={`flex items-start gap-2.5 rounded-tarjeta px-4 py-3 text-sm leading-relaxed ${
-                alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-error-suave"
+                alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-attention-suave"
               }`}
             >
               {alternativaElegida.esCorrecta ? <IconoCorrecto /> : <IconoIncorrecto />}
