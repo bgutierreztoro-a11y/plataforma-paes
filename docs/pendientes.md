@@ -220,7 +220,7 @@ ubique al estudiante, es contenido nuevo desde cero, con checklist de originalid
 y revisión matemática como cualquier lección. Tiene sentido recién cuando haya
 varias lecciones publicables entre las cuales enrutar (`plan-rediseno-entrada.md:19-22`).
 
-## `/cierre` empuja al banner de demostración sin aviso — PENDIENTE DE DECISIÓN (2026-07-25)
+## `/cierre` empuja al banner de demostración sin aviso — RESUELTO (2026-07-25)
 
 Al resolver el caso de `/diagnostico` (sección anterior) apareció un caso emparentado
 que no se tocó: `content/cierre.json:5` también está en `"estado": "revision"`, y
@@ -239,16 +239,24 @@ desde `renderFinal` de `EjecutorSetItems` cuando sí los hay). El estudiante no 
 ir a `/cierre` — el flujo lo empuja ahí, y el banner aparece sin que nada se lo haya
 anunciado antes.
 
-Adicional, ya anotado antes de ahora pero relacionado: `content/cierre.json:4`
-declara `"titulo": "Cierre — pendiente e intercepto"`, que es el tema de la Lección 2
-(`borrador`, no del cierre del módulo completo). Verificado que hoy no se renderiza
-en ningún componente (`Cierre.tsx`, `CierreFinal.tsx`, `app/cierre/page.tsx` no leen
-`.titulo`), así que no es visible todavía, pero queda inconsistente si algún día se
-muestra.
+**Resuelto (2026-07-25, commit `88466a2`, 5 archivos).** Se agrega un aviso "El
+cierre es hoy una versión de demostración" antes del último click hacia `/cierre`,
+con el mismo vocabulario ya usado en `/diagnostico`. Resuelto server-side:
+`obtenerCierre().estado` baja como prop `cierreEnDemostracion` hasta el punto real
+de disparo, que depende de si la lección tiene `itemsPAES` o no (`terminarPasos()`
+vs. `renderFinal` de `EjecutorSetItems`).
 
-**Pendiente de decisión de Benjamín — no propuesta de solución acá:** qué hacer con
-el banner sin aviso previo en un flujo empujado (a diferencia de un click elegido), y
-qué hacer con el título de L2 dentro de `cierre.json`.
+Cambio de tipos asociado: `esPublicable()` se ensanchó de `(l: Leccion)` a
+`(c: {estado: Estado})` para aceptar también `CierreContenido` — aprobado
+retroactivamente como parte de este commit, sin cambio de comportamiento en los
+call sites previos (`Leccion` sigue satisfaciendo la forma más ancha).
+
+**Lo que queda abierto:** `content/cierre.json:4` sigue declarando `"titulo":
+"Cierre — pendiente e intercepto"`, que es el tema de la Lección 2 (`borrador`, no
+del cierre del módulo completo). Sigue sin renderizarse en ningún componente
+(`Cierre.tsx`, `CierreFinal.tsx`, `app/cierre/page.tsx` no leen `.titulo`), así que
+no es visible todavía, pero queda inconsistente si algún día se muestra. Sin
+decisión tomada.
 
 Fecha: 2026-07-24
 
