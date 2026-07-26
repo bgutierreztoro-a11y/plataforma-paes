@@ -12,18 +12,19 @@ export const COPY_EN_PREPARACION =
 const ETIQUETA: Record<EstadoNodo, string> = {
   completado: "Completado",
   porRepasar: "Por repasar",
+  enCurso: "En curso",
   disponible: "Empezar",
   enConstruccion: "En preparación",
 };
 
 /**
- * El punto sobre la recta. Los cuatro estados se distinguen por forma **y**
- * color, nunca por color solo (MASTER.md §2.1), y cada uno lleva texto: un nodo
- * que solo cambia de tono no comunica nada a quien no distingue esos tonos.
+ * El punto sobre la recta. Los estados se distinguen por forma **y** color,
+ * nunca por color solo (MASTER.md §2.1), y cada uno lleva texto: un nodo que
+ * solo cambia de tono no comunica nada a quien no distingue esos tonos.
  *
- * El bloqueado NO lleva candado. Un candado promete que existe algo detrás y
- * que se puede abrir cumpliendo un requisito; acá el contenido todavía no está
- * escrito, así que el candado mentiría. Contorno punteado = "en obra".
+ * El de "en construcción" NO lleva candado. Un candado promete que existe algo
+ * detrás y que se puede abrir cumpliendo un requisito; acá el contenido todavía
+ * no está escrito, así que mentiría. Contorno punteado = "en obra".
  */
 export function PuntoNodo({ estado }: { estado: EstadoNodo }) {
   const base =
@@ -43,9 +44,19 @@ export function PuntoNodo({ estado }: { estado: EstadoNodo }) {
           <span className="h-2.5 w-2.5 rounded-full bg-attention-fuerte" />
         </span>
       );
+    case "enCurso":
+      // Mismo anillo de acento que "disponible" pero sin pulso: hay algo
+      // empezado, así que no hace falta llamar la atención para arrancar.
+      return (
+        <span className={`${base} bg-surface ring-2 ring-accent ring-offset-2 ring-offset-bg`}>
+          <span className="h-3 w-3 rounded-full bg-accent" />
+        </span>
+      );
     case "disponible":
       return (
-        <span className={`${base} relative bg-accent text-white ring-2 ring-accent ring-offset-2 ring-offset-bg`}>
+        <span
+          className={`${base} relative bg-accent text-white ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+        >
           {/* El pulso es decorativo: se apaga con prefers-reduced-motion y el
               estado sigue legible por el anillo y por la etiqueta. */}
           <span className="absolute inset-0 rounded-full bg-accent opacity-60 motion-safe:animate-ping motion-reduce:hidden" />
@@ -53,10 +64,21 @@ export function PuntoNodo({ estado }: { estado: EstadoNodo }) {
         </span>
       );
     case "enConstruccion":
-      return (
-        <span className={`${base} border-2 border-dashed border-border-fuerte bg-bg`} />
-      );
+      return <span className={`${base} border-2 border-dashed border-border-fuerte bg-bg`} />;
   }
+}
+
+export interface NodoTemaProps {
+  id: string;
+  nombre: string;
+  objetivo: string;
+  estado: EstadoNodo;
+  /** Nombre del eje al que pertenece, para el rótulo superior. */
+  ejeNombre: string;
+  /** Lecciones completadas sobre las declaradas en el tema. Es la diferencia
+   *  visible entre "voy en la mitad" y "terminé", que el estado por sí solo no
+   *  alcanza a distinguir. */
+  avance: { hechas: number; total: number };
 }
 
 /** El texto del nodo, sin el punto. En escritorio el punto va exactamente sobre
@@ -67,7 +89,22 @@ export function EtiquetaNodo({
   objetivo,
   estado,
   ejeNombre,
+  avance,
 }: Omit<NodoTemaProps, "id">) {
+  const claseChip =
+    estado === "completado"
+      ? "bg-success-suave text-success"
+      : estado === "porRepasar"
+        ? "bg-attention-suave text-attention-fuerte"
+        : estado === "disponible" || estado === "enCurso"
+          ? "bg-accent-suave text-accent-fuerte"
+          : "bg-bg text-ink-suave ring-1 ring-inset ring-border";
+
+  /* El conteo solo aparece cuando dice algo que la etiqueta no dice: en
+     construcción no hay nada que contar, y en completado sería redundante. */
+  const mostrarAvance =
+    avance.total > 1 && estado !== "enConstruccion" && estado !== "completado";
+
   return (
     <span className="min-w-0 flex-1">
       <span className="block text-xs font-medium uppercase tracking-wide text-ink-tenue">
@@ -80,39 +117,32 @@ export function EtiquetaNodo({
       <span className="mt-0.5 block text-sm leading-snug text-ink-suave">
         {estado === "enConstruccion" ? COPY_EN_PREPARACION : objetivo}
       </span>
-      <span
-        className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-          estado === "completado"
-            ? "bg-success-suave text-success"
-            : estado === "porRepasar"
-              ? "bg-attention-suave text-attention-fuerte"
-              : estado === "disponible"
-                ? "bg-accent-suave text-accent-fuerte"
-                : "bg-bg text-ink-suave ring-1 ring-inset ring-border"
-        }`}
-      >
+      {mostrarAvance && (
+        <span className="mt-1 block text-xs text-ink-tenue">
+          <span className="font-mono tabular-nums">{avance.hechas}</span> de{" "}
+          <span className="font-mono tabular-nums">{avance.total}</span> lecciones
+        </span>
+      )}
+      <span className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${claseChip}`}>
         {ETIQUETA[estado]}
       </span>
     </span>
   );
 }
 
-export interface NodoTemaProps {
-  id: string;
-  nombre: string;
-  objetivo: string;
-  estado: EstadoNodo;
-  /** Índice dentro del eje al que pertenece, para el rótulo del eje. */
-  ejeNombre: string;
-}
-
-export function NodoTema({ id, nombre, objetivo, estado, ejeNombre }: NodoTemaProps) {
+export function NodoTema({ id, nombre, objetivo, estado, ejeNombre, avance }: NodoTemaProps) {
   const navegable = estado !== "enConstruccion";
 
   const contenido = (
     <>
       <PuntoNodo estado={estado} />
-      <EtiquetaNodo nombre={nombre} objetivo={objetivo} estado={estado} ejeNombre={ejeNombre} />
+      <EtiquetaNodo
+        nombre={nombre}
+        objetivo={objetivo}
+        estado={estado}
+        ejeNombre={ejeNombre}
+        avance={avance}
+      />
     </>
   );
 

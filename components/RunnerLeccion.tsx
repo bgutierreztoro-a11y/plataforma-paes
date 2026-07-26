@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
 import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
-import { aciertosPorContexto, estadoDeNodo } from "@/lib/estadoNodo";
+import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
@@ -68,7 +68,7 @@ export function RunnerLeccion({
     marcarCompletada(leccion.id);
 
     const progreso = leer();
-    const estadoTema = estadoDeNodo(tema, progreso, aciertosPorContexto(progreso));
+    const estadoTema = estadoDeNodo(tema, progreso, resumirRespuestas(progreso));
     const yaCelebrado = progreso?.temasCelebrados?.includes(tema.id) ?? false;
 
     router.push(

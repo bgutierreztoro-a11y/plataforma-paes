@@ -6,7 +6,7 @@ import { useState } from "react";
 import { NodoTema, PuntoNodo, EtiquetaNodo } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
-import { aciertosPorContexto, estadoDeNodo, type EstadoNodo } from "@/lib/estadoNodo";
+import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
 import { TOTAL_TEMAS } from "@/lib/temas";
 import type { TemaDelCamino } from "@/lib/camino";
 
@@ -40,8 +40,9 @@ export function Camino({
   const [expandido, setExpandido] = useState(false);
 
   const progreso = montado ? leer() : null;
-  const aciertos = aciertosPorContexto(progreso);
-  const estados: EstadoNodo[] = temasConNodo.map((t) => estadoDeNodo(t, progreso, aciertos));
+  const resumen = resumirRespuestas(progreso);
+  const estados: EstadoNodo[] = temasConNodo.map((t) => estadoDeNodo(t, progreso, resumen));
+  const avances = temasConNodo.map((t) => avanceDeTema(t, progreso));
   const completados = estados.filter((e) => e === "completado").length;
 
   const n = temasConNodo.length;
@@ -83,6 +84,7 @@ export function Camino({
                 objetivo={tema.objetivo}
                 ejeNombre={tema.ejeNombre}
                 estado={estados[i]}
+                avance={avances[i]}
               />
             </li>
           ))}
@@ -155,6 +157,7 @@ export function Camino({
                       objetivo={tema.objetivo}
                       estado={estados[i]}
                       ejeNombre={tema.ejeNombre}
+                      avance={avances[i]}
                     />
                   </EnlaceNodo>
                 </div>

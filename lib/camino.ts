@@ -33,6 +33,9 @@ export interface TemaDelCamino {
   /** El tema termina en /cierre. `cierrePublicable` decide si es navegable. */
   cierreId?: string;
   cierrePublicable: boolean;
+  /** Cuántos ítems trae ese cierre. Es el denominador para saber si se rindió
+   *  entero: haber abierto el cierre no es haberlo terminado. */
+  cierreTotalItems: number;
 }
 
 function leccionesDelTema(tema: Tema, validas: Set<string>): LeccionDelTema[] {
@@ -56,7 +59,9 @@ function leccionesDelTema(tema: Tema, validas: Set<string>): LeccionDelTema[] {
 /** Los 16 temas con su contenido resuelto, en orden de temario. */
 export function temasDelCamino(): TemaDelCamino[] {
   const validas = new Set(idsDeLecciones());
-  const cierrePublicable = esPublicable(obtenerCierre());
+  const cierre = obtenerCierre();
+  const cierrePublicable = esPublicable(cierre);
+  const cierreTotalItems = cierre.items?.length ?? 0;
 
   return EJES.flatMap((eje) =>
     eje.temas.map((tema) => ({
@@ -69,6 +74,7 @@ export function temasDelCamino(): TemaDelCamino[] {
       lecciones: leccionesDelTema(tema, validas),
       cierreId: "cierreId" in tema ? tema.cierreId : undefined,
       cierrePublicable,
+      cierreTotalItems,
     })),
   );
 }

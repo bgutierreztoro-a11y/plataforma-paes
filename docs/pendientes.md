@@ -251,12 +251,11 @@ Cambio de tipos asociado: `esPublicable()` se ensanchó de `(l: Leccion)` a
 retroactivamente como parte de este commit, sin cambio de comportamiento en los
 call sites previos (`Leccion` sigue satisfaciendo la forma más ancha).
 
-**Lo que queda abierto:** `content/cierre.json:4` sigue declarando `"titulo":
-"Cierre — pendiente e intercepto"`, que es el tema de la Lección 2 (`borrador`, no
-del cierre del módulo completo). Sigue sin renderizarse en ningún componente
-(`Cierre.tsx`, `CierreFinal.tsx`, `app/cierre/page.tsx` no leen `.titulo`), así que
-no es visible todavía, pero queda inconsistente si algún día se muestra. Sin
-decisión tomada.
+**Cerrado (2026-07-26).** Lo que quedaba abierto era el título de
+`content/cierre.json`, que decía "Cierre — pendiente e intercepto" (el tema de la
+Lección 2) en vez del cierre del módulo completo. Ya está resuelto: el commit
+`1df8dbe` lo dejó en `"Cierre del módulo"`. Verificado contra el archivo el
+2026-07-26. Sin nada pendiente en esta sección.
 
 Fecha: 2026-07-24
 
@@ -306,3 +305,32 @@ concretos y no solo agregados de sesión. Antes de eso no compra nada.
 Aviso de copy que sigue vigente (`docs/plan-fase-3-navegacion.md` §1): ningún
 texto de la interfaz puede afirmar ni insinuar que la cuenta guarda, protege o
 recupera el avance. Con esta pieza sin construir, sería falso.
+
+---
+
+Fecha: 2026-07-26
+
+La celebración de tema no tiene ruta de flujo real hasta que `l2` pase a
+publicable.
+
+Un tema se da por completado solo cuando **todas** las lecciones declaradas en
+`lib/temas.ts` están publicables y completadas, más su `cierreId` si lo tiene
+(`lib/estadoNodo.ts`, `estadoDeNodo`). Hoy `funcion-lineal-y-afin` declara
+`l1-patrones-de-cambio` y `l2-pendiente-e-intercepto`, y `l2` está en `borrador`,
+así que ese tema no puede completarse y `/tema/funcion-lineal-y-afin/completado`
+no se alcanza jugando. `ecuaciones-e-inecuaciones-primer-grado` tampoco: su única
+lección está en borrador.
+
+**Es el comportamiento correcto, no una regresión.** La primera versión filtraba
+las lecciones por `publicable` antes de evaluar, así que terminar `l1` daba el
+tema por cerrado y disparaba "Tema completado" tras 1 de 2 lecciones. Son 16
+celebraciones en todo el curso y son idempotentes: una gastada en falso es una
+que el estudiante no vuelve a ver cuando la lección que falta se publique.
+
+Estado del nodo mientras tanto: **en curso**, con el conteo "1 de 2 lecciones"
+visible. Ni completado ni disponible — hay avance real y no hay nada más abierto
+que hacer.
+
+La pantalla está construida y verificada; lo que falta es contenido, no código.
+Se alcanza sola en cuanto `l2` cruce revisión matemática y de originalidad. No
+hay nada que reprogramar.
