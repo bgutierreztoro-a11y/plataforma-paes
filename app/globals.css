@@ -23,6 +23,17 @@
   --color-error: #b3261e;
   --color-error-suave: #fbeae9;
 
+  /* "aún no": una respuesta incorrecta del estudiante se pinta ámbar, jamás
+     roja. Es la regla dura de MASTER.md §2.1 y §3.4 — el rojo de alarma queda
+     reservado a fallos de sistema, y esa separación ES la pedagogía del
+     principio 3. Tres niveles, como --color-accent, porque el doc distingue el
+     tono de acento del tono de texto: attention-500 tiene 2,0:1 contra blanco y
+     no alcanza para trazo ni texto (§5 exige AA), así que el nivel "fuerte"
+     existe para eso. Valores literales de MASTER.md §2.1. */
+  --color-attention: #f5a623;
+  --color-attention-fuerte: #b26a00;
+  --color-attention-suave: #fff6e9;
+
   /* cuadrícula tipo papel milimetrado */
   --color-grid-fina: #e4eaf5;
   --color-grid-fuerte: #c7d3ea;
