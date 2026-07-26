@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
 import { registrarEvento } from "@/lib/eventos";
+import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarAlternativas } from "@/lib/mezclar";
@@ -12,9 +13,14 @@ import type { BloquePregunta as BloquePreguntaTipo } from "@/lib/tipos";
 export function BloquePregunta({
   bloque,
   itemId,
+  contexto,
+  contextoId,
 }: {
   bloque: BloquePreguntaTipo;
   itemId: string;
+  /* Requeridas, sin default: ver la nota en ItemPAES.tsx. */
+  contexto: RespuestaLocal["contexto"];
+  contextoId: string;
 }) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
@@ -41,14 +47,24 @@ export function BloquePregunta({
     if (!alternativaElegida) return;
     const nuevoIntento = intento + 1;
     setIntento(nuevoIntento);
+    const tiempoMs = Math.round(performance.now() - inicio.current);
     registrarEvento({
       nombre: "item_respuesta",
       props: {
         item_id: itemId,
         correcta: alternativaElegida.esCorrecta,
         intento: nuevoIntento,
-        tiempo_ms: Math.round(performance.now() - inicio.current),
+        tiempo_ms: tiempoMs,
       },
+    });
+    registrarRespuesta({
+      contexto,
+      contextoId,
+      itemId,
+      valor: { tipo: "alternativa", clave: alternativaElegida.clave },
+      correcta: alternativaElegida.esCorrecta,
+      intento: nuevoIntento,
+      tiempoMs,
     });
     setRevelado(true);
   }

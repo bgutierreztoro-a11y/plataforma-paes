@@ -43,7 +43,16 @@ export function Bloque({
     case "abierta":
       return <BloqueAbierta bloque={bloque} />;
     case "pregunta":
-      return <BloquePregunta bloque={bloque} itemId={itemId} />;
+      /* Un bloque `pregunta` siempre vive dentro de una lección: el contexto
+         no puede ser otro y sale del id que este componente ya recibe. */
+      return (
+        <BloquePregunta
+          bloque={bloque}
+          itemId={itemId}
+          contexto="leccion"
+          contextoId={leccionId}
+        />
+      );
     case "interactivoSlider":
       return <BloqueInteractivo bloque={bloque} onExploracionCompleta={onExploracionCompleta} />;
     case "pistas":

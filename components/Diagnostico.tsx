@@ -95,6 +95,8 @@ export function Diagnostico({
       <EjecutorSetItems
         items={diagnostico.items}
         mostrarFeedback={false}
+        contexto="diagnostico"
+        contextoId="diagnostico"
         renderFinal={(respuestas) => (
           <FinalDiagnostico respuestas={respuestas} primeraLeccionId={primeraLeccionId} />
         )}

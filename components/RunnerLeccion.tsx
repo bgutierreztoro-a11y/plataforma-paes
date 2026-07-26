@@ -81,6 +81,8 @@ export function RunnerLeccion({
         <EjecutorSetItems
           items={leccion.itemsPAES}
           mostrarFeedback={true}
+          contexto="leccion"
+          contextoId={leccion.id}
           renderFinal={(respuestas) => (
             <ItemsPAESFinal
               respuestas={respuestas}

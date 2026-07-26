@@ -20,6 +20,8 @@ export function Cierre({
       <EjecutorSetItems
         items={cierre.items}
         mostrarFeedback={true}
+        contexto="cierre"
+        contextoId="cierre"
         renderFinal={(respuestas) => (
           <CierreFinal respuestas={respuestas} ultimaLeccionId={ultimaLeccionId} />
         )}

@@ -8,12 +8,19 @@ import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarAlternativas } from "@/lib/mezclar";
 import { visualDeItem } from "@/lib/visualesItems";
+import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
 import type { ItemCliente } from "@/lib/sanitizar";
 
 interface ItemPAESProps {
   item: ItemCliente;
   mostrarFeedback: boolean;
   onSiguiente: (correcta: boolean, tiempoMs: number) => void;
+  /* Dónde se está respondiendo. Requeridas y sin valor por defecto a propósito:
+     un default silencioso de "leccion" atribuiría al camino las respuestas del
+     diagnóstico y arruinaría el delta pre/post del MOS §6 sin que nada falle.
+     Preferimos el error de compilación. */
+  contexto: RespuestaLocal["contexto"];
+  contextoId: string;
   /* Texto del botón que avanza tras responder ("Siguiente pregunta", "Ver resultado"...). */
   etiquetaSiguiente?: string;
 }
@@ -29,6 +36,8 @@ export function ItemPAES({
   item,
   mostrarFeedback,
   onSiguiente,
+  contexto,
+  contextoId,
   etiquetaSiguiente = "Continuar",
 }: ItemPAESProps) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
@@ -81,6 +90,19 @@ export function ItemPAES({
         intento: nuevoIntento,
         tiempo_ms: tiempoMs,
       },
+    });
+    // Se persiste en el mismo punto donde ya se instrumentaba: son el mismo
+    // hecho. Un intento es una fila nueva y nunca se actualiza una anterior,
+    // igual que en la tabla `respuestas` — así se puede reconstruir cuántos
+    // intentos necesitó el ítem, que es la señal pedagógica que importa.
+    registrarRespuesta({
+      contexto,
+      contextoId,
+      itemId: item.id,
+      valor: { tipo: "alternativa", clave: alternativaElegida.clave },
+      correcta: alternativaElegida.esCorrecta,
+      intento: nuevoIntento,
+      tiempoMs,
     });
     setRevelado(true);
   }
