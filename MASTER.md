@@ -223,15 +223,25 @@ Especificados con tokens. Cada uno lista sus estados obligatorios.
 
 > Microcopy de botón: dice exactamente qué pasa. "Comprobar", no "Enviar". "Siguiente lección", no "OK". (Ver §4.)
 
-### 3.2 Tarjeta de lección
+### 3.2 Nodo del camino y tarjeta de lección
 
-Contenedor de cada lección en el mapa del módulo.
+El camino tiene dos niveles: `/camino` muestra los **temas** del temario M1 como nodos sobre una recta ascendente, y `/tema/[id]` muestra las **lecciones** de ese tema como tarjetas. Los estados de abajo aplican a los dos.
+
 - Superficie `--color-surface`, `--radius-lg`, `--shadow-2`, padding `--space-5`.
 - Estados según progreso:
-  - **Bloqueada:** opacidad reducida, ícono de candado `--ink-400`, sin sombra elevada. No frustra: comunica "primero la anterior".
   - **Disponible:** borde `--color-action` de 2px, badge "Empezar". Hover: `--shadow-3` + `translateY(-2px)` (despega).
   - **En curso:** barra de progreso interna visible.
+  - **Por repasar:** anillo `--color-attention` (ámbar) y badge "Por repasar". Es lo que se pinta cuando el estudiante terminó pero quedó bajo el umbral de dominio. Ámbar y **nunca rojo**, por la misma razón que §3.4: terminar flojo es una invitación a volver, no una falla. **No bloquea nada** — la lección siguiente sigue disponible.
   - **Completada:** check `--color-success`, superficie `--success-50` sutil.
+
+**Los dos estados no disponibles son distintos y no se pintan igual** (enmienda del 2026-07-26):
+
+  - **Bloqueada por prerrequisito:** opacidad reducida, ícono de candado `--ink-400`, sin sombra elevada. Comunica "primero la anterior". El contenido existe y se abre cumpliendo un requisito.
+  - **En construcción:** contorno **punteado** `--color-border-fuerte`, **sin candado**. El contenido todavía no está escrito.
+
+Por qué se separaron: la versión original de esta sección escribió "bloqueada" cuando el único caso previsto era "completa la anterior primero". Con el temario de 16 unidades apareció un caso que no existía —una unidad cuyo contenido no está construido— y el candado ahí miente: promete que hay algo detrás y que se puede abrir. El punteado dice "en obra", que es la verdad. El candado se conserva en el sistema porque el caso de prerrequisito es legítimo, aunque hoy no tenga uso.
+
+> Regla general que deja esta enmienda: el documento se enmienda cuando **el concepto cambia**, no cuando el código se desvió. Si el código no calza con el doc, se arregla el código.
 
 ### 3.3 Bloque interactivo (sliders) — **la insignia**
 
