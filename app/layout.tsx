@@ -22,6 +22,35 @@ const localizacion = {
   formResendCodeLink: "Reenviar el código",
   footerActionLink__useAnotherMethod: "Probar de otra forma",
   backButton: "Volver",
+  badge__primary: "Principal",
+  userButton: {
+    action__manageAccount: "Gestionar cuenta",
+    action__signOut: "Cerrar sesión",
+  },
+  userProfile: {
+    navbar: {
+      title: "Cuenta",
+      description: "Gestiona la información de tu cuenta.",
+      account: "Perfil",
+      security: "Seguridad",
+    },
+    start: {
+      headerTitle__account: "Detalles del perfil",
+      profileSection: {
+        title: "Perfil",
+        primaryButton: "Actualizar perfil",
+      },
+      emailAddressesSection: {
+        title: "Correo electrónico",
+        // El botón real queda oculto vía appearance.elements
+        // (profileSectionPrimaryButton__emailAddresses, ver más abajo):
+        // el flujo solo permite un correo por cuenta. Se traduce igual
+        // por si el CSS no llega a aplicar antes del primer render.
+        primaryButton: "Agregar correo electrónico",
+        detailsAction__primary: "Completar verificación",
+      },
+    },
+  },
   signIn: {
     start: {
       title: "Entra a tu cuenta",
@@ -98,6 +127,15 @@ const apariencia: ClerkAppearanceTheme = {
       textTransform: "none", // Boton no usa mayúsculas ni versalitas
       letterSpacing: "0",
       boxShadow: "none", // el CTA de la plataforma es plano
+    },
+    // Oculta "Agregar correo electrónico" en UserProfile: el flujo de la
+    // plataforma solo admite un correo por cuenta (es el identificador único
+    // de entitlements), agregar uno segundo no tiene a dónde ir. Clave
+    // verificada por inspección directa del DOM en dev (clase real que
+    // renderiza Clerk: cl-profileSectionPrimaryButton__emailAddresses), no
+    // asumida.
+    profileSectionPrimaryButton__emailAddresses: {
+      display: "none",
     },
   },
 };
