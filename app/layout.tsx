@@ -3,6 +3,7 @@ import type { ClerkAppearanceTheme } from "@clerk/shared/types";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
+import { Navegacion } from "@/components/navegacion/Navegacion";
 import "./globals.css";
 
 /**
@@ -134,7 +135,7 @@ export default function RootLayout({
       lang="es-CL"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans text-ink">
+      <body className="min-h-full flex flex-col font-sans text-ink pb-14 sm:pb-0">
         {/* ClerkProvider no protege ni redirige nada por sí solo: solo publica
             el estado de sesión por contexto. Sin la prop `dynamic` no llama a
             auth() en el servidor, así que las lecciones se siguen
@@ -156,6 +157,12 @@ export default function RootLayout({
           localization={localizacion}
           appearance={apariencia}
         >
+          {/* Navegacion se oculta a sí misma (retorna null) dentro de
+              /leccion/[id] — modo foco. pb-14 en <body> reserva el alto de la
+              barra fija inferior en móvil para que no tape contenido; en
+              /leccion/ ese padding queda sin uso (Navegacion no se monta ahí),
+              costo cosmético menor y aceptado frente a taparlo. */}
+          <Navegacion />
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
       </body>
