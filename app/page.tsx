@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { EnlaceBoton } from "@/components/ui/Boton";
-import { GrillaLecciones } from "@/components/GrillaLecciones";
 import { idsPublicables } from "@/lib/contenido";
 
 export default function Portada() {
@@ -45,16 +44,21 @@ export default function Portada() {
         </p>
       </section>
 
-      {/* Acceso directo a lecciones */}
-      <section className="mx-auto w-full max-w-5xl px-4 pb-24 pt-16 sm:px-6">
+      {/* Un solo destino de navegación: el camino. La grilla de lecciones que
+          vivía acá se retiró — dos formas de recorrer el mismo contenido es
+          deuda de diseño, no una comodidad. */}
+      <section className="mx-auto w-full max-w-3xl px-4 pb-24 pt-16 text-center sm:px-6">
         <h2 className="text-2xl font-semibold tracking-tight text-ink">
-          O refuerza un tema directo
+          El temario completo, por unidades
         </h2>
-        <p className="mt-2 text-base text-ink-suave">
-          Cada lección se completa en una sesión y termina con preguntas formato PAES.
+        <p className="mt-2 text-base leading-7 text-ink-suave">
+          Matemática M1 son 16 unidades repartidas en cuatro ejes. En el camino ves cuáles
+          están abiertas, cuáles en preparación y por dónde vas.
         </p>
-        <div className="mt-8">
-          <GrillaLecciones />
+        <div className="mt-8 flex justify-center">
+          <EnlaceBoton href="/camino" variante="secundario">
+            Ver el camino
+          </EnlaceBoton>
         </div>
       </section>
     </div>

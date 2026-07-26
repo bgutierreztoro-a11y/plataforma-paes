@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { idsDelCamino, obtenerLeccion, esPublicable } from "@/lib/contenido";
-import { PuntoDePartida, type LeccionDelCamino } from "@/components/PuntoDePartida";
+import { temasConNodo } from "@/lib/camino";
+import { PuntoDePartida } from "@/components/PuntoDePartida";
 
 export const metadata: Metadata = {
   title: "Inicio",
@@ -16,18 +16,9 @@ export const metadata: Metadata = {
  * sesión (ver components/PuntoDePartida.tsx).
  *
  * / se queda como hero público y no rebota acá; el enlace "ver todo el camino"
- * mantiene /lecciones como índice completo.
+ * lleva a /camino, que es la única forma de navegar el contenido.
  */
 export default function Inicio() {
-  const lecciones: LeccionDelCamino[] = idsDelCamino()
-    .map(obtenerLeccion)
-    .map((leccion) => ({
-      id: leccion.id,
-      titulo: leccion.titulo,
-      minutos: leccion.tiempoEstimadoMin,
-      publicable: esPublicable(leccion),
-    }));
-
   return (
     <div className="min-h-full flex-1 px-4 py-16 sm:px-6">
       <div className="mx-auto w-full max-w-2xl">
@@ -38,16 +29,16 @@ export default function Inicio() {
           Tu punto de partida
         </h1>
         <div className="mt-8">
-          <PuntoDePartida lecciones={lecciones} />
+          <PuntoDePartida temas={temasConNodo()} />
         </div>
         <p className="mt-6 text-sm leading-6 text-ink-suave">
           <Link
-            href="/lecciones"
+            href="/camino"
             className="font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Ver todo el camino
           </Link>{" "}
-          — las tres lecciones del módulo y en qué estado está cada una.
+          — el temario M1 por unidades, y en qué va cada una.
         </p>
       </div>
     </div>

@@ -32,12 +32,14 @@ function FinalDiagnostico({
       <h1 className="text-2xl font-semibold tracking-tight text-ink">
         Listo, ya tenemos tu punto de partida
       </h1>
-      {/* Nada de verbos de guardado: el resultado vive en memoria de módulo
-          (lib/progresoSesion.ts) y muere al recargar. La frase tiene que seguir
-          siendo cierta justo después de una recarga. */}
+      {/* El detalle de cada respuesta sí queda en el dispositivo
+          (lib/progresoLocal.ts); lo que muere al recargar es el resumen en
+          memoria que alimenta la comparación inmediata del cierre. La frase
+          promete solo lo segundo, que es lo único que podemos cumplir hoy: la
+          cuenta todavía no lleva nada de esto a otro dispositivo. */}
       <p className="max-w-md text-base leading-relaxed text-ink-suave">
-        Este resultado vive solo en esta visita: si recargas la página, se pierde. Si llegas
-        al cierre sin recargar, lo vas a ver comparado con tus respuestas del final.
+        Si llegas al cierre en esta misma visita, vas a ver este resultado comparado con tus
+        respuestas del final.
       </p>
       {/* Sin lección publicable no hay a dónde mandar un enlace directo: se
           manda al índice, que ya sabe mostrar "En preparación" por lección,
@@ -45,7 +47,7 @@ function FinalDiagnostico({
       {primeraLeccionId ? (
         <EnlaceBoton href={`/leccion/${primeraLeccionId}`}>Empezar la primera lección</EnlaceBoton>
       ) : (
-        <EnlaceBoton href="/lecciones">Ver el camino</EnlaceBoton>
+        <EnlaceBoton href="/camino">Ver el camino</EnlaceBoton>
       )}
     </div>
   );

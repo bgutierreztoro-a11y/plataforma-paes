@@ -7,7 +7,7 @@ import { useMontado } from "@/lib/useMontado";
 
 const DESTINOS = [
   { href: "/inicio", etiqueta: "Inicio" },
-  { href: "/lecciones", etiqueta: "Camino" },
+  { href: "/camino", etiqueta: "Camino" },
 ] as const;
 
 const CLASE_ENLACE =
