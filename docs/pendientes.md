@@ -275,3 +275,34 @@ Pendiente real cuando se compre el dominio propio:
 
 No asumir que "ya está configurado" solo porque development funciona — son dos endpoints y dos secrets independientes.
 
+
+---
+
+Fecha: 2026-07-26
+
+El progreso anónimo guardado en `localStorage` (`pm1:progreso:v1`) NO se migra
+al servidor cuando el estudiante crea cuenta. El detalle de respuestas se pierde
+en ese momento.
+
+Contexto: `lib/progresoLocal.ts` (nuevo) escribe avance por lección más el
+detalle de intentos por ítem. La mitad del avance por lección sí tiene destino:
+`migrarProgresoLocal` en `lib/datos/progreso.ts` la vuelca a
+`progreso_lecciones`. El detalle de intentos, en cambio, espeja la tabla
+`respuestas` (`db/migraciones/003_respuestas.sql`) y **no tiene función de
+migración**: nadie escribe esa tabla desde el cliente.
+
+Consecuencia concreta: un estudiante que hace el diagnóstico y una lección sin
+cuenta, y después se registra, conserva "dónde iba" pero pierde el detalle de
+qué respondió y en qué intento. Eso es justamente el insumo del delta pre/post
+del MOS §6 para esa persona.
+
+Decisión tomada el 2026-07-26: **no construir la migración ahora.** Es alcance
+propio y no bloquea el camino de dos niveles. Queda documentado para que nadie
+asuma que el detalle sobrevive al registro.
+
+Gatillo para retomarlo: cuando se quiera medir el delta pre/post de estudiantes
+concretos y no solo agregados de sesión. Antes de eso no compra nada.
+
+Aviso de copy que sigue vigente (`docs/plan-fase-3-navegacion.md` §1): ningún
+texto de la interfaz puede afirmar ni insinuar que la cuenta guarda, protege o
+recupera el avance. Con esta pieza sin construir, sería falso.

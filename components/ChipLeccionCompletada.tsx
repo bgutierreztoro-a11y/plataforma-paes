@@ -1,7 +1,7 @@
 "use client";
 
 import { IconoCorrecto } from "@/components/ui/Icono";
-import { esLeccionCompletada } from "@/lib/progresoSesion";
+import { esLeccionCompletada } from "@/lib/progresoLocal";
 import { useMontado } from "@/lib/useMontado";
 
 /** Chip "Completada" en la tarjeta de lección. Lee el progreso en memoria de

@@ -1,17 +1,14 @@
-/* Progreso de la sesión actual, SOLO en memoria de módulo (cliente).
-   Sobrevive a la navegación client-side y muere al recargar la página.
-   Decisión de privacidad documentada (menores, MOS §7.5): nada de
-   localStorage, sessionStorage ni cookies. */
+/* Estado de la sesión actual, SOLO en memoria de módulo (cliente). Sobrevive a
+   la navegación client-side y muere al recargar la página.
 
-const leccionesCompletadas = new Set<string>();
+   El comentario anterior decía que MOS §7.5 prohibía localStorage. Eso dejó de
+   ser cierto el 2026-07-23: la enmienda de esa sección autoriza persistir
+   desempeño pedagógico bajo una única clave versionada, y esa capa vive ahora
+   en lib/progresoLocal.ts. El avance por lección se mudó allá.
 
-export function marcarLeccionCompletada(id: string) {
-  leccionesCompletadas.add(id);
-}
-
-export function esLeccionCompletada(id: string): boolean {
-  return leccionesCompletadas.has(id);
-}
+   Lo que queda acá es lo que corresponde que muera con la pestaña: el resultado
+   del diagnóstico se usa para la comparación pre/post dentro de una misma
+   sesión (MOS §6) y no necesita sobrevivir a un reload. */
 
 /* Resultado del diagnóstico de esta misma sesión, para la comparación
    pre/post del cierre (MOS §6). null si no se rindió en esta sesión. */

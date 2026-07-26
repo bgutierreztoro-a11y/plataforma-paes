@@ -94,9 +94,49 @@ export interface ProgresoLocalLeccion {
   completada: boolean;
 }
 
+/**
+ * Lo que el estudiante eligió, como conjunto cerrado.
+ *
+ * Es una unión discriminada y no un `string` a propósito: no existe variante
+ * que admita texto libre, así que es **estructuralmente imposible** guardar lo
+ * que una persona escribió. `bloqueAbierta` y `bloquePrediccion` capturan
+ * escritura libre en la interfaz (`components/bloques/BloqueAbierta.tsx`,
+ * `BloquePrediccion.tsx`) y por eso quedan fuera del registro por construcción,
+ * no por una lista que alguien pueda olvidar actualizar. Frontera del MOS §7.5:
+ * desempeño sí, identidad no, y el texto libre de un menor es identidad
+ * potencial.
+ */
+export type ValorRespuesta =
+  | { tipo: "alternativa"; clave: "A" | "B" | "C" | "D" }
+  | { tipo: "opcion"; opcionId: string }
+  | { tipo: "booleana"; valor: boolean }
+  | { tipo: "numero"; valor: number };
+
+/**
+ * Un intento sobre un ítem. Espeja la tabla `respuestas`
+ * (db/migraciones/003_respuestas.sql), que ya modela esto en el servidor: una
+ * fila por intento, nunca se actualiza una anterior. Eso es lo que permite
+ * reconstruir cuántos intentos necesitó un ítem, y de ahí sale el agregado
+ * (aciertos, porcentaje) sin guardarlo aparte.
+ */
+export interface RespuestaLocal {
+  contexto: "leccion" | "diagnostico" | "cierre";
+  contextoId: string;
+  itemId: string;
+  valor: ValorRespuesta;
+  correcta: boolean;
+  intento: number;
+  tiempoMs: number;
+  respondidaEn: string;
+}
+
 export interface ProgresoLocal {
   version: 1;
   lecciones: ProgresoLocalLeccion[];
+  /** Opcional a propósito: un objeto sin este campo sigue siendo `version: 1`
+   *  válido, así que agregarlo no obliga a subir la versión de la clave ni a
+   *  migrar lo ya guardado. */
+  respuestas?: RespuestaLocal[];
 }
 
 /**

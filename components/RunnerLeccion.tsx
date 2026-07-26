@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
-import { marcarLeccionCompletada } from "@/lib/progresoSesion";
+import { marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
 import { AvisoCierreDemostracion } from "@/components/ui/Banner";
@@ -52,12 +52,18 @@ export function RunnerLeccion({
       nombre: "paso_inicio",
       props: { paso: estado.pasoActual + 1, leccion_id: leccion.id },
     });
+    // El avance se persiste en el mismo punto donde ya se instrumentaba el
+    // paso: son el mismo hecho ("el estudiante llegó acá") y separarlos abriría
+    // la puerta a que uno se registre y el otro no. `registrarPaso` es monótono
+    // y nunca lanza, así que un almacenamiento no disponible no afecta al
+    // runner (MOS §7.5).
+    registrarPaso(leccion.id, estado.pasoActual);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estado.pasoActual]);
 
   function irAlCierre() {
     registrarEvento({ nombre: "leccion_fin", props: { leccion_id: leccion.id } });
-    marcarLeccionCompletada(leccion.id);
+    marcarCompletada(leccion.id);
     router.push("/cierre");
   }
 

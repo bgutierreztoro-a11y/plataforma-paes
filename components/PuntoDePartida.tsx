@@ -1,7 +1,7 @@
 "use client";
 
 import { EnlaceBoton } from "@/components/ui/Boton";
-import { esLeccionCompletada } from "@/lib/progresoSesion";
+import { esLeccionCompletada } from "@/lib/progresoLocal";
 import { useMontado } from "@/lib/useMontado";
 
 /** Lo mínimo que el cliente necesita de cada lección del camino. La página de
@@ -18,13 +18,17 @@ export interface LeccionDelCamino {
  * Punto de partida de /inicio: una sola decisión, "¿qué hago ahora?", resuelta
  * con lo que ya existe.
  *
- * El progreso vive en memoria de módulo (lib/progresoSesion.ts) y muere al
- * recargar: eso es una decisión de privacidad tomada, no un bug. Consecuencia
- * asumida y visible acá: un estudiante con cuenta puede volver, seguir con
- * sesión de Clerk iniciada, y ver igual el arranque de la rama 1. Por eso el
- * copy de las tres ramas es neutro respecto a la memoria — no dice "de vuelta",
- * no saluda distinto al que ya estuvo, y nunca afirma que algo quedó guardado.
- * Un estudiante que ve la rama 1 no debe poder concluir que perdió algo.
+ * El progreso vive en lib/progresoLocal.ts, o sea en el dispositivo, bajo la
+ * clave versionada que autoriza MOS §7.5. Sobrevive al reload, pero **no** al
+ * cambio de dispositivo ni al borrado del navegador: la migración al servidor
+ * al crear cuenta todavía no existe (docs/pendientes.md, 2026-07-26).
+ *
+ * Por eso el copy de las tres ramas sigue siendo neutro respecto a la memoria:
+ * no dice "de vuelta", no saluda distinto al que ya estuvo, y nunca afirma que
+ * algo quedó guardado. Un estudiante que abre esto en otro teléfono ve la rama
+ * 1, y no debe poder concluir que perdió algo ni que la cuenta se lo guardaba.
+ * Prometer persistencia entre dispositivos sería falso mientras esa pieza no
+ * esté construida (docs/plan-fase-3-navegacion.md §1).
  *
  * Isla de cliente porque `esLeccionCompletada` solo tiene sentido después de
  * hidratar; antes de eso renderiza la rama 1 (mismo HTML en servidor y en el
