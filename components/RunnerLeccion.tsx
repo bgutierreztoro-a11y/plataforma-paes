@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useReducer, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
@@ -124,6 +125,16 @@ export function RunnerLeccion({
         }`}
       >
         <div className="mb-8 space-y-4">
+          {/* Modo foco: acá adentro no hay barra de navegación persistente
+              (Navegacion.tsx no se monta en /leccion/[id]). Este es el único
+              enlace de salida — discreto a propósito, para no competir con el
+              CTA "Siguiente paso" del fondo del runner. */}
+          <Link
+            href="/lecciones"
+            className="inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            ← Salir al camino
+          </Link>
           <h1 className="text-2xl font-semibold tracking-tight text-ink">{leccion.titulo}</h1>
           <BarraProgreso
             pasoActual={estado.pasoActual}
