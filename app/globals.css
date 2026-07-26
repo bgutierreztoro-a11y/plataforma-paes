@@ -145,11 +145,22 @@ body {
 }
 
 /* Trazo del camino completándose en la celebración de tema: la recta se dibuja
-   de una pasada. El path lleva pathLength="1" como atributo SVG (no es una
-   propiedad CSS), así el dash no depende de las coordenadas reales. */
+   de una pasada.
+
+   El número tiene que superar el largo del trazo **en píxeles de pantalla**, no
+   en unidades del viewBox. El path lleva vector-effect="non-scaling-stroke"
+   para que el grosor no se deforme, y ese modo hace que todas las propiedades
+   de trazo —incluido el dash— se resuelvan en el espacio de la pantalla. Con
+   el largo en unidades (95) el trazo se dibujaba hasta un 63% y se cortaba
+   antes del punto final, porque los 95px reales eran menos que los ~152px
+   renderizados. Se probó también pathLength="1": el navegador tampoco normaliza
+   stroke-dasharray de CSS contra ese valor.
+
+   1000 cubre cualquier viewport en el que quepa este SVG, así que no hay que
+   reajustarlo al cambiar el tamaño ni las coordenadas. */
 .trazo-camino {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
   animation: dibujar-trazo 900ms ease-out forwards;
 }
 

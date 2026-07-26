@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState } from "react";
-import { NodoTema } from "@/components/camino/NodoTema";
+import { NodoTema, PuntoNodo, EtiquetaNodo } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { aciertosPorContexto, estadoDeNodo, type EstadoNodo } from "@/lib/estadoNodo";
@@ -47,7 +49,7 @@ export function Camino({
      va de abajo-izquierda a arriba-derecha; el primer tema es el origen. Con un
      solo nodo se centra en vez de dividir por cero. */
   const posicion = (i: number) =>
-    n <= 1 ? { x: 50, y: 50 } : { x: 10 + (i * 80) / (n - 1), y: 90 - (i * 80) / (n - 1) };
+    n <= 1 ? { x: 50, y: 50 } : { x: 12 + (i * 72) / (n - 1), y: 86 - (i * 72) / (n - 1) };
 
   return (
     <div>
@@ -88,7 +90,7 @@ export function Camino({
       </div>
 
       {/* ---------- escritorio: recta ascendente con ejes ---------- */}
-      <div className="fondo-cuadricula relative hidden rounded-tarjeta border border-border sm:block">
+      <div className="fondo-cuadricula relative hidden overflow-hidden rounded-tarjeta border border-border sm:block">
         <div className="relative aspect-[16/10] w-full">
           <svg
             viewBox="0 0 100 100"
@@ -100,7 +102,7 @@ export function Camino({
                 nodos. non-scaling-stroke evita que preserveAspectRatio="none"
                 deforme el grosor de la línea. */}
             <path
-              d="M10 4 V90 H96"
+              d="M8 6 V92 H96"
               stroke="var(--color-border-fuerte)"
               strokeWidth="1"
               fill="none"
@@ -119,21 +121,43 @@ export function Camino({
               />
             )}
           </svg>
+
           {temasConNodo.map((tema, i) => {
             const { x, y } = posicion(i);
+            /* La etiqueta se ancla al lado del punto y cambia de lado pasada la
+               mitad del plano. Sin ese volteo, un nodo en la parte derecha
+               empujaría su tarjeta fuera del contenedor y aparecería scroll
+               horizontal — que es justo lo que no puede pasar en ninguna
+               pantalla. */
+            const aLaDerecha = x <= 50;
             return (
-              <div
-                key={tema.id}
-                className="absolute w-64 max-w-[42%] -translate-y-1/2"
-                style={{ left: `${x}%`, top: `${y}%` }}
-              >
-                <NodoTema
-                  id={tema.id}
-                  nombre={tema.nombre}
-                  objetivo={tema.objetivo}
-                  ejeNombre={tema.ejeNombre}
-                  estado={estados[i]}
-                />
+              <div key={tema.id}>
+                {/* El punto, exactamente sobre la recta. */}
+                <div
+                  className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                >
+                  <PuntoNodo estado={estados[i]} />
+                </div>
+                {/* La etiqueta, al lado. Es el destino clickeable; el punto es
+                    decorativo y queda cubierto por el mismo enlace en móvil. */}
+                <div
+                  className="absolute w-60 -translate-y-1/2"
+                  style={
+                    aLaDerecha
+                      ? { left: `calc(${x}% + 2rem)`, top: `${y}%` }
+                      : { right: `calc(${100 - x}% + 2rem)`, top: `${y}%` }
+                  }
+                >
+                  <EnlaceNodo id={tema.id} estado={estados[i]}>
+                    <EtiquetaNodo
+                      nombre={tema.nombre}
+                      objetivo={tema.objetivo}
+                      estado={estados[i]}
+                      ejeNombre={tema.ejeNombre}
+                    />
+                  </EnlaceNodo>
+                </div>
               </div>
             );
           })}
@@ -182,5 +206,36 @@ export function Camino({
         </section>
       )}
     </div>
+  );
+}
+
+/** Envoltorio de la etiqueta en escritorio: enlace cuando el tema es navegable,
+ *  contenedor inerte cuando está en construcción. Mismo criterio que NodoTema
+ *  en móvil — un tema sin contenido no lleva a ninguna parte. */
+function EnlaceNodo({
+  id,
+  estado,
+  children,
+}: {
+  id: string;
+  estado: EstadoNodo;
+  children: React.ReactNode;
+}) {
+  const clases =
+    "flex min-h-11 w-full rounded-tarjeta bg-surface/95 p-3 text-left shadow-tarjeta backdrop-blur-[2px]";
+  if (estado === "enConstruccion") {
+    return (
+      <div className={`${clases} cursor-default`} aria-disabled="true">
+        {children}
+      </div>
+    );
+  }
+  return (
+    <Link
+      href={`/tema/${id}`}
+      className={`${clases} motion-safe:transition-shadow hover:shadow-tarjeta-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+    >
+      {children}
+    </Link>
   );
 }

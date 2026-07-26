@@ -14,14 +14,16 @@ function TarjetaDato({
   detalle,
 }: {
   etiqueta: string;
-  valor: string;
+  /* ReactNode y no string: el monoespaciado es solo para las cifras, y las
+     palabras que van entre ellas ("de") se pintan en sans. */
+  valor: React.ReactNode;
   detalle: string;
 }) {
   return (
     <div className="rounded-tarjeta border border-border bg-surface p-5 text-left shadow-tarjeta">
       <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">{etiqueta}</p>
       {/* Cifras tabulares: el número no cambia de ancho entre lecciones. */}
-      <p className="mt-1 font-mono text-3xl font-semibold tabular-nums text-ink">{valor}</p>
+      <p className="mt-1 text-3xl font-semibold text-ink">{valor}</p>
       <p className="mt-1 text-sm leading-6 text-ink-suave">{detalle}</p>
     </div>
   );
@@ -67,12 +69,18 @@ export function ItemsPAESFinal({
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TarjetaDato
             etiqueta="Aciertos"
-            valor={`${aciertos}/${total}`}
+            valor={<span className="font-mono tabular-nums">{`${aciertos}/${total}`}</span>}
             detalle="Preguntas formato PAES de esta lección."
           />
           <TarjetaDato
             etiqueta="Tu avance"
-            valor={`${ordinalLeccion} de ${totalLeccionesTema}`}
+            valor={
+              <>
+                <span className="font-mono tabular-nums">{ordinalLeccion}</span>
+                <span className="px-1.5 text-2xl text-ink-suave">de</span>
+                <span className="font-mono tabular-nums">{totalLeccionesTema}</span>
+              </>
+            }
             detalle={`Lecciones de ${temaNombre}.`}
           />
         </div>

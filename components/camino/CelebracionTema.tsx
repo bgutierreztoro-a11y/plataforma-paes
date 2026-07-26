@@ -32,7 +32,6 @@ function TrazoCompletandose() {
       />
       <path
         d="M8 52 L92 8"
-        pathLength={1}
         stroke="var(--color-success)"
         strokeWidth="2.5"
         strokeLinecap="round"

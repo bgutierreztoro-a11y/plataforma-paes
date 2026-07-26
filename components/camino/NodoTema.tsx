@@ -25,7 +25,7 @@ const ETIQUETA: Record<EstadoNodo, string> = {
  * que se puede abrir cumpliendo un requisito; acá el contenido todavía no está
  * escrito, así que el candado mentiría. Contorno punteado = "en obra".
  */
-function Punto({ estado }: { estado: EstadoNodo }) {
+export function PuntoNodo({ estado }: { estado: EstadoNodo }) {
   const base =
     "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors";
   switch (estado) {
@@ -59,6 +59,44 @@ function Punto({ estado }: { estado: EstadoNodo }) {
   }
 }
 
+/** El texto del nodo, sin el punto. En escritorio el punto va exactamente sobre
+ *  la recta y la etiqueta se ancla al lado, así que se posicionan por separado;
+ *  en móvil van juntos en una fila. */
+export function EtiquetaNodo({
+  nombre,
+  objetivo,
+  estado,
+  ejeNombre,
+}: Omit<NodoTemaProps, "id">) {
+  return (
+    <span className="min-w-0 flex-1">
+      <span className="block text-xs font-medium uppercase tracking-wide text-ink-tenue">
+        {ejeNombre}
+      </span>
+      <span className="block text-base font-semibold leading-snug text-ink">{nombre}</span>
+      {/* La línea del tema, en lenguaje del estudiante. En "en construcción" se
+          dice la verdad sobre por qué no abre, en vez de repetir una promesa
+          que todavía no se puede cumplir. */}
+      <span className="mt-0.5 block text-sm leading-snug text-ink-suave">
+        {estado === "enConstruccion" ? COPY_EN_PREPARACION : objetivo}
+      </span>
+      <span
+        className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          estado === "completado"
+            ? "bg-success-suave text-success"
+            : estado === "porRepasar"
+              ? "bg-attention-suave text-attention-fuerte"
+              : estado === "disponible"
+                ? "bg-accent-suave text-accent-fuerte"
+                : "bg-bg text-ink-suave ring-1 ring-inset ring-border"
+        }`}
+      >
+        {ETIQUETA[estado]}
+      </span>
+    </span>
+  );
+}
+
 export interface NodoTemaProps {
   id: string;
   nombre: string;
@@ -73,32 +111,8 @@ export function NodoTema({ id, nombre, objetivo, estado, ejeNombre }: NodoTemaPr
 
   const contenido = (
     <>
-      <Punto estado={estado} />
-      <span className="min-w-0 flex-1">
-        <span className="block text-xs font-medium uppercase tracking-wide text-ink-tenue">
-          {ejeNombre}
-        </span>
-        <span className="block text-base font-semibold leading-snug text-ink">{nombre}</span>
-        {/* La línea del tema, en lenguaje del estudiante. En "en construcción"
-            se dice la verdad sobre por qué no abre, en vez de repetir una
-            promesa que todavía no se puede cumplir. */}
-        <span className="mt-0.5 block text-sm leading-snug text-ink-suave">
-          {estado === "enConstruccion" ? COPY_EN_PREPARACION : objetivo}
-        </span>
-        <span
-          className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            estado === "completado"
-              ? "bg-success-suave text-success"
-              : estado === "porRepasar"
-                ? "bg-attention-suave text-attention-fuerte"
-                : estado === "disponible"
-                  ? "bg-accent-suave text-accent-fuerte"
-                  : "bg-bg text-ink-suave ring-1 ring-inset ring-border"
-          }`}
-        >
-          {ETIQUETA[estado]}
-        </span>
-      </span>
+      <PuntoNodo estado={estado} />
+      <EtiquetaNodo nombre={nombre} objetivo={objetivo} estado={estado} ejeNombre={ejeNombre} />
     </>
   );
 
