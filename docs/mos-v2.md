@@ -150,3 +150,23 @@ Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del l
 3. Ninguna sesión de estrategia sin datos nuevos.
 4. La evidencia previa no se borra con un reset de proyecto: lo único que la gente nos ha pagado hasta hoy fue material curado cercano al examen. Esa señal se respeta y por eso cada lección conecta con formato PAES.
 5. Este documento se actualiza solo cuando un gate se cruza o un test entrega resultados. No se reescribe por inquietud.
+
+## 12. Enmienda 1 (julio 2026) — gatillada por test de usuario
+
+Dato: una estudiante PAES externa completó parte del módulo y reportó monotonía en el formato de interacción. Señal cualitativa, n=1, pero apunta al riesgo pedagógico central: si no termina la lección, no hay aprendizaje que medir.
+
+Se libera de §9:
+- Navegación tipo camino con estados de progreso visibles.
+- Variedad de formatos de interacción dentro de los pasos de lección.
+- Autenticación (ya construida; §9 quedó obsoleto).
+- Señales de progreso intra-lección y resumen de cierre.
+
+Sigue bloqueado (requiere Gate 3):
+- Ligas, ranking entre estudiantes, monedas, vidas, tiendas.
+- Rachas diarias y notificaciones de retención.
+- Dashboard del estudiante. Tutor IA. Repetición espaciada.
+
+Innegociable, sin cambios:
+- Ítems PAES = 4 alternativas A–D, respuesta única. La fidelidad al examen ES el producto.
+- Originalidad, revisión matemática, proveniencia, firma manual.
+- localStorage solo desempeño, nunca identidad.
