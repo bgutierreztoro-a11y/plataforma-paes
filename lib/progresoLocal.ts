@@ -155,7 +155,14 @@ export function leer(): ProgresoLocal | null {
       }
     }
 
-    return respuestas.length > 0 ? { version: 1, lecciones, respuestas } : { version: 1, lecciones };
+    const temasCelebrados = Array.isArray(data.temasCelebrados)
+      ? data.temasCelebrados.filter((t): t is string => typeof t === "string" && t.trim() !== "")
+      : [];
+
+    const salida: ProgresoLocal = { version: 1, lecciones };
+    if (respuestas.length > 0) salida.respuestas = respuestas;
+    if (temasCelebrados.length > 0) salida.temasCelebrados = temasCelebrados;
+    return salida;
   } catch {
     return null;
   }
@@ -247,6 +254,23 @@ export function registrarRespuesta(intento: Omit<RespuestaLocal, "respondidaEn">
   const actual = leer() ?? VACIO;
   const respuesta: RespuestaLocal = { ...intento, respondidaEn: new Date().toISOString() };
   guardar({ ...actual, respuestas: [...(actual.respuestas ?? []), respuesta] });
+}
+
+/**
+ * Marca el tema como celebrado y devuelve `true` solo la **primera** vez. Las
+ * llamadas siguientes devuelven `false` sin escribir nada, que es lo que hace
+ * idempotente a la pantalla de celebración.
+ *
+ * Si el almacenamiento no está disponible devuelve `true` siempre: preferimos
+ * que un estudiante en modo privado vea la celebración de nuevo antes que no
+ * verla nunca. Es una degradación visible y benigna, no un dato perdido.
+ */
+export function marcarTemaCelebrado(temaId: string): boolean {
+  const actual = leer();
+  if (actual?.temasCelebrados?.includes(temaId)) return false;
+  const base = actual ?? VACIO;
+  guardar({ ...base, temasCelebrados: [...(base.temasCelebrados ?? []), temaId] });
+  return true;
 }
 
 // ---------- lecturas derivadas ----------

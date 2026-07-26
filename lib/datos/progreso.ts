@@ -137,6 +137,16 @@ export interface ProgresoLocal {
    *  válido, así que agregarlo no obliga a subir la versión de la clave ni a
    *  migrar lo ya guardado. */
   respuestas?: RespuestaLocal[];
+  /**
+   * Ids de tema cuya pantalla de celebración ya se mostró. Existe para que la
+   * celebración sea idempotente: se ve una vez, no en cada visita ni tras cada
+   * recarga.
+   *
+   * Es un conjunto cerrado de ids del temario, no desempeño y menos identidad.
+   * Opcional por la misma razón que `respuestas`: la versión de la clave se
+   * mantiene en 1.
+   */
+  temasCelebrados?: string[];
 }
 
 /**
