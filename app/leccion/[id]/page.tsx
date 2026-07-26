@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
-import { obtenerLeccion, idsPublicables, esPublicable, obtenerCierre } from "@/lib/contenido";
+import { obtenerLeccion, idsPublicables, esPublicable } from "@/lib/contenido";
+import { temaDelCaminoPorId } from "@/lib/camino";
+import { temaDeLeccion } from "@/lib/temas";
 import { sanitizarLeccion } from "@/lib/sanitizar";
 import { RunnerLeccion } from "@/components/RunnerLeccion";
 
@@ -26,16 +28,16 @@ export default async function PaginaLeccion({
   // invariante explícito en el propio handler y lo mantiene aunque cambie la
   // configuración de rutas: nunca se renderiza contenido no publicable.
   if (!esPublicable(leccion)) notFound();
-  /* El runner empuja a /cierre al terminar la lección, sin click elegido. Se
-     resuelve acá si ese destino muestra el banner de demostración para poder
-     avisarlo antes. Baja como booleano y no como contenido: el cierre completo
-     viajaría en el payload RSC de cada lección sin renderizarse. `obtenerCierre`
-     ya posee la ruta, así que el id no se escribe a mano. */
-  const cierreEnDemostracion = !esPublicable(obtenerCierre());
-  return (
-    <RunnerLeccion
-      leccion={sanitizarLeccion(leccion)}
-      cierreEnDemostracion={cierreEnDemostracion}
-    />
-  );
+
+  /* El tema baja resuelto desde servidor: da el "Lección N de M" del cierre y
+     permite que el runner sepa si terminar esta lección completa el tema. El
+     barrido de lib/contenido.ts garantiza que toda lección no-demo pertenece a
+     exactamente un tema, así que esto no puede quedar vacío para una lección
+     publicable — pero si algún día lo hiciera, es un 404 honesto y no una
+     pantalla a medias. */
+  const registro = temaDeLeccion(leccion.id);
+  const tema = registro ? temaDelCaminoPorId(registro.id) : undefined;
+  if (!tema) notFound();
+
+  return <RunnerLeccion leccion={sanitizarLeccion(leccion)} tema={tema} />;
 }

@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
-import { marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
+import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
+import { aciertosPorContexto, estadoDeNodo } from "@/lib/estadoNodo";
+import type { TemaDelCamino } from "@/lib/camino";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
-import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { PasoLeccion } from "@/components/PasoLeccion";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
@@ -17,13 +18,13 @@ import type { BloqueInteractivoSlider } from "@/lib/tipos";
 
 export function RunnerLeccion({
   leccion,
-  cierreEnDemostracion = false,
+  tema,
 }: {
   leccion: LeccionCliente;
-  /* `true` si /cierre va a mostrar el banner de demostración. Lo resuelve
-     app/leccion/[id]/page.tsx en servidor. Sirve para avisarlo antes del click
-     que navega, no después de aterrizar. */
-  cierreEnDemostracion?: boolean;
+  /* El tema al que pertenece esta lección, resuelto en servidor por
+     app/leccion/[id]/page.tsx. Da el "Lección N de M" del cierre y permite
+     saber si terminar esta lección cierra el tema completo. */
+  tema: TemaDelCamino;
 }) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
   const [fase, setFase] = useState<"pasos" | "itemsPAES">("pasos");
@@ -36,10 +37,7 @@ export function RunnerLeccion({
   const router = useRouter();
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
-  /* "Ir al cierre" solo navega de verdad a /cierre cuando la lección no tiene
-     itemsPAES; si los tiene, abre esa fase y el aviso le toca a ItemsPAESFinal,
-     que sí es el último click antes de irAlCierre(). */
-  const botonFinalVaAlCierre = esUltimoPaso && leccion.itemsPAES.length === 0;
+  const indiceEnTema = tema.lecciones.findIndex((l) => l.id === leccion.id);
 
   useEffect(() => {
     registrarEvento({ nombre: "leccion_inicio", props: { leccion_id: leccion.id } });
@@ -61,17 +59,36 @@ export function RunnerLeccion({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estado.pasoActual]);
 
-  function irAlCierre() {
+  /* Terminar la lección la marca completada y decide el destino. Si con esto el
+     tema entero queda completado y su celebración no se ha mostrado nunca, se
+     va a esa pantalla; si no, al camino. La decisión se toma DESPUÉS de
+     marcarCompletada para que el estado del nodo ya incluya esta lección. */
+  function terminar() {
     registrarEvento({ nombre: "leccion_fin", props: { leccion_id: leccion.id } });
     marcarCompletada(leccion.id);
-    router.push("/cierre");
+
+    const progreso = leer();
+    const estadoTema = estadoDeNodo(tema, progreso, aciertosPorContexto(progreso));
+    const yaCelebrado = progreso?.temasCelebrados?.includes(tema.id) ?? false;
+
+    router.push(
+      estadoTema === "completado" && !yaCelebrado ? `/tema/${tema.id}/completado` : "/camino",
+    );
+  }
+
+  function repasar() {
+    dispatch({ type: "REINICIAR" });
+    setFase("pasos");
+    setExploracionCumplida(false);
+    setMostrarAvisoExploracion(false);
+    window.scrollTo({ top: 0 });
   }
 
   function terminarPasos() {
     if (leccion.itemsPAES.length > 0) {
       setFase("itemsPAES");
     } else {
-      irAlCierre();
+      terminar();
     }
   }
 
@@ -86,8 +103,11 @@ export function RunnerLeccion({
           renderFinal={(respuestas) => (
             <ItemsPAESFinal
               respuestas={respuestas}
-              onContinuar={irAlCierre}
-              cierreEnDemostracion={cierreEnDemostracion}
+              temaNombre={tema.nombre}
+              ordinalLeccion={indiceEnTema + 1}
+              totalLeccionesTema={tema.lecciones.length}
+              onRepasar={repasar}
+              onContinuar={terminar}
             />
           )}
         />
@@ -146,7 +166,7 @@ export function RunnerLeccion({
               enlace de salida — discreto a propósito, para no competir con el
               CTA "Siguiente paso" del fondo del runner. */}
           <Link
-            href="/lecciones"
+            href="/camino"
             className="inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             ← Salir al camino
@@ -176,16 +196,11 @@ export function RunnerLeccion({
             Paso anterior
           </Boton>
           {esUltimoPaso ? (
-            <Boton onClick={terminarPasos}>Ir al cierre</Boton>
+            <Boton onClick={terminarPasos}>Terminar lección</Boton>
           ) : (
             <Boton onClick={avanzar}>Siguiente paso</Boton>
           )}
         </div>
-        {botonFinalVaAlCierre && cierreEnDemostracion && (
-          <div className="mt-4">
-            <AvisoCierreDemostracion />
-          </div>
-        )}
         {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
             en el guion: el botón no se deshabilita sin explicación. */}
         {mostrarAvisoExploracion && avanceBloqueado && (

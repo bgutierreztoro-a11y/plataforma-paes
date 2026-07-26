@@ -2,49 +2,112 @@
 
 import { Boton } from "@/components/ui/Boton";
 import { AvisoCierreDemostracion } from "@/components/ui/Banner";
+import { alcanzaDominio } from "@/lib/umbrales";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 
-function formatoTiempo(ms: number): string {
-  const totalSeg = Math.round(ms / 1000);
-  const min = Math.floor(totalSeg / 60);
-  const seg = totalSeg % 60;
-  return `${min}:${String(seg).padStart(2, "0")}`;
+/** Una de las dos tarjetas del cierre. Exactamente dos: el número que importa y
+ *  dónde queda dentro del tema. Nada de XP, puntos ni monedas — lista negra del
+ *  MOS, y además desviarían la atención del único dato accionable. */
+function TarjetaDato({
+  etiqueta,
+  valor,
+  detalle,
+}: {
+  etiqueta: string;
+  valor: string;
+  detalle: string;
+}) {
+  return (
+    <div className="rounded-tarjeta border border-border bg-surface p-5 text-left shadow-tarjeta">
+      <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">{etiqueta}</p>
+      {/* Cifras tabulares: el número no cambia de ancho entre lecciones. */}
+      <p className="mt-1 font-mono text-3xl font-semibold tabular-nums text-ink">{valor}</p>
+      <p className="mt-1 text-sm leading-6 text-ink-suave">{detalle}</p>
+    </div>
+  );
 }
 
+/**
+ * Cierre de una lección: dos tarjetas y una decisión.
+ *
+ * El umbral **no bloquea nada**. Bajo el umbral se ofrece repasar como acción
+ * primaria, pero "Seguir al camino" sigue disponible al lado: bloquear contenido
+ * por puntaje está en la lista negra del MOS. La diferencia entre las dos ramas
+ * es qué se propone primero, no qué se permite.
+ */
 export function ItemsPAESFinal({
   respuestas,
+  temaNombre,
+  ordinalLeccion,
+  totalLeccionesTema,
+  onRepasar,
   onContinuar,
   cierreEnDemostracion = false,
 }: {
   respuestas: RespuestaRegistrada[];
+  temaNombre: string;
+  ordinalLeccion: number;
+  totalLeccionesTema: number;
+  onRepasar: () => void;
   onContinuar: () => void;
-  /* "Continuar" navega a /cierre: si allá espera el banner de demostración, se
-     nombra acá, antes del click. */
+  /* Solo aplica cuando el destino de "Continuar" es /cierre. */
   cierreEnDemostracion?: boolean;
 }) {
+  const total = respuestas.length;
   const aciertos = respuestas.filter((r) => r.correcta).length;
-  const promedioMs =
-    respuestas.length > 0
-      ? respuestas.reduce((suma, r) => suma + r.tiempoMs, 0) / respuestas.length
-      : 0;
+  const conDominio = alcanzaDominio(aciertos, total);
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center gap-5 px-4 py-16 text-center">
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">Cerraste esta lección</h1>
-      <div className="w-full max-w-sm rounded-tarjeta border border-border bg-surface p-6 shadow-tarjeta">
-        <p className="font-mono text-3xl font-medium tabular-nums text-ink">
-          {aciertos}
-          <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
-        </p>
-        <p className="mt-1 text-sm text-ink-suave">respuestas correctas</p>
-        <p className="mt-3 border-t border-border pt-3 text-sm text-ink-suave">
-          Ritmo promedio:{" "}
-          <span className="font-mono tabular-nums">{formatoTiempo(promedioMs)}</span> por pregunta
-        </p>
-      </div>
-      <div className="flex flex-col items-center gap-3">
-        {cierreEnDemostracion && <AvisoCierreDemostracion />}
-        <Boton onClick={onContinuar}>Continuar</Boton>
+    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+      <div className="w-full max-w-xl text-center">
+        <h1 className="text-2xl font-semibold tracking-tight text-ink">
+          {conDominio ? "Lección terminada" : "Lección terminada, y hay algo que afinar"}
+        </h1>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <TarjetaDato
+            etiqueta="Aciertos"
+            valor={`${aciertos}/${total}`}
+            detalle="Preguntas formato PAES de esta lección."
+          />
+          <TarjetaDato
+            etiqueta="Tu avance"
+            valor={`${ordinalLeccion} de ${totalLeccionesTema}`}
+            detalle={`Lecciones de ${temaNombre}.`}
+          />
+        </div>
+
+        {conDominio ? (
+          <>
+            <p className="mt-6 text-base leading-7 text-ink-suave">
+              Lo que viste acá quedó sólido. Sigue cuando quieras.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Boton onClick={onContinuar}>Continuar</Boton>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Tono de guía, jamás de reproche (MASTER.md §4): nombra el hecho y
+                ofrece la salida, no califica a la persona. */}
+            <p className="mt-6 text-base leading-7 text-ink-suave">
+              Varias se te escaparon. Rehacer la lección ahora es lo que más rinde: no
+              pierdes nada de lo que ya hiciste, y el camino te espera igual.
+            </p>
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Boton onClick={onRepasar}>Repasar esta lección</Boton>
+              <Boton variante="secundario" onClick={onContinuar}>
+                Seguir al camino
+              </Boton>
+            </div>
+          </>
+        )}
+
+        {cierreEnDemostracion && (
+          <div className="mt-6 text-left">
+            <AvisoCierreDemostracion />
+          </div>
+        )}
       </div>
     </div>
   );
