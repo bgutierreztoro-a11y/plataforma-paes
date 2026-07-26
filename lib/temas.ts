@@ -54,6 +54,13 @@ interface FormaTema {
    *  que todavía no tiene contenido, así que no podría vivir en un JSON de
    *  lección. */
   objetivo: string;
+  /**
+   * Una frase de capacidad, en primera persona del estudiante, para la
+   * pantalla de celebración del tema. Se deriva de `objetivo` pero no es lo
+   * mismo: `objetivo` es una promesa antes de empezar ("vas a poder"),
+   * `capacidad` es un hecho al terminar ("ya puedes"). Copy de interfaz.
+   */
+  capacidad: string;
   /** Orden de curso dentro del tema. La posición en este array **es** la
    *  secuencia: sin campo `orden`, sin parsear el prefijo del id, sin sort. */
   lecciones: readonly LeccionId[];
@@ -93,12 +100,16 @@ export const EJES = [
       {
         id: "enteros-y-racionales",
         nombre: "Enteros y racionales",
+        capacidad:
+          "Ya puedes operar con negativos y fracciones sin perderte con los signos.",
         objetivo: "Operar con negativos y fracciones sin que se te dé vuelta el signo.",
         lecciones: [],
       },
       {
         id: "porcentaje",
         nombre: "Porcentaje",
+        capacidad:
+          "Ya puedes calcular descuentos, aumentos e IVA sin depender de la calculadora.",
         objetivo:
           "Calcular descuentos, aumentos e IVA de cabeza, y notar cuándo un 20% no es lo que parece.",
         lecciones: [],
@@ -106,6 +117,8 @@ export const EJES = [
       {
         id: "potencias-y-raices",
         nombre: "Potencias y raíces",
+        capacidad:
+          "Ya puedes manejar potencias y raíces, incluso con exponentes negativos.",
         objetivo:
           "Manejar potencias y raíces, incluidos los exponentes negativos y fraccionarios.",
         lecciones: [],
@@ -119,6 +132,8 @@ export const EJES = [
       {
         id: "expresiones-algebraicas",
         nombre: "Expresiones algebraicas",
+        capacidad:
+          "Ya puedes reducir y factorizar expresiones sin perder términos.",
         objetivo:
           "Reducir, factorizar y evaluar expresiones con letras sin perder términos en el camino.",
         lecciones: [],
@@ -126,6 +141,8 @@ export const EJES = [
       {
         id: "proporcionalidad",
         nombre: "Proporcionalidad",
+        capacidad:
+          "Ya puedes distinguir una proporción directa de una inversa y usar ambas.",
         objetivo:
           "Distinguir cuándo dos cantidades crecen juntas y cuándo una sube mientras la otra baja.",
         lecciones: [],
@@ -133,6 +150,8 @@ export const EJES = [
       {
         id: "ecuaciones-e-inecuaciones-primer-grado",
         nombre: "Ecuaciones e inecuaciones de primer grado",
+        capacidad:
+          "Ya puedes despejar una incógnita y explicar por qué una desigualdad cambia de sentido.",
         objetivo:
           "Despejar la incógnita paso a paso y saber por qué una desigualdad a veces cambia de sentido.",
         lecciones: ["l3-ecuaciones-lineales"],
@@ -140,6 +159,8 @@ export const EJES = [
       {
         id: "sistemas-2x2",
         nombre: "Sistemas de ecuaciones 2×2",
+        capacidad:
+          "Ya puedes resolver un sistema de dos ecuaciones y leer qué significa su solución.",
         objetivo:
           "Resolver dos ecuaciones con dos incógnitas y leer qué significa el punto donde se cruzan.",
         lecciones: [],
@@ -147,6 +168,8 @@ export const EJES = [
       {
         id: "funcion-lineal-y-afin",
         nombre: "Función lineal y afín",
+        capacidad:
+          "Ya puedes leer una recta en tabla, gráfico o ecuación, y pasar de una forma a otra.",
         objetivo:
           "Leer una recta en cualquier forma —tabla, gráfico o ecuación— y pasar de una a otra.",
         lecciones: ["l1-patrones-de-cambio", "l2-pendiente-e-intercepto"],
@@ -155,6 +178,8 @@ export const EJES = [
       {
         id: "funcion-cuadratica",
         nombre: "Función cuadrática",
+        capacidad:
+          "Ya puedes reconocer una parábola y encontrar sus ceros y su vértice.",
         objetivo:
           "Reconocer una parábola, encontrar dónde corta el eje x y dónde está su punto más alto o más bajo.",
         lecciones: [],
@@ -168,6 +193,8 @@ export const EJES = [
       {
         id: "figuras-geometricas",
         nombre: "Figuras geométricas",
+        capacidad:
+          "Ya puedes calcular perímetros y áreas, y aplicar Pitágoras cuando corresponde.",
         objetivo:
           "Calcular perímetros y áreas, y sacar el lado que falta cuando aparece un triángulo rectángulo.",
         lecciones: [],
@@ -175,18 +202,24 @@ export const EJES = [
       {
         id: "cuerpos-geometricos",
         nombre: "Cuerpos geométricos",
+        capacidad:
+          "Ya puedes calcular el volumen y la superficie de los cuerpos que evalúa la PAES.",
         objetivo: "Calcular volumen y superficie de cuerpos que puedes imaginar en la mano.",
         lecciones: [],
       },
       {
         id: "transformaciones-isometricas",
         nombre: "Transformaciones isométricas",
+        capacidad:
+          "Ya puedes trasladar, rotar y reflejar figuras sin equivocarte en el resultado.",
         objetivo: "Trasladar, rotar y reflejar una figura sin cambiarle el tamaño ni la forma.",
         lecciones: [],
       },
       {
         id: "semejanza-y-proporcionalidad",
         nombre: "Semejanza y proporcionalidad",
+        capacidad:
+          "Ya puedes usar semejanza para calcular medidas que no puedes tomar directamente.",
         objetivo:
           "Usar figuras semejantes para calcular alturas y distancias que no puedes medir directamente.",
         lecciones: [],
@@ -200,12 +233,16 @@ export const EJES = [
       {
         id: "tablas-y-graficos",
         nombre: "Tablas y gráficos",
+        capacidad:
+          "Ya puedes leer un gráfico con criterio y detectar cuando está mal construido.",
         objetivo: "Leer un gráfico rápido y detectar cuándo está armado para confundirte.",
         lecciones: [],
       },
       {
         id: "medidas-de-posicion",
         nombre: "Medidas de posición",
+        capacidad:
+          "Ya puedes interpretar media, mediana, cuartiles y percentiles, y elegir cuál usar.",
         objetivo:
           "Interpretar media, mediana, cuartiles y percentiles, y saber cuál conviene mirar en cada caso.",
         lecciones: [],
@@ -213,6 +250,8 @@ export const EJES = [
       {
         id: "reglas-de-probabilidades",
         nombre: "Reglas de probabilidades",
+        capacidad:
+          "Ya puedes calcular probabilidades de eventos combinados sin fiarte de la intuición.",
         objetivo:
           "Calcular la probabilidad de eventos combinados sin caer en las trampas de la intuición.",
         lecciones: [],
