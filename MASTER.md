@@ -238,14 +238,30 @@ Por qué se revirtió: la versión anterior dibujaba los temas sobre una recta a
 - **Tarjeta del nodo activo:** lleva el rótulo (eje o cierre), el título, la descripción, el contador y **el** botón de acción. En móvil va fija al pie de la pantalla; en escritorio cuelga del borde inferior de la fila del nodo activo, como un panel flotante.
 - **Densidad, objetivo verificable:** 6 o más nodos visibles sin scroll a 360×800.
 
-Estados, comunes a los dos niveles:
+Estados, comunes a los dos niveles. **Viven en el disco, no en una tarjeta**
+(enmienda del 2026-07-27, misma que retiró la tarjeta por nodo): la lista de
+abajo describía badges y una barra de progreso interna, que eran piezas de la
+tarjeta que cada nodo arrastraba. Al quedar un disco y un título, el estado
+tiene que leerse en el disco. Se distinguen por **forma y color, nunca por
+color solo** (§2.1) — un nodo que solo cambia de tono no le comunica nada a
+quien no distingue esos tonos:
 
-- Superficie de la tarjeta `--color-surface`, `--radius-lg`, `--shadow-2`.
-- Estados según progreso:
-  - **Disponible:** borde `--color-action` de 2px, badge "Empezar". Hover: `--shadow-3` + `translateY(-2px)` (despega).
-  - **En curso:** barra de progreso interna visible.
-  - **Por repasar:** anillo `--color-attention` (ámbar) y badge "Por repasar". Es lo que se pinta cuando el estudiante terminó pero quedó bajo el umbral de dominio. Ámbar y **nunca rojo**, por la misma razón que §3.4: terminar flojo es una invitación a volver, no una falla. **No bloquea nada** — la lección siguiente sigue disponible.
-  - **Completada:** check `--color-success`, superficie `--success-50` sutil.
+- **Disponible:** disco relleno `--color-action`, punto blanco al centro, anillo del mismo color y respiración continua. Es el único que respira: dice "acá se empieza". La animación es decorativa, se apaga con `prefers-reduced-motion`, y el estado sigue legible sin ella.
+- **En curso:** superficie clara, anillo `--color-action` y punto del mismo color. Mismo anillo que "disponible" pero **sin** respiración: hay algo empezado, así que no hace falta llamar a arrancar.
+- **Por repasar:** superficie clara, anillo `--color-attention` (ámbar) y punto ámbar. Es lo que se pinta cuando el estudiante terminó pero quedó bajo el umbral de dominio. Ámbar y **nunca rojo**, por la misma razón que §3.4: terminar flojo es una invitación a volver, no una falla. **No bloquea nada** — la lección siguiente sigue disponible.
+- **Completada:** disco relleno `--color-success` con check blanco.
+- **En construcción:** contorno punteado, sin sombra y sin candado. Ver más abajo.
+
+La tarjeta del nodo activo **no nombra el estado con una etiqueta**: lo dice el
+verbo de su botón ("Empezar el tema", "Seguir el tema", "Repasar el tema"), que
+es acción y no rótulo, como pide §3.1. El contador de lecciones va al lado y
+cuenta solo lecciones cerradas, así que "Seguir el tema · 0 de 2 lecciones" es
+literal y no se contradice: el estado dice que hay avance, el conteo dice
+cuánto está cerrado.
+
+La transición entre estados cubre color, sombra y escala (`--dur-slow`). Cuando
+el estudiante vuelve de terminar una lección, el nodo se repinta al hidratar; sin
+transición ese cambio es un salto que no se alcanza a ver.
 
 **Los dos estados no disponibles son distintos y no se pintan igual** (enmienda del 2026-07-26):
 

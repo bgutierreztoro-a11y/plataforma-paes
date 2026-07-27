@@ -443,3 +443,100 @@ de progreso interna visible"), que es el vocabulario de la tarjeta por nodo que
 la enmienda del 2026-07-27 retiró. La misma sección ya declara arriba que un
 nodo es un disco y un título, así que el párrafo de estados quedó como resto.
 No se toca acá: enmendar MASTER.md es 🟡 y no se pidió.
+
+---
+
+Fecha: 2026-07-27
+
+## Índice de lo que sigue abierto (consolidación pre-push)
+
+Este documento creció por acumulación y ya no se puede leer de corrido para
+saber qué falta. Esta sección es el índice: **solo lo que sigue abierto**, con
+su estado real verificado contra el código, no contra notas anteriores. Lo
+resuelto queda arriba, en su sección, marcado y con el commit que lo cerró.
+
+### a) `l2` y `l3` en borrador, esperando revisión matemática
+
+Verificado leyendo los JSON, no las notas:
+
+| archivo | estado | revisión matemática |
+| --- | --- | --- |
+| `l1-patrones-de-cambio` | `publicable` | aprobada |
+| `l2-pendiente-e-intercepto` | `borrador` | sin aprobar |
+| `l3-ecuaciones-lineales` | `borrador` | sin aprobar |
+| `cierre` | `revision` | — |
+| `diagnostico` | `revision` | — |
+
+Consecuencia en pantalla, hoy: `l1` es la **única** lección navegable. `l2` y
+`l3` se pintan como nodos en construcción (contorno punteado, sin tarjeta, no
+seleccionables) y no tumban el build — `idsPublicables()` las deja fuera de
+`generateStaticParams`. `cierre` y `diagnostico` son navegables con el chip
+"Demostración", que es la decisión del 2026-07-25.
+
+Desbloquea: `/revision-matematica` y `/revision-originalidad` sobre cada una.
+Es trabajo de contenido, no de código. **🔴 tocar estos JSON o marcar algo
+`publicable` requiere firma.**
+
+### b) La celebración de tema no tiene ruta de flujo real
+
+Sigue vigente tal como se anotó el 2026-07-26. Un tema se completa solo con
+**todas** sus lecciones declaradas publicables y completadas, más su cierre; con
+`l2` en borrador, `funcion-lineal-y-afin` no puede completarse jugando y
+`/tema/funcion-lineal-y-afin/completado` no se alcanza salvo por URL directa.
+
+Es el comportamiento correcto, no una regresión: son 16 celebraciones en todo el
+curso, son idempotentes, y una gastada en falso es una que el estudiante no
+vuelve a ver. La pantalla está construida y cubierta por test. Se alcanza sola
+en cuanto `l2` cruce revisión. **No hay nada que reprogramar** — depende de (a).
+
+### c) `porRepasar` junto a una lección sin tocar, en la portada
+
+La rama de deuda de la portada exige que *nada* esté `enCurso` ni `disponible`.
+Con una lección `porRepasar` y otra abierta sin tocar, la portada muestra la
+rama 2 y apunta a la segunda sin nombrar la deuda; el camino sí la pinta ámbar.
+
+No es contradicción —la portada responde "qué hago ahora", el nodo responde
+"cómo va esto"— y **hoy es inalcanzable**, porque `l1` es la única publicable.
+Depende de (a): revisar cuando `l2` cruce revisión. Si ahí se decide que la
+deuda manda sobre avanzar, es mover una guarda de lugar en
+`components/PuntoDePartida.tsx`.
+
+### d) `migrarProgresoLocal` no la llama nadie
+
+`lib/datos/progreso.ts:205` existe y está probada del lado del servidor, pero
+**ningún archivo de `app/` o `components/` la invoca**. O sea: el progreso
+guardado en el dispositivo no sube a la base al crear cuenta.
+
+Consecuencia que ya está cubierta y no hay que romper: ningún texto de la
+interfaz afirma ni insinúa que la cuenta guarda, protege o recupera el avance.
+Con esta pieza sin construir sería falso, y `components/PuntoDePartida.tsx` lo
+documenta en su cabecera para que no se deshaga por accidente.
+
+Gatillo para retomarlo: cuando se quiera medir el delta pre/post de estudiantes
+concretos y no solo agregados de sesión. Antes de eso no compra nada.
+
+### e) Clerk sigue en instancia development
+
+Clerk no permite crear instancia de producción con dominio `*.vercel.app`:
+exige dominio propio verificable por DNS. Confirmado contra su documentación el
+2026-07-24. No es un problema de configuración, es una restricción de la
+plataforma.
+
+Hoy en Vercel Production corren claves `pk_test_` / `sk_test_` y un signing
+secret de development, y el camino feliz está verificado end-to-end contra esa
+instancia. **Funciona, pero no es producción de verdad.**
+
+Cuando se compre el dominio: crear la instancia de producción, repetir el
+endpoint del webhook con los mismos tres eventos, y actualizar el nuevo signing
+secret en `.env.local` y en Vercel. Son dos endpoints y dos secrets
+independientes: que development funcione no dice nada de producción.
+
+### Lo que NO está abierto, para no volver a revisarlo
+
+- Coherencia de progreso entre las cuatro superficies — cerrada en `3b4385b` y
+  `e958117`, con test que las recorre juntas (`0b56d02`).
+- Un tema se completa por sus lecciones declaradas y no por las abiertas —
+  cerrada en `7ac140e`.
+- El camino como única navegación, con la grilla retirada — `6bac9ce`.
+- Dirección del recorrido y nodos sin tarjeta — `fc7bc3d`, con MASTER.md §3.2
+  enmendado en el mismo commit.
