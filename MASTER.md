@@ -223,11 +223,24 @@ Especificados con tokens. Cada uno lista sus estados obligatorios.
 
 > Microcopy de botón: dice exactamente qué pasa. "Comprobar", no "Enviar". "Siguiente lección", no "OK". (Ver §4.)
 
-### 3.2 Nodo del camino y tarjeta de lección
+### 3.2 Nodo del camino y tarjeta del nodo activo
 
-El camino tiene dos niveles: `/camino` muestra los **temas** del temario M1 como nodos sobre una recta ascendente, y `/tema/[id]` muestra las **lecciones** de ese tema como tarjetas. Los estados de abajo aplican a los dos.
+El camino tiene dos niveles: `/camino` muestra los **temas** del temario M1 y `/tema/[id]` muestra las **lecciones** de ese tema más su cierre. Los dos usan el mismo layout y los mismos estados.
 
-- Superficie `--color-surface`, `--radius-lg`, `--shadow-2`, padding `--space-5`.
+**El camino baja** (enmienda del 2026-07-27, revierte la recta ascendente). La progresión va **siempre de arriba hacia abajo**, en los dos niveles: en un tema, lección 1, lección 2 y el cierre al final. Se conservan el papel milimetrado como textura de fondo y el trazo que une los nodos, ahora vertical y con un leve zigzag.
+
+Por qué se revirtió: la versión anterior dibujaba los temas sobre una recta ascendente, de abajo-izquierda a arriba-derecha, porque el módulo enseña funciones lineales y la metáfora parecía gratis. Probado en un teléfono real no lo era: en móvil los nodos se amontonaban, en escritorio el lienzo quedaba vacío, y la progresión peleaba con el orden de lectura y con el scroll, que baja. Ninguna app de aprendizaje sube. **La metáfora de la función vive en el contenido de las lecciones, no en la dirección en que se recorre la pantalla** — usarla para el recorrido cobraba un costo de ergonomía a cambio de un guiño que el estudiante no estaba leyendo.
+
+**Un nodo es un disco y un título corto. Nada más.** Sin descripción, sin contador, sin badge y sin nombre del eje al lado del disco: con todo eso, una pantalla de 360px mostraba dos nodos y medio. El detalle aparece **una sola vez**, en la tarjeta del nodo activo, y se mueve al tocar otro nodo.
+
+- **Columna:** una sola implementación para los dos tamaños. Centrada, ancho máximo 560px, con márgenes generosos en escritorio. El escritorio no necesita un layout propio; necesita no estirarse.
+- **Discos:** 56px en móvil, 60px en escritorio. Área táctil ≥44px (§5) — el disco es lo que se toca.
+- **Tarjeta del nodo activo:** lleva el rótulo (eje o cierre), el título, la descripción, el contador y **el** botón de acción. En móvil va fija al pie de la pantalla; en escritorio cuelga del borde inferior de la fila del nodo activo, como un panel flotante.
+- **Densidad, objetivo verificable:** 6 o más nodos visibles sin scroll a 360×800.
+
+Estados, comunes a los dos niveles:
+
+- Superficie de la tarjeta `--color-surface`, `--radius-lg`, `--shadow-2`.
 - Estados según progreso:
   - **Disponible:** borde `--color-action` de 2px, badge "Empezar". Hover: `--shadow-3` + `translateY(-2px)` (despega).
   - **En curso:** barra de progreso interna visible.
@@ -241,7 +254,11 @@ El camino tiene dos niveles: `/camino` muestra los **temas** del temario M1 como
 
 Por qué se separaron: la versión original de esta sección escribió "bloqueada" cuando el único caso previsto era "completa la anterior primero". Con el temario de 16 unidades apareció un caso que no existía —una unidad cuyo contenido no está construido— y el candado ahí miente: promete que hay algo detrás y que se puede abrir. El punteado dice "en obra", que es la verdad. El candado se conserva en el sistema porque el caso de prerrequisito es legítimo, aunque hoy no tenga uso.
 
-> Regla general que deja esta enmienda: el documento se enmienda cuando **el concepto cambia**, no cuando el código se desvió. Si el código no calza con el doc, se arregla el código.
+Un nodo **en construcción** no tiene tarjeta ni es seleccionable: su disco va punteado y su título atenuado. No hay nada que contar sobre contenido que no existe.
+
+**El cierre del tema es la meta, no otra lección** (2026-07-27). Va siempre al final del recorrido, con disco ~1,4× el de una lección y contorno doble. Su rótulo nombra lo que es y cuánto pesa: "Cierre del tema · 8 preguntas formato PAES". Sigue navegable aunque su contenido no sea `publicable`, con el chip "Demostración" — decisión del 2026-07-25, ver `docs/pendientes.md`: un cierre en revisión está escrito, y cerrarle la puerta al estudiante sería quitarle un acceso que hoy tiene. La referencia de jerarquía es el nodo de revisión de Brilliant y el cofre de fin de unidad de Duolingo; la ejecución visual es nuestra.
+
+> Regla general que deja esta enmienda: el documento se enmienda cuando **el concepto cambia**, no cuando el código se desvió. Si el código no calza con el doc, se arregla el código. Acá el concepto cambió por evidencia de uso —un teléfono real, no una intuición— que es exactamente el gatillo que §0 autoriza.
 
 ### 3.3 Bloque interactivo (sliders) — **la insignia**
 
