@@ -120,14 +120,9 @@ test("camino", async ({ page }, testInfo) => {
   await expect(page.getByText("unidades del temario M1")).toBeVisible();
   /* El tema queda "en curso" y no "completado": l2 sigue en borrador, y un tema
      solo se completa con todas sus lecciones declaradas publicables y hechas
-     (lib/estadoNodo.ts). El conteo es lo que distingue "voy en la mitad" de
-     "terminé", que el estado por sí solo no dice. */
-  /* Filtrado por visible porque /camino monta los dos árboles —móvil y
-     escritorio— y oculta uno con CSS: el texto está dos veces en el DOM y solo
-     una se ve. `.first()` no sirve, tomaría el de móvil también en escritorio. */
-  await expect(page.getByText("de 2 lecciones").filter({ visible: true })).toHaveText(
-    /1 de 2 lecciones/,
-  );
+     (lib/estadoNodo.ts). El conteo distingue "voy en la mitad" de "terminé", y
+     desde el rediseño vive en la tarjeta del nodo activo, no en cada nodo. */
+  await expect(page.getByText("1 de 2 lecciones")).toBeVisible();
   await capturar(page, "3-camino", testInfo.project.name);
 });
 
@@ -135,16 +130,91 @@ test("tema con los nodos enlazados", async ({ page }, testInfo) => {
   await sembrar(page, PROGRESO_LECCION_HECHA);
   await page.goto(`/tema/${TEMA}`);
   await expect(page.getByRole("heading", { name: "Función lineal y afín" })).toBeVisible();
-  // El cierre es el último nodo del trazo y es navegable aunque su contenido
-  // esté en revisión: se avisa que es demostración en vez de cerrar la puerta.
-  await expect(page.getByText("Cierre del tema")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Cierre del tema/ })).toHaveAttribute(
+
+  /* Orden del recorrido: las lecciones y el cierre al final. Va sobre el DOM y
+     no sobre píxeles porque es lo que define la dirección — si alguien vuelve a
+     invertir la lista, esto se cae. */
+  const titulos = await page.getByRole("listitem").allInnerTexts();
+  expect(titulos.at(-1)).toContain("Cierre del tema");
+
+  /* El cierre es navegable aunque su contenido esté en revisión: se avisa que es
+     demostración en vez de cerrar la puerta (decisión del 2026-07-25). El
+     enlace vive en la tarjeta del nodo activo, así que primero hay que
+     seleccionarlo. */
+  await page.getByRole("button", { name: "Cierre del tema" }).click();
+  await expect(page.getByRole("link", { name: "Rendir el cierre" })).toHaveAttribute(
     "href",
     "/cierre",
   );
-  // La lección hecha con dominio se pinta completada, no "por repasar".
-  await expect(page.getByText("Completada")).toBeVisible();
-  await capturar(page, "4-tema-nodos-enlazados", testInfo.project.name);
+  await expect(page.getByText("Demostración")).toBeVisible();
+  await expect(page.getByText("8 preguntas formato PAES")).toBeVisible();
+
+  await capturar(page, "4-tema-nodo-cierre", testInfo.project.name);
+});
+
+test("caben 6 nodos sin scroll en 360px", async ({ page }, testInfo) => {
+  /* El objetivo verificable del rediseño. Solo tiene sentido en el ancho de
+     diseño base (MASTER.md §5), así que en escritorio se salta en vez de
+     afirmar algo que no se pidió. */
+  test.skip(testInfo.project.name !== "movil", "la densidad se exige a 360px");
+
+  await sembrar(page, PROGRESO_LECCION_HECHA);
+  await page.goto(`/tema/${TEMA}`);
+  await expect(page.getByRole("button", { name: "El patrón que se repite" })).toBeVisible();
+
+  const caben = await page.evaluate(() => {
+    const alto = (sel: string) => {
+      const el = document.querySelector(sel);
+      return el ? el.getBoundingClientRect().height : 0;
+    };
+    const fila = document.querySelector("ol li");
+    const paso = fila ? fila.getBoundingClientRect().height : 0;
+    const caja = document.querySelector(".fondo-cuadricula");
+    const desde = caja ? caja.getBoundingClientRect().top + 16 : 0;
+    // Lo que tapan la barra de navegación y la tarjeta fija del nodo activo.
+    const hasta = window.innerHeight - alto("nav[aria-label]") - alto("aside") - 16;
+    return paso > 0 ? Math.floor((hasta - desde) / paso) : 0;
+  });
+
+  expect(caben).toBeGreaterThanOrEqual(6);
+});
+
+test("sin movimiento cuando el sistema lo pide", async ({ browser }) => {
+  /* `prefers-reduced-motion` no se comprueba a ojo: se le pide al navegador que
+     lo declare y se lee el estilo calculado. Lo que importa es que el estado
+     final sea el mismo —el trazo completo, el nodo visible— y que solo se
+     salte el recorrido (MASTER.md §2.6 y §5). */
+  const contexto = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await contexto.newPage();
+  await page.goto(`/tema/${TEMA}`);
+  await expect(page.getByRole("button", { name: "El patrón que se repite" })).toBeVisible();
+
+  const estilos = await page.evaluate(() => {
+    const de = (sel: string) => {
+      const el = document.querySelector(sel);
+      if (!el) return null;
+      const cs = getComputedStyle(el);
+      return {
+        animacion: cs.animationName,
+        opacidad: cs.opacity,
+        dashoffset: cs.strokeDashoffset,
+      };
+    };
+    return {
+      respiracion: de(".respiracion-nodo"),
+      entrada: de(".entra-nodo"),
+      trazo: de(".trazo-camino"),
+    };
+  });
+
+  expect(estilos.respiracion?.animacion).toBe("none");
+  expect(estilos.entrada?.animacion).toBe("none");
+  expect(estilos.entrada?.opacidad).toBe("1");
+  expect(estilos.trazo?.animacion).toBe("none");
+  // El trazo queda dibujado entero, no a medias.
+  expect(estilos.trazo?.dashoffset).toBe("0px");
+
+  await contexto.close();
 });
 
 test("celebración de tema", async ({ page }, testInfo) => {
