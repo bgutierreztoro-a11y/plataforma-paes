@@ -11,6 +11,7 @@ import {
   type EstadoNodo,
 } from "@/lib/estadoNodo";
 import { presentacionDeLeccion } from "@/lib/descripcionesLecciones";
+import { registrarEvento } from "@/lib/eventos";
 import type { TemaDelCamino } from "@/lib/camino";
 
 const ACCION: Record<EstadoNodo, string> = {
@@ -58,6 +59,11 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
       rotulo: `Lección ${i + 1} de ${total}`,
       descripcion: estado === "enConstruccion" ? COPY_EN_PREPARACION : descripcion,
       contador: `${leccion.minutos} min aprox.`,
+      onAbrir: () =>
+        registrarEvento({
+          nombre: "nodo_leccion_abierto",
+          props: { leccion_id: leccion.id, estado },
+        }),
     };
   });
 

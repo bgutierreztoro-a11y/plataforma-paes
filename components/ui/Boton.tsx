@@ -29,14 +29,23 @@ export function EnlaceBoton({
   variante = "primario",
   className = "",
   children,
+  onClick,
 }: {
   href: string;
   variante?: Variante;
   className?: string;
   children: React.ReactNode;
+  /* Opcional: dispara analítica antes de navegar (ver `NodoCamino.onAbrir`).
+   *  `Link` navega en cliente y no espera a este handler, así que no retrasa
+   *  ni puede bloquear la navegación. */
+  onClick?: () => void;
 }) {
   return (
-    <Link href={href} className={`${CLASES_BASE} ${CLASES_VARIANTE[variante]} ${className}`}>
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`${CLASES_BASE} ${CLASES_VARIANTE[variante]} ${className}`}
+    >
       {children}
     </Link>
   );

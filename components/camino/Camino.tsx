@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CaminoVertical, type NodoCamino } from "@/components/camino/CaminoVertical";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
+import { registrarEvento } from "@/lib/eventos";
 import { TOTAL_TEMAS } from "@/lib/temas";
 import type { TemaDelCamino } from "@/lib/camino";
 
@@ -50,6 +51,18 @@ export function Camino({
   const estados = temasConNodo.map((t) => estadoDeNodo(t, progreso, resumen));
   const completados = estados.filter((e) => e === "completado").length;
 
+  /* Una sola vez, después de hidratar: antes de eso `completados` es siempre 0
+     porque `progreso` todavía es null (mismo HTML servidor/cliente), y contar
+     ese cero como si fuera el dato real ensuciaría la métrica. */
+  useEffect(() => {
+    if (!montado) return;
+    registrarEvento({
+      nombre: "camino_visto",
+      props: { temas_visibles: temasConNodo.length, temas_completados: completados },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- una vez por montaje, cuando montado pasa a true
+  }, [montado]);
+
   const nodos: NodoCamino[] = temasConNodo.map((tema, i) => {
     const estado = estados[i];
     const avance = avanceDeTema(tema, progreso);
@@ -65,6 +78,8 @@ export function Camino({
          tema de una sola lección es ruido. */
       contador:
         avance.total > 1 ? `${avance.hechas} de ${avance.total} lecciones` : undefined,
+      onAbrir: () =>
+        registrarEvento({ nombre: "nodo_tema_abierto", props: { tema_id: tema.id, estado } }),
     };
   });
 
@@ -103,7 +118,17 @@ export function Camino({
         <section className="mt-6">
           <button
             type="button"
-            onClick={() => setExpandido((v) => !v)}
+            onClick={() => {
+              /* Solo el gesto de abrir es la señal que importa: cuánto interés
+                 hay en el resto del temario, no si el estudiante lo volvió a
+                 cerrar. Se lee `expandido` del cierre del render y no del
+                 updater funcional de abajo a propósito: React vuelve a invocar
+                 ese updater en modo estricto de desarrollo para detectar
+                 impurezas, y un evento de analítica ahí adentro se dispararía
+                 dos veces por un solo clic. */
+              if (!expandido) registrarEvento({ nombre: "temas_plegados_expandidos", props: {} });
+              setExpandido((v) => !v);
+            }}
             aria-expanded={expandido}
             className="flex min-h-11 w-full items-center justify-between gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >

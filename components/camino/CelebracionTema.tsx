@@ -7,6 +7,7 @@ import { PuntoNodo } from "@/components/camino/NodoTema";
 import { IlustracionTema } from "@/lib/ilustracionesTemas";
 import { leer, marcarTemaCelebrado } from "@/lib/progresoLocal";
 import { temasCompletados } from "@/lib/estadoNodo";
+import { registrarEvento } from "@/lib/eventos";
 import { TOTAL_TEMAS } from "@/lib/temas";
 import type { TemaDelCamino } from "@/lib/camino";
 
@@ -110,6 +111,7 @@ export function CelebracionTema({
     if (resuelto.current) return;
     resuelto.current = true;
     if (marcarTemaCelebrado(tema.id)) {
+      registrarEvento({ nombre: "tema_celebrado", props: { tema_id: tema.id } });
       // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage solo existe tras montar; es la lectura inicial, no una sincronización de props
       setCompletados(temasCompletados(temasConNodo, leer()));
       setMostrar(true);

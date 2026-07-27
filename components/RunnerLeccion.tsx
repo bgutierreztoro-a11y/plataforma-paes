@@ -103,6 +103,7 @@ export function RunnerLeccion({
           renderFinal={(respuestas) => (
             <ItemsPAESFinal
               respuestas={respuestas}
+              leccionId={leccion.id}
               temaNombre={tema.nombre}
               ordinalLeccion={indiceEnTema + 1}
               totalLeccionesTema={tema.lecciones.length}

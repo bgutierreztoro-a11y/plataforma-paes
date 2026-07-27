@@ -41,6 +41,12 @@ export interface NodoCamino {
   /** "N de M lecciones". Ya formateado: el camino no sabe qué se cuenta. */
   contador?: string;
   demostracion?: boolean;
+  /** Dispara el evento de analítica del nivel que corresponda
+   *  (`nodo_tema_abierto` en /camino, `nodo_leccion_abierto` en /tema/[id]).
+   *  Vive acá y no en `CaminoVertical` porque quien arma `nodos` es quien sabe
+   *  si el id es un tema o una lección — este componente es genérico a
+   *  propósito y no debe aprender ese dominio. */
+  onAbrir?: () => void;
 }
 
 /**
@@ -300,7 +306,9 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
       )}
       <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-2">
         {nodo.href && nodo.accion && (
-          <EnlaceBoton href={nodo.href}>{nodo.accion}</EnlaceBoton>
+          <EnlaceBoton href={nodo.href} onClick={nodo.onAbrir}>
+            {nodo.accion}
+          </EnlaceBoton>
         )}
         {nodo.contador && (
           <span className="text-sm text-ink-suave">{nodo.contador}</span>

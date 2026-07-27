@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { alcanzaDominio } from "@/lib/umbrales";
+import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 
 /** Una de las dos tarjetas del cierre. Exactamente dos: el número que importa y
@@ -39,6 +41,7 @@ function TarjetaDato({
  */
 export function ItemsPAESFinal({
   respuestas,
+  leccionId,
   temaNombre,
   ordinalLeccion,
   totalLeccionesTema,
@@ -47,6 +50,7 @@ export function ItemsPAESFinal({
   cierreEnDemostracion = false,
 }: {
   respuestas: RespuestaRegistrada[];
+  leccionId: string;
   temaNombre: string;
   ordinalLeccion: number;
   totalLeccionesTema: number;
@@ -58,6 +62,37 @@ export function ItemsPAESFinal({
   const total = respuestas.length;
   const aciertos = respuestas.filter((r) => r.correcta).length;
   const conDominio = alcanzaDominio(aciertos, total);
+
+  /* Esta pantalla solo se monta una vez, cuando EjecutorSetItems agota los
+     ítems (ver su condición `indiceActual >= items.length`): no hay
+     re-render que vuelva a poner indiceActual atrás, así que el montaje es
+     el evento real de "llegó al resultado", igual que leccion_inicio en
+     RunnerLeccion.tsx.
+     El `ref` es el mismo guardia que ya usa CelebracionTema.tsx contra el
+     modo estricto de desarrollo, que monta dos veces: verificado en el
+     navegador que sin él este evento se duplicaba (dos entradas idénticas en
+     consola por una sola pantalla), y `leccion_terminada` alimenta una tasa
+     de término — contarla dos veces la infla. */
+  const yaRegistrado = useRef(false);
+  useEffect(() => {
+    if (yaRegistrado.current) return;
+    yaRegistrado.current = true;
+    registrarEvento({
+      nombre: "leccion_terminada",
+      props: { leccion_id: leccionId, aciertos, total, sobre_umbral: conDominio },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- una sola vez, al montar esta pantalla
+  }, []);
+
+  function repasar() {
+    if (!conDominio) registrarEvento({ nombre: "repaso_elegido", props: { leccion_id: leccionId } });
+    onRepasar();
+  }
+
+  function continuar() {
+    if (!conDominio) registrarEvento({ nombre: "camino_elegido", props: { leccion_id: leccionId } });
+    onContinuar();
+  }
 
   return (
     <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
@@ -91,7 +126,7 @@ export function ItemsPAESFinal({
               Lo que viste acá quedó sólido. Sigue cuando quieras.
             </p>
             <div className="mt-6 flex justify-center">
-              <Boton onClick={onContinuar}>Continuar</Boton>
+              <Boton onClick={continuar}>Continuar</Boton>
             </div>
           </>
         ) : (
@@ -103,8 +138,8 @@ export function ItemsPAESFinal({
               pierdes nada de lo que ya hiciste, y el camino te espera igual.
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Boton onClick={onRepasar}>Repasar esta lección</Boton>
-              <Boton variante="secundario" onClick={onContinuar}>
+              <Boton onClick={repasar}>Repasar esta lección</Boton>
+              <Boton variante="secundario" onClick={continuar}>
                 Seguir al camino
               </Boton>
             </div>
