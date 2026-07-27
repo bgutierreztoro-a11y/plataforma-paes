@@ -339,7 +339,39 @@ hay nada que reprogramar.
 
 Fecha: 2026-07-27
 
-## La portada deriva el progreso por su cuenta (barrido de coherencia)
+## La portada deriva el progreso por su cuenta (barrido de coherencia) — CERRADO
+
+**Resuelto el 2026-07-27**, en los dos commits que siguen. Lo de abajo queda
+como registro de qué estaba mal y cómo se verificó; la fuente de verdad es el
+código.
+
+- `3b4385b` — `PuntoDePartida` deriva de `lib/estadoNodo.ts`. Cierra el caso B.
+- `e958117` — rama propia para la deuda pendiente. Cierra el caso A.
+
+Las cuatro superficies coinciden ahora en los dos estados, y coinciden bajo
+test: `e2e/capturas.spec.ts` recorre portada, nodo de tema, nodo de lección y
+encabezado **en el mismo test y con el mismo progreso sembrado**, que es lo
+único que hace fallar una discrepancia entre ellas. Comprobarlas por separado
+es justo lo que dejó pasar estos dos defectos: cada pantalla estaba bien mirada
+a solas. Capturas `6a`/`6b` y `7a`/`7b`.
+
+| superficie | caso A, ahora | caso B, ahora |
+| --- | --- | --- |
+| portada | "Te conviene repasar una lección" | "Empieza por acá" |
+| nodo de tema | "Repasar el tema" | "Empezar el tema" |
+| nodo de lección | "Repasar la lección" | "Empezar la lección" |
+| encabezado | 1/2 | 0/2 |
+
+**Lo que queda sin cubrir, a propósito.** La rama de deuda exige que *nada*
+esté `enCurso` ni `disponible`. Con una lección `porRepasar` y otra abierta sin
+tocar, la portada muestra la rama 2 y apunta a la segunda, sin nombrar la
+deuda; el camino sí la pinta en ámbar. No es contradicción —la portada
+responde "qué hago ahora" y el nodo responde "cómo va esto"— y hoy es
+inalcanzable, porque `l1` es la única lección publicable. Revisar cuando `l2`
+cruce revisión: si ahí se decide que la deuda manda sobre avanzar, el orden de
+guardas es de una línea.
+
+---
 
 Barrido de las cuatro superficies que hablan del mismo estado —portada, nodo de
 tema, nodo de lección y encabezado de tema— después de plegar `estadoDeNodo`
@@ -389,12 +421,19 @@ La portada afirma un avance que el resto de la aplicación no ve. Es el mismo
 defecto que el pliegue acaba de corregir un nivel más arriba, y por el mismo
 motivo: contar filas guardadas en vez de preguntar por el estado.
 
-**Arreglo propuesto, no ejecutado** (es 🟡, toca un componente, y el barrido se
-pidió como verificación): que `PuntoDePartida` calcule
+**Arreglo propuesto** —ejecutado tal cual el 2026-07-27, ver el cierre arriba—:
+que `PuntoDePartida` calcule
 `estadoDeLeccion(l, progreso, resumen)` por cada lección abierta y decida sobre
 esas etiquetas, igual que hace ahora `estadoDeNodo`. La rama 2 apuntaría a la
 primera lección `enCurso` o `porRepasar`, y la rama 3 exigiría que ninguna
-quede en `porRepasar`. Requiere decidir el copy de una rama nueva: hoy no hay
+quede en `porRepasar`.
+
+> Se ejecutó con una corrección: la deuda quedó en **rama propia**, no repartida
+> entre la 2 y la 3. `porRepasar` es "terminada y floja", no "pendiente sin
+> tocar"; meterla en la rama 2 juntaba dos estados distintos y obligaba a
+> cambiar su copy igual, así que no ahorraba nada.
+
+Requiere decidir el copy de una rama nueva: hoy no hay
 texto para "terminaste todo pero algo quedó flojo", y meterlo en la rama 3 sin
 cambiar el copy volvería a decir "hiciste todo" sobre una deuda abierta.
 

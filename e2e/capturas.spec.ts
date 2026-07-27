@@ -54,6 +54,42 @@ const PROGRESO_LECCION_HECHA = {
   })),
 };
 
+/**
+ * La lección abierta y abandonada en el paso 0. Es la fila que `registrarPaso`
+ * escribe al montar el runner, o sea apenas se abre: existe, pero no dice que
+ * el estudiante avanzara. `estadoDeLeccion` pide `pasoActual > 0`, así que la
+ * llama `disponible`.
+ *
+ * Este era el caso B de docs/pendientes.md: la portada contaba filas y decía
+ * "Te queda una lección del camino" mientras el camino decía "Empezar".
+ */
+const PROGRESO_ABIERTA_SIN_AVANZAR = {
+  version: 1,
+  lecciones: [{ leccionId: LECCION, pasoActual: 0, completada: false }],
+};
+
+/**
+ * La lección terminada pero floja: 1 de 3 ítems al primer intento, bajo el 0,6
+ * que pide `alcanzaDominio`. `estadoDeLeccion` la llama `porRepasar`.
+ *
+ * Este era el caso A: la portada la contaba como cerrada y declaraba "Hiciste
+ * todo lo que está abierto" sobre una deuda que el camino pintaba en ámbar.
+ */
+const PROGRESO_BAJO_UMBRAL = {
+  version: 1,
+  lecciones: [{ leccionId: LECCION, pasoActual: 9, completada: true }],
+  respuestas: ["l1-item-1", "l1-item-2", "l1-item-3"].map((itemId, i) => ({
+    contexto: "leccion",
+    contextoId: LECCION,
+    itemId,
+    valor: { tipo: "alternativa", clave: "B" },
+    correcta: i === 0,
+    intento: 1,
+    tiempoMs: 42_000,
+    respondidaEn: `2026-07-26T18:0${i}:00.000Z`,
+  })),
+};
+
 /** Siembra el progreso antes de que corra cualquier script de la página, que es
  *  la única forma de que el primer render del cliente ya lo vea. */
 async function sembrar(page: Page, progreso: unknown) {
@@ -240,6 +276,66 @@ test("sin movimiento cuando el sistema lo pide", async ({ browser }) => {
   expect(estilos.trazo?.dashoffset).toBe("0px");
 
   await contexto.close();
+});
+
+/**
+ * Los dos casos que docs/pendientes.md dejó abiertos el 2026-07-27, cada uno
+ * recorriendo **las cuatro superficies** que hablan del mismo estado: portada,
+ * nodo de tema, nodo de lección y encabezado de tema.
+ *
+ * Se afirma el texto de las cuatro en el mismo test y con el mismo progreso
+ * sembrado, que es la única forma de que una discrepancia entre ellas falle.
+ * Comprobarlas por separado es justo lo que dejó pasar los dos defectos: cada
+ * pantalla estaba bien mirada a solas.
+ */
+test("abierta sin avanzar: las cuatro superficies dicen lo mismo", async ({
+  page,
+}, testInfo) => {
+  await sembrar(page, PROGRESO_ABIERTA_SIN_AVANZAR);
+
+  /* Abrir la lección y salirse no es haberla empezado: la portada arranca igual
+     que sin progreso. Antes decía "Te queda una lección del camino". */
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Empieza por acá" })).toBeVisible();
+  await capturar(page, "6a-portada-abierta-sin-avanzar", testInfo.project.name);
+
+  await page.goto("/camino");
+  await expect(page.getByRole("link", { name: "Empezar el tema" })).toBeVisible();
+  await capturar(page, "6b-camino-abierta-sin-avanzar", testInfo.project.name);
+
+  await page.goto(`/tema/${TEMA}`);
+  await expect(page.getByRole("link", { name: "Empezar la lección" })).toBeVisible();
+  await expect(page.locator("header p").last()).toContainText("0/2");
+});
+
+test("terminada bajo el umbral: las cuatro superficies dicen lo mismo", async ({
+  page,
+}, testInfo) => {
+  await sembrar(page, PROGRESO_BAJO_UMBRAL);
+
+  /* La rama de deuda. Lo que NO puede decir es "Hiciste todo lo que está
+     abierto", que es lo que decía antes sobre esta misma deuda. */
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", { name: "Te conviene repasar una lección" }),
+  ).toBeVisible();
+  await expect(page.getByText("Hiciste todo")).toHaveCount(0);
+  // El umbral se imprime desde lib/umbrales.ts, no escrito a mano.
+  await expect(page.getByText("quedó bajo el 60% de aciertos")).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Repasar: .+ · .+/ })).toBeVisible();
+  await capturar(page, "7a-portada-deuda", testInfo.project.name);
+
+  await page.goto("/camino");
+  await expect(page.getByRole("link", { name: "Repasar el tema" })).toBeVisible();
+  await capturar(page, "7b-camino-deuda", testInfo.project.name);
+
+  await page.goto(`/tema/${TEMA}`);
+  /* El nodo activo acá es el cierre —la lección ya no está ni en curso ni
+     disponible—, así que hay que seleccionar el de la lección para leer su
+     acción. */
+  await page.getByRole("button", { name: "El patrón que se repite" }).click();
+  await expect(page.getByRole("link", { name: "Repasar la lección" })).toBeVisible();
+  await expect(page.locator("header p").last()).toContainText("1/2");
 });
 
 test("celebración de tema", async ({ page }, testInfo) => {
