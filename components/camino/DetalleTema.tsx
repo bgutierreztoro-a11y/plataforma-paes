@@ -2,51 +2,63 @@
 
 import Link from "next/link";
 import { CaminoLecciones } from "@/components/camino/CaminoLecciones";
-import { IlustracionTema } from "@/lib/ilustracionesTemas";
+import { useMontado } from "@/lib/useMontado";
+import { leer } from "@/lib/progresoLocal";
+import { avanceDeTema } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 
 /**
- * Segundo nivel del camino: las lecciones de un tema, en orden de curso, más su
- * cierre si lo tiene.
+ * Segundo nivel del camino: las lecciones de un tema y su cierre.
  *
- * Antes esto era una lista de tarjetas sueltas y el cierre colgaba de un
- * enlace subrayado al pie. Dos problemas: el tema por dentro no se parecía en
- * nada al camino que lo contiene, y la meta del tema —lo único que lo cierra—
- * era el elemento con menos peso visual de la pantalla. Ahora es el mismo trazo
- * de /camino con los mismos nodos, y el cierre es su último punto.
+ * **Encabezado fijo (2026-07-27).** Antes el encabezado llevaba el eje, el
+ * nombre, el objetivo completo y un enlace de volver, y ocupaba casi media
+ * pantalla de 360px antes de que apareciera el primer nodo. Ahora es una franja
+ * compacta que se queda arriba mientras se recorre: el estudiante siempre sabe
+ * en qué tema está sin gastar el alto una sola vez al principio.
+ *
+ * El objetivo del tema salió de acá. No se pierde: es la descripción de la
+ * tarjeta del nodo en /camino, que es donde el estudiante decide si entrar.
  */
 export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
-  return (
-    <div className="min-h-full flex-1 px-4 py-10 sm:px-6">
-      <div className="mx-auto w-full max-w-3xl">
-        <Link
-          href="/camino"
-          className="inline-flex min-h-11 items-center text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          ← Volver al camino
-        </Link>
+  const montado = useMontado();
+  const avance = montado ? avanceDeTema(tema, leer()) : { hechas: 0, total: tema.lecciones.length };
 
-        {/* La ilustración del tema al lado del título, no encima: es una figura
-            de apoyo y no puede empujar el nombre del tema fuera de la primera
-            pantalla. En 360px se apila debajo. */}
-        <header className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+  return (
+    <div className="min-h-full flex-1">
+      {/* `top-0` en móvil, donde la barra de navegación va abajo; en escritorio
+          la barra es sticky arriba y mide 3.25rem, así que la franja se pega
+          justo debajo en vez de quedar tapada. */}
+      <header className="sticky top-0 z-20 border-b border-border bg-surface/95 backdrop-blur-sm sm:top-[3.25rem]">
+        <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-2 sm:px-6">
+          <Link
+            href="/camino"
+            aria-label="Volver al camino"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta text-lg text-accent hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            ←
+          </Link>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium uppercase tracking-wide text-ink-tenue">
+            <p className="truncate text-xs font-medium uppercase tracking-wide text-ink-tenue">
               {tema.ejeNombre}
             </p>
-            <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink lg:text-3xl">
+            <h1 className="truncate text-base font-semibold tracking-tight text-ink sm:text-lg">
               {tema.nombre}
             </h1>
-            <p className="mt-2 text-base leading-7 text-ink-suave">{tema.objetivo}</p>
           </div>
-          <div aria-hidden="true" className="w-40 shrink-0 self-start sm:w-48 sm:self-center">
-            <IlustracionTema temaId={tema.id} />
-          </div>
-        </header>
-
-        <div className="mt-8">
-          <CaminoLecciones tema={tema} />
+          <p className="shrink-0 text-sm text-ink-suave">
+            <span className="font-mono tabular-nums">{avance.hechas}</span>
+            <span aria-hidden="true">/</span>
+            <span className="font-mono tabular-nums">{avance.total}</span>
+            <span className="sr-only">
+              {" "}
+              lecciones completadas de {avance.total}
+            </span>
+          </p>
         </div>
+      </header>
+
+      <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
+        <CaminoLecciones tema={tema} />
       </div>
     </div>
   );
