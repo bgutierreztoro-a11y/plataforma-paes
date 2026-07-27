@@ -5,6 +5,7 @@ import { EnlaceBoton } from "@/components/ui/Boton";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { estadoDeLeccion, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
+import { UMBRAL_DOMINIO } from "@/lib/umbrales";
 import type { LeccionDelTema, TemaDelCamino } from "@/lib/camino";
 
 /** Una lección abierta del camino, con el tema al que pertenece y la etiqueta
@@ -110,8 +111,46 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      progreso. */
   const hayAvance = conEstado.some((l) => l.estado !== "disponible");
 
-  // Rama 3 — todo lo abierto quedó hecho. Si no hay pendiente y las lecciones
-  // abiertas existen, todas están completadas: `hayAvance` sobra en la guarda.
+  /* La deuda pedagógica: terminada pero bajo el umbral de dominio. Misma
+     etiqueta que pinta el nodo en ámbar en los dos niveles del camino. */
+  const porRepasar = conEstado.find((l) => l.estado === "porRepasar");
+
+  /* Rama 4 — no queda nada abierto sin terminar, pero alguna lección quedó
+     bajo el umbral de dominio.
+
+     Va **antes** que la rama 3 porque es la que impide declarar "hiciste todo"
+     sobre una deuda abierta: `porRepasar` significa terminada y floja, no
+     pendiente sin tocar, y hasta ahora esta pantalla la contaba como cerrada y
+     mandaba al estudiante a otra parte mientras el camino la pintaba en ámbar
+     (docs/pendientes.md, caso A).
+
+     Es rama propia y no la 2 reusada a propósito: la 2 habla de algo que quedó
+     sin terminar, y mezclarlas juntaría dos estados distintos en un copy que
+     habría que cambiar igual.
+
+     Si hay más de una, apunta a la primera en orden de temario — `conEstado`
+     ya viene en ese orden desde `lib/camino.ts`. */
+  if (!pendiente && porRepasar) {
+    return (
+      <Marco titulo="Te conviene repasar una lección">
+        {/* El umbral sale de lib/umbrales.ts y no escrito a mano: es
+            exactamente el número que ese módulo existe para que no aparezca
+            dos veces y se desincronice. */}
+        <p className="text-base leading-7 text-ink-suave">
+          Terminaste todo lo abierto. «{porRepasar.titulo}» quedó bajo el{" "}
+          {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer intento.
+        </p>
+        {/* Mismo patrón de etiqueta que la rama 2: el botón nombra tema y
+            lección, que es lo que le permite reconocer cuál sin abrirla. */}
+        <EnlaceBoton href={`/leccion/${porRepasar.id}`} className="mt-8">
+          Repasar: {porRepasar.temaNombre} · {porRepasar.titulo}
+        </EnlaceBoton>
+      </Marco>
+    );
+  }
+
+  // Rama 3 — todo lo abierto quedó hecho, y sin deuda. Si no hay pendiente y
+  // las lecciones abiertas existen, todas están completadas: `hayAvance` sobra.
   if (!pendiente) {
     return (
       <Marco titulo="Hiciste todo lo que está abierto">
