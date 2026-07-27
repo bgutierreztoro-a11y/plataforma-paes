@@ -60,11 +60,57 @@ Falso positivo de estilo, no un placeholder real: "TODO" en mayúsculas es la
 palabra española "todo" usada para dar énfasis, y el validador la detecta
 como marcador de trabajo pendiente en inglés a propósito —el propio script
 distingue "todo"/"pendiente" en minúscula (palabras normales del idioma) de
-`TODO`/`[PENDIENTE]` en mayúscula (marcadores)—. **No es contenido a
-revisar por el profesor**, es una palabra a reescribir sin mayúsculas o en
-cursiva antes de marcar `publicable`: por ejemplo "dividir *todo* cada lado"
-o "dividir **cada término**, no solo el 3x". Cualquiera de las dos preserva
-el sentido matemático exacto.
+`TODO`/`[PENDIENTE]` en mayúscula (marcadores)—.
+
+**Decisión explícita (2026-07-27): no se toca ni el JSON ni el detector.**
+Relajar el patrón de placeholders para que ignore "TODO" en mayúsculas
+debilitaría la certificación de originalidad para todo el resto del
+contenido, presente y futuro, a cambio de ahorrarse reescribir una frase.
+La palabra se reescribe; el candado que la atrapó se queda exactamente como
+está.
+
+## Para el revisor: la reescritura del "TODO" de `l3` — dos propuestas
+
+Esto **no es una revisión matemática ni de originalidad** — es una elección
+de redacción, y por eso queda en una sección aparte en vez de mezclada con
+el checklist. Ninguna de las dos cambia el error que la alternativa describe
+ni el paso donde el estudiante se equivocó; ambas dicen exactamente lo mismo
+que dice hoy el texto, sin la palabra en mayúsculas.
+
+**Texto actual** (`itemsPAES[2].alternativas[2].feedback`, ítem 3,
+alternativa C):
+
+> "Dividiste solo una parte del lado izquierdo. Para dividir por 3 hay que
+> dividir TODO cada lado (los tres términos), no solo el 3x. Al hacerlo a
+> medias cambias la solución: x + 5 = 20 no equivale a la original."
+
+**Propuesta A — cursiva, cambio mínimo:**
+
+> "Dividiste solo una parte del lado izquierdo. Para dividir por 3 hay que
+> dividir *todo* cada lado (los tres términos), no solo el 3x. Al hacerlo a
+> medias cambias la solución: x + 5 = 20 no equivale a la original."
+
+Un solo cambio: mayúsculas → cursiva. El énfasis se conserva casi igual de
+fuerte; el resto de la frase queda idéntico, palabra por palabra.
+
+**Propuesta B — sin la palabra "todo", más explícita:**
+
+> "Dividiste solo una parte del lado izquierdo. Para dividir por 3 hay que
+> dividir cada término del lado izquierdo, no solo el 3x. Al hacerlo a
+> medias cambias la solución: x + 5 = 20 no equivale a la original."
+
+Reemplaza "TODO cada lado (los tres términos)" por "cada término del lado
+izquierdo" — dice lo mismo con una palabra menos ambigua que "todo", que en
+el contexto de una ecuación puede leerse como cantidad ("todo" = el lado
+completo como bloque) en vez de como "cada uno" (los tres términos por
+separado). Es la opción más precisa matemáticamente, a costa de una frase
+un poco más larga.
+
+**Recomendación de quien escribe esto:** Propuesta A, por cambio mínimo —
+pero la decisión es del revisor, no de esta nota. Cualquiera de las dos se
+escribe directo en `itemsPAES[2].alternativas[2].feedback` durante el mismo
+paso de `/revision-originalidad` (paso 3 del orden más abajo), no antes:
+así el auditor ve la versión final, no una intermedia.
 
 ## Qué NO hace falta tocar
 
