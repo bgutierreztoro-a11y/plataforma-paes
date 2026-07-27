@@ -3,7 +3,7 @@
  * dispositivo. Módulo puro: recibe el progreso ya leído, no toca localStorage.
  * Eso lo hace testeable y evita que cada nodo dispare su propia lectura.
  */
-import type { TemaDelCamino } from "./camino";
+import type { TemaDelCamino, LeccionDelTema } from "./camino";
 import { alcanzaDominio } from "./umbrales";
 import type { ProgresoLocal } from "./datos/progreso";
 
@@ -122,6 +122,68 @@ export function estadoDeNodo(
   if (completo) return "completado";
 
   return hechas.length > 0 ? "enCurso" : "disponible";
+}
+
+/**
+ * Estado de una **lección** dentro de su tema. Mismas cinco etiquetas que el
+ * nodo de tema, un nivel más abajo: el camino de temas y el camino de lecciones
+ * hablan el mismo vocabulario visual, así que también tienen que hablar el
+ * mismo vocabulario de estados.
+ *
+ * El orden de las reglas es el de `estadoDeNodo` y por las mismas razones:
+ * "por repasar" va antes que "completado" porque una deuda pedagógica pendiente
+ * pesa más que haber recorrido el material, y una lección sin ítems PAES no
+ * aporta evidencia de dominio, así que no se arrastra a ámbar por falta de
+ * datos.
+ *
+ * "En curso" acá significa algo más fino que en el tema: hay un paso empezado
+ * dentro de la lección. Es el dato que ya guarda `pasoActual`, sin inventar
+ * ninguno nuevo.
+ */
+export function estadoDeLeccion(
+  leccion: LeccionDelTema,
+  progreso: ProgresoLocal | null,
+  resumen: ResumenRespuestas,
+): EstadoNodo {
+  if (!leccion.publicable) return "enConstruccion";
+
+  const guardada = (progreso?.lecciones ?? []).find((l) => l.leccionId === leccion.id);
+
+  if (guardada?.completada) {
+    const flojo =
+      leccion.totalItemsPAES > 0 &&
+      !alcanzaDominio(resumen.aciertos.get(leccion.id) ?? 0, leccion.totalItemsPAES);
+    return flojo ? "porRepasar" : "completado";
+  }
+
+  return (guardada?.pasoActual ?? 0) > 0 ? "enCurso" : "disponible";
+}
+
+/**
+ * Estado del **cierre** del tema, que no es una lección: es `tipo: "cierre"`,
+ * vive en su propia ruta y su evidencia de término es haber respondido todos
+ * sus ítems, no un flag `completada`.
+ *
+ * Por eso no reusa `estadoDeLeccion`: "abrí el cierre" no es "rendí el cierre",
+ * y la única forma de distinguirlo es contar ítems distintos respondidos contra
+ * el total que trae el contenido. Es el mismo criterio que ya aplica
+ * `estadoDeNodo` para decidir si un tema está completo.
+ *
+ * **Nunca devuelve "en construcción", aunque el cierre no sea publicable.** Un
+ * cierre en `revision` está escrito y es navegable: el producto ya decidió
+ * (2026-07-25, docs/pendientes.md) que se puede entrar avisando antes que es
+ * una demostración. "En construcción" significa que el contenido no existe
+ * todavía (MASTER.md §3.2) y acá sí existe, así que pintarlo así mentiría y
+ * además le quitaría al estudiante un acceso que hoy tiene. Que sea
+ * demostración se comunica aparte, con su propio chip.
+ */
+export function estadoDelCierre(
+  tema: TemaDelCamino,
+  resumen: ResumenRespuestas,
+): EstadoNodo {
+  const respondidos = resumen.itemsRespondidos.get("cierre")?.size ?? 0;
+  if (tema.cierreTotalItems > 0 && respondidos >= tema.cierreTotalItems) return "completado";
+  return respondidos > 0 ? "enCurso" : "disponible";
 }
 
 /** Cuántos temas del temario están completados. Denominador: `TOTAL_TEMAS`. */

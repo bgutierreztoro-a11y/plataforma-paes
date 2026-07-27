@@ -115,7 +115,7 @@ export function Camino({
           aria-hidden="true"
           viewBox="0 0 2 100"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute bottom-8 left-[38px] top-8 w-0.5 -translate-x-1/2"
+          className="pointer-events-none absolute bottom-10 left-[38px] top-10 w-0.5 -translate-x-1/2"
         >
           <line
             x1="1"
@@ -132,7 +132,7 @@ export function Camino({
             lectura y de tabulación sigue siendo el del curso, que ahora además
             coincide con lo que se ve (de abajo hacia arriba). Invertir el array
             en cambio dejaría el orden semántico al revés. */}
-        <ol className="relative flex flex-col-reverse gap-3">
+        <ol className="flex flex-col-reverse gap-3">
           {temasConNodo.map((tema, i) => (
             <li key={tema.id} ref={i === indiceActivo ? nodoActivoMovil : undefined}>
               <NodoTema

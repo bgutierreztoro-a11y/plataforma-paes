@@ -20,8 +20,8 @@ const CLASE_ENLACE =
  *
  * El slot de Cuenta reserva tamaño fijo (h-9 w-20) antes de montar: `Show` no
  * sabe el estado de sesión durante el SSR, y sin ese slot reservado la barra
- * saltaría al hidratar. Mismo criterio que useMontado en ChipLeccionCompletada
- * y PuntoDePartida.
+ * saltaría al hidratar. Mismo criterio que useMontado en PuntoDePartida y en
+ * los caminos de components/camino/.
  */
 export function Navegacion() {
   const pathname = usePathname();

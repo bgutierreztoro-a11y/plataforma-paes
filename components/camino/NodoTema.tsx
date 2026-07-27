@@ -25,10 +25,16 @@ const ETIQUETA: Record<EstadoNodo, string> = {
  * El de "en construcción" NO lleva candado. Un candado promete que existe algo
  * detrás y que se puede abrir cumpliendo un requisito; acá el contenido todavía
  * no está escrito, así que mentiría. Contorno punteado = "en obra".
+ *
+ * `meta` lo agranda y le pone un segundo contorno. Se reserva al cierre de un
+ * tema: es el último punto del trazo y el único que termina algo, así que tiene
+ * que leerse distinto sin cambiar de vocabulario. Un punto más grande y con
+ * doble anillo es "la meta"; un color nuevo habría sido un estado nuevo.
  */
-export function PuntoNodo({ estado }: { estado: EstadoNodo }) {
-  const base =
-    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors";
+export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?: boolean }) {
+  const base = `flex ${meta ? "h-14 w-14" : "h-11 w-11"} shrink-0 items-center justify-center rounded-full transition-colors${
+    meta ? " outline outline-2 outline-offset-[6px] outline-border-fuerte" : ""
+  }`;
   switch (estado) {
     case "completado":
       return (
@@ -130,40 +136,70 @@ export function EtiquetaNodo({
   );
 }
 
-export function NodoTema({ id, nombre, objetivo, estado, ejeNombre, avance }: NodoTemaProps) {
-  const navegable = estado !== "enConstruccion";
-
-  const contenido = (
-    <>
-      <PuntoNodo estado={estado} />
-      <EtiquetaNodo
-        nombre={nombre}
-        objetivo={objetivo}
-        estado={estado}
-        ejeNombre={ejeNombre}
-        avance={avance}
-      />
-    </>
+/**
+ * Canaleta del punto: ancho fijo de 44px con el punto centrado.
+ *
+ * El punto va **fuera** de la tarjeta, no dentro. Adentro quedaba tapando el
+ * trazo: la tarjeta es opaca y lo cubría por completo, así que los nodos se
+ * veían sueltos aunque hubiera una recta dibujada detrás. Con el punto en su
+ * propia columna, la recta corre por la canaleta y los une de verdad.
+ *
+ * El ancho es fijo (y no el del punto) para que el nodo de meta, que mide 56px,
+ * desborde parejo a los dos lados y su centro caiga en la misma vertical que
+ * todos los demás. Si la canaleta creciera con él, el trazo se doblaría.
+ */
+export function CanaletaPunto({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="relative z-10 flex w-11 shrink-0 justify-center">{children}</span>
   );
+}
 
-  // min-h-11 y el punto de 44px cumplen el área táctil mínima (MASTER.md §5).
+/** La tarjeta del nodo, al lado de la canaleta. El punto es decorativo y el
+ *  destino clickeable es esta tarjeta — mismo criterio que /camino en
+ *  escritorio, donde el punto vive sobre la recta y la etiqueta es el enlace. */
+export function TarjetaNodo({
+  href,
+  children,
+}: {
+  href?: string;
+  children: React.ReactNode;
+}) {
+  // min-h-11 cumple el área táctil mínima (MASTER.md §5).
   const clases =
-    "flex min-h-11 w-full items-start gap-4 rounded-tarjeta bg-surface/90 p-3 text-left shadow-tarjeta backdrop-blur-[2px]";
-
-  if (!navegable) {
+    "flex min-h-11 min-w-0 flex-1 items-start gap-4 rounded-tarjeta bg-surface/90 p-3 text-left shadow-tarjeta backdrop-blur-[2px]";
+  if (!href) {
     return (
       <div className={`${clases} cursor-default`} aria-disabled="true">
-        {contenido}
+        {children}
       </div>
     );
   }
-
   return (
     <Link
-      href={`/tema/${id}`}
+      href={href}
       className={`${clases} motion-safe:transition-shadow hover:shadow-tarjeta-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
     >
-      {contenido}
+      {children}
     </Link>
+  );
+}
+
+export function NodoTema({ id, nombre, objetivo, estado, ejeNombre, avance }: NodoTemaProps) {
+  const navegable = estado !== "enConstruccion";
+  return (
+    <div className="flex items-start gap-4">
+      <CanaletaPunto>
+        <PuntoNodo estado={estado} />
+      </CanaletaPunto>
+      <TarjetaNodo href={navegable ? `/tema/${id}` : undefined}>
+        <EtiquetaNodo
+          nombre={nombre}
+          objetivo={objetivo}
+          estado={estado}
+          ejeNombre={ejeNombre}
+          avance={avance}
+        />
+      </TarjetaNodo>
+    </div>
   );
 }
