@@ -4,28 +4,28 @@ import Link from "next/link";
 import { EnlaceBoton } from "@/components/ui/Boton";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
-import type { TemaDelCamino } from "@/lib/camino";
+import { estadoDeLeccion, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
+import type { LeccionDelTema, TemaDelCamino } from "@/lib/camino";
 
-/** Una lección abierta del camino, con el tema al que pertenece. La página de
- *  servidor lo arma con lib/camino.ts: acá no se lee contenido del disco ni se
+/** Una lección abierta del camino, con el tema al que pertenece y la etiqueta
+ *  de estado que le pone `lib/estadoNodo.ts`. La página de servidor arma las
+ *  lecciones con lib/camino.ts: acá no se lee contenido del disco ni se
  *  serializa una lección completa. */
 interface LeccionAbierta {
   id: string;
   titulo: string;
   minutos: number;
   temaNombre: string;
+  estado: EstadoNodo;
 }
 
-function abiertasEnOrden(temas: TemaDelCamino[]): LeccionAbierta[] {
+function abiertasEnOrden(
+  temas: TemaDelCamino[],
+): { leccion: LeccionDelTema; temaNombre: string }[] {
   return temas.flatMap((tema) =>
     tema.lecciones
       .filter((l) => l.publicable)
-      .map((l) => ({
-        id: l.id,
-        titulo: l.titulo,
-        minutos: l.minutos,
-        temaNombre: tema.nombre,
-      })),
+      .map((leccion) => ({ leccion, temaNombre: tema.nombre })),
   );
 }
 
@@ -43,7 +43,7 @@ function abiertasEnOrden(temas: TemaDelCamino[]): LeccionAbierta[] {
  * cambio de dispositivo ni al borrado del navegador: la migración al servidor
  * al crear cuenta todavía no existe (docs/pendientes.md, 2026-07-26).
  *
- * Por eso el copy de las tres ramas es neutro respecto a la memoria: no dice
+ * Por eso el copy de todas las ramas es neutro respecto a la memoria: no dice
  * "de vuelta", no saluda distinto al que ya estuvo, y nunca afirma que algo
  * quedó guardado por tener cuenta. Un estudiante que abre esto en otro teléfono
  * ve la rama 1 y no debe poder concluir que perdió algo ni que la cuenta se lo
@@ -55,9 +55,31 @@ function abiertasEnOrden(temas: TemaDelCamino[]): LeccionAbierta[] {
  */
 export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   const montado = useMontado();
-  const abiertas = abiertasEnOrden(temas);
   const enPreparacion = temas.some((t) => t.lecciones.some((l) => !l.publicable));
-  const primera = abiertas[0];
+
+  /* El estado sale de `lib/estadoNodo.ts`, el mismo módulo que pinta los dos
+     niveles del camino, y no de contar filas de `progresoLocal`.
+
+     Contar filas era una segunda derivación del mismo hecho, y se
+     desincronizó exactamente donde se esperaba (docs/pendientes.md,
+     2026-07-27): `registrarPaso` escribe la fila al montar el runner, o sea
+     apenas se abre la lección, así que abrirla y salirse en el paso 0 le hacía
+     decir a esta pantalla "te queda una lección" mientras el camino seguía
+     diciendo "Empezar". Con `estadoDeLeccion` el predicado es `pasoActual > 0`
+     y esa lección es `disponible` en las tres superficies que hablan de estado:
+     abrir algo no es haberlo empezado. */
+  const progreso = montado ? leer() : null;
+  const resumen = resumirRespuestas(progreso);
+  const conEstado: LeccionAbierta[] = abiertasEnOrden(temas).map(
+    ({ leccion, temaNombre }) => ({
+      id: leccion.id,
+      titulo: leccion.titulo,
+      minutos: leccion.minutos,
+      temaNombre,
+      estado: estadoDeLeccion(leccion, progreso, resumen),
+    }),
+  );
+  const primera = conEstado[0];
 
   // Invariante del camino: hoy l1 es publicable. Si algún día no se cumple, el
   // punto de partida dice la verdad en vez de ofrecer un enlace roto.
@@ -75,15 +97,22 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
     );
   }
 
-  const progreso = montado ? leer() : null;
-  const completadas = new Set(
-    (progreso?.lecciones ?? []).filter((l) => l.completada).map((l) => l.leccionId),
-  );
-  const pendiente = montado ? abiertas.find((l) => !completadas.has(l.id)) : primera;
-  const hayAvance = montado && (progreso?.lecciones.length ?? 0) > 0;
+  /* Lo empezado manda sobre lo que todavía no se abre. Es la misma regla que
+     mueve la tarjeta del nodo activo en `Camino` y en `CaminoLecciones`, y está
+     escrita igual a propósito: la portada y el camino tienen que elegir la
+     misma lección o se contradicen al nombrarla. */
+  const pendiente =
+    conEstado.find((l) => l.estado === "enCurso") ??
+    conEstado.find((l) => l.estado === "disponible");
 
-  // Rama 3 — todo lo abierto quedó hecho.
-  if (hayAvance && !pendiente) {
+  /* Hay avance cuando alguna lección abierta dejó de estar `disponible`. Antes
+     era `progreso.lecciones.length > 0`, que cuenta filas guardadas y no
+     progreso. */
+  const hayAvance = conEstado.some((l) => l.estado !== "disponible");
+
+  // Rama 3 — todo lo abierto quedó hecho. Si no hay pendiente y las lecciones
+  // abiertas existen, todas están completadas: `hayAvance` sobra en la guarda.
+  if (!pendiente) {
     return (
       <Marco titulo="Hiciste todo lo que está abierto">
         <p className="text-base leading-7 text-ink-suave">
@@ -100,7 +129,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
 
   // Rama 2 — quedó algo sin terminar. La etiqueta nombra el tema y la lección,
   // que es lo que le permite al estudiante reconocer dónde iba sin abrirla.
-  if (hayAvance && pendiente) {
+  if (hayAvance) {
     return (
       <Marco titulo="Te queda una lección del camino">
         <p className="text-base leading-7 text-ink-suave">
