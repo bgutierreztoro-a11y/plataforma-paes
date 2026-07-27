@@ -540,3 +540,29 @@ independientes: que development funcione no dice nada de producción.
 - El camino como única navegación, con la grilla retirada — `6bac9ce`.
 - Dirección del recorrido y nodos sin tarjeta — `fc7bc3d`, con MASTER.md §3.2
   enmendado en el mismo commit.
+
+---
+
+Fecha: 2026-07-27
+
+## Deuda de historia — CERRADA, no se reescribe
+
+**Push realizado con firma de Benjamín Gutiérrez, 2026-07-27.** Los 30 commits
+de las sesiones del camino (`88ed670..a48a68c`) están en `origin/master`.
+Decisión explícita: no reescribir historia por lo que sigue, porque el riesgo
+de reescribir 30 commits ya pusheados supera el problema que resolvería.
+
+- **`74f53a0`** — el mensaje dice `docs: separa "bloqueada por prerrequisito" de
+  "en construccion"` y en efecto enmienda MASTER.md, pero el mismo commit
+  agrega `docs/ideas-en-espera/plan-semanal.md` (79 líneas, idea de producto sin
+  código) sin mencionarlo. El contenido es correcto y legítimo; el mensaje no lo
+  describe. Queda así.
+- **`868dd4c`** y **`7ac140e`** — `lib/estadoNodo.ts` entró como binario
+  (`Bin 0 -> 2854 bytes` / `Bin 2854 -> 5239 bytes`) porque se creó en UTF-16 y
+  se convirtió a UTF-8 después. `git log -p` sobre ese archivo se salta esos dos
+  commits. El archivo hoy es UTF-8 limpio y el diff acumulado no tiene binarios;
+  solo el historial fino de esos dos commits queda ilegible con `-p`.
+
+Si algún día hace falta leer el contenido real de esos dos commits, usar
+`git show <hash>:lib/estadoNodo.ts` en vez de `git log -p` — el blob se lee
+igual, aunque el diff no se muestre como texto.
