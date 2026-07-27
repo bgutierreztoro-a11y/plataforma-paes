@@ -12,6 +12,14 @@ export type Evento =
   | { nombre: "leccion_fin"; props: { leccion_id: string } }
   | { nombre: "solicitud_siguiente_leccion"; props: { leccion_id: string } }
   /* ---------- rediseño del camino (2026-07-27) ---------- */
+  /* Qué rama de PuntoDePartida.tsx vio el estudiante — la primera pantalla
+     que abre todo el mundo, y hasta esta sesión la única sin instrumentar.
+     No incluye la quinta rama ("el camino todavía no abre"): no es una de
+     las cuatro pedidas y hoy es inalcanzable. */
+  | {
+      nombre: "portada_vista";
+      props: { rama: "empezar" | "continuar" | "repasar" | "todo_al_dia" };
+    }
   | { nombre: "camino_visto"; props: { temas_visibles: number; temas_completados: number } }
   | { nombre: "nodo_tema_abierto"; props: { tema_id: string; estado: EstadoNodo } }
   | { nombre: "nodo_leccion_abierto"; props: { leccion_id: string; estado: EstadoNodo } }

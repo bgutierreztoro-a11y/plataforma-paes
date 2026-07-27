@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { EnlaceBoton } from "@/components/ui/Boton";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { estadoDeLeccion, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
+import { registrarEvento } from "@/lib/eventos";
 import { UMBRAL_DOMINIO } from "@/lib/umbrales";
 import type { LeccionDelTema, TemaDelCamino } from "@/lib/camino";
 
@@ -82,6 +84,54 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   );
   const primera = conEstado[0];
 
+  /* Lo empezado manda sobre lo que todavía no se abre. Es la misma regla que
+     mueve la tarjeta del nodo activo en `Camino` y en `CaminoLecciones`, y está
+     escrita igual a propósito: la portada y el camino tienen que elegir la
+     misma lección o se contradicen al nombrarla.
+
+     Se calculan acá arriba, antes del `if (!primera)`, y no donde se leían
+     originalmente (justo antes de la rama 4) para que el evento de abajo
+     pueda usarlas sin duplicar esta misma lógica de ramas en dos lugares:
+     son funciones puras sobre `conEstado`, que con `conEstado` vacío
+     simplemente dan `undefined`/`false`, así que moverlas antes del early
+     return no cambia ningún comportamiento. */
+  const pendiente =
+    conEstado.find((l) => l.estado === "enCurso") ??
+    conEstado.find((l) => l.estado === "disponible");
+
+  /* Hay avance cuando alguna lección abierta dejó de estar `disponible`. Antes
+     era `progreso.lecciones.length > 0`, que cuenta filas guardadas y no
+     progreso. */
+  const hayAvance = conEstado.some((l) => l.estado !== "disponible");
+
+  /* La deuda pedagógica: terminada pero bajo el umbral de dominio. Misma
+     etiqueta que pinta el nodo en ámbar en los dos niveles del camino. */
+  const porRepasar = conEstado.find((l) => l.estado === "porRepasar");
+
+  /* Qué rama se le muestra al estudiante, en el mismo orden y con el mismo
+     criterio que las cuatro ramas de abajo — nunca "el camino todavía no
+     abre": esa quinta pantalla no es ninguna de las cuatro que se pidió medir
+     (empezar / continuar / repasar / todo_al_dia), y hoy es inalcanzable
+     porque l1 siempre es publicable. */
+  const rama: "empezar" | "continuar" | "repasar" | "todo_al_dia" | null = !primera
+    ? null
+    : !pendiente && porRepasar
+      ? "repasar"
+      : !pendiente
+        ? "todo_al_dia"
+        : hayAvance
+          ? "continuar"
+          : "empezar";
+
+  /* Una vez por hidratación, igual que camino_visto en Camino.tsx: antes de
+     montar, `progreso` es null y `rama` daría siempre "empezar" — el cero de
+     SSR, no el dato real. */
+  useEffect(() => {
+    if (!montado || !rama) return;
+    registrarEvento({ nombre: "portada_vista", props: { rama } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- una vez por montaje, cuando montado pasa a true
+  }, [montado]);
+
   // Invariante del camino: hoy l1 es publicable. Si algún día no se cumple, el
   // punto de partida dice la verdad en vez de ofrecer un enlace roto.
   if (!primera) {
@@ -97,23 +147,6 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
       </Marco>
     );
   }
-
-  /* Lo empezado manda sobre lo que todavía no se abre. Es la misma regla que
-     mueve la tarjeta del nodo activo en `Camino` y en `CaminoLecciones`, y está
-     escrita igual a propósito: la portada y el camino tienen que elegir la
-     misma lección o se contradicen al nombrarla. */
-  const pendiente =
-    conEstado.find((l) => l.estado === "enCurso") ??
-    conEstado.find((l) => l.estado === "disponible");
-
-  /* Hay avance cuando alguna lección abierta dejó de estar `disponible`. Antes
-     era `progreso.lecciones.length > 0`, que cuenta filas guardadas y no
-     progreso. */
-  const hayAvance = conEstado.some((l) => l.estado !== "disponible");
-
-  /* La deuda pedagógica: terminada pero bajo el umbral de dominio. Misma
-     etiqueta que pinta el nodo en ámbar en los dos niveles del camino. */
-  const porRepasar = conEstado.find((l) => l.estado === "porRepasar");
 
   /* Rama 4 — no queda nada abierto sin terminar, pero alguna lección quedó
      bajo el umbral de dominio.
