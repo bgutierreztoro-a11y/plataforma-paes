@@ -5,8 +5,11 @@ import { usePathname } from "next/navigation";
 import { Show, UserButton } from "@clerk/nextjs";
 import { useMontado } from "@/lib/useMontado";
 
+/* "Inicio" apunta a `/`, que es la portada. `/inicio` sigue existiendo pero solo
+   como redirección: mandar la barra ahí obligaría a un salto de más en cada
+   toque. */
 const DESTINOS = [
-  { href: "/inicio", etiqueta: "Inicio" },
+  { href: "/", etiqueta: "Inicio" },
   { href: "/camino", etiqueta: "Camino" },
 ] as const;
 

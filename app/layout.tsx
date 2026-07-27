@@ -183,15 +183,19 @@ export default function RootLayout({
             tipografía de la plataforma (ver const `apariencia`). Es solo
             cosmética: no cambia auth, roles ni entitlements. */}
         {/* Los dos *FallbackRedirectUrl son solo el destino por defecto cuando
-            no hay uno explícito en la URL: mandan a /inicio, el punto de
-            partida, en vez de dejar al estudiante en la página de auth. No
+            no hay uno explícito en la URL: mandan a la portada, que es el punto
+            de partida, en vez de dejar al estudiante en la página de auth. No
             introducen ninguna redirección de entrada — nadie es empujado a
-            /ingresar, y / sigue siendo hero público. */}
+            /ingresar, y / sigue siendo pública.
+
+            Apuntan a `/` y no a `/inicio` para no pasar por una redirección
+            justo al terminar el registro. `/inicio` sigue existiendo igual, por
+            los enlaces ya guardados. */}
         <ClerkProvider
           signInUrl="/ingresar"
           signUpUrl="/registrarse"
-          signInFallbackRedirectUrl="/inicio"
-          signUpFallbackRedirectUrl="/inicio"
+          signInFallbackRedirectUrl="/"
+          signUpFallbackRedirectUrl="/"
           localization={localizacion}
           appearance={apariencia}
         >

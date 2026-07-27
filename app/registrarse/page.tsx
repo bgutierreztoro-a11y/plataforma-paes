@@ -21,7 +21,7 @@ export default function Registrarse() {
           La cuenta es opcional. Todo lo que está publicado es gratis y no requiere
           cuenta.
         </p>
-        <EnlaceBoton href="/inicio" variante="secundario" className="w-full sm:w-auto">
+        <EnlaceBoton href="/" variante="secundario" className="w-full sm:w-auto">
           Seguir sin cuenta
         </EnlaceBoton>
       </div>
