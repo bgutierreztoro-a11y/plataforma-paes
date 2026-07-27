@@ -13,6 +13,12 @@
 # testing
 /coverage
 
+# playwright: las specs se versionan, los artefactos no
+/e2e/capturas/
+/e2e/.resultados/
+/playwright-report/
+/test-results/
+
 # next.js
 /.next/
 /out/
