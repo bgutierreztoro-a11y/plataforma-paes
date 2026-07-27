@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NodoTema, PuntoNodo, EtiquetaNodo } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
+import { posicionEnRecta, extremosDeLaRecta } from "@/lib/geometriaCamino";
 import { TOTAL_TEMAS } from "@/lib/temas";
 import type { TemaDelCamino } from "@/lib/camino";
 
@@ -18,6 +19,12 @@ import type { TemaDelCamino } from "@/lib/camino";
  * avance del estudiante se dibuja como la recta que está aprendiendo a leer:
  * ejes tenues, cuadrícula de fondo, puntos sobre la recta. Nada de mapa
  * isométrico ni de sendero serpenteante — ese vocabulario es de otro producto.
+ *
+ * **El origen va abajo.** En los dos anchos el recorrido empieza en la esquina
+ * inferior izquierda y sube: es un plano cartesiano de verdad, no una lista.
+ * En escritorio eso ya lo daba `posicionEnRecta`; en móvil hace falta
+ * `flex-col-reverse`, porque una lista en orden de documento pinta el primer
+ * tema arriba y deja el camino leyéndose al revés de lo que enseña.
  *
  * En móvil la recta se endereza a vertical: una diagonal en 360px de ancho deja
  * los nodos apretados contra los bordes y el texto sin espacio. Mobile-first
@@ -46,11 +53,40 @@ export function Camino({
   const completados = estados.filter((e) => e === "completado").length;
 
   const n = temasConNodo.length;
-  /* Posición de cada punto sobre la recta, en porcentaje del lienzo. La recta
-     va de abajo-izquierda a arriba-derecha; el primer tema es el origen. Con un
-     solo nodo se centra en vez de dividir por cero. */
-  const posicion = (i: number) =>
-    n <= 1 ? { x: 50, y: 50 } : { x: 12 + (i * 72) / (n - 1), y: 86 - (i * 72) / (n - 1) };
+  const posicion = (i: number) => posicionEnRecta(i, n);
+  const { desde, hasta } = extremosDeLaRecta(n);
+
+  /* Dónde está parado el estudiante: lo empezado manda sobre lo que todavía no
+     abre. Si no hay ninguno de los dos —todo completado o todo en obra— no hay
+     a qué llevar el scroll y se deja donde el navegador lo puso. */
+  const indiceActivo = (() => {
+    const enCurso = estados.indexOf("enCurso");
+    if (enCurso !== -1) return enCurso;
+    const disponible = estados.indexOf("disponible");
+    return disponible !== -1 ? disponible : null;
+  })();
+
+  /* Un ref por variante: móvil y escritorio montan los dos árboles y ocultan
+     uno con CSS, así que hay que llevar el scroll al que efectivamente se está
+     viendo. `offsetParent === null` es la forma barata de preguntarlo sin medir
+     nada (`display:none` no tiene offsetParent). */
+  const nodoActivoMovil = useRef<HTMLLIElement>(null);
+  const nodoActivoEscritorio = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (indiceActivo === null) return;
+    const movil = nodoActivoMovil.current;
+    const escritorio = nodoActivoEscritorio.current;
+    const nodo = movil && movil.offsetParent !== null ? movil : escritorio;
+    if (!nodo || nodo.offsetParent === null) return;
+    // Solo si la página realmente desborda: en un camino corto el scroll no
+    // tiene a dónde ir y llamarlo igual roba el foco de lectura del encabezado.
+    if (document.documentElement.scrollHeight <= window.innerHeight) return;
+    /* Instantáneo a propósito. Un scroll animado al cargar es justo el
+       movimiento decorativo que MASTER.md §2.6 descarta, y siendo instantáneo
+       no hay nada que apagar bajo prefers-reduced-motion. */
+    nodo.scrollIntoView({ block: "center", behavior: "auto" });
+  }, [indiceActivo]);
 
   return (
     <div>
@@ -69,15 +105,36 @@ export function Camino({
         </p>
       </header>
 
-      {/* ---------- móvil: recta vertical ---------- */}
+      {/* ---------- móvil: recta vertical, con el origen abajo ---------- */}
       <div className="fondo-cuadricula relative rounded-tarjeta border border-border p-4 sm:hidden">
-        <div
+        {/* La recta como SVG y no como <div>: un borde de CSS no tiene trazo
+            que animar, y este es el mismo gesto de dibujado que la celebración
+            de tema. preserveAspectRatio="none" la estira al alto que tenga la
+            lista sin deformar el grosor (non-scaling-stroke). */}
+        <svg
           aria-hidden="true"
-          className="absolute bottom-8 left-[38px] top-8 w-0.5 -translate-x-1/2 bg-border-fuerte"
-        />
-        <ol className="relative space-y-3">
+          viewBox="0 0 2 100"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute bottom-8 left-[38px] top-8 w-0.5 -translate-x-1/2"
+        >
+          <line
+            x1="1"
+            y1="100"
+            x2="1"
+            y2="0"
+            stroke="var(--color-border-fuerte)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        {/* `flex-col-reverse` invierte la pintura, no el DOM: el orden de
+            lectura y de tabulación sigue siendo el del curso, que ahora además
+            coincide con lo que se ve (de abajo hacia arriba). Invertir el array
+            en cambio dejaría el orden semántico al revés. */}
+        <ol className="relative flex flex-col-reverse gap-3">
           {temasConNodo.map((tema, i) => (
-            <li key={tema.id}>
+            <li key={tema.id} ref={i === indiceActivo ? nodoActivoMovil : undefined}>
               <NodoTema
                 id={tema.id}
                 nombre={tema.nombre}
@@ -112,10 +169,10 @@ export function Camino({
             />
             {n > 1 && (
               <line
-                x1={posicion(0).x}
-                y1={posicion(0).y}
-                x2={posicion(n - 1).x}
-                y2={posicion(n - 1).y}
+                x1={desde.x}
+                y1={desde.y}
+                x2={hasta.x}
+                y2={hasta.y}
                 stroke="var(--color-accent)"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -123,6 +180,16 @@ export function Camino({
               />
             )}
           </svg>
+
+          {/* El cero en el vértice de los ejes. Sin él la recta se lee como una
+              diagonal decorativa; con él, el camino se declara plano cartesiano
+              y el estudiante ubica de dónde parte. */}
+          <span
+            aria-hidden="true"
+            className="absolute left-[8%] top-[92%] -translate-x-[150%] font-mono text-xs tabular-nums text-ink-tenue"
+          >
+            0
+          </span>
 
           {temasConNodo.map((tema, i) => {
             const { x, y } = posicion(i);
@@ -134,8 +201,12 @@ export function Camino({
             const aLaDerecha = x <= 50;
             return (
               <div key={tema.id}>
-                {/* El punto, exactamente sobre la recta. */}
+                {/* El punto, exactamente sobre la recta. Es el que lleva el ref
+                    del nodo activo: el envoltorio no sirve, porque sus dos
+                    hijos son absolutos y queda con alto 0 al inicio del
+                    contenedor. */}
                 <div
+                  ref={i === indiceActivo ? nodoActivoEscritorio : undefined}
                   className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${x}%`, top: `${y}%` }}
                 >
