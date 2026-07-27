@@ -9,7 +9,7 @@ import type { TemaDelCamino } from "@/lib/camino";
  * Segundo nivel del camino: las lecciones de un tema, en orden de curso, más su
  * cierre si lo tiene.
  *
- * Antes esto era una lista de `Tarjeta` sueltas y el cierre colgaba de un
+ * Antes esto era una lista de tarjetas sueltas y el cierre colgaba de un
  * enlace subrayado al pie. Dos problemas: el tema por dentro no se parecía en
  * nada al camino que lo contiene, y la meta del tema —lo único que lo cierra—
  * era el elemento con menos peso visual de la pantalla. Ahora es el mismo trazo
