@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
@@ -39,13 +39,29 @@ export function RunnerLeccion({
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
   const indiceEnTema = tema.lecciones.findIndex((l) => l.id === leccion.id);
 
+  /* Los dos `ref` de abajo son el mismo guardia que CelebracionTema.tsx y
+     ItemsPAESFinal.tsx ya usan: React vuelve a invocar los efectos en modo
+     estricto de desarrollo (mount → cleanup → mount) para detectar
+     impurezas, y sin guardia estos dos duplicaban el evento — verificado en
+     el navegador, con navegación cliente hacia /leccion/[id] (por URL
+     directa no se reproducía, por eso pasó una sesión sin notarse). */
+  const yaInicio = useRef(false);
   useEffect(() => {
+    if (yaInicio.current) return;
+    yaInicio.current = true;
     registrarEvento({ nombre: "leccion_inicio", props: { leccion_id: leccion.id } });
     // Solo al montar: leccion_inicio se dispara una vez por sesión de lección.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /* Guarda el último paso ya registrado y no un booleano de una sola vez,
+     porque a diferencia de leccion_inicio este evento sí tiene que volver a
+     dispararse cada vez que estado.pasoActual cambia de verdad — solo se
+     salta la re-invocación del modo estricto sobre el MISMO valor. */
+  const ultimoPasoRegistrado = useRef<number | null>(null);
   useEffect(() => {
+    if (ultimoPasoRegistrado.current === estado.pasoActual) return;
+    ultimoPasoRegistrado.current = estado.pasoActual;
     registrarEvento({
       nombre: "paso_inicio",
       props: { paso: estado.pasoActual + 1, leccion_id: leccion.id },
