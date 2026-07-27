@@ -243,28 +243,16 @@ body {
   animation: dibujar-trazo 900ms ease-out forwards;
 }
 
-.punto-final {
-  opacity: 0;
-  animation: aparecer-punto 300ms ease-out 800ms forwards;
-}
-
 @keyframes dibujar-trazo {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes aparecer-punto {
-  to {
-    opacity: 1;
-  }
-}
-
 /* Sin movimiento: el trazo aparece ya completo. El estado final es el mismo,
    solo se salta el recorrido (MASTER.md §2.6 y §5). */
 @media (prefers-reduced-motion: reduce) {
-  .trazo-camino,
-  .punto-final {
+  .trazo-camino {
     animation: none;
     stroke-dashoffset: 0;
     opacity: 1;
