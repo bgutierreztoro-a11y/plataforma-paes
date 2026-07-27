@@ -144,8 +144,87 @@ body {
   }
 }
 
-/* Trazo del camino completándose en la celebración de tema: la recta se dibuja
-   de una pasada.
+/* ---------------------------------------------------------------------------
+   Vida del camino: respiración, entrada escalonada y trazo que se dibuja.
+
+   Tres reglas para todo lo de acá abajo:
+   1. El movimiento sirve al descubrimiento, no a la decoración (MASTER.md §2.6).
+      El nodo activo respira porque hay que saber dónde estás; nada parpadea
+      para llamar la atención.
+   2. Nada de esto cambia el significado de un estado. Si se apaga el
+      movimiento, la pantalla dice exactamente lo mismo.
+   3. `prefers-reduced-motion` deja todo en su estado final, nunca a medias.
+   --------------------------------------------------------------------------- */
+
+/* Nodo activo: respiración continua, no parpadeo.
+
+   Antes esto era `animate-ping` de Tailwind, que es un anillo que se expande y
+   desaparece — un parpadeo, y de los que cansan cuando quedan en pantalla.
+   Acá el punto se hincha apenas y vuelve, con el ritmo de una respiración
+   tranquila (2,4s).
+
+   Solo `transform`, nada de `box-shadow`. Tailwind implementa `ring-*` y las
+   sombras con box-shadow, así que animar esa propiedad le borraba al nodo su
+   anillo de acento y su sombra de reposo mientras respiraba — perdía el
+   volumen justo en el estado que más tiene que destacar. */
+@keyframes respirar-nodo {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.respiracion-nodo {
+  animation: respirar-nodo 2400ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Entrada escalonada de los nodos. El retraso lo pone cada nodo con
+   `animationDelay` inline, calculado desde su índice en el camino, para que la
+   secuencia siga el trazo desde el origen y no el orden del DOM.
+
+   `backwards` es lo que hace que el nodo esté invisible **durante** su retraso;
+   sin eso aparecerían todos de golpe y recién después se animarían. */
+@keyframes entrar-nodo {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entra-nodo {
+  animation: entrar-nodo 360ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Misma entrada, pero con el retraso declarado por variable. La usa la
+   secuencia de la celebración de tema, donde los retrasos no salen de un índice
+   sino de un guion de tiempos. */
+.entra-en-secuencia {
+  animation: entrar-nodo 360ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--retraso, 0ms);
+}
+
+/* Sin movimiento: todo llega ya puesto. El estado final es idéntico, solo se
+   salta el recorrido (MASTER.md §2.6 y §5). */
+@media (prefers-reduced-motion: reduce) {
+  .respiracion-nodo,
+  .entra-nodo,
+  .entra-en-secuencia {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* El trazo del camino dibujándose de una pasada. La usan la celebración de tema
+   y las rectas de /camino y del camino de lecciones: el mismo gesto en las tres,
+   que es lo que las hace el mismo camino.
 
    El número tiene que superar el largo del trazo **en píxeles de pantalla**, no
    en unidades del viewBox. El path lleva vector-effect="non-scaling-stroke"

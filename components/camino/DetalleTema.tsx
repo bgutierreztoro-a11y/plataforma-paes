@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CaminoLecciones } from "@/components/camino/CaminoLecciones";
+import { IlustracionTema } from "@/lib/ilustracionesTemas";
 import type { TemaDelCamino } from "@/lib/camino";
 
 /**
@@ -25,14 +26,22 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
           ← Volver al camino
         </Link>
 
-        <header className="mt-2">
-          <p className="text-sm font-medium uppercase tracking-wide text-ink-tenue">
-            {tema.ejeNombre}
-          </p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink lg:text-3xl">
-            {tema.nombre}
-          </h1>
-          <p className="mt-2 text-base leading-7 text-ink-suave">{tema.objetivo}</p>
+        {/* La ilustración del tema al lado del título, no encima: es una figura
+            de apoyo y no puede empujar el nombre del tema fuera de la primera
+            pantalla. En 360px se apila debajo. */}
+        <header className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium uppercase tracking-wide text-ink-tenue">
+              {tema.ejeNombre}
+            </p>
+            <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink lg:text-3xl">
+              {tema.nombre}
+            </h1>
+            <p className="mt-2 text-base leading-7 text-ink-suave">{tema.objetivo}</p>
+          </div>
+          <div aria-hidden="true" className="w-40 shrink-0 self-start sm:w-48 sm:self-center">
+            <IlustracionTema temaId={tema.id} />
+          </div>
         </header>
 
         <div className="mt-8">

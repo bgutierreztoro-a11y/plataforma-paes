@@ -4,6 +4,7 @@ import {
   PuntoNodo,
   CanaletaPunto,
   TarjetaNodo,
+  FilaNodo,
   COPY_EN_PREPARACION,
 } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
@@ -80,23 +81,29 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
           SVG y no borde de CSS: un borde no tiene trazo que animar, y este es el
           mismo gesto de dibujado que la celebración de tema. El left coincide
           con el centro de la canaleta (24px de padding + 22px de medio punto). */}
-      <svg
+      {/* El <svg> va envuelto en un div y no posicionado directo: un SVG es un
+          elemento reemplazado y con `top`/`bottom` no se estira — se queda en el
+          tamaño intrínseco de su viewBox (acá, 100px de alto), y el trazo salía
+          cortado a un tercio del camino. El div sí estira, y el svg lo llena. */}
+      <div
         aria-hidden="true"
-        viewBox="0 0 2 100"
-        preserveAspectRatio="none"
         className="pointer-events-none absolute bottom-10 left-[46px] top-10 w-0.5 -translate-x-1/2"
       >
-        <line
-          x1="1"
-          y1="100"
-          x2="1"
-          y2="0"
-          stroke="var(--color-border-fuerte)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+        <svg viewBox="0 0 2 100" preserveAspectRatio="none" className="h-full w-full">
+          {/* Se dibuja desde el origen: y1=100 es el extremo de abajo. */}
+          <line
+            x1="1"
+            y1="100"
+            x2="1"
+            y2="0"
+            stroke="var(--color-border-fuerte)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+            className="trazo-camino"
+          />
+        </svg>
+      </div>
 
       <ol className="flex flex-col-reverse gap-3">
         {tema.lecciones.map((leccion, i) => {
@@ -104,7 +111,8 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
           const estado = estados[i];
           const enConstruccion = estado === "enConstruccion";
           return (
-            <li key={leccion.id} className="flex items-start gap-4">
+            <li key={leccion.id}>
+              <FilaNodo indice={i}>
               <CanaletaPunto>
                 <PuntoNodo estado={estado} />
               </CanaletaPunto>
@@ -140,6 +148,7 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
                   <Ilustracion />
                 </span>
               </TarjetaNodo>
+              </FilaNodo>
             </li>
           );
         })}
@@ -148,19 +157,34 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
             flex-col-reverse: es el punto que termina el tema. No es una lección
             —es `tipo: "cierre"` y tiene ruta propia— y por eso se distingue por
             tamaño y doble contorno en vez de por un color nuevo. */}
-        {tema.cierreId && <NodoCierre tema={tema} estado={estadoDelCierre(tema, resumen)} />}
+        {tema.cierreId && (
+          <NodoCierre
+            tema={tema}
+            estado={estadoDelCierre(tema, resumen)}
+            indice={total}
+          />
+        )}
       </ol>
     </div>
   );
 }
 
-function NodoCierre({ tema, estado }: { tema: TemaDelCamino; estado: EstadoNodo }) {
+function NodoCierre({
+  tema,
+  estado,
+  indice,
+}: {
+  tema: TemaDelCamino;
+  estado: EstadoNodo;
+  indice: number;
+}) {
   /* El cierre es navegable aunque su contenido esté en revisión: eso ya lo
      decidió el producto el 2026-07-25 y se avisa antes de entrar, no cerrando
      la puerta. Ver `estadoDelCierre`. */
   const esDemostracion = !tema.cierrePublicable;
   return (
-    <li className="flex items-start gap-4">
+    <li>
+      <FilaNodo indice={indice}>
       <CanaletaPunto>
         <PuntoNodo estado={estado} meta />
       </CanaletaPunto>
@@ -199,6 +223,7 @@ function NodoCierre({ tema, estado }: { tema: TemaDelCamino; estado: EstadoNodo 
           </span>
         </span>
       </TarjetaNodo>
+      </FilaNodo>
     </li>
   );
 }

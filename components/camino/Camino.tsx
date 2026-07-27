@@ -7,7 +7,7 @@ import { NodoTema, PuntoNodo, EtiquetaNodo } from "@/components/camino/NodoTema"
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
-import { posicionEnRecta, extremosDeLaRecta } from "@/lib/geometriaCamino";
+import { posicionEnRecta, extremosDeLaRecta, retrasoDeEntrada } from "@/lib/geometriaCamino";
 import { TOTAL_TEMAS } from "@/lib/temas";
 import type { TemaDelCamino } from "@/lib/camino";
 
@@ -111,23 +111,29 @@ export function Camino({
             que animar, y este es el mismo gesto de dibujado que la celebración
             de tema. preserveAspectRatio="none" la estira al alto que tenga la
             lista sin deformar el grosor (non-scaling-stroke). */}
-        <svg
+        {/* Envuelto en un div a propósito: un <svg> es un elemento reemplazado y
+            con `top`/`bottom` no se estira — se queda en el tamaño intrínseco de
+            su viewBox y el trazo sale cortado. El div estira, el svg lo llena. */}
+        <div
           aria-hidden="true"
-          viewBox="0 0 2 100"
-          preserveAspectRatio="none"
           className="pointer-events-none absolute bottom-10 left-[38px] top-10 w-0.5 -translate-x-1/2"
         >
-          <line
-            x1="1"
-            y1="100"
-            x2="1"
-            y2="0"
-            stroke="var(--color-border-fuerte)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
+          <svg viewBox="0 0 2 100" preserveAspectRatio="none" className="h-full w-full">
+            {/* Se dibuja desde el origen (abajo) hacia arriba: y1=100 es el
+                extremo inferior, así que ese es el que aparece primero. */}
+            <line
+              x1="1"
+              y1="100"
+              x2="1"
+              y2="0"
+              stroke="var(--color-border-fuerte)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              className="trazo-camino"
+            />
+          </svg>
+        </div>
         {/* `flex-col-reverse` invierte la pintura, no el DOM: el orden de
             lectura y de tabulación sigue siendo el del curso, que ahora además
             coincide con lo que se ve (de abajo hacia arriba). Invertir el array
@@ -142,6 +148,7 @@ export function Camino({
                 ejeNombre={tema.ejeNombre}
                 estado={estados[i]}
                 avance={avances[i]}
+                indice={i}
               />
             </li>
           ))}
@@ -168,6 +175,10 @@ export function Camino({
               vectorEffect="non-scaling-stroke"
             />
             {n > 1 && (
+              /* Del origen a la meta, en ese orden: el trazo se dibuja
+                 subiendo. Ver .trazo-camino en globals.css para por qué el
+                 dasharray va en píxeles de pantalla y no en unidades del
+                 viewBox. */
               <line
                 x1={desde.x}
                 y1={desde.y}
@@ -177,6 +188,7 @@ export function Camino({
                 strokeWidth="2"
                 strokeLinecap="round"
                 vectorEffect="non-scaling-stroke"
+                className="trazo-camino"
               />
             )}
           </svg>
@@ -205,12 +217,21 @@ export function Camino({
                     del nodo activo: el envoltorio no sirve, porque sus dos
                     hijos son absolutos y queda con alto 0 al inicio del
                     contenedor. */}
+                {/* La animación de entrada va en un hijo y no acá: `entra-nodo`
+                    anima `transform`, que es justo lo que usa el centrado
+                    (-translate-x/y). En el mismo elemento, el keyframe pisaría
+                    la posición y el punto saltaría al entrar. */}
                 <div
                   ref={i === indiceActivo ? nodoActivoEscritorio : undefined}
                   className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${x}%`, top: `${y}%` }}
                 >
-                  <PuntoNodo estado={estados[i]} />
+                  <span
+                    className="entra-nodo block"
+                    style={{ animationDelay: `${retrasoDeEntrada(i)}ms` }}
+                  >
+                    <PuntoNodo estado={estados[i]} />
+                  </span>
                 </div>
                 {/* La etiqueta, al lado. Es el destino clickeable; el punto es
                     decorativo y queda cubierto por el mismo enlace en móvil. */}
@@ -222,15 +243,20 @@ export function Camino({
                       : { right: `calc(${100 - x}% + 2rem)`, top: `${y}%` }
                   }
                 >
-                  <EnlaceNodo id={tema.id} estado={estados[i]}>
-                    <EtiquetaNodo
-                      nombre={tema.nombre}
-                      objetivo={tema.objetivo}
-                      estado={estados[i]}
-                      ejeNombre={tema.ejeNombre}
-                      avance={avances[i]}
-                    />
-                  </EnlaceNodo>
+                  <span
+                    className="entra-nodo block"
+                    style={{ animationDelay: `${retrasoDeEntrada(i)}ms` }}
+                  >
+                    <EnlaceNodo id={tema.id} estado={estados[i]}>
+                      <EtiquetaNodo
+                        nombre={tema.nombre}
+                        objetivo={tema.objetivo}
+                        estado={estados[i]}
+                        ejeNombre={tema.ejeNombre}
+                        avance={avances[i]}
+                      />
+                    </EnlaceNodo>
+                  </span>
                 </div>
               </div>
             );

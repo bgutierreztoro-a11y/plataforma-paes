@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { IconoCorrecto } from "@/components/ui/Icono";
+import { retrasoDeEntrada } from "@/lib/geometriaCamino";
 import type { EstadoNodo } from "@/lib/estadoNodo";
 
 /** Copy reutilizado de la grilla que este camino reemplaza: ya estaba escrito y
@@ -32,7 +33,15 @@ const ETIQUETA: Record<EstadoNodo, string> = {
  * doble anillo es "la meta"; un color nuevo habría sido un estado nuevo.
  */
 export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?: boolean }) {
-  const base = `flex ${meta ? "h-14 w-14" : "h-11 w-11"} shrink-0 items-center justify-center rounded-full transition-colors${
+  /* La transición cubre color, sombra y escala, no solo color. Cuando el
+     estudiante vuelve de terminar una lección, el nodo se repinta con el estado
+     nuevo al hidratar; sin transición ese cambio es un salto y no se alcanza a
+     ver. Con ella el nodo se mueve hacia su estado nuevo (`--dur-slow`, 360ms).
+
+     Límite conocido: es una transición al pintar el estado nuevo, no una
+     animación que conozca el anterior. No hay evento de navegación entre la
+     lección y el camino que permita lo segundo. */
+  const base = `flex ${meta ? "h-14 w-14" : "h-11 w-11"} shrink-0 items-center justify-center rounded-full shadow-tarjeta motion-safe:transition-[background-color,box-shadow,transform] motion-safe:duration-[360ms] motion-reduce:transition-none${
     meta ? " outline outline-2 outline-offset-[6px] outline-border-fuerte" : ""
   }`;
   switch (estado) {
@@ -51,7 +60,7 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
         </span>
       );
     case "enCurso":
-      // Mismo anillo de acento que "disponible" pero sin pulso: hay algo
+      // Mismo anillo de acento que "disponible" pero sin respiración: hay algo
       // empezado, así que no hace falta llamar la atención para arrancar.
       return (
         <span className={`${base} bg-surface ring-2 ring-accent ring-offset-2 ring-offset-bg`}>
@@ -59,18 +68,24 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
         </span>
       );
     case "disponible":
+      /* Respiración continua, no parpadeo: es el único nodo que dice "acá se
+         empieza". La animación es decorativa —se apaga con
+         prefers-reduced-motion— y el estado sigue legible por el anillo, por el
+         relleno y por la etiqueta, nunca solo por el movimiento. */
       return (
         <span
-          className={`${base} relative bg-accent text-white ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+          className={`${base} respiracion-nodo bg-accent text-white ring-2 ring-accent ring-offset-2 ring-offset-bg`}
         >
-          {/* El pulso es decorativo: se apaga con prefers-reduced-motion y el
-              estado sigue legible por el anillo y por la etiqueta. */}
-          <span className="absolute inset-0 rounded-full bg-accent opacity-60 motion-safe:animate-ping motion-reduce:hidden" />
-          <span className="relative h-3 w-3 rounded-full bg-white" />
+          <span className="h-3 w-3 rounded-full bg-white" />
         </span>
       );
     case "enConstruccion":
-      return <span className={`${base} border-2 border-dashed border-border-fuerte bg-bg`} />;
+      // Sin sombra: lo que está en obra no despega (MASTER.md §2.5).
+      return (
+        <span
+          className={`${base} border-2 border-dashed border-border-fuerte bg-bg !shadow-none`}
+        />
+      );
   }
 }
 
@@ -154,6 +169,31 @@ export function CanaletaPunto({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Envoltorio de un nodo completo (canaleta + tarjeta) con su entrada escalonada.
+ *
+ * El retraso sale del índice **en el camino**, no del orden del DOM: en móvil la
+ * lista se invierte con `flex-col-reverse`, así que calcularlo por posición en
+ * pantalla haría que la secuencia bajara desde arriba en vez de subir desde el
+ * origen. `retrasoDeEntrada` es la única fuente de ese número.
+ */
+export function FilaNodo({
+  indice,
+  children,
+}: {
+  indice: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="entra-nodo flex items-start gap-4"
+      style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /** La tarjeta del nodo, al lado de la canaleta. El punto es decorativo y el
  *  destino clickeable es esta tarjeta — mismo criterio que /camino en
  *  escritorio, donde el punto vive sobre la recta y la etiqueta es el enlace. */
@@ -174,20 +214,32 @@ export function TarjetaNodo({
       </div>
     );
   }
+  /* Hover y tap suben la tarjeta un 4% con 120ms (`--dur-fast`, MASTER.md §2.6):
+     el tiempo del micro-feedback, no el de una transición de estado. `active`
+     además del `hover` para que el dedo reciba la misma respuesta que el mouse
+     — en un teléfono no existe hover y sin eso el toque no confirma nada. */
   return (
     <Link
       href={href}
-      className={`${clases} motion-safe:transition-shadow hover:shadow-tarjeta-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+      className={`${clases} origin-left motion-safe:transition-[box-shadow,transform] motion-safe:duration-[120ms] motion-reduce:transition-none hover:shadow-tarjeta-hover hover:motion-safe:scale-[1.04] active:motion-safe:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
     >
       {children}
     </Link>
   );
 }
 
-export function NodoTema({ id, nombre, objetivo, estado, ejeNombre, avance }: NodoTemaProps) {
+export function NodoTema({
+  id,
+  nombre,
+  objetivo,
+  estado,
+  ejeNombre,
+  avance,
+  indice,
+}: NodoTemaProps & { indice: number }) {
   const navegable = estado !== "enConstruccion";
   return (
-    <div className="flex items-start gap-4">
+    <FilaNodo indice={indice}>
       <CanaletaPunto>
         <PuntoNodo estado={estado} />
       </CanaletaPunto>
@@ -200,6 +252,6 @@ export function NodoTema({ id, nombre, objetivo, estado, ejeNombre, avance }: No
           avance={avance}
         />
       </TarjetaNodo>
-    </div>
+    </FilaNodo>
   );
 }
