@@ -31,6 +31,9 @@ export function BloqueInteractivo({
       configB={config(varB, { ...POR_DEFECTO, min: -8, max: 8, editable: false })}
       exploracionMinima={bloque.variante === "unaVariable" ? bloque.exploracionMinima : undefined}
       onExploracionCompleta={onExploracionCompleta}
+      secuenciaMicropreguntas={
+        bloque.variante === "dosVariables" ? bloque.secuenciaMicropreguntas : undefined
+      }
     />
   );
 }

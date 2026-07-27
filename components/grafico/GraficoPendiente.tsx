@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { SliderControl } from "./SliderControl";
 import { PlanoCartesiano } from "./PlanoCartesiano";
+import { SecuenciaMicropreguntas, type FaseMicropregunta } from "./SecuenciaMicropreguntas";
 import { formatoDecimalChileno } from "@/lib/planoCartesiano";
+import type { MicropreguntaSlider } from "@/lib/tipos";
 
 interface ConfigControl {
   min: number;
@@ -20,6 +22,8 @@ interface GraficoPendienteProps {
      debe probar el estudiante antes de que se le permita avanzar de paso. */
   exploracionMinima?: number;
   onExploracionCompleta?: () => void;
+  /* Solo variante dosVariables: el guion predice → mueve → comprueba. */
+  secuenciaMicropreguntas?: MicropreguntaSlider[];
 }
 
 const PASO_M = 0.5;
@@ -31,11 +35,21 @@ export function GraficoPendiente({
   configB,
   exploracionMinima,
   onExploracionCompleta,
+  secuenciaMicropreguntas,
 }: GraficoPendienteProps) {
   const [m, setM] = useState(configM.valorInicial);
   const [b, setB] = useState(configB.valorInicial);
   const [mostrarCambio, setMostrarCambio] = useState(false);
   const [activo, setActivo] = useState<"m" | "b" | null>(null);
+
+  const haySecuencia = (secuenciaMicropreguntas?.length ?? 0) > 0;
+  const [indiceMP, setIndiceMP] = useState(0);
+  const [faseMP, setFaseMP] = useState<FaseMicropregunta>("predice");
+  const [prediccionMP, setPrediccionMP] = useState<number | null>(null);
+  /* Se reinician al pasar de predicción: cada ronda exige volver a mover los
+     dos controles, no basta con lo que ya se había tocado antes de predecir. */
+  const [tocadoM, setTocadoM] = useState(false);
+  const [tocadoB, setTocadoB] = useState(false);
 
   /* La exploración cuenta valores DISTINTOS, no movimientos: arrastrar el
      slider de ida y vuelta entre dos posiciones no es explorar. Va en un ref
@@ -65,9 +79,49 @@ export function GraficoPendiente({
     }
   }
 
+  /* Solo cuenta como "mover para comprobar" durante la fase "mueve": antes de
+     elegir predicción, o después de comprobar, los controles son exploración
+     libre y no hacen avanzar el guion. */
+  function registrarMovimiento(control: "m" | "b") {
+    if (faseMP !== "mueve") return;
+    if (control === "m") setTocadoM(true);
+    else setTocadoB(true);
+  }
+
+  function elegirPrediccionMP(indice: number) {
+    setPrediccionMP(indice);
+    setTocadoM(false);
+    setTocadoB(false);
+    setFaseMP("mueve");
+  }
+
+  function comprobarMP() {
+    setFaseMP("comprobada");
+  }
+
+  function siguienteMP() {
+    setIndiceMP((i) => i + 1);
+    setPrediccionMP(null);
+    setTocadoM(false);
+    setTocadoB(false);
+    setFaseMP("predice");
+  }
+
   return (
     <div className="space-y-4">
       {instruccion && <p className="text-base text-ink">{instruccion}</p>}
+      {haySecuencia && (
+        <SecuenciaMicropreguntas
+          micropreguntas={secuenciaMicropreguntas!}
+          indice={indiceMP}
+          fase={faseMP}
+          prediccionElegida={prediccionMP}
+          ambosControlesTocados={tocadoM && tocadoB}
+          onElegirPrediccion={elegirPrediccionMP}
+          onComprobar={comprobarMP}
+          onSiguiente={siguienteMP}
+        />
+      )}
       <div className="flex justify-center">
         <PlanoCartesiano m={m} b={b} mostrarCambio={mostrarCambio} />
       </div>
@@ -100,6 +154,7 @@ export function GraficoPendiente({
             setM(v);
             setActivo("m");
             registrarExploracion(v);
+            registrarMovimiento("m");
           }}
           valorTexto={`pendiente ${formatoDecimalChileno(m)}`}
         />
@@ -114,6 +169,7 @@ export function GraficoPendiente({
             setB(v);
             setActivo("b");
             registrarExploracion(v);
+            registrarMovimiento("b");
           }}
           valorTexto={`intercepto ${formatoDecimalChileno(b)}`}
         />
