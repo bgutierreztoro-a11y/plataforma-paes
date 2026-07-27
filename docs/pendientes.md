@@ -334,3 +334,73 @@ que hacer.
 La pantalla está construida y verificada; lo que falta es contenido, no código.
 Se alcanza sola en cuanto `l2` cruce revisión matemática y de originalidad. No
 hay nada que reprogramar.
+
+---
+
+Fecha: 2026-07-27
+
+## La portada deriva el progreso por su cuenta (barrido de coherencia)
+
+Barrido de las cuatro superficies que hablan del mismo estado —portada, nodo de
+tema, nodo de lección y encabezado de tema— después de plegar `estadoDeNodo`
+sobre `estadoDeLeccion`.
+
+**Tres de las cuatro ya derivan de `lib/estadoNodo.ts` y coinciden entre sí.**
+El nodo de tema (`components/camino/Camino.tsx`) usa `estadoDeNodo`, el nodo de
+lección (`components/camino/CaminoLecciones.tsx`) usa `estadoDeLeccion`, y el
+encabezado (`components/camino/DetalleTema.tsx`) usa `avanceDeTema`. También
+`RunnerLeccion.terminar()` y `temasCompletados()`. Con el pliegue, el nodo de
+tema ya no puede discrepar del nodo de lección: lo deriva de él.
+
+**`components/PuntoDePartida.tsx` es la única que quedó leyendo el progreso
+directamente** (líneas 78–83): arma su propio set de `completada` y decide con
+`progreso.lecciones.length > 0`, sin pasar por `estadoDeLeccion`. Eso produce
+dos contradicciones, las dos verificadas en el navegador sembrando
+`localStorage`, no deducidas leyendo:
+
+**A. Una lección terminada bajo el umbral de dominio.** `estadoDeLeccion` la
+llama `porRepasar`; la portada la ve solo como `completada: true` y la da por
+cerrada.
+
+| superficie | dice |
+| --- | --- |
+| portada | "Hiciste todo lo que está abierto" |
+| nodo de tema | "Repasar el tema" |
+| nodo de lección | "Repasar la lección" |
+| encabezado | 1/2 |
+
+La portada declara cerrado lo que el camino pinta en ámbar como deuda
+pendiente. Es el caso más grave porque es alcanzable hoy: basta terminar `l1`
+con 1 de 3 ítems al primer intento.
+
+**B. Una lección abierta y abandonada en el paso 0.** `registrarPaso` escribe la
+fila `{pasoActual: 0, completada: false}` al montar el runner, o sea apenas se
+abre la lección. `estadoDeLeccion` exige `pasoActual > 0` y la llama
+`disponible`; la portada solo cuenta filas.
+
+| superficie | dice |
+| --- | --- |
+| portada | "Te queda una lección del camino" |
+| nodo de tema | "Empezar el tema" |
+| nodo de lección | "Empezar la lección" |
+| encabezado | 0/2 |
+
+La portada afirma un avance que el resto de la aplicación no ve. Es el mismo
+defecto que el pliegue acaba de corregir un nivel más arriba, y por el mismo
+motivo: contar filas guardadas en vez de preguntar por el estado.
+
+**Arreglo propuesto, no ejecutado** (es 🟡, toca un componente, y el barrido se
+pidió como verificación): que `PuntoDePartida` calcule
+`estadoDeLeccion(l, progreso, resumen)` por cada lección abierta y decida sobre
+esas etiquetas, igual que hace ahora `estadoDeNodo`. La rama 2 apuntaría a la
+primera lección `enCurso` o `porRepasar`, y la rama 3 exigiría que ninguna
+quede en `porRepasar`. Requiere decidir el copy de una rama nueva: hoy no hay
+texto para "terminaste todo pero algo quedó flojo", y meterlo en la rama 3 sin
+cambiar el copy volvería a decir "hiciste todo" sobre una deuda abierta.
+
+**Nota menor de deriva doc↔código, sin acción.** MASTER.md §3.2 todavía
+describe los estados con badges y barra de progreso interna ("En curso: barra
+de progreso interna visible"), que es el vocabulario de la tarjeta por nodo que
+la enmienda del 2026-07-27 retiró. La misma sección ya declara arriba que un
+nodo es un disco y un título, así que el párrafo de estados quedó como resto.
+No se toca acá: enmendar MASTER.md es 🟡 y no se pidió.
