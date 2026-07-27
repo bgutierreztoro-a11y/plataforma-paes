@@ -113,6 +113,31 @@ test("portada con progreso", async ({ page }, testInfo) => {
   await capturar(page, "2-portada-con-progreso", testInfo.project.name);
 });
 
+test("camino con la lección a medias", async ({ page }, testInfo) => {
+  /* El par de la captura anterior: **el mismo progreso sembrado**, para poder
+     mirar portada y camino lado a lado y comprobar que dicen lo mismo sobre el
+     mismo estado.
+
+     Es el caso que el pliegue de `estadoDeNodo` sobre `estadoDeLeccion` cambió.
+     Antes el tema miraba solo lecciones completadas, así que con una lección
+     empezada y ninguna cerrada se pintaba "disponible" y el botón decía
+     "Empezar el tema" — le pedía al estudiante empezar algo que ya había
+     empezado, justo cuando la portada le ofrecía continuarlo. Ahora hereda el
+     predicado `pasoActual > 0` de la lección y se lee "en curso".
+
+     El conteo se queda en "0 de 2": `avanceDeTema` cuenta lecciones cerradas y
+     no hay ninguna. No se pisa con el estado —el estado dice que hay avance, el
+     conteo dice cuánto está cerrado— y por eso se afirman los dos juntos. */
+  await sembrar(page, PROGRESO_EN_CURSO);
+  await page.goto("/camino");
+  await expect(page.getByRole("heading", { name: "Tu camino" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Seguir el tema" })).toBeVisible();
+  await expect(page.getByText("0 de 2 lecciones")).toBeVisible();
+  /* "2b" y no "3": el número las ordena en el directorio, y esta captura es el
+     par de la 2, no el comienzo de otra serie. */
+  await capturar(page, "2b-camino-leccion-a-medias", testInfo.project.name);
+});
+
 test("camino", async ({ page }, testInfo) => {
   await sembrar(page, PROGRESO_LECCION_HECHA);
   await page.goto("/camino");

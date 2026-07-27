@@ -65,16 +65,28 @@ export function avanceDeTema(
 }
 
 /**
+ * Estado del nodo de **tema**, plegado desde el estado de sus lecciones.
+ *
+ * No vuelve a leer el progreso: pregunta `estadoDeLeccion` por cada lección
+ * declarada y decide sobre esas etiquetas. Antes las dos funciones derivaban lo
+ * mismo por su cuenta —cada una con su propio set de completadas y su propio
+ * chequeo de umbral— y eso es exactamente la forma que tiene una
+ * desincronización de esperar: el nodo del tema y el nodo de la lección podían
+ * discrepar sobre el mismo hecho sin que nada fallara. Ahora el tema no puede
+ * decir algo que sus lecciones no digan, porque no tiene de dónde sacarlo.
+ *
  * Reglas, en este orden:
  *
- * 1. Ninguna lección abierta → **en construcción**.
- * 2. Alguna lección hecha quedó bajo el umbral → **por repasar**. Va antes que
+ * 1. Todas las lecciones en construcción → **en construcción**.
+ * 2. Alguna lección **por repasar** → **por repasar**. Va antes que
  *    "completado" a propósito: una deuda pedagógica pendiente pesa más que
  *    haber recorrido todo el material.
- * 3. **Completado** exige las tres cosas: que *todas* las lecciones declaradas
- *    en `lib/temas.ts` estén publicables, que todas estén completadas, y que el
- *    cierre del tema —si lo tiene— se haya rendido entero.
- * 4. Hay avance pero no alcanza para completar → **en curso**.
+ * 3. **Completado** exige las dos cosas: que *todas* las lecciones declaradas
+ *    en `lib/temas.ts` estén completadas —lo que incluye estar publicables,
+ *    porque una lección no publicable nunca llega a "completado"— y que el
+ *    cierre del tema, si lo tiene, se haya rendido entero.
+ * 4. Hay algo empezado, sea una lección a medias o una ya cerrada → **en
+ *    curso**.
  * 5. Si no → **disponible**.
  *
  * El paso 3 es el que impide celebrar de más. Filtrar por "publicable" antes de
@@ -85,43 +97,38 @@ export function avanceDeTema(
  * que el estudiante nunca vería la de verdad cuando la lección que falta se
  * publique.
  *
- * Una lección sin ítems PAES no aporta evidencia de dominio y se omite del paso
- * 2 en vez de arrastrar el nodo a "por repasar": ausencia de datos no es
- * evidencia de flaqueza. Regla general — nunca inventar progreso.
+ * El paso 4 hereda de `estadoDeLeccion` el predicado `pasoActual > 0`, y ese es
+ * el cambio de comportamiento de este pliegue: un tema donde el estudiante dejó
+ * una lección a medias ya no se pinta "disponible" —que le pedía empezar algo
+ * que ya había empezado— sino "en curso". El conteo no se mueve: `avanceDeTema`
+ * sigue contando lecciones cerradas, así que ese tema se lee "En curso · 0 de 2
+ * lecciones". Es literal y no se pisa con el estado: el estado dice que hay
+ * avance, el conteo dice cuánto está cerrado.
+ *
+ * Una lección sin ítems PAES no aporta evidencia de dominio y `estadoDeLeccion`
+ * no la arrastra a "por repasar": ausencia de datos no es evidencia de
+ * flaqueza. Regla general — nunca inventar progreso.
  */
 export function estadoDeNodo(
   tema: TemaDelCamino,
   progreso: ProgresoLocal | null,
   resumen: ResumenRespuestas,
 ): EstadoNodo {
-  const declaradas = tema.lecciones;
-  const abiertas = declaradas.filter((l) => l.publicable);
-  if (abiertas.length === 0) return "enConstruccion";
+  const estados = tema.lecciones.map((l) => estadoDeLeccion(l, progreso, resumen));
 
-  const completadas = new Set(
-    (progreso?.lecciones ?? []).filter((l) => l.completada).map((l) => l.leccionId),
-  );
-  const hechas = abiertas.filter((l) => completadas.has(l.id));
-
-  const flojas = hechas.filter(
-    (l) =>
-      l.totalItemsPAES > 0 &&
-      !alcanzaDominio(resumen.aciertos.get(l.id) ?? 0, l.totalItemsPAES),
-  );
-  if (flojas.length > 0) return "porRepasar";
+  if (estados.every((e) => e === "enConstruccion")) return "enConstruccion";
+  if (estados.some((e) => e === "porRepasar")) return "porRepasar";
 
   const cierreRendido =
     !tema.cierreId ||
     (tema.cierrePublicable &&
       (resumen.itemsRespondidos.get("cierre")?.size ?? 0) >= tema.cierreTotalItems);
 
-  const completo =
-    declaradas.every((l) => l.publicable) &&
-    declaradas.every((l) => completadas.has(l.id)) &&
-    cierreRendido;
-  if (completo) return "completado";
+  if (estados.every((e) => e === "completado") && cierreRendido) return "completado";
 
-  return hechas.length > 0 ? "enCurso" : "disponible";
+  return estados.some((e) => e === "enCurso" || e === "completado")
+    ? "enCurso"
+    : "disponible";
 }
 
 /**
