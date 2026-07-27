@@ -474,7 +474,12 @@ seleccionables) y no tumban el build — `idsPublicables()` las deja fuera de
 "Demostración", que es la decisión del 2026-07-25.
 
 Desbloquea: `/revision-matematica` y `/revision-originalidad` sobre cada una.
-Es trabajo de contenido, no de código. **🔴 tocar estos JSON o marcar algo
+Es trabajo de contenido, no de código. Los siete campos exactos que faltan en
+cada archivo, y el orden de pasos una vez firmada la revisión, están en
+`docs/publicacion-l2-l3.md` (2026-07-27) — incluye un hallazgo en `l3`: un
+falso positivo del validador de placeholders ("TODO" en mayúsculas usado como
+énfasis en español, no como marcador de trabajo pendiente) que hay que
+reescribir antes de poder marcar `publicable`. **🔴 tocar estos JSON o marcar algo
 `publicable` requiere firma.**
 
 ### b) La celebración de tema no tiene ruta de flujo real
@@ -566,3 +571,85 @@ de reescribir 30 commits ya pusheados supera el problema que resolvería.
 Si algún día hace falta leer el contenido real de esos dos commits, usar
 `git show <hash>:lib/estadoNodo.ts` en vez de `git log -p` — el blob se lee
 igual, aunque el diff no se muestre como texto.
+
+---
+
+Fecha: 2026-07-27 (sesión de instrumentación + slider de dos variables)
+
+## Instrumentación PostHog del camino — qué quedó cubierto y qué no
+
+Los ocho eventos pedidos están instrumentados y verificados uno por uno en el
+navegador, con las correcciones que aparecen en el commit
+`instrumenta PostHog en las superficies del camino rediseñado`: `camino_visto`,
+`nodo_tema_abierto`, `nodo_leccion_abierto`, `leccion_terminada`,
+`repaso_elegido`, `camino_elegido`, `tema_celebrado`,
+`temas_plegados_expandidos`.
+
+**Lo que NO quedó cubierto, a propósito por alcance de la tarea, no por
+olvido:**
+
+- **`components/PuntoDePartida.tsx` (la portada) no dispara nada.** Sus
+  botones ("Empezar la primera lección", "Continuar: tema · lección",
+  "Repasar: tema · lección") son la otra puerta de entrada a una lección,
+  distinta de los nodos del camino, y hoy no llaman a `registrarEvento` en
+  ningún lado. Un estudiante que siempre entra por la portada nunca dispara
+  `nodo_leccion_abierto` — solo lo hace quien entra navegando el camino
+  visualmente. Si en algún momento importa saber "cuántas lecciones se abren
+  desde la portada vs. desde el camino", hoy esa pregunta no se puede
+  responder. No se instrumentó porque la Tarea 1 pedía específicamente los
+  nodos del camino (`nodo_tema_abierto` / `nodo_leccion_abierto`), no la
+  portada; ampliarlo es una decisión de alcance, no una corrección de bug.
+- **`/diagnostico` y `/cierre` no tienen eventos propios del rediseño.** Usan
+  `leccion_fin`-adyacentes existentes indirectamente (el cierre entra por
+  `EjecutorSetItems`, igual que las lecciones, pero `ItemsPAESFinal` es
+  específico de lecciones — el cierre usa su propio `CierreFinal.tsx`, sin
+  tocar). No estaba en la lista de la Tarea 1.
+
+**Bug encontrado y corregido: doble disparo por re-invocación de React en
+desarrollo.** Dos de los eventos nuevos se disparaban dos veces por una sola
+acción del estudiante, verificado en el navegador con un acumulador en
+`window` (más confiable que el lector de consola de la extensión, que repite
+su buffer entero después de cada navegación):
+
+1. `temas_plegados_expandidos` vivía dentro del *updater* funcional de
+   `setExpandido`, que React vuelve a invocar en modo estricto de desarrollo
+   para detectar impurezas. Se sacó el efecto del updater.
+2. `leccion_terminada` no tenía guardia contra el mismo problema. Se le agregó
+   el mismo `ref` que `CelebracionTema.tsx` ya usa para esto — patrón
+   preexistente en el código, no uno nuevo.
+
+**Hallazgo sin corregir, fuera de alcance de esta tarea:** `leccion_inicio` y
+`paso_inicio` (`components/RunnerLeccion.tsx`, código preexistente, no tocado
+en esta sesión) se disparan dos veces bajo la misma causa, pero **solo en
+navegación cliente** (clic en un `<Link>` que lleva a `/leccion/[id]`, no URL
+directa) **y solo en desarrollo** — no se reprodujo en el primer walkthrough
+de esta sesión (que entraba por URL directa) y sí en el segundo (que entraba
+por clic desde `/tema/[id]`). No se tocó porque no es parte de lo pedido en
+esta sesión y modificar código no instrumentado por esta tarea es una
+ampliación de alcance que no se pidió. Si se retoma: mismo arreglo que los dos
+de arriba, un `ref` de una sola escritura alrededor de la llamada a
+`registrarEvento` en los dos efectos de `RunnerLeccion.tsx`.
+
+Confirmado explícitamente que ninguno de los ocho eventos nuevos toca
+`PostHogProvider.tsx`: `autocapture: false`, `disable_session_recording: true`
+y `persistence: "memory"` siguen exactamente como estaban.
+
+## Slider de dos variables (dosVariables) — construido, sin lección que lo use
+
+`components/grafico/GraficoPendiente.tsx` y el nuevo
+`components/grafico/SecuenciaMicropreguntas.tsx` implementan el guion
+predice → mueve → comprueba que el schema declaraba desde antes
+(`secuenciaMicropreguntas`) y que ninguna lección publicada usa todavía —
+`l2-pendiente-e-intercepto` sigue en `unaVariable` únicamente. Verificado en
+`/vista-previa/interactivo-dos-variables` (ruta interna, sin enlazar,
+`robots: noindex`, con datos de `e2e/fixtures/bloqueDosVariables.ts`, nunca de
+`content/`) y cubierto por `e2e/interactivo-dos-variables.spec.ts`.
+
+**Consecuencia práctica para cuando se escriba contenido que use
+`dosVariables`:** las opciones de predicción que ve el estudiante son
+exactamente las cadenas de `feedbackPorPrediccion[].prediccion` de cada
+`MicropreguntaSlider`, presentadas como botones seleccionables — no hay
+matching de texto libre. Quien redacte una lección con esta variante tiene que
+escribir `prediccion` como una etiqueta corta y legible para el estudiante
+("También sube", no una descripción interna), porque se muestra tal cual, no
+se interpreta.
