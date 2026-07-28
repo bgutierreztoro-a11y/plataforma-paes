@@ -22,7 +22,7 @@
     "AUDITORÍA DE SOLAPAMIENTO TEMÁTICO 2026-07-22: el Paso 8 exigía el mismo procedimiento algebraico que l3-item-1 (reunir incógnitas de ambos lados, después las constantes, después dividir), y lo exigía sin haberlo enseñado nunca, una lección antes de que la Lección 3 lo introduzca. Se reescribió para evaluar lectura e interpretación de m y n, que es lo que esta lección sí enseña. Ver la nota del Paso 8 para el detalle y la verificación matemática. La Lección 3 no se tocó.",
     "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -447,16 +447,16 @@
     "declaracionOriginalidad": "Enunciados, contextos y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 y el currículum Mineduc se usaron solo para calibrar alcance, formato y secuencia (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de esas fuentes fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-07-27"
   },
   "revisionMatematica": {
-    "aprobada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-07-27"
   }
 }
