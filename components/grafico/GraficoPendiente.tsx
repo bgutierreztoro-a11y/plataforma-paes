@@ -3,7 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { SliderControl } from "./SliderControl";
 import { PlanoCartesiano } from "./PlanoCartesiano";
-import { SecuenciaMicropreguntas, type FaseMicropregunta } from "./SecuenciaMicropreguntas";
+import {
+  SecuenciaMicropreguntas,
+  type ConfirmacionMicropregunta,
+  type FaseMicropregunta,
+} from "./SecuenciaMicropreguntas";
+import { Boton } from "@/components/ui/Boton";
 import { formatoDecimalChileno } from "@/lib/planoCartesiano";
 import type { MicropreguntaSlider } from "@/lib/tipos";
 
@@ -46,6 +51,7 @@ export function GraficoPendiente({
   const [indiceMP, setIndiceMP] = useState(0);
   const [faseMP, setFaseMP] = useState<FaseMicropregunta>("predice");
   const [prediccionMP, setPrediccionMP] = useState<number | null>(null);
+  const [confirmacionMP, setConfirmacionMP] = useState<ConfirmacionMicropregunta>(null);
   /* Se reinician al pasar de predicción: cada ronda exige volver a mover los
      dos controles, no basta con lo que ya se había tocado antes de predecir. */
   const [tocadoM, setTocadoM] = useState(false);
@@ -92,6 +98,7 @@ export function GraficoPendiente({
     setPrediccionMP(indice);
     setTocadoM(false);
     setTocadoB(false);
+    setConfirmacionMP(null);
     setFaseMP("mueve");
   }
 
@@ -99,12 +106,27 @@ export function GraficoPendiente({
     setFaseMP("comprobada");
   }
 
+  function confirmarMP(valor: "si" | "no") {
+    setConfirmacionMP(valor);
+  }
+
   function siguienteMP() {
     setIndiceMP((i) => i + 1);
     setPrediccionMP(null);
     setTocadoM(false);
     setTocadoB(false);
+    setConfirmacionMP(null);
     setFaseMP("predice");
+  }
+
+  /* Reinicia solo los valores del gráfico a su punto de partida: no existe hoy
+     ningún contador de intentos para este bloque (ni exploración, ni
+     predicción), así que "empezar de nuevo" no puede gastar nada que no
+     exista. No toca `faseMP`/`indiceMP`/`prediccionMP`: es un reset del
+     gráfico, no de la secuencia predice→mueve→comprueba. */
+  function volverAEmpezar() {
+    setM(configM.valorInicial);
+    setB(configB.valorInicial);
   }
 
   return (
@@ -117,8 +139,10 @@ export function GraficoPendiente({
           fase={faseMP}
           prediccionElegida={prediccionMP}
           ambosControlesTocados={tocadoM && tocadoB}
+          confirmacion={confirmacionMP}
           onElegirPrediccion={elegirPrediccionMP}
           onComprobar={comprobarMP}
+          onConfirmar={confirmarMP}
           onSiguiente={siguienteMP}
         />
       )}
@@ -174,15 +198,24 @@ export function GraficoPendiente({
           valorTexto={`intercepto ${formatoDecimalChileno(b)}`}
         />
       </div>
-      <label className="flex min-h-11 w-fit cursor-pointer items-center gap-2 text-sm text-ink">
-        <input
-          type="checkbox"
-          checked={mostrarCambio}
-          onChange={(e) => setMostrarCambio(e.target.checked)}
-          className="h-5 w-5 accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        />
-        Ver el cambio (Δx / Δy)
-      </label>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <label className="flex min-h-11 w-fit cursor-pointer items-center gap-2 text-sm text-ink">
+          <input
+            type="checkbox"
+            checked={mostrarCambio}
+            onChange={(e) => setMostrarCambio(e.target.checked)}
+            className="h-5 w-5 accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          />
+          Ver el cambio (Δx / Δy)
+        </label>
+        <Boton
+          variante="secundario"
+          onClick={volverAEmpezar}
+          disabled={m === configM.valorInicial && b === configB.valorInicial}
+        >
+          Volver a empezar
+        </Boton>
+      </div>
     </div>
   );
 }

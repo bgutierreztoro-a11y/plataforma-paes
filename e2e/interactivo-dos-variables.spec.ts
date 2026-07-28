@@ -23,7 +23,9 @@ async function capturar(page: import("@playwright/test").Page, nombre: string, p
   });
 }
 
-test("predice, mueve, comprueba — con una predicción declarada", async ({ page }, testInfo) => {
+test("predice, mueve, comprueba, confirma — con una predicción declarada", async ({
+  page,
+}, testInfo) => {
   await page.goto("/vista-previa/interactivo-dos-variables");
   await expect(
     page.getByRole("heading", { name: /Si subes la pendiente/ }).or(page.getByText("Si subes la pendiente")),
@@ -60,9 +62,33 @@ test("predice, mueve, comprueba — con una predicción declarada", async ({ pag
   await expect(
     page.getByText("El intercepto depende del otro control, no de este."),
   ).toBeVisible();
+
+  // La micro-confirmación gatea el avance: "Siguiente predicción" no aparece
+  // hasta responder "¿Tiene sentido?".
+  await expect(page.getByRole("button", { name: "Siguiente predicción" })).toHaveCount(0);
+  await expect(page.getByText("¿Tiene sentido?")).toBeVisible();
+  await page.getByRole("button", { name: "Sí", exact: true }).click();
   await expect(page.getByRole("button", { name: "Siguiente predicción" })).toBeVisible();
 
   await capturar(page, "8-slider-dos-variables-comprobada", testInfo.project.name);
+});
+
+test("responder 'No' en la confirmación muestra el aviso y no bloquea el avance", async ({
+  page,
+}) => {
+  await page.goto("/vista-previa/interactivo-dos-variables");
+  await page.getByRole("radio", { name: "También sube" }).click();
+  await page.getByRole("slider", { name: "Pendiente (m)" }).focus();
+  await page.keyboard.press("ArrowRight");
+  await page.getByRole("slider", { name: "Intercepto (b)" }).focus();
+  await page.keyboard.press("ArrowLeft");
+  await page.getByRole("button", { name: "Comprobar" }).click();
+
+  await page.getByRole("button", { name: "No", exact: true }).click();
+  await expect(
+    page.getByText("Vuelve a mover los dos controles y compara con el mensaje anterior"),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Siguiente predicción" })).toBeVisible();
 });
 
 test("el catch-all 'No estoy seguro' no inventa una respuesta", async ({ page }) => {
@@ -73,6 +99,7 @@ test("el catch-all 'No estoy seguro' no inventa una respuesta", async ({ page })
   await page.getByRole("slider", { name: "Intercepto (b)" }).focus();
   await page.keyboard.press("ArrowLeft");
   await page.getByRole("button", { name: "Comprobar" }).click();
+  await page.getByRole("button", { name: "Sí", exact: true }).click();
   await page.getByRole("button", { name: "Siguiente predicción" }).click();
 
   await expect(page.getByText("Predicción 2 de 2")).toBeVisible();
@@ -87,6 +114,7 @@ test("el catch-all 'No estoy seguro' no inventa una respuesta", async ({ page })
   /* Sin match en feedbackPorPrediccion: mensaje neutro, nunca "correcto" — no
      hay forma de saber si la predicción real del estudiante lo era. */
   await expect(page.getByText("Comprobado. Sigue mirando qué cambia")).toBeVisible();
+  await page.getByRole("button", { name: "Sí", exact: true }).click();
   await expect(page.getByText("Sigue explorando el gráfico libremente")).toBeVisible();
   // Última micropregunta: no hay "Siguiente predicción" que ofrecer.
   await expect(page.getByRole("button", { name: "Siguiente predicción" })).toHaveCount(0);
@@ -101,4 +129,62 @@ test("los sliders no se bloquean fuera de la fase mueve", async ({ page }) => {
   await pendiente.focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByText("y = 1,5").first()).toBeVisible();
+});
+
+test("'Volver a empezar' reinicia los sliders a su valor inicial", async ({ page }) => {
+  await page.goto("/vista-previa/interactivo-dos-variables");
+  const reiniciar = page.getByRole("button", { name: "Volver a empezar" });
+
+  // Estado inicial: nada que reiniciar.
+  await expect(reiniciar).toBeDisabled();
+
+  const pendiente = page.getByRole("slider", { name: "Pendiente (m)" });
+  const intercepto = page.getByRole("slider", { name: "Intercepto (b)" });
+  await pendiente.focus();
+  await page.keyboard.press("ArrowRight");
+  await intercepto.focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.getByText("y = 1,5").first()).toBeVisible();
+  await expect(reiniciar).toBeEnabled();
+
+  await reiniciar.click();
+  await expect(page.getByText("y = 1").first()).toBeVisible();
+  await expect(reiniciar).toBeDisabled();
+});
+
+test("flujo completo: explorar, reiniciar, predecir, feedback, confirmar", async ({ page }) => {
+  await page.goto("/vista-previa/interactivo-dos-variables");
+
+  // Explorar libremente antes de comprometer una predicción.
+  const pendiente = page.getByRole("slider", { name: "Pendiente (m)" });
+  const intercepto = page.getByRole("slider", { name: "Intercepto (b)" });
+  await pendiente.focus();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await intercepto.focus();
+  await page.keyboard.press("ArrowLeft");
+
+  // Reiniciar antes de predecir: vuelve al punto de partida, no cuenta como intento.
+  await page.getByRole("button", { name: "Volver a empezar" }).click();
+  await expect(page.getByText("y = 1").first()).toBeVisible();
+  await expect(page.getByText("Predicción 1 de 2")).toBeVisible();
+
+  // Predecir.
+  await page.getByRole("radio", { name: "También sube" }).click();
+
+  // Mover los dos controles.
+  await pendiente.focus();
+  await page.keyboard.press("ArrowRight");
+  await intercepto.focus();
+  await page.keyboard.press("ArrowLeft");
+
+  // Comprobar y ver el feedback.
+  await page.getByRole("button", { name: "Comprobar" }).click();
+  await expect(
+    page.getByText("El intercepto depende del otro control, no de este."),
+  ).toBeVisible();
+
+  // Confirmar comprensión.
+  await page.getByRole("button", { name: "Sí", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Siguiente predicción" })).toBeVisible();
 });

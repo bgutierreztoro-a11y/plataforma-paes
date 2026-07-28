@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { SelectorOpciones } from "@/components/ui/SelectorOpciones";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarArray } from "@/lib/mezclar";
 import type { BloqueSeleccion as BloqueSeleccionTipo } from "@/lib/tipos";
@@ -29,28 +30,14 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
       <div className="text-base font-medium text-ink">
         <TextoEnriquecido contenido={bloque.enunciado} />
       </div>
-      <fieldset className="space-y-2" disabled={revelado}>
-        <legend className="sr-only">Opciones</legend>
-        {opciones.map((op) => (
-          <label
-            key={op.id}
-            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:checked]:border-accent has-[:checked]:bg-accent-suave ${
-              revelado
-                ? "cursor-not-allowed"
-                : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
-            }`}
-          >
-            <input
-              type="radio"
-              name={`seleccion-${bloque.enunciado.slice(0, 10)}`}
-              checked={seleccion === op.id}
-              onChange={() => setSeleccion(op.id)}
-              className="h-5 w-5 accent-accent"
-            />
-            <span>{op.texto}</span>
-          </label>
-        ))}
-      </fieldset>
+      <SelectorOpciones
+        opciones={opciones.map((op) => ({ id: op.id, texto: op.texto }))}
+        nombre={`seleccion-${bloque.enunciado.slice(0, 10)}`}
+        seleccionado={seleccion}
+        onSeleccionar={setSeleccion}
+        disabled={revelado}
+        leyenda="Opciones"
+      />
       {!revelado && (
         <Boton onClick={() => setRevelado(true)} disabled={!seleccion}>
           Revisar respuesta

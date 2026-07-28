@@ -2,6 +2,7 @@
 
 import { Boton } from "@/components/ui/Boton";
 import { IconoIncorrecto } from "@/components/ui/Icono";
+import { SelectorOpciones } from "@/components/ui/SelectorOpciones";
 import type { MicropreguntaSlider } from "@/lib/tipos";
 
 /**
@@ -23,8 +24,10 @@ import type { MicropreguntaSlider } from "@/lib/tipos";
  */
 
 export type FaseMicropregunta = "predice" | "mueve" | "comprobada";
+export type ConfirmacionMicropregunta = "si" | "no" | null;
 
 const SIN_ESTAR_SEGURO = -1;
+const ID_SIN_ESTAR_SEGURO = "no-estoy-seguro";
 
 interface SecuenciaMicropreguntasProps {
   micropreguntas: MicropreguntaSlider[];
@@ -35,8 +38,13 @@ interface SecuenciaMicropreguntasProps {
    *  habilita "Comprobar". Antes de elegir predicción, y durante "comprobada",
    *  los sliders siguen libres para explorar — nunca se bloquean. */
   ambosControlesTocados: boolean;
+  /** Micro-confirmación tras el feedback de "comprobada": gatea el avance a la
+   *  siguiente predicción hasta que el estudiante responda, sin importar cuál
+   *  de las dos respuestas dé. No es un campo del schema — vive solo acá. */
+  confirmacion: ConfirmacionMicropregunta;
   onElegirPrediccion: (indice: number) => void;
   onComprobar: () => void;
+  onConfirmar: (valor: "si" | "no") => void;
   onSiguiente: () => void;
 }
 
@@ -46,8 +54,10 @@ export function SecuenciaMicropreguntas({
   fase,
   prediccionElegida,
   ambosControlesTocados,
+  confirmacion,
   onElegirPrediccion,
   onComprobar,
+  onConfirmar,
   onSiguiente,
 }: SecuenciaMicropreguntasProps) {
   const actual = micropreguntas[indice];
@@ -65,32 +75,29 @@ export function SecuenciaMicropreguntas({
       <p className="mt-1 text-base font-medium text-ink">{actual.enunciado}</p>
 
       {fase === "predice" && (
-        <fieldset className="mt-3 space-y-2">
-          <legend className="sr-only">Tu predicción</legend>
-          {actual.feedbackPorPrediccion.map((f, i) => (
-            <label
-              key={i}
-              className="flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border border-border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
-            >
-              <input
-                type="radio"
-                name={`prediccion-${actual.id}`}
-                className="h-5 w-5 accent-accent"
-                onChange={() => onElegirPrediccion(i)}
-              />
-              <span className="text-sm text-ink">{f.prediccion}</span>
-            </label>
-          ))}
-          <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border border-border px-4 py-2.5 has-[:checked]:border-accent has-[:checked]:bg-accent-suave has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
-            <input
-              type="radio"
-              name={`prediccion-${actual.id}`}
-              className="h-5 w-5 accent-accent"
-              onChange={() => onElegirPrediccion(SIN_ESTAR_SEGURO)}
-            />
-            <span className="text-sm text-ink">No estoy seguro</span>
-          </label>
-        </fieldset>
+        <div className="mt-3">
+          <SelectorOpciones
+            leyenda="Tu predicción"
+            nombre={`prediccion-${actual.id}`}
+            seleccionado={
+              prediccionElegida === null
+                ? null
+                : prediccionElegida === SIN_ESTAR_SEGURO
+                  ? ID_SIN_ESTAR_SEGURO
+                  : String(prediccionElegida)
+            }
+            onSeleccionar={(id) =>
+              onElegirPrediccion(id === ID_SIN_ESTAR_SEGURO ? SIN_ESTAR_SEGURO : Number(id))
+            }
+            opciones={[
+              ...actual.feedbackPorPrediccion.map((f, i) => ({
+                id: String(i),
+                texto: f.prediccion,
+              })),
+              { id: ID_SIN_ESTAR_SEGURO, texto: "No estoy seguro" },
+            ]}
+          />
+        </div>
       )}
 
       {fase === "mueve" && (
@@ -117,12 +124,35 @@ export function SecuenciaMicropreguntas({
               Comprobado. Sigue mirando qué cambia y qué se queda igual.
             </p>
           )}
-          {esUltima ? (
-            <p className="text-sm text-ink-suave">
-              Sigue explorando el gráfico libremente cuando quieras.
-            </p>
+
+          {confirmacion === null ? (
+            <div className="space-y-2">
+              <p className="text-sm text-ink">¿Tiene sentido?</p>
+              <div className="flex gap-2">
+                <Boton variante="secundario" onClick={() => onConfirmar("si")}>
+                  Sí
+                </Boton>
+                <Boton variante="secundario" onClick={() => onConfirmar("no")}>
+                  No
+                </Boton>
+              </div>
+            </div>
           ) : (
-            <Boton onClick={onSiguiente}>Siguiente predicción</Boton>
+            <>
+              {confirmacion === "no" && (
+                <p role="status" className="text-sm text-ink-suave">
+                  Vuelve a mover los dos controles y compara con el mensaje anterior antes de
+                  seguir.
+                </p>
+              )}
+              {esUltima ? (
+                <p className="text-sm text-ink-suave">
+                  Sigue explorando el gráfico libremente cuando quieras.
+                </p>
+              ) : (
+                <Boton onClick={onSiguiente}>Siguiente predicción</Boton>
+              )}
+            </>
           )}
         </div>
       )}
