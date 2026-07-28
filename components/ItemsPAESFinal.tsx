@@ -7,6 +7,13 @@ import { alcanzaDominio } from "@/lib/umbrales";
 import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 
+/* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
+   opción discreta de esta pantalla no es un tercer botón del mismo peso que
+   los otros dos, es un enlace de texto. No es <Link> porque no navega directo
+   — dispara analítica y un handler antes. */
+const CLASE_ENLACE_DISCRETO =
+  "mt-4 inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
 /** Una de las dos tarjetas del cierre. Exactamente dos: el número que importa y
  *  dónde queda dentro del tema. Nada de XP, puntos ni monedas — lista negra del
  *  MOS, y además desviarían la atención del único dato accionable. */
@@ -32,12 +39,13 @@ function TarjetaDato({
 }
 
 /**
- * Cierre de una lección: dos tarjetas y una decisión.
+ * Cierre de una lección: dos tarjetas y una decisión de tres caminos —
+ * avanzar, repetir la lección completa, o repetir solo estas preguntas.
  *
- * El umbral **no bloquea nada**. Bajo el umbral se ofrece repasar como acción
- * primaria, pero "Seguir al camino" sigue disponible al lado: bloquear contenido
- * por puntaje está en la lista negra del MOS. La diferencia entre las dos ramas
- * es qué se propone primero, no qué se permite.
+ * El umbral **no bloquea nada**. Los tres caminos están siempre disponibles en
+ * las dos ramas; lo que cambia con el umbral es cuál se propone primero, no
+ * qué se permite: bloquear contenido por puntaje está en la lista negra del
+ * MOS.
  */
 export function ItemsPAESFinal({
   respuestas,
@@ -46,7 +54,9 @@ export function ItemsPAESFinal({
   ordinalLeccion,
   totalLeccionesTema,
   onRepasar,
+  onRepetirCierre,
   onContinuar,
+  siguienteLeccionId,
   cierreEnDemostracion = false,
 }: {
   respuestas: RespuestaRegistrada[];
@@ -55,13 +65,19 @@ export function ItemsPAESFinal({
   ordinalLeccion: number;
   totalLeccionesTema: number;
   onRepasar: () => void;
+  /* Repite solo el cierre (itemsPAES), sin rehacer los 10 pasos. */
+  onRepetirCierre: () => void;
   onContinuar: () => void;
+  /* Presente solo si hay una siguiente lección publicable en el camino
+     completo — decide el copy del botón/enlace de avance. */
+  siguienteLeccionId?: string;
   /* Solo aplica cuando el destino de "Continuar" es /cierre. */
   cierreEnDemostracion?: boolean;
 }) {
   const total = respuestas.length;
   const aciertos = respuestas.filter((r) => r.correcta).length;
   const conDominio = alcanzaDominio(aciertos, total);
+  const copyAvanzar = siguienteLeccionId ? "Siguiente lección" : "Seguir al camino";
 
   /* Esta pantalla solo se monta una vez, cuando EjecutorSetItems agota los
      ítems (ver su condición `indiceActual >= items.length`): no hay
@@ -84,14 +100,22 @@ export function ItemsPAESFinal({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- una sola vez, al montar esta pantalla
   }, []);
 
+  /* A diferencia de cuando solo había un botón en la rama con dominio, ahora
+     las tres opciones son una decisión real en las dos ramas: los tres
+     eventos se registran siempre, no solo bajo el umbral. */
   function repasar() {
-    if (!conDominio) registrarEvento({ nombre: "repaso_elegido", props: { leccion_id: leccionId } });
+    registrarEvento({ nombre: "repaso_elegido", props: { leccion_id: leccionId } });
     onRepasar();
   }
 
   function continuar() {
-    if (!conDominio) registrarEvento({ nombre: "camino_elegido", props: { leccion_id: leccionId } });
+    registrarEvento({ nombre: "camino_elegido", props: { leccion_id: leccionId } });
     onContinuar();
+  }
+
+  function repetirCierre() {
+    registrarEvento({ nombre: "cierre_repetido_elegido", props: { leccion_id: leccionId } });
+    onRepetirCierre();
   }
 
   return (
@@ -123,11 +147,17 @@ export function ItemsPAESFinal({
         {conDominio ? (
           <>
             <p className="mt-6 text-base leading-7 text-ink-suave">
-              Lo que viste acá quedó sólido. Sigue cuando quieras.
+              Lo que viste acá quedó sólido.
             </p>
-            <div className="mt-6 flex justify-center">
-              <Boton onClick={continuar}>Continuar</Boton>
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Boton onClick={continuar}>{copyAvanzar}</Boton>
+              <Boton variante="secundario" onClick={repasar}>
+                Repasar esta lección
+              </Boton>
             </div>
+            <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
+              Repetir solo las preguntas
+            </button>
           </>
         ) : (
           <>
@@ -139,10 +169,13 @@ export function ItemsPAESFinal({
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Boton onClick={repasar}>Repasar esta lección</Boton>
-              <Boton variante="secundario" onClick={continuar}>
-                Seguir al camino
+              <Boton variante="secundario" onClick={repetirCierre}>
+                Repetir solo las preguntas
               </Boton>
             </div>
+            <button type="button" onClick={continuar} className={CLASE_ENLACE_DISCRETO}>
+              {copyAvanzar}
+            </button>
           </>
         )}
 

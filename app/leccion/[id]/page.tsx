@@ -39,5 +39,19 @@ export default async function PaginaLeccion({
   const tema = registro ? temaDelCaminoPorId(registro.id) : undefined;
   if (!tema) notFound();
 
-  return <RunnerLeccion leccion={sanitizarLeccion(leccion)} tema={tema} />;
+  /* Siguiente lección navegable del camino completo (eje → tema → posición),
+     no solo de este tema: idsPublicables() ya trae el orden robusto que usa
+     el resto del sitio. Sin siguiente (última lección publicable) queda
+     undefined y RunnerLeccion cae al destino actual (celebración/camino). */
+  const publicables = idsPublicables();
+  const indice = publicables.indexOf(leccion.id);
+  const siguienteLeccionId = indice >= 0 ? publicables[indice + 1] : undefined;
+
+  return (
+    <RunnerLeccion
+      leccion={sanitizarLeccion(leccion)}
+      tema={tema}
+      siguienteLeccionId={siguienteLeccionId}
+    />
+  );
 }

@@ -27,11 +27,14 @@ export type Evento =
       nombre: "leccion_terminada";
       props: { leccion_id: string; aciertos: number; total: number; sobre_umbral: boolean };
     }
-  /* Solo se disparan en la rama bajo el umbral (ItemsPAESFinal.tsx): es la
-     única pantalla con una decisión real entre las dos — con dominio
-     alcanzado hay un solo botón y no hay nada que distinguir. */
+  /* Las tres opciones de ItemsPAESFinal.tsx (avanzar, repasar, repetir el
+     cierre) son siempre una decisión real, en las dos ramas del umbral. */
   | { nombre: "repaso_elegido"; props: { leccion_id: string } }
   | { nombre: "camino_elegido"; props: { leccion_id: string } }
+  /* Tercera opción de ItemsPAESFinal.tsx: repetir solo el cierre (itemsPAES)
+     sin rehacer los 10 pasos. Mismo criterio que repaso_elegido/camino_elegido:
+     cada decisión real de esta pantalla se mide. */
+  | { nombre: "cierre_repetido_elegido"; props: { leccion_id: string } }
   | { nombre: "tema_celebrado"; props: { tema_id: string } }
   | { nombre: "temas_plegados_expandidos"; props: Record<string, never> };
 

@@ -20,12 +20,17 @@ import type { BloqueInteractivoSlider } from "@/lib/tipos";
 export function RunnerLeccion({
   leccion,
   tema,
+  siguienteLeccionId,
 }: {
   leccion: LeccionCliente;
   /* El tema al que pertenece esta lección, resuelto en servidor por
      app/leccion/[id]/page.tsx. Da el "Lección N de M" del cierre y permite
      saber si terminar esta lección cierra el tema completo. */
   tema: TemaDelCamino;
+  /* Id de la siguiente lección publicable del camino completo (no solo de
+     este tema), resuelta en servidor con idsPublicables(). Sin siguiente
+     (última lección publicable de hoy) queda undefined. */
+  siguienteLeccionId?: string;
 }) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
   const [fase, setFase] = useState<"pasos" | "anuncio" | "itemsPAES">("pasos");
@@ -88,9 +93,23 @@ export function RunnerLeccion({
     const estadoTema = estadoDeNodo(tema, progreso, resumirRespuestas(progreso));
     const yaCelebrado = progreso?.temasCelebrados?.includes(tema.id) ?? false;
 
-    router.push(
-      estadoTema === "completado" && !yaCelebrado ? `/tema/${tema.id}/completado` : "/camino",
-    );
+    if (estadoTema === "completado" && !yaCelebrado) {
+      router.push(`/tema/${tema.id}/completado`);
+    } else if (siguienteLeccionId) {
+      router.push(`/leccion/${siguienteLeccionId}`);
+    } else {
+      router.push("/camino");
+    }
+  }
+
+  /* Repetir solo el cierre (itemsPAES), sin rehacer los 10 pasos. Volver a
+     pasar por la fase "anuncio" alcanza: EjecutorSetItems no lleva `key` y su
+     estado vive en un useReducer local, así que al desmontarse (esta fase) y
+     volver a montarse (fase "itemsPAES") arranca limpio, sin arrastrar
+     respuestas de la vuelta anterior. */
+  function repetirCierre() {
+    setFase("anuncio");
+    window.scrollTo({ top: 0 });
   }
 
   function repasar() {
@@ -137,7 +156,9 @@ export function RunnerLeccion({
               ordinalLeccion={indiceEnTema + 1}
               totalLeccionesTema={tema.lecciones.length}
               onRepasar={repasar}
+              onRepetirCierre={repetirCierre}
               onContinuar={terminar}
+              siguienteLeccionId={siguienteLeccionId}
             />
           )}
         />
