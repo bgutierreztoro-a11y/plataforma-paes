@@ -1,5 +1,7 @@
 # Pendientes técnicos
 
+🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
+
 ## Migración de `content/lecciones/l1-patrones-de-cambio.json` — hecha y re-certificada (`publicable`)
 
 **Resuelto estructuralmente el 2026-07-08.** El archivo usaba una forma ad-hoc (`"interaccion": {...}` anidada) que no coincidía con los bloques discriminados por `tipo` de `content/schema/leccion.schema.json`. Se migró a la forma del schema (`prediccion`, `seleccion`, `numerica`, `verdaderoFalso`, `abierta`, `pistas`, `texto`), preservando enunciados, números, alternativas y feedback exactos — transformación de forma, no de contenido. `npm run validar` pasa, y `idsDeLecciones()` ya no la excluye de `generateStaticParams()`: `/leccion/l1-patrones-de-cambio` se genera y navega correctamente.
