@@ -11,6 +11,7 @@ import type { TemaDelCamino } from "@/lib/camino";
 import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
 import { PasoLeccion } from "@/components/PasoLeccion";
+import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
 import type { LeccionCliente } from "@/lib/sanitizar";
@@ -27,7 +28,7 @@ export function RunnerLeccion({
   tema: TemaDelCamino;
 }) {
   const [estado, dispatch] = useReducer(reducerRunner, estadoInicialRunner);
-  const [fase, setFase] = useState<"pasos" | "itemsPAES">("pasos");
+  const [fase, setFase] = useState<"pasos" | "anuncio" | "itemsPAES">("pasos");
   /* Gate de exploración: un paso con slider de variante unaVariable no deja
      avanzar hasta que el estudiante probó `exploracionMinima` valores
      distintos. Sin ese piso, el paso se puede pasar de largo sin mirar el
@@ -102,10 +103,22 @@ export function RunnerLeccion({
 
   function terminarPasos() {
     if (leccion.itemsPAES.length > 0) {
-      setFase("itemsPAES");
+      setFase("anuncio");
     } else {
       terminar();
     }
+  }
+
+  if (fase === "anuncio") {
+    return (
+      <div className="flex min-h-full flex-col">
+        <AnuncioPrevioItems
+          variante="leccion"
+          cantidad={leccion.itemsPAES.length}
+          onEmpezar={() => setFase("itemsPAES")}
+        />
+      </div>
+    );
   }
 
   if (fase === "itemsPAES") {
