@@ -14,6 +14,7 @@ import { PasoLeccion } from "@/components/PasoLeccion";
 import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { ItemsPAESFinal } from "@/components/ItemsPAESFinal";
+import { BannerDemostracion } from "@/components/ui/Banner";
 import type { LeccionCliente } from "@/lib/sanitizar";
 import type { BloqueInteractivoSlider } from "@/lib/tipos";
 
@@ -131,6 +132,7 @@ export function RunnerLeccion({
   if (fase === "anuncio") {
     return (
       <div className="flex min-h-full flex-col">
+        {leccion.estado !== "publicable" && <BannerDemostracion />}
         <AnuncioPrevioItems
           variante="leccion"
           cantidad={leccion.itemsPAES.length}
@@ -143,6 +145,7 @@ export function RunnerLeccion({
   if (fase === "itemsPAES") {
     return (
       <div className="flex min-h-full flex-col">
+        {leccion.estado !== "publicable" && <BannerDemostracion />}
         <EjecutorSetItems
           items={leccion.itemsPAES}
           mostrarFeedback={true}
@@ -198,6 +201,7 @@ export function RunnerLeccion({
 
   return (
     <div className="flex min-h-full flex-col">
+      {leccion.estado !== "publicable" && <BannerDemostracion />}
       <div
         className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${
           pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"

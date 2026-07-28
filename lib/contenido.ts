@@ -129,8 +129,18 @@ const ID_DEMO = "l0-demo";
  * Pide solo `estado` (el campo que comparte todo `ContenidoBase`) en vez de una
  * `Leccion` completa: lección, diagnóstico y cierre se preguntan lo mismo, y así
  * la comparación con "publicable" vive en un único lugar.
+ *
+ * Bypass de preview (rama `preview/revision-profesor`, 2026-07-27): con
+ * `PREVIEW_MOSTRAR_BORRADORES=true` (solo en el entorno Preview de Vercel de
+ * esa rama) esta función devuelve `true` sin mirar `estado`, para que un
+ * revisor externo pueda navegar lecciones en borrador/revisión. El `estado`
+ * real del contenido NO cambia — sigue siendo la única fuente de verdad de
+ * qué está efectivamente revisado; ver `BannerDemostracion` en RunnerLeccion,
+ * Diagnostico y Cierre, que chequean `estado` directo y por eso no se
+ * desactivan con este bypass.
  */
 export function esPublicable(contenido: { estado: Estado }): boolean {
+  if (process.env.PREVIEW_MOSTRAR_BORRADORES === "true") return true;
   return contenido.estado === "publicable";
 }
 
