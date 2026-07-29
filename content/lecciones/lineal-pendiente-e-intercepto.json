@@ -136,7 +136,8 @@
       "tipo": "descubrimiento",
       "titulo": "Dos controles: pendiente e intercepto",
       "_notasInternas": [
-        "Pantalla original: Paso 5 (micro-preguntas 5.1, 5.2, 5.3). Secuencia predice→mueve→compara. 5.1 mapea a error-1 (confunde pendiente con intercepto); 5.3 mapea a error-2 (signo de la pendiente)."
+        "Pantalla original: Paso 5 (micro-preguntas 5.1, 5.2, 5.3). Secuencia predice→mueve→compara. 5.1 mapea a error-1 (confunde pendiente con intercepto); 5.3 mapea a error-2 (signo de la pendiente).",
+        "2026-07-28: bloque interactivoSlider (dosVariables + secuenciaMicropreguntas) agregado — estaba ausente desde la creación del archivo (ver commit ea912b1). El schema se extendió con el campo opcional mensajeCorrecto en secuenciaMicropreguntas para no perder el feedback de la opción correcta de cada micro-pregunta."
       ],
       "bloques": [
         {
@@ -144,49 +145,51 @@
           "contenido": "Ahora se habilitan los dos controles: pendiente e intercepto. Vamos a hacer tres micro-experimentos: predice, mueve, compara."
         },
         {
-          "tipo": "seleccion",
-          "enunciado": "5.1 — ¿Cuál de los dos controles crees que mueve el punto donde la recta cruza el eje Y?",
-          "opciones": [
+          "tipo": "interactivoSlider",
+          "variante": "dosVariables",
+          "variables": [
+            { "nombre": "pendiente (m)", "min": -5, "max": 5, "valorInicial": 1, "editable": true },
+            { "nombre": "intercepto (b)", "min": -8, "max": 8, "valorInicial": 2, "editable": true }
+          ],
+          "instruccion": "Ahora se mueven los dos controles. Antes de cada pregunta, predice — después muévelos y comprueba si tenías razón.",
+          "secuenciaMicropreguntas": [
             {
-              "id": "a",
-              "texto": "El control de la pendiente",
-              "esCorrecta": false,
-              "feedback": "Compruébalo tú: mueve solo el control de pendiente. ¿Se mueve el punto donde la recta cruza el eje Y, o se queda clavado ahí?",
-              "errorCatalogado": "error-1"
+              "id": "l2-p5-mp1",
+              "enunciado": "5.1 — ¿Cuál de los dos controles crees que mueve el punto donde la recta cruza el eje Y?",
+              "feedbackPorPrediccion": [
+                {
+                  "prediccion": "El control de la pendiente",
+                  "mensaje": "Compruébalo tú: mueve solo el control de pendiente. ¿Se mueve el punto donde la recta cruza el eje Y, o se queda clavado ahí?",
+                  "errorCatalogado": "error-1"
+                }
+              ],
+              "mensajeCorrecto": "Exacto. El intercepto es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
             },
             {
-              "id": "b",
-              "texto": "El control del intercepto",
-              "esCorrecta": true,
-              "feedback": "Exacto. El intercepto es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
-            }
-          ]
-        },
-        {
-          "tipo": "seleccion",
-          "enunciado": "5.2 — ¿Cuál control cambia la inclinación, o sea qué tan empinada sube la recta?",
-          "opciones": [
-            {
-              "id": "a",
-              "texto": "El control del intercepto",
-              "esCorrecta": false,
-              "feedback": "Prueba mover solo el control de intercepto. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
-              "errorCatalogado": "error-1"
+              "id": "l2-p5-mp2",
+              "enunciado": "5.2 — ¿Cuál control cambia la inclinación, o sea qué tan empinada sube la recta?",
+              "feedbackPorPrediccion": [
+                {
+                  "prediccion": "El control del intercepto",
+                  "mensaje": "Prueba mover solo el control de intercepto. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
+                  "errorCatalogado": "error-1"
+                }
+              ],
+              "mensajeCorrecto": "Eso es. La pendiente controla la inclinación: más pendiente, recta más empinada."
             },
             {
-              "id": "b",
-              "texto": "El control de la pendiente",
-              "esCorrecta": true,
-              "feedback": "Eso es. La pendiente controla la inclinación: más pendiente, recta más empinada."
+              "id": "l2-p5-mp3",
+              "enunciado": "5.3 — Si llevas la pendiente a un valor negativo, la recta se hace más corta.",
+              "feedbackPorPrediccion": [
+                {
+                  "prediccion": "Verdadero",
+                  "mensaje": "Una recta no se acorta. Lleva la pendiente a negativo y observa la dirección: ¿sube de izquierda a derecha, o baja? Una pendiente negativa hace que la recta BAJE, no que se acorte.",
+                  "errorCatalogado": "error-2"
+                }
+              ],
+              "mensajeCorrecto": "Correcto. Una recta no se acorta: con pendiente negativa cambia de dirección y baja de izquierda a derecha. El signo de la pendiente dice si sube o baja."
             }
           ]
-        },
-        {
-          "tipo": "verdaderoFalso",
-          "enunciado": "5.3 — Si llevas la pendiente a un valor negativo, la recta se hace más corta.",
-          "respuestaCorrecta": false,
-          "feedbackVerdadero": "Una recta no se acorta. Lleva la pendiente a negativo y observa la dirección: ¿sube de izquierda a derecha, o baja? Una pendiente negativa hace que la recta BAJE, no que se acorte.",
-          "feedbackFalso": "Correcto. Una recta no se acorta: con pendiente negativa cambia de dirección y baja de izquierda a derecha. El signo de la pendiente dice si sube o baja."
         }
       ]
     },
