@@ -1,5 +1,5 @@
 /**
- * Arma el camino de dos niveles cruzando la taxonomía (`lib/temas.ts`, estática)
+ * Arma el camino de dos niveles cruzando la taxonomía (`lib/modulos.ts`, estática)
  * con el contenido real en disco (`lib/contenido.ts`).
  *
  * Server-only: lee archivos. Devuelve estructuras planas y serializables, para
@@ -10,7 +10,7 @@
  * en el dispositivo. Eso lo resuelve `estadoDeNodo` en components/camino/.
  */
 import { idsDeLecciones, obtenerLeccion, esPublicable, obtenerCierre } from "./contenido";
-import { EJES, type Tema } from "./temas";
+import { EJES, type Tema } from "./modulos";
 
 export interface LeccionDelTema {
   id: string;

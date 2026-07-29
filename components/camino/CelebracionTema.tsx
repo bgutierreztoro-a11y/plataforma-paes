@@ -8,7 +8,7 @@ import { IlustracionTema } from "@/lib/ilustracionesTemas";
 import { leer, marcarTemaCelebrado } from "@/lib/progresoLocal";
 import { temasCompletados } from "@/lib/estadoNodo";
 import { registrarEvento } from "@/lib/eventos";
-import { TOTAL_TEMAS } from "@/lib/temas";
+import { TOTAL_TEMAS } from "@/lib/modulos";
 import type { TemaDelCamino } from "@/lib/camino";
 
 /**

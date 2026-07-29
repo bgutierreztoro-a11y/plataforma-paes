@@ -3,7 +3,7 @@ import type { BloqueInteractivoSlider } from "@/lib/tipos";
 /**
  * Fixture de prueba para la variante `dosVariables` del bloque interactivo.
  * No es contenido de lección: ninguna lección publicada declara todavía este
- * bloque (hoy `content/` solo tiene `unaVariable`, en `l2-pendiente-e-intercepto`).
+ * bloque (hoy `content/` solo tiene `unaVariable`, en `lineal-pendiente-e-intercepto`).
  *
  * Vive en `e2e/` a propósito y no en `content/lecciones/`: es dato de prueba
  * para verificar el componente, no material pedagógico con proveniencia ni

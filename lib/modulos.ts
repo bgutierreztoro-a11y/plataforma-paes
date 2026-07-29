@@ -37,9 +37,9 @@
  */
 export const IDS_LECCION = [
   "l0-demo",
-  "l1-patrones-de-cambio",
-  "l2-pendiente-e-intercepto",
-  "l3-ecuaciones-lineales",
+  "lineal-patrones-de-cambio",
+  "lineal-pendiente-e-intercepto",
+  "ecuaciones-lineales",
 ] as const;
 
 export type LeccionId = (typeof IDS_LECCION)[number];
@@ -154,7 +154,7 @@ export const EJES = [
           "Ya puedes despejar una incógnita y explicar por qué una desigualdad cambia de sentido.",
         objetivo:
           "Despejar la incógnita paso a paso y saber por qué una desigualdad a veces cambia de sentido.",
-        lecciones: ["l3-ecuaciones-lineales"],
+        lecciones: ["ecuaciones-lineales"],
       },
       {
         id: "sistemas-2x2",
@@ -172,7 +172,7 @@ export const EJES = [
           "Ya puedes leer una recta en tabla, gráfico o ecuación, y pasar de una forma a otra.",
         objetivo:
           "Leer una recta en cualquier forma —tabla, gráfico o ecuación— y pasar de una a otra.",
-        lecciones: ["l1-patrones-de-cambio", "l2-pendiente-e-intercepto"],
+        lecciones: ["lineal-patrones-de-cambio", "lineal-pendiente-e-intercepto"],
         cierreId: "cierre-v0",
       },
       {

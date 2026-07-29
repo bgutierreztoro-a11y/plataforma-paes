@@ -1,6 +1,6 @@
 {
   "tipo": "leccion",
-  "id": "l3-ecuaciones-lineales",
+  "id": "ecuaciones-lineales",
   "titulo": "La balanza que esconde un número",
   "objetivo": "Resolver ecuaciones lineales de una incógnita aplicando la misma operación a ambos lados para conservar la igualdad, hasta despejar la incógnita; traducir situaciones a una ecuación y resolverla; y justificar cuándo una transformación conserva (o no) la solución.",
   "tiempoEstimadoMin": 22,

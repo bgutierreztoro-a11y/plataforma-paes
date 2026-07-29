@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { obtenerLeccion, idsPublicables, esPublicable } from "@/lib/contenido";
 import { temaDelCaminoPorId } from "@/lib/camino";
-import { temaDeLeccion } from "@/lib/temas";
+import { temaDeLeccion } from "@/lib/modulos";
 import { sanitizarLeccion } from "@/lib/sanitizar";
 import { RunnerLeccion } from "@/components/RunnerLeccion";
 

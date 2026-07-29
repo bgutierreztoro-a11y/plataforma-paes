@@ -11,7 +11,7 @@ export const metadata: Metadata = {
  * Ruta de previsualización, no de producto: monta la variante `dosVariables`
  * del bloque interactivo con datos de prueba (`e2e/fixtures/`), no con una
  * lección real. Ninguna lección publicada declara este bloque todavía —
- * `content/lecciones/l2-pendiente-e-intercepto.json` solo usa `unaVariable` —
+ * `content/lecciones/lineal-pendiente-e-intercepto.json` solo usa `unaVariable` —
  * así que no hay forma de ver ni capturar el componente por el camino normal
  * sin escribir contenido de lección, que este trabajo tiene prohibido tocar.
  *

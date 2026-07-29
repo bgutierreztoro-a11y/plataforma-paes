@@ -5,7 +5,7 @@ import { IlustracionEjeNumeros } from "@/components/ilustraciones/ejes/Ilustraci
 import { IlustracionEjeAlgebra } from "@/components/ilustraciones/ejes/IlustracionEjeAlgebra";
 import { IlustracionEjeGeometria } from "@/components/ilustraciones/ejes/IlustracionEjeGeometria";
 import { IlustracionEjeProbabilidad } from "@/components/ilustraciones/ejes/IlustracionEjeProbabilidad";
-import { ejeDeTema } from "@/lib/temas";
+import { ejeDeTema } from "@/lib/modulos";
 
 /**
  * La ilustración de cada tema. Mismo criterio y mismo lugar que

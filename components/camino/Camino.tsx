@@ -6,7 +6,7 @@ import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
 import { registrarEvento } from "@/lib/eventos";
-import { TOTAL_TEMAS } from "@/lib/temas";
+import { TOTAL_TEMAS } from "@/lib/modulos";
 import type { TemaDelCamino } from "@/lib/camino";
 
 const ACCION: Record<EstadoNodo, string> = {

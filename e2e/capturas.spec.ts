@@ -11,7 +11,7 @@ import { test, expect, type Page } from "@playwright/test";
 
 const CLAVE = "pm1:progreso:v1";
 const TEMA = "funcion-lineal-y-afin";
-const LECCION = "l1-patrones-de-cambio";
+const LECCION = "lineal-patrones-de-cambio";
 
 /**
  * Progreso sembrado a mano, respetando campo por campo la forma que valida

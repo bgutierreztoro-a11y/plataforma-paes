@@ -11,7 +11,7 @@ import {
   idsDeLeccionesEnOrden,
   temaDeLeccion,
   todosLosTemas,
-} from "./temas";
+} from "./modulos";
 import type {
   Contenido,
   Estado,
@@ -77,7 +77,7 @@ function cargarYValidar<T extends Contenido>(rutaAbsoluta: string): T {
  *
  * Se separa de `idsDeLecciones()` porque el barrido de temas necesita comparar
  * contra los **archivos**, no contra los archivos válidos: si no, una lección
- * con un error de contenido se reportaría como "declarada en lib/temas.ts pero
+ * con un error de contenido se reportaría como "declarada en lib/modulos.ts pero
  * inexistente", que es un diagnóstico falso y manda a buscar al lugar
  * equivocado.
  */
@@ -135,7 +135,7 @@ export function esPublicable(contenido: { estado: Estado }): boolean {
 }
 
 /**
- * Cruza el registro de temas (`lib/temas.ts`, estático) contra los archivos que
+ * Cruza el registro de temas (`lib/modulos.ts`, estático) contra los archivos que
  * existen en disco. Es la mitad de la garantía que TypeScript no puede dar: el
  * compilador impide escribir un id que no esté en `IDS_LECCION`, pero no sabe
  * si ese archivo existe ni si alguien lo dejó huérfano.
@@ -170,7 +170,7 @@ export function verificarRegistroDeTemas(): void {
   for (const id of enDisco) {
     if (id === ID_DEMO) continue;
     if (!temaDeLeccion(id)) {
-      problemas.push(`"${id}" no está asignada a ningún tema en lib/temas.ts`);
+      problemas.push(`"${id}" no está asignada a ningún tema en lib/modulos.ts`);
     }
   }
 
@@ -188,7 +188,7 @@ export function verificarRegistroDeTemas(): void {
 
   if (problemas.length > 0) {
     throw new ContenidoInvalidoError(
-      `lib/temas.ts no calza con content/lecciones/:\n${problemas.map((p) => ` - ${p}`).join("\n")}`,
+      `lib/modulos.ts no calza con content/lecciones/:\n${problemas.map((p) => ` - ${p}`).join("\n")}`,
     );
   }
 }
@@ -199,10 +199,11 @@ export function verificarRegistroDeTemas(): void {
  * publicables: el camino las muestra como "En preparación" en vez de ocultarlas,
  * para que el curso se lea como en construcción y no como abandonado.
  *
- * El orden lo da `lib/temas.ts`, no el prefijo del id ni un sort alfabético.
- * Ese prefijo (`l1-`, `l2-`, `l3-`) quedó como resto histórico y ya no codifica
- * la secuencia: `l3-ecuaciones-lineales` pertenece a otro tema que `l1` y `l2`,
- * así que un número global no significaba nada. Además el sort se caía en `l10`.
+ * El orden lo da `lib/modulos.ts`, no el nombre del id ni un sort alfabético.
+ * El id ya no lleva prefijo numérico (`l1-`, `l2-`, `l3-`): desde la Enmienda 2
+ * (mos-v2.md §13) el formato es `{modulo}-{slug}`, y `ecuaciones-lineales`
+ * pertenece a otro módulo que las otras dos lecciones de este tema, así que un
+ * número global nunca significó nada. Además el sort se caía en `l10`.
  *
  * Se filtra contra `idsDeLecciones()` para no perder la propiedad de que una
  * lección con contenido inválido queda fuera del camino sin tumbar el build.

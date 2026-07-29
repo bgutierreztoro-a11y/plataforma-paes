@@ -82,7 +82,7 @@ export function avanceDeTema(
  *    "completado" a propósito: una deuda pedagógica pendiente pesa más que
  *    haber recorrido todo el material.
  * 3. **Completado** exige las dos cosas: que *todas* las lecciones declaradas
- *    en `lib/temas.ts` estén completadas —lo que incluye estar publicables,
+ *    en `lib/modulos.ts` estén completadas —lo que incluye estar publicables,
  *    porque una lección no publicable nunca llega a "completado"— y que el
  *    cierre del tema, si lo tiene, se haya rendido entero.
  * 4. Hay algo empezado, sea una lección a medias o una ya cerrada → **en
