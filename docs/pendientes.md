@@ -677,3 +677,65 @@ matching de texto libre. Quien redacte una lección con esta variante tiene que
 escribir `prediccion` como una etiqueta corta y legible para el estudiante
 ("También sube", no una descripción interna), porque se muestra tal cual, no
 se interpreta.
+
+---
+
+Fecha: 2026-07-29
+
+## Estado real del módulo "Función lineal y afín": 2/3 lecciones
+
+Registro de estado, no acción — no se escribe la tercera lección hoy, solo se
+deja constancia antes de decidir cuándo abordarla.
+
+El módulo declara 3 lecciones (Enmienda 2, `mos-v2.md` §13): patrones de
+cambio, pendiente e intercepto, modelamiento PAES. Las dos primeras existen
+como archivo (`lineal-patrones-de-cambio.json`, `lineal-pendiente-e-intercepto.json`);
+la tercera — modelamiento PAES — **no está escrita**. Sigue en 2/3.
+
+No confundir con `ecuaciones-lineales.json`: pertenece al módulo "Ecuaciones e
+inecuaciones de primer grado" desde la Enmienda 2, no cuenta como la lección
+que falta aquí.
+
+## Cierre: revisión de diferenciación L1 vs L3 (2026-07-29)
+
+Verificada paso a paso en producción (`plataforma-paes.vercel.app`) con
+browser real tras el push de `76cec8c` — no solo lectura de JSON, mismo
+método que destapó el bug del paso 5 de L2 (ese no era visible en el archivo,
+solo renderizado).
+
+Recorridos los 10 pasos de `ecuaciones-lineales.json` (L3) y comparados en
+pantalla contra los pasos equivalentes de `lineal-patrones-de-cambio.json`
+(L1), específicamente los reescritos el 2026-07-27 para diferenciar (palancas
+A, B, F, G, H documentadas en el propio JSON):
+
+- **Paso 1** (palanca B): formato distinto — tabla en L1, prosa+balanza en L3.
+- **Paso 2** (palanca F): confirmado en pantalla — L1 un solo bloque de
+  selección; L3 agrega un segundo bloque `verdaderoFalso` (generaliza con
+  números "feos").
+- **Paso 3** (palanca G): confirmado en pantalla — L1 repite el mismo tipo de
+  cálculo dos veces (semana 3 y 8); L3 el segundo campo es una tarea de
+  naturaleza distinta (comprobación).
+- **Paso 4** (palanca H): pista 3 da la operación sin resolverla en ambas
+  lecciones — mismo principio pedagógico correcto, aplicado a operaciones
+  distintas. No es superposición.
+- **Paso 7** (reorden): confirmado en pantalla — L1 mantiene orden plano
+  numérica→verdaderoFalso→selección; L3 invierte a
+  selección→verdaderoFalso→numérica.
+- **Paso 8** (palanca A): confirmado en pantalla — L1 pide la fórmula antes
+  de calcular; L3 invierte el orden (resuelve primero, formaliza después).
+- **Pasos 9-10**: sin cambio estructural, decisión consciente documentada en
+  el JSON (forzar una palanca ahí sería abstracción sin propósito).
+
+**Resultado: diferenciación estructural real en todos los pasos revisados** —
+cambia el número de bloques, el tipo de bloque, el orden, o qué se pide
+resolver primero. Ningún paso se sintió cosmético (mismo patrón con números o
+nombres distintos). Sin problemas de renderizado: 10 pasos cargaron sin
+errores de consola, sin contenido cortado, pistas progresivas funcionando.
+
+**Marcado como cerrado — no repetir esta auditoría** salvo que se vuelva a
+tocar el contenido de L1 o L3.
+
+**No resuelve** el ítem 🔴 al inicio de este documento: la revisión
+matemática real de L2/L3 sigue abierta (firma de 2026-07-27 administrativa,
+temporal para la demo del profesor). Esta sección es sobre diferenciación
+estructural, no sobre corrección matemática.
