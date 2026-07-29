@@ -130,38 +130,64 @@ Cada lección cierra con 2–3 ítems. La distribución mínima:
 
 ## 4. Matriz de cobertura del temario M1
 
-### 4.0 Alcance vigente: MVP v1 — REGLA QUE MANDA
+### 4.0 Alcance vigente — módulo "Función lineal y afín" (Enmienda 2, mos-v2.md §13, 2026-07-28)
 
-**El MVP v1 cubre un solo tema: funciones lineales y afines.** Micro-tema de entrada: pendiente como razón de cambio. Esta especificación está **cerrada** (MOS §4): no se rediseña, se construye.
+**Vocabulario:** eje → módulo → lección. 4 ejes, 16 módulos, N lecciones por módulo. "Módulo"
+reemplaza a "tema" en todo este documento; "lección" se conserva.
 
-Secuencia fija del MVP v1:
+**Alcance:** el MVP v1 ya no está acotado a un solo módulo. La plataforma cubre los 16 módulos
+del temario M1 (matriz en §4.1, que deja de ser referencia post-Gate 2 y pasa a ser el mapa de
+trabajo vigente). La unidad de producción es el módulo completo (diagnóstico → lecciones →
+cierre); no se abre un módulo nuevo antes de cerrar el anterior. Derogada: "ninguna lección
+fuera de esta secuencia se escribe antes del Gate 2".
 
-| Pieza | Contenido | Estado |
-|---|---|---|
-| Diagnóstico | 5 ítems | — |
-| **Lección 1** | Reconocimiento intuitivo de patrones de cambio constante | `publicable` ✓ |
-| **Lección 2** | Pendiente e intercepto con gráfico interactivo de sliders (**la interacción insignia**) | en desarrollo |
-| **Lección 3** | Traducción entre representaciones (tabla, gráfico, ecuación, enunciado) | pendiente |
-| **Lección 4** | Modelamiento estilo PAES | pendiente |
-| Cierre | 8 ítems formato PAES | — |
+Secuencia del módulo "Función lineal y afín" (el primero en construirse, sin cambios en esa
+prioridad):
 
-**Ninguna lección fuera de esta secuencia se escribe antes del Gate 2.** El MVP existe para validar dos apuestas: la pedagógica (piloto) y la comercial (preventa). Cubrir más ejes del temario sirve a la apuesta de producción y a la de sistema, que por regla explícita del MOS **se rechazan por defecto antes del Gate 2**.
+| Pieza | Contenido | Estado | Id nuevo |
+|---|---|---|---|
+| Diagnóstico | 5 ítems | — | — |
+| **Lección 1** | Patrones de cambio | `publicable` | `funcion-lineal-y-afin-patrones-de-cambio` (antes `l1-patrones-de-cambio`) |
+| **Lección 2** | Pendiente e intercepto, gráfico interactivo de sliders (**la interacción insignia**) | `publicable` | `funcion-lineal-y-afin-pendiente-e-intercepto` (antes `l2-pendiente-e-intercepto`) |
+| **Lección 3** | Modelamiento PAES | por escribir | `funcion-lineal-y-afin-modelamiento-paes` (nueva) |
+| Cierre | 8 ítems formato PAES | — | — |
 
-Traducido a decisión concreta: expandir a Números, Geometría o Probabilidad **antes** de tener el curso de funciones vendido y pilotado es exactamente el error que el MOS existe para prevenir. Amplía superficie sin reducir incertidumbre.
+"Traducción entre representaciones" se elimina como lección propia. Razón: pendiente e
+intercepto ya recorre tabla → gráfico → ecuación, y modelamiento PAES es por definición
+traducir un enunciado a una representación; una lección dedicada duplicaría a las otras dos.
 
-> **Discrepancia detectada (2026-07-22, requiere decisión de Benja).** Existe en `content/lecciones/` un archivo `l3-ecuaciones-lineales.json`. El MOS §4 especifica que la Lección 3 es **traducción entre representaciones**, no ecuaciones lineales. Posibilidades: (a) la lección se construyó fuera de spec, (b) está bien pero mal numerada y corresponde a otro lugar de la secuencia, (c) el MOS se desactualizó respecto de una decisión posterior. **No se resuelve por inferencia.** Hasta que Benja defina cuál es el caso, la secuencia que manda es la del MOS §4.
+**Discrepancia de l3 (abierta 2026-07-22) — resuelta.** `l3-ecuaciones-lineales` no estaba
+fuera de spec: estaba archivado en el módulo equivocado. Pertenece al módulo "Ecuaciones e
+inecuaciones de primer grado", no a "Función lineal y afín". Se reubica; esto explica la
+superposición L1/L3 detectada. Id nuevo: `ecuaciones-e-inecuaciones-primer-grado-ecuaciones-lineales`
+(antes `l3-ecuaciones-lineales`).
+
+**Namespace de ids.** Formato `{modulo}-{slug}`, sin número correlativo. El orden vive solo en
+código (`lib/temas.ts` o su sucesor), nunca en el id. Esta tabla documenta el mapeo; el
+renombrado real de archivos y de `lib/temas.ts` es trabajo aparte, no incluido en esta
+enmienda (que es solo documentación).
+
+**Gate 2.** Suspendido, sin criterio métrico. Revisión: 2026-10-31. Razón: no hay
+instrumentación de comportamiento de usuarios por decisión explícita, así que un gate basado
+en métricas sería letra muerta. No se inventa un criterio sustituto mientras eso siga así.
+
+**Precedencia.** Esta sección es espejo operativo de `mos-v2.md` §13 (Enmienda 2). Ante
+cualquier discrepancia futura, manda el MOS.
 
 ---
 
-### 4.1 Matriz completa del temario M1 — referencia post-Gate 2
+### 4.1 Matriz completa del temario M1 — mapa de trabajo vigente (16 módulos)
 
-**Esta sección NO es una lista de tareas.** Es referencia de scope para cuando el producto se expanda más allá de funciones, después del Gate 2. Se incluye acá para no tener que reconstruirla después, no para orientar el trabajo actual.
+Desde la Enmienda 2 (mos-v2.md §13, 2026-07-28), esta matriz **es** el mapa de trabajo: cada
+fila es uno de los 16 módulos que se construyen, un módulo completo a la vez, en el orden que
+se defina. La columna "Estado" ya no distingue "cubierto vs. excluido de alcance": distingue
+construido vs. por construir.
 
 Fuente: temario oficial DEMRE.
 
 #### Eje: NÚMEROS
 
-| Unidad | Contenidos | Cubierto por MVP v1 |
+| Módulo | Contenidos | Estado |
 |---|---|---|
 | Conjunto de enteros y racionales | Operaciones y orden en ℤ; operaciones y comparación en ℚ; problemas en contexto | No |
 | Porcentaje | Concepto y cálculo; problemas en diversos contextos | No |
@@ -169,18 +195,18 @@ Fuente: temario oficial DEMRE.
 
 #### Eje: ÁLGEBRA Y FUNCIONES
 
-| Unidad | Contenidos | Cubierto por MVP v1 |
+| Módulo | Contenidos | Estado |
 |---|---|---|
 | Expresiones algebraicas | Productos notables; factorizaciones y desarrollo; operatoria; problemas | No |
 | Proporcionalidad | Proporción directa e inversa y sus representaciones; problemas | No |
-| Ecuaciones e inecuaciones de primer grado | Resolución de ecuaciones lineales; resolución de inecuaciones lineales; problemas de ambas | Ver discrepancia en §4.0 |
+| Ecuaciones e inecuaciones de primer grado | Resolución de ecuaciones lineales; resolución de inecuaciones lineales; problemas de ambas | Parcial — incluye la lección reubicada desde función lineal y afín (`ecuaciones-e-inecuaciones-primer-grado-ecuaciones-lineales`, ver §4.0) |
 | Sistemas de ecuaciones lineales (2×2) | Resolución; problemas | No |
-| **Función lineal y afín** | Concepto; tablas y gráficos; problemas | **Sí — es todo el MVP v1 (L1 a L4)** |
+| **Función lineal y afín** | Concepto; tablas y gráficos; problemas | **En construcción — 3 lecciones (ver §4.0)** |
 | Función cuadrática | Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas | No |
 
 #### Eje: GEOMETRÍA
 
-| Unidad | Contenidos | Cubierto por MVP v1 |
+| Módulo | Contenidos | Estado |
 |---|---|---|
 | Figuras geométricas | Teorema de Pitágoras; perímetro y área de triángulos, paralelogramos, trapecios y círculos; problemas | No |
 | Cuerpos geométricos | Área de superficie y volumen de paralelepípedos, cubos y cilindros; problemas | No |
@@ -189,7 +215,7 @@ Fuente: temario oficial DEMRE.
 
 #### Eje: PROBABILIDAD Y ESTADÍSTICA
 
-| Unidad | Contenidos | Cubierto por MVP v1 |
+| Módulo | Contenidos | Estado |
 |---|---|---|
 | Representación de datos (tablas y gráficos) | Frecuencia absoluta y relativa; tipos de gráficos; promedio; problemas | No |
 | Medidas de posición | Cuartiles y percentiles de uno o más grupos; diagrama de cajón; problemas | No |
@@ -210,9 +236,7 @@ El benchmark de un ensayo completo de 65 ítems muestra esta distribución aprox
 
 *Uso correcto:* respalda la elección de tema del MVP v1. Álgebra y funciones es el eje de mayor peso de la prueba (~35 %), y dentro de él, función lineal y afín es la unidad con más superficie. Empezar ahí no fue arbitrario: es el punto de máximo retorno por lección construida. Sirve como argumento de venta concreto para la preventa.
 
-*Uso incorrecto:* leer los ejes sin cubrir como una lista de tareas pendientes. Los huecos de esta matriz **no son deuda**: son alcance deliberadamente excluido hasta el Gate 2. Un ~23 % de la prueba sin cubrir no es un problema del MVP; es la definición del MVP.
-
-La pregunta que decide si se expande no es "¿cuánto de la prueba cubrimos?" sino **"¿ya validamos que el método enseña y que alguien paga?"**. Mientras la respuesta sea no, más cobertura es más superficie que mantener sin evidencia que la justifique.
+*Uso incorrecto (previo a la Enmienda 2):* leer los ejes sin cubrir como alcance excluido. Desde el 2026-07-28 los huecos de esta matriz **sí son roadmap**: son los módulos que faltan construir, en el orden que se defina, un módulo completo a la vez. El criterio de secuencia no es de cobertura de examen sino de producción: no se abre un módulo nuevo antes de cerrar el anterior (§4.0).
 
 ---
 

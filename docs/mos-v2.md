@@ -38,6 +38,9 @@ Canal inicial: confianza física. Colegio propio, compañeros de otros colegios,
 
 ## 4. Producto: especificación del MVP v1
 
+> Vocabulario y alcance actualizados por la Enmienda 2 (§13, 2026-07-28). Esta sección queda
+> como registro histórico de la especificación original de julio de 2026.
+
 Cerrada. No se rediseña; se construye.
 
 **Tema:** funciones lineales y afines. Micro-tema de entrada: pendiente como razón de cambio.
@@ -137,7 +140,7 @@ Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del l
 ## 10. Gates del roadmap
 
 - **Gate 1 (semanas 1 a 3):** preventa lanzada y lección 1 construida y testeada. Incluye resolver la formalización mínima.
-- **Gate 2 (semanas 3 a 6):** piloto completo del módulo de funciones con la cohorte pagada. Umbrales de la sección 6 cumplidos.
+- **Gate 2:** ~~piloto completo del módulo de funciones con la cohorte pagada. Umbrales de la sección 6 cumplidos.~~ Suspendido, sin criterio métrico, por la Enmienda 2 (§13, 2026-07-28): no hay instrumentación de comportamiento de usuarios por decisión explícita, y un gate basado en métricas sería letra muerta. Revisión: 2026-10-31.
 - **Gate 3 (temporada 2026):** cohorte fundadora completa el curso, medimos su percepción de mejora en ensayos reales. Recién aquí se evalúan: segundo tema de M1, capa modo ensayo, tutor IA.
 - **Gate 4 (2027):** decisión de escala con datos de una temporada completa: más temas, automatización, canal de distribución propio.
 
@@ -170,3 +173,49 @@ Innegociable, sin cambios:
 - Ítems PAES = 4 alternativas A–D, respuesta única. La fidelidad al examen ES el producto.
 - Originalidad, revisión matemática, proveniencia, firma manual.
 - localStorage solo desempeño, nunca identidad.
+
+## 13. Enmienda 2 (28 de julio de 2026) — decisión de alcance de Benja, gatillada por la discrepancia de l3
+
+Dato: la discrepancia de `l3-ecuaciones-lineales` abierta el 2026-07-22 (§4, Lección 3) se
+resuelve: el archivo no estaba fuera de spec, estaba archivado bajo el módulo equivocado.
+Pertenece a "Ecuaciones e inecuaciones de primer grado", no a "Función lineal y afín".
+Resolver esto expuso que el vocabulario y el alcance de §4 ya no describen cómo se construye
+el producto, y motiva esta enmienda.
+
+**1. Vocabulario y jerarquía** (reemplaza cualquier redacción previa en §4 y en todo el
+documento). eje → módulo → lección. 4 ejes, 16 módulos, N lecciones por módulo. "Módulo"
+reemplaza a "tema" como capa intermedia entre eje y lección. "Lección" se conserva: es el
+vocabulario que ve el estudiante.
+
+**2. Alcance.** El MVP v1 deja de estar acotado a un solo tema. La plataforma cubre los 16
+módulos del temario M1 (matriz completa en `docs/calibracion-lecciones-e-items.md` §4.1, que
+deja de ser "referencia post-Gate 2" y pasa a ser el mapa de trabajo vigente). La unidad de
+producción es el módulo completo: diagnóstico → lecciones → cierre. No se abre un módulo
+nuevo antes de cerrar el anterior. Queda derogada la regla de §4 y de calibración: "ninguna
+lección fuera de esta secuencia se escribe antes del Gate 2".
+
+**3. Módulo "Función lineal y afín" = 3 lecciones.**
+- Patrones de cambio (existe).
+- Pendiente e intercepto (existe).
+- Modelamiento PAES (por escribir).
+
+"Traducción entre representaciones" se elimina como lección propia: pendiente e intercepto ya
+recorre tabla → gráfico → ecuación, y modelamiento PAES es por definición traducir un
+enunciado a una representación. Una lección dedicada duplicaría a las otras dos.
+
+**4. Resolución de la discrepancia de l3 (abierta 2026-07-22).** `l3-ecuaciones-lineales` no
+estaba fuera de spec: estaba archivado en el módulo equivocado. Pertenece al módulo
+"Ecuaciones e inecuaciones de primer grado", no a "Función lineal y afín". Se reubica. Esto
+explica la superposición L1/L3 detectada.
+
+**5. Gate 2 (reemplaza el criterio de §10).** Suspendido, sin criterio métrico. Revisión:
+2026-10-31. Razón: no hay instrumentación de comportamiento de usuarios por decisión
+explícita, así que un gate basado en métricas sería letra muerta. No se inventa un criterio
+sustituto mientras eso siga así.
+
+**6. Namespace de ids.** Formato `{modulo}-{slug}`, sin número correlativo. El orden vive solo
+en código (`lib/temas.ts` o su sucesor), nunca en el id. Mapeo documentado en
+`docs/calibracion-lecciones-e-items.md` §4.0.
+
+Sigue vigente sin cambios: §7 (legal), §7.5 (datos personales), §11 (prioridades), y las
+reglas de contenido (10 pasos, ítems PAES, feedback artesanal, checklist de originalidad).

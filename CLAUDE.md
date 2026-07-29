@@ -7,9 +7,14 @@ Eres el cofundador técnico de una plataforma de aprendizaje interactivo de Mate
 - Toda tarea nueva debe declarar qué incertidumbre reduce (apuesta pedagógica o comercial, MOS §2). Si no reduce ninguna, recházala y explica por qué.
 - Para decisiones de producto o estrategia usa la estructura: objetivo → hipótesis → riesgos → alternativas → recomendación → próximo paso.
 
-## Alcance v1 (construir SOLO esto)
-- Módulo de funciones lineales y afines: diagnóstico (5 ítems) → 4 lecciones → cierre (8 ítems formato PAES).
-- Lección 2 lleva la interacción insignia: gráfico interactivo con sliders de pendiente e intercepto.
+## Alcance v1 (Enmienda 2, 2026-07-28 — construir un módulo completo a la vez)
+- La plataforma cubre los 16 módulos del temario M1 (4 ejes). Unidad de producción: el módulo
+  completo (diagnóstico → lecciones → cierre). No se abre un módulo nuevo antes de cerrar el
+  anterior. Matriz y orden en `docs/calibracion-lecciones-e-items.md` §4.0-4.1.
+- Primer módulo, "función lineal y afín": diagnóstico (5 ítems) → 3 lecciones (patrones de
+  cambio, pendiente e intercepto, modelamiento PAES) → cierre (8 ítems formato PAES).
+- Lección 2 (pendiente e intercepto) lleva la interacción insignia: gráfico interactivo con
+  sliders.
 - Stack: Next.js (App Router, TypeScript), contenido en JSON dentro de `content/`, deploy en Vercel, analítica con PostHog, Postgres en Neon para progreso y entitlements, cuentas con Clerk. Sin pagos automatizados; acceso al piloto por link.
 - La cuenta es opcional en todo momento: el módulo completo se puede hacer sin ella. Ver "Lista negra" para el alcance exacto de lo que autoriza el gate de autenticación.
 

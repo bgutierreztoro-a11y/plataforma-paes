@@ -2,6 +2,28 @@
 
 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
+## ✅ Discrepancia de l3 (abierta 2026-07-22) — resuelta por Enmienda 2 (2026-07-28)
+
+`l3-ecuaciones-lineales.json` no estaba fuera de spec: estaba archivado en el módulo
+equivocado. El MOS §4 original definía la Lección 3 del MVP como "traducción entre
+representaciones"; `lib/temas.ts` ya trataba `l3-ecuaciones-lineales` como parte del módulo
+"Ecuaciones e inecuaciones de primer grado", no de "Función lineal y afín" — el código
+adelantó una resolución que la documentación nunca formalizó. La Enmienda 2 (`mos-v2.md` §13)
+la formaliza: el módulo "Función lineal y afín" queda en 3 lecciones (patrones de cambio,
+pendiente e intercepto, modelamiento PAES — esta última por escribir); `l3-ecuaciones-lineales`
+se reubica en su módulo correcto. Detalle y mapeo de ids nuevos:
+`docs/calibracion-lecciones-e-items.md` §4.0.
+
+**Esto NO resuelve** el ítem 🔴 de arriba: la revisión matemática real de
+`l3-ecuaciones-lineales` sigue pendiente (la firma de 2026-07-27 es administrativa, temporal
+para demo) — problema aparte, sin tocar por esta enmienda, que es solo de documentación.
+
+**Pendiente de ejecución (fuera de esta enmienda):** renombrar el archivo
+`content/lecciones/l3-ecuaciones-lineales.json` → `ecuaciones-e-inecuaciones-primer-grado-ecuaciones-lineales.json`
+y los ids `l1-*`/`l2-*` a la convención `{modulo}-{slug}` en el propio JSON, `lib/temas.ts` y
+todo lugar que los referencie (`db/migraciones/`, `lib/contenido.ts`,
+`lib/descripcionesLecciones.tsx`, `e2e/`).
+
 ## Migración de `content/lecciones/l1-patrones-de-cambio.json` — hecha y re-certificada (`publicable`)
 
 **Resuelto estructuralmente el 2026-07-08.** El archivo usaba una forma ad-hoc (`"interaccion": {...}` anidada) que no coincidía con los bloques discriminados por `tipo` de `content/schema/leccion.schema.json`. Se migró a la forma del schema (`prediccion`, `seleccion`, `numerica`, `verdaderoFalso`, `abierta`, `pistas`, `texto`), preservando enunciados, números, alternativas y feedback exactos — transformación de forma, no de contenido. `npm run validar` pasa, y `idsDeLecciones()` ya no la excluye de `generateStaticParams()`: `/leccion/l1-patrones-de-cambio` se genera y navega correctamente.
