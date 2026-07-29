@@ -121,7 +121,7 @@ export function SecuenciaMicropreguntas({
             </div>
           ) : (
             <p role="status" className="text-sm text-ink-suave">
-              Comprobado. Sigue mirando qué cambia y qué se queda igual.
+              {actual.mensajeCorrecto ?? "Comprobado. Sigue mirando qué cambia y qué se queda igual."}
             </p>
           )}
 

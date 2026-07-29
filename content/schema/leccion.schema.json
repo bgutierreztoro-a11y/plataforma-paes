@@ -294,6 +294,11 @@
                   },
                   "additionalProperties": false
                 }
+              },
+              "mensajeCorrecto": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Confirmación cuando el estudiante acierta la predicción. Si falta, el componente usa su mensaje genérico."
               }
             },
             "additionalProperties": false

@@ -132,6 +132,7 @@ export interface MicropreguntaSlider {
   id: string;
   enunciado: string;
   feedbackPorPrediccion: FeedbackPorPrediccionSlider[];
+  mensajeCorrecto?: string;
 }
 
 export interface BloqueInteractivoSlider {
