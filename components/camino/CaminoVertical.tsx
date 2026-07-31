@@ -430,8 +430,30 @@ function FilaCamino({
         type="button"
         onClick={onSeleccionar}
         aria-current={seleccionado ? "true" : undefined}
-        className="absolute inset-0 z-10 flex items-center rounded-tarjeta text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+        className={`absolute inset-0 z-10 flex items-center rounded-tarjeta text-left motion-safe:transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
+          seleccionado && nodo.estado !== "enConstruccion" ? "bg-accent-suave" : ""
+        }`}
       >
+        {/* La marca de fila activa (2026-08-01). Antes solo el título cambiaba de
+            color (`text-accent-fuerte`): con 5 a 16 filas visibles no bastaba
+            para ubicar cuál estaba seleccionada de un vistazo.
+
+            El fondo se omite en un nodo `enConstruccion`: su título ya va en
+            `text-ink-tenue` (2,99:1 contra el fondo, deuda preexistente fuera de
+            este cambio) y `bg-accent-suave` lo bajaría a 2,72:1 — justo en la
+            fila que más necesita leerse, porque es la que explica el bloqueo. La
+            barra lateral, en cambio, no es texto y no depende de ese contraste:
+            queda como única marca en ese caso.
+
+            Vocabulario reutilizado, no inventado: mismo `bg-accent-suave` /
+            `border-accent` que ya usan el chip "Demostración" de `TarjetaActivo`
+            y la alternativa marcada en `BloquePregunta.tsx`. */}
+        {seleccionado && (
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-2 left-0 w-1 rounded-full bg-accent"
+          />
+        )}
         <span
           className="absolute -translate-x-1/2"
           style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
