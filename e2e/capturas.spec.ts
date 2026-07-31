@@ -12,6 +12,8 @@ import { test, expect, type Page } from "@playwright/test";
 const CLAVE = "pm1:progreso:v1";
 const TEMA = "funcion-lineal-y-afin";
 const LECCION = "lineal-patrones-de-cambio";
+const LECCION2 = "lineal-pendiente-e-intercepto";
+const LECCION3 = "ecuaciones-lineales";
 
 /**
  * Progreso sembrado a mano, respetando campo por campo la forma que valida
@@ -74,20 +76,57 @@ const PROGRESO_ABIERTA_SIN_AVANZAR = {
  *
  * Este era el caso A: la portada la contaba como cerrada y declaraba "Hiciste
  * todo lo que está abierto" sobre una deuda que el camino pintaba en ámbar.
+ *
+ * Va con dominio completo TODA lección publicable del camino que no sea
+ * `LECCION` — no solo las del tema bajo prueba (`LECCION2`, del mismo tema
+ * que `LECCION`, más `LECCION3`, de otro tema). `PuntoDePartida.tsx:76`
+ * (`abiertasEnOrden`) aplana las lecciones publicables de **todos** los
+ * temas del camino, y `pendiente` busca sobre esa lista completa: si
+ * cualquiera de ellas queda `disponible` sin tocar, `PuntoDePartida`
+ * prioriza "seguir la ruta" sobre "hay una deuda" y la rama que este test
+ * verifica nunca se alcanza. Si en el futuro se publica una lección nueva
+ * (p. ej. las 3 de `enteros-y-racionales`, hoy en `borrador`), este test se
+ * rompe hasta que se sume acá también.
  */
 const PROGRESO_BAJO_UMBRAL = {
   version: 1,
-  lecciones: [{ leccionId: LECCION, pasoActual: 9, completada: true }],
-  respuestas: ["l1-item-1", "l1-item-2", "l1-item-3"].map((itemId, i) => ({
-    contexto: "leccion",
-    contextoId: LECCION,
-    itemId,
-    valor: { tipo: "alternativa", clave: "B" },
-    correcta: i === 0,
-    intento: 1,
-    tiempoMs: 42_000,
-    respondidaEn: `2026-07-26T18:0${i}:00.000Z`,
-  })),
+  lecciones: [
+    { leccionId: LECCION, pasoActual: 9, completada: true },
+    { leccionId: LECCION2, pasoActual: 9, completada: true },
+    { leccionId: LECCION3, pasoActual: 9, completada: true },
+  ],
+  respuestas: [
+    ...["l1-item-1", "l1-item-2", "l1-item-3"].map((itemId, i) => ({
+      contexto: "leccion",
+      contextoId: LECCION,
+      itemId,
+      valor: { tipo: "alternativa", clave: "B" },
+      correcta: i === 0,
+      intento: 1,
+      tiempoMs: 42_000,
+      respondidaEn: `2026-07-26T18:0${i}:00.000Z`,
+    })),
+    ...["l2-item-1", "l2-item-2", "l2-item-3"].map((itemId, i) => ({
+      contexto: "leccion",
+      contextoId: LECCION2,
+      itemId,
+      valor: { tipo: "alternativa", clave: "B" },
+      correcta: true,
+      intento: 1,
+      tiempoMs: 42_000,
+      respondidaEn: `2026-07-26T18:1${i}:00.000Z`,
+    })),
+    ...["l3-item-1", "l3-item-2", "l3-item-3"].map((itemId, i) => ({
+      contexto: "leccion",
+      contextoId: LECCION3,
+      itemId,
+      valor: { tipo: "alternativa", clave: "B" },
+      correcta: true,
+      intento: 1,
+      tiempoMs: 42_000,
+      respondidaEn: `2026-07-26T18:2${i}:00.000Z`,
+    })),
+  ],
 };
 
 /** Siembra el progreso antes de que corra cualquier script de la página, que es
@@ -205,12 +244,17 @@ test("tema con los nodos enlazados", async ({ page }, testInfo) => {
   await page.getByRole("button", { name: "Cierre del tema" }).click();
   await expect(page.getByRole("link", { name: "Rendir el cierre" })).toHaveAttribute(
     "href",
-    "/cierre",
+    `/cierre/${TEMA}`,
   );
   await expect(page.getByText("Demostración")).toBeVisible();
   await expect(page.getByText("8 preguntas formato PAES")).toBeVisible();
 
   await capturar(page, "4-tema-nodo-cierre", testInfo.project.name);
+});
+
+test("/cierre viejo redirige al cierre del tema", async ({ page }) => {
+  await page.goto("/cierre");
+  await expect(page).toHaveURL(`/cierre/${TEMA}`);
 });
 
 test("caben 6 nodos sin scroll en 360px", async ({ page }, testInfo) => {
@@ -335,7 +379,7 @@ test("terminada bajo el umbral: las cuatro superficies dicen lo mismo", async ({
      acción. */
   await page.getByRole("button", { name: "El patrón que se repite" }).click();
   await expect(page.getByRole("link", { name: "Repasar la lección" })).toBeVisible();
-  await expect(page.locator("header p").last()).toContainText("1/2");
+  await expect(page.locator("header p").last()).toContainText("2/2");
 });
 
 test("celebración de tema", async ({ page }, testInfo) => {

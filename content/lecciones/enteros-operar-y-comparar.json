@@ -1,0 +1,460 @@
+{
+  "tipo": "leccion",
+  "id": "enteros-operar-y-comparar",
+  "titulo": "Racionales: operar y comparar",
+  "objetivo": "Dividir una cantidad entre una fracción, entendiendo que el resultado puede ser mayor que la cantidad original ('dividir puede agrandar'), y comparar dos fracciones con distinto denominador sin quedarse solo con el numerador.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "Fracciones simples (medios, tercios, cuartos, quintos, octavos) de cursos anteriores. No depende de haber completado 'enteros-operar-y-ordenar', aunque es la Lección 2 del módulo 'Enteros y racionales'."
+  ],
+  "conceptos": [
+    "fracción",
+    "división de una cantidad entre una fracción",
+    "fracción como reparto en porciones",
+    "recíproco de una fracción",
+    "comparación de fracciones con distinto denominador"
+  ],
+  "_notasInternas": [
+    "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (bizcocho, receta con tazas) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
+    "Verificación de colisión de la escena concreta contra Material/618-JMA-M1-01-2024.md ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO CON UNA CORRECCIÓN OBLIGATORIA — 'galletas' colisionaba con el examen DEMRE real (demre/paes-m1-2026-forma113.md y Material/PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md) y fue reemplazado por 'bizcocho' en toda la lección. 'harina' y 'azúcar' pegaron solo en pdv-terceros (MA-10, MA-32) con frases completas en NO: se tratan como vocabulario genérico de ingredientes (mismo criterio que 'tazas' en la decisión original), no como colisión de escena. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md.",
+    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí. Este archivo solo referencia sus ids (error-1 a error-8) vía errorCatalogado en los distractores. Esta lección usa activamente error-4, error-6, error-7 y error-8 (los cuatro específicos de operatoria y comparación con fracciones positivas). error-8 se agregó después de la primera redacción: reemplaza usos de error-7 que en realidad eran inversión del orden de la división (divisor ÷ dividendo), no la creencia de que 'dividir siempre achica'. error-1, error-2, error-3 y error-5 son específicos de enteros negativos (Lección 1, buceo) y no se usan en esta lección.",
+    "Insight fijado del Paso 5 (descubrimiento): 3 ÷ 3/4 = 4. Dividir por una fracción menor que 1 agranda el resultado, lo que choca con la intuición de que 'dividir siempre achica' (error-7). Ese choque es el motor de la lección.",
+    "Paso 1 (curiosidad) usa un bloque 'pregunta' formato PAES para instalar la intuición ANTES de enseñar el método, pero preguntando solo la DIRECCIÓN del resultado (mayor/menor/igual que 3), no el valor exacto — el número exacto (4) se reserva para el Paso 5, que es donde vive el insight fijado. Diferenciación estructural respecto a Lección 1, que usa 'pregunta' recién en el Paso 10.",
+    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+  ],
+  "estado": "borrador",
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "¿Rinde más o menos de lo que crees?",
+      "_notasInternas": [
+        "Instala la dirección del insight (mayor que 3) sin revelar el valor exacto (4), que se reserva para el Paso 5. La opción 'Menor que 3' está diseñada para atraer directamente el error-7."
+      ],
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "enunciado": "Vas a preparar bizcochos para la feria del colegio. Tienes 3 tazas de harina, y cada bizcocho individual usa 3/4 de taza. Sin calcular nada todavía: la cantidad de bizcochos que vas a poder hacer, ¿es mayor, menor o igual que 3?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Menor que 3",
+              "esCorrecta": false,
+              "feedback": "Es la intuición más común, pero acá pasa lo contrario. Vas a repartir 3 tazas en porciones MÁS CHICAS que 1 taza (3/4 de taza cada una), así que van a salir más de 3 porciones, no menos.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "B",
+              "texto": "Igual a 3",
+              "esCorrecta": false,
+              "feedback": "Si cada bizcocho usara exactamente 1 taza, sí saldrían 3. Pero cada bizcocho usa MENOS de 1 taza (3/4), así que alcanza para más de 3 bizcochos."
+            },
+            {
+              "clave": "C",
+              "texto": "Mayor que 3",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cada bizcocho usa menos de una taza completa, así que las 3 tazas alcanzan para más de 3 bizcochos. En el Paso 5 vas a ver exactamente cuántos."
+            },
+            {
+              "clave": "D",
+              "texto": "No se puede saber sin más datos",
+              "esCorrecta": false,
+              "feedback": "Sí hay datos suficientes: sabes cuánta harina tienes en total (3 tazas) y cuánto usa cada bizcocho (3/4 de taza). Con eso alcanza para saber si el resultado es mayor, menor o igual que 3, aunque todavía no sepas el número exacto."
+            }
+          ],
+          "notaVerificacionMatematica": "3 ÷ 3/4 = 4, y 4 > 3. La dirección 'mayor que 3' es correcta porque el tamaño de la porción (3/4) es menor que 1: repartir en porciones menores que la unidad siempre produce más porciones que la cantidad total. ✓"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La receta de bizcocho de la feria dice: 'usa 3/4 de taza de harina por cada bizcocho'. Tienes 3 tazas de harina disponibles. En los próximos pasos vas a descubrir exactamente cuántos bizcochos rinden esas 3 tazas — y por qué el resultado sorprende a la mayoría."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Tu estimación",
+      "_notasInternas": [
+        "Predicción libre sin corrección, para comparar más adelante con el resultado exacto del Paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de calcular nada: con 3 tazas de harina y 3/4 de taza por bizcocho, ¿cuántos bizcochos crees que vas a poder hacer? Anota tu estimación, aunque no estés seguro.",
+          "tipoRespuesta": "numero",
+          "eventoAnalytics": "prediccion_registrada"
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Empecemos con un caso más chico",
+      "_notasInternas": [
+        "Calentamiento con multiplicación (2 bizcochos × 3/4 taza) antes de enfrentar la división del Paso 5. feedbackPorError anticipa error-6 (suma de denominadores) al intentar sumar 3/4 + 3/4."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Antes de resolver la pregunta completa, prueba con un caso más chico: si preparas solo 2 bizcochos, y cada uno usa 3/4 de taza de harina, ¿cuánta harina necesitas en total, en tazas?",
+          "campos": [
+            {
+              "id": "harinaTotal",
+              "etiqueta": "Harina total para 2 bizcochos",
+              "respuestaCorrecta": 1.5,
+              "unidad": "tazas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "harinaTotal",
+              "valorObtenido": 0.75,
+              "mensaje": "Parece que sumaste 3/4 + 3/4 como (3+3)/(4+4) = 6/8 = 0,75. Al sumar fracciones el denominador NO se suma: hay que dejar el mismo denominador (cuartos) y sumar solo los numeradores. 3/4 + 3/4 = 6/4 = 1,5.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "harinaTotal",
+              "valorObtenido": 0.375,
+              "mensaje": "Ese valor sale de dividir 3/4 por 2, como si repartir entre 2 bizcochos significara achicar la porción. Pero la pregunta es al revés: son 2 bizcochos que YA usan 3/4 de taza cada uno, así que hay que sumar (o multiplicar por 2), no dividir."
+            }
+          ],
+          "feedbackPorDefecto": "2 bizcochos, cada uno con 3/4 de taza: 3/4 + 3/4 = 6/4 = 1,5 tazas en total. También se puede pensar como 2 × 3/4 = 6/4 = 1,5."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "¿Cuántas porciones de 3/4 caben en 3 tazas?",
+      "_notasInternas": [
+        "Visualización de las 3 tazas divididas en cuartos, para contar visualmente cuántos grupos de 3/4 caben, antes de formalizar la división en el Paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Tres tazas dibujadas una al lado de la otra, cada una dividida en 4 partes iguales (cuartos) marcadas con líneas punteadas. Debajo, llaves que agrupan las partes de 3 en 3 (3 cuartos por grupo), mostrando visualmente cuántos grupos de 3/4 se pueden formar con las 12 partes totales.",
+          "datos": {
+            "tazasTotal": 3,
+            "partesPorTaza": 4,
+            "partesTotales": 12,
+            "partesPorGrupo": 3,
+            "gruposCompletos": 4
+          }
+        },
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Cada taza tiene 4 cuartos, así que 3 tazas tienen 3 × 4 = 12 cuartos en total."
+            },
+            {
+              "nivel": 2,
+              "texto": "Cada bizcocho usa 3 cuartos (3/4 de taza). Si tienes 12 cuartos en total, ¿cuántos grupos de 3 cuartos puedes formar?"
+            },
+            {
+              "nivel": 3,
+              "texto": "12 cuartos ÷ 3 cuartos por bizcocho = 4 bizcochos. Fíjate que este conteo (12 ÷ 3 = 4) es exactamente lo mismo que 3 ÷ 3/4, solo que contado en cuartos en vez de en tazas completas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "3 ÷ 3/4 = 4: dividir puede agrandar",
+      "_notasInternas": [
+        "INSIGHT FIJADO del módulo (docs/diseno-modulo-enteros-racionales.md §a, L2). El control explora el tamaño de porción y muestra cuántas porciones completas caben en las 3 tazas fijas; a menor tamaño de porción, más porciones rinden. 3 ÷ 3/4 = 4 > 3, contradice 'dividir siempre achica' (error-7)."
+      ],
+      "bloques": [
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "variables": [
+            {
+              "nombre": "tamaño de porción por bizcocho (tazas)",
+              "min": 0.25,
+              "max": 3,
+              "valorInicial": 0.75,
+              "editable": true
+            },
+            {
+              "nombre": "harina total disponible (tazas, fijo)",
+              "min": 0,
+              "max": 3,
+              "valorInicial": 3,
+              "editable": false
+            }
+          ],
+          "instruccion": "Mueve el control del tamaño de porción y observa cuántos bizcochos completos rinden las 3 tazas fijas de harina. ¿Qué pasa con el número de bizcochos cuando la porción se hace más chica? ¿Y cuando se hace más grande, cercana a 3?",
+          "exploracionMinima": 3,
+          "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba con una porción chica (cerca de 0,25), con la porción original (0,75) y con una porción grande (cercana a 3), antes de seguir."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Con porciones de 3/4 de taza, las 3 tazas rinden exactamente:\n\n3 ÷ 3/4 = 3 × 4/3 = 12/3 = 4 bizcochos\n\nCuatro bizcochos. El resultado (4) es MAYOR que el número que dividiste (3). Dividir por una fracción menor que 1 no achica: agranda.\n\nTiene sentido si lo piensas como reparto: 3/4 de taza es MENOS que una taza completa, así que caben más porciones de 3/4 que tazas enteras hay. Igual que en el diagrama del paso anterior: 12 cuartos ÷ 3 cuartos por bizcocho = 4."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla, en general",
+      "_notasInternas": [
+        "Reflexión abierta sobre el 'por qué' antes de formalizar la regla del recíproco en el bloque de texto."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Ya viste que 3 ÷ 3/4 = 4, un resultado mayor que 3. ¿Por qué crees que dividir por una fracción MENOR que 1 agranda el resultado, en vez de achicarlo como pasa al dividir por números enteros mayores que 1? Escribe tu idea con tus propias palabras.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección. Busca que el estudiante articule la intuición de reparto en porciones más chicas que la unidad, antes de ver la regla formal del recíproco."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En general: dividir por una fracción es lo mismo que multiplicar por su recíproco (la fracción 'al revés').\n\na ÷ (b/c) = a × (c/b)\n\nSi la fracción por la que divides es MENOR que 1 (como 3/4), su recíproco es MAYOR que 1 (como 4/3), y multiplicar por un número mayor que 1 agranda el resultado. Por eso dividir por 3/4 da un resultado mayor que el original: no es una excepción rara, es la misma regla de siempre (multiplicar por más de 1 agranda), aplicada a través del recíproco."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Cambia el tamaño de la porción",
+      "_notasInternas": [
+        "Reutiliza las 3 tazas fijas con un tamaño de porción distinto (1/2 en vez de 3/4). Correcto: 3 ÷ 1/2 = 6. Los tres distractores exploran variantes del error-7 y de inversión del orden de la división."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora cambias la receta: cada bizcocho usa 1/2 taza de harina en vez de 3/4. Con las mismas 3 tazas disponibles, ¿cuántos bizcochos rinden?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "6",
+              "esCorrecta": true,
+              "feedback": "Correcto. 3 ÷ 1/2 = 3 × 2 = 6. Como la porción ahora es más chica (1/2 en vez de 3/4), rinden todavía más bizcochos que antes."
+            },
+            {
+              "id": "b",
+              "texto": "1,5",
+              "esCorrecta": false,
+              "feedback": "Ese valor sale de multiplicar 3 × 1/2 en vez de dividir. Multiplicar da un resultado más chico, pero acá se pregunta cuántas porciones de 1/2 taza caben en 3 tazas, y eso es una división, no una multiplicación.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "1/6",
+              "esCorrecta": false,
+              "feedback": "Ese resultado sale de calcular 1/2 ÷ 3 en vez de 3 ÷ 1/2. Fíjate en qué cantidad se está repartiendo (las 3 tazas de harina) y en qué tamaño de porción se está repartiendo (1/2 taza): el orden importa.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "id": "d",
+              "texto": "4",
+              "esCorrecta": false,
+              "feedback": "4 era el resultado con porciones de 3/4 de taza (Paso 5), pero acá la porción cambió a 1/2 taza. Hay que recalcular: una porción más chica que antes debería rendir MÁS bizcochos, no el mismo número."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Una tanda más grande",
+      "_notasInternas": [
+        "Aplica el método a números nuevos (5 ÷ 5/6 = 6), sin el andamiaje visual de pasos anteriores. feedbackPorError cubre error-7 (multiplicar en vez de dividir) y la inversión del orden de la división."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Para la tanda grande de la feria, tienes 5 tazas de harina y cada bizcocho grande usa 5/6 de taza. ¿Cuántos bizcochos grandes rinden las 5 tazas?",
+          "campos": [
+            {
+              "id": "resultado",
+              "etiqueta": "Bizcochos grandes que rinden 5 tazas",
+              "respuestaCorrecta": 6,
+              "unidad": "bizcochos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "resultado",
+              "valorObtenido": 4.1667,
+              "mensaje": "Ese valor sale de calcular 5 × 5/6 en vez de 5 ÷ 5/6. La pregunta es cuántas porciones de 5/6 de taza caben en 5 tazas, y eso se calcula dividiendo, no multiplicando.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "resultado",
+              "valorObtenido": 1.2,
+              "mensaje": "Ese resultado sale de calcular 5/6 ÷ 5 en vez de 5 ÷ 5/6: el orden de la división está invertido. Lo que se reparte son las 5 tazas de harina, en porciones de 5/6 de taza cada una."
+            }
+          ],
+          "feedbackPorDefecto": "5 ÷ 5/6 = 5 × 6/5 = 30/5 = 6 bizcochos grandes. Como 5/6 es menos de 1 taza, rinden más bizcochos que tazas de harina hay."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Cuál receta usa más azúcar?",
+      "_notasInternas": [
+        "Comparación de fracciones con contexto de azúcar (2/3 vs 3/5), verificado LIMPIO tras el reemplazo de 'galletas' por 'bizcocho'. Ataca directamente error-4 (comparar solo numeradores)."
+      ],
+      "bloques": [
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Una receta de bizcocho usa 2/3 de taza de azúcar. Otra receta, más dulce, usa 3/5 de taza de azúcar. Como 3 es mayor que 2 (y 5 es mayor que 3), la receta de 3/5 de taza usa más azúcar que la de 2/3 de taza.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Ojo: comparaste solo los numeradores (3 y 2), sin fijarte en que los denominadores también son distintos (5 y 3). Para comparar de verdad hay que llevar ambas fracciones al mismo denominador: 2/3 = 10/15 y 3/5 = 9/15. Como 10/15 > 9/15, en realidad la receta de 2/3 usa MÁS azúcar, no menos.",
+          "feedbackFalso": "Correcto, es falso. Llevando ambas fracciones a quinceavos: 2/3 = 10/15 y 3/5 = 9/15. Como 10/15 > 9/15, la receta de 2/3 de taza usa más azúcar que la de 3/5, aunque el numerador 3 sea mayor que el 2 de la otra fracción."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Un solo bloque de texto, sin 'pregunta' embebida (a diferencia de la consolidación de Lección 1), por diseño explícito de diferenciación estructural (tabla (d) del doc: consolidación de L2 = solo texto)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Dividir por una fracción menor que 1 agranda el resultado, no lo achica: dividir por 3/4 (o cualquier fracción menor que 1) da un número MAYOR, no menor. 3 ÷ 3/4 = 4.\n- Dividir por una fracción es multiplicar por su recíproco: a ÷ (b/c) = a × (c/b).\n- Para comparar dos fracciones con distinto denominador hay que llevarlas al mismo denominador; fijarse solo en el numerador (¿cuál es más grande, 2 o 3?) lleva a la respuesta equivocada.\n\nAhora un cierre formato PAES con estas dos ideas."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Para una tanda de bizcochos con harina integral, tienes 4 tazas de harina y cada bizcocho usa 2/3 de taza. ¿Cuántos bizcochos rinden las 4 tazas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6",
+          "esCorrecta": true,
+          "feedback": "Correcto. 4 ÷ 2/3 = 4 × 3/2 = 12/2 = 6 bizcochos."
+        },
+        {
+          "clave": "B",
+          "texto": "8/3",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de calcular 4 × 2/3 en vez de 4 ÷ 2/3. La pregunta pide cuántas porciones de 2/3 de taza caben en 4 tazas, y eso es una división, no una multiplicación.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "1/6",
+          "esCorrecta": false,
+          "feedback": "Ese resultado sale de calcular 2/3 ÷ 4 en vez de 4 ÷ 2/3: el orden de la división quedó invertido. Lo que se reparte son las 4 tazas de harina, en porciones de 2/3 de taza cada una.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "3/2",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de dividir 4 por el recíproco de 2/3 en vez de multiplicar por él: 4 ÷ (3/2) en vez de 4 × (3/2). Dividir por una fracción es multiplicar por su recíproco, no dividir por él otra vez.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "4 ÷ 2/3 = 4 × 3/2 = 12/2 = 6 bizcochos. Comprobación: cada bizcocho usa 2/3 de taza, que es menos de una taza completa, así que las 4 tazas deben rendir más de 4 bizcochos — 6 es coherente con eso. ✓"
+    },
+    {
+      "id": "l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Preparas una tanda mini de bizcochos: tienes 6 tazas de harina y cada bizcocho mini usa 3/8 de taza. ¿Cuál operación permite calcular cuántos bizcochos mini rinden las 6 tazas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6 ÷ 3/8",
+          "esCorrecta": true,
+          "feedback": "Correcto. Repartir 6 tazas en porciones de 3/8 de taza cada una es una división: 6 ÷ 3/8 = 6 × 8/3 = 48/3 = 16 bizcochos."
+        },
+        {
+          "clave": "B",
+          "texto": "6 × 3/8",
+          "esCorrecta": false,
+          "feedback": "Esta operación calcula cuánta harina usarían 6 bizcochos (no cuántos bizcochos rinden 6 tazas): mezcla las dos cantidades al revés. Lo que se busca es cuántas veces cabe la porción (3/8) dentro del total (6 tazas), y eso se calcula dividiendo el total entre la porción.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "3/8 ÷ 6",
+          "esCorrecta": false,
+          "feedback": "Esta operación reparte la porción (3/8 de taza) en 6 partes, no reparte las 6 tazas en porciones de 3/8. Fíjate en cuál cantidad es el total que se reparte (las 6 tazas) y cuál es el tamaño de cada porción (3/8 de taza).",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "6 + 3/8",
+          "esCorrecta": false,
+          "feedback": "Sumar no responde la pregunta: 6 + 3/8 solo agrega una porción más a las 6 tazas, no calcula cuántas porciones de 3/8 caben en total. 'Cuántas veces cabe algo dentro de un total' es siempre una división.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "La operación correcta es 6 ÷ 3/8, porque se está repartiendo un total (6 tazas) en porciones de un tamaño fijo (3/8 de taza), y eso es una división. Resolviendo: 6 ÷ 3/8 = 6 × 8/3 = 48/3 = 16 bizcochos mini. ✓"
+    },
+    {
+      "id": "l2-item-3",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Una receta de bizcocho lleva 2/5 de taza de harina integral y 3/10 de taza de harina blanca. ¿Cuánta harina en total lleva la receta, en tazas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7/10",
+          "esCorrecta": true,
+          "feedback": "Correcto. Llevando ambas fracciones a décimos: 2/5 = 4/10, y 4/10 + 3/10 = 7/10."
+        },
+        {
+          "clave": "B",
+          "texto": "5/15",
+          "esCorrecta": false,
+          "feedback": "Ese resultado sale de sumar los denominadores: (2+3)/(5+10) = 5/15. Al sumar fracciones el denominador NO se suma; primero hay que llevar ambas fracciones al mismo denominador (décimos) y ahí sí sumar solo los numeradores.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "5/10",
+          "esCorrecta": false,
+          "feedback": "Ese resultado suma los numeradores (2+3=5) pero deja el denominador de una sola de las fracciones (10), sin convertir realmente 2/5 a décimos primero. Antes de sumar numeradores, cada fracción tiene que estar expresada en el mismo denominador.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "1/10",
+          "esCorrecta": false,
+          "feedback": "Ese resultado sale de sumar los numeradores (2+3=5) y multiplicar los denominadores (5×10=50) para después simplificar mal. Ni sumar denominadores ni multiplicarlos da el total correcto: hay que convertir cada fracción al mismo denominador y sumar solo los numeradores.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "2/5 = 4/10 (amplificando por 2). 4/10 + 3/10 = 7/10 de taza en total. Comprobación: 7/10 = 0,7, y 2/5 + 3/10 = 0,4 + 0,3 = 0,7 en decimales, coincide. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad (Paso 1, pregunta): dirección del resultado de 3 ÷ 3/4 (mayor que 3), sin revelar el valor exacto",
+    "pensar (Paso 3): 2 × 3/4 = 1,5 tazas",
+    "pistas (Paso 4, visualización): 3 tazas = 12 cuartos, agrupados de a 3 cuartos",
+    "descubrimiento (Paso 5, insight fijado): 3 ÷ 3/4 = 4",
+    "practica (Paso 7): 3 ÷ 1/2 = 6",
+    "aplicacion (Paso 8): 5 ÷ 5/6 = 6",
+    "reflexion (Paso 9): comparación 2/3 de taza de azúcar vs 3/5 de taza de azúcar",
+    "itemsPAES l2-item-1 (resolver): 4 ÷ 2/3 = 6",
+    "itemsPAES l2-item-2 (modelar): 6 ÷ 3/8 = 16 (modela la operación, no solo calcula)",
+    "itemsPAES l2-item-3 (resolver): 2/5 + 3/10 = 7/10"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
+      "Verificación de colisión de la escena concreta de recetas con tazas contra Material/618-JMA-M1-01-2024.md, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '3 tazas' (NO), '3/4 de taza' (NO), 'tres cuartos' (NO), 'panqueques' (NO), '3/5' (NO), '3 tazas de harina' (NO), 'cuántas porciones' (NO). Colisión real detectada en 'galletas' contra demre/paes-m1-2026-forma113.md y Material/PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md (examen DEMRE real): reemplazado por 'bizcocho' en toda la lección. 'harina' y 'azúcar' pegaron solo en pdv-terceros (MA-10, MA-32), con frases completas en NO: se mantienen sin cambios como vocabulario genérico de ingredientes. Veredicto final: LIMPIO tras el reemplazo. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false
+  },
+  "revisionMatematica": {
+    "aprobada": false
+  }
+}

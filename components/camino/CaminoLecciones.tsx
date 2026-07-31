@@ -78,7 +78,7 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
       tituloTarjeta: tema.nombre,
       estado,
       meta: true,
-      href: "/cierre",
+      href: `/cierre/${tema.id}`,
       /* Un cierre no se "empieza", se rinde: el verbo dice la acción real
          (MASTER.md §4). */
       accion: estado === "completado" ? "Repasar el cierre" : "Rendir el cierre",

@@ -40,9 +40,22 @@ export const IDS_LECCION = [
   "lineal-patrones-de-cambio",
   "lineal-pendiente-e-intercepto",
   "ecuaciones-lineales",
+  "enteros-operar-y-ordenar",
+  "enteros-operar-y-comparar",
+  "enteros-problemas-en-contexto",
 ] as const;
 
 export type LeccionId = (typeof IDS_LECCION)[number];
+
+/**
+ * Universo de ids de cierre, misma garantía de doble capa que `IDS_LECCION`:
+ * un `cierreId` en `EJES` que no esté acá no compila, y que esta lista
+ * coincida con los archivos que realmente existen en `content/cierres/` lo
+ * verifica `verificarRegistroDeTemas()` en `lib/contenido.ts`.
+ */
+export const IDS_CIERRE = ["cierre-v0", "cierre-enteros-racionales"] as const;
+
+export type CierreId = (typeof IDS_CIERRE)[number];
 
 /** Forma que `satisfies` verifica. Los tipos públicos `Eje` y `Tema` se derivan
  *  de `EJES` más abajo, para conservar los literales de cada id. */
@@ -69,12 +82,12 @@ interface FormaTema {
    * `content/`), o ausente si el tema todavía no tiene uno.
    *
    * Es un id y no un booleano a propósito: el cierre de hoy (`cierre-v0`) es
-   * único porque el módulo v1 cabe entero en un tema, pero con 16 temas habrá
-   * 16 cierres y un booleano no tendría cómo decir cuál. El cierre no puede ir
+   * uno entre varios ya (con la Enmienda 2, 16 temas tendrán hasta 16
+   * cierres) y un booleano no tendría cómo decir cuál. El cierre no puede ir
    * en `lecciones` porque no es una lección: es `tipo: "cierre"`, vive en
-   * `content/cierre.json` y se navega por su propia ruta.
+   * `content/cierres/{cierreId}.json` y se navega en `/cierre/{temaId}`.
    */
-  cierreId?: string;
+  cierreId?: CierreId;
 }
 
 interface FormaEje {
@@ -103,7 +116,12 @@ export const EJES = [
         capacidad:
           "Ya puedes operar con negativos y fracciones sin perderte con los signos.",
         objetivo: "Operar con negativos y fracciones sin que se te dé vuelta el signo.",
-        lecciones: [],
+        lecciones: [
+          "enteros-operar-y-ordenar",
+          "enteros-operar-y-comparar",
+          "enteros-problemas-en-contexto",
+        ],
+        cierreId: "cierre-enteros-racionales",
       },
       {
         id: "porcentaje",

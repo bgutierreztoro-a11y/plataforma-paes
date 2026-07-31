@@ -10,7 +10,7 @@
  * en el dispositivo. Eso lo resuelve `estadoDeNodo` en components/camino/.
  */
 import { idsDeLecciones, obtenerLeccion, esPublicable, obtenerCierre } from "./contenido";
-import { EJES, type Tema } from "./modulos";
+import { EJES, type Tema, type CierreId } from "./modulos";
 
 export interface LeccionDelTema {
   id: string;
@@ -30,8 +30,8 @@ export interface TemaDelCamino {
   ejeId: string;
   ejeNombre: string;
   lecciones: LeccionDelTema[];
-  /** El tema termina en /cierre. `cierrePublicable` decide si es navegable. */
-  cierreId?: string;
+  /** El tema termina en /cierre/{id}. `cierrePublicable` decide si es navegable. */
+  cierreId?: CierreId;
   cierrePublicable: boolean;
   /** Cuántos ítems trae ese cierre. Es el denominador para saber si se rindió
    *  entero: haber abierto el cierre no es haberlo terminado. */
@@ -59,23 +59,28 @@ function leccionesDelTema(tema: Tema, validas: Set<string>): LeccionDelTema[] {
 /** Los 16 temas con su contenido resuelto, en orden de temario. */
 export function temasDelCamino(): TemaDelCamino[] {
   const validas = new Set(idsDeLecciones());
-  const cierre = obtenerCierre();
-  const cierrePublicable = esPublicable(cierre);
-  const cierreTotalItems = cierre.items?.length ?? 0;
 
   return EJES.flatMap((eje) =>
-    eje.temas.map((tema) => ({
-      id: tema.id,
-      nombre: tema.nombre,
-      objetivo: tema.objetivo,
-      capacidad: tema.capacidad,
-      ejeId: eje.id,
-      ejeNombre: eje.nombre,
-      lecciones: leccionesDelTema(tema, validas),
-      cierreId: "cierreId" in tema ? tema.cierreId : undefined,
-      cierrePublicable,
-      cierreTotalItems,
-    })),
+    eje.temas.map((tema) => {
+      // El cierre se resuelve por tema: cada tema tiene a lo sumo un cierre
+      // propio (o ninguno). Antes de la Enmienda 2 había un único cierre
+      // global y esto se calculaba una sola vez fuera del loop; con más de un
+      // módulo eso aplicaría el cierre equivocado a temas sin el suyo.
+      const cierreId = "cierreId" in tema ? tema.cierreId : undefined;
+      const cierre = cierreId ? obtenerCierre(cierreId) : undefined;
+      return {
+        id: tema.id,
+        nombre: tema.nombre,
+        objetivo: tema.objetivo,
+        capacidad: tema.capacidad,
+        ejeId: eje.id,
+        ejeNombre: eje.nombre,
+        lecciones: leccionesDelTema(tema, validas),
+        cierreId,
+        cierrePublicable: cierre ? esPublicable(cierre) : false,
+        cierreTotalItems: cierre?.items?.length ?? 0,
+      };
+    }),
   );
 }
 

@@ -1,0 +1,475 @@
+{
+  "tipo": "leccion",
+  "id": "enteros-problemas-en-contexto",
+  "titulo": "Problemas en contexto (enteros y racionales)",
+  "objetivo": "Comparar temperaturas bajo cero y calcular variaciones de temperatura que combinan enteros negativos y fracciones, aplicando que entre dos negativos el de mayor valor absoluto es el MENOR, y que ese mismo número puede representar la temperatura más fría sin ser matemáticamente mayor.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "enteros-operar-y-ordenar: orden de los enteros negativos en la recta numérica.",
+    "enteros-operar-y-comparar: sumar una fracción simple a una cantidad."
+  ],
+  "conceptos": [
+    "orden de los enteros negativos con decimales",
+    "comparación de temperaturas bajo cero",
+    "variación de una temperatura negativa más una fracción de grado",
+    "recta numérica como modelo de comparación",
+    "distinción entre magnitud (más frío) y valor numérico (mayor/menor)"
+  ],
+  "_notasInternas": [
+    "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (clima, Candidato A: Nortelva/Valle Frío) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
+    "Verificación de colisión del contexto clima/Nortelva/Valle Frío contra el corpus completo, ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO AL 100%. Todo NO: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío'. Escenario aprobado tal cual se propuso. No se corrió una consulta nueva en esta sesión (confirmado por Benja como ya verificado).",
+    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí, mismo patrón que enteros-operar-y-comparar.json (L2). Esta lección usa activamente error-1, error-2, error-3, error-5 y error-6 (todos ya definidos en L1). No usa error-4, error-7 ni error-8, que son específicos de comparación de fracciones positivas o de división de fracciones, no de esta lección.",
+    "Insight fijado (piso de partida entregado por Benja, formalizado en el Paso 5): comparar dos negativos invierte la intuición de 'mayor'. −2,8 °C es más cálido (mayor) que −4,3 °C, aunque 2,8 sea menor que 4,3 en valor absoluto. Mismo mecanismo que error-5 de L1, aplicado ahora a decimales y a un contexto físico (temperatura) en vez de solo abstracto (recta numérica).",
+    "No se inventaron nombres de ciudad nuevos más allá de Nortelva y Valle Frío (las dos únicas verificadas contra el corpus). Donde el diseño necesitaba un tercer punto de comparación (Paso 7, Paso 9) se usó una lectura genérica sin nombre propio ('un refugio de montaña cercano') para no introducir un sustantivo propio sin verificar.",
+    "El Paso 8 (aplicación) combina el insight de esta lección con el de L2 (dividir/operar con fracciones) sumando 3/4 de grado por hora a una temperatura negativa — frase '3/4 de grado' reutilizada literalmente porque es la que pasó la verificación de colisión (ver nota de arriba), en vez de introducir una fracción nueva sin verificar.",
+    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+  ],
+  "estado": "borrador",
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "¿Cuál ciudad está más fría?",
+      "_notasInternas": [
+        "Instala la pregunta central sin enseñar método todavía. El enunciado del verdaderoFalso está diseñado para atraer directamente el error-5."
+      ],
+      "bloques": [
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "A la misma hora, Nortelva registra −2,8 °C y Valle Frío registra −4,3 °C. Como 4,3 es mayor que 2,8, Valle Frío tiene en ese momento la temperatura MAYOR de las dos ciudades.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Ojo: compraste 4,3 y 2,8 como si no tuvieran signo. Pero −4,3 es MENOR que −2,8 (está más lejos de 0 hacia los negativos), así que Valle Frío tiene la temperatura MENOR, no la mayor. Valle Frío sí es la ciudad más fría, pero 'más fría' y 'temperatura mayor' no son lo mismo con negativos.",
+          "feedbackFalso": "Correcto, es falso. −4,3 °C es MENOR que −2,8 °C, aunque 4,3 sea mayor que 2,8 sin el signo. Valle Frío es la ciudad más fría, pero eso significa que tiene la temperatura MENOR, no la mayor."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Nortelva y Valle Frío son dos ciudades ficticias que vas a comparar durante esta lección. Ya viste que comparar sus temperaturas bajo cero no es tan simple como comparar los números sin el signo. En los próximos pasos vas a entender exactamente por qué, y vas a combinar esto con lo que aprendiste sobre fracciones en la lección anterior."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El reporte del clima",
+      "_notasInternas": [
+        "Solo texto (sin bloque evaluado), presenta el escenario completo antes de pedir una predicción en el Paso 3."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El reporte del clima de las 8 de la mañana dice:\n\n- Nortelva: −2,8 °C\n- Valle Frío: −4,3 °C\n\nUn locutor de radio, mirando estos números, tiene que decir cuál ciudad está más fría y cuál temperatura es matemáticamente mayor. Son dos preguntas relacionadas, pero no son exactamente la misma pregunta."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Tu predicción",
+      "_notasInternas": [
+        "Predicción libre sin corrección, para comparar con el resultado formalizado en el Paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de que lo calculemos juntos: entre −2,8 °C (Nortelva) y −4,3 °C (Valle Frío), ¿cuál crees que es la temperatura matemáticamente MAYOR (no la más cálida al tacto, la mayor como número)?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": ["−2,8 °C (Nortelva)", "−4,3 °C (Valle Frío)", "Son iguales"],
+          "eventoAnalytics": "prediccion_registrada"
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "¿Cuánto más cálida es Nortelva?",
+      "_notasInternas": [
+        "feedbackPorError anticipa error-1 (al restar un negativo, invertir el signo del resultado) y error-2 (invertir el orden de la diferencia), ambos ya definidos en L1 y directamente aplicables a decimales."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Calcula cuántos grados más cálida es Nortelva (−2,8 °C) que Valle Frío (−4,3 °C), usando la operación (−2,8) − (−4,3).",
+          "campos": [
+            {
+              "id": "diferencia",
+              "etiqueta": "Resultado de (−2,8) − (−4,3)",
+              "respuestaCorrecta": 1.5,
+              "unidad": "°C"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diferencia",
+              "valorObtenido": -7.1,
+              "mensaje": "Trataste −(−4,3) como si fuera −4,3, sin invertir el signo. Restar un negativo equivale a sumar su opuesto: (−2,8) − (−4,3) = −2,8 + 4,3, no −2,8 − 4,3.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "diferencia",
+              "valorObtenido": -1.5,
+              "mensaje": "El tamaño está bien, pero calculaste (−4,3) − (−2,8) en vez de (−2,8) − (−4,3). Fíjate en cuál temperatura va primero en la resta que pide el enunciado.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "(−2,8) − (−4,3) = −2,8 + 4,3 = 1,5. Nortelva está 1,5 °C más cálida que Valle Frío."
+        },
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Restar un negativo es lo mismo que sumar su opuesto: (−2,8) − (−4,3) = −2,8 + 4,3."
+            },
+            {
+              "nivel": 2,
+              "texto": "−2,8 + 4,3: piensa en la recta numérica. Partes en −2,8 y avanzas 4,3 unidades hacia la derecha (hacia los positivos)."
+            },
+            {
+              "nivel": 3,
+              "texto": "−2,8 + 4,3 = 1,5. Ese 1,5 es la distancia entre las dos temperaturas: cuánto más cálida es Nortelva."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Más lejos de cero no siempre es 'más'",
+      "_notasInternas": [
+        "INSIGHT FIJADO (piso de partida de Benja, docs/diseno-modulo-enteros-racionales.md §a): comparar dos negativos invierte la intuición de 'mayor'. Formaliza aquí lo que el verdaderoFalso del Paso 1 ya insinuó."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En la recta numérica, −2,8 está más cerca de 0 que −4,3. Mientras más a la derecha (más cerca de 0, o positivo), MAYOR es el número.\n\nPor eso: −2,8 > −4,3, aunque 2,8 sea MENOR que 4,3 sin el signo.\n\nEsto no es una casualidad ni una excepción: entre dos negativos, el que tiene mayor valor absoluto (el número 'sin signo' más grande) es siempre el MENOR de los dos. Comparar dos negativos invierte la intuición de comparar dos positivos."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "El locutor de radio del Paso 2 tiene que explicar esto en 10 segundos al aire, sin usar la palabra 'valor absoluto'. ¿Cómo explicarías, con tus propias palabras, por qué −2,8 °C es la temperatura mayor aunque Valle Frío (−4,3 °C) sea la ciudad más fría?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección. Busca que el estudiante articule la distinción entre 'más frío' (magnitud física) y 'mayor' (posición en la recta numérica), preparando la generalización del Paso 6."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla, con otro par de números",
+      "_notasInternas": [
+        "Lecturas de termómetro genéricas, sin nombre de ciudad, para reforzar la regla con números nuevos sin introducir un sustantivo propio no verificado."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Dos termómetros de control marcan −1,9 °C y −3,6 °C. ¿Cuál es la diferencia entre ambos, como número positivo?",
+          "campos": [
+            {
+              "id": "diferencia",
+              "etiqueta": "Diferencia entre −1,9 °C y −3,6 °C",
+              "respuestaCorrecta": 1.7,
+              "unidad": "°C"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diferencia",
+              "valorObtenido": -1.7,
+              "mensaje": "El tamaño está bien, pero el enunciado pide la diferencia como número positivo. Revisa el orden de la resta: la temperatura mayor (−1,9) menos la menor (−3,6) da un resultado positivo.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "(−1,9) − (−3,6) = −1,9 + 3,6 = 1,7 °C de diferencia."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En general: entre dos números negativos, el de mayor valor absoluto es el MENOR. En un termómetro, eso significa que el número que se ve 'más grande' (sin signo) corresponde a la temperatura más fría, no a la mayor. 'Más frío' y 'matemáticamente mayor' apuntan en direcciones opuestas cuando se comparan negativos."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Ordena las tres lecturas",
+      "_notasInternas": [
+        "Tercer punto de comparación sin nombre de ciudad ('un refugio de montaña'), para no introducir un sustantivo propio no verificado. Distractores de la selección usan error-5. El verdaderoFalso no lleva errorCatalogado (el tipo de bloque no tiene ese campo en el schema); el error se explica en el texto de feedback."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "A la misma hora: Nortelva registra −2,8 °C, Valle Frío registra −4,3 °C, y un refugio de montaña cercano registra −1,2 °C. Ordenadas de MENOR a MAYOR (como números, no como 'qué tan frío se siente'), ¿cuál es el orden correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "−4,3, −2,8, −1,2",
+              "esCorrecta": true,
+              "feedback": "Correcto. −4,3 es la menor (más a la izquierda en la recta numérica), después −2,8, y −1,2 es la mayor de las tres (la más cercana a 0)."
+            },
+            {
+              "id": "b",
+              "texto": "−1,2, −2,8, −4,3",
+              "esCorrecta": false,
+              "feedback": "Este es el orden exactamente al revés. Ordenaste como si el número 'sin signo' más chico (1,2) fuera el menor, pero con negativos pasa lo contrario: −1,2 es el MAYOR de los tres, no el menor.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "−2,8, −4,3, −1,2",
+              "esCorrecta": false,
+              "feedback": "El extremo −1,2 quedó bien ubicado como el mayor, pero invertiste −2,8 y −4,3. ¿Cuál de los dos está más a la izquierda en la recta numérica: el que tiene 2,8 o el que tiene 4,3?",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "d",
+              "texto": "−4,3, −1,2, −2,8",
+              "esCorrecta": false,
+              "feedback": "Identificaste bien que −4,3 es la menor, pero invertiste el orden entre −1,2 y −2,8. Compara solo esos dos: ¿cuál está más lejos de 0 hacia la izquierda?",
+              "errorCatalogado": "error-5"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Entre dos temperaturas bajo cero, la que tiene el número 'sin signo' más grande siempre corresponde a la más fría, aunque matemáticamente sea la MENOR de las dos.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto. No hay contradicción: 'más fría' (magnitud, qué tan lejos de 0 hacia abajo) y 'matemáticamente mayor' (posición en la recta numérica) son dos preguntas distintas. El número con mayor valor absoluto está más lejos de 0, así que es el más frío, pero por estar más a la izquierda en la recta numérica, también es el MENOR como número.",
+          "feedbackFalso": "En realidad sí es cierto. El número con mayor valor absoluto (más grande 'sin signo') está más lejos de 0 hacia los negativos: eso lo hace el más frío al mismo tiempo que el matemáticamente MENOR. Son dos preguntas distintas (qué tan frío vs. qué tan grande como número) que dan respuestas opuestas con negativos."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La temperatura sube",
+      "_notasInternas": [
+        "Combina el insight de esta lección con operatoria de fracciones de L2: suma una fracción a una temperatura negativa a lo largo de varias horas. Reutiliza literalmente la frase '3/4 de grado', ya verificada. El resultado (−2,8 °C) coincide a propósito con la temperatura de Nortelva del resto de la lección, como cierre narrativo del escenario."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "A las 5 de la tarde, la temperatura en Valle Frío es −4,3 °C y sube 3/4 de grado cada hora. ¿Cuál es la temperatura a las 7 de la tarde (dos horas después)?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "−2,8 °C",
+              "esCorrecta": true,
+              "feedback": "Correcto. Sube 3/4 de grado cada hora durante 2 horas: 2 × 3/4 = 1,5 °C en total. −4,3 + 1,5 = −2,8 °C."
+            },
+            {
+              "id": "b",
+              "texto": "−5,8 °C",
+              "esCorrecta": false,
+              "feedback": "Ese valor sale de RESTAR 1,5 °C en vez de sumarlo, como si 'subir' la temperatura significara alejarse más de 0. Pero subir la temperatura acerca el número a 0 (o lo hace positivo): hay que sumar, no restar.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "−3,55 °C",
+              "esCorrecta": false,
+              "feedback": "Ese valor sale de sumar 3/4 + 3/4 como (3+3)/(4+4) = 6/8 = 0,75, en vez de 6/4 = 1,5. Al sumar fracciones el denominador NO se suma: hay que mantenerlo igual y sumar solo los numeradores.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "id": "d",
+              "texto": "5,8 °C",
+              "esCorrecta": false,
+              "feedback": "Ese resultado pierde por completo el signo negativo de la temperatura inicial: sale de tratar −4,3 como si fuera 4,3 antes de sumar. La temperatura sigue siendo negativa después de subir 1,5 °C, porque 1,5 no alcanza para llegar a 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Un chequeo antes de cerrar",
+      "_notasInternas": [
+        "Bloque 'pregunta' embebido (formato PAES), por diseño de la tabla (d): reflexión de L3 = pregunta, no abierta. Reutiliza Nortelva (−2,8 °C) y el refugio de montaña genérico (−1,2 °C) del Paso 7."
+      ],
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "enunciado": "En Nortelva la temperatura es −2,8 °C. En el refugio de montaña cercano, la temperatura es −1,2 °C. ¿Cuál es el resultado de (−1,2) − (−2,8)?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "1,6",
+              "esCorrecta": true,
+              "feedback": "Correcto. (−1,2) − (−2,8) = −1,2 + 2,8 = 1,6."
+            },
+            {
+              "clave": "B",
+              "texto": "-1,6",
+              "esCorrecta": false,
+              "feedback": "El tamaño está bien, pero calculaste (−2,8) − (−1,2) en vez de (−1,2) − (−2,8). Revisa cuál temperatura va primero en la resta.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "C",
+              "texto": "-4,0",
+              "esCorrecta": false,
+              "feedback": "Sumaste las dos temperaturas como si fueran magnitudes que se acumulan (−1,2 + (−2,8) = −4,0), en vez de restarlas con su signo para encontrar la diferencia entre los dos puntos.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "clave": "D",
+              "texto": "4,0",
+              "esCorrecta": false,
+              "feedback": "Trataste −(−2,8) como −2,8 en vez de +2,8, sin invertir el signo del segundo negativo, y además perdiste el signo del resultado final. Restar un negativo equivale a sumar su opuesto.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "notaVerificacionMatematica": "(−1,2) − (−2,8) = −1,2 + 2,8 = 1,6. Comprobación con distancia: entre −2,8 y −1,2 hay 1,6 unidades en la recta numérica, y −1,2 es la mayor de las dos (está más cerca de 0). ✓"
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Cierra el módulo completo, no solo esta lección: la reflexión abierta conecta explícitamente los tres insights fijados (L1, L2, L3)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "De las tres lecciones de este módulo (buceo con enteros, recetas con fracciones, y clima con ambos), ¿cuál insight te costó más aceptar al principio: que restar un negativo puede agrandar, que dividir por una fracción puede agrandar, o que comparar dos negativos invierte el orden? ¿Por qué?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Es el termómetro de qué insight del módulo completo resultó más contraintuitivo."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas de esta lección:\n- Entre dos negativos, el de mayor valor absoluto es el MENOR: −4,3 es menor que −2,8, aunque 4,3 > 2,8.\n- 'Más frío' (magnitud) y 'matemáticamente mayor' (posición en la recta numérica) son preguntas distintas, y con negativos dan respuestas opuestas.\n- Una temperatura negativa puede subir sumando una fracción de grado, igual que cualquier otra suma: −4,3 + 1,5 = −2,8.\n\nCon esto completas las tres lecciones del módulo 'Enteros y racionales'. Un último cierre formato PAES."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En un refugio de montaña la temperatura es −3,1 °C. En la base del cerro, la temperatura es −1,6 °C. ¿Cuál operación permite calcular cuántos grados más fría está el refugio respecto a la base?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−1,6) − (−3,1)",
+          "esCorrecta": true,
+          "feedback": "Correcto. La base es la temperatura mayor, así que restarle la del refugio (la menor) da cuánto más fría está el refugio: (−1,6) − (−3,1) = 1,5."
+        },
+        {
+          "clave": "B",
+          "texto": "(−3,1) − (−1,6)",
+          "esCorrecta": false,
+          "feedback": "Esta operación invierte el orden: da −1,5, un resultado negativo, cuando la pregunta pide cuántos grados MÁS FRÍA está el refugio (un número positivo). Fíjate en cuál temperatura hay que restar de cuál.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "(−3,1) + (−1,6)",
+          "esCorrecta": false,
+          "feedback": "Sumar las dos temperaturas no calcula una diferencia, acumula dos magnitudes negativas sin sentido para esta pregunta. Para comparar dos puntos hay que restarlos, no sumarlos.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "(−1,6) − 3,1",
+          "esCorrecta": false,
+          "feedback": "Esta operación trata la temperatura del refugio como si fuera positiva (3,1 en vez de −3,1), perdiendo su signo. Restar un negativo (−3,1) equivale a sumar su opuesto, no a restar el número sin signo.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "La base (−1,6 °C) es la temperatura mayor; el refugio (−3,1 °C) es la menor. Cuántos grados más fría está el refugio = (−1,6) − (−3,1) = −1,6 + 3,1 = 1,5 °C. ✓"
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: 'Como 5,4 es mayor que 2,9, entonces −5,4 °C es una temperatura mayor que −2,9 °C.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque el número 'sin signo' más grande es siempre el mayor, tenga o no signo negativo.",
+          "esCorrecta": false,
+          "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −5,4 y −2,9, el de mayor valor absoluto (5,4) es en realidad el MENOR.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "B",
+          "texto": "No: −5,4 °C es menor que −2,9 °C, porque en la recta numérica −5,4 está más a la izquierda (más lejos de 0 hacia los negativos) que −2,9.",
+          "esCorrecta": true,
+          "feedback": "Correcto. −5,4 < −2,9, así que la afirmación del estudiante es falsa."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí, porque −5,4 representa una temperatura más baja, y 'más baja' siempre significa 'matemáticamente mayor'.",
+          "esCorrecta": false,
+          "feedback": "'Más baja' (más fría) y 'matemáticamente mayor' no son lo mismo con negativos: son preguntas opuestas. −5,4 es efectivamente la más fría, pero eso la hace la MENOR como número, no la mayor.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, porque en un termómetro, mientras más lejos esté la aguja del cero, mayor es el número que marca, sin importar hacia qué lado apunte.",
+          "esCorrecta": false,
+          "feedback": "Esa regla ignora el signo: la aguja puede estar lejos de 0 hacia la izquierda (negativo) o hacia la derecha (positivo), y eso cambia todo. Lejos de 0 hacia la izquierda es un número MENOR, no mayor.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "En la recta numérica, −5,4 está más a la izquierda que −2,9, así que −5,4 < −2,9. La afirmación del estudiante compara los valores absolutos (5,4 y 2,9) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es B. ✓"
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "A las 5 de la tarde, la temperatura en Valle Frío es −5,2 °C y sube 3/4 de grado cada hora. ¿Cuál es la temperatura a las 7 de la tarde (dos horas después)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "-3,7",
+          "esCorrecta": true,
+          "feedback": "Correcto. 2 horas × 3/4 de grado = 1,5 °C de aumento. −5,2 + 1,5 = −3,7 °C."
+        },
+        {
+          "clave": "B",
+          "texto": "-6,7",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de restar 1,5 °C en vez de sumarlo, como si subir la temperatura alejara el número de 0. Pero subir acerca la temperatura a 0: hay que sumar el aumento, no restarlo.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "-4,45",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de sumar 3/4 + 3/4 como (3+3)/(4+4) = 6/8 = 0,75 en vez de 6/4 = 1,5. Al sumar fracciones el denominador no se suma: se mantiene igual y se suman solo los numeradores.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "3,7",
+          "esCorrecta": false,
+          "feedback": "Este resultado pierde el signo negativo de la temperatura inicial. −5,2 + 1,5 sigue siendo negativo, porque 1,5 no alcanza para llegar a 0.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "Aumento total = 2 × 3/4 = 6/4 = 1,5 °C. Temperatura final = −5,2 + 1,5 = −3,7 °C. Comprobación: como el aumento (1,5) es menor que la distancia a 0 (5,2), la temperatura final sigue siendo negativa. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad/problema/pensar/pistas/descubrimiento/generalizacion (parcial)/practica/reflexion: par núcleo Nortelva −2,8 °C y Valle Frío −4,3 °C",
+    "pistas (Paso 4): (−2,8) − (−4,3) = 1,5",
+    "generalizacion (Paso 6): lecturas genéricas de termómetro −1,9 °C y −3,6 °C, diferencia 1,7",
+    "practica (Paso 7): tercera lectura genérica (refugio de montaña) −1,2 °C, orden −4,3 / −2,8 / −1,2",
+    "aplicacion (Paso 8): −4,3 °C + 2 × 3/4 de grado = −2,8 °C",
+    "reflexion (pregunta embebida, Paso 9): (−1,2) − (−2,8) = 1,6",
+    "itemsPAES l3-item-1 (modelar): refugio −3,1 °C, base −1,6 °C, diferencia 1,5",
+    "itemsPAES l3-item-2 (argumentar): comparación de posiciones −5,4 °C y −2,9 °C",
+    "itemsPAES l3-item-3 (resolver): −5,2 °C + 2 × 3/4 de grado = −3,7 °C"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
+      "Verificación de colisión del contexto clima (Candidato A: ciudades ficticias Nortelva y Valle Frío, temperaturas bajo cero decimales, variación fraccionaria de grado por hora) contra el corpus completo, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío' = NO en todas. Veredicto: LIMPIO AL 100%. Escenario aprobado tal cual se propuso. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false
+  },
+  "revisionMatematica": {
+    "aprobada": false
+  }
+}

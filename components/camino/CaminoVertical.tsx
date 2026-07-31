@@ -103,6 +103,13 @@ export function CaminoVertical({
   const metas = nodos.map((n) => n.meta === true);
   const equis = nodos.map((n, i) => desplazamientoDeNodo(i, n.meta));
 
+  /* Caso que el comentario de abajo no contemplaba: si la fila que la tarjeta
+     taparía es la última (la meta), no hay ningún nodo más abajo al que el
+     estudiante pueda saltar para destaparla — queda inalcanzable en
+     escritorio. Cuando pasa, la tarjeta cuelga hacia arriba del nodo activo en
+     vez de hacia abajo. */
+  const siguienteEsMeta = indice >= 0 && metas[indice + 1] === true;
+
   return (
     <div
       className="relative mx-auto w-full"
@@ -145,10 +152,21 @@ export function CaminoVertical({
       {activo && (
         <aside
           aria-live="polite"
-          className="fixed inset-x-0 bottom-14 z-30 px-4 pb-4 sm:absolute sm:bottom-auto sm:left-[var(--canaleta)] sm:right-0 sm:top-[var(--anclaje)] sm:px-0 sm:pb-0"
+          className={`fixed inset-x-0 bottom-14 z-30 px-4 pb-4 sm:absolute sm:bottom-auto sm:left-[var(--canaleta)] sm:right-0 sm:top-[var(--anclaje)] sm:px-0 sm:pb-0${
+            siguienteEsMeta ? " sm:-translate-y-full" : ""
+          }`}
           style={
             {
-              "--anclaje": `${desplazamientoVertical(metas, indice)}px`,
+              /* Colgando hacia abajo, el ancla es el borde inferior de la fila
+                 activa. Volteado (`siguienteEsMeta`), el ancla pasa a ser su
+                 borde superior, y `-translate-y-full` sube la tarjeta por su
+                 propio alto —desconocido acá, lo resuelve el navegador— para
+                 que termine justo encima en vez de justo debajo. */
+              "--anclaje": `${
+                siguienteEsMeta
+                  ? desplazamientoVertical(metas, indice) - altoDeFila(metas[indice])
+                  : desplazamientoVertical(metas, indice)
+              }px`,
               "--canaleta": `${ANCHO_CANALETA}px`,
             } as React.CSSProperties
           }

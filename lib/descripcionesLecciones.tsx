@@ -38,6 +38,20 @@ const CATALOGO: Record<LeccionId, PresentacionLeccion> = {
       "Resuelve ecuaciones pensando en una balanza en equilibrio: lo que haces a un lado, lo haces al otro.",
     Ilustracion: IlustracionBalanza,
   },
+  "enteros-operar-y-ordenar": {
+    descripcion:
+      "Suma y resta enteros pensando en profundidad bajo el agua, y ordénalos en la recta sin confundirte con los signos.",
+    Ilustracion: IlustracionPlano,
+  },
+  "enteros-operar-y-comparar": {
+    descripcion:
+      "Descubre por qué dividir por una fracción puede agrandar el resultado, y compara fracciones sin mirar solo el numerador.",
+    Ilustracion: IlustracionPlano,
+  },
+  "enteros-problemas-en-contexto": {
+    descripcion: "Compara temperaturas bajo cero y calcula variaciones que combinan enteros y fracciones.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

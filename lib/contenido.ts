@@ -8,10 +8,12 @@ import { ContenidoInvalidoError } from "./errores";
 import { TIPOS_BLOQUE_VALIDOS } from "./tipos";
 import {
   IDS_LECCION,
+  IDS_CIERRE,
   idsDeLeccionesEnOrden,
   temaDeLeccion,
   todosLosTemas,
 } from "./modulos";
+import type { CierreId } from "./modulos";
 import type {
   Contenido,
   Estado,
@@ -83,6 +85,14 @@ function cargarYValidar<T extends Contenido>(rutaAbsoluta: string): T {
  */
 function idsEnDisco(): string[] {
   const dir = path.join(process.cwd(), "content", "lecciones");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => f.replace(/\.json$/, ""));
+}
+
+/** Análogo a `idsEnDisco()`, para `content/cierres/`. */
+function idsEnDiscoCierres(): string[] {
+  const dir = path.join(process.cwd(), "content", "cierres");
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => f.replace(/\.json$/, ""));
@@ -186,6 +196,33 @@ export function verificarRegistroDeTemas(): void {
     }
   }
 
+  // Mismas tres comprobaciones que arriba, para content/cierres/.
+  const cierresEnDisco = new Set(idsEnDiscoCierres());
+  const cierresDeclarados = new Map<string, string[]>();
+  for (const tema of todosLosTemas()) {
+    const cierreId = "cierreId" in tema ? tema.cierreId : undefined;
+    if (!cierreId) continue;
+    cierresDeclarados.set(cierreId, [...(cierresDeclarados.get(cierreId) ?? []), tema.id]);
+  }
+
+  for (const cierreId of cierresDeclarados.keys()) {
+    if (!cierresEnDisco.has(cierreId)) {
+      problemas.push(
+        `"${cierreId}" está declarado como cierreId pero no existe content/cierres/${cierreId}.json`,
+      );
+    }
+  }
+  for (const id of cierresEnDisco) {
+    if (!cierresDeclarados.has(id)) {
+      problemas.push(`content/cierres/${id}.json existe pero ningún tema lo declara como cierreId`);
+    }
+  }
+  for (const [cierreId, temas] of cierresDeclarados) {
+    if (temas.length > 1) {
+      problemas.push(`"${cierreId}" está declarado como cierreId de más de un tema: ${temas.join(", ")}`);
+    }
+  }
+
   if (problemas.length > 0) {
     throw new ContenidoInvalidoError(
       `lib/modulos.ts no calza con content/lecciones/:\n${problemas.map((p) => ` - ${p}`).join("\n")}`,
@@ -229,6 +266,27 @@ export function obtenerDiagnostico(): DiagnosticoContenido {
   );
 }
 
-export function obtenerCierre(): CierreContenido {
-  return cargarYValidar<CierreContenido>(path.join(process.cwd(), "content", "cierre.json"));
+export function obtenerCierre(id: CierreId): CierreContenido {
+  const ruta = path.join(process.cwd(), "content", "cierres", `${id}.json`);
+  return cargarYValidar<CierreContenido>(ruta);
+}
+
+/**
+ * Ids de cierre que existen en disco y pasan la validación completa. Mismo
+ * criterio que `idsDeLecciones()`: un cierre con contenido inválido queda
+ * excluido en vez de tumbar el build.
+ */
+export function idsDeCierres(): CierreId[] {
+  return idsEnDiscoCierres().filter((id): id is CierreId => {
+    if (!(IDS_CIERRE as readonly string[]).includes(id)) return false;
+    try {
+      obtenerCierre(id as CierreId);
+      return true;
+    } catch (e) {
+      console.warn(
+        `idsDeCierres: se excluye "${id}" (contenido inválido): ${(e as Error).message}`,
+      );
+      return false;
+    }
+  });
 }

@@ -1,0 +1,318 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-enteros-racionales",
+  "titulo": "Cierre del módulo: Enteros y racionales",
+  "estado": "borrador",
+  "_notasInternas": [
+    "Cierre del módulo 'Enteros y racionales' (docs/diseno-modulo-enteros-racionales.md), construido después de que las 3 lecciones (enteros-operar-y-ordenar, enteros-operar-y-comparar, enteros-problemas-en-contexto) quedaran en estado 'borrador' con npm run validar en verde.",
+    "El catálogo de errores del módulo vive únicamente en content/lecciones/enteros-operar-y-ordenar.json (L1), mismo patrón que L2 y L3 — no se duplica aquí. Este archivo referencia error-1, error-2, error-3, error-4, error-5, error-7 y error-8 (todos ya definidos en L1). No se necesitó ningún id nuevo: cada vez que un distractor representaba un error sin id existente en el catálogo (p. ej. 'creer que un denominador más grande hace la fracción mayor', o 'creer que fracciones con diferencia numerador-denominador igual son equivalentes'), se dejó sin errorCatalogado en vez de forzar un id que no encaja — no se agregó ni propuso ningún error-9 sin consultarlo primero, tal como se pidió.",
+    "No se corrió una verificación de colisión nueva para este archivo. Los tres contextos (buceo, bizcocho, clima/Nortelva/Valle Frío) ya fueron verificados LIMPIO en sus respectivas lecciones (ver proveniencia de cada una); este cierre reutiliza el mismo vocabulario y las mismas escenas generales, solo con números nuevos. Según el propio hallazgo de la verificación de L1, los números sueltos no son la señal de riesgo (pegan en 80-90 archivos como ruido de substring); lo que importa es la escena/frase concreta, que no cambió. Se deja constancia explícita de que esto es una inferencia razonada, no una verificación nueva ejecutada — si Benja prefiere correr una consulta puntual sobre los ítems nuevos igual, se puede pedir aparte.",
+    "Números verificados contra contextosNumericos de las 3 lecciones para no repetir escenas exactas: ningún ítem de este cierre reutiliza el mismo par de valores (profundidades, fracciones o temperaturas) que ya apareció en L1, L2 o L3.",
+    "Ítem 8 es el ítem integrador pedido: combina el mecanismo de L1 (restar un negativo da más, usado para calcular el ascenso de cada buzo) con el mecanismo de L3 (comparar dos negativos invierte la intuición de 'mayor', usado para decidir cuál de los dos resultados es mayor).",
+    "Estado 'borrador'. Sin checklistOriginalidad ni revisionMatematica: el schema no los exige a nivel raíz (solo tipo/id/titulo/estado/proveniencia son 'required'); se omiten en vez de rellenarlos con valores que todavía no significan nada, mismo criterio que content/cierre.json (el cierre de demostración del módulo de función lineal)."
+  ],
+  "items": [
+    {
+      "id": "cierre-enteros-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un buzo está a −9 metros. Otro buzo está a −22 metros. ¿Cuál es el resultado de (−9) − (−22)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "13",
+          "esCorrecta": true,
+          "feedback": "Correcto. (−9) − (−22) = −9 + 22 = 13."
+        },
+        {
+          "clave": "B",
+          "texto": "-13",
+          "esCorrecta": false,
+          "feedback": "El tamaño está bien, pero calculaste (−22) − (−9) en vez de (−9) − (−22). Revisa cuál profundidad va primero en la resta.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "-31",
+          "esCorrecta": false,
+          "feedback": "Trataste −(−22) como −22 en vez de +22, sin invertir el signo del segundo negativo. Restar un negativo equivale a sumar su opuesto.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "31",
+          "esCorrecta": false,
+          "feedback": "Sumaste las dos profundidades como si fueran magnitudes que se acumulan (9 + 22), en vez de restarlas con su signo para encontrar la diferencia entre los dos puntos.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "(−9) − (−22) = −9 + 22 = 13. Comprobación con distancia: entre −9 y −22 hay 13 unidades en la recta numérica. ✓"
+    },
+    {
+      "id": "cierre-enteros-2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Tienes 7 tazas de harina integral para bizcochos. Cada bizcocho usa 7/8 de taza. ¿Cuántos bizcochos rinden las 7 tazas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8",
+          "esCorrecta": true,
+          "feedback": "Correcto. 7 ÷ 7/8 = 7 × 8/7 = 56/7 = 8 bizcochos."
+        },
+        {
+          "clave": "B",
+          "texto": "49/8",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de calcular 7 × 7/8 en vez de 7 ÷ 7/8. La pregunta pide cuántas porciones de 7/8 de taza caben en 7 tazas, y eso es una división, no una multiplicación.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "1/8",
+          "esCorrecta": false,
+          "feedback": "Ese resultado sale de calcular 7/8 ÷ 7 en vez de 7 ÷ 7/8: el orden de la división quedó invertido. Lo que se reparte son las 7 tazas de harina, en porciones de 7/8 de taza cada una.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "6",
+          "esCorrecta": false,
+          "feedback": "Ese número es menor que 7, como si dividir por una fracción menor que 1 tuviera que achicar el resultado. Pero 7/8 de taza es menos que una taza completa, así que caben más de 7 porciones, no menos.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "7 ÷ 7/8 = 7 × 8/7 = 56/7 = 8 bizcochos. Como 7/8 es menos de 1 taza, rinden más bizcochos que tazas de harina hay. ✓"
+    },
+    {
+      "id": "cierre-enteros-3",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "En una recta numérica horizontal, con los negativos a la izquierda del cero, se marcan tres temperaturas: −0,9 °C, −3,3 °C y −2,1 °C. ¿Cuál de las siguientes afirmaciones sobre su ubicación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−3,3 °C está más a la izquierda que las otras dos, porque es la temperatura menor de las tres.",
+          "esCorrecta": true,
+          "feedback": "Correcto. −3,3 < −2,1 < −0,9, así que −3,3 °C queda más a la izquierda de las tres."
+        },
+        {
+          "clave": "B",
+          "texto": "−0,9 °C está más a la izquierda que las otras dos, porque 0,9 es el número más chico sin signo.",
+          "esCorrecta": false,
+          "feedback": "Estás comparando los números como si no tuvieran signo. Con negativos, el de menor valor absoluto (0,9) es en realidad el MAYOR: −0,9 queda más a la DERECHA de las tres, no a la izquierda.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "−2,1 °C está más a la derecha que −0,9 °C, porque 2,1 es mayor que 0,9 sin signo.",
+          "esCorrecta": false,
+          "feedback": "Es al revés: como −0,9 > −2,1, −0,9 se ubica más a la DERECHA (más cerca del cero), no −2,1. El número sin signo más grande no manda la posición cuando hay signo negativo.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "−0,9 °C está más a la izquierda que −2,1 °C, porque 0,9 es menor que 2,1 sin signo.",
+          "esCorrecta": false,
+          "feedback": "Esa lógica funciona para positivos, pero no para negativos: entre −0,9 y −2,1, el de menor valor absoluto (0,9) es el MAYOR, así que −0,9 está a la derecha de −2,1, no a la izquierda.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "Ordenando: −3,3 < −2,1 < −0,9. En la recta numérica, de izquierda a derecha: −3,3, luego −2,1, luego −0,9. La alternativa correcta es A. ✓"
+    },
+    {
+      "id": "cierre-enteros-4",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un buzo desciende de −11 m a −19 m. ¿Cuál operación permite calcular cuántos metros descendió?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−11) − (−19)",
+          "esCorrecta": true,
+          "feedback": "Correcto. La profundidad final (−19) es menor que la inicial (−11); restar la final de la inicial da cuánto descendió: (−11) − (−19) = 8."
+        },
+        {
+          "clave": "B",
+          "texto": "(−19) − (−11)",
+          "esCorrecta": false,
+          "feedback": "Esta operación invierte el orden: da −8, un resultado negativo, cuando la pregunta pide cuántos metros descendió (un número positivo). Fíjate en cuál profundidad hay que restar de cuál.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "(−11) − 19",
+          "esCorrecta": false,
+          "feedback": "Esta operación trata la profundidad final como si fuera positiva (19 en vez de −19), perdiendo su signo. Restar un negativo (−19) equivale a sumar su opuesto, no a restar el número sin signo.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "(−11) + (−19)",
+          "esCorrecta": false,
+          "feedback": "Sumar las dos profundidades no calcula un descenso, acumula dos magnitudes negativas sin sentido para esta pregunta. Para comparar dos puntos hay que restarlos, no sumarlos.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "Descenso = (−11) − (−19) = −11 + 19 = 8 metros. Comprobación: pasó de −11 a −19, una diferencia de posición de 8 metros más profundo. ✓"
+    },
+    {
+      "id": "cierre-enteros-5",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Para el bizcocho de limón usas 5/12 de taza de jugo. Para el de naranja usas 7/18 de taza de jugo. ¿Cuál receta usa más jugo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La de limón (5/12), porque 5/12 = 15/36 y 7/18 = 14/36, y 15/36 > 14/36.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Llevando ambas fracciones a treintaiseisavos: 5/12 = 15/36 y 7/18 = 14/36. Como 15/36 > 14/36, la de limón usa más jugo."
+        },
+        {
+          "clave": "B",
+          "texto": "La de naranja (7/18), porque 7 es mayor que 5 (los numeradores).",
+          "esCorrecta": false,
+          "feedback": "Comparaste solo los numeradores (7 y 5), sin convertir a un denominador común. Con denominadores distintos eso no funciona: 5/12 = 15/36 es mayor que 7/18 = 14/36, aunque 5 sea menor que 7.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "La de naranja (7/18), porque 7/18 = 21/36 y 5/12 = 10/36.",
+          "esCorrecta": false,
+          "feedback": "La conversión a treintaiseisavos está mal hecha: 7/18 se convierte multiplicando por 2 (no por 3), así que 7/18 = 14/36, no 21/36. Y 5/12 se convierte multiplicando por 3 (no por 2), así que 5/12 = 15/36, no 10/36. Revisa por cuánto hay que multiplicar cada fracción para llegar a 36."
+        },
+        {
+          "clave": "D",
+          "texto": "Son iguales, porque 5/12 y 7/18 son ambas cercanas a un medio.",
+          "esCorrecta": false,
+          "feedback": "Que dos fracciones sean parecidas en valor decimal no significa que sean iguales. 5/12 = 15/36 y 7/18 = 14/36 son fracciones distintas, aunque estén cerca una de la otra: hay que compararlas con un denominador común, no 'a ojo'."
+        }
+      ],
+      "solucion": "MCM(12,18) = 36. 5/12 = 15/36 y 7/18 = 14/36. Como 15/36 > 14/36, la receta de limón (5/12) usa más jugo. La alternativa correcta es A. ✓"
+    },
+    {
+      "id": "cierre-enteros-6",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "Un estudiante afirma: 'Como 0,6 es menor que 3,8, entonces −0,6 °C es una temperatura menor que −3,8 °C.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: −0,6 °C es MAYOR que −3,8 °C, porque en la recta numérica −0,6 está más cerca de 0.",
+          "esCorrecta": true,
+          "feedback": "Correcto. −0,6 > −3,8, así que la afirmación del estudiante es falsa."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcta, porque el número con menor valor absoluto siempre es el menor, tenga o no signo negativo.",
+          "esCorrecta": false,
+          "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −0,6 y −3,8, el de menor valor absoluto (0,6) es en realidad el MAYOR.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "Sí es correcta, porque −0,6 representa una temperatura más alta, y 'más alta' siempre significa 'matemáticamente menor'.",
+          "esCorrecta": false,
+          "feedback": "'Más alta' (más cálida) y 'matemáticamente menor' no son lo mismo con negativos: son preguntas opuestas. −0,6 es efectivamente la más cálida, pero eso la hace la MAYOR como número, no la menor.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "Sí es correcta, porque en la recta numérica los números negativos se ordenan igual que los positivos: mientras más chico el número sin signo, más a la izquierda queda.",
+          "esCorrecta": false,
+          "feedback": "Con negativos pasa exactamente al revés: mientras más chico el número sin signo, MÁS A LA DERECHA queda (más cerca de 0, o sea, mayor). −0,6 está a la derecha de −3,8, no a la izquierda.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "En la recta numérica, −0,6 está más cerca de 0 que −3,8, así que −0,6 > −3,8. La afirmación del estudiante compara los valores absolutos (0,6 y 3,8) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es A. ✓"
+    },
+    {
+      "id": "cierre-enteros-7",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "enunciado": "Tienes 8 tazas de harina en total. Usas 5 tazas para bizcochos grandes. Con las tazas que quedan, preparas bizcochos mini que usan 1/3 de taza cada uno. ¿Cuántos bizcochos mini rinden?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9",
+          "esCorrecta": true,
+          "feedback": "Correcto. Quedan 8 − 5 = 3 tazas. 3 ÷ 1/3 = 3 × 3 = 9 bizcochos mini."
+        },
+        {
+          "clave": "B",
+          "texto": "1",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de calcular 3 × 1/3 en vez de 3 ÷ 1/3. La pregunta pide cuántas porciones de 1/3 de taza caben en las 3 tazas que quedan, y eso es una división, no una multiplicación.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "1/9",
+          "esCorrecta": false,
+          "feedback": "Ese resultado sale de calcular 1/3 ÷ 3 en vez de 3 ÷ 1/3: el orden de la división quedó invertido. Lo que se reparte son las 3 tazas que quedan, en porciones de 1/3 de taza cada una.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "24",
+          "esCorrecta": false,
+          "feedback": "Ese valor sale de dividir las 8 tazas totales entre 1/3, sin restar primero las 5 tazas que ya se usaron para los bizcochos grandes. Antes de dividir hay que calcular cuánta harina queda: 8 − 5 = 3 tazas, no 8."
+        }
+      ],
+      "solucion": "Tazas que quedan = 8 − 5 = 3. Bizcochos mini = 3 ÷ 1/3 = 3 × 3 = 9. ✓"
+    },
+    {
+      "id": "cierre-enteros-8",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "Dos buzos ascienden el mismo día. Buzo A estaba a −16 m y su nueva profundidad es (−16) − (−9). Buzo B estaba a −13 m y su nueva profundidad es (−13) − (−4). ¿Cuál buzo terminó en la profundidad matemáticamente MAYOR, y cuál es esa profundidad?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Buzo A, en −7 m, porque −7 está más cerca de 0 que −9.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Buzo A: (−16) − (−9) = −16 + 9 = −7. Buzo B: (−13) − (−4) = −13 + 4 = −9. Como −7 > −9, Buzo A terminó en la profundidad mayor, aunque 7 sea menor que 9 sin signo."
+        },
+        {
+          "clave": "B",
+          "texto": "Buzo B, en −9 m, porque 9 es mayor que 7 sin signo.",
+          "esCorrecta": false,
+          "feedback": "Calculaste bien las dos profundidades finales (−7 y −9), pero al compararlas usaste los números sin signo. Entre dos negativos, el de mayor valor absoluto (9) es el MENOR, no el mayor: −9 es menor que −7.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "Buzo A, en −25 m, porque calculó (−16) − (−9) tratando el segundo término como positivo 9 en vez de invertir el signo: −16 − 9 = −25, y esa es la profundidad 'más grande' de las dos.",
+          "esCorrecta": false,
+          "feedback": "El error está en el cálculo de la profundidad de Buzo A: trataste −(−9) como −9 en vez de +9, sin invertir el signo. (−16) − (−9) = −16 + 9 = −7, no −25.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "Buzo B, porque su cambio se calculó como (−4) − (−13) = 9 en vez de (−13) − (−4) = −9, y 9 es la profundidad final.",
+          "esCorrecta": false,
+          "feedback": "El error está en el orden de la resta para Buzo B: (−4) − (−13) invierte cuál profundidad va primero. La operación correcta es (−13) − (−4) = −13 + 4 = −9, no 9.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Buzo A: (−16) − (−9) = −16 + 9 = −7 m (restar un negativo da un resultado mayor que −16, tal como en el insight de L1). Buzo B: (−13) − (−4) = −13 + 4 = −9 m. Comparando −7 y −9: −7 está más cerca de 0, así que −7 > −9 (tal como en el insight de L3: el de menor valor absoluto es el mayor). Buzo A terminó en la profundidad mayor, −7 m. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-enteros-1 (buceo, resolver): (−9) − (−22) = 13",
+    "cierre-enteros-2 (bizcocho, resolver): 7 ÷ 7/8 = 8",
+    "cierre-enteros-3 (clima, representar): orden de −0,9 °C, −3,3 °C y −2,1 °C",
+    "cierre-enteros-4 (buceo, modelar): (−11) − (−19) = 8",
+    "cierre-enteros-5 (bizcocho, modelar): comparación 5/12 vs 7/18",
+    "cierre-enteros-6 (clima, argumentar): comparación de posiciones −0,6 °C y −3,8 °C",
+    "cierre-enteros-7 (bizcocho, resolver): 8 − 5 = 3 tazas; 3 ÷ 1/3 = 9",
+    "cierre-enteros-8 (buceo + clima, modelar, integrador): Buzo A (−16)−(−9)=−7, Buzo B (−13)−(−4)=−9, comparación −7 > −9"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
+      "Este cierre reutiliza los tres contextos ya verificados LIMPIO en las lecciones del módulo (buceo en enteros-operar-y-ordenar.json, bizcocho en enteros-operar-y-comparar.json, clima/Nortelva/Valle Frío en enteros-problemas-en-contexto.json), sin introducir vocabulario, escenas o nombres propios nuevos — solo números nuevos dentro de esos mismos contextos. No se ejecutó una consulta-fuentes nueva específica para este archivo; ver _notasInternas para el razonamiento y la salvedad explícita de que esto es una inferencia, no una verificación nueva."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+  }
+}

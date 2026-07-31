@@ -1,0 +1,502 @@
+{
+  "tipo": "leccion",
+  "id": "enteros-operar-y-ordenar",
+  "titulo": "Enteros: operar y ordenar",
+  "objetivo": "Sumar y restar números enteros, incluyendo restar un negativo, entendiendo la resta como diferencia de profundidad entre dos puntos, y ordenar enteros en la recta numérica sin comparar los signos como si no existieran.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "Ninguno: primera lección del eje Números y del módulo 'Enteros y racionales'."
+  ],
+  "conceptos": [
+    "número entero",
+    "recta numérica",
+    "orden en los enteros",
+    "resta como diferencia de profundidad",
+    "suma y resta de negativos"
+  ],
+  "_notasInternas": [
+    "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (buceo, profundidades −5/−12/−27 m) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
+    "Verificación de colisión de escena concreta contra Material/MA-34_Potencia_Ecuacion_Exponencial.md ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md.",
+    "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo 'Enteros y racionales' (error-1 a error-7, ver docs/diseno-modulo-enteros-racionales.md §b), para mantener ids consistentes entre los tres archivos del módulo. Esta lección usa activamente error-1, error-2, error-3 y error-5. error-4, error-6 y error-7 son específicos de operatoria con fracciones (Lección 2, racionales) y quedan declarados aquí sin uso, a la espera de esa lección.",
+    "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido, con notaVerificacionMatematica) ADEMÁS del arreglo itemsPAES del cierre, por diseño explícito de diferenciación estructural (tabla (d) del doc: consolidación = texto + pregunta). Es un cuarto chequeo formato PAES antes del cierre formal, con números propios distintos de los tres itemsPAES.",
+    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+  ],
+  "estado": "borrador",
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Al restar un negativo, invertir el signo del resultado (trata a − (−b) como a − b, perdiendo el cambio de signo)."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Invertir el orden de la diferencia entre dos profundidades/valores (calcula B − A cuando corresponde A − B, o viceversa), sin error de signo en sí — es un error de qué se resta de qué."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Tratar el valor negativo como si fuera una distancia (magnitud) y perder el signo al usarlo en una operación posterior, aunque la resta inicial haya estado bien planteada."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Comparar dos fracciones fijándose solo en el numerador (cree que 3/4 > 2/3 porque 3 > 2, ignorando el denominador)."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Comparar dos números negativos como si fueran positivos (cree que un negativo con mayor valor absoluto es el mayor de los dos, ignorando que el signo invierte el orden)."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Sumar denominadores al sumar o restar fracciones (calcula a/b + c/d como (a+c)/(b+d))."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Creer que dividir siempre achica (al ver un resultado de división mayor que el dividendo, rechaza el resultado o busca dónde 'se perdió' un paso)."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "invertir el orden de la división de fracciones (calcular el divisor entre el dividendo, p. ej. resolver 3/4 ÷ 3 en vez de 3 ÷ 3/4)."
+    }
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Dos inmersiones, un mismo día",
+      "_notasInternas": [
+        "Introduce el escenario y los dos primeros puntos del perfil de profundidad (−12 m y −27 m) sin enseñar método todavía. Predicción libre sobre la diferencia, sin corrección: se retoma en el Paso 5 (descubrimiento)."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Perfil vertical mostrando la superficie del agua marcada en 0 m, con un eje graduado en metros negativos hacia abajo. Dos marcas de profundidad con línea punteada horizontal hasta el eje: Grupo A en −12 m y Grupo B en −27 m.",
+          "datos": {
+            "puntos": [
+              { "etiqueta": "Superficie", "profundidad": 0 },
+              { "etiqueta": "Grupo A", "profundidad": -12 },
+              { "etiqueta": "Grupo B", "profundidad": -27 }
+            ]
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "El Grupo A bucea a −12 metros. El Grupo B, más profundo, llega a −27 metros. Sin calcular nada todavía: ¿cuántos metros de diferencia crees que hay entre las dos inmersiones? Anota tu estimación.",
+          "tipoRespuesta": "numero",
+          "eventoAnalytics": "prediccion_registrada"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El registro del día de buceo",
+      "_notasInternas": [
+        "Intento de cálculo antes de enseñar el método formal con signos. Correcto: 27 − 12 = 15. feedbackPorError anticipa sumar en vez de restar (error-3) y restar en el orden que da un signo no pedido (error-2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un grupo de buceo desciende a 12 metros bajo la superficie. Otro grupo, en una inmersión más profunda, llega a 27 metros bajo la superficie. Sin usar ninguna fórmula todavía: ¿cuál es la diferencia de profundidad entre las dos inmersiones, en metros?",
+          "campos": [
+            {
+              "id": "diferencia",
+              "etiqueta": "Diferencia de profundidad (como número positivo)",
+              "respuestaCorrecta": 15,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diferencia",
+              "valorObtenido": 39,
+              "mensaje": "Sumaste las dos profundidades (12 + 27) en vez de encontrar la diferencia entre ellas. La pregunta busca cuánto más profundo llegó un grupo respecto al otro, no la suma de ambas profundidades.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "diferencia",
+              "valorObtenido": -15,
+              "mensaje": "El tamaño de la diferencia está bien, pero se pidió como número positivo. Fíjate en cuál profundidad restaste de cuál: si restas la más profunda de la menos profunda, el resultado sale con signo negativo.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "La diferencia de profundidad se calcula restando la profundidad menor de la mayor, sin importar el signo por ahora: 27 − 12 = 15 metros. En los próximos pasos vamos a ver cómo hacer este cálculo directamente con los números negativos, sin tener que 'quitar el signo' primero."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Por qué 'restar' no siempre es 'quitar'?",
+      "_notasInternas": [
+        "Predicción abierta sin corrección, previa al descubrimiento formal. No hay respuesta modelo: se compara con el Paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Cuando calculaste la diferencia recién, probablemente restaste el número más chico del más grande, sin fijarte en los signos. Pero en matemática las profundidades se escriben con su signo: −12 y −27. ¿Qué operación con esos dos números, con su signo incluido, crees que da como resultado la diferencia de 15 metros que ya calculaste? Escribe tu idea, aunque no estés seguro.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección. Busca activar la intuición de que el orden y el signo importan, antes de mostrar la operación formal en el Paso 5."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Explora la recta numérica de profundidades",
+      "_notasInternas": [
+        "Slider de una variable con marca fija de referencia en −27 m (Grupo B). Umbral de exploración mínima antes de avanzar."
+      ],
+      "bloques": [
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "variables": [
+            {
+              "nombre": "profundidad explorada (m)",
+              "min": -40,
+              "max": 0,
+              "valorInicial": -12,
+              "editable": true
+            },
+            {
+              "nombre": "marca de referencia: Grupo B (−27 m)",
+              "min": -40,
+              "max": 0,
+              "valorInicial": -27,
+              "editable": false
+            }
+          ],
+          "instruccion": "Mueve el control y observa su posición en la recta numérica de profundidades, comparándola con la marca fija del Grupo B en −27 m. ¿Cuándo tu control queda 'más profundo' que la marca? ¿Cuándo queda 'menos profundo'?",
+          "exploracionMinima": 3,
+          "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba llevar el control a un valor cercano a la superficie, a uno cercano a la marca fija, y a uno más profundo que la marca, antes de seguir."
+        },
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "En la recta numérica, mientras más a la izquierda (más lejos de 0 hacia los negativos), más profundo y más chico es el número. −27 está más a la izquierda que −12: es un número menor, aunque 27 sea más grande que 12 'sin signo'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La resta que sí calcula la diferencia",
+      "_notasInternas": [
+        "INSIGHT FIJADO del módulo: la resta como diferencia de profundidad, no como 'quitar'. Se agrega un tercer punto (Grupo C, −5 m) al perfil, usado luego en Paso 8. (−12) − (−27) = 15, coincide con la distancia contada directamente en el dibujo."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Mismo perfil vertical del Paso 1, ahora con tres marcas: Grupo C en −5 m, Grupo A en −12 m y Grupo B en −27 m. Una llave o flecha destaca el tramo entre Grupo A y Grupo B, con su longitud (15 m) escrita junto a la flecha.",
+          "datos": {
+            "puntos": [
+              { "etiqueta": "Grupo C", "profundidad": -5 },
+              { "etiqueta": "Grupo A", "profundidad": -12 },
+              { "etiqueta": "Grupo B", "profundidad": -27 }
+            ],
+            "tramoDestacado": { "desde": -12, "hasta": -27, "longitud": 15 }
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Fíjate en el dibujo: contaste la distancia entre el Grupo A y el Grupo B directamente, sin calculadora, y te dio 15 metros.\n\nAhora hagamos la misma resta con los números tal como los escribimos, con su signo:\n\n(−12) − (−27)\n\nRestar un negativo no 'quita': al restar un número negativo, el resultado es MÁS grande que el primer número, no más chico. (−12) − (−27) = −12 + 27 = 15.\n\nCoincide exactamente con la distancia que contaste en el dibujo. Restar un negativo no es una regla arbitraria de signos: es, literalmente, la distancia entre dos profundidades."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla, en general",
+      "_notasInternas": [
+        "Regla general en palabras + chequeo verdaderoFalso sobre orden de negativos (error-5, sin campo errorCatalogado disponible en este tipo de bloque según schema; se explica en el texto de feedback)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En general: para restar un número negativo, se suma su opuesto. a − (−b) = a + b.\n\nY para ordenar en la recta numérica: mientras más a la izquierda está un número, menor es. Entre dos negativos, el que tiene mayor valor absoluto (el número 'sin signo' más grande) es en realidad el MENOR de los dos."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Como 27 es mayor que 12, entonces −27 es mayor que −12.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Ojo: eso invierte el orden. En la recta numérica, mientras más negativo (más a la izquierda), MENOR es el número. −27 está más a la izquierda que −12, así que −27 es MENOR, no mayor. Comparar los valores absolutos (27 y 12) sin fijarte en el signo es el error clásico al comparar negativos.",
+          "feedbackFalso": "Correcto. −27 es menor que −12: está más profundo, más lejos de la superficie, más a la izquierda en la recta numérica. Con negativos, el mayor valor absoluto es el número MENOR."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Practica: calcula la diferencia",
+      "_notasInternas": [
+        "Reutiliza los puntos ya establecidos (Grupo C −5 m, Grupo B −27 m) para practicar la resta formal. Correcto: (−5) − (−27) = 22. feedbackPorError cubre error-1 (olvida invertir el signo) y error-2 (invierte el orden)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Calcula la diferencia de profundidad entre el Grupo C (−5 m) y el Grupo B (−27 m) usando la operación (−5) − (−27).",
+          "campos": [
+            {
+              "id": "resultado",
+              "etiqueta": "Resultado de (−5) − (−27)",
+              "respuestaCorrecta": 22,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "resultado",
+              "valorObtenido": -32,
+              "mensaje": "Trataste −(−27) como si fuera −27, sin invertir el signo. Restar un negativo equivale a sumar su opuesto: (−5) − (−27) = −5 + 27, no −5 − 27.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "resultado",
+              "valorObtenido": -22,
+              "mensaje": "El tamaño está bien, pero calculaste (−27) − (−5) en vez de (−5) − (−27). Fíjate en cuál profundidad va primero en la resta que pide el enunciado.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "(−5) − (−27) = −5 + 27 = 22. Comprueba con el dibujo del Paso 5: la distancia entre −5 y −27 es 22 metros."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Ordena las tres inmersiones",
+      "_notasInternas": [
+        "Retoma los tres puntos del escenario (−5, −12, −27) para ordenar. Correcto: −27, −12, −5 (de menor a mayor). Los tres distractores repiten variantes de error-5 (comparar negativos como si fueran positivos), con feedback distinto para cada una."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El mismo día bucearon tres grupos: Grupo A a −12 m, Grupo B a −27 m y Grupo C a −5 m. Ordenados de MENOR a MAYOR (como números, no como distancia a la superficie), ¿cuál es el orden correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "−27, −12, −5",
+              "esCorrecta": true,
+              "feedback": "Correcto. −27 es el menor (más a la izquierda en la recta numérica), después −12, y −5 es el mayor de los tres (el más cercano a la superficie)."
+            },
+            {
+              "id": "b",
+              "texto": "−5, −12, −27",
+              "esCorrecta": false,
+              "feedback": "Este es exactamente el orden al revés. Ordenaste como si el número 'sin signo' más chico (5) fuera el menor, pero con negativos pasa lo contrario: −5 es el MAYOR de los tres, no el menor.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "−12, −27, −5",
+              "esCorrecta": false,
+              "feedback": "El extremo −5 quedó bien ubicado, pero invertiste −12 y −27. ¿Cuál de los dos está más a la izquierda en la recta numérica: el que tiene 12 o el que tiene 27?",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "d",
+              "texto": "−27, −5, −12",
+              "esCorrecta": false,
+              "feedback": "Identificaste bien que −27 es el menor, pero invertiste el orden entre −5 y −12. Compara solo esos dos: ¿cuál está más lejos de 0 hacia la izquierda?",
+              "errorCatalogado": "error-5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Qué tan intuitiva te resultó la regla?",
+      "_notasInternas": [
+        "Pregunta abierta no evaluada, instrumentación cualitativa (Test B, MOS §6)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Antes de esta lección, ¿pensabas que restar SIEMPRE hace que el resultado sea más chico? ¿Qué te ayudó más a entender por qué restar un negativo puede dar un número más grande: el dibujo del perfil de profundidad, la recta numérica, u otra cosa?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Es el termómetro de qué representación (dibujo vs. recta numérica) ayudó más."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Cierre formato PAES",
+      "_notasInternas": [
+        "Puente de texto + un cuarto chequeo formato PAES embebido (bloque 'pregunta', con notaVerificacionMatematica), antes de los 3 itemsPAES del arreglo del cierre. Números propios (−10, −21), distintos de los usados en el resto de la lección y en itemsPAES."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Restar es encontrar la diferencia de profundidad entre dos puntos, no 'quitar'.\n- Restar un negativo equivale a sumar su opuesto: a − (−b) = a + b, y puede dar un resultado MAYOR.\n- En la recta numérica, mientras más a la izquierda, menor es el número: entre dos negativos, el de mayor valor absoluto es el MENOR.\n\nUn último chequeo antes del cierre formal."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un buzo está a −10 m y otro a −21 m. ¿Cuál es la diferencia de profundidad entre ambos, expresada como (−10) − (−21)?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "11",
+              "esCorrecta": true,
+              "feedback": "Correcto. (−10) − (−21) = −10 + 21 = 11."
+            },
+            {
+              "clave": "B",
+              "texto": "-11",
+              "esCorrecta": false,
+              "feedback": "El tamaño está bien, pero calculaste (−21) − (−10) en vez de (−10) − (−21). Revisa cuál profundidad va primero en la resta.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "C",
+              "texto": "-31",
+              "esCorrecta": false,
+              "feedback": "Trataste −(−21) como −21 en vez de +21, sin invertir el signo del segundo negativo. Restar un negativo equivale a sumar su opuesto.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "D",
+              "texto": "31",
+              "esCorrecta": false,
+              "feedback": "Sumaste las dos profundidades como si fueran distancias que se acumulan (10 + 21), en vez de restarlas con su signo para encontrar la diferencia entre los dos puntos.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "notaVerificacionMatematica": "(−10) − (−21) = −10 + 21 = 11. Comprobación con distancia: entre −21 y −10 hay 11 unidades en la recta numérica. ✓"
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Un buzo está en una inmersión a −7 metros. Continúa bajando hasta llegar a −23 metros. ¿Cuántos metros descendió en total?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "16",
+          "esCorrecta": true,
+          "feedback": "Correcto. Descendió |(−23) − (−7)| = |−16| = 16 metros."
+        },
+        {
+          "clave": "B",
+          "texto": "30",
+          "esCorrecta": false,
+          "feedback": "Sumaste las dos profundidades (7 + 23) como si fueran distancias que se acumulan, en vez de restarlas para encontrar cuánto cambió la posición del buzo.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "-16",
+          "esCorrecta": false,
+          "feedback": "El tamaño está bien, pero calculaste (−7) − (−23) en vez de (−23) − (−7). Además, la pregunta pide 'cuántos metros descendió', que siempre es un número positivo.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "-30",
+          "esCorrecta": false,
+          "feedback": "Trataste −(−23) como −23, sin invertir el signo del segundo negativo. Restar un negativo equivale a sumar su opuesto: (−23) − (−7) = −23 + 7, no −23 − 7.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Descenso = |(−23) − (−7)| = |−23 + 7| = |−16| = 16 metros. Comprobación: partió en −7 y llegó a −23, una diferencia de posición de 16 metros más profundo. ✓"
+    },
+    {
+      "id": "l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "En una recta numérica horizontal, con los negativos a la izquierda del cero, se marcan las profundidades −6 m y −17 m de dos inmersiones. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−17 está más a la izquierda que −6, porque −17 es menor que −6.",
+          "esCorrecta": true,
+          "feedback": "Correcto. −17 < −6, así que −17 se ubica más a la izquierda en la recta numérica."
+        },
+        {
+          "clave": "B",
+          "texto": "−17 está más a la derecha que −6, porque 17 es mayor que 6.",
+          "esCorrecta": false,
+          "feedback": "Estás comparando los números como si no tuvieran signo. Con negativos, el de mayor valor absoluto (17) es en realidad el MENOR: −17 queda a la izquierda de −6, no a la derecha.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "−6 está más a la izquierda que −17, porque la inmersión de −6 es menos profunda.",
+          "esCorrecta": false,
+          "feedback": "Es al revés: como −6 > −17, −6 se ubica más a la DERECHA (más cerca del cero), no más a la izquierda. 'Menos profunda' significa más cerca de la superficie, o sea más a la derecha en esta recta.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "−17 está a la derecha de −6 porque el buzo de −17 recorrió una distancia mayor desde la superficie.",
+          "esCorrecta": false,
+          "feedback": "Estás usando la distancia recorrida (17 metros) para decidir la posición, en vez del valor con signo del número. En la recta numérica la posición la da el número −17 tal como es, no cuánto 'viajó' el buzo.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "Como −17 < −6 (más lejos del cero hacia la izquierda = número menor), −17 se ubica más a la izquierda que −6 en la recta numérica. Comprobación: −17 corresponde a la inmersión más profunda, coherente con estar más a la izquierda del cero. ✓"
+    },
+    {
+      "id": "l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: 'Restar siempre achica el número, así que (−8) − (−20) tiene que dar un resultado menor que −8.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque restar un número siempre reduce el resultado, sin excepciones.",
+          "esCorrecta": false,
+          "feedback": "Esa regla solo vale para restar positivos. Aquí se resta un NEGATIVO, y eso cambia todo: restar un negativo equivale a sumar. Calcula (−8) − (−20) y compara con −8.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "B",
+          "texto": "No: (−8) − (−20) = 12, que es mayor que −8, porque restar un negativo equivale a sumar su opuesto.",
+          "esCorrecta": true,
+          "feedback": "Correcto. (−8) − (−20) = −8 + 20 = 12, y 12 es mayor que −8. La afirmación del estudiante es falsa."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí, porque −20 es menor que −8, y restar un número menor siempre da un resultado menor.",
+          "esCorrecta": false,
+          "feedback": "Esa relación no es cierta al restar negativos. Que −20 sea menor que −8 no dice qué le pasa al resultado de la resta: hay que calcular (−8) − (−20) directamente, no razonar solo con el orden de los números originales.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, porque hay que tratar las profundidades como distancias: sumando 8 y 20 se obtiene 28, un número mayor, que en profundidad significa 'más chico'.",
+          "esCorrecta": false,
+          "feedback": "Estás sumando las profundidades como si fueran distancias que se acumulan, en vez de restarlas con su signo. La operación pedida es una resta de dos enteros con signo, no una suma de distancias.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "(−8) − (−20) = −8 + 20 = 12. Como 12 > −8, la afirmación general 'restar siempre da un resultado menor' es falsa para este caso: restar un negativo equivale a sumar su valor absoluto, lo que puede aumentar el resultado. La alternativa correcta es B. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad/problema/pistas/generalizacion/practica/aplicacion: escenario núcleo de buceo con tres profundidades, −5 m (Grupo C), −12 m (Grupo A), −27 m (Grupo B)",
+    "descubrimiento (Paso 5, insight fijado): (−12) − (−27) = 15",
+    "practica (Paso 7): (−5) − (−27) = 22",
+    "consolidacion (pregunta embebida, Paso 10): (−10) − (−21) = 11",
+    "itemsPAES l1-item-1 (resolver): (−23) − (−7) → descenso de 16 m",
+    "itemsPAES l1-item-2 (representar): comparación de posiciones −6 y −17 en la recta numérica",
+    "itemsPAES l1-item-3 (argumentar): (−8) − (−20) = 12"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
+      "Verificación de colisión de la escena concreta de buceo contra Material/MA-34_Potencia_Ecuacion_Exponencial.md, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: 12, -12, 27, -27, 15, -15, 5, -5, 'desciende a 12 metros', '27 metros bajo la superficie', 'diferencia de profundidad' = NO en todas. Los números sueltos (12, 15, 27) pegaron en 80-90 archivos, calificado por Benja como ruido de substring sin valor de señal, no colisión real. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false
+  },
+  "revisionMatematica": {
+    "aprobada": false
+  }
+}
