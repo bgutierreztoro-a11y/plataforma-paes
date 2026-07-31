@@ -86,7 +86,21 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
       /* Un cierre no se "empieza", se rinde: el verbo dice la acción real
          (MASTER.md §4). */
       accion: estado === "completado" ? "Repasar el cierre" : "Rendir el cierre",
-      rotulo: "Cierre del tema · 8 preguntas formato PAES",
+      /* Cuántas preguntas trae **este** cierre, derivado del contenido. Estaba
+         escrito a mano ("8 preguntas") de cuando había un único cierre global.
+         Los dos que existen hoy traen 8, así que el número todavía no miente,
+         pero con la Enmienda 2 el temario va a 16 cierres y el primero que
+         traiga 6 o 10 lo diría mal sin que nada fallara. `cierreTotalItems` ya
+         viene de `lib/camino.ts` y es el mismo número con el que
+         `estadoDeNodo` decide si el cierre se rindió entero.
+
+         Se omite el conteo si es 0 en vez de anunciar "0 preguntas": eso pasa
+         cuando el cierre quedó fuera por contenido inválido, y ahí el rótulo
+         honesto es el nombre a secas. */
+      rotulo:
+        tema.cierreTotalItems > 0
+          ? `Cierre del tema · ${tema.cierreTotalItems} preguntas formato PAES`
+          : "Cierre del tema",
       descripcion: tema.cierrePublicable
         ? "Todo el tema junto. Al terminarlo comparamos con tu diagnóstico."
         : "Todo el tema junto, en formato PAES.",

@@ -25,10 +25,18 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
 
   return (
     <div className="min-h-full flex-1">
-      {/* `top-0` en móvil, donde la barra de navegación va abajo; en escritorio
-          la barra es sticky arriba y mide 3.25rem, así que la franja se pega
-          justo debajo en vez de quedar tapada. */}
-      <header className="sticky top-0 z-20 border-b border-border bg-surface/95 backdrop-blur-sm sm:top-[3.25rem]">
+      {/* El tope sale de `--tope-nav`: 0 en móvil, donde la barra de navegación
+          va abajo, y 3.25rem en escritorio, donde la barra se pega arriba y la
+          franja tiene que quedar justo debajo en vez de tapada.
+
+          Antes ese 3.25rem estaba escrito acá a mano. Desde que /camino apila
+          dos capas pegadas —su franja y las bandas de eje, que se suman con
+          `calc`— el número vive en una variable, y tenerlo repetido en dos
+          archivos es pedir que se separen el día que la barra cambie de alto. */}
+      <header
+        className="sticky z-20 border-b border-border bg-surface/95 backdrop-blur-sm"
+        style={{ top: "var(--tope-nav)" }}
+      >
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-2 sm:px-6">
           <Link
             href="/camino"

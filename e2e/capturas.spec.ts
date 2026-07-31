@@ -419,6 +419,34 @@ test("tema con los nodos enlazados", async ({ page }, testInfo) => {
   await capturar(page, "4-tema-nodo-cierre", testInfo.project.name);
 });
 
+test("el segundo nivel trata igual a una lección bloqueada", async ({ page }, testInfo) => {
+  /* `enteros-y-racionales` es el módulo recién construido: tres lecciones
+     escritas y las tres en `borrador`. Es el único tema del temario cuyo camino
+     de lecciones está entero en construcción, y hasta ahora ninguna prueba
+     miraba esa pantalla — justo la que muestra el trabajo más reciente.
+
+     Lo que se afirma es que el segundo nivel usa el **mismo** vocabulario que
+     /camino: tarjeta con la razón y botón apagado, no un hueco. Si alguien
+     vuelve a bifurcar los dos niveles, esto se cae. */
+  await limpiar(page);
+  await page.goto("/tema/enteros-y-racionales");
+  await expect(page.getByRole("heading", { name: "Enteros y racionales" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Enteros: operar y ordenar" }).click();
+  const tarjeta = page.locator("aside");
+  await expect(tarjeta.getByRole("button", { name: "Aún no disponible" })).toBeDisabled();
+  await expect(tarjeta).toContainText("Se abre después de la revisión matemática");
+  await expect(tarjeta.getByRole("link")).toHaveCount(0);
+
+  /* El cierre sí es navegable aunque su contenido esté en revisión, y su rótulo
+     dice cuántas preguntas trae **este** cierre, no un número escrito a mano. */
+  await page.getByRole("button", { name: "Cierre del tema" }).click();
+  await expect(tarjeta.getByRole("link", { name: "Rendir el cierre" })).toBeVisible();
+  await expect(tarjeta).toContainText("8 preguntas formato PAES");
+
+  await capturar(page, "4b-tema-lecciones-bloqueadas", testInfo.project.name);
+});
+
 test("/cierre viejo redirige al cierre del tema", async ({ page }) => {
   await page.goto("/cierre");
   await expect(page).toHaveURL(`/cierre/${TEMA}`);
