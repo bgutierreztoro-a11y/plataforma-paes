@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CaminoVertical, type NodoCamino } from "@/components/camino/CaminoVertical";
+import { useEffect } from "react";
+import {
+  CaminoVertical,
+  type NodoCamino,
+  type SeccionCamino,
+} from "@/components/camino/CaminoVertical";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
 import { registrarEvento } from "@/lib/eventos";
+import { ALTO_FRANJA_CAMINO } from "@/lib/geometriaCamino";
 import { TOTAL_TEMAS } from "@/lib/modulos";
-import type { TemaDelCamino } from "@/lib/camino";
+import type { EjeDelCamino, TemaDelCamino } from "@/lib/camino";
 
 const ACCION: Record<EstadoNodo, string> = {
   completado: "Repasar el tema",
@@ -28,28 +33,37 @@ const ACCION: Record<EstadoNodo, string> = {
  * vive en el contenido de las lecciones; la dirección del recorrido es
  * ergonomía. Ver MASTER.md §3.2.
  *
- * Este componente ya no hace layout: cruza el progreso del dispositivo con la
- * taxonomía y le entrega a `CaminoVertical` una lista de nodos. El layout es
+ * **Un solo camino, las 16 unidades (2026-07-31).** Antes se dibujaban solo los
+ * temas con al menos una lección —hoy 3— y los otros 13 vivían en una tarjeta
+ * colapsable al pie, "El resto del temario M1". El estudiante no veía el curso:
+ * veía tres puntos sueltos y una nota al pie. Ahora el temario completo está en
+ * la misma columna, agrupado por eje, con la banda del eje pegada arriba. Los
+ * ejes donde ningún tema tiene lecciones declaradas arrancan plegados, con el
+ * contador en su banda: cuatro discos idénticos que no llevan a ninguna parte
+ * no son información, son cuatro filas gastadas.
+ *
+ * Este componente no hace layout: cruza el progreso del dispositivo con la
+ * taxonomía y le entrega a `CaminoVertical` una lista de tramos. El layout es
  * uno solo y lo comparte con el camino de lecciones de /tema/[id].
  *
  * Isla de cliente: el estado de cada nodo depende del progreso del dispositivo.
  * Antes de hidratar pinta todo con el progreso vacío —el mismo HTML en servidor
  * y en el primer render— y se corrige después.
  */
-export function Camino({
-  temasConNodo,
-  temasSinContenido,
-}: {
-  temasConNodo: TemaDelCamino[];
-  temasSinContenido: TemaDelCamino[];
-}) {
+export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
   const montado = useMontado();
-  const [expandido, setExpandido] = useState(false);
 
   const progreso = montado ? leer() : null;
   const resumen = resumirRespuestas(progreso);
-  const estados = temasConNodo.map((t) => estadoDeNodo(t, progreso, resumen));
-  const completados = estados.filter((e) => e === "completado").length;
+
+  /* Los 16 temas aplanados en orden de temario, con su estado ya resuelto. Se
+     calcula una vez sobre la lista completa —y no eje por eje— porque el
+     contador de avance y el nodo activo son propiedades del camino entero. */
+  const temas = ejes.flatMap((eje) => eje.temas);
+  const estadoPorTema = new Map<string, EstadoNodo>(
+    temas.map((tema) => [tema.id, estadoDeNodo(tema, progreso, resumen)]),
+  );
+  const completados = [...estadoPorTema.values()].filter((e) => e === "completado").length;
 
   /* Una sola vez, después de hidratar: antes de eso `completados` es siempre 0
      porque `progreso` todavía es null (mismo HTML servidor/cliente), y contar
@@ -58,13 +72,13 @@ export function Camino({
     if (!montado) return;
     registrarEvento({
       nombre: "camino_visto",
-      props: { temas_visibles: temasConNodo.length, temas_completados: completados },
+      props: { temas_visibles: temas.length, temas_completados: completados },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- una vez por montaje, cuando montado pasa a true
   }, [montado]);
 
-  const nodos: NodoCamino[] = temasConNodo.map((tema, i) => {
-    const estado = estados[i];
+  const nodoDeTema = (tema: TemaDelCamino): NodoCamino => {
+    const estado = estadoPorTema.get(tema.id)!;
     const avance = avanceDeTema(tema, progreso);
     return {
       id: tema.id,
@@ -81,89 +95,83 @@ export function Camino({
       onAbrir: () =>
         registrarEvento({ nombre: "nodo_tema_abierto", props: { tema_id: tema.id, estado } }),
     };
-  });
+  };
+
+  const secciones: SeccionCamino[] = ejes.map((eje) => ({
+    id: eje.id,
+    titulo: eje.nombre,
+    plegable: eje.colapsado,
+    /* Sin fecha y sin "próximamente": no prometemos plazos que no
+       controlamos. */
+    contador: eje.colapsado
+      ? `${eje.temas.length} ${eje.temas.length === 1 ? "unidad" : "unidades"} en construcción`
+      : undefined,
+    nodos: eje.temas.map(nodoDeTema),
+    onExpandir: () =>
+      registrarEvento({ nombre: "temas_plegados_expandidos", props: { eje_id: eje.id } }),
+  }));
 
   /* Dónde está parado el estudiante: lo empezado manda sobre lo que todavía no
-     abre. Si no hay ninguno de los dos, la tarjeta arranca en el primero. */
-  const indiceActivo = (() => {
-    const enCurso = estados.indexOf("enCurso");
-    if (enCurso !== -1) return enCurso;
-    const disponible = estados.indexOf("disponible");
-    return disponible !== -1 ? disponible : 0;
-  })();
+     abre. Si no hay ninguno de los dos, `CaminoVertical` cae en el primer nodo
+     seleccionable. */
+  const temaActivo =
+    temas.find((t) => estadoPorTema.get(t.id) === "enCurso") ??
+    temas.find((t) => estadoPorTema.get(t.id) === "disponible");
 
   return (
-    <div>
-      <header className="mb-6">
-        <p className="text-sm font-medium uppercase tracking-wide text-ink-suave">
-          Matemática M1 · Piloto privado
-        </p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink lg:text-3xl">
-          Tu camino
-        </h1>
-        <p className="mt-1 text-base text-ink-suave">
+    <div className="min-h-full flex-1">
+      {/* **Franja fija y compacta (2026-07-31).** Antes el encabezado era un
+          bloque de tres líneas que se iba con el scroll y gastaba ~165px del
+          alto de la pantalla antes del primer disco. Con 3 nodos daba lo mismo;
+          con los 16 del temario, ese alto es la diferencia entre ver el camino y
+          ver dos nodos y medio.
+
+          Es el mismo patrón compacto de `DetalleTema`, que es justo lo que hace
+          que /tema/[id] cumpla el objetivo de densidad de MASTER.md §3.2: la
+          identidad de la pantalla se queda arriba mientras se recorre, en vez de
+          cobrarse el alto una sola vez al principio.
+
+          `z-30` la pone sobre las bandas de eje (`z-20`), que se pegan debajo
+          usando `ALTO_FRANJA_CAMINO`. El alto va por `style` y no por clase para
+          que ese número sea uno solo. */}
+      <header
+        className="sticky z-30 border-b border-border bg-surface/95 backdrop-blur-sm"
+        style={{ top: "var(--tope-nav)", height: ALTO_FRANJA_CAMINO }}
+      >
+        <div className="mx-auto flex h-full w-full max-w-5xl items-center gap-3 px-4 sm:px-6">
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-medium uppercase tracking-wide text-ink-tenue">
+              Matemática M1 · Piloto privado
+            </p>
+            <h1 className="truncate text-base font-semibold tracking-tight text-ink sm:text-lg">
+              Tu camino
+            </h1>
+          </div>
           {/* Contador sobre el temario completo, no sobre lo que alcanzamos a
-              construir: el estudiante ve el tamaño real del curso que rinde. */}
-          <span className="font-mono tabular-nums">{completados}</span> de{" "}
-          <span className="font-mono tabular-nums">{TOTAL_TEMAS}</span> unidades del temario M1
-        </p>
+              construir: el estudiante ve el tamaño real del curso que rinde. La
+              forma corta es la que cabe en la franja; el texto entero lo dice el
+              lector de pantalla. */}
+          <p className="shrink-0 text-sm text-ink-suave">
+            <span className="font-mono tabular-nums">{completados}</span>
+            <span aria-hidden="true">/</span>
+            <span className="font-mono tabular-nums">{TOTAL_TEMAS}</span>
+            <span className="sr-only">
+              {" "}
+              unidades del temario M1 completadas de {TOTAL_TEMAS}
+            </span>
+          </p>
+        </div>
       </header>
 
-      <div className="fondo-cuadricula rounded-tarjeta border border-border px-3 py-4 sm:px-4">
-        <CaminoVertical nodos={nodos} indiceActivo={indiceActivo} />
+      <div className="mx-auto w-full max-w-5xl px-4 py-4 sm:px-6">
+        <div className="fondo-cuadricula rounded-tarjeta border border-border px-3 py-4 sm:px-4">
+          <CaminoVertical
+            secciones={secciones}
+            idActivo={temaActivo?.id}
+            desplazamientoSticky={ALTO_FRANJA_CAMINO}
+          />
+        </div>
       </div>
-
-      {/* ---------- el resto del temario, colapsado ---------- */}
-      {temasSinContenido.length > 0 && (
-        <section className="mt-6">
-          <button
-            type="button"
-            onClick={() => {
-              /* Solo el gesto de abrir es la señal que importa: cuánto interés
-                 hay en el resto del temario, no si el estudiante lo volvió a
-                 cerrar. Se lee `expandido` del cierre del render y no del
-                 updater funcional de abajo a propósito: React vuelve a invocar
-                 ese updater en modo estricto de desarrollo para detectar
-                 impurezas, y un evento de analítica ahí adentro se dispararía
-                 dos veces por un solo clic. */
-              if (!expandido) registrarEvento({ nombre: "temas_plegados_expandidos", props: {} });
-              setExpandido((v) => !v);
-            }}
-            aria-expanded={expandido}
-            className="flex min-h-11 w-full items-center justify-between gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            <span>
-              <span className="block text-base font-medium text-ink">
-                El resto del temario M1
-              </span>
-              {/* Sin fecha y sin "próximamente": no prometemos plazos que no
-                  controlamos. */}
-              <span className="block text-sm text-ink-suave">
-                {temasSinContenido.length} unidades en construcción
-              </span>
-            </span>
-            <span aria-hidden="true" className="text-ink-suave">
-              {expandido ? "−" : "+"}
-            </span>
-          </button>
-          {expandido && (
-            <ul className="mt-3 space-y-2">
-              {temasSinContenido.map((tema) => (
-                <li
-                  key={tema.id}
-                  className="rounded-tarjeta border border-dashed border-border px-4 py-3"
-                >
-                  <span className="block text-xs font-medium uppercase tracking-wide text-ink-tenue">
-                    {tema.ejeNombre}
-                  </span>
-                  <span className="block text-sm font-medium text-ink">{tema.nombre}</span>
-                  <span className="block text-sm text-ink-suave">{tema.objetivo}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      )}
     </div>
   );
 }

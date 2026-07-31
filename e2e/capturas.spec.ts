@@ -217,13 +217,114 @@ test("camino", async ({ page }, testInfo) => {
   await sembrar(page, PROGRESO_LECCION_HECHA);
   await page.goto("/camino");
   await expect(page.getByRole("heading", { name: "Tu camino" })).toBeVisible();
-  await expect(page.getByText("unidades del temario M1")).toBeVisible();
+  /* El contador, en la forma **visible** que quedó tras compactar la franja
+     (2026-07-31). Antes decía "0 de 16 unidades del temario M1" en tres líneas;
+     ahora la franja fija muestra "0/16" y la frase larga vive solo en el
+     `sr-only`. Se afirma lo que el estudiante ve: apuntar a la frase larga
+     seguía pasando, pero sobre texto que ya nadie lee — un verde que no
+     comprueba lo que decía comprobar. */
+  await expect(page.locator("header p").last()).toContainText("0/16");
   /* El tema queda "en curso" y no "completado": l2 sigue en borrador, y un tema
      solo se completa con todas sus lecciones declaradas publicables y hechas
      (lib/estadoNodo.ts). El conteo distingue "voy en la mitad" de "terminé", y
      desde el rediseño vive en la tarjeta del nodo activo, no en cada nodo. */
   await expect(page.getByText("1 de 2 lecciones")).toBeVisible();
   await capturar(page, "3-camino", testInfo.project.name);
+});
+
+test("el camino muestra las 16 unidades, con los ejes vacíos plegados", async ({
+  page,
+}, testInfo) => {
+  /* El objetivo del rediseño: un solo camino con el temario completo, agrupado
+     por eje, en vez de tres nodos sueltos y una tarjeta "El resto del temario"
+     al pie.
+
+     Se afirma sobre los cuatro ejes juntos y no sobre uno: lo que puede
+     romperse es el **criterio** de plegado, y un criterio equivocado solo se ve
+     comparando el eje que se pliega con el que no. */
+  await sembrar(page, PROGRESO_LECCION_HECHA);
+  await page.goto("/camino");
+  await expect(page.getByRole("heading", { name: "Tu camino" })).toBeVisible();
+
+  // Los cuatro ejes del temario, cada uno con su banda.
+  for (const eje of ["Números", "Álgebra y funciones", "Geometría", "Probabilidad y estadística"]) {
+    await expect(page.getByRole("heading", { name: eje })).toBeVisible();
+  }
+
+  /* Números va **abierto** aunque sus tres lecciones estén en `borrador`: el
+     criterio de plegado es "sin lección declarada", no "sin lección
+     publicable". Con el otro criterio, el módulo recién construido quedaría
+     escondido.
+
+     Sus tres unidades se afirman por texto y no por rol de botón: el eje entero
+     está en construcción hoy —las tres lecciones de `enteros-y-racionales` en
+     borrador, y `porcentaje` y `potencias-y-raices` sin ninguna—, y un nodo en
+     construcción se pinta como texto atenuado, no como control. Que aparezcan
+     igual es justamente el punto: el estudiante ve el tamaño real del curso. */
+  await expect(page.getByText("Enteros y racionales")).toBeVisible();
+  await expect(page.getByText("Porcentaje")).toBeVisible();
+  await expect(page.getByText("Potencias y raíces")).toBeVisible();
+
+  // Las dos unidades con lección publicable sí son seleccionables.
+  await expect(page.getByRole("button", { name: "Función lineal y afín" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Ecuaciones e inecuaciones de primer grado" }),
+  ).toBeVisible();
+
+  /* Geometría y Probabilidad no tienen ninguna lección declarada: banda con
+     contador y sin discos. */
+  await expect(page.getByText("4 unidades en construcción")).toBeVisible();
+  await expect(page.getByText("3 unidades en construcción")).toBeVisible();
+  await expect(page.getByText("Semejanza y proporcionalidad")).toHaveCount(0);
+
+  // Sin plazos que no controlamos.
+  await expect(page.getByText("próximamente")).toHaveCount(0);
+  // Y sin la tarjeta que este rediseño reemplaza.
+  await expect(page.getByText("El resto del temario M1")).toHaveCount(0);
+
+  // Desplegar un eje plegado saca sus unidades a la columna.
+  await page.getByRole("button", { name: /Geometría/ }).click();
+  await expect(page.getByText("Semejanza y proporcionalidad")).toBeVisible();
+
+  await capturar(page, "3b-camino-16-unidades", testInfo.project.name);
+});
+
+test("caben 5 nodos sin scroll en /camino a 360px", async ({ page }, testInfo) => {
+  /* La densidad de MASTER.md §3.2 se exigía hasta ahora solo en /tema/[id]. La
+     banda de eje consume alto permanente por estar pegada, así que /camino pasa
+     a ser el caso ajustado y hay que exigírselo también.
+
+     **Objetivo 6 de MASTER.md §3.2 pendiente; se revisa cuando la tarjeta quede
+     definitiva en Fase B.** Hoy entran 5. Llegar a 6 exigiría dejar la pantalla
+     sin nada de aire —franja a una sola línea y el camino pegado a los bordes—,
+     y se decidió que el aire vale más que el sexto nodo. Además el denominador
+     está por moverse: la tarjeta mide 178,5px y la Fase B le pone el botón
+     full-width. Ver docs/pendientes.md.
+
+     Se afirma el 5 y no se salta el test: lo que protege es que la densidad no
+     **empeore** mientras tanto. */
+  test.skip(testInfo.project.name !== "movil", "la densidad se exige a 360px");
+
+  await sembrar(page, PROGRESO_LECCION_HECHA);
+  await page.goto("/camino");
+  await expect(page.getByText("Enteros y racionales")).toBeVisible();
+
+  const caben = await page.evaluate(() => {
+    const alto = (sel: string) => {
+      const el = document.querySelector(sel);
+      return el ? el.getBoundingClientRect().height : 0;
+    };
+    const fila = document.querySelector("ol li");
+    const paso = fila ? fila.getBoundingClientRect().height : 0;
+    const caja = document.querySelector(".fondo-cuadricula");
+    /* Desde la primera fila y no desde el borde de la caja: entre los dos está
+       la banda del eje, que es justo lo que hay que descontar. */
+    const desde = fila ? fila.getBoundingClientRect().top : 0;
+    const hasta = window.innerHeight - alto("nav[aria-label]") - alto("aside") - 16;
+    return { caben: paso > 0 ? Math.floor((hasta - desde) / paso) : 0, paso, desde, hasta, caja: !!caja };
+  });
+
+  expect(caben.caben, `medición: ${JSON.stringify(caben)}`).toBeGreaterThanOrEqual(5);
 });
 
 test("tema con los nodos enlazados", async ({ page }, testInfo) => {

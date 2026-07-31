@@ -46,13 +46,121 @@ export function altoDeFila(esMeta: boolean): number {
 }
 
 /**
- * Distancia desde el inicio de la columna hasta el borde inferior de la fila
- * `i`. Es donde se cuelga la tarjeta del nodo activo en escritorio.
+ * Alto de la banda de encabezado de eje, en píxeles.
+ *
+ * **El CSS tiene que fijar `height: 44px` exacto, nunca derivarlo de padding +
+ * line-height.** Es el mismo contrato que `PASO_FILA`: este número entra en el
+ * ancla de la tarjeta del nodo activo, así que si el alto real del encabezado
+ * se separa de esta constante, la tarjeta se despega del nodo — y lo hace en
+ * silencio, sin que nada falle. Un padding que cambie con el tamaño de fuente
+ * del sistema es exactamente esa deriva.
+ *
+ * 44px es además el mínimo táctil de MASTER.md §5, que el encabezado del eje
+ * colapsado necesita por ser un botón.
  */
-export function desplazamientoVertical(metas: readonly boolean[], i: number): number {
+export const ALTO_ENCABEZADO_EJE = 44;
+
+/**
+ * Alto de la franja fija de /camino (eyebrow, "Tu camino" y el contador), en
+ * píxeles.
+ *
+ * No entra en el ancla de la tarjeta —la franja vive fuera de la columna— pero
+ * sí lo comparten dos piezas: la franja lo usa para fijar su alto y las bandas
+ * de eje para saber a qué altura pegarse debajo de ella. Si se separaran, las
+ * bandas quedarían tapadas por la franja o flotando bajo un hueco.
+ *
+ * Mismo patrón compacto que el encabezado de /tema/[id], que es lo que permite
+ * que esa pantalla cumpla el objetivo de densidad de MASTER.md §3.2.
+ */
+export const ALTO_FRANJA_CAMINO = 60;
+
+/**
+ * Un elemento de la columna, en orden visual.
+ *
+ * La columna dejó de ser una lista de nodos cuando /camino pasó a agrupar las
+ * 16 unidades por eje: ahora intercala bandas de encabezado. El ancla de la
+ * tarjeta se calcula sumando altos en orden, así que tiene que poder sumar los
+ * dos tipos de elemento.
+ *
+ * `position: sticky` **no saca al elemento del flujo** — un encabezado pegado
+ * arriba sigue ocupando su alto. Por eso sumarlo es correcto esté quieto o
+ * pegado, y no hace falta medir nada en el navegador.
+ */
+export type ElementoColumna =
+  | { tipo: "encabezado" }
+  | { tipo: "nodo"; meta: boolean };
+
+/** Alto de un elemento de la columna, en píxeles. */
+export function altoDeElemento(elemento: ElementoColumna): number {
+  return elemento.tipo === "encabezado"
+    ? ALTO_ENCABEZADO_EJE
+    : altoDeFila(elemento.meta);
+}
+
+/**
+ * Distancia desde el inicio de la columna hasta el borde inferior del elemento
+ * `i`. Es donde se cuelga la tarjeta del nodo activo en escritorio.
+ *
+ * Los índices fuera de rango se ignoran en vez de sumar un alto por omisión: un
+ * `i` mayor que la columna es un error de quien llama, y devolver el alto total
+ * es más honesto que inventar filas que no existen.
+ */
+export function desplazamientoVertical(
+  elementos: readonly ElementoColumna[],
+  i: number,
+): number {
   let y = 0;
-  for (let k = 0; k <= i; k++) y += altoDeFila(metas[k]);
+  for (let k = 0; k <= i; k++) {
+    const elemento = elementos[k];
+    if (elemento) y += altoDeElemento(elemento);
+  }
   return y;
+}
+
+/**
+ * Cuánto alto ocupa la tarjeta del nodo activo colgando en escritorio, en
+ * píxeles. Es la misma reserva que el hueco del pie de la columna (`h-44` de
+ * Tailwind), y acá se usa como **cota**, no como posición: la tarjeta se
+ * posiciona con `-translate-y-full`, que resuelve el navegador conociendo el
+ * alto real. Un valor aproximado solo hace que se voltee alguna vez de más, que
+ * es inofensivo; que se quede corto, no.
+ */
+export const RESERVA_TARJETA = 176;
+
+/**
+ * ¿La tarjeta, colgando hacia abajo del elemento `i`, alcanzaría a tapar una
+ * banda de encabezado?
+ *
+ * Existe porque tapar una banda no es lo mismo que tapar un nodo. La tarjeta es
+ * un panel flotante y taparle el título a los nodos de abajo es su
+ * comportamiento buscado: basta tocar otro nodo para moverla. Una banda de eje
+ * plegado, en cambio, es un **control** —abre sus unidades—, y taparlo no lo
+ * esconde: se come el clic. Playwright lo encontró intentando desplegar
+ * Geometría con la tarjeta encima.
+ *
+ * No alcanza con mirar el elemento inmediatamente siguiente, que es lo que
+ * hacía la primera versión: la tarjeta mide más que una fila, así que llega a
+ * una banda que está dos elementos más abajo. El caso real es exactamente ese
+ * —el nodo activo es "Función lineal y afín", debajo va "Función cuadrática" y
+ * recién después la banda de Geometría.
+ */
+export function tapariaUnaBanda(
+  elementos: readonly ElementoColumna[],
+  i: number,
+): boolean {
+  if (i < 0) return false;
+  const borde = desplazamientoVertical(elementos, i);
+  const limite = borde + RESERVA_TARJETA;
+
+  /* `techo` es el borde superior del elemento `k`, que arranca siendo el borde
+     inferior del activo. Se recorre hacia abajo mientras la tarjeta siga
+     llegando. */
+  let techo = borde;
+  for (let k = i + 1; k < elementos.length && techo < limite; k++) {
+    if (elementos[k].tipo === "encabezado") return true;
+    techo += altoDeElemento(elementos[k]);
+  }
+  return false;
 }
 
 /**

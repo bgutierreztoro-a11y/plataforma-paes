@@ -85,23 +85,57 @@ export function temasDelCamino(): TemaDelCamino[] {
 }
 
 /**
- * Temas que se dibujan como nodos: los que tienen al menos una lección, esté
- * publicable o no.
+ * Temas que tienen página propia y cuentan para el avance: los que tienen al
+ * menos una lección, esté publicable o no.
  *
- * Por qué "con lección" y no "con lección publicable": un tema que ya tiene
- * contenido escrito y esperando revisión es parte del camino visible, y su nodo
- * en construcción es lo que le dice al estudiante que el curso avanza. Además,
- * con un solo nodo la recta ascendente no se lee como recta — se lee como un
- * punto suelto.
+ * Ya **no** es el filtro de qué se dibuja en /camino —desde la agrupación por
+ * ejes se dibujan los 16—, pero sigue siendo el de qué es navegable: alimenta
+ * `generateStaticParams` de `/tema/[id]` y de `/tema/[id]/completado`, y el
+ * denominador de la portada. Un tema sin ninguna lección no tiene nada que
+ * mostrar en su página.
  */
 export function temasConNodo(): TemaDelCamino[] {
   return temasDelCamino().filter((t) => t.lecciones.length > 0);
 }
 
-/** Temas sin ninguna lección todavía: van en la sección colapsada del pie, sin
- *  nodo propio, para que el camino no se lea como un sitio en obras. */
-export function temasSinContenido(): TemaDelCamino[] {
-  return temasDelCamino().filter((t) => t.lecciones.length === 0);
+/** Un eje del temario con sus temas resueltos, tal como lo recorre /camino. */
+export interface EjeDelCamino {
+  id: string;
+  nombre: string;
+  temas: TemaDelCamino[];
+  /**
+   * Un eje donde **ningún** tema tiene lecciones declaradas arranca plegado,
+   * con el contador en la banda, en vez de gastar cuatro filas en cuatro discos
+   * idénticos que no llevan a ninguna parte.
+   *
+   * El criterio es "sin lección declarada" y no "sin lección publicable" a
+   * propósito: hoy las tres lecciones de `enteros-y-racionales` están en
+   * `borrador`, y con el criterio de publicable el eje Números se plegaría
+   * entero — escondiendo el módulo recién construido justo cuando lo que el
+   * camino tiene que comunicar es que el curso avanza.
+   */
+  colapsado: boolean;
+}
+
+/**
+ * Los 4 ejes del temario M1 con sus 16 temas, en orden DEMRE.
+ *
+ * El orden sale de `EJES` (`lib/modulos.ts`) y de ningún otro lado: la posición
+ * en ese array **es** la secuencia. Esta función no reordena ni renumera nada,
+ * solo agrupa lo que `temasDelCamino()` ya devuelve en orden.
+ */
+export function ejesDelCamino(): EjeDelCamino[] {
+  const porTema = new Map(temasDelCamino().map((t) => [t.id, t]));
+
+  return EJES.map((eje) => {
+    const temas = eje.temas.map((t) => porTema.get(t.id)!);
+    return {
+      id: eje.id,
+      nombre: eje.nombre,
+      temas,
+      colapsado: temas.every((t) => t.lecciones.length === 0),
+    };
+  });
 }
 
 export function temaDelCaminoPorId(id: string): TemaDelCamino | undefined {

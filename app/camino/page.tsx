@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Camino } from "@/components/camino/Camino";
-import { temasConNodo, temasSinContenido } from "@/lib/camino";
+import { ejesDelCamino } from "@/lib/camino";
 
 export const metadata: Metadata = {
   title: "Tu camino",
@@ -14,11 +14,8 @@ export const metadata: Metadata = {
  * depende del progreso guardado en el dispositivo.
  */
 export default function PaginaCamino() {
-  return (
-    <div className="min-h-full flex-1 px-4 py-10 sm:px-6">
-      <div className="mx-auto w-full max-w-5xl">
-        <Camino temasConNodo={temasConNodo()} temasSinContenido={temasSinContenido()} />
-      </div>
-    </div>
-  );
+  /* Sin envoltorio con padding: la franja fija de `Camino` va a sangre para
+     poder pegarse arriba, así que el ancho y el aire los administra el propio
+     componente. Mismo reparto que /tema/[id] con `DetalleTema`. */
+  return <Camino ejes={ejesDelCamino()} />;
 }

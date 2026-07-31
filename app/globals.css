@@ -55,6 +55,26 @@ body {
   color: var(--color-ink);
 }
 
+/* Dónde empieza a pegarse lo que va fijo arriba.
+ *
+ * La barra de navegación es fija abajo en móvil y pegada arriba en escritorio,
+ * donde mide 3.25rem. Todo lo demás que se pega —la franja de /camino, las
+ * bandas de eje— tiene que arrancar debajo de ella o queda tapado.
+ *
+ * Vive acá y no en una clase de Tailwind porque los offsets se **suman**: la
+ * banda de un eje se pega bajo la franja, que a su vez se pega bajo la barra.
+ * Con clases habría que escribir a mano cada total, y un `calc()` con valores
+ * dinámicos no lo alcanza el JIT de Tailwind. */
+:root {
+  --tope-nav: 0px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --tope-nav: 3.25rem;
+  }
+}
+
 /* Textura de fondo tipo papel milimetrado: dos pares de líneas repetidas
    (finas cada 24px, fuertes cada 120px). Solo se aplica donde el diseño lo
    pide explícitamente (portada, transiciones entre pasos) — nunca detrás de

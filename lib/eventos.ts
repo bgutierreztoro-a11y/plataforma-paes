@@ -36,7 +36,13 @@ export type Evento =
      cada decisión real de esta pantalla se mide. */
   | { nombre: "cierre_repetido_elegido"; props: { leccion_id: string } }
   | { nombre: "tema_celebrado"; props: { tema_id: string } }
-  | { nombre: "temas_plegados_expandidos"; props: Record<string, never> };
+  /* Cuánto interés hay en el resto del temario. Desde la agrupación por ejes
+     (2026-07-31) lo que se pliega es un eje y no "el resto" en bloque, así que
+     el evento dice cuál: sin `eje_id`, cuatro bandas distintas producirían el
+     mismo dato y no se sabría si el interés está en Geometría o en
+     Probabilidad. Se conserva el nombre en vez de inventar uno nuevo — es el
+     mismo gesto sobre la misma pregunta, y renombrarlo cortaría la serie. */
+  | { nombre: "temas_plegados_expandidos"; props: { eje_id: string } };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en

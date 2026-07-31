@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { EnlaceBoton } from "@/components/ui/Boton";
 import { PuntoNodo } from "@/components/camino/NodoTema";
+import { EncabezadoEje } from "@/components/camino/EncabezadoEje";
 import {
   ANCHO_CANALETA,
   ANCHO_COLUMNA,
@@ -10,6 +11,8 @@ import {
   desplazamientoDeNodo,
   desplazamientoVertical,
   retrasoDeEntrada,
+  tapariaUnaBanda,
+  type ElementoColumna,
 } from "@/lib/geometriaCamino";
 import type { EstadoNodo } from "@/lib/estadoNodo";
 
@@ -50,6 +53,34 @@ export interface NodoCamino {
 }
 
 /**
+ * Un tramo del camino con su banda de encabezado.
+ *
+ * En /camino es un eje del temario; en /tema/[id] hay un solo tramo sin
+ * encabezado, y entonces la columna es exactamente la de antes de agrupar por
+ * ejes. Esa equivalencia está afirmada en `lib/geometriaCamino.test.ts`.
+ */
+export interface SeccionCamino {
+  id: string;
+  /** Ausente = tramo sin banda. La geometría no suma nada por él. */
+  titulo?: string;
+  /** Solo en tramos plegables: "4 unidades en construcción". Ya formateado. */
+  contador?: string;
+  /** Arranca plegado y su banda es un botón que lo despliega. */
+  plegable?: boolean;
+  nodos: NodoCamino[];
+  /** Se dispara al **desplegar**, nunca al volver a plegar: lo que interesa
+   *  medir es el interés, no el arrepentimiento. */
+  onExpandir?: () => void;
+}
+
+/** Lo que se pinta, en orden visual, ya resuelto qué tramos están desplegados.
+ *  `indiceNodo` corre solo sobre nodos: es el que alimenta el zigzag y el
+ *  escalonamiento de entrada, que no saben de bandas. */
+type Item =
+  | { clase: "encabezado"; seccion: SeccionCamino }
+  | { clase: "nodo"; nodo: NodoCamino; indiceNodo: number; primeroDelTramo: boolean };
+
+/**
  * El camino, en columna y hacia abajo.
  *
  * **Por qué baja (enmienda del 2026-07-27).** Antes subía, sobre una recta
@@ -70,66 +101,167 @@ export interface NodoCamino {
  * detalle completo aparece una sola vez, para el nodo activo, y se mueve al
  * tocar otro. Antes cada nodo llevaba eje, descripción, contador y chip, y en
  * 360px eso dejaba dos nodos y medio en pantalla.
+ *
+ * **La columna se recorre por tramos (2026-07-31).** /camino pasó de dibujar
+ * los 3 temas con contenido a dibujar los 16 del temario, agrupados por eje con
+ * la banda del eje pegada arriba. El ancla de la tarjeta ya no puede multiplicar
+ * por el alto de fila: suma altos de elementos, y las bandas son elementos.
+ * `position: sticky` no saca del flujo, así que la suma vale igual con la banda
+ * pegada — no hay que medir nada en el navegador.
  */
 export function CaminoVertical({
-  nodos,
-  indiceActivo,
+  secciones,
+  idActivo,
+  desplazamientoSticky = 0,
 }: {
-  nodos: NodoCamino[];
-  /** Dónde está parado el estudiante. La tarjeta arranca acá y sigue a este
-   *  índice mientras nadie toque otro nodo — que es lo que hace que el estado
-   *  llegue bien después de hidratar, sin un efecto que lo sincronice. */
-  indiceActivo: number;
+  secciones: SeccionCamino[];
+  /** Cuánto ocupa la franja fija de la pantalla, para que las bandas de eje se
+   *  peguen debajo de ella y no detrás. */
+  desplazamientoSticky?: number;
+  /** Dónde está parado el estudiante, por id de nodo. La tarjeta arranca acá y
+   *  sigue a este nodo mientras nadie toque otro — que es lo que hace que el
+   *  estado llegue bien después de hidratar, sin un efecto que lo sincronice.
+   *
+   *  Es un id y no un índice a propósito: con bandas intercaladas hay dos
+   *  numeraciones distintas (la de nodos y la de la columna) y pasar la
+   *  equivocada no fallaría, solo pondría la tarjeta en otro nodo. */
+  idActivo?: string;
 }) {
-  const [elegido, setElegido] = useState<number | null>(null);
+  const [elegido, setElegido] = useState<string | null>(null);
+  const [expandidas, setExpandidas] = useState<ReadonlySet<string>>(new Set());
 
+  /* Un nodo en construcción no es seleccionable: no tiene tarjeta que mostrar.
+     (Fase B del rediseño lo cambia: pasará a mostrar tarjeta con el botón
+     deshabilitado y la razón por la que no se puede entrar.) */
   const seleccionable = (n: NodoCamino) => n.estado !== "enConstruccion";
-  /* Un nodo en construcción nunca queda seleccionado, ni siquiera si el índice
-     activo apunta ahí: no tiene tarjeta que mostrar. */
-  const indice =
-    elegido !== null && seleccionable(nodos[elegido])
-      ? elegido
-      : nodos.findIndex(seleccionable) === -1
-        ? -1
-        : seleccionable(nodos[indiceActivo] ?? nodos[0])
-          ? indiceActivo
-          : nodos.findIndex(seleccionable);
 
-  const activo = indice >= 0 ? nodos[indice] : undefined;
+  /* La columna visible, en orden. Un tramo plegable oculta sus nodos pero
+     conserva su banda: la banda es lo que dice cuántos hay y cómo abrirlos. */
+  const items: Item[] = [];
+  let indiceNodo = 0;
+  for (const seccion of secciones) {
+    if (seccion.titulo !== undefined) {
+      items.push({ clase: "encabezado", seccion });
+    }
+    if (seccion.plegable && !expandidas.has(seccion.id)) continue;
+    seccion.nodos.forEach((nodo, i) => {
+      items.push({ clase: "nodo", nodo, indiceNodo, primeroDelTramo: i === 0 });
+      indiceNodo++;
+    });
+  }
 
-  /* Las posiciones se calculan una vez, acá, y se reparten. Que el disco, el
-     trazo que llega a él y el ancla de la tarjeta salgan del mismo número es lo
-     que hace que el trazo toque el centro del disco en vez de pasar cerca. */
-  const metas = nodos.map((n) => n.meta === true);
-  const equis = nodos.map((n, i) => desplazamientoDeNodo(i, n.meta));
+  const elementos: ElementoColumna[] = items.map((item) =>
+    item.clase === "encabezado"
+      ? { tipo: "encabezado" }
+      : { tipo: "nodo", meta: item.nodo.meta === true },
+  );
 
-  /* Caso que el comentario de abajo no contemplaba: si la fila que la tarjeta
-     taparía es la última (la meta), no hay ningún nodo más abajo al que el
-     estudiante pueda saltar para destaparla — queda inalcanzable en
-     escritorio. Cuando pasa, la tarjeta cuelga hacia arriba del nodo activo en
-     vez de hacia abajo. */
-  const siguienteEsMeta = indice >= 0 && metas[indice + 1] === true;
+  /* El índice de nodo de cada uno, para no ir a buscarlo dentro del render. */
+  const indicePorId = new Map(
+    items.flatMap((item) => (item.clase === "nodo" ? [[item.nodo.id, item.indiceNodo]] : [])),
+  );
+
+  /* Qué nodo lleva la tarjeta: lo tocado manda sobre lo que el progreso dice,
+     y si ninguno de los dos sirve, el primero que se pueda seleccionar. Un id
+     que quedó dentro de un tramo plegado no cuenta: no está en pantalla. */
+  const indiceDe = (id: string | null | undefined) =>
+    id == null
+      ? -1
+      : items.findIndex(
+          (item) => item.clase === "nodo" && item.nodo.id === id && seleccionable(item.nodo),
+        );
+
+  const indice = (() => {
+    const tocado = indiceDe(elegido);
+    if (tocado !== -1) return tocado;
+    const delProgreso = indiceDe(idActivo);
+    if (delProgreso !== -1) return delProgreso;
+    return items.findIndex((item) => item.clase === "nodo" && seleccionable(item.nodo));
+  })();
+
+  const itemActivo = indice >= 0 ? items[indice] : undefined;
+  const activo = itemActivo?.clase === "nodo" ? itemActivo.nodo : undefined;
+
+  /* En escritorio la tarjeta cuelga hacia abajo y tapa lo que venga: eso es lo
+     que hace un panel flotante, y tapar títulos de nodos es aceptable porque
+     basta tocar otro nodo para moverla. Hay dos casos donde no lo es, y en los
+     dos la tarjeta se voltea y cuelga hacia arriba:
+
+     - **La meta.** Es la última fila, así que no hay ningún nodo más abajo al
+       que saltar para destaparla — queda inalcanzable.
+     - **Una banda de eje.** Es un control: la banda de un eje plegado abre sus
+       unidades. Taparla no la esconde, la deshabilita — el clic se lo come la
+       tarjeta. Lo detectó Playwright al intentar desplegar Geometría con la
+       tarjeta encima.
+
+     El segundo caso mira todo el alcance de la tarjeta y no solo el elemento
+     siguiente: la tarjeta mide más que una fila, así que llega a una banda que
+     está dos elementos más abajo. Ver `tapariaUnaBanda`. */
+  const siguiente = indice >= 0 ? items[indice + 1] : undefined;
+  const voltear =
+    (siguiente?.clase === "nodo" && siguiente.nodo.meta === true) ||
+    tapariaUnaBanda(elementos, indice);
+
+  const alternar = (seccion: SeccionCamino) => {
+    /* Solo el gesto de abrir es la señal que importa: cuánto interés hay en el
+       resto del temario, no si el estudiante lo volvió a cerrar. Se lee el set
+       del cierre del render y no del updater funcional de abajo a propósito:
+       React vuelve a invocar ese updater en modo estricto de desarrollo para
+       detectar impurezas, y un evento de analítica ahí adentro se dispararía
+       dos veces por un solo clic. */
+    if (!expandidas.has(seccion.id)) seccion.onExpandir?.();
+    setExpandidas((previas) => {
+      const siguientes = new Set(previas);
+      if (siguientes.has(seccion.id)) siguientes.delete(seccion.id);
+      else siguientes.add(seccion.id);
+      return siguientes;
+    });
+  };
 
   return (
-    <div
-      className="relative mx-auto w-full"
-      style={{ maxWidth: ANCHO_COLUMNA }}
-    >
-      <ol className="relative">
-        {nodos.map((nodo, i) => (
-          <FilaCamino
-            key={nodo.id}
-            nodo={nodo}
-            indice={i}
-            x={equis[i]}
-            xAnterior={i > 0 ? equis[i - 1] : undefined}
-            alto={altoDeFila(metas[i])}
-            altoAnterior={i > 0 ? altoDeFila(metas[i - 1]) : 0}
-            seleccionado={i === indice}
-            onSeleccionar={() => setElegido(i)}
-          />
-        ))}
-      </ol>
+    <div className="relative mx-auto w-full" style={{ maxWidth: ANCHO_COLUMNA }}>
+      {secciones.map((seccion) => {
+        const desplegada = !seccion.plegable || expandidas.has(seccion.id);
+        return (
+          <section key={seccion.id}>
+            {seccion.titulo !== undefined && (
+              <EncabezadoEje
+                nombre={seccion.titulo}
+                contador={seccion.contador}
+                desplazamientoSticky={desplazamientoSticky}
+                expandido={seccion.plegable ? desplegada : undefined}
+                onAlternar={seccion.plegable ? () => alternar(seccion) : undefined}
+              />
+            )}
+            {desplegada && (
+              <ol className="relative">
+                {seccion.nodos.map((nodo, i) => {
+                  const n = indicePorId.get(nodo.id) ?? i;
+                  const anterior = seccion.nodos[i - 1];
+                  return (
+                    <FilaCamino
+                      key={nodo.id}
+                      nodo={nodo}
+                      indice={n}
+                      x={desplazamientoDeNodo(n, nodo.meta)}
+                      /* El trazo no cruza la banda de un eje: cada tramo empieza
+                         su propio recorrido. Una línea por debajo de una franja
+                         opaca y pegada se vería solo a ratos, según el scroll. */
+                      xAnterior={
+                        anterior ? desplazamientoDeNodo(n - 1, anterior.meta) : undefined
+                      }
+                      alto={altoDeFila(nodo.meta === true)}
+                      altoAnterior={anterior ? altoDeFila(anterior.meta === true) : 0}
+                      seleccionado={activo?.id === nodo.id}
+                      onSeleccionar={() => setElegido(nodo.id)}
+                    />
+                  );
+                })}
+              </ol>
+            )}
+          </section>
+        );
+      })}
 
       {/* **Una sola tarjeta**, reposicionada por CSS.
           - Móvil: fija al pie. `bottom-14` libra la barra de navegación, que
@@ -153,19 +285,19 @@ export function CaminoVertical({
         <aside
           aria-live="polite"
           className={`fixed inset-x-0 bottom-14 z-30 px-4 pb-4 sm:absolute sm:bottom-auto sm:left-[var(--canaleta)] sm:right-0 sm:top-[var(--anclaje)] sm:px-0 sm:pb-0${
-            siguienteEsMeta ? " sm:-translate-y-full" : ""
+            voltear ? " sm:-translate-y-full" : ""
           }`}
           style={
             {
               /* Colgando hacia abajo, el ancla es el borde inferior de la fila
-                 activa. Volteado (`siguienteEsMeta`), el ancla pasa a ser su
-                 borde superior, y `-translate-y-full` sube la tarjeta por su
-                 propio alto —desconocido acá, lo resuelve el navegador— para
-                 que termine justo encima en vez de justo debajo. */
+                 activa. Volteada (`voltear`), el ancla pasa a ser su borde
+                 superior, y `-translate-y-full` sube la tarjeta por su propio
+                 alto —desconocido acá, lo resuelve el navegador— para que
+                 termine justo encima en vez de justo debajo. */
               "--anclaje": `${
-                siguienteEsMeta
-                  ? desplazamientoVertical(metas, indice) - altoDeFila(metas[indice])
-                  : desplazamientoVertical(metas, indice)
+                voltear
+                  ? desplazamientoVertical(elementos, indice) - altoDeFila(activo.meta === true)
+                  : desplazamientoVertical(elementos, indice)
               }px`,
               "--canaleta": `${ANCHO_CANALETA}px`,
             } as React.CSSProperties
@@ -251,46 +383,69 @@ function FilaCamino({
         </svg>
       )}
 
-      {/* El disco. Posición y animación en elementos distintos: `entra-nodo`
-          anima `transform`, que es lo mismo que usa el centrado, y juntos el
-          keyframe pisa la posición. */}
-      <span
-        className="absolute z-10 -translate-x-1/2"
-        style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
-      >
-        <span
-          className="entra-nodo block"
-          style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
-        >
-          <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
-        </span>
-      </span>
+      {/* El disco y el título son **un solo botón** (2026-07-31). Antes el
+          disco era decorativo y solo el título seleccionaba, lo que contradecía
+          MASTER.md §3.2 —"el disco es lo que se toca"— y dejaba fuera del área
+          táctil justo el elemento más grande y más obvio de la fila.
 
-      {/* El título, al costado. No se desplaza con el zigzag: si el texto
-          bailara, la columna dejaría de leerse como columna.
-
-          A dos líneas como máximo. La fila tiene alto fijo, así que un título de
-          tres líneas —"Ecuaciones e inecuaciones de primer grado" ya llega—
-          desborda hacia la fila de al lado. El nombre completo no se pierde: es
-          el título de la tarjeta en cuanto el nodo queda activo. */}
+          El disco sigue posicionado en la canaleta con la geometría del zigzag;
+          lo que cambió es que ahora vive dentro del botón en vez de al lado.
+          `entra-nodo` anima `transform`, que es lo mismo que usa el centrado,
+          así que la posición y la animación siguen en elementos distintos: si
+          compartieran uno, el keyframe pisaría la posición. */}
       {enConstruccion ? (
-        <span
-          className="line-clamp-2 min-w-0 flex-1 text-base font-medium leading-snug text-ink-tenue"
-          style={{ marginLeft: ANCHO_CANALETA }}
-        >
-          {nodo.titulo}
-        </span>
+        <>
+          <span
+            className="absolute z-10 -translate-x-1/2"
+            style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
+          >
+            <span
+              className="entra-nodo block"
+              style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
+            >
+              <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
+            </span>
+          </span>
+          {/* A dos líneas como máximo. La fila tiene alto fijo, así que un
+              título de tres líneas —"Ecuaciones e inecuaciones de primer grado"
+              ya llega— desborda hacia la fila de al lado. */}
+          <span
+            className="line-clamp-2 min-w-0 flex-1 text-base font-medium leading-snug text-ink-tenue"
+            style={{ marginLeft: ANCHO_CANALETA }}
+          >
+            {nodo.titulo}
+          </span>
+        </>
       ) : (
         <button
           type="button"
           onClick={onSeleccionar}
           aria-current={seleccionado ? "true" : undefined}
-          className={`z-10 line-clamp-2 min-h-11 min-w-0 flex-1 rounded-tarjeta px-2 py-3 text-left text-base font-semibold leading-snug motion-safe:transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-            seleccionado ? "text-accent-fuerte" : "text-ink hover:text-accent"
-          }`}
-          style={{ marginLeft: ANCHO_CANALETA }}
+          className="absolute inset-0 z-10 flex items-center rounded-tarjeta text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
         >
-          {nodo.titulo}
+          <span
+            className="absolute -translate-x-1/2"
+            style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
+          >
+            <span
+              className="entra-nodo block"
+              style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
+            >
+              <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
+            </span>
+          </span>
+          {/* El título no se desplaza con el zigzag: si el texto bailara, la
+              columna dejaría de leerse como columna. El nombre completo no se
+              pierde cuando se recorta: es el título de la tarjeta en cuanto el
+              nodo queda activo. */}
+          <span
+            className={`line-clamp-2 min-w-0 flex-1 pr-2 text-base font-semibold leading-snug motion-safe:transition-colors ${
+              seleccionado ? "text-accent-fuerte" : "text-ink"
+            }`}
+            style={{ marginLeft: ANCHO_CANALETA }}
+          >
+            {nodo.titulo}
+          </span>
         </button>
       )}
     </li>

@@ -1,6 +1,10 @@
 "use client";
 
-import { CaminoVertical, type NodoCamino } from "@/components/camino/CaminoVertical";
+import {
+  CaminoVertical,
+  type NodoCamino,
+  type SeccionCamino,
+} from "@/components/camino/CaminoVertical";
 import { COPY_EN_PREPARACION } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
@@ -92,16 +96,19 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
 
   /* La tarjeta arranca en lo empezado; si no hay nada empezado, en lo primero
      que se puede hacer. */
-  const indiceActivo = (() => {
-    const enCurso = nodos.findIndex((n) => n.estado === "enCurso");
-    if (enCurso !== -1) return enCurso;
-    const disponible = nodos.findIndex((n) => n.estado === "disponible");
-    return disponible !== -1 ? disponible : 0;
-  })();
+  const activo =
+    nodos.find((n) => n.estado === "enCurso") ?? nodos.find((n) => n.estado === "disponible");
+
+  /* Un solo tramo y **sin banda de encabezado**: el eje y el tema ya los dice
+     el encabezado fijo de la pantalla (`DetalleTema`), y repetirlos acá gastaría
+     44px de alto para no agregar nada. Sin banda, la geometría de la columna es
+     exactamente la de antes de agrupar por ejes — equivalencia afirmada en
+     `lib/geometriaCamino.test.ts`. */
+  const secciones: SeccionCamino[] = [{ id: tema.id, nodos }];
 
   return (
     <div className="fondo-cuadricula rounded-tarjeta border border-border px-3 py-4 sm:px-4">
-      <CaminoVertical nodos={nodos} indiceActivo={indiceActivo} />
+      <CaminoVertical secciones={secciones} idActivo={activo?.id} />
     </div>
   );
 }
