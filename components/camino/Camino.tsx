@@ -6,6 +6,7 @@ import {
   type NodoCamino,
   type SeccionCamino,
 } from "@/components/camino/CaminoVertical";
+import { COPY_EN_PREPARACION } from "@/components/camino/NodoTema";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
@@ -21,6 +22,27 @@ const ACCION: Record<EstadoNodo, string> = {
   disponible: "Empezar el tema",
   enConstruccion: "",
 };
+
+/**
+ * Por qué este tema todavía no se puede abrir.
+ *
+ * Son dos casos y no uno, y la diferencia importa: un tema con lecciones ya
+ * escritas está esperando revisión —hay algo hecho y hay un criterio conocido
+ * para abrirlo—, mientras que uno sin ninguna lección todavía no tiene nada que
+ * revisar. Decir lo mismo de los dos convertiría la promesa de revisión en algo
+ * que no existe.
+ *
+ * El primer caso reusa el copy que ya escribió el camino de lecciones en vez de
+ * duplicarlo: es la misma situación un nivel más abajo, y dos textos para el
+ * mismo hecho se desincronizan al primer retoque.
+ *
+ * Ninguno de los dos promete fechas.
+ */
+function razonDeBloqueo(tema: TemaDelCamino): string {
+  return tema.lecciones.length === 0
+    ? "Todavía no tiene lecciones. Estamos construyendo el temario unidad por unidad."
+    : COPY_EN_PREPARACION;
+}
 
 /**
  * El camino de temas: una columna de nodos que baja, sobre el papel milimetrado
@@ -87,7 +109,11 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
       href: estado === "enConstruccion" ? undefined : `/tema/${tema.id}`,
       accion: ACCION[estado],
       rotulo: tema.ejeNombre,
-      descripcion: tema.objetivo,
+      /* En un tema bloqueado la tarjeta dice **por qué** no se puede entrar, no
+         qué se va a poder hacer. Son dos razones distintas y confundirlas
+         miente: un tema con lecciones escritas espera revisión, uno sin
+         ninguna no tiene nada que revisar todavía. */
+      descripcion: estado === "enConstruccion" ? razonDeBloqueo(tema) : tema.objetivo,
       /* El conteo solo aparece cuando dice algo que el estado no dice: en un
          tema de una sola lección es ruido. */
       contador:

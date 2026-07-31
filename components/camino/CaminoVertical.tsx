@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { EnlaceBoton } from "@/components/ui/Boton";
+import { Boton, EnlaceBoton } from "@/components/ui/Boton";
 import { PuntoNodo } from "@/components/camino/NodoTema";
 import { EncabezadoEje } from "@/components/camino/EncabezadoEje";
 import {
@@ -12,6 +12,7 @@ import {
   desplazamientoVertical,
   retrasoDeEntrada,
   tapariaUnaBanda,
+  RESERVA_TARJETA,
   type ElementoColumna,
 } from "@/lib/geometriaCamino";
 import type { EstadoNodo } from "@/lib/estadoNodo";
@@ -130,11 +131,6 @@ export function CaminoVertical({
   const [elegido, setElegido] = useState<string | null>(null);
   const [expandidas, setExpandidas] = useState<ReadonlySet<string>>(new Set());
 
-  /* Un nodo en construcción no es seleccionable: no tiene tarjeta que mostrar.
-     (Fase B del rediseño lo cambia: pasará a mostrar tarjeta con el botón
-     deshabilitado y la razón por la que no se puede entrar.) */
-  const seleccionable = (n: NodoCamino) => n.estado !== "enConstruccion";
-
   /* La columna visible, en orden. Un tramo plegable oculta sus nodos pero
      conserva su banda: la banda es lo que dice cuántos hay y cómo abrirlos. */
   const items: Item[] = [];
@@ -161,22 +157,40 @@ export function CaminoVertical({
     items.flatMap((item) => (item.clase === "nodo" ? [[item.nodo.id, item.indiceNodo]] : [])),
   );
 
-  /* Qué nodo lleva la tarjeta: lo tocado manda sobre lo que el progreso dice,
-     y si ninguno de los dos sirve, el primero que se pueda seleccionar. Un id
-     que quedó dentro de un tramo plegado no cuenta: no está en pantalla. */
+  /* Qué nodo lleva la tarjeta: lo tocado manda sobre lo que el progreso dice, y
+     si ninguno de los dos sirve, el primero de la columna.
+
+     **Todos los nodos sirven (2026-07-31).** Antes uno en construcción quedaba
+     excluido de esta resolución porque no tenía tarjeta que mostrar, y el
+     camino terminaba diciendo que algo no se podía abrir sin decir nunca por
+     qué. Ahora su tarjeta trae la razón y el botón deshabilitado, así que no
+     hay motivo para saltárselo. Un id dentro de un tramo plegado sigue sin
+     contar, pero por otra razón: no está en pantalla. */
   const indiceDe = (id: string | null | undefined) =>
     id == null
       ? -1
-      : items.findIndex(
-          (item) => item.clase === "nodo" && item.nodo.id === id && seleccionable(item.nodo),
-        );
+      : items.findIndex((item) => item.clase === "nodo" && item.nodo.id === id);
 
   const indice = (() => {
     const tocado = indiceDe(elegido);
     if (tocado !== -1) return tocado;
     const delProgreso = indiceDe(idActivo);
     if (delProgreso !== -1) return delProgreso;
-    return items.findIndex((item) => item.clase === "nodo" && seleccionable(item.nodo));
+
+    /* De arranque, el primer nodo que **se pueda abrir**. Un nodo bloqueado es
+       seleccionable —para eso tiene tarjeta con la razón— pero no es un buen
+       lugar donde dejar parado a alguien que todavía no tocó nada: la pantalla
+       abriría ofreciendo un botón apagado.
+
+       Importa cuando no hay nada empezado ni disponible: con una deuda de
+       repaso y el resto en construcción, `idActivo` viene vacío y sin este
+       filtro la tarjeta caía en la primera unidad del temario, que hoy está en
+       borrador. Solo si no hay ninguno abrible se cae al primero, que es mejor
+       que no mostrar tarjeta. */
+    const abrible = items.findIndex(
+      (item) => item.clase === "nodo" && item.nodo.estado !== "enConstruccion",
+    );
+    return abrible !== -1 ? abrible : items.findIndex((item) => item.clase === "nodo");
   })();
 
   const itemActivo = indice >= 0 ? items[indice] : undefined;
@@ -307,9 +321,30 @@ export function CaminoVertical({
         </aside>
       )}
 
-      {/* Reserva para que la tarjeta de escritorio no se salga del contenedor
-          cuando el nodo activo es el último. */}
-      <div aria-hidden="true" className="hidden h-44 sm:block" />
+      {/* Reserva al pie, para que lo último de la columna se pueda alcanzar.
+          Antes existía solo en escritorio (`hidden sm:block`), donde evita que
+          la tarjeta se salga del contenedor cuando el nodo activo es el último.
+
+          **En móvil hacía falta igual y no estaba (2026-07-31).** Ahí la tarjeta
+          es `fixed` sobre el pie y tapa `RESERVA_TARJETA` + los 56px de la barra
+          de navegación: sin reserva, lo que caiga al final de la página queda
+          debajo y no hay scroll que lo saque. Con 3 nodos no se notaba porque
+          abajo no había nada; con las 16 unidades, las dos bandas de eje
+          plegadas viven justo ahí, y Playwright las encontró inalcanzables al
+          intentar desplegar Geometría en 360px.
+
+          Sale de `RESERVA_TARJETA` y no de un número suelto para que la reserva
+          siga a la tarjeta si vuelve a cambiar de alto. */}
+      <div
+        aria-hidden="true"
+        className="h-[var(--reserva-movil)] sm:h-[var(--reserva-escritorio)]"
+        style={
+          {
+            "--reserva-movil": `${RESERVA_TARJETA + 56}px`,
+            "--reserva-escritorio": `${RESERVA_TARJETA}px`,
+          } as React.CSSProperties
+        }
+      />
     </div>
   );
 }
@@ -340,8 +375,6 @@ function FilaCamino({
   seleccionado: boolean;
   onSeleccionar: () => void;
 }) {
-  const enConstruccion = nodo.estado === "enConstruccion";
-
   return (
     <li className="relative flex items-center" style={{ height: alto }}>
       {/* El tramo de trazo que llega desde el nodo de arriba. Va por fila y no
@@ -393,61 +426,44 @@ function FilaCamino({
           `entra-nodo` anima `transform`, que es lo mismo que usa el centrado,
           así que la posición y la animación siguen en elementos distintos: si
           compartieran uno, el keyframe pisaría la posición. */}
-      {enConstruccion ? (
-        <>
-          <span
-            className="absolute z-10 -translate-x-1/2"
-            style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
-          >
-            <span
-              className="entra-nodo block"
-              style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
-            >
-              <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
-            </span>
-          </span>
-          {/* A dos líneas como máximo. La fila tiene alto fijo, así que un
-              título de tres líneas —"Ecuaciones e inecuaciones de primer grado"
-              ya llega— desborda hacia la fila de al lado. */}
-          <span
-            className="line-clamp-2 min-w-0 flex-1 text-base font-medium leading-snug text-ink-tenue"
-            style={{ marginLeft: ANCHO_CANALETA }}
-          >
-            {nodo.titulo}
-          </span>
-        </>
-      ) : (
-        <button
-          type="button"
-          onClick={onSeleccionar}
-          aria-current={seleccionado ? "true" : undefined}
-          className="absolute inset-0 z-10 flex items-center rounded-tarjeta text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+      <button
+        type="button"
+        onClick={onSeleccionar}
+        aria-current={seleccionado ? "true" : undefined}
+        className="absolute inset-0 z-10 flex items-center rounded-tarjeta text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+      >
+        <span
+          className="absolute -translate-x-1/2"
+          style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
         >
           <span
-            className="absolute -translate-x-1/2"
-            style={{ left: `calc(${ANCHO_CANALETA}px * ${x} / 100)` }}
+            className="entra-nodo block"
+            style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
           >
-            <span
-              className="entra-nodo block"
-              style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
-            >
-              <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
-            </span>
+            <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
           </span>
-          {/* El título no se desplaza con el zigzag: si el texto bailara, la
-              columna dejaría de leerse como columna. El nombre completo no se
-              pierde cuando se recorta: es el título de la tarjeta en cuanto el
-              nodo queda activo. */}
-          <span
-            className={`line-clamp-2 min-w-0 flex-1 pr-2 text-base font-semibold leading-snug motion-safe:transition-colors ${
-              seleccionado ? "text-accent-fuerte" : "text-ink"
-            }`}
-            style={{ marginLeft: ANCHO_CANALETA }}
-          >
-            {nodo.titulo}
-          </span>
-        </button>
-      )}
+        </span>
+        {/* El título no se desplaza con el zigzag: si el texto bailara, la
+            columna dejaría de leerse como columna. A dos líneas como máximo: la
+            fila tiene alto fijo, así que un título de tres —"Ecuaciones e
+            inecuaciones de primer grado" ya llega— desbordaría a la fila de al
+            lado. El nombre completo no se pierde cuando se recorta: es el
+            título de la tarjeta en cuanto el nodo queda activo.
+
+            Un nodo en construcción se atenúa y baja de peso. Es la misma
+            jerarquía de antes; lo que cambió es que ahora también es un botón,
+            porque su tarjeta explica qué le falta. */}
+        <span
+          className={`line-clamp-2 min-w-0 flex-1 pr-2 text-base leading-snug motion-safe:transition-colors ${
+            nodo.estado === "enConstruccion"
+              ? "font-medium text-ink-tenue"
+              : `font-semibold ${seleccionado ? "text-accent-fuerte" : "text-ink"}`
+          }`}
+          style={{ marginLeft: ANCHO_CANALETA }}
+        >
+          {nodo.titulo}
+        </span>
+      </button>
     </li>
   );
 }
@@ -462,6 +478,17 @@ function FilaCamino({
  * tarjeta de /camino, que es donde el estudiante decide si entrar.
  */
 function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
+  /* Un nodo en construcción ahora **sí** tiene tarjeta (2026-07-31). Antes no
+     era ni seleccionable: su disco iba punteado, su título atenuado, y no había
+     forma de saber qué le faltaba. El camino mostraba que algo no se podía
+     abrir pero nunca por qué. Ahora la tarjeta lo dice y el botón queda
+     deshabilitado, que es más honesto que no ofrecer nada.
+
+     El estado manda: no hace falta un campo aparte. `estadoDelCierre` nunca
+     devuelve "enConstruccion" —un cierre en revisión está escrito y es
+     navegable—, así que el cierre no cae acá por accidente. */
+  const bloqueado = nodo.estado === "enConstruccion";
+
   return (
     <div className="rounded-tarjeta border border-border bg-surface p-3 shadow-tarjeta-hover">
       {nodo.rotulo && (
@@ -472,26 +499,43 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
       <p className="mt-0.5 text-base font-semibold leading-snug text-ink">
         {nodo.tituloTarjeta ?? nodo.titulo}
       </p>
+      {/* En un nodo bloqueado esta línea es la **razón** por la que no se puede
+          entrar, no el objetivo del tema: quien arma los nodos la sustituye. */}
       {nodo.descripcion && (
         <p className="mt-1 line-clamp-2 text-sm leading-snug text-ink-suave">
           {nodo.descripcion}
         </p>
       )}
-      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-2">
-        {nodo.href && nodo.accion && (
-          <EnlaceBoton href={nodo.href} onClick={nodo.onAbrir}>
+      {/* El contador y el chip suben junto a la descripción para que el botón
+          quede solo y último: una sola acción principal por vista, y es lo
+          último que se lee (MASTER.md §3.1 y §6). */}
+      {(nodo.contador || nodo.demostracion) && (
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          {nodo.contador && (
+            <span className="text-sm text-ink-suave">{nodo.contador}</span>
+          )}
+          {nodo.demostracion && (
+            <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-xs font-medium text-accent-fuerte">
+              Demostración
+            </span>
+          )}
+        </div>
+      )}
+      {/* Full-width: la tarjeta es angosta y un botón a media línea deja al lado
+          un hueco que no es nada. Ocupando el ancho, el objetivo táctil es todo
+          el borde inferior de la tarjeta. */}
+      {bloqueado ? (
+        <Boton disabled className="mt-2.5 w-full">
+          Aún no disponible
+        </Boton>
+      ) : (
+        nodo.href &&
+        nodo.accion && (
+          <EnlaceBoton href={nodo.href} onClick={nodo.onAbrir} className="mt-2.5 w-full">
             {nodo.accion}
           </EnlaceBoton>
-        )}
-        {nodo.contador && (
-          <span className="text-sm text-ink-suave">{nodo.contador}</span>
-        )}
-        {nodo.demostracion && (
-          <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-xs font-medium text-accent-fuerte">
-            Demostración
-          </span>
-        )}
-      </div>
+        )
+      )}
     </div>
   );
 }

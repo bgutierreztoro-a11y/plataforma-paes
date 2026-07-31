@@ -20,6 +20,17 @@ export default defineConfig({
   /* Sin reintentos: una captura que solo sale bien al segundo intento esconde
      justo el problema que se quiere ver. */
   retries: 0,
+  /* El de por defecto son 5s y se quedó corto cuando las pantallas del camino
+     crecieron: las 16 unidades del temario y la reserva del pie dejaron a
+     /camino y /tema/[id] varias veces más altas, y sus capturas `fullPage` se
+     volvieron caras. Con cuatro workers en paralelo eso hacía caer por timeout
+     a tests de **otras** pantallas —la celebración, sobre todo— que pasaban
+     siempre en aislamiento y siempre a un worker.
+     Que sea contención y no lentitud del producto se verificó guardando los
+     cambios y corriendo la suite contra la revisión anterior: 3 de 3 en verde
+     con el mismo timeout. Se sube el margen en vez de bajar los workers, que
+     solo haría más lenta toda la corrida sin arreglar nada. */
+  expect: { timeout: 30_000 },
   reporter: [["list"]],
   use: {
     baseURL: "http://localhost:3100",

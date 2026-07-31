@@ -118,14 +118,24 @@ export function desplazamientoVertical(
 }
 
 /**
- * Cuánto alto ocupa la tarjeta del nodo activo colgando en escritorio, en
- * píxeles. Es la misma reserva que el hueco del pie de la columna (`h-44` de
- * Tailwind), y acá se usa como **cota**, no como posición: la tarjeta se
- * posiciona con `-translate-y-full`, que resuelve el navegador conociendo el
- * alto real. Un valor aproximado solo hace que se voltee alguna vez de más, que
- * es inofensivo; que se quede corto, no.
+ * Cuánto alto ocupa la tarjeta del nodo activo, en píxeles.
+ *
+ * Se usa como **cota**, no como posición: la tarjeta se posiciona con
+ * `-translate-y-full`, que resuelve el navegador conociendo el alto real. Un
+ * valor de más solo hace que se voltee alguna vez sin necesidad, que es
+ * inofensivo; uno de menos deja que la tarjeta le tape el clic a una banda de
+ * eje, que es el defecto que `tapariaUnaBanda` existe para evitar.
+ *
+ * **Medido, no estimado, y verificado por un test.** Arrancó en 176 (el `h-44`
+ * que reserva la columna al pie) y la Fase B del rediseño lo desfasó sin que
+ * nada fallara: el botón full-width en su propia línea llevó la tarjeta a
+ * 204,5px. Ese es justo el modo de falla silencioso que hace falta atrapar, así
+ * que `e2e/capturas.spec.ts` mide la tarjeta real y falla si pasa esta cota.
+ *
+ * 216 son los 204,5 medidos más un colchón: el alto depende de cuánto envuelva
+ * la descripción, y el ancho angosto (360px) es el caso que más envuelve.
  */
-export const RESERVA_TARJETA = 176;
+export const RESERVA_TARJETA = 216;
 
 /**
  * ¿La tarjeta, colgando hacia abajo del elemento `i`, alcanzaría a tapar una

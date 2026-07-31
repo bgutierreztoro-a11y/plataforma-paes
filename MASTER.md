@@ -215,7 +215,9 @@ Especificados con tokens. Cada uno lista sus estados obligatorios.
 - *Hover:* `--color-action-hover` + `--shadow-2` + sube 1px (`translateY(-1px)`).
 - *Pressed:* baja 1px, quita sombra.
 - *Focus (teclado):* `--shadow-focus`.
-- *Disabled:* `--ink-200` fondo, `--ink-400` texto, sin sombra, `cursor: not-allowed`.
+- *Disabled:* `--color-border` fondo, `--color-text-muted` texto, sin sombra, `cursor: not-allowed`.
+
+> **Enmienda del 2026-07-31 (contraste del disabled).** Esta línea decía `--ink-200` fondo con `--ink-400` texto. Esa combinación da **2,51:1**, y §5 de este mismo documento exige contraste AA (4,5:1) en todo texto: el doc se contradecía consigo mismo. WCAG exime a los controles inactivos, pero acá el botón deshabilitado **carga información que el estudiante necesita leer** —dice "Aún no disponible" sobre una unidad del temario—, así que la exención no aplica al caso que tenemos. Los tokens del proyecto (`--color-border` #dce3ee con `--color-text-muted` #4b5c78) dan **5,24:1** y sí pasan; el código ya los usaba. Se corrige el documento, no el código: acá el doc estaba mal, no desviado.
 
 **Secundario** (acción alterna — "Ver pista", "Atrás"): fondo transparente, borde `--color-border-strong`, texto `--color-action`. Hover: fondo `--color-action-soft`.
 
