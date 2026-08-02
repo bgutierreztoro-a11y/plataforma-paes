@@ -628,22 +628,42 @@ describe("plan", () => {
   });
 });
 
+/**
+ * El DAG real, ya con sus aristas escritas a mano (2026-08-02).
+ *
+ * Estos tests no prueban el motor: prueban el contenido. Existen porque las
+ * aristas las escribe una persona en un JSON, y ahí un dedo puede introducir un
+ * ciclo, un id mal tipeado o dejar una unidad colgada sin que nada se queje
+ * hasta que un alumno reciba un plan absurdo.
+ *
+ * Las cifras esperadas van escritas a mano, NO derivadas del archivo. Un test
+ * que calcula lo esperado a partir del mismo dato que verifica no verifica
+ * nada: describe. Si mañana el mapa cambia, estos números tienen que cambiar
+ * con una decisión explícita detrás.
+ */
 describe("dag-m1.json", () => {
-  test("trae las 16 unidades del temario y ninguna arista", () => {
+  const ARISTAS_ESPERADAS = 22;
+  const RAIZ = "enteros-racionales";
+
+  /** Unidades que nadie declara como prerrequisito. A mano, a propósito. */
+  const HOJAS_ESPERADAS = [
+    "sistemas-2x2",
+    "funcion-cuadratica",
+    "cuerpos-geometricos",
+    "transformaciones-isometricas",
+    "semejanza-proporcionalidad",
+    "medidas-posicion",
+    "reglas-probabilidad",
+  ];
+
+  function leerDominio(): DominioSerializado {
     const ruta = new URL("../../../content/diagnostico/dag-m1.json", import.meta.url);
-    const dominio = JSON.parse(readFileSync(ruta, "utf8")) as DominioSerializado;
+    return JSON.parse(readFileSync(ruta, "utf8")) as DominioSerializado;
+  }
 
+  test("trae las 16 unidades del temario, repartidas por eje", () => {
+    const dominio = leerDominio();
     assert.equal(dominio.unidades.length, 16);
-    assert.deepEqual(
-      dominio.unidades.filter((u) => u.prerrequisitos.length > 0),
-      [],
-      "las aristas del DAG real las escribe una persona, no este motor",
-    );
-
-    // Aunque hoy esté sin aristas, tiene que ser un DAG construible: este test
-    // pasa a ser el guardia de ciclos e ids rotos cuando se llenen a mano.
-    const dag = construirDag(dominio.unidades);
-    assert.equal(dag.unidades.length, 16);
 
     const porEje = new Map<string, number>();
     for (const unidad of dominio.unidades) {
@@ -658,5 +678,62 @@ describe("dag-m1.json", () => {
         ["probabilidad", 3],
       ],
     );
+  });
+
+  test("es acíclico: construirDag no lo rechaza", () => {
+    // `construirDag` tira ante ciclos, ids rotos y duplicados: que construya ya
+    // es la afirmación. Un ciclo acá haría que el motor propagara evidencia en
+    // círculo, y eso no se ve mirando la pantalla.
+    const dag = construirDag(leerDominio().unidades);
+    assert.equal(dag.unidades.length, 16);
+  });
+
+  test("tiene exactamente 22 aristas", () => {
+    const total = leerDominio().unidades.reduce((suma, u) => suma + u.prerrequisitos.length, 0);
+    assert.equal(total, ARISTAS_ESPERADAS);
+  });
+
+  test("todo id usado como prerrequisito existe como unidad declarada", () => {
+    const dominio = leerDominio();
+    const declaradas = new Set(dominio.unidades.map((u) => u.id));
+    const rotos: string[] = [];
+
+    for (const unidad of dominio.unidades) {
+      for (const previo of unidad.prerrequisitos) {
+        if (!declaradas.has(previo)) rotos.push(`${unidad.id} → ${previo}`);
+      }
+    }
+    assert.deepEqual(rotos, [], "hay prerrequisitos que apuntan a unidades inexistentes");
+  });
+
+  test("raíz única en sentido fuerte: enteros-racionales", () => {
+    const dominio = leerDominio();
+    const dag = construirDag(dominio.unidades);
+
+    // (1) Es la única sin prerrequisitos: no hay ninguna otra puerta de entrada.
+    assert.deepEqual(
+      dominio.unidades.filter((u) => u.prerrequisitos.length === 0).map((u) => u.id),
+      [RAIZ],
+    );
+
+    // (2) Y toda otra unidad la tiene como ancestro, directo o transitivo: nada
+    // del temario cuelga de un subgrafo desconectado de la raíz.
+    const huerfanas = dominio.unidades
+      .filter((u) => u.id !== RAIZ && !ancestros(dag, u.id).has(RAIZ))
+      .map((u) => u.id);
+    assert.deepEqual(huerfanas, [], `estas unidades no descienden de ${RAIZ}`);
+  });
+
+  test("las hojas son exactamente las siete esperadas", () => {
+    const dominio = leerDominio();
+    const usadasComoPrerrequisito = new Set(
+      dominio.unidades.flatMap((u) => u.prerrequisitos),
+    );
+    const hojas = dominio.unidades
+      .map((u) => u.id)
+      .filter((id) => !usadasComoPrerrequisito.has(id));
+
+    assert.deepEqual([...hojas].sort(), [...HOJAS_ESPERADAS].sort());
+    assert.equal(hojas.length, 7);
   });
 });

@@ -1,25 +1,35 @@
 {
   "id": "dag-m1",
-  "nota": "Estructura del dominio M1: las 16 unidades del temario y sus prerrequisitos. TODAS las aristas van vacias a proposito: las llena Benja a mano. Ninguna arista de este archivo la escribe un modelo. Ver la excepcion acotada del gate de grafo de conocimiento en docs/mos-v2.md seccion 9.",
+  "nota": "Estructura del dominio M1: las 16 unidades del temario y sus prerrequisitos. Las aristas las escribio Benja a mano el 2026-08-02; ninguna la escribe un modelo. Los tests de lib/diagnostico/__tests__/ fijan sus invariantes: 22 aristas, raiz unica enteros-racionales y 7 hojas. Ver la excepcion acotada del gate de grafo de conocimiento en docs/mos-v2.md seccion 9.",
   "unidades": [
     { "id": "enteros-racionales", "nombre": "Enteros y racionales", "eje": "numeros", "prerrequisitos": [] },
-    { "id": "porcentaje", "nombre": "Porcentaje", "eje": "numeros", "prerrequisitos": [] },
-    { "id": "potencias-raices", "nombre": "Potencias y raíces", "eje": "numeros", "prerrequisitos": [] },
+    { "id": "porcentaje", "nombre": "Porcentaje", "eje": "numeros", "prerrequisitos": ["enteros-racionales"] },
+    { "id": "potencias-raices", "nombre": "Potencias y raíces", "eje": "numeros", "prerrequisitos": ["enteros-racionales"] },
 
-    { "id": "expresiones-algebraicas", "nombre": "Expresiones algebraicas", "eje": "algebra", "prerrequisitos": [] },
-    { "id": "proporcionalidad", "nombre": "Proporcionalidad", "eje": "algebra", "prerrequisitos": [] },
-    { "id": "ecuaciones-inecuaciones", "nombre": "Ecuaciones e inecuaciones", "eje": "algebra", "prerrequisitos": [] },
-    { "id": "sistemas-2x2", "nombre": "Sistemas de ecuaciones 2x2", "eje": "algebra", "prerrequisitos": [] },
-    { "id": "funcion-lineal-afin", "nombre": "Función lineal y afín", "eje": "algebra", "prerrequisitos": [] },
-    { "id": "funcion-cuadratica", "nombre": "Función cuadrática", "eje": "algebra", "prerrequisitos": [] },
+    { "id": "expresiones-algebraicas", "nombre": "Expresiones algebraicas", "eje": "algebra", "prerrequisitos": ["enteros-racionales"] },
+    { "id": "proporcionalidad", "nombre": "Proporcionalidad", "eje": "algebra", "prerrequisitos": ["enteros-racionales"] },
+    { "id": "ecuaciones-inecuaciones", "nombre": "Ecuaciones e inecuaciones", "eje": "algebra", "prerrequisitos": ["expresiones-algebraicas"] },
+    { "id": "sistemas-2x2", "nombre": "Sistemas de ecuaciones 2x2", "eje": "algebra", "prerrequisitos": ["ecuaciones-inecuaciones", "funcion-lineal-afin"] },
+    { "id": "funcion-lineal-afin", "nombre": "Función lineal y afín", "eje": "algebra", "prerrequisitos": ["proporcionalidad", "ecuaciones-inecuaciones"] },
+    {
+      "id": "funcion-cuadratica",
+      "nombre": "Función cuadrática",
+      "eje": "algebra",
+      "prerrequisitos": [
+        "expresiones-algebraicas",
+        "ecuaciones-inecuaciones",
+        "potencias-raices",
+        "funcion-lineal-afin"
+      ]
+    },
 
-    { "id": "figuras-geometricas", "nombre": "Figuras geométricas", "eje": "geometria", "prerrequisitos": [] },
-    { "id": "cuerpos-geometricos", "nombre": "Cuerpos geométricos", "eje": "geometria", "prerrequisitos": [] },
-    { "id": "transformaciones-isometricas", "nombre": "Transformaciones isométricas", "eje": "geometria", "prerrequisitos": [] },
-    { "id": "semejanza-proporcionalidad", "nombre": "Semejanza y proporcionalidad", "eje": "geometria", "prerrequisitos": [] },
+    { "id": "figuras-geometricas", "nombre": "Figuras geométricas", "eje": "geometria", "prerrequisitos": ["potencias-raices"] },
+    { "id": "cuerpos-geometricos", "nombre": "Cuerpos geométricos", "eje": "geometria", "prerrequisitos": ["figuras-geometricas"] },
+    { "id": "transformaciones-isometricas", "nombre": "Transformaciones isométricas", "eje": "geometria", "prerrequisitos": ["funcion-lineal-afin"] },
+    { "id": "semejanza-proporcionalidad", "nombre": "Semejanza y proporcionalidad", "eje": "geometria", "prerrequisitos": ["proporcionalidad", "figuras-geometricas"] },
 
-    { "id": "tablas-graficos", "nombre": "Tablas y gráficos", "eje": "probabilidad", "prerrequisitos": [] },
-    { "id": "medidas-posicion", "nombre": "Medidas de posición", "eje": "probabilidad", "prerrequisitos": [] },
-    { "id": "reglas-probabilidad", "nombre": "Reglas de probabilidad", "eje": "probabilidad", "prerrequisitos": [] }
+    { "id": "tablas-graficos", "nombre": "Tablas y gráficos", "eje": "probabilidad", "prerrequisitos": ["enteros-racionales", "porcentaje"] },
+    { "id": "medidas-posicion", "nombre": "Medidas de posición", "eje": "probabilidad", "prerrequisitos": ["tablas-graficos"] },
+    { "id": "reglas-probabilidad", "nombre": "Reglas de probabilidad", "eje": "probabilidad", "prerrequisitos": ["enteros-racionales"] }
   ]
 }
