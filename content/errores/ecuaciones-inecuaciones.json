@@ -1,0 +1,25 @@
+{
+  "unidad": "ecuaciones-inecuaciones",
+  "errores": [
+    {
+      "id": "ecuaciones-inecuaciones/error-1",
+      "descripcion": "Aplicar una operación a un solo lado de la ecuación, rompiendo el equilibrio (p. ej. quitar bolitas de un solo platillo, o 'borrar' el +5 de la izquierda sin tocar la derecha)."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-2",
+      "descripcion": "Equivocarse en el signo o la dirección al mover un término al otro lado: sumar cuando corresponde restar, o restar cuando corresponde sumar."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-3",
+      "descripcion": "Repartir (dividir) solo una parte de un lado en vez del lado completo, o dividir por el coeficiente antes de haber quitado las bolitas sueltas (la constante)."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-4",
+      "descripcion": "Olvidar dividir por el número de bolsas (el coeficiente): quedarse en 'a·x = c' y entregar c como respuesta sin repartir entre las a bolsas."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-5",
+      "descripcion": "Al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas (o contar mal cuántas bolsas quedan al pasarlas a un solo lado)."
+    }
+  ]
+}

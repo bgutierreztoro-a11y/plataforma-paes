@@ -24,6 +24,42 @@ lo exento es `content/diagnostico/` (carpeta).
 Si al llegar a Gate 3 `lib/diagnostico/` no está integrado, se borra completo.
 No se arrastra código muerto. Firmado al cruzar el gate el 2026-08-02, MOS §9.
 
+## 🟡 `content/errores/` es una copia, no la fuente (abierta 2026-08-02)
+
+`content/errores/<unidad>.json` existe como artefacto propio desde este commit,
+pero cada L1 sigue teniendo su propio `catalogoErrores` embebido, y ese array
+embebido — no el archivo nuevo — sigue siendo el que la app lee. La migración
+fue deliberadamente mecánica: copiar, no mudar. Ver CLAUDE.md y el commit de
+este cambio para el porqué (había una demo con un profesor encima y cero
+tolerancia a riesgo de regresión en contenido publicable).
+
+**La deuda real:** el L1 debería terminar leyendo del catálogo en vez de tener
+el suyo embebido. Mientras eso no pase, hay dos fuentes del mismo dato y un
+validador (`validarCatalogoErrores` en `scripts/validar-contenido.mjs`) que las
+compara y falla si divergen — pero el validador solo corre cuando alguien toca
+uno de los dos archivos o corre `npm run validar`. Nada impide que las dos
+copias existan un rato desincronizadas entre una edición y la siguiente
+corrida del validador.
+
+**Colisión sin resolver: `funcion-lineal-afin` tiene dos L1 con catálogo
+embebido.** `lineal-patrones-de-cambio.json` (6 errores) y
+`lineal-pendiente-e-intercepto.json` (5 errores) numeran cada uno desde
+`error-1` de forma independiente, con descripciones distintas para el mismo
+id local. Se migró solo `lineal-patrones-de-cambio` a
+`content/errores/funcion-lineal-afin.json`; los 5 errores de
+`lineal-pendiente-e-intercepto` **no están en ningún catálogo unificado**.
+Antes de que el L1 lea del catálogo en vez de tener el suyo, hay que decidir
+el esquema de id para unidades con más de una lección con catálogo propio —
+namespacing por lección, fusión con renumeración, u otra cosa. Es una decisión
+de esquema, no mecánica: no se toma sin firma.
+
+**Mapeo lección→unidad, hoy solo en código.** `MAPEO_LECCION_UNIDAD` en
+`scripts/validar-contenido.mjs` es la única fuente que declara qué L1
+corresponde a qué unidad del DAG — el contrato de lección no tiene ese campo.
+Si se agrega un L1 nuevo con `catalogoErrores` y su
+`content/errores/<unidad>.json`, hay que sumar la entrada a mano en esa
+constante o la regla de coherencia no tiene con qué comparar.
+
 ## ✅ Discrepancia de l3 (abierta 2026-07-22) — resuelta por Enmienda 2 (2026-07-28)
 
 `l3-ecuaciones-lineales.json` no estaba fuera de spec: estaba archivado en el módulo

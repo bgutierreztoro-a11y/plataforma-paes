@@ -175,10 +175,12 @@ export function validarArchivo(ruta) {
  *   diagnostico/ estructura del dominio (DAG de unidades y prerrequisitos) que
  *                consume `lib/diagnostico/`. No tiene pasos, ítems ni
  *                proveniencia porque no es material que lea un estudiante.
+ *   errores/     catálogo de errores por unidad ({ unidad, errores[] }). Tiene
+ *                su propio contrato, más abajo (`validarCatalogoErrores`).
  * Ojo: `content/diagnostico.json` (archivo, no carpeta) SÍ es contenido y sigue
  * validándose — acá se compara contra segmentos de ruta, no contra el nombre.
  */
-const CARPETAS_SIN_CONTRATO = new Set(['schema', 'diagnostico']);
+const CARPETAS_SIN_CONTRATO = new Set(['schema', 'diagnostico', 'errores']);
 
 function esContenido(ruta) {
   const partes = resolve(ruta).split(sep);
@@ -196,6 +198,128 @@ function* archivosDeContenido(dir) {
     if (ent.isDirectory()) yield* archivosDeContenido(ruta);
     else if (esContenido(ruta)) yield ruta;
   }
+}
+
+/**
+ * Mapeo manual lección → unidad del DAG.
+ *
+ * El contrato de lección no declara a qué unidad pertenece: esa
+ * correspondencia hoy solo existe en prosa, en docs/pendientes.md y
+ * docs/calibracion-lecciones-e-items.md. Sin esta tabla, la regla de abajo no
+ * tendría con qué comparar un content/errores/<unidad>.json contra el
+ * catálogo embebido de su L1.
+ *
+ * Mantenla a mano al día: si se agrega un L1 nuevo con catalogoErrores y su
+ * content/errores/<unidad>.json correspondiente, hay que sumar la entrada
+ * acá. Sin ella, una divergencia entre ambos catálogos pasa desapercibida —
+ * justo lo que esta regla existe para evitar.
+ */
+const MAPEO_LECCION_UNIDAD = {
+  'enteros-operar-y-ordenar': 'enteros-racionales',
+  'ecuaciones-lineales': 'ecuaciones-inecuaciones',
+  'lineal-patrones-de-cambio': 'funcion-lineal-afin',
+};
+
+function leccionesDe(unidad) {
+  return Object.entries(MAPEO_LECCION_UNIDAD)
+    .filter(([, u]) => u === unidad)
+    .map(([leccionId]) => leccionId);
+}
+
+function esCatalogoErrores(ruta) {
+  const partes = resolve(ruta).split(sep);
+  return (
+    /\.json$/i.test(ruta) &&
+    partes.includes('content') &&
+    partes.includes('errores') &&
+    !basename(ruta).startsWith('_')
+  );
+}
+
+function* archivosDeCatalogoErrores(dirContent) {
+  const dir = join(dirContent, 'errores');
+  if (!existsSync(dir)) return;
+  for (const ent of readdirSync(dir, { withFileTypes: true })) {
+    const ruta = join(dir, ent.name);
+    if (!ent.isDirectory() && esCatalogoErrores(ruta)) yield ruta;
+  }
+}
+
+/** La raíz `content/` que contiene a `ruta`, para ubicar `content/lecciones/` desde ahí. */
+function raizContentDe(ruta) {
+  const partes = resolve(ruta).split(sep);
+  const i = partes.lastIndexOf('content');
+  return partes.slice(0, i + 1).join(sep);
+}
+
+/**
+ * Valida un `content/errores/<unidad>.json`.
+ *
+ * Regla dura (2026-08-02): si la unidad también tiene catálogo embebido en su
+ * L1 (`MAPEO_LECCION_UNIDAD`), los ids locales (sin el prefijo "<unidad>/") y
+ * las descripciones deben coincidir exactamente entre ambos archivos. Es la
+ * única fuente doble que existe hoy para el mismo error catalogado; que
+ * diverjan en silencio sería tener dos versiones del mismo error sin que
+ * nadie se entere. Divergencia = error, no warning.
+ */
+export function validarCatalogoErrores(ruta, dirLecciones) {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(ruta, 'utf8'));
+  } catch (e) {
+    return [`JSON inválido: ${e.message}`];
+  }
+
+  const errores = [];
+  const unidad = data?.unidad;
+  if (!esTexto(unidad)) return ['falta "unidad"'];
+
+  const lista = data?.errores;
+  if (!Array.isArray(lista) || lista.length === 0) return ['falta "errores"[] con al menos un error'];
+
+  const idsLocales = new Map(); // id local (sin prefijo) → descripción
+  const prefijo = `${unidad}/`;
+  lista.forEach((e, i) => {
+    const p = `errores[${i}]`;
+    if (!esTexto(e?.id)) return errores.push(`${p}: falta id`);
+    if (!esTexto(e?.descripcion)) return errores.push(`${p}: falta descripcion`);
+    if (!e.id.startsWith(prefijo)) return errores.push(`${p}: id "${e.id}" debe empezar con "${prefijo}"`);
+    const local = e.id.slice(prefijo.length);
+    if (idsLocales.has(local)) errores.push(`${p}: id local "${local}" duplicado`);
+    idsLocales.set(local, e.descripcion);
+  });
+  if (errores.length > 0) return errores;
+
+  for (const leccionId of leccionesDe(unidad)) {
+    const rutaLeccion = join(dirLecciones, `${leccionId}.json`);
+    if (!existsSync(rutaLeccion)) continue;
+    let leccion;
+    try {
+      leccion = JSON.parse(readFileSync(rutaLeccion, 'utf8'));
+    } catch {
+      continue; // el validador de lecciones ya reporta ese JSON roto por su cuenta
+    }
+    const embebido = leccion?.catalogoErrores;
+    if (!Array.isArray(embebido)) continue;
+
+    const idsEmbebidos = new Map();
+    for (const e of embebido) if (esTexto(e?.id)) idsEmbebidos.set(e.id, e.descripcion);
+
+    for (const [local, descripcion] of idsLocales) {
+      if (!idsEmbebidos.has(local)) {
+        errores.push(`"${unidad}/${local}" no existe en catalogoErrores de ${leccionId}.json`);
+      } else if (idsEmbebidos.get(local) !== descripcion) {
+        errores.push(`"${unidad}/${local}" diverge de catalogoErrores de ${leccionId}.json (la descripción no coincide)`);
+      }
+    }
+    for (const local of idsEmbebidos.keys()) {
+      if (!idsLocales.has(local)) {
+        errores.push(`catalogoErrores de ${leccionId}.json tiene "${local}", ausente en content/errores/${unidad}.json`);
+      }
+    }
+  }
+
+  return errores;
 }
 
 function reportar(ruta, errores) {
@@ -229,13 +353,18 @@ if (arg === '--hook') {
     }
   }
 
-  if (!filePath || !existsSync(filePath) || !esContenido(filePath)) process.exit(0);
+  const esErrores = esCatalogoErrores(filePath);
+  if (!filePath || !existsSync(filePath) || (!esContenido(filePath) && !esErrores)) process.exit(0);
 
-  const errores = validarArchivo(filePath);
+  const errores = esErrores
+    ? validarCatalogoErrores(filePath, join(raizContentDe(filePath), 'lecciones'))
+    : validarArchivo(filePath);
   if (errores.length) {
     console.error(`El archivo de contenido ${filePath} no pasa la validación:`);
     for (const e of errores) console.error(` - ${e}`);
-    console.error('Corrige estos puntos antes de continuar (contrato: content/schema/leccion.schema.json).');
+    if (!esErrores) {
+      console.error('Corrige estos puntos antes de continuar (contrato: content/schema/leccion.schema.json).');
+    }
     process.exit(2); // Claude Code recibe este error como feedback y corrige
   }
   process.exit(0);
@@ -247,7 +376,10 @@ if (arg) {
     console.error(`No existe: ${ruta}`);
     process.exit(1);
   }
-  process.exit(reportar(ruta, validarArchivo(ruta)) ? 0 : 1);
+  const errores = esCatalogoErrores(ruta)
+    ? validarCatalogoErrores(ruta, join(raizContentDe(ruta), 'lecciones'))
+    : validarArchivo(ruta);
+  process.exit(reportar(ruta, errores) ? 0 : 1);
 }
 
 const raiz = resolve(process.cwd(), 'content');
@@ -260,6 +392,11 @@ let n = 0;
 for (const ruta of archivosDeContenido(raiz)) {
   n++;
   if (!reportar(ruta, validarArchivo(ruta))) ok = false;
+}
+const dirLecciones = join(raiz, 'lecciones');
+for (const ruta of archivosDeCatalogoErrores(raiz)) {
+  n++;
+  if (!reportar(ruta, validarCatalogoErrores(ruta, dirLecciones))) ok = false;
 }
 if (n === 0) console.log('Sin archivos de contenido que validar (los que empiezan con "_" son plantillas y se omiten).');
 process.exit(ok ? 0 : 1);

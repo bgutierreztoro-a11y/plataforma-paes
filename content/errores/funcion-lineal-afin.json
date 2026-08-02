@@ -1,0 +1,29 @@
+{
+  "unidad": "funcion-lineal-afin",
+  "errores": [
+    {
+      "id": "funcion-lineal-afin/error-1",
+      "descripcion": "Olvidar el valor inicial (p. ej. el bidón partía con 4 litros; Camila, con $5.000)."
+    },
+    {
+      "id": "funcion-lineal-afin/error-2",
+      "descripcion": "Contar mal los saltos (p. ej. de la semana 0 a la 8 hay 8 saltos, no 7 ni 9)."
+    },
+    {
+      "id": "funcion-lineal-afin/error-3",
+      "descripcion": "Confundir la dirección de la operación al despejar un valor desconocido (sumar en vez de restar, o viceversa) — distinto de olvidar el valor inicial o de contar mal los saltos."
+    },
+    {
+      "id": "funcion-lineal-afin/error-4",
+      "descripcion": "Confundir el signo de una tasa de cambio en un cálculo hacia adelante (sumar en vez de restar, o viceversa), sin estar despejando un valor desconocido — distinto de error-3, que es específicamente sobre despeje inverso."
+    },
+    {
+      "id": "funcion-lineal-afin/error-5",
+      "descripcion": "Aplicar el cambio una sola vez en vez de multiplicarlo por el número de pasos (p. ej. restar o sumar el cambio de un solo paso —6, en vez de 6×6— cuando la situación tiene varios pasos) — distinto de error-2, que es contar mal CUÁNTOS pasos hay; aquí directamente no se multiplica por los pasos."
+    },
+    {
+      "id": "funcion-lineal-afin/error-6",
+      "descripcion": "Multiplicar el valor inicial junto con la tasa por el número de pasos, en vez de multiplicar solo la tasa (p. ej. (24+18)×5 en vez de 24+18×5) — el valor inicial se suma una sola vez, nunca se multiplica por los pasos."
+    }
+  ]
+}

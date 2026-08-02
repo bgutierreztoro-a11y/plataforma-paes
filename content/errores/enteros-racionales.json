@@ -1,0 +1,37 @@
+{
+  "unidad": "enteros-racionales",
+  "errores": [
+    {
+      "id": "enteros-racionales/error-1",
+      "descripcion": "Al restar un negativo, invertir el signo del resultado (trata a − (−b) como a − b, perdiendo el cambio de signo)."
+    },
+    {
+      "id": "enteros-racionales/error-2",
+      "descripcion": "Invertir el orden de la diferencia entre dos profundidades/valores (calcula B − A cuando corresponde A − B, o viceversa), sin error de signo en sí — es un error de qué se resta de qué."
+    },
+    {
+      "id": "enteros-racionales/error-3",
+      "descripcion": "Tratar el valor negativo como si fuera una distancia (magnitud) y perder el signo al usarlo en una operación posterior, aunque la resta inicial haya estado bien planteada."
+    },
+    {
+      "id": "enteros-racionales/error-4",
+      "descripcion": "Comparar dos fracciones fijándose solo en el numerador (cree que 3/4 > 2/3 porque 3 > 2, ignorando el denominador)."
+    },
+    {
+      "id": "enteros-racionales/error-5",
+      "descripcion": "Comparar dos números negativos como si fueran positivos (cree que un negativo con mayor valor absoluto es el mayor de los dos, ignorando que el signo invierte el orden)."
+    },
+    {
+      "id": "enteros-racionales/error-6",
+      "descripcion": "Sumar denominadores al sumar o restar fracciones (calcula a/b + c/d como (a+c)/(b+d))."
+    },
+    {
+      "id": "enteros-racionales/error-7",
+      "descripcion": "Creer que dividir siempre achica (al ver un resultado de división mayor que el dividendo, rechaza el resultado o busca dónde 'se perdió' un paso)."
+    },
+    {
+      "id": "enteros-racionales/error-8",
+      "descripcion": "invertir el orden de la división de fracciones (calcular el divisor entre el dividendo, p. ej. resolver 3/4 ÷ 3 en vez de 3 ÷ 3/4)."
+    }
+  ]
+}
