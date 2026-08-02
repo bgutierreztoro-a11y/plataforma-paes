@@ -29,6 +29,7 @@ import {
   BANCO_FIXTURE,
   CLAVE_CORRECTA,
   DAG_FIXTURE,
+  dominioPlano,
   errorDe,
   generadorDeterminista,
   itemsDe,
@@ -477,6 +478,63 @@ describe("causa y regla dura de nombrar el error", () => {
     // El dato del fallo no se pierde, simplemente no se le muestra al alumno.
     assert.equal(zeta.fallos.length, 1);
     assert.equal(zeta.fallos[0].errorCatalogado, errorDe("zeta", "B"));
+  });
+
+  test("un fallo solo, cortado por MAX_ITEMS, da 'a-reforzar' y no nombra el error", () => {
+    // 25 unidades planas con 2 ítems cada una. Acertar adivinando suma 0,35 y
+    // deja la unidad DENTRO de la banda de indecisión, así que el bucle no puede
+    // parar por falta de incertidumbre y llega al techo. Sin aristas, el
+    // selector recorre las unidades en orden de declaración, y el ítem número
+    // MAX_ITEMS cae exactamente en la unidad 20: ahí ponemos el único fallo.
+    const { dag, banco } = dominioPlano(25, 2);
+    const ultima = "p20";
+
+    const estado = ejecutarDiagnostico(dag, banco, (item) =>
+      item.unidadId === ultima
+        ? { clave: "B", confianza: "adivine" }
+        : { clave: CLAVE_CORRECTA, confianza: "adivine" },
+    );
+
+    assert.equal(estado.itemsVistos, MAX_ITEMS, "el corte tiene que venir del techo");
+    const unidad = unidadDe(estado, ultima);
+    assert.equal(unidad.itemsVistos, 1, "falló en su primer y único ítem");
+    assert.equal(unidad.fallos.length, 1);
+    assert.equal(unidad.requiereConfirmacion, true, "la confirmación quedó sin gastar");
+    // Y era confirmable: quedaba un segundo ítem sin usar. Lo que cortó fue el techo.
+    assert.ok(siguienteItem(estado, dag, banco), "todavía había con qué preguntar");
+
+    assert.equal(causaDeUnidad(unidad), "a-reforzar");
+    assert.equal(
+      errorNombrable(unidad),
+      null,
+      "un fallo sin confirmar no autoriza nombrar nada, lo haya cortado quien lo haya cortado",
+    );
+  });
+
+  test("un fallo solo, sin ítems con qué confirmar, da 'a-reforzar' y no nombra el error", () => {
+    // zeta con un único ítem aislante: la hipótesis nunca se va a poder cerrar.
+    const bancoCorto = BANCO_FIXTURE.filter(
+      (item) => item.unidadId !== "zeta" || item.id === "fx-zeta-1",
+    );
+
+    const estado = ejecutarDiagnostico(DAG_FIXTURE, bancoCorto, (item) =>
+      item.unidadId === "zeta" ? { clave: "B", confianza: "lo-sabia" } : TODO_BIEN(),
+    );
+
+    const zeta = unidadDe(estado, "zeta");
+    assert.equal(zeta.itemsVistos, 1);
+    assert.equal(zeta.fallos.length, 1);
+    assert.equal(zeta.requiereConfirmacion, true, "la confirmación quedó sin gastar");
+    // Una hipótesis que no se puede cerrar no deja el test colgado esperándola.
+    assert.notEqual(siguienteItem(estado, DAG_FIXTURE, bancoCorto)?.unidadId, "zeta");
+    assert.equal(estado.itemsVistos >= MIN_ITEMS, true);
+
+    assert.equal(causaDeUnidad(zeta), "a-reforzar");
+    assert.equal(errorNombrable(zeta), null);
+    // Y el plan que ve el alumno tampoco lo nombra.
+    const enPlan = generarPlan(estado, DAG_FIXTURE).unidades.find((u) => u.unidadId === "zeta");
+    assert.equal(enPlan?.causa, "a-reforzar");
+    assert.equal(enPlan?.errorNombrable, null);
   });
 
   test("sin ítems la causa es 'sin-datos' y sin fallos no hay causa", () => {

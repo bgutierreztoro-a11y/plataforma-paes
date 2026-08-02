@@ -95,6 +95,34 @@ export function itemsDe(unidadId: string): ItemDiagnostico[] {
 }
 
 /**
+ * Dominio plano: `cantidad` unidades sin ninguna arista, con `itemsPorUnidad`
+ * ítems aislantes cada una.
+ *
+ * Sirve para forzar cortes del bucle que el DAG de seis nodos no alcanza. Sin
+ * aristas no hay propagación, todas las centralidades son 0 y el selector queda
+ * reducido a "la primera declarada que siga indecisa": el recorrido es
+ * predecible unidad por unidad, que es justo lo que hace falta para provocar un
+ * corte por `MAX_ITEMS` en la respuesta exacta que uno quiera.
+ */
+export function dominioPlano(
+  cantidad: number,
+  itemsPorUnidad: number,
+): { unidades: UnidadDominio[]; dag: ReturnType<typeof construirDag>; banco: ItemDiagnostico[] } {
+  const unidades: UnidadDominio[] = Array.from({ length: cantidad }, (_, i) => ({
+    id: `p${String(i + 1).padStart(2, "0")}`,
+    nombre: `Plana ${i + 1}`,
+    eje: "numeros",
+    prerrequisitos: [],
+  }));
+
+  const banco = unidades.flatMap((unidad) =>
+    Array.from({ length: itemsPorUnidad }, (_, n) => itemSintetico(unidad.id, n + 1)),
+  );
+
+  return { unidades, dag: construirDag(unidades), banco };
+}
+
+/**
  * Generador pseudoaleatorio determinista (Lehmer). Los tests que barren
  * estrategias de respuesta necesitan variedad, no azar: con la misma semilla
  * un fallo se reproduce siempre.

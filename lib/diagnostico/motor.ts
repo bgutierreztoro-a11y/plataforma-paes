@@ -293,12 +293,15 @@ export function ejecutarDiagnostico(
  *   sin ítems               → `sin-datos` (lo que se sepa de ella vino del DAG)
  *   ≥2 fallos, mismo error  → `error-confirmado`
  *   ≥2 fallos, distintos    → `punto-debil`
- *   1 fallo                 → `a-reforzar`
+ *   1 fallo                 → `a-reforzar`, esté acompañado de acierto o solo
  *   ítems vistos, 0 fallos  → `null`: no hay nada que diagnosticar
  *
- * El marco define el caso de 1 fallo como "1 fallo + 1 acierto". Acá cubre
- * también el fallo único que se quedó sin confirmar porque el test topó con
- * `MAX_ITEMS`: sigue siendo un dato solo, y la lectura conservadora es la misma.
+ * El marco define el caso de 1 fallo como "1 fallo + 1 acierto". La rama de
+ * `fallos.length === 1` no mira `itemsVistos` a propósito, así que cubre igual
+ * las dos formas en que un fallo se queda sin confirmar: que el test corte por
+ * `MAX_ITEMS` justo después de fallar, o que a esa unidad ya no le queden ítems
+ * aislantes con qué preguntar de nuevo. En las tres formas hay un solo dato, la
+ * lectura conservadora es la misma y el error no se nombra.
  */
 export function causaDeUnidad(unidad: EstadoUnidad): CausaDiagnosticada | null {
   if (unidad.itemsVistos === 0) return "sin-datos";
