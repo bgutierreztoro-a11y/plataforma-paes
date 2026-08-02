@@ -63,7 +63,7 @@ Cada lección sigue la secuencia de 10 pasos (curiosidad, problema, pensar, pist
 
 ## 5. Modelo de negocio
 
-Pase de temporada, pago único: "Plan PAES 2027". Sin suscripción mensual.
+Pase de temporada, pago único: ~~"Plan PAES 2027"~~ **"Modo PAES"** (nombre reemplazado el 2026-08-02; el detalle del modelo —corte gratis/pago, momento de conversión, reglas de urgencia— vive en `docs/modelo-negocio.md`, que manda sobre esta sección en lo que ahí esté decidido). Sin suscripción mensual.
 
 Razones: (a) el churn es del 100% por diseño, todos rinden y se van; (b) los ingresos se concentran entre marzo y noviembre; (c) la única evidencia de pago que tenemos son transferencias únicas por acceso, no suscripciones. La matemática SaaS mensual no aplica a este mercado y se elimina del vocabulario del proyecto.
 
