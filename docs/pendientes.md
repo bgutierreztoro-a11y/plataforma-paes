@@ -2,6 +2,28 @@
 
 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
+## 🟡 Deudas del motor de diagnóstico (abierta 2026-08-02)
+
+### `content/diagnostico/` quedó exento del contrato del validador
+
+El commit `8a13a4f` sacó esa carpeta de `esContenido()` en
+`scripts/validar-contenido.mjs`, porque el DAG del dominio no tiene pasos, ítems
+ni proveniencia y el contrato de lecciones lo rechazaba. **Es aceptable solo
+mientras ahí viva únicamente el DAG.**
+
+**Gatillo, y es duro:** ANTES de escribir el primer ítem de diagnóstico hay que
+definir su schema y sacar la carpeta de la lista de exentas. Si no, el primer
+ítem real entra a la carpeta sin que nada lo valide —sin feedback obligatorio por
+distractor, sin `errorCatalogado`, sin revisión— y el validador va a decir OK.
+Esa es exactamente la clase de silencio que el validador existe para romper.
+Ojo con el detalle: `content/diagnostico.json` (archivo) sí se sigue validando;
+lo exento es `content/diagnostico/` (carpeta).
+
+### Condición de reversión del gate de grafo de conocimiento
+
+Si al llegar a Gate 3 `lib/diagnostico/` no está integrado, se borra completo.
+No se arrastra código muerto. Firmado al cruzar el gate el 2026-08-02, MOS §9.
+
 ## ✅ Discrepancia de l3 (abierta 2026-07-22) — resuelta por Enmienda 2 (2026-07-28)
 
 `l3-ecuaciones-lineales.json` no estaba fuera de spec: estaba archivado en el módulo
