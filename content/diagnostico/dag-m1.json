@@ -25,7 +25,7 @@
 
     { "id": "figuras-geometricas", "nombre": "Figuras geométricas", "eje": "geometria", "prerrequisitos": ["potencias-raices"] },
     { "id": "cuerpos-geometricos", "nombre": "Cuerpos geométricos", "eje": "geometria", "prerrequisitos": ["figuras-geometricas"] },
-    { "id": "transformaciones-isometricas", "nombre": "Transformaciones isométricas", "eje": "geometria", "prerrequisitos": ["funcion-lineal-afin"] },
+    { "id": "transformaciones-isometricas", "nombre": "Transformaciones isométricas", "eje": "geometria", "prerrequisitos": ["figuras-geometricas"] },
     { "id": "semejanza-proporcionalidad", "nombre": "Semejanza y proporcionalidad", "eje": "geometria", "prerrequisitos": ["proporcionalidad", "figuras-geometricas"] },
 
     { "id": "tablas-graficos", "nombre": "Tablas y gráficos", "eje": "probabilidad", "prerrequisitos": ["enteros-racionales", "porcentaje"] },
