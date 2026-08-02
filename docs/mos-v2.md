@@ -137,6 +137,14 @@ Pipeline industrial de descomposición de guías, grafo de conocimiento, motor d
 
 Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del login; nunca se muestra un muro de registro al entrar; la cuenta es opcional en todo momento y la aplicación completa debe funcionar sin ella. Los pagos automatizados siguen en la lista negra y esta excepción no los toca.
 
+**Excepción acotada: grafo de conocimiento (gate cruzado el 2026-08-02).** Se autoriza construir `lib/diagnostico/` como motor puro, sin UI, sin ítems reales y con el DAG de aristas vacías.
+
+Qué incertidumbre elimina: si el diagnóstico adaptativo es implementable como código determinista, con los casos límite resueltos, antes de comprometer semanas en escribir 48 ítems que dependen de él. Construir los ítems primero y descubrir después que el motor no los clasifica bien es el orden caro.
+
+Qué NO autoriza: aristas reales del DAG, ítems de diagnóstico, integración con `/camino`, cualquier UI. Cada una de esas necesita su propia firma.
+
+Condición de reversión: si al llegar a Gate 3 el motor no está integrado, se borra `lib/diagnostico/` completo. No se arrastra código muerto.
+
 ## 10. Gates del roadmap
 
 - **Gate 1 (semanas 1 a 3):** preventa lanzada y lección 1 construida y testeada. Incluye resolver la formalización mínima.
@@ -145,6 +153,8 @@ Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del l
 - **Gate 4 (2027):** decisión de escala con datos de una temporada completa: más temas, automatización, canal de distribución propio.
 
 **Nota de gates cruzados.** 2026-07-23: se cruza el gate de autenticación en la forma acotada de la sección 9. No adelanta ningún otro gate: los pagos automatizados, el tutor IA y el dashboard del estudiante siguen donde estaban.
+
+2026-08-02: se cruza el gate de grafo de conocimiento en la forma acotada de la sección 9 — motor puro en `lib/diagnostico/`, sin UI, sin ítems reales, DAG con aristas vacías. No adelanta ningún otro gate ni mueve el Gate 3: el tutor IA, el motor de variantes y el dashboard del estudiante siguen donde estaban. Lleva condición de reversión propia (§9): si al llegar a Gate 3 el motor no está integrado, se borra completo.
 
 ## 11. Reglas de trabajo
 
