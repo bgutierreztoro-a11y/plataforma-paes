@@ -168,12 +168,24 @@ export function validarArchivo(ruta) {
   return validarDatos(data);
 }
 
+/**
+ * Carpetas bajo `content/` que NO llevan contenido pedagógico y por lo tanto no
+ * se miden contra el contrato de lecciones:
+ *   schema/      el contrato mismo
+ *   diagnostico/ estructura del dominio (DAG de unidades y prerrequisitos) que
+ *                consume `lib/diagnostico/`. No tiene pasos, ítems ni
+ *                proveniencia porque no es material que lea un estudiante.
+ * Ojo: `content/diagnostico.json` (archivo, no carpeta) SÍ es contenido y sigue
+ * validándose — acá se compara contra segmentos de ruta, no contra el nombre.
+ */
+const CARPETAS_SIN_CONTRATO = new Set(['schema', 'diagnostico']);
+
 function esContenido(ruta) {
   const partes = resolve(ruta).split(sep);
   return (
     /\.json$/i.test(ruta) &&
     partes.includes('content') &&
-    !partes.includes('schema') &&
+    !partes.some((p) => CARPETAS_SIN_CONTRATO.has(p)) &&
     !basename(ruta).startsWith('_')
   );
 }
