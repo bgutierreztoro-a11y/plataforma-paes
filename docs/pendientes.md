@@ -4,20 +4,37 @@
 
 ## 🟡 Deudas del motor de diagnóstico (abierta 2026-08-02)
 
-### `content/diagnostico/` quedó exento del contrato del validador
+### ✅ `content/diagnostico/` quedó exento del contrato del validador — resuelta (2026-08-02)
 
 El commit `8a13a4f` sacó esa carpeta de `esContenido()` en
 `scripts/validar-contenido.mjs`, porque el DAG del dominio no tiene pasos, ítems
-ni proveniencia y el contrato de lecciones lo rechazaba. **Es aceptable solo
-mientras ahí viva únicamente el DAG.**
+ni proveniencia y el contrato de lecciones lo rechazaba. **Era aceptable solo
+mientras ahí viviera únicamente el DAG.**
 
-**Gatillo, y es duro:** ANTES de escribir el primer ítem de diagnóstico hay que
+**Gatillo, y era duro:** ANTES de escribir el primer ítem de diagnóstico había que
 definir su schema y sacar la carpeta de la lista de exentas. Si no, el primer
-ítem real entra a la carpeta sin que nada lo valide —sin feedback obligatorio por
-distractor, sin `errorCatalogado`, sin revisión— y el validador va a decir OK.
+ítem real habría entrado a la carpeta sin que nada lo validara —sin feedback obligatorio por
+distractor, sin `errorCatalogado`, sin revisión— y el validador habría dicho OK.
 Esa es exactamente la clase de silencio que el validador existe para romper.
 Ojo con el detalle: `content/diagnostico.json` (archivo) sí se sigue validando;
-lo exento es `content/diagnostico/` (carpeta).
+lo que estaba exento era `content/diagnostico/` (carpeta).
+
+**Resuelta por este commit, antes de que existiera un solo ítem real.**
+`content/diagnostico/` ya no es una exención en bloque: se sacó de
+`CARPETAS_SIN_CONTRATO`. En su lugar tiene dos contratos dedicados,
+discriminados por ruta (`esDagM1`, `esItemDiagnostico`): `dag-m1.json` contra
+su propia estructura (16 unidades, 22 aristas, acíclico, raíz única, vía
+`validarDagM1Archivo`, que reutiliza `construirDag`/`ancestros` de
+`lib/diagnostico/dag.ts` en vez de reimplementar el grafo) y cada archivo de
+`items/*.json` contra `content/schema/item-diagnostico.schema.json` más las
+reglas cruzadas del validador (`validarBancoDiagnostico`): unidad existe en el
+DAG, unidadesInvolucradas la contiene y define si es aislante, cada
+errorCatalogado existe en `content/errores/` y su unidad dueña está entre las
+involucradas, ningún id ni contexto numérico se repite en el banco, y toda
+unidad con ítems tiene al menos uno aislante y al menos un error que se repite
+en dos ítems (para que `error-confirmado` sea alcanzable). `items/` sigue
+vacío a propósito (`.gitkeep`); las 22 reglas se probaron una por una a mano
+con ítems de prueba desechados antes de este commit, no solo leídas.
 
 ### Condición de reversión del gate de grafo de conocimiento
 

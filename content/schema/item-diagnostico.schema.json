@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "item-diagnostico.schema.json",
+  "title": "Ítem del banco de diagnóstico adaptativo M1",
+  "$comment": "Schema v0, definido junto con la excepción acotada del gate de grafo de conocimiento (MOS §9, 2026-08-02). Un archivo = un ítem, bajo content/diagnostico/items/. El banco vive vacío a propósito: esta sesión define el contrato, no escribe ítems. Este schema describe la FORMA de un ítem; lo que no puede expresar por sí solo —pertenencia de 'unidad' a content/diagnostico/dag-m1.json, que 'unidadesInvolucradas' contenga a 'unidad' y quede dentro de {unidad} ∪ ancestros(unidad) para ser AISLANTE, que cada errorCatalogado exista en content/errores/ y su unidad dueña esté en unidadesInvolucradas, unicidad de 'id' y de 'contextoNumerico' en TODO el banco, y cobertura mínima por unidad (≥1 ítem aislante; ≥1 errorCatalogado propio repetido en 2 ítems, para que error-confirmado sea alcanzable)— lo aplica scripts/validar-contenido.mjs sobre el banco completo, no archivo por archivo.",
+  "type": "object",
+  "required": [
+    "id",
+    "unidad",
+    "unidadesInvolucradas",
+    "temarioDemre",
+    "enunciado",
+    "alternativas",
+    "verificacionNumerica",
+    "revisionMatematica",
+    "checklistOriginalidad",
+    "estado",
+    "contextoNumerico"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Único en TODO el banco (todos los archivos de content/diagnostico/items/ juntos), no solo en este archivo. Lo verifica el validador, no este schema."
+    },
+    "unidad": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Id de una unidad de content/diagnostico/dag-m1.json. Existencia verificada por el validador."
+    },
+    "unidadesInvolucradas": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Ids del DAG que este ítem realmente pone a prueba. Debe incluir 'unidad' (validador, regla 6b). Si todo lo demás que contiene es ancestro de 'unidad' en el DAG, el ítem es AISLANTE — una propiedad CALCULADA por el validador y por el motor a partir de este arreglo y del DAG, nunca un booleano aparte en este schema."
+    },
+    "temarioDemre": {
+      "type": "string",
+      "minLength": 1,
+      "description": "La unidad tal como la nombra el temario oficial DEMRE (uso descriptivo únicamente; ver CLAUDE.md, 'PAES'/'DEMRE' nunca sugieren afiliación)."
+    },
+    "enunciado": { "type": "string", "minLength": 1 },
+    "alternativas": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Exactamente 4 (A–D), respuesta única (validador, regla 6c).",
+      "items": {
+        "type": "object",
+        "required": ["letra", "texto", "esCorrecta", "errorCatalogado", "feedback"],
+        "properties": {
+          "letra": { "enum": ["A", "B", "C", "D"] },
+          "texto": { "type": "string", "minLength": 1 },
+          "esCorrecta": { "type": "boolean" },
+          "errorCatalogado": {
+            "type": ["string", "null"],
+            "description": "null en la alternativa correcta. En cada distractor, no nulo: un id que debe existir en algún content/errores/<unidad>.json, cuya unidad dueña debe estar en unidadesInvolucradas (validador, reglas 6d y 6e)."
+          },
+          "feedback": {
+            "type": "string",
+            "minLength": 1,
+            "description": "No se muestra durante el diagnóstico. El diagnóstico corre en silencio total: sin correcto/incorrecto y sin feedback de contenido. Este texto se consume en (a) el repaso de errores del Modo PAES y (b) la pantalla del plan, únicamente en unidades cuya causa sea error-confirmado. Motivo: mostrar feedback entre ítems contamina la confianza autoreportada del ítem siguiente e invalida la regla de dos fallos, porque el segundo ítem de esa unidad pasaría a medir si entendió la explicación recién dada en vez de si domina el concepto."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "verificacionNumerica": {
+      "description": "OBLIGATORIO, nunca anulable. Dos formas, ninguna vacía: recalculable, o justificación explícita de por qué no se puede recalcular.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["metodo", "expresion", "esperado"],
+          "properties": {
+            "metodo": { "const": "calculo" },
+            "expresion": { "type": "string", "minLength": 1 },
+            "esperado": { "type": ["number", "string"], "description": "Resultado exacto de 'expresion', recalculado desde cero." }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["metodo", "justificacion"],
+          "properties": {
+            "metodo": { "const": "sin-calculo" },
+            "justificacion": {
+              "type": "string",
+              "minLength": 20,
+              "description": "Por qué este ítem no se puede verificar aritméticamente. Que cueste escribirla es el punto: no es una salida fácil para saltarse la verificación."
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "revisionMatematica": {
+      "type": "object",
+      "required": ["aprobada", "por", "fecha"],
+      "description": "Estado inicial al crear un ítem: { aprobada: false, por: null, fecha: null }. Pasa a aprobada:true solo tras una revisión real, recalculando desde cero. El selector del motor (lib/diagnostico/motor.ts, Regla 8) nunca sirve un ítem con aprobada !== true, sin importar 'estado'.",
+      "properties": {
+        "aprobada": { "type": "boolean" },
+        "por": { "type": ["string", "null"] },
+        "fecha": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "checklistOriginalidad": {
+      "type": "boolean",
+      "description": "Sin problema de originalidad detectado. Ante duda razonable: false, y el ítem se descarta o se rehace (MOS §7.2-7.3)."
+    },
+    "estado": {
+      "enum": ["borrador", "publicable"],
+      "description": "Solo 'publicable' puede llegar al selector, y únicamente si además revisionMatematica.aprobada === true (motor.ts, Regla 8). Un ítem 'publicable' con aprobada:false es válido para este schema y para el validador: la Regla 8 que lo bloquea vive en el motor, no acá."
+    },
+    "contextoNumerico": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Registro del contexto/cifras narrativas que usa este ítem — análogo a 'contextosNumericos' en leccion.schema.json ('para que otras lecciones no los repitan'), aquí a nivel de ítem individual. El validador impide que dos ítems del banco reutilicen el mismo contexto (regla 6f). Campo agregado en esta sesión junto con el resto del schema: no viene en la lista original del encargo, que solo nombraba la regla del validador sin decir en qué campo se apoya."
+    }
+  }
+}

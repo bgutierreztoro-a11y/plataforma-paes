@@ -57,6 +57,13 @@ export type AlternativaDiagnostico = {
   errorCatalogado?: string;
 };
 
+/** Revisión matemática de un ítem. Estado inicial al crear uno: `{ aprobada: false, por: null, fecha: null }`. */
+export type RevisionMatematicaItem = {
+  aprobada: boolean;
+  por: string | null;
+  fecha: string | null;
+};
+
 /**
  * Un ítem de diagnóstico.
  *
@@ -64,6 +71,13 @@ export type AlternativaDiagnostico = {
  * sin arrastrar el fallo de un prerrequisito. El selector solo entrega ítems
  * aislantes, porque un fallo en un ítem no aislante no dice cuál de las dos
  * unidades falló y rompe la propagación por el DAG.
+ *
+ * `estado` y `revisionMatematica` son campos de gobernanza de contenido, no de
+ * álgebra del motor — viajan igual en este tipo porque el selector los
+ * necesita para la Regla 8 (`esServible` en `motor.ts`): solo sirve ítems
+ * `publicable` con revisión matemática aprobada. Un error matemático servido
+ * en el diagnóstico es exactamente el tipo de daño que esa regla existe para
+ * impedir (MOS §4).
  */
 export type ItemDiagnostico = {
   id: string;
@@ -71,6 +85,8 @@ export type ItemDiagnostico = {
   aislante: boolean;
   enunciado: string;
   alternativas: AlternativaDiagnostico[];
+  estado: "borrador" | "publicable";
+  revisionMatematica: RevisionMatematicaItem;
 };
 
 /** Un fallo ya ocurrido, con el error que lo produjo. */

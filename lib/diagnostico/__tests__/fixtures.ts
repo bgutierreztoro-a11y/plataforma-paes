@@ -59,12 +59,29 @@ export function errorDe(unidadId: string, clave: string): string {
   return `err-${unidadId}-${posicion + 1}`;
 }
 
-function itemSintetico(unidadId: string, n: number, aislante = true): ItemDiagnostico {
+/**
+ * Estado de revisión por defecto: publicable y aprobado, o sea servible por el
+ * selector. Los tests de la Regla 8 pasan un `revision` propio para construir
+ * a propósito el caso contrario (borrador, o publicable sin aprobar).
+ */
+export function itemSintetico(
+  unidadId: string,
+  n: number,
+  aislante = true,
+  revision: { estado: "borrador" | "publicable"; aprobada: boolean } = {
+    estado: "publicable",
+    aprobada: true,
+  },
+): ItemDiagnostico {
   return {
     id: `fx-${unidadId}-${n}`,
     unidadId,
     aislante,
     enunciado: `Ítem sintético ${n} de ${unidadId}`,
+    estado: revision.estado,
+    revisionMatematica: revision.aprobada
+      ? { aprobada: true, por: "fixture", fecha: "2026-08-02" }
+      : { aprobada: false, por: null, fecha: null },
     alternativas: [
       { clave: "A", texto: "correcta", esCorrecta: true },
       ...CLAVES_INCORRECTAS.map((clave) => ({

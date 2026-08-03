@@ -162,6 +162,19 @@ function necesitaConfirmacion(unidad: EstadoUnidad): boolean {
   return unidad.itemsVistos === 1 && unidad.fallos.length === 1 && unidad.logOdds < 0;
 }
 
+/**
+ * Regla 8 (2026-08-02): el selector solo puede servir ítems ya revisados. La
+ * condición es la conjunción de dos gates independientes, no basta uno solo:
+ * `estado` lo decide quien escribe el ítem, `revisionMatematica.aprobada` una
+ * revisión matemática separada (MOS §4: "un error matemático publicado
+ * destruye la confianza del mercado"). El encadenado con `?.` es deliberado:
+ * un ítem real mal formado debe quedar afuera del banco servible, no tirar
+ * abajo el selector con una excepción cruda.
+ */
+export function esServible(item: ItemDiagnostico): boolean {
+  return item.estado === "publicable" && item.revisionMatematica?.aprobada === true;
+}
+
 /** Ítems del banco que sirven para preguntar por `unidadId` y no se han usado. */
 function itemsDisponibles(
   estado: EstadoDiagnostico,
@@ -169,7 +182,11 @@ function itemsDisponibles(
   unidadId: string,
 ): ItemDiagnostico[] {
   return banco.filter(
-    (item) => item.unidadId === unidadId && item.aislante && !estado.itemsUsados.has(item.id),
+    (item) =>
+      item.unidadId === unidadId &&
+      item.aislante &&
+      esServible(item) &&
+      !estado.itemsUsados.has(item.id),
   );
 }
 

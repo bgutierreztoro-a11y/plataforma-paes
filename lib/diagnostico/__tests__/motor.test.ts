@@ -17,6 +17,7 @@ import {
   debeTerminar,
   ejecutarDiagnostico,
   errorNombrable,
+  esServible,
   probabilidad,
   registrarRespuesta,
   siguienteItem,
@@ -32,6 +33,7 @@ import {
   dominioPlano,
   errorDe,
   generadorDeterminista,
+  itemSintetico,
   itemsDe,
   UNIDADES_FIXTURE,
 } from "./fixtures.ts";
@@ -203,6 +205,8 @@ describe("propagación por el DAG", () => {
       unidadId: "n1",
       aislante: true,
       enunciado: "raíz de la cadena",
+      estado: "publicable",
+      revisionMatematica: { aprobada: true, por: "fixture", fecha: "2026-08-02" },
       alternativas: [
         { clave: "A", texto: "ok", esCorrecta: true },
         { clave: "B", texto: "mal", esCorrecta: false, errorCatalogado: "err-cadena" },
@@ -313,6 +317,49 @@ describe("selección del siguiente ítem", () => {
     }
     assert.equal(siguienteItem(estado, DAG_FIXTURE, BANCO_FIXTURE), null);
     assert.equal(debeTerminar(estado, DAG_FIXTURE, BANCO_FIXTURE), true);
+  });
+});
+
+describe("regla 8: el selector solo sirve ítems revisados", () => {
+  test("esServible exige la conjunción: ninguno de los dos gates basta solo", () => {
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: true })), true);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: false })), false);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true })), false);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: false })), false);
+  });
+
+  test("un ítem publicable con aprobada:false nunca se sirve, aunque sea el único de su unidad", () => {
+    const noAprobado = itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: false });
+    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [noAprobado]), null);
+  });
+
+  test("un ítem borrador nunca se sirve, aunque su revisión matemática esté aprobada", () => {
+    const borrador = itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true });
+    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [borrador]), null);
+  });
+
+  test("publicable Y aprobado sí se sirve: el filtro no bloquea el caso bueno", () => {
+    const servible = itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: true });
+    const item = siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [servible]);
+    assert.equal(item?.id, servible.id);
+  });
+
+  test("banco vacío o sin ningún ítem servible: el selector falla de forma explícita (null), nunca con excepción cruda", () => {
+    assert.doesNotThrow(() => {
+      assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, []), null);
+    });
+
+    const soloNoServibles = [
+      itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true }),
+      itemSintetico("alfa", 1, true, { estado: "publicable", aprobada: false }),
+    ];
+    assert.doesNotThrow(() => {
+      assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, soloNoServibles), null);
+    });
+    // Tampoco deja el test colgado esperando un ítem que nunca va a llegar.
+    assert.doesNotThrow(() => {
+      assert.equal(debeTerminar(crearEstado(DAG_FIXTURE), DAG_FIXTURE, soloNoServibles), true);
+    });
   });
 });
 

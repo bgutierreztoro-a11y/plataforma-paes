@@ -25,6 +25,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve, basename, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { construirDag, ancestros } from '../lib/diagnostico/dag.ts';
 
 const ORDEN_PASOS = [
   'curiosidad', 'problema', 'pensar', 'pistas', 'descubrimiento',
@@ -172,15 +173,49 @@ export function validarArchivo(ruta) {
  * Carpetas bajo `content/` que NO llevan contenido pedagógico y por lo tanto no
  * se miden contra el contrato de lecciones:
  *   schema/      el contrato mismo
- *   diagnostico/ estructura del dominio (DAG de unidades y prerrequisitos) que
- *                consume `lib/diagnostico/`. No tiene pasos, ítems ni
- *                proveniencia porque no es material que lea un estudiante.
  *   errores/     catálogo de errores por unidad ({ unidad, errores[] }). Tiene
  *                su propio contrato, más abajo (`validarCatalogoErrores`).
- * Ojo: `content/diagnostico.json` (archivo, no carpeta) SÍ es contenido y sigue
- * validándose — acá se compara contra segmentos de ruta, no contra el nombre.
+ *
+ * `content/diagnostico/` YA NO está acá (2026-08-02). Era una exención en
+ * bloque —introducida en `8a13a4f`, la deuda registrada en
+ * docs/pendientes.md— que la sacaba de TODO contrato sin darle uno propio: un
+ * ítem real mal formado habría entrado ahí sin que nada lo validara. Ahora
+ * tiene dos contratos dedicados, discriminados por ruta (`esDagM1`,
+ * `esItemDiagnostico`, justo abajo): `dag-m1.json` contra su propia
+ * estructura (16 unidades, 22 aristas, acíclico, raíz única) e
+ * `items/*.json` contra `content/schema/item-diagnostico.schema.json`.
+ * Sigue sin pasar por el contrato de LECCIÓN porque no es material que lea un
+ * estudiante — pero ya no pasa en silencio.
+ *
+ * Ojo: `content/diagnostico.json` (archivo, no carpeta) SÍ es contenido de
+ * lección y sigue validándose contra ese contrato — acá se compara contra
+ * segmentos de ruta, no contra el nombre.
  */
-const CARPETAS_SIN_CONTRATO = new Set(['schema', 'diagnostico', 'errores']);
+const CARPETAS_SIN_CONTRATO = new Set(['schema', 'errores']);
+
+/** `content/diagnostico/dag-m1.json` (o cualquier .json ahí, salvo lo que cuelga de `items/`). */
+function esDagM1(ruta) {
+  const partes = resolve(ruta).split(sep);
+  return (
+    /\.json$/i.test(ruta) &&
+    partes.includes('content') &&
+    partes.includes('diagnostico') &&
+    !partes.includes('items') &&
+    !basename(ruta).startsWith('_')
+  );
+}
+
+/** Cualquier `content/diagnostico/items/*.json`. Un archivo = un ítem. */
+function esItemDiagnostico(ruta) {
+  const partes = resolve(ruta).split(sep);
+  return (
+    /\.json$/i.test(ruta) &&
+    partes.includes('content') &&
+    partes.includes('diagnostico') &&
+    partes.includes('items') &&
+    !basename(ruta).startsWith('_')
+  );
+}
 
 function esContenido(ruta) {
   const partes = resolve(ruta).split(sep);
@@ -188,6 +223,8 @@ function esContenido(ruta) {
     /\.json$/i.test(ruta) &&
     partes.includes('content') &&
     !partes.some((p) => CARPETAS_SIN_CONTRATO.has(p)) &&
+    !esDagM1(ruta) &&
+    !esItemDiagnostico(ruta) &&
     !basename(ruta).startsWith('_')
   );
 }
@@ -322,6 +359,290 @@ export function validarCatalogoErrores(ruta, dirLecciones) {
   return errores;
 }
 
+function* archivosDeItemDiagnostico(dirContent) {
+  const dir = join(dirContent, 'diagnostico', 'items');
+  if (!existsSync(dir)) return;
+  for (const ent of readdirSync(dir, { withFileTypes: true })) {
+    const ruta = resolve(join(dir, ent.name));
+    if (!ent.isDirectory() && esItemDiagnostico(ruta)) yield ruta;
+  }
+}
+
+/**
+ * Valida `content/diagnostico/dag-m1.json`: 16 unidades, 22 aristas, DAG
+ * acíclico y raíz única en sentido fuerte (una sola unidad sin
+ * prerrequisitos, y toda otra unidad desciende de ella).
+ *
+ * Reutiliza `construirDag`/`ancestros` de `lib/diagnostico/dag.ts`: la misma
+ * noción de "ancestro" y el mismo detector de ciclos que usa el motor en
+ * producción, no una reimplementación paralela del grafo que se pueda
+ * desincronizar con calladita.
+ */
+export function validarDagM1Archivo(ruta) {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(ruta, 'utf8'));
+  } catch (e) {
+    return [`JSON inválido: ${e.message}`];
+  }
+
+  const errores = [];
+  const unidades = data?.unidades;
+  if (!Array.isArray(unidades)) return ['falta "unidades"[]'];
+  if (unidades.length !== 16) errores.push(`se esperan 16 unidades (hay ${unidades.length})`);
+
+  let totalAristas = 0;
+  for (const u of unidades) totalAristas += Array.isArray(u?.prerrequisitos) ? u.prerrequisitos.length : 0;
+  if (totalAristas !== 22) errores.push(`se esperan 22 aristas en total (hay ${totalAristas})`);
+
+  let dag;
+  try {
+    dag = construirDag(unidades);
+  } catch (e) {
+    errores.push(e.message); // construirDag ya cubre ids duplicados, prerrequisitos rotos y ciclos
+    return errores; // sin un DAG válido, "raíz única" no se puede evaluar con sentido
+  }
+
+  const sinPrerrequisitos = unidades.filter((u) => !u?.prerrequisitos?.length).map((u) => u.id);
+  if (sinPrerrequisitos.length !== 1) {
+    errores.push(
+      `debe haber exactamente una unidad sin prerrequisitos (hay ${sinPrerrequisitos.length}: ${sinPrerrequisitos.join(', ') || 'ninguna'})`,
+    );
+  } else {
+    const raiz = sinPrerrequisitos[0];
+    const huerfanas = unidades
+      .filter((u) => u.id !== raiz && !ancestros(dag, u.id).has(raiz))
+      .map((u) => u.id);
+    if (huerfanas.length) {
+      errores.push(`unidades que no descienden de la raíz única ("${raiz}"): ${huerfanas.join(', ')}`);
+    }
+  }
+
+  return errores;
+}
+
+/** Lee content/diagnostico/items/*.json ya parseados. Un archivo = un ítem. */
+function leerBancoDiagnostico(dirContent) {
+  const items = []; // { ruta, data }
+  const rotos = []; // { ruta, mensaje }
+  for (const ruta of archivosDeItemDiagnostico(dirContent)) {
+    try {
+      items.push({ ruta, data: JSON.parse(readFileSync(ruta, 'utf8')) });
+    } catch (e) {
+      rotos.push({ ruta, mensaje: `JSON inválido: ${e.message}` });
+    }
+  }
+  return { items, rotos };
+}
+
+/** Mapa errorCatalogado completo ("<unidad>/error-N") → unidad dueña, leído de content/errores/*.json. */
+function cargarErroresCatalogados(dirContent) {
+  const porId = new Map();
+  const dir = join(dirContent, 'errores');
+  if (!existsSync(dir)) return porId;
+  for (const ent of readdirSync(dir, { withFileTypes: true })) {
+    const ruta = join(dir, ent.name);
+    if (ent.isDirectory() || !esCatalogoErrores(ruta)) continue;
+    let data;
+    try {
+      data = JSON.parse(readFileSync(ruta, 'utf8'));
+    } catch {
+      continue; // ese archivo ya reporta su propio JSON roto por su cuenta
+    }
+    const unidad = data?.unidad;
+    for (const e of data?.errores ?? []) {
+      if (esTexto(e?.id)) porId.set(e.id, unidad);
+    }
+  }
+  return porId;
+}
+
+/** Forma de un ítem individual y sus referencias al DAG y a content/errores/ (reglas 6a, 6b, 6c, 6d, 6e, y el contrato de verificacionNumerica/revisionMatematica/checklistOriginalidad/estado). */
+function validarFormaItemDiagnostico(data, dag, erroresCatalogados) {
+  const errores = [];
+
+  if (!esTexto(data?.id)) errores.push('falta id');
+
+  const unidad = data?.unidad;
+  if (!esTexto(unidad)) errores.push('falta unidad');
+  else if (!dag.porId.has(unidad)) errores.push(`unidad "${unidad}" no existe en dag-m1.json`); // regla 6a
+
+  const invol = data?.unidadesInvolucradas;
+  if (!Array.isArray(invol) || invol.length === 0) {
+    errores.push('falta unidadesInvolucradas[] (al menos "unidad")');
+  } else {
+    if (esTexto(unidad) && !invol.includes(unidad)) {
+      errores.push('unidadesInvolucradas debe contener "unidad" (regla 6b)');
+    }
+    for (const u of invol) {
+      if (!dag.porId.has(u)) errores.push(`unidadesInvolucradas incluye "${u}", que no existe en dag-m1.json`);
+    }
+  }
+
+  if (!esTexto(data?.temarioDemre)) errores.push('falta temarioDemre');
+  if (!esTexto(data?.enunciado)) errores.push('falta enunciado');
+  if (!esTexto(data?.contextoNumerico)) errores.push('falta contextoNumerico');
+
+  const alts = data?.alternativas;
+  if (!Array.isArray(alts) || alts.length !== 4) {
+    errores.push(`se esperan exactamente 4 alternativas (hay ${Array.isArray(alts) ? alts.length : 0})`); // regla 6c
+  } else {
+    const letras = alts.map((a) => a?.letra);
+    for (const l of CLAVES) if (!letras.includes(l)) errores.push(`falta la alternativa ${l}`);
+    const correctas = alts.filter((a) => a?.esCorrecta === true);
+    if (correctas.length !== 1) errores.push(`debe haber exactamente una alternativa correcta (hay ${correctas.length})`); // regla 6c
+
+    for (const a of alts) {
+      const q = `alternativas.${a?.letra ?? '?'}`;
+      if (!esTexto(a?.texto)) errores.push(`${q}: falta texto`);
+      if (!esTexto(a?.feedback)) errores.push(`${q}: falta feedback`);
+
+      if (a?.esCorrecta === true) {
+        if (a?.errorCatalogado !== null) errores.push(`${q}: la alternativa correcta debe tener errorCatalogado: null`); // regla 6d
+      } else if (!esTexto(a?.errorCatalogado)) {
+        errores.push(`${q}: el distractor debe tener errorCatalogado (no nulo)`); // regla 6d
+      } else {
+        const dueño = erroresCatalogados.get(a.errorCatalogado); // regla 6e
+        if (dueño === undefined) {
+          errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no existe en ningún content/errores/<unidad>.json`);
+        } else if (!(Array.isArray(invol) && invol.includes(dueño))) {
+          errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" pertenece a "${dueño}", que no está en unidadesInvolucradas`);
+        }
+      }
+    }
+  }
+
+  const vn = data?.verificacionNumerica;
+  if (!vn || typeof vn !== 'object') {
+    errores.push('falta verificacionNumerica'); // regla 5
+  } else if (vn.metodo === 'calculo') {
+    if (!esTexto(vn.expresion)) errores.push('verificacionNumerica.expresion es obligatoria en metodo "calculo"');
+    if (vn.esperado === undefined || vn.esperado === null || vn.esperado === '') {
+      errores.push('verificacionNumerica.esperado es obligatorio en metodo "calculo"');
+    }
+  } else if (vn.metodo === 'sin-calculo') {
+    if (!esTexto(vn.justificacion) || vn.justificacion.trim().length < 20) {
+      errores.push('verificacionNumerica.justificacion debe explicar, con sustancia, por qué no se puede verificar aritméticamente');
+    }
+  } else {
+    errores.push('verificacionNumerica.metodo debe ser "calculo" o "sin-calculo"');
+  }
+
+  const rm = data?.revisionMatematica;
+  if (!rm || typeof rm !== 'object' || typeof rm.aprobada !== 'boolean') {
+    errores.push('falta revisionMatematica.aprobada (boolean)');
+  }
+  if (typeof data?.checklistOriginalidad !== 'boolean') errores.push('falta checklistOriginalidad (boolean)');
+  if (!['borrador', 'publicable'].includes(data?.estado)) errores.push('estado debe ser "borrador" o "publicable"');
+
+  return errores;
+}
+
+/**
+ * Valida el BANCO COMPLETO de content/diagnostico/items/*.json a la vez.
+ *
+ * Reglas 6f, 6g y 6h solo tienen sentido mirando el banco entero, no un
+ * archivo aislado — por eso este validador, a diferencia de `validarArchivo`,
+ * no opera archivo por archivo: lee todo y devuelve un mapa ruta → errores
+ * para que cada modo de invocación (hook, archivo suelto, corrida completa)
+ * muestre el error contra el archivo que corresponde.
+ *
+ * 6g y 6h se evalúan solo sobre unidades que YA tienen ítems: un banco vacío
+ * es un estado válido —`content/diagnostico/items/` está vacío a propósito en
+ * esta sesión— y no dispara ninguna de las dos.
+ */
+export function validarBancoDiagnostico(dirContent) {
+  const porRuta = new Map();
+  const agregar = (ruta, mensaje) => porRuta.set(ruta, [...(porRuta.get(ruta) ?? []), mensaje]);
+
+  const { items, rotos } = leerBancoDiagnostico(dirContent);
+  for (const { ruta, mensaje } of rotos) agregar(ruta, mensaje);
+  if (items.length === 0) return porRuta; // banco vacío: nada más que validar
+
+  let dag;
+  try {
+    const dagData = JSON.parse(readFileSync(join(dirContent, 'diagnostico', 'dag-m1.json'), 'utf8'));
+    dag = construirDag(dagData.unidades);
+  } catch (e) {
+    for (const { ruta } of items) agregar(ruta, `no se pudo cargar dag-m1.json: ${e.message}`);
+    return porRuta;
+  }
+  const erroresCatalogados = cargarErroresCatalogados(dirContent);
+
+  for (const { ruta, data } of items) {
+    for (const e of validarFormaItemDiagnostico(data, dag, erroresCatalogados)) agregar(ruta, e);
+  }
+
+  // Unicidad de id en TODO el banco (parte de la definición del campo "id").
+  const porId = new Map();
+  for (const { ruta, data } of items) {
+    if (!esTexto(data?.id)) continue;
+    porId.set(data.id, [...(porId.get(data.id) ?? []), ruta]);
+  }
+  for (const [id, rutas] of porId) {
+    if (rutas.length > 1) {
+      for (const ruta of rutas) agregar(ruta, `id "${id}" duplicado con: ${rutas.filter((r) => r !== ruta).join(', ')}`);
+    }
+  }
+
+  // Regla 6f: ningún contexto numérico se repite entre ítems del banco.
+  const porContexto = new Map();
+  for (const { ruta, data } of items) {
+    if (!esTexto(data?.contextoNumerico)) continue;
+    porContexto.set(data.contextoNumerico, [...(porContexto.get(data.contextoNumerico) ?? []), ruta]);
+  }
+  for (const [contexto, rutas] of porContexto) {
+    if (rutas.length > 1) {
+      for (const ruta of rutas) {
+        agregar(ruta, `contextoNumerico "${contexto}" repetido con: ${rutas.filter((r) => r !== ruta).join(', ')}`);
+      }
+    }
+  }
+
+  // Reglas 6g y 6h: cobertura por unidad, solo sobre unidades que ya tienen ítems.
+  const itemsPorUnidad = new Map();
+  for (const entrada of items) {
+    const u = entrada.data?.unidad;
+    if (!esTexto(u) || !dag.porId.has(u)) continue;
+    itemsPorUnidad.set(u, [...(itemsPorUnidad.get(u) ?? []), entrada]);
+  }
+
+  for (const [unidad, entradas] of itemsPorUnidad) {
+    // 6g: al menos un ítem aislante (unidadesInvolucradas ⊆ {unidad} ∪ ancestros).
+    const permitidas = new Set([unidad, ...ancestros(dag, unidad).keys()]);
+    const aislantes = entradas.filter(({ data }) => {
+      const invol = data?.unidadesInvolucradas;
+      return Array.isArray(invol) && invol.length > 0 && invol.every((u2) => permitidas.has(u2));
+    });
+    if (aislantes.length === 0) {
+      const mensaje = `la unidad "${unidad}" tiene ítems pero ninguno es aislante (unidadesInvolucradas ⊆ {unidad} ∪ ancestros)`;
+      for (const { ruta } of entradas) agregar(ruta, mensaje);
+    }
+
+    // 6h: si hay ≥2 ítems, al menos un errorCatalogado propio se repite en ≥2 de ellos.
+    if (entradas.length >= 2) {
+      const itemsPorError = new Map();
+      for (const { ruta, data } of entradas) {
+        for (const a of data?.alternativas ?? []) {
+          const errId = a?.errorCatalogado;
+          if (esTexto(errId) && errId.startsWith(`${unidad}/`)) {
+            const s = itemsPorError.get(errId) ?? new Set();
+            s.add(ruta);
+            itemsPorError.set(errId, s);
+          }
+        }
+      }
+      const algunoRepetido = [...itemsPorError.values()].some((s) => s.size >= 2);
+      if (!algunoRepetido) {
+        const mensaje = `la unidad "${unidad}" tiene ${entradas.length} ítems pero ningún errorCatalogado propio se repite en 2 de ellos: error-confirmado sería inalcanzable`;
+        for (const { ruta } of entradas) agregar(ruta, mensaje);
+      }
+    }
+  }
+
+  return porRuta;
+}
+
 function reportar(ruta, errores) {
   if (errores.length === 0) {
     console.log(`OK  ${ruta}`);
@@ -354,15 +675,29 @@ if (arg === '--hook') {
   }
 
   const esErrores = esCatalogoErrores(filePath);
-  if (!filePath || !existsSync(filePath) || (!esContenido(filePath) && !esErrores)) process.exit(0);
+  const esDag = esDagM1(filePath);
+  const esItem = esItemDiagnostico(filePath);
+  const requiereValidacion = esContenido(filePath) || esErrores || esDag || esItem;
+  if (!filePath || !existsSync(filePath) || !requiereValidacion) process.exit(0);
 
-  const errores = esErrores
-    ? validarCatalogoErrores(filePath, join(raizContentDe(filePath), 'lecciones'))
-    : validarArchivo(filePath);
+  let errores;
+  let esLeccion = false;
+  if (esErrores) {
+    errores = validarCatalogoErrores(filePath, join(raizContentDe(filePath), 'lecciones'));
+  } else if (esDag) {
+    errores = validarDagM1Archivo(filePath);
+  } else if (esItem) {
+    const porRuta = validarBancoDiagnostico(raizContentDe(filePath));
+    errores = porRuta.get(resolve(filePath)) ?? [];
+  } else {
+    errores = validarArchivo(filePath);
+    esLeccion = true;
+  }
+
   if (errores.length) {
     console.error(`El archivo de contenido ${filePath} no pasa la validación:`);
     for (const e of errores) console.error(` - ${e}`);
-    if (!esErrores) {
+    if (esLeccion) {
       console.error('Corrige estos puntos antes de continuar (contrato: content/schema/leccion.schema.json).');
     }
     process.exit(2); // Claude Code recibe este error como feedback y corrige
@@ -376,9 +711,17 @@ if (arg) {
     console.error(`No existe: ${ruta}`);
     process.exit(1);
   }
-  const errores = esCatalogoErrores(ruta)
-    ? validarCatalogoErrores(ruta, join(raizContentDe(ruta), 'lecciones'))
-    : validarArchivo(ruta);
+  let errores;
+  if (esCatalogoErrores(ruta)) {
+    errores = validarCatalogoErrores(ruta, join(raizContentDe(ruta), 'lecciones'));
+  } else if (esDagM1(ruta)) {
+    errores = validarDagM1Archivo(ruta);
+  } else if (esItemDiagnostico(ruta)) {
+    const porRuta = validarBancoDiagnostico(raizContentDe(ruta));
+    errores = porRuta.get(ruta) ?? [];
+  } else {
+    errores = validarArchivo(ruta);
+  }
   process.exit(reportar(ruta, errores) ? 0 : 1);
 }
 
@@ -398,6 +741,19 @@ for (const ruta of archivosDeCatalogoErrores(raiz)) {
   n++;
   if (!reportar(ruta, validarCatalogoErrores(ruta, dirLecciones))) ok = false;
 }
+
+const rutaDagM1 = join(raiz, 'diagnostico', 'dag-m1.json');
+if (existsSync(rutaDagM1)) {
+  n++;
+  if (!reportar(rutaDagM1, validarDagM1Archivo(rutaDagM1))) ok = false;
+}
+
+const porRutaItems = validarBancoDiagnostico(raiz);
+for (const ruta of archivosDeItemDiagnostico(raiz)) {
+  n++;
+  if (!reportar(ruta, porRutaItems.get(ruta) ?? [])) ok = false;
+}
+
 if (n === 0) console.log('Sin archivos de contenido que validar (los que empiezan con "_" son plantillas y se omiten).');
 process.exit(ok ? 0 : 1);
 }
