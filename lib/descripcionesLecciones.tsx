@@ -33,6 +33,11 @@ const CATALOGO: Record<LeccionId, PresentacionLeccion> = {
       "Mueve una recta real con tus manos y descubre qué controlan la pendiente y el intercepto.",
     Ilustracion: IlustracionPendiente,
   },
+  "lineal-modelamiento-paes": {
+    descripcion:
+      "Parte de un enunciado escrito y arma tú la ecuación: decide qué número es el ritmo y cuál el punto de partida.",
+    Ilustracion: IlustracionPlano,
+  },
   "ecuaciones-lineales": {
     descripcion:
       "Resuelve ecuaciones pensando en una balanza en equilibrio: lo que haces a un lado, lo haces al otro.",

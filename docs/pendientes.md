@@ -43,6 +43,8 @@ criterio humano sobre qué error es cuál.
 esta colisión; el resto puede tener sus ítems de diagnóstico escritos sin
 esperar a que esta se resuelva.
 
+**Namespace de ids de error: dos convenciones conviviendo, nada que las cruce (anotada 2026-08-02).** `content/errores/<unidad>.json` usa ids con prefijo de módulo (`funcion-lineal-afin/error-7`), que es lo que exige el validador de ítems de diagnóstico (reglas 6e y 6h en `validarFormaItemDiagnostico`). En cambio, los arrays `catalogoErrores` embebidos en los L1 y el campo `errorCatalogado` de toda lección usan el id local pelado (`error-7`), y el contrato de lección no verifica ese campo contra ningún catálogo — `validarDatos` ni lo mira. El prefijo desambigua **entre** unidades, no **dentro** de una: `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` pertenecen al mismo módulo, así que sus dos `error-1` de significado distinto colapsarían igual en `funcion-lineal-afin/error-1` — por eso los 5 errores del segundo siguen sin migrar y la colisión de arriba sigue abierta. Falta decidir la convención única (y si el campo `errorCatalogado` de las lecciones debe validarse contra el artefacto) antes de que el diagnóstico adaptativo lo consuma.
+
 ## 🟡 Deudas del motor de diagnóstico (abierta 2026-08-02)
 
 ### ✅ `content/diagnostico/` quedó exento del contrato del validador — resuelta (2026-08-02)
@@ -798,19 +800,27 @@ se interpreta.
 
 Fecha: 2026-07-29
 
-## Estado real del módulo "Función lineal y afín": 2/3 lecciones
+## ✅ Estado real del módulo "Función lineal y afín": 3/3 lecciones — resuelta (2026-08-02)
 
-Registro de estado, no acción — no se escribe la tercera lección hoy, solo se
-deja constancia antes de decidir cuándo abordarla.
+Registro de estado, no acción — cuando se anotó (2026-07-29) no se escribía la
+tercera lección, solo se dejaba constancia antes de decidir cuándo abordarla.
 
 El módulo declara 3 lecciones (Enmienda 2, `mos-v2.md` §13): patrones de
-cambio, pendiente e intercepto, modelamiento PAES. Las dos primeras existen
-como archivo (`lineal-patrones-de-cambio.json`, `lineal-pendiente-e-intercepto.json`);
-la tercera — modelamiento PAES — **no está escrita**. Sigue en 2/3.
+cambio, pendiente e intercepto, modelamiento PAES. Al anotar esta entrada
+existían las dos primeras (`lineal-patrones-de-cambio.json`,
+`lineal-pendiente-e-intercepto.json`) y la tercera no estaba escrita: 2/3.
+
+**Cerrada el 2026-08-02:** se escribió `lineal-modelamiento-paes.json` y se
+registró en `lib/modulos.ts` (tercera posición del módulo) y en
+`lib/descripcionesLecciones.tsx`. El módulo queda en **3/3**. La lección nace
+en `estado: "borrador"`, con `checklistOriginalidad` y `revisionMatematica` sin
+firmar: falta `/revision-matematica` y `/revision-originalidad` antes de que
+pueda pasar a `publicable` y volverse navegable. O sea, el módulo está completo
+como archivos, no como contenido publicado.
 
 No confundir con `ecuaciones-lineales.json`: pertenece al módulo "Ecuaciones e
-inecuaciones de primer grado" desde la Enmienda 2, no cuenta como la lección
-que falta aquí.
+inecuaciones de primer grado" desde la Enmienda 2, no contaba como la lección
+que faltaba aquí.
 
 ## Cierre: revisión de diferenciación L1 vs L3 (2026-07-29)
 

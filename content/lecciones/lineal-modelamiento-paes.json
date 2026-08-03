@@ -1,0 +1,505 @@
+{
+  "tipo": "leccion",
+  "id": "lineal-modelamiento-paes",
+  "titulo": "Del enunciado al modelo",
+  "objetivo": "Traducir un enunciado en lenguaje natural a una función afín: decidir qué cantidad del enunciado es la tasa de cambio y cuál el valor inicial, escribir el modelo y = mx + n, interpretar de vuelta qué significa cada parámetro en el contexto, y evaluar si un modelo propuesto representa o no la situación.",
+  "tiempoEstimadoMin": 25,
+  "prerrequisitos": [
+    "Lección 1: cambio constante y la receta 'valor inicial + cambio por paso × número de pasos'",
+    "Lección 2: pendiente e intercepto, y la notación y = mx + n"
+  ],
+  "conceptos": [
+    "modelamiento",
+    "traducción enunciado ↔ ecuación",
+    "tasa de cambio en contexto",
+    "valor inicial en contexto",
+    "interpretación de parámetros",
+    "validez de un modelo"
+  ],
+  "_notasInternas": [
+    "Tercera y última lección del módulo 'función lineal y afín' (Enmienda 2, mos-v2.md §13). Con ella el módulo queda en 3/3 lecciones; cierra la deuda registrada en docs/pendientes.md ('Estado real del módulo: 2/3 lecciones', 2026-07-29).",
+    "Estado 'borrador' a propósito: checklistOriginalidad con los cuatro campos en false y sin revisadoPor, revisionMatematica con aprobada:false y sin firma. Ningún proceso automático los escribe (nota de cabecera de scripts/validar-contenido.mjs); los firma el autor humano después de /revision-matematica y /revision-originalidad reales.",
+    "SIN catalogoErrores embebido, a diferencia de lineal-patrones-de-cambio.json y lineal-pendiente-e-intercepto.json. Decisión de esta sesión: el catálogo del módulo no se duplica acá. Los ids error-1 a error-6 referenciados por errorCatalogado son los de lineal-patrones-de-cambio.json (idénticos a los de content/errores/funcion-lineal-afin.json sin su prefijo de módulo). NO se referencia ningún id del catálogo de lineal-pendiente-e-intercepto.json, que numera error-1..error-5 con significados distintos — ver la deuda 🔴 de docs/pendientes.md sobre la colisión de namespace.",
+    "error-7 ('intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo') es NUEVO, aprobado y firmado por Benjamín Gutiérrez el 2026-08-02 para esta lección. Vive solo en content/errores/funcion-lineal-afin.json como funcion-lineal-afin/error-7; por decisión explícita de la misma sesión NO se agregó al array embebido de ningún L1. Es el error central de esta lección: aparece en los pasos 2, 5, 7 y 8 y en los tres ítems del cierre.",
+    "FORMATO DE REFERENCIA de errorCatalogado: id local pelado ('error-7'), sin el prefijo 'funcion-lineal-afin/'. Decisión explícita del 2026-08-02, tomada después de verificar que (a) las 38 referencias existentes en las otras dos lecciones del módulo usan el formato pelado y (b) el contrato de lección no valida este campo contra ningún catálogo (validarDatos y validarItem en scripts/validar-contenido.mjs no lo mencionan; solo lo verifican las reglas 6e y 6h, que son de ítems de diagnóstico y sí exigen prefijo). La convergencia de ambas convenciones es la deuda anotada en docs/pendientes.md, se resuelve aparte.",
+    "DIFERENCIACIÓN respecto de las otras dos lecciones del módulo, que es lo que justifica que exista. L1 (patrones de cambio) detecta cambio constante restando valores consecutivos de una TABLA ya dada. L2 (pendiente e intercepto) manipula m y n con sliders sobre un GRÁFICO ya dado. Esta lección va en la dirección inversa: parte de un ENUNCIADO en lenguaje natural y el estudiante decide qué cantidad es m y cuál n, arma el modelo, lo interpreta de vuelta en el contexto y evalúa la validez de un modelo propuesto. Ningún paso pide restar filas consecutivas ni mover controles; ninguno pide despejar una incógnita (eso es de ecuaciones-lineales.json, de otro módulo).",
+    "DESVIACIÓN DECLARADA de docs/calibracion-lecciones-e-items.md §3.5: con 3 ítems la distribución que ese documento prescribe es resolver + (modelar|representar) + argumentar, y acá es modelar + argumentar + representar. Se omite 'resolver' a propósito: un ítem de resolver es cálculo sobre un modelo ya dado, que es exactamente lo que L1 ya entrena, y su presencia gastaría un tercio del cierre en la habilidad menos propia de esta lección. Se respeta la regla dura del mismo §3.5 ('nunca los 2–3 ítems de la misma habilidad') y el requisito de cubrir 'modelar' y 'argumentar', esta última la peor cubierta por L1 y L2.",
+    "CONTEXTOS verificados contra el corpus de fuentes aisladas por Benjamín Gutiérrez fuera de esta sesión, conforme al mecanismo 2 de 'Aislamiento de fuentes externas' (CLAUDE.md): dron de inspección topográfica, cable restante en la bobina, cinta transportadora que apila cajas. El hilo de redacción no consultó el corpus ni ejecutó scripts/consultar-fuentes.mjs. Se evitaron por instrucción los dominios reparto, batería, estanque, carrete y bodega, y la familia 'cargo fijo + tarifa variable' (ya usada en el Paso 8 de lineal-pendiente-e-intercepto.json).",
+    "VERIFICACIÓN MATEMÁTICA recalculada desde cero, contexto por contexto. Dron del cuerpo de la lección, d = 30 + 9t: t=0 → 30; t=4 → 30+36 = 66; t=10 → 30+90 = 120. Valores de los distractores del Paso 3: 9×4 = 36 (error-1), 30+9 = 39 (error-5), (30+9)×4 = 156 (error-6), 9×10 = 90 (error-1), 30+9×9 = 111 (error-2), (30+9)×10 = 390 (error-6). Cable, c = 280 − 9t: t=0 → 280; t=20 → 280−180 = 100. Dron del ítem 1, d = 50 + 7t: t=0 → 50; t=3 → 50+21 = 71. Cable del ítem 2, c = 180 − 6t: t=0 → 180; t=10 → 180−60 = 120; el distractor c = 180 + 6t da 240 en t=10. Cinta del ítem 3, N = 16 + 4t: 16, 20, 24, 28 en los minutos 0 a 3; distractor B = 4t → 0, 4, 8, 12; distractor C = 4 + 16t → 4, 20, 36, 52; distractor D aplica el aumento una sola vez → 16, 20, 20, 20. Todos los resultados son enteros. Esta verificación es del redactor y NO sustituye a /revision-matematica: revisionMatematica.aprobada sigue en false.",
+    "NÚMEROS: los cinco pares usados (30/9, 280/9, 50/7, 180/6, 16/4) se eligieron sin repetir ninguna combinación de lineal-patrones-de-cambio.json (4/3, 5.000/2.000, 45/6, 12/7, 18/5, 47/6, 24/18) ni de lineal-pendiente-e-intercepto.json (4/−2, 5/3, 160/25, 1.200/900, 4.800/300). Registro en contextosNumericos."
+  ],
+  "estado": "borrador",
+  "contextosNumericos": [
+    "Dron de inspección topográfica: 30 m ya recorridos al empezar el registro, 9 m/s. Modelo d = 30 + 9t. Usado en los pasos 1 a 6 y 8.",
+    "Cable que queda en la bobina del dron: 280 m enrollados al empezar el registro, 9 m sueltos por segundo. Modelo c = 280 − 9t. Usado en los pasos 6 y 7.",
+    "Dron de inspección topográfica, segundo vuelo: 50 m al empezar el registro, 7 m/s. Modelo d = 50 + 7t. Usado en itemsPAES[0].",
+    "Cable que queda en la bobina, segundo vuelo: 180 m enrollados, 6 m sueltos por segundo. Modelo c = 180 − 6t. Usado en itemsPAES[1].",
+    "Cinta transportadora que apila cajas: 16 cajas ya apiladas al encenderse, 4 cajas por minuto. Modelo N = 16 + 4t. Usado en itemsPAES[2]."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Los mismos dos números, dos ecuaciones distintas",
+      "_notasInternas": [
+        "La predicción no se corrige acá: se retoma en el Paso 5, después de que el estudiante tenga el criterio para decidirla solo. Misma mecánica que el Paso 1 de lineal-patrones-de-cambio.json (predicción sin corrección → revelación en el descubrimiento).",
+        "La tercera opción ('las dos sirven') está para capturar al estudiante que todavía no ve que el orden importa; el Paso 3 la desmiente con números, no con una explicación."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un dron de inspección topográfica sobrevuela un terreno en línea recta. Cuando el equipo enciende el registro de datos, el dron **ya se había alejado 30 metros** de su punto de despegue. Desde ese instante sigue alejándose a **9 metros por segundo**, sin cambiar de velocidad.\n\nAlguien tiene que escribir la ecuación que da la distancia al punto de despegue en función del tiempo. En la pizarra aparecen dos candidatas:\n\nd = 30 + 9t\n\nd = 9 + 30t\n\nLos dos números son los mismos. Lo único que cambió es dónde quedó cada uno."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular nada todavía: ¿cuál de las dos describe a este dron?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "d = 30 + 9t",
+            "d = 9 + 30t",
+            "Las dos sirven: es el mismo par de números"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Guarda tu respuesta. No la corregimos todavía: en unos pasos vas a poder decidirlo tú, y no de memoria, sino con un criterio que funciona para cualquier enunciado.\n\nSi elegiste la tercera, atención al paso siguiente: las dos ecuaciones dan resultados distintos desde el primer segundo."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Uno ocurre una vez, el otro se repite",
+      "_notasInternas": [
+        "Opción (b) → error-7 (papeles intercambiados), que es el error central de esta lección y aparece acá por primera vez. Opción (c) → error-6 (multiplicar el valor inicial junto con la tasa).",
+        "Verificación del feedback de (c): si ambos números se sumaran en cada segundo, el ritmo sería 30 + 9 = 39 m/s, no los 9 m/s del enunciado."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Volvamos al enunciado, sin ecuaciones de por medio:\n\n> Al empezar el registro, el dron ya estaba a 30 metros del punto de despegue, y desde ahí se aleja 9 metros por segundo.\n\nEntre los dos números hay una diferencia de fondo: uno ocurre **una sola vez**, el otro **vuelve a ocurrir en cada segundo**.\n\n¿Cuál de los dos se repite segundo a segundo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Los 9 metros: cada segundo que pasa, el dron suma otros 9.",
+              "esCorrecta": true,
+              "feedback": "Exacto. Los 9 metros son un ritmo: se aplican una vez por cada segundo transcurrido, así que quedan multiplicando al tiempo. Los 30 metros ya estaban recorridos antes de que el registro empezara: se cuentan una sola vez y no se repiten nunca más."
+            },
+            {
+              "id": "b",
+              "texto": "Los 30 metros: es el número más grande, así que es el que manda.",
+              "esCorrecta": false,
+              "feedback": "El tamaño del número no decide nada. Pregúntate qué pasa entre el segundo 1 y el segundo 2: ¿el dron vuelve a sumar 30 metros, o vuelve a sumar 9? Los 30 metros ocurrieron antes de que empezara el registro y no se repiten.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "Los dos: en cada segundo el dron suma 30 y además 9.",
+              "esCorrecta": false,
+              "feedback": "Los 30 metros no se vuelven a sumar: son el punto desde donde arranca la medición, no algo que ocurra cada segundo. Si se sumaran los dos en cada segundo, el dron avanzaría 39 metros por segundo, y el enunciado dice 9.",
+              "errorCatalogado": "error-6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Dos distancias, razonando del enunciado",
+      "_notasInternas": [
+        "El estudiante todavía no tiene el modelo escrito: se le pide razonar directo del enunciado, que es la habilidad de esta lección. El modelo aparece recién en el Paso 5, construido a partir de estos dos cálculos.",
+        "Los 4 segundos son alcanzables contando; los 10 segundos empujan al atajo multiplicativo. Mismo incentivo deliberado que el Paso 3 de lineal-patrones-de-cambio.json (semana 3 vs. semana 8).",
+        "Verificación: 30 + 9×4 = 30 + 36 = 66. 30 + 9×10 = 30 + 90 = 120.",
+        "Verificación de los distractores: 9×4 = 36; 30 + 9 = 39; (30+9)×4 = 39×4 = 156; 9×10 = 90; 30 + 9×9 = 30 + 81 = 111; (30+9)×10 = 390."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Sin usar ninguna de las dos ecuaciones de la pizarra, razona directamente del enunciado:\n\n> Al empezar el registro, el dron ya estaba a 30 metros del punto de despegue, y desde ahí se aleja 9 metros por segundo.\n\n¿A qué distancia del punto de despegue está el dron a los 4 segundos de registro? ¿Y a los 10?",
+          "campos": [
+            {
+              "id": "distancia4s",
+              "etiqueta": "Distancia a los 4 segundos",
+              "respuestaCorrecta": 66,
+              "unidad": "m"
+            },
+            {
+              "id": "distancia10s",
+              "etiqueta": "Distancia a los 10 segundos",
+              "respuestaCorrecta": 120,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "distancia4s",
+              "valorObtenido": 36,
+              "mensaje": "Eso es solo lo que el dron avanzó durante el registro (9×4 = 36). Pero no arrancó en el punto de despegue: ya estaba a 30 metros cuando la medición empezó.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "distancia4s",
+              "valorObtenido": 39,
+              "mensaje": "Sumaste los 9 metros una sola vez. Fueron 4 segundos, y en cada uno avanza 9: hay que sumar 9 cuatro veces, o sea 9×4.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "distancia4s",
+              "valorObtenido": 156,
+              "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×4. Los 30 metros ya estaban recorridos antes de empezar, así que se suman una vez y no se multiplican por nada.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "distancia10s",
+              "valorObtenido": 90,
+              "mensaje": "Eso es solo lo que avanzó durante el registro (9×10 = 90). Faltan los 30 metros que el dron ya llevaba cuando la medición empezó.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "distancia10s",
+              "valorObtenido": 111,
+              "mensaje": "Contaste 9 segundos en vez de 10: 30 + 9×9 = 111. A los 10 segundos el dron avanzó 9 metros diez veces, no nueve.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "distancia10s",
+              "valorObtenido": 390,
+              "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×10. Solo el ritmo de 9 metros por segundo se multiplica por el tiempo; los 30 se suman una sola vez.",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "feedbackPorDefecto": "Arma el cálculo en dos partes: cuánto llevaba el dron antes de empezar (esa cantidad entra una sola vez) y cuánto avanzó durante el registro (9 metros por cada segundo transcurrido)."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para las dos distancias",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Parte el enunciado en dos preguntas separadas: ¿dónde estaba el dron en el segundo 0? ¿Y cuánto se le suma por cada segundo que pasa?"
+            },
+            {
+              "nivel": 2,
+              "texto": "En el segundo 0 el dron estaba a 30 metros: esa cantidad entra una sola vez, sin multiplicar por nada. Los 9 metros entran una vez por cada segundo transcurrido."
+            },
+            {
+              "nivel": 3,
+              "texto": "Distancia = 30 + 9 × (segundos). Para 4 segundos: 30 + 9×4. Calcula eso, y después repítelo con 10."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El número que queda solo",
+      "_notasInternas": [
+        "Acá se cierra la predicción del Paso 1 y se introduce el detector central de la lección: evaluar en el instante 0. Sirve tanto para construir el modelo como para auditarlo, y es lo que se reutiliza en los pasos 7 y 8 y en los tres ítems.",
+        "El verdaderoFalso de cierre ataca error-7 de frente. bloqueVerdaderoFalso no tiene campo errorCatalogado en el schema, así que el error se nombra en el texto del feedback.",
+        "Verificación: d = 30 + 9·0 = 30; d = 9 + 30·0 = 9. El enunciado dice 30, así que la segunda queda descartada."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Tus dos resultados salen de la misma estructura:\n\n30 + 9 × 4 = 66\n\n30 + 9 × 10 = 120\n\nSi en vez de 4 o de 10 escribes t, tienes el modelo completo:\n\nd = 30 + 9t\n\nEra la primera candidata de la pizarra. Y ahora sabes por qué: los 9 metros multiplican al tiempo porque se repiten en cada segundo; los 30 metros van sueltos porque ocurrieron una sola vez, antes de que t empezara a correr."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La otra candidata, d = 9 + 30t, no está mal escrita: describe un dron perfectamente posible, uno que empezó a 9 metros y vuela a 30 metros por segundo. Lo que pasa es que **no es el dron del enunciado.**\n\nPara distinguirlas hay una prueba que toma un segundo. Reemplaza t por 0, es decir, mira el instante exacto en que empieza el registro:\n\n- d = 30 + 9·0 = 30 → el enunciado dice 30. Coincide.\n- d = 9 + 30·0 = 9 → el enunciado no dice 9. No coincide.\n\n> El número que queda solo, sin la t al lado, es siempre el valor en el instante 0.\n\nEse es el detector. Guárdalo: lo vas a usar en toda la lección."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En el modelo d = 30 + 9t, el 9 representa la distancia a la que estaba el dron cuando empezó el registro.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Es al revés, y es la confusión más común de esta lección. Aplica la prueba del instante 0: reemplaza t por 0 en d = 30 + 9t y mira qué queda. Queda 30, no 9. El 9 está pegado a la t justamente porque es un ritmo: 9 metros por cada segundo.",
+          "feedbackFalso": "Exacto. El 9 multiplica a la t, así que es el ritmo: 9 metros por cada segundo. La distancia al empezar el registro es el número que queda solo, el 30."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Dos preguntas para cualquier enunciado",
+      "_notasInternas": [
+        "Se conecta explícitamente con L2 (allá los parámetros venían dados y se movían con controles; acá hay que extraerlos del texto) sin repetir su contenido.",
+        "El contexto del cable entra acá y no antes: es el primer caso con tasa negativa y necesita el marco de las dos preguntas ya instalado. Verificación: c = 280 − 9t; en t=0 quedan 280 m; en t=20, 280 − 180 = 100 m.",
+        "La respuesta modelo del bloque abierto se muestra (mostrarRespuestaModelo: true) porque el estudiante necesita comparar su modelo con el correcto antes de la práctica del Paso 7, que lo da por sabido."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que hiciste con el dron funciona con cualquier situación de cambio constante. Ante un enunciado se le hacen **dos preguntas**, siempre las mismas:\n\n1. **¿Cuánto vale la cantidad en el instante 0?** Eso es el valor inicial: la n.\n2. **¿Cuánto sube o baja por cada unidad que avanza la variable?** Eso es la tasa de cambio: la m.\n\nCon esas dos respuestas, el modelo se escribe solo:\n\ny = mx + n\n\nEn el dron: m = 9 (metros por segundo) y n = 30 (metros al empezar), o sea d = 30 + 9t.\n\nEn la Lección 2 moviste m y n con los controles y viste qué le hacían a la recta. Acá el trabajo va al revés: los números no te los dan servidos, hay que sacarlos del texto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Falta un caso, y es el que más se equivoca: **la tasa de cambio puede ser negativa.**\n\nEl dron va soltando un cable que lo mantiene conectado con la estación en tierra. Cuando empieza el registro, la bobina tiene **280 metros** de cable enrollados, y por cada segundo que el dron se aleja **se sueltan 9 metros**.\n\nAcá la cantidad no crece: el cable que queda en la bobina disminuye. Las dos preguntas se responden igual —en el instante 0 hay 280 metros, y cada segundo la cantidad cambia en 9 metros— pero el cambio va hacia abajo, así que la tasa es −9."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escribe el modelo del cable que queda en la bobina, usando t para los segundos de registro y c para los metros de cable.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "c = 280 − 9t. El 280 es el valor en el instante 0 (la n) y el −9 es la tasa de cambio (la m): cada segundo hay 9 metros menos en la bobina. Comprobación a los 20 segundos: c = 280 − 9·20 = 280 − 180 = 100 metros todavía enrollados."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "El cable, de ida y de vuelta",
+      "_notasInternas": [
+        "Los tres distractores del bloque de selección cubren los tres errores distintos que produce este enunciado: error-4 (signo de la tasa: modela lo soltado en vez de lo que queda), error-7 (números intercambiados) y error-1 (valor inicial ausente).",
+        "Verificación del feedback de (b): con c = 280 + 9t, a los 20 segundos habría 280 + 180 = 460 metros en una bobina que empezó con 280. Absurdo en el contexto, que es justo el argumento.",
+        "El verdaderoFalso cierra el paso reforzando el detector del instante 0, esta vez sobre un modelo con tasa negativa."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "La bobina tenía 280 metros de cable enrollados al empezar el registro, y se sueltan 9 metros por cada segundo.\n\nSi c son los metros de cable que **quedan en la bobina** y t los segundos de registro, ¿cuál es el modelo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "c = 280 − 9t",
+              "esCorrecta": true,
+              "feedback": "Correcto. En el instante 0 quedan 280 metros (esa es la n) y cada segundo hay 9 metros menos en la bobina, así que la tasa es −9."
+            },
+            {
+              "id": "b",
+              "texto": "c = 280 + 9t",
+              "esCorrecta": false,
+              "feedback": "Ese modelo dice que el cable en la bobina aumenta 9 metros por segundo. Fíjate en qué cantidad estás midiendo: los metros que quedan enrollados, no los que ya salieron. A los 20 segundos daría 460 metros en una bobina que empezó con 280.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "id": "c",
+              "texto": "c = 9 − 280t",
+              "esCorrecta": false,
+              "feedback": "Los dos números están, pero cambiados de puesto: así el modelo dice que la bobina empezó con 9 metros y que se sueltan 280 por segundo. Aplica la prueba del instante 0 y compara con lo que dice el enunciado.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "d",
+              "texto": "c = −9t",
+              "esCorrecta": false,
+              "feedback": "La tasa está bien (−9 metros por segundo), pero falta de cuánto se parte. Con t = 0 este modelo da 0 metros de cable en la bobina, y el enunciado dice que había 280.",
+              "errorCatalogado": "error-1"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En el modelo c = 280 − 9t, el 280 son los metros de cable que quedaban en la bobina en el instante en que empezó el registro.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto. Es el número que queda solo, sin la t al lado: el valor en el instante 0. Que la tasa sea negativa no cambia dónde se lee el valor inicial.",
+          "feedbackFalso": "Aplica la prueba del instante 0: reemplaza t por 0 en c = 280 − 9t. Queda 280, que es justo lo que el enunciado dice que había enrollado al empezar."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Ahora al revés: leer el modelo",
+      "_notasInternas": [
+        "Segunda mitad del eje de la lección: hasta acá se construyó el modelo desde el enunciado; este paso lo interpreta de vuelta en el contexto, que es el criterio 'interpreta parámetros y supuestos de un modelo' de la habilidad modelar (docs/calibracion-lecciones-e-items.md §3.2).",
+        "Los tres distractores usan errores distintos y ya vistos: error-7 (papeles intercambiados), error-1 (valor inicial ausente) y error-6 (sumar el valor inicial con la tasa).",
+        "Las alternativas se mezclan en el cliente (mezclarAlternativas en BloquePregunta.tsx reasigna la clave), así que ningún texto se refiere a otra alternativa por su letra."
+      ],
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un equipo distinto registra otro vuelo y publica directamente este modelo, con t en segundos y d en metros:\n\nd = 30 + 9t\n\nEsta vez nadie te cuenta la historia: solo tienes la ecuación. ¿Cuál de estas lecturas del modelo es correcta?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "El dron ya estaba a 30 metros del punto de despegue al empezar el registro, y se aleja 9 metros por segundo.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El número suelto es el valor en el instante 0 (30 metros) y el que multiplica a la t es el ritmo (9 metros por cada segundo)."
+            },
+            {
+              "clave": "B",
+              "texto": "El dron ya estaba a 9 metros del punto de despegue al empezar el registro, y se aleja 30 metros por segundo.",
+              "esCorrecta": false,
+              "feedback": "Los dos números están, pero con los papeles cambiados. Reemplaza t por 0 en el modelo: lo que queda es 30, así que 30 es la distancia al empezar. El 9 va pegado a la t, así que es el ritmo por segundo.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "C",
+              "texto": "El dron parte del punto de despegue y se aleja 9 metros por segundo.",
+              "esCorrecta": false,
+              "feedback": "Si partiera del punto de despegue, en el instante 0 la distancia sería 0 y el modelo sería d = 9t, sin nada más. Pero el modelo trae un 30 suelto: esa es exactamente la distancia que el dron ya llevaba recorrida cuando empezó el registro.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "D",
+              "texto": "El dron se aleja 39 metros por segundo, que es la suma de los dos números del modelo.",
+              "esCorrecta": false,
+              "feedback": "Los dos números no se suman entre sí: cumplen papeles distintos. El 30 se cuenta una sola vez, porque es desde dónde se parte; solo el 9 se repite en cada segundo. Sumarlos describiría un dron más de cuatro veces más rápido que el del modelo.",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "notaVerificacionMatematica": "Modelo publicado: d = 30 + 9t. En t = 0 da 30, que es el valor inicial, y el coeficiente de t es 9, que es el ritmo: la lectura correcta es la alternativa A. Descarte del resto recalculando cada modelo implícito: B corresponde a d = 9 + 30t, que en t = 0 da 9 (≠ 30); C corresponde a d = 9t, que en t = 0 da 0 (≠ 30); D corresponde a un ritmo de 39 m/s, o sea d = 30 + 39t, que en t = 1 da 69 en vez de los 39 que da el modelo publicado. Ninguno de los tres reproduce d = 30 + 9t. Sobre el 'más de cuatro veces más rápido' del feedback de D: 39 ÷ 9 = 4,33…, o sea algo más de 4 veces. ✓"
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Las dos preguntas, con tus palabras",
+      "_notasInternas": [
+        "Pregunta abierta no evaluada, para instrumentación cualitativa del piloto (Test B del MOS §6). Se pide explícitamente que no use las letras m y n para forzar que explique el concepto en vez de recitar la fórmula.",
+        "El bloque de texto de cierre nombra los dos errores más caros de esta lección en particular (error-7 y error-1), igual que el Paso 9 de lineal-patrones-de-cambio.json nombra los suyos."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus propias palabras: si te dan un enunciado cualquiera con cambio constante, ¿qué dos preguntas le haces para escribir el modelo? Explícalo sin usar las letras m ni n.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Lo que se busca es que aparezcan las dos preguntas como preguntas separadas —cuánto vale al empezar y cuánto cambia por cada unidad—, no la fórmula recitada. Una respuesta tipo 'miro cuánto hay al principio y cuánto se suma cada vez' indica comprensión; una que solo diga 'y = mx + n' indica memorización."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los dos errores que más se repiten cuando hay que modelar desde un enunciado, y que ya viste en carne propia:\n\n1. **Cambiar los números de puesto.** Poner el valor inicial multiplicando a la variable y la tasa suelta. Los dos números están, pero al revés.\n2. **Dejar fuera el valor inicial.** Escribir solo la tasa por la variable, como si todo empezara en cero.\n\nContra los dos sirve la misma prueba: reemplaza la variable por 0 y compara el resultado con lo que el enunciado dice que había al principio. Si no coincide, el modelo está mal, y ya sabes por dónde mirar."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Cierra el módulo completo: es la última de las tres lecciones de 'función lineal y afín'. El texto lo dice explícitamente, igual que el Paso 10 de L1 anuncia a L2.",
+        "Puente a los itemsPAES, que viven en el arreglo itemsPAES de este archivo y no como bloques de este paso, igual que en las otras dos lecciones del módulo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Ante un enunciado, dos preguntas: ¿cuánto vale la cantidad en el instante 0? (eso es la n) y ¿cuánto cambia por cada unidad que avanza la variable? (eso es la m).\n- Con esas dos respuestas el modelo se escribe solo: y = mx + n.\n- La tasa puede ser negativa. Si la cantidad disminuye, la m va con signo menos, y eso no tiene nada de raro.\n- Prueba del instante 0: reemplaza la variable por 0 y compara con el enunciado. Detecta de un golpe los números cambiados de puesto y los valores iniciales olvidados.\n- Interpretar un modelo es el mismo trabajo al revés: el número suelto dice desde dónde se parte, el que acompaña a la variable dice a qué ritmo se cambia.\n\nCon esto cierras el módulo de función lineal y afín completo: detectaste el cambio constante en tablas, moviste la recta con tus propias manos, y ahora sabes construir el modelo desde un texto y defender por qué es ese y no otro.\n\nAhora, tres ítems formato PAES para consolidar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "lineal-modelamiento-item-1",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un dron de inspección topográfica ya se había alejado 50 metros de su punto de despegue cuando el equipo encendió el registro de datos. Desde ese instante se aleja en línea recta a 7 metros por segundo, sin cambiar de velocidad.\n\nSi t son los segundos transcurridos desde que empezó el registro y d la distancia en metros al punto de despegue, ¿qué modelo representa d?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "d = 50 + 7t",
+          "esCorrecta": true,
+          "feedback": "Correcto. En el instante 0 el dron está a 50 metros (ese es el valor inicial) y por cada segundo se suman 7 metros (esa es la tasa, y por eso multiplica a la t)."
+        },
+        {
+          "clave": "B",
+          "texto": "d = 7 + 50t",
+          "esCorrecta": false,
+          "feedback": "Los dos números del enunciado están, pero en la posición equivocada: así el modelo dice que el dron partió de 7 metros y vuela a 50 metros por segundo. Reemplaza t por 0 y compara con la distancia que el enunciado da al empezar el registro.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "d = 7t",
+          "esCorrecta": false,
+          "feedback": "La tasa está bien, pero este modelo da 0 metros en el instante 0, o sea supone que el dron arrancó justo sobre el punto de despegue. El enunciado dice que ya se había alejado 50 metros antes de que empezara el registro.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "d = 57t",
+          "esCorrecta": false,
+          "feedback": "Sumaste los dos números y multiplicaste el total por el tiempo. Los 50 metros ya estaban recorridos: se suman una sola vez y no se multiplican por nada. Solo los 7 metros por segundo se repiten en cada segundo.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Se le hacen al enunciado las dos preguntas del modelo afín. (1) ¿Cuánto vale d en el instante 0? El dron ya estaba a 50 metros del punto de despegue, así que el valor inicial es n = 50. (2) ¿Cuánto cambia d por cada segundo? Se aleja 7 metros por segundo, así que la tasa es m = 7. El modelo es d = 50 + 7t. Comprobación en t = 0: d = 50 + 7·0 = 50, que es exactamente la distancia que el enunciado da al empezar el registro. Comprobación en t = 3: d = 50 + 7·3 = 50 + 21 = 71, es decir los 50 metros iniciales más los 21 recorridos en 3 segundos a 7 metros por segundo. Respuesta: d = 50 + 7t."
+    },
+    {
+      "id": "lineal-modelamiento-item-2",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "El dron va soltando un cable que lo mantiene conectado con la estación en tierra. Al empezar el registro, la bobina tiene 180 metros de cable enrollados, y por cada segundo se sueltan 6 metros.\n\nUn estudiante propone modelar los metros de cable que quedan en la bobina con c = 180 − 6t, donde t son los segundos de registro. Otro le responde que el modelo está mal, porque \"en una función lineal la tasa de cambio no puede ser negativa\".\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El modelo es correcto: una tasa de cambio negativa es válida, y es justamente lo que describe una cantidad que disminuye a ritmo constante.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El signo de la tasa solo indica la dirección del cambio: positiva si la cantidad crece, negativa si disminuye. Nada en la definición de función afín exige que la tasa sea positiva, y acá el cable que queda efectivamente baja."
+        },
+        {
+          "clave": "B",
+          "texto": "El modelo está mal: debería ser c = 180 + 6t, porque la cantidad de cable soltado aumenta con el tiempo.",
+          "esCorrecta": false,
+          "feedback": "Es verdad que el cable soltado aumenta, pero el modelo no mide eso: mide el que QUEDA en la bobina, que disminuye. Comprueba a los 10 segundos: ese modelo daría 240 metros enrollados en una bobina que empezó con 180.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "El modelo está mal: debería ser c = 6 − 180t, porque el 6 es lo que cambia en cada segundo.",
+          "esCorrecta": false,
+          "feedback": "Los dos números están, pero con los papeles cambiados: ese modelo dice que la bobina empezó con 6 metros y que se sueltan 180 por segundo. Reemplaza t por 0 y compara con lo que el enunciado dice que había enrollado al empezar.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "El modelo está mal: debería ser c = −6t, porque lo único que importa es el ritmo al que se suelta el cable.",
+          "esCorrecta": false,
+          "feedback": "La tasa está bien, pero falta de cuánto se parte. Con t = 0 ese modelo da 0 metros de cable en la bobina, y el enunciado dice que había 180 enrollados justo al empezar el registro.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "La objeción del segundo estudiante es falsa: en y = mx + n la tasa m puede ser negativa, y ese es precisamente el caso de una cantidad que disminuye a ritmo constante. El modelo propuesto se valida con las dos preguntas. (1) En el instante 0 quedan 180 metros enrollados → n = 180. ✓ (2) Por cada segundo hay 6 metros menos en la bobina → m = −6. ✓ Por lo tanto c = 180 − 6t es correcto. Comprobación en t = 10: c = 180 − 6·10 = 180 − 60 = 120 metros restantes, coherente con los 60 metros soltados en esos 10 segundos (120 + 60 = 180). Descarte de los otros modelos: c = 180 + 6t da 240 en t = 10, más cable del que la bobina tenía al empezar; c = 6 − 180t da 6 en t = 0, distinto de 180; c = −6t da 0 en t = 0, distinto de 180. Respuesta: la afirmación que valida el modelo original."
+    },
+    {
+      "id": "lineal-modelamiento-item-3",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Una cinta transportadora apila cajas a ritmo constante. En el momento en que se enciende, la pila ya tiene 16 cajas, y desde entonces la cinta agrega 4 cajas por minuto.\n\n¿Cuál de las siguientes tablas representa el total de cajas en la pila durante los primeros 3 minutos?\n\nTabla A\n\n| Minuto | Cajas |\n|---|---|\n| 0 | 16 |\n| 1 | 20 |\n| 2 | 24 |\n| 3 | 28 |\n\nTabla B\n\n| Minuto | Cajas |\n|---|---|\n| 0 | 0 |\n| 1 | 4 |\n| 2 | 8 |\n| 3 | 12 |\n\nTabla C\n\n| Minuto | Cajas |\n|---|---|\n| 0 | 4 |\n| 1 | 20 |\n| 2 | 36 |\n| 3 | 52 |\n\nTabla D\n\n| Minuto | Cajas |\n|---|---|\n| 0 | 16 |\n| 1 | 20 |\n| 2 | 20 |\n| 3 | 20 |",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tabla A",
+          "esCorrecta": true,
+          "feedback": "Correcto. Empieza en 16, que son las cajas que ya estaban apiladas al encender la cinta, y sube de a 4 en cada minuto: 16, 20, 24, 28."
+        },
+        {
+          "clave": "B",
+          "texto": "Tabla B",
+          "esCorrecta": false,
+          "feedback": "Esa tabla empieza en 0: cuenta solo las cajas que agregó la cinta y deja fuera las 16 que ya estaban apiladas cuando se encendió. Mira la fila del minuto 0 y compárala con el enunciado.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Tabla C",
+          "esCorrecta": false,
+          "feedback": "Los dos números están cambiados de puesto: esa tabla empieza en 4 y sube de a 16 por minuto. En el minuto 0 tendría que haber 16 cajas, no 4.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "Tabla D",
+          "esCorrecta": false,
+          "feedback": "Ahí la pila sube una sola vez, de 16 a 20, y después se queda quieta. La cinta agrega 4 cajas en cada minuto, no 4 cajas una única vez.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "Valor inicial: 16 cajas en el minuto 0. Tasa: +4 cajas por minuto. Modelo: N = 16 + 4t. Se evalúa minuto a minuto: t=0 → 16; t=1 → 16 + 4 = 20; t=2 → 16 + 8 = 24; t=3 → 16 + 12 = 28. La secuencia 16, 20, 24, 28 corresponde a la tabla A. Descarte del resto recalculando cada una: la tabla B es 4t (0, 4, 8, 12), que omite las 16 cajas iniciales y da 0 en el minuto 0; la tabla C es 4 + 16t (4, 20, 36, 52), que intercambia el valor inicial con la tasa y da 4 en el minuto 0; la tabla D aplica el aumento de 4 una sola vez y después se estanca en 20, lo que exigiría que la cinta se detuviera después del primer minuto. Respuesta: tabla A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — alcance, habilidades y formato de ítems de función lineal y afín; en particular los criterios de la habilidad 'modelar' (usar modelos matemáticos en una situación planteada, interpretar parámetros y supuestos, evaluar modelos según la situación) y de 'argumentar' (evaluar la validez de argumentos e identificar errores en procedimientos). Usado solo para calibrar alcance y formato, nunca como origen de texto.",
+      "Currículum nacional Mineduc/UCE, unidad de álgebra y funciones (documento curricular de uso público) — profundidad y secuencia esperadas para modelar situaciones de cambio constante mediante función afín. Usado solo para calibrar secuencia, nunca como origen de texto."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos, datos y tablas creados desde cero por el autor del proyecto. El temario PAES M1 y el currículum Mineduc se usaron solo para calibrar alcance, habilidades y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo, tabla ni diagrama de esas fuentes fue reproducido ni parafraseado. Los tres contextos de la lección (dron de inspección topográfica, cable que queda en la bobina, cinta transportadora que apila cajas) fueron verificados contra el corpus de fuentes aisladas por el autor del proyecto fuera de esta sesión de redacción, conforme al mecanismo 2 de 'Aislamiento de fuentes externas' (CLAUDE.md); el hilo que redactó este archivo no consultó el corpus por ningún medio. Originalidad NO firmada aún: pendiente de /revision-originalidad. Revisión matemática NO firmada aún: pendiente de /revision-matematica."
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false
+  },
+  "revisionMatematica": {
+    "aprobada": false
+  }
+}

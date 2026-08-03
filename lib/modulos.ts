@@ -39,6 +39,7 @@ export const IDS_LECCION = [
   "l0-demo",
   "lineal-patrones-de-cambio",
   "lineal-pendiente-e-intercepto",
+  "lineal-modelamiento-paes",
   "ecuaciones-lineales",
   "enteros-operar-y-ordenar",
   "enteros-operar-y-comparar",
@@ -190,7 +191,11 @@ export const EJES = [
           "Ya puedes leer una recta en tabla, gráfico o ecuación, y pasar de una forma a otra.",
         objetivo:
           "Leer una recta en cualquier forma —tabla, gráfico o ecuación— y pasar de una a otra.",
-        lecciones: ["lineal-patrones-de-cambio", "lineal-pendiente-e-intercepto"],
+        lecciones: [
+          "lineal-patrones-de-cambio",
+          "lineal-pendiente-e-intercepto",
+          "lineal-modelamiento-paes",
+        ],
         cierreId: "cierre-v0",
       },
       {
