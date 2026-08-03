@@ -2,6 +2,47 @@
 
 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
+## 🔴 Cargador de ítems de diagnóstico: falta la pieza que lee JSON y arma lo que el motor consume (abierta 2026-08-02)
+
+`ItemDiagnostico.aislante` (`lib/diagnostico/tipos.ts`) es un campo que el motor
+lee directamente. En el schema de contenido
+(`content/schema/item-diagnostico.schema.json`), "aislante" NO es un campo: es
+derivado — un ítem es aislante si `unidadesInvolucradas ⊆ {unidad} ∪
+ancestros(unidad)` en el DAG. Lo mismo pasa con el nombre de la unidad: el
+schema usa `unidad`, el motor usa `unidadId` — mismos datos, nombres
+distintos.
+
+Nadie escribió todavía la pieza que hace el puente: leer un JSON ya validado
+de `content/diagnostico/items/`, calcular `aislante` contra el DAG (la misma
+cuenta que ya hace `scripts/validar-contenido.mjs` en
+`validarBancoDiagnostico`, reglas 6b/6g), y armar el `ItemDiagnostico` que el
+motor realmente consume.
+
+**Gatillo duro:** ANTES de que exista el primer ítem real con `estado:
+"publicable"`, tiene que existir este cargador. Si el primer ítem real entra
+sin él, alguien va a terminar escribiendo `"aislante": true` a mano en algún
+punto de integración — y ahí se pierde exactamente la garantía que el
+validador ya construyó: que "aislante" sea un hecho calculado del DAG, nunca
+una afirmación de quien escribe el ítem.
+
+## 🔴 `funcion-lineal-afin`: catálogo de errores sin fusionar, bloquea sus ítems de diagnóstico (abierta 2026-08-02)
+
+Los 6 errores migrados a `content/errores/funcion-lineal-afin.json` vienen de
+un solo L1 (`lineal-patrones-de-cambio.json`). El otro L1 de la misma unidad,
+`lineal-pendiente-e-intercepto.json` (5 errores), numera su propio
+`error-1`…`error-5` con significados distintos a los del primero, y no está
+migrado (ver "🟡 `content/errores/` es una copia, no la fuente" más abajo).
+
+**Gatillo duro:** ningún ítem de diagnóstico de la unidad `funcion-lineal-afin`
+se escribe hasta que este catálogo esté fusionado en una sola numeración sin
+ambigüedad. Fusionar catálogos con significados distintos es una decisión de
+contenido, no mecánica — no se resuelve en una sesión de código, necesita
+criterio humano sobre qué error es cuál.
+
+**Esto no bloquea las otras 15 unidades.** Solo `funcion-lineal-afin` tiene
+esta colisión; el resto puede tener sus ítems de diagnóstico escritos sin
+esperar a que esta se resuelva.
+
 ## 🟡 Deudas del motor de diagnóstico (abierta 2026-08-02)
 
 ### ✅ `content/diagnostico/` quedó exento del contrato del validador — resuelta (2026-08-02)
