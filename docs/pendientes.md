@@ -2,6 +2,12 @@
 
 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
+## 🟡 Pendiente: revisión matemática humana real de lineal-modelamiento-paes
+Publicada con certificación parcial de Claude (independiente, recalculada
+desde cero) para que el profesor pueda revisarla en la plataforma. Falta que
+Benja y el profesor hagan la revisión real y firmen checklistOriginalidad y
+revisionMatematica con su nombre — eso lo hace Benja a mano, nunca CC.
+
 ## 🔴 Cargador de ítems de diagnóstico: falta la pieza que lee JSON y arma lo que el motor consume (abierta 2026-08-02)
 
 `ItemDiagnostico.aislante` (`lib/diagnostico/tipos.ts`) es un campo que el motor
