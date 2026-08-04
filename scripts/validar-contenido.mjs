@@ -105,6 +105,32 @@ export function validarDatos(data) {
     }
   }
 
+  const campoItems = tipo === 'leccion' ? 'itemsPAES' : 'items';
+  const items = data?.[campoItems];
+  const [minItems, maxItems] = ITEMS_POR_TIPO[tipo];
+  const esperadoItems = minItems === maxItems ? `${minItems}` : `${minItems}–${maxItems}`;
+  const conteoOk = Array.isArray(items) && items.length >= minItems && items.length <= maxItems;
+
+  /**
+   * El CONTEO de ítems se exige desde borrador, igual que el orden de los 10
+   * pasos unas líneas más arriba. Un cierre con 4 o con 12 ítems no es un
+   * borrador a medio escribir: es un archivo estructuralmente mal formado, y
+   * hasta el 2026-08-03 pasaba en verde porque este chequeo vivía después del
+   * `return` de nivel 0. El error aparecía recién al subir el archivo a
+   * 'revision' —o sea, en el momento de publicar, que es el peor— y con 14
+   * módulos por producir eso muerde seguro.
+   *
+   * Se exige solo si el array EXISTE. Que los ítems todavía no estén escritos
+   * sí es una omisión legítima de borrador, y esa se sigue reportando abajo,
+   * a partir de 'revision'. Mismo criterio que usa `pasos` con su
+   * `data.pasos !== undefined`.
+   */
+  if (items !== undefined && !conteoOk) {
+    errores.push(
+      `${campoItems}: se esperan ${esperadoItems} ítems (hay ${Array.isArray(items) ? items.length : 0})`,
+    );
+  }
+
   if (nivel === 0) return errores; // borrador: libertad para redactar
 
   // revision y publicable: contrato completo
@@ -119,13 +145,12 @@ export function validarDatos(data) {
     if (!Array.isArray(data?.conceptos)) errores.push('falta conceptos[]');
   }
 
-  const campoItems = tipo === 'leccion' ? 'itemsPAES' : 'items';
-  const items = data?.[campoItems];
-  const [min, max] = ITEMS_POR_TIPO[tipo];
-  if (!Array.isArray(items) || items.length < min || items.length > max) {
-    const esperado = min === max ? `${min}` : `${min}–${max}`;
-    errores.push(`${campoItems}: se esperan ${esperado} ítems (hay ${Array.isArray(items) ? items.length : 0})`);
-  } else {
+  // El conteo fuera de rango ya se reportó más arriba (se exige desde
+  // borrador); acá solo queda el caso que sí es una omisión legítima de
+  // borrador: que el array no exista todavía.
+  if (items === undefined) {
+    errores.push(`${campoItems}: se esperan ${esperadoItems} ítems (hay 0)`);
+  } else if (conteoOk) {
     items.forEach((it, i) => validarItem(it, i, campoItems, nivel, errores));
   }
 
