@@ -54,7 +54,24 @@ type ClaveInterna = (typeof CLAVES_INTERNAS)[number];
  * Opcional a propósito: un módulo sin `catalogoErrores` (hoy, todos los cierres)
  * simplemente no la trae y el componente omite la capa. Ver docs/pendientes.md.
  */
-export type AlternativaCliente = Alternativa & { descripcionError?: string };
+export type AlternativaCliente = Alternativa & {
+  descripcionError?: string;
+  /**
+   * Tres descripciones del catálogo del módulo —la que de verdad corresponde a
+   * este distractor y dos señuelos— para el paso de autoexplicación: antes de
+   * ver la Capa 2, se le pregunta al estudiante cuál describe lo que le pasó.
+   *
+   * Son EXACTAMENTE tres y salen del `catalogoErrores` existente: no se inventa
+   * ningún error. Ausente cuando el catálogo tiene menos de tres entradas o
+   * cuando el módulo no tiene catálogo, y ahí el ítem omite el paso entero.
+   *
+   * Sobre exposición: manda tres descripciones por distractor, no el catálogo
+   * completo, y no dice cuál es la verdadera. Cuál lo es se puede deducir del
+   * payload cruzándolo con `descripcionError`, que ya viajaba desde la Capa 2 —
+   * este campo no abre una vía nueva, agrega dos señuelos a algo ya visible.
+   */
+  opcionesAutoexplicacion?: string[];
+};
 
 export type ItemCliente = Omit<Item, "solucion" | "alternativas"> & {
   alternativas: AlternativaCliente[];
@@ -84,6 +101,27 @@ export type CierreCliente = Omit<CierreContenido, ClaveInterna | "items"> & {
  * estrictamente local al archivo: sin `catalogoErrores`, no se resuelve nada.
  * Un id sin entrada se deja sin descripción en vez de adivinar.
  */
+/**
+ * Las tres opciones del paso de autoexplicación para un error dado: la real y
+ * dos señuelos, tomados del mismo catálogo recorriéndolo en círculo desde la
+ * entrada real.
+ *
+ * Determinista, sin `Math.random`: el orden se rota según la posición del error
+ * real en el catálogo, así la respuesta verdadera no cae siempre en el mismo
+ * lugar —se aprendería el patrón en dos ítems— pero servidor y cliente
+ * coinciden y no hay mismatch de hidratación.
+ */
+function opcionesDeAutoexplicacion(idReal: string, catalogo: Map<string, string>): string[] | undefined {
+  if (catalogo.size < 3) return undefined;
+  const ids = [...catalogo.keys()];
+  const i = ids.indexOf(idReal);
+  if (i === -1) return undefined;
+
+  const tres = [0, 1, 2].map((k) => catalogo.get(ids[(i + k) % ids.length])!);
+  const giro = i % 3;
+  return [...tres.slice(giro), ...tres.slice(0, giro)];
+}
+
 function resolverDescripcionesDeError(valor: unknown, catalogo: Map<string, string>): unknown {
   if (catalogo.size === 0) return valor;
   if (Array.isArray(valor)) {
@@ -100,7 +138,11 @@ function resolverDescripcionesDeError(valor: unknown, catalogo: Map<string, stri
   const id = objeto.errorCatalogado;
   if (typeof id === "string") {
     const descripcion = catalogo.get(id);
-    if (descripcion) resuelto.descripcionError = descripcion;
+    if (descripcion) {
+      resuelto.descripcionError = descripcion;
+      const opciones = opcionesDeAutoexplicacion(id, catalogo);
+      if (opciones) resuelto.opcionesAutoexplicacion = opciones;
+    }
   }
   return resuelto;
 }

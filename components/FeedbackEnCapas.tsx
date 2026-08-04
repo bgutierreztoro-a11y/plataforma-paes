@@ -32,7 +32,9 @@ export function FeedbackEnCapas({
   capa1,
   capa2,
   capa3,
+  opcionesAutoexplicacion,
   onVerPorQue,
+  onAutoexplicacion,
   extra,
 }: {
   esCorrecta: boolean;
@@ -41,16 +43,36 @@ export function FeedbackEnCapas({
   /** Ausente cuando el módulo no tiene `catalogoErrores` (hoy, los cierres). */
   capa2?: string;
   capa3?: string;
+  /** Tres descripciones del catálogo del módulo, o ausente para omitir el paso. */
+  opcionesAutoexplicacion?: string[];
   /** Se dispara al abrir la Capa 2, una sola vez. Para instrumentación. */
   onVerPorQue?: () => void;
+  /** `elegida` es null si el estudiante saltó el paso. */
+  onAutoexplicacion?: (elegida: string | null) => void;
   /** Contenido propio de quien llama (tiempo de resolución, botón de avance). */
   extra?: React.ReactNode;
 }) {
   const [porQueAbierto, setPorQueAbierto] = useState(false);
+  const [autoexplicado, setAutoexplicado] = useState(false);
+
+  /* El paso solo existe si hay tres opciones reales del catálogo y hay una
+     Capa 2 que revelar después: preguntar "¿qué te pasó?" para después no
+     contestarlo sería un peaje sin contraparte. */
+  const hayAutoexplicacion =
+    !esCorrecta && !!capa2 && (opcionesAutoexplicacion?.length ?? 0) === 3 && !autoexplicado;
 
   function abrirPorQue() {
     setPorQueAbierto(true);
     onVerPorQue?.();
+  }
+
+  /* Elija lo que elija —o si lo salta— después ve la Capa 2 completa. No hay
+     penalización, ni segundo intento, ni cambio en el resultado del ítem: esto
+     mide si reconoce su propio error, no lo evalúa. */
+  function responderAutoexplicacion(elegida: string | null) {
+    setAutoexplicado(true);
+    setPorQueAbierto(true);
+    onAutoexplicacion?.(elegida);
   }
 
   return (
@@ -67,11 +89,40 @@ export function FeedbackEnCapas({
         <span>{capa1}</span>
       </div>
 
+      {/* Autoexplicación restringida: intentar nombrar el propio error antes de
+          leer la explicación es lo que hace que la explicación se lea de verdad.
+          Va antes de la Capa 2 y se responde una sola vez. */}
+      {hayAutoexplicacion && (
+        <div className="transicion-paso space-y-3 rounded-tarjeta border border-border bg-surface px-4 py-3">
+          <p className="text-sm font-medium text-ink">¿Cuál de estas describe lo que pasó?</p>
+          <div className="space-y-2">
+            {opcionesAutoexplicacion!.map((opcion) => (
+              <button
+                key={opcion}
+                type="button"
+                onClick={() => responderAutoexplicacion(opcion)}
+                className="flex w-full cursor-pointer items-start gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 text-left text-sm leading-relaxed text-ink hover:border-border-fuerte hover:bg-accent-suave/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                {opcion}
+              </button>
+            ))}
+          </div>
+          {/* Saltable con un toque, para que no se vuelva un peaje. */}
+          <button
+            type="button"
+            onClick={() => responderAutoexplicacion(null)}
+            className="inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            Prefiero ver la explicación
+          </button>
+        </div>
+      )}
+
       {/* La Capa 2 se pide, no se impone: leerla es una decisión, y una
           explicación que aparece sola se salta con la misma facilidad con la
           que aparece. Solo en el caso incorrecto — al acertar, el mecanismo del
           error no viene al caso. */}
-      {!esCorrecta && capa2 && !porQueAbierto && (
+      {!esCorrecta && capa2 && !hayAutoexplicacion && !porQueAbierto && (
         <Boton variante="secundario" onClick={abrirPorQue}>
           ¿Por qué?
         </Boton>

@@ -59,6 +59,54 @@ test("el catálogo NO viaja al cliente, solo la descripción del distractor", ()
   assert.equal(serializado.includes("Este pertenece a otro ítem"), false);
 });
 
+test("con catálogo de 3+, el distractor trae exactamente 3 opciones, una de ellas la real", () => {
+  const catalogo = [
+    { id: "error-1", descripcion: "d1" },
+    { id: "error-2", descripcion: "d2" },
+    { id: "error-3", descripcion: "d3" },
+    { id: "error-4", descripcion: "d4" },
+    { id: "error-5", descripcion: "d5" },
+  ];
+  const limpia = sanitizarLeccion(leccionCon(catalogo));
+  const [a, b] = limpia.itemsPAES[0].alternativas;
+
+  assert.equal(b.opcionesAutoexplicacion?.length, 3);
+  assert.ok(b.opcionesAutoexplicacion!.includes("d1"));
+  assert.equal(new Set(b.opcionesAutoexplicacion).size, 3, "sin repetidas");
+  // La alternativa correcta no tiene errorCatalogado, así que no tiene opciones.
+  assert.equal(a.opcionesAutoexplicacion, undefined);
+});
+
+test("con menos de 3 errores en el catálogo, el ítem omite el paso de autoexplicación", () => {
+  const limpia = sanitizarLeccion(
+    leccionCon([
+      { id: "error-1", descripcion: "d1" },
+      { id: "error-2", descripcion: "d2" },
+    ]),
+  );
+  const [, b] = limpia.itemsPAES[0].alternativas;
+  assert.equal(b.descripcionError, "d1", "la Capa 2 sí sigue disponible");
+  assert.equal(b.opcionesAutoexplicacion, undefined);
+});
+
+test("la posición de la opción real no es siempre la misma", () => {
+  /* Si la verdadera cayera siempre primera, el patrón se aprende en dos ítems
+     y la pregunta deja de medir nada. */
+  const catalogo = Array.from({ length: 6 }, (_, i) => ({
+    id: `error-${i + 1}`,
+    descripcion: `d${i + 1}`,
+  }));
+  const posiciones = new Set<number>();
+  for (const id of ["error-1", "error-2", "error-3"]) {
+    const leccion = leccionCon(catalogo);
+    leccion.itemsPAES[0].alternativas[1].errorCatalogado = id;
+    const [, b] = sanitizarLeccion(leccion).itemsPAES[0].alternativas;
+    const real = catalogo.find((e) => e.id === id)!.descripcion;
+    posiciones.add(b.opcionesAutoexplicacion!.indexOf(real));
+  }
+  assert.ok(posiciones.size > 1, "la real cae en distintas posiciones según el ítem");
+});
+
 test("un id sin entrada en el catálogo se deja sin descripción, no se adivina", () => {
   const limpia = sanitizarLeccion(
     leccionCon([{ id: "error-1", descripcion: "El que corresponde." }]),

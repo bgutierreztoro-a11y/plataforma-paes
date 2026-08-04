@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
-import { capaUno, capaDos } from "@/lib/capasFeedback";
+import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
+import type { AlternativaCliente } from "@/lib/sanitizar";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarAlternativas } from "@/lib/mezclar";
@@ -32,7 +33,12 @@ export function BloquePregunta({
   // nota en ItemPAES.tsx sobre por qué no mezclar directo en useState).
   // "Intentar de nuevo" no remonta el componente, así que una vez mezclado
   // el orden se mantiene estable entre reintentos de la misma pregunta.
-  const [alternativas, setAlternativas] = useState(bloque.alternativas);
+  /* AlternativaCliente y no Alternativa: el bloque llega después de pasar por
+     lib/sanitizar.ts, que resuelve `descripcionError` y las opciones de
+     autoexplicación contra el catálogo del módulo. El tipo `Bloque` de tipos.ts
+     describe el JSON en disco, no lo que cruza al cliente — los dos campos
+     extra son opcionales, así que el valor entra sin cast. */
+  const [alternativas, setAlternativas] = useState<AlternativaCliente[]>(bloque.alternativas);
   // Ver lib/useMontado.ts: mismo guard de hidratación que ItemPAES.
   const montado = useMontado();
   useEffect(() => {
@@ -138,6 +144,10 @@ export function BloquePregunta({
           esCorrecta={alternativaElegida.esCorrecta}
           capa1={capaUno(alternativaElegida, alternativas)}
           capa2={capaDos(alternativaElegida)}
+          opcionesAutoexplicacion={alternativaElegida.opcionesAutoexplicacion}
+          onAutoexplicacion={(elegida) =>
+            registrarAutoexplicacion(itemId, elegida, alternativaElegida.descripcionError)
+          }
           extra={
             !alternativaElegida.esCorrecta ? (
               <Boton variante="secundario" onClick={intentarDeNuevo}>

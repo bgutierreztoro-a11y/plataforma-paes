@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
-import { capaUno, capaDos } from "@/lib/capasFeedback";
+import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
@@ -223,6 +223,10 @@ export function ItemPAES({
               esCorrecta={alternativaElegida.esCorrecta}
               capa1={capaUno(alternativaElegida, alternativas)}
               capa2={capaDos(alternativaElegida)}
+              opcionesAutoexplicacion={alternativaElegida.opcionesAutoexplicacion}
+              onAutoexplicacion={(elegida) =>
+                registrarAutoexplicacion(item.id, elegida, alternativaElegida.descripcionError)
+              }
               extra={pieDelItem}
             />
           ) : (

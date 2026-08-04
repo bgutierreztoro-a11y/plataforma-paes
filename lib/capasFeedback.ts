@@ -1,3 +1,4 @@
+import { registrarEvento } from "@/lib/eventos";
 import type { AlternativaCliente } from "@/lib/sanitizar";
 
 /**
@@ -39,4 +40,28 @@ export function capaUno(
  */
 export function capaDos(elegida: AlternativaCliente): string | undefined {
   return elegida.esCorrecta ? undefined : elegida.descripcionError;
+}
+
+/**
+ * Registra la elección del paso de autoexplicación. `elegida` es null si el
+ * estudiante lo saltó.
+ *
+ * `acerto_su_error` compara la descripción elegida con la que de verdad
+ * corresponde a su distractor. Es una señal DISTINTA de haber cometido el
+ * error: dice si lo RECONOCE, que es lo que predice si va a poder evitarlo la
+ * próxima vez. No afecta el resultado del ítem ni cuenta como intento.
+ */
+export function registrarAutoexplicacion(
+  itemId: string,
+  elegida: string | null,
+  descripcionReal: string | undefined,
+): void {
+  if (elegida === null) {
+    registrarEvento({ nombre: "autoexplicacion_saltada", props: { item_id: itemId } });
+    return;
+  }
+  registrarEvento({
+    nombre: "autoexplicacion_elegida",
+    props: { item_id: itemId, acerto_su_error: elegida === descripcionReal },
+  });
 }

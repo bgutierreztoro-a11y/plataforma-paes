@@ -871,3 +871,113 @@ tocar el contenido de L1 o L3.
 matemática real de L2/L3 sigue abierta (firma de 2026-07-27 administrativa,
 temporal para la demo del profesor). Esta sección es sobre diferenciación
 estructural, no sobre corrección matemática.
+
+---
+
+# Sesión de experiencia y feedback (2026-08-04)
+
+Fases ejecutadas: 2 (estados de interacción), 9 (feedback en tres capas), 1
+(previsualización en vivo), 7 (intercalado, parcial), 10 (autoexplicación
+restringida). Ningún archivo de `content/` fue editado en toda la sesión, y
+`CLAUDE.md` no se tocó.
+
+## 🟡 Los eventos de autoexplicación no están declarados en CLAUDE.md (abierta 2026-08-04)
+
+`lib/eventos.ts` suma `autoexplicacion_elegida` (item_id, acerto_su_error) y
+`autoexplicacion_saltada` (item_id). CLAUDE.md §Convenciones dice que la lista
+de eventos se modifica "primero aquí", y esta sesión tenía prohibido tocar ese
+archivo, así que la unión de tipos y la documentación quedaron desincronizadas.
+
+**Gatillo:** la próxima sesión que pueda editar CLAUDE.md. Es una entrada de
+dos líneas en la lista de eventos; no hay decisión de diseño pendiente.
+
+## 🟡 No existe el campo que dice la ESTRATEGIA de resolución de un ítem (abierta 2026-08-04)
+
+Bloquea la activación de `lib/intercalar.ts` en el render (Fase 7). El objetivo
+—que dos ítems consecutivos del cierre nunca pidan la misma estrategia, para que
+el estudiante practique la decisión que la PAES evalúa— no se puede cumplir con
+lo que hay:
+
+- `habilidad` es la habilidad PAES (resolver/modelar/representar/argumentar), no
+  el procedimiento. Dos ítems `resolver` pueden pedir despejar una ecuación y
+  resolver una inecuación con signo negativo.
+- La lección de origen no es un campo: es una convención de los ids
+  (`cierre-ecuaciones-*` / `cierre-inecuaciones-*`) que `cierre-v0.json` no sigue.
+
+**Campo aditivo mínimo propuesto** (🔴, requiere firma — no se agregó):
+`estrategia?: string` por ítem, opcional y sin default, con vocabulario cerrado
+por módulo. Aditivo y opcional cumple P1: no invalida las lecciones con
+`revisionMatematica` y `checklistOriginalidad` ya firmados a mano. Sin el campo,
+`intercalarPorClave` cae a su fallback (orden original) y no rompe nada.
+
+**Gatillo:** cuando se decida activar el intercalado. La función pura y su test
+ya están, con la propiedad "sin dos consecutivos iguales" verificada.
+
+**Corrección al supuesto de partida:** los cierres NO están agrupados por
+estrategia hoy. `cierre-ecuaciones-lineales.json` y
+`cierre-enteros-racionales.json` están ordenados por dificultad ascendente, con
+las habilidades ya bastante alternadas. El que sí cicla habilidad de forma
+predecible es `cierre-v0.json` (estado `revision`).
+
+## 🟡 Ningún cierre tiene `catalogoErrores`: sin Capa 2 ni autoexplicación (abierta 2026-08-04)
+
+La Capa 2 del feedback (el mecanismo del error) y el paso de autoexplicación se
+alimentan del `catalogoErrores` del módulo, resuelto en el servidor
+(`lib/sanitizar.ts`). Hoy lo tienen cuatro lecciones —`ecuaciones-lineales`,
+`lineal-pendiente-e-intercepto`, `lineal-patrones-de-cambio`,
+`enteros-operar-y-ordenar`— y **ningún cierre**, así que los 24 ítems de cierre
+muestran Capa 1 y nada más, aunque 38 de sus 72 distractores sí declaran
+`errorCatalogado`.
+
+No se resuelve copiando el catálogo: los ids son locales (`"error-4"`) y
+`cierre-ecuaciones-lineales.json` mezcla ítems de dos unidades, así que
+`"error-4"` es ambiguo dentro del mismo archivo. Resolverlo contra un catálogo
+ajeno mostraría la descripción equivocada, que es peor que no mostrar ninguna —
+por eso `resolverDescripcionesDeError` es estrictamente local al archivo y hay
+un test que fija ese comportamiento.
+
+**Gatillo:** cuando se decida namespacear los `errorCatalogado` de los cierres
+(🔴, toca JSON de contenido). Se conecta con la deuda ya abierta de
+`content/errores/` como fuente única y con la exclusión explícita de
+`ecuaciones-lineales` en `scripts/validar-contenido.mjs`.
+
+## 🟡 La Capa 3 del feedback no tiene fuente (abierta 2026-08-04)
+
+`components/FeedbackEnCapas.tsx` acepta `capa3` —"qué hacer la próxima vez que
+aparezca este error", una línea— pero ningún campo de contenido la alimenta y no
+se inventa desde código. Hoy nunca se muestra.
+
+**Campo aditivo mínimo propuesto** (🔴, requiere firma): `queHacer?: string` en
+cada entrada de `catalogoErrores`. Va en el catálogo y no en la alternativa
+porque el consejo pertenece al mecanismo del error, no al ejercicio — que es
+justo la distinción que separa la Capa 2 de la Capa 1.
+
+**Gatillo:** cuando se escriba el primer catálogo con consejos.
+
+## 🟡 48 feedbacks de contenido son de 3+ frases: materialmente Capa 1 + Capa 2 fusionadas (abierta 2026-08-04)
+
+El contenedor de tres capas usa el `feedback` del JSON como Capa 1, que debe ser
+UNA frase sobre qué pasó con esta respuesta. 48 de los feedbacks existentes
+tienen tres o más frases y ya explican el mecanismo, así que hoy la Capa 1 dice
+de más y la Capa 2 repite.
+
+No se editó ni uno: el alcance de la sesión era el contenedor de render y el
+orden de revelado, no el texto. Los peores casos (6 frases) están en
+`content/lecciones/ecuaciones-lineales.json:512` y `:548`; hay listado completo
+en el historial de la sesión.
+
+**Gatillo:** la próxima pasada editorial sobre un módulo (🔴, toca JSON). Al
+partir un feedback largo, la primera frase se queda de Capa 1 y el resto se
+mueve a la descripción del `catalogoErrores` correspondiente.
+
+## 🟢 Sin sustrato, no bloqueantes (2026-08-04)
+
+- **Banco de opciones con hueco reservado** (Fase 2). No existe ningún ítem de
+  construcción ni banco de piezas: los cinco componentes que evalúan usan radios
+  o campos que permanecen en su lugar. Nada desaparece, no hay hueco que
+  reservar. Se aplicará si alguna vez existe un tipo de ítem que consuma piezas.
+- **Previsualización en vivo fuera de los dos ítems con figura** (Fase 1).
+  `lib/visualesItems.tsx` declara figura solo para `diag-5` y `cierre-5`, los
+  únicos que la tienen; el resto de los ítems PAES del repo es 100% texto. Sin
+  representación no hay nada que redibujar, e inventarle una a un ítem es
+  trabajo de contenido, no de render.

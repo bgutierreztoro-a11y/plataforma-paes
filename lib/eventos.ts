@@ -42,7 +42,20 @@ export type Evento =
      mismo dato y no se sabría si el interés está en Geometría o en
      Probabilidad. Se conserva el nombre en vez de inventar uno nuevo — es el
      mismo gesto sobre la misma pregunta, y renombrarlo cortaría la serie. */
-  | { nombre: "temas_plegados_expandidos"; props: { eje_id: string } };
+  | { nombre: "temas_plegados_expandidos"; props: { eje_id: string } }
+  /* ---------- autoexplicación restringida (2026-08-04) ---------- */
+  /* Al fallar, antes de ver la Capa 2, el estudiante elige cuál de tres errores
+     del catálogo describe lo que le pasó. `acerto_su_error` es una señal
+     DISTINTA de haber cometido el error: mide si lo RECONOCE, que es lo que
+     predice si va a poder evitarlo. Sin penalización y sin efecto en el
+     resultado del ítem — es diagnóstico, no evaluación.
+     Deuda: falta declarar estos dos eventos en la lista de CLAUDE.md
+     (docs/pendientes.md). */
+  | {
+      nombre: "autoexplicacion_elegida";
+      props: { item_id: string; acerto_su_error: boolean };
+    }
+  | { nombre: "autoexplicacion_saltada"; props: { item_id: string } };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en
