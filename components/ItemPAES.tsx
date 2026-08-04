@@ -167,10 +167,25 @@ export function ItemPAES({
           </label>
         ))}
       </fieldset>
+      {/* "Empezar de nuevo" está presente durante toda la resolución y solo se
+          apaga cuando no hay nada que limpiar: si apareciera recién al elegir,
+          la fila cambiaría de alto y el botón de comprobar se movería justo
+          bajo el dedo. No reinicia el cronómetro a propósito — el tiempo que
+          se reporta es el que tardó en llegar a la respuesta, y borrar una
+          selección es parte de ese trabajo, no un ítem nuevo. */}
       {!revelado && (
-        <Boton onClick={revisar} disabled={!seleccion || !montado}>
-          Revisar respuesta
-        </Boton>
+        <div className="flex flex-wrap items-center gap-3">
+          <Boton onClick={revisar} disabled={!seleccion || !montado}>
+            Revisar respuesta
+          </Boton>
+          <Boton
+            variante="secundario"
+            onClick={() => setSeleccion(null)}
+            disabled={!seleccion || !montado}
+          >
+            Empezar de nuevo
+          </Boton>
+        </div>
       )}
       {revelado && alternativaElegida && (
         <div className="transicion-paso space-y-4">

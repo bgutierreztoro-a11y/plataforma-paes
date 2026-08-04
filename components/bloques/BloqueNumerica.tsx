@@ -20,6 +20,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
   const [revelado, setRevelado] = useState(false);
 
   const listo = bloque.campos.every((c) => valores[c.id]?.trim());
+  const hayAlgoEscrito = bloque.campos.some((c) => valores[c.id]?.trim());
 
   return (
     <div className="space-y-3">
@@ -43,7 +44,13 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
                 disabled={revelado}
                 value={valores[campo.id] ?? ""}
                 onChange={(e) => setValores((v) => ({ ...v, [campo.id]: e.target.value }))}
-                className="h-11 w-40 rounded-tarjeta border border-border px-3 font-mono tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                /* Al acertar, el verde se ancla al campo que el estudiante
+                   llenó y no solo al recuadro de feedback de abajo: con varios
+                   campos, el panel por sí solo no dice cuál de ellos quedó
+                   bien. Solo el acierto. */
+                className={`h-11 w-40 rounded-tarjeta border px-3 font-mono tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
+                  esCorrecto ? "border-success bg-success-suave" : "border-border"
+                }`}
               />
               {revelado && (
                 <div
@@ -61,9 +68,17 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
         })}
       </div>
       {!revelado && (
-        <Boton onClick={() => setRevelado(true)} disabled={!listo}>
-          Revisar respuesta
-        </Boton>
+        <div className="flex flex-wrap items-center gap-3">
+          <Boton onClick={() => setRevelado(true)} disabled={!listo}>
+            Revisar respuesta
+          </Boton>
+          {/* Se apaga con TODOS los campos vacíos, no con `listo`: con un
+              formulario a medio llenar es justo cuando más se necesita poder
+              partir de cero. Ver la nota en ItemPAES.tsx. */}
+          <Boton variante="secundario" onClick={() => setValores({})} disabled={!hayAlgoEscrito}>
+            Empezar de nuevo
+          </Boton>
+        </div>
       )}
     </div>
   );

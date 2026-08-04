@@ -105,7 +105,13 @@ export function SecuenciaMicropreguntas({
           <p className="text-sm text-ink-suave">
             Mueve los dos controles para comprobar qué pasa de verdad.
           </p>
-          {ambosControlesTocados && <Boton onClick={onComprobar}>Comprobar</Boton>}
+          {/* Presente y apagado, no ausente: antes aparecía recién al tocar los
+              dos controles, y el bloque crecía de golpe justo cuando la mano
+              estaba en el slider — el gráfico saltaba bajo el cursor. Apagado
+              además dice de antemano que hay algo que hacer después. */}
+          <Boton onClick={onComprobar} disabled={!ambosControlesTocados}>
+            Comprobar
+          </Boton>
         </div>
       )}
 

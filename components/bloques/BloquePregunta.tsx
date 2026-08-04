@@ -84,7 +84,16 @@ export function BloquePregunta({
         {alternativas.map((alt) => (
           <label
             key={alt.clave}
-            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:checked]:border-accent has-[:checked]:bg-accent-suave has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+            /* Al acertar, el verde se ancla a la alternativa elegida y no solo
+               al recuadro de feedback de abajo: es el objeto que el estudiante
+               estaba mirando al comprobar. Solo el acierto — el caso incorrecto
+               se resuelve en el panel, donde la explicación puede llegar antes
+               que el veredicto. */
+            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+              revelado && seleccion === alt.clave && alt.esCorrecta
+                ? "border-success bg-success-suave"
+                : "border-border has-[:checked]:border-accent has-[:checked]:bg-accent-suave"
+            } ${
               revelado || !montado
                 ? "cursor-not-allowed"
                 : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
@@ -106,9 +115,22 @@ export function BloquePregunta({
         ))}
       </fieldset>
       {!revelado && (
-        <Boton onClick={revisar} disabled={!seleccion || !montado}>
-          Revisar respuesta
-        </Boton>
+        <div className="flex flex-wrap items-center gap-3">
+          <Boton onClick={revisar} disabled={!seleccion || !montado}>
+            Revisar respuesta
+          </Boton>
+          {/* Presente durante toda la resolución, apagado cuando no hay nada
+              que limpiar: ver la nota en ItemPAES.tsx. No se confunde con
+              "Intentar de nuevo", que aparece DESPUÉS de fallar y sí gasta un
+              intento — este limpia antes de comprobar y no registra nada. */}
+          <Boton
+            variante="secundario"
+            onClick={() => setSeleccion(null)}
+            disabled={!seleccion || !montado}
+          >
+            Empezar de nuevo
+          </Boton>
+        </div>
       )}
       {revelado && alternativaElegida && (
         <div
