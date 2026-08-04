@@ -122,22 +122,9 @@ export function BloquePregunta({
         ))}
       </fieldset>
       {!revelado && (
-        <div className="flex flex-wrap items-center gap-3">
-          <Boton onClick={revisar} disabled={!seleccion || !montado}>
-            Revisar respuesta
-          </Boton>
-          {/* Presente durante toda la resolución, apagado cuando no hay nada
-              que limpiar: ver la nota en ItemPAES.tsx. No se confunde con
-              "Intentar de nuevo", que aparece DESPUÉS de fallar y sí gasta un
-              intento — este limpia antes de comprobar y no registra nada. */}
-          <Boton
-            variante="secundario"
-            onClick={() => setSeleccion(null)}
-            disabled={!seleccion || !montado}
-          >
-            Empezar de nuevo
-          </Boton>
-        </div>
+        <Boton onClick={revisar} disabled={!seleccion || !montado}>
+          Revisar respuesta
+        </Boton>
       )}
       {revelado && alternativaElegida && (
         <FeedbackEnCapas

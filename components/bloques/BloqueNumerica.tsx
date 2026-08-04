@@ -20,7 +20,6 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
   const [revelado, setRevelado] = useState(false);
 
   const listo = bloque.campos.every((c) => valores[c.id]?.trim());
-  const hayAlgoEscrito = bloque.campos.some((c) => valores[c.id]?.trim());
 
   return (
     <div className="space-y-3">
@@ -68,17 +67,9 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
         })}
       </div>
       {!revelado && (
-        <div className="flex flex-wrap items-center gap-3">
-          <Boton onClick={() => setRevelado(true)} disabled={!listo}>
-            Revisar respuesta
-          </Boton>
-          {/* Se apaga con TODOS los campos vacíos, no con `listo`: con un
-              formulario a medio llenar es justo cuando más se necesita poder
-              partir de cero. Ver la nota en ItemPAES.tsx. */}
-          <Boton variante="secundario" onClick={() => setValores({})} disabled={!hayAlgoEscrito}>
-            Empezar de nuevo
-          </Boton>
-        </div>
+        <Boton onClick={() => setRevelado(true)} disabled={!listo}>
+          Revisar respuesta
+        </Boton>
       )}
     </div>
   );

@@ -48,20 +48,9 @@ export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
         </Boton>
       </div>
       {!revelado && (
-        <div className="flex flex-wrap items-center gap-3">
-          <Boton onClick={() => setRevelado(true)} disabled={respuesta === null}>
-            Revisar respuesta
-          </Boton>
-          {/* Presente durante toda la resolución, apagado sin nada que limpiar:
-              ver la nota en ItemPAES.tsx. */}
-          <Boton
-            variante="secundario"
-            onClick={() => setRespuesta(null)}
-            disabled={respuesta === null}
-          >
-            Empezar de nuevo
-          </Boton>
-        </div>
+        <Boton onClick={() => setRevelado(true)} disabled={respuesta === null}>
+          Revisar respuesta
+        </Boton>
       )}
       {revelado && (
         <div

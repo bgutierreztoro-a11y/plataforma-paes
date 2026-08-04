@@ -79,9 +79,9 @@ export function ItemPAES({
      comprobó. El gráfico se redibuja con ese valor para que el aprendizaje
      ocurra al manipular, no al presionar "Revisar respuesta" — comprobar solo
      confirma lo que ya vio. Es reversible sin costo (cambiar de alternativa
-     redibuja, "Empezar de nuevo" vuelve al enunciado), no cuesta ninguna
-     llamada al servidor, y deja de aplicarse al revelar: desde ahí el gráfico
-     vuelve a mostrar la recta real del enunciado. */
+     redibuja), no cuesta ninguna llamada al servidor, y deja de aplicarse al
+     revelar: desde ahí el gráfico vuelve a mostrar la recta real del
+     enunciado. */
   const textoTentativo = !revelado ? (alternativaElegida?.texto ?? null) : null;
   const visual = visualDeItem(item.id, textoTentativo);
 
@@ -196,25 +196,10 @@ export function ItemPAES({
           </label>
         ))}
       </fieldset>
-      {/* "Empezar de nuevo" está presente durante toda la resolución y solo se
-          apaga cuando no hay nada que limpiar: si apareciera recién al elegir,
-          la fila cambiaría de alto y el botón de comprobar se movería justo
-          bajo el dedo. No reinicia el cronómetro a propósito — el tiempo que
-          se reporta es el que tardó en llegar a la respuesta, y borrar una
-          selección es parte de ese trabajo, no un ítem nuevo. */}
       {!revelado && (
-        <div className="flex flex-wrap items-center gap-3">
-          <Boton onClick={revisar} disabled={!seleccion || !montado}>
-            Revisar respuesta
-          </Boton>
-          <Boton
-            variante="secundario"
-            onClick={() => setSeleccion(null)}
-            disabled={!seleccion || !montado}
-          >
-            Empezar de nuevo
-          </Boton>
-        </div>
+        <Boton onClick={revisar} disabled={!seleccion || !montado}>
+          Revisar respuesta
+        </Boton>
       )}
       {revelado && alternativaElegida && (
         <>

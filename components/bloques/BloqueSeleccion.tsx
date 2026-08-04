@@ -40,16 +40,9 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
         marcaAcierto={revelado && opcionElegida?.esCorrecta ? opcionElegida.id : null}
       />
       {!revelado && (
-        <div className="flex flex-wrap items-center gap-3">
-          <Boton onClick={() => setRevelado(true)} disabled={!seleccion}>
-            Revisar respuesta
-          </Boton>
-          {/* Presente durante toda la resolución, apagado sin nada que limpiar:
-              ver la nota en ItemPAES.tsx. */}
-          <Boton variante="secundario" onClick={() => setSeleccion(null)} disabled={!seleccion}>
-            Empezar de nuevo
-          </Boton>
-        </div>
+        <Boton onClick={() => setRevelado(true)} disabled={!seleccion}>
+          Revisar respuesta
+        </Boton>
       )}
       {revelado && opcionElegida && (
         <div
