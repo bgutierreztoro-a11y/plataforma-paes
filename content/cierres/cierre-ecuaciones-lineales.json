@@ -1,0 +1,325 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-ecuaciones-lineales",
+  "titulo": "Cierre del módulo: Ecuaciones e inecuaciones de primer grado",
+  "estado": "borrador",
+  "_notasInternas": [
+    "Cierre del tema 'Ecuaciones e inecuaciones de primer grado' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: ecuaciones-lineales.json, inecuaciones-resolucion.json e inecuaciones-problemas.json.",
+    "AMPLIADO A INECUACIONES EL 2026-08-03 — cierra la deuda anterior. Este archivo nació con 8 ítems, todos de ecuaciones, y una nota que decía 'Cierre incompleto respecto al tema completo: cubre solo ecuaciones lineales. Pendiente ampliar con ítems de inecuaciones cuando esas lecciones se creen.' Esas lecciones ya existen, así que la deuda queda saldada: se reemplazaron 4 de los 8 ítems por ítems de inecuaciones, dejando el reparto en 4 de ecuaciones y 4 de inecuaciones. El cierre ya representa el tema completo.",
+    "POR QUÉ REEMPLAZAR Y NO AGREGAR. El validador fija exactamente 8 ítems para tipo 'cierre' (ITEMS_POR_TIPO en scripts/validar-contenido.mjs), así que ampliar significaba necesariamente sacar. Se decidió mantener el tope y hacer swaps, no relajar el contrato.",
+    "QUÉ SALIÓ Y POR QUÉ, ítem por ítem. (1) Salió el antiguo ítem 2 (resolver, baja, salas/cuentos, 6x + 6 = 36): era un duplicado estructural del ítem 1 —mismo ax + b = c con coeficiente positivo, misma dificultad, misma habilidad, mismos dos pasos—, así que el cierre gastaba dos de ocho casillas en la misma destreza. Es el de menor costo pedagógico. Se conservó el ítem 1 en su lugar porque es la balanza, la imagen insignia del módulo. (2) Salió el antiguo ítem 6 (representar, media, qué operación conserva la igualdad): swap de igual a igual, preserva la habilidad pero la mueve a inecuaciones, donde vale más — dibujar el conjunto solución en la recta es contenido explícito del temario para inecuaciones, mientras que 'qué operación conserva la igualdad' ya está cubierto por el paso 7 de ecuaciones-lineales.json. (3) Salió el antiguo ítem 3 (resolver, media, jaulas/gatos, 8x − 16 = 40): tercera de la misma familia resolver-con-constante; su variación de signo del término ya la ejercitan el ítem cierre-ecuaciones-5 y el cierre-ecuaciones-8. (4) Salió el antiguo ítem 7 (argumentar, alta, diagnosticar el desarrollo de Camila): swap de igual a igual, la habilidad argumentar se conserva y pasa a justificar por qué se invierte el sentido, que es el núcleo conceptual del módulo.",
+    "QUÉ QUEDÓ INTACTO: cierre-ecuaciones-1 (balanza, única baja del set), cierre-ecuaciones-4 (único modelar de una ecuación), cierre-ecuaciones-5 (único con la incógnita en ambos lados, ejercita error-5) y cierre-ecuaciones-8 (el integrador). Ninguno de los cuatro fue modificado: se conservan con su enunciado, alternativas, feedback y solución originales.",
+    "REPARTO FINAL, contado a mano sobre los 8 ítems: habilidad resolver 3 (cierre-ecuaciones-1, cierre-inecuaciones-1, cierre-ecuaciones-5), modelar 3 (cierre-ecuaciones-4, cierre-inecuaciones-3, cierre-ecuaciones-8), representar 1 (cierre-inecuaciones-2), argumentar 1 (cierre-inecuaciones-4). Las cuatro habilidades PAES presentes. Dificultad: baja 2, media 3, alta 3 — el mismo reparto que tenía el cierre antes de la ampliación.",
+    "AJUSTE DE DIFICULTAD (2026-08-03), motivado por UMBRAL_DOMINIO = 0.6 en lib/umbrales.ts: con 8 ítems el estudiante necesita 5 aciertos, y la ampliación había dejado el set en baja 1 / media 3 / alta 4, o sea la mitad en 'alta' justo en el instrumento que mide su avance. Se corrigió sin bajar artificialmente la exigencia, con dos cambios que se sostienen solos. (1) cierre-ecuaciones-5 pasó de 'alta' a 'media': era una inconsistencia contra el criterio usado en las lecciones — su gemelo estructural, el ítem 1 de inecuaciones-resolucion.json (6x + 5 < 2x + 29, incógnita en ambos lados, los mismos tres pasos), está marcado 'media'. Lo que de verdad separa 'media' de 'alta' en esta familia es el signo del resultado: 5x + 8 = x − 4 da x = −3 (negativo, marcado alta en ecuaciones-lineales.json) mientras que 5x + 15 = 2x + 36 da x = 7, positivo y limpio. Es solo un reetiquetado: el ítem no se tocó. (2) cierre-inecuaciones-1 pasó a una versión de un solo paso (−6x > 42 en vez de −4x + 5 ≥ 29) y con eso a 'baja'. El núcleo conceptual —la inversión del sentido al dividir por un negativo— queda intacto; el término constante era andamio y no aportaba al núcleo. Los cuatro distractores conservan su estructura y sus ids (error-6 no invertir, error-4 no dividir, error-7 borde). Efecto secundario a favor: la inversión del sentido queda medida dos veces y a dos niveles, accesible acá y en profundidad en el argumentar de cierre-inecuaciones-4.",
+    "ERROR-9 EN cierre-inecuaciones-3 (2026-08-03), y el trade que obligó. El ítem nació con el pasillo en 41 m y sin ningún distractor de traducción, así que error-9 —el error más frecuente de inecuaciones-problemas.json— no aparecía en todo el cierre. La causa era estructural, no un descuido: con 41 m el cociente es 12,33 y, cuando el cociente NO es entero, '≤' y '<' dan el mismo entero (12 en ambos casos), de modo que el borde no se puede testear; y la dirección invertida daba 13, que ya estaba ocupado por el distractor de error-11. Se cambió el pasillo a 40 m, con lo que el cociente pasa a ser exacto (36 ÷ 3 = 12) y el borde sí muerde: leer 'no puede superar 40' como estricto da 11, un valor distinto de todos los demás. El enunciado se reformuló para que la condición aparezca con esa frase exacta, que es la trampa que la tabla de dos entradas de inecuaciones-problemas.json enseña a desarmar. COSTO ACEPTADO: con cociente exacto desaparece el decimal, así que el distractor 12,33 (error-10, no aterrizar la respuesta) sale del ítem, y error-10 deja de aparecer en el cierre. Se prefirió así porque error-10 ya se mide dos veces dentro de inecuaciones-problemas.json (paso 8 e ítem PAES 2), mientras que error-9 no se medía ninguna. En un ítem cuya respuesta es un conteo, error-9 y error-10 son mutuamente excluyentes: el borde solo muerde con cociente exacto y el redondeo solo existe con cociente no entero.",
+    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json, que desde el 2026-08-03 es la única fuente para esta unidad (se sacó 'ecuaciones-lineales' de MAPEO_LECCION_UNIDAD en scripts/validar-contenido.mjs). Los cuatro ítems conservados siguen referenciando error-1, error-2, error-4 y error-5 tal como nacieron. Los cuatro ítems nuevos referencian error-4 (dos veces), error-6 (tres), error-7 (dos), error-8, error-10 y error-11.",
+    "DISTRACTORES SIN errorCatalogado. Los de los ítems conservados quedan como estaban (ver la razón original: son errores de modelamiento o del segundo paso del integrador, que no calzaban con los cinco errores de procedimiento que existían entonces). Entre los ítems nuevos hay uno solo: cierre-inecuaciones-4 alternativa D, que acierta CUÁNDO se invierte el sentido pero lo justifica con la magnitud ('los números se hacen más chicos'). Es una idea equivocada sobre el tamaño, no sobre el manejo del sentido, así que no es error-6; se deja sin id en vez de dar señal falsa al motor de diagnóstico. Es la misma confusión ya identificada en el paso 5 de inecuaciones-resolucion.json, también sin catalogar.",
+    "DOMINIOS. Solo cierre-inecuaciones-3 lleva contexto; los otros tres ítems nuevos son abstractos a propósito, para minimizar la superficie que hay que verificar contra el corpus de fuentes aisladas. El escenario de la feria de ciencias (casetas a lo largo de un pasillo de gimnasio) fue verificado por Benja con scripts/consultar-fuentes.mjs fuera de la sesión de redacción: 'feria de ciencias', 'pasillo' y 'gimnasio' salieron limpios, y 'caseta' es el reemplazo aprobado tras descartar tres candidatos por colisión — 'stand' (7 archivos, incluido pdv-terceros/MA-11_Planteamientos.md), 'puesto' (27 archivos) y 'mesón' (2 archivos, ambos MA-31_Inecuaciones.md, justo el tema de este módulo). El hilo que redactó este archivo no ejecutó el script ni leyó fuentes-analisis-aisladas/ por ningún medio propio.",
+    "NÚMEROS: ninguna de las expresiones de los cuatro ítems nuevos (−4x + 5 ≥ 29; 5x − 3 < 12; 4 + 3n ≤ 41; 2 < 6 multiplicado por −1 y por 3) aparece en las tres lecciones del módulo ni en los cuatro ítems conservados. Se verificó una a una contra contextosNumericos de ecuaciones-lineales.json, inecuaciones-resolucion.json e inecuaciones-problemas.json.",
+    "TÍTULO ACTUALIZADO: decía 'Cierre del módulo: Ecuaciones e inecuaciones de primer grado (ecuaciones lineales)'. Ese paréntesis existía justamente porque el cierre solo cubría ecuaciones; con los cuatro ítems de inecuaciones adentro pasó a ser falso, así que se eliminó. Es el único cambio de copy visible al estudiante que trajo esta ampliación.",
+    "El ítem cierre-ecuaciones-5 reestructura el contexto de salas/cuentos en una comparación entre dos bibliotecas (misma cantidad total de cuentos) para poder plantear una ecuación con la incógnita en ambos lados — mismo vocabulario y misma escena general que la lección, sin nombres propios ni sustantivos nuevos.",
+    "El ítem cierre-ecuaciones-8 es el integrador: combina el mecanismo de la balanza (despejar x en 6x + 4 = 40, mismo tipo de paso que el ítem 1) con el contexto de jaulas y gatos, aplicando el valor de x hallado en el primer paso a un segundo escenario. Sus distractores (18, 16, 24) son errores propios de ese segundo paso.",
+    "VERIFICACIÓN MATEMÁTICA: la aritmética de los cuatro ítems nuevos fue recalculada desde cero con un script independiente antes de escribirlos, incluidas las sustituciones en los dos enteros vecinos de cada borde y en los dos vecinos del redondeo de cierre-inecuaciones-3. Eso NO reemplaza la revisión matemática humana.",
+    "Estado 'borrador'. Sin checklistOriginalidad ni revisionMatematica: el schema no los exige a nivel raíz (solo se activan desde 'revision' en adelante). Pendiente revisión matemática manual (Benja + profesor) y checklist de originalidad firmado a mano antes de subir de estado."
+  ],
+  "items": [
+    {
+      "id": "cierre-ecuaciones-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una balanza, 4 bolsas iguales más 8 bolitas sueltas equilibran 32 bolitas. ¿Cuántas bolitas hay en cada bolsa?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6",
+          "esCorrecta": true,
+          "feedback": "Correcto. 32 − 8 = 24 bolitas repartidas en las 4 bolsas: 24 ÷ 4 = 6."
+        },
+        {
+          "clave": "B",
+          "texto": "8",
+          "esCorrecta": false,
+          "feedback": "Restaste las 8 bolitas sueltas del total, pero dejaste el 4x sin cambiar: usaste 4x = 32 en vez de 4x = 24. Las 8 bolitas hay que quitarlas de los dos lados, no solo mencionarlas.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "24",
+          "esCorrecta": false,
+          "feedback": "Bien hasta 32 − 8 = 24, pero olvidaste repartir esas 24 bolitas entre las 4 bolsas. Falta dividir por 4.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "10",
+          "esCorrecta": false,
+          "feedback": "Sumaste las 8 bolitas en vez de restarlas: 32 + 8 = 40, y luego 40 ÷ 4 = 10. Para despejar x hay que restar la constante, no sumarla.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "4x + 8 = 32 → 4x = 32 − 8 = 24 → x = 24 ÷ 4 = 6. Comprobación: 4(6) + 8 = 24 + 8 = 32 ✓."
+    },
+    {
+      "id": "cierre-inecuaciones-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "¿Cuál es el conjunto solución de la inecuación −6x > 42?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x < −7",
+          "esCorrecta": true,
+          "feedback": "Correcto. Al dividir ambos lados por −6, que es negativo, el sentido se invierte: el > se convierte en < y queda x < −7."
+        },
+        {
+          "clave": "B",
+          "texto": "x > −7",
+          "esCorrecta": false,
+          "feedback": "El número está bien, pero te faltó dar vuelta el sentido. Dividiste por −6, que es negativo, y ahí el > tiene que convertirse en <. Comprueba con x = 0, que cumple tu respuesta: −6·0 = 0, y 0 > 42 es falso.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "x < 42",
+          "esCorrecta": false,
+          "feedback": "Diste vuelta el sentido correctamente, pero no dividiste. El −6 está multiplicando a la x, así que para dejarla sola hay que repartir ambos lados entre −6.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "x ≤ −7",
+          "esCorrecta": false,
+          "feedback": "El número y la dirección están bien; falla el borde. El signo original es >, sin la rayita del igual, así que al invertirlo queda < y no ≤. Comprueba x = −7: −6·(−7) = 42, y 42 > 42 es falso, así que el −7 queda afuera.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "−6x > 42. Se divide por −6, que es negativo, así que el sentido se invierte: x < 42 ÷ (−6) = −7, es decir x < −7. Comprobación interior: x = −8 → −6·(−8) = 48, y 48 > 42 ✓. Comprobación del borde: x = −7 → −6·(−7) = 42, y 42 > 42 es falso ✓, el borde queda excluido, coherente con el <. Comprobación exterior: x = −6 → 36, y 36 > 42 es falso ✓."
+    },
+    {
+      "id": "cierre-inecuaciones-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "¿Cuál de las siguientes representaciones en la recta numérica corresponde al conjunto solución de 5x − 3 < 12?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Un punto vacío en 3, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La inecuación da x < 3: el punto vacío marca que el 3 no pertenece, y 'menor que' es la parte de la recta que queda a la izquierda."
+        },
+        {
+          "clave": "B",
+          "texto": "Un punto relleno en 3, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "feedback": "La dirección está bien, pero el punto relleno dice que el 3 pertenece a la solución. El signo es <, sin la rayita del igual. Comprueba x = 3: 5·3 − 3 = 12, y 12 < 12 es falso, así que el 3 queda afuera.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "Un punto vacío en 3, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "feedback": "El borde está bien marcado, pero sombreaste hacia el lado equivocado. 'x menor que 3' son los números que están a la izquierda del 3 en la recta: 2, 0, −5… Los de la derecha son mayores.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "Un punto vacío en 15, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "feedback": "Llegaste bien a 5x < 15 y marcaste ese 15, pero ese número es el peso de las cinco equis juntas, no el valor de x. Falta dividir ambos lados por 5.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "5x − 3 < 12. Se suma 3 en ambos lados: 5x < 15. Se divide por 5, que es positivo, así que el sentido se conserva: x < 3. El signo < deja el extremo afuera, luego el punto va vacío en 3, y 'menor que' corresponde a la parte de la recta que queda a la izquierda. Comprobación del borde: x = 3 → 5·3 − 3 = 12, y 12 < 12 es falso ✓, correctamente excluido. Comprobación interior: x = 2 → 10 − 3 = 7, y 7 < 12 ✓."
+    },
+    {
+      "id": "cierre-ecuaciones-4",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En una balanza, 5 bolsas iguales más 3 bolitas sueltas equilibran 43 bolitas. ¿Cuál ecuación representa correctamente esta situación, tomando x como la cantidad de bolitas en cada bolsa?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5x + 3 = 43",
+          "esCorrecta": true,
+          "feedback": "Correcto. 5 bolsas de x bolitas cada una son 5x; sumadas a las 3 bolitas sueltas, equilibran las 43 bolitas totales."
+        },
+        {
+          "clave": "B",
+          "texto": "3x + 5 = 43",
+          "esCorrecta": false,
+          "feedback": "Invertiste los papeles: son 5 bolsas (el coeficiente de x) y 3 bolitas sueltas (la constante), no al revés."
+        },
+        {
+          "clave": "C",
+          "texto": "5x − 3 = 43",
+          "esCorrecta": false,
+          "feedback": "Las 3 bolitas sueltas se suman al peso de las bolsas, no se restan: en la balanza todo lo que hay en ese platillo pesa junto."
+        },
+        {
+          "clave": "D",
+          "texto": "5(x + 3) = 43",
+          "esCorrecta": false,
+          "feedback": "Esto diría que cada bolsa además tiene 3 bolitas extra dentro, y por fuera no quedaría ninguna bolita suelta — no es lo que describe el problema: las 3 bolitas están fuera de las bolsas."
+        }
+      ],
+      "solucion": "Hay 5 bolsas de x bolitas cada una (5x) más 3 bolitas sueltas, y el total es 43: 5x + 3 = 43. (Resolviendo aparte: 5x = 40 → x = 8, aunque lo que pide este ítem es el modelo, no el valor de x.)"
+    },
+    {
+      "id": "cierre-ecuaciones-5",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "La biblioteca A tiene 5 salas iguales más 15 cuentos aparte, y la biblioteca B tiene 2 salas iguales (del mismo tamaño que las de la biblioteca A) más 36 cuentos aparte. Si ambas bibliotecas tienen el mismo total de cuentos, ¿cuántos cuentos hay en cada sala?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7",
+          "esCorrecta": true,
+          "feedback": "Correcto. 5x + 15 = 2x + 36 → 5x − 2x = 36 − 15 → 3x = 21 → x = 7."
+        },
+        {
+          "clave": "B",
+          "texto": "3",
+          "esCorrecta": false,
+          "feedback": "Al reunir las incógnitas sumaste 5x + 2x = 7x en vez de restar 5x − 2x = 3x. Cuando la incógnita aparece en ambos lados, hay que restar (o mover) para dejarla en un solo lado, no sumarla.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "21",
+          "esCorrecta": false,
+          "feedback": "Bien hasta 3x = 21, pero olvidaste dividir por 3 para despejar x.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "-7",
+          "esCorrecta": false,
+          "feedback": "Invertiste el orden al restar los cuentos aparte: calculaste 15 − 36 en vez de 36 − 15. El lado que queda con más cuentos sueltos va primero.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "5x + 15 = 2x + 36 → 5x − 2x = 36 − 15 → 3x = 21 → x = 7. Comprobación: 5(7) + 15 = 35 + 15 = 50; 2(7) + 36 = 14 + 36 = 50. Ambos lados dan 50 ✓."
+    },
+    {
+      "id": "cierre-inecuaciones-3",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "En una feria de ciencias, las casetas se instalarán una al lado de la otra a lo largo de un pasillo del gimnasio. Cada caseta ocupa 3 metros y, además, hay que dejar 4 metros fijos para la entrada. El largo total ocupado no puede superar los 40 metros. ¿Cuántas casetas como máximo se pueden instalar?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "12 casetas",
+          "esCorrecta": true,
+          "feedback": "Correcto. La condición es 4 + 3n ≤ 40, o sea 3n ≤ 36 y n ≤ 12. Doce casetas ocupan 36 m que, con los 4 de la entrada, suman exactamente 40: como la condición dice 'no puede superar 40', llegar justo a 40 está permitido."
+        },
+        {
+          "clave": "B",
+          "texto": "11 casetas",
+          "esCorrecta": false,
+          "feedback": "Leíste 'no puede superar los 40 metros' como si exigiera quedarse por debajo de 40, y eso te costó una caseta. Superar significa pasar de 40, no alcanzarlo: con 12 casetas el largo ocupado es exactamente 40 m, y eso sí cumple.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "13 casetas",
+          "esCorrecta": false,
+          "feedback": "Repartiste los 40 metros completos entre las casetas, pero 4 de esos metros están comprometidos con la entrada y no se pueden ocupar. Con 13 casetas necesitarías 39 m más los 4 de la entrada: 43 m en un pasillo donde solo caben 40.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "D",
+          "texto": "36 casetas",
+          "esCorrecta": false,
+          "feedback": "Los 36 son los metros que quedan disponibles para casetas después de descontar la entrada, no la cantidad de casetas. Falta repartir esos 36 metros entre los 3 que ocupa cada una.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Sea n el número de casetas. Ocupan 3n metros y, junto con los 4 metros fijos de la entrada, no pueden superar los 40 metros: 4 + 3n ≤ 40, con borde cerrado porque superar significa estrictamente pasar. Se restan 4 en ambos lados: 3n ≤ 36. Se divide por 3, que es positivo, así que el sentido se conserva: n ≤ 12. Comprobación del borde: 12 casetas → 4 + 3·12 = 4 + 36 = 40, y 40 ≤ 40 es verdadero ✓, caben justo. Comprobación exterior: 13 casetas → 4 + 3·13 = 43, y 43 ≤ 40 es falso ✓. Si la condición hubiera sido 'menos de 40 metros', el 40 quedaría excluido y la respuesta sería 11 (alternativa B)."
+    },
+    {
+      "id": "cierre-inecuaciones-4",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: \"Al multiplicar los dos lados de una desigualdad por un mismo número, el sentido siempre se mantiene, porque se le está haciendo lo mismo a ambos lados.\" ¿Es correcta su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: si el número es negativo, el sentido se invierte, porque multiplicar por un negativo refleja la recta numérica respecto del 0 e intercambia el orden.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Hacer lo mismo a ambos lados es necesario, pero no basta: el factor negativo da vuelta la recta como un espejo puesto en el 0, y lo que estaba a la izquierda queda a la derecha."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: mientras la operación sea idéntica en los dos lados, el sentido se conserva siempre.",
+          "esCorrecta": false,
+          "feedback": "Esa regla vale para las ecuaciones, no para las desigualdades. Pruébala: 2 < 6 es verdadera; multiplica ambos lados por −1 y quedan −2 y −6. ¿Es cierto que −2 < −6?",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "No: el sentido se invierte cada vez que se multiplica, sea el número positivo o negativo.",
+          "esCorrecta": false,
+          "feedback": "Multiplicar por un positivo no invierte nada. Pruébalo: 2 < 6 multiplicado por 3 da 6 < 18, que sigue siendo verdadera. El positivo estira la recta, pero no la da vuelta.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "No: si el número es negativo, el sentido se invierte, porque al multiplicar por un negativo los dos números se hacen más chicos.",
+          "esCorrecta": false,
+          "feedback": "Acertaste cuándo se invierte, pero no por qué. Multiplicar por −1 no achica: −6 tiene exactamente el mismo tamaño que 6. Lo que cambia no es el tamaño de los números, sino de qué lado del 0 quedan."
+        }
+      ],
+      "solucion": "La afirmación es falsa. Aplicar la misma operación a ambos lados es necesario, pero para las desigualdades no es suficiente: si el factor es negativo, el sentido se invierte. La razón es que multiplicar por un negativo refleja la recta numérica respecto del 0, y una reflexión intercambia izquierda con derecha; como 'a < b' significa 'a está a la izquierda de b', el orden queda invertido. Contraejemplo que refuta la afirmación: 2 < 6 es verdadera, pero al multiplicar ambos lados por −1 quedan −2 y −6, y −2 < −6 es falsa. Contraejemplo que refuta la alternativa C: 2 < 6 multiplicado por 3 da 6 < 18, que sigue siendo verdadera, luego multiplicar por un positivo no invierte. La alternativa D acierta el cuándo pero justifica con la magnitud, que no cambia: |−6| = 6. Respuesta: A."
+    },
+    {
+      "id": "cierre-ecuaciones-8",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "En una balanza, 6 bolsas iguales más 4 bolitas sueltas equilibran 40 bolitas. Con ese mismo valor de bolitas por bolsa, si en una veterinaria hay 3 jaulas iguales (cada una con esa misma cantidad de gatos que bolitas por bolsa) más 2 gatos sueltos en observación, ¿cuántos gatos hay en total en la veterinaria?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "20",
+          "esCorrecta": true,
+          "feedback": "Correcto. Primero 6x + 4 = 40 → x = 6 bolitas por bolsa. Luego 3 jaulas de 6 gatos son 18, más los 2 sueltos: 18 + 2 = 20 gatos en total."
+        },
+        {
+          "clave": "B",
+          "texto": "18",
+          "esCorrecta": false,
+          "feedback": "Calculaste bien los 18 gatos en las jaulas (3 × 6), pero olvidaste sumar los 2 gatos sueltos que están en observación aparte."
+        },
+        {
+          "clave": "C",
+          "texto": "16",
+          "esCorrecta": false,
+          "feedback": "Restaste los 2 gatos en observación en vez de sumarlos: están además de los que hay en las jaulas, no se quitan."
+        },
+        {
+          "clave": "D",
+          "texto": "24",
+          "esCorrecta": false,
+          "feedback": "Repartiste los 2 gatos sueltos entre las 3 jaulas como si fueran parte de cada jaula (3 × 8 = 24), pero esos 2 gatos están aparte, no repartidos entre las jaulas: se suman una sola vez al final."
+        }
+      ],
+      "solucion": "Primero: 6x + 4 = 40 → 6x = 36 → x = 6 bolitas por bolsa. Con ese mismo valor, 3 jaulas de 6 gatos cada una son 3 × 6 = 18 gatos, más los 2 gatos sueltos en observación: 18 + 2 = 20 gatos en total."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-ecuaciones-1 (balanza, resolver, baja): 4x + 8 = 32, x = 6",
+    "cierre-inecuaciones-1 (abstracto, resolver, baja): −6x > 42, x < −7 (inversión de sentido al dividir por −6, un solo paso)",
+    "cierre-inecuaciones-2 (abstracto, representar, media): 5x − 3 < 12, x < 3 (punto abierto en 3, sombreado a la izquierda)",
+    "cierre-ecuaciones-4 (balanza, modelar, media): 5x + 3 = 43 (se pide el modelo, no el valor de x)",
+    "cierre-ecuaciones-5 (salas/cuentos comparadas, resolver, media): 5x + 15 = 2x + 36, x = 7",
+    "cierre-inecuaciones-3 (feria de ciencias, modelar, alta): 4 + 3n ≤ 40, n ≤ 12 → 12 casetas; con borde estricto (< 40) daría 11",
+    "cierre-inecuaciones-4 (abstracto, argumentar, alta): contraejemplos 2 < 6 por −1 y por 3",
+    "cierre-ecuaciones-8 (balanza + jaulas/gatos, modelar, alta, integrador): 6x + 4 = 40 (x = 6) → 3 jaulas de 6 + 2 sueltos = 20"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4). Solo para calibrar alcance y formato, no como origen de texto, contextos ni ejemplos.",
+      "Este cierre reutiliza los tres contextos ya verificados en ecuaciones-lineales.json (balanza con bolsas de bolitas, salas con cuentos de reserva, jaulas con gatos), sin introducir vocabulario, escenas o nombres propios nuevos — solo números nuevos dentro de esos mismos contextos. No se corrió una consulta-fuentes nueva para este archivo: ver _notasInternas para el razonamiento."
+    ],
+    "declaracionOriginalidad": "Borrador. Enunciados creados desde cero por el autor del proyecto, combinando los tres contextos ya establecidos en ecuaciones-lineales.json con estructuras nuevas (ecuación de un paso, de dos pasos con resta inicial, con la incógnita en ambos lados, un ítem de equivalencia, uno de diagnóstico de un desarrollo ajeno y un ítem integrador de dos escenarios). El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad (o su equivalente manual)."
+  }
+}

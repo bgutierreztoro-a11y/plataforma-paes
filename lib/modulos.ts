@@ -41,6 +41,8 @@ export const IDS_LECCION = [
   "lineal-pendiente-e-intercepto",
   "lineal-modelamiento-paes",
   "ecuaciones-lineales",
+  "inecuaciones-resolucion",
+  "inecuaciones-problemas",
   "enteros-operar-y-ordenar",
   "enteros-operar-y-comparar",
   "enteros-problemas-en-contexto",
@@ -54,7 +56,11 @@ export type LeccionId = (typeof IDS_LECCION)[number];
  * coincida con los archivos que realmente existen en `content/cierres/` lo
  * verifica `verificarRegistroDeTemas()` en `lib/contenido.ts`.
  */
-export const IDS_CIERRE = ["cierre-v0", "cierre-enteros-racionales"] as const;
+export const IDS_CIERRE = [
+  "cierre-v0",
+  "cierre-enteros-racionales",
+  "cierre-ecuaciones-lineales",
+] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
 
@@ -173,7 +179,12 @@ export const EJES = [
           "Ya puedes despejar una incógnita y explicar por qué una desigualdad cambia de sentido.",
         objetivo:
           "Despejar la incógnita paso a paso y saber por qué una desigualdad a veces cambia de sentido.",
-        lecciones: ["ecuaciones-lineales"],
+        lecciones: [
+          "ecuaciones-lineales",
+          "inecuaciones-resolucion",
+          "inecuaciones-problemas",
+        ],
+        cierreId: "cierre-ecuaciones-lineales",
       },
       {
         id: "sistemas-2x2",

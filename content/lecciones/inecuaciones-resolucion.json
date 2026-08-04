@@ -1,0 +1,571 @@
+{
+  "tipo": "leccion",
+  "id": "inecuaciones-resolucion",
+  "titulo": "La recta que se da vuelta",
+  "objetivo": "Resolver inecuaciones lineales de una incógnita aplicando la misma operación a ambos lados; reconocer y justificar que multiplicar o dividir por un número negativo invierte el sentido de la desigualdad; representar el conjunto solución en la recta numérica; y distinguir el borde cerrado (≤, ≥) del abierto (<, >).",
+  "tiempoEstimadoMin": 24,
+  "prerrequisitos": [
+    "Lección 'ecuaciones-lineales': el principio de aplicar la misma operación a ambos lados para conservar la igualdad",
+    "Orden en los enteros: comparar dos números negativos (saber que −3 es mayor que −5)"
+  ],
+  "conceptos": [
+    "inecuación lineal de una incógnita",
+    "sentido de la desigualdad",
+    "inversión del sentido al multiplicar o dividir por un negativo",
+    "conjunto solución",
+    "recta numérica",
+    "borde abierto y borde cerrado"
+  ],
+  "_notasInternas": [
+    "Convertida desde docs/guion-inecuaciones-1-resolucion.md. Segunda lección del módulo 'Ecuaciones e inecuaciones de primer grado'; sucede a ecuaciones-lineales.json y precede a la lección de problemas en contexto (guion en docs/guion-inecuaciones-2-problemas.md, aún no convertido).",
+    "DECISIÓN (a) — POR QUÉ SE DESCARTÓ LA BALANZA. La balanza de ecuaciones-lineales.json modela el signo '='. La extensión obvia para '<' sería una balanza desequilibrada, y funciona para sumar/restar (el lado pesado sigue pesado) y para multiplicar por un positivo. Pero NO puede representar multiplicar por un negativo: no existe un platillo con peso negativo. O sea, guarda silencio exactamente en el único caso donde la regla cambia — y peor, al funcionar sin excepción en todo lo que sí puede mostrar, sugiere activamente la conclusión falsa de que el sentido nunca se invierte. Sería un andamio que enseña el error que la lección quiere desmontar. No es una objeción nueva: la propia lección de ecuaciones ya lo anticipó en su Paso 6 ('no existe una bolsa con −3 bolitas'); esta lección arranca donde ese reconocimiento quedó abierto, y esa continuidad se le explicita al estudiante en el Paso 5.",
+    "DECISIÓN (a) — QUÉ LA REEMPLAZA: LA RECTA NUMÉRICA CON UN ESPEJO EN EL 0. La recta modela '<' de forma nativa y sin metáfora: 'a < b' significa literalmente 'a está a la izquierda de b'. Cada operación permitida es una transformación geométrica visible: sumar/restar DESLIZA la recta (orden conservado), multiplicar/dividir por un positivo la ESTIRA o ENCOGE desde el 0 (orden conservado), y multiplicar/dividir por un negativo la REFLEJA en un espejo puesto en el 0 (orden intercambiado). Así la inversión deja de ser una regla que memorizar y pasa a ser una consecuencia obligatoria: un espejo intercambia izquierda con derecha, y si 'menor' significa 'está a la izquierda', reflejar intercambia menor con mayor. Ventaja adicional: la misma recta es donde después se dibuja el conjunto solución (Paso 6), así que la imagen central y la representación que pide el temario son la misma cosa, sin dos metáforas compitiendo.",
+    "DECISIÓN (b) — LOS PASOS 1 A 7 VAN CASI SIN CONTEXTO DEL MUNDO REAL. Solo el Paso 8 (nieve en un refugio de montaña) tiene escenario; el resto es matemática pelada, recta numérica y bordes. Se eligió así para minimizar la superficie de dominios nuevos que hay que verificar contra el corpus de fuentes aisladas, dado lo caro que salió históricamente el clean-room en lineal-patrones-de-cambio.json (4 intentos de contexto en un solo paso). TRADE-OFF ACEPTADO: menos anclaje concreto en la lección procedimental. Para revertirlo hay que agregar contextos a los Pasos 3 y 7, lo que suma 2-3 dominios más a verificar.",
+    "DECISIÓN (d) — COBERTURA PARCIAL DEL CATÁLOGO, A PROPÓSITO. Esta lección usa error-1, error-2, error-4, error-5 (mecanismo algebraico, heredados de ecuaciones-lineales) y error-6, error-7, error-8 (propios de inecuaciones). NO usa error-3 (repartir solo una parte de un lado): ninguna situación diseñada acá lo produce de forma natural, y forzar un distractor artificial con tal de cubrirlo habría metido dificultad falsa. error-3 se ejercita en ecuaciones-lineales.json y reaparece en el cierre del módulo.",
+    "DECISIÓN (e) — 'x < −4' SE REPITE A PROPÓSITO. El conjunto solución x < −4 aparece dos veces: en el Paso 6 (desde −5x > 20) y en el ítem PAES 3 (desde −3x + 2 > 14). Se dejó así deliberadamente: llegar al mismo conjunto por dos caminos distintos refuerza que el resultado no depende de los números particulares. Si en revisión se prefiere que no se repita, el ítem PAES 3 admite cambiar el 14 por 20 (−3x + 2 > 20 → x < −6) sin tocar nada más de su estructura ni de sus distractores.",
+    "DISTRACTORES SIN errorCatalogado, Y POR QUÉ. Tres distractores quedan deliberadamente sin id: (1) Paso 5, alternativa B ('los negativos son más chicos, así que todo se hace más chico') es una idea equivocada sobre la MAGNITUD, no sobre el sentido de la desigualdad, y no calza con ninguno de los diez errores del catálogo. (2) Paso 5, alternativa C y (3) ítem PAES 3, alternativa D son la misma confusión —cambiar el signo del NÚMERO creyendo que eso es invertir el signo de la DESIGUALDAD—, que se propuso al catálogo en el guion y no fue incorporada. Se dejan sin id en vez de forzar error-6, que describe el manejo del sentido y no esta confusión de referentes. El ítem PAES 3, alternativa C tampoco lleva id: quien la elige no comete error-2, sino que atribuye mal un error que no está ahí (el Paso 1 del desarrollo mostrado es correcto); etiquetarla como error-2 daría un diagnóstico falso al motor que después lea estos campos.",
+    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json (commit 195bea7). Los distractores referencian los ids locales pelados (error-1, error-6, …), que es la convención que usan hoy todas las lecciones; el prefijo namespaced ('ecuaciones-inecuaciones/error-6') vive solo en el artefacto de content/errores/.",
+    "VERIFICACIÓN MATEMÁTICA: toda la aritmética de esta lección fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
+    "ESTADO: borrador. checklistOriginalidad y revisionMatematica presentes con todos los booleanos en false y sin firmante, a la espera de la revisión real. Los 6 dominios candidatos de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de esta sesión."
+  ],
+  "estado": "borrador",
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "La regla que te traiciona",
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sabes que esto es verdadero:\n\n**3 < 5**\n\nEn la lección anterior aprendiste una regla que nunca fallaba: *puedes hacerle la misma operación a ambos lados, y la igualdad se conserva*. Probemos si sigue viva acá.\n\nMultiplica **ambos lados por −1**. La izquierda se convierte en −3. La derecha se convierte en −5.\n\nAntes de seguir, comprométete: ¿la afirmación **−3 < −5** es verdadera o falsa?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": ["Verdadera", "Falsa"]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Es **falsa**. −3 no es menor que −5: es **mayor**. En la recta numérica, −5 queda más a la izquierda que −3.\n\nO sea: partimos de algo verdadero, le hicimos exactamente lo mismo a los dos lados —lo que la lección anterior declaró siempre seguro— y llegamos a algo falso.\n\nNo es que la regla sea mentira. Es que estabas usando una versión de la regla que servía para el `=` y no para el `<`. En esta lección vas a encontrar **qué le falta** a la regla, y no te lo voy a decir: lo vas a acorralar tú."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Qué tan rota está la regla?",
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Antes de arreglar la regla hay que saber **qué tan rota está**. Porque si se rompiera con cualquier operación, las inecuaciones serían inservibles.\n\nPartimos siempre de esto, que es verdadero: **4 < 10**.\n\nA cada fila se le aplicó la misma operación a los dos lados:\n\n| Operación aplicada a ambos lados | Izquierda | Derecha |\n|---|---|---|\n| Sumar 6 | 10 | 16 |\n| Restar 14 | −10 | −4 |\n| Multiplicar por 3 | 12 | 30 |\n| Dividir por 2 | 2 | 5 |\n| Multiplicar por −1 | −4 | −10 |\n| Dividir por −2 | −2 | −5 |\n\n¿Cuál de estos grupos describe correctamente qué filas **dejaron de ser verdaderas**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Se rompen solo las dos últimas: multiplicar por −1 y dividir por −2.",
+              "esCorrecta": true,
+              "feedback": "Eso es. Y fíjate en lo que dejaste fuera: restar 14 llenó los dos lados de números negativos y aun así la afirmación siguió siendo verdadera (−10 < −4 es cierto). Entonces el problema NO son los negativos en general. Es algo más fino, y ya lo tienes cercado."
+            },
+            {
+              "id": "b",
+              "texto": "Se rompen las tres que terminan con números negativos: restar 14, multiplicar por −1 y dividir por −2.",
+              "esCorrecta": false,
+              "feedback": "Revisa la fila de restar 14 con cuidado: quedó −10 a la izquierda y −4 a la derecha. ¿Es cierto que −10 < −4? Sí lo es: −10 está más a la izquierda en la recta. Aparecieron negativos y la afirmación aguantó. Entonces 'que haya negativos' no puede ser el criterio. ¿Qué tienen en común las otras dos que sí se rompieron, y que esta no tiene?",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "id": "c",
+              "texto": "Se rompen todas las que involucran multiplicar o dividir; sumar y restar siempre son seguras.",
+              "esCorrecta": false,
+              "feedback": "Multiplicar por 3 dio 12 < 30, y dividir por 2 dio 2 < 5. Las dos siguen siendo verdaderas. Así que multiplicar y dividir no son peligrosos por sí solos. Compara esas dos filas con las dos últimas: ¿en qué se diferencia el número por el que multiplicaste o dividiste?",
+              "errorCatalogado": "error-6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Resuelve una donde nada se da vuelta",
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Todavía no arreglamos la regla, pero hay un montón de inecuaciones donde el problema ni siquiera aparece. Esta es una:\n\n**3x − 4 < 11**\n\n**Parte 1.** Resuélvela igual que una ecuación: deja la x sola aplicando la misma operación a ambos lados. ¿Cuál es el mayor número **entero** que cumple?\n\n**Parte 2 — comprobación.** Toma el entero que respondiste, súmale 1, y reemplaza ese nuevo valor en 3x − 4. ¿Cuánto da?",
+          "campos": [
+            {
+              "id": "mayorEntero",
+              "etiqueta": "Mayor entero que cumple",
+              "respuestaCorrecta": 4
+            },
+            {
+              "id": "comprobacion",
+              "etiqueta": "Resultado de 3x − 4 en el entero siguiente",
+              "respuestaCorrecta": 11
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "mayorEntero",
+              "valorObtenido": 5,
+              "mensaje": "Casi. Llegaste bien a que x tiene que ser menor que 5, pero fíjate en el signo: es `<`, no `≤`. ¿El propio 5 cumple? Reemplaza: 3·5 − 4 = 11, y 11 no es menor que 11. El 5 queda justo afuera.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "mayorEntero",
+              "valorObtenido": 14,
+              "mensaje": "Llegaste a 3x < 15 y te detuviste ahí. Pero 15 es el peso de las TRES equis juntas: todavía falta repartir, dividir ambos lados por 3.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "mayorEntero",
+              "valorObtenido": 2,
+              "mensaje": "Restaste el 4 cuando había que sumarlo. El término es −4, así que para eliminarlo se suma 4 en ambos lados: 3x < 11 + 4. Revisa esa dirección.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "comprobacion",
+              "valorObtenido": 8,
+              "mensaje": "Reemplazaste el entero que ya habías respondido, no el siguiente. La Parte 2 pide sumarle 1 primero: si respondiste 4, evalúa en 5."
+            }
+          ],
+          "feedbackPorDefecto": "Para la Parte 1: suma 4 en ambos lados para dejar sola a la x, y después divide ambos lados por 3 (como 3 es positivo, el signo `<` no cambia). Ojo con el borde: el `<` no admite el empate. Para la Parte 2: toma tu respuesta, súmale 1 y reemplaza ese valor en 3x − 4."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para despejar sin que nada se dé vuelta",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El −4 estorba para dejar la x sola. ¿Qué operación lo cancela? Y recuerda la regla de la lección anterior: hásela idéntica a los dos lados."
+            },
+            {
+              "nivel": 2,
+              "texto": "Sumando 4 a ambos lados queda **3x < 15**. Ojo: eso dice que las tres equis juntas valen menos de 15, no que x valga menos de 15. Falta un paso."
+            },
+            {
+              "nivel": 3,
+              "texto": "Divide ambos lados por 3 —y como 3 es positivo, el signo `<` se queda igual—: x < 5. Ahora la pregunta fina: ¿el 5 mismo cumple? Reemplázalo en 3x − 4 y compáralo con 11 antes de responder."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El espejo en el cero",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Hora de arreglar la regla. Y para eso hay que cambiar de dibujo.\n\nLa balanza de la lección pasada servía para el `=`: dos platillos que pesan lo mismo. Para el `<` podrías imaginar una balanza **desnivelada**, y funcionaría… para sumar y restar, y para duplicar. Pero se cae justo donde la necesitas: **no existe un platillo con peso negativo**. La balanza no tiene nada que decir sobre multiplicar por −1, que es exactamente el caso que te traicionó en la primera pantalla.\n\n(Esto ya lo sabías: la lección de ecuaciones lo dijo con todas sus letras — 'no existe una bolsa con −3 bolitas'. Ahí ese límite era una nota al margen. Acá es el tema.)\n\nCambiemos de imagen: **la recta numérica**. En ella, `a < b` no es una metáfora de nada: significa literalmente **'a está a la izquierda de b'**."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Cuatro rectas numéricas apiladas verticalmente, cada una con dos puntos marcados y etiquetados. La primera muestra la situación original; las tres siguientes muestran qué le hace cada operación a la recta completa. Las bandas 2 y 3 deben leerse como el MISMO orden izquierda-derecha que la banda 1; la banda 4 debe mostrar visiblemente el intercambio, idealmente con un eje de simetría dibujado en el 0.",
+          "datos": {
+            "bandas": [
+              {
+                "operacion": "Original",
+                "queSeVe": "Recta con los puntos 4 y 10 marcados",
+                "puntos": [4, 10],
+                "orden": "4 a la izquierda de 10"
+              },
+              {
+                "operacion": "Sumar 6",
+                "queSeVe": "Toda la recta se DESLIZA 6 lugares hacia la derecha",
+                "puntos": [10, 16],
+                "orden": "10 a la izquierda de 16 — mismo orden"
+              },
+              {
+                "operacion": "Multiplicar por 3",
+                "queSeVe": "Toda la recta se ESTIRA desde el 0",
+                "puntos": [12, 30],
+                "orden": "12 a la izquierda de 30 — mismo orden"
+              },
+              {
+                "operacion": "Multiplicar por −1",
+                "queSeVe": "Aparece un ESPEJO en el 0 y la recta se da vuelta",
+                "puntos": [-4, -10],
+                "orden": "−4 a la DERECHA de −10 — orden intercambiado"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Con el espejo a la vista: ¿por qué multiplicar por un negativo invierte el sentido de la desigualdad?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Porque el espejo del 0 intercambia izquierda con derecha, y 'menor' significa 'está a la izquierda'.",
+              "esCorrecta": true,
+              "feedback": "Exacto. Y fíjate en lo que eso implica: la inversión no es una regla que alguien inventó para complicarte, es una consecuencia obligatoria de qué significa 'menor' en la recta."
+            },
+            {
+              "clave": "B",
+              "texto": "Porque los números negativos son más chicos, así que todo se hace más chico.",
+              "esCorrecta": false,
+              "feedback": "Multiplicar por −1 no achica: −10 no es 'más chico' que 10 en tamaño, tiene exactamente el mismo tamaño. Lo que cambió no es el tamaño, es de qué lado del 0 quedó cada uno. Mira el diagrama otra vez y fíjate solo en el orden izquierda-derecha."
+            },
+            {
+              "clave": "C",
+              "texto": "Porque al multiplicar por un negativo hay que cambiarle el signo también al resultado.",
+              "esCorrecta": false,
+              "feedback": "Cuidado con la palabra 'signo', que acá significa dos cosas distintas. Está el signo de un número (−4 tiene signo negativo) y está el signo de la desigualdad (`<` o `>`). Lo que se da vuelta es el segundo. Los números ya cambiaron de signo solos al multiplicar; no se les cambia dos veces."
+            },
+            {
+              "clave": "D",
+              "texto": "Porque multiplicar siempre invierte el sentido, sea por positivo o por negativo.",
+              "esCorrecta": false,
+              "feedback": "Vuelve a la tabla del paso anterior: multiplicar por 3 dio 12 < 30, que sigue siendo verdadera. Multiplicar por un positivo estira la recta pero no la da vuelta. ¿Qué tenía de distinto el −1?",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "notaVerificacionMatematica": "Partiendo de 4 < 10. Multiplicar por 3: 12 y 30; 12 está a la izquierda de 30, orden conservado ✓ — esto refuta D. Multiplicar por −1: −4 y −10, ambos con el mismo valor absoluto que sus originales (4 y 10), luego no hubo 'achicamiento' ✓ — esto refuta B. La única transformación que intercambia el orden izquierda-derecha es la reflexión respecto de 0, que es precisamente lo que hace multiplicar por un negativo. Única correcta: A."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ahí está la regla completa, la que le faltaba una línea:\n\n> **Puedes hacerle cualquier operación a una inecuación, siempre que se la hagas idéntica a los dos lados. El sentido se conserva… salvo si multiplicas o divides por un número negativo. En ese caso, y solo en ese, el sentido se da vuelta.**\n\nFíjate en lo que la regla NO dice: no dice 'si aparecen negativos'. Hace un momento restaste 14 y te llenaste de negativos sin que pasara nada. Lo que importa es **por qué número** multiplicas o divides, no qué números terminan apareciendo."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla trabajando, y el conjunto solución",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Veámosla trabajar. Resuelve conmigo:\n\n**−2x + 1 ≥ 9**\n\nResto 1 a ambos lados (deslizar, no invierte): **−2x ≥ 8**.\nDivido ambos lados por **−2**. Es negativo: el `≥` se da vuelta y queda `≤`.\n**x ≤ −4**\n\nComprobación, siempre: probemos x = −5, que cumple x ≤ −4. Reemplazo: −2·(−5) + 1 = 10 + 1 = 11, y 11 ≥ 9 ✓. Ahora probemos x = −3, que NO cumple: −2·(−3) + 1 = 6 + 1 = 7, y 7 ≥ 9 es falso ✓. La solución quedó del lado correcto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Una diferencia grande con las ecuaciones: una ecuación lineal tiene **una** solución. Una inecuación tiene **infinitas**, y por eso no se responde con un número sino con un **conjunto solución**, que se dibuja en la recta.\n\nY ahí importa el borde:\n\n| Signo | Se lee | El borde | Se dibuja |\n|---|---|---|---|\n| x < 5 | menor que 5 | **NO** incluido | punto **abierto** (círculo vacío) en 5, sombreado hacia la izquierda |\n| x ≤ 5 | menor o igual que 5 | **SÍ** incluido | punto **cerrado** (relleno) en 5, sombreado hacia la izquierda |\n| x > 5 | mayor que 5 | **NO** incluido | punto **abierto** en 5, sombreado hacia la derecha |\n| x ≥ 5 | mayor o igual que 5 | **SÍ** incluido | punto **cerrado** (relleno) en 5, sombreado hacia la derecha |\n\nLa rayita de abajo en `≤` y `≥` es literalmente el `=` escondido: dice 'y también vale el que está justo ahí'. Es lo que comprobaste hace un rato, cuando el 5 quedó afuera por un pelo."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Tu turno con inversión incluida. Resuelve:\n\n**−5x > 20**\n\n¿Cuál es el mayor número **entero** que cumple?",
+          "campos": [
+            {
+              "id": "mayorEnteroNegativo",
+              "etiqueta": "Mayor entero que cumple",
+              "respuestaCorrecta": -5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "mayorEnteroNegativo",
+              "valorObtenido": -4,
+              "mensaje": "Dividiste bien por −5 y diste vuelta el signo, pero el borde te jugó una mala pasada: la solución es x < −4, y el `<` deja al −4 afuera. Reemplaza: −5·(−4) = 20, y 20 > 20 es falso. El mayor entero que sí cumple es el que viene justo antes.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "mayorEnteroNegativo",
+              "valorObtenido": -3,
+              "mensaje": "Revisa si diste vuelta el sentido. Al dividir por −5 (negativo) el `>` tiene que convertirse en `<`. Si lo dejaste como `>`, te quedaste con x > −4, que es el conjunto equivocado: prueba −3 en la inecuación original y mira qué pasa.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "mayorEnteroNegativo",
+              "valorObtenido": 15,
+              "mensaje": "Restaste 5 en vez de dividir por −5. El −5 está **multiplicando** a la x, así que se cancela dividiendo, no restando.",
+              "errorCatalogado": "error-4"
+            }
+          ],
+          "feedbackPorDefecto": "El −5 está multiplicando a la x: para despejarla hay que dividir ambos lados por −5. Y como −5 es negativo, el `>` se convierte en `<`. Después mira el borde con cuidado: el `<` no admite el empate."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios, una sola excepción",
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para resolver **7x + 2 < 30**, ¿cuál de estos pasos **rompe** la inecuación (o sea, da un conjunto solución distinto)?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Restar 2 en ambos lados, quedando 7x < 28.",
+              "esCorrecta": false,
+              "feedback": "Ese paso es válido: restas lo mismo (2) a los dos lados, la recta se desliza entera y el orden se conserva. La pregunta pide el paso que SÍ rompe."
+            },
+            {
+              "id": "b",
+              "texto": "Restar 2 solo al lado izquierdo, quedando 7x < 30.",
+              "esCorrecta": true,
+              "feedback": "Ese es. Le quitaste 2 a un lado y no al otro, así que ya no es la misma comparación. 7x < 30 da x < 30/7 ≈ 4,29, que no es lo mismo que x < 4.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "Dividir ambos lados por 7 después de tener 7x < 28, quedando x < 4.",
+              "esCorrecta": false,
+              "feedback": "Ese paso es válido: 7 es positivo, así que dividir por 7 estira la recta sin darla vuelta y el `<` se queda igual. Llegas a x < 4, que es correcto."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Restar 9 a ambos lados de una inecuación invierte su sentido, porque los resultados pueden quedar negativos.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Pruébalo con números antes de decidir: parte de 2 < 6, que es verdadera, y resta 9 a ambos lados. Quedan −7 y −3. ¿Es cierto que −7 < −3? Fíjate cuál está más a la izquierda en la recta. La inversión tiene una sola causa, y no es 'que aparezcan negativos'.",
+          "feedbackFalso": "Correcto. Restar desliza la recta completa: los dos puntos se mueven el mismo tramo en la misma dirección, así que el que estaba a la izquierda sigue a la izquierda. Que aparezcan números negativos no tiene nada que ver — es justo lo que comprobaste al principio de la lección restando 14."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Dos inecuaciones casi gemelas. La única diferencia está en el signo del medio.\n\n**Parte 1.** En **4x + 3 ≤ 19**, ¿cuál es el mayor número entero que cumple?\n**Parte 2.** En **4x + 3 < 19**, ¿cuál es el mayor número entero que cumple?",
+          "campos": [
+            {
+              "id": "mayorEnteroCerrado",
+              "etiqueta": "Mayor entero en 4x + 3 ≤ 19",
+              "respuestaCorrecta": 4
+            },
+            {
+              "id": "mayorEnteroAbierto",
+              "etiqueta": "Mayor entero en 4x + 3 < 19",
+              "respuestaCorrecta": 3
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "mayorEnteroAbierto",
+              "valorObtenido": 4,
+              "mensaje": "Las dos partes no pueden dar lo mismo: esa es toda la gracia del ejercicio. Reemplaza x = 4 en la Parte 2: 4·4 + 3 = 19, y ¿19 es menor que 19? El `<` no admite el empate.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "mayorEnteroCerrado",
+              "valorObtenido": 3,
+              "mensaje": "Te pasaste de cauteloso. En la Parte 1 el signo es `≤`, que sí admite el empate: 4·4 + 3 = 19, y 19 ≤ 19 es verdadero. El 4 sí cumple.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "mayorEnteroCerrado",
+              "valorObtenido": 16,
+              "mensaje": "Llegaste a 4x ≤ 16 y respondiste ahí. Falta repartir: divide ambos lados por 4.",
+              "errorCatalogado": "error-4"
+            }
+          ],
+          "feedbackPorDefecto": "En las dos partes: resta 3 en ambos lados y después divide por 4 (positivo, así que el signo no se da vuelta). Lo único que cambia entre la Parte 1 y la Parte 2 es si el valor del borde entra o no."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La nieve del refugio",
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un refugio de montaña tiene **45 cm de nieve acumulada** en su ladera de práctica. Con el deshielo, la capa pierde **6 cm cada día**. La ladera solo puede usarse mientras queden **al menos 15 cm** de nieve.\n\n¿Cuántos días completos, contando desde hoy, se puede seguir usando la ladera?",
+          "campos": [
+            {
+              "id": "diasUtiles",
+              "etiqueta": "Días que se puede usar la ladera",
+              "respuestaCorrecta": 5,
+              "unidad": "días"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diasUtiles",
+              "valorObtenido": 6,
+              "mensaje": "Estás a un día de distancia. Revisa el borde: al día 6 quedan 45 − 36 = 9 cm, y 9 no alcanza los 15 que se piden. Al día 5 quedan exactamente 15, y como el enunciado dice 'al menos 15', ese día todavía sirve.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "diasUtiles",
+              "valorObtenido": 4,
+              "mensaje": "Te quedaste corto por el borde. Al día 5 quedan exactamente 15 cm. 'Al menos 15' incluye el 15 justo, así que el día 5 todavía cuenta.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "diasUtiles",
+              "valorObtenido": 30,
+              "mensaje": "Ese es el resultado de 45 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 30 cm entre los 6 cm que se pierden cada día.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "diasUtiles",
+              "valorObtenido": 10,
+              "mensaje": "Parece que calculaste en cuántos días se acaba toda la nieve, pero la ladera deja de servir mucho antes: no se necesita que la nieve llegue a cero, se necesita que no baje de 15 cm. Vuelve a armar la inecuación con ese 15 adentro."
+            }
+          ],
+          "feedbackPorDefecto": "Llama d a los días transcurridos. La nieve que queda es 45 − 6d, y la condición es que sea al menos 15. Arma esa inecuación y resuélvela. Ojo con el borde: 'al menos 15' incluye el 15 exacto."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escríbelo en símbolos. Llama **d** al número de días transcurridos y arma la inecuación que representa la condición 'quedan al menos 15 cm'.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "45 − 6d ≥ 15\n\nY fíjate en algo útil: hay dos caminos para resolverla, y los dos llegan a d ≤ 5. Camino 1 (con inversión): resto 45 a ambos lados → −6d ≥ −30; divido por −6, que es negativo, así que invierto → d ≤ 5. Camino 2 (sin inversión): sumo 6d a ambos lados → 45 ≥ 15 + 6d; resto 15 → 30 ≥ 6d; divido por 6, positivo → 5 ≥ d, o sea d ≤ 5. Si te incomoda dividir por un negativo, el camino 2 te lo evita por completo."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Por qué el espejo?",
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué multiplicar los dos lados por un número negativo obliga a dar vuelta el signo, si multiplicar por uno positivo no? Explícalo usando la recta numérica.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda anonimizada para el piloto. Una respuesta tipo 'porque el negativo da vuelta la recta como un espejo, y el que estaba a la izquierda queda a la derecha' indica que entendió el mecanismo. Una respuesta tipo 'porque es la regla' indica memorización, que es exactamente lo que esta lección intenta evitar."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los tres errores que más se repiten con inecuaciones, y que ya viste por dentro:\n\n1. **No invertir el sentido** al multiplicar o dividir por un negativo.\n2. **Invertirlo de más**: darlo vuelta cuando solo se sumó o restó, o cuando el número era positivo.\n3. **Equivocarse de borde**: tratar `<` como si incluyera el extremo, o `≤` como si lo excluyera.\n\nLas alternativas incorrectas de la PAES se construyen casi siempre con uno de esos tres. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Una inecuación se resuelve como una ecuación: la misma operación a ambos lados.\n- Con **una** excepción: multiplicar o dividir por un **negativo** invierte el sentido. Nada más lo invierte.\n- El porqué: en la recta numérica, 'menor' es 'está a la izquierda', y multiplicar por un negativo la refleja como un espejo puesto en el 0. Un espejo intercambia izquierda con derecha.\n- Que aparezcan números negativos en el resultado **no** invierte nada. Importa por qué número multiplicas, no qué números salen.\n- La respuesta no es un número sino un **conjunto solución**: infinitos valores, dibujados en la recta.\n- Borde **cerrado** (`≤`, `≥`, punto relleno) incluye el extremo; borde **abierto** (`<`, `>`, punto vacío) lo deja afuera.\n- Truco de seguridad: si te incomoda dividir por un negativo, muévelo al otro lado sumando y divide por un positivo. Se llega a lo mismo.\n\n**Lo que viene:** ahora sabes resolverlas. Falta lo otro: darte cuenta de que un problema pide una inecuación, traducir frases como 'a lo más', 'al menos' o 'alcanza para', y leer la respuesta de vuelta en el contexto.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "inecuaciones-resolucion-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es el conjunto solución de la inecuación 6x + 5 < 2x + 29?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x < 6",
+          "esCorrecta": true,
+          "feedback": "Correcto. Se resta 2x en ambos lados (6x − 2x = 4x): 4x + 5 < 29. Se resta 5: 4x < 24. Se divide por 4, que es positivo, así que el `<` se mantiene: x < 6."
+        },
+        {
+          "clave": "B",
+          "texto": "x < 3",
+          "esCorrecta": false,
+          "feedback": "Al juntar las equis de los dos lados las sumaste (6x + 2x = 8x) en vez de restarlas. La x de la derecha se pasa a la izquierda restando: 6x − 2x = 4x, no 8x.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "x < 24",
+          "esCorrecta": false,
+          "feedback": "Llegaste bien a 4x < 24, pero te detuviste ahí. Ese 24 es el peso de las cuatro equis juntas: falta dividir ambos lados por 4.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "x > 6",
+          "esCorrecta": false,
+          "feedback": "El resultado numérico está bien, pero diste vuelta el sentido sin motivo. Repasa cuándo se invierte: solo al multiplicar o dividir por un **negativo**. Acá restaste y dividiste por 4, que es positivo — nada se da vuelta.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "6x + 5 < 2x + 29. Se resta 2x en ambos lados: 4x + 5 < 29. Se resta 5 en ambos lados: 4x < 24. Se divide por 4, que es positivo, así que el sentido se conserva: x < 6. Comprobación interior: x = 5 → izquierda 6·5 + 5 = 35, derecha 2·5 + 29 = 39, y 35 < 39 ✓. Comprobación del borde: x = 6 → izquierda 41, derecha 41, y 41 < 41 es falso ✓, el 6 queda correctamente excluido. Comprobación exterior: x = 7 → izquierda 47, derecha 43, y 47 < 43 es falso ✓."
+    },
+    {
+      "id": "inecuaciones-resolucion-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El conjunto solución de una inecuación es x ≥ −2. ¿Cuál de las siguientes representaciones en la recta numérica le corresponde?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Un punto relleno en −2, con la recta sombreada hacia la derecha.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El `≥` incluye al −2, y eso se dibuja con el punto relleno; 'mayor' es 'a la derecha' en la recta, y hacia allá va el sombreado."
+        },
+        {
+          "clave": "B",
+          "texto": "Un punto vacío en −2, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "feedback": "La dirección está bien, pero el punto vacío dice que el −2 **no** pertenece a la solución. Fíjate en la rayita de abajo del `≥`: es un `=` escondido, y significa que el −2 sí cumple. Punto relleno.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "Un punto relleno en −2, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "feedback": "El borde está bien marcado, pero sombreaste hacia el lado equivocado. 'x mayor o igual que −2' son los números que están a la derecha de −2 en la recta: −1, 0, 5… Los de la izquierda (−3, −7) son menores.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "Un punto relleno en 2, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "feedback": "Marcaste el 2 en vez del −2. Son puntos distintos de la recta, en lados opuestos del 0: x ≥ 2 dejaría fuera al 0 y al −1, que sí cumplen x ≥ −2."
+        }
+      ],
+      "solucion": "x ≥ −2 tiene borde cerrado, porque el `≥` incluye la igualdad: se dibuja con punto relleno en −2. El conjunto son todos los números mayores o iguales que −2, que en la recta quedan a la derecha de −2: el sombreado va hacia la derecha. Comprobaciones puntuales: x = −2 pertenece (−2 ≥ −2 es verdadero) ✓; x = 0 pertenece (0 ≥ −2) ✓ y está a la derecha; x = −3 no pertenece (−3 ≥ −2 es falso) ✓ y está a la izquierda, coherente con el sombreado. Única correcta: A."
+    },
+    {
+      "id": "inecuaciones-resolucion-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante resuelve la inecuación −3x + 2 > 14 de esta forma:\n\nPaso 1: resta 2 a ambos lados → −3x > 12\nPaso 2: divide ambos lados por −3 → x > −4\n\n¿Es correcto su desarrollo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: al dividir por −3, que es negativo, hay que invertir el sentido. El resultado correcto es x < −4.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El Paso 1 está bien: restar 2 a ambos lados desliza la recta y no invierte nada. El Paso 2 es el que falla: dividir por −3 refleja la recta, así que el `>` tiene que convertirse en `<`."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: los dos pasos aplican la misma operación a ambos lados, así que el desarrollo es válido.",
+          "esCorrecta": false,
+          "feedback": "Es cierto que aplicó la misma operación a ambos lados, y esa parte del método está bien. Pero eso alcanzaba para las ecuaciones; para las inecuaciones falta la segunda mitad de la regla. Comprueba con un número: x = 0 cumple x > −4. Reemplaza x = 0 en la inecuación original: −3·0 + 2 = 2. ¿Es 2 > 14?",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "No: el error está en el Paso 1, donde debió sumar 2 en vez de restarlo.",
+          "esCorrecta": false,
+          "feedback": "El Paso 1 está correcto: el término es +2, así que para eliminarlo se resta 2 en ambos lados, y 14 − 2 = 12. Ahí no hubo error. Mira de nuevo el Paso 2 y qué tipo de número es el −3."
+        },
+        {
+          "clave": "D",
+          "texto": "No: al dividir por −3 hay que invertir el sentido y cambiar el signo del resultado, quedando x < 4.",
+          "esCorrecta": false,
+          "feedback": "Acertaste que hay que invertir el sentido, pero le cambiaste el signo dos veces al mismo número. El 12 dividido por −3 ya da −4; ese signo negativo salió de la división. Invertir el sentido es dar vuelta el símbolo `>`, no volver a tocar el número."
+        }
+      ],
+      "solucion": "−3x + 2 > 14. Paso 1 (correcto): restar 2 a ambos lados → −3x > 12. Paso 2: dividir por −3, que es negativo, obliga a invertir el sentido → x < 12 ÷ (−3) = −4, es decir x < −4. Comprobación del conjunto correcto: x = −5 → −3·(−5) + 2 = 15 + 2 = 17, y 17 > 14 ✓ pertenece, y en efecto −5 < −4. x = 0 → −3·0 + 2 = 2, y 2 > 14 es falso ✓ no pertenece — esto refuta directamente la alternativa B, porque bajo x > −4 el 0 debería pertenecer, y también refuta la alternativa D, porque bajo x < 4 el 0 también debería pertenecer. Comprobación del borde: x = −4 → 12 + 2 = 14, y 14 > 14 es falso ✓, correctamente excluido por el borde abierto. Respuesta: A."
+    }
+  ],
+  "contextosNumericos": [
+    "paso 1 (curiosidad, abstracto): 3 < 5 multiplicado por −1 → −3 vs −5; la afirmación −3 < −5 es falsa",
+    "paso 2 (problema, abstracto): 4 < 10 sometida a +6, −14, ×3, ÷2, ×(−1), ÷(−2); solo las dos últimas se rompen",
+    "paso 3 (pensar, abstracto): 3x − 4 < 11 → x < 5; mayor entero 4; comprobación en x = 5 da 11",
+    "paso 5 (descubrimiento, abstracto): 4 < 10 reutilizada en el diagrama del espejo (misma pareja del paso 2, a propósito: ya la calculó y acá solo la ve transformada)",
+    "paso 6 (generalizacion, abstracto): −2x + 1 ≥ 9 → x ≤ −4; y −5x > 20 → x < −4, mayor entero −5",
+    "paso 7 (practica, abstracto): 7x + 2 < 30 → x < 4; 2 < 6 restando 9 → −7 < −3; 4x + 3 ≤ 19 → x ≤ 4 (mayor entero 4) y 4x + 3 < 19 → x < 4 (mayor entero 3)",
+    "paso 8 (aplicacion, nieve en refugio de montaña): 45 − 6d ≥ 15 → d ≤ 5 días",
+    "itemsPAES 1 (resolver, abstracto): 6x + 5 < 2x + 29 → x < 6",
+    "itemsPAES 2 (representar, abstracto): conjunto x ≥ −2 en la recta numérica, borde cerrado hacia la derecha",
+    "itemsPAES 3 (argumentar, abstracto): −3x + 2 > 14 → x < −4"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos.",
+      "Los 6 candidatos de dominio de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) fueron verificados sin colisión contra el corpus de fuentes aisladas mediante scripts/consultar-fuentes.mjs, corrido por el autor del proyecto fuera de la sesión de redacción (mecanismo 2 del protocolo de aislamiento, CLAUDE.md). El hilo que redactó este contenido no ejecutó el script ni leyó fuentes-analisis-aisladas/ por ningún medio propio."
+    ],
+    "declaracionOriginalidad": "Borrador. Enunciados, la imagen didáctica central (la recta numérica con un espejo en el 0) y la secuencia de descubrimiento fueron creados desde cero por el autor del proyecto. La lección es deliberadamente abstracta en 9 de sus 10 pasos y usa un único contexto del mundo real (el deshielo en la ladera de un refugio de montaña), elegido fuera de la familia 'cargo fijo + tarifa variable' y fuera de los dominios ya usados en el módulo y en el de funciones lineales. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente del checklist de originalidad y de la revisión matemática humana.",
+    "autor": "",
+    "fecha": ""
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  },
+  "revisionMatematica": {
+    "aprobada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  }
+}

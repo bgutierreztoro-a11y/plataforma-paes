@@ -43,6 +43,16 @@ const CATALOGO: Record<LeccionId, PresentacionLeccion> = {
       "Resuelve ecuaciones pensando en una balanza en equilibrio: lo que haces a un lado, lo haces al otro.",
     Ilustracion: IlustracionBalanza,
   },
+  "inecuaciones-resolucion": {
+    descripcion:
+      "Descubre por qué multiplicar por un número negativo da vuelta una desigualdad, y dibuja el conjunto solución en la recta.",
+    Ilustracion: IlustracionPlano,
+  },
+  "inecuaciones-problemas": {
+    descripcion:
+      "Traduce frases como \"a lo más\" o \"al menos\" a desigualdades, y decide cuándo la respuesta tiene que ser un número entero.",
+    Ilustracion: IlustracionPlano,
+  },
   "enteros-operar-y-ordenar": {
     descripcion:
       "Suma y resta enteros pensando en profundidad bajo el agua, y ordénalos en la recta sin confundirte con los signos.",
