@@ -75,7 +75,15 @@ export function ItemPAES({
   }, [revelado]);
 
   const alternativaElegida = alternativas.find((a) => a.clave === seleccion);
-  const visual = visualDeItem(item.id);
+  /* Respuesta tentativa: lo que el estudiante tiene marcado y todavía NO
+     comprobó. El gráfico se redibuja con ese valor para que el aprendizaje
+     ocurra al manipular, no al presionar "Revisar respuesta" — comprobar solo
+     confirma lo que ya vio. Es reversible sin costo (cambiar de alternativa
+     redibuja, "Empezar de nuevo" vuelve al enunciado), no cuesta ninguna
+     llamada al servidor, y deja de aplicarse al revelar: desde ahí el gráfico
+     vuelve a mostrar la recta real del enunciado. */
+  const textoTentativo = !revelado ? (alternativaElegida?.texto ?? null) : null;
+  const visual = visualDeItem(item.id, textoTentativo);
 
   /* El pie es el mismo en las dos ramas (con y sin feedback) y va DESPUÉS de
      las capas: el botón de avanzar tiene que quedar debajo de la explicación,

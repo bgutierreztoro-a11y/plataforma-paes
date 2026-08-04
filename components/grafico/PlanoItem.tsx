@@ -7,6 +7,14 @@ interface PlanoItemProps {
   puntos: [number, number][];
   /* Dibuja la recta que pasa por los dos primeros puntos. */
   conRecta?: boolean;
+  /* Previsualización de la respuesta que el estudiante está considerando, antes
+     de comprobar: la recta con SU pendiente, anclada al primer punto del
+     enunciado. Mientras está activa, la recta de referencia se oculta — dibujar
+     las dos a la vez convertiría el gráfico en un detector de aciertos
+     (se superponen o no), y esto no puede revelar corrección. Lo que sí muestra
+     es evidencia que el estudiante interpreta solo: si su recta pasa o no por el
+     segundo punto del enunciado. */
+  rectaTentativa?: { m: number; desde: [number, number] } | null;
 }
 
 const ANCHO = 280;
@@ -20,7 +28,7 @@ function pasoBonito(rango: number): number {
   return 10;
 }
 
-export function PlanoItem({ puntos, conRecta = true }: PlanoItemProps) {
+export function PlanoItem({ puntos, conRecta = true, rectaTentativa = null }: PlanoItemProps) {
   const xMax = Math.max(...puntos.map(([x]) => x)) + 1;
   const yMax = Math.max(...puntos.map(([, y]) => y)) + 2;
   const xMin = 0;
@@ -49,12 +57,23 @@ export function PlanoItem({ puntos, conRecta = true }: PlanoItemProps) {
     lineasGrid.push(`M ${MARGEN.izq} ${gy} H ${ANCHO - MARGEN.der}`);
   }
 
-  /* Recta por los dos primeros puntos, recortada al área visible. */
+  /* Recta recortada al área visible. Sin previsualización activa es la que pasa
+     por los dos primeros puntos; con ella, es la de la pendiente tentativa
+     anclada a su punto de partida. Nunca las dos a la vez. */
   let recta: { x1: number; y1: number; x2: number; y2: number } | null = null;
-  if (conRecta && puntos.length >= 2) {
-    const [[px1, py1], [px2, py2]] = puntos;
-    const m = (py2 - py1) / (px2 - px1);
-    const c = py1 - m * px1;
+  const dibujarRecta = rectaTentativa !== null || (conRecta && puntos.length >= 2);
+  if (dibujarRecta) {
+    let m: number;
+    let c: number;
+    if (rectaTentativa) {
+      const [dx, dy] = rectaTentativa.desde;
+      m = rectaTentativa.m;
+      c = dy - m * dx;
+    } else {
+      const [[px1, py1], [px2, py2]] = puntos;
+      m = (py2 - py1) / (px2 - px1);
+      c = py1 - m * px1;
+    }
     let xa = xMin;
     let ya = m * xa + c;
     if (ya < yMin && m !== 0) [xa, ya] = [(yMin - c) / m, yMin];
@@ -120,11 +139,14 @@ export function PlanoItem({ puntos, conRecta = true }: PlanoItemProps) {
         );
       })}
       {recta && (
+        /* La recta tentativa va punteada y en tinta neutra, nunca en el acento
+           ni en verde/rojo: es "lo que estás proponiendo", no un veredicto. */
         <line
           {...recta}
-          stroke="var(--color-accent)"
+          stroke={rectaTentativa ? "var(--color-ink-suave)" : "var(--color-accent)"}
           strokeWidth="2.5"
           strokeLinecap="round"
+          strokeDasharray={rectaTentativa ? "6 5" : undefined}
         />
       )}
       {puntos.map(([x, y]) => {
