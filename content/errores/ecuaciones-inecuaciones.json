@@ -20,6 +20,30 @@
     {
       "id": "ecuaciones-inecuaciones/error-5",
       "descripcion": "Al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas (o contar mal cuántas bolsas quedan al pasarlas a un solo lado)."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-6",
+      "descripcion": "Manejar mal el sentido de la desigualdad al multiplicar o dividir: no invertirlo cuando el factor es negativo, o invertirlo cuando no corresponde."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-7",
+      "descripcion": "Confundir borde abierto con cerrado: incluir el extremo con < o > , o excluirlo con ≤ o ≥."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-8",
+      "descripcion": "Invertir la dirección al representar el conjunto solución en la recta numérica."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-9",
+      "descripcion": "Traducir mal el lenguaje natural a desigualdad: equivocar la inclusión del extremo (\"al menos\", \"más de\") o la dirección (poner techo donde va piso)."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-10",
+      "descripcion": "No devolver la solución al contexto: entregar un decimal donde se exige entero, o redondear en la dirección que el contexto no permite."
+    },
+    {
+      "id": "ecuaciones-inecuaciones/error-11",
+      "descripcion": "Omitir la cantidad inicial (o el término constante) al traducir la situación a una inecuación, modelando solo la parte variable."
     }
   ]
 }
