@@ -874,12 +874,54 @@ estructural, no sobre corrección matemática.
 
 ---
 
-# Sesión de experiencia y feedback (2026-08-04)
+# Sesión de experiencia y feedback (2026-08-04) — CERRADA, pusheada a origin/master
 
-Fases ejecutadas: 2 (estados de interacción), 9 (feedback en tres capas), 1
-(previsualización en vivo), 7 (intercalado, parcial), 10 (autoexplicación
-restringida). Ningún archivo de `content/` fue editado en toda la sesión, y
-`CLAUDE.md` no se tocó.
+Fases ejecutadas, en orden, cada una con su propio commit y verde de
+`validar` + `lint` + `tsc --noEmit` + tests antes de commitear:
+
+1. **D1** (`a1ec619`) — reconstruye el bypass de borradores para Preview
+   (`PREVIEW_MOSTRAR_BORRADORES`), que estaba escrito pero sin commitear desde
+   antes de esta sesión. `lib/contenido.ts`, `app/leccion/[id]/page.tsx`,
+   `components/RunnerLeccion.tsx`.
+2. **Fase 2** (`9dbc212`) — estados de interacción: acierto anclado al objeto
+   de la respuesta (alternativa, campo o botón elegido, no solo el panel), y
+   el "Comprobar" de `SecuenciaMicropreguntas` presente-apagado en vez de
+   aparecer de la nada. Incluyó por un turno "Empezar de nuevo" en los cinco
+   evaluadores — **revertido más abajo**.
+3. **Fase 9** (`e9c4614`) — feedback en tres capas
+   (`components/FeedbackEnCapas.tsx`). Capa 1 siempre visible, Capa 2 tras
+   pedir "¿Por qué?", sin color de alarma ni ✗ en ninguna parte al fallar.
+   Capa 2 resuelta en el servidor (`lib/sanitizar.ts`) sin sacar
+   `catalogoErrores` de `CLAVES_INTERNAS`. De paso, corrigió un bug latente:
+   distractor sin `feedback` → recuadro rojo con frase vacía.
+4. **Fase 1** (`9708361`) — previsualización en vivo. Solo en los dos ítems
+   PAES que tienen figura (`diag-5`, `cierre-5`): elegir una pendiente dibuja
+   esa recta, punteada y neutra, sin revelar corrección.
+5. **Fase 7** (`5026ce2`) — `lib/intercalar.ts` + test, **sin activar en el
+   render** (ver "quedó abierto" abajo).
+6. **Fase 10** (`60fccb4`) — autoexplicación restringida antes de la Capa 2,
+   con dos eventos PostHog nuevos, y la primera versión de esta sección de
+   cierre.
+7. **Revert** (`1259843`) — quita "Empezar de nuevo" de los cinco
+   evaluadores (`ItemPAES`, `BloquePregunta`, `BloqueSeleccion`,
+   `BloqueNumerica`, `BloqueVerdaderoFalso`), por instrucción explícita: no
+   aportaba, porque cambiar de alternativa antes de comprobar ya reemplaza la
+   selección directamente. El resto de la Fase 2 —acierto anclado al objeto,
+   "Comprobar" presente-apagado— se mantuvo intacto.
+
+Pusheada a `origin/master` el 2026-08-04 (`005a759..1259843`, fast-forward).
+Ningún archivo de `content/` fue editado en toda la sesión, y `CLAUDE.md` no
+se tocó en ningún commit.
+
+## Qué quedó abierto
+
+- **Fase 7 sin activar.** La función pura y su test están (`lib/intercalar.ts`),
+  pero nadie la llama desde el render: falta el campo de estrategia (ver deuda
+  debajo). Activarla hoy con `habilidad` como clave sería llamar "estrategia" a
+  algo que no lo es.
+- **Capa 3 sin fuente.** `FeedbackEnCapas` la soporta (prop `capa3`), pero
+  ningún campo de contenido la alimenta y no se inventó desde código. Nunca se
+  muestra hoy.
 
 ## 🟡 Los eventos de autoexplicación no están declarados en CLAUDE.md (abierta 2026-08-04)
 
@@ -919,7 +961,7 @@ estrategia hoy. `cierre-ecuaciones-lineales.json` y
 las habilidades ya bastante alternadas. El que sí cicla habilidad de forma
 predecible es `cierre-v0.json` (estado `revision`).
 
-## 🟡 Ningún cierre tiene `catalogoErrores`: sin Capa 2 ni autoexplicación (abierta 2026-08-04)
+## 🟡 Ningún cierre tiene `catalogoErrores`: sin Capa 2 ni autoexplicación, y el botón "¿Por qué?" no aparece (abierta 2026-08-04, confirmada contra contenido real)
 
 La Capa 2 del feedback (el mecanismo del error) y el paso de autoexplicación se
 alimentan del `catalogoErrores` del módulo, resuelto en el servidor
@@ -928,6 +970,29 @@ alimentan del `catalogoErrores` del módulo, resuelto en el servidor
 `enteros-operar-y-ordenar`— y **ningún cierre**, así que los 24 ítems de cierre
 muestran Capa 1 y nada más, aunque 38 de sus 72 distractores sí declaran
 `errorCatalogado`.
+
+**No es un bug de cableado.** `Cierre.tsx` y `RunnerLeccion.tsx` llegan al
+mismo `ItemPAES.tsx` por el mismo camino (`EjecutorSetItems`), con el mismo
+`FeedbackEnCapas` — no hay ninguna rama que trate al cierre distinto. El botón
+"¿Por qué?" solo se pinta cuando `capaDos()` devuelve algo, y `capaDos()`
+depende exclusivamente de que el archivo de origen tenga `catalogoErrores` en
+su raíz, sin importar si el distractor tiene `errorCatalogado` poblado.
+
+Reproducido ejecutando `sanitizarLeccion`/`sanitizarCierre` contra los JSON
+reales del repo (no simulado):
+
+```
+LECCIÓN (ecuaciones-lineales.json, l3-item-1, distractor B, errorCatalogado: error-4)
+  → descripcionError: "Olvidar dividir por el número de bolsas (el coeficiente):
+    quedarse en 'a·x = c' y entregar c como respuesta sin repartir entre las
+    a bolsas."
+  → capaDos existe → el botón "¿Por qué?" SÍ aparece.
+
+CIERRE (cierre-ecuaciones-lineales.json, cierre-ecuaciones-1, distractor B,
+        errorCatalogado: error-1 — tan poblado como en la lección)
+  → descripcionError: undefined
+  → capaDos undefined → el botón NO aparece.
+```
 
 No se resuelve copiando el catálogo: los ids son locales (`"error-4"`) y
 `cierre-ecuaciones-lineales.json` mezcla ítems de dos unidades, así que
