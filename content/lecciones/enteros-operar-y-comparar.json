@@ -20,9 +20,9 @@
     "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí. Este archivo solo referencia sus ids (error-1 a error-8) vía errorCatalogado en los distractores. Esta lección usa activamente error-4, error-6, error-7 y error-8 (los cuatro específicos de operatoria y comparación con fracciones positivas). error-8 se agregó después de la primera redacción: reemplaza usos de error-7 que en realidad eran inversión del orden de la división (divisor ÷ dividendo), no la creencia de que 'dividir siempre achica'. error-1, error-2, error-3 y error-5 son específicos de enteros negativos (Lección 1, buceo) y no se usan en esta lección.",
     "Insight fijado del Paso 5 (descubrimiento): 3 ÷ 3/4 = 4. Dividir por una fracción menor que 1 agranda el resultado, lo que choca con la intuición de que 'dividir siempre achica' (error-7). Ese choque es el motor de la lección.",
     "Paso 1 (curiosidad) usa un bloque 'pregunta' formato PAES para instalar la intuición ANTES de enseñar el método, pero preguntando solo la DIRECCIÓN del resultado (mayor/menor/igual que 3), no el valor exacto — el número exacto (4) se reserva para el Paso 5, que es donde vive el insight fijado. Diferenciación estructural respecto a Lección 1, que usa 'pregunta' recién en el Paso 10.",
-    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -446,15 +446,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión de la escena concreta de recetas con tazas contra Material/618-JMA-M1-01-2024.md, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '3 tazas' (NO), '3/4 de taza' (NO), 'tres cuartos' (NO), 'panqueques' (NO), '3/5' (NO), '3 tazas de harina' (NO), 'cuántas porciones' (NO). Colisión real detectada en 'galletas' contra demre/paes-m1-2026-forma113.md y Material/PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md (examen DEMRE real): reemplazado por 'bizcocho' en toda la lección. 'harina' y 'azúcar' pegaron solo en pdv-terceros (MA-10, MA-32), con frases completas en NO: se mantienen sin cambios como vocabulario genérico de ingredientes. Veredicto final: LIMPIO tras el reemplazo. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   },
   "revisionMatematica": {
-    "aprobada": false
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }

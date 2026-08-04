@@ -19,9 +19,9 @@
     "Verificación de colisión de escena concreta contra Material/MA-34_Potencia_Ecuacion_Exponencial.md ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md.",
     "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo 'Enteros y racionales' (error-1 a error-7, ver docs/diseno-modulo-enteros-racionales.md §b), para mantener ids consistentes entre los tres archivos del módulo. Esta lección usa activamente error-1, error-2, error-3 y error-5. error-4, error-6 y error-7 son específicos de operatoria con fracciones (Lección 2, racionales) y quedan declarados aquí sin uso, a la espera de esa lección.",
     "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido, con notaVerificacionMatematica) ADEMÁS del arreglo itemsPAES del cierre, por diseño explícito de diferenciación estructural (tabla (d) del doc: consolidación = texto + pregunta). Es un cuarto chequeo formato PAES antes del cierre formal, con números propios distintos de los tres itemsPAES.",
-    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -488,15 +488,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión de la escena concreta de buceo contra Material/MA-34_Potencia_Ecuacion_Exponencial.md, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: 12, -12, 27, -27, 15, -15, 5, -5, 'desciende a 12 metros', '27 metros bajo la superficie', 'diferencia de profundidad' = NO en todas. Los números sueltos (12, 15, 27) pegaron en 80-90 archivos, calificado por Benja como ruido de substring sin valor de señal, no colisión real. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   },
   "revisionMatematica": {
-    "aprobada": false
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }

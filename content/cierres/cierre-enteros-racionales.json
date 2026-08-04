@@ -2,14 +2,14 @@
   "tipo": "cierre",
   "id": "cierre-enteros-racionales",
   "titulo": "Cierre del módulo: Enteros y racionales",
-  "estado": "borrador",
+  "estado": "publicable",
   "_notasInternas": [
     "Cierre del módulo 'Enteros y racionales' (docs/diseno-modulo-enteros-racionales.md), construido después de que las 3 lecciones (enteros-operar-y-ordenar, enteros-operar-y-comparar, enteros-problemas-en-contexto) quedaran en estado 'borrador' con npm run validar en verde.",
     "El catálogo de errores del módulo vive únicamente en content/lecciones/enteros-operar-y-ordenar.json (L1), mismo patrón que L2 y L3 — no se duplica aquí. Este archivo referencia error-1, error-2, error-3, error-4, error-5, error-7 y error-8 (todos ya definidos en L1). No se necesitó ningún id nuevo: cada vez que un distractor representaba un error sin id existente en el catálogo (p. ej. 'creer que un denominador más grande hace la fracción mayor', o 'creer que fracciones con diferencia numerador-denominador igual son equivalentes'), se dejó sin errorCatalogado en vez de forzar un id que no encaja — no se agregó ni propuso ningún error-9 sin consultarlo primero, tal como se pidió.",
     "No se corrió una verificación de colisión nueva para este archivo. Los tres contextos (buceo, bizcocho, clima/Nortelva/Valle Frío) ya fueron verificados LIMPIO en sus respectivas lecciones (ver proveniencia de cada una); este cierre reutiliza el mismo vocabulario y las mismas escenas generales, solo con números nuevos. Según el propio hallazgo de la verificación de L1, los números sueltos no son la señal de riesgo (pegan en 80-90 archivos como ruido de substring); lo que importa es la escena/frase concreta, que no cambió. Se deja constancia explícita de que esto es una inferencia razonada, no una verificación nueva ejecutada — si Benja prefiere correr una consulta puntual sobre los ítems nuevos igual, se puede pedir aparte.",
     "Números verificados contra contextosNumericos de las 3 lecciones para no repetir escenas exactas: ningún ítem de este cierre reutiliza el mismo par de valores (profundidades, fracciones o temperaturas) que ya apareció en L1, L2 o L3.",
     "Ítem 8 es el ítem integrador pedido: combina el mecanismo de L1 (restar un negativo da más, usado para calcular el ascenso de cada buzo) con el mecanismo de L3 (comparar dos negativos invierte la intuición de 'mayor', usado para decidir cuál de los dos resultados es mayor).",
-    "Estado 'borrador'. Sin checklistOriginalidad ni revisionMatematica: el schema no los exige a nivel raíz (solo tipo/id/titulo/estado/proveniencia son 'required'); se omiten en vez de rellenarlos con valores que todavía no significan nada, mismo criterio que content/cierre.json (el cierre de demostración del módulo de función lineal)."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez — se agregan ambos objetos, ausentes hasta ahora porque el schema no los exige a nivel raíz para estados por debajo de publicable (ver nota anterior sobre el mismo criterio de content/cierre.json)."
   ],
   "items": [
     {
@@ -313,6 +313,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Este cierre reutiliza los tres contextos ya verificados LIMPIO en las lecciones del módulo (buceo en enteros-operar-y-ordenar.json, bizcocho en enteros-operar-y-comparar.json, clima/Nortelva/Valle Frío en enteros-problemas-en-contexto.json), sin introducir vocabulario, escenas o nombres propios nuevos — solo números nuevos dentro de esos mismos contextos. No se ejecutó una consulta-fuentes nueva específica para este archivo; ver _notasInternas para el razonamiento y la salvedad explícita de que esto es una inferencia, no una verificación nueva."
     ],
-    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
+  },
+  "revisionMatematica": {
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }

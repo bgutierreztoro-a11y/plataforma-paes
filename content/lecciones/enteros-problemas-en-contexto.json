@@ -22,9 +22,9 @@
     "Insight fijado (piso de partida entregado por Benja, formalizado en el Paso 5): comparar dos negativos invierte la intuición de 'mayor'. −2,8 °C es más cálido (mayor) que −4,3 °C, aunque 2,8 sea menor que 4,3 en valor absoluto. Mismo mecanismo que error-5 de L1, aplicado ahora a decimales y a un contexto físico (temperatura) en vez de solo abstracto (recta numérica).",
     "No se inventaron nombres de ciudad nuevos más allá de Nortelva y Valle Frío (las dos únicas verificadas contra el corpus). Donde el diseño necesitaba un tercer punto de comparación (Paso 7, Paso 9) se usó una lectura genérica sin nombre propio ('un refugio de montaña cercano') para no introducir un sustantivo propio sin verificar.",
     "El Paso 8 (aplicación) combina el insight de esta lección con el de L2 (dividir/operar con fracciones) sumando 3/4 de grado por hora a una temperatura negativa — frase '3/4 de grado' reutilizada literalmente porque es la que pasó la verificación de colisión (ver nota de arriba), en vez de introducir una fracción nueva sin verificar.",
-    "Estado 'borrador': checklistOriginalidad y revisionMatematica con todos los campos booleanos en false, sin revisadoPor ni fecha. Pendiente /revision-matematica y /revision-originalidad en sesión aparte antes de subir de estado."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -461,15 +461,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión del contexto clima (Candidato A: ciudades ficticias Nortelva y Valle Frío, temperaturas bajo cero decimales, variación fraccionaria de grado por hora) contra el corpus completo, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío' = NO en todas. Veredicto: LIMPIO AL 100%. Escenario aprobado tal cual se propuso. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."
+    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   },
   "revisionMatematica": {
-    "aprobada": false
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }
