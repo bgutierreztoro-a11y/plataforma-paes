@@ -260,6 +260,28 @@ export function idsPublicables(): string[] {
   return idsDelCamino().filter((id) => esPublicable(obtenerLeccion(id)));
 }
 
+/**
+ * `true` solo con `PREVIEW_MOSTRAR_BORRADORES=true` (Preview env de Vercel,
+ * nunca Production). Reconstruye el bypass de `02457f2`, perdido en un
+ * refactor posterior: deja ver contenido en borrador para demostración sin
+ * tocar `estado`, que sigue siendo la única fuente de verdad de qué está
+ * realmente revisado. `RunnerLeccion` es responsable de mostrar el banner
+ * de demostración cuando la lección no es publicable.
+ */
+export function previewMuestraBorradores(): boolean {
+  return process.env.PREVIEW_MOSTRAR_BORRADORES === "true";
+}
+
+/**
+ * Como `idsPublicables()`, pero incluye borradores si el preview está
+ * activo. Es lo único que debe alimentar `generateStaticParams` de
+ * `/leccion/[id]`: así la ruta existe en Preview aunque `estado` no sea
+ * `"publicable"`, sin relajar el contrato en Production.
+ */
+export function idsPublicablesOPreview(): string[] {
+  return previewMuestraBorradores() ? idsDelCamino() : idsPublicables();
+}
+
 export function obtenerDiagnostico(): DiagnosticoContenido {
   return cargarYValidar<DiagnosticoContenido>(
     path.join(process.cwd(), "content", "diagnostico.json"),

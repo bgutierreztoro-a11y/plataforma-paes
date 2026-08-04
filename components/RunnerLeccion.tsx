@@ -128,9 +128,24 @@ export function RunnerLeccion({
     }
   }
 
+  /* Solo puede ser true en Preview con PREVIEW_MOSTRAR_BORRADORES activo:
+     en Production, app/leccion/[id]/page.tsx nunca llega a renderizar este
+     componente para una lección no publicable (ver esa guardia). `estado`
+     no está en CLAVES_INTERNAS de lib/sanitizar.ts, así que llega intacto. */
+  const esBorrador = leccion.estado !== "publicable";
+  const bannerDemostracion = esBorrador ? (
+    <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+      <strong>Vista de demostración.</strong> Este contenido está en{" "}
+      <code className="rounded bg-amber-100 px-1 py-0.5">{leccion.estado}</code>: todavía no
+      pasó la revisión matemática ni el checklist de originalidad. No es la experiencia final del
+      estudiante.
+    </div>
+  ) : null;
+
   if (fase === "anuncio") {
     return (
       <div className="flex min-h-full flex-col">
+        {bannerDemostracion}
         <AnuncioPrevioItems
           variante="leccion"
           cantidad={leccion.itemsPAES.length}
@@ -143,6 +158,7 @@ export function RunnerLeccion({
   if (fase === "itemsPAES") {
     return (
       <div className="flex min-h-full flex-col">
+        {bannerDemostracion}
         <EjecutorSetItems
           items={leccion.itemsPAES}
           mostrarFeedback={true}
@@ -203,6 +219,7 @@ export function RunnerLeccion({
           pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"
         }`}
       >
+        {bannerDemostracion}
         <h1 className="mb-6 text-2xl font-semibold tracking-tight text-ink">
           {leccion.titulo}
         </h1>
