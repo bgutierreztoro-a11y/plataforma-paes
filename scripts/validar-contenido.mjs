@@ -278,7 +278,33 @@ function* archivosDeContenido(dir) {
  */
 const MAPEO_LECCION_UNIDAD = {
   'enteros-operar-y-ordenar': 'enteros-racionales',
-  'ecuaciones-lineales': 'ecuaciones-inecuaciones',
+  // 'ecuaciones-lineales': 'ecuaciones-inecuaciones',  ← excluida a propósito (2026-08-03)
+  //
+  // Es la primera unidad donde content/errores/<unidad>.json pasa a ser la
+  // ÚNICA fuente, que es lo que el commit 195bea7 decía querer ("catalogo de
+  // errores como artefacto propio") pero no llegó a implementar: el espejo de
+  // abajo dejó a los dos archivos acoplados como co-fuentes, no como canónico
+  // + legado.
+  //
+  // El acople se volvió un bloqueo real cuando la unidad creció más allá de su
+  // L1: las lecciones de inecuaciones aportaron error-6..error-10, que son
+  // errores de desigualdades y NO tienen nada que hacer dentro del
+  // catalogoErrores embebido de ecuaciones-lineales.json (una lección que no
+  // enseña inecuaciones). Con la entrada activa, el espejo exigía copiarlos
+  // ahí para que `npm run validar` pasara.
+  //
+  // Efecto de excluirla: el catalogoErrores embebido de ecuaciones-lineales.json
+  // queda congelado como legado —se conserva, no se toca, y nadie lo compara
+  // contra nada—, mientras content/errores/ecuaciones-inecuaciones.json crece
+  // solo. Se pierde el guard antidivergencia para ESTA unidad; es el precio de
+  // que el artefacto canónico pueda existir de verdad.
+  //
+  // Las otras dos unidades siguen con el espejo ACTIVO y no cambian de
+  // comportamiento: enteros-racionales (vía enteros-operar-y-ordenar) y
+  // funcion-lineal-afin (vía lineal-patrones-de-cambio). Cuando se migren —o
+  // sea, cuando se les borre el catalogoErrores embebido a sus L1 y el
+  // artefacto quede como única fuente— sus entradas salen de acá también y
+  // este mapeo desaparece completo, junto con la regla de espejo.
   'lineal-patrones-de-cambio': 'funcion-lineal-afin',
 };
 
