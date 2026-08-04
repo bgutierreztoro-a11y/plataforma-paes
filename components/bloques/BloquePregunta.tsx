@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
+import { capaUno, capaDos } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
 import { useMontado } from "@/lib/useMontado";
@@ -133,22 +134,18 @@ export function BloquePregunta({
         </div>
       )}
       {revelado && alternativaElegida && (
-        <div
-          role="status"
-          className={`transicion-paso flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-            alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-attention-suave"
-          }`}
-        >
-          {alternativaElegida.esCorrecta ? <IconoCorrecto /> : <IconoIncorrecto />}
-          <span>
-            {alternativaElegida.feedback ?? (alternativaElegida.esCorrecta ? "¡Correcto!" : "")}
-          </span>
-        </div>
-      )}
-      {revelado && alternativaElegida && !alternativaElegida.esCorrecta && (
-        <Boton variante="secundario" onClick={intentarDeNuevo}>
-          Intentar de nuevo
-        </Boton>
+        <FeedbackEnCapas
+          esCorrecta={alternativaElegida.esCorrecta}
+          capa1={capaUno(alternativaElegida, alternativas)}
+          capa2={capaDos(alternativaElegida)}
+          extra={
+            !alternativaElegida.esCorrecta ? (
+              <Boton variante="secundario" onClick={intentarDeNuevo}>
+                Intentar de nuevo
+              </Boton>
+            ) : null
+          }
+        />
       )}
     </div>
   );

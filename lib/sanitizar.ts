@@ -1,4 +1,10 @@
-import type { CierreContenido, DiagnosticoContenido, Item, Leccion } from "@/lib/tipos";
+import type {
+  Alternativa,
+  CierreContenido,
+  DiagnosticoContenido,
+  Item,
+  Leccion,
+} from "@/lib/tipos";
 
 /**
  * Claves que existen en content/*.json para el proceso editorial (proveniencia,
@@ -34,7 +40,25 @@ const CLAVES_INTERNAS = [
 
 type ClaveInterna = (typeof CLAVES_INTERNAS)[number];
 
-export type ItemCliente = Omit<Item, "solucion">;
+/**
+ * La descripción del error que produjo este distractor, ya resuelta contra el
+ * `catalogoErrores` del módulo. Es la Capa 2 del feedback ("el mecanismo del
+ * error", no el ejercicio).
+ *
+ * Existe porque `catalogoErrores` **no puede** viajar al cliente: publicarlo
+ * entero entregaría el mapa completo de errores previstos del módulo, incluidos
+ * los de ítems que el estudiante todavía no respondió. Resolver en el servidor y
+ * mandar solo la descripción del distractor efectivamente elegido da la Capa 2
+ * sin abrir el catálogo — y mantiene `catalogoErrores` en CLAVES_INTERNAS.
+ *
+ * Opcional a propósito: un módulo sin `catalogoErrores` (hoy, todos los cierres)
+ * simplemente no la trae y el componente omite la capa. Ver docs/pendientes.md.
+ */
+export type AlternativaCliente = Alternativa & { descripcionError?: string };
+
+export type ItemCliente = Omit<Item, "solucion" | "alternativas"> & {
+  alternativas: AlternativaCliente[];
+};
 
 export type LeccionCliente = Omit<Leccion, ClaveInterna | "itemsPAES"> & {
   itemsPAES: ItemCliente[];
@@ -47,6 +71,51 @@ export type DiagnosticoCliente = Omit<DiagnosticoContenido, ClaveInterna | "item
 export type CierreCliente = Omit<CierreContenido, ClaveInterna | "items"> & {
   items: ItemCliente[];
 };
+
+/**
+ * Recorre el árbol y, en cada objeto que declare `errorCatalogado`, agrega la
+ * `descripcionError` correspondiente del catálogo del módulo. Corre ANTES de
+ * `quitarClavesInternas` — después, `catalogoErrores` ya no existe.
+ *
+ * Los ids del catálogo embebido son locales ("error-4"), y dentro de un mismo
+ * archivo eso es inequívoco. NO lo es entre archivos: `content/errores/` usa
+ * ids con unidad ("ecuaciones-inecuaciones/error-4") y los cierres mezclan
+ * ítems de dos unidades sin catálogo propio. Por eso la resolución es
+ * estrictamente local al archivo: sin `catalogoErrores`, no se resuelve nada.
+ * Un id sin entrada se deja sin descripción en vez de adivinar.
+ */
+function resolverDescripcionesDeError(valor: unknown, catalogo: Map<string, string>): unknown {
+  if (catalogo.size === 0) return valor;
+  if (Array.isArray(valor)) {
+    return valor.map((v) => resolverDescripcionesDeError(v, catalogo));
+  }
+  if (valor === null || typeof valor !== "object") return valor;
+
+  const objeto = valor as Record<string, unknown>;
+  const resuelto: Record<string, unknown> = {};
+  for (const [clave, anidado] of Object.entries(objeto)) {
+    resuelto[clave] = resolverDescripcionesDeError(anidado, catalogo);
+  }
+
+  const id = objeto.errorCatalogado;
+  if (typeof id === "string") {
+    const descripcion = catalogo.get(id);
+    if (descripcion) resuelto.descripcionError = descripcion;
+  }
+  return resuelto;
+}
+
+function catalogoDe(contenido: { catalogoErrores?: { id: string; descripcion: string }[] }) {
+  return new Map((contenido.catalogoErrores ?? []).map((e) => [e.id, e.descripcion]));
+}
+
+function prepararParaCliente<T>(contenido: {
+  catalogoErrores?: { id: string; descripcion: string }[];
+}): T {
+  return quitarClavesInternas(
+    resolverDescripcionesDeError(contenido, catalogoDe(contenido)),
+  ) as T;
+}
 
 /**
  * Recorre el objeto completo, a cualquier profundidad: `_notasInternas` puede
@@ -66,13 +135,13 @@ function quitarClavesInternas(valor: unknown): unknown {
 }
 
 export function sanitizarLeccion(leccion: Leccion): LeccionCliente {
-  return quitarClavesInternas(leccion) as LeccionCliente;
+  return prepararParaCliente<LeccionCliente>(leccion);
 }
 
 export function sanitizarDiagnostico(diagnostico: DiagnosticoContenido): DiagnosticoCliente {
-  return quitarClavesInternas(diagnostico) as DiagnosticoCliente;
+  return prepararParaCliente<DiagnosticoCliente>(diagnostico);
 }
 
 export function sanitizarCierre(cierre: CierreContenido): CierreCliente {
-  return quitarClavesInternas(cierre) as CierreCliente;
+  return prepararParaCliente<CierreCliente>(cierre);
 }

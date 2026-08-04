@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
+import { capaUno, capaDos } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
@@ -76,6 +77,24 @@ export function ItemPAES({
   const alternativaElegida = alternativas.find((a) => a.clave === seleccion);
   const visual = visualDeItem(item.id);
 
+  /* El pie es el mismo en las dos ramas (con y sin feedback) y va DESPUÉS de
+     las capas: el botón de avanzar tiene que quedar debajo de la explicación,
+     no compitiendo con ella. Es un valor JSX y no un componente definido acá
+     adentro — declarar un componente durante el render lo remontaría en cada
+     pasada (regla react-hooks/static-components). */
+  const pieDelItem = alternativaElegida ? (
+    <>
+      <p className="text-sm text-ink-suave">
+        Resuelta en{" "}
+        <span className="font-mono tabular-nums">{formatoTiempo(tiempoFinalMs)}</span> · en la
+        PAES M1 tendrás alrededor de 2 minutos por pregunta.
+      </p>
+      <Boton onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}>
+        {etiquetaSiguiente}
+      </Boton>
+    </>
+  ) : null;
+
   function revisar() {
     if (!alternativaElegida) return;
     const nuevoIntento = intento + 1;
@@ -111,12 +130,14 @@ export function ItemPAES({
     const base =
       "flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent";
     if (revelado && seleccion === alt.clave) {
+      /* Al fallar, la alternativa elegida queda marcada como elegida y nada
+         más: el rojo que llevaba antes contestaba "¿la tuve bien?" desde el
+         costado, antes de que se leyera la Capa 1, que es donde está lo que
+         enseña. El acierto sí se marca — es información, no reproche. */
       return `${base} cursor-default ${
         alt.esCorrecta && mostrarFeedback
           ? "border-success bg-success-suave"
-          : !alt.esCorrecta && mostrarFeedback
-            ? "border-attention bg-attention-suave"
-            : "border-accent bg-accent-suave"
+          : "border-accent bg-accent-suave"
       }`;
     }
     if (revelado) return `${base} cursor-default opacity-60`;
@@ -188,36 +209,26 @@ export function ItemPAES({
         </div>
       )}
       {revelado && alternativaElegida && (
-        <div className="transicion-paso space-y-4">
+        <>
           {mostrarFeedback ? (
-            <div
-              role="status"
-              className={`flex items-start gap-2.5 rounded-tarjeta px-4 py-3 text-sm leading-relaxed ${
-                alternativaElegida.esCorrecta ? "bg-success-suave" : "bg-attention-suave"
-              }`}
-            >
-              {alternativaElegida.esCorrecta ? <IconoCorrecto /> : <IconoIncorrecto />}
-              <span>
-                {alternativaElegida.feedback ??
-                  (alternativaElegida.esCorrecta ? "¡Correcto!" : "")}
-              </span>
-            </div>
+            <FeedbackEnCapas
+              esCorrecta={alternativaElegida.esCorrecta}
+              capa1={capaUno(alternativaElegida, alternativas)}
+              capa2={capaDos(alternativaElegida)}
+              extra={pieDelItem}
+            />
           ) : (
-            <div role="status" className="rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink">
-              Respuesta registrada.
+            <div className="transicion-paso space-y-4">
+              <div
+                role="status"
+                className="rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink"
+              >
+                Respuesta registrada.
+              </div>
+              {pieDelItem}
             </div>
           )}
-          <p className="text-sm text-ink-suave">
-            Resuelta en{" "}
-            <span className="font-mono tabular-nums">{formatoTiempo(tiempoFinalMs)}</span> · en la
-            PAES M1 tendrás alrededor de 2 minutos por pregunta.
-          </p>
-          <Boton
-            onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}
-          >
-            {etiquetaSiguiente}
-          </Boton>
-        </div>
+        </>
       )}
     </div>
   );
