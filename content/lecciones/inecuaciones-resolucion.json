@@ -26,9 +26,9 @@
     "DISTRACTORES SIN errorCatalogado, Y POR QUÉ. Tres distractores quedan deliberadamente sin id: (1) Paso 5, alternativa B ('los negativos son más chicos, así que todo se hace más chico') es una idea equivocada sobre la MAGNITUD, no sobre el sentido de la desigualdad, y no calza con ninguno de los diez errores del catálogo. (2) Paso 5, alternativa C y (3) ítem PAES 3, alternativa D son la misma confusión —cambiar el signo del NÚMERO creyendo que eso es invertir el signo de la DESIGUALDAD—, que se propuso al catálogo en el guion y no fue incorporada. Se dejan sin id en vez de forzar error-6, que describe el manejo del sentido y no esta confusión de referentes. El ítem PAES 3, alternativa C tampoco lleva id: quien la elige no comete error-2, sino que atribuye mal un error que no está ahí (el Paso 1 del desarrollo mostrado es correcto); etiquetarla como error-2 daría un diagnóstico falso al motor que después lea estos campos.",
     "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json (commit 195bea7). Los distractores referencian los ids locales pelados (error-1, error-6, …), que es la convención que usan hoy todas las lecciones; el prefijo namespaced ('ecuaciones-inecuaciones/error-6') vive solo en el artefacto de content/errores/.",
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética de esta lección fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
-    "ESTADO: borrador. checklistOriginalidad y revisionMatematica presentes con todos los booleanos en false y sin firmante, a la espera de la revisión real. Los 6 dominios candidatos de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de esta sesión."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez. Los 6 dominios candidatos de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de esta sesión."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -551,21 +551,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos.",
       "Los 6 candidatos de dominio de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) fueron verificados sin colisión contra el corpus de fuentes aisladas mediante scripts/consultar-fuentes.mjs, corrido por el autor del proyecto fuera de la sesión de redacción (mecanismo 2 del protocolo de aislamiento, CLAUDE.md). El hilo que redactó este contenido no ejecutó el script ni leyó fuentes-analisis-aisladas/ por ningún medio propio."
     ],
-    "declaracionOriginalidad": "Borrador. Enunciados, la imagen didáctica central (la recta numérica con un espejo en el 0) y la secuencia de descubrimiento fueron creados desde cero por el autor del proyecto. La lección es deliberadamente abstracta en 9 de sus 10 pasos y usa un único contexto del mundo real (el deshielo en la ladera de un refugio de montaña), elegido fuera de la familia 'cargo fijo + tarifa variable' y fuera de los dominios ya usados en el módulo y en el de funciones lineales. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente del checklist de originalidad y de la revisión matemática humana.",
-    "autor": "",
-    "fecha": ""
+    "declaracionOriginalidad": "Enunciados, la imagen didáctica central (la recta numérica con un espejo en el 0) y la secuencia de descubrimiento fueron creados desde cero por el autor del proyecto. La lección es deliberadamente abstracta en 9 de sus 10 pasos y usa un único contexto del mundo real (el deshielo en la ladera de un refugio de montaña), elegido fuera de la familia 'cargo fijo + tarifa variable' y fuera de los dominios ya usados en el módulo y en el de funciones lineales. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   },
   "revisionMatematica": {
-    "aprobada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }

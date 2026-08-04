@@ -2,7 +2,7 @@
   "tipo": "cierre",
   "id": "cierre-ecuaciones-lineales",
   "titulo": "Cierre del módulo: Ecuaciones e inecuaciones de primer grado",
-  "estado": "borrador",
+  "estado": "publicable",
   "_notasInternas": [
     "Cierre del tema 'Ecuaciones e inecuaciones de primer grado' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: ecuaciones-lineales.json, inecuaciones-resolucion.json e inecuaciones-problemas.json.",
     "AMPLIADO A INECUACIONES EL 2026-08-03 — cierra la deuda anterior. Este archivo nació con 8 ítems, todos de ecuaciones, y una nota que decía 'Cierre incompleto respecto al tema completo: cubre solo ecuaciones lineales. Pendiente ampliar con ítems de inecuaciones cuando esas lecciones se creen.' Esas lecciones ya existen, así que la deuda queda saldada: se reemplazaron 4 de los 8 ítems por ítems de inecuaciones, dejando el reparto en 4 de ecuaciones y 4 de inecuaciones. El cierre ya representa el tema completo.",
@@ -20,7 +20,7 @@
     "El ítem cierre-ecuaciones-5 reestructura el contexto de salas/cuentos en una comparación entre dos bibliotecas (misma cantidad total de cuentos) para poder plantear una ecuación con la incógnita en ambos lados — mismo vocabulario y misma escena general que la lección, sin nombres propios ni sustantivos nuevos.",
     "El ítem cierre-ecuaciones-8 es el integrador: combina el mecanismo de la balanza (despejar x en 6x + 4 = 40, mismo tipo de paso que el ítem 1) con el contexto de jaulas y gatos, aplicando el valor de x hallado en el primer paso a un segundo escenario. Sus distractores (18, 16, 24) son errores propios de ese segundo paso.",
     "VERIFICACIÓN MATEMÁTICA: la aritmética de los cuatro ítems nuevos fue recalculada desde cero con un script independiente antes de escribirlos, incluidas las sustituciones en los dos enteros vecinos de cada borde y en los dos vecinos del redondeo de cierre-inecuaciones-3. Eso NO reemplaza la revisión matemática humana.",
-    "Estado 'borrador'. Sin checklistOriginalidad ni revisionMatematica: el schema no los exige a nivel raíz (solo se activan desde 'revision' en adelante). Pendiente revisión matemática manual (Benja + profesor) y checklist de originalidad firmado a mano antes de subir de estado."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
   "items": [
     {
@@ -320,6 +320,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4). Solo para calibrar alcance y formato, no como origen de texto, contextos ni ejemplos.",
       "Este cierre reutiliza los tres contextos ya verificados en ecuaciones-lineales.json (balanza con bolsas de bolitas, salas con cuentos de reserva, jaulas con gatos), sin introducir vocabulario, escenas o nombres propios nuevos — solo números nuevos dentro de esos mismos contextos. No se corrió una consulta-fuentes nueva para este archivo: ver _notasInternas para el razonamiento."
     ],
-    "declaracionOriginalidad": "Borrador. Enunciados creados desde cero por el autor del proyecto, combinando los tres contextos ya establecidos en ecuaciones-lineales.json con estructuras nuevas (ecuación de un paso, de dos pasos con resta inicial, con la incógnita en ambos lados, un ítem de equivalencia, uno de diagnóstico de un desarrollo ajeno y un ítem integrador de dos escenarios). El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad (o su equivalente manual)."
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los tres contextos ya establecidos en ecuaciones-lineales.json con estructuras nuevas (ecuación de un paso, de dos pasos con resta inicial, con la incógnita en ambos lados, un ítem de equivalencia, uno de diagnóstico de un desarrollo ajeno y un ítem integrador de dos escenarios). El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
+  },
+  "revisionMatematica": {
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }

@@ -26,9 +26,9 @@
     "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json, que desde el 2026-08-03 es la ÚNICA fuente para esta unidad (se sacó 'ecuaciones-lineales' de MAPEO_LECCION_UNIDAD en scripts/validar-contenido.mjs). Los distractores referencian los ids locales pelados (error-3, error-9, …); el prefijo namespaced vive solo en el artefacto.",
     "DOMINIOS: los 10 candidatos de este guion (ascensor de carga, torneo escolar de robótica, desafío de robótica, impresora 3D, filamento, taller de colegio, mural comunitario, tarro de pintura, bote de remos, cupo máximo) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de la sesión de redacción. Se evitaron deliberadamente la familia 'cargo fijo + tarifa variable' (ningún escenario cobra dinero por unidad de tiempo o consumo), los dominios del propio módulo (balanza y bolsas de bolitas, gatos por jaula, cuentos por sala) y los del módulo de funciones lineales (bidón, ahorro semanal, planes de datos, huerta). El torneo usa PUNTOS, no pesos, justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en la familia comercial saturada.",
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde y las dos direcciones de redondeo del paso 8. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
-    "ESTADO: borrador. checklistOriginalidad y revisionMatematica presentes con todos los booleanos en false y sin firmante."
+    "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "borrador",
+  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -526,21 +526,21 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos.",
       "Los 10 candidatos de dominio de esta lección (ascensor de carga, torneo escolar de robótica, desafío de robótica, impresora 3D, filamento, taller de colegio, mural comunitario, tarro de pintura, bote de remos, cupo máximo) fueron verificados sin colisión contra el corpus de fuentes aisladas mediante scripts/consultar-fuentes.mjs, corrido por el autor del proyecto fuera de la sesión de redacción (mecanismo 2 del protocolo de aislamiento, CLAUDE.md). El hilo que redactó este contenido no ejecutó el script ni leyó fuentes-analisis-aisladas/ por ningún medio propio."
     ],
-    "declaracionOriginalidad": "Borrador. Enunciados, contextos y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los escenarios se eligieron deliberadamente fuera de la familia 'cargo fijo + tarifa variable' —saturada en el material de referencia— y fuera de los dominios ya usados en este módulo y en el de funciones lineales; el torneo de robótica usa puntos y no dinero justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en esa familia. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente del checklist de originalidad y de la revisión matemática humana.",
-    "autor": "",
-    "fecha": ""
+    "declaracionOriginalidad": "Enunciados, contextos y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los escenarios se eligieron deliberadamente fuera de la familia 'cargo fijo + tarifa variable' —saturada en el material de referencia— y fuera de los dominios ya usados en este módulo y en el de funciones lineales; el torneo de robótica usa puntos y no dinero justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en esa familia. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-04"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "enunciadosOriginales": true,
+    "diagramasOriginales": true,
+    "secuenciaOriginal": true,
+    "provenienciaRegistrada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   },
   "revisionMatematica": {
-    "aprobada": false,
-    "revisadoPor": "",
-    "fecha": ""
+    "aprobada": true,
+    "revisadoPor": "benjamin gutierrez",
+    "fecha": "2026-08-04"
   }
 }
