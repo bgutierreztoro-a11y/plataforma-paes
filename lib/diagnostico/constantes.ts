@@ -27,25 +27,36 @@ export const GAMMA = 0.5;
 /**
  * Hasta cuántos saltos del DAG se propaga una respuesta.
  *
- * **Radio de propagación, no altura del grafo.** Son dos cosas distintas y es
- * fácil confundirlas: esta constante dice hasta dónde viaja la evidencia de una
- * sola respuesta; la altura del grafo dice cuán larga es la cadena de
- * prerrequisitos más larga del dominio. Nada en el código ata una a la otra.
+ * **Radio de propagación, no altura del grafo — y la métrica que de verdad
+ * importa acá tampoco es la altura.** `ancestros()`/`descendientes()`
+ * (`dag.ts`) devuelven la distancia BFS **mínima** a cada nodo alcanzable: si
+ * hay dos caminos de largo distinto entre dos unidades, la propagación viaja
+ * por el corto. La altura del grafo — el largo de la cadena de prerrequisitos
+ * MÁS LARGA — es una cifra distinta que no gobierna nada de esto; que hoy sea
+ * 4 (`enteros-racionales → expresiones-algebraicas → ecuaciones-inecuaciones →
+ * funcion-lineal-afin → sistemas-2x2`, fijado en el test "la cadena de
+ * prerrequisitos más larga tiene 4 aristas") no dice nada sobre qué tan lejos
+ * llega una respuesta.
  *
- * Hoy no coinciden: `dag-m1.json` tiene altura **4**
- * (`enteros-racionales → expresiones-algebraicas → ecuaciones-inecuaciones →
- * funcion-lineal-afin → sistemas-2x2`, y la misma ruta hasta
- * `funcion-cuadratica`), mientras este radio es 3. La consecuencia concreta es
- * que fallar un ítem de `sistemas-2x2` o de `funcion-cuadratica` nunca mueve la
- * creencia sobre `enteros-racionales`, porque queda a 4 saltos.
+ * (Esto corrige una nota anterior de este comentario, que afirmaba que fallar
+ * `sistemas-2x2` o `funcion-cuadratica` nunca movía la creencia sobre
+ * `enteros-racionales` "porque quedan a 4 saltos". Es falso: la distancia BFS
+ * mínima de `sistemas-2x2` a `enteros-racionales` es 3, no 4, porque además
+ * del camino largo por `funcion-lineal-afin` existe uno corto por
+ * `ecuaciones-inecuaciones`. La altura mide el peor camino; la propagación usa
+ * el mejor.)
  *
- * Se deja así a propósito y no es un descuido: con `GAMMA = 0.5` la evidencia a
- * 4 saltos ya valdría 1/16, y la raíz recibe evidencia directa de sobra por
- * otros caminos más cortos. Queda escrito acá para que la próxima persona que
- * note el desfase sepa que se miró, en vez de "arreglarlo" subiendo el radio.
- * El test "la cadena de prerrequisitos más larga tiene 4 aristas"
- * (`__tests__/motor.test.ts`) fija ese 4 con una cifra escrita a mano: si
- * alguien alarga una cadena, el test lo obliga a decidirlo en voz alta.
+ * La cifra que sí importa: hoy, la distancia BFS mínima MÁS GRANDE entre
+ * cualquier par (unidad, ancestro-o-descendiente) alcanzable del grafo real es
+ * **3**, tanto subiendo como bajando. O sea `PROFUNDIDAD_MAX = 3` no trunca
+ * ningún par existente — cubre el grafo entero tal como está hoy. Esa
+ * cobertura depende de la estructura actual de aristas, no de este número: si
+ * mañana una arista nueva alarga el camino MÍNIMO (no el más largo) entre dos
+ * unidades más allá de 3, empieza a haber pares que dejan de recibir
+ * evidencia. El test "la propagación cubre el DAG real: distancia BFS mínima
+ * dentro de PROFUNDIDAD_MAX" (`__tests__/motor.test.ts`) revisa exactamente
+ * eso contra `dag-m1.json` y falla nombrando el par y la distancia si se
+ * rompe.
  */
 export const PROFUNDIDAD_MAX = 3;
 

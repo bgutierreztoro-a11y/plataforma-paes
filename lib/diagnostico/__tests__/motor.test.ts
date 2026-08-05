@@ -8,6 +8,7 @@ import {
   K,
   MAX_ITEMS,
   MIN_ITEMS,
+  PROFUNDIDAD_MAX,
   UMBRAL_P_DOMINADA,
 } from "../constantes.ts";
 import { ancestros, centralidad, construirDag, descendientes } from "../dag.ts";
@@ -794,12 +795,21 @@ describe("dag-m1.json", () => {
   });
 
   /**
-   * La altura del grafo, escrita a mano como el resto de las cifras de este
-   * bloque. No confundir con `PROFUNDIDAD_MAX = 3`, que es el radio de
-   * propagación de evidencia y NO la altura (ver la nota en `constantes.ts`).
-   * Que hoy la altura sea mayor que el radio es deliberado y está documentado
-   * ahí; este test existe para que alargar una cadena a 5 sea una decisión
-   * explícita y no un accidente.
+   * La altura del grafo — el largo de la cadena de prerrequisitos MÁS LARGA —,
+   * escrita a mano como el resto de las cifras de este bloque.
+   *
+   * Esto NO mide lo mismo que el test de más abajo ("la propagación cubre el
+   * DAG real"), y es fácil confundirlos porque los dos hablan de "distancia".
+   * Este test mide el peor camino entre dos unidades cualesquiera del grafo
+   * (útil para saber cuántas etapas de estudio hacen falta como mínimo). El
+   * otro mide, para cada par ya alcanzable, el MEJOR camino — la distancia BFS
+   * mínima que de verdad usa `ancestros()`/`descendientes()` en el motor. Que
+   * la altura sea 4 no implica que algún par quede a distancia 4 en BFS
+   * mínima: en este grafo no ocurre (ver `constantes.ts` y el test de
+   * cobertura). Alargar una cadena a 5 es una decisión que este test obliga a
+   * tomar en voz alta; si además esa cadena nueva empuja alguna distancia
+   * mínima más allá de `PROFUNDIDAD_MAX`, el test de cobertura es el que
+   * avisa.
    */
   test("la cadena de prerrequisitos más larga tiene 4 aristas", () => {
     const dag = construirDag(leerDominio().unidades);
@@ -807,6 +817,44 @@ describe("dag-m1.json", () => {
 
     // Y que la raíz esté efectivamente en el nivel 0, no flotando en otro lado.
     assert.equal(niveles(dag).get(RAIZ), 0);
+  });
+
+  /**
+   * La propagación real: para cada unidad y cada ancestro/descendiente suyo
+   * YA ALCANZABLE, la distancia BFS mínima tiene que quedar dentro de
+   * `PROFUNDIDAD_MAX`. Corre sobre `dag-m1.json`, no sobre una cadena
+   * sintética — a diferencia del test de `PROFUNDIDAD_MAX` en el bloque de
+   * arriba (línea ~196), que prueba el mecanismo de corte en abstracto, este
+   * prueba que el mecanismo no corta nada en el grafo real tal como está hoy.
+   *
+   * No es lo mismo que "la cadena más larga tiene 4 aristas": esa altura mide
+   * el peor camino; este test mide, par por par, el mejor. Si algún día una
+   * arista nueva alarga el camino MÍNIMO entre dos unidades más allá de 3
+   * (no necesariamente la cadena más larga), este test señala exactamente cuál
+   * par quedó sin cobertura — no un booleano ciego.
+   */
+  test("la propagación cubre el DAG real: distancia BFS mínima dentro de PROFUNDIDAD_MAX", () => {
+    const dag = construirDag(leerDominio().unidades);
+    const excedidos: string[] = [];
+
+    for (const u of dag.unidades) {
+      for (const [ancestro, distancia] of ancestros(dag, u.id)) {
+        if (distancia > PROFUNDIDAD_MAX) {
+          excedidos.push(`(${u.id}, ${ancestro}) ascendente a distancia ${distancia}`);
+        }
+      }
+      for (const [descendiente, distancia] of descendientes(dag, u.id)) {
+        if (distancia > PROFUNDIDAD_MAX) {
+          excedidos.push(`(${u.id}, ${descendiente}) descendente a distancia ${distancia}`);
+        }
+      }
+    }
+
+    assert.deepEqual(
+      excedidos,
+      [],
+      `hay pares con distancia BFS mínima mayor que PROFUNDIDAD_MAX=${PROFUNDIDAD_MAX}: ${excedidos.join("; ")}`,
+    );
   });
 
   test("el orden topológico incluye las 16 y respeta todos los prerrequisitos", () => {
