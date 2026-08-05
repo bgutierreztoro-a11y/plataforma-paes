@@ -1,16 +1,128 @@
 {
   "id": "dag-m1",
-  "nota": "Estructura del dominio M1: las 16 unidades del temario y sus prerrequisitos. Las aristas las escribio Benja a mano el 2026-08-02; ninguna la escribe un modelo. Los tests de lib/diagnostico/__tests__/ fijan sus invariantes: 22 aristas, raiz unica enteros-racionales y 7 hojas. Ver la excepcion acotada del gate de grafo de conocimiento en docs/mos-v2.md seccion 9.",
+  "nota": "Estructura del dominio M1: las 16 unidades del temario y sus prerrequisitos. Las aristas las escribio Benja a mano el 2026-08-02; ninguna la escribe un modelo. Los tests de lib/diagnostico/__tests__/ fijan sus invariantes: 22 aristas, raiz unica enteros-racionales, 7 hojas y altura 4. Ver la excepcion acotada del gate de grafo de conocimiento en docs/mos-v2.md seccion 9.",
+  "fuenteDescriptores": "Los campos `descriptor` citan la columna Contenidos de la matriz de docs/calibracion-lecciones-e-items.md seccion 4.1, que es un RESUMEN de una linea por modulo, NO la fuente primaria. El PDF del temario oficial DEMRE no esta versionado en este repo (busqueda por contenido el 2026-08-05: cero PDFs, ninguna coincidencia con 'TEMARIO PRUEBA OBLIGATORIA'). Cada justificacion lleva `fuente: \"resumen-4.1\"` para que eso quede visible en el punto de uso. Si algun dia entra el temario integro al repo, estas 22 citas se re-verifican contra el.",
+  "notaJustificaciones": "Cada entrada de `justificaciones` corresponde a una arista y se lee: para llegar a ESTA unidad hace falta el prerrequisito indicado. `descriptor` es la cita del temario de la unidad DEPENDIENTE. `respaldo: \"temario\"` significa que el descriptor citado nombra el prerrequisito. `respaldo: \"sin-respaldo\"` significa que la arista es inferencia pedagogica razonable pero el temario no la sostiene textualmente: NO es un error ni una arista a borrar, es una arista que tiene que dirimir la profesora. Hoy: 10 con respaldo, 12 sin respaldo. Ver docs/dag-m1-para-revision.md.",
   "unidades": [
-    { "id": "enteros-racionales", "nombre": "Enteros y racionales", "eje": "numeros", "prerrequisitos": [] },
-    { "id": "porcentaje", "nombre": "Porcentaje", "eje": "numeros", "prerrequisitos": ["enteros-racionales"] },
-    { "id": "potencias-raices", "nombre": "Potencias y raíces", "eje": "numeros", "prerrequisitos": ["enteros-racionales"] },
+    { "id": "enteros-racionales", "nombre": "Enteros y racionales", "eje": "numeros", "prerrequisitos": [], "justificaciones": {} },
 
-    { "id": "expresiones-algebraicas", "nombre": "Expresiones algebraicas", "eje": "algebra", "prerrequisitos": ["enteros-racionales"] },
-    { "id": "proporcionalidad", "nombre": "Proporcionalidad", "eje": "algebra", "prerrequisitos": ["enteros-racionales"] },
-    { "id": "ecuaciones-inecuaciones", "nombre": "Ecuaciones e inecuaciones", "eje": "algebra", "prerrequisitos": ["expresiones-algebraicas"] },
-    { "id": "sistemas-2x2", "nombre": "Sistemas de ecuaciones 2x2", "eje": "algebra", "prerrequisitos": ["ecuaciones-inecuaciones", "funcion-lineal-afin"] },
-    { "id": "funcion-lineal-afin", "nombre": "Función lineal y afín", "eje": "algebra", "prerrequisitos": ["proporcionalidad", "ecuaciones-inecuaciones"] },
+    {
+      "id": "porcentaje",
+      "nombre": "Porcentaje",
+      "eje": "numeros",
+      "prerrequisitos": ["enteros-racionales"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Concepto y cálculo; problemas en diversos contextos",
+          "porque": "Un porcentaje es una razón de denominador 100, así que calcularlo es operar en ℚ. Pero el descriptor del temario no nombra los racionales ni ninguna operación concreta: dice solo \"concepto y cálculo\". La dependencia es evidente para cualquier profesor y aun así no está escrita.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "potencias-raices",
+      "nombre": "Potencias y raíces",
+      "eje": "numeros",
+      "prerrequisitos": ["enteros-racionales"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Propiedades de potencias de base y exponente racional; descomposición y propiedades de raíces en ℝ; problemas",
+          "porque": "El descriptor nombra el prerrequisito de forma literal: \"exponente racional\". No se puede elevar a un exponente de ℚ sin manejar ℚ antes.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "expresiones-algebraicas",
+      "nombre": "Expresiones algebraicas",
+      "eje": "algebra",
+      "prerrequisitos": ["enteros-racionales"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Productos notables; factorizaciones y desarrollo; operatoria; problemas",
+          "porque": "\"Operatoria\" con literales reproduce las reglas de la operatoria numérica, y los coeficientes de estas expresiones son enteros y racionales. El descriptor dice \"operatoria\" a secas, sin decir sobre qué conjunto numérico: no nombra ℤ ni ℚ.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "proporcionalidad",
+      "nombre": "Proporcionalidad",
+      "eje": "algebra",
+      "prerrequisitos": ["enteros-racionales"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Proporción directa e inversa y sus representaciones; problemas",
+          "porque": "Una proporción es una igualdad entre dos razones, y una razón es un cociente: el objeto de estudio es un racional. Pero el descriptor nunca lo dice; habla de proporción y representaciones sin bajar al conjunto numérico.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "ecuaciones-inecuaciones",
+      "nombre": "Ecuaciones e inecuaciones",
+      "eje": "algebra",
+      "prerrequisitos": ["expresiones-algebraicas"],
+      "justificaciones": {
+        "expresiones-algebraicas": {
+          "descriptor": "Resolución de ecuaciones lineales; resolución de inecuaciones lineales; problemas de ambas",
+          "porque": "Despejar una incógnita es manipular una expresión algebraica: reducir términos semejantes y transponer. El descriptor de la unidad dependiente habla solo de \"resolución\" y no menciona expresiones algebraicas, productos notables ni factorización. De todas las aristas sin respaldo, es la más defendible pedagógicamente, y aun así el temario no la escribe.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "sistemas-2x2",
+      "nombre": "Sistemas de ecuaciones 2x2",
+      "eje": "algebra",
+      "prerrequisitos": ["ecuaciones-inecuaciones", "funcion-lineal-afin"],
+      "justificaciones": {
+        "ecuaciones-inecuaciones": {
+          "descriptor": "Sistemas de ecuaciones lineales (2×2) — Resolución; problemas",
+          "porque": "El nombre del módulo en el temario dice \"ecuaciones lineales\", que es exactamente el objeto que introduce el módulo prerrequisito (\"Resolución de ecuaciones lineales\"). Un sistema 2×2 es un par de ecuaciones lineales resueltas a la vez: no hay sistema antes de haber ecuación.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        },
+        "funcion-lineal-afin": {
+          "descriptor": "Resolución; problemas",
+          "porque": "La lectura de un sistema como intersección de dos rectas exige la función afín. Pero el descriptor es de dos palabras y no menciona gráficos, rectas ni funciones: el temario admite resolver 2×2 solo por sustitución o igualación, algebraicamente, sin pasar nunca por la función. Esta es además la arista que estira el grafo a altura 4; si la profesora la rechaza, la altura baja a 3.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "funcion-lineal-afin",
+      "nombre": "Función lineal y afín",
+      "eje": "algebra",
+      "prerrequisitos": ["proporcionalidad", "ecuaciones-inecuaciones"],
+      "justificaciones": {
+        "proporcionalidad": {
+          "descriptor": "Concepto; tablas y gráficos; problemas",
+          "porque": "La función lineal y = mx es la proporcionalidad directa escrita como función, y las \"tablas y gráficos\" que pide son las mismas \"representaciones\" que pide proporcionalidad. La conexión se ve cruzando los dos descriptores, pero el descriptor de la unidad dependiente no nombra la proporcionalidad.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        },
+        "ecuaciones-inecuaciones": {
+          "descriptor": "Concepto; tablas y gráficos; problemas",
+          "porque": "Evaluar la función en un punto o encontrar dónde corta el eje x es resolver una ecuación lineal. El descriptor no lo menciona: dice \"concepto, tablas y gráficos\", que se puede tratar de forma puramente descriptiva sin resolver ninguna ecuación.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
     {
       "id": "funcion-cuadratica",
       "nombre": "Función cuadrática",
@@ -20,16 +132,150 @@
         "ecuaciones-inecuaciones",
         "potencias-raices",
         "funcion-lineal-afin"
-      ]
+      ],
+      "justificaciones": {
+        "expresiones-algebraicas": {
+          "descriptor": "Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas",
+          "porque": "Encontrar los ceros pasa por factorizar, y llegar al vértice por completación de cuadrado usa el producto notable. Ambas técnicas están en el módulo prerrequisito, pero el descriptor de la cuadrática nombra los resultados (\"vértice\", \"ceros\") y nunca las técnicas: no dice factorizar ni producto notable.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        },
+        "ecuaciones-inecuaciones": {
+          "descriptor": "Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas",
+          "porque": "El descriptor abre nombrando \"ecuaciones de segundo grado\". El objeto ecuación y su resolución los introduce el módulo de primer grado; segundo grado es la extensión declarada de ese mismo objeto. La cita nombra al prerrequisito por su tipo.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        },
+        "potencias-raices": {
+          "descriptor": "Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas",
+          "porque": "La fórmula general trae una raíz cuadrada y el término cuadrático es una potencia. El descriptor no nombra ni potencias ni raíces en ningún punto: \"segundo grado\" es la única pista y no cita el módulo. Arista de inferencia, no de texto.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        },
+        "funcion-lineal-afin": {
+          "descriptor": "Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas",
+          "porque": "\"Tablas y gráficos\" y la idea de variar parámetros repiten literalmente el trabajo hecho con la función afín, y sin el concepto de función no hay dónde apoyar la parábola. Pero el descriptor no menciona la función lineal: la continuidad es de método, no de cita.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
     },
 
-    { "id": "figuras-geometricas", "nombre": "Figuras geométricas", "eje": "geometria", "prerrequisitos": ["potencias-raices"] },
-    { "id": "cuerpos-geometricos", "nombre": "Cuerpos geométricos", "eje": "geometria", "prerrequisitos": ["figuras-geometricas"] },
-    { "id": "transformaciones-isometricas", "nombre": "Transformaciones isométricas", "eje": "geometria", "prerrequisitos": ["figuras-geometricas"] },
-    { "id": "semejanza-proporcionalidad", "nombre": "Semejanza y proporcionalidad", "eje": "geometria", "prerrequisitos": ["proporcionalidad", "figuras-geometricas"] },
+    {
+      "id": "figuras-geometricas",
+      "nombre": "Figuras geométricas",
+      "eje": "geometria",
+      "prerrequisitos": ["potencias-raices"],
+      "justificaciones": {
+        "potencias-raices": {
+          "descriptor": "Teorema de Pitágoras; perímetro y área de triángulos, paralelogramos, trapecios y círculos; problemas",
+          "porque": "El descriptor abre con el teorema de Pitágoras, que es una identidad entre cuadrados y cuyo uso normal termina en una raíz cuadrada para despejar el lado. El área del círculo trae otra potencia. La cita nombra el contenido que obliga al prerrequisito.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
 
-    { "id": "tablas-graficos", "nombre": "Tablas y gráficos", "eje": "probabilidad", "prerrequisitos": ["enteros-racionales", "porcentaje"] },
-    { "id": "medidas-posicion", "nombre": "Medidas de posición", "eje": "probabilidad", "prerrequisitos": ["tablas-graficos"] },
-    { "id": "reglas-probabilidad", "nombre": "Reglas de probabilidad", "eje": "probabilidad", "prerrequisitos": ["enteros-racionales"] }
+    {
+      "id": "cuerpos-geometricos",
+      "nombre": "Cuerpos geométricos",
+      "eje": "geometria",
+      "prerrequisitos": ["figuras-geometricas"],
+      "justificaciones": {
+        "figuras-geometricas": {
+          "descriptor": "Área de superficie y volumen de paralelepípedos, cubos y cilindros; problemas",
+          "porque": "El área de superficie de un cilindro se arma sumando dos círculos y un rectángulo, y la de un cubo, seis cuadrados. El descriptor pide exactamente \"área de superficie\" de esos cuerpos, y las áreas planas que eso requiere son las que declara el módulo prerrequisito (\"perímetro y área de triángulos, paralelogramos, trapecios y círculos\"). Los dos descriptores se enganchan por el texto.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "transformaciones-isometricas",
+      "nombre": "Transformaciones isométricas",
+      "eje": "geometria",
+      "prerrequisitos": ["figuras-geometricas"],
+      "justificaciones": {
+        "figuras-geometricas": {
+          "descriptor": "Puntos y vectores en el plano cartesiano; rotación, traslación y reflexión; problemas",
+          "porque": "Dos cosas. Primero, en negativo: el temario ubica \"puntos y vectores en el plano cartesiano\" DENTRO del descriptor de esta misma unidad, así que el plano cartesiano no se importa desde función lineal y afín — la unidad lo trae consigo. Segundo, en positivo: rotar, trasladar y reflejar son operaciones sobre una figura, y reconocer la figura que se transforma es lo que entrega el módulo prerrequisito. La primera mitad es cita literal; la segunda es lectura del verbo \"rotación\" y su objeto implícito.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "semejanza-proporcionalidad",
+      "nombre": "Semejanza y proporcionalidad",
+      "eje": "geometria",
+      "prerrequisitos": ["proporcionalidad", "figuras-geometricas"],
+      "justificaciones": {
+        "proporcionalidad": {
+          "descriptor": "Propiedades de semejanza y proporcionalidad aplicadas a modelos a escala y situaciones reales",
+          "porque": "El descriptor nombra el prerrequisito con la palabra exacta: \"proporcionalidad\". Una escala es una razón constante entre medidas; sin proporción no hay modelo a escala.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        },
+        "figuras-geometricas": {
+          "descriptor": "Semejanza y proporcionalidad de figuras — Propiedades de semejanza y proporcionalidad aplicadas a modelos a escala y situaciones reales",
+          "porque": "El nombre del módulo en el temario termina en \"de figuras\": lo que se declara semejante son figuras geométricas, con sus lados y ángulos. La semejanza se define comparando esos elementos, que los entrega el módulo prerrequisito.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "tablas-graficos",
+      "nombre": "Tablas y gráficos",
+      "eje": "probabilidad",
+      "prerrequisitos": ["enteros-racionales", "porcentaje"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Frecuencia absoluta y relativa; tipos de gráficos; promedio; problemas",
+          "porque": "La frecuencia relativa es, por definición, el cociente entre la frecuencia absoluta y el total: un racional. El promedio es otra división. El descriptor nombra las dos cosas, así que la cita sostiene la arista.",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        },
+        "porcentaje": {
+          "descriptor": "Frecuencia absoluta y relativa; tipos de gráficos; promedio; problemas",
+          "porque": "En la práctica la frecuencia relativa se comunica y se lee en porcentaje, y los gráficos circulares se reparten sobre 100. Pero el descriptor dice \"relativa\", no \"porcentaje\": el temario admite tratar la frecuencia relativa como fracción o decimal sin pasar por el módulo de porcentaje.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "medidas-posicion",
+      "nombre": "Medidas de posición",
+      "eje": "probabilidad",
+      "prerrequisitos": ["tablas-graficos"],
+      "justificaciones": {
+        "tablas-graficos": {
+          "descriptor": "Cuartiles y percentiles de uno o más grupos; diagrama de cajón; problemas",
+          "porque": "El descriptor pide el diagrama de cajón, que es un tipo de gráfico, y los cuartiles se calculan sobre datos organizados en una tabla de frecuencias. Ambos objetos —tabla y gráfico— los entrega el módulo prerrequisito, que declara \"tipos de gráficos\" y \"frecuencia absoluta y relativa\".",
+          "respaldo": "temario",
+          "fuente": "resumen-4.1"
+        }
+      }
+    },
+
+    {
+      "id": "reglas-probabilidad",
+      "nombre": "Reglas de probabilidad",
+      "eje": "probabilidad",
+      "prerrequisitos": ["enteros-racionales"],
+      "justificaciones": {
+        "enteros-racionales": {
+          "descriptor": "Probabilidad de un evento; regla aditiva y multiplicativa; problemas",
+          "porque": "La probabilidad de un evento es casos favorables sobre casos totales —un racional entre 0 y 1— y las reglas aditiva y multiplicativa son suma y producto de fracciones. El descriptor nombra las operaciones pero nunca el conjunto numérico sobre el que ocurren: no dice racionales, ni fracciones, ni cociente. Arista de inferencia.",
+          "respaldo": "sin-respaldo",
+          "fuente": "resumen-4.1"
+        }
+      }
+    }
   ]
 }
