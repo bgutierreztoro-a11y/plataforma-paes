@@ -158,7 +158,7 @@ export interface BloquePistas {
 
 export interface BloqueVisualizacion {
   tipo: "visualizacion";
-  variante: "tabla" | "grafico" | "diagrama";
+  variante: "tabla" | "grafico" | "diagrama" | "regla-signos";
   descripcion: string;
   datos?: unknown;
 }

@@ -2,6 +2,7 @@ import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos
 import { IlustracionBandas } from "@/components/ilustraciones/IlustracionBandas";
 import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
 import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
+import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
@@ -20,6 +21,15 @@ interface DatosParticion {
 interface DatosEjeVertical {
   puntos: { etiqueta: string; profundidad: number }[];
   tramoDestacado?: { desde: number; hasta: number; longitud: number };
+}
+
+interface DatosReglaSignos {
+  signos: {
+    signo: string;
+    lectura: string;
+    incluido: boolean;
+    direccion: "izquierda" | "derecha";
+  }[];
 }
 
 interface DatosBandas {
@@ -75,6 +85,21 @@ function esDatosEjeVertical(datos: unknown): datos is DatosEjeVertical {
     Array.isArray(puntos) &&
     puntos.length > 0 &&
     puntos.every((p) => typeof p?.profundidad === "number" && typeof p?.etiqueta === "string")
+  );
+}
+
+function esDatosReglaSignos(datos: unknown): datos is DatosReglaSignos {
+  const signos = (datos as DatosReglaSignos | null)?.signos;
+  return (
+    Array.isArray(signos) &&
+    signos.length > 0 &&
+    signos.every(
+      (s) =>
+        typeof s?.signo === "string" &&
+        typeof s?.lectura === "string" &&
+        typeof s?.incluido === "boolean" &&
+        (s?.direccion === "izquierda" || s?.direccion === "derecha"),
+    )
   );
 }
 
@@ -180,6 +205,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
           puntos={bloque.datos.puntos}
           tramoDestacado={bloque.datos.tramoDestacado}
         />
+      </figure>
+    );
+  }
+
+  if (esDatosReglaSignos(bloque.datos)) {
+    return (
+      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <TablaReglaSigno filas={bloque.datos.signos} />
       </figure>
     );
   }
