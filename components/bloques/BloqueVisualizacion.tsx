@@ -1,8 +1,23 @@
 import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos";
+import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
+import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
 
 interface DatosTabla {
   columnas: string[];
   filas: (string | number)[][];
+}
+
+interface DatosParticion {
+  tazasTotal: number;
+  partesPorTaza: number;
+  partesTotales: number;
+  partesPorGrupo: number;
+  gruposCompletos: number;
+}
+
+interface DatosEjeVertical {
+  puntos: { etiqueta: string; profundidad: number }[];
+  tramoDestacado?: { desde: number; hasta: number; longitud: number };
 }
 
 /* Diagrama por etapas: cada paso es un estado con dos lados y la acción que
@@ -34,6 +49,26 @@ function esDatosPasos(datos: unknown): datos is DatosPasos {
     Array.isArray(pasos) &&
     pasos.length > 0 &&
     pasos.every((p) => typeof p?.izquierda === "string" && typeof p?.derecha === "string")
+  );
+}
+
+function esDatosParticion(datos: unknown): datos is DatosParticion {
+  const d = datos as DatosParticion | null;
+  return (
+    typeof d?.partesPorTaza === "number" &&
+    typeof d.tazasTotal === "number" &&
+    typeof d.partesTotales === "number" &&
+    typeof d.partesPorGrupo === "number" &&
+    typeof d.gruposCompletos === "number"
+  );
+}
+
+function esDatosEjeVertical(datos: unknown): datos is DatosEjeVertical {
+  const puntos = (datos as DatosEjeVertical | null)?.puntos;
+  return (
+    Array.isArray(puntos) &&
+    puntos.length > 0 &&
+    puntos.every((p) => typeof p?.profundidad === "number" && typeof p?.etiqueta === "string")
   );
 }
 
@@ -96,6 +131,27 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
             )}
           </div>
         ))}
+      </figure>
+    );
+  }
+
+  if (esDatosParticion(bloque.datos)) {
+    return (
+      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionParticion {...bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosEjeVertical(bloque.datos)) {
+    return (
+      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionEjeVertical
+          puntos={bloque.datos.puntos}
+          tramoDestacado={bloque.datos.tramoDestacado}
+        />
       </figure>
     );
   }
