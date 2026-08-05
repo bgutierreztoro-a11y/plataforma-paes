@@ -24,7 +24,29 @@ export const K = 1.4;
  */
 export const GAMMA = 0.5;
 
-/** Hasta cuántos saltos del DAG se propaga una respuesta. */
+/**
+ * Hasta cuántos saltos del DAG se propaga una respuesta.
+ *
+ * **Radio de propagación, no altura del grafo.** Son dos cosas distintas y es
+ * fácil confundirlas: esta constante dice hasta dónde viaja la evidencia de una
+ * sola respuesta; la altura del grafo dice cuán larga es la cadena de
+ * prerrequisitos más larga del dominio. Nada en el código ata una a la otra.
+ *
+ * Hoy no coinciden: `dag-m1.json` tiene altura **4**
+ * (`enteros-racionales → expresiones-algebraicas → ecuaciones-inecuaciones →
+ * funcion-lineal-afin → sistemas-2x2`, y la misma ruta hasta
+ * `funcion-cuadratica`), mientras este radio es 3. La consecuencia concreta es
+ * que fallar un ítem de `sistemas-2x2` o de `funcion-cuadratica` nunca mueve la
+ * creencia sobre `enteros-racionales`, porque queda a 4 saltos.
+ *
+ * Se deja así a propósito y no es un descuido: con `GAMMA = 0.5` la evidencia a
+ * 4 saltos ya valdría 1/16, y la raíz recibe evidencia directa de sobra por
+ * otros caminos más cortos. Queda escrito acá para que la próxima persona que
+ * note el desfase sepa que se miró, en vez de "arreglarlo" subiendo el radio.
+ * El test "la cadena de prerrequisitos más larga tiene 4 aristas"
+ * (`__tests__/motor.test.ts`) fija ese 4 con una cifra escrita a mano: si
+ * alguien alarga una cadena, el test lo obliga a decidirlo en voz alta.
+ */
 export const PROFUNDIDAD_MAX = 3;
 
 /**
