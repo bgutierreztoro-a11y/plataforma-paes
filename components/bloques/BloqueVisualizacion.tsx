@@ -1,6 +1,7 @@
 import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos";
 import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
 import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
+import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
   columnas: string[];
@@ -81,8 +82,11 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
           <thead>
             <tr>
               {columnas.map((c, i) => (
-                <th key={i} className="border-b border-border bg-accent-suave px-3 py-2 text-left font-medium">
-                  {c}
+                <th
+                  key={i}
+                  className="border-b border-border bg-accent-suave px-3.5 py-2.5 text-left align-top font-medium text-ink"
+                >
+                  {conEnfasis(c)}
                 </th>
               ))}
             </tr>
@@ -91,8 +95,13 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
             {filas.map((fila, i) => (
               <tr key={i}>
                 {fila.map((c, j) => (
-                  <td key={j} className="border-b border-border px-3 py-2 font-mono tabular-nums">
-                    {c}
+                  <td
+                    key={j}
+                    className={`border-b border-border px-3.5 py-2.5 align-top leading-relaxed ${
+                      esNumeroPuro(c) ? "font-mono tabular-nums" : ""
+                    }`}
+                  >
+                    {conEnfasis(String(c))}
                   </td>
                 ))}
               </tr>
