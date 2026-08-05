@@ -11,6 +11,8 @@ import {
   UMBRAL_P_DOMINADA,
 } from "../constantes.ts";
 import { ancestros, centralidad, construirDag, descendientes } from "../dag.ts";
+import { altura, desbloquea, niveles, ordenDeEstudio, ordenTopologico } from "../orden.ts";
+import { todosLosTemas } from "../../modulos.ts";
 import {
   causaDeUnidad,
   crearEstado,
@@ -692,6 +694,13 @@ describe("dag-m1.json", () => {
   const ARISTAS_ESPERADAS = 22;
   const RAIZ = "enteros-racionales";
 
+  /** Largo en aristas de la cadena más larga. NO es `PROFUNDIDAD_MAX`. */
+  const ALTURA_ESPERADA = 4;
+
+  /** Reparto de las 22 justificaciones, revisado arista por arista a mano. */
+  const CON_RESPALDO_ESPERADAS = 10;
+  const SIN_RESPALDO_ESPERADAS = 12;
+
   /** Unidades que nadie declara como prerrequisito. A mano, a propósito. */
   const HOJAS_ESPERADAS = [
     "sistemas-2x2",
@@ -782,5 +791,224 @@ describe("dag-m1.json", () => {
 
     assert.deepEqual([...hojas].sort(), [...HOJAS_ESPERADAS].sort());
     assert.equal(hojas.length, 7);
+  });
+
+  /**
+   * La altura del grafo, escrita a mano como el resto de las cifras de este
+   * bloque. No confundir con `PROFUNDIDAD_MAX = 3`, que es el radio de
+   * propagación de evidencia y NO la altura (ver la nota en `constantes.ts`).
+   * Que hoy la altura sea mayor que el radio es deliberado y está documentado
+   * ahí; este test existe para que alargar una cadena a 5 sea una decisión
+   * explícita y no un accidente.
+   */
+  test("la cadena de prerrequisitos más larga tiene 4 aristas", () => {
+    const dag = construirDag(leerDominio().unidades);
+    assert.equal(altura(dag), ALTURA_ESPERADA);
+
+    // Y que la raíz esté efectivamente en el nivel 0, no flotando en otro lado.
+    assert.equal(niveles(dag).get(RAIZ), 0);
+  });
+
+  test("el orden topológico incluye las 16 y respeta todos los prerrequisitos", () => {
+    const dominio = leerDominio();
+    const dag = construirDag(dominio.unidades);
+    const orden = ordenTopologico(dag);
+
+    assert.equal(orden.length, 16);
+    assert.equal(orden[0], RAIZ, "la raíz tiene que salir primera");
+
+    const posicion = new Map(orden.map((id, i) => [id, i]));
+    const violaciones: string[] = [];
+    for (const u of dominio.unidades) {
+      for (const previo of u.prerrequisitos) {
+        if (posicion.get(previo)! >= posicion.get(u.id)!) violaciones.push(`${previo} → ${u.id}`);
+      }
+    }
+    assert.deepEqual(violaciones, [], "hay unidades que salen antes que sus prerrequisitos");
+  });
+
+  test("la raíz desbloquea las 15 unidades restantes", () => {
+    const dag = construirDag(leerDominio().unidades);
+    assert.equal(desbloquea(dag, RAIZ), 15);
+
+    // Una hoja no desbloquea nada: es el otro extremo de la misma medida.
+    assert.equal(desbloquea(dag, "reglas-probabilidad"), 0);
+  });
+
+  /**
+   * El DAG y `lib/modulos.ts` nombran las mismas 16 unidades con ids distintos
+   * (`enteros-racionales` vs `enteros-y-racionales`, y siete más). Mientras el
+   * diagnóstico no esté integrado con `/camino` no hay razón para renombrar
+   * ninguno de los dos lados, pero sí para exigir que la correspondencia siga
+   * siendo 1 a 1: si aparece o desaparece una unidad de cualquiera de los dos
+   * archivos, este test cae.
+   *
+   * El mapa va escrito a mano, como todo en este bloque. Derivarlo de los ids
+   * (normalizando guiones, por ejemplo) sería fingir una verificación: pasaría
+   * igual aunque los dos archivos hablaran de temarios distintos.
+   */
+  const DAG_A_TEMA: Record<string, string> = {
+    "enteros-racionales": "enteros-y-racionales",
+    porcentaje: "porcentaje",
+    "potencias-raices": "potencias-y-raices",
+    "expresiones-algebraicas": "expresiones-algebraicas",
+    proporcionalidad: "proporcionalidad",
+    "ecuaciones-inecuaciones": "ecuaciones-e-inecuaciones-primer-grado",
+    "sistemas-2x2": "sistemas-2x2",
+    "funcion-lineal-afin": "funcion-lineal-y-afin",
+    "funcion-cuadratica": "funcion-cuadratica",
+    "figuras-geometricas": "figuras-geometricas",
+    "cuerpos-geometricos": "cuerpos-geometricos",
+    "transformaciones-isometricas": "transformaciones-isometricas",
+    "semejanza-proporcionalidad": "semejanza-y-proporcionalidad",
+    "tablas-graficos": "tablas-y-graficos",
+    "medidas-posicion": "medidas-de-posicion",
+    "reglas-probabilidad": "reglas-de-probabilidades",
+  };
+
+  test("las 16 unidades del DAG corresponden 1 a 1 con los temas de lib/modulos.ts", () => {
+    const idsDag = leerDominio().unidades.map((u) => u.id);
+    // `Set<string>` a propósito: los ids de `modulos.ts` son un union type y los
+    // del DAG son strings sueltos. Comparar los dos conjuntos es justamente el
+    // punto del test, así que acá se bajan a string en vez de castear el mapa.
+    const idsTema: Set<string> = new Set(todosLosTemas().map((t) => t.id as string));
+
+    assert.equal(Object.keys(DAG_A_TEMA).length, 16, "el mapa tiene que cubrir las 16");
+    assert.deepEqual(
+      [...idsDag].sort(),
+      Object.keys(DAG_A_TEMA).sort(),
+      "el DAG trae unidades que el mapa no nombra (o al revés)",
+    );
+
+    const sinTema = idsDag.map((id) => DAG_A_TEMA[id]).filter((tema) => !idsTema.has(tema));
+    assert.deepEqual(sinTema, [], "el mapa apunta a temas que no existen en lib/modulos.ts");
+
+    const mapeados = new Set(Object.values(DAG_A_TEMA));
+    assert.equal(mapeados.size, 16, "hay dos unidades del DAG apuntando al mismo tema");
+    assert.deepEqual(
+      [...idsTema].filter((t) => !mapeados.has(t)),
+      [],
+      "hay temas de lib/modulos.ts que ninguna unidad del DAG cubre",
+    );
+  });
+
+  /**
+   * Las 22 aristas tienen que venir con justificación auditable. `sin-respaldo`
+   * es un valor legítimo y esperado: significa que la arista es inferencia
+   * pedagógica que el temario no sostiene textualmente, y son exactamente las
+   * que la profesora tiene que dirimir. Lo que este test prohíbe es la ausencia
+   * silenciosa — una arista nueva sin nadie que explique de dónde salió.
+   */
+  test("cada arista trae justificación con descriptor y porqué no vacíos", () => {
+    const unidades = leerDominio().unidades as UnidadConJustificaciones[];
+    const problemas: string[] = [];
+    let total = 0;
+
+    for (const u of unidades) {
+      const justificaciones = u.justificaciones ?? {};
+      for (const previo of u.prerrequisitos) {
+        total++;
+        const j = justificaciones[previo];
+        const arista = `${previo} → ${u.id}`;
+        if (!j) {
+          problemas.push(`${arista}: sin justificación`);
+          continue;
+        }
+        if (!j.descriptor?.trim()) problemas.push(`${arista}: descriptor vacío`);
+        if (!j.porque?.trim()) problemas.push(`${arista}: porqué vacío`);
+        if (j.respaldo !== "temario" && j.respaldo !== "sin-respaldo") {
+          problemas.push(`${arista}: respaldo inválido (${j.respaldo})`);
+        }
+      }
+      for (const clave of Object.keys(justificaciones)) {
+        if (!u.prerrequisitos.includes(clave)) {
+          problemas.push(`${clave} → ${u.id}: justificación de una arista que no existe`);
+        }
+      }
+    }
+
+    assert.deepEqual(problemas, []);
+    assert.equal(total, ARISTAS_ESPERADAS);
+  });
+
+  test("el reparto entre aristas respaldadas y sin respaldo es el revisado a mano", () => {
+    const unidades = leerDominio().unidades as UnidadConJustificaciones[];
+    const respaldos = unidades.flatMap((u) =>
+      Object.values(u.justificaciones ?? {}).map((j) => j.respaldo),
+    );
+
+    assert.equal(respaldos.filter((r) => r === "temario").length, CON_RESPALDO_ESPERADAS);
+    assert.equal(respaldos.filter((r) => r === "sin-respaldo").length, SIN_RESPALDO_ESPERADAS);
+  });
+});
+
+/** Forma de una unidad del JSON con el campo de justificaciones que lee el test. */
+type UnidadConJustificaciones = {
+  id: string;
+  prerrequisitos: string[];
+  justificaciones?: Record<
+    string,
+    { descriptor?: string; porque?: string; respaldo?: string; fuente?: string }
+  >;
+};
+
+/**
+ * `orden.ts` contra la topología sintética de `fixtures.ts`, donde el resultado
+ * correcto se puede verificar mirando el diagrama del archivo. El bloque de
+ * arriba ya cubre el grafo real; acá se prueba el algoritmo.
+ */
+describe("orden derivado del DAG", () => {
+  test("el orden topológico desempata por orden de declaración, no alfabético", () => {
+    // alfa y zeta son ambas raíces, pero zeta va última en UNIDADES_FIXTURE, así
+    // que sale última: beta y gamma (índices 1 y 2) se le adelantan apenas alfa
+    // las habilita. Con desempate FIFO zeta habría salido segunda; con desempate
+    // alfabético, epsilon iría antes que gamma. Ni una ni otra: manda el archivo.
+    assert.deepEqual(ordenTopologico(DAG_FIXTURE), [
+      "alfa",
+      "beta",
+      "gamma",
+      "delta",
+      "epsilon",
+      "zeta",
+    ]);
+  });
+
+  test("el nivel usa el camino más largo, no el más corto", () => {
+    const nivel = niveles(DAG_FIXTURE);
+    assert.equal(nivel.get("alfa"), 0);
+    assert.equal(nivel.get("zeta"), 0, "una raíz aislada también está en el nivel 0");
+    assert.equal(nivel.get("beta"), 1);
+    assert.equal(nivel.get("gamma"), 1);
+    assert.equal(nivel.get("delta"), 2);
+    assert.equal(nivel.get("epsilon"), 3);
+    assert.equal(altura(DAG_FIXTURE), 3);
+  });
+
+  test("un rombo pone la unidad en el nivel del camino largo", () => {
+    // alfa → beta → delta, y además alfa → delta directo. delta debe quedar en
+    // 2 (camino largo), no en 1 (camino corto, que es lo que daría `ancestros`).
+    const dag = construirDag([
+      { id: "alfa", nombre: "Alfa", eje: "numeros", prerrequisitos: [] },
+      { id: "beta", nombre: "Beta", eje: "numeros", prerrequisitos: ["alfa"] },
+      { id: "delta", nombre: "Delta", eje: "numeros", prerrequisitos: ["alfa", "beta"] },
+    ]);
+
+    assert.equal(ancestros(dag, "delta").get("alfa"), 1, "la distancia mínima sigue siendo 1");
+    assert.equal(niveles(dag).get("delta"), 2, "pero el nivel usa el camino largo");
+  });
+
+  test("desbloquea cuenta descendientes transitivos", () => {
+    assert.equal(desbloquea(DAG_FIXTURE, "alfa"), 4); // beta, gamma, delta, epsilon
+    assert.equal(desbloquea(DAG_FIXTURE, "delta"), 1); // epsilon
+    assert.equal(desbloquea(DAG_FIXTURE, "epsilon"), 0);
+    assert.equal(desbloquea(DAG_FIXTURE, "zeta"), 0, "una unidad aislada no abre nada");
+  });
+
+  test("ordenDeEstudio junta orden, nivel y desbloqueos en una sola pasada", () => {
+    const filas = ordenDeEstudio(DAG_FIXTURE);
+    assert.equal(filas.length, 6);
+    assert.deepEqual(filas[0], { id: "alfa", nivel: 0, desbloquea: 4 });
+    assert.deepEqual(filas[4], { id: "epsilon", nivel: 3, desbloquea: 0 });
+    assert.deepEqual(filas.at(-1), { id: "zeta", nivel: 0, desbloquea: 0 });
   });
 });
