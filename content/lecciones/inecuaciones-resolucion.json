@@ -159,37 +159,8 @@
           "contenido": "Hora de arreglar la regla. Y para eso hay que cambiar de dibujo.\n\nLa balanza de la lección pasada servía para el `=`: dos platillos que pesan lo mismo. Para el `<` podrías imaginar una balanza **desnivelada**, y funcionaría… para sumar y restar, y para duplicar. Pero se cae justo donde la necesitas: **no existe un platillo con peso negativo**. La balanza no tiene nada que decir sobre multiplicar por −1, que es exactamente el caso que te traicionó en la primera pantalla.\n\n(Esto ya lo sabías: la lección de ecuaciones lo dijo con todas sus letras — 'no existe una bolsa con −3 bolitas'. Ahí ese límite era una nota al margen. Acá es el tema.)\n\nCambiemos de imagen: **la recta numérica**. En ella, `a < b` no es una metáfora de nada: significa literalmente **'a está a la izquierda de b'**."
         },
         {
-          "tipo": "visualizacion",
-          "variante": "diagrama",
-          "descripcion": "Cuatro rectas numéricas apiladas verticalmente, cada una con dos puntos marcados y etiquetados. La primera muestra la situación original; las tres siguientes muestran qué le hace cada operación a la recta completa. Las bandas 2 y 3 deben leerse como el MISMO orden izquierda-derecha que la banda 1; la banda 4 debe mostrar visiblemente el intercambio, idealmente con un eje de simetría dibujado en el 0.",
-          "datos": {
-            "bandas": [
-              {
-                "operacion": "Original",
-                "queSeVe": "Recta con los puntos 4 y 10 marcados",
-                "puntos": [4, 10],
-                "orden": "4 a la izquierda de 10"
-              },
-              {
-                "operacion": "Sumar 6",
-                "queSeVe": "Toda la recta se DESLIZA 6 lugares hacia la derecha",
-                "puntos": [10, 16],
-                "orden": "10 a la izquierda de 16 — mismo orden"
-              },
-              {
-                "operacion": "Multiplicar por 3",
-                "queSeVe": "Toda la recta se ESTIRA desde el 0",
-                "puntos": [12, 30],
-                "orden": "12 a la izquierda de 30 — mismo orden"
-              },
-              {
-                "operacion": "Multiplicar por −1",
-                "queSeVe": "Aparece un ESPEJO en el 0 y la recta se da vuelta",
-                "puntos": [-4, -10],
-                "orden": "−4 a la DERECHA de −10 — orden intercambiado"
-              }
-            ]
-          }
+          "tipo": "texto",
+          "contenido": "Prueba estas cuatro reglas sobre **−5 < 3**, una por una, y fíjate qué le pasa a la desigualdad:\n\n1. Sumar 4 a ambos lados: **−1 < 7**. Sigue siendo verdad.\n2. Restar 4 a ambos lados: **−9 < −1**. Sigue siendo verdad.\n3. Multiplicar ambos lados por 2: **−10 < 6**. Sigue siendo verdad.\n4. Multiplicar ambos lados por −2: **10 < −6**. Esto es falso.\n\nEn la regla 4 el signo se dio vuelta: tenía que ser **10 > −6** para seguir siendo cierto."
         },
         {
           "tipo": "pregunta",
