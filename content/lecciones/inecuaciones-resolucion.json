@@ -210,7 +210,44 @@
         },
         {
           "tipo": "texto",
-          "contenido": "Una diferencia grande con las ecuaciones: una ecuación lineal tiene **una** solución. Una inecuación tiene **infinitas**, y por eso no se responde con un número sino con un **conjunto solución**, que se dibuja en la recta.\n\nY ahí importa el borde:\n\n| Signo | Se lee | El borde | Se dibuja |\n|---|---|---|---|\n| x < 5 | menor que 5 | **NO** incluido | punto **abierto** (círculo vacío) en 5, sombreado hacia la izquierda |\n| x ≤ 5 | menor o igual que 5 | **SÍ** incluido | punto **cerrado** (relleno) en 5, sombreado hacia la izquierda |\n| x > 5 | mayor que 5 | **NO** incluido | punto **abierto** en 5, sombreado hacia la derecha |\n| x ≥ 5 | mayor o igual que 5 | **SÍ** incluido | punto **cerrado** (relleno) en 5, sombreado hacia la derecha |\n\nLa rayita de abajo en `≤` y `≥` es literalmente el `=` escondido: dice 'y también vale el que está justo ahí'. Es lo que comprobaste hace un rato, cuando el 5 quedó afuera por un pelo."
+          "contenido": "Una diferencia grande con las ecuaciones: una ecuación lineal tiene **una** solución. Una inecuación tiene **infinitas**, y por eso no se responde con un número sino con un **conjunto solución**, que se dibuja en la recta.\n\nY ahí importa el borde:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "regla-signos",
+          "descripcion": "Cuatro filas, una por signo, todas con el borde en 5. x < 5, menor que 5: punto abierto (círculo vacío) en 5, sombreado hacia la izquierda. x ≤ 5, menor o igual que 5: punto cerrado (relleno) en 5, sombreado hacia la izquierda. x > 5, mayor que 5: punto abierto en 5, sombreado hacia la derecha. x ≥ 5, mayor o igual que 5: punto cerrado (relleno) en 5, sombreado hacia la derecha.",
+          "datos": {
+            "signos": [
+              {
+                "signo": "x < 5",
+                "lectura": "menor que 5",
+                "incluido": false,
+                "direccion": "izquierda"
+              },
+              {
+                "signo": "x ≤ 5",
+                "lectura": "menor o igual que 5",
+                "incluido": true,
+                "direccion": "izquierda"
+              },
+              {
+                "signo": "x > 5",
+                "lectura": "mayor que 5",
+                "incluido": false,
+                "direccion": "derecha"
+              },
+              {
+                "signo": "x ≥ 5",
+                "lectura": "mayor o igual que 5",
+                "incluido": true,
+                "direccion": "derecha"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La rayita de abajo en `≤` y `≥` es literalmente el `=` escondido: dice 'y también vale el que está justo ahí'. Es lo que comprobaste hace un rato, cuando el 5 quedó afuera por un pelo."
         },
         {
           "tipo": "numerica",

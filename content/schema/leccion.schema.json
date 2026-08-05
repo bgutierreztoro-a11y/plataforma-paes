@@ -338,7 +338,7 @@
       "required": ["tipo", "variante", "descripcion"],
       "properties": {
         "tipo": { "const": "visualizacion" },
-        "variante": { "enum": ["tabla", "grafico", "diagrama"] },
+        "variante": { "enum": ["tabla", "grafico", "diagrama", "regla-signos"] },
         "descripcion": { "type": "string", "minLength": 1, "description": "Qué debe mostrarse, en términos suficientes para que diseño/desarrollo lo construya." },
         "datos": { "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante." }
       },
