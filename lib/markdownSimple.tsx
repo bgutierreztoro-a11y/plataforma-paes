@@ -12,7 +12,17 @@ import type { ReactNode } from "react";
  * recursión, los delimitadores interiores se imprimirían literales. Termina
  * siempre: cada nivel entrega al siguiente el texto ya sin sus delimitadores.
  */
-function conEnfasis(linea: string): ReactNode[] {
+/**
+ * Número puro: solo dígitos, con signo y decimales opcionales. Se usa para
+ * decidir si una celda va en monoespaciada. "x < 5" o "5 kg" no califican —
+ * llevan texto, y el texto se lee mejor en la tipografía base.
+ */
+export function esNumeroPuro(valor: string | number): boolean {
+  if (typeof valor === "number") return true;
+  return /^[-−+]?\d+([.,]\d+)?$/.test(valor.trim());
+}
+
+export function conEnfasis(linea: string): ReactNode[] {
   // La negrita va primero en la alternancia: si no, "**x**" se partiría como
   // cursiva y dejaría asteriscos sueltos en pantalla.
   const partes = linea.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g).filter((p) => p !== "");
@@ -46,13 +56,16 @@ function renderTabla(lineas: string[], key: number): ReactNode {
     );
   const [encabezado, ...cuerpo] = filas;
   return (
-    <div key={key} className="overflow-x-auto">
-      <table className="my-2 w-full border-collapse text-sm">
+    <div key={key} className="my-3 overflow-x-auto rounded-tarjeta border border-border">
+      <table className="w-full border-collapse text-sm">
         <thead>
           <tr>
             {encabezado.map((c, i) => (
-              <th key={i} className="border-b border-border px-3 py-1.5 text-left font-medium">
-                {c}
+              <th
+                key={i}
+                className="border-b border-border bg-accent-suave px-3.5 py-2.5 text-left align-top font-medium text-ink"
+              >
+                {conEnfasis(c)}
               </th>
             ))}
           </tr>
@@ -61,8 +74,13 @@ function renderTabla(lineas: string[], key: number): ReactNode {
           {cuerpo.map((fila, i) => (
             <tr key={i}>
               {fila.map((c, j) => (
-                <td key={j} className="border-b border-border px-3 py-1.5 font-mono tabular-nums">
-                  {c}
+                <td
+                  key={j}
+                  className={`border-b border-border px-3.5 py-2.5 align-top leading-relaxed ${
+                    esNumeroPuro(c) ? "font-mono tabular-nums" : ""
+                  }`}
+                >
+                  {conEnfasis(c)}
                 </td>
               ))}
             </tr>
