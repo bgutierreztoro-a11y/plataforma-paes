@@ -1,4 +1,5 @@
 import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos";
+import { IlustracionBandas } from "@/components/ilustraciones/IlustracionBandas";
 import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
 import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
@@ -19,6 +20,10 @@ interface DatosParticion {
 interface DatosEjeVertical {
   puntos: { etiqueta: string; profundidad: number }[];
   tramoDestacado?: { desde: number; hasta: number; longitud: number };
+}
+
+interface DatosBandas {
+  bandas: { operacion: string; queSeVe?: string; puntos: number[]; orden?: string }[];
 }
 
 /* Diagrama por etapas: cada paso es un estado con dos lados y la acción que
@@ -70,6 +75,20 @@ function esDatosEjeVertical(datos: unknown): datos is DatosEjeVertical {
     Array.isArray(puntos) &&
     puntos.length > 0 &&
     puntos.every((p) => typeof p?.profundidad === "number" && typeof p?.etiqueta === "string")
+  );
+}
+
+function esDatosBandas(datos: unknown): datos is DatosBandas {
+  const bandas = (datos as DatosBandas | null)?.bandas;
+  return (
+    Array.isArray(bandas) &&
+    bandas.length > 0 &&
+    bandas.every(
+      (b) =>
+        typeof b?.operacion === "string" &&
+        Array.isArray(b?.puntos) &&
+        b.puntos.every((p) => typeof p === "number"),
+    )
   );
 }
 
@@ -161,6 +180,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
           puntos={bloque.datos.puntos}
           tramoDestacado={bloque.datos.tramoDestacado}
         />
+      </figure>
+    );
+  }
+
+  if (esDatosBandas(bloque.datos)) {
+    return (
+      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionBandas bandas={bloque.datos.bandas} />
       </figure>
     );
   }
