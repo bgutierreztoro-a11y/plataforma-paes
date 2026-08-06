@@ -699,8 +699,18 @@ describe("dag-m1.json", () => {
   const ALTURA_ESPERADA = 4;
 
   /** Reparto de las 22 justificaciones, revisado arista por arista a mano. */
-  const CON_RESPALDO_ESPERADAS = 10;
-  const SIN_RESPALDO_ESPERADAS = 12;
+  const CON_RESPALDO_ESPERADAS = 6;
+  const SIN_RESPALDO_ESPERADAS = 16;
+
+  /**
+   * Reparto de tipo, mismo criterio de cifra escrita a mano: si un alumno puede
+   * dominar la UNIDAD DEPENDIENTE COMPLETA sin el prerrequisito (facilitadora)
+   * o no (bloqueante). Pre-registrado antes de justificar las 16 aristas fuera
+   * de enteros-racionales, comparado después contra el resultado: 15/16
+   * aciertos.
+   */
+  const BLOQUEANTE_ESPERADAS = 17;
+  const FACILITADORA_ESPERADAS = 5;
 
   /** Unidades que nadie declara como prerrequisito. A mano, a propósito. */
   const HOJAS_ESPERADAS = [
@@ -941,13 +951,17 @@ describe("dag-m1.json", () => {
   });
 
   /**
-   * Las 22 aristas tienen que venir con justificación auditable. `sin-respaldo`
+   * Las 22 aristas tienen que venir con justificación auditable, citando
+   * docs/temario-demre-m1-2027.md palabra por palabra (`justificacion.descriptor`
+   * es un array de bullets exactos, nunca fusionados en una oración compuesta),
+   * con su ubicación (`archivo`, `linea`) para verificar con grep. `sin-respaldo`
    * es un valor legítimo y esperado: significa que la arista es inferencia
    * pedagógica que el temario no sostiene textualmente, y son exactamente las
    * que la profesora tiene que dirimir. Lo que este test prohíbe es la ausencia
-   * silenciosa — una arista nueva sin nadie que explique de dónde salió.
+   * silenciosa — una arista nueva sin nadie que explique de dónde salió, o sin
+   * tipo clasificado.
    */
-  test("cada arista trae justificación con descriptor y porqué no vacíos", () => {
+  test("cada arista trae justificación citable, con porQue, respaldo y tipo", () => {
     const unidades = leerDominio().unidades as UnidadConJustificaciones[];
     const problemas: string[] = [];
     let total = 0;
@@ -962,10 +976,18 @@ describe("dag-m1.json", () => {
           problemas.push(`${arista}: sin justificación`);
           continue;
         }
-        if (!j.descriptor?.trim()) problemas.push(`${arista}: descriptor vacío`);
-        if (!j.porque?.trim()) problemas.push(`${arista}: porqué vacío`);
+        const descriptor = j.justificacion?.descriptor;
+        if (!Array.isArray(descriptor) || descriptor.length === 0 || descriptor.some((d) => !d.trim())) {
+          problemas.push(`${arista}: descriptor vacío o mal formado`);
+        }
+        if (!j.justificacion?.archivo?.trim()) problemas.push(`${arista}: falta archivo de la cita`);
+        if (!j.justificacion?.linea?.trim()) problemas.push(`${arista}: falta línea de la cita`);
+        if (!j.porQue?.trim()) problemas.push(`${arista}: porQue vacío`);
         if (j.respaldo !== "temario" && j.respaldo !== "sin-respaldo") {
           problemas.push(`${arista}: respaldo inválido (${j.respaldo})`);
+        }
+        if (j.tipo !== "bloqueante" && j.tipo !== "facilitadora") {
+          problemas.push(`${arista}: tipo inválido (${j.tipo})`);
         }
       }
       for (const clave of Object.keys(justificaciones)) {
@@ -979,6 +1001,38 @@ describe("dag-m1.json", () => {
     assert.equal(total, ARISTAS_ESPERADAS);
   });
 
+  /**
+   * Cada cita, verificada letra por letra contra el archivo fuente que declara
+   * `justificacion.archivo`. No basta con que el campo no esté vacío: tiene que
+   * existir tal cual en el temario, o toda la garantía de "cita textual" es de
+   * palabra.
+   */
+  test("cada cita existe literal en el archivo que declara", () => {
+    const unidades = leerDominio().unidades as UnidadConJustificaciones[];
+    const fuentes = new Map<string, string>();
+    const noEncontradas: string[] = [];
+
+    for (const u of unidades) {
+      for (const [previo, j] of Object.entries(u.justificaciones ?? {})) {
+        const archivo = j.justificacion?.archivo;
+        const bullets = j.justificacion?.descriptor ?? [];
+        if (!archivo) continue;
+        if (!fuentes.has(archivo)) {
+          const ruta = new URL(`../../../${archivo}`, import.meta.url);
+          fuentes.set(archivo, readFileSync(ruta, "utf8"));
+        }
+        const texto = fuentes.get(archivo)!;
+        for (const bullet of bullets) {
+          if (!texto.includes(bullet)) {
+            noEncontradas.push(`${previo} → ${u.id}: "${bullet}" no está en ${archivo}`);
+          }
+        }
+      }
+    }
+
+    assert.deepEqual(noEncontradas, []);
+  });
+
   test("el reparto entre aristas respaldadas y sin respaldo es el revisado a mano", () => {
     const unidades = leerDominio().unidades as UnidadConJustificaciones[];
     const respaldos = unidades.flatMap((u) =>
@@ -988,6 +1042,19 @@ describe("dag-m1.json", () => {
     assert.equal(respaldos.filter((r) => r === "temario").length, CON_RESPALDO_ESPERADAS);
     assert.equal(respaldos.filter((r) => r === "sin-respaldo").length, SIN_RESPALDO_ESPERADAS);
   });
+
+  /**
+   * Igual que el reparto de respaldo: cifra escrita a mano, revisada arista por
+   * arista contra el criterio "¿puede dominar la unidad dependiente completa sin
+   * el prerrequisito?" — no derivada del propio archivo.
+   */
+  test("el reparto entre bloqueantes y facilitadoras es el revisado a mano", () => {
+    const unidades = leerDominio().unidades as UnidadConJustificaciones[];
+    const tipos = unidades.flatMap((u) => Object.values(u.justificaciones ?? {}).map((j) => j.tipo));
+
+    assert.equal(tipos.filter((t) => t === "bloqueante").length, BLOQUEANTE_ESPERADAS);
+    assert.equal(tipos.filter((t) => t === "facilitadora").length, FACILITADORA_ESPERADAS);
+  });
 });
 
 /** Forma de una unidad del JSON con el campo de justificaciones que lee el test. */
@@ -996,7 +1063,13 @@ type UnidadConJustificaciones = {
   prerrequisitos: string[];
   justificaciones?: Record<
     string,
-    { descriptor?: string; porque?: string; respaldo?: string; fuente?: string }
+    {
+      justificacion?: { descriptor?: string[]; archivo?: string; linea?: string };
+      porQue?: string;
+      respaldo?: string;
+      tipo?: string;
+      nota?: string;
+    }
   >;
 };
 
