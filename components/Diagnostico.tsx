@@ -8,6 +8,7 @@ import { Tarjeta } from "@/components/ui/Tarjeta";
 import { guardarResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import type { DiagnosticoCliente } from "@/lib/sanitizar";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 /* Guarda el resultado en memoria de sesión al montar (efecto, no durante el
    render). Es la medición "pre" que el cierre compara al final del módulo. */
@@ -29,8 +30,8 @@ function FinalDiagnostico({
   }, []);
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center gap-4 px-4 py-16 text-center">
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">
+    <PantallaCentrada className="gap-4 text-center">
+      <h1 className="text-3xl font-semibold text-ink">
         Listo, ya tenemos tu punto de partida
       </h1>
       {/* El detalle de cada respuesta sí queda en el dispositivo
@@ -50,7 +51,7 @@ function FinalDiagnostico({
       ) : (
         <EnlaceBoton href="/camino">Ver el camino</EnlaceBoton>
       )}
-    </div>
+    </PantallaCentrada>
   );
 }
 
@@ -67,9 +68,9 @@ export function Diagnostico({
     return (
       <div className="flex min-h-full flex-col">
         {diagnostico.estado !== "publicable" && <BannerDemostracion />}
-        <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+        <PantallaCentrada>
           <Tarjeta className="w-full max-w-lg p-8">
-            <h1 className="text-2xl font-semibold tracking-tight text-ink">
+            <h1 className="text-3xl font-semibold text-ink">
               Antes de empezar, midamos tu punto de partida
             </h1>
             <div className="mt-4 space-y-3 text-base leading-relaxed text-ink-suave">
@@ -87,7 +88,7 @@ export function Diagnostico({
               <Boton onClick={() => setFase("items")}>Empezar diagnóstico</Boton>
             </div>
           </Tarjeta>
-        </div>
+        </PantallaCentrada>
       </div>
     );
   }

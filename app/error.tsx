@@ -1,6 +1,7 @@
 "use client";
 
 import { Boton } from "@/components/ui/Boton";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 export default function ErrorBoundary({
   error,
@@ -11,8 +12,8 @@ export default function ErrorBoundary({
 }) {
   const esDev = process.env.NODE_ENV === "development";
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center gap-4 px-4 py-16 text-center">
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">Algo no funcionó</h1>
+    <PantallaCentrada className="gap-4 text-center">
+      <h1 className="text-3xl font-semibold text-ink">Algo no funcionó</h1>
       <p className="max-w-md text-base leading-relaxed text-ink-suave">
         {esDev
           ? "Detalle del error (solo visible en desarrollo):"
@@ -24,6 +25,6 @@ export default function ErrorBoundary({
         </pre>
       )}
       <Boton onClick={reset}>Intentar de nuevo</Boton>
-    </div>
+    </PantallaCentrada>
   );
 }

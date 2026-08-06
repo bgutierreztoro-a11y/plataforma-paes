@@ -26,7 +26,7 @@ export default function Preventa() {
       <p className="font-mono text-sm uppercase tracking-wide text-ink-suave">
         Cohorte fundadora · Cupos limitados
       </p>
-      <h1 className="max-w-lg text-4xl font-semibold leading-tight text-ink">
+      <h1 className="max-w-lg text-4xl font-semibold text-ink">
         Curso intensivo de Funciones para la PAES M1
       </h1>
       <p className="max-w-md text-lg leading-8 text-ink-suave">

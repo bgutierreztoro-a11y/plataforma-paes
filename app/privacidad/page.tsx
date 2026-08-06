@@ -28,7 +28,7 @@ export default function Privacidad() {
       <p className="text-sm uppercase tracking-wide text-ink-suave">
         Actualizado el {ACTUALIZADO}
       </p>
-      <h1 className="mt-2 text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+      <h1 className="mt-2 text-3xl font-semibold text-ink sm:text-4xl">
         Aviso de privacidad
       </h1>
       <p className="mt-4 text-lg leading-8 text-ink-suave">

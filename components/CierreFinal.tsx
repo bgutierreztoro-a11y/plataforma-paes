@@ -8,6 +8,7 @@ import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre"
 import { registrarEvento } from "@/lib/eventos";
 import { obtenerResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 function formatoTiempo(ms: number): string {
   const totalSeg = Math.round(ms / 1000);
@@ -46,12 +47,12 @@ export function CierreFinal({
   }
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center gap-6 px-4 py-16 text-center">
+    <PantallaCentrada className="gap-6 text-center">
       <div className="w-full max-w-56">
         <IlustracionCierre />
       </div>
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-ink lg:text-3xl">
+        <h1 className="text-3xl font-semibold text-ink">
           Terminaste el módulo
         </h1>
         <p className="mx-auto max-w-md text-base leading-relaxed text-ink-suave">
@@ -113,6 +114,6 @@ export function CierreFinal({
       </Tarjeta>
 
       <Boton onClick={solicitarSiguienteLeccion}>Quiero la próxima lección</Boton>
-    </div>
+    </PantallaCentrada>
   );
 }

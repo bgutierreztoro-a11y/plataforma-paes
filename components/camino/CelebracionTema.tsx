@@ -10,6 +10,7 @@ import { temasCompletados } from "@/lib/estadoNodo";
 import { registrarEvento } from "@/lib/eventos";
 import { TOTAL_TEMAS } from "@/lib/modulos";
 import type { TemaDelCamino } from "@/lib/camino";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 /**
  * Guion de tiempos de la celebración. Un solo lugar, en orden de lectura, para
@@ -126,7 +127,7 @@ export function CelebracionTema({
   if (!mostrar) return null;
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+    <PantallaCentrada>
       <div className="w-full max-w-2xl text-center">
         <TrazoCompletandose />
 
@@ -140,7 +141,7 @@ export function CelebracionTema({
           <p className="text-sm font-medium uppercase tracking-wide text-ink-suave">
             Tema completado
           </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 text-4xl font-semibold text-ink sm:text-5xl lg:text-6xl">
             {tema.nombre}
           </h1>
         </div>
@@ -174,6 +175,6 @@ export function CelebracionTema({
           </EnlaceBoton>
         </div>
       </div>
-    </div>
+    </PantallaCentrada>
   );
 }

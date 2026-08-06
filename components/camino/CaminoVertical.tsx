@@ -535,8 +535,12 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
        tarjeta está acotado por RESERVA_TARJETA en lib/geometriaCamino.ts, y
        crecer acá le devuelve a la tarjeta el clic de una banda de eje. */
     <div className="rounded-panel border border-border bg-surface p-3 shadow-flotante">
+      {/* Interlineado apretado en toda la tarjeta: acá no se lee prosa, se
+          consulta un panel, y su alto está tasado por RESERVA_TARJETA. Los
+          interlineados cómodos de la escala tipográfica son para el texto de
+          lección, no para esto. */}
       {nodo.rotulo && (
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
+        <p className="text-xs font-medium uppercase leading-tight tracking-wide text-ink-tenue">
           {nodo.rotulo}
         </p>
       )}
@@ -556,7 +560,7 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
       {(nodo.contador || nodo.demostracion) && (
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
           {nodo.contador && (
-            <span className="text-sm text-ink-suave">{nodo.contador}</span>
+            <span className="text-sm leading-tight text-ink-suave">{nodo.contador}</span>
           )}
           {nodo.demostracion && (
             <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-xs font-medium text-accent-fuerte">

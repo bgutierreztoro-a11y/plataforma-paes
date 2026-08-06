@@ -7,6 +7,7 @@ import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { alcanzaDominio } from "@/lib/umbrales";
 import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 /* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
    opción discreta de esta pantalla no es un tercer botón del mismo peso que
@@ -120,9 +121,9 @@ export function ItemsPAESFinal({
   }
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+    <PantallaCentrada>
       <div className="w-full max-w-xl text-center">
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">
+        <h1 className="text-3xl font-semibold text-ink">
           {conDominio ? "Lección terminada" : "Lección terminada, y hay algo que afinar"}
         </h1>
 
@@ -186,6 +187,6 @@ export function ItemsPAESFinal({
           </div>
         )}
       </div>
-    </div>
+    </PantallaCentrada>
   );
 }

@@ -223,7 +223,7 @@ export function RunnerLeccion({
         }`}
       >
         {bannerDemostracion}
-        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-ink">
+        <h1 className="mb-6 text-2xl font-semibold text-ink">
           {leccion.titulo}
         </h1>
         {/* Sticky: header pinneado (link de salida + progreso) mientras se

@@ -43,7 +43,12 @@ const CLASES_VARIANTE: Record<Variante, string> = {
  * ese modo, aunque sí siga cambiando de color.
  */
 const CLASES_BASE =
-  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta px-5 py-2.5 text-base font-semibold motion-safe:transition-[background-color,border-color,box-shadow,transform] motion-safe:duration-150 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed";
+  /* `leading-6` y no el interlineado de la escala: 1,6 es la medida de un
+     párrafo que se lee de corrido, y una etiqueta de botón de una línea con ese
+     aire crece 1,6px sin ganar nada. En superficies acotadas —la tarjeta del
+     nodo activo tiene su alto tasado por RESERVA_TARJETA— esos píxeles se
+     cobran. */
+  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta px-5 py-2.5 text-base font-semibold leading-6 motion-safe:transition-[background-color,border-color,box-shadow,transform] motion-safe:duration-150 motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed";
 
 export function Boton({ variante = "primario", className = "", ...props }: BotonProps) {
   return (
