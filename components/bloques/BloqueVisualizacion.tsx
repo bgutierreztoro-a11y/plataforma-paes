@@ -121,7 +121,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
   if (bloque.variante === "tabla" && esDatosTabla(bloque.datos)) {
     const { columnas, filas } = bloque.datos;
     return (
-      <div className="overflow-x-auto rounded-tarjeta border border-border">
+      <div className="overflow-x-auto rounded-panel border border-border">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
@@ -190,7 +190,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosParticion(bloque.datos)) {
     return (
-      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+      <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionParticion {...bloque.datos} />
       </figure>
@@ -199,7 +199,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosEjeVertical(bloque.datos)) {
     return (
-      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+      <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionEjeVertical
           puntos={bloque.datos.puntos}
@@ -211,7 +211,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosReglaSignos(bloque.datos)) {
     return (
-      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+      <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <TablaReglaSigno filas={bloque.datos.signos} />
       </figure>
@@ -220,7 +220,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosBandas(bloque.datos)) {
     return (
-      <figure className="rounded-tarjeta border border-border bg-surface p-4">
+      <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionBandas bandas={bloque.datos.bandas} />
       </figure>
@@ -231,7 +231,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
   // (y el texto alternativo de la figura). Se presenta como figura descrita,
   // no como recuadro punteado de "falta algo".
   return (
-    <figure className="rounded-tarjeta border border-border bg-surface p-4">
+    <figure className="rounded-panel border border-border bg-surface p-4">
       <figcaption className="mb-1.5 text-sm font-medium text-ink-tenue">Figura</figcaption>
       <p className="text-sm leading-relaxed text-ink-suave">{bloque.descripcion}</p>
     </figure>

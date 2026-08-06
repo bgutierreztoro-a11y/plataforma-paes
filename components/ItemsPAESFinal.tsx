@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Boton } from "@/components/ui/Boton";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { alcanzaDominio } from "@/lib/umbrales";
 import { registrarEvento } from "@/lib/eventos";
@@ -29,12 +30,12 @@ function TarjetaDato({
   detalle: string;
 }) {
   return (
-    <div className="rounded-tarjeta border border-border bg-surface p-5 text-left shadow-tarjeta">
+    <Tarjeta className="p-5 text-left">
       <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">{etiqueta}</p>
       {/* Cifras tabulares: el número no cambia de ancho entre lecciones. */}
       <p className="mt-1 text-3xl font-semibold text-ink">{valor}</p>
       <p className="mt-1 text-sm leading-6 text-ink-suave">{detalle}</p>
-    </div>
+    </Tarjeta>
   );
 }
 

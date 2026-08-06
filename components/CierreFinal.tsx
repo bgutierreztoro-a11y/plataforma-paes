@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Boton } from "@/components/ui/Boton";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre";
 import { registrarEvento } from "@/lib/eventos";
 import { obtenerResultadoDiagnostico } from "@/lib/progresoSesion";
@@ -58,7 +59,7 @@ export function CierreFinal({
         </p>
       </div>
 
-      <div className="w-full max-w-lg rounded-tarjeta border border-border bg-surface p-6 text-left shadow-tarjeta">
+      <Tarjeta className="w-full max-w-lg p-6 text-left">
         {diagnostico ? (
           <>
             <div className="grid grid-cols-2 divide-x divide-border">
@@ -109,7 +110,7 @@ export function CierreFinal({
           <span className="font-mono tabular-nums">{formatoTiempo(promedioMs)}</span> por pregunta
           · en la PAES M1 el tiempo da para ~2:00.
         </p>
-      </div>
+      </Tarjeta>
 
       <Boton onClick={solicitarSiguienteLeccion}>Quiero la próxima lección</Boton>
     </div>

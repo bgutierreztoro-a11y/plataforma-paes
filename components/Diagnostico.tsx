@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { Boton, EnlaceBoton } from "@/components/ui/Boton";
 import { BannerDemostracion } from "@/components/ui/Banner";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 import { guardarResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import type { DiagnosticoCliente } from "@/lib/sanitizar";
@@ -67,7 +68,7 @@ export function Diagnostico({
       <div className="flex min-h-full flex-col">
         {diagnostico.estado !== "publicable" && <BannerDemostracion />}
         <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
-          <div className="w-full max-w-lg rounded-tarjeta border border-border bg-surface p-8 shadow-tarjeta">
+          <Tarjeta className="w-full max-w-lg p-8">
             <h1 className="text-2xl font-semibold tracking-tight text-ink">
               Antes de empezar, midamos tu punto de partida
             </h1>
@@ -85,7 +86,7 @@ export function Diagnostico({
             <div className="mt-6">
               <Boton onClick={() => setFase("items")}>Empezar diagnóstico</Boton>
             </div>
-          </div>
+          </Tarjeta>
         </div>
       </div>
     );
