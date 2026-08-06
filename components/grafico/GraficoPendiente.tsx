@@ -152,13 +152,13 @@ export function GraficoPendiente({
       <p className="text-center font-mono text-xl tabular-nums text-ink">
         y ={" "}
         <span
-          className={`rounded px-1 motion-safe:transition-colors ${activo === "m" ? "bg-accent-suave" : ""}`}
+          className={`rounded-control px-1.5 motion-safe:transition-colors ${activo === "m" ? "bg-interactive-suave text-interactive-fuerte" : ""}`}
         >
           {formatoDecimalChileno(m)}
         </span>
         x +{" "}
         <span
-          className={`rounded px-1 motion-safe:transition-colors ${activo === "b" ? "bg-accent-suave" : ""}`}
+          className={`rounded-control px-1.5 motion-safe:transition-colors ${activo === "b" ? "bg-interactive-suave text-interactive-fuerte" : ""}`}
         >
           {formatoDecimalChileno(b)}
         </span>

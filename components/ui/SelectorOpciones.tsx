@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  ALTERNATIVA_BASE,
+  ALTERNATIVA_CORRECTA,
+  ALTERNATIVA_INTERACTIVA,
+  ALTERNATIVA_REPOSO,
+} from "@/components/ui/alternativa";
+
 export interface OpcionSelector {
   id: string;
   texto: string;
@@ -45,15 +52,9 @@ export function SelectorOpciones({
           /* El acierto gana sobre `has-[:checked]`: son la misma opción (solo
              se marca la elegida), y sin el orden explícito el azul de
              seleccionado taparía el verde. */
-          className={`flex min-h-11 items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-            marcaAcierto === op.id
-              ? "border-success bg-success-suave"
-              : "border-border has-[:checked]:border-accent has-[:checked]:bg-accent-suave"
-          } ${
-            disabled
-              ? "cursor-not-allowed"
-              : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
-          }`}
+          className={`${ALTERNATIVA_BASE} ${
+            marcaAcierto === op.id ? ALTERNATIVA_CORRECTA : ALTERNATIVA_REPOSO
+          } ${disabled ? "cursor-not-allowed" : ALTERNATIVA_INTERACTIVA}`}
         >
           <input
             type="radio"

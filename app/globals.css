@@ -280,6 +280,77 @@
   );
 }
 
+/* ---------------------------------------------------------------------------
+   El control del interactivo.
+
+   Vive acá y no en clases porque los pseudo-elementos del <input type="range">
+   son cuatro y difieren entre motores; escritos como variantes arbitrarias de
+   Tailwind el className pasaba de 600 caracteres y dejaba de ser leíble.
+
+   Tres decisiones que valen el comentario:
+
+   1. **El riel muestra cuánto llevas.** Antes era un pill gris de 44px de alto,
+      uniforme: no se veía dónde estaba el valor dentro del rango. Ahora el
+      tramo recorrido va en cian y el resto en el gris del borde. El porcentaje
+      entra por `--relleno`, que lo calcula SliderControl.
+   2. **El cian es exclusivo de lo que se toca** (MASTER.md §2.1). El riel
+      activo y el thumb son los únicos lugares del producto donde aparece.
+   3. **El input mide 44px de alto y el riel 8px.** El alto es el área táctil
+      que pide MASTER.md §5; el riel es lo que se ve. Separarlos es lo que
+      permite un control cómodo con un dibujo delgado.
+
+   El thumb lleva un aro blanco de 3px y sombra: es lo que lo separa del riel
+   sin depender de que el cian contraste contra el gris. */
+.slider-interactivo {
+  appearance: none;
+  background: transparent;
+}
+
+.slider-interactivo::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--color-interactive) var(--relleno, 50%),
+    var(--color-border) var(--relleno, 50%)
+  );
+}
+
+.slider-interactivo::-webkit-slider-thumb {
+  appearance: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  /* (alto del riel − alto del thumb) / 2, para centrarlo sobre el riel. */
+  margin-top: -0.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactive);
+  border: 3px solid var(--color-surface);
+  box-shadow: var(--shadow-tarjeta);
+}
+
+/* Firefox pinta el tramo recorrido solo, con ::-moz-range-progress, así que su
+   riel va liso y el degradado no hace falta. */
+.slider-interactivo::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-border);
+}
+
+.slider-interactivo::-moz-range-progress {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactive);
+}
+
+.slider-interactivo::-moz-range-thumb {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactive);
+  border: 3px solid var(--color-surface);
+  box-shadow: var(--shadow-tarjeta);
+}
+
 /* Utilidad de accesibilidad: oculta visualmente sin ocultar de lectores de
    pantalla (usada por la región aria-live de GraficoPendiente). */
 .solo-lector {

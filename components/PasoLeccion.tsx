@@ -39,7 +39,10 @@ export function PasoLeccion({
 
   return (
     <section className="transicion-paso">
-      <h2 className="text-lg font-semibold text-ink">{paso.titulo}</h2>
+      {/* Sube a text-xl: con el cuerpo en 18px, un título de 18px dejaba de
+          serlo. La jerarquía es relativa, así que mover el cuerpo obliga a
+          mover el encabezado. */}
+      <h2 className="text-xl font-semibold text-ink">{paso.titulo}</h2>
       {visuales.length > 0 && lectura.length > 0 ? (
         <div className="mt-6 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-10">
           <div

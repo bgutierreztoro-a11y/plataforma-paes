@@ -2,6 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
+import {
+  ALTERNATIVA_BASE,
+  ALTERNATIVA_CORRECTA,
+  ALTERNATIVA_DESCARTADA,
+  ALTERNATIVA_ELEGIDA_REVELADA,
+  ALTERNATIVA_INTERACTIVA,
+  ALTERNATIVA_REPOSO,
+} from "@/components/ui/alternativa";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
 import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
@@ -135,22 +143,21 @@ export function ItemPAES({
   }
 
   function clasesOpcion(alt: (typeof alternativas)[number]): string {
-    const base =
-      "flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent";
+    const base = ALTERNATIVA_BASE;
     if (revelado && seleccion === alt.clave) {
       /* Al fallar, la alternativa elegida queda marcada como elegida y nada
          más: el rojo que llevaba antes contestaba "¿la tuve bien?" desde el
          costado, antes de que se leyera la Capa 1, que es donde está lo que
          enseña. El acierto sí se marca — es información, no reproche. */
-      return `${base} cursor-default ${
+      return `${base} ${
         alt.esCorrecta && mostrarFeedback
-          ? "border-success bg-success-suave"
-          : "border-accent bg-accent-suave"
+          ? ALTERNATIVA_CORRECTA
+          : ALTERNATIVA_ELEGIDA_REVELADA
       }`;
     }
-    if (revelado) return `${base} cursor-default opacity-60`;
-    if (!montado) return `${base} cursor-not-allowed`;
-    return `${base} border-border hover:border-border-fuerte hover:bg-accent-suave/40 has-[:checked]:border-accent has-[:checked]:bg-accent-suave`;
+    if (revelado) return `${base} ${ALTERNATIVA_DESCARTADA}`;
+    if (!montado) return `${base} ${ALTERNATIVA_REPOSO} cursor-not-allowed`;
+    return `${base} ${ALTERNATIVA_REPOSO} ${ALTERNATIVA_INTERACTIVA}`;
   }
 
   return (
