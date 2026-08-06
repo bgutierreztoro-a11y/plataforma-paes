@@ -2,7 +2,7 @@
 
 **Para:** revisión pedagógica
 **Fecha:** 2026-08-05
-**Qué se pide:** que alguien que enseña M1 diga si el orden en que este mapa obliga a estudiar los 16 temas es el correcto.
+**Fuente de las citas:** `docs/temario-demre-m1-2027.md` — transcripción textual del Temario DEMRE PAES Competencia Matemática 1 (M1), Admisión 2027. Es la única fuente citable: un resumen anterior (`docs/calibracion-lecciones-e-items.md` §4.1) se usó en un borrador previo y resultó tener 8 de 16 descriptores omitidos, fundidos o alterados respecto al temario real, así que se descartó como fuente de citas.
 
 ---
 
@@ -14,21 +14,26 @@ Se leen así:
 
 > **Potencias y raíces** ← necesita **Enteros y racionales**
 
-Con esas 22 flechas, el sistema calcula solo dos cosas: en qué orden ofrecerle los temas al estudiante, y qué tan grave es que falle uno (si un tema abre muchos otros, fallarlo bloquea más).
+Con esas 22 flechas el sistema calcula el orden en que ofrecerle los temas al estudiante, y qué tan grave es que falle uno.
 
-**Lo que se necesita revisar es si las 22 flechas son ciertas.** Nada más.
+Cada flecha, además, viene marcada con un **tipo**:
 
-### Un aviso importante sobre este documento
+- **Bloqueante** — sin el tema anterior, es imposible rendir bien en el tema nuevo completo.
+- **Facilitadora** — el tema anterior ayuda y ordena el aprendizaje, pero un estudiante podría rendir bien en el tema nuevo completo sin haberlo dominado.
 
-Junto a cada flecha aparece una cita del temario oficial DEMRE. Esa cita **no sale del PDF oficial**: sale de un resumen de una línea por tema que está en `docs/calibracion-lecciones-e-items.md`, porque el PDF del temario no está guardado en este proyecto. Es la mejor fuente disponible hoy, pero es un resumen.
+La distinción importa porque el sistema hoy trata las 22 flechas igual, con el mismo peso. Si una flecha es solo "facilitadora", pesarla igual que una "bloqueante" puede meter ruido al diagnóstico — un estudiante flojo en el tema anterior no debería verse penalizado en el tema nuevo si esa relación no es realmente necesaria.
 
-Y hay algo más de fondo: **el temario enumera contenidos, no dice qué va antes de qué.** Por eso muchas flechas —12 de las 22— no tienen ninguna frase del temario que las respalde. No están mal: son juicio pedagógico razonable, pero sin respaldo escrito. Están todas juntas en la sección 3, y son las que de verdad hay que dirimir.
+**Lo que se necesita revisar es si las 22 flechas son ciertas, y si su tipo está bien asignado.**
+
+### Un aviso importante
+
+Cada flecha trae la cita exacta del temario, palabra por palabra, con la línea donde aparece. Pero el temario **enumera contenidos, no dice qué va antes de qué**. Por eso muchas flechas —16 de las 22— no tienen ninguna frase del temario que las respalde directamente. No están mal: son juicio pedagógico razonable, pero sin respaldo escrito. Todas quedan juntas en la sección 3, y son las que de verdad hay que dirimir.
 
 ---
 
 ## 1. Los 16 temas en orden de estudio
 
-Los temas están agrupados por **etapa**. Los de una etapa solo se pueden estudiar cuando están listos todos los de las etapas anteriores de los que dependen. La columna "abre" dice cuántos temas quedan habilitados al dominar ese.
+Agrupados por **etapa**: los de una etapa solo se pueden estudiar cuando están listos los de las etapas anteriores de los que dependen. La columna "abre" dice cuántos temas quedan habilitados al dominar ese.
 
 ### Etapa 0 — el punto de partida
 
@@ -36,9 +41,9 @@ Los temas están agrupados por **etapa**. Los de una etapa solo se pueden estudi
 |---|---|
 | Enteros y racionales | 15 |
 
-Es el único tema sin prerrequisitos: todo el resto del temario cuelga de él, directa o indirectamente.
+El único tema sin prerrequisitos: todo el resto cuelga de él, directa o indirectamente.
 
-### Etapa 1 — se pueden tomar apenas termina el anterior
+### Etapa 1
 
 | Tema | Abre |
 |---|---|
@@ -73,212 +78,197 @@ Es el único tema sin prerrequisitos: todo el resto del temario cuelga de él, d
 | Sistemas de ecuaciones 2×2 | 0 |
 | Función cuadrática | 0 |
 
-**El camino más largo del mapa tiene 4 pasos:**
-Enteros y racionales → Expresiones algebraicas → Ecuaciones e inecuaciones → Función lineal y afín → Sistemas 2×2
+**El camino más largo del mapa tiene 4 pasos:** Enteros y racionales → Expresiones algebraicas → Ecuaciones e inecuaciones → Función lineal y afín → Sistemas 2×2.
 
-**Dos cosas que llaman la atención de esta lista y conviene mirar con calma:**
+**Dos cosas que llaman la atención:**
 
-1. **Reglas de probabilidad queda en la etapa 1**, disponible casi al principio, con solo Enteros y racionales por delante. ¿Es correcto que un estudiante pueda entrar a probabilidades tan temprano?
-2. **Porcentaje abre solo 2 temas**, muy poco para lo transversal que suele ser en la prueba. Depende de una sola flecha saliente (hacia Tablas y gráficos), y esa flecha además es de las que no tienen respaldo.
+1. **Reglas de probabilidad queda en la etapa 1**, disponible casi al principio. ¿Es correcto que un estudiante entre a probabilidades tan temprano?
+2. **Porcentaje abre solo 2 temas.** Depende de una sola flecha saliente (hacia Tablas y gráficos), y es una flecha marcada **facilitadora** — o sea, ni siquiera es indispensable ahí.
 
 ---
 
-## 2. Las 10 flechas que el temario sí respalda
+## 2. Las 22 flechas, con su cita y su tipo
 
-Para cada una: la cita del temario del tema que **necesita** al otro, y por qué.
+Cada una: cita textual del temario (unidad que **necesita** al prerrequisito), por qué, y el tipo con su razón.
+
+### 2.1 Bloqueantes con respaldo textual (6)
 
 **1. Potencias y raíces ← Enteros y racionales**
-> *"Propiedades de potencias de base y exponente **racional**; descomposición y propiedades de raíces en ℝ; problemas"*
+> *"Propiedades de las potencias de base racional y exponente racional."* (línea 41)
 
-El temario nombra el prerrequisito con todas sus letras: "exponente racional". No se puede elevar a un exponente de ℚ sin manejar ℚ antes.
+Base **y** exponente racionales, cita literal. No se puede elevar a un exponente de ℚ sin manejar ℚ antes. Los tres contenidos de la unidad dependen de esto — **bloqueante**.
 
 **2. Sistemas 2×2 ← Ecuaciones e inecuaciones**
-> *"Sistemas de ecuaciones **lineales** (2×2) — Resolución; problemas"*
+> *"Resolución de sistemas de ecuaciones lineales."* (línea 70)
 
-El nombre del tema en el temario dice "ecuaciones lineales", que es exactamente lo que introduce el tema anterior. Un sistema 2×2 es un par de ecuaciones lineales resueltas a la vez.
+El nombre del objeto —"ecuaciones lineales"— es el prerrequisito. Resolver un sistema por sustitución o igualación reduce el problema a resolver una ecuación lineal — **bloqueante**.
 
 **3. Función cuadrática ← Ecuaciones e inecuaciones**
-> *"**Ecuaciones de segundo grado**; tablas y gráficos y variación de parámetros; vértice, ceros e intersecciones; problemas"*
+> *"Resolución y problemas de ecuaciones de segundo grado en diversos contextos."* (línea 80)
 
-El descriptor abre nombrando "ecuaciones de segundo grado". La idea de ecuación y cómo resolverla la instala el tema de primer grado; segundo grado es la extensión del mismo objeto.
+Segundo grado es la extensión declarada del mismo objeto que primer grado. Toda la unidad depende de poder resolver una ecuación — **bloqueante**.
 
-**4. Figuras geométricas ← Potencias y raíces**
-> *"**Teorema de Pitágoras**; perímetro y área de triángulos, paralelogramos, trapecios y círculos; problemas"*
+**4. Transformaciones isométricas ← Figuras geométricas**
+> *"Rotación, traslación y reflexión de figuras geométricas."* (línea 104)
 
-Pitágoras es una igualdad entre cuadrados y despejar el lado termina en una raíz. El área del círculo trae otra potencia.
+**Ver nota especial más abajo** — esta es la única flecha marcada **facilitadora** que además tiene respaldo textual, y trae una ambigüedad de lectura sin resolver.
 
-**5. Cuerpos geométricos ← Figuras geométricas**
-> *"**Área de superficie** y volumen de paralelepípedos, cubos y cilindros; problemas"*
+**5. Semejanza y proporcionalidad ← Proporcionalidad**
+> *"Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala..."* (línea 109)
 
-La superficie de un cilindro se arma con dos círculos y un rectángulo; la de un cubo, con seis cuadrados. Esas áreas planas son justo las que declara el tema anterior.
+Nombra el prerrequisito con la palabra exacta. Una escala es una razón constante — **bloqueante**.
 
-**6. Transformaciones isométricas ← Figuras geométricas**
-> *"**Puntos y vectores en el plano cartesiano**; rotación, traslación y reflexión; problemas"*
+**6. Tablas y gráficos ← Enteros y racionales**
+> *"Tablas de frecuencia absoluta y relativa... Promedio de un conjunto de datos."* (líneas 117, 119)
 
-Dos cosas, y la primera es la razón por la que esta flecha se revisó:
-
-- *En negativo:* el temario mete "puntos y vectores en el plano cartesiano" **dentro de este mismo tema**. O sea, el plano cartesiano **no** se hereda de Función lineal y afín: el tema lo trae consigo. Antes el mapa decía que sí y estaba equivocado.
-- *En positivo:* rotar, trasladar y reflejar son operaciones sobre **una figura**, y reconocer esa figura es lo que entrega el tema anterior. Esta segunda mitad es lectura, no cita.
-
-**7. Semejanza y proporcionalidad ← Proporcionalidad**
-> *"Propiedades de semejanza y **proporcionalidad** aplicadas a modelos a escala y situaciones reales"*
-
-El temario nombra el prerrequisito con la palabra exacta. Una escala es una razón constante.
-
-**8. Semejanza y proporcionalidad ← Figuras geométricas**
-> *"Semejanza y proporcionalidad **de figuras** — Propiedades de semejanza y proporcionalidad aplicadas a modelos a escala y situaciones reales"*
-
-El nombre del tema termina en "de figuras": lo que se declara semejante son figuras, con sus lados y ángulos.
-
-**9. Tablas y gráficos ← Enteros y racionales**
-> *"Frecuencia absoluta y **relativa**; tipos de gráficos; **promedio**; problemas"*
-
-La frecuencia relativa es, por definición, un cociente. El promedio es otra división.
-
-**10. Medidas de posición ← Tablas y gráficos**
-> *"Cuartiles y percentiles de uno o más grupos; **diagrama de cajón**; problemas"*
-
-El diagrama de cajón es un tipo de gráfico, y los cuartiles se calculan sobre datos ya organizados en tabla de frecuencias.
+Frecuencia relativa y promedio son cocientes — un racional. Dos de los cuatro contenidos de la unidad dependen de esto — **bloqueante**.
 
 ---
 
-## 3. Las 12 flechas SIN respaldo en el temario — las que hay que dirimir
+### 2.2 La flecha facilitadora con respaldo (caso especial)
 
-**Esta es la sección que importa.** Estas 12 flechas están en el mapa porque parecen razonables, pero **no hay ninguna frase del temario que las sostenga**. No son errores: son decisiones pedagógicas que nadie firmó todavía.
+**Transformaciones isométricas ← Figuras geométricas**
+> *"Puntos y vectores en el plano cartesiano." / "Rotación, traslación y reflexión de figuras geométricas." / "Problemas que involucren rotación, traslación y reflexión en diversos contextos."* (líneas 103-105)
 
-Cada una se puede aprobar (queda como está), rechazar (se borra la flecha, el tema se libera antes) o modificar.
+El plano cartesiano viene **dentro** de la propia unidad —no se importa de Función lineal y afín, como se pensó en un borrador anterior—, y "rotación... de figuras geométricas" nombra el objeto transformado. Pero ningún bullet pide calcular una medida (perímetro, área, Pitágoras): solo ubicar la figura, reconocer sus vértices y moverla. Un estudiante puede dominar toda la unidad —coordenadas, transformar puntos y figuras simples, resolver esos problemas— sin haber dominado el cálculo de áreas del prerrequisito. **Facilitadora.**
 
-**1. Porcentaje ← Enteros y racionales**
-Temario dice: *"Concepto y cálculo; problemas en diversos contextos"*.
-Un porcentaje es una razón sobre 100, así que calcularlo es operar en ℚ. Pero el temario dice "concepto y cálculo" y nada más: no nombra los racionales ni ninguna operación concreta.
-
-**2. Expresiones algebraicas ← Enteros y racionales**
-Temario dice: *"Productos notables; factorizaciones y desarrollo; operatoria; problemas"*.
-"Operatoria" con letras repite las reglas de la operatoria numérica, y los coeficientes son enteros y racionales. Pero el temario dice "operatoria" a secas, sin decir sobre qué conjunto.
-
-**3. Proporcionalidad ← Enteros y racionales**
-Temario dice: *"Proporción directa e inversa y sus representaciones; problemas"*.
-Una proporción iguala dos razones, y una razón es un cociente. El temario nunca baja al conjunto numérico.
-
-**4. Ecuaciones e inecuaciones ← Expresiones algebraicas**
-Temario dice: *"Resolución de ecuaciones lineales; resolución de inecuaciones lineales; problemas de ambas"*.
-Despejar una incógnita es manipular una expresión: reducir semejantes, transponer. **De las 12, es la más defendible** — y aun así el temario no la escribe.
-
-**5. Sistemas 2×2 ← Función lineal y afín** ⚠️
-Temario dice: *"Resolución; problemas"*.
-Leer un sistema como el cruce de dos rectas exige la función afín. Pero el descriptor son dos palabras y no menciona gráficos ni rectas: el temario admite resolver un 2×2 por sustitución o igualación, puro álgebra, sin pasar nunca por la función.
-**⚠️ Esta flecha es la que hace más largo todo el mapa.** Es la que estira el camino a 4 pasos. Si se rechaza, el mapa entero pasa a 3 pasos y Sistemas 2×2 se puede estudiar bastante antes.
-
-**6. Función lineal y afín ← Proporcionalidad**
-Temario dice: *"Concepto; tablas y gráficos; problemas"*.
-La función lineal y = mx **es** la proporcionalidad directa escrita como función, y las "tablas y gráficos" son las mismas "representaciones" que pide Proporcionalidad. La conexión se ve cruzando los dos descriptores, no leyendo uno.
-
-**7. Función lineal y afín ← Ecuaciones e inecuaciones**
-Temario dice: *"Concepto; tablas y gráficos; problemas"*.
-Evaluar la función o buscar dónde corta el eje x es resolver una ecuación. El temario no lo menciona: "concepto, tablas y gráficos" se puede tratar de forma descriptiva, sin resolver nada.
-
-**8. Función cuadrática ← Expresiones algebraicas**
-Temario dice: *"Ecuaciones de segundo grado; …; vértice, ceros e intersecciones; problemas"*.
-Los ceros salen de factorizar y el vértice de completar el cuadrado. El temario nombra los **resultados** ("vértice", "ceros") y nunca las **técnicas**.
-
-**9. Función cuadrática ← Potencias y raíces**
-Temario dice: *"Ecuaciones de segundo grado; …; vértice, ceros e intersecciones; problemas"*.
-La fórmula general trae una raíz cuadrada y el término cuadrático es una potencia. El temario no nombra ni potencias ni raíces en ningún punto.
-
-**10. Función cuadrática ← Función lineal y afín**
-Temario dice: *"Ecuaciones de segundo grado; tablas y gráficos y variación de parámetros; …"*.
-"Tablas y gráficos" y variar parámetros repiten el trabajo hecho con la función afín, y sin la idea de función no hay dónde apoyar la parábola. Pero la continuidad es de método, no de cita.
-
-**11. Tablas y gráficos ← Porcentaje**
-Temario dice: *"Frecuencia absoluta y **relativa**; tipos de gráficos; promedio; problemas"*.
-En la práctica la frecuencia relativa se lee en porcentaje y los gráficos circulares se reparten sobre 100. Pero el temario dice "relativa", no "porcentaje": admite tratarla como fracción o decimal.
-*(Ojo: esta es la única flecha que sale de Porcentaje. Si se rechaza, Porcentaje queda sin abrir ningún tema.)*
-
-**12. Reglas de probabilidad ← Enteros y racionales**
-Temario dice: *"Probabilidad de un evento; regla aditiva y multiplicativa; problemas"*.
-La probabilidad es casos favorables sobre totales —un racional entre 0 y 1— y las reglas aditiva y multiplicativa son suma y producto de fracciones. El temario nombra las operaciones pero nunca el conjunto numérico.
+⚠️ **Ambigüedad sin resolver:** la frase "de figuras geométricas" (línea 104) está en minúscula, como sustantivo común (el objeto que se rota), no necesariamente como referencia a la unidad *Figuras geométricas* del temario. Se interpretó como esa unidad porque en un ítem real el objeto transformado suele ser un triángulo o cuadrilátero reconocible — pero es una lectura, no una certeza. **Esto lo tiene que dirimir quien revise.**
 
 ---
 
-## 4. Flechas que faltarían — propuestas, NO aplicadas
+### 2.3 Las 16 flechas sin respaldo textual — el entregable central
 
-Estas **no están** en el mapa. Aparecieron al revisar el temario y se dejan como propuesta. Ninguna se agregó.
+Ninguna cita del temario las sostiene directamente. Son juicio pedagógico. Cada una puede aprobarse, rechazarse o modificarse — y su tipo (bloqueante/facilitadora) también puede corregirse por separado de si la flecha existe.
+
+**7. Porcentaje ← Enteros y racionales** — *bloqueante*
+Temario: *"Concepto y cálculo de porcentaje."* (línea 36). Un porcentaje es una razón sobre 100; calcularlo es operar en ℚ. Los dos contenidos de la unidad dependen de esto sin excepción.
+
+**8. Expresiones algebraicas ← Enteros y racionales** — *bloqueante*
+Temario: *"Productos notables."* (línea 51, primero de cuatro bullets). En el rango PAES, productos notables, factorización, operatoria y problemas exigen manejar coeficientes enteros y racionales, incluidos negativos y fraccionarios.
+
+**9. Proporcionalidad ← Enteros y racionales** — *bloqueante*
+Temario: *"Concepto de proporción directa e inversa..."* (línea 58). Una proporción es un cociente; los dos contenidos de la unidad son, en esencia, la misma dependencia.
+
+**10. Ecuaciones e inecuaciones ← Expresiones algebraicas** — *bloqueante*
+Temario: *"Resolución de ecuaciones lineales."* (línea 63). Despejar una incógnita es manipular una expresión: reducir y transponer. Los cuatro contenidos de la unidad dependen de eso.
+
+**11. Sistemas 2×2 ← Función lineal y afín** — *facilitadora* ⚠️
+Temario: *"Resolución de sistemas de ecuaciones lineales."* (línea 70). Un estudiante puede resolver un sistema por sustitución o igualación —álgebra pura— sin pasar nunca por la lectura gráfica de dos rectas. **Esta es la única causa de que el mapa tenga 4 etapas en vez de 3.** Si se rechaza o se confirma como facilitadora sin cambiar el peso del sistema, Sistemas 2×2 podría adelantarse en el orden de estudio.
+
+**12. Función lineal y afín ← Proporcionalidad** — *bloqueante*
+Temario: *"Concepto de función lineal y función afín."* (línea 75). La función lineal es la proporcionalidad directa reescrita como función; los tres contenidos de la unidad presuponen esa base.
+
+**13. Función lineal y afín ← Ecuaciones e inecuaciones** — *facilitadora*
+Temario: mismo bullet (línea 75). El concepto y buena parte de tablas/gráficos se dominan de forma descriptiva —leer una tabla, identificar pendiente— sin resolver ninguna ecuación. Solo una porción de "problemas" exige resolver.
+
+**14. Función cuadrática ← Expresiones algebraicas** — *bloqueante*
+Temario: *"Resolución y problemas de ecuaciones de segundo grado..."* (línea 80). La fórmula general evita factorizar, pero no evita la operatoria algebraica: llevar la ecuación a forma estándar es reducir y transponer, y eso no tiene atajo.
+
+**15. Función cuadrática ← Potencias y raíces** — *bloqueante*
+Temario: mismo bullet más *"vértice, ceros de la función..."* (línea 82). La fórmula general —el único método que cubre "en diversos contextos"— trae una raíz cuadrada en su núcleo. No hay forma de evitar potencias/raíces en el rango representativo.
+
+**16. Función cuadrática ← Función lineal y afín** — *facilitadora*
+Temario: *"Tablas y gráficos de la función cuadrática... Puntos especiales..."* (líneas 81-82). Leer una tabla de una parábola o identificar su vértice es una destreza nueva y autocontenida; el temario no repite en esta unidad un bullet de "concepto de función" que dependa de la recta.
+
+**17. Figuras geométricas ← Potencias y raíces** — *bloqueante*
+Temario: *"Problemas que involucren el Teorema de Pitágoras..."* (línea 91). Despejar el lado con Pitágoras termina en raíz cuadrada; el área del círculo trae una potencia (π·r²).
+
+**18. Cuerpos geométricos ← Figuras geométricas** — *bloqueante*
+Temario: *"Área de superficies de paralelepípedos, cubos y cilindros."* (línea 97). El área de superficie de un cuerpo se arma sumando las mismas áreas planas del prerrequisito.
+
+**19. Semejanza y proporcionalidad ← Figuras geométricas** — *bloqueante*
+Temario: mismo bullet que #5 (línea 109). Comparar lados y ángulos entre figuras semejantes exige reconocer esos elementos, que entrega el prerrequisito.
+
+**20. Tablas y gráficos ← Porcentaje** — *facilitadora*
+Temario: mismo bullet que #6 (líneas 117-120). "Tabla de frecuencia absoluta" y "tipos de gráficos" no requieren porcentaje en absoluto; "frecuencia relativa" y "promedio" se pueden trabajar como fracción o decimal sin convertir a porcentaje.
+
+**21. Medidas de posición ← Tablas y gráficos** — *bloqueante*
+Temario: *"Diagrama de cajón para representar distribución de datos."* (línea 125). El diagrama de cajón es, por definición, un tipo de gráfico; los cuartiles se calculan sobre datos ya tabulados.
+
+**22. Reglas de probabilidad ← Enteros y racionales** — *bloqueante*
+Temario: *"Problemas que involucren probabilidad de un evento..."* (líneas 130-131). Toda la unidad son "problemas que involucren"; una probabilidad es siempre un cociente en ℚ.
+
+---
+
+## 3. Flechas que faltarían — propuestas, NO aplicadas
+
+Aparecieron al revisar el temario. Ninguna se agregó al mapa.
 
 **A. Porcentaje ← Proporcionalidad**
-Un porcentaje es una proporción de denominador 100, y "tanto por ciento" es el caso más común de proporción directa. Hoy los dos temas están sueltos, ambos en la etapa 1. Agregarla empujaría Porcentaje a la etapa 2.
-*Contra:* el temario los trata como temas separados y de ejes distintos (Números vs. Álgebra).
+Un porcentaje es una proporción de denominador 100. Hoy ambos son unidades hermanas sin arista entre sí.
+*Contra:* el temario las trata como unidades separadas, de ejes distintos (Números vs. Álgebra), sin cruzarlas en ningún descriptor.
 
-**B. Reglas de probabilidad ← Porcentaje**
-La probabilidad se comunica casi siempre en porcentaje ("70% de posibilidades"). Hoy Reglas de probabilidad queda disponible en la etapa 1, muy temprano; esta flecha la correría más adelante.
-*Contra:* el temario define la probabilidad como cociente, no como porcentaje.
+**B. Medidas de posición ← Enteros y racionales (directa)**
+Ordenar datos para calcular cuartiles exige orden en ℤ/ℚ. Hoy llega solo indirecta (vía Tablas y gráficos).
+*Contra:* probablemente innecesaria — la relación indirecta ya cubre esto. Se anota solo para constancia de que se revisó.
 
-**C. Semejanza y proporcionalidad ← Potencias y raíces**
-Si dos figuras están en razón *k*, sus áreas están en razón *k²*. Ese salto al cuadrado es el error clásico en modelos a escala.
-*Contra:* el temario dice solo "modelos a escala y situaciones reales", sin mencionar áreas ni potencias. Además hoy la relación ya llega indirecta, vía Figuras geométricas.
-
-**D. Medidas de posición ← Enteros y racionales (directa)**
-Ordenar datos para sacar cuartiles exige orden en ℚ. Hoy la relación llega indirecta a través de Tablas y gráficos, así que **probablemente no haga falta** — se anota solo para dejar constancia de que se miró.
-
-### Y una que se decidió NO proponer
-
-**Transformaciones isométricas ← Función lineal y afín.** Estaba en el mapa y se quitó. Razón: el temario ubica "puntos y vectores en el plano cartesiano" **dentro del descriptor de Transformaciones isométricas**, así que el plano cartesiano no se importa desde Función lineal y afín. Ver la flecha 6 de la sección 2.
+**C. Reglas de probabilidad ← Porcentaje**
+La probabilidad se comunica con frecuencia en porcentaje en enunciados PAES reales.
+*Contra:* el temario define probabilidad solo como "problemas que involucren probabilidad de un evento", sin mencionar porcentaje en ningún bullet. Más débil que A.
 
 ---
 
-## 5. Hoja de firma
+## 4. Hoja de firma
 
-Marcar una casilla por flecha. En "modificar", escribir al lado qué debería decir.
+Cuatro casillas por flecha: **aprobada** (queda tal cual, arista y tipo) / **rechazada** (se borra la flecha) / **modificada** (escribir qué cambia) / **tipo al revés** (la flecha existe pero el tipo está mal — bloqueante debería ser facilitadora, o viceversa).
 
-### Las 12 sin respaldo — prioridad alta
+### Bloqueantes con respaldo (6)
 
-| # | Flecha | Aprobar | Rechazar | Modificar |
-|---|---|:---:|:---:|:---:|
-| 1 | Porcentaje ← Enteros y racionales | ☐ | ☐ | ☐ |
-| 2 | Expresiones algebraicas ← Enteros y racionales | ☐ | ☐ | ☐ |
-| 3 | Proporcionalidad ← Enteros y racionales | ☐ | ☐ | ☐ |
-| 4 | Ecuaciones e inecuaciones ← Expresiones algebraicas | ☐ | ☐ | ☐ |
-| 5 | ⚠️ Sistemas 2×2 ← Función lineal y afín | ☐ | ☐ | ☐ |
-| 6 | Función lineal y afín ← Proporcionalidad | ☐ | ☐ | ☐ |
-| 7 | Función lineal y afín ← Ecuaciones e inecuaciones | ☐ | ☐ | ☐ |
-| 8 | Función cuadrática ← Expresiones algebraicas | ☐ | ☐ | ☐ |
-| 9 | Función cuadrática ← Potencias y raíces | ☐ | ☐ | ☐ |
-| 10 | Función cuadrática ← Función lineal y afín | ☐ | ☐ | ☐ |
-| 11 | Tablas y gráficos ← Porcentaje | ☐ | ☐ | ☐ |
-| 12 | Reglas de probabilidad ← Enteros y racionales | ☐ | ☐ | ☐ |
+| # | Flecha | Aprobada | Rechazada | Modificada | Tipo al revés |
+|---|---|:---:|:---:|:---:|:---:|
+| 1 | Potencias y raíces ← Enteros y racionales | ☐ | ☐ | ☐ | ☐ |
+| 2 | Sistemas 2×2 ← Ecuaciones e inecuaciones | ☐ | ☐ | ☐ | ☐ |
+| 3 | Función cuadrática ← Ecuaciones e inecuaciones | ☐ | ☐ | ☐ | ☐ |
+| 5 | Semejanza y proporcionalidad ← Proporcionalidad | ☐ | ☐ | ☐ | ☐ |
+| 6 | Tablas y gráficos ← Enteros y racionales | ☐ | ☐ | ☐ | ☐ |
 
-### Las 10 con respaldo — confirmar
+### La facilitadora con respaldo (caso especial, ver §2.2)
 
-| # | Flecha | Aprobar | Rechazar | Modificar |
-|---|---|:---:|:---:|:---:|
-| 13 | Potencias y raíces ← Enteros y racionales | ☐ | ☐ | ☐ |
-| 14 | Sistemas 2×2 ← Ecuaciones e inecuaciones | ☐ | ☐ | ☐ |
-| 15 | Función cuadrática ← Ecuaciones e inecuaciones | ☐ | ☐ | ☐ |
-| 16 | Figuras geométricas ← Potencias y raíces | ☐ | ☐ | ☐ |
-| 17 | Cuerpos geométricos ← Figuras geométricas | ☐ | ☐ | ☐ |
-| 18 | Transformaciones isométricas ← Figuras geométricas | ☐ | ☐ | ☐ |
-| 19 | Semejanza y proporcionalidad ← Proporcionalidad | ☐ | ☐ | ☐ |
-| 20 | Semejanza y proporcionalidad ← Figuras geométricas | ☐ | ☐ | ☐ |
-| 21 | Tablas y gráficos ← Enteros y racionales | ☐ | ☐ | ☐ |
-| 22 | Medidas de posición ← Tablas y gráficos | ☐ | ☐ | ☐ |
+| # | Flecha | Aprobada | Rechazada | Modificada | Tipo al revés |
+|---|---|:---:|:---:|:---:|:---:|
+| 4 | ⚠️ Transformaciones isométricas ← Figuras geométricas | ☐ | ☐ | ☐ | ☐ |
 
-### Las 4 propuestas — ¿se agregan?
+**¿Cómo lee usted "de figuras geométricas" en la línea 104: como la unidad Figuras geométricas, o como sustantivo común?**
+☐ Como la unidad (la interpretación usada) ☐ Como sustantivo común, sin relación con la unidad
+
+### Sin respaldo textual — prioridad alta (16)
+
+| # | Flecha | Tipo asignado | Aprobada | Rechazada | Modificada | Tipo al revés |
+|---|---|---|:---:|:---:|:---:|:---:|
+| 7 | Porcentaje ← Enteros y racionales | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 8 | Expresiones algebraicas ← Enteros y racionales | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 9 | Proporcionalidad ← Enteros y racionales | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 10 | Ecuaciones e inecuaciones ← Expresiones algebraicas | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 11 | ⚠️ Sistemas 2×2 ← Función lineal y afín | facilitadora | ☐ | ☐ | ☐ | ☐ |
+| 12 | Función lineal y afín ← Proporcionalidad | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 13 | Función lineal y afín ← Ecuaciones e inecuaciones | facilitadora | ☐ | ☐ | ☐ | ☐ |
+| 14 | Función cuadrática ← Expresiones algebraicas | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 15 | Función cuadrática ← Potencias y raíces | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 16 | Función cuadrática ← Función lineal y afín | facilitadora | ☐ | ☐ | ☐ | ☐ |
+| 17 | Figuras geométricas ← Potencias y raíces | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 18 | Cuerpos geométricos ← Figuras geométricas | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 19 | Semejanza y proporcionalidad ← Figuras geométricas | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 20 | Tablas y gráficos ← Porcentaje | facilitadora | ☐ | ☐ | ☐ | ☐ |
+| 21 | Medidas de posición ← Tablas y gráficos | bloqueante | ☐ | ☐ | ☐ | ☐ |
+| 22 | Reglas de probabilidad ← Enteros y racionales | bloqueante | ☐ | ☐ | ☐ | ☐ |
+
+### Las 3 propuestas — ¿se agregan?
 
 | # | Flecha propuesta | Agregar | Descartar |
 |---|---|:---:|:---:|
 | A | Porcentaje ← Proporcionalidad | ☐ | ☐ |
-| B | Reglas de probabilidad ← Porcentaje | ☐ | ☐ |
-| C | Semejanza y proporcionalidad ← Potencias y raíces | ☐ | ☐ |
-| D | Medidas de posición ← Enteros y racionales (directa) | ☐ | ☐ |
+| B | Medidas de posición ← Enteros y racionales (directa) | ☐ | ☐ |
+| C | Reglas de probabilidad ← Porcentaje | ☐ | ☐ |
 
-### Dos preguntas de conjunto
+### Preguntas de conjunto
 
 **¿Está bien que Reglas de probabilidad se pueda estudiar en la etapa 1, casi al principio?**
-
 ☐ Sí ☐ No — debería ir después de: ____________________
 
-**¿Falta alguna relación que no esté en ninguna lista?**
+**La flecha #11 (Sistemas 2×2 ← Función lineal y afín) es la única que hace el mapa de 4 etapas en vez de 3. ¿Se mantiene?**
+☐ Sí, se mantiene ☐ No, se rechaza (el mapa pasa a 3 etapas)
 
-_______________________________________________________________
+**¿Falta alguna relación que no esté en ninguna lista?**
 
 _______________________________________________________________
 
@@ -286,4 +276,4 @@ _______________________________________________________________
 
 ---
 
-*Cambios en las flechas se hacen en `content/diagnostico/dag-m1.json`. Los tests de `lib/diagnostico/__tests__/` fijan los totales (22 flechas, 10 con respaldo, 12 sin), así que cualquier cambio obliga a actualizar esas cifras a mano — a propósito: para que ninguna flecha se mueva sin que alguien lo decida.*
+*Cambios en las flechas se hacen en `content/diagnostico/dag-m1.json`. Los tests de `lib/diagnostico/__tests__/motor.test.ts` fijan los totales (22 flechas, 6 con respaldo / 16 sin, 17 bloqueantes / 5 facilitadoras) a mano — a propósito: para que ninguna flecha cambie sin que alguien lo decida y actualice el test.*
