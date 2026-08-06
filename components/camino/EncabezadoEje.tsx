@@ -64,7 +64,7 @@ export function EncabezadoEje({
 
   return (
     <h2
-      className="sticky z-20 -mx-3 flex items-center border-b border-border bg-surface/95 backdrop-blur-sm sm:-mx-4"
+      className="sticky z-20 -mx-3 flex items-center border-b border-border bg-surface/90 backdrop-blur-md sm:-mx-4"
       style={{
         height: ALTO_ENCABEZADO_EJE,
         top: `calc(var(--tope-nav) + ${desplazamientoSticky}px)`,

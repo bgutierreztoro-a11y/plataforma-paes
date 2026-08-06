@@ -136,7 +136,13 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
   const tamano = meta
     ? "h-[78px] w-[78px] sm:h-[84px] sm:w-[84px]"
     : "h-14 w-14 sm:h-[60px] sm:w-[60px]";
-  const base = `flex ${tamano} shrink-0 items-center justify-center rounded-full shadow-tarjeta motion-safe:transition-[background-color,box-shadow,transform] motion-safe:duration-[360ms] motion-reduce:transition-none${
+  /* La sombra la pone cada estado, no la base. La elevación es la jerarquía del
+     recorrido: cuanto más cerca está un nodo de ser lo próximo que hay que
+     hacer, más despega del papel. Antes los cinco compartían la misma sombra y
+     el camino se leía como una fila de discos igual de lejanos.
+     `respiracion-nodo` anima solo `transform`, así que la sombra más alta del
+     nodo disponible convive con ella sin parpadear. */
+  const base = `flex ${tamano} shrink-0 items-center justify-center rounded-full motion-safe:transition-[background-color,box-shadow,transform] motion-safe:duration-[360ms] motion-reduce:transition-none${
     meta ? " outline outline-2 outline-offset-4 outline-border-fuerte" : ""
   }`;
 
@@ -165,11 +171,14 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
 
   switch (estado) {
     case "completado":
-      return <span className={`${base} bg-success text-white`}>{contenido}</span>;
+      // Lo terminado apoya: está hecho, no reclama nada.
+      return (
+        <span className={`${base} bg-success text-white shadow-nivel-1`}>{contenido}</span>
+      );
     case "porRepasar":
       return (
         <span
-          className={`${base} bg-surface text-attention-fuerte ring-2 ring-attention-fuerte ring-offset-2 ring-offset-bg`}
+          className={`${base} bg-surface text-attention-fuerte shadow-nivel-1 ring-2 ring-attention-fuerte ring-offset-2 ring-offset-bg`}
         >
           {contenido}
         </span>
@@ -179,7 +188,7 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
       // empezado, así que no hace falta llamar la atención para arrancar.
       return (
         <span
-          className={`${base} bg-surface text-accent ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+          className={`${base} bg-surface text-accent shadow-tarjeta ring-2 ring-accent ring-offset-2 ring-offset-bg`}
         >
           {contenido}
         </span>
@@ -191,7 +200,7 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
          relleno y por la tarjeta, nunca solo por el movimiento. */
       return (
         <span
-          className={`${base} respiracion-nodo bg-accent text-white ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+          className={`${base} respiracion-nodo bg-accent text-white shadow-tarjeta-hover ring-2 ring-accent ring-offset-2 ring-offset-bg`}
         >
           {contenido}
         </span>
@@ -214,7 +223,7 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
          los dos que sí se pueden abrir. */
       return (
         <span
-          className={`${base} border-2 border-dashed border-ink-tenue bg-border !shadow-none`}
+          className={`${base} border-2 border-dashed border-ink-tenue bg-border`}
         />
       );
   }

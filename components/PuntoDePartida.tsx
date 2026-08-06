@@ -137,7 +137,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   if (!primera) {
     return (
       <Marco titulo="El camino todavía no abre">
-        <p className="text-base leading-7 text-ink-suave">
+        <p className="text-lg text-ink-suave">
           Ninguna lección pasó todavía la revisión matemática y de originalidad. Es lo
           único que falta para abrirlas.
         </p>
@@ -169,7 +169,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
         {/* El umbral sale de lib/umbrales.ts y no escrito a mano: es
             exactamente el número que ese módulo existe para que no aparezca
             dos veces y se desincronice. */}
-        <p className="text-base leading-7 text-ink-suave">
+        <p className="text-lg text-ink-suave">
           Terminaste todo lo abierto. «{porRepasar.titulo}» quedó bajo el{" "}
           {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer intento.
         </p>
@@ -187,7 +187,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   if (!pendiente) {
     return (
       <Marco titulo="Hiciste todo lo que está abierto">
-        <p className="text-base leading-7 text-ink-suave">
+        <p className="text-lg text-ink-suave">
           {enPreparacion
             ? "Las lecciones que siguen están en preparación: se abren cuando pasen la revisión matemática y de originalidad. Mientras tanto, las que ya hiciste se pueden repasar enteras."
             : "Las lecciones que ya hiciste se pueden repasar enteras."}
@@ -204,7 +204,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   if (hayAvance) {
     return (
       <Marco titulo="Te queda una lección del camino">
-        <p className="text-base leading-7 text-ink-suave">
+        <p className="text-lg text-ink-suave">
           Unos {pendiente.minutos} minutos, con preguntas formato PAES al final.
         </p>
         <EnlaceBoton href={`/leccion/${pendiente.id}`} className="mt-8">
@@ -223,7 +223,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      diagnóstico sigue accesible, abajo y nombrando lo que es. */
   return (
     <Marco titulo="Empieza por acá">
-      <p className="text-base leading-7 text-ink-suave">
+      <p className="text-lg text-ink-suave">
         El camino abre en «{primera.temaNombre} · {primera.titulo}». Unos{" "}
         {primera.minutos} minutos, con preguntas formato PAES al final. No necesitas
         cuenta para nada de esto.
@@ -258,10 +258,13 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
 function Marco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
     <section className="mx-auto max-w-xl text-center">
-      <h2 className="text-3xl font-semibold leading-tight tracking-tight text-ink lg:text-4xl">
-        {titulo}
-      </h2>
-      <div className="mt-4 flex flex-col items-center">{children}</div>
+      {/* Sube un escalón de la escala (36px, 48px en escritorio): es el primer
+          título que ve alguien que llega, y a 30px competía de igual a igual con
+          el h1 de cualquier pantalla interna. Sin `leading-tight tracking-tight`
+          a mano — desde la escala tipográfica de globals.css el interlineado y
+          el tracking ya vienen en el token del tamaño. */}
+      <h2 className="text-4xl font-semibold text-ink lg:text-5xl">{titulo}</h2>
+      <div className="mt-5 flex flex-col items-center">{children}</div>
     </section>
   );
 }

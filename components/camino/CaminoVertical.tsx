@@ -266,6 +266,13 @@ export function CaminoVertical({
                       }
                       alto={altoDeFila(nodo.meta === true)}
                       altoAnterior={anterior ? altoDeFila(anterior.meta === true) : 0}
+                      /* Un tramo está recorrido cuando el nodo del que sale ya
+                         se hizo. "Por repasar" también cuenta: se rindió, con
+                         deuda, pero el estudiante pasó por ahí. */
+                      recorrido={
+                        anterior?.estado === "completado" ||
+                        anterior?.estado === "porRepasar"
+                      }
                       seleccionado={activo?.id === nodo.id}
                       onSeleccionar={() => setElegido(nodo.id)}
                     />
@@ -363,6 +370,7 @@ function FilaCamino({
   xAnterior,
   alto,
   altoAnterior,
+  recorrido,
   seleccionado,
   onSeleccionar,
 }: {
@@ -372,6 +380,7 @@ function FilaCamino({
   xAnterior?: number;
   alto: number;
   altoAnterior: number;
+  recorrido: boolean;
   seleccionado: boolean;
   onSeleccionar: () => void;
 }) {
@@ -407,7 +416,14 @@ function FilaCamino({
             y1="0"
             x2={x}
             y2="100"
-            stroke="var(--color-border-fuerte)"
+            /* El tramo ya recorrido se pinta con el verde de "completado" y el
+               que falta queda en el gris del borde. Es la misma lectura de
+               progreso que dan los discos, dicha por la línea que los une: se
+               ve dónde llegaste sin contar nodos ni leer el contador. No suma
+               un color al sistema — reusa el que ya significa "hecho". */
+            stroke={
+              recorrido ? "var(--color-success)" : "var(--color-border-fuerte)"
+            }
             strokeWidth="3"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
@@ -512,7 +528,13 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
   const bloqueado = nodo.estado === "enConstruccion";
 
   return (
-    <div className="rounded-tarjeta border border-border bg-surface p-3 shadow-tarjeta-hover">
+    /* `flotante` y no `elevado`: esta tarjeta no está apoyada en la página,
+       vive encima del camino y tapa nodos. Si no se separa de verdad, el ojo la
+       lee como parte del recorrido en vez de como el panel que responde "¿y
+       ahora qué?". El padding se queda en p-3 a propósito: el alto de esta
+       tarjeta está acotado por RESERVA_TARJETA en lib/geometriaCamino.ts, y
+       crecer acá le devuelve a la tarjeta el clic de una banda de eje. */
+    <div className="rounded-panel border border-border bg-surface p-3 shadow-flotante">
       {nodo.rotulo && (
         <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
           {nodo.rotulo}
