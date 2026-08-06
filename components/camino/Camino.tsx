@@ -7,6 +7,10 @@ import {
   type SeccionCamino,
 } from "@/components/camino/CaminoVertical";
 import { COPY_EN_PREPARACION } from "@/components/camino/NodoTema";
+import {
+  ContadorDePantalla,
+  TituloDePantalla,
+} from "@/components/navegacion/EncabezadoPantalla";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
@@ -161,31 +165,23 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
           usando `ALTO_FRANJA_CAMINO`. El alto va por `style` y no por clase para
           que ese número sea uno solo. */}
       <header
-        className="sticky z-30 border-b border-border bg-surface/95 backdrop-blur-sm"
+        className="sticky z-30 border-b border-border bg-surface/80 backdrop-blur-md"
         style={{ top: "var(--tope-nav)", height: ALTO_FRANJA_CAMINO }}
       >
         <div className="mx-auto flex h-full w-full max-w-5xl items-center gap-3 px-4 sm:px-6">
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-xs font-medium uppercase tracking-wide text-ink-tenue">
-              Matemática M1 · Piloto privado
-            </p>
-            <h1 className="truncate text-base font-semibold tracking-tight text-ink sm:text-lg">
-              Tu camino
-            </h1>
-          </div>
+          <TituloDePantalla
+            rotulo="Matemática M1 · Piloto privado"
+            titulo="Tu camino"
+          />
           {/* Contador sobre el temario completo, no sobre lo que alcanzamos a
               construir: el estudiante ve el tamaño real del curso que rinde. La
               forma corta es la que cabe en la franja; el texto entero lo dice el
               lector de pantalla. */}
-          <p className="shrink-0 text-sm text-ink-suave">
-            <span className="font-mono tabular-nums">{completados}</span>
-            <span aria-hidden="true">/</span>
-            <span className="font-mono tabular-nums">{TOTAL_TEMAS}</span>
-            <span className="sr-only">
-              {" "}
-              unidades del temario M1 completadas de {TOTAL_TEMAS}
-            </span>
-          </p>
+          <ContadorDePantalla
+            hechas={completados}
+            total={TOTAL_TEMAS}
+            descripcion={`unidades del temario M1 completadas de ${TOTAL_TEMAS}`}
+          />
         </div>
       </header>
 
