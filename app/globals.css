@@ -34,25 +34,177 @@
   --color-attention-fuerte: #b26a00;
   --color-attention-suave: #fff6e9;
 
+  /* "esto se toca": el cian reservado al elemento manipulable de la lección
+     —riel y thumb del slider, la recta que se mueve— y a nada más (MASTER.md
+     §2.1, "Aurora"). Su exclusividad ES la enseñanza: si el interactivo usa el
+     mismo azul que el botón de navegación, el ojo nunca aprende a distinguir
+     lo que se lee de lo que se manipula. Prohibido en navegación, CTA y
+     estados.
+
+     `interactive` (aurora-500 de MASTER) da 2,5:1 contra blanco: sirve de
+     relleno, jamás de trazo fino ni de texto. Por eso existe el nivel
+     "fuerte", igual que en --color-attention y por la misma razón. MASTER no
+     define un aurora-700, así que este se elige acá para cumplir el AA que
+     exige su propia §5: #0e7c8c da 4,9:1 sobre blanco. */
+  --color-interactive: #12b5c9;
+  --color-interactive-fuerte: #0e7c8c;
+  --color-interactive-suave: #e6fafc;
+
   /* cuadrícula tipo papel milimetrado */
   --color-grid-fina: #e4eaf5;
   --color-grid-fuerte: #c7d3ea;
 
-  --font-sans: var(--font-geist-sans);
+  /* Inter para leer, Geist Mono para la notación.
+   *
+   * El cambio de Geist a Inter (2026-08-06) no es de gusto; se decidió sobre
+   * dos diferencias verificables en los metadatos de next/font:
+   *
+   * 1. **Geist no tiene cursiva.** Su entrada en Google Fonts declara
+   *    `styles: ["normal"]` y nada más. El contenido de las lecciones usa
+   *    énfasis pedagógico constantemente (`*incógnita*`, `*sola*`, `*una bolsa
+   *    cerrada*`) y `lib/markdownSimple.tsx` lo renderiza como <em>: cada uno
+   *    de esos salía como oblicua sintética, o sea la redonda inclinada a la
+   *    fuerza por el navegador. Es un defecto tipográfico real en el texto que
+   *    el estudiante lee durante media hora.
+   * 2. **Inter tiene eje óptico** (`opsz` 14→32); Geist solo tiene `wght`. El
+   *    eje corrige tracking y aperturas según el tamaño, que es exactamente lo
+   *    que pide la escala de acá abajo. Es lo que este proyecto venía
+   *    parchando a mano con `tracking-tight` en 12 de 25 encabezados.
+   *
+   * Se mantiene Geist Mono: es buena, es lo que apunta `font-mono` en 47
+   * lugares, y cambiarla sería ruido sin un argumento equivalente. */
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
-  --radius-tarjeta: 0.75rem;
+  /* ---------------------------------------------------------------------
+     Escala tipográfica.
 
-  /* sombras: una de reposo y una de hover, siempre derivadas de ink */
+     Se afinan los tamaños que Tailwind ya define en vez de inventar nombres
+     nuevos (`text-h1`, `text-body`…): el repo tiene 159 usos de `text-sm`,
+     `text-base`, `text-3xl`… y un vocabulario paralelo obligaría a migrarlos
+     todos o a convivir con dos sistemas. Redefinirlos en su sitio arregla los
+     159 de una vez.
+
+     La progresión es la de siempre en tipografía bien hecha: **mientras más
+     grande el texto, más apretados el interlineado y el tracking**. Un título
+     de 36px con el interlineado de un párrafo se ve suelto y amateur. Abajo
+     eso queda en el token, no en la clase, así que ya no hay que acordarse de
+     escribir `tracking-tight` (y de acertarle al mismo valor) en cada h1.
+     --------------------------------------------------------------------- */
+
+  /* lectura: interlineado generoso, tracking intacto */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.45;
+  --text-xs--letter-spacing: 0.005em;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.55;
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+  /* el cuerpo de la lección: 18px. Leer para aprender pide comodidad
+     (MASTER.md §2.2, "body-lg") */
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.65;
+
+  /* títulos: el interlineado se cierra y el tracking entra en negativo */
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.35;
+  --text-xl--letter-spacing: -0.011em;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.28;
+  --text-2xl--letter-spacing: -0.014em;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.2;
+  --text-3xl--letter-spacing: -0.018em;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.12;
+  --text-4xl--letter-spacing: -0.021em;
+
+  /* display: solo momentos de revelación (celebración, portada, anuncio) */
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1.06;
+  --text-5xl--letter-spacing: -0.024em;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1.03;
+  --text-6xl--letter-spacing: -0.026em;
+
+  /* ---------------------------------------------------------------------
+     Radios: cuatro pasos, no uno.
+
+     Hasta acá todo el producto usaba el mismo 0.75rem —botón, tarjeta,
+     alternativa, caja del camino—, y sin jerarquía de encierro la pantalla se
+     lee plana aunque el espaciado esté bien. La escala es la de MASTER.md
+     §2.4. `--radius-tarjeta` conserva su valor y su nombre (44 usos) y pasa a
+     ser el radio de los controles medianos: botones y alternativas.
+     --------------------------------------------------------------------- */
+  --radius-control: 0.5rem; /* chips, código en línea, badges */
+  --radius-tarjeta: 0.75rem; /* botones, alternativas, superficies chicas */
+  --radius-panel: 1rem; /* tarjetas de contenido */
+  --radius-escena: 1.5rem; /* el contenedor del interactivo */
+
+  /* ---------------------------------------------------------------------
+     Elevación: la metáfora del "lift" (MASTER.md §2.5).
+
+     Sombras multicapa y de baja opacidad, todas derivadas de ink: una de
+     contacto, corta y apenas visible, más una ambiental amplia y difusa. Una
+     sola capa se ve como sticker.
+
+     La escala sube cuando algo se vuelve interactivo o se levanta de la
+     página. Los dos primeros niveles conservan sus valores exactos: ya
+     estaban bien y así ningún uso existente cambia de aspecto.
+     --------------------------------------------------------------------- */
+  /* reposo — botones y nodos: apenas despega del papel */
+  --shadow-nivel-1:
+    0 1px 2px rgb(22 33 58 / 0.06), 0 1px 3px rgb(22 33 58 / 0.04);
+  /* tarjeta — una unidad de información apoyada en la página */
   --shadow-tarjeta:
     0 1px 2px rgb(22 33 58 / 0.05), 0 4px 16px rgb(22 33 58 / 0.06);
+  /* hover — algo que el cursor levantó */
   --shadow-tarjeta-hover:
     0 2px 4px rgb(22 33 58 / 0.06), 0 8px 24px rgb(22 33 58 / 0.09);
+  /* flotante — panel que vive sobre el contenido (tarjeta del nodo activo) */
+  --shadow-flotante:
+    0 4px 8px rgb(22 33 58 / 0.06), 0 16px 40px rgb(22 33 58 / 0.13);
+  /* el interactivo: misma forma, teñida de aurora. Es la única sombra que no
+     deriva de ink, y esa excepción es justamente lo que la señala */
+  --shadow-interactivo:
+    0 2px 6px rgb(18 181 201 / 0.1), 0 12px 32px rgb(18 181 201 / 0.18);
 }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-ink);
+@layer base {
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+
+    /* Deja que Inter use su eje óptico (`opsz`): el navegador lo ajusta solo
+       según el tamaño de cada texto. Es el valor por defecto de la propiedad,
+       pero se escribe explícito porque es la mitad del motivo por el que se
+       eligió esta fuente y no debería apagarse por descuido. */
+    font-optical-sizing: auto;
+
+    /* Nota para el futuro: NO agregar `font-feature-settings` con las variantes
+       de carácter de Inter (`cv05` cola en la ele, `cv08` remates en la I).
+       Se probó y el corte que sirve Google Fonts no las trae: medido en el
+       navegador, el ancho del glifo es idéntico con y sin la variante. Quedaba
+       como una declaración que prometía desambiguar l/I/1 sin hacerlo.
+       Traerlas exigiría alojar el .woff2 de Inter propio, y eso no se paga
+       para este piloto. */
+  }
+
+  /* Evita que un párrafo termine en una palabra sola colgando en la última
+     línea. El techo de medida de línea (68ch, MASTER.md §2.2) no se resuelve
+     acá sino con `max-w-prose` en cada superficie de lectura. */
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Los títulos nunca se parten dejando una palabra huérfana en la última
+     línea. Es gratis y es la diferencia entre "compuesto" y "volcado". */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
 }
 
 /* Dónde empieza a pegarse lo que va fijo arriba.

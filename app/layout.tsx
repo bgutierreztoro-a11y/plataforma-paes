@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ClerkAppearanceTheme } from "@clerk/shared/types";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
 import { Navegacion } from "@/components/navegacion/Navegacion";
@@ -108,8 +108,8 @@ const apariencia: ClerkAppearanceTheme = {
     colorDanger: "#b3261e", // --color-error
     colorSuccess: "#146c43", // --color-success
     colorRing: "#1e4fd8", // --color-accent: anillo de foco, igual que Boton (outline-accent)
-    fontFamily: "var(--font-geist-sans)", // --font-sans
-    fontFamilyButtons: "var(--font-geist-sans)", // --font-sans
+    fontFamily: "var(--font-inter)", // --font-sans
+    fontFamilyButtons: "var(--font-inter)", // --font-sans
     fontSize: "1rem", // text-base, la escala de texto de la plataforma (Boton, labels)
     borderRadius: "0.75rem", // --radius-tarjeta (0.75rem); literal para que Clerk derive sm/lg/xl
   },
@@ -123,10 +123,13 @@ const apariencia: ClerkAppearanceTheme = {
     formButtonPrimary: {
       minHeight: "2.75rem", // min-h-11
       fontSize: "1rem", // text-base
-      fontWeight: 500, // font-medium
+      fontWeight: 600, // font-semibold
       textTransform: "none", // Boton no usa mayúsculas ni versalitas
       letterSpacing: "0",
-      boxShadow: "none", // el CTA de la plataforma es plano
+      // --shadow-nivel-1: el CTA de la plataforma apoya, no es plano. Va en
+      // literal por lo mismo que los colores: Clerk no parsea var().
+      boxShadow:
+        "0 1px 2px rgb(22 33 58 / 0.06), 0 1px 3px rgb(22 33 58 / 0.04)",
     },
     // Oculta "Agregar correo electrónico" en UserProfile: el flujo de la
     // plataforma solo admite un correo por cuenta (es el identificador único
@@ -140,9 +143,24 @@ const apariencia: ClerkAppearanceTheme = {
   },
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/* Inter para la lectura, Geist Mono para la notación matemática. El porqué del
+   cambio de Geist a Inter está escrito en app/globals.css, junto al token
+   --font-sans: en resumen, Geist no tiene cursiva y el contenido de las
+   lecciones usa énfasis en cada paso. */
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  /* `style` hay que pedirlo: next/font trae solo la redonda si no se declara,
+     y sin esta línea el navegador seguiría fabricando la cursiva inclinando la
+     redonda —justo el defecto que motivó dejar Geist—. Verificado en el
+     navegador: sin ella `document.fonts` no lista ninguna cara `italic`. */
+  style: ["normal", "italic"],
+  /* Igual que `style`: next/font recorta la fuente variable al eje de peso y
+     tira el resto si no se nombran. Sin esta línea el eje óptico viaja en los
+     metadatos pero no en el archivo, y `font-optical-sizing: auto` no tiene
+     sobre qué actuar. Verificado midiendo el ancho de una misma cadena con
+     `opsz` en sus dos extremos: sin `axes` daba idéntico. */
+  axes: ["opsz"],
 });
 
 const geistMono = Geist_Mono({
@@ -171,7 +189,7 @@ export default function RootLayout({
   return (
     <html
       lang="es-CL"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans text-ink pb-14 sm:pb-0">
         {/* ClerkProvider no protege ni redirige nada por sí solo: solo publica
