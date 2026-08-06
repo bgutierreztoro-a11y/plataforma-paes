@@ -178,6 +178,13 @@ cualquier discrepancia futura, manda el MOS.
 
 ### 4.1 Matriz completa del temario M1 — mapa de trabajo vigente (16 módulos)
 
+**Nota (2026-08-05): la columna "Contenidos" de esta tabla es un resumen de una línea por
+módulo, derivado a mano en una sesión anterior — no es citable como fuente. Al menos 8 de los
+16 resúmenes omiten, funden o alteran algo del descriptor real (detalle: sesión de trabajo del
+DAG M1, 2026-08-05). La fuente citable es `docs/temario-demre-m1-2027.md`, transcripción
+textual verificable con grep. Esta tabla no se reescribe todavía; sirve solo de referencia
+rápida de alcance, no de texto a citar.**
+
 Desde la Enmienda 2 (mos-v2.md §13, 2026-07-28), esta matriz **es** el mapa de trabajo: cada
 fila es uno de los 16 módulos que se construyen, un módulo completo a la vez, en el orden que
 se defina. La columna "Estado" ya no distingue "cubierto vs. excluido de alcance": distingue
