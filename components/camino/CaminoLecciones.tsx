@@ -121,7 +121,7 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
   const secciones: SeccionCamino[] = [{ id: tema.id, nodos }];
 
   return (
-    <div className="fondo-cuadricula rounded-panel border border-border px-3 py-4 sm:px-4">
+    <div className="rounded-panel border border-border px-3 py-4 sm:px-4">
       <CaminoVertical secciones={secciones} idActivo={activo?.id} />
     </div>
   );

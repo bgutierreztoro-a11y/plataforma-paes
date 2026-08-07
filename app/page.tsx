@@ -24,7 +24,7 @@ export default function Portada() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <section className="fondo-cuadricula cuadricula-desvanecida relative flex flex-1 items-center justify-center overflow-hidden px-4 py-24 lg:py-32">
+      <section className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-24 lg:py-32">
         <CaminoFantasma nodos={temas.length} />
 
         <div className="relative w-full">

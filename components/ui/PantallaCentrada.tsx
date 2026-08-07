@@ -27,7 +27,7 @@ export function PantallaCentrada({
 }) {
   return (
     <div
-      className={`fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16 ${className}`}
+      className={`flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16 ${className}`}
     >
       {children}
     </div>

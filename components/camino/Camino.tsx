@@ -186,7 +186,7 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
       </header>
 
       <div className="mx-auto w-full max-w-5xl px-4 py-4 sm:px-6">
-        <div className="fondo-cuadricula rounded-panel border border-border px-3 py-4 sm:px-4">
+        <div className="rounded-panel border border-border px-3 py-4 sm:px-4">
           <CaminoVertical
             secciones={secciones}
             idActivo={temaActivo?.id}
