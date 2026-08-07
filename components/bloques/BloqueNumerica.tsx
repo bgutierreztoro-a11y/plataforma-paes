@@ -47,7 +47,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
                    llenó y no solo al recuadro de feedback de abajo: con varios
                    campos, el panel por sí solo no dice cuál de ellos quedó
                    bien. Solo el acierto. */
-                className={`h-11 w-40 rounded-tarjeta border px-3 font-mono tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
+                className={`h-11 w-40 rounded-tarjeta border px-3 num focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
                   esCorrecto ? "border-success bg-success-suave" : "border-border"
                 }`}
               />

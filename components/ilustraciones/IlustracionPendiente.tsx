@@ -49,7 +49,6 @@ export function IlustracionPendiente() {
         x="130"
         y="124"
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
         fontSize="11"
         fill="var(--color-ink-suave)"
       >
@@ -58,7 +57,6 @@ export function IlustracionPendiente() {
       <text
         x="181"
         y="91"
-        fontFamily="var(--font-mono)"
         fontSize="11"
         fill="var(--color-ink-suave)"
       >

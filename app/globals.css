@@ -89,14 +89,20 @@
    * 2. **Tiene eje óptico** (`opsz` 14→32), que corrige tracking y aperturas
    *    según el tamaño.
    *
-   * `--font-mono` ya no apunta a una monoespaciada. Los ~50 usos de `font-mono`
-   * eran para números, tiempos y notación; eso lo resuelve `.num`
-   * (`tabular-nums`) sin cambiar de familia, y una tercera cara tipográfica no
-   * se paga sola. La migración de esos call sites a `.num` es de la fase de
-   * componentes; mientras tanto el alias los deja en Inter. */
+   * `--font-mono` es la pila monoespaciada del sistema, no una webfont. Los ~20
+   * usos de `font-mono` que había eran casi todos para números y tiempos, y eso
+   * lo resuelve `.num` (`tabular-nums`) sin cambiar de familia: descargar una
+   * tercera cara para alinear dígitos no se paga sola.
+   *
+   * Pero quedan tres sitios donde "monoespaciado" sí significa algo —el <pre>
+   * del stack trace en app/error.tsx y los <code> en línea de RunnerLeccion y
+   * markdownSimple—, y ahí una proporcional es sencillamente incorrecta. La
+   * pila del sistema los cubre sin costo de red. Es la misma que usa el
+   * preflight de Tailwind, así que <code> y <pre> se ven igual con la clase y
+   * sin ella. */
   --font-display: var(--font-instrument-sans);
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-inter);
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* Escala propia; no sobrescribe los text-sm/base/lg de Tailwind.
      Los ~159 usos de la escala numérica de Tailwind vuelven a sus valores

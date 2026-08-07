@@ -23,7 +23,7 @@ const FECHA_INICIO = "[FECHA POR DEFINIR]";
 export default function Preventa() {
   return (
     <div className="flex min-h-full flex-1 flex-col items-center justify-center gap-6 px-4 py-24 text-center">
-      <p className="font-mono text-sm uppercase tracking-wide text-ink-suave">
+      <p className="text-sm uppercase tracking-wide text-ink-suave">
         Cohorte fundadora · Cupos limitados
       </p>
       <h1 className="max-w-lg text-4xl font-semibold text-ink">

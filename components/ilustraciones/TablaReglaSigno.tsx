@@ -69,7 +69,7 @@ function MiniRecta({ incluido, direccion }: Pick<Fila, "incluido" | "direccion">
         x={xBorde}
         y={yRecta + 14}
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
+        className="num"
         fontSize="9"
         fill="var(--color-ink-tenue)"
       >
@@ -85,7 +85,7 @@ export function TablaReglaSigno({ filas }: Props) {
       {filas.map((fila) => (
         <li key={fila.signo} className="flex items-center gap-4 py-2.5 first:pt-0 last:pb-0">
           <div className="min-w-0 flex-1">
-            <p className="font-mono text-sm tabular-nums text-ink">{fila.signo}</p>
+            <p className="text-sm tabular-nums text-ink">{fila.signo}</p>
             <p className="text-sm leading-relaxed text-ink-suave">{fila.lectura}</p>
           </div>
           <MiniRecta incluido={fila.incluido} direccion={fila.direccion} />

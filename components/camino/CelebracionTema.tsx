@@ -160,8 +160,8 @@ export function CelebracionTema({
           </p>
 
           <p className="mt-8 text-sm text-ink-suave">
-            <span className="font-mono tabular-nums">{completados}</span> de{" "}
-            <span className="font-mono tabular-nums">{TOTAL_TEMAS}</span> unidades del
+            <span className="num">{completados}</span> de{" "}
+            <span className="num">{TOTAL_TEMAS}</span> unidades del
             temario M1
           </p>
         </div>

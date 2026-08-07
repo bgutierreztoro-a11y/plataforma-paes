@@ -32,7 +32,7 @@ export function SliderControl({
           {etiqueta}
           {!editable && " · fijo"}
         </span>
-        <span className="font-mono text-base tabular-nums text-ink">
+        <span className="text-base num text-ink">
           {valor.toLocaleString("es-CL", { maximumFractionDigits: 1 })}
         </span>
       </div>

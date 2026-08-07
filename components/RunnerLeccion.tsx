@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useReducer, useRef, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
 import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
-import { BarraProgreso } from "@/components/ui/BarraProgreso";
 import { Boton } from "@/components/ui/Boton";
+import { HeaderLeccion } from "@/components/leccion/HeaderLeccion";
 import { PasoLeccion } from "@/components/PasoLeccion";
 import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
@@ -136,7 +135,7 @@ export function RunnerLeccion({
   const bannerDemostracion = esBorrador ? (
     <div className="mb-6 rounded-panel border border-attention bg-attention-suave px-4 py-3 text-sm text-ink">
       <strong>Vista de demostración.</strong> Este contenido está en{" "}
-      <code className="rounded-control bg-surface px-1.5 py-0.5 font-mono text-attention-fuerte">
+      <code className="rounded-control bg-surface px-1.5 py-0.5 text-attention-fuerte">
         {leccion.estado}
       </code>
       : todavía no
@@ -217,37 +216,30 @@ export function RunnerLeccion({
 
   return (
     <div className="flex min-h-full flex-col">
+      {/* Fuera del contenedor con padding: el header y su borde inferior llegan
+          a los dos bordes del viewport. Modo foco — acá adentro no hay barra de
+          navegación persistente (Navegacion.tsx no se monta en /leccion/[id]),
+          así que este es el único chrome de la pantalla. */}
+      <HeaderLeccion
+        pasoActual={estado.pasoActual}
+        total={totalPasos}
+        tipo={paso.tipo}
+      />
+      {/* 600px de medida de lectura y 20px de margen lateral. El caso con visual
+          conserva el ancho grande: ahí el tope de línea lo pone la columna
+          izquierda del grid, no el contenedor, y capar acá mataría las dos
+          columnas de escritorio.
+
+          El título de la lección ya no se pinta: lo dice `generateMetadata` en
+          app/leccion/[id]/page.tsx, y en pantalla se repetía en cada uno de los
+          diez pasos. El único h1 es el título del paso, que vive en
+          PasoLeccion.tsx y sí cambia. */}
       <div
-        className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${
-          pasoConVisual ? "max-w-2xl lg:max-w-5xl" : "max-w-2xl"
+        className={`mx-auto w-full flex-1 px-5 py-8 sm:px-6 ${
+          pasoConVisual ? "max-w-[37.5rem] lg:max-w-5xl" : "max-w-[37.5rem]"
         }`}
       >
         {bannerDemostracion}
-        <h1 className="mb-6 text-2xl font-semibold text-ink">
-          {leccion.titulo}
-        </h1>
-        {/* Sticky: header pinneado (link de salida + progreso) mientras se
-            hace scroll dentro del paso. El título queda afuera, arriba, para
-            no inflar la altura fija en mobile. top-28 en
-            PasoLeccion.tsx:45 depende de la altura de este bloque — si se
-            edita el padding o el gap, hay que revisar ese offset también. */}
-        <div className="sticky top-0 z-10 mb-8 space-y-4 border-b border-border bg-surface py-3">
-          {/* Modo foco: acá adentro no hay barra de navegación persistente
-              (Navegacion.tsx no se monta en /leccion/[id]). Este es el único
-              enlace de salida — discreto a propósito, para no competir con el
-              CTA "Siguiente paso" del fondo del runner. */}
-          <Link
-            href="/camino"
-            className="inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            ← Salir al camino
-          </Link>
-          <BarraProgreso
-            pasoActual={estado.pasoActual}
-            total={totalPasos}
-            detalle={paso.tipo}
-          />
-        </div>
         <PasoLeccion
           key={estado.pasoActual}
           paso={leccion.pasos[estado.pasoActual]}

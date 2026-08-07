@@ -39,17 +39,18 @@ export function PasoLeccion({
 
   return (
     <section className="transicion-paso">
-      {/* Sube a text-xl: con el cuerpo en 18px, un título de 18px dejaba de
-          serlo. La jerarquía es relativa, así que mover el cuerpo obliga a
-          mover el encabezado. */}
-      <h2 className="text-xl font-semibold text-ink">{paso.titulo}</h2>
+      {/* El único h1 de la pantalla. Antes era h2, bajo el título de la lección
+          que RunnerLeccion pintaba arriba del header; ese salió y el nombre de
+          la lección lo da ahora `document.title`. El que cambia en cada paso
+          —y por lo tanto el que nombra lo que se está mirando— es este. */}
+      <h1 className="text-xl font-semibold text-ink">{paso.titulo}</h1>
       {visuales.length > 0 && lectura.length > 0 ? (
         <div className="mt-6 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-10">
           <div
-            // top-28 (112px) despeja el header sticky de RunnerLeccion.tsx
-            // (link "Salir al camino" + BarraProgreso, 97px medidos) para
-            // que no se pisen al hacer scroll en desktop.
-            className="space-y-8 lg:sticky lg:top-28 lg:col-start-2 lg:row-start-1"
+            // top-20 (80px) = los 56px del header de HeaderLeccion.tsx más 24
+            // de aire, para que no se pisen al hacer scroll en desktop. Venía
+            // de top-28 (112px), calibrado contra el header viejo de 97px.
+            className="space-y-8 lg:sticky lg:top-20 lg:col-start-2 lg:row-start-1"
           >
             {visuales.map(pintar)}
           </div>

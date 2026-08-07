@@ -113,7 +113,7 @@ export function PlanoItem({ puntos, conRecta = true, rectaTentativa = null }: Pl
             x={gx}
             y={origenY + 16}
             textAnchor="middle"
-            fontFamily="var(--font-mono)"
+            className="num"
             fontSize="10"
             fill="var(--color-ink-suave)"
           >
@@ -130,7 +130,7 @@ export function PlanoItem({ puntos, conRecta = true, rectaTentativa = null }: Pl
             x={origenX - 8}
             y={gy + 3.5}
             textAnchor="end"
-            fontFamily="var(--font-mono)"
+            className="num"
             fontSize="10"
             fill="var(--color-ink-suave)"
           >
@@ -163,7 +163,7 @@ export function PlanoItem({ puntos, conRecta = true, rectaTentativa = null }: Pl
               x={cabeIzquierda ? cx - 10 : cx + 10}
               y={cabeIzquierda ? cy - 10 : cy + 18}
               textAnchor={cabeIzquierda ? "end" : "start"}
-              fontFamily="var(--font-mono)"
+              className="num"
               fontSize="11"
               fill="var(--color-ink)"
             >

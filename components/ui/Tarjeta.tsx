@@ -5,11 +5,11 @@ type Nivel = "plano" | "elevado" | "flotante";
 /**
  * Una superficie que agrupa una unidad real de información.
  *
- * Existe porque el mismo puñado de clases —`rounded-tarjeta border
- * border-border bg-surface … shadow-tarjeta`— estaba copiado literal en cinco
- * archivos y con tres paddings distintos según quién lo escribió. Con la
- * escala de elevación de MASTER.md §2.5 la copia deja de ser solo repetición y
- * pasa a ser una decisión que hay que tomar bien una vez.
+ * Existe porque el mismo puñado de clases —`rounded-md border border-border
+ * bg-surface … shadow-e1`— estaba copiado literal en cinco archivos y con tres
+ * paddings distintos según quién lo escribió. Con la escala de elevación la
+ * copia deja de ser solo repetición y pasa a ser una decisión que hay que
+ * tomar bien una vez.
  *
  * El componente es dueño de **superficie, borde, radio y elevación**. El
  * tamaño, el padding y la alineación los sigue poniendo quien la usa, por
@@ -28,11 +28,11 @@ type Nivel = "plano" | "elevado" | "flotante";
  */
 const CLASES_NIVEL: Record<Nivel, string> = {
   plano: "shadow-none",
-  elevado: "shadow-tarjeta",
-  flotante: "shadow-flotante",
+  elevado: "shadow-e1",
+  flotante: "shadow-e2",
 };
 
-const CLASES_BASE = "rounded-panel border border-border bg-surface";
+const CLASES_BASE = "rounded-md border border-border bg-surface";
 
 export function Tarjeta({
   nivel = "elevado",

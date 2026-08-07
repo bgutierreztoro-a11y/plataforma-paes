@@ -64,7 +64,7 @@ export function IlustracionEjeVertical({ puntos, tramoDestacado }: Props) {
             x={xEje - 8}
             y={y(v) + 3.5}
             textAnchor="end"
-            fontFamily="var(--font-mono)"
+            className="num"
             fontSize="9"
             fill="var(--color-ink-tenue)"
           >
@@ -135,7 +135,7 @@ export function IlustracionEjeVertical({ puntos, tramoDestacado }: Props) {
             x={208}
             y={(y(tramoDestacado.desde) + y(tramoDestacado.hasta)) / 2 + 3.5}
             textAnchor="end"
-            fontFamily="var(--font-mono)"
+            className="num"
             fontSize="10"
             fill="var(--color-accent-fuerte)"
           >

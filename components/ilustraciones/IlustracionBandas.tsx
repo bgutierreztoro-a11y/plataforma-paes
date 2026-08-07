@@ -91,7 +91,7 @@ export function IlustracionBandas({ bandas }: Props) {
                   x={x(valor)}
                   y={yRecta + 12}
                   textAnchor="middle"
-                  fontFamily="var(--font-mono)"
+                  className="num"
                   fontSize="8"
                   fill={j === 0 ? "var(--color-accent-fuerte)" : "var(--color-ink-suave)"}
                 >

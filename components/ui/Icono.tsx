@@ -2,6 +2,37 @@ interface IconoProps {
   className?: string;
 }
 
+/**
+ * Salida del modo foco: una flecha a la izquierda, sin caja ni círculo.
+ *
+ * Es una flecha y no una equis a propósito. La equis dice "cerrar", que sugiere
+ * descartar lo hecho; la flecha dice "volver", que es lo que realmente pasa —el
+ * avance queda guardado y el camino sigue ahí. En una pantalla donde la única
+ * otra acción es avanzar, esa diferencia decide si el estudiante se atreve a
+ * tocarla.
+ *
+ * Mide 24px y no 20px como los dos de abajo: esos acompañan texto de feedback y
+ * este es el objetivo táctil de una esquina.
+ */
+export function IconoSalir({ className = "" }: IconoProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={`h-6 w-6 shrink-0 ${className}`}
+    >
+      <path
+        d="M15 5l-7 7 7 7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Siempre se usa junto al color de estado (éxito/error), nunca el color solo. */
 export function IconoCorrecto({ className = "" }: IconoProps) {
   return (

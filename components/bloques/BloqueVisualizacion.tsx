@@ -142,7 +142,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
                   <td
                     key={j}
                     className={`border-b border-border px-3.5 py-2.5 align-top leading-relaxed ${
-                      esNumeroPuro(c) ? "font-mono tabular-nums" : ""
+                      esNumeroPuro(c) ? "num" : ""
                     }`}
                   >
                     {conEnfasis(String(c))}
@@ -171,7 +171,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
               </p>
               <span
                 aria-hidden="true"
-                className="flex items-center px-1 font-mono text-xl text-ink-suave"
+                className="flex items-center px-1 text-xl text-ink-suave"
               >
                 =
               </span>

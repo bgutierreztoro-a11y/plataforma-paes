@@ -52,11 +52,11 @@ export function ContadorDePantalla({
 }) {
   return (
     <p className="shrink-0 text-sm text-ink-tenue">
-      <span className="font-mono font-medium tabular-nums text-ink">
+      <span className="font-medium num text-ink">
         {hechas}
       </span>
       <span aria-hidden="true">/</span>
-      <span className="font-mono tabular-nums">{total}</span>
+      <span className="num">{total}</span>
       <span className="sr-only"> {descripcion}</span>
     </p>
   );

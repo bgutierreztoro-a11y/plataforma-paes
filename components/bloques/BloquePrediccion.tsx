@@ -42,7 +42,7 @@ export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
           value={respuesta}
           onChange={(e) => setRespuesta(e.target.value)}
           aria-label="Tu predicción"
-          className="h-11 w-full max-w-xs rounded-tarjeta border border-border px-3 font-mono focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          className="h-11 w-full max-w-xs rounded-tarjeta border border-border px-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
         />
       )}
       {!enviado && (

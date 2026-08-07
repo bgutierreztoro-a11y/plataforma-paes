@@ -21,8 +21,8 @@ export function BarraProgreso({
             oración entera. */}
         <p className="text-sm text-ink-tenue">
           {sustantivo}{" "}
-          <span className="font-medium tabular-nums text-ink">{pasoActual + 1}</span> de{" "}
-          <span className="tabular-nums">{total}</span>
+          <span className="font-medium num text-ink">{pasoActual + 1}</span> de{" "}
+          <span className="num">{total}</span>
         </p>
         {detalle && <p className="truncate text-sm capitalize text-ink-tenue">{detalle}</p>}
       </div>

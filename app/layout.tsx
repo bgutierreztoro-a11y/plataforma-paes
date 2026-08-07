@@ -4,6 +4,7 @@ import { Instrument_Sans, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
 import { Navegacion } from "@/components/navegacion/Navegacion";
+import { PieLegal } from "@/components/ui/PieLegal";
 import "./globals.css";
 
 /**
@@ -233,11 +234,9 @@ export default function RootLayout({
           <Navegacion />
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
-        <footer className="border-t border-border px-4 py-6 text-center text-xs text-ink-tenue">
-          Plataforma independiente, sin vínculo con DEMRE, la Universidad de
-          Chile ni ningún preuniversitario. &quot;PAES&quot; se usa solo para
-          describir el formato de los ítems.
-        </footer>
+        {/* Se oculta a sí mismo dentro de /leccion/[id], igual que Navegacion.
+            El texto vive en un solo archivo: ver components/ui/PieLegal.tsx. */}
+        <PieLegal />
       </body>
     </html>
   );

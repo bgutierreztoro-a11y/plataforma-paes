@@ -66,7 +66,7 @@ export function CierreFinal({
             <div className="grid grid-cols-2 divide-x divide-border">
               <div className="pr-6">
                 <p className="text-sm text-ink-suave">Diagnóstico</p>
-                <p className="mt-1 font-mono text-3xl font-medium tabular-nums text-ink">
+                <p className="mt-1 text-3xl font-medium num text-ink">
                   {diagnostico.aciertos}
                   <span className="text-lg text-ink-tenue"> / {diagnostico.total}</span>
                 </p>
@@ -74,7 +74,7 @@ export function CierreFinal({
               </div>
               <div className="pl-6">
                 <p className="text-sm text-ink-suave">Cierre</p>
-                <p className="mt-1 font-mono text-3xl font-medium tabular-nums text-accent-fuerte">
+                <p className="mt-1 text-3xl font-medium num text-accent-fuerte">
                   {aciertos}
                   <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
                 </p>
@@ -89,7 +89,7 @@ export function CierreFinal({
         ) : (
           <>
             <p className="text-sm text-ink-suave">Cierre</p>
-            <p className="mt-1 font-mono text-3xl font-medium tabular-nums text-ink">
+            <p className="mt-1 text-3xl font-medium num text-ink">
               {aciertos}
               <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
             </p>
@@ -108,7 +108,7 @@ export function CierreFinal({
         )}
         <p className="mt-3 text-sm text-ink-suave">
           Ritmo promedio:{" "}
-          <span className="font-mono tabular-nums">{formatoTiempo(promedioMs)}</span> por pregunta
+          <span className="num">{formatoTiempo(promedioMs)}</span> por pregunta
           · en la PAES M1 el tiempo da para ~2:00.
         </p>
       </Tarjeta>

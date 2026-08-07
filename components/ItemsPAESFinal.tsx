@@ -130,16 +130,16 @@ export function ItemsPAESFinal({
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TarjetaDato
             etiqueta="Aciertos"
-            valor={<span className="font-mono tabular-nums">{`${aciertos}/${total}`}</span>}
+            valor={<span className="num">{`${aciertos}/${total}`}</span>}
             detalle="Preguntas formato PAES de esta lección."
           />
           <TarjetaDato
             etiqueta="Tu avance"
             valor={
               <>
-                <span className="font-mono tabular-nums">{ordinalLeccion}</span>
+                <span className="num">{ordinalLeccion}</span>
                 <span className="px-1.5 text-2xl text-ink-suave">de</span>
-                <span className="font-mono tabular-nums">{totalLeccionesTema}</span>
+                <span className="num">{totalLeccionesTema}</span>
               </>
             }
             detalle={`Lecciones de ${temaNombre}.`}

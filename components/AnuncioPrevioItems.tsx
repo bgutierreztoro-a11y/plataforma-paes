@@ -95,7 +95,7 @@ export function AnuncioPrevioItems({
       <TrazoPreguntas cantidad={cantidad} variante={variante} />
       <div>
         <p
-          className="entra-numero font-mono text-7xl font-semibold tabular-nums text-accent-fuerte sm:text-8xl"
+          className="entra-numero text-7xl font-semibold num text-accent-fuerte sm:text-8xl"
           style={{ animationDelay: "120ms" }}
         >
           {cantidad}
