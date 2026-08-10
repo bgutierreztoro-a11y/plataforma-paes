@@ -287,20 +287,32 @@ test("el camino muestra las 16 unidades, con los ejes vacíos plegados", async (
   await page.getByRole("button", { name: /Geometría/ }).click();
   await expect(page.getByText("Semejanza y proporcionalidad")).toBeVisible();
 
-  /* `RESERVA_TARJETA` decide si la tarjeta se voltea para no taparle el clic a
-     una banda de eje (`tapariaUnaBanda`). Es un número escrito a mano en
-     `lib/geometriaCamino.ts`, y la tarjeta real puede crecer por debajo sin que
-     nada falle: pasó en la Fase B, cuando el botón full-width en su propia
-     línea la llevó de 178,5 a 204,5px y dejó la cota corta. El test unitario no
-     puede atraparlo —ahí el alto es un supuesto—, así que se mide acá, y en los
-     dos anchos, porque el que más envuelve la descripción es el angosto. */
+  /* `RESERVA_TARJETA` es la cota del **contenido real** de la tarjeta, y la
+     tarjeta real puede crecer por debajo sin que nada falle: pasó en la Fase
+     B, cuando el botón full-width en su propia línea la llevó de 178,5 a
+     204,5px y dejó la cota corta. El test unitario no puede atraparlo —ahí el
+     alto es un supuesto—, así que se mide acá, y en los dos anchos, porque el
+     que más envuelve la descripción es el angosto.
+
+     Desde la Fase 4 la caja de `<aside>` ya no mide lo mismo que el
+     contenido: `alturaSegura`/`alturaSeguraArriba` le imponen un `min-height`
+     redondeado a un borde de fila (ver lib/geometriaCamino.ts), así que puede
+     medir más que `RESERVA_TARJETA` a propósito — eso es lo que evita que la
+     tarjeta corte un nodo a la mitad, no un defecto. Lo que sigue sin poder
+     pasar la cota es el contenido en sí: se mide desde el borde superior de
+     la tarjeta hasta el borde inferior de su último hijo real (el botón),
+     ignorando el aire que agrega el `min-height`. */
   const tarjeta = await page.evaluate(() => {
-    const el = document.querySelector("aside");
-    return el ? el.getBoundingClientRect().height : 0;
+    const aside = document.querySelector("aside");
+    const caja = aside?.firstElementChild;
+    const ultimo = caja?.lastElementChild;
+    if (!caja || !ultimo) return 0;
+    const paddingInferior = parseFloat(getComputedStyle(caja).paddingBottom);
+    return ultimo.getBoundingClientRect().bottom - caja.getBoundingClientRect().top + paddingInferior;
   });
   expect(
     tarjeta,
-    `la tarjeta mide ${tarjeta}px y RESERVA_TARJETA es ${RESERVA_TARJETA}`,
+    `el contenido de la tarjeta mide ${tarjeta}px y RESERVA_TARJETA es ${RESERVA_TARJETA}`,
   ).toBeLessThanOrEqual(RESERVA_TARJETA);
 
   await capturar(page, "3b-camino-16-unidades", testInfo.project.name);
@@ -372,9 +384,10 @@ test("caben 5 nodos sin scroll en /camino a 360px", async ({ page }, testInfo) =
     };
     const fila = document.querySelector("ol li");
     const paso = fila ? fila.getBoundingClientRect().height : 0;
-    const caja = document.querySelector(".fondo-cuadricula");
-    /* Desde la primera fila y no desde el borde de la caja: entre los dos está
-       la banda del eje, que es justo lo que hay que descontar. */
+    /* Desde la primera fila y no desde `.fondo-cuadricula` (eliminado en la
+       Fase 1, ver el test hermano de /tema/[id] más abajo): entre la caja y la
+       primera fila está la banda del eje, que es justo lo que hay que
+       descontar, y la primera fila ya viene después de esa banda. */
     const desde = fila ? fila.getBoundingClientRect().top : 0;
     const hasta = window.innerHeight - alto("nav[aria-label]") - alto("aside") - 16;
     return {
@@ -382,7 +395,6 @@ test("caben 5 nodos sin scroll en /camino a 360px", async ({ page }, testInfo) =
       paso,
       desde,
       hasta,
-      caja: !!caja,
       /* La altura real de la tarjeta, que es de donde sale RESERVA_TARJETA en
          lib/geometriaCamino.ts. Si la tarjeta crece por encima de esa cota, la
          tarjeta vuelve a comerse el clic de una banda de eje. */
@@ -391,6 +403,83 @@ test("caben 5 nodos sin scroll en /camino a 360px", async ({ page }, testInfo) =
   });
 
   expect(caben.caben, `medición: ${JSON.stringify(caben)}`).toBeGreaterThanOrEqual(5);
+});
+
+test("la tarjeta activa nunca corta un nodo a la mitad (escritorio)", async ({
+  page,
+}, testInfo) => {
+  /* El anclaje por nodo (`--anclaje`, `voltear`, `--alto-seguro`) vive solo
+     en clases `sm:` (Tailwind v4, 640px sin override en app/globals.css) — a
+     360/390px el `<aside>` es `fixed bottom-14` y no cuelga de ningún nodo en
+     particular. Este test es del único ancho donde `alturaSegura` /
+     `alturaSeguraArriba` tienen algo que verificar; el test hermano de abajo
+     confirma para 390px que, en efecto, no aplica.
+
+     Recorre **todos** los nodos de /camino y no uno elegido a mano: el corte
+     depende de cuántas filas hay entre el activo y el resto, así que el caso
+     que falla puede estar en cualquier posición de las 16 unidades. Es este
+     mismo test, sin `min-height`, el que encontró en el navegador real que
+     voltear solo no alcanza — "Expresiones algebraicas" activo cortaba
+     "Porcentaje" hacia arriba en vez de "Sistemas de ecuaciones 2×2" hacia
+     abajo. */
+  test.skip(testInfo.project.name !== "escritorio", "el anclaje por nodo solo existe en sm:+");
+
+  await sembrar(page, PROGRESO_LECCION_HECHA);
+  await page.goto("/camino");
+  await expect(page.getByText("Enteros y racionales")).toBeVisible();
+
+  const botones = page.locator("ol li button");
+  const total = await botones.count();
+
+  for (let i = 0; i < total; i++) {
+    /* `force: true`: tapar entero el botón del nodo siguiente es
+       comportamiento aceptado (ver el comentario sobre `voltear` más arriba
+       en CaminoVertical.tsx — "basta tocar otro nodo para moverla"), y con
+       `alturaSegura` cubriendo filas completas a propósito, el nodo
+       inmediatamente después del activo puede quedar tapado del todo. Esta
+       corrida clickea los 16 en orden para medir geometría, no para
+       ejercitar el flujo real de un estudiante — que sí respeta esa tapa. */
+    await botones.nth(i).click({ force: true });
+    const aside = page.locator("aside");
+    await expect(aside).toBeVisible();
+
+    const cortes = await page.evaluate(() => {
+      const asideEl = document.querySelector("aside");
+      if (!asideEl) return [];
+      const cajaTarjeta = asideEl.getBoundingClientRect();
+      const filas = Array.from(document.querySelectorAll("ol li"));
+      return filas.flatMap((fila) => {
+        const r = fila.getBoundingClientRect();
+        const solape = Math.min(r.bottom, cajaTarjeta.bottom) - Math.max(r.top, cajaTarjeta.top);
+        // Cubrir la fila entera (solape >= alto) es el comportamiento
+        // aceptado; no tocarla (solape <= 0) también. Cortarla es cualquier
+        // solape estrictamente entre los dos.
+        const corte = solape > 0.5 && solape < r.height - 0.5;
+        return corte
+          ? [{ titulo: fila.textContent?.slice(0, 40), solape, alto: r.height }]
+          : [];
+      });
+    });
+
+    expect(cortes, `nodo activo #${i}: ${JSON.stringify(cortes)}`).toEqual([]);
+  }
+});
+
+test("a 390px la tarjeta no cuelga de un nodo, va fija al pie", async ({ page }, testInfo) => {
+  /* Documenta la razón por la que el test anterior se salta en móvil: no es
+     que el corte de nodo no importe a este ancho, es que el mecanismo que
+     podría producirlo no está activo. Si esto deja de ser `fixed` sin que
+     nadie lo haya decidido a propósito, el test de arriba también tiene que
+     empezar a correr en "movil". */
+  test.skip(testInfo.project.name !== "movil", "prueba el breakpoint exacto de sm:");
+
+  await sembrar(page, PROGRESO_LECCION_HECHA);
+  await page.setViewportSize({ width: 390, height: 800 });
+  await page.goto("/camino");
+  await expect(page.getByText("Enteros y racionales")).toBeVisible();
+
+  const posicion = await page.locator("aside").evaluate((el) => getComputedStyle(el).position);
+  expect(posicion).toBe("fixed");
 });
 
 test("tema con los nodos enlazados", async ({ page }, testInfo) => {
@@ -478,8 +567,13 @@ test("caben 5 nodos sin scroll en 360px", async ({ page }, testInfo) => {
     };
     const fila = document.querySelector("ol li");
     const paso = fila ? fila.getBoundingClientRect().height : 0;
-    const caja = document.querySelector(".fondo-cuadricula");
-    const desde = caja ? caja.getBoundingClientRect().top + 16 : 0;
+    /* Desde la primera fila y no desde `.fondo-cuadricula`: esa clase se
+       eliminó en la Fase 1 y el selector medía siempre `null`, así que
+       `desde` quedaba fijo en 0 — el mismo bug que se corrigió en el test
+       hermano de /camino (línea ~378). Con `desde` en 0 en vez del borde real
+       de la primera fila, `hasta - desde` se inflaba y la aserción pasaba más
+       fácil de lo que debía. */
+    const desde = fila ? fila.getBoundingClientRect().top : 0;
     // Lo que tapan la barra de navegación y la tarjeta fija del nodo activo.
     const hasta = window.innerHeight - alto("nav[aria-label]") - alto("aside") - 16;
     return paso > 0 ? Math.floor((hasta - desde) / paso) : 0;

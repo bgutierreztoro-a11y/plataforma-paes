@@ -174,6 +174,60 @@ export function tapariaUnaBanda(
 }
 
 /**
+ * Cuánto alto necesita la tarjeta, colgando hacia abajo del elemento `i`,
+ * para que su borde libre —el que no queda pegado al nodo activo— caiga
+ * siempre en un borde de elemento y nunca a mitad de un nodo.
+ *
+ * **Por qué esto y no una variante de `tapariaUnaBanda`.** Una primera
+ * versión de esta fase intentaba decidir "¿cortaría?" y, si sí, voltear la
+ * tarjeta hacia el otro lado. No alcanza: 216 (`RESERVA_TARJETA`) no es
+ * múltiplo de 76 (`PASO_FILA`), así que el mismo resto de 64px que corta un
+ * nodo hacia abajo corta uno hacia arriba si se voltea — la geometría es
+ * simétrica, cambiar de lado no la arregla, solo la traslada (confirmado con
+ * datos reales del navegador: "Expresiones algebraicas" activo cortaba
+ * "Sistemas de ecuaciones 2×2" para abajo y "Porcentaje" para arriba). El
+ * único borde que puede garantizarse en un límite de fila sin importar hacia
+ * dónde cuelgue la tarjeta es el que depende del **alto real de la tarjeta**,
+ * no de su posición. Por eso esta función no devuelve un booleano para
+ * decidir un volteo: devuelve un alto, para usarlo como `min-height` de la
+ * tarjeta. El contenido real (204,5–216px medidos) casi siempre entra en ese
+ * alto con aire de sobra; solo en el caso más ancho de descripción lo llena.
+ * Lo que se ve de más es una tarjeta con algo de espacio en blanco al fondo,
+ * nunca un título cortado — el costo es visual, acotado y previsible; el
+ * corte no lo era.
+ *
+ * Camina igual que `tapariaUnaBanda` (sumando alto de elemento en elemento
+ * mientras no se alcance `RESERVA_TARJETA`) pero el resultado es la suma
+ * misma, no una pregunta sobre ella — por construcción cae siempre exacto en
+ * el borde inferior del último elemento sumado.
+ */
+export function alturaSegura(elementos: readonly ElementoColumna[], i: number): number {
+  if (i < 0) return RESERVA_TARJETA;
+  const borde = desplazamientoVertical(elementos, i);
+  let techo = borde;
+  for (let k = i + 1; k < elementos.length && techo - borde < RESERVA_TARJETA; k++) {
+    techo += altoDeElemento(elementos[k]);
+  }
+  /* La columna se acabó antes de llegar a la cota: no queda nada más que
+     cortar, así que el piso es la cota misma y no lo que alcanzó a sumar. */
+  return Math.max(RESERVA_TARJETA, techo - borde);
+}
+
+/**
+ * La misma garantía que `alturaSegura`, para cuando la tarjeta cuelga hacia
+ * **arriba** (`voltear` es `true` por la meta o por `tapariaUnaBanda`).
+ *
+ * Reutiliza `alturaSegura` sobre la columna invertida en vez de escribir la
+ * misma caminata en la otra dirección: recorrer hacia arriba desde `i` es
+ * recorrer hacia abajo desde el índice espejado en la columna al revés.
+ */
+export function alturaSeguraArriba(elementos: readonly ElementoColumna[], i: number): number {
+  if (i < 0 || i >= elementos.length) return RESERVA_TARJETA;
+  const invertida = [...elementos].reverse();
+  return alturaSegura(invertida, elementos.length - 1 - i);
+}
+
+/**
  * Ancho de la canaleta donde viven los discos y el trazo, en píxeles.
  *
  * Fijo a propósito. Tiene que caber lo más ancho de los dos casos: un disco

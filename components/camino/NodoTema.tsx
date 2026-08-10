@@ -121,7 +121,22 @@ function GlifoPunto({ className = "" }: { className?: string }) {
  * tiene que leerse distinto sin cambiar de vocabulario. Un disco más grande y
  * con doble anillo es "la meta"; un color nuevo habría sido un estado nuevo.
  */
-export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?: boolean }) {
+export function PuntoNodo({
+  estado,
+  meta = false,
+  destacado = false,
+}: {
+  estado: EstadoNodo;
+  meta?: boolean;
+  /** El nodo trae la tarjeta activa ahora mismo. No es un estado nuevo — se
+   *  compone con cualquiera de los cinco, salvo `enConstruccion`: quien
+   *  llama ya filtra ese caso, porque un disco grande y de relleno sólido
+   *  prometería una acción que un nodo bloqueado no tiene (ver
+   *  `FilaCamino`, que aplica la misma exclusión al fondo de la fila). Tiene
+   *  que ganar la pantalla sin ayuda de la tarjeta: por eso vive en el disco
+   *  y no en el texto de al lado. */
+  destacado?: boolean;
+}) {
   /* La transición cubre color, sombra y escala, no solo color. Cuando el
      estudiante vuelve de terminar una lección, el nodo se repinta con el estado
      nuevo al hidratar; sin transición ese cambio es un salto y no se alcanza a
@@ -132,25 +147,67 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
      lección y el camino que permita lo segundo. */
   /* 56px en móvil y 60px en escritorio; la meta, 1,4× (78 y 84). Bien por
      encima del mínimo táctil de 44px de MASTER.md §5 — el disco es lo que se
-     toca para mover la tarjeta, así que no puede ser un adorno chico. */
+     toca para mover la tarjeta, así que no puede ser un adorno chico.
+
+     El destacado (Fase 4) es un escalón intermedio, 64/68px: por debajo de
+     la meta —que sigue siendo el disco más grande del camino, es la
+     llegada— pero claramente por encima del resto. No usa el multiplicador
+     de la meta porque no comparten motivo: uno dice "esto termina el tema",
+     el otro dice "esto es lo tuyo ahora mismo". */
   const tamano = meta
     ? "h-[78px] w-[78px] sm:h-[84px] sm:w-[84px]"
-    : "h-14 w-14 sm:h-[60px] sm:w-[60px]";
+    : destacado
+      ? "h-16 w-16 sm:h-[68px] sm:w-[68px]"
+      : "h-14 w-14 sm:h-[60px] sm:w-[60px]";
   /* La sombra la pone cada estado, no la base. La elevación es la jerarquía del
      recorrido: cuanto más cerca está un nodo de ser lo próximo que hay que
      hacer, más despega del papel. Antes los cinco compartían la misma sombra y
      el camino se leía como una fila de discos igual de lejanos.
      `respiracion-nodo` anima solo `transform`, así que la sombra más alta del
-     nodo disponible convive con ella sin parpadear. */
+     nodo disponible convive con ella sin parpadear.
+
+     El borde inferior de 3px es el mismo lenguaje que `Boton.tsx` (variante
+     `primario`): el disco destacado se lee como un control, no solo como un
+     marcador de estado. Sin el `motion-safe:active:*` de Boton — el clic lo
+     recibe el `<button>` que envuelve al disco en `FilaCamino`, no el disco
+     mismo, así que no hay un `:active` propio que animar sin acoplarse al
+     padre. */
   const base = `flex ${tamano} shrink-0 items-center justify-center rounded-full motion-safe:transition-[background-color,box-shadow,transform] motion-safe:duration-[360ms] motion-reduce:transition-none${
     meta ? " outline outline-2 outline-offset-4 outline-border-fuerte" : ""
-  }`;
+  }${destacado ? " border-b-[3px] border-b-accent-fuerte" : ""}`;
 
   /* El glifo escala con el disco: en la meta todo mide 1,4×, y un trazo del
      tamaño de siempre dentro de un disco más grande se lee como un error de
-     centrado antes que como énfasis. */
-  const glifo = meta ? "h-9 w-9 sm:h-10 sm:w-10" : "h-7 w-7 sm:h-8 sm:w-8";
-  const punto = meta ? "h-5 w-5 sm:h-6 sm:w-6" : "h-4 w-4 sm:h-5 sm:w-5";
+     centrado antes que como énfasis. Mismo motivo para el destacado, un
+     escalón más chico. */
+  const glifo = meta
+    ? "h-9 w-9 sm:h-10 sm:w-10"
+    : destacado
+      ? "h-8 w-8 sm:h-9 sm:w-9"
+      : "h-7 w-7 sm:h-8 sm:w-8";
+  const punto = meta
+    ? "h-5 w-5 sm:h-6 sm:w-6"
+    : destacado
+      ? "h-4.5 w-4.5 sm:h-5.5 sm:w-5.5"
+      : "h-4 w-4 sm:h-5 sm:w-5";
+
+  /* Relleno sólido incluso en los estados que hoy se leen por anillo
+     (`porRepasar`, `enCurso`): destacado es "esto es lo tuyo ahora", y un
+     disco que sigue siendo `bg-surface` con un aro no gana la pantalla por sí
+     solo — necesita leer la tarjeta para confirmarlo, que es justo lo que el
+     objetivo pide evitar. El color no cambia de familia, solo de tratamiento:
+     el ámbar de "por repasar" sigue siendo ámbar, el índigo de "en curso"
+     sigue siendo índigo. */
+  const colorDestacado: Record<EstadoNodo, string> = {
+    completado: "bg-success",
+    porRepasar: "bg-attention-fuerte",
+    enCurso: "bg-accent",
+    disponible: "bg-accent",
+    /* No se usa: quien llama excluye este caso (ver el comentario de la prop
+       `destacado` más arriba). Declarado igual para que el `Record` sea
+       exhaustivo y un estado nuevo no pueda faltar acá en silencio. */
+    enConstruccion: "bg-border",
+  };
 
   /* El glifo se resuelve una vez y en orden de prioridad, no dentro de cada
      rama: qué se dibuja depende del estado **y** de si es meta, y repetir esa
@@ -171,24 +228,41 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
 
   switch (estado) {
     case "completado":
-      // Lo terminado apoya: está hecho, no reclama nada.
+      // Lo terminado apoya: está hecho, no reclama nada. Destacado sube un
+      // escalón de sombra, igual que el resto de los estados — no cambia de
+      // familia de color, ya era relleno sólido.
       return (
-        <span className={`${base} bg-success text-white shadow-nivel-1`}>{contenido}</span>
+        <span
+          className={`${base} ${colorDestacado.completado} text-white ${destacado ? "shadow-tarjeta-hover" : "shadow-nivel-1"}`}
+        >
+          {contenido}
+        </span>
       );
     case "porRepasar":
       return (
         <span
-          className={`${base} bg-surface text-attention-fuerte shadow-nivel-1 ring-2 ring-attention-fuerte ring-offset-2 ring-offset-bg`}
+          className={
+            destacado
+              ? `${base} ${colorDestacado.porRepasar} text-white shadow-tarjeta-hover ring-2 ring-attention-fuerte ring-offset-2 ring-offset-bg`
+              : `${base} bg-surface text-attention-fuerte shadow-nivel-1 ring-2 ring-attention-fuerte ring-offset-2 ring-offset-bg`
+          }
         >
           {contenido}
         </span>
       );
     case "enCurso":
       // Mismo anillo de acento que "disponible" pero sin respiración: hay algo
-      // empezado, así que no hace falta llamar la atención para arrancar.
+      // empezado, así que no hace falta llamar la atención para arrancar. El
+      // destacado es la excepción: ahí sí hace falta, porque es el nodo con
+      // la tarjeta abierta, así que pasa a relleno sólido igual que
+      // "disponible".
       return (
         <span
-          className={`${base} bg-surface text-accent shadow-tarjeta ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+          className={
+            destacado
+              ? `${base} ${colorDestacado.enCurso} text-white shadow-tarjeta-hover ring-2 ring-accent ring-offset-2 ring-offset-bg`
+              : `${base} bg-surface text-accent shadow-tarjeta ring-2 ring-accent ring-offset-2 ring-offset-bg`
+          }
         >
           {contenido}
         </span>
@@ -206,25 +280,21 @@ export function PuntoNodo({ estado, meta = false }: { estado: EstadoNodo; meta?:
         </span>
       );
     case "enConstruccion":
-      /* Relleno gris plano y contorno punteado. Antes el relleno era el color de
-         fondo de la página, así que el disco no era un disco: era un hueco en la
-         cuadrícula, y en el recorrido se leía como si faltara algo en vez de
-         como algo que todavía no está. Sin sombra: lo que está en obra no
-         despega (MASTER.md §2.5).
+      /* Relleno plano, sin trazo (Fase 4). El punteado de la versión anterior
+         era ruido de forma sobre un elemento que ya dice su estado por color:
+         con 13 de 16 unidades en construcción, ese trazo repetido 13 veces
+         era lo que más pesaba visualmente en la pantalla, justo lo contrario
+         de lo que un estado recesivo debería hacer. El color solo ya alcanza
+         — el disco no compite con el título en gris de al lado ni con la
+         ausencia de interacción, que son las otras dos señales de "esto no se
+         puede abrir todavía".
 
-         El punteado sube de `border-fuerte` a `ink-tenue`. El anterior daba
-         1,42:1 contra el fondo —prácticamente invisible—, y desde que estos
-         nodos son seleccionables (muestran su tarjeta con la razón) ya no son
-         un adorno que se pueda dejar al borde de lo perceptible. `ink-tenue`
-         da 2,99:1: sigue recesivo, que es lo que corresponde a algo que no se
-         puede abrir, pero se ve. No se sube más a propósito — hoy 13 de 16
-         unidades están en construcción, y un gris de alto contraste convertiría
-         el camino en una pared de discos apagados que le ganaría la atención a
-         los dos que sí se pueden abrir. */
-      return (
-        <span
-          className={`${base} border-2 border-dashed border-ink-tenue bg-border`}
-        />
-      );
+         `bg-surface-alt` (ink-100) medía 1,07:1 contra `--color-bg` (ink-50):
+         prácticamente invisible, se borraba. Sube a `bg-border` (ink-200,
+         que es el mismo tono que ya usa `--color-border`) para conservar la
+         continuidad visual del recorrido sin desaparecer del todo — sigue
+         siendo el disco más tenue del camino, solo que legible. Sin sombra,
+         lo que está en obra no despega (MASTER.md §2.5). */
+      return <span className={`${base} bg-border`} />;
   }
 }

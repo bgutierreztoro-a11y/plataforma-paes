@@ -10,6 +10,8 @@ import {
   desplazamientoVertical,
   desplazamientoDeNodo,
   tapariaUnaBanda,
+  alturaSegura,
+  alturaSeguraArriba,
   type ElementoColumna,
 } from "./geometriaCamino.ts";
 
@@ -189,6 +191,79 @@ describe("tapariaUnaBanda", () => {
 
   test("índice inválido no explota", () => {
     assert.equal(tapariaUnaBanda([encabezado(), nodo()], -1), false);
+  });
+});
+
+describe("alturaSegura", () => {
+  /**
+   * El caso real que reveló que voltear no alcanza: con tres nodos seguidos
+   * debajo del activo, 216 (`RESERVA_TARJETA`) cae 64px dentro del tercero.
+   * El alto seguro tiene que ser exactamente la suma de los tres —228, no
+   * 216— para que el borde libre de la tarjeta caiga en el borde inferior
+   * del tercero y no a mitad de él.
+   */
+  test("el resto de 64px se resuelve sumando el elemento entero, no redondeando", () => {
+    // `nodos(4)`: el activo (índice 0) más tres filas debajo, 76px cada una.
+    assert.equal(alturaSegura(nodos(4), 0), 3 * PASO_FILA);
+  });
+
+  /** Con solo dos filas debajo (152px), ya alcanzan y sobran para cubrir
+   *  `RESERVA_TARJETA`: el alto seguro es la cota misma, sin sumar una
+   *  tercera fila que no hace falta. */
+  test("dos filas ya cubren la cota: el alto seguro es la cota, no una fila de más", () => {
+    assert.equal(alturaSegura(nodos(3), 0), RESERVA_TARJETA);
+  });
+
+  /** La columna se acaba antes de llegar a la cota: no queda nada que cortar,
+   *  así que el alto seguro es la cota misma y no lo poco que alcanzó a
+   *  sumar — no hay ninguna fila real después que necesite protección. */
+  test("la columna se acaba antes de la cota: el alto seguro es la cota", () => {
+    assert.equal(alturaSegura(nodos(5), 4), RESERVA_TARJETA);
+  });
+
+  /** Una banda de eje cuenta con su propio alto, igual que un nodo: lo que
+   *  importa acá es no cortar ningún elemento, no distinguir tipos —esa
+   *  distinción es de `tapariaUnaBanda`, que decide si hay que taparla o no
+   *  del todo. */
+  test("una banda intercalada suma su propio alto, no el de una fila", () => {
+    const columna = [nodo(), nodo(), encabezado(), encabezado()];
+    // 76 (nodo1) + 44 (encabezado1) = 120 < 216, sigue sumando el segundo
+    // encabezado: 120 + 44 = 164 < 216, columna agotada → cae en la cota.
+    assert.equal(alturaSegura(columna, 0), RESERVA_TARJETA);
+  });
+
+  test("índice inválido: devuelve la cota", () => {
+    assert.equal(alturaSegura([encabezado(), nodo()], -1), RESERVA_TARJETA);
+  });
+});
+
+describe("alturaSeguraArriba", () => {
+  /** Espejo del caso real de `alturaSegura`: tres nodos **arriba** del activo
+   *  (índice 3, el último de `nodos(4)`) piden el mismo alto seguro que hacia
+   *  abajo. Es la garantía que hacía falta cuando `voltear` cuelga la tarjeta
+   *  hacia arriba: sin esto, "Expresiones algebraicas" activo volteaba la
+   *  tarjeta y cortaba "Porcentaje" dos filas más arriba — medido en el
+   *  navegador real, no en la función pura. */
+  test("el resto de 64px hacia arriba pide la misma fila completa de más", () => {
+    assert.equal(alturaSeguraArriba(nodos(4), 3), 3 * PASO_FILA);
+  });
+
+  test("dos filas arriba ya cubren la cota", () => {
+    assert.equal(alturaSeguraArriba(nodos(3), 2), RESERVA_TARJETA);
+  });
+
+  test("nada arriba del primer elemento: la cota, no cero", () => {
+    assert.equal(alturaSeguraArriba(nodos(5), 0), RESERVA_TARJETA);
+  });
+
+  test("una banda arriba suma su propio alto", () => {
+    const columna = [encabezado(), encabezado(), nodo(), nodo()];
+    assert.equal(alturaSeguraArriba(columna, 3), RESERVA_TARJETA);
+  });
+
+  test("índice inválido: devuelve la cota", () => {
+    assert.equal(alturaSeguraArriba([encabezado(), nodo()], -1), RESERVA_TARJETA);
+    assert.equal(alturaSeguraArriba([encabezado(), nodo()], 5), RESERVA_TARJETA);
   });
 });
 
