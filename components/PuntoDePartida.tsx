@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { EnlaceBoton } from "@/components/ui/Boton";
+import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { estadoDeLeccion, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
@@ -136,12 +137,11 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   // punto de partida dice la verdad en vez de ofrecer un enlace roto.
   if (!primera) {
     return (
-      <Marco titulo="El camino todavía no abre">
-        <p className="text-lg text-ink-suave">
-          Ninguna lección pasó todavía la revisión matemática y de originalidad. Es lo
-          único que falta para abrirlas.
-        </p>
-        <EnlaceBoton href="/diagnostico" className="mt-8" variante="secundario">
+      <Marco
+        titulo="El camino todavía no abre"
+        subtitulo="Ninguna lección pasó todavía la revisión matemática y de originalidad. Es lo único que falta para abrirlas."
+      >
+        <EnlaceBoton href="/diagnostico" anchoCompleto className="mt-8" variante="secundario">
           Hacer el diagnóstico
         </EnlaceBoton>
       </Marco>
@@ -165,18 +165,26 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      ya viene en ese orden desde `lib/camino.ts`. */
   if (!pendiente && porRepasar) {
     return (
-      <Marco titulo="Te conviene repasar una lección">
-        {/* El umbral sale de lib/umbrales.ts y no escrito a mano: es
-            exactamente el número que ese módulo existe para que no aparezca
-            dos veces y se desincronice. */}
-        <p className="text-lg text-ink-suave">
-          Terminaste todo lo abierto. «{porRepasar.titulo}» quedó bajo el{" "}
-          {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer intento.
-        </p>
-        {/* Mismo patrón de etiqueta que la rama 2: el botón nombra tema y
-            lección, que es lo que le permite reconocer cuál sin abrirla. */}
-        <EnlaceBoton href={`/leccion/${porRepasar.id}`} className="mt-8">
-          Repasar: {porRepasar.temaNombre} · {porRepasar.titulo}
+      <Marco
+        titulo="Te conviene repasar una lección"
+        /* El umbral sale de lib/umbrales.ts y no escrito a mano: es
+           exactamente el número que ese módulo existe para que no aparezca
+           dos veces y se desincronice. */
+        subtitulo={
+          <>
+            Terminaste todo lo abierto.{" "}
+            <strong className="font-semibold text-ink">
+              {porRepasar.temaNombre} · {porRepasar.titulo}
+            </strong>{" "}
+            quedó bajo el {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer
+            intento.
+          </>
+        }
+      >
+        {/* Mismo criterio que la rama 2: el nombre vive en el subtítulo y el
+            botón dice la acción. */}
+        <EnlaceBoton href={`/leccion/${porRepasar.id}`} anchoCompleto className="mt-8">
+          Repasar la lección
         </EnlaceBoton>
       </Marco>
     );
@@ -186,29 +194,43 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   // las lecciones abiertas existen, todas están completadas: `hayAvance` sobra.
   if (!pendiente) {
     return (
-      <Marco titulo="Hiciste todo lo que está abierto">
-        <p className="text-lg text-ink-suave">
-          {enPreparacion
+      <Marco
+        titulo="Hiciste todo lo que está abierto"
+        subtitulo={
+          enPreparacion
             ? "Las lecciones que siguen están en preparación: se abren cuando pasen la revisión matemática y de originalidad. Mientras tanto, las que ya hiciste se pueden repasar enteras."
-            : "Las lecciones que ya hiciste se pueden repasar enteras."}
-        </p>
-        <EnlaceBoton href="/camino" className="mt-8">
+            : "Las lecciones que ya hiciste se pueden repasar enteras."
+        }
+      >
+        <EnlaceBoton href="/camino" anchoCompleto className="mt-8">
           Ver el camino
         </EnlaceBoton>
       </Marco>
     );
   }
 
-  // Rama 2 — quedó algo sin terminar. La etiqueta nombra el tema y la lección,
-  // que es lo que le permite al estudiante reconocer dónde iba sin abrirla.
+  /* Rama 2 — quedó algo sin terminar.
+     El tema y la lección se nombran, porque es lo que le permite al estudiante
+     reconocer dónde iba sin abrirla. Lo que cambió (Fase 6) es **dónde**: van en
+     el subtítulo y no dentro del botón. Medido a 390px, "Continuar: {tema} ·
+     {lección}" ocupaba 2 líneas (71px con line-height de 24), y un botón que
+     envuelve pierde la forma de botón. El dato no se recortó, se movió a la
+     línea que existe para dar contexto. */
   if (hayAvance) {
     return (
-      <Marco titulo="Te queda una lección del camino">
-        <p className="text-lg text-ink-suave">
-          Unos {pendiente.minutos} minutos, con preguntas formato PAES al final.
-        </p>
-        <EnlaceBoton href={`/leccion/${pendiente.id}`} className="mt-8">
-          Continuar: {pendiente.temaNombre} · {pendiente.titulo}
+      <Marco
+        titulo="Te queda una lección del camino"
+        subtitulo={
+          <>
+            <strong className="font-semibold text-ink">
+              {pendiente.temaNombre} · {pendiente.titulo}
+            </strong>
+            . Unos {pendiente.minutos} minutos, con preguntas formato PAES al final.
+          </>
+        }
+      >
+        <EnlaceBoton href={`/leccion/${pendiente.id}`} anchoCompleto className="mt-8">
+          Continuar la lección
         </EnlaceBoton>
       </Marco>
     );
@@ -222,18 +244,23 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      hasta ahora solo cumplía `/` mientras esta pantalla hacía lo contrario. El
      diagnóstico sigue accesible, abajo y nombrando lo que es. */
   return (
-    <Marco titulo="Empieza por acá">
-      <p className="text-lg text-ink-suave">
-        El camino abre en «{primera.temaNombre} · {primera.titulo}». Unos{" "}
-        {primera.minutos} minutos, con preguntas formato PAES al final. No necesitas
-        cuenta para nada de esto.
-      </p>
-      {/* Corto a propósito, al revés que la rama 2. Quien ya tiene avance
-          necesita reconocer dónde iba, así que el botón nombra tema y lección;
-          quien recién llega no elige entre destinos —hay uno solo— y el párrafo
-          de arriba ya dijo cuál es. Repetirlo dentro del botón lo parte en dos
-          líneas y le quita la fuerza que tiene que tener. */}
-      <EnlaceBoton href={`/leccion/${primera.id}`} className="mt-8">
+    <Marco
+      titulo="Empieza por acá"
+      subtitulo={
+        <>
+          El camino abre en{" "}
+          <strong className="font-semibold text-ink">
+            {primera.temaNombre} · {primera.titulo}
+          </strong>
+          . Unos {primera.minutos} minutos, con preguntas formato PAES al final. No
+          necesitas cuenta para nada de esto.
+        </>
+      }
+    >
+      {/* Las cuatro ramas dicen la acción y nada más; el nombre de la lección
+          vive arriba, en el subtítulo. Antes esta era la única corta y las otras
+          dos metían tema y lección adentro del botón. */}
+      <EnlaceBoton href={`/leccion/${primera.id}`} anchoCompleto className="mt-8">
         Empezar la primera lección
       </EnlaceBoton>
       <p className="mt-6 text-sm leading-6 text-ink-suave">
@@ -250,20 +277,30 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   );
 }
 
-/** Contenedor común a las cuatro ramas: mismo lugar del título y del CTA, para
- *  que pasar de una rama a otra no mueva la página.
+/** Contenedor común a las cuatro ramas: mismo lugar del título, del subtítulo y
+ *  del CTA, para que pasar de una rama a otra no mueva la página.
  *
  *  Sin tarjeta y sin borde: esto va sobre el camino dibujado de fondo, y una
  *  superficie opaca encima lo taparía justo donde tiene que verse. */
-function Marco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+function Marco({
+  titulo,
+  subtitulo,
+  children,
+}: {
+  titulo: string;
+  subtitulo: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <section className="mx-auto max-w-xl text-center">
-      {/* Sube un escalón de la escala (36px, 48px en escritorio): es el primer
-          título que ve alguien que llega, y a 30px competía de igual a igual con
-          el h1 de cualquier pantalla interna. Sin `leading-tight tracking-tight`
-          a mano — desde la escala tipográfica de globals.css el interlineado y
-          el tracking ya vienen en el token del tamaño. */}
-      <h2 className="text-4xl font-semibold text-ink lg:text-5xl">{titulo}</h2>
+      {/* El rótulo no se pasa acá: lo pinta `app/page.tsx` sobre el camino de
+          fondo, y duplicarlo pondría dos en la misma pantalla.
+
+          Pasa a `h1` (Fase 6): esta era la única pantalla del producto sin
+          ninguno. */}
+      <EncabezadoDeEntrada titulo={titulo} escala="portada">
+        {subtitulo}
+      </EncabezadoDeEntrada>
       <div className="mt-5 flex flex-col items-center">{children}</div>
     </section>
   );

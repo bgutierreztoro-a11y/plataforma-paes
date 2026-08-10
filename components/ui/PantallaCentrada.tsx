@@ -1,7 +1,13 @@
 import type { ReactNode } from "react";
 
 /**
- * Una pantalla de una sola cosa, centrada sobre el papel milimetrado.
+ * Una pantalla de una sola cosa, centrada.
+ *
+ * (Decía "sobre el papel milimetrado" hasta la Fase 6: la cuadrícula de fondo se
+ * retiró en la Fase 1 y el comentario se quedó describiendo algo que ya no se
+ * pinta. Los tokens `--color-grid-*` siguen existiendo, pero para las
+ * ilustraciones —`PlanoCartesiano`, `PlanoItem`, `CuadriculaFondo`—, no para el
+ * fondo de la página.)
  *
  * Es el envoltorio de los momentos en que el producto no está enseñando sino
  * marcando un hito: la entrada al diagnóstico, el anuncio antes de las

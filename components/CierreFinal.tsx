@@ -9,6 +9,7 @@ import { registrarEvento } from "@/lib/eventos";
 import { obtenerResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
+import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 function formatoTiempo(ms: number): string {
   const totalSeg = Math.round(ms / 1000);
@@ -51,21 +52,22 @@ export function CierreFinal({
       <div className="w-full max-w-56">
         <IlustracionCierre />
       </div>
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold text-ink">
-          Terminaste el módulo
-        </h1>
-        <p className="mx-auto max-w-md text-base leading-relaxed text-ink-suave">
-          Llegaste al final del recorrido. Esto fue lo que mostró el cierre:
-        </p>
-      </div>
+      <EncabezadoDeEntrada rotulo="Cierre del módulo" titulo="Terminaste el módulo">
+        Llegaste al final del recorrido. Esto fue lo que mostró el cierre:
+      </EncabezadoDeEntrada>
 
       <Tarjeta className="w-full max-w-lg p-6 text-left">
         {diagnostico ? (
           <>
             <div className="grid grid-cols-2 divide-x divide-border">
+              {/* Etiqueta en eyebrow arriba, cifra abajo (Fase 6). Antes la
+                  etiqueta era `text-sm text-ink-suave`: texto corriente del
+                  mismo peso que el pie de abajo, así que la tarjeta se leía como
+                  tres líneas sueltas en vez de como una métrica. */}
               <div className="pr-6">
-                <p className="text-sm text-ink-suave">Diagnóstico</p>
+                <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
+                  Diagnóstico
+                </p>
                 <p className="mt-1 text-3xl font-medium num text-ink">
                   {diagnostico.aciertos}
                   <span className="text-lg text-ink-tenue"> / {diagnostico.total}</span>
@@ -73,7 +75,9 @@ export function CierreFinal({
                 <p className="mt-1 text-sm text-ink-tenue">tu punto de partida</p>
               </div>
               <div className="pl-6">
-                <p className="text-sm text-ink-suave">Cierre</p>
+                <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
+                  Cierre
+                </p>
                 <p className="mt-1 text-3xl font-medium num text-accent-fuerte">
                   {aciertos}
                   <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
@@ -88,7 +92,9 @@ export function CierreFinal({
           </>
         ) : (
           <>
-            <p className="text-sm text-ink-suave">Cierre</p>
+            <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
+              Cierre
+            </p>
             <p className="mt-1 text-3xl font-medium num text-ink">
               {aciertos}
               <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
@@ -113,7 +119,11 @@ export function CierreFinal({
         </p>
       </Tarjeta>
 
-      <Boton onClick={solicitarSiguienteLeccion}>Quiero la próxima lección</Boton>
+      <div className="w-full max-w-lg">
+        <Boton anchoCompleto onClick={solicitarSiguienteLeccion}>
+          Quiero la próxima lección
+        </Boton>
+      </div>
     </PantallaCentrada>
   );
 }

@@ -138,7 +138,7 @@ export function CelebracionTema({
           className="entra-en-secuencia mt-10"
           style={{ ["--retraso" as string]: `${RETRASO.titulo}ms` }}
         >
-          <p className="text-sm font-medium uppercase tracking-wide text-ink-suave">
+          <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
             Tema completado
           </p>
           <h1 className="mt-3 text-4xl font-semibold text-ink sm:text-5xl lg:text-6xl">

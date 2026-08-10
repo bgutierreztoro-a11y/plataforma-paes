@@ -28,7 +28,11 @@ export default function Portada() {
         <CaminoFantasma nodos={temas.length} />
 
         <div className="relative w-full">
-          <p className="text-center text-sm font-medium uppercase tracking-wide text-ink-suave">
+          {/* El rótulo de la portada vive acá y no dentro de `PuntoDePartida`:
+              es de la pantalla, no de la rama, y por eso no cambia cuando la
+              rama cambia. Usa el token `text-eyebrow`, igual que el resto de los
+              rótulos desde la Fase 6. */}
+          <p className="text-center text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
             Matemática M1 · Piloto privado
           </p>
           <div className="mt-4">

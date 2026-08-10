@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
+import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 export const metadata: Metadata = {
   title: "Curso intensivo Funciones M1 — Cohorte fundadora",
@@ -22,20 +24,18 @@ const FECHA_INICIO = "[FECHA POR DEFINIR]";
 
 export default function Preventa() {
   return (
-    <div className="flex min-h-full flex-1 flex-col items-center justify-center gap-6 px-4 py-24 text-center">
-      <p className="text-sm uppercase tracking-wide text-ink-suave">
-        Cohorte fundadora · Cupos limitados
-      </p>
-      <h1 className="max-w-lg text-4xl font-semibold text-ink">
-        Curso intensivo de Funciones para la PAES M1
-      </h1>
+    <PantallaCentrada className="gap-6 text-center">
+      <EncabezadoDeEntrada
+        rotulo="Cohorte fundadora · Cupos limitados"
+        titulo="Curso intensivo de Funciones para la PAES M1"
+        escala="portada"
+      >
+        Un curso corto y guiado para dominar funciones lineales y afines: la base que
+        más se repite en la prueba. Diagnóstico, lecciones interactivas y práctica con
+        preguntas formato PAES.
+      </EncabezadoDeEntrada>
       <p className="max-w-md text-lg leading-8 text-ink-suave">
-        Un curso corto y guiado para dominar funciones lineales y afines: la base que más
-        se repite en la prueba. Diagnóstico, lecciones interactivas y práctica con preguntas
-        formato PAES.
-      </p>
-      <p className="max-w-md text-lg leading-8 text-ink-suave">
-        <span className="text-2xl font-semibold text-ink">$9.990</span>
+        <span className="num text-2xl font-semibold text-ink">$9.990</span>
         <span className="mx-2 text-ink-suave">·</span>
         Parte el {FECHA_INICIO}
       </p>
@@ -47,6 +47,6 @@ export default function Preventa() {
         height={200}
         className="w-full max-w-md border-0"
       ></iframe>
-    </div>
+    </PantallaCentrada>
   );
 }

@@ -183,9 +183,23 @@ test("portada con progreso", async ({ page }, testInfo) => {
   await sembrar(page, PROGRESO_EN_CURSO);
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Te queda una lección" })).toBeVisible();
-  // El botón nombra tema y lección: es lo que le permite al estudiante
-  // reconocer dónde iba sin abrirla.
-  await expect(page.getByRole("link", { name: /^Continuar: .+ · .+/ })).toBeVisible();
+  /* Lo que se protege sigue siendo lo mismo —que el estudiante reconozca dónde
+     iba sin abrir la lección—, pero desde la Fase 6 se cumple en el subtítulo y
+     no dentro del botón: "Continuar: {tema} · {lección}" medía 2 líneas a 390px,
+     y un botón que envuelve deja de leerse como botón.
+
+     Por eso son dos afirmaciones y no una: el botón dice la acción, y el nombre
+     está en la pantalla igual. Si alguna de las dos se cae, la pantalla perdió
+     algo real. */
+  await expect(page.getByRole("link", { name: "Continuar la lección" })).toBeVisible();
+  /* El nombre va en el `<strong>` del subtítulo, no en cualquier texto con un
+     "·" — el rótulo de la portada ("Matemática M1 · Piloto privado") también
+     tiene uno, y afirmarlo con un patrón suelto pasaría sin que el nombre
+     estuviera. Se afirma la posición y que no venga vacío, no el título
+     literal: eso último es justo lo que tiene a los otros tests en rojo. */
+  const nombreDeLaLeccion = page.locator("h1 + p strong");
+  await expect(nombreDeLaLeccion).toBeVisible();
+  await expect(nombreDeLaLeccion).not.toBeEmpty();
   await capturar(page, "2-portada-con-progreso", testInfo.project.name);
 });
 
