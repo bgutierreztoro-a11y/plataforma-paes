@@ -11,6 +11,8 @@ import {
   ALTERNATIVA_REPOSO,
 } from "@/components/ui/alternativa";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
@@ -55,6 +57,7 @@ export function ItemPAES({
   const [transcurridoMs, setTranscurridoMs] = useState(0);
   const [tiempoFinalMs, setTiempoFinalMs] = useState(0);
   const inicio = useRef(0);
+  const anclar = usePanelAnclado();
   // El orden inicial es el original (idéntico en servidor y cliente, sin
   // Math.random en el render: mezclarlo aquí causaría un mismatch de
   // hidratación). La mezcla real ocurre en el efecto de abajo, que solo
@@ -105,7 +108,10 @@ export function ItemPAES({
         <span className="num">{formatoTiempo(tiempoFinalMs)}</span> · en la
         PAES M1 tendrás alrededor de 2 minutos por pregunta.
       </p>
-      <Boton onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}>
+      <Boton
+        anchoCompleto
+        onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}
+      >
         {etiquetaSiguiente}
       </Boton>
     </>
@@ -203,11 +209,15 @@ export function ItemPAES({
           </label>
         ))}
       </fieldset>
-      {!revelado && (
-        <Boton onClick={revisar} disabled={!seleccion || !montado}>
-          Revisar respuesta
-        </Boton>
-      )}
+      {/* El CTA del ítem va anclado igual que el feedback que lo reemplaza: son
+          el mismo lugar de la pantalla en dos momentos, y dejar el botón en el
+          flujo haría que el control saltara al fondo recién al comprobar. */}
+      {!revelado &&
+        anclar(
+          <Boton anchoCompleto onClick={revisar} disabled={!seleccion || !montado}>
+            Revisar respuesta
+          </Boton>,
+        )}
       {revelado && alternativaElegida && (
         <>
           {mostrarFeedback ? (
@@ -219,18 +229,18 @@ export function ItemPAES({
               onAutoexplicacion={(elegida) =>
                 registrarAutoexplicacion(item.id, elegida, alternativaElegida.descripcionError)
               }
-              extra={pieDelItem}
+              pie={pieDelItem}
             />
           ) : (
-            <div className="transicion-paso space-y-4">
-              <div
-                role="status"
-                className="rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink"
-              >
-                Respuesta registrada.
-              </div>
-              {pieDelItem}
-            </div>
+            /* Diagnóstico: se registra la respuesta sin decir si estuvo bien.
+               Mismo tratamiento anclado que el feedback completo — cambia qué
+               dice el panel, no dónde vive. */
+            anclar(
+              <div className="entra-panel-anclado space-y-3">
+                <PanelFeedback tono="neutro">Respuesta registrada.</PanelFeedback>
+                {pieDelItem}
+              </div>,
+            )
           )}
         </>
       )}

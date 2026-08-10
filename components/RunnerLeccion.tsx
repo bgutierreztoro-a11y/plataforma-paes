@@ -8,6 +8,8 @@ import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 import { Boton } from "@/components/ui/Boton";
+import { CascaronAnclado } from "@/components/ui/ZonaAnclada";
+import { esPasoSimple } from "@/lib/feedbackDelPaso";
 import { HeaderLeccion } from "@/components/leccion/HeaderLeccion";
 import { PasoLeccion } from "@/components/PasoLeccion";
 import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
@@ -159,28 +161,30 @@ export function RunnerLeccion({
 
   if (fase === "itemsPAES") {
     return (
-      <div className="flex min-h-full flex-col">
-        {bannerDemostracion}
-        <EjecutorSetItems
-          items={leccion.itemsPAES}
-          mostrarFeedback={true}
-          contexto="leccion"
-          contextoId={leccion.id}
-          renderFinal={(respuestas) => (
-            <ItemsPAESFinal
-              respuestas={respuestas}
-              leccionId={leccion.id}
-              temaNombre={tema.nombre}
-              ordinalLeccion={indiceEnTema + 1}
-              totalLeccionesTema={tema.lecciones.length}
-              onRepasar={repasar}
-              onRepetirCierre={repetirCierre}
-              onContinuar={terminar}
-              siguienteLeccionId={siguienteLeccionId}
-            />
-          )}
-        />
-      </div>
+      /* Sin el `<div>` envolvente de antes y con el banner adentro: el cascarón
+         mide 100dvh, así que cualquier cosa apilada por fuera lo empuja y la
+         zona anclada deja de tocar el fondo. */
+      <EjecutorSetItems
+        anclarAcciones
+        encabezado={bannerDemostracion}
+        items={leccion.itemsPAES}
+        mostrarFeedback={true}
+        contexto="leccion"
+        contextoId={leccion.id}
+        renderFinal={(respuestas) => (
+          <ItemsPAESFinal
+            respuestas={respuestas}
+            leccionId={leccion.id}
+            temaNombre={tema.nombre}
+            ordinalLeccion={indiceEnTema + 1}
+            totalLeccionesTema={tema.lecciones.length}
+            onRepasar={repasar}
+            onRepetirCierre={repetirCierre}
+            onContinuar={terminar}
+            siguienteLeccionId={siguienteLeccionId}
+          />
+        )}
+      />
     );
   }
 
@@ -214,8 +218,47 @@ export function RunnerLeccion({
     irA("IR_SIGUIENTE");
   }
 
+  /* Las acciones del paso, ahora ancladas al fondo del viewport (Fase 5).
+
+     El primario domina y el "Paso anterior" baja a variante `texto`: eran dos
+     botones del mismo peso decidiendo entre volver y avanzar, y avanzar es lo
+     que el paso pide el 90% de las veces. El texto no pierde objetivo táctil
+     —Boton mantiene min-h-11 y min-w-11 en todas las variantes—, solo caja.
+
+     `flex-1` sobre el primario y ancho automático en el secundario: el primario
+     se queda con todo el ancho sobrante en vez de repartirlo mitad y mitad. */
+  const accionesDelPaso = (
+    <div className="flex items-center gap-2">
+      <Boton
+        variante="texto"
+        onClick={() => irA("IR_ANTERIOR")}
+        disabled={estado.pasoActual === 0}
+      >
+        Paso anterior
+      </Boton>
+      {esUltimoPaso ? (
+        <Boton className="flex-1" onClick={terminarPasos}>
+          Terminar lección
+        </Boton>
+      ) : (
+        <Boton className="flex-1" onClick={avanzar}>
+          Siguiente paso
+        </Boton>
+      )}
+    </div>
+  );
+
   return (
-    <div className="flex min-h-full flex-col">
+    <CascaronAnclado
+      acciones={accionesDelPaso}
+      /* Solo los pasos con un único panel de veredicto anclan feedback: con dos
+         ejercicios en pantalla el panel anclado no podría decir a cuál de los
+         dos corresponde. 87 de los 100 pasos del corpus califican; los 13
+         restantes son los `practica` y `pensar`, que dejan su feedback inline
+         junto a cada pregunta. Ver `lib/feedbackDelPaso.ts`. */
+      anclarFeedback={esPasoSimple(paso.bloques)}
+      modoFoco
+    >
       {/* Fuera del contenedor con padding: el header y su borde inferior llegan
           a los dos bordes del viewport. Modo foco — acá adentro no hay barra de
           navegación persistente (Navegacion.tsx no se monta en /leccion/[id]),
@@ -250,20 +293,6 @@ export function RunnerLeccion({
             setMostrarAvisoExploracion(false);
           }}
         />
-        <div className="mt-8 flex justify-between gap-3">
-          <Boton
-            variante="secundario"
-            onClick={() => irA("IR_ANTERIOR")}
-            disabled={estado.pasoActual === 0}
-          >
-            Paso anterior
-          </Boton>
-          {esUltimoPaso ? (
-            <Boton onClick={terminarPasos}>Terminar lección</Boton>
-          ) : (
-            <Boton onClick={avanzar}>Siguiente paso</Boton>
-          )}
-        </div>
         {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
             en el guion: el botón no se deshabilita sin explicación. */}
         {mostrarAvisoExploracion && avanceBloqueado && (
@@ -275,6 +304,6 @@ export function RunnerLeccion({
           </p>
         )}
       </div>
-    </div>
+    </CascaronAnclado>
   );
 }

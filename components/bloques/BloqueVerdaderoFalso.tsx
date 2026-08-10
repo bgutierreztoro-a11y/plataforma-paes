@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloqueVerdaderoFalso as BloqueVFTipo } from "@/lib/tipos";
 
@@ -17,6 +18,7 @@ const CLASE_ACIERTO =
 export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
   const [respuesta, setRespuesta] = useState<boolean | null>(null);
   const [revelado, setRevelado] = useState(false);
+  const anclar = usePanelAnclado();
 
   const esCorrecto = respuesta === bloque.respuestaCorrecta;
 
@@ -52,17 +54,15 @@ export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
           Revisar respuesta
         </Boton>
       )}
-      {revelado && (
-        <div
-          role="status"
-          className={`flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-            esCorrecto ? "bg-success-suave" : "bg-attention-suave"
-          }`}
-        >
-          {esCorrecto ? <IconoCorrecto /> : <IconoIncorrecto />}
-          <span>{respuesta === true ? bloque.feedbackVerdadero : bloque.feedbackFalso}</span>
-        </div>
-      )}
+      {revelado &&
+        anclar(
+          <PanelFeedback
+            tono={esCorrecto ? "acierto" : "atencion"}
+            className="entra-panel-anclado"
+          >
+            {respuesta === true ? bloque.feedbackVerdadero : bloque.feedbackFalso}
+          </PanelFeedback>,
+        )}
     </div>
   );
 }

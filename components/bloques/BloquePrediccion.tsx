@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloquePrediccion as BloquePrediccionTipo } from "@/lib/tipos";
 
@@ -50,11 +50,13 @@ export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
           Registrar predicción
         </Boton>
       )}
+      {/* Acuse de recibo, no veredicto: dice lo mismo se haya predicho lo que
+          se haya predicho. Por eso se queda inline aunque el paso ancle
+          feedback — la zona anclada es del veredicto, y mandar acá un "quedó
+          registrado" ocuparía el lugar donde el estudiante espera un
+          resultado. Ver `lib/feedbackDelPaso.ts`. */}
       {enviado && (
-        <div role="status" className="flex items-start gap-2 rounded-tarjeta bg-success-suave px-4 py-3 text-sm">
-          <IconoCorrecto />
-          <span>Predicción registrada. Sigue para comparar.</span>
-        </div>
+        <PanelFeedback tono="acierto">Predicción registrada. Sigue para comparar.</PanelFeedback>
       )}
     </div>
   );

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloqueNumerica as BloqueNumericaTipo } from "@/lib/tipos";
 
@@ -18,6 +19,11 @@ function mensajeParaCampo(bloque: BloqueNumericaTipo, campoId: string, valor: nu
 export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
   const [valores, setValores] = useState<Record<string, string>>({});
   const [revelado, setRevelado] = useState(false);
+  /* Con varios campos este bloque abre un panel por campo, así que el paso
+     entero cuenta como múltiple (`lib/feedbackDelPaso.ts`) y no habrá zona
+     anclada: `anclar` devuelve el panel en su lugar y cada feedback se queda
+     pegado a su campo, que es lo único que los distingue. */
+  const anclar = usePanelAnclado();
 
   const listo = bloque.campos.every((c) => valores[c.id]?.trim());
 
@@ -51,17 +57,15 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
                   esCorrecto ? "border-success bg-success-suave" : "border-border"
                 }`}
               />
-              {revelado && (
-                <div
-                  role="status"
-                  className={`flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-                    esCorrecto ? "bg-success-suave" : "bg-attention-suave"
-                  }`}
-                >
-                  {esCorrecto ? <IconoCorrecto /> : <IconoIncorrecto />}
-                  <span>{mensajeParaCampo(bloque, campo.id, numero)}</span>
-                </div>
-              )}
+              {revelado &&
+                anclar(
+                  <PanelFeedback
+                    tono={esCorrecto ? "acierto" : "atencion"}
+                    className="entra-panel-anclado"
+                  >
+                    {mensajeParaCampo(bloque, campo.id, numero)}
+                  </PanelFeedback>,
+                )}
             </div>
           );
         })}

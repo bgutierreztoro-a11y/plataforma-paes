@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto, IconoIncorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { SelectorOpciones } from "@/components/ui/SelectorOpciones";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarArray } from "@/lib/mezclar";
@@ -11,6 +12,7 @@ import type { BloqueSeleccion as BloqueSeleccionTipo } from "@/lib/tipos";
 export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
+  const anclar = usePanelAnclado();
   // Orden inicial = original (idéntico servidor/cliente). La mezcla real
   // ocurre en el efecto, que solo corre en el cliente tras hidratar —
   // mezclar directo en el useState causaría un mismatch de hidratación
@@ -44,17 +46,16 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
           Revisar respuesta
         </Boton>
       )}
-      {revelado && opcionElegida && (
-        <div
-          role="status"
-          className={`transicion-paso flex items-start gap-2 rounded-tarjeta px-4 py-3 text-sm ${
-            opcionElegida.esCorrecta ? "bg-success-suave" : "bg-attention-suave"
-          }`}
-        >
-          {opcionElegida.esCorrecta ? <IconoCorrecto /> : <IconoIncorrecto />}
-          <span>{opcionElegida.feedback}</span>
-        </div>
-      )}
+      {revelado &&
+        opcionElegida &&
+        anclar(
+          <PanelFeedback
+            tono={opcionElegida.esCorrecta ? "acierto" : "atencion"}
+            className="entra-panel-anclado"
+          >
+            {opcionElegida.feedback}
+          </PanelFeedback>,
+        )}
     </div>
   );
 }

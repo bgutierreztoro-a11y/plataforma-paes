@@ -364,6 +364,52 @@
   }
 }
 
+/* Entrada del panel de feedback en la zona anclada (Fase 5).
+
+   Separada de `.transicion-paso` aunque el movimiento se parezca: aquella es
+   el cambio de paso —contenido que se reemplaza— y esta es un panel que
+   aparece sin que nada se vaya. Compartir la clase habría atado dos duraciones
+   que no tienen por qué moverse juntas.
+
+   Usa los tokens de motion de la Fase 1 y no números sueltos: `--dur-entrada`
+   (320ms) y `--ease-salida`, la curva que frena al final, para que el panel
+   se asiente en vez de golpear. Sube 8px y no 4 como el paso: viene del borde
+   de la pantalla, así que necesita algo más de recorrido para leerse como
+   "entró desde abajo". */
+@keyframes entra-panel-anclado {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entra-panel-anclado {
+  animation: entra-panel-anclado var(--dur-entrada) var(--ease-salida);
+}
+
+/* El desvanecido del contenido bajo la zona anclada: comunica "hay más abajo"
+   sin depender de una barra de scroll, que en móvil no se dibuja hasta que se
+   scrollea.
+
+   Los 24px del tramo se aplican solo al borde inferior; el resto de la región
+   queda opaco (`black` en el resto de las paradas). `mask-image` sin prefijo y
+   con `-webkit-` para Safari, donde la versión sin prefijo todavía no cubre
+   este caso. */
+.desvanece-bajo-anclado {
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entra-panel-anclado {
+    animation: none;
+  }
+}
+
 /* Entrada del número grande en AnuncioPrevioItems: un "pop" con leve
    sobregiro para que el conteo de preguntas se sienta como una revelación y
    no como texto que ya estaba ahí al cargar. */
