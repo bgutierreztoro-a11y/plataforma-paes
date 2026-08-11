@@ -1,4 +1,5 @@
 import { Boton } from "@/components/ui/Boton";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 interface AnuncioPrevioItemsProps {
   variante: "leccion" | "modulo";
@@ -89,12 +90,12 @@ export function AnuncioPrevioItems({
   const alcance = variante === "leccion" ? "de esta lección" : `de ${nombreModulo}`;
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida transicion-paso mx-auto flex w-full flex-1 flex-col items-center justify-center gap-7 px-4 py-16 text-center">
-      <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{titulo}</h1>
+    <PantallaCentrada className="transicion-paso mx-auto w-full gap-7 text-center">
+      <h1 className="text-3xl font-semibold text-ink sm:text-4xl">{titulo}</h1>
       <TrazoPreguntas cantidad={cantidad} variante={variante} />
       <div>
         <p
-          className="entra-numero font-mono text-7xl font-semibold tabular-nums text-accent-fuerte sm:text-8xl"
+          className="entra-numero text-7xl font-semibold num text-accent-fuerte sm:text-8xl"
           style={{ animationDelay: "120ms" }}
         >
           {cantidad}
@@ -128,6 +129,6 @@ export function AnuncioPrevioItems({
           </svg>
         </span>
       </Boton>
-    </div>
+    </PantallaCentrada>
   );
 }

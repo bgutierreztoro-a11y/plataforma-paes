@@ -36,7 +36,10 @@ export function conEnfasis(linea: string): ReactNode[] {
     const codigo = /^`([^`]+)`$/.exec(parte);
     if (codigo)
       return (
-        <code key={i} className="rounded bg-accent-suave px-1 py-0.5 font-mono text-[0.95em]">
+        <code
+          key={i}
+          className="rounded-control bg-accent-suave px-1.5 py-0.5 font-mono text-[0.95em]"
+        >
           {codigo[1]}
         </code>
       );
@@ -56,7 +59,7 @@ function renderTabla(lineas: string[], key: number): ReactNode {
     );
   const [encabezado, ...cuerpo] = filas;
   return (
-    <div key={key} className="my-3 overflow-x-auto rounded-tarjeta border border-border">
+    <div key={key} className="my-4 overflow-x-auto rounded-panel border border-border">
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr>
@@ -115,7 +118,7 @@ export function TextoEnriquecido({ contenido }: { contenido: string }) {
           return (
             <blockquote
               key={i}
-              className="my-4 rounded-r-tarjeta border-l-4 border-accent bg-accent-suave/60 py-3 pl-4 pr-4 leading-relaxed text-ink"
+              className="my-5 rounded-r-panel border-l-4 border-accent bg-accent-suave/60 py-3 pl-4 pr-4 leading-relaxed text-ink"
             >
               {lineas.map((l, j) => (
                 <span key={j} className="block">

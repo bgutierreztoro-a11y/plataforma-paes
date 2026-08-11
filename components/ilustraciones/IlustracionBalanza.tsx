@@ -63,7 +63,6 @@ export function IlustracionBalanza() {
         x="55"
         y="119"
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
         fontSize="12"
         fill="var(--color-accent-fuerte)"
       >
@@ -99,7 +98,7 @@ export function IlustracionBalanza() {
         x="176.5"
         y="120.5"
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
+        className="num"
         fontSize="10"
         fill="var(--color-ink-suave)"
       >
@@ -119,7 +118,7 @@ export function IlustracionBalanza() {
         x="193.5"
         y="120.5"
         textAnchor="middle"
-        fontFamily="var(--font-mono)"
+        className="num"
         fontSize="10"
         fill="var(--color-ink-suave)"
       >

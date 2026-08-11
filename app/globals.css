@@ -1,131 +1,346 @@
 @import "tailwindcss";
 
 @theme {
-  /* superficie: fondo casi blanco frío, el mundo visual del plano cartesiano */
-  --color-bg: #f6f8fc;
+  /* ── Primitivos: índigo (acción) ───────────────────────── */
+  --indigo-50: #eef0fe;
+  --indigo-100: #dfe2fd;
+  --indigo-200: #c2c7fb;
+  --indigo-300: #9da3f7;
+  --indigo-500: #5b57e8;
+  --indigo-600: #4640d6;
+  --indigo-700: #3831ae;
+  --indigo-900: #1e1b54;
+
+  /* ── Primitivos: flux (lo manipulable) ─────────────────── */
+  --flux-400: #22c9dc;
+  --flux-500: #0dafc4;
+  --flux-600: #0a8a9c;
+  /* No está en la paleta original de la fase: se agrega porque el tono de
+     relleno del interactivo (chip activo de GraficoPendiente) no tiene
+     equivalente en 400/500/600, y sin él ese uso quedaba sin color. */
+  --flux-50: #e4f8fb;
+
+  /* ── Primitivos: ink (neutros con tinte índigo) ────────── */
+  --ink-900: #16142b;
+  --ink-700: #3a3852;
+  --ink-600: #45435c;
+  --ink-500: #6b6982;
+  --ink-300: #c7c5d6;
+  --ink-200: #e4e3ed;
+  --ink-100: #f1f0f6;
+  --ink-50: #f8f8fb;
+
+  /* ── Semánticos: superficie ────────────────────────────── */
+  --color-bg: var(--ink-50);
   --color-surface: #ffffff;
-  --color-border: #dce3ee;
-  --color-border-fuerte: #c7d3ea;
+  --color-surface-alt: var(--ink-100);
+  --color-border: var(--ink-200);
+  --color-border-fuerte: var(--ink-300);
 
-  /* texto */
-  --color-ink: #16213a;
-  --color-ink-suave: #4b5c78;
-  --color-ink-tenue: #8291ad;
+  /* ── Semánticos: texto ─────────────────────────────────── */
+  --color-ink: var(--ink-900);
+  --color-ink-suave: var(--ink-600);
+  --color-ink-tenue: var(--ink-500);
 
-  /* acento único: azul tinta, confiable y serio */
-  --color-accent: #1e4fd8;
-  --color-accent-fuerte: #143aa6;
-  --color-accent-suave: #e8edfc;
+  /* ── Semánticos: acción (índigo) ───────────────────────── */
+  /* Regla: el índigo SOLO marca lo que se puede tocar para avanzar. */
+  --color-accent: var(--indigo-600);
+  --color-accent-fuerte: var(--indigo-700);
+  --color-accent-suave: var(--indigo-50);
+  --color-accent-borde: var(--indigo-200);
 
-  /* estado: siempre acompañado de ícono, nunca solo color */
-  --color-success: #146c43;
-  --color-success-suave: #e4f3ea;
+  /* ── Semánticos: interactivo (flux) ────────────────────── */
+  /* Regla: exclusivo del elemento que el estudiante manipula (thumb del
+     slider, punto arrastrable). Nunca aparece en cromo de UI. */
+  --color-interactivo: var(--flux-500);
+  --color-interactivo-alto: var(--flux-400);
+  --color-interactivo-fuerte: var(--flux-600);
+  --color-interactivo-suave: var(--flux-50);
+
+  /* ── Semánticos: estado ────────────────────────────────── */
+  /* acierto = verde · atención = respuesta incorrecta (ámbar, es
+     aprendizaje) · error = fallo de sistema (rojo, solo eso) */
+  --color-success: #0e7c57;
+  --color-success-suave: #e6f5ef;
+  --color-atencion: #b45309;
+  --color-atencion-suave: #fef6e7;
   --color-error: #b3261e;
   --color-error-suave: #fbeae9;
 
-  /* "aún no": una respuesta incorrecta del estudiante se pinta ámbar, jamás
-     roja. Es la regla dura de MASTER.md §2.1 y §3.4 — el rojo de alarma queda
-     reservado a fallos de sistema, y esa separación ES la pedagogía del
-     principio 3. Tres niveles, como --color-accent, porque el doc distingue el
-     tono de acento del tono de texto: attention-500 tiene 2,0:1 contra blanco y
-     no alcanza para trazo ni texto (§5 exige AA), así que el nivel "fuerte"
-     existe para eso. Valores literales de MASTER.md §2.1. */
-  --color-attention: #f5a623;
-  --color-attention-fuerte: #b26a00;
-  --color-attention-suave: #fff6e9;
+  /* ── Grilla de ilustraciones (NO es fondo de página) ───── */
+  --color-grid-fina: var(--ink-200);
+  --color-grid-fuerte: var(--ink-300);
 
-  /* cuadrícula tipo papel milimetrado */
-  --color-grid-fina: #e4eaf5;
-  --color-grid-fuerte: #c7d3ea;
+  /* ── Tipografía ────────────────────────────────────────────────────────
+   *
+   * Instrument Sans para los títulos, Inter para leer.
+   *
+   * Inter se eligió (2026-08-06) sobre dos diferencias verificables en los
+   * metadatos de next/font, y las dos siguen vigentes:
+   *
+   * 1. **Tiene cursiva real** (`styles: ["normal","italic"]`). El contenido de
+   *    las lecciones usa énfasis pedagógico constantemente (`*incógnita*`,
+   *    `*sola*`, `*una bolsa cerrada*`) y `lib/markdownSimple.tsx` lo renderiza
+   *    como <em>. Con una fuente sin cursiva, cada uno de esos sale como
+   *    oblicua sintética —la redonda inclinada a la fuerza por el navegador—,
+   *    un defecto tipográfico real en el texto que el estudiante lee durante
+   *    media hora. Por eso `app/layout.tsx` pide `style` explícito y por eso no
+   *    se le pasa `weight`: fijar pesos la vuelve estática y tira la cursiva.
+   * 2. **Tiene eje óptico** (`opsz` 14→32), que corrige tracking y aperturas
+   *    según el tamaño.
+   *
+   * `--font-mono` es la pila monoespaciada del sistema, no una webfont. Los ~20
+   * usos de `font-mono` que había eran casi todos para números y tiempos, y eso
+   * lo resuelve `.num` (`tabular-nums`) sin cambiar de familia: descargar una
+   * tercera cara para alinear dígitos no se paga sola.
+   *
+   * Pero quedan tres sitios donde "monoespaciado" sí significa algo —el <pre>
+   * del stack trace en app/error.tsx y los <code> en línea de RunnerLeccion y
+   * markdownSimple—, y ahí una proporcional es sencillamente incorrecta. La
+   * pila del sistema los cubre sin costo de red. Es la misma que usa el
+   * preflight de Tailwind, así que <code> y <pre> se ven igual con la clase y
+   * sin ella. */
+  --font-display: var(--font-instrument-sans);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Escala propia; no sobrescribe los text-sm/base/lg de Tailwind.
+     Los ~159 usos de la escala numérica de Tailwind vuelven a sus valores
+     por defecto en esta fase; la migración a estos nombres es trabajo de la
+     fase de componentes. */
+  --text-display-l: 2rem;
+  --text-display-l--line-height: 2.25rem;
+  --text-display-m: 1.625rem;
+  --text-display-m--line-height: 2rem;
+  --text-titulo: 1.25rem;
+  --text-titulo--line-height: 1.75rem;
+  --text-cuerpo-l: 1.0625rem;
+  --text-cuerpo-l--line-height: 1.75rem;
+  --text-etiqueta: 0.8125rem;
+  --text-etiqueta--line-height: 1.125rem;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1rem;
 
-  --radius-tarjeta: 0.75rem;
+  /* ── Radios ────────────────────────────────────────────── */
+  --radius-xs: 0.375rem; /* chips */
+  --radius-sm: 0.625rem; /* inputs, opciones */
+  --radius-md: 0.875rem; /* cards */
+  --radius-lg: 1.25rem; /* hojas, contenedores grandes */
 
-  /* sombras: una de reposo y una de hover, siempre derivadas de ink */
-  --shadow-tarjeta:
-    0 1px 2px rgb(22 33 58 / 0.05), 0 4px 16px rgb(22 33 58 / 0.06);
-  --shadow-tarjeta-hover:
-    0 2px 4px rgb(22 33 58 / 0.06), 0 8px 24px rgb(22 33 58 / 0.09);
+  /* ── Elevación ─────────────────────────────────────────── */
+  --shadow-e1: 0 1px 2px rgb(22 20 43 / 0.04), 0 3px 12px rgb(22 20 43 / 0.05);
+  --shadow-e2: 0 2px 6px rgb(22 20 43 / 0.06), 0 12px 32px rgb(22 20 43 / 0.1);
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --dur-press: 120ms;
+  --dur-base: 200ms;
+  --dur-entrada: 320ms;
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Alias legados ───────────────────────────────────────────────────────
+     Mapean los nombres de token que el código usa hoy a la paleta nueva.
+
+     Existen porque en Tailwind v4 un token que desaparece del @theme deja de
+     generar su utilidad **en silencio**: `lint` y `build` pasan en verde y el
+     elemento simplemente se queda sin estilo. Sin este bloque, 41 call sites
+     repartidos en 15 componentes (ui/Boton, ui/Tarjeta, bloques/*, camino/*,
+     grafico/*, RunnerLeccion, markdownSimple) perderían color, radio o sombra
+     sin que nada lo avise.
+
+     Se retiran en la fase que renombre esos call sites, no antes.
+     ---------------------------------------------------------------------- */
+
+  /* Antes eran dos tonos (#f5a623 medio, #b26a00 oscuro); la paleta nueva
+     trae uno solo, ya seguro para texto y trazo. Los dos apuntan ahí: el
+     único uso del tono medio (border-attention) se oscurece, que es el
+     comportamiento correcto para AA. */
+  --color-attention: var(--color-atencion);
+  --color-attention-fuerte: var(--color-atencion);
+  --color-attention-suave: var(--color-atencion-suave);
+
+  --color-interactive: var(--color-interactivo);
+  --color-interactive-fuerte: var(--color-interactivo-fuerte);
+  --color-interactive-suave: var(--color-interactivo-suave);
+
+  /* La jerarquía de encierro de a6fb4c0 se conserva mapeando cada paso viejo
+     a su equivalente nuevo: control→xs (chips), tarjeta→sm (botones y
+     alternativas), panel→md (tarjetas), escena→lg (el interactivo). */
+  --radius-control: var(--radius-xs);
+  --radius-tarjeta: var(--radius-sm);
+  --radius-panel: var(--radius-md);
+  --radius-escena: var(--radius-lg);
+
+  /* Cuatro niveles de elevación colapsan a dos: reposo y levantado. */
+  --shadow-nivel-1: var(--shadow-e1);
+  --shadow-tarjeta: var(--shadow-e1);
+  --shadow-tarjeta-hover: var(--shadow-e2);
+  --shadow-flotante: var(--shadow-e2);
+  /* Única sombra teñida, y esa excepción es justamente lo que señala al
+     interactivo. Recoloreada de aurora a flux-500. */
+  --shadow-interactivo:
+    0 2px 6px rgb(13 175 196 / 0.1), 0 12px 32px rgb(13 175 196 / 0.18);
 }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-ink);
+@layer base {
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+
+    /* Deja que Inter use su eje óptico (`opsz`): el navegador lo ajusta solo
+       según el tamaño de cada texto. Es el valor por defecto de la propiedad,
+       pero se escribe explícito porque es la mitad del motivo por el que se
+       eligió esta fuente y no debería apagarse por descuido. */
+    font-optical-sizing: auto;
+
+    /* Nota para el futuro: NO agregar `font-feature-settings` con las variantes
+       de carácter de Inter (`cv05` cola en la ele, `cv08` remates en la I).
+       Se probó y el corte que sirve Google Fonts no las trae: medido en el
+       navegador, el ancho del glifo es idéntico con y sin la variante. Quedaba
+       como una declaración que prometía desambiguar l/I/1 sin hacerlo.
+       Traerlas exigiría alojar el .woff2 de Inter propio, y eso no se paga
+       para este piloto. */
+  }
+
+  /* Evita que un párrafo termine en una palabra sola colgando en la última
+     línea. El techo de medida de línea (68ch, MASTER.md §2.2) no se resuelve
+     acá sino con `max-w-prose` en cada superficie de lectura. */
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Los títulos nunca se parten dejando una palabra huérfana en la última
+     línea. Es gratis y es la diferencia entre "compuesto" y "volcado". */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* Los títulos son la única voz de Instrument Sans. El tracking negativo vive
+     acá y no en cada clase: antes había que acordarse de escribir
+     `tracking-tight` —y de acertarle al mismo valor— en cada encabezado. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Números tabulares: reemplaza el uso de font-mono para tiempos, contadores y
+   valores del slider. Todos miden lo mismo, así que un contador que cambia no
+   desplaza lo que tiene al lado. */
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Dónde empieza a pegarse lo que va fijo arriba.
  *
- * La barra de navegación es fija abajo en móvil y pegada arriba en escritorio,
- * donde mide 3.25rem. Todo lo demás que se pega —la franja de /camino, las
- * bandas de eje— tiene que arrancar debajo de ella o queda tapado.
+ * La barra de navegación es fija abajo en móvil y pegada arriba en escritorio.
+ * Todo lo demás que se pega —la franja de /camino, las bandas de eje— tiene que
+ * arrancar debajo de ella o queda tapado.
  *
  * Vive acá y no en una clase de Tailwind porque los offsets se **suman**: la
  * banda de un eje se pega bajo la franja, que a su vez se pega bajo la barra.
  * Con clases habría que escribir a mano cada total, y un `calc()` con valores
- * dinámicos no lo alcanza el JIT de Tailwind. */
+ * dinámicos no lo alcanza el JIT de Tailwind.
+ *
+ * **El valor de escritorio se deriva, no se estima.** Antes decía `3.25rem`
+ * (52px) escrito a ojo, y el alto real de la barra es 69px: la franja de
+ * /camino y las bandas de eje quedaban 17px por debajo del borde de la barra,
+ * con el eyebrow tapado. La barra no declara alto en escritorio (`sm:h-auto`,
+ * en components/navegacion/Navegacion.tsx), así que su alto es la suma de tres
+ * términos y hay que escribirlos como suma para que sigan al componente:
+ *
+ *   2.75rem  el hijo más alto del contenedor: `min-h-11` de cada destino
+ *            (CLASE_DESTINO). El slot de Cuenta mide `h-9` (2.25rem) y no manda.
+ *   1.5rem   el `sm:py-3` del contenedor interno, arriba y abajo (0.75 × 2).
+ *   1px      el `sm:border-b`, que también empuja hacia abajo lo que viene.
+ *
+ * Si alguno de esos tres cambia en Navegacion.tsx, este calc hay que
+ * actualizarlo: no hay medición en vivo que lo sincronice sola. */
 :root {
   --tope-nav: 0px;
 }
 
 @media (min-width: 640px) {
   :root {
-    --tope-nav: 3.25rem;
+    --tope-nav: calc(2.75rem + 1.5rem + 1px);
   }
 }
 
-/* Textura de fondo tipo papel milimetrado: dos pares de líneas repetidas
-   (finas cada 24px, fuertes cada 120px). Solo se aplica donde el diseño lo
-   pide explícitamente (portada, transiciones entre pasos) — nunca detrás de
-   texto denso, para no competir con la lectura. */
-.fondo-cuadricula {
-  background-color: var(--color-bg);
-  background-image: linear-gradient(
-      to right,
-      var(--color-grid-fuerte) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, var(--color-grid-fuerte) 1px, transparent 1px),
-    linear-gradient(to right, var(--color-grid-fina) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-grid-fina) 1px, transparent 1px);
-  background-size:
-    120px 120px,
-    120px 120px,
-    24px 24px,
-    24px 24px;
+/* ---------------------------------------------------------------------------
+   El control del interactivo.
+
+   Vive acá y no en clases porque los pseudo-elementos del <input type="range">
+   son cuatro y difieren entre motores; escritos como variantes arbitrarias de
+   Tailwind el className pasaba de 600 caracteres y dejaba de ser leíble.
+
+   Tres decisiones que valen el comentario:
+
+   1. **El riel muestra cuánto llevas.** Antes era un pill gris de 44px de alto,
+      uniforme: no se veía dónde estaba el valor dentro del rango. Ahora el
+      tramo recorrido va en cian y el resto en el gris del borde. El porcentaje
+      entra por `--relleno`, que lo calcula SliderControl.
+   2. **El cian es exclusivo de lo que se toca** (MASTER.md §2.1). El riel
+      activo y el thumb son los únicos lugares del producto donde aparece.
+   3. **El input mide 44px de alto y el riel 8px.** El alto es el área táctil
+      que pide MASTER.md §5; el riel es lo que se ve. Separarlos es lo que
+      permite un control cómodo con un dibujo delgado.
+
+   El thumb lleva un aro blanco de 3px y sombra: es lo que lo separa del riel
+   sin depender de que el cian contraste contra el gris. */
+.slider-interactivo {
+  appearance: none;
+  background: transparent;
 }
 
-/* En pantallas grandes las celdas crecen para mantener la misma densidad
-   visual percibida (24px se siente ruidoso a 1280px). */
-@media (min-width: 1024px) {
-  .fondo-cuadricula {
-    background-size:
-      160px 160px,
-      160px 160px,
-      32px 32px,
-      32px 32px;
-  }
-}
-
-/* Desvanecido radial de la cuadrícula: el centro respira y la textura nunca
-   compite con el contenido del hero. Se combina con .fondo-cuadricula. */
-.cuadricula-desvanecida {
-  position: relative;
-  isolation: isolate;
-}
-
-.cuadricula-desvanecida::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    var(--color-bg) 0%,
-    rgb(246 248 252 / 0.6) 55%,
-    transparent 100%
+.slider-interactivo::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--color-interactivo) var(--relleno, 50%),
+    var(--color-border) var(--relleno, 50%)
   );
+}
+
+.slider-interactivo::-webkit-slider-thumb {
+  appearance: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  /* (alto del riel − alto del thumb) / 2, para centrarlo sobre el riel. */
+  margin-top: -0.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactivo);
+  border: 3px solid var(--color-surface);
+  box-shadow: var(--shadow-tarjeta);
+}
+
+/* Firefox pinta el tramo recorrido solo, con ::-moz-range-progress, así que su
+   riel va liso y el degradado no hace falta. */
+.slider-interactivo::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-border);
+}
+
+.slider-interactivo::-moz-range-progress {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactivo);
+}
+
+.slider-interactivo::-moz-range-thumb {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 9999px;
+  background: var(--color-interactivo);
+  border: 3px solid var(--color-surface);
+  box-shadow: var(--shadow-tarjeta);
 }
 
 /* Utilidad de accesibilidad: oculta visualmente sin ocultar de lectores de
@@ -160,6 +375,52 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .transicion-paso {
+    animation: none;
+  }
+}
+
+/* Entrada del panel de feedback en la zona anclada (Fase 5).
+
+   Separada de `.transicion-paso` aunque el movimiento se parezca: aquella es
+   el cambio de paso —contenido que se reemplaza— y esta es un panel que
+   aparece sin que nada se vaya. Compartir la clase habría atado dos duraciones
+   que no tienen por qué moverse juntas.
+
+   Usa los tokens de motion de la Fase 1 y no números sueltos: `--dur-entrada`
+   (320ms) y `--ease-salida`, la curva que frena al final, para que el panel
+   se asiente en vez de golpear. Sube 8px y no 4 como el paso: viene del borde
+   de la pantalla, así que necesita algo más de recorrido para leerse como
+   "entró desde abajo". */
+@keyframes entra-panel-anclado {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entra-panel-anclado {
+  animation: entra-panel-anclado var(--dur-entrada) var(--ease-salida);
+}
+
+/* El desvanecido del contenido bajo la zona anclada: comunica "hay más abajo"
+   sin depender de una barra de scroll, que en móvil no se dibuja hasta que se
+   scrollea.
+
+   Los 24px del tramo se aplican solo al borde inferior; el resto de la región
+   queda opaco (`black` en el resto de las paradas). `mask-image` sin prefijo y
+   con `-webkit-` para Safari, donde la versión sin prefijo todavía no cubre
+   este caso. */
+.desvanece-bajo-anclado {
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entra-panel-anclado {
     animation: none;
   }
 }

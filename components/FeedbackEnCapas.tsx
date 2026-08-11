@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 
 /**
  * Feedback en tres capas, para lo que pasa después de comprobar una respuesta.
@@ -26,6 +27,19 @@ import { IconoCorrecto } from "@/components/ui/Icono";
  *
  * Nada de esto comenta a la persona. El elogio personal ("¡crack!", "eres bueno
  * en esto") desplaza al contenido sustantivo y está prohibido en las tres capas.
+ *
+ * ## Qué se ancla y qué no (Fase 5)
+ *
+ * La Capa 1 y el pie —lo que se **lee** y el control para seguir— van a la zona
+ * anclada al fondo del viewport. La autoexplicación y la Capa 2 se quedan en el
+ * flujo normal.
+ *
+ * No es una decisión de encuadre sino de tamaño medido: la autoexplicación son
+ * tres opciones de catálogo y mide 484px a 390×844, contra los 94px de la Capa
+ * 1. Anclarla obligaba a elegir entre tres opciones viendo dos, por una
+ * ventanilla con scroll, con las alternativas del ítem fuera de cuadro. La
+ * regla general —lo que se lee va anclado, lo que se responde vive en flujo
+ * normal— está en `ZonaAnclada.tsx`.
  */
 export function FeedbackEnCapas({
   esCorrecta,
@@ -35,6 +49,7 @@ export function FeedbackEnCapas({
   opcionesAutoexplicacion,
   onVerPorQue,
   onAutoexplicacion,
+  pie,
   extra,
 }: {
   esCorrecta: boolean;
@@ -49,11 +64,24 @@ export function FeedbackEnCapas({
   onVerPorQue?: () => void;
   /** `elegida` es null si el estudiante saltó el paso. */
   onAutoexplicacion?: (elegida: string | null) => void;
-  /** Contenido propio de quien llama (tiempo de resolución, botón de avance). */
+  /**
+   * Viaja con la Capa 1 a la zona anclada. Solo para el control que **cierra
+   * este ejercicio y deja seguir** — el pie de ItemPAES, con el tiempo de
+   * resolución y "Siguiente pregunta".
+   */
+  pie?: React.ReactNode;
+  /**
+   * Se queda en el flujo, al final, junto a su pregunta. Para acciones sobre el
+   * **ejercicio** y no sobre el paso: "Intentar de nuevo" reintenta este bloque,
+   * así que anclarlo lo pondría a competir con la navegación de pasos en una
+   * barra de 390px, y rompería la regla de `ZonaAnclada.tsx` — lo que se
+   * responde vive en flujo normal.
+   */
   extra?: React.ReactNode;
 }) {
   const [porQueAbierto, setPorQueAbierto] = useState(false);
   const [autoexplicado, setAutoexplicado] = useState(false);
+  const anclar = usePanelAnclado();
 
   /* El paso solo existe si hay tres opciones reales del catálogo y hay una
      Capa 2 que revelar después: preguntar "¿qué te pasó?" para después no
@@ -77,17 +105,15 @@ export function FeedbackEnCapas({
 
   return (
     <div className="transicion-paso space-y-4">
-      <div
-        role="status"
-        className={`rounded-tarjeta px-4 py-3 text-sm leading-relaxed ${
-          esCorrecta
-            ? "flex items-start gap-2.5 bg-success-suave"
-            : "border border-border bg-surface text-ink"
-        }`}
-      >
-        {esCorrecta && <IconoCorrecto />}
-        <span>{capa1}</span>
-      </div>
+      {/* `neutro` al fallar: el veredicto visual no puede llegar antes que la
+          frase que explica qué pasó. Es la excepción documentada a la
+          unificación de tonos — ver PanelFeedback.tsx. */}
+      {anclar(
+        <div className="entra-panel-anclado space-y-3">
+          <PanelFeedback tono={esCorrecta ? "acierto" : "neutro"}>{capa1}</PanelFeedback>
+          {pie}
+        </div>,
+      )}
 
       {/* Autoexplicación restringida: intentar nombrar el propio error antes de
           leer la explicación es lo que hace que la explicación se lea de verdad.

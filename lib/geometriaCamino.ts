@@ -87,7 +87,16 @@ export const ALTO_FRANJA_CAMINO = 60;
  * pegado, y no hace falta medir nada en el navegador.
  */
 export type ElementoColumna =
-  | { tipo: "encabezado" }
+  | {
+      tipo: "encabezado";
+      /** La banda es un **control** y no un rótulo: la de un eje plegable es un
+       *  `<button>` que despliega sus unidades, la de un eje con contenido es un
+       *  `<span>`. Solo lo usa `tapariaUnaBanda`, y ahí es la diferencia entre
+       *  taparle el clic a un control y taparle el texto a un encabezado. El
+       *  alto es el mismo en los dos casos, así que el resto de la geometría no
+       *  lo mira. */
+      control: boolean;
+    }
   | { tipo: "nodo"; meta: boolean };
 
 /** Alto de un elemento de la columna, en píxeles. */
@@ -138,21 +147,64 @@ export function desplazamientoVertical(
 export const RESERVA_TARJETA = 216;
 
 /**
+ * La misma cota, para el alto reservado en **escritorio**.
+ *
+ * `RESERVA_TARJETA` está calibrada a 360px, que es el ancho donde la
+ * descripción más envuelve — y es el ancho donde la tarjeta va `fixed` al pie y
+ * no reserva nada. En escritorio la tarjeta es mucho más estable: la columna
+ * tiene `max-width` fijo (`ANCHO_COLUMNA`) y la canaleta también, así que entre
+ * 640px y 1440px la tarjeta mide entre 439 y 456 de ancho y **188px de alto en
+ * el peor caso** (título de dos líneas más contador). Medido en el navegador
+ * anulando el mínimo, en los dos extremos del rango.
+ *
+ * Reservar los 216 de móvil acá salía caro: `alturaSegura` redondea hacia
+ * arriba al siguiente borde de elemento, y esos 28px de más empujaban el
+ * redondeo un borde más allá del necesario. Con "Enteros y racionales" activo
+ * pedía 272 —tres filas y una banda— para un contenido de 188, y ese sobrante
+ * se veía como aire de sobra. Con 192 el redondeo cae en 196: la fila de
+ * Porcentaje, la de Potencias y la banda de Álgebra, que es exactamente donde
+ * termina el contenido.
+ *
+ * 192 son los 188 medidos más 4 de colchón. Es un margen chico a propósito: lo
+ * que protege del error no es el colchón sino que `alturaSegura` **siempre
+ * redondea hacia arriba**, así que el alto reservado nunca es menor que este
+ * número. Si el contenido de la tarjeta creciera por encima de 192 —un título
+ * que pase a tres líneas, una línea nueva en el panel—, la tarjeta se saldría
+ * de lo reservado y volvería a cortar una fila; lo atrapa el recorrido de los
+ * 16 nodos en `e2e/capturas.spec.ts`, que mide la tarjeta real.
+ */
+export const RESERVA_TARJETA_ESCRITORIO = 192;
+
+/**
  * ¿La tarjeta, colgando hacia abajo del elemento `i`, alcanzaría a tapar una
- * banda de encabezado?
+ * banda que además es un **control**?
  *
  * Existe porque tapar una banda no es lo mismo que tapar un nodo. La tarjeta es
  * un panel flotante y taparle el título a los nodos de abajo es su
  * comportamiento buscado: basta tocar otro nodo para moverla. Una banda de eje
- * plegado, en cambio, es un **control** —abre sus unidades—, y taparlo no lo
+ * plegado, en cambio, es un control —abre sus unidades—, y taparlo no lo
  * esconde: se come el clic. Playwright lo encontró intentando desplegar
  * Geometría con la tarjeta encima.
+ *
+ * **Solo las bandas-control cuentan (2026-08-11).** La primera versión devolvía
+ * `true` ante cualquier `encabezado`, aunque su propio comentario ya decía que
+ * el motivo era el clic de un eje *plegable*. Los ejes con contenido —Números,
+ * Álgebra y funciones— rinden un `<span>`, no un `<button>`: no se comen ningún
+ * clic, y taparles el rótulo es del mismo orden que taparle el título a un
+ * nodo. Contarlos igual salía caro en el borde de arriba de la columna: con
+ * "Enteros y racionales" activo —el primer nodo del primer eje y el que
+ * /camino trae seleccionado de entrada— la banda de Álgebra forzaba un volteo
+ * hacia arriba, y ahí solo hay 44px de columna contra los 216 que pide la
+ * tarjeta. Se desbordaba 172px por encima de la columna, debajo de la barra de
+ * navegación pegada: medido a 1440px, 79px de tarjeta inalcanzables y el
+ * título tapado. Una banda que no es control ahora suma su alto y la caminata
+ * sigue, igual que un nodo.
  *
  * No alcanza con mirar el elemento inmediatamente siguiente, que es lo que
  * hacía la primera versión: la tarjeta mide más que una fila, así que llega a
  * una banda que está dos elementos más abajo. El caso real es exactamente ese
  * —el nodo activo es "Función lineal y afín", debajo va "Función cuadrática" y
- * recién después la banda de Geometría.
+ * recién después la banda de Geometría, que sí es plegable.
  */
 export function tapariaUnaBanda(
   elementos: readonly ElementoColumna[],
@@ -167,10 +219,69 @@ export function tapariaUnaBanda(
      llegando. */
   let techo = borde;
   for (let k = i + 1; k < elementos.length && techo < limite; k++) {
-    if (elementos[k].tipo === "encabezado") return true;
-    techo += altoDeElemento(elementos[k]);
+    const elemento = elementos[k];
+    if (elemento.tipo === "encabezado" && elemento.control) return true;
+    techo += altoDeElemento(elemento);
   }
   return false;
+}
+
+/**
+ * Cuánto alto necesita la tarjeta, colgando hacia abajo del elemento `i`,
+ * para que su borde libre —el que no queda pegado al nodo activo— caiga
+ * siempre en un borde de elemento y nunca a mitad de un nodo.
+ *
+ * **Por qué esto y no una variante de `tapariaUnaBanda`.** Una primera
+ * versión de esta fase intentaba decidir "¿cortaría?" y, si sí, voltear la
+ * tarjeta hacia el otro lado. No alcanza: 216 (`RESERVA_TARJETA`) no es
+ * múltiplo de 76 (`PASO_FILA`), así que el mismo resto de 64px que corta un
+ * nodo hacia abajo corta uno hacia arriba si se voltea — la geometría es
+ * simétrica, cambiar de lado no la arregla, solo la traslada (confirmado con
+ * datos reales del navegador: "Expresiones algebraicas" activo cortaba
+ * "Sistemas de ecuaciones 2×2" para abajo y "Porcentaje" para arriba). El
+ * único borde que puede garantizarse en un límite de fila sin importar hacia
+ * dónde cuelgue la tarjeta es el que depende del **alto real de la tarjeta**,
+ * no de su posición. Por eso esta función no devuelve un booleano para
+ * decidir un volteo: devuelve un alto, para usarlo como `min-height` de la
+ * tarjeta. Sobra siempre algo: el alto pedido cae en un borde de elemento y el
+ * contenido no mide eso, así que la diferencia se ve como aire dentro de la
+ * tarjeta. Es geometría y no un descuido —con filas de 76px y contenido de
+ * 165–188 no existe un alto sin sobrante—, pero el sobrante sí depende de qué
+ * cota se use para redondear: por eso acá va `RESERVA_TARJETA_ESCRITORIO` (192,
+ * el alto real medido en este rango de anchos) y no `RESERVA_TARJETA` (216,
+ * calibrada a 360px, donde este mínimo ni siquiera se aplica). Redondear desde
+ * 216 empujaba el corte un borde más allá del necesario y hacía el aire mucho
+ * más visible: 272 en vez de 196 con "Enteros y racionales" activo.
+ *
+ * Camina igual que `tapariaUnaBanda` (sumando alto de elemento en elemento
+ * mientras no se alcance la cota) pero el resultado es la suma misma, no una
+ * pregunta sobre ella — por construcción cae siempre exacto en el borde
+ * inferior del último elemento sumado, y nunca por debajo de la cota.
+ */
+export function alturaSegura(elementos: readonly ElementoColumna[], i: number): number {
+  if (i < 0) return RESERVA_TARJETA_ESCRITORIO;
+  const borde = desplazamientoVertical(elementos, i);
+  let techo = borde;
+  for (let k = i + 1; k < elementos.length && techo - borde < RESERVA_TARJETA_ESCRITORIO; k++) {
+    techo += altoDeElemento(elementos[k]);
+  }
+  /* La columna se acabó antes de llegar a la cota: no queda nada más que
+     cortar, así que el piso es la cota misma y no lo que alcanzó a sumar. */
+  return Math.max(RESERVA_TARJETA_ESCRITORIO, techo - borde);
+}
+
+/**
+ * La misma garantía que `alturaSegura`, para cuando la tarjeta cuelga hacia
+ * **arriba** (`voltear` es `true` por la meta o por `tapariaUnaBanda`).
+ *
+ * Reutiliza `alturaSegura` sobre la columna invertida en vez de escribir la
+ * misma caminata en la otra dirección: recorrer hacia arriba desde `i` es
+ * recorrer hacia abajo desde el índice espejado en la columna al revés.
+ */
+export function alturaSeguraArriba(elementos: readonly ElementoColumna[], i: number): number {
+  if (i < 0 || i >= elementos.length) return RESERVA_TARJETA_ESCRITORIO;
+  const invertida = [...elementos].reverse();
+  return alturaSegura(invertida, elementos.length - 1 - i);
 }
 
 /**

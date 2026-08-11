@@ -24,11 +24,15 @@ export default function Portada() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <section className="fondo-cuadricula cuadricula-desvanecida relative flex flex-1 items-center justify-center overflow-hidden px-4 py-24 lg:py-32">
+      <section className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-24 lg:py-32">
         <CaminoFantasma nodos={temas.length} />
 
         <div className="relative w-full">
-          <p className="text-center text-sm font-medium uppercase tracking-wide text-ink-suave">
+          {/* El rótulo de la portada vive acá y no dentro de `PuntoDePartida`:
+              es de la pantalla, no de la rama, y por eso no cambia cuando la
+              rama cambia. Usa el token `text-eyebrow`, igual que el resto de los
+              rótulos desde la Fase 6. */}
+          <p className="text-center text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
             Matemática M1 · Piloto privado
           </p>
           <div className="mt-4">

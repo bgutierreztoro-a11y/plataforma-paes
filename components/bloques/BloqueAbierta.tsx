@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
-import { IconoCorrecto } from "@/components/ui/Icono";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloqueAbierta as BloqueAbiertaTipo } from "@/lib/tipos";
 
@@ -28,16 +28,15 @@ export function BloqueAbierta({ bloque }: { bloque: BloqueAbiertaTipo }) {
           Enviar respuesta
         </Boton>
       )}
+      {/* Acuse de recibo, no veredicto: se queda inline por el mismo motivo que
+          en BloquePrediccion. */}
       {enviado && (
-        <div role="status" className="flex items-start gap-2 rounded-tarjeta bg-success-suave px-4 py-3 text-sm">
-          <IconoCorrecto />
-          <span>
-            Respuesta registrada.
-            {bloque.mostrarRespuestaModelo && bloque.respuestaModelo
-              ? ` Una forma de decirlo: ${bloque.respuestaModelo}`
-              : ""}
-          </span>
-        </div>
+        <PanelFeedback tono="acierto">
+          Respuesta registrada.
+          {bloque.mostrarRespuestaModelo && bloque.respuestaModelo
+            ? ` Una forma de decirlo: ${bloque.respuestaModelo}`
+            : ""}
+        </PanelFeedback>
       )}
     </div>
   );

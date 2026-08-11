@@ -38,7 +38,7 @@ export function IlustracionEjeNumeros() {
               x={x}
               y={112}
               textAnchor="middle"
-              fontFamily="var(--font-mono)"
+              className="num"
               fontSize="12"
               fill={esCero ? "var(--color-accent-fuerte)" : "var(--color-ink-suave)"}
             >

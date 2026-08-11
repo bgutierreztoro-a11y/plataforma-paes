@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Boton, EnlaceBoton } from "@/components/ui/Boton";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 import { PuntoNodo } from "@/components/camino/NodoTema";
 import { EncabezadoEje } from "@/components/camino/EncabezadoEje";
 import {
@@ -12,6 +13,8 @@ import {
   desplazamientoVertical,
   retrasoDeEntrada,
   tapariaUnaBanda,
+  alturaSegura,
+  alturaSeguraArriba,
   RESERVA_TARJETA,
   type ElementoColumna,
 } from "@/lib/geometriaCamino";
@@ -146,9 +149,14 @@ export function CaminoVertical({
     });
   }
 
+  /* `control` es la única propiedad de una banda que la geometría necesita
+     saber, y sale de lo mismo que decide si `EncabezadoEje` rinde un `<button>`
+     o un `<span>`: `plegable`. Se resuelve acá y no dentro de la geometría
+     porque es este componente el que ya tiene la sección a mano — el módulo de
+     geometría es aritmética pura y no sabe qué es un eje. */
   const elementos: ElementoColumna[] = items.map((item) =>
     item.clase === "encabezado"
-      ? { tipo: "encabezado" }
+      ? { tipo: "encabezado", control: item.seccion.plegable === true }
       : { tipo: "nodo", meta: item.nodo.meta === true },
   );
 
@@ -203,14 +211,31 @@ export function CaminoVertical({
 
      - **La meta.** Es la última fila, así que no hay ningún nodo más abajo al
        que saltar para destaparla — queda inalcanzable.
-     - **Una banda de eje.** Es un control: la banda de un eje plegado abre sus
-       unidades. Taparla no la esconde, la deshabilita — el clic se lo come la
-       tarjeta. Lo detectó Playwright al intentar desplegar Geometría con la
+     - **Una banda de eje que sea un control.** La banda de un eje plegable abre
+       sus unidades. Taparla no la esconde, la deshabilita — el clic se lo come
+       la tarjeta. Lo detectó Playwright al intentar desplegar Geometría con la
        tarjeta encima.
 
      El segundo caso mira todo el alcance de la tarjeta y no solo el elemento
      siguiente: la tarjeta mide más que una fila, así que llega a una banda que
-     está dos elementos más abajo. Ver `tapariaUnaBanda`. */
+     está dos elementos más abajo. Y mira solo las bandas plegables: la de un
+     eje con contenido es un rótulo, no un control, y taparla cuesta lo mismo
+     que taparle el título a un nodo. Contarlas todas volteaba la tarjeta en el
+     primer nodo de la columna, donde no hay 216px arriba y terminaba debajo de
+     la barra de navegación. Ver `tapariaUnaBanda`.
+
+     **Que no corte un nodo a la mitad no depende de la dirección (Fase 4).**
+     Se probó primero decidir un tercer motivo de volteo —"cortaría un
+     nodo"— igual que estos dos, y no alcanzaba: 216 (`RESERVA_TARJETA`) no es
+     múltiplo de 76 (`PASO_FILA`), así que el resto de 64px que corta un nodo
+     hacia abajo corta uno hacia arriba si se voltea — cambiar de lado
+     traslada el defecto, no lo arregla (confirmado en el navegador real: con
+     "Expresiones algebraicas" activo, sin este arreglo se cortaba "Sistemas
+     de ecuaciones 2×2" para abajo y, volteando, "Porcentaje" para arriba). El
+     arreglo real vive en `alturaSegura`/`alturaSeguraArriba`, aplicado como
+     `min-height` de la tarjeta más abajo: no cambia hacia qué lado cuelga,
+     le garantiza a **ese** lado que su borde libre caiga en un borde de
+     elemento sin importar cuánto mida el contenido real. */
   const siguiente = indice >= 0 ? items[indice + 1] : undefined;
   const voltear =
     (siguiente?.clase === "nodo" && siguiente.nodo.meta === true) ||
@@ -266,6 +291,13 @@ export function CaminoVertical({
                       }
                       alto={altoDeFila(nodo.meta === true)}
                       altoAnterior={anterior ? altoDeFila(anterior.meta === true) : 0}
+                      /* Un tramo está recorrido cuando el nodo del que sale ya
+                         se hizo. "Por repasar" también cuenta: se rindió, con
+                         deuda, pero el estudiante pasó por ahí. */
+                      recorrido={
+                        anterior?.estado === "completado" ||
+                        anterior?.estado === "porRepasar"
+                      }
                       seleccionado={activo?.id === nodo.id}
                       onSeleccionar={() => setElegido(nodo.id)}
                     />
@@ -314,6 +346,17 @@ export function CaminoVertical({
                   : desplazamientoVertical(elementos, indice)
               }px`,
               "--canaleta": `${ANCHO_CANALETA}px`,
+              /* El alto mínimo que garantiza que el borde libre de la tarjeta
+                 —el que no queda pegado al nodo activo— caiga en un borde de
+                 elemento y no a mitad de un nodo. Viaja como variable CSS y no
+                 como prop de `TarjetaActivo` porque es la tarjeta interior
+                 (`<Tarjeta>`, dentro de `TarjetaActivo`) la que necesita
+                 aplicarlo — las variables CSS heredan por el árbol sin que
+                 haga falta pasarlas de componente en componente. Ver
+                 `alturaSegura` en lib/geometriaCamino.ts para el porqué. */
+              "--alto-seguro": `${
+                voltear ? alturaSeguraArriba(elementos, indice) : alturaSegura(elementos, indice)
+              }px`,
             } as React.CSSProperties
           }
         >
@@ -363,6 +406,7 @@ function FilaCamino({
   xAnterior,
   alto,
   altoAnterior,
+  recorrido,
   seleccionado,
   onSeleccionar,
 }: {
@@ -372,6 +416,7 @@ function FilaCamino({
   xAnterior?: number;
   alto: number;
   altoAnterior: number;
+  recorrido: boolean;
   seleccionado: boolean;
   onSeleccionar: () => void;
 }) {
@@ -407,7 +452,14 @@ function FilaCamino({
             y1="0"
             x2={x}
             y2="100"
-            stroke="var(--color-border-fuerte)"
+            /* El tramo ya recorrido se pinta con el verde de "completado" y el
+               que falta queda en el gris del borde. Es la misma lectura de
+               progreso que dan los discos, dicha por la línea que los une: se
+               ve dónde llegaste sin contar nodos ni leer el contador. No suma
+               un color al sistema — reusa el que ya significa "hecho". */
+            stroke={
+              recorrido ? "var(--color-success)" : "var(--color-border-fuerte)"
+            }
             strokeWidth="3"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
@@ -462,7 +514,11 @@ function FilaCamino({
             className="entra-nodo block"
             style={{ animationDelay: `${retrasoDeEntrada(indice)}ms` }}
           >
-            <PuntoNodo estado={nodo.estado} meta={nodo.meta} />
+            <PuntoNodo
+              estado={nodo.estado}
+              meta={nodo.meta}
+              destacado={seleccionado && nodo.estado !== "enConstruccion"}
+            />
           </span>
         </span>
         {/* El título no se desplaza con el zigzag: si el texto bailara, la
@@ -512,9 +568,50 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
   const bloqueado = nodo.estado === "enConstruccion";
 
   return (
-    <div className="rounded-tarjeta border border-border bg-surface p-3 shadow-tarjeta-hover">
+    /* `flotante` y no `elevado`: esta tarjeta no está apoyada en la página,
+       vive encima del camino y tapa nodos. Si no se separa de verdad, el ojo la
+       lee como parte del recorrido en vez de como el panel que responde "¿y
+       ahora qué?". El padding se queda en p-3 a propósito: el alto de esta
+       tarjeta está acotado por RESERVA_TARJETA en lib/geometriaCamino.ts, y
+       crecer acá le devuelve a la tarjeta el clic de una banda de eje.
+
+       `<Tarjeta>` y no las clases a mano (Fase 4): esta tarjeta se quedó con
+       los alias legados (`rounded-panel`, `shadow-flotante`) que
+       `components/ui/Tarjeta.tsx` abandonó en la Fase 2 al migrar a la escala
+       primitiva (`rounded-md`, `shadow-e2`). No se tocó en esa fase porque
+       vive en este archivo y no en el de la tarjeta genérica.
+
+       `sm:min-h-[var(--alto-seguro)]` y no `min-h-` a secas: el anclaje por
+       nodo —y por lo tanto el riesgo de cortar uno— solo existe en escritorio
+       (`sm:` y más ancho, ver el comentario sobre `voltear` más arriba). En
+       móvil la tarjeta es `fixed` al pie y forzarle un alto mínimo ahí solo
+       le agregaría aire de sobra sin motivo.
+
+       `sm:flex sm:flex-col sm:justify-center` es lo que hace que ese alto
+       mínimo se lea como aire y no como un hueco. `alturaSegura` reserva por
+       borde de fila, no por contenido, así que casi siempre pide más de lo que
+       el contenido mide —272px contra ~204 en el caso de "Enteros y
+       racionales"—. Sin esto, el sobrante caía entero debajo del botón y la
+       tarjeta parecía cortada al medio. Centrando, `justify-center` reparte los
+       mismos ~68px en partes iguales arriba y abajo: el padding crece por los
+       dos lados y el bloque queda con aire generoso. No cambia el alto de la
+       tarjeta —el mínimo sigue siendo el mismo número— así que la garantía de
+       `alturaSegura` no se toca: es exactamente el espacio reservado, repartido
+       distinto.
+
+       Va en `sm:` por lo mismo que el `min-h`: en móvil no hay alto mínimo, no
+       hay sobrante que repartir, y estas clases serían inertes. Dejarlas fuera
+       del breakpoint mantiene el layout de móvil idéntico al de antes. */
+    <Tarjeta
+      nivel="flotante"
+      className="p-3 sm:flex sm:min-h-[var(--alto-seguro)] sm:flex-col sm:justify-center"
+    >
+      {/* Interlineado apretado en toda la tarjeta: acá no se lee prosa, se
+          consulta un panel, y su alto está tasado por RESERVA_TARJETA. Los
+          interlineados cómodos de la escala tipográfica son para el texto de
+          lección, no para esto. */}
       {nodo.rotulo && (
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
+        <p className="text-xs font-medium uppercase leading-tight tracking-wide text-ink-tenue">
           {nodo.rotulo}
         </p>
       )}
@@ -534,10 +631,14 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
       {(nodo.contador || nodo.demostracion) && (
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
           {nodo.contador && (
-            <span className="text-sm text-ink-suave">{nodo.contador}</span>
+            <span className="num text-sm leading-tight text-ink-suave">{nodo.contador}</span>
           )}
           {nodo.demostracion && (
-            <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-xs font-medium text-accent-fuerte">
+            /* `text-eyebrow` (Fase 4): el segundo consumidor previsto desde la
+               Fase 2, cuando se estrenó en HeaderLeccion.tsx. `rounded-full`
+               reemplaza el radio implícito de `px-2.5 py-0.5` — mismo aspecto,
+               token explícito. */
+            <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-eyebrow uppercase tracking-wide text-accent-fuerte">
               Demostración
             </span>
           )}
@@ -558,6 +659,6 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
           </EnlaceBoton>
         )
       )}
-    </div>
+    </Tarjeta>
   );
 }

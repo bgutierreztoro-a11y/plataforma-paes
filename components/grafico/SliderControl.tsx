@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 interface SliderControlProps {
   etiqueta: string;
   valor: number;
@@ -30,7 +32,7 @@ export function SliderControl({
           {etiqueta}
           {!editable && " · fijo"}
         </span>
-        <span className="font-mono text-base tabular-nums text-ink">
+        <span className="text-base num text-ink">
           {valor.toLocaleString("es-CL", { maximumFractionDigits: 1 })}
         </span>
       </div>
@@ -44,7 +46,17 @@ export function SliderControl({
         onChange={(e) => onChange(Number(e.target.value))}
         aria-label={editable ? etiqueta : `${etiqueta}, fijo en este paso`}
         aria-valuetext={valorTexto}
-        className={`h-11 w-full appearance-none rounded-full bg-border accent-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-accent [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent ${
+        /* Qué parte del riel va pintada. El dibujo del control vive en
+           `.slider-interactivo` (globals.css); acá solo viaja el número, que es
+           lo único que depende del estado. Se acota a [0, 100] porque un valor
+           fuera de rango —`valorInicial` mal puesto en el contenido— daría un
+           degradado invertido en vez de un riel. */
+        style={
+          {
+            "--relleno": `${Math.min(100, Math.max(0, ((valor - min) / (max - min)) * 100))}%`,
+          } as CSSProperties
+        }
+        className={`slider-interactivo h-11 w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
           editable ? "cursor-pointer" : "cursor-not-allowed"
         }`}
       />

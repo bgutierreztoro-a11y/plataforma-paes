@@ -25,10 +25,13 @@ function Seccion({ titulo, children }: { titulo: string; children: ReactNode }) 
 export default function Privacidad() {
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-16 sm:py-24">
-      <p className="text-sm uppercase tracking-wide text-ink-suave">
+      {/* Solo el token del rótulo (Fase 6). El layout se queda como está: esta
+          es una página de documento, no una pantalla de una sola cosa, así que
+          no va en `PantallaCentrada` — centrar un texto largo lo vuelve ilegible. */}
+      <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
         Actualizado el {ACTUALIZADO}
       </p>
-      <h1 className="mt-2 text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+      <h1 className="mt-2 text-3xl font-semibold text-ink sm:text-4xl">
         Aviso de privacidad
       </h1>
       <p className="mt-4 text-lg leading-8 text-ink-suave">

@@ -25,15 +25,24 @@ export function BloqueInteractivo({
 }) {
   const [varM, varB] = bloque.variables;
   return (
-    <GraficoPendiente
-      instruccion={bloque.instruccion}
-      configM={config(varM, POR_DEFECTO)}
-      configB={config(varB, { ...POR_DEFECTO, min: -8, max: 8, editable: false })}
-      exploracionMinima={bloque.variante === "unaVariable" ? bloque.exploracionMinima : undefined}
-      onExploracionCompleta={onExploracionCompleta}
-      secuenciaMicropreguntas={
-        bloque.variante === "dosVariables" ? bloque.secuenciaMicropreguntas : undefined
-      }
-    />
+    /* Contenedor propio: el interactivo es el héroe de la lección (MASTER.md
+       §3.3 y UI_GUIDELINES §15) y necesita separarse del texto para decir "acá
+       se juega". El radio más grande de la escala y la única sombra teñida de
+       aurora son suyos y de nada más — es lo que lo distingue de una tarjeta
+       cualquiera sin agregarle adornos. */
+    <div className="rounded-escena border border-border bg-surface p-4 shadow-interactivo sm:p-6">
+      <GraficoPendiente
+        instruccion={bloque.instruccion}
+        configM={config(varM, POR_DEFECTO)}
+        configB={config(varB, { ...POR_DEFECTO, min: -8, max: 8, editable: false })}
+        exploracionMinima={
+          bloque.variante === "unaVariable" ? bloque.exploracionMinima : undefined
+        }
+        onExploracionCompleta={onExploracionCompleta}
+        secuenciaMicropreguntas={
+          bloque.variante === "dosVariables" ? bloque.secuenciaMicropreguntas : undefined
+        }
+      />
+    </div>
   );
 }

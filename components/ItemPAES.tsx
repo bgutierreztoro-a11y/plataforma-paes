@@ -2,7 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
+import {
+  ALTERNATIVA_BASE,
+  ALTERNATIVA_CORRECTA,
+  ALTERNATIVA_DESCARTADA,
+  ALTERNATIVA_ELEGIDA_REVELADA,
+  ALTERNATIVA_INTERACTIVA,
+  ALTERNATIVA_REPOSO,
+} from "@/components/ui/alternativa";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
+import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
@@ -47,6 +57,7 @@ export function ItemPAES({
   const [transcurridoMs, setTranscurridoMs] = useState(0);
   const [tiempoFinalMs, setTiempoFinalMs] = useState(0);
   const inicio = useRef(0);
+  const anclar = usePanelAnclado();
   // El orden inicial es el original (idéntico en servidor y cliente, sin
   // Math.random en el render: mezclarlo aquí causaría un mismatch de
   // hidratación). La mezcla real ocurre en el efecto de abajo, que solo
@@ -94,10 +105,13 @@ export function ItemPAES({
     <>
       <p className="text-sm text-ink-suave">
         Resuelta en{" "}
-        <span className="font-mono tabular-nums">{formatoTiempo(tiempoFinalMs)}</span> · en la
+        <span className="num">{formatoTiempo(tiempoFinalMs)}</span> · en la
         PAES M1 tendrás alrededor de 2 minutos por pregunta.
       </p>
-      <Boton onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}>
+      <Boton
+        anchoCompleto
+        onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}
+      >
         {etiquetaSiguiente}
       </Boton>
     </>
@@ -135,22 +149,21 @@ export function ItemPAES({
   }
 
   function clasesOpcion(alt: (typeof alternativas)[number]): string {
-    const base =
-      "flex min-h-11 cursor-pointer items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent";
+    const base = ALTERNATIVA_BASE;
     if (revelado && seleccion === alt.clave) {
       /* Al fallar, la alternativa elegida queda marcada como elegida y nada
          más: el rojo que llevaba antes contestaba "¿la tuve bien?" desde el
          costado, antes de que se leyera la Capa 1, que es donde está lo que
          enseña. El acierto sí se marca — es información, no reproche. */
-      return `${base} cursor-default ${
+      return `${base} ${
         alt.esCorrecta && mostrarFeedback
-          ? "border-success bg-success-suave"
-          : "border-accent bg-accent-suave"
+          ? ALTERNATIVA_CORRECTA
+          : ALTERNATIVA_ELEGIDA_REVELADA
       }`;
     }
-    if (revelado) return `${base} cursor-default opacity-60`;
-    if (!montado) return `${base} cursor-not-allowed`;
-    return `${base} border-border hover:border-border-fuerte hover:bg-accent-suave/40 has-[:checked]:border-accent has-[:checked]:bg-accent-suave`;
+    if (revelado) return `${base} ${ALTERNATIVA_DESCARTADA}`;
+    if (!montado) return `${base} ${ALTERNATIVA_REPOSO} cursor-not-allowed`;
+    return `${base} ${ALTERNATIVA_REPOSO} ${ALTERNATIVA_INTERACTIVA}`;
   }
 
   return (
@@ -165,7 +178,7 @@ export function ItemPAES({
           title="En la PAES M1 tendrás alrededor de 2 minutos por pregunta"
         >
           Tiempo{" "}
-          <span className="font-mono tabular-nums">
+          <span className="num">
             {formatoTiempo(revelado ? tiempoFinalMs : transcurridoMs)}
           </span>
         </p>
@@ -189,18 +202,22 @@ export function ItemPAES({
               onChange={() => setSeleccion(alt.clave)}
               className="peer sr-only"
             />
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte font-mono text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
               {alt.clave}
             </span>
             <span>{alt.texto}</span>
           </label>
         ))}
       </fieldset>
-      {!revelado && (
-        <Boton onClick={revisar} disabled={!seleccion || !montado}>
-          Revisar respuesta
-        </Boton>
-      )}
+      {/* El CTA del ítem va anclado igual que el feedback que lo reemplaza: son
+          el mismo lugar de la pantalla en dos momentos, y dejar el botón en el
+          flujo haría que el control saltara al fondo recién al comprobar. */}
+      {!revelado &&
+        anclar(
+          <Boton anchoCompleto onClick={revisar} disabled={!seleccion || !montado}>
+            Revisar respuesta
+          </Boton>,
+        )}
       {revelado && alternativaElegida && (
         <>
           {mostrarFeedback ? (
@@ -212,18 +229,18 @@ export function ItemPAES({
               onAutoexplicacion={(elegida) =>
                 registrarAutoexplicacion(item.id, elegida, alternativaElegida.descripcionError)
               }
-              extra={pieDelItem}
+              pie={pieDelItem}
             />
           ) : (
-            <div className="transicion-paso space-y-4">
-              <div
-                role="status"
-                className="rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink"
-              >
-                Respuesta registrada.
-              </div>
-              {pieDelItem}
-            </div>
+            /* Diagnóstico: se registra la respuesta sin decir si estuvo bien.
+               Mismo tratamiento anclado que el feedback completo — cambia qué
+               dice el panel, no dónde vive. */
+            anclar(
+              <div className="entra-panel-anclado space-y-3">
+                <PanelFeedback tono="neutro">Respuesta registrada.</PanelFeedback>
+                {pieDelItem}
+              </div>,
+            )
           )}
         </>
       )}

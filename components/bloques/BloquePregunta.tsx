@@ -114,7 +114,7 @@ export function BloquePregunta({
               onChange={() => setSeleccion(alt.clave)}
               className="peer sr-only"
             />
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte font-mono text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
               {alt.clave}
             </span>
             <span>{alt.texto}</span>

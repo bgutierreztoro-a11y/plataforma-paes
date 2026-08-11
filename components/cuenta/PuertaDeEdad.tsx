@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SignUp } from "@clerk/nextjs";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 
 /**
  * Declaración de edad antes del formulario de registro.
@@ -24,7 +25,7 @@ export function PuertaDeEdad() {
 
   return (
     <div className="flex w-full flex-col items-center gap-8">
-      <div className="w-full rounded-tarjeta border border-border bg-surface p-5 shadow-tarjeta">
+      <Tarjeta className="w-full p-5">
         <label className="flex cursor-pointer items-start gap-3">
           <input
             type="checkbox"
@@ -52,7 +53,7 @@ export function PuertaDeEdad() {
           </Link>
           .
         </p>
-      </div>
+      </Tarjeta>
 
       {declarado ? (
         <SignUp routing="hash" signInUrl="/ingresar" />

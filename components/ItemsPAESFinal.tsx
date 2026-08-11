@@ -2,10 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { Boton } from "@/components/ui/Boton";
+import { Tarjeta } from "@/components/ui/Tarjeta";
 import { AvisoCierreDemostracion } from "@/components/ui/Banner";
 import { alcanzaDominio } from "@/lib/umbrales";
 import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
+import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 /* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
    opción discreta de esta pantalla no es un tercer botón del mismo peso que
@@ -29,12 +32,18 @@ function TarjetaDato({
   detalle: string;
 }) {
   return (
-    <div className="rounded-tarjeta border border-border bg-surface p-5 text-left shadow-tarjeta">
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">{etiqueta}</p>
+    <Tarjeta className="p-5 text-left">
+      {/* El orden ya era el correcto —etiqueta arriba, cifra abajo—; lo que
+          cambió en la Fase 6 es que usa el token `text-eyebrow` en vez de
+          `text-xs` a mano, que es lo que hacía que este rótulo y el de las otras
+          pantallas no midieran igual. */}
+      <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
+        {etiqueta}
+      </p>
       {/* Cifras tabulares: el número no cambia de ancho entre lecciones. */}
       <p className="mt-1 text-3xl font-semibold text-ink">{valor}</p>
       <p className="mt-1 text-sm leading-6 text-ink-suave">{detalle}</p>
-    </div>
+    </Tarjeta>
   );
 }
 
@@ -119,25 +128,27 @@ export function ItemsPAESFinal({
   }
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+    <PantallaCentrada>
       <div className="w-full max-w-xl text-center">
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">
-          {conDominio ? "Lección terminada" : "Lección terminada, y hay algo que afinar"}
-        </h1>
+        <EncabezadoDeEntrada
+          rotulo={temaNombre}
+          titulo={conDominio ? "Lección terminada" : "Lección terminada, y hay algo que afinar"}
+        />
+
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TarjetaDato
             etiqueta="Aciertos"
-            valor={<span className="font-mono tabular-nums">{`${aciertos}/${total}`}</span>}
+            valor={<span className="num">{`${aciertos}/${total}`}</span>}
             detalle="Preguntas formato PAES de esta lección."
           />
           <TarjetaDato
             etiqueta="Tu avance"
             valor={
               <>
-                <span className="font-mono tabular-nums">{ordinalLeccion}</span>
+                <span className="num">{ordinalLeccion}</span>
                 <span className="px-1.5 text-2xl text-ink-suave">de</span>
-                <span className="font-mono tabular-nums">{totalLeccionesTema}</span>
+                <span className="num">{totalLeccionesTema}</span>
               </>
             }
             detalle={`Lecciones de ${temaNombre}.`}
@@ -149,15 +160,21 @@ export function ItemsPAESFinal({
             <p className="mt-6 text-base leading-7 text-ink-suave">
               Lo que viste acá quedó sólido.
             </p>
-            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Boton onClick={continuar}>{copyAvanzar}</Boton>
-              <Boton variante="secundario" onClick={repasar}>
+            {/* Un solo primario a ancho completo (Fase 6). Antes eran dos
+                botones del mismo peso lado a lado y un enlace debajo: tres
+                opciones compitiendo sin que ninguna se leyera como la propuesta.
+                Ahora la jerarquía es una y se ve — primario, texto, texto. */}
+            <Boton anchoCompleto className="mt-6" onClick={continuar}>
+              {copyAvanzar}
+            </Boton>
+            <div className="flex flex-col items-center">
+              <button type="button" onClick={repasar} className={CLASE_ENLACE_DISCRETO}>
                 Repasar esta lección
-              </Boton>
+              </button>
+              <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
+                Repetir solo las preguntas
+              </button>
             </div>
-            <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
-              Repetir solo las preguntas
-            </button>
           </>
         ) : (
           <>
@@ -167,15 +184,19 @@ export function ItemsPAESFinal({
               Varias se te escaparon. Rehacer la lección ahora es lo que más rinde: no
               pierdes nada de lo que ya hiciste, y el camino te espera igual.
             </p>
-            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Boton onClick={repasar}>Repasar esta lección</Boton>
-              <Boton variante="secundario" onClick={repetirCierre}>
+            {/* Misma jerarquía que la otra rama; lo que cambia es cuál opción
+                es la propuesta, que es la decisión que el umbral ya tomaba. */}
+            <Boton anchoCompleto className="mt-6" onClick={repasar}>
+              Repasar esta lección
+            </Boton>
+            <div className="flex flex-col items-center">
+              <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
                 Repetir solo las preguntas
-              </Boton>
+              </button>
+              <button type="button" onClick={continuar} className={CLASE_ENLACE_DISCRETO}>
+                {copyAvanzar}
+              </button>
             </div>
-            <button type="button" onClick={continuar} className={CLASE_ENLACE_DISCRETO}>
-              {copyAvanzar}
-            </button>
           </>
         )}
 
@@ -185,6 +206,6 @@ export function ItemsPAESFinal({
           </div>
         )}
       </div>
-    </div>
+    </PantallaCentrada>
   );
 }

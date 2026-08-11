@@ -149,16 +149,16 @@ export function GraficoPendiente({
       <div className="flex justify-center">
         <PlanoCartesiano m={m} b={b} mostrarCambio={mostrarCambio} />
       </div>
-      <p className="text-center font-mono text-xl tabular-nums text-ink">
+      <p className="text-center text-xl num text-ink">
         y ={" "}
         <span
-          className={`rounded px-1 motion-safe:transition-colors ${activo === "m" ? "bg-accent-suave" : ""}`}
+          className={`rounded-control px-1.5 motion-safe:transition-colors ${activo === "m" ? "bg-interactive-suave text-interactive-fuerte" : ""}`}
         >
           {formatoDecimalChileno(m)}
         </span>
         x +{" "}
         <span
-          className={`rounded px-1 motion-safe:transition-colors ${activo === "b" ? "bg-accent-suave" : ""}`}
+          className={`rounded-control px-1.5 motion-safe:transition-colors ${activo === "b" ? "bg-interactive-suave text-interactive-fuerte" : ""}`}
         >
           {formatoDecimalChileno(b)}
         </span>
@@ -208,8 +208,13 @@ export function GraficoPendiente({
           />
           Ver el cambio (Δx / Δy)
         </label>
+        {/* Variante texto y tamaño chico: resetear el gráfico no es una acción
+            del paso, es una del interactivo, y con el peso de un botón
+            secundario competía con "Siguiente paso". Se queda acá adentro, al
+            lado de lo que resetea. */}
         <Boton
-          variante="secundario"
+          variante="texto"
+          tamano="sm"
           onClick={volverAEmpezar}
           disabled={m === configM.valorInicial && b === configB.valorInicial}
         >

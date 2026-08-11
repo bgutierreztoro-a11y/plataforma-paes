@@ -10,6 +10,7 @@ import { temasCompletados } from "@/lib/estadoNodo";
 import { registrarEvento } from "@/lib/eventos";
 import { TOTAL_TEMAS } from "@/lib/modulos";
 import type { TemaDelCamino } from "@/lib/camino";
+import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 
 /**
  * Guion de tiempos de la celebración. Un solo lugar, en orden de lectura, para
@@ -126,7 +127,7 @@ export function CelebracionTema({
   if (!mostrar) return null;
 
   return (
-    <div className="fondo-cuadricula cuadricula-desvanecida flex min-h-full flex-1 flex-col items-center justify-center px-4 py-16">
+    <PantallaCentrada>
       <div className="w-full max-w-2xl text-center">
         <TrazoCompletandose />
 
@@ -137,10 +138,10 @@ export function CelebracionTema({
           className="entra-en-secuencia mt-10"
           style={{ ["--retraso" as string]: `${RETRASO.titulo}ms` }}
         >
-          <p className="text-sm font-medium uppercase tracking-wide text-ink-suave">
+          <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
             Tema completado
           </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 text-4xl font-semibold text-ink sm:text-5xl lg:text-6xl">
             {tema.nombre}
           </h1>
         </div>
@@ -159,8 +160,8 @@ export function CelebracionTema({
           </p>
 
           <p className="mt-8 text-sm text-ink-suave">
-            <span className="font-mono tabular-nums">{completados}</span> de{" "}
-            <span className="font-mono tabular-nums">{TOTAL_TEMAS}</span> unidades del
+            <span className="num">{completados}</span> de{" "}
+            <span className="num">{TOTAL_TEMAS}</span> unidades del
             temario M1
           </p>
         </div>
@@ -174,6 +175,6 @@ export function CelebracionTema({
           </EnlaceBoton>
         </div>
       </div>
-    </div>
+    </PantallaCentrada>
   );
 }

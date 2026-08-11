@@ -36,7 +36,7 @@ export function IlustracionPatrones() {
               x={x}
               y={Y_RECTA + 24}
               textAnchor="middle"
-              fontFamily="var(--font-mono)"
+              className="num"
               fontSize="12"
               fill="var(--color-ink)"
             >
@@ -71,7 +71,7 @@ export function IlustracionPatrones() {
               x={xMedio}
               y={Y_RECTA - 40}
               textAnchor="middle"
-              fontFamily="var(--font-mono)"
+              className="num"
               fontSize="11"
               fill="var(--color-accent-fuerte)"
             >

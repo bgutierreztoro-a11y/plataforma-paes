@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import { CaminoLecciones } from "@/components/camino/CaminoLecciones";
+import {
+  ContadorDePantalla,
+  TituloDePantalla,
+} from "@/components/navegacion/EncabezadoPantalla";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema } from "@/lib/estadoNodo";
@@ -26,42 +30,33 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
   return (
     <div className="min-h-full flex-1">
       {/* El tope sale de `--tope-nav`: 0 en móvil, donde la barra de navegación
-          va abajo, y 3.25rem en escritorio, donde la barra se pega arriba y la
-          franja tiene que quedar justo debajo en vez de tapada.
+          va abajo, y el alto real de la barra en escritorio, donde se pega
+          arriba y la franja tiene que quedar justo debajo en vez de tapada. El
+          número no se escribe: se deriva de las clases de la barra, en
+          app/globals.css.
 
-          Antes ese 3.25rem estaba escrito acá a mano. Desde que /camino apila
+          Antes había un `3.25rem` escrito acá a mano. Desde que /camino apila
           dos capas pegadas —su franja y las bandas de eje, que se suman con
           `calc`— el número vive en una variable, y tenerlo repetido en dos
           archivos es pedir que se separen el día que la barra cambie de alto. */}
       <header
-        className="sticky z-20 border-b border-border bg-surface/95 backdrop-blur-sm"
+        className="sticky z-20 border-b border-border bg-surface/80 backdrop-blur-md"
         style={{ top: "var(--tope-nav)" }}
       >
         <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 py-2 sm:px-6">
           <Link
             href="/camino"
             aria-label="Volver al camino"
-            className="flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta text-lg text-accent hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="-ml-2 flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta text-lg text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:bg-accent-suave hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
           >
             ←
           </Link>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-xs font-medium uppercase tracking-wide text-ink-tenue">
-              {tema.ejeNombre}
-            </p>
-            <h1 className="truncate text-base font-semibold tracking-tight text-ink sm:text-lg">
-              {tema.nombre}
-            </h1>
-          </div>
-          <p className="shrink-0 text-sm text-ink-suave">
-            <span className="font-mono tabular-nums">{avance.hechas}</span>
-            <span aria-hidden="true">/</span>
-            <span className="font-mono tabular-nums">{avance.total}</span>
-            <span className="sr-only">
-              {" "}
-              lecciones completadas de {avance.total}
-            </span>
-          </p>
+          <TituloDePantalla rotulo={tema.ejeNombre} titulo={tema.nombre} />
+          <ContadorDePantalla
+            hechas={avance.hechas}
+            total={avance.total}
+            descripcion={`lecciones completadas de ${avance.total}`}
+          />
         </div>
       </header>
 

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import type { ClerkAppearanceTheme } from "@clerk/shared/types";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Sans, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
 import { Navegacion } from "@/components/navegacion/Navegacion";
+import { PieLegal } from "@/components/ui/PieLegal";
 import "./globals.css";
 
 /**
@@ -96,22 +97,22 @@ const localizacion = {
  */
 const apariencia: ClerkAppearanceTheme = {
   variables: {
-    colorPrimary: "#1e4fd8", // --color-accent
+    colorPrimary: "#4640d6", // --color-accent (indigo-600)
     colorPrimaryForeground: "#ffffff", // texto sobre accent (Boton: text-white)
-    colorForeground: "#16213a", // --color-ink
-    colorMutedForeground: "#4b5c78", // --color-ink-suave
+    colorForeground: "#16142b", // --color-ink (ink-900)
+    colorMutedForeground: "#45435c", // --color-ink-suave (ink-600)
     colorBackground: "#ffffff", // --color-surface
     colorInput: "#ffffff", // --color-surface
-    colorInputForeground: "#16213a", // --color-ink
-    colorBorder: "#dce3ee", // --color-border
-    colorNeutral: "#16213a", // --color-ink: base de bordes/sombras/estados neutros
+    colorInputForeground: "#16142b", // --color-ink (ink-900)
+    colorBorder: "#e4e3ed", // --color-border (ink-200)
+    colorNeutral: "#16142b", // --color-ink: base de bordes/sombras/estados neutros
     colorDanger: "#b3261e", // --color-error
-    colorSuccess: "#146c43", // --color-success
-    colorRing: "#1e4fd8", // --color-accent: anillo de foco, igual que Boton (outline-accent)
-    fontFamily: "var(--font-geist-sans)", // --font-sans
-    fontFamilyButtons: "var(--font-geist-sans)", // --font-sans
+    colorSuccess: "#0e7c57", // --color-success
+    colorRing: "#4640d6", // --color-accent: anillo de foco, igual que Boton (outline-accent)
+    fontFamily: "var(--font-inter)", // --font-sans
+    fontFamilyButtons: "var(--font-inter)", // --font-sans
     fontSize: "1rem", // text-base, la escala de texto de la plataforma (Boton, labels)
-    borderRadius: "0.75rem", // --radius-tarjeta (0.75rem); literal para que Clerk derive sm/lg/xl
+    borderRadius: "0.625rem", // --radius-tarjeta → --radius-sm; literal para que Clerk derive sm/lg/xl
   },
   elements: {
     // El botón primario del formulario ("Continuar") debe leerse como un CTA
@@ -123,10 +124,13 @@ const apariencia: ClerkAppearanceTheme = {
     formButtonPrimary: {
       minHeight: "2.75rem", // min-h-11
       fontSize: "1rem", // text-base
-      fontWeight: 500, // font-medium
+      fontWeight: 600, // font-semibold
       textTransform: "none", // Boton no usa mayúsculas ni versalitas
       letterSpacing: "0",
-      boxShadow: "none", // el CTA de la plataforma es plano
+      // --shadow-e1: el CTA de la plataforma apoya, no es plano. Va en
+      // literal por lo mismo que los colores: Clerk no parsea var().
+      boxShadow:
+        "0 1px 2px rgb(22 20 43 / 0.04), 0 3px 12px rgb(22 20 43 / 0.05)",
     },
     // Oculta "Agregar correo electrónico" en UserProfile: el flujo de la
     // plataforma solo admite un correo por cuenta (es el identificador único
@@ -140,14 +144,37 @@ const apariencia: ClerkAppearanceTheme = {
   },
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/* Instrument Sans para los títulos, Inter para la lectura. El porqué de cada
+   una está escrito en app/globals.css, junto a los tokens --font-display y
+   --font-sans.
+
+   Ninguna de las dos lleva `weight`, y no es un olvido: declarar pesos
+   numéricos hace que next/font sirva instancias estáticas en vez de la fuente
+   variable, y con eso se pierden la cara cursiva y los ejes. Sin `weight`,
+   Instrument Sans conserva su rango 400–700 —de donde sale el `font-weight:
+   600` de los títulos— e Inter conserva las dos propiedades por las que se
+   eligió. */
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+  /* `style` hay que pedirlo: next/font trae solo la redonda si no se declara,
+     y sin esta línea el navegador fabricaría la cursiva inclinando la redonda.
+     Verificado en el navegador: sin ella `document.fonts` no lista ninguna
+     cara `italic`. */
+  style: ["normal", "italic"],
+  /* Igual que `style`: next/font recorta la fuente variable al eje de peso y
+     tira el resto si no se nombran. Sin esta línea el eje óptico viaja en los
+     metadatos pero no en el archivo, y `font-optical-sizing: auto` no tiene
+     sobre qué actuar. Verificado midiendo el ancho de una misma cadena con
+     `opsz` en sus dos extremos: sin `axes` daba idéntico. */
+  axes: ["opsz"],
 });
 
 export const metadata: Metadata = {
@@ -171,7 +198,7 @@ export default function RootLayout({
   return (
     <html
       lang="es-CL"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${instrumentSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans text-ink pb-14 sm:pb-0">
         {/* ClerkProvider no protege ni redirige nada por sí solo: solo publica
@@ -207,11 +234,9 @@ export default function RootLayout({
           <Navegacion />
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
-        <footer className="border-t border-border px-4 py-6 text-center text-xs text-ink-tenue">
-          Plataforma independiente, sin vínculo con DEMRE, la Universidad de
-          Chile ni ningún preuniversitario. &quot;PAES&quot; se usa solo para
-          describir el formato de los ítems.
-        </footer>
+        {/* Se oculta a sí mismo dentro de /leccion/[id], igual que Navegacion.
+            El texto vive en un solo archivo: ver components/ui/PieLegal.tsx. */}
+        <PieLegal />
       </body>
     </html>
   );

@@ -59,7 +59,7 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
           y={yAPixel(0) + 12}
           fontSize={9}
           textAnchor="middle"
-          className="fill-ink-suave font-mono tabular-nums"
+          className="fill-ink-suave num"
         >
           {n}
         </text>
@@ -71,7 +71,7 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
           y={yAPixel(n) + 3}
           fontSize={9}
           textAnchor="end"
-          className="fill-ink-suave font-mono tabular-nums"
+          className="fill-ink-suave num"
         >
           {n}
         </text>
@@ -81,8 +81,13 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
         y1={yAPixel(p1.y)}
         x2={xAPixel(p2.x)}
         y2={yAPixel(p2.y)}
-        stroke="var(--color-accent)"
-        strokeWidth={2.5}
+        /* La recta que los sliders mueven es el objeto manipulable de la
+           pantalla, así que va en el cian reservado y no en el azul de acción
+           (MASTER.md §2.1 y §3.3). Nivel "fuerte": es un trazo fino, y el cian
+           base da 2,5:1 contra blanco — por debajo del 3:1 que pide WCAG para
+           un objeto gráfico que hay que poder ver. */
+        stroke="var(--color-interactive-fuerte)"
+        strokeWidth={3}
         strokeLinecap="round"
       />
       {triangulo && (
@@ -110,7 +115,7 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
             y={yAPixel(triangulo.y0) - 6}
             fontSize={10}
             textAnchor="middle"
-            className="fill-ink font-mono tabular-nums"
+            className="fill-ink num"
           >
             {`Δx = ${triangulo.dx}`}
           </text>
@@ -119,7 +124,7 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
             y={(yAPixel(triangulo.y0) + yAPixel(triangulo.y1)) / 2}
             fontSize={10}
             textAnchor="start"
-            className="fill-ink font-mono tabular-nums"
+            className="fill-ink num"
           >
             {`Δy = ${triangulo.dy}`}
           </text>

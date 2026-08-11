@@ -6,10 +6,13 @@ import {
   PASO_FILA,
   PASO_FILA_META,
   RESERVA_TARJETA,
+  RESERVA_TARJETA_ESCRITORIO,
   altoDeElemento,
   desplazamientoVertical,
   desplazamientoDeNodo,
   tapariaUnaBanda,
+  alturaSegura,
+  alturaSeguraArriba,
   type ElementoColumna,
 } from "./geometriaCamino.ts";
 
@@ -24,7 +27,16 @@ import {
  */
 
 const nodo = (meta = false): ElementoColumna => ({ tipo: "nodo", meta });
-const encabezado = (): ElementoColumna => ({ tipo: "encabezado" });
+
+/** Una banda de eje. Por omisión **no** es un control: es el caso de un eje con
+ *  contenido (Números, Álgebra y funciones), que rinde un `<span>`. Los ejes
+ *  plegables —los únicos que rinden un `<button>` y por lo tanto los únicos que
+ *  pueden perder un clic— se piden con `banda()`. */
+const encabezado = (): ElementoColumna => ({ tipo: "encabezado", control: false });
+
+/** Una banda de eje **plegable**: un `<button>` que despliega sus unidades. Es
+ *  la única que hace voltear la tarjeta. */
+const banda = (): ElementoColumna => ({ tipo: "encabezado", control: true });
 
 /** Los `n` nodos normales seguidos que hacen falta para armar un caso. */
 const nodos = (n: number): ElementoColumna[] => Array.from({ length: n }, () => nodo());
@@ -155,24 +167,24 @@ describe("tapariaUnaBanda", () => {
    */
   test("la banda a dos elementos de distancia sí se tapa", () => {
     const columna: ElementoColumna[] = [
-      encabezado(),
+      encabezado(), // Números, con contenido
       ...nodos(3),
-      encabezado(),
+      encabezado(), // Álgebra y funciones, con contenido
       ...nodos(6),
-      encabezado(),
-      encabezado(),
+      banda(), // Geometría, plegable
+      banda(), // Probabilidad y estadística, plegable
     ];
     assert.equal(tapariaUnaBanda(columna, 9), true);
   });
 
   test("la banda inmediatamente siguiente se tapa", () => {
-    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo()], 0), true);
+    assert.equal(tapariaUnaBanda([nodo(), banda(), nodo()], 0), true);
   });
 
   /* Con tres filas de por medio (228px) la tarjeta ya no llega: voltearla ahí
      sería taparle el título a los nodos de arriba sin ganar nada. */
   test("una banda fuera del alcance de la tarjeta no cuenta", () => {
-    const columna = [...nodos(4), encabezado(), nodo()];
+    const columna = [...nodos(4), banda(), nodo()];
     assert.equal(tapariaUnaBanda(columna, 0), false);
     assert.equal(RESERVA_TARJETA < 4 * PASO_FILA, true);
   });
@@ -182,6 +194,66 @@ describe("tapariaUnaBanda", () => {
     assert.equal(tapariaUnaBanda([encabezado(), ...nodos(3)], 1), false);
   });
 
+  /**
+   * El caso que motivó la distinción: la banda de un eje **con contenido** es un
+   * `<span>`, no se come ningún clic, y taparla cuesta lo mismo que taparle el
+   * título a un nodo. Antes devolvía `true` y volteaba la tarjeta.
+   */
+  test("una banda que no es control no hace voltear", () => {
+    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo()], 0), false);
+  });
+
+  /**
+   * Y no solo no cuenta: **suma su alto y la caminata sigue**. Si en vez de eso
+   * se la salteara sin sumar, la tarjeta parecería llegar 44px más lejos de lo
+   * que llega y voltearía por una banda-control que en realidad no alcanza.
+   *
+   * Las distancias se miden desde el borde inferior del nodo activo.
+   *
+   * La primera afirmación fija que **no corta**: pasando por una banda-rótulo,
+   * 44 + 76 = 120 < 216, la banda-control del final sigue estando al alcance.
+   *
+   * La segunda fija que **suma**, y necesita dos bandas-rótulo para poder
+   * distinguirlo: 88 + 2×76 = 240 ≥ 216, la caminata se corta y la
+   * banda-control queda fuera. Sin sumar esos 88px daría 152 < 216 y esta
+   * misma columna diría `true`. Con una sola banda-rótulo no hay conteo de
+   * filas que separe los dos comportamientos —los 44px nunca cruzan la cota
+   * solos—, así que la columna es sintética a propósito: acá se verifica
+   * aritmética, y el caso real de /camino tiene su propio test más abajo.
+   */
+  test("una banda que no es control suma su alto y la caminata sigue", () => {
+    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo(), banda()], 0), true);
+    assert.equal(
+      tapariaUnaBanda([nodo(), encabezado(), encabezado(), nodo(), nodo(), banda()], 0),
+      false,
+    );
+  });
+
+  /**
+   * El caso real de /camino, con el nodo que la pantalla trae activo de
+   * entrada: "Enteros y racionales", índice 1, primer nodo del primer eje.
+   * Debajo van sus dos hermanos y después la banda de Álgebra —que tiene
+   * contenido y por lo tanto es un rótulo—. No hay que voltear: arriba solo hay
+   * 44px de columna y la tarjeta pide `RESERVA_TARJETA`, así que volteada se
+   * desborda por encima de la columna y termina debajo de la barra de
+   * navegación pegada.
+   */
+  test("el primer nodo del primer eje no voltea por la banda del eje siguiente", () => {
+    const columna: ElementoColumna[] = [
+      encabezado(), // Números
+      ...nodos(3), // Enteros y racionales, Porcentaje, Potencias y raíces
+      encabezado(), // Álgebra y funciones, con contenido
+      ...nodos(6),
+      banda(), // Geometría, plegable
+      banda(), // Probabilidad y estadística, plegable
+    ];
+    assert.equal(tapariaUnaBanda(columna, 1), false);
+
+    // Y el espacio que hay arriba es, en efecto, insuficiente: es la razón por
+    // la que voltear ahí era el problema y no la solución.
+    assert.equal(desplazamientoVertical(columna, 0) < RESERVA_TARJETA, true);
+  });
+
   test("el último elemento no tiene nada debajo", () => {
     const columna = [encabezado(), ...nodos(2)];
     assert.equal(tapariaUnaBanda(columna, columna.length - 1), false);
@@ -189,6 +261,110 @@ describe("tapariaUnaBanda", () => {
 
   test("índice inválido no explota", () => {
     assert.equal(tapariaUnaBanda([encabezado(), nodo()], -1), false);
+  });
+});
+
+describe("alturaSegura", () => {
+  /**
+   * La cota de esta función es `RESERVA_TARJETA_ESCRITORIO` (192, el alto real
+   * medido de la tarjeta entre 640 y 1440px) y no `RESERVA_TARJETA` (216,
+   * calibrada a 360px, donde el mínimo ni siquiera se aplica). Redondear desde
+   * la cota grande empujaba el borde libre un elemento más allá del necesario
+   * y ese sobrante se veía como aire dentro de la tarjeta.
+   */
+  test("la cota es la de escritorio, no la de móvil", () => {
+    assert.equal(RESERVA_TARJETA_ESCRITORIO < RESERVA_TARJETA, true);
+    assert.equal(alturaSegura(nodos(5), 4), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  /**
+   * El caso real que reveló que voltear no alcanza: con dos filas debajo del
+   * activo se suman 152px, todavía por debajo de la cota, así que hay que
+   * sumar la tercera entera. El alto seguro tiene que ser exactamente la suma
+   * de las tres —228— para que el borde libre de la tarjeta caiga en el borde
+   * inferior de la tercera y no a mitad de ella.
+   */
+  test("el resto se resuelve sumando el elemento entero, no redondeando", () => {
+    // `nodos(4)`: el activo (índice 0) más tres filas debajo, 76px cada una.
+    assert.equal(2 * PASO_FILA < RESERVA_TARJETA_ESCRITORIO, true);
+    assert.equal(alturaSegura(nodos(4), 0), 3 * PASO_FILA);
+  });
+
+  /** La columna se acaba antes de llegar a la cota: no queda nada que cortar,
+   *  así que el alto seguro es la cota misma y no lo poco que alcanzó a
+   *  sumar — no hay ninguna fila real después que necesite protección. */
+  test("la columna se acaba antes de la cota: el alto seguro es la cota", () => {
+    // Dos filas debajo suman 152 < 192 y no hay una tercera.
+    assert.equal(alturaSegura(nodos(3), 0), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  /** Una banda de eje cuenta con su propio alto, igual que un nodo: lo que
+   *  importa acá es no cortar ningún elemento, no distinguir tipos —esa
+   *  distinción es de `tapariaUnaBanda`, que decide si hay que taparla o no
+   *  del todo. */
+  test("una banda intercalada suma su propio alto, no el de una fila", () => {
+    const columna = [nodo(), nodo(), encabezado(), encabezado()];
+    // 76 (nodo1) + 44 (encabezado1) = 120 < 192, sigue sumando el segundo
+    // encabezado: 120 + 44 = 164 < 192, columna agotada → cae en la cota.
+    assert.equal(alturaSegura(columna, 0), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  /** El caso de /camino que motivó bajar la cota: el activo es "Enteros y
+   *  racionales" (índice 1) y debajo van sus dos hermanos y la banda de
+   *  Álgebra. 76 + 76 + 44 = 196, que cubre 192 justo donde termina el
+   *  contenido real de la tarjeta (188). Con la cota de 216 seguía hasta 272,
+   *  una fila más allá. */
+  test("el primer nodo del primer eje reserva 196 y no una fila de más", () => {
+    const columna: ElementoColumna[] = [
+      encabezado(),
+      ...nodos(3),
+      encabezado(),
+      ...nodos(6),
+      banda(),
+      banda(),
+    ];
+    assert.equal(alturaSegura(columna, 1), 2 * PASO_FILA + ALTO_ENCABEZADO_EJE);
+    assert.equal(alturaSegura(columna, 1), 196);
+  });
+
+  test("índice inválido: devuelve la cota", () => {
+    assert.equal(alturaSegura([encabezado(), nodo()], -1), RESERVA_TARJETA_ESCRITORIO);
+  });
+});
+
+describe("alturaSeguraArriba", () => {
+  /** Espejo del caso real de `alturaSegura`: tres nodos **arriba** del activo
+   *  (índice 3, el último de `nodos(4)`) piden el mismo alto seguro que hacia
+   *  abajo. Es la garantía que hacía falta cuando `voltear` cuelga la tarjeta
+   *  hacia arriba: sin esto, "Expresiones algebraicas" activo volteaba la
+   *  tarjeta y cortaba "Porcentaje" dos filas más arriba — medido en el
+   *  navegador real, no en la función pura. */
+  test("el resto hacia arriba pide la misma fila completa de más", () => {
+    assert.equal(alturaSeguraArriba(nodos(4), 3), 3 * PASO_FILA);
+  });
+
+  test("dos filas arriba no llegan a la cota: devuelve la cota", () => {
+    assert.equal(alturaSeguraArriba(nodos(3), 2), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  test("nada arriba del primer elemento: la cota, no cero", () => {
+    assert.equal(alturaSeguraArriba(nodos(5), 0), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  test("una banda arriba suma su propio alto", () => {
+    const columna = [encabezado(), encabezado(), nodo(), nodo()];
+    assert.equal(alturaSeguraArriba(columna, 3), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  test("índice inválido: devuelve la cota", () => {
+    assert.equal(
+      alturaSeguraArriba([encabezado(), nodo()], -1),
+      RESERVA_TARJETA_ESCRITORIO,
+    );
+    assert.equal(
+      alturaSeguraArriba([encabezado(), nodo()], 5),
+      RESERVA_TARJETA_ESCRITORIO,
+    );
   });
 });
 
