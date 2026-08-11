@@ -30,10 +30,12 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
   return (
     <div className="min-h-full flex-1">
       {/* El tope sale de `--tope-nav`: 0 en móvil, donde la barra de navegación
-          va abajo, y 3.25rem en escritorio, donde la barra se pega arriba y la
-          franja tiene que quedar justo debajo en vez de tapada.
+          va abajo, y el alto real de la barra en escritorio, donde se pega
+          arriba y la franja tiene que quedar justo debajo en vez de tapada. El
+          número no se escribe: se deriva de las clases de la barra, en
+          app/globals.css.
 
-          Antes ese 3.25rem estaba escrito acá a mano. Desde que /camino apila
+          Antes había un `3.25rem` escrito acá a mano. Desde que /camino apila
           dos capas pegadas —su franja y las bandas de eje, que se suman con
           `calc`— el número vive en una variable, y tenerlo repetido en dos
           archivos es pedir que se separen el día que la barra cambie de alto. */}

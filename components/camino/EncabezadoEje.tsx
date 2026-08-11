@@ -44,11 +44,11 @@ export function EncabezadoEje({
   expandido?: boolean;
   onAlternar?: () => void;
 }) {
-  /* El tope se acumula: `--tope-nav` es 0 en móvil (la barra va abajo) y
-     3.25rem en escritorio (la barra se pega arriba), y encima de eso va lo que
-     ya ocupe la franja fija de la pantalla. Sumarlo con `calc` en vez de
-     escribir el total a mano es lo que evita que las dos capas se pisen cuando
-     una cambie de alto.
+  /* El tope se acumula: `--tope-nav` es 0 en móvil (la barra va abajo) y el
+     alto real de la barra en escritorio (donde se pega arriba), y encima de eso
+     va lo que ya ocupe la franja fija de la pantalla. Sumarlo con `calc` en vez
+     de escribir el total a mano es lo que evita que las dos capas se pisen
+     cuando una cambie de alto.
 
      `z-20`: sobre los discos y los títulos (`z-10`), que tienen que pasar por
      debajo al hacer scroll, y bajo la franja de la pantalla y la tarjeta del

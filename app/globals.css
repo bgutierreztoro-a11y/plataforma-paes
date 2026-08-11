@@ -239,21 +239,36 @@
 
 /* Dónde empieza a pegarse lo que va fijo arriba.
  *
- * La barra de navegación es fija abajo en móvil y pegada arriba en escritorio,
- * donde mide 3.25rem. Todo lo demás que se pega —la franja de /camino, las
- * bandas de eje— tiene que arrancar debajo de ella o queda tapado.
+ * La barra de navegación es fija abajo en móvil y pegada arriba en escritorio.
+ * Todo lo demás que se pega —la franja de /camino, las bandas de eje— tiene que
+ * arrancar debajo de ella o queda tapado.
  *
  * Vive acá y no en una clase de Tailwind porque los offsets se **suman**: la
  * banda de un eje se pega bajo la franja, que a su vez se pega bajo la barra.
  * Con clases habría que escribir a mano cada total, y un `calc()` con valores
- * dinámicos no lo alcanza el JIT de Tailwind. */
+ * dinámicos no lo alcanza el JIT de Tailwind.
+ *
+ * **El valor de escritorio se deriva, no se estima.** Antes decía `3.25rem`
+ * (52px) escrito a ojo, y el alto real de la barra es 69px: la franja de
+ * /camino y las bandas de eje quedaban 17px por debajo del borde de la barra,
+ * con el eyebrow tapado. La barra no declara alto en escritorio (`sm:h-auto`,
+ * en components/navegacion/Navegacion.tsx), así que su alto es la suma de tres
+ * términos y hay que escribirlos como suma para que sigan al componente:
+ *
+ *   2.75rem  el hijo más alto del contenedor: `min-h-11` de cada destino
+ *            (CLASE_DESTINO). El slot de Cuenta mide `h-9` (2.25rem) y no manda.
+ *   1.5rem   el `sm:py-3` del contenedor interno, arriba y abajo (0.75 × 2).
+ *   1px      el `sm:border-b`, que también empuja hacia abajo lo que viene.
+ *
+ * Si alguno de esos tres cambia en Navegacion.tsx, este calc hay que
+ * actualizarlo: no hay medición en vivo que lo sincronice sola. */
 :root {
   --tope-nav: 0px;
 }
 
 @media (min-width: 640px) {
   :root {
-    --tope-nav: 3.25rem;
+    --tope-nav: calc(2.75rem + 1.5rem + 1px);
   }
 }
 
