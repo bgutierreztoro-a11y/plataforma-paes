@@ -149,9 +149,14 @@ export function CaminoVertical({
     });
   }
 
+  /* `control` es la única propiedad de una banda que la geometría necesita
+     saber, y sale de lo mismo que decide si `EncabezadoEje` rinde un `<button>`
+     o un `<span>`: `plegable`. Se resuelve acá y no dentro de la geometría
+     porque es este componente el que ya tiene la sección a mano — el módulo de
+     geometría es aritmética pura y no sabe qué es un eje. */
   const elementos: ElementoColumna[] = items.map((item) =>
     item.clase === "encabezado"
-      ? { tipo: "encabezado" }
+      ? { tipo: "encabezado", control: item.seccion.plegable === true }
       : { tipo: "nodo", meta: item.nodo.meta === true },
   );
 
@@ -206,14 +211,18 @@ export function CaminoVertical({
 
      - **La meta.** Es la última fila, así que no hay ningún nodo más abajo al
        que saltar para destaparla — queda inalcanzable.
-     - **Una banda de eje.** Es un control: la banda de un eje plegado abre sus
-       unidades. Taparla no la esconde, la deshabilita — el clic se lo come la
-       tarjeta. Lo detectó Playwright al intentar desplegar Geometría con la
+     - **Una banda de eje que sea un control.** La banda de un eje plegable abre
+       sus unidades. Taparla no la esconde, la deshabilita — el clic se lo come
+       la tarjeta. Lo detectó Playwright al intentar desplegar Geometría con la
        tarjeta encima.
 
      El segundo caso mira todo el alcance de la tarjeta y no solo el elemento
      siguiente: la tarjeta mide más que una fila, así que llega a una banda que
-     está dos elementos más abajo. Ver `tapariaUnaBanda`.
+     está dos elementos más abajo. Y mira solo las bandas plegables: la de un
+     eje con contenido es un rótulo, no un control, y taparla cuesta lo mismo
+     que taparle el título a un nodo. Contarlas todas volteaba la tarjeta en el
+     primer nodo de la columna, donde no hay 216px arriba y terminaba debajo de
+     la barra de navegación. Ver `tapariaUnaBanda`.
 
      **Que no corte un nodo a la mitad no depende de la dirección (Fase 4).**
      Se probó primero decidir un tercer motivo de volteo —"cortaría un

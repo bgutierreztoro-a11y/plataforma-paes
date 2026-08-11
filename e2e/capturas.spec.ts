@@ -419,7 +419,7 @@ test("caben 5 nodos sin scroll en /camino a 360px", async ({ page }, testInfo) =
   expect(caben.caben, `medición: ${JSON.stringify(caben)}`).toBeGreaterThanOrEqual(5);
 });
 
-test("la tarjeta activa nunca corta un nodo a la mitad (escritorio)", async ({
+test("la tarjeta activa nunca corta un nodo ni se desborda por arriba (escritorio)", async ({
   page,
 }, testInfo) => {
   /* El anclaje por nodo (`--anclaje`, `voltear`, `--alto-seguro`) vive solo
@@ -435,7 +435,28 @@ test("la tarjeta activa nunca corta un nodo a la mitad (escritorio)", async ({
      mismo test, sin `min-height`, el que encontró en el navegador real que
      voltear solo no alcanza — "Expresiones algebraicas" activo cortaba
      "Porcentaje" hacia arriba en vez de "Sistemas de ecuaciones 2×2" hacia
-     abajo. */
+     abajo.
+
+     **Dos ejes, no uno (2026-08-11).** Este test comparaba la tarjeta solo
+     contra las filas `ol li`, y por eso estuvo verde mientras "Enteros y
+     racionales" —el nodo que /camino trae activo de entrada— renderizaba su
+     tarjeta 172px por encima del inicio de la columna, debajo de la barra de
+     navegación pegada: 79px inalcanzables y el título tapado, medido a 1440px.
+     Ningún corte de fila, así que nada fallaba. El desborde por arriba es un
+     eje propio y se afirma aparte.
+
+     Se compara contra el **contenedor de la columna** y no contra la barra de
+     navegación a propósito: la tarjeta es `absolute` dentro de esa columna y
+     scrollea con ella, así que pasar por detrás de la barra al hacer scroll es
+     correcto y esperable. Lo que nunca es correcto es quedar por encima del
+     inicio de su propio contenedor — eso no depende del scroll, y es
+     exactamente lo que la empujaba contra el chrome pegado.
+
+     Cubre /camino, que es donde vive el volteo por banda. En /tema/[id] existe
+     el otro motivo de volteo —que el nodo siguiente sea la meta— y ahí el nodo
+     previo al cierre todavía se desborda ~64px por encima de su columna: no lo
+     tapa la barra, pero pisa la franja del tema. Queda fuera de este arreglo a
+     propósito; es una decisión de anclaje sin tomar, no un descuido. */
   test.skip(testInfo.project.name !== "escritorio", "el anclaje por nodo solo existe en sm:+");
 
   await sembrar(page, PROGRESO_LECCION_HECHA);
@@ -457,12 +478,12 @@ test("la tarjeta activa nunca corta un nodo a la mitad (escritorio)", async ({
     const aside = page.locator("aside");
     await expect(aside).toBeVisible();
 
-    const cortes = await page.evaluate(() => {
+    const medida = await page.evaluate(() => {
       const asideEl = document.querySelector("aside");
-      if (!asideEl) return [];
+      if (!asideEl) return { cortes: [], desborde: 0, nodo: "" };
       const cajaTarjeta = asideEl.getBoundingClientRect();
       const filas = Array.from(document.querySelectorAll("ol li"));
-      return filas.flatMap((fila) => {
+      const cortes = filas.flatMap((fila) => {
         const r = fila.getBoundingClientRect();
         const solape = Math.min(r.bottom, cajaTarjeta.bottom) - Math.max(r.top, cajaTarjeta.top);
         // Cubrir la fila entera (solape >= alto) es el comportamiento
@@ -473,9 +494,30 @@ test("la tarjeta activa nunca corta un nodo a la mitad (escritorio)", async ({
           ? [{ titulo: fila.textContent?.slice(0, 40), solape, alto: r.height }]
           : [];
       });
+
+      /* El contenedor de la columna es el `offsetParent` de la tarjeta: el
+         mismo `div.relative` contra el que se resuelve `--anclaje`. Se lo pide
+         al navegador en vez de escribir un selector para que no se despegue si
+         cambia el marcado. */
+      const columna = asideEl.offsetParent?.getBoundingClientRect();
+      const desborde = columna ? Math.max(0, columna.top - cajaTarjeta.top) : 0;
+
+      return {
+        cortes,
+        desborde,
+        nodo: asideEl.querySelector("p.font-semibold")?.textContent ?? "",
+      };
     });
 
-    expect(cortes, `nodo activo #${i}: ${JSON.stringify(cortes)}`).toEqual([]);
+    expect(
+      medida.cortes,
+      `nodo activo #${i} (${medida.nodo}): ${JSON.stringify(medida.cortes)}`,
+    ).toEqual([]);
+
+    expect(
+      medida.desborde,
+      `nodo activo #${i} (${medida.nodo}): la tarjeta arranca ${medida.desborde}px por encima del inicio de la columna, donde la tapa el chrome pegado`,
+    ).toBeLessThanOrEqual(0.5);
   }
 });
 

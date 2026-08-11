@@ -87,7 +87,16 @@ export const ALTO_FRANJA_CAMINO = 60;
  * pegado, y no hace falta medir nada en el navegador.
  */
 export type ElementoColumna =
-  | { tipo: "encabezado" }
+  | {
+      tipo: "encabezado";
+      /** La banda es un **control** y no un rótulo: la de un eje plegable es un
+       *  `<button>` que despliega sus unidades, la de un eje con contenido es un
+       *  `<span>`. Solo lo usa `tapariaUnaBanda`, y ahí es la diferencia entre
+       *  taparle el clic a un control y taparle el texto a un encabezado. El
+       *  alto es el mismo en los dos casos, así que el resto de la geometría no
+       *  lo mira. */
+      control: boolean;
+    }
   | { tipo: "nodo"; meta: boolean };
 
 /** Alto de un elemento de la columna, en píxeles. */
@@ -139,20 +148,34 @@ export const RESERVA_TARJETA = 216;
 
 /**
  * ¿La tarjeta, colgando hacia abajo del elemento `i`, alcanzaría a tapar una
- * banda de encabezado?
+ * banda que además es un **control**?
  *
  * Existe porque tapar una banda no es lo mismo que tapar un nodo. La tarjeta es
  * un panel flotante y taparle el título a los nodos de abajo es su
  * comportamiento buscado: basta tocar otro nodo para moverla. Una banda de eje
- * plegado, en cambio, es un **control** —abre sus unidades—, y taparlo no lo
+ * plegado, en cambio, es un control —abre sus unidades—, y taparlo no lo
  * esconde: se come el clic. Playwright lo encontró intentando desplegar
  * Geometría con la tarjeta encima.
+ *
+ * **Solo las bandas-control cuentan (2026-08-11).** La primera versión devolvía
+ * `true` ante cualquier `encabezado`, aunque su propio comentario ya decía que
+ * el motivo era el clic de un eje *plegable*. Los ejes con contenido —Números,
+ * Álgebra y funciones— rinden un `<span>`, no un `<button>`: no se comen ningún
+ * clic, y taparles el rótulo es del mismo orden que taparle el título a un
+ * nodo. Contarlos igual salía caro en el borde de arriba de la columna: con
+ * "Enteros y racionales" activo —el primer nodo del primer eje y el que
+ * /camino trae seleccionado de entrada— la banda de Álgebra forzaba un volteo
+ * hacia arriba, y ahí solo hay 44px de columna contra los 216 que pide la
+ * tarjeta. Se desbordaba 172px por encima de la columna, debajo de la barra de
+ * navegación pegada: medido a 1440px, 79px de tarjeta inalcanzables y el
+ * título tapado. Una banda que no es control ahora suma su alto y la caminata
+ * sigue, igual que un nodo.
  *
  * No alcanza con mirar el elemento inmediatamente siguiente, que es lo que
  * hacía la primera versión: la tarjeta mide más que una fila, así que llega a
  * una banda que está dos elementos más abajo. El caso real es exactamente ese
  * —el nodo activo es "Función lineal y afín", debajo va "Función cuadrática" y
- * recién después la banda de Geometría.
+ * recién después la banda de Geometría, que sí es plegable.
  */
 export function tapariaUnaBanda(
   elementos: readonly ElementoColumna[],
@@ -167,8 +190,9 @@ export function tapariaUnaBanda(
      llegando. */
   let techo = borde;
   for (let k = i + 1; k < elementos.length && techo < limite; k++) {
-    if (elementos[k].tipo === "encabezado") return true;
-    techo += altoDeElemento(elementos[k]);
+    const elemento = elementos[k];
+    if (elemento.tipo === "encabezado" && elemento.control) return true;
+    techo += altoDeElemento(elemento);
   }
   return false;
 }

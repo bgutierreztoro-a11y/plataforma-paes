@@ -26,7 +26,16 @@ import {
  */
 
 const nodo = (meta = false): ElementoColumna => ({ tipo: "nodo", meta });
-const encabezado = (): ElementoColumna => ({ tipo: "encabezado" });
+
+/** Una banda de eje. Por omisión **no** es un control: es el caso de un eje con
+ *  contenido (Números, Álgebra y funciones), que rinde un `<span>`. Los ejes
+ *  plegables —los únicos que rinden un `<button>` y por lo tanto los únicos que
+ *  pueden perder un clic— se piden con `banda()`. */
+const encabezado = (): ElementoColumna => ({ tipo: "encabezado", control: false });
+
+/** Una banda de eje **plegable**: un `<button>` que despliega sus unidades. Es
+ *  la única que hace voltear la tarjeta. */
+const banda = (): ElementoColumna => ({ tipo: "encabezado", control: true });
 
 /** Los `n` nodos normales seguidos que hacen falta para armar un caso. */
 const nodos = (n: number): ElementoColumna[] => Array.from({ length: n }, () => nodo());
@@ -157,24 +166,24 @@ describe("tapariaUnaBanda", () => {
    */
   test("la banda a dos elementos de distancia sí se tapa", () => {
     const columna: ElementoColumna[] = [
-      encabezado(),
+      encabezado(), // Números, con contenido
       ...nodos(3),
-      encabezado(),
+      encabezado(), // Álgebra y funciones, con contenido
       ...nodos(6),
-      encabezado(),
-      encabezado(),
+      banda(), // Geometría, plegable
+      banda(), // Probabilidad y estadística, plegable
     ];
     assert.equal(tapariaUnaBanda(columna, 9), true);
   });
 
   test("la banda inmediatamente siguiente se tapa", () => {
-    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo()], 0), true);
+    assert.equal(tapariaUnaBanda([nodo(), banda(), nodo()], 0), true);
   });
 
   /* Con tres filas de por medio (228px) la tarjeta ya no llega: voltearla ahí
      sería taparle el título a los nodos de arriba sin ganar nada. */
   test("una banda fuera del alcance de la tarjeta no cuenta", () => {
-    const columna = [...nodos(4), encabezado(), nodo()];
+    const columna = [...nodos(4), banda(), nodo()];
     assert.equal(tapariaUnaBanda(columna, 0), false);
     assert.equal(RESERVA_TARJETA < 4 * PASO_FILA, true);
   });
@@ -182,6 +191,66 @@ describe("tapariaUnaBanda", () => {
   test("sin bandas debajo, nunca voltea", () => {
     assert.equal(tapariaUnaBanda(nodos(5), 0), false);
     assert.equal(tapariaUnaBanda([encabezado(), ...nodos(3)], 1), false);
+  });
+
+  /**
+   * El caso que motivó la distinción: la banda de un eje **con contenido** es un
+   * `<span>`, no se come ningún clic, y taparla cuesta lo mismo que taparle el
+   * título a un nodo. Antes devolvía `true` y volteaba la tarjeta.
+   */
+  test("una banda que no es control no hace voltear", () => {
+    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo()], 0), false);
+  });
+
+  /**
+   * Y no solo no cuenta: **suma su alto y la caminata sigue**. Si en vez de eso
+   * se la salteara sin sumar, la tarjeta parecería llegar 44px más lejos de lo
+   * que llega y voltearía por una banda-control que en realidad no alcanza.
+   *
+   * Las distancias se miden desde el borde inferior del nodo activo.
+   *
+   * La primera afirmación fija que **no corta**: pasando por una banda-rótulo,
+   * 44 + 76 = 120 < 216, la banda-control del final sigue estando al alcance.
+   *
+   * La segunda fija que **suma**, y necesita dos bandas-rótulo para poder
+   * distinguirlo: 88 + 2×76 = 240 ≥ 216, la caminata se corta y la
+   * banda-control queda fuera. Sin sumar esos 88px daría 152 < 216 y esta
+   * misma columna diría `true`. Con una sola banda-rótulo no hay conteo de
+   * filas que separe los dos comportamientos —los 44px nunca cruzan la cota
+   * solos—, así que la columna es sintética a propósito: acá se verifica
+   * aritmética, y el caso real de /camino tiene su propio test más abajo.
+   */
+  test("una banda que no es control suma su alto y la caminata sigue", () => {
+    assert.equal(tapariaUnaBanda([nodo(), encabezado(), nodo(), banda()], 0), true);
+    assert.equal(
+      tapariaUnaBanda([nodo(), encabezado(), encabezado(), nodo(), nodo(), banda()], 0),
+      false,
+    );
+  });
+
+  /**
+   * El caso real de /camino, con el nodo que la pantalla trae activo de
+   * entrada: "Enteros y racionales", índice 1, primer nodo del primer eje.
+   * Debajo van sus dos hermanos y después la banda de Álgebra —que tiene
+   * contenido y por lo tanto es un rótulo—. No hay que voltear: arriba solo hay
+   * 44px de columna y la tarjeta pide `RESERVA_TARJETA`, así que volteada se
+   * desborda por encima de la columna y termina debajo de la barra de
+   * navegación pegada.
+   */
+  test("el primer nodo del primer eje no voltea por la banda del eje siguiente", () => {
+    const columna: ElementoColumna[] = [
+      encabezado(), // Números
+      ...nodos(3), // Enteros y racionales, Porcentaje, Potencias y raíces
+      encabezado(), // Álgebra y funciones, con contenido
+      ...nodos(6),
+      banda(), // Geometría, plegable
+      banda(), // Probabilidad y estadística, plegable
+    ];
+    assert.equal(tapariaUnaBanda(columna, 1), false);
+
+    // Y el espacio que hay arriba es, en efecto, insuficiente: es la razón por
+    // la que voltear ahí era el problema y no la solución.
+    assert.equal(desplazamientoVertical(columna, 0) < RESERVA_TARJETA, true);
   });
 
   test("el último elemento no tiene nada debajo", () => {
