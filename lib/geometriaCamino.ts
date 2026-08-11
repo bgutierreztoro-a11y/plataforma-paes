@@ -147,6 +147,35 @@ export function desplazamientoVertical(
 export const RESERVA_TARJETA = 216;
 
 /**
+ * La misma cota, para el alto reservado en **escritorio**.
+ *
+ * `RESERVA_TARJETA` está calibrada a 360px, que es el ancho donde la
+ * descripción más envuelve — y es el ancho donde la tarjeta va `fixed` al pie y
+ * no reserva nada. En escritorio la tarjeta es mucho más estable: la columna
+ * tiene `max-width` fijo (`ANCHO_COLUMNA`) y la canaleta también, así que entre
+ * 640px y 1440px la tarjeta mide entre 439 y 456 de ancho y **188px de alto en
+ * el peor caso** (título de dos líneas más contador). Medido en el navegador
+ * anulando el mínimo, en los dos extremos del rango.
+ *
+ * Reservar los 216 de móvil acá salía caro: `alturaSegura` redondea hacia
+ * arriba al siguiente borde de elemento, y esos 28px de más empujaban el
+ * redondeo un borde más allá del necesario. Con "Enteros y racionales" activo
+ * pedía 272 —tres filas y una banda— para un contenido de 188, y ese sobrante
+ * se veía como aire de sobra. Con 192 el redondeo cae en 196: la fila de
+ * Porcentaje, la de Potencias y la banda de Álgebra, que es exactamente donde
+ * termina el contenido.
+ *
+ * 192 son los 188 medidos más 4 de colchón. Es un margen chico a propósito: lo
+ * que protege del error no es el colchón sino que `alturaSegura` **siempre
+ * redondea hacia arriba**, así que el alto reservado nunca es menor que este
+ * número. Si el contenido de la tarjeta creciera por encima de 192 —un título
+ * que pase a tres líneas, una línea nueva en el panel—, la tarjeta se saldría
+ * de lo reservado y volvería a cortar una fila; lo atrapa el recorrido de los
+ * 16 nodos en `e2e/capturas.spec.ts`, que mide la tarjeta real.
+ */
+export const RESERVA_TARJETA_ESCRITORIO = 192;
+
+/**
  * ¿La tarjeta, colgando hacia abajo del elemento `i`, alcanzaría a tapar una
  * banda que además es un **control**?
  *
@@ -214,27 +243,31 @@ export function tapariaUnaBanda(
  * dónde cuelgue la tarjeta es el que depende del **alto real de la tarjeta**,
  * no de su posición. Por eso esta función no devuelve un booleano para
  * decidir un volteo: devuelve un alto, para usarlo como `min-height` de la
- * tarjeta. El contenido real (204,5–216px medidos) casi siempre entra en ese
- * alto con aire de sobra; solo en el caso más ancho de descripción lo llena.
- * Lo que se ve de más es una tarjeta con algo de espacio en blanco al fondo,
- * nunca un título cortado — el costo es visual, acotado y previsible; el
- * corte no lo era.
+ * tarjeta. Sobra siempre algo: el alto pedido cae en un borde de elemento y el
+ * contenido no mide eso, así que la diferencia se ve como aire dentro de la
+ * tarjeta. Es geometría y no un descuido —con filas de 76px y contenido de
+ * 165–188 no existe un alto sin sobrante—, pero el sobrante sí depende de qué
+ * cota se use para redondear: por eso acá va `RESERVA_TARJETA_ESCRITORIO` (192,
+ * el alto real medido en este rango de anchos) y no `RESERVA_TARJETA` (216,
+ * calibrada a 360px, donde este mínimo ni siquiera se aplica). Redondear desde
+ * 216 empujaba el corte un borde más allá del necesario y hacía el aire mucho
+ * más visible: 272 en vez de 196 con "Enteros y racionales" activo.
  *
  * Camina igual que `tapariaUnaBanda` (sumando alto de elemento en elemento
- * mientras no se alcance `RESERVA_TARJETA`) pero el resultado es la suma
- * misma, no una pregunta sobre ella — por construcción cae siempre exacto en
- * el borde inferior del último elemento sumado.
+ * mientras no se alcance la cota) pero el resultado es la suma misma, no una
+ * pregunta sobre ella — por construcción cae siempre exacto en el borde
+ * inferior del último elemento sumado, y nunca por debajo de la cota.
  */
 export function alturaSegura(elementos: readonly ElementoColumna[], i: number): number {
-  if (i < 0) return RESERVA_TARJETA;
+  if (i < 0) return RESERVA_TARJETA_ESCRITORIO;
   const borde = desplazamientoVertical(elementos, i);
   let techo = borde;
-  for (let k = i + 1; k < elementos.length && techo - borde < RESERVA_TARJETA; k++) {
+  for (let k = i + 1; k < elementos.length && techo - borde < RESERVA_TARJETA_ESCRITORIO; k++) {
     techo += altoDeElemento(elementos[k]);
   }
   /* La columna se acabó antes de llegar a la cota: no queda nada más que
      cortar, así que el piso es la cota misma y no lo que alcanzó a sumar. */
-  return Math.max(RESERVA_TARJETA, techo - borde);
+  return Math.max(RESERVA_TARJETA_ESCRITORIO, techo - borde);
 }
 
 /**
@@ -246,7 +279,7 @@ export function alturaSegura(elementos: readonly ElementoColumna[], i: number): 
  * recorrer hacia abajo desde el índice espejado en la columna al revés.
  */
 export function alturaSeguraArriba(elementos: readonly ElementoColumna[], i: number): number {
-  if (i < 0 || i >= elementos.length) return RESERVA_TARJETA;
+  if (i < 0 || i >= elementos.length) return RESERVA_TARJETA_ESCRITORIO;
   const invertida = [...elementos].reverse();
   return alturaSegura(invertida, elementos.length - 1 - i);
 }

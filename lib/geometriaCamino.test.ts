@@ -6,6 +6,7 @@ import {
   PASO_FILA,
   PASO_FILA_META,
   RESERVA_TARJETA,
+  RESERVA_TARJETA_ESCRITORIO,
   altoDeElemento,
   desplazamientoVertical,
   desplazamientoDeNodo,
@@ -265,29 +266,36 @@ describe("tapariaUnaBanda", () => {
 
 describe("alturaSegura", () => {
   /**
-   * El caso real que reveló que voltear no alcanza: con tres nodos seguidos
-   * debajo del activo, 216 (`RESERVA_TARJETA`) cae 64px dentro del tercero.
-   * El alto seguro tiene que ser exactamente la suma de los tres —228, no
-   * 216— para que el borde libre de la tarjeta caiga en el borde inferior
-   * del tercero y no a mitad de él.
+   * La cota de esta función es `RESERVA_TARJETA_ESCRITORIO` (192, el alto real
+   * medido de la tarjeta entre 640 y 1440px) y no `RESERVA_TARJETA` (216,
+   * calibrada a 360px, donde el mínimo ni siquiera se aplica). Redondear desde
+   * la cota grande empujaba el borde libre un elemento más allá del necesario
+   * y ese sobrante se veía como aire dentro de la tarjeta.
    */
-  test("el resto de 64px se resuelve sumando el elemento entero, no redondeando", () => {
-    // `nodos(4)`: el activo (índice 0) más tres filas debajo, 76px cada una.
-    assert.equal(alturaSegura(nodos(4), 0), 3 * PASO_FILA);
+  test("la cota es la de escritorio, no la de móvil", () => {
+    assert.equal(RESERVA_TARJETA_ESCRITORIO < RESERVA_TARJETA, true);
+    assert.equal(alturaSegura(nodos(5), 4), RESERVA_TARJETA_ESCRITORIO);
   });
 
-  /** Con solo dos filas debajo (152px), ya alcanzan y sobran para cubrir
-   *  `RESERVA_TARJETA`: el alto seguro es la cota misma, sin sumar una
-   *  tercera fila que no hace falta. */
-  test("dos filas ya cubren la cota: el alto seguro es la cota, no una fila de más", () => {
-    assert.equal(alturaSegura(nodos(3), 0), RESERVA_TARJETA);
+  /**
+   * El caso real que reveló que voltear no alcanza: con dos filas debajo del
+   * activo se suman 152px, todavía por debajo de la cota, así que hay que
+   * sumar la tercera entera. El alto seguro tiene que ser exactamente la suma
+   * de las tres —228— para que el borde libre de la tarjeta caiga en el borde
+   * inferior de la tercera y no a mitad de ella.
+   */
+  test("el resto se resuelve sumando el elemento entero, no redondeando", () => {
+    // `nodos(4)`: el activo (índice 0) más tres filas debajo, 76px cada una.
+    assert.equal(2 * PASO_FILA < RESERVA_TARJETA_ESCRITORIO, true);
+    assert.equal(alturaSegura(nodos(4), 0), 3 * PASO_FILA);
   });
 
   /** La columna se acaba antes de llegar a la cota: no queda nada que cortar,
    *  así que el alto seguro es la cota misma y no lo poco que alcanzó a
    *  sumar — no hay ninguna fila real después que necesite protección. */
   test("la columna se acaba antes de la cota: el alto seguro es la cota", () => {
-    assert.equal(alturaSegura(nodos(5), 4), RESERVA_TARJETA);
+    // Dos filas debajo suman 152 < 192 y no hay una tercera.
+    assert.equal(alturaSegura(nodos(3), 0), RESERVA_TARJETA_ESCRITORIO);
   });
 
   /** Una banda de eje cuenta con su propio alto, igual que un nodo: lo que
@@ -296,13 +304,31 @@ describe("alturaSegura", () => {
    *  del todo. */
   test("una banda intercalada suma su propio alto, no el de una fila", () => {
     const columna = [nodo(), nodo(), encabezado(), encabezado()];
-    // 76 (nodo1) + 44 (encabezado1) = 120 < 216, sigue sumando el segundo
-    // encabezado: 120 + 44 = 164 < 216, columna agotada → cae en la cota.
-    assert.equal(alturaSegura(columna, 0), RESERVA_TARJETA);
+    // 76 (nodo1) + 44 (encabezado1) = 120 < 192, sigue sumando el segundo
+    // encabezado: 120 + 44 = 164 < 192, columna agotada → cae en la cota.
+    assert.equal(alturaSegura(columna, 0), RESERVA_TARJETA_ESCRITORIO);
+  });
+
+  /** El caso de /camino que motivó bajar la cota: el activo es "Enteros y
+   *  racionales" (índice 1) y debajo van sus dos hermanos y la banda de
+   *  Álgebra. 76 + 76 + 44 = 196, que cubre 192 justo donde termina el
+   *  contenido real de la tarjeta (188). Con la cota de 216 seguía hasta 272,
+   *  una fila más allá. */
+  test("el primer nodo del primer eje reserva 196 y no una fila de más", () => {
+    const columna: ElementoColumna[] = [
+      encabezado(),
+      ...nodos(3),
+      encabezado(),
+      ...nodos(6),
+      banda(),
+      banda(),
+    ];
+    assert.equal(alturaSegura(columna, 1), 2 * PASO_FILA + ALTO_ENCABEZADO_EJE);
+    assert.equal(alturaSegura(columna, 1), 196);
   });
 
   test("índice inválido: devuelve la cota", () => {
-    assert.equal(alturaSegura([encabezado(), nodo()], -1), RESERVA_TARJETA);
+    assert.equal(alturaSegura([encabezado(), nodo()], -1), RESERVA_TARJETA_ESCRITORIO);
   });
 });
 
@@ -313,26 +339,32 @@ describe("alturaSeguraArriba", () => {
    *  hacia arriba: sin esto, "Expresiones algebraicas" activo volteaba la
    *  tarjeta y cortaba "Porcentaje" dos filas más arriba — medido en el
    *  navegador real, no en la función pura. */
-  test("el resto de 64px hacia arriba pide la misma fila completa de más", () => {
+  test("el resto hacia arriba pide la misma fila completa de más", () => {
     assert.equal(alturaSeguraArriba(nodos(4), 3), 3 * PASO_FILA);
   });
 
-  test("dos filas arriba ya cubren la cota", () => {
-    assert.equal(alturaSeguraArriba(nodos(3), 2), RESERVA_TARJETA);
+  test("dos filas arriba no llegan a la cota: devuelve la cota", () => {
+    assert.equal(alturaSeguraArriba(nodos(3), 2), RESERVA_TARJETA_ESCRITORIO);
   });
 
   test("nada arriba del primer elemento: la cota, no cero", () => {
-    assert.equal(alturaSeguraArriba(nodos(5), 0), RESERVA_TARJETA);
+    assert.equal(alturaSeguraArriba(nodos(5), 0), RESERVA_TARJETA_ESCRITORIO);
   });
 
   test("una banda arriba suma su propio alto", () => {
     const columna = [encabezado(), encabezado(), nodo(), nodo()];
-    assert.equal(alturaSeguraArriba(columna, 3), RESERVA_TARJETA);
+    assert.equal(alturaSeguraArriba(columna, 3), RESERVA_TARJETA_ESCRITORIO);
   });
 
   test("índice inválido: devuelve la cota", () => {
-    assert.equal(alturaSeguraArriba([encabezado(), nodo()], -1), RESERVA_TARJETA);
-    assert.equal(alturaSeguraArriba([encabezado(), nodo()], 5), RESERVA_TARJETA);
+    assert.equal(
+      alturaSeguraArriba([encabezado(), nodo()], -1),
+      RESERVA_TARJETA_ESCRITORIO,
+    );
+    assert.equal(
+      alturaSeguraArriba([encabezado(), nodo()], 5),
+      RESERVA_TARJETA_ESCRITORIO,
+    );
   });
 });
 
