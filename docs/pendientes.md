@@ -1046,3 +1046,85 @@ mueve a la descripción del `catalogoErrores` correspondiente.
   únicos que la tienen; el resto de los ítems PAES del repo es 100% texto. Sin
   representación no hay nada que redibujar, e inventarle una a un ítem es
   trabajo de contenido, no de render.
+
+## 🟡 Rediseño de UI (Fases 1-6 + fixes de nav y tarjeta): tres deudas que quedan abiertas (2026-08-11)
+
+Mergeado a producción en `f84ebb1` (commits `b6c20d4`, `a92fd79`, `868978d`,
+`0d4694e` sobre las Fases 1-6). Quedan tres cosas sin resolver, ninguna
+bloqueante.
+
+### 1. El aire dentro de `TarjetaActivo` en /camino: mitigado, no resuelto
+
+`alturaSegura` (`lib/geometriaCamino.ts`) reserva el alto de la tarjeta
+redondeando hacia arriba al siguiente borde de fila o banda de la columna,
+porque su único trabajo es garantizar que el borde libre de la tarjeta nunca
+corte una fila de abajo. El contenido real de la tarjeta mide 165–188px; los
+bordes disponibles en la retícula son múltiplos de `PASO_FILA` (76px) más, a
+veces, `ALTO_ENCABEZADO_EJE` (44px). Como esos números no coinciden con el
+contenido, siempre sobra algo — es geometría, no un descuido, y quedó
+demostrado el mismo día midiendo los 16 nodos uno por uno.
+
+El commit `0d4694e` bajó la cota de redondeo de 216 (`RESERVA_TARJETA`,
+calibrada a 360px/móvil) a 192 (`RESERVA_TARJETA_ESCRITORIO`, medida en el
+rango real de escritorio). Mejora 8 de los 16 nodos —los que tienen una banda
+de eje (44px) cerca abajo, el aire baja de 55–67px a 17–29px— pero deja los
+otros 8 exactamente igual, en 45px: los que tienen tres filas planas de 76px
+debajo y ninguna banda cerca, porque el borde disponible más cercano por
+encima de 165–188 sigue siendo 228 (3×76) tanto con la cota vieja como con la
+nueva. Verificado visualmente el mismo día: 45px se lee como padding
+generoso en las tarjetas de módulos "Aún no disponible" (6 de los 8 casos),
+no como el hueco muerto de antes del fix.
+
+Se evaluaron tres caminos para resolverlo de raíz, no solo mitigarlo:
+
+1. **Tarjeta en línea que empuja las filas de abajo en vez de flotar sobre
+   ellas** (la solución real). Sin borde libre sobre la columna no hay corte
+   posible que prevenir, así que el alto de la tarjeta puede ser el de su
+   contenido y el aire desaparece. Costo: la columna se reacomoda en cada
+   selección de nodo, cambia la densidad de la pantalla, y es un cambio de
+   mecanismo — no un ajuste de constante. **Es la opción recomendada, para
+   una fase aparte.**
+2. Bajar `PASO_FILA` para que la retícula sea más fina y algún borde caiga
+   más cerca del contenido. Descartado: toca la densidad de toda la pantalla
+   del camino (el objetivo de "6 nodos visibles sin scroll en 360×800" de
+   MASTER.md §3.2 depende de ese número) para resolver un problema que es
+   solo de la tarjeta flotante.
+3. Forzar la descripción a 3 líneas en vez de 2 para que el contenido real se
+   acerque más a 228px. Descartado: es maquillar una restricción de layout
+   tocando contenido/copy en vez de resolver el layout, y solo mejora los 6
+   casos peores sin eliminarlos.
+
+**Gatillo para retomar:** cuando se abra una fase de UI en /camino, no
+antes — no es un hotfix.
+
+### 2. /tema/[id]: el nodo previo al cierre se desborda 64px sobre la franja del tema
+
+Mismo mecanismo que el bug de la nav que corrigió `a92fd79`
+(`tapariaUnaBanda` dejó de voltear la tarjeta por bandas que no son
+control), pero acá el volteo tiene otra causa: el nodo siguiente es la meta
+(`voltear = true` cuando `siguiente.meta === true` en
+`CaminoVertical.tsx`), no una banda. Con el nodo previo al cierre activo, la
+tarjeta cuelga hacia arriba y se desborda 64px por encima del inicio de su
+columna, pisando la franja fija de /tema/[id] — no la barra de navegación,
+ahí no llega. Documentado en el test "la tarjeta activa nunca corta un nodo
+ni se desborda por arriba (escritorio)" de `e2e/capturas.spec.ts`, que cubre
+/camino y explícitamente no /tema/[id] por esto.
+
+**Gatillo para retomar:** junto con el punto 1, si se toca el mecanismo de
+anclaje de la tarjeta — es la misma familia de problema.
+
+### 3. 15 tests e2e fallan desde antes del merge del rediseño, no son regresión
+
+`git stash` + corrida limpia contra `94e40ef` (Fase 6, previo a los 4 fixes
+del 2026-08-11) confirmó el mismo set de 15 fallas, mismos nombres, con y
+sin los fixes de nav/tarjeta. Incluyen `e2e/capturas.spec.ts` ("camino con
+la lección a medias", "camino", "un nodo bloqueado dice por qué...", "el
+segundo nivel trata igual a una lección bloqueada", "abierta sin avanzar /
+terminada bajo el umbral: las cuatro superficies dicen lo mismo", "tema con
+los nodos enlazados") y `e2e/interactivo-dos-variables.spec.ts` ("predice,
+mueve, comprueba, confirma"), en los dos proyectos (`movil` y `escritorio`)
+donde aplica. No se diagnosticaron uno por uno.
+
+**Gatillo para retomar:** antes de la próxima fase de contenido o UI que
+toque estas pantallas — corren en cada `npx playwright test` y hoy ensucian
+la señal real de cualquier cambio nuevo.
