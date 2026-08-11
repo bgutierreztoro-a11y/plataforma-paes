@@ -585,8 +585,27 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
        nodo —y por lo tanto el riesgo de cortar uno— solo existe en escritorio
        (`sm:` y más ancho, ver el comentario sobre `voltear` más arriba). En
        móvil la tarjeta es `fixed` al pie y forzarle un alto mínimo ahí solo
-       le agregaría aire de sobra sin motivo. */
-    <Tarjeta nivel="flotante" className="p-3 sm:min-h-[var(--alto-seguro)]">
+       le agregaría aire de sobra sin motivo.
+
+       `sm:flex sm:flex-col sm:justify-center` es lo que hace que ese alto
+       mínimo se lea como aire y no como un hueco. `alturaSegura` reserva por
+       borde de fila, no por contenido, así que casi siempre pide más de lo que
+       el contenido mide —272px contra ~204 en el caso de "Enteros y
+       racionales"—. Sin esto, el sobrante caía entero debajo del botón y la
+       tarjeta parecía cortada al medio. Centrando, `justify-center` reparte los
+       mismos ~68px en partes iguales arriba y abajo: el padding crece por los
+       dos lados y el bloque queda con aire generoso. No cambia el alto de la
+       tarjeta —el mínimo sigue siendo el mismo número— así que la garantía de
+       `alturaSegura` no se toca: es exactamente el espacio reservado, repartido
+       distinto.
+
+       Va en `sm:` por lo mismo que el `min-h`: en móvil no hay alto mínimo, no
+       hay sobrante que repartir, y estas clases serían inertes. Dejarlas fuera
+       del breakpoint mantiene el layout de móvil idéntico al de antes. */
+    <Tarjeta
+      nivel="flotante"
+      className="p-3 sm:flex sm:min-h-[var(--alto-seguro)] sm:flex-col sm:justify-center"
+    >
       {/* Interlineado apretado en toda la tarjeta: acá no se lee prosa, se
           consulta un panel, y su alto está tasado por RESERVA_TARJETA. Los
           interlineados cómodos de la escala tipográfica son para el texto de
