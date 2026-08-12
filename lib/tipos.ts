@@ -226,7 +226,6 @@ export interface ErrorCatalogado {
 interface ContenidoBase {
   id: string;
   titulo: string;
-  subtitulo?: string;
   estado: Estado;
   proveniencia: Proveniencia;
   checklistOriginalidad?: ChecklistOriginalidad;

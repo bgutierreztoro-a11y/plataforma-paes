@@ -1,8 +1,7 @@
 {
   "tipo": "leccion",
   "id": "enteros-problemas-en-contexto",
-  "titulo": "Todo junto, en la vida real",
-  "subtitulo": "Problemas que involucren el conjunto de los números enteros y racionales en diversos contextos",
+  "titulo": "Problemas que involucren el conjunto de los números enteros y racionales en diversos contextos",
   "objetivo": "Comparar temperaturas bajo cero y calcular variaciones de temperatura que combinan enteros negativos y fracciones, aplicando que entre dos negativos el de mayor valor absoluto es el MENOR, y que ese mismo número puede representar la temperatura más fría sin ser matemáticamente mayor.",
   "tiempoEstimadoMin": 22,
   "prerrequisitos": [

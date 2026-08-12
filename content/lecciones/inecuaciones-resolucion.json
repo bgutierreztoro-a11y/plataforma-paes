@@ -1,8 +1,7 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-resolucion",
-  "titulo": "No un valor, sino un tramo",
-  "subtitulo": "Resolución de inecuaciones lineales",
+  "titulo": "Resolución de inecuaciones lineales",
   "objetivo": "Resolver inecuaciones lineales de una incógnita aplicando la misma operación a ambos lados; reconocer y justificar que multiplicar o dividir por un número negativo invierte el sentido de la desigualdad; representar el conjunto solución en la recta numérica; y distinguir el borde cerrado (≤, ≥) del abierto (<, >).",
   "tiempoEstimadoMin": 24,
   "prerrequisitos": [
