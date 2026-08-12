@@ -139,6 +139,7 @@ export function validarDatos(data) {
 
   if (tipo === 'leccion') {
     if (data.pasos === undefined) errores.push('faltan los 10 pasos');
+    if (!esTexto(data?.subtitulo)) errores.push('falta subtitulo');
     if (!esTexto(data?.objetivo)) errores.push('falta objetivo');
     if (!(Number.isFinite(data?.tiempoEstimadoMin) && data.tiempoEstimadoMin > 0)) errores.push('falta tiempoEstimadoMin (> 0)');
     if (!Array.isArray(data?.prerrequisitos)) errores.push('falta prerrequisitos[]');

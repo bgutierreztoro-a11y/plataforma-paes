@@ -9,6 +9,7 @@
     "tipo": { "enum": ["leccion", "diagnostico", "cierre"] },
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, p. ej. l2-pendiente-intercepto" },
     "titulo": { "type": "string", "minLength": 1 },
+    "subtitulo": { "type": "string", "minLength": 1, "description": "Una línea, lenguaje técnico: la unidad temática DEMRE y qué se aprende. Lo lee el profesor al revisar; distinto de 'titulo', que es el gancho para el estudiante." },
     "estado": {
       "enum": ["borrador", "revision", "publicable"],
       "description": "Nivel de madurez. Solo 'publicable' puede mostrarse a estudiantes."

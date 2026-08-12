@@ -2,6 +2,7 @@
   "tipo": "leccion",
   "id": "lineal-modelamiento-paes",
   "titulo": "Del enunciado al modelo",
+  "subtitulo": "Problemas que involucren función lineal y afín en diversos contextos",
   "objetivo": "Traducir un enunciado en lenguaje natural a una función afín: decidir qué cantidad del enunciado es la tasa de cambio y cuál el valor inicial, escribir el modelo y = mx + n, interpretar de vuelta qué significa cada parámetro en el contexto, y evaluar si un modelo propuesto representa o no la situación.",
   "tiempoEstimadoMin": 25,
   "prerrequisitos": [

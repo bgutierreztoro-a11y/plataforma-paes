@@ -1,7 +1,8 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-problemas",
-  "titulo": "Lo que el cartel realmente dice",
+  "titulo": "Todos los números que sirven",
+  "subtitulo": "Problemas que involucren inecuaciones lineales en diversos contextos",
   "objetivo": "Traducir enunciados en lenguaje natural a una inecuación lineal, distinguiendo la dirección (techo o piso) de la inclusión del extremo; resolverla con el método de la lección anterior; e interpretar el conjunto solución de vuelta en el contexto, incluyendo decidir cuándo la respuesta debe ser entera y en qué dirección se redondea.",
   "tiempoEstimadoMin": 26,
   "prerrequisitos": [

@@ -2,6 +2,7 @@
   "tipo": "leccion",
   "id": "lineal-patrones-de-cambio",
   "titulo": "El patrón que se repite",
+  "subtitulo": "Concepto de función lineal y función afín",
   "objetivo": "Detectar si una situación o tabla tiene cambio constante mirando las diferencias entre valores consecutivos; predecir valores futuros usando la estructura 'valor inicial + cambio por paso × cantidad de pasos'; y distinguir cambio constante de otros tipos de crecimiento.",
   "tiempoEstimadoMin": 22,
   "prerrequisitos": [
