@@ -61,11 +61,11 @@ Nunca sacrifiques una superior por una inferior. En la práctica: código aburri
 - Estados del contenido = niveles de exigencia del validador: `borrador` (estructura básica, libertad para redactar) → `revision` (contrato completo: todos los campos, feedback en cada distractor) → `publicable` (checklist de originalidad + revisión matemática aprobadas, sin placeholders).
 - Eventos PostHog, nombres exactos y nada más: `leccion_inicio` (leccion_id), `paso_inicio` (paso, leccion_id), `item_respuesta` (item_id, correcta, intento, tiempo_ms), `pista_usada` (paso), `leccion_fin` (leccion_id), `solicitud_siguiente_leccion` (leccion_id). Cualquier cambio a esta lista se hace primero aquí.
 - Sin dependencias nuevas sin justificar qué incertidumbre reducen. Preferir cero dependencias.
-- Matemática: toda solución se verifica recalculando desde cero. Antes de dar por lista una lección: `/revision-matematica` y `/revision-originalidad`. Un error matemático publicado destruye la confianza del mercado.
+- Matemática: toda solución se verifica recalculando desde cero. `/revision-matematica` y `/revision-originalidad` describen el checklist, pero sus subagentes no están disponibles en este entorno — la ejecución real es manual: Benja y el profesor recalculan a mano (revisión matemática); colisión de dominio se verifica con `node scripts/consultar-fuentes.mjs "términos"` corrido por Benja, salida cruda sin reformular (revisión de originalidad). Un error matemático publicado destruye la confianza del mercado.
 - Commits pequeños y frecuentes, mensajes en español. `npm run validar` y `npm run lint` en verde antes de cada commit.
 
 ## Flujo de sesión
 1. Abre cada sesión con `/sesion`: si no hay entregable concreto ni dato nuevo, la sesión se cancela (regla de uso del MOS).
 2. Features: primero plan mode, revisar el plan, luego ejecutar.
-3. Contenido nuevo: `/nueva-leccion` → redactar → `/revision-matematica` → `/revision-originalidad` → publicable.
+3. Contenido nuevo: `/nueva-leccion` → redactar (verificando contexto con `consultar-fuentes.mjs` antes de comprometerlo) → revisión matemática manual (Benja + profesor) → checklist de originalidad firmado a mano → publicable.
 4. `/clear` entre tareas no relacionadas.
