@@ -150,10 +150,19 @@ export function esPublicable(contenido: { estado: Estado }): boolean {
  * compilador impide escribir un id que no esté en `IDS_LECCION`, pero no sabe
  * si ese archivo existe ni si alguien lo dejó huérfano.
  *
- * Se verifica en las dos direcciones porque los dos errores son igual de
- * silenciosos: un id declarado que no existe pinta un nodo hacia un 404, y una
- * lección real que ningún tema reclama simplemente desaparece del camino sin
- * que nada falle.
+ * **Solo se verifica una dirección: disco → registro.** Un archivo real que
+ * ningún tema reclama desaparece del camino sin que nada falle, así que sigue
+ * siendo error. La dirección contraria —un id declarado sin archivo en disco—
+ * dejó de serlo cuando el registro pasó a declarar las 48 lecciones del
+ * temario (16 módulos × 3) teniendo solo 9 escritas: un id sin archivo es una
+ * lección *planeada*, y su módulo se muestra como `sin-contenido` en el
+ * camino. `leccionesDelTema()` en `lib/camino.ts` ya los salta, y
+ * `temasConNodo()` deja esos módulos fuera de `generateStaticParams`.
+ *
+ * Lo que se pierde: un typo dentro de `IDS_LECCION` ya no truena acá, se lee
+ * como lección planeada. Sigue cubierto por el otro lado —`EJES` es
+ * `as const satisfies`, así que un id que no esté en `IDS_LECCION` no
+ * compila— y por `docs/mapa-modulos-m1.md`, que es la fuente única de nombres.
  *
  * Lanza en vez de advertir: esto corre al construir el camino, así que una
  * desincronización rompe el build en lugar de publicar un temario con hoyos.
@@ -163,11 +172,6 @@ export function verificarRegistroDeTemas(): void {
   const declarados = new Set<string>(IDS_LECCION);
   const problemas: string[] = [];
 
-  for (const id of declarados) {
-    if (!enDisco.has(id)) {
-      problemas.push(`"${id}" está en IDS_LECCION pero no existe content/lecciones/${id}.json`);
-    }
-  }
   for (const id of enDisco) {
     if (!declarados.has(id)) {
       problemas.push(`content/lecciones/${id}.json existe pero no está en IDS_LECCION`);
