@@ -49,7 +49,7 @@ export const IDS_LECCION = [
   "enteros-operar-y-ordenar",
   "enteros-operar-y-comparar",
   "enteros-problemas-en-contexto",
-  "porcentaje-cartel",
+  "porcentaje-concepto",
   "porcentaje-rebaja-doble",
   "porcentaje-volver-atras",
   "potencias-multiplicar-corto",
@@ -194,7 +194,7 @@ export const EJES = [
         objetivo:
           "Calcular descuentos, aumentos e IVA de cabeza, y notar cuándo un 20% no es lo que parece.",
         lecciones: [
-          "porcentaje-cartel",
+          "porcentaje-concepto",
           "porcentaje-rebaja-doble",
           "porcentaje-volver-atras",
         ],

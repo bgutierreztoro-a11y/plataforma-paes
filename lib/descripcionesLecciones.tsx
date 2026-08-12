@@ -74,6 +74,11 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
     descripcion: "Compara temperaturas bajo cero y calcula variaciones que combinan enteros y fracciones.",
     Ilustracion: IlustracionPlano,
   },
+  "porcentaje-concepto": {
+    descripcion:
+      "Descubre que sacar un porcentaje es multiplicar por un número fijo, moviendo un grupo de estudiantes y viendo qué se mantiene igual.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

@@ -66,10 +66,10 @@ describe("descripcionesLecciones: cobertura del catálogo", () => {
     );
   });
 
-  test("el catálogo cubre exactamente las 10 lecciones que hoy existen", () => {
+  test("el catálogo cubre exactamente las 11 lecciones que hoy existen", () => {
     // Ancla el número para que agregar contenido nuevo sin su copy de interfaz
     // se note acá y no en producción, donde el fallback es silencioso.
-    assert.equal(leccionesEnDisco().length, 10);
-    assert.equal(clavesDelCatalogo().length, 10);
+    assert.equal(leccionesEnDisco().length, 11);
+    assert.equal(clavesDelCatalogo().length, 11);
   });
 });

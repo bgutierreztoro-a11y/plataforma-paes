@@ -1128,3 +1128,65 @@ donde aplica. No se diagnosticaron uno por uno.
 **Gatillo para retomar:** antes de la próxima fase de contenido o UI que
 toque estas pantallas — corren en cada `npx playwright test` y hoy ensucian
 la señal real de cualquier cambio nuevo.
+
+## 🟡 Deuda detectada al escribir la L1 de Porcentaje (2026-08-11)
+
+Los tres puntos salieron de la preparación de `content/lecciones/porcentaje-concepto.json`
+(recorrer el contrato, el esqueleto y los contextos ya usados). Ninguno bloqueaba
+esa lección, así que se registran acá sin resolverlos.
+
+### 1. `contextosNumericos` faltante en dos lecciones publicables
+
+`lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` **no
+declaran el campo**, pero usan al menos 10 contextos: bidón que se llena, ahorro
+de Camila y Diego, páginas de Nicolás, impresora por página, taxímetro, población
+de bacterias, estampillas de Martina, fichas de juego de mesa, latas de reciclaje
+y huerta escolar con plantines.
+
+**Por qué importa:** el campo existe para que una lección nueva no repita un
+contexto ya usado. Hoy el inventario declarado son 73 contextos en 7 archivos, y
+esos 10 quedan fuera — quien consulte el campo va a creer que están libres. Al
+escribir la L1 de Porcentaje hubo que abrir las dos lecciones y extraerlos a
+mano; sin ese paso extra, el dominio agrícola (huerta escolar / plantines) se
+habría reusado sin que nada avisara.
+
+**Gatillo para retomar:** antes de escribir la siguiente lección de cualquier
+módulo, o al tocar cualquiera de esas dos por otro motivo.
+
+### 2. Descalce entre los 2 puntos DEMRE de Porcentaje y las 3 lecciones planeadas
+
+`docs/temario-demre-m1-2027.md` lista **dos** puntos para Porcentaje:
+«Concepto y cálculo de porcentaje» y «Problemas que involucren porcentaje en
+diversos contextos». `docs/mapa-modulos-m1.md` declara **tres** lecciones.
+
+La L1 (`porcentaje-concepto`) cubre el primer punto exactamente. Falta decidir
+cómo se reparte el segundo entre L2 (`porcentaje-rebaja-doble`, hoy titulada
+«Porcentaje aplicado sucesivamente en contextos de precio») y L3
+(`porcentaje-volver-atras`, «Cálculo del valor original a partir de un
+porcentaje») — ninguno de esos dos títulos aparece literal en el temario.
+
+**Por qué importa:** los títulos son el nombre técnico DEMRE y se auditan contra
+el temario. Dos lecciones con título que no calza con ningún punto del temario es
+justo lo que la decisión de «un solo nombre, el auditable» quería evitar.
+
+**Gatillo para retomar:** antes de escribir la L2 de Porcentaje.
+
+### 3. `content/lecciones/_esqueleto.json` desactualizado respecto al schema
+
+La plantilla declara formas de bloque que el contrato vigente rechaza:
+
+- `"tipo": "interactivo"` — no existe en el schema; el tipo válido es
+  `interactivoSlider`, y además exige `variante` y `variables`.
+- `"tipo": "pistas"` con la clave `pistas: []` — el schema pide
+  `condicionActivacion` y `niveles[]`, y tiene `additionalProperties: false`.
+- `"tipo": "pregunta"` con `contenido` — el schema pide `enunciado` y
+  `alternativas` (formato A–D).
+
+**Por qué importa:** los archivos que empiezan con `_` no se validan, así que
+la plantilla puede divergir del contrato sin que `npm run validar` diga nada.
+Quien parta de ella escribiendo una lección nueva produce un archivo que falla
+al subirlo a `revision`. Para `porcentaje-concepto.json` se siguió el schema
+directamente y se ignoró el esqueleto.
+
+**Gatillo para retomar:** antes de la próxima lección que alguien escriba
+partiendo de la plantilla, o al tocar el schema otra vez.

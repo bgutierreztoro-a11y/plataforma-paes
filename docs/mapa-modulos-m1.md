@@ -22,13 +22,21 @@ un profesor puede auditar contra el temario.
   `— sin archivo —` significa que el id está declarado y planificado, pero el
   JSON todavía no existe.
 
-> **Los ids no siempre se parecen a su título.** Varios slugs (`porcentaje-cartel`,
-> `cuadratica-sube-y-baja`, `posicion-caja-que-resume`…) se acuñaron cuando cada
-> lección iba a llevar un nombre lúdico, y se conservan: el id es un
-> identificador opaco y estable, y renombrarlo cambiaría archivos, URLs y el
-> registro sin ganar nada. No es una inconsistencia que haya que arreglar.
+> **Los ids no siempre se parecen a su título.** Varios slugs
+> (`sistemas-dos-historias`, `cuadratica-sube-y-baja`, `posicion-caja-que-resume`,
+> `datos-grafico-puede-mentir`…) se acuñaron cuando cada lección iba a llevar un
+> nombre lúdico, y se conservan: el id es un identificador opaco y estable, y
+> renombrarlo cambiaría archivos, URLs y el registro sin ganar nada. No es una
+> inconsistencia que haya que arreglar.
+>
+> La excepción es un id que todavía no tiene archivo y cuyo slug alude a un
+> motivo ya usado por otra lección: ahí sí conviene renombrarlo antes de escribir
+> el JSON, porque no hay nada que romper. Pasó con `porcentaje-cartel` → 
+> `porcentaje-concepto` el 2026-08-11: el motivo «cartel» ya estructura dos pasos
+> de `inecuaciones-problemas`, y el contenido real de la lección resultó ser una
+> encuesta de asistencia, no un cartel.
 
-**Declarar no es escribir.** Los 48 ids están en el registro; 9 tienen archivo.
+**Declarar no es escribir.** Los 48 ids están en el registro; 10 tienen archivo.
 Un id sin archivo no rompe nada: `verificarRegistroDeTemas()` lo deja pasar como
 lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 `/camino`, fuera de `generateStaticParams`. Ver `lib/estadoModulo.ts`.
@@ -40,7 +48,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | # | Eje | Módulo (nombre DEMRE) | id de tema | Estado |
 |---|---|---|---|---|
 | 1 | Números | Enteros y racionales | `enteros-y-racionales` | **completo** |
-| 2 | Números | Porcentaje | `porcentaje` | sin contenido |
+| 2 | Números | Porcentaje | `porcentaje` | en preparación |
 | 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | sin contenido |
 | 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | sin contenido |
 | 5 | Álgebra y funciones | Proporcionalidad | `proporcionalidad` | sin contenido |
@@ -56,7 +64,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-3 completos · 13 sin contenido · 9 de 48 lecciones escritas.
+3 completos · 1 en preparación · 12 sin contenido · 10 de 48 lecciones escritas.
 
 Los `id` de tema **no** cambian aunque cambie el `nombre`: son rutas
 (`/tema/{id}`, `/cierre/{id}`) y renombrarlas rompe enlaces sin ganancia.
@@ -79,7 +87,7 @@ Cierre: `cierre-enteros-racionales`.
 
 | id | Título | Estado |
 |---|---|---|
-| `porcentaje-cartel` | Concepto y cálculo de porcentaje | — sin archivo — |
+| `porcentaje-concepto` | Concepto y cálculo de porcentaje | borrador |
 | `porcentaje-rebaja-doble` | Porcentaje aplicado sucesivamente en contextos de precio | — sin archivo — |
 | `porcentaje-volver-atras` | Cálculo del valor original a partir de un porcentaje | — sin archivo — |
 

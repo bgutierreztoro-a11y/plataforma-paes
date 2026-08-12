@@ -1,0 +1,611 @@
+{
+  "tipo": "leccion",
+  "id": "porcentaje-concepto",
+  "titulo": "Concepto y cálculo de porcentaje",
+  "objetivo": "Calcular el porcentaje de una cantidad multiplicándola por el factor decimal correspondiente, explicar por qué un mismo porcentaje aplicado a cantidades distintas da resultados distintos, y distinguir un aumento o una baja «de un p%» de un cambio «a un p%».",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "Multiplicación de un número entero por un decimal",
+    "Lectura de una fracción como parte de un total"
+  ],
+  "conceptos": [
+    "porcentaje como factor multiplicativo",
+    "conversión de porcentaje a decimal",
+    "proporcionalidad respecto del total",
+    "aumento y disminución porcentual"
+  ],
+  "estado": "borrador",
+  "_notasInternas": [
+    "L1 del módulo Porcentaje. Como L1 del módulo, este archivo aloja el catalogoErrores COMPLETO de la unidad: porcentaje-concepto (L2) y la lección de problemas (L3) referencian estos ids vía errorCatalogado y no definen errores propios.",
+    "Marco pedagógico (no negociable, fijado antes de redactar): el porcentaje se descubre como OPERADOR MULTIPLICATIVO, no como regla de tres memorizada. El estudiante llega por sí mismo a que «30% de X» equivale a «0,30 · X» observando un patrón en el paso 5. La definición formal (30% = 30/100 = 0,30) aparece recién en el paso 6.",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: PENDIENTE. No se ejecutó scripts/consultar-fuentes.mjs. Según CLAUDE.md («Aislamiento de fuentes externas»), el hilo que redacta contenido NUNCA corre ese script ni lee fuentes-analisis-aisladas/ por ningún medio propio, y el subagente consulta-fuentes no está disponible en este entorno. La verificación queda POSTERGADA, no sustituida: debe correrla Benja fuera de sesión (mecanismo 2) sobre los términos del contexto núcleo antes de subir este archivo de 'borrador'. Por eso checklistOriginalidad está en false.",
+    "REVISIÓN MATEMÁTICA: PENDIENTE. Todos los cálculos de este archivo fueron verificados recalculando desde cero durante la redacción (ver _notasInternas de cada paso), pero eso NO es la revisión independiente que exige el schema: la hacen Benja y el profesor a mano. revisionMatematica.aprobada queda en false.",
+    "Contexto elegido tras descartar el dominio agrícola: lineal-pendiente-e-intercepto.json ya usa 'huerta escolar / plantines por sembrar' en un ítem PAES y l0-demo.json usa un vivero, así que 'semillas que germinan' habría caído en la misma familia. También se descartó el motivo 'cartel', con 20 apariciones en inecuaciones-problemas.json. El dominio encuesta/asistencia escolar da cero apariciones en el contenido existente.",
+    "Se evitó a propósito todo contexto de precio, descuento o rebaja: según docs/mapa-modulos-m1.md, ese dominio queda reservado para la L2 del módulo ('Porcentaje aplicado sucesivamente en contextos de precio'). El catálogo de errores sí describe el error del descuento en términos comerciales, porque es la forma en que el estudiante lo va a encontrar en la PAES, pero ningún enunciado de esta lección usa ese contexto."
+  ],
+  "contextosNumericos": [
+    "curiosidad (Paso 1): dos grupos de 20 y 40 estudiantes, 30% camina al colegio en ambos → 6 y 12",
+    "problema (Paso 2): comparación de proporciones entre 6 de 20 y 12 de 40 (misma proporción)",
+    "pensar (Paso 3): 30% de 60 = 18",
+    "descubrimiento (Paso 5, insight fijado): 30% aplicado a 20/30/40/50/60 → 6/9/12/15/18; el cociente es siempre 0,30. Micro-pregunta de cierre: factor que multiplica a 350 para dar su 30% → 0,3",
+    "generalizacion (Paso 6): 45% de 80 = 36",
+    "practica (Paso 7): 25% de 64 = 16; 40% de 30 = 12 (verdadero/falso); distinción «aumentó un 30%» vs «aumentó a 30%» sin cálculo",
+    "aplicacion (Paso 8): 15% de 120 = 18 (taller de teatro)",
+    "itemsPAES item-1 (resolver): 35% de 240 = 84; complemento 240 × 0,65 = 156",
+    "itemsPAES item-2 (modelar): 150 aumentado un 40% = 210; aumento solo = 60; conversión errada 150 × 1,04 = 156",
+    "itemsPAES item-3 (argumentar): 80 disminuido un 25% = 60; lectura errada «bajó al 25%» = 20; resta fija 80 − 25 = 55"
+  ],
+  "catalogoErrores": [
+    {
+      "id": "porcentaje-error-1",
+      "descripcion": "Confundir el porcentaje del CAMBIO con el porcentaje que QUEDA: leer «30% de descuento» como «queda al 30% del precio» (cuando queda el 70%), o «bajó un 25%» como «bajó al 25%». El estudiante aplica el porcentaje enunciado al total en vez de aplicar su complemento."
+    },
+    {
+      "id": "porcentaje-error-2",
+      "descripcion": "Tratar el porcentaje como una cantidad fija en vez de una proporción del total: sumar o restar el número del porcentaje directamente (150 + 40 en vez de 150 × 1,40; 80 − 25 en vez de 80 × 0,75), o creer que «el 30%» significa siempre «30 unidades», sin importar cuál sea el total."
+    },
+    {
+      "id": "porcentaje-error-3",
+      "descripcion": "Convertir mal el porcentaje a decimal: multiplicar por el número del porcentaje sin dividir por 100 (×30 en vez de ×0,30), o correr la coma de más (40% como 0,04 en vez de 0,40; 30% como 3 en vez de 0,3)."
+    },
+    {
+      "id": "porcentaje-error-4",
+      "descripcion": "No distinguir «aumentó UN p%» de «aumentó A p%»: la primera expresión suma el p% al total original (factor 1 + p/100), la segunda lo reemplaza por el p% del original (factor p/100). Distinto de porcentaje-error-1, que confunde el cambio con su complemento dentro de una misma lectura."
+    },
+    {
+      "id": "porcentaje-error-5",
+      "descripcion": "Entregar solo la parte porcentual cuando la pregunta pide el total después del cambio: calcular correctamente el 40% de 150 (=60) y responder 60 en vez de 210. El cálculo intermedio está bien; falta el paso de recomponer el total."
+    }
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "El mismo 30%, dos números distintos",
+      "_notasInternas": [
+        "Gancho: el mismo porcentaje sobre totales distintos da cantidades distintas. Ataca de entrada porcentaje-error-2 (porcentaje como cantidad fija) sin nombrarlo todavía.",
+        "No se corrige la predicción acá. La corrección llega en el mismo paso, en el bloque de texto, porque el dato es verificable de inmediato y el objetivo es abrir la pregunta, no sostener el suspenso.",
+        "Verificación: 30% de 20 = 20 × 0,30 = 6. 30% de 40 = 40 × 0,30 = 12."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "En dos talleres de un colegio se preguntó lo mismo: ¿cómo llegas al colegio?\n\n| Taller | Estudiantes |\n|--------|-------------|\n| Taller de música | 20 |\n| Taller de teatro | 40 |\n\nEn los dos talleres, el 30% respondió que camina.\n\nSin calcular todavía: ¿caminan la misma cantidad de estudiantes en los dos talleres?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, en los dos caminan 30",
+            "Sí, la misma cantidad, aunque no sé cuánta",
+            "No, en el taller de teatro caminan más"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En el taller de música caminan **6**. En el de teatro, **12**.\n\nEl porcentaje era idéntico —30% en los dos— y las cantidades salieron distintas. El doble de estudiantes, el doble de caminantes.\n\nEso es lo raro del porcentaje y lo que lo hace útil: no es un número de personas. Es una instrucción sobre qué hacer con el total. En esta lección vas a descubrir exactamente cuál es esa instrucción."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿En cuál taller camina una proporción mayor?",
+      "_notasInternas": [
+        "El problema fuerza a comparar proporciones, no cantidades absolutas. El estudiante todavía no tiene la herramienta formal; se apoya en la intuición de 'parte del total'.",
+        "Verificación: 6 de 20 = 6/20 = 0,3. 12 de 40 = 12/40 = 0,3. Iguales."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ya sabemos los números:\n\n| Taller | Estudiantes | Caminan |\n|--------|-------------|---------|\n| Música | 20 | 6 |\n| Teatro | 40 | 12 |\n\nEn el taller de teatro caminan más personas (12 contra 6). Pero la pregunta es otra:\n\n¿En cuál de los dos talleres los que caminan son una **parte mayor del total**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En el taller de música",
+              "esCorrecta": false,
+              "feedback": "Fíjate en qué parte del total representan. En música, 6 de 20: si partieras el taller en 20 partes iguales, los caminantes ocupan 6. En teatro, 12 de 40. ¿Esas dos partes son distintas o son la misma medida escrita con otros números?"
+            },
+            {
+              "id": "b",
+              "texto": "En el taller de teatro",
+              "esCorrecta": false,
+              "feedback": "Caminan más personas en teatro, eso es cierto. Pero también hay más estudiantes en total. Compara cada cantidad con SU total: 6 de 20 y 12 de 40. Si duplicas tanto los caminantes como el total, ¿cambió la parte que representan?"
+            },
+            {
+              "id": "c",
+              "texto": "Es la misma parte en los dos",
+              "esCorrecta": true,
+              "feedback": "Exacto. 6 de 20 y 12 de 40 son la misma parte del total: en ambos casos, poco menos de un tercio. Por eso los dos talleres tenían el mismo 30%, aunque las cantidades fueran distintas. El porcentaje mide la parte, no la cantidad."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Un tercer taller, más grande",
+      "_notasInternas": [
+        "Espacio de intento antes de entregar la herramienta. El 60 se elige porque es el triple de 20: el estudiante puede llegar contando (6 × 3) o descubriendo el atajo multiplicativo, y las dos rutas son válidas en este punto.",
+        "Verificación: 30% de 60 = 60 × 0,30 = 18. Ruta alternativa: 60 es 3 veces 20, y 6 × 3 = 18. ✓",
+        "Verificación de los distractores: creer que 30% = 30 personas → 30. Multiplicar sin convertir: 60 × 30 = 1.800. Repetir el resultado del taller de teatro sin recalcular → 12."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Se suma un tercer taller a la encuesta:\n\n| Taller | Estudiantes | Caminan |\n|--------|-------------|---------|\n| Música | 20 | 6 |\n| Teatro | 40 | 12 |\n| Deportes | 60 | ? |\n\nEn el taller de deportes también camina el 30%. ¿Cuántos estudiantes caminan?",
+          "campos": [
+            {
+              "id": "caminanDeportes",
+              "etiqueta": "Estudiantes que caminan (taller de deportes)",
+              "respuestaCorrecta": 18,
+              "unidad": "estudiantes"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "caminanDeportes",
+              "valorObtenido": 30,
+              "mensaje": "«El 30%» no significa «30 estudiantes». Si significara eso, en el taller de música también caminarían 30 — y ahí solo hay 20 personas en total. El porcentaje siempre se calcula sobre el total de cada grupo.",
+              "errorCatalogado": "porcentaje-error-2"
+            },
+            {
+              "campoId": "caminanDeportes",
+              "valorObtenido": 1800,
+              "mensaje": "Multiplicaste 60 × 30. Pero fíjate en el tamaño del resultado: te dio más caminantes que estudiantes hay en todo el colegio. El 30% tiene que ser una parte de 60, así que el resultado tiene que ser menor que 60.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "caminanDeportes",
+              "valorObtenido": 12,
+              "mensaje": "Ese es el resultado del taller de teatro, que tenía 40 estudiantes. Deportes tiene 60. Como el total cambió, la cantidad de caminantes también cambia, aunque el porcentaje sea el mismo.",
+              "errorCatalogado": "porcentaje-error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Compara con lo que ya sabes: 20 estudiantes → 6 caminan; 40 estudiantes → 12 caminan. El total de deportes es 60. ¿Qué relación hay entre 20 y 60? Aplícale esa misma relación al 6."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el taller de deportes",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El total de deportes (60) es el triple del total de música (20). Si el porcentaje es el mismo en los dos, ¿qué le tiene que pasar a la cantidad de caminantes?"
+            },
+            {
+              "nivel": 2,
+              "texto": "En música caminaban 6 de 20. Multiplica ambos números por 3: obtienes «? de 60». Ese ? es tu respuesta."
+            },
+            {
+              "nivel": 3,
+              "texto": "6 × 3 = 18. Así que en el taller de deportes caminan 18 de 60. Comprueba que la parte se mantiene: 18 de 60 es la misma proporción que 6 de 20."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El número que no cambia nunca",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN. Insight que el estudiante construye solo: al cambiar el total, lo que se mantiene fijo no es cuánto se SUMA, sino por cuánto se MULTIPLICA. Ese factor fijo (0,30) ES el 30%.",
+        "Mecánica aprobada antes de redactar: slider de una variable. El control editable es el tamaño del grupo (20→60); el porcentaje queda fijo en 30 y NO es manipulable (editable: false). En pantalla, tres columnas que se recalculan solas; la tercera —el cociente— nunca cambia. exploracionMinima: 4 obliga a probar cuatro tamaños antes de avanzar, para que el patrón se vea y no se adivine.",
+        "La definición 30% = 30/100 = 0,30 NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que el cociente es siempre 0,30.",
+        "Verificación de la tabla completa del slider: 20 × 0,30 = 6 (6/20 = 0,30); 30 × 0,30 = 9 (9/30 = 0,30); 40 × 0,30 = 12 (12/40 = 0,30); 50 × 0,30 = 15 (15/50 = 0,30); 60 × 0,30 = 18 (18/60 = 0,30). Los cinco tamaños dan cantidades enteras: elegidos así a propósito, para que ningún decimal distraiga del patrón.",
+        "Verificación de la micro-pregunta de cierre: 350 × 0,3 = 105. El campo pide el FACTOR (0,3), no el resultado (105); los distractores 30, 3 y 105 cubren los tres desvíos previsibles."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de tocar nada. Vas a poder cambiar el tamaño del grupo encuestado, con el porcentaje siempre fijo en 30%.\n\nSi el grupo pasa de 20 a 40 estudiantes, ¿qué le pasa a la cantidad que camina?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sube siempre la misma cantidad, sin importar el tamaño",
+            "Se duplica, igual que el grupo",
+            "Se queda igual: el porcentaje no cambió"
+          ]
+        },
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "instruccion": "Mueve el control del tamaño del grupo y mira las tres columnas. Dos de ellas cambian. Una no cambia nunca. Encuentra cuál es y qué valor tiene.",
+          "variables": [
+            {
+              "nombre": "Tamaño del grupo encuestado",
+              "min": 20,
+              "max": 60,
+              "valorInicial": 20,
+              "editable": true
+            },
+            {
+              "nombre": "Porcentaje que camina al colegio (%)",
+              "min": 30,
+              "max": 30,
+              "valorInicial": 30,
+              "editable": false
+            }
+          ],
+          "exploracionMinima": 4,
+          "feedbackExploracionInsuficiente": "Todavía no has probado suficientes tamaños como para estar seguro de que hay un patrón. Prueba al menos cuatro distintos —por ejemplo 20, 30, 40 y 60— y anota qué pasa con la tercera columna en cada uno."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esto es lo que aparece al recorrer el control:\n\n| Grupo | Caminan | Caminan ÷ Grupo |\n|-------|---------|-----------------|\n| 20 | 6 | 0,30 |\n| 30 | 9 | 0,30 |\n| 40 | 12 | 0,30 |\n| 50 | 15 | 0,30 |\n| 60 | 18 | 0,30 |\n\nLas dos primeras columnas no paran de cambiar. La tercera no se mueve: **0,30 siempre**.\n\nY eso responde la pregunta del principio. Lo que se mantiene fijo cuando cambia el total no es cuánto se suma —de 20 a 30 estudiantes se sumaron 3 caminantes, de 30 a 60 se sumaron 9—, sino **por cuánto hay que multiplicar**. Ese número fijo es 0,30.\n\nO sea: calcular «el 30% de algo» es multiplicar ese algo por 0,30. Nada más."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos que el patrón funciona fuera de la tabla, con un número que nunca apareció.\n\n¿Por qué número hay que multiplicar 350 para obtener su 30%?\n\n(Te pedimos el multiplicador, no el resultado.)",
+          "campos": [
+            {
+              "id": "factorDel30",
+              "etiqueta": "Número por el que hay que multiplicar",
+              "respuestaCorrecta": 0.3,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "factorDel30",
+              "valorObtenido": 30,
+              "mensaje": "Multiplicar por 30 agranda el número 30 veces: 350 × 30 = 10.500. Pero el 30% de 350 tiene que ser una PARTE de 350, así que el multiplicador tiene que ser menor que 1. Mira la tercera columna de la tabla otra vez.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "factorDel30",
+              "valorObtenido": 3,
+              "mensaje": "Casi: tienes los dígitos correctos, pero la coma corrida. Multiplicar por 3 triplica el número. El valor que se repetía en la tabla no era 3, era 0,30.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "factorDel30",
+              "valorObtenido": 105,
+              "mensaje": "105 es el resultado —y está bien calculado—, pero la pregunta es por el multiplicador: el número que, aplicado a 350, produce 105. Ese es el que aparecía fijo en la tercera columna.",
+              "errorCatalogado": "porcentaje-error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Vuelve a la tercera columna de la tabla. Ese valor se repitió en los cinco tamaños del grupo, y es el mismo para cualquier cantidad a la que le calcules el 30%."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "De 30% a 0,30: la regla general",
+      "_notasInternas": [
+        "Recién acá se nombra y formaliza el concepto, como exige el marco pedagógico del módulo.",
+        "Verificación del ejercicio: 45% de 80 = 80 × 0,45 = 36. ✓",
+        "Verificación de los distractores: sin convertir, 80 × 45 = 3.600. Coma corrida de más: 80 × 0,045 = 3,6. Complemento: 80 × 0,55 = 44."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora sí, el nombre y la regla.\n\n**Por ciento** significa «de cada cien». Cuando decimos 30%, decimos «30 de cada 100», que escrito como fracción es 30/100, y como decimal es 0,30.\n\nPor eso el multiplicador que descubriste era 0,30: no es un truco ni una coincidencia, es el porcentaje escrito de otra manera.\n\nLa regla general, para cualquier porcentaje:\n\n**p% de X = (p ÷ 100) × X**\n\nEl paso que más se falla es el primero: convertir el p% en su decimal. 30% → 0,30. 45% → 0,45. 7% → 0,07. Siempre se divide por 100, o dicho más corto: se corre la coma dos lugares a la izquierda."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica la regla con un porcentaje que no habías usado.\n\nEn una encuesta a 80 estudiantes de un nivel, el 45% respondió que participa en algún taller extraprogramático.\n\n¿Cuántos estudiantes participan?",
+          "campos": [
+            {
+              "id": "participan45de80",
+              "etiqueta": "Estudiantes que participan",
+              "respuestaCorrecta": 36,
+              "unidad": "estudiantes"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "participan45de80",
+              "valorObtenido": 3600,
+              "mensaje": "Multiplicaste por 45 en vez de por 0,45. Te faltó el paso de convertir: 45% = 45/100 = 0,45. Sin esa división por 100, el resultado se dispara.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "participan45de80",
+              "valorObtenido": 3.6,
+              "mensaje": "Corriste la coma tres lugares en vez de dos: usaste 0,045. Para convertir un porcentaje se divide por 100, no por 1.000. 45% = 0,45.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "participan45de80",
+              "valorObtenido": 44,
+              "mensaje": "Calculaste el 55%, que es la parte que NO participa. La pregunta pide el 45%: 80 × 0,45.",
+              "errorCatalogado": "porcentaje-error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Dos pasos: primero convierte 45% a decimal dividiendo por 100, después multiplica los 80 estudiantes por ese decimal."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: tres formas de equivocarse",
+      "_notasInternas": [
+        "Tres bloques de dificultad progresiva, cada uno apuntando a un error distinto del catálogo: cálculo directo (error-3), porcentaje como cantidad fija (error-2) y la distinción «un p%» vs «a p%» (error-4).",
+        "Verificación P1: 25% de 64 = 64 × 0,25 = 16. ✓ Distractores: 64 × 25 = 1.600; 64 − 25 = 39.",
+        "Verificación P2: 40% de 30 = 30 × 0,40 = 12, no 40. Además 40 > 30, así que la afirmación es imposible incluso sin calcular — esa es la vía de razonamiento que premia el feedback.",
+        "P3 no pide cálculo a propósito: evalúa la lectura del enunciado, que es donde se produce error-4."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "En un curso de 64 estudiantes, el 25% se inscribió en la salida a terreno.\n\n¿Cuántos se inscribieron?",
+          "campos": [
+            {
+              "id": "inscritos25de64",
+              "etiqueta": "Estudiantes inscritos",
+              "respuestaCorrecta": 16,
+              "unidad": "estudiantes"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "inscritos25de64",
+              "valorObtenido": 1600,
+              "mensaje": "Faltó convertir el porcentaje: 25% es 0,25, no 25. Con 0,25 el resultado es una parte de 64; con 25 es 25 veces 64.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "inscritos25de64",
+              "valorObtenido": 39,
+              "mensaje": "Restaste 25 como si fuera una cantidad de estudiantes. El 25% no son 25 personas: es una parte del curso, y hay que multiplicar por 0,25 para obtenerla.",
+              "errorCatalogado": "porcentaje-error-2"
+            }
+          ],
+          "feedbackPorDefecto": "25% = 0,25. Multiplica los 64 estudiantes por ese decimal. Pista de control: el 25% es la cuarta parte, así que el resultado debería ser cerca de la cuarta parte de 64."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En un taller de 30 estudiantes, el 40% almuerza en el colegio. Entonces almuerzan 40 estudiantes en el colegio.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Revisa el tamaño del taller: son 30 estudiantes en total. No pueden almorzar 40, porque no hay 40. Ese choque es la señal de que el 40% se leyó como «40 personas» en vez de como una parte de 30. Lo correcto: 30 × 0,40 = 12.",
+          "feedbackFalso": "Bien visto. Almuerzan 12 (30 × 0,40). Y ni siquiera hacía falta calcular para descartarlo: 40 es mayor que el taller entero, y una parte nunca puede ser mayor que el total. Ese chequeo rápido te va a servir en la PAES."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Dos colegios informan sus cifras de participación en el taller de robótica. Los dos partieron el año con 50 inscritos.\n\n- Colegio A: «la participación aumentó **un** 20%».\n- Colegio B: «la participación aumentó **a** un 20%».\n\n¿Qué significa cada frase?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Significan lo mismo: en los dos hay 20% más participantes.",
+              "esCorrecta": false,
+              "feedback": "Cambia una sola palabra —«un» por «a»— y cambia todo. «Aumentó un 20%» dice cuánto CRECIÓ respecto de lo que había. «Aumentó a un 20%» dice en cuánto QUEDÓ. Vuelve a leerlas pensando en esa diferencia.",
+              "errorCatalogado": "porcentaje-error-4"
+            },
+            {
+              "id": "b",
+              "texto": "En A quedaron 60 participantes; en B quedaron 10.",
+              "esCorrecta": true,
+              "feedback": "Exacto. En A el 20% se suma a lo que había: 50 + 50×0,20 = 60. En B el 20% reemplaza al total: quedó en el 20% de 50, o sea 10. La misma cifra, «20%», describe un aumento en un caso y una caída fuerte en el otro. La PAES usa esta diferencia a propósito."
+            },
+            {
+              "id": "c",
+              "texto": "En A quedaron 10 participantes; en B quedaron 60.",
+              "esCorrecta": false,
+              "feedback": "Tienes los dos resultados correctos, pero intercambiados. «Aumentó UN 20%» es el que suma sobre lo que había (60). «Aumentó A un 20%» es el que deja el total en el 20% del original (10). Fíjate cuál preposición acompaña a cada colegio.",
+              "errorCatalogado": "porcentaje-error-4"
+            },
+            {
+              "id": "d",
+              "texto": "En A quedaron 70 participantes; en B, 20.",
+              "esCorrecta": false,
+              "feedback": "Parece que sumaste 20 como cantidad fija (50 + 20 = 70) y leíste el otro 20% como «20 personas». El porcentaje siempre se calcula sobre el total: 50 × 0,20 = 10, y ese 10 es el que se suma en A o el que queda en B.",
+              "errorCatalogado": "porcentaje-error-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El taller de teatro del nivel completo",
+      "_notasInternas": [
+        "Contexto distinto al del descubrimiento: cambia de un grupo pequeño (20-60) a un nivel completo (120), y de «caminar al colegio» a «inscribirse en un taller». Mismo dominio (encuesta/participación escolar), situación distinta — el mismo criterio que usa lineal-patrones-de-cambio al pasar del bidón a las estampillas.",
+        "Verificación parte 2: 15% de 120 = 120 × 0,15 = 18. ✓",
+        "Verificación de los distractores: sin convertir, 120 × 15 = 1.800. Complemento: 120 × 0,85 = 102. Coma corrida: 120 × 0,015 = 1,8."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "De los 120 estudiantes de un nivel, el 15% se inscribió en el taller de teatro.\n\nParte 1: escribe la operación que responde cuántos se inscribieron. No la calcules todavía, solo escríbela.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "120 × 0,15  (porque 15% = 15/100 = 0,15)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora sí, calcula. ¿Cuántos estudiantes se inscribieron en el taller de teatro?",
+          "campos": [
+            {
+              "id": "inscritosTeatro",
+              "etiqueta": "Estudiantes inscritos en teatro",
+              "respuestaCorrecta": 18,
+              "unidad": "estudiantes"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "inscritosTeatro",
+              "valorObtenido": 1800,
+              "mensaje": "Multiplicaste por 15 en vez de 0,15. Control rápido: el resultado no puede pasar de 120, porque los inscritos son una parte del nivel.",
+              "errorCatalogado": "porcentaje-error-3"
+            },
+            {
+              "campoId": "inscritosTeatro",
+              "valorObtenido": 102,
+              "mensaje": "Calculaste el 85%, que es la parte que NO se inscribió. La pregunta pide los que sí: 120 × 0,15.",
+              "errorCatalogado": "porcentaje-error-1"
+            },
+            {
+              "campoId": "inscritosTeatro",
+              "valorObtenido": 1.8,
+              "mensaje": "Usaste 0,015 en vez de 0,15: corriste la coma tres lugares en vez de dos. Para convertir un porcentaje se divide por 100.",
+              "errorCatalogado": "porcentaje-error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: convierte 15% a decimal (0,15) y multiplícalo por los 120 estudiantes del nivel."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige. Es el mejor termómetro de si el concepto se construyó o solo se ejecutó: una respuesta como «lo multiplicas por el porcentaje con la coma corrida dos lugares» indica comprensión del operador; una como «haces una regla de tres» indica que el insight del paso 5 no prendió."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus propias palabras: ¿cómo le explicarías a un compañero qué hay que hacerle a un número para sacarle un porcentaje? Trata de no usar la frase «regla de tres».",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: que mencione multiplicar por un número menor que 1, o dividir el porcentaje por 100 antes de usarlo. Señal de alerta: describir un procedimiento de proporciones cruzadas sin mencionar la multiplicación por el factor."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los cuatro errores que más se repiten con porcentajes, y que ya viste en esta lección:\n\n1. **Tratarlo como cantidad fija.** «El 30%» no son 30 personas. Depende siempre del total.\n2. **Olvidar dividir por 100.** 45% es 0,45, no 45. Si el resultado te sale más grande que el total, cayó esta.\n3. **Calcular el complemento.** Si te piden el 15%, no entregues el 85%.\n4. **Confundir «un p%» con «a p%».** Aumentar UN 20% deja 60 de 50; aumentar A un 20% deja 10.\n\nLa PAES construye sus alternativas incorrectas exactamente con estos cuatro. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Un porcentaje **no es una cantidad**: es una instrucción sobre qué hacer con un total.\n- **p% de X = (p ÷ 100) × X.** Convertir primero, multiplicar después.\n- El porcentaje escrito como decimal es el **factor que no cambia** aunque cambie el total. Eso fue lo que viste fijo en 0,30 al mover el control.\n- Control de sensatez: si te piden una parte de X y tu resultado es mayor que X, algo se rompió — casi siempre, la conversión a decimal.\n\n**Lo que viene:** en la próxima lección los porcentajes se aplican uno tras otro, sobre precios. Ahí vas a descubrir por qué un 20% de descuento seguido de otro 20% **no** es un 40% de descuento, aunque todo el mundo lo diga."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "porcentaje-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "En una encuesta aplicada a 240 estudiantes de un colegio, el 35% respondió que llega en bicicleta. ¿Cuántos estudiantes llegan en bicicleta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "84",
+          "esCorrecta": true,
+          "feedback": "Correcto: 35% = 0,35, y 240 × 0,35 = 84."
+        },
+        {
+          "clave": "B",
+          "texto": "156",
+          "esCorrecta": false,
+          "feedback": "Calculaste el 65%, es decir la parte que NO llega en bicicleta (240 × 0,65 = 156). La pregunta pide el 35%, no lo que queda fuera de ese 35%.",
+          "errorCatalogado": "porcentaje-error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "35",
+          "esCorrecta": false,
+          "feedback": "Leíste «el 35%» como «35 estudiantes». El porcentaje siempre se calcula sobre el total: aquí, sobre los 240 encuestados. La cifra 35 sería la respuesta solo si el total encuestado hubiera sido 100.",
+          "errorCatalogado": "porcentaje-error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "8.400",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste 240 × 35 sin convertir el porcentaje a decimal. El resultado te dio 35 veces el total de encuestados: una parte de 240 nunca puede ser mayor que 240.",
+          "errorCatalogado": "porcentaje-error-3"
+        }
+      ],
+      "solucion": "Se convierte el porcentaje a decimal: 35% = 35/100 = 0,35. Luego se multiplica por el total: 240 × 0,35 = 84 estudiantes. Verificación por otra vía: el 10% de 240 es 24, así que el 30% es 72; el 5% es la mitad del 10%, o sea 12; 72 + 12 = 84. ✓"
+    },
+    {
+      "id": "porcentaje-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En 2025, 150 estudiantes participaban en el taller de robótica de un colegio. En 2026 la cantidad de participantes aumentó un 40% respecto de 2025. ¿Cuántos estudiantes participan en 2026?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "190",
+          "esCorrecta": false,
+          "feedback": "Sumaste 40 como si fueran 40 estudiantes. Pero el 40% no es una cantidad fija: es el 40% de los 150 que ya había, o sea 60. El total queda en 150 + 60.",
+          "errorCatalogado": "porcentaje-error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "210",
+          "esCorrecta": true,
+          "feedback": "Correcto: el aumento es 150 × 0,40 = 60, y el total queda en 150 + 60 = 210. También se puede hacer de una vez multiplicando por 1,40."
+        },
+        {
+          "clave": "C",
+          "texto": "60",
+          "esCorrecta": false,
+          "feedback": "60 es cuánto AUMENTÓ, y está bien calculado. Pero la pregunta pide cuántos participan en 2026, que son los 150 de antes más esos 60 nuevos.",
+          "errorCatalogado": "porcentaje-error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "156",
+          "esCorrecta": false,
+          "feedback": "Usaste 0,04 en vez de 0,40: corriste la coma un lugar de más y el aumento te salió de 6 en vez de 60. Para convertir 40% se divide por 100: 40/100 = 0,40.",
+          "errorCatalogado": "porcentaje-error-3"
+        }
+      ],
+      "solucion": "«Aumentó un 40%» significa que se suma el 40% del valor original. Aumento = 150 × 0,40 = 60. Total 2026 = 150 + 60 = 210. Vía directa equivalente: 150 × 1,40 = 210. ✓"
+    },
+    {
+      "id": "porcentaje-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "El año pasado, 80 estudiantes de un colegio usaban transporte público para llegar. Este año, esa cantidad bajó un 25%.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Este año son 60, porque bajar un 25% deja el 75% de los que había.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y por la razón correcta: si se va el 25%, queda el 75%. 80 × 0,75 = 60. Equivale a calcular la baja (80 × 0,25 = 20) y restarla: 80 − 20 = 60."
+        },
+        {
+          "clave": "B",
+          "texto": "Este año son 20, porque bajó al 25%.",
+          "esCorrecta": false,
+          "feedback": "Cambiaste «bajó UN 25%» por «bajó AL 25%». La primera dice cuánto se perdió; la segunda, en cuánto quedó. Bajar un 25% deja el 75% (60 estudiantes), no el 25% (20).",
+          "errorCatalogado": "porcentaje-error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Este año son 55, porque se restan 25 estudiantes.",
+          "esCorrecta": false,
+          "feedback": "Restaste 25 como cantidad de personas. El 25% de 80 son 20 estudiantes, no 25. Si el total hubiera sido 100, ahí sí coincidirían las dos cifras — y esa coincidencia es justamente la trampa.",
+          "errorCatalogado": "porcentaje-error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "Este año son 78, porque 80 × 0,025 = 2 y 80 − 2 = 78.",
+          "esCorrecta": false,
+          "feedback": "La estructura del razonamiento está bien —calcular la baja y restarla—, pero la conversión no: 25% es 0,25, no 0,025. Dividir por 100 corre la coma dos lugares, no tres.",
+          "errorCatalogado": "porcentaje-error-3"
+        }
+      ],
+      "solucion": "«Bajó un 25%» significa que se perdió el 25% del valor original, así que queda el 100% − 25% = 75%. Cálculo directo: 80 × 0,75 = 60. Cálculo en dos pasos: baja = 80 × 0,25 = 20; total = 80 − 20 = 60. Ambas vías coinciden en 60. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), eje Números → Porcentaje, punto «Concepto y cálculo de porcentaje» — usado solo para calibrar alcance y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/mapa-modulos-m1.md — fuente única de id y título de esta lección.",
+      "content/lecciones/lineal-patrones-de-cambio.json — leída como referencia de densidad, tono y calidad de feedback (lección propia del proyecto, no fuente externa)."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos numéricos y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ADVERTENCIA: esta declaración cubre el proceso de redacción, NO una auditoría de colisión — la verificación contra fuentes-analisis-aisladas/ está pendiente y debe correrla el autor fuera de esta sesión (ver _notasInternas de nivel raíz).",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
+    "fecha": "2026-08-11"
+  },
+  "checklistOriginalidad": {
+    "enunciadosOriginales": false,
+    "diagramasOriginales": false,
+    "secuenciaOriginal": false,
+    "provenienciaRegistrada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  },
+  "revisionMatematica": {
+    "aprobada": false,
+    "revisadoPor": "",
+    "fecha": ""
+  }
+}
