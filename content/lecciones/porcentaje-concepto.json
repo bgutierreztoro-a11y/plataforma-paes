@@ -18,7 +18,7 @@
   "_notasInternas": [
     "L1 del módulo Porcentaje. Como L1 del módulo, este archivo aloja el catalogoErrores COMPLETO de la unidad: porcentaje-concepto (L2) y la lección de problemas (L3) referencian estos ids vía errorCatalogado y no definen errores propios.",
     "Marco pedagógico (no negociable, fijado antes de redactar): el porcentaje se descubre como OPERADOR MULTIPLICATIVO, no como regla de tres memorizada. El estudiante llega por sí mismo a que «30% de X» equivale a «0,30 · X» observando un patrón en el paso 5. La definición formal (30% = 30/100 = 0,30) aparece recién en el paso 6.",
-    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: PENDIENTE. No se ejecutó scripts/consultar-fuentes.mjs. Según CLAUDE.md («Aislamiento de fuentes externas»), el hilo que redacta contenido NUNCA corre ese script ni lee fuentes-analisis-aisladas/ por ningún medio propio, y el subagente consulta-fuentes no está disponible en este entorno. La verificación queda POSTERGADA, no sustituida: debe correrla Benja fuera de sesión (mecanismo 2) sobre los términos del contexto núcleo antes de subir este archivo de 'borrador'. Por eso checklistOriginalidad está en false.",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. consultar-fuentes.mjs \"encuesta escolar caminar al colegio porcentaje\" → NO, 2026-08-12. Corrida por Benja fuera de sesión (mecanismo 2 de CLAUDE.md), salida pegada tal cual sin reformular. checklistOriginalidad.enunciadosOriginales queda en true; los otros tres campos del checklist y revisionMatematica.aprobada siguen en false.",
     "REVISIÓN MATEMÁTICA: PENDIENTE. Todos los cálculos de este archivo fueron verificados recalculando desde cero durante la redacción (ver _notasInternas de cada paso), pero eso NO es la revisión independiente que exige el schema: la hacen Benja y el profesor a mano. revisionMatematica.aprobada queda en false.",
     "Contexto elegido tras descartar el dominio agrícola: lineal-pendiente-e-intercepto.json ya usa 'huerta escolar / plantines por sembrar' en un ítem PAES y l0-demo.json usa un vivero, así que 'semillas que germinan' habría caído en la misma familia. También se descartó el motivo 'cartel', con 20 apariciones en inecuaciones-problemas.json. El dominio encuesta/asistencia escolar da cero apariciones en el contenido existente.",
     "Se evitó a propósito todo contexto de precio, descuento o rebaja: según docs/mapa-modulos-m1.md, ese dominio queda reservado para la L2 del módulo ('Porcentaje aplicado sucesivamente en contextos de precio'). El catálogo de errores sí describe el error del descuento en términos comerciales, porque es la forma en que el estudiante lo va a encontrar en la PAES, pero ningún enunciado de esta lección usa ese contexto."
@@ -596,7 +596,7 @@
     "fecha": "2026-08-11"
   },
   "checklistOriginalidad": {
-    "enunciadosOriginales": false,
+    "enunciadosOriginales": true,
     "diagramasOriginales": false,
     "secuenciaOriginal": false,
     "provenienciaRegistrada": false,
