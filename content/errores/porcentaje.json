@@ -1,0 +1,37 @@
+{
+  "unidad": "porcentaje",
+  "errores": [
+    {
+      "id": "porcentaje/error-1",
+      "descripcion": "Confundir el porcentaje del CAMBIO con el porcentaje que QUEDA: leer «30% de descuento» como «queda al 30% del precio», cuando en realidad queda el 70%. El estudiante aplica el porcentaje enunciado al total en vez de aplicar su complemento, o entrega la parte que se fue cuando se pide la que quedó. La lectura del enunciado es correcta —entendió que el cambio es del 30%—; lo que falla es cuál de las dos partes se reporta. Distinto de error-4: allá el estudiante lee mal el enunciado mismo («un p%» como «a p%»), acá lo lee bien y se equivoca al elegir qué parte entregar."
+    },
+    {
+      "id": "porcentaje/error-2",
+      "descripcion": "Tratar el porcentaje como una cantidad fija en vez de una proporción del total: sumar o restar el número del porcentaje directamente (150 + 40 en vez de 150 × 1,40; 80 − 25 en vez de 80 × 0,75), o creer que «el 30%» significa siempre «30 unidades», sin importar cuál sea el total."
+    },
+    {
+      "id": "porcentaje/error-3",
+      "descripcion": "Convertir mal el porcentaje a decimal: multiplicar por el número del porcentaje sin dividir por 100 (×30 en vez de ×0,30), o correr la coma de más (40% como 0,04 en vez de 0,40; 30% como 3 en vez de 0,3)."
+    },
+    {
+      "id": "porcentaje/error-4",
+      "descripcion": "No distinguir «aumentó UN p%» de «aumentó A p%»: la primera expresión suma el p% al total original (factor 1 + p/100), la segunda lo reemplaza por el p% del original (factor p/100). Distinto de error-1, que confunde el cambio con su complemento dentro de una misma lectura."
+    },
+    {
+      "id": "porcentaje/error-5",
+      "descripcion": "Entregar solo la parte porcentual cuando la pregunta pide el total después del cambio: calcular correctamente el 40% de 150 (=60) y responder 60 en vez de 210. El cálculo intermedio está bien; falta el paso de recomponer el total."
+    },
+    {
+      "id": "porcentaje/error-6",
+      "descripcion": "Componer dos cambios porcentuales sucesivos de forma aditiva en vez de multiplicativa: sumar los porcentajes («20% y luego 10% adicional» leído como un único 30%), o aplicar el segundo porcentaje sobre el valor ORIGINAL en vez de sobre el valor ya modificado. Ambas rutas producen el mismo resultado numérico errado (factor 0,70 en vez de 0,80 × 0,90 = 0,72). Incluye la variante de creer que un aumento seguido de una baja del mismo porcentaje devuelve el valor inicial."
+    },
+    {
+      "id": "porcentaje/error-7",
+      "descripcion": "Deshacer un cambio porcentual aplicando el mismo porcentaje en sentido contrario, en vez de dividir por el factor: ante «subió un 25% y quedó en $X», calcular X × 0,75 (bajarle un 25%) en lugar de X ÷ 1,25. Cubre también las divisiones mal elegidas una vez entendido que hay que dividir: X ÷ 0,25 o X ÷ 0,75 en vez de X ÷ 1,25. Distinto de error-6, que compone DOS cambios sucesivos hacia adelante: acá hay un solo cambio y lo que se pide es reconstruir el valor de partida desde el de llegada."
+    },
+    {
+      "id": "porcentaje/error-8",
+      "descripcion": "Entregar una magnitud distinta de la pedida, habiendo calculado bien: responder el resultado (350 × 0,3 = 105) cuando la pregunta pide el factor (0,3), o aplicar el p% al valor final cuando se pide el valor original (P × 0,20 en vez de P ÷ 0,80). La operación ejecutada es correcta y no hay error de conversión, de composición ni de inversión: lo que falla es la lectura de qué objeto se está preguntando. Distinto de error-5, donde el procedimiento quedó incompleto y falta un paso para recomponer el total: acá el procedimiento está completo y bien hecho, pero responde otra pregunta."
+    }
+  ]
+}

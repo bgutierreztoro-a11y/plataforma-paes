@@ -114,6 +114,7 @@ export const IDS_CIERRE = [
   "cierre-v0",
   "cierre-enteros-racionales",
   "cierre-ecuaciones-lineales",
+  "cierre-porcentaje",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -198,6 +199,7 @@ export const EJES = [
           "porcentaje-rebaja-doble",
           "porcentaje-volver-atras",
         ],
+        cierreId: "cierre-porcentaje",
       },
       {
         id: "potencias-y-raices",

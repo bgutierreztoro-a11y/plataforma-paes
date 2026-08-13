@@ -1,0 +1,334 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-porcentaje",
+  "titulo": "Cierre del módulo: Porcentaje",
+  "_notasInternas": [
+    "Cierre del tema 'Porcentaje' (eje Números). Cubre las tres lecciones del módulo: porcentaje-concepto.json, porcentaje-rebaja-doble.json y porcentaje-volver-atras.json.",
+    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/porcentaje.json, y la unidad 'porcentaje' nunca estuvo en MAPEO_LECCION_UNIDAD de scripts/validar-contenido.mjs, así que no hay catálogo embebido en ninguna lección del módulo ni regla de espejo que mantener. Los ids se referencian pelados (error-1 … error-7), igual que en las tres lecciones.",
+    "COBERTURA POR LECCIÓN, contada a mano: L1 porcentaje-concepto → ítems 1, 2 y 5 (conversión a decimal, complemento, «un p%» vs «a p%»). L2 porcentaje-rebaja-doble → ítems 3, 6 y 8 (composición multiplicativa de cambios sucesivos). L3 porcentaje-volver-atras → ítems 4, 7 y 8 (división por el factor para recuperar el valor inicial). El ítem 8 es el integrador y cuenta para L2 y L3 a la vez.",
+    "REPARTO DE HABILIDADES: resolver 3 (ítems 1, 3, 6), modelar 2 (ítems 4, 8), representar 1 (ítem 2), argumentar 2 (ítems 5, 7). Las cuatro habilidades PAES presentes. Se le dio a argumentar una casilla más que en los otros tres cierres del proyecto porque las dos confusiones más caras de este módulo —«un p%» contra «a p%», y creer que el porcentaje inverso deshace un cambio— se evalúan mucho mejor pidiendo evaluar una afirmación que pidiendo un cálculo. §3.5 dice explícitamente que argumentar se prioriza.",
+    "REPARTO DE DIFICULTAD: baja 2, media 4, alta 2. Es el mismo reparto de cierre-enteros-racionales.json y cierre-v0.json, y responde a UMBRAL_DOMINIO = 0.6 en lib/umbrales.ts: con 8 ítems el estudiante necesita 5 aciertos, así que cargar el set hacia 'alta' convertiría el instrumento de medición en un filtro. Se verificó la constante en el código, no se asumió.",
+    "COBERTURA DEL CATÁLOGO: los siete errores aparecen al menos una vez. error-1 en los ítems 1, 2, 3, 4, 5 y 6; error-2 en 2, 5 y 7; error-3 en 1 (dos veces: sin convertir y con la coma corrida de más, los dos mecanismos que el catálogo agrupa bajo ese id) y en 2; error-4 en 5; error-5 en 3 y 6; error-6 en 3, 6 y 8; error-7 en 4, 7 y 8.",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Corrida por Benja fuera de sesión (mecanismo 2 de CLAUDE.md), salida pegada tal cual sin reformular. Resultados textuales: «campaña de reciclaje kilos recolectados: NO» / «embalse reserva de agua porcentaje de capacidad: NO» / «panaderia produccion diaria kilos: NO» / «porcentaje de la capacidad de un estanque: NO» / «aumento porcentual mensual de una recoleccion: NO». El candidato 'panadería' quedó sin usar: era la reserva por si alguno de los otros dos colisionaba.",
+    "DOMINIOS Y SUPERFICIE DE VERIFICACIÓN. Solo cuatro ítems llevan contexto: 2 y 5 usan el embalse, 3 y 8 usan la campaña de reciclaje. Los ítems 1, 4, 6 y 7 son abstractos o genéricos a propósito ('¿cuál es el 8% de 2.500?', 'una cantidad Q', 'un artículo'), siguiendo el mismo criterio explicitado en cierre-ecuaciones-lineales.json: minimizar la superficie que hay que verificar contra el corpus de fuentes aisladas. El hilo que redactó este archivo no ejecutó consultar-fuentes.mjs ni leyó fuentes-analisis-aisladas/ por ningún medio propio.",
+    "POR QUÉ EL EMBALSE PARA EL ÍTEM 5. Es el único dominio del módulo donde el porcentaje es nativo del objeto —un embalse se mide en porcentaje de su capacidad—, y eso permite construir la distinción «bajó UN 20%» contra «bajó AL 20%» sobre una misma magnitud sin forzar el enunciado. En un contexto de precios la misma distinción exige inventar dos titulares contradictorios; acá sale sola.",
+    "CIFRAS NUEVAS: ninguna de las cantidades base ni de las respuestas correctas de estos ocho ítems aparece en las tres lecciones del módulo. Se contrastaron una a una contra los campos contextosNumericos de porcentaje-concepto.json, porcentaje-rebaja-doble.json y porcentaje-volver-atras.json. Valores introducidos acá: 2.500/200, 500/300 millones de m³, 3.200/2.160, 1,60 como factor, 80%→64%, 4.500/1.125, 5.600/7.000, 4.200/2.800.",
+    "EL DISTRACTOR $0 DEL ÍTEM 6 es deliberado y es el mejor del set: 50% y otro 50% sumados dan 100%, o sea 'gratis'. Un estudiante que sume los porcentajes llega a una conclusión absurda que él mismo puede detectar, y eso convierte el error-6 en algo memorable en vez de en una cifra más. Es el único ítem del cierre donde el error aditivo produce un resultado imposible en lugar de uno meramente equivocado.",
+    "ÍTEM 8, INTEGRADOR: encadena las dos lecciones finales. Hay que componer dos alzas sucesivas (L2: 1,25 × 1,20 = 1,50) y después invertir esa composición (L3: dividir por 1,50). Es modelar y no resolver a propósito —las alternativas son expresiones, no números— porque lo que se evalúa es si el estudiante arma bien la estructura, no si sabe dividir.",
+    "VERIFICACIÓN MATEMÁTICA: toda la aritmética de los ocho ítems fue recalculada desde cero con un script independiente, incluidas las comprobaciones hacia adelante de cada respuesta correcta y el valor exacto de cada distractor. Eso NO reemplaza la revisión matemática humana, que sigue pendiente.",
+    "ESTADO: borrador. A diferencia de los otros tres cierres del proyecto, este no está en 'publicable' porque ni la revisión matemática independiente ni el checklist de originalidad han sido firmados por una persona. Las tres lecciones del módulo están en la misma situación."
+  ],
+  "items": [
+    {
+      "id": "cierre-porcentaje-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "¿Cuál es el 8% de 2.500?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "200",
+          "esCorrecta": true,
+          "feedback": "Correcto. 8% = 8/100 = 0,08, y 2.500 × 0,08 = 200."
+        },
+        {
+          "clave": "B",
+          "texto": "20.000",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste por 8 sin convertir el porcentaje a decimal. El resultado te quedó ocho veces mayor que el total, y una parte de 2.500 nunca puede superar a 2.500. Hay que dividir el 8 por 100 primero.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "2.300",
+          "esCorrecta": false,
+          "feedback": "Calculaste el 92%, que es lo que queda al quitar el 8%. La pregunta pide el 8% mismo, no lo que sobra después de descontarlo.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "20",
+          "esCorrecta": false,
+          "feedback": "Corriste la coma tres lugares en vez de dos: usaste 0,008. Convertir un porcentaje es dividir por 100, no por 1.000. 8% = 0,08.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "8% = 8/100 = 0,08. Luego 2.500 × 0,08 = 200. Verificación por otra vía: el 10% de 2.500 es 250, y el 8% es cuatro quintos de eso: 250 × 0,8 = 200 ✓."
+    },
+    {
+      "id": "cierre-porcentaje-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un embalse tiene una capacidad total de 500 millones de m³ y actualmente contiene 300 millones de m³. ¿Cuál de las siguientes tablas representa correctamente su estado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Ocupado: 60% · Disponible: 40%",
+          "esCorrecta": true,
+          "feedback": "Correcto. 300 ÷ 500 = 0,60, o sea el 60% de la capacidad está ocupado, y el 40% restante está disponible. Las dos cifras suman 100%, como debe ser."
+        },
+        {
+          "clave": "B",
+          "texto": "Ocupado: 40% · Disponible: 60%",
+          "esCorrecta": false,
+          "feedback": "Intercambiaste las dos cifras. El embalse contiene 300 de los 500 millones, o sea más de la mitad: lo ocupado tiene que ser el porcentaje mayor, no el menor.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Ocupado: 30% · Disponible: 70%",
+          "esCorrecta": false,
+          "feedback": "Dividiste por 1.000 en vez de por la capacidad real. La proporción se calcula sobre el total del embalse, que son 500 millones: 300 ÷ 500 = 0,60, no 0,30.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "Ocupado: 60 millones de m³ · Disponible: 40 millones de m³",
+          "esCorrecta": false,
+          "feedback": "Los números 60 y 40 son correctos, pero son porcentajes, no millones de m³. En volumen el embalse tiene 300 millones ocupados y 200 disponibles. Un porcentaje no es una cantidad: es la proporción que esa cantidad representa del total.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "La parte ocupada es 300 de 500, es decir 300 ÷ 500 = 0,60 = 60%. Lo disponible es el complemento: 100% − 60% = 40%, que en volumen son 500 − 300 = 200 millones de m³. Comprobación: el 40% de 500 es 500 × 0,40 = 200 ✓, coherente con el volumen disponible."
+    },
+    {
+      "id": "cierre-porcentaje-3",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "En una campaña de reciclaje se recolectaron 3.200 kg en julio. En agosto la recolección bajó un 25% respecto de julio, y en septiembre bajó un 10% respecto de agosto. ¿Cuántos kilos se recolectaron en septiembre?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2.160 kg",
+          "esCorrecta": true,
+          "feedback": "Correcto. La baja del 25% deja el factor 0,75 y la del 10% deja 0,90. Su producto es 0,675, y 3.200 × 0,675 = 2.160."
+        },
+        {
+          "clave": "B",
+          "texto": "2.080 kg",
+          "esCorrecta": false,
+          "feedback": "Sumaste los porcentajes: 25% + 10% = 35% de baja, o sea multiplicar por 0,65. Pero la segunda baja se calcula sobre la recolección de agosto, que ya es menor, así que quita menos de lo que quitaría sobre julio. El factor correcto es 0,75 × 0,90 = 0,675.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "2.400 kg",
+          "esCorrecta": false,
+          "feedback": "Esa es la recolección de agosto, y está bien calculada (3.200 × 0,75). Falta aplicarle la baja del 10% para llegar a septiembre.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "1.040 kg",
+          "esCorrecta": false,
+          "feedback": "Calculaste cuánto BAJÓ la recolección en total (el 32,5% de 3.200), no cuánto se recolectó. Lo que se pide es lo que quedó, que es el 67,5% restante.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Cada baja se convierte en su factor: 25% deja 1 − 0,25 = 0,75; 10% deja 1 − 0,10 = 0,90. Como se aplican una tras otra, los factores se multiplican: 0,75 × 0,90 = 0,675. Septiembre = 3.200 × 0,675 = 2.160 kg. Verificación por pasos: agosto = 3.200 × 0,75 = 2.400; septiembre = 2.400 × 0,90 = 2.160 ✓. La baja total fue del 32,5%, no del 35%."
+    },
+    {
+      "id": "cierre-porcentaje-4",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Una cantidad aumentó un 60% y quedó en Q. ¿Cuál de las siguientes expresiones representa la cantidad antes del aumento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Q ÷ 1,60",
+          "esCorrecta": true,
+          "feedback": "Correcto. El alza del 60% multiplicó la cantidad inicial por 1 + 0,60 = 1,60, así que para recuperarla hay que dividir por ese mismo factor."
+        },
+        {
+          "clave": "B",
+          "texto": "Q × 0,40",
+          "esCorrecta": false,
+          "feedback": "Esta expresión aplica una baja del 60% al resultado, que es la intuición de «deshacer el porcentaje con el porcentaje». No funciona: 1,60 × 0,40 = 0,64, así que no devuelve la cantidad inicial sino el 64% de ella.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "Q ÷ 0,60",
+          "esCorrecta": false,
+          "feedback": "Dividir es la operación correcta, pero el divisor no es el porcentaje suelto: es el factor. Un alza del 60% no multiplica por 0,60, multiplica por 1 + 0,60 = 1,60.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "Q × 0,60",
+          "esCorrecta": false,
+          "feedback": "Esta expresión toma el 60% de Q, que ni siquiera es el aumento: el aumento se calculó sobre la cantidad inicial, no sobre la final. Comprueba con un caso: si la cantidad inicial fuera 500, entonces Q = 800, y 800 × 0,60 da 480, no 500.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Un alza del 60% multiplica por 1 + 60/100 = 1,60. Si V es la cantidad inicial, entonces Q = V × 1,60, de donde V = Q ÷ 1,60. Verificación con una cifra concreta: si V fuera 500, entonces Q = 800, y 800 ÷ 1,60 = 500 ✓."
+    },
+    {
+      "id": "cierre-porcentaje-5",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "El mes pasado un embalse estaba al 80% de su capacidad. Este mes se informa que «la reserva del embalse bajó un 20%».\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El embalse quedó al 64% de su capacidad, porque la baja del 20% se aplica sobre la reserva que había y no sobre la capacidad total.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y por la razón correcta. La reserva era el 80% de la capacidad; bajarla un 20% la multiplica por 0,80, y 80% × 0,80 = 64%. Lo que baja es la reserva, no la capacidad."
+        },
+        {
+          "clave": "B",
+          "texto": "El embalse quedó al 60% de su capacidad, porque 80% − 20% = 60%.",
+          "esCorrecta": false,
+          "feedback": "Restaste el 20 como si fuera una cantidad fija de puntos de capacidad. Pero «bajó un 20%» significa que la reserva perdió un quinto de sí misma, y un quinto de 80% es 16%, no 20%. Un porcentaje aplicado a otro porcentaje sigue siendo una proporción, no una resta.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "El embalse quedó al 20% de su capacidad, porque bajó al 20%.",
+          "esCorrecta": false,
+          "feedback": "Cambiaste «bajó UN 20%» por «bajó AL 20%». La primera dice cuánto se perdió de la reserva; la segunda diría en cuánto quedó. Son afirmaciones muy distintas: una describe una baja moderada y la otra, una sequía severa.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "El embalse quedó al 16% de su capacidad, porque el 20% de 80% es 16%.",
+          "esCorrecta": false,
+          "feedback": "El 16% está bien calculado: eso es exactamente lo que se perdió. Pero la pregunta es cuánto QUEDÓ, y lo que queda es 80% − 16% = 64%. Entregaste la parte que se fue en vez de la que sigue ahí.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "La reserva era el 80% de la capacidad. «Bajó un 20%» significa que esa reserva se multiplicó por 1 − 0,20 = 0,80. Entonces la nueva reserva es 80% × 0,80 = 64% de la capacidad. Verificación con cifras concretas: si la capacidad fuera 500 millones de m³, la reserva era 400; bajarla un 20% quita 400 × 0,20 = 80, y quedan 320. Y 320 ÷ 500 = 0,64 = 64% ✓. Nótese que la baja equivale a 16 puntos de capacidad (alternativa D), no a 20 (alternativa B): esa diferencia es justamente la trampa del ítem."
+    },
+    {
+      "id": "cierre-porcentaje-6",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un artículo de $4.500 tiene un 50% de descuento y, sobre el precio ya rebajado, un 50% adicional. ¿Cuánto se paga por él?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$1.125",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada 50% deja la mitad: 4.500 → 2.250 → 1.125. En factores, 0,50 × 0,50 = 0,25, o sea se paga la cuarta parte."
+        },
+        {
+          "clave": "B",
+          "texto": "$0",
+          "esCorrecta": false,
+          "feedback": "Sumaste 50% + 50% = 100% y concluiste que el artículo sale gratis. Ese resultado absurdo es la mejor señal de que los porcentajes no se suman: el segundo 50% se calcula sobre $2.250, no sobre $4.500, así que solo quita $1.125 más. Ninguna cadena de descuentos parciales llega jamás a cero.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "$2.250",
+          "esCorrecta": false,
+          "feedback": "Ese es el precio después del primer descuento, y está bien calculado. Falta aplicarle el 50% adicional a esos $2.250.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "$3.375",
+          "esCorrecta": false,
+          "feedback": "Calculaste cuánto te descuentan en total ($4.500 − $1.125), no cuánto pagas. El descuento total es del 75%, así que lo que se paga es el 25% restante.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Un descuento del 50% deja el factor 0,50. Al aplicarse dos veces, los factores se multiplican: 0,50 × 0,50 = 0,25. Precio final = 4.500 × 0,25 = $1.125. Verificación por pasos: 4.500 × 0,50 = 2.250; 2.250 × 0,50 = 1.125 ✓. El descuento total es del 75%, no del 100%."
+    },
+    {
+      "id": "cierre-porcentaje-7",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "El precio de un artículo bajó un 20% y quedó en $5.600. Un estudiante afirma: «Para recuperar el precio original, calculo 5.600 × 1,20».\n\n¿Es correcta su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: hay que dividir por 0,80, lo que da $7.000.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El descuento multiplicó por 0,80, así que se deshace dividiendo por 0,80: 5.600 ÷ 0,80 = 7.000. Comprobación: 7.000 × 0,80 = 5.600 ✓. El método del estudiante da $6.720, que no es el original."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: subir un 20% deshace exactamente una baja del 20%.",
+          "esCorrecta": false,
+          "feedback": "No se deshacen entre sí, porque no se calculan sobre la misma base. Compruébalo: 5.600 × 1,20 = 6.720, y si a $6.720 le quitas un 20% obtienes $5.376, no $5.600. En factores, 0,80 × 1,20 = 0,96: siempre queda un 4% corto.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "No: hay que dividir, pero por 1,20.",
+          "esCorrecta": false,
+          "feedback": "Acertaste que la operación es una división, que es la parte difícil. Pero el factor que se aplicó fue el de un DESCUENTO del 20%, o sea 0,80, no 1,20. Además dividir por 1,20 daría unos $4.667, menos que lo pagado, y el precio original tiene que ser mayor.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, porque un 20% representa la misma cantidad de pesos se aplique sobre el precio original o sobre el rebajado.",
+          "esCorrecta": false,
+          "feedback": "Ahí está la raíz del problema. El 20% no es una cantidad fija: sobre el precio original ($7.000) son $1.400, y sobre el rebajado ($5.600) son $1.120. Son $280 de diferencia, y por eso la ida y la vuelta no cierran.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "La afirmación es falsa. Una baja del 20% multiplica por 1 − 0,20 = 0,80, así que si P es el precio original, P × 0,80 = 5.600 y por lo tanto P = 5.600 ÷ 0,80 = $7.000. Comprobación hacia adelante: 7.000 × 0,80 = 5.600 ✓. El método propuesto da 5.600 × 1,20 = $6.720, y al bajarle un 20% se obtiene $5.376, que no coincide con los $5.600 del enunciado. La razón de fondo: 0,80 × 1,20 = 0,96, no 1. Respuesta: A."
+    },
+    {
+      "id": "cierre-porcentaje-8",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "En una campaña de reciclaje, la recolección de marzo aumentó un 25% respecto de la de febrero, y la de abril aumentó un 20% respecto de la de marzo. En abril se recolectaron 4.200 kg.\n\n¿Cuál expresión permite calcular los kilos recolectados en febrero?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4.200 ÷ (1,25 × 1,20)",
+          "esCorrecta": true,
+          "feedback": "Correcto. Las dos alzas componen un único factor 1,25 × 1,20 = 1,50 que lleva de febrero a abril; para recorrer el camino al revés se divide por ese factor."
+        },
+        {
+          "clave": "B",
+          "texto": "4.200 × (0,75 × 0,80)",
+          "esCorrecta": false,
+          "feedback": "Esta expresión aplica dos bajas del 25% y del 20% para intentar deshacer dos alzas de esos mismos porcentajes. No funciona: 1,50 × 0,60 = 0,90, así que devuelve el 90% de febrero, no febrero.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "4.200 ÷ 1,45",
+          "esCorrecta": false,
+          "feedback": "Sumaste los porcentajes: 25% + 20% = 45%, o sea un factor 1,45. Pero el segundo aumento se calculó sobre la recolección de marzo, que ya venía crecida, así que aporta más que un 20% de febrero. Los factores se multiplican: 1,25 × 1,20 = 1,50.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "4.200 × 1,25 × 1,20",
+          "esCorrecta": false,
+          "feedback": "Esta expresión avanza en vez de retroceder: parte de abril y le aplica otra vez las dos alzas. Los 4.200 kg son el punto de llegada, no el de partida, así que febrero tiene que ser menor que 4.200 y esta expresión da más.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "Sea F la recolección de febrero. El alza del 25% da marzo = F × 1,25, y el alza del 20% da abril = F × 1,25 × 1,20 = F × 1,50. Como abril son 4.200 kg, entonces F = 4.200 ÷ 1,50 = 2.800 kg. Verificación hacia adelante: 2.800 × 1,25 = 3.500 (marzo); 3.500 × 1,20 = 4.200 (abril) ✓. Control de sensatez: como la recolección subió dos veces, febrero debe ser menor que abril, y 2.800 < 4.200."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-porcentaje-1 (abstracto, resolver, baja): 8% de 2.500 = 200; distractores 20.000 (sin convertir), 2.300 (complemento) y 20 (coma corrida de más)",
+    "cierre-porcentaje-2 (embalse, representar, media): capacidad 500 y contenido 300 millones de m³ → 60% ocupado y 40% disponible; distractores 40/60 invertido, 30/70 (dividió por 1.000) y las cifras 60 y 40 leídas como millones de m³",
+    "cierre-porcentaje-3 (campaña de reciclaje, resolver, media): 3.200 kg en julio, baja 25% y luego 10% → 2.160 kg; factor 0,75 × 0,90 = 0,675; distractores 2.080 (sumó a 35%), 2.400 (solo la primera baja) y 1.040 (entregó lo perdido)",
+    "cierre-porcentaje-4 (abstracto, modelar, media): cantidad que aumentó un 60% hasta Q → expresión Q ÷ 1,60; distractores Q × 0,40, Q ÷ 0,60 y Q × 0,60",
+    "cierre-porcentaje-5 (embalse, argumentar, alta): reserva al 80% de capacidad que baja un 20% → queda al 64%; distractores 60% (restó los puntos), 20% (leyó «bajó al 20%») y 16% (entregó la pérdida)",
+    "cierre-porcentaje-6 (artículo genérico, resolver, baja): 4.500 con 50% y otro 50% → 1.125; factor 0,50 × 0,50 = 0,25; distractores 0 (sumó a 100%), 2.250 (solo el primero) y 3.375 (entregó el descuento)",
+    "cierre-porcentaje-7 (artículo genérico, argumentar, media): bajó 20% y quedó en 5.600 → original 7.000 dividiendo por 0,80; el método erróneo 5.600 × 1,20 da 6.720, y 0,80 × 1,20 = 0,96",
+    "cierre-porcentaje-8 (campaña de reciclaje, modelar, alta, integrador): dos alzas sucesivas 25% y 20% desde febrero hasta 4.200 kg en abril → expresión 4.200 ÷ (1,25 × 1,20), con febrero = 2.800 kg"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), eje Números → Porcentaje — usado solo para calibrar alcance y formato de ítems, nunca como origen de texto, contextos ni ejemplos.",
+      "docs/calibracion-lecciones-e-items.md §2, §3, §6 y §7 — habilidades PAES, regla de distribución §3.5, zonas de contexto saturadas y patrones de distractor.",
+      "content/lecciones/porcentaje-concepto.json, porcentaje-rebaja-doble.json y porcentaje-volver-atras.json — leídas para verificar que ningún enunciado, contexto ni cifra base se repita (lecciones propias del proyecto, no fuentes externas).",
+      "content/cierres/cierre-ecuaciones-lineales.json — leído como referencia de formato y estructura de un cierre (archivo propio del proyecto).",
+      "content/errores/porcentaje.json — catálogo de errores de la unidad, referenciado por errorCatalogado.",
+      "lib/umbrales.ts — constante UMBRAL_DOMINIO, consultada para calibrar el reparto de dificultad."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos y cifras creados desde cero por el autor del proyecto para este cierre. Los dos dominios con contexto —campaña de reciclaje y embalse— son nuevos en el proyecto y fueron verificados fuera de esta sesión mediante el mecanismo 2 de CLAUDE.md, devolviendo NO en las cinco consultas realizadas (ver _notasInternas). Los otros cuatro ítems son abstractos o genéricos, sin dominio que verificar. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ADVERTENCIA: esta declaración cubre el proceso de redacción y la verificación de dominio registrada, NO una auditoría de originalidad completa — esa sigue pendiente, igual que la revisión matemática independiente.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
+    "fecha": "2026-08-12"
+  }
+}
