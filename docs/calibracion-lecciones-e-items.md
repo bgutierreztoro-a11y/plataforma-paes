@@ -144,11 +144,11 @@ fuera de esta secuencia se escribe antes del Gate 2".
 Secuencia del módulo "Función lineal y afín" (el primero en construirse, sin cambios en esa
 prioridad):
 
-| Pieza | Contenido | Estado | Id nuevo |
+| Pieza | Contenido | En disco | Id nuevo |
 |---|---|---|---|
 | Diagnóstico | 5 ítems | — | — |
-| **Lección 1** | Patrones de cambio | `publicable` | `funcion-lineal-y-afin-patrones-de-cambio` (antes `l1-patrones-de-cambio`) |
-| **Lección 2** | Pendiente e intercepto, gráfico interactivo de sliders (**la interacción insignia**) | `publicable` | `funcion-lineal-y-afin-pendiente-e-intercepto` (antes `l2-pendiente-e-intercepto`) |
+| **Lección 1** | Patrones de cambio | sí | `funcion-lineal-y-afin-patrones-de-cambio` (antes `l1-patrones-de-cambio`) |
+| **Lección 2** | Pendiente e intercepto, gráfico interactivo de sliders (**la interacción insignia**) | sí | `funcion-lineal-y-afin-pendiente-e-intercepto` (antes `l2-pendiente-e-intercepto`) |
 | **Lección 3** | Modelamiento PAES | por escribir | `funcion-lineal-y-afin-modelamiento-paes` (nueva) |
 | Cierre | 8 ítems formato PAES | — | — |
 
@@ -366,15 +366,19 @@ El análisis del material comercial de referencia expuso fallas de control de ca
 1. **Toda solución se recalcula desde cero**, sin mirar la clave declarada. Si el recálculo no coincide con la clave, el ítem se corrige o se descarta; nunca se "ajusta la explicación".
 2. **La clave se deriva de la solución, no al revés.** Escribir primero "la correcta es C" y después justificarlo es cómo se producen estas contradicciones.
 3. **La verificación aritmética es un paso separado** de la redacción, ejecutado por el subagente `revisor-matematico`, y su resultado no es autocertificable.
-4. **Ningún archivo pasa a `publicable` sin firma manual** de Benja en `checklistOriginalidad` y `revisionMatematica`, con nombre y fecha. Un agente no puede firmar por sí mismo, y no se acepta una nota interna que afirme haber sido "confirmada con el autor" sin firma real.
+4. **Ningún archivo se commitea sin las dos auditorías corridas en hilos aparte.** El aislamiento reemplaza a la firma manual que existía hasta el 2026-08-12: lo que impide autocertificarse ya no es un campo con un nombre escrito, sino que quien audita no tenga en contexto las decisiones de quien redactó. No se acepta una nota interna que afirme haber sido "confirmada con el autor" en lugar de la auditoría.
 
 Este es el diferenciador real frente al material comercial disponible: no es tener más ejercicios, es que **cada ítem sea correcto y cada error tenga una explicación que enseñe**.
 
 ---
 
-## 9. Checklist de publicación
+## 9. Checklist de cierre de contenido
 
-Se corre completo antes de mover cualquier archivo a `estado: "publicable"`.
+Se corre completo antes de commitear contenido nuevo. **No existe campo `estado`**
+(eliminado el 2026-08-12): un archivo que está en `content/` y pasa
+`npm run validar` es contenido terminado. Las secciones "Matemática" y
+"Originalidad" de abajo son las que ejecutan las dos auditorías, cada una en un
+hilo abierto con `/clear` y nunca en el hilo que redactó el contenido.
 
 ### Estructura
 - [ ] Exactamente 10 pasos, en el orden de `ORDEN_PASOS`
@@ -391,18 +395,22 @@ Se corre completo antes de mover cualquier archivo a `estado: "publicable"`.
 - [ ] Cada distractor referencia un `errorCatalogado` existente en `catalogoErrores`
 - [ ] Ningún distractor es arbitrario: todos son producto de un error nombrable
 
-### Matemática
+### Matemática — auditoría en hilo aparte
 - [ ] Cada solución fue recalculada desde cero, sin mirar la clave
 - [ ] La clave declarada coincide con el recálculo independiente
+- [ ] Cada distractor es alcanzable simulando el error que dice representar, y produce ese número exacto
+- [ ] El `errorCatalogado` de cada distractor corresponde al error realmente cometido
+- [ ] Ninguna alternativa correcta es ambigua y no hay dos alternativas con el mismo valor
 - [ ] Las cifras del ejemplo trabajado y del ejercicio del paso 6 son distintas entre sí
-- [ ] `revisionMatematica.aprobada` firmada manualmente con nombre y fecha
+- [ ] La auditoría corrió en un hilo abierto con `/clear`, no en el que redactó el contenido
 
-### Originalidad
+### Originalidad — auditoría en hilo aparte
 - [ ] `consultar-fuentes.mjs` devolvió NO en dominio, cifras y plantilla
 - [ ] El contexto no pertenece a ninguna zona saturada de §6
 - [ ] Todos los contextos y cifras quedaron registrados en `contextosNumericos`
 - [ ] `proveniencia.fuentesAnalisis` lista solo fuentes usadas para calibración, no como origen de texto
-- [ ] `checklistOriginalidad` firmada manualmente con nombre y fecha
+- [ ] "PAES" y "DEMRE" solo en uso descriptivo; cero PII; sin placeholders
+- [ ] La auditoría corrió en un hilo abierto con `/clear`, no en el que redactó el contenido
 
 ### Alcance
 - [ ] La lección corresponde a una de las cuatro del MVP v1 (§4.0). Si no corresponde a ninguna, **no se construye**
@@ -424,9 +432,7 @@ Este documento es contexto de entrada, no algo que CC deba modificar por su cuen
 
 **Lo que CC no puede hacer:**
 
-- Marcar cualquier casilla de §9 por sí mismo.
-- Cambiar `estado` a `publicable`.
-- Escribir en `checklistOriginalidad` o `revisionMatematica`.
+- Marcar las casillas de §9 desde el mismo hilo que redactó el contenido: las dos auditorías exigen contexto limpio (`/clear`).
 - Avanzar al paso siguiente sin aprobación explícita del paso anterior.
 - Actualizar este documento sin instrucción directa.
 - **Proponer o construir lecciones fuera de la secuencia del MVP v1**, ni siquiera como sugerencia. La especificación está cerrada; expandir alcance antes del Gate 2 se rechaza por defecto.

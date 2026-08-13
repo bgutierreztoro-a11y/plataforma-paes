@@ -13,11 +13,18 @@ interface PresentacionLeccion {
 }
 
 /**
- * `Record<LeccionId, ...>` a propósito: un id que se renombra o se agrega en
- * `lib/modulos.ts` sin actualizar este mapa rompe el build (falta o sobra una
- * propiedad), en vez de caer en `RESPALDO` en silencio.
+ * `Partial<Record<LeccionId, ...>>` desde que el registro declara las 48
+ * lecciones del temario teniendo 9 escritas: un `Record` total exigiría copy
+ * de interfaz para 39 lecciones que todavía no existen, y esa copy se
+ * escribiría a ciegas.
+ *
+ * La garantía que antes daba el `Record` total —un id renombrado o agregado
+ * sin actualizar este mapa cae en `RESPALDO` en silencio— la sostiene ahora
+ * `__tests__/descripcionesLecciones.test.ts`, que exige entrada propia para
+ * toda lección **con archivo en disco**. Es el mismo contrato donde importa,
+ * medido contra la realidad en vez de contra el plan.
  */
-const CATALOGO: Record<LeccionId, PresentacionLeccion> = {
+const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
   "l0-demo": {
     descripcion:
       "Un recorrido corto para conocer cómo funcionan las lecciones: preguntas, pistas y descubrimiento paso a paso.",
@@ -67,6 +74,21 @@ const CATALOGO: Record<LeccionId, PresentacionLeccion> = {
     descripcion: "Compara temperaturas bajo cero y calcula variaciones que combinan enteros y fracciones.",
     Ilustracion: IlustracionPlano,
   },
+  "porcentaje-concepto": {
+    descripcion:
+      "Descubre que sacar un porcentaje es multiplicar por un número fijo, moviendo un grupo de estudiantes y viendo qué se mantiene igual.",
+    Ilustracion: IlustracionPlano,
+  },
+  "porcentaje-rebaja-doble": {
+    descripcion:
+      "Averigua por qué un 20% de descuento seguido de un 10% no es un 30%, y qué se multiplica cuando dos rebajas se aplican una tras otra.",
+    Ilustracion: IlustracionPlano,
+  },
+  "porcentaje-volver-atras": {
+    descripcion:
+      "Reconstruye el precio original a partir del precio final, y descubre por qué quitar el mismo porcentaje que se sumó nunca te devuelve al punto de partida.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {
@@ -78,7 +100,11 @@ const RESPALDO: PresentacionLeccion = {
  * Recibe `string` y no `LeccionId` a propósito: el llamador trae el id de un
  * `Leccion` leído de disco en runtime, no un literal verificado por el
  * compilador. El cast acá adentro es el único lugar donde se relaja el tipo;
- * `CATALOGO` en sí sigue exhaustivamente chequeado contra `LeccionId`.
+ * las claves de `CATALOGO` siguen acotadas a `LeccionId` por su anotación.
+ *
+ * `RESPALDO` es la salida legítima para las 39 lecciones planeadas que aún no
+ * tienen archivo. Para las que sí existen, el test de cobertura garantiza que
+ * nunca se llegue acá.
  */
 export function presentacionDeLeccion(id: string): PresentacionLeccion {
   return (CATALOGO as Record<string, PresentacionLeccion | undefined>)[id] ?? RESPALDO;

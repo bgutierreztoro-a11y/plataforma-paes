@@ -36,11 +36,10 @@ export default async function PaginaCierre({
   if (!tema || !tema.cierreId) notFound();
 
   const cierre = obtenerCierre(tema.cierreId);
-  /* Última lección publicable de ESTE tema: es la que el estudiante deja
-     atrás cuando pide "la próxima". Scoped al tema y no al camino completo,
-     para que un módulo no apunte a la última lección de otro módulo. */
-  const leccionesPublicables = tema.lecciones.filter((l) => l.publicable);
-  const ultimaLeccionId = leccionesPublicables.at(-1)?.id;
+  /* Última lección de ESTE tema: es la que el estudiante deja atrás cuando
+     pide "la próxima". Scoped al tema y no al camino completo, para que un
+     módulo no apunte a la última lección de otro módulo. */
+  const ultimaLeccionId = tema.lecciones.at(-1)?.id;
 
   return <Cierre cierre={sanitizarCierre(cierre)} ultimaLeccionId={ultimaLeccionId} />;
 }

@@ -101,10 +101,7 @@ export function CaminoLecciones({ tema }: { tema: TemaDelCamino }) {
         tema.cierreTotalItems > 0
           ? `Cierre del tema · ${tema.cierreTotalItems} preguntas formato PAES`
           : "Cierre del tema",
-      descripcion: tema.cierrePublicable
-        ? "Todo el tema junto. Al terminarlo comparamos con tu diagnóstico."
-        : "Todo el tema junto, en formato PAES.",
-      demostracion: !tema.cierrePublicable,
+      descripcion: "Todo el tema junto. Al terminarlo comparamos con tu diagnóstico.",
     });
   }
 

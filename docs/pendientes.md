@@ -1,8 +1,19 @@
 # Pendientes técnicos
 
-🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
+## ⬛ 2026-08-12 — Eliminado el sistema `estado` / `checklistOriginalidad` / `revisionMatematica`
+
+Se quitaron los tres campos del schema, del validador, de los tipos y de toda la UI: ya no hay pipeline `borrador → revision → publicable`, el validador exige el contrato completo a todo archivo de `content/`, y la revisión pasó a ser dos auditorías (matemática y de originalidad) corridas por Claude Code en hilos abiertos con `/clear`, aisladas del hilo que redactó — ver `CLAUDE.md` regla 5. `enConstruccion` sobrevive con un único origen: que una lección declarada en `lib/modulos.ts` todavía no tenga archivo en disco.
+
+**Las entradas marcadas `⬛ SUPERADA` más abajo quedaron sin objeto por este cambio. Se conservan sin reescribir**, porque registran por qué se decidió lo que se decidió y esa trazabilidad vale más que la limpieza. Se borró `docs/publicacion-l2-l3.md`, que era íntegramente el procedimiento de firma (recuperable: último commit `4b83b91`).
+
+---
+
+⬛ SUPERADA por la nota del 2026-08-12 — 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
 ## 🟡 Pendiente: revisión matemática humana real de lineal-modelamiento-paes
+
+⬛ SUPERADA por la nota del 2026-08-12: ya no hay campos que firmar. Lo que queda vigente de esta entrada es que la lección no ha pasado por la auditoría matemática en hilo aislado del nuevo flujo.
+
 Publicada con certificación parcial de Claude (independiente, recalculada
 desde cero) para que el profesor pueda revisarla en la plataforma. Falta que
 Benja y el profesor hagan la revisión real y firmen checklistOriginalidad y
@@ -239,6 +250,8 @@ Auditoría del deploy público antes de compartir el link con usuarios externos.
 
 **Resuelto:** `lib/sanitizar.ts` filtra por nombre de clave, a cualquier profundidad, antes de cruzar la frontera server→cliente: `proveniencia`, `checklistOriginalidad`, `revisionMatematica`, `catalogoErrores`, `contextosNumericos`, `_notasInternas`, `notaDiseno`, `notaVerificacionMatematica`, `solucion`. Ninguno se renderizaba. Se conservan `estado` (lo usa `BannerDemostracion`) y `respuestaModelo` (lo muestra `BloqueAbierta`). La app sigue 100% estática; no se agregó backend.
 
+⬛ SUPERADA PARCIALMENTE por la nota del 2026-08-12: `checklistOriginalidad`, `revisionMatematica` y `estado` ya no existen como campos, así que salieron de `CLAVES_INTERNAS` y la excepción de `estado` quedó sin objeto. El filtro y el resto de las claves siguen vigentes tal cual.
+
 ### Riesgo asumido: `esCorrecta` y el feedback por alternativa siguen viajando al cliente
 
 `esCorrecta`, `respuestaCorrecta` (bloques `numerica`/`verdaderoFalso`) y el `feedback` de cada alternativa siguen en el payload. Un usuario con DevTools puede ver la respuesta correcta de cualquier pregunta sin resolverla.
@@ -254,6 +267,8 @@ Auditoría del deploy público antes de compartir el link con usuarios externos.
 **Gatillo para reevaluar:** si alguna vez hay nota, certificación, ranking o cualquier incentivo para hacer trampa, esto pasa a ser un requisito y cruza el gate de backend del MOS §9–10.
 
 ### `estado: "publicable"` como gate de ruta: descartado, se usa el banner
+
+⬛ SUPERADA por la nota del 2026-08-12: no hay campo `estado` ni banner de demostración; la decisión que registra esta entrada ya no aplica a nada.
 
 Se evaluó bloquear `/cierre` y `/diagnostico` si su `estado !== "publicable"`. Hoy `cierre.json`, `diagnostico.json` y `l0-demo.json` están en `revision` — el gate dejaría el piloto inservible (el CTA de la portada moriría) y solo quedaría `/leccion/l1-patrones-de-cambio`. Además contradice la decisión de diseño ya existente en `RunnerLeccion`. En su lugar se extendió `BannerDemostracion` a `/cierre` y `/diagnostico`, que antes no lo mostraban: señal honesta de piloto, sin apagar el producto.
 
@@ -332,6 +347,8 @@ Ya está borrado y las cinco tablas quedaron en cero. La lección para el próxi
 
 ## CTA principal de `/` empujaba a contenido no publicable (2026-07-25) — RESUELTO EN PARTE
 
+⬛ SUPERADA por la nota del 2026-08-12: ya no existe "contenido no publicable" — todo lo que está en `content/` y valida es navegable.
+
 El CTA principal de la portada (`app/page.tsx`) era "Comenzar diagnóstico" y
 apuntaba a `/diagnostico`, cuyo contenido (`content/diagnostico.json`) está en
 `estado: revision`, no `publicable`.
@@ -369,6 +386,8 @@ y revisión matemática como cualquier lección. Tiene sentido recién cuando ha
 varias lecciones publicables entre las cuales enrutar (`plan-rediseno-entrada.md:19-22`).
 
 ## `/cierre` empuja al banner de demostración sin aviso — RESUELTO (2026-07-25)
+
+⬛ SUPERADA por la nota del 2026-08-12: el banner de demostración se eliminó junto con el campo `estado`, así que el problema que resolvió esta entrada ya no puede ocurrir.
 
 Al resolver el caso de `/diagnostico` (sección anterior) apareció un caso emparentado
 que no se tocó: `content/cierre.json:5` también está en `"estado": "revision"`, y
@@ -883,6 +902,9 @@ Fases ejecutadas, en orden, cada una con su propio commit y verde de
    (`PREVIEW_MOSTRAR_BORRADORES`), que estaba escrito pero sin commitear desde
    antes de esta sesión. `lib/contenido.ts`, `app/leccion/[id]/page.tsx`,
    `components/RunnerLeccion.tsx`.
+   ⬛ SUPERADA por la nota del 2026-08-12: la variable y las funciones
+   `previewMuestraBorradores()` / `idsPublicablesOPreview()` se eliminaron —
+   sin borradores que revelar, el bypass no tiene función.
 2. **Fase 2** (`9dbc212`) — estados de interacción: acierto anclado al objeto
    de la respuesta (alternativa, campo o botón elegido, no solo el panel), y
    el "Comprobar" de `SecuenciaMicropreguntas` presente-apagado en vez de
@@ -1046,3 +1068,147 @@ mueve a la descripción del `catalogoErrores` correspondiente.
   únicos que la tienen; el resto de los ítems PAES del repo es 100% texto. Sin
   representación no hay nada que redibujar, e inventarle una a un ítem es
   trabajo de contenido, no de render.
+
+## 🟡 Rediseño de UI (Fases 1-6 + fixes de nav y tarjeta): tres deudas que quedan abiertas (2026-08-11)
+
+Mergeado a producción en `f84ebb1` (commits `b6c20d4`, `a92fd79`, `868978d`,
+`0d4694e` sobre las Fases 1-6). Quedan tres cosas sin resolver, ninguna
+bloqueante.
+
+### 1. El aire dentro de `TarjetaActivo` en /camino: mitigado, no resuelto
+
+`alturaSegura` (`lib/geometriaCamino.ts`) reserva el alto de la tarjeta
+redondeando hacia arriba al siguiente borde de fila o banda de la columna,
+porque su único trabajo es garantizar que el borde libre de la tarjeta nunca
+corte una fila de abajo. El contenido real de la tarjeta mide 165–188px; los
+bordes disponibles en la retícula son múltiplos de `PASO_FILA` (76px) más, a
+veces, `ALTO_ENCABEZADO_EJE` (44px). Como esos números no coinciden con el
+contenido, siempre sobra algo — es geometría, no un descuido, y quedó
+demostrado el mismo día midiendo los 16 nodos uno por uno.
+
+El commit `0d4694e` bajó la cota de redondeo de 216 (`RESERVA_TARJETA`,
+calibrada a 360px/móvil) a 192 (`RESERVA_TARJETA_ESCRITORIO`, medida en el
+rango real de escritorio). Mejora 8 de los 16 nodos —los que tienen una banda
+de eje (44px) cerca abajo, el aire baja de 55–67px a 17–29px— pero deja los
+otros 8 exactamente igual, en 45px: los que tienen tres filas planas de 76px
+debajo y ninguna banda cerca, porque el borde disponible más cercano por
+encima de 165–188 sigue siendo 228 (3×76) tanto con la cota vieja como con la
+nueva. Verificado visualmente el mismo día: 45px se lee como padding
+generoso en las tarjetas de módulos "Aún no disponible" (6 de los 8 casos),
+no como el hueco muerto de antes del fix.
+
+Se evaluaron tres caminos para resolverlo de raíz, no solo mitigarlo:
+
+1. **Tarjeta en línea que empuja las filas de abajo en vez de flotar sobre
+   ellas** (la solución real). Sin borde libre sobre la columna no hay corte
+   posible que prevenir, así que el alto de la tarjeta puede ser el de su
+   contenido y el aire desaparece. Costo: la columna se reacomoda en cada
+   selección de nodo, cambia la densidad de la pantalla, y es un cambio de
+   mecanismo — no un ajuste de constante. **Es la opción recomendada, para
+   una fase aparte.**
+2. Bajar `PASO_FILA` para que la retícula sea más fina y algún borde caiga
+   más cerca del contenido. Descartado: toca la densidad de toda la pantalla
+   del camino (el objetivo de "6 nodos visibles sin scroll en 360×800" de
+   MASTER.md §3.2 depende de ese número) para resolver un problema que es
+   solo de la tarjeta flotante.
+3. Forzar la descripción a 3 líneas en vez de 2 para que el contenido real se
+   acerque más a 228px. Descartado: es maquillar una restricción de layout
+   tocando contenido/copy en vez de resolver el layout, y solo mejora los 6
+   casos peores sin eliminarlos.
+
+**Gatillo para retomar:** cuando se abra una fase de UI en /camino, no
+antes — no es un hotfix.
+
+### 2. /tema/[id]: el nodo previo al cierre se desborda 64px sobre la franja del tema
+
+Mismo mecanismo que el bug de la nav que corrigió `a92fd79`
+(`tapariaUnaBanda` dejó de voltear la tarjeta por bandas que no son
+control), pero acá el volteo tiene otra causa: el nodo siguiente es la meta
+(`voltear = true` cuando `siguiente.meta === true` en
+`CaminoVertical.tsx`), no una banda. Con el nodo previo al cierre activo, la
+tarjeta cuelga hacia arriba y se desborda 64px por encima del inicio de su
+columna, pisando la franja fija de /tema/[id] — no la barra de navegación,
+ahí no llega. Documentado en el test "la tarjeta activa nunca corta un nodo
+ni se desborda por arriba (escritorio)" de `e2e/capturas.spec.ts`, que cubre
+/camino y explícitamente no /tema/[id] por esto.
+
+**Gatillo para retomar:** junto con el punto 1, si se toca el mecanismo de
+anclaje de la tarjeta — es la misma familia de problema.
+
+### 3. 15 tests e2e fallan desde antes del merge del rediseño, no son regresión
+
+`git stash` + corrida limpia contra `94e40ef` (Fase 6, previo a los 4 fixes
+del 2026-08-11) confirmó el mismo set de 15 fallas, mismos nombres, con y
+sin los fixes de nav/tarjeta. Incluyen `e2e/capturas.spec.ts` ("camino con
+la lección a medias", "camino", "un nodo bloqueado dice por qué...", "el
+segundo nivel trata igual a una lección bloqueada", "abierta sin avanzar /
+terminada bajo el umbral: las cuatro superficies dicen lo mismo", "tema con
+los nodos enlazados") y `e2e/interactivo-dos-variables.spec.ts` ("predice,
+mueve, comprueba, confirma"), en los dos proyectos (`movil` y `escritorio`)
+donde aplica. No se diagnosticaron uno por uno.
+
+**Gatillo para retomar:** antes de la próxima fase de contenido o UI que
+toque estas pantallas — corren en cada `npx playwright test` y hoy ensucian
+la señal real de cualquier cambio nuevo.
+
+## 🟡 Deuda detectada al escribir la L1 de Porcentaje (2026-08-11)
+
+Los tres puntos salieron de la preparación de `content/lecciones/porcentaje-concepto.json`
+(recorrer el contrato, el esqueleto y los contextos ya usados). Ninguno bloqueaba
+esa lección, así que se registran acá sin resolverlos.
+
+### 1. `contextosNumericos` faltante en dos lecciones publicables
+
+`lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` **no
+declaran el campo**, pero usan al menos 10 contextos: bidón que se llena, ahorro
+de Camila y Diego, páginas de Nicolás, impresora por página, taxímetro, población
+de bacterias, estampillas de Martina, fichas de juego de mesa, latas de reciclaje
+y huerta escolar con plantines.
+
+**Por qué importa:** el campo existe para que una lección nueva no repita un
+contexto ya usado. Hoy el inventario declarado son 73 contextos en 7 archivos, y
+esos 10 quedan fuera — quien consulte el campo va a creer que están libres. Al
+escribir la L1 de Porcentaje hubo que abrir las dos lecciones y extraerlos a
+mano; sin ese paso extra, el dominio agrícola (huerta escolar / plantines) se
+habría reusado sin que nada avisara.
+
+**Gatillo para retomar:** antes de escribir la siguiente lección de cualquier
+módulo, o al tocar cualquiera de esas dos por otro motivo.
+
+### 2. Descalce entre los 2 puntos DEMRE de Porcentaje y las 3 lecciones planeadas
+
+`docs/temario-demre-m1-2027.md` lista **dos** puntos para Porcentaje:
+«Concepto y cálculo de porcentaje» y «Problemas que involucren porcentaje en
+diversos contextos». `docs/mapa-modulos-m1.md` declara **tres** lecciones.
+
+La L1 (`porcentaje-concepto`) cubre el primer punto exactamente. Falta decidir
+cómo se reparte el segundo entre L2 (`porcentaje-rebaja-doble`, hoy titulada
+«Porcentaje aplicado sucesivamente en contextos de precio») y L3
+(`porcentaje-volver-atras`, «Cálculo del valor original a partir de un
+porcentaje») — ninguno de esos dos títulos aparece literal en el temario.
+
+**Por qué importa:** los títulos son el nombre técnico DEMRE y se auditan contra
+el temario. Dos lecciones con título que no calza con ningún punto del temario es
+justo lo que la decisión de «un solo nombre, el auditable» quería evitar.
+
+**Gatillo para retomar:** antes de escribir la L2 de Porcentaje.
+
+### 3. `content/lecciones/_esqueleto.json` desactualizado respecto al schema
+
+La plantilla declara formas de bloque que el contrato vigente rechaza:
+
+- `"tipo": "interactivo"` — no existe en el schema; el tipo válido es
+  `interactivoSlider`, y además exige `variante` y `variables`.
+- `"tipo": "pistas"` con la clave `pistas: []` — el schema pide
+  `condicionActivacion` y `niveles[]`, y tiene `additionalProperties: false`.
+- `"tipo": "pregunta"` con `contenido` — el schema pide `enunciado` y
+  `alternativas` (formato A–D).
+
+**Por qué importa:** los archivos que empiezan con `_` no se validan, así que
+la plantilla puede divergir del contrato sin que `npm run validar` diga nada.
+Quien parta de ella escribiendo una lección nueva produce un archivo que falla
+al subirlo a `revision`. Para `porcentaje-concepto.json` se siguió el schema
+directamente y se ignoró el esqueleto.
+
+**Gatillo para retomar:** antes de la próxima lección que alguien escriba
+partiendo de la plantilla, o al tocar el schema otra vez.

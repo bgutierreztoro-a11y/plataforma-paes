@@ -11,7 +11,6 @@ function leccionCon(catalogoErrores?: { id: string; descripcion: string }[]): Le
     tipo: "leccion",
     id: "l-test",
     titulo: "Test",
-    estado: "borrador",
     objetivo: "",
     tiempoEstimadoMin: 1,
     prerrequisitos: [],
@@ -132,7 +131,6 @@ test("los ids locales NO se resuelven entre archivos: un cierre sin catálogo qu
     tipo: "cierre",
     id: "cierre-test",
     titulo: "Cierre",
-    estado: "borrador",
     proveniencia: { fuentesAnalisis: [], declaracionOriginalidad: "x" },
     items: [
       {

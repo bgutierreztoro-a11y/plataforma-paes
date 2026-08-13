@@ -2,7 +2,6 @@
   "tipo": "cierre",
   "id": "cierre-ecuaciones-lineales",
   "titulo": "Cierre del módulo: Ecuaciones e inecuaciones de primer grado",
-  "estado": "publicable",
   "_notasInternas": [
     "Cierre del tema 'Ecuaciones e inecuaciones de primer grado' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: ecuaciones-lineales.json, inecuaciones-resolucion.json e inecuaciones-problemas.json.",
     "AMPLIADO A INECUACIONES EL 2026-08-03 — cierra la deuda anterior. Este archivo nació con 8 ítems, todos de ecuaciones, y una nota que decía 'Cierre incompleto respecto al tema completo: cubre solo ecuaciones lineales. Pendiente ampliar con ítems de inecuaciones cuando esas lecciones se creen.' Esas lecciones ya existen, así que la deuda queda saldada: se reemplazaron 4 de los 8 ítems por ítems de inecuaciones, dejando el reparto en 4 de ecuaciones y 4 de inecuaciones. El cierre ya representa el tema completo.",
@@ -322,19 +321,6 @@
     ],
     "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los tres contextos ya establecidos en ecuaciones-lineales.json con estructuras nuevas (ecuación de un paso, de dos pasos con resta inicial, con la incógnita en ambos lados, un ítem de equivalencia, uno de diagnóstico de un desarrollo ajeno y un ítem integrador de dos escenarios). El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }

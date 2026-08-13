@@ -77,25 +77,20 @@ export function avanceDeTema(
  *
  * Reglas, en este orden:
  *
- * 1. Todas las lecciones en construcción → **en construcción**.
+ * 1. El tema no tiene ninguna lección con archivo en disco → **en
+ *    construcción**. Es el único origen de esa etiqueta desde que se eliminó
+ *    el sistema de `estado` (2026-08-12): `leccionesDelTema()` en
+ *    `lib/camino.ts` ya descarta las declaradas sin JSON, así que un tema sin
+ *    archivos llega acá con `lecciones` vacío y `every()` responde `true`.
  * 2. Alguna lección **por repasar** → **por repasar**. Va antes que
  *    "completado" a propósito: una deuda pedagógica pendiente pesa más que
  *    haber recorrido todo el material.
- * 3. **Completado** exige las dos cosas: que *todas* las lecciones declaradas
- *    en `lib/modulos.ts` estén completadas —lo que incluye estar publicables,
- *    porque una lección no publicable nunca llega a "completado"— y que el
- *    cierre del tema, si lo tiene, se haya rendido entero.
+ * 3. **Completado** exige las dos cosas: que *todas* las lecciones con archivo
+ *    estén completadas y que el cierre del tema, si lo tiene, se haya rendido
+ *    entero.
  * 4. Hay algo empezado, sea una lección a medias o una ya cerrada → **en
  *    curso**.
  * 5. Si no → **disponible**.
- *
- * El paso 3 es el que impide celebrar de más. Filtrar por "publicable" antes de
- * evaluar —como hacía la primera versión— hacía que un tema con una lección
- * abierta y otra en borrador se diera por terminado al hacer la primera: el
- * estudiante veía "Tema completado" tras 1 de 2 lecciones. Son 16 celebraciones
- * en todo el curso y son idempotentes, así que gastar una en falso significa
- * que el estudiante nunca vería la de verdad cuando la lección que falta se
- * publique.
  *
  * El paso 4 hereda de `estadoDeLeccion` el predicado `pasoActual > 0`, y ese es
  * el cambio de comportamiento de este pliegue: un tema donde el estudiante dejó
@@ -121,8 +116,7 @@ export function estadoDeNodo(
 
   const cierreRendido =
     !tema.cierreId ||
-    (tema.cierrePublicable &&
-      (resumen.itemsRespondidos.get("cierre")?.size ?? 0) >= tema.cierreTotalItems);
+    (resumen.itemsRespondidos.get("cierre")?.size ?? 0) >= tema.cierreTotalItems;
 
   if (estados.every((e) => e === "completado") && cierreRendido) return "completado";
 
@@ -152,8 +146,6 @@ export function estadoDeLeccion(
   progreso: ProgresoLocal | null,
   resumen: ResumenRespuestas,
 ): EstadoNodo {
-  if (!leccion.publicable) return "enConstruccion";
-
   const guardada = (progreso?.lecciones ?? []).find((l) => l.leccionId === leccion.id);
 
   if (guardada?.completada) {

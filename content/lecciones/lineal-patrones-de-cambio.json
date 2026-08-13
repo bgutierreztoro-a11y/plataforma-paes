@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "lineal-patrones-de-cambio",
-  "titulo": "El patrón que se repite",
+  "titulo": "Concepto de función lineal y función afín",
   "objetivo": "Detectar si una situación o tabla tiene cambio constante mirando las diferencias entre valores consecutivos; predecir valores futuros usando la estructura 'valor inicial + cambio por paso × cantidad de pasos'; y distinguir cambio constante de otros tipos de crecimiento.",
   "tiempoEstimadoMin": 22,
   "prerrequisitos": [
@@ -17,7 +17,6 @@
     "'conceptos' (esta lista de 4) y 'tiempoEstimadoMin: 22' son adiciones editoriales sin equivalente literal en leccion-1-guion.md: el guion da un rango de duración de 20 a 25 minutos (se fijó 22 dentro de ese rango) y no enumera 'conceptos' como lista. Ninguno de los dos es campo requerido por leccion.schema.json (el 'required' a nivel de lección es solo tipo/id/titulo/estado/proveniencia). Se declaran aquí como decisión editorial de la migración del 2026-07-08, no como omisión — hallazgo de la auditoría de fidelidad, corregido el 2026-07-08.",
     "Corrección de procedencia (2026-07-09, sin re-verificación matemática ni de originalidad — solo lenguaje): docs/pendientes.md confirmó que /revision-matematica y /revision-originalidad, en este entorno, no lanzan un subagente en sesión aislada real (el Agent tool no expone auditor-originalidad ni revisor-matematico como subagent_type invocable); corren en la sesión compartida del hilo principal. Por lo tanto, `revisionMatematica.aprobada: true` y `checklistOriginalidad` (más abajo) reflejan revisión en sesión compartida, pendiente de re-verificación aislada según el protocolo de docs/protocolo-revision-aislada.md — no una revisión independiente confirmada en el sentido que describe leccion.schema.json ('Revisión independiente: recalcular todo desde cero'). Mismo matiz aplica a la nota de la pantalla 'aplicacion' más abajo, que atribuía la verificación a que el subagente 'confirmó por su cuenta' los tres bloqueos previos."
   ],
-  "estado": "publicable",
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -529,18 +528,5 @@
       "mineduc-curriculum/03-unidad-2-algebra-funciones.md (OA10, 8° básico, función afín) — agregada como fuente de análisis el 2026-07-08 tras la auditoría de originalidad, que detectó paralelismo conceptual entre el enfoque de esta lección (receta 'valor inicial + cambio por paso × pasos', ejemplo de ahorro con cambio constante) y los ejemplos de ese documento (formulación recursiva f(t+1)=f(t)+c, ejemplo de ahorro/gasto diario constante). Se declara como convergencia pedagógica con el enfoque oficial de Mineduc para este OA (documento curricular de uso público, no material de terceros con derechos reservados), no como derivación no declarada de un texto específico."
     ],
     "declaracionOriginalidad": "Enunciados, contextos y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 y material externo se usaron solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de esas fuentes fue reproducido ni parafraseado."
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "Benjamín Gutiérrez",
-    "fecha": "2026-07-08"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "Benjamín Gutiérrez",
-    "fecha": "2026-07-08"
   }
 }

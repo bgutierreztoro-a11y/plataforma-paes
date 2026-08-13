@@ -16,7 +16,6 @@ import {
 import type { CierreId } from "./modulos";
 import type {
   Contenido,
-  Estado,
   Leccion,
   DiagnosticoContenido,
   CierreContenido,
@@ -132,28 +131,24 @@ export function obtenerLeccion(id: string): Leccion {
 const ID_DEMO = "l0-demo";
 
 /**
- * `true` si el contenido puede mostrarse a un estudiante. La fuente de verdad es
- * el `estado` del propio JSON: el schema declara "Solo 'publicable' puede
- * mostrarse a estudiantes" (content/schema/leccion.schema.json).
- *
- * Pide solo `estado` (el campo que comparte todo `ContenidoBase`) en vez de una
- * `Leccion` completa: lección, diagnóstico y cierre se preguntan lo mismo, y así
- * la comparación con "publicable" vive en un único lugar.
- */
-export function esPublicable(contenido: { estado: Estado }): boolean {
-  return contenido.estado === "publicable";
-}
-
-/**
  * Cruza el registro de temas (`lib/modulos.ts`, estático) contra los archivos que
  * existen en disco. Es la mitad de la garantía que TypeScript no puede dar: el
  * compilador impide escribir un id que no esté en `IDS_LECCION`, pero no sabe
  * si ese archivo existe ni si alguien lo dejó huérfano.
  *
- * Se verifica en las dos direcciones porque los dos errores son igual de
- * silenciosos: un id declarado que no existe pinta un nodo hacia un 404, y una
- * lección real que ningún tema reclama simplemente desaparece del camino sin
- * que nada falle.
+ * **Solo se verifica una dirección: disco → registro.** Un archivo real que
+ * ningún tema reclama desaparece del camino sin que nada falle, así que sigue
+ * siendo error. La dirección contraria —un id declarado sin archivo en disco—
+ * dejó de serlo cuando el registro pasó a declarar las 48 lecciones del
+ * temario (16 módulos × 3) teniendo solo 9 escritas: un id sin archivo es una
+ * lección *planeada*, y su módulo se muestra como `sin-contenido` en el
+ * camino. `leccionesDelTema()` en `lib/camino.ts` ya los salta, y
+ * `temasConNodo()` deja esos módulos fuera de `generateStaticParams`.
+ *
+ * Lo que se pierde: un typo dentro de `IDS_LECCION` ya no truena acá, se lee
+ * como lección planeada. Sigue cubierto por el otro lado —`EJES` es
+ * `as const satisfies`, así que un id que no esté en `IDS_LECCION` no
+ * compila— y por `docs/mapa-modulos-m1.md`, que es la fuente única de nombres.
  *
  * Lanza en vez de advertir: esto corre al construir el camino, así que una
  * desincronización rompe el build en lugar de publicar un temario con hoyos.
@@ -163,11 +158,6 @@ export function verificarRegistroDeTemas(): void {
   const declarados = new Set<string>(IDS_LECCION);
   const problemas: string[] = [];
 
-  for (const id of declarados) {
-    if (!enDisco.has(id)) {
-      problemas.push(`"${id}" está en IDS_LECCION pero no existe content/lecciones/${id}.json`);
-    }
-  }
   for (const id of enDisco) {
     if (!declarados.has(id)) {
       problemas.push(`content/lecciones/${id}.json existe pero no está en IDS_LECCION`);
@@ -232,9 +222,10 @@ export function verificarRegistroDeTemas(): void {
 
 /**
  * Ids del camino del estudiante en orden de temario (eje → tema → posición
- * dentro del tema), excluida la demo. Incluye a propósito lecciones aún no
- * publicables: el camino las muestra como "En preparación" en vez de ocultarlas,
- * para que el curso se lea como en construcción y no como abandonado.
+ * dentro del tema), excluida la demo. Son las lecciones que tienen archivo en
+ * disco y validan: las declaradas en `lib/modulos.ts` sin JSON todavía quedan
+ * fuera acá y el camino las muestra como "En preparación", para que el curso se
+ * lea como en construcción y no como abandonado.
  *
  * El orden lo da `lib/modulos.ts`, no el nombre del id ni un sort alfabético.
  * El id ya no lleva prefijo numérico (`l1-`, `l2-`, `l3-`): desde la Enmienda 2
@@ -252,34 +243,20 @@ export function idsDelCamino(): string[] {
 }
 
 /**
- * Ids efectivamente navegables: solo las publicables del camino. Alimenta
- * `generateStaticParams`; con `dynamicParams = false`, cualquier otro id —la
- * demo o una lección en borrador/revisión— cae en el 404 normal.
+ * Ids efectivamente navegables. Desde que se eliminó el sistema de `estado`
+ * (2026-08-12) coincide con `idsDelCamino()`: todo contenido válido del camino
+ * es navegable, porque el contenido se revisa una vez y se publica directo.
+ *
+ * Se conserva como función propia —y no se reemplaza por `idsDelCamino()` en
+ * cada llamador— porque nombra una intención distinta: "lo que el estudiante
+ * puede abrir". Si algún día vuelve a haber un filtro, vive acá.
+ *
+ * Alimenta `generateStaticParams`; con `dynamicParams = false`, cualquier otro
+ * id —la demo, o una lección declarada sin archivo en disco— cae en el 404
+ * normal.
  */
 export function idsPublicables(): string[] {
-  return idsDelCamino().filter((id) => esPublicable(obtenerLeccion(id)));
-}
-
-/**
- * `true` solo con `PREVIEW_MOSTRAR_BORRADORES=true` (Preview env de Vercel,
- * nunca Production). Reconstruye el bypass de `02457f2`, perdido en un
- * refactor posterior: deja ver contenido en borrador para demostración sin
- * tocar `estado`, que sigue siendo la única fuente de verdad de qué está
- * realmente revisado. `RunnerLeccion` es responsable de mostrar el banner
- * de demostración cuando la lección no es publicable.
- */
-export function previewMuestraBorradores(): boolean {
-  return process.env.PREVIEW_MOSTRAR_BORRADORES === "true";
-}
-
-/**
- * Como `idsPublicables()`, pero incluye borradores si el preview está
- * activo. Es lo único que debe alimentar `generateStaticParams` de
- * `/leccion/[id]`: así la ruta existe en Preview aunque `estado` no sea
- * `"publicable"`, sin relajar el contrato en Production.
- */
-export function idsPublicablesOPreview(): string[] {
-  return previewMuestraBorradores() ? idsDelCamino() : idsPublicables();
+  return idsDelCamino();
 }
 
 export function obtenerDiagnostico(): DiagnosticoContenido {

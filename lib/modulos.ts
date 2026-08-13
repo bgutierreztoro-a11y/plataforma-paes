@@ -9,10 +9,12 @@
  *
  * Por qué el registro vive fuera de `content/`:
  *
- * 1. **14 de los 16 temas no tienen ninguna lección.** Un tema no puede
- *    declararse desde dentro de un archivo que no existe, así que el registro
- *    tiene que ser independiente del contenido. No es preferencia: es la única
- *    forma de que el mapa completo pueda existir.
+ * 1. **13 de los 16 temas no tienen ningún archivo de lección en disco.** Los
+ *    16 declaran sus 3 lecciones acá —el mapa completo del temario existe
+ *    desde el primer día—, pero solo 3 módulos tienen JSON escrito. Un tema no
+ *    puede declararse desde dentro de un archivo que no existe, así que el
+ *    registro tiene que ser independiente del contenido. No es preferencia: es
+ *    la única forma de que el mapa completo pueda existir.
  * 2. `scripts/validar-contenido.mjs` recorre `content/` recursivamente y valida
  *    todo `.json` que encuentre como lección, diagnóstico o cierre. Un
  *    `content/temas/*.json` fallaría con "tipo debe ser leccion, diagnostico o
@@ -31,21 +33,73 @@
  *
  * TypeScript no puede leer el directorio en tiempo de tipos, así que esta lista
  * es la mitad estática de la garantía: cualquier id escrito en `EJES` que no
- * esté acá es un error de compilación. La otra mitad —que esta lista coincida
- * con los archivos que realmente existen— la verifica
- * `verificarRegistroDeTemas()` en `lib/contenido.ts`.
+ * esté acá es un error de compilación.
+ *
+ * **Declarar un id NO afirma que su archivo exista.** Las 48 lecciones del
+ * temario están declaradas; solo 9 tienen JSON escrito. Un id sin archivo es
+ * una lección *planeada*: `verificarRegistroDeTemas()` en `lib/contenido.ts`
+ * la deja pasar y su módulo se muestra como "sin contenido" en el camino. Lo
+ * que esa función sí sigue prohibiendo es la dirección contraria —un archivo
+ * en disco que ningún tema reclame—, porque ese desaparece en silencio.
  */
 export const IDS_LECCION = [
   "l0-demo",
-  "lineal-patrones-de-cambio",
-  "lineal-pendiente-e-intercepto",
-  "lineal-modelamiento-paes",
-  "ecuaciones-lineales",
-  "inecuaciones-resolucion",
-  "inecuaciones-problemas",
+
+  // Números
   "enteros-operar-y-ordenar",
   "enteros-operar-y-comparar",
   "enteros-problemas-en-contexto",
+  "porcentaje-concepto",
+  "porcentaje-rebaja-doble",
+  "porcentaje-volver-atras",
+  "potencias-multiplicar-corto",
+  "potencias-exponente-racional",
+  "potencias-raiz-escondida",
+
+  // Álgebra y funciones
+  "expresiones-rectangulo",
+  "expresiones-deshacer-producto",
+  "expresiones-sumar-lo-que-se-parece",
+  "proporcionalidad-directa",
+  "proporcionalidad-inversa",
+  "proporcionalidad-reconocer",
+  "ecuaciones-lineales",
+  "inecuaciones-resolucion",
+  "inecuaciones-problemas",
+  "sistemas-dos-historias",
+  "sistemas-rectas-no-se-cruzan",
+  "sistemas-plantear-antes-resolver",
+  "lineal-patrones-de-cambio",
+  "lineal-pendiente-e-intercepto",
+  "lineal-modelamiento-paes",
+  "cuadratica-sube-y-baja",
+  "cuadratica-punto-mas-alto",
+  "cuadratica-donde-toca-el-eje",
+
+  // Geometría
+  "figuras-triangulo-no-se-rompe",
+  "figuras-borde-y-superficie",
+  "figuras-problemas-con-forma",
+  "cuerpos-desarmar-la-caja",
+  "cuerpos-cuanto-cabe-adentro",
+  "cuerpos-hoja-al-cilindro",
+  "isometrias-mover-sin-deformar",
+  "isometrias-girar-reflejar-trasladar",
+  "isometrias-figura-y-su-imagen",
+  "semejanza-misma-forma-otro-tamano",
+  "semejanza-medir-sin-acercarse",
+  "semejanza-plano-y-realidad",
+
+  // Probabilidad y estadística
+  "datos-grafico-puede-mentir",
+  "datos-numero-que-representa",
+  "datos-leer-antes-de-calcular",
+  "posicion-donde-quedaste-tu",
+  "posicion-partir-en-cuatro",
+  "posicion-caja-que-resume",
+  "probabilidad-posible-y-probable",
+  "probabilidad-esto-o-esto-otro",
+  "probabilidad-antes-de-apostar",
 ] as const;
 
 export type LeccionId = (typeof IDS_LECCION)[number];
@@ -60,6 +114,7 @@ export const IDS_CIERRE = [
   "cierre-v0",
   "cierre-enteros-racionales",
   "cierre-ecuaciones-lineales",
+  "cierre-porcentaje",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -70,7 +125,7 @@ interface FormaTema {
   id: string;
   nombre: string;
   /** Una línea en lenguaje del estudiante —qué vas a poder hacer—, no en
-   *  lenguaje del temario. Copy de interfaz: en 14 de 16 temas describe algo
+   *  lenguaje del temario. Copy de interfaz: en 13 de 16 temas describe algo
    *  que todavía no tiene contenido, así que no podría vivir en un JSON de
    *  lección. */
   objetivo: string;
@@ -82,7 +137,9 @@ interface FormaTema {
    */
   capacidad: string;
   /** Orden de curso dentro del tema. La posición en este array **es** la
-   *  secuencia: sin campo `orden`, sin parsear el prefijo del id, sin sort. */
+   *  secuencia: sin campo `orden`, sin parsear el prefijo del id, sin sort.
+   *  Los 16 temas declaran sus 3 lecciones aunque el JSON todavía no exista:
+   *  declarar es planificar, no afirmar que el archivo está escrito. */
   lecciones: readonly LeccionId[];
   /**
    * Id del contenido de cierre con que termina este tema (`tipo: "cierre"` en
@@ -137,16 +194,25 @@ export const EJES = [
           "Ya puedes calcular descuentos, aumentos e IVA sin depender de la calculadora.",
         objetivo:
           "Calcular descuentos, aumentos e IVA de cabeza, y notar cuándo un 20% no es lo que parece.",
-        lecciones: [],
+        lecciones: [
+          "porcentaje-concepto",
+          "porcentaje-rebaja-doble",
+          "porcentaje-volver-atras",
+        ],
+        cierreId: "cierre-porcentaje",
       },
       {
         id: "potencias-y-raices",
-        nombre: "Potencias y raíces",
+        nombre: "Potencias y raíces enésimas",
         capacidad:
           "Ya puedes manejar potencias y raíces, incluso con exponentes negativos.",
         objetivo:
           "Manejar potencias y raíces, incluidos los exponentes negativos y fraccionarios.",
-        lecciones: [],
+        lecciones: [
+          "potencias-multiplicar-corto",
+          "potencias-exponente-racional",
+          "potencias-raiz-escondida",
+        ],
       },
     ],
   },
@@ -161,7 +227,11 @@ export const EJES = [
           "Ya puedes reducir y factorizar expresiones sin perder términos.",
         objetivo:
           "Reducir, factorizar y evaluar expresiones con letras sin perder términos en el camino.",
-        lecciones: [],
+        lecciones: [
+          "expresiones-rectangulo",
+          "expresiones-deshacer-producto",
+          "expresiones-sumar-lo-que-se-parece",
+        ],
       },
       {
         id: "proporcionalidad",
@@ -170,7 +240,11 @@ export const EJES = [
           "Ya puedes distinguir una proporción directa de una inversa y usar ambas.",
         objetivo:
           "Distinguir cuándo dos cantidades crecen juntas y cuándo una sube mientras la otra baja.",
-        lecciones: [],
+        lecciones: [
+          "proporcionalidad-directa",
+          "proporcionalidad-inversa",
+          "proporcionalidad-reconocer",
+        ],
       },
       {
         id: "ecuaciones-e-inecuaciones-primer-grado",
@@ -188,12 +262,16 @@ export const EJES = [
       },
       {
         id: "sistemas-2x2",
-        nombre: "Sistemas de ecuaciones 2×2",
+        nombre: "Sistemas de ecuaciones lineales (2x2)",
         capacidad:
           "Ya puedes resolver un sistema de dos ecuaciones y leer qué significa su solución.",
         objetivo:
           "Resolver dos ecuaciones con dos incógnitas y leer qué significa el punto donde se cruzan.",
-        lecciones: [],
+        lecciones: [
+          "sistemas-dos-historias",
+          "sistemas-rectas-no-se-cruzan",
+          "sistemas-plantear-antes-resolver",
+        ],
       },
       {
         id: "funcion-lineal-y-afin",
@@ -216,7 +294,11 @@ export const EJES = [
           "Ya puedes reconocer una parábola y encontrar sus ceros y su vértice.",
         objetivo:
           "Reconocer una parábola, encontrar dónde corta el eje x y dónde está su punto más alto o más bajo.",
-        lecciones: [],
+        lecciones: [
+          "cuadratica-sube-y-baja",
+          "cuadratica-punto-mas-alto",
+          "cuadratica-donde-toca-el-eje",
+        ],
       },
     ],
   },
@@ -231,7 +313,11 @@ export const EJES = [
           "Ya puedes calcular perímetros y áreas, y aplicar Pitágoras cuando corresponde.",
         objetivo:
           "Calcular perímetros y áreas, y sacar el lado que falta cuando aparece un triángulo rectángulo.",
-        lecciones: [],
+        lecciones: [
+          "figuras-triangulo-no-se-rompe",
+          "figuras-borde-y-superficie",
+          "figuras-problemas-con-forma",
+        ],
       },
       {
         id: "cuerpos-geometricos",
@@ -239,7 +325,11 @@ export const EJES = [
         capacidad:
           "Ya puedes calcular el volumen y la superficie de los cuerpos que evalúa la PAES.",
         objetivo: "Calcular volumen y superficie de cuerpos que puedes imaginar en la mano.",
-        lecciones: [],
+        lecciones: [
+          "cuerpos-desarmar-la-caja",
+          "cuerpos-cuanto-cabe-adentro",
+          "cuerpos-hoja-al-cilindro",
+        ],
       },
       {
         id: "transformaciones-isometricas",
@@ -247,16 +337,24 @@ export const EJES = [
         capacidad:
           "Ya puedes trasladar, rotar y reflejar figuras sin equivocarte en el resultado.",
         objetivo: "Trasladar, rotar y reflejar una figura sin cambiarle el tamaño ni la forma.",
-        lecciones: [],
+        lecciones: [
+          "isometrias-mover-sin-deformar",
+          "isometrias-girar-reflejar-trasladar",
+          "isometrias-figura-y-su-imagen",
+        ],
       },
       {
         id: "semejanza-y-proporcionalidad",
-        nombre: "Semejanza y proporcionalidad",
+        nombre: "Semejanza y proporcionalidad de figuras",
         capacidad:
           "Ya puedes usar semejanza para calcular medidas que no puedes tomar directamente.",
         objetivo:
           "Usar figuras semejantes para calcular alturas y distancias que no puedes medir directamente.",
-        lecciones: [],
+        lecciones: [
+          "semejanza-misma-forma-otro-tamano",
+          "semejanza-medir-sin-acercarse",
+          "semejanza-plano-y-realidad",
+        ],
       },
     ],
   },
@@ -266,11 +364,15 @@ export const EJES = [
     temas: [
       {
         id: "tablas-y-graficos",
-        nombre: "Tablas y gráficos",
+        nombre: "Representación de datos a través de tablas y gráficos",
         capacidad:
           "Ya puedes leer un gráfico con criterio y detectar cuando está mal construido.",
         objetivo: "Leer un gráfico rápido y detectar cuándo está armado para confundirte.",
-        lecciones: [],
+        lecciones: [
+          "datos-grafico-puede-mentir",
+          "datos-numero-que-representa",
+          "datos-leer-antes-de-calcular",
+        ],
       },
       {
         id: "medidas-de-posicion",
@@ -279,16 +381,24 @@ export const EJES = [
           "Ya puedes interpretar media, mediana, cuartiles y percentiles, y elegir cuál usar.",
         objetivo:
           "Interpretar media, mediana, cuartiles y percentiles, y saber cuál conviene mirar en cada caso.",
-        lecciones: [],
+        lecciones: [
+          "posicion-donde-quedaste-tu",
+          "posicion-partir-en-cuatro",
+          "posicion-caja-que-resume",
+        ],
       },
       {
         id: "reglas-de-probabilidades",
-        nombre: "Reglas de probabilidades",
+        nombre: "Reglas de las probabilidades",
         capacidad:
           "Ya puedes calcular probabilidades de eventos combinados sin fiarte de la intuición.",
         objetivo:
           "Calcular la probabilidad de eventos combinados sin caer en las trampas de la intuición.",
-        lecciones: [],
+        lecciones: [
+          "probabilidad-posible-y-probable",
+          "probabilidad-esto-o-esto-otro",
+          "probabilidad-antes-de-apostar",
+        ],
       },
     ],
   },

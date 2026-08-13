@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-problemas",
-  "titulo": "Lo que el cartel realmente dice",
+  "titulo": "Problemas que involucren inecuaciones lineales en diversos contextos",
   "objetivo": "Traducir enunciados en lenguaje natural a una inecuación lineal, distinguiendo la dirección (techo o piso) de la inclusión del extremo; resolverla con el método de la lección anterior; e interpretar el conjunto solución de vuelta en el contexto, incluyendo decidir cuándo la respuesta debe ser entera y en qué dirección se redondea.",
   "tiempoEstimadoMin": 26,
   "prerrequisitos": [
@@ -28,7 +28,6 @@
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde y las dos direcciones de redondeo del paso 8. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -528,19 +527,6 @@
     ],
     "declaracionOriginalidad": "Enunciados, contextos y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los escenarios se eligieron deliberadamente fuera de la familia 'cargo fijo + tarifa variable' —saturada en el material de referencia— y fuera de los dominios ya usados en este módulo y en el de funciones lineales; el torneo de robótica usa puntos y no dinero justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en esa familia. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }

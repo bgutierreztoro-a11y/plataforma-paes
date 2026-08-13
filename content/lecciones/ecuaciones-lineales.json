@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "ecuaciones-lineales",
-  "titulo": "La balanza que esconde un número",
+  "titulo": "Resolución de ecuaciones lineales",
   "objetivo": "Resolver ecuaciones lineales de una incógnita aplicando la misma operación a ambos lados para conservar la igualdad, hasta despejar la incógnita; traducir situaciones a una ecuación y resolverla; y justificar cuándo una transformación conserva (o no) la solución.",
   "tiempoEstimadoMin": 22,
   "prerrequisitos": [
@@ -21,7 +21,6 @@
     "Estado 'borrador': checklistOriginalidad y revisionMatematica en false a propósito. Pendiente /revision-matematica y /revision-originalidad antes de subir a revision/publicable.",
     "REESCRITURA ESTRUCTURAL 2026-07-27 (aprobada por el autor, sesión de diferenciación L1↔L3): tras un diff paso a paso contra l1-patrones-de-cambio.json, se identificaron 8 de los 10 pasos como 'casi idénticos' a L1 (mismo tipo de bloque, mismo orden, mismo rol pedagógico — solo cambiaba el dominio numérico). Se reescribieron 6 de esos 8 con cambios ESTRUCTURALES (no solo de cifras), reutilizando únicamente palancas ya validadas en Paso 5 (reestructuración 2026-07-22) y Paso 6 de esta misma lección — ninguna palanca nueva: Paso 3 (palanca G, campo de comprobación), Paso 4 (palanca H, pista final sin resultado calculado), Paso 8 (palanca A, orden numerica→abierta), Paso 1 (palanca B, contraste con respuesta errónea), Paso 2 (palanca F, reencuadre validez-vs-eficiencia + bloque verdaderoFalso encadenado), Paso 7 (reorden de bloques a rampa ascendente + feedback que explicita 'procedimiento, no dato'). Los Pasos 9 y 10 quedaron deliberadamente SIN cambio estructural (acordado con el autor): su forma restringida (síntesis breve / metacognición con abierta+texto) es inherente a su función, y forzar una palanca ahí sería abstracción sin propósito. No se tocaron Paso 5, Paso 6 (ya diferenciados), itemsPAES, proveniencia, checklistOriginalidad, revisionMatematica ni 'estado' (sigue 'borrador'). No se introdujo ningún dominio ni contexto numérico nuevo — se verificó con consultar-fuentes.mjs antes de escribir (137 y 1.943 del Paso 2: NO)."
   ],
-  "estado": "publicable",
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -615,18 +614,5 @@
     "declaracionOriginalidad": "Borrador. Enunciados, contextos (balanza con bolsas de bolitas, gatos por jaula, cuentos por sala) y la secuencia didáctica creados desde cero por el autor del proyecto, deliberadamente en dominios NO transaccionales para evitar la familia 'cargo fijo + tarifa variable'. Aún NO auditado: pendiente /revision-originalidad (verificar ausencia de colisión con fuentes del corpus) y /revision-matematica (recalcular todo desde cero) antes de subir de 'borrador'.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-07-20"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-07-27"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-07-27"
   }
 }

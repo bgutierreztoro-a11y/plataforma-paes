@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-resolucion",
-  "titulo": "La recta que se da vuelta",
+  "titulo": "Resolución de inecuaciones lineales",
   "objetivo": "Resolver inecuaciones lineales de una incógnita aplicando la misma operación a ambos lados; reconocer y justificar que multiplicar o dividir por un número negativo invierte el sentido de la desigualdad; representar el conjunto solución en la recta numérica; y distinguir el borde cerrado (≤, ≥) del abierto (<, >).",
   "tiempoEstimadoMin": 24,
   "prerrequisitos": [
@@ -28,7 +28,6 @@
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética de esta lección fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez. Los 6 dominios candidatos de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de esta sesión."
   ],
-  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -561,19 +560,6 @@
     ],
     "declaracionOriginalidad": "Enunciados, la imagen didáctica central (la recta numérica con un espejo en el 0) y la secuencia de descubrimiento fueron creados desde cero por el autor del proyecto. La lección es deliberadamente abstracta en 9 de sus 10 pasos y usa un único contexto del mundo real (el deshielo en la ladera de un refugio de montaña), elegido fuera de la familia 'cargo fijo + tarifa variable' y fuera de los dominios ya usados en el módulo y en el de funciones lineales. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }

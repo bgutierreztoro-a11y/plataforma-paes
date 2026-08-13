@@ -4,7 +4,6 @@ import { useState } from "react";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { CierreFinal } from "@/components/CierreFinal";
 import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
-import { BannerDemostracion } from "@/components/ui/Banner";
 import type { CierreCliente } from "@/lib/sanitizar";
 
 export function Cierre({
@@ -20,7 +19,6 @@ export function Cierre({
 
   return (
     <div className="flex min-h-full flex-col">
-      {cierre.estado !== "publicable" && <BannerDemostracion />}
       {fase === "anuncio" ? (
         <AnuncioPrevioItems
           variante="modulo"

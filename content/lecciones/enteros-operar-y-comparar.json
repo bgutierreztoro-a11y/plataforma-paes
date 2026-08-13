@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "enteros-operar-y-comparar",
-  "titulo": "Racionales: operar y comparar",
+  "titulo": "Operatoria y comparación de números racionales",
   "objetivo": "Dividir una cantidad entre una fracción, entendiendo que el resultado puede ser mayor que la cantidad original ('dividir puede agrandar'), y comparar dos fracciones con distinto denominador sin quedarse solo con el numerador.",
   "tiempoEstimadoMin": 22,
   "prerrequisitos": [
@@ -22,7 +22,6 @@
     "Paso 1 (curiosidad) usa un bloque 'pregunta' formato PAES para instalar la intuición ANTES de enseñar el método, pero preguntando solo la DIRECCIÓN del resultado (mayor/menor/igual que 3), no el valor exacto — el número exacto (4) se reserva para el Paso 5, que es donde vive el insight fijado. Diferenciación estructural respecto a Lección 1, que usa 'pregunta' recién en el Paso 10.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -448,19 +447,6 @@
     ],
     "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }

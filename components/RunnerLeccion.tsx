@@ -129,27 +129,9 @@ export function RunnerLeccion({
     }
   }
 
-  /* Solo puede ser true en Preview con PREVIEW_MOSTRAR_BORRADORES activo:
-     en Production, app/leccion/[id]/page.tsx nunca llega a renderizar este
-     componente para una lección no publicable (ver esa guardia). `estado`
-     no está en CLAVES_INTERNAS de lib/sanitizar.ts, así que llega intacto. */
-  const esBorrador = leccion.estado !== "publicable";
-  const bannerDemostracion = esBorrador ? (
-    <div className="mb-6 rounded-panel border border-attention bg-attention-suave px-4 py-3 text-sm text-ink">
-      <strong>Vista de demostración.</strong> Este contenido está en{" "}
-      <code className="rounded-control bg-surface px-1.5 py-0.5 text-attention-fuerte">
-        {leccion.estado}
-      </code>
-      : todavía no
-      pasó la revisión matemática ni el checklist de originalidad. No es la experiencia final del
-      estudiante.
-    </div>
-  ) : null;
-
   if (fase === "anuncio") {
     return (
       <div className="flex min-h-full flex-col">
-        {bannerDemostracion}
         <AnuncioPrevioItems
           variante="leccion"
           cantidad={leccion.itemsPAES.length}
@@ -166,7 +148,6 @@ export function RunnerLeccion({
          zona anclada deja de tocar el fondo. */
       <EjecutorSetItems
         anclarAcciones
-        encabezado={bannerDemostracion}
         items={leccion.itemsPAES}
         mostrarFeedback={true}
         contexto="leccion"
@@ -282,7 +263,6 @@ export function RunnerLeccion({
           pasoConVisual ? "max-w-[37.5rem] lg:max-w-5xl" : "max-w-[37.5rem]"
         }`}
       >
-        {bannerDemostracion}
         <PasoLeccion
           key={estado.pasoActual}
           paso={leccion.pasos[estado.pasoActual]}

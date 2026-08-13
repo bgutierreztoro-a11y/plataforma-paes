@@ -1,0 +1,595 @@
+{
+  "tipo": "leccion",
+  "id": "porcentaje-volver-atras",
+  "titulo": "Volver al precio original",
+  "objetivo": "Recuperar el valor anterior a un cambio porcentual dividiendo por su factor, explicar por qué aplicar el mismo porcentaje en sentido contrario no devuelve el valor de partida, y reconocer en un enunciado cuándo el dato entregado es el valor final y no el inicial.",
+  "tiempoEstimadoMin": 25,
+  "prerrequisitos": [
+    "Calcular el porcentaje de una cantidad multiplicándola por su factor decimal",
+    "Escribir un alza del p% como el factor 1 + p/100 y un descuento como 1 − p/100",
+    "Componer dos cambios porcentuales sucesivos multiplicando sus factores"
+  ],
+  "conceptos": [
+    "operación inversa de un cambio porcentual",
+    "división por el factor",
+    "valor inicial y valor final",
+    "asimetría entre aplicar y deshacer un porcentaje"
+  ],
+  "_notasInternas": [
+    "L3 y cierre del módulo Porcentaje. El catálogo de errores de la unidad vive en content/errores/porcentaje.json (ids \"porcentaje/error-N\"); esta lección referencia esos errores vía errorCatalogado con el id local pelado (\"error-N\"), sin namespace ni catálogo embebido.",
+    "Marco pedagógico: el insight es que deshacer un cambio porcentual exige DIVIDIR por el factor, no aplicar el porcentaje al revés. El estudiante lo descubre en el paso 5 viendo que la ida y vuelta NO cierra: la última columna del slider marca siempre 0,96 y nunca 1. La regla V = X ÷ f aparece recién en el paso 6.",
+    "El 0,96 del paso 5 es el mismo mecanismo que el 0,72 de porcentaje-rebaja-doble: 1,20 × 0,80 = 0,96 ≠ 1. La lección se apoya deliberadamente en ese resultado ya construido en L2 (su item-3 muestra que subir y bajar el mismo porcentaje no vuelve al inicio) y lo convierte en la pregunta de esta: si no vuelve, ¿qué operación sí devuelve el original?",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Corrida por Benja fuera de sesión (mecanismo 2 de CLAUDE.md), salida pegada tal cual sin reformular. Resultados textuales: «precio neto a partir del precio con IVA: NO» / «calcular el precio antes del descuento: NO» / «valor original antes del aumento porcentual: NO» / «cuanto habia antes del aumento: NO» / «boleta con IVA precio neto: NO» / «cuenta restaurante propina incluida: NO» / «entrada concierto recargo compra online: NO».",
+    "ALERTA §6 CHEQUEADA: §6 prohíbe como framing «cuánto había antes de comenzar los registros» (backward-solve sobre un CONTEO, ecoa un ítem DEMRE 2024). Esta lección es backward-solve, así que se corrió la keyword «cuanto habia antes del aumento» expresamente para medir esa adyacencia: volvió NO. Aun así, ningún enunciado de esta lección hace backward-solve sobre un conteo de objetos o personas — todos operan sobre precios y montos, que es un objeto distinto del que motivó la prohibición.",
+    "TASA DE IVA — decisión deliberada. El autor autorizó usar la boleta con IVA «con 20%». Se usó 19%, que es la tasa real vigente en Chile. Enseñar que el IVA es del 20% sería enseñar un dato falso sobre el propio país del estudiante, y la prioridad de aprendizaje del MOS §11 está por encima de la comodidad aritmética. El costo es que el factor 1,19 no es redondo; se compensó eligiendo cifras que igual dan resultados enteros (47.600 ÷ 1,19 = 40.000) y ubicando el IVA en el paso 8, donde el objetivo es transferir a un contexto nuevo y menos amable, no descubrir la regla.",
+    "Contextos: paso 5 usa entrada a evento con recargo del 20% por compra online (dominio verificado, y el 20% lo fijó el autor). Paso 7 bloque 3 usa cuenta de restaurante con propina del 10% incluida. Paso 8 usa boleta con IVA — contexto NUEVO respecto del paso 5, como exige §2. Los tres dominios se verificaron por separado.",
+    "Contextos evitados por estar quemados en el módulo: feria del libro y club de lectura (porcentaje-rebaja-doble, paso 5), taller de reparación de bicicletas (porcentaje-rebaja-doble, paso 8), colegio/estudiantes/talleres/encuesta/transporte (porcentaje-concepto), buceo, recetas y tazas, temperaturas y termómetro (módulo de enteros).",
+    "REVISIÓN MATEMÁTICA: PENDIENTE. Todos los cálculos fueron verificados recalculando desde cero durante la redacción (ver _notasInternas de cada paso), pero eso NO es la revisión independiente que exige el schema: la hacen Benja y el profesor a mano. revisionMatematica.aprobada queda en false."
+  ],
+  "contextosNumericos": [
+    "curiosidad (Paso 1): entrada de evento con 20% de recargo online; se pagaron 6.000 y la entrada valía 5.000, no 4.800; comprobación 4.800 × 1,20 = 5.760 ≠ 6.000",
+    "problema (Paso 2): elegir entre dos candidatos a valor de la entrada (4.800 y 5.000) usando la comprobación hacia adelante sobre el total de 6.000",
+    "pensar (Paso 3): total pagado 18.000 con 20% de recargo → entrada 15.000. Distractores: 14.400 (le quitó el 20% al total), 3.600 (entregó el recargo), 22.500 (dividió por 0,80)",
+    "descubrimiento (Paso 5, insight fijado): entradas de 2.000/3.000/4.000/5.000/6.000 con 20% de recargo → totales 2.400/3.600/4.800/6.000/7.200; al quitarle el 20% al total se obtiene 1.920/2.880/3.840/4.800/5.760, y el cociente recuperado ÷ original es siempre 0,96, nunca 1. Micro-pregunta de cierre: divisor que recupera el original → 1,2",
+    "generalizacion (Paso 6): ejemplo trabajado con descuento del 10%, se pagó 12.600 → original 14.000. Ejercicio con cifras distintas: alza del 50%, quedó en 27.000 → original 18.000 (distractores 13.500, 54.000 y 9.000)",
+    "practica (Paso 7): tras un 20% de descuento se pagó 14.400 → original 18.000 (distractor canónico 17.280); verdadero/falso sobre deshacer un alza del 20% con un descuento del 20% (falso); cuenta de restaurante de 22.000 con 10% de propina incluida → consumo 20.000",
+    "aplicacion (Paso 8, contexto nuevo): boleta con IVA de 19% por 47.600 → precio neto 40.000. Distractores: 38.556 (le quitó el 19%), 9.044 (entregó el IVA), 56.644 (volvió a sumar el IVA)",
+    "itemsPAES item-1 (resolver): tras un 20% de descuento se pagaron 52.000 → precio original 65.000; distractores 62.400, 41.600 y 10.400",
+    "itemsPAES item-2 (modelar): precio pagado P tras un descuento del 20%; expresión correcta P ÷ 0,80",
+    "itemsPAES item-3 (argumentar): entrada que subió un 20% y quedó en 66.000 → antes valía 55.000; distractores 52.800 (le quitó el 20%), 13.200 (entregó el alza) y 330.000 (leyó «subió a un 20%»)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Pagaste $6.000, pero ¿cuánto valía la entrada?",
+      "_notasInternas": [
+        "Gancho: la operación inversa intuitiva falla. Ataca error-7 de entrada sin nombrarlo.",
+        "La predicción no se corrige antes del bloque de texto: el objetivo es abrir la pregunta.",
+        "Verificación: 5.000 × 1,20 = 6.000. Quitarle el 20% al total: 6.000 × 0,80 = 4.800. Comprobación de que 4.800 es falso: 4.800 × 1,20 = 5.760, que no son los 6.000 pagados. ✓"
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Compras online una entrada para un evento. Al llegar al pago, el sitio avisa:\n\n> **Se aplica un 20% de recargo por compra online.**\n\nPagas **$6.000** en total.\n\nUn amigo te dice: «Fácil, entonces la entrada vale $4.800 — le quitas el 20% a lo que pagaste.»\n\nSin calcular todavía: ¿tiene razón?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, la entrada vale $4.800",
+            "No, la entrada vale más de $4.800",
+            "No, la entrada vale menos de $4.800"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La entrada vale **$5.000**. Tu amigo se quedó corto por $200.\n\nY lo mejor es que puedes comprobarlo tú mismo, sin saber todavía cómo se calcula. Si la entrada valiera los $4.800 que él dice, ¿cuánto habrías pagado con el recargo?\n\n$4.800 más su 20% da **$5.760**. Pero tú pagaste $6.000. No cuadra.\n\nEn cambio, $5.000 más su 20% da exactamente $6.000. Ese sí cuadra.\n\nAsí que quitarle el 20% a lo que pagaste **no deshace** el 20% que te sumaron. En esta lección vas a descubrir qué operación sí lo deshace — y por qué la intuición falla justo acá."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Cómo saber quién tiene razón?",
+      "_notasInternas": [
+        "Mismo mundo que el paso 1, escala mayor: ahora no basta constatar que 4.800 falla, hay que identificar el criterio que decide. La estrategia de comprobar hacia adelante es la herramienta que el estudiante SÍ tiene, y es la que sostiene todo el resto de la lección.",
+        "Verificación: 4.800 × 1,20 = 5.760 ≠ 6.000. 5.000 × 1,20 = 6.000 ✓."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Dos personas discuten cuánto valía realmente la entrada por la que se pagaron $6.000 con un 20% de recargo.\n\n- **Ana** dice: $4.800.\n- **Beto** dice: $5.000.\n\nTodavía no sabes calcularlo directamente. Pero sí sabes aplicar un recargo del 20% a un precio.\n\n¿Cuál de estos razonamientos decide la discusión?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Tiene razón Ana: para deshacer un recargo del 20% hay que quitarle un 20%.",
+              "esCorrecta": false,
+              "feedback": "Eso es lo que suena razonable, pero no lo comprobaste. Toma el número de Ana y aplícale el recargo, que es la operación que sí sabes hacer: $4.800 más su 20%. Si el resultado no son los $6.000 que se pagaron, su respuesta no puede ser la correcta.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "b",
+              "texto": "Tiene razón Beto: $5.000 más su 20% da exactamente los $6.000 que se pagaron.",
+              "esCorrecta": true,
+              "feedback": "Exacto, y fíjate en lo que hiciste: no calculaste el valor de la entrada, lo verificaste. Aplicaste el recargo hacia adelante y viste cuál de los dos candidatos aterriza en $6.000. Esa comprobación va a ser tu red de seguridad durante toda la lección."
+            },
+            {
+              "id": "c",
+              "texto": "Ninguno: el recargo del 20% son $20, así que la entrada valía $5.980.",
+              "esCorrecta": false,
+              "feedback": "El 20% no son $20. Un porcentaje no es una cantidad fija de pesos: es una parte del precio, y cuánto vale esa parte depende del precio. Sobre $5.000, el 20% son $1.000.",
+              "errorCatalogado": "error-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Otra entrada, sin ayuda todavía",
+      "_notasInternas": [
+        "Espacio de intento genuino antes de entregar la herramienta. Dato pedagógico más valioso de la lección: el error acá está sin contaminar por ayuda previa.",
+        "Verificación: 18.000 ÷ 1,20 = 15.000. Comprobación hacia adelante: 15.000 × 1,20 = 18.000 ✓.",
+        "Verificación de los distractores: quitarle el 20% al total → 18.000 × 0,80 = 14.400. Entregar el recargo → 18.000 × 0,20 = 3.600. Dividir por el complemento en vez de por el factor → 18.000 ÷ 0,80 = 22.500."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Para otro evento, con el mismo 20% de recargo por compra online, el total pagado fue de **$18.000**.\n\n¿Cuánto valía la entrada antes del recargo?",
+          "campos": [
+            {
+              "id": "entrada18000",
+              "etiqueta": "Valor de la entrada sin recargo",
+              "respuestaCorrecta": 15000,
+              "unidad": "pesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "entrada18000",
+              "valorObtenido": 14400,
+              "mensaje": "Le quitaste el 20% al total. Compruébalo hacia adelante: $14.400 más su 20% da $17.280, no $18.000. Quitar el mismo porcentaje no deshace lo que se sumó, porque el 20% del total es más grande que el 20% de la entrada.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "entrada18000",
+              "valorObtenido": 3600,
+              "mensaje": "Calculaste el 20% del total pagado. Ojo: eso ni siquiera es el recargo — el recargo real fue de $3.000, porque se calculó sobre la entrada y no sobre el total. Y en todo caso la pregunta pide el precio de partida, no lo que se sumó encima.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "entrada18000",
+              "valorObtenido": 22500,
+              "mensaje": "Dividir es el camino correcto, pero no por ese número. Fíjate en el tamaño del resultado: te dio más que los $18.000 pagados, y la entrada tiene que costar MENOS que el total con recargo. Estás dividiendo por 0,80 cuando el factor que se aplicó fue otro.",
+              "errorCatalogado": "error-7"
+            }
+          ],
+          "feedbackPorDefecto": "Llama V al valor de la entrada. Con el recargo, lo que se paga es V más su 20%. ¿Por qué número hay que multiplicar V para obtener el total de $18.000? Una vez que lo tengas, ya casi está."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para la entrada de $18.000",
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Prueba con un número cualquiera. Si la entrada valiera $14.400, ¿cuánto se habría pagado con el recargo? Compara ese resultado con los $18.000."
+            },
+            {
+              "nivel": 2,
+              "texto": "Llámale V al valor de la entrada. Pagar con un 20% de recargo significa pagar V × 1,20. Y ese total son $18.000. Te queda una igualdad con un solo hueco."
+            },
+            {
+              "nivel": 3,
+              "texto": "Si V × 1,20 = 18.000, entonces V se despeja haciendo la operación contraria a multiplicar por 1,20."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La ida y la vuelta no cierran",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN. Insight que el estudiante construye solo: aplicar el recargo y después quitar el mismo porcentaje NO devuelve al punto de partida. La última columna marca 0,96 en todas las filas —nunca 1— y ese 0,96 es exactamente 1,20 × 0,80, el mismo mecanismo que el 0,72 de la lección anterior.",
+        "Mecánica: slider de una variable. El control editable es el valor de la entrada (2.000→6.000); el recargo queda fijo en 20% y NO es manipulable (editable: false). Cuatro columnas; la última es recuperado ÷ original y nunca cambia. exploracionMinima: 4.",
+        "ESCALERA CAMBIADA (2026-08-12, tras auditoría). El slider corría antes de 5.000 a 25.000 con las filas 5.000/10.000/15.000/20.000/25.000 — exactamente el mismo dominio y las mismas cinco bases que el slider de porcentaje-rebaja-doble.json, de modo que las dos lecciones consecutivas del módulo mostraban la misma escalera de precios. Se bajó a 2.000→6.000. Queda un solape residual aceptado por el autor: con precios redondos y los factores 1,20 y 0,80 no existe una escalera exacta sin ninguna cifra en común con L2. La fila 5.000 → 6.000 coincide a propósito con el caso de apertura del paso 1, para que el estudiante reconozca su propio ejemplo dentro de la tabla.",
+        "La regla V = X ÷ f NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que la vuelta se queda corta SIEMPRE en la misma proporción.",
+        "Verificación de la tabla completa: 2.000 × 1,20 = 2.400, y 2.400 × 0,80 = 1.920 (1.920/2.000 = 0,96); 3.000 → 3.600 → 2.880 (0,96); 4.000 → 4.800 → 3.840 (0,96); 5.000 → 6.000 → 4.800 (0,96); 6.000 → 7.200 → 5.760 (0,96). Los cinco valores dan cantidades exactas: elegidos así a propósito.",
+        "Verificación de la micro-pregunta: el divisor que recupera el original es 1,2, porque el total es siempre original × 1,20. Distractores: 0,8 y 0,2 (divisores mal elegidos, ambos descritos en error-7); 0,96 (es el factor de la ida y vuelta completa, no el de la vuelta)."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de tocar nada. Vas a poder cambiar el valor de la entrada, con el recargo siempre fijo en 20%.\n\nLa tercera columna aplica el recargo. La cuarta le quita un 20% a ese total —el intento de tu amigo del paso 1— y lo compara con el valor de partida.\n\n¿Qué esperas que muestre esa última columna?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "1, porque quitar el 20% deshace el 20% que se sumó",
+            "Un número fijo menor que 1, igual para todas las entradas",
+            "Un número que cambia según lo cara que sea la entrada"
+          ]
+        },
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "instruccion": "Mueve el control del valor de la entrada y observa la última columna, que compara el valor recuperado con el valor original. Las tres primeras columnas cambian. La cuarta no cambia nunca — y no vale 1.",
+          "variables": [
+            {
+              "nombre": "Valor de la entrada ($)",
+              "min": 2000,
+              "max": 6000,
+              "valorInicial": 2000,
+              "editable": true
+            },
+            {
+              "nombre": "Recargo por compra online (%)",
+              "min": 20,
+              "max": 20,
+              "valorInicial": 20,
+              "editable": false
+            }
+          ],
+          "exploracionMinima": 4,
+          "feedbackExploracionInsuficiente": "Todavía no has probado suficientes entradas como para estar seguro de que hay un patrón. Prueba al menos cuatro valores distintos —por ejemplo 2.000, 3.000, 5.000 y 6.000— y anota qué muestra la última columna en cada uno."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esto es lo que aparece al recorrer el control:\n\n| Entrada | Total con 20% de recargo | Al total le quito el 20% | Recuperado ÷ Entrada |\n|---------|--------------------------|--------------------------|----------------------|\n| 2.000 | 2.400 | 1.920 | 0,96 |\n| 3.000 | 3.600 | 2.880 | 0,96 |\n| 4.000 | 4.800 | 3.840 | 0,96 |\n| 5.000 | 6.000 | 4.800 | 0,96 |\n| 6.000 | 7.200 | 5.760 | 0,96 |\n\nLa última columna nunca dice 1. Dice **0,96 siempre**.\n\nO sea: la ida y la vuelta **no cierran**. Después de sumar el 20% y volver a quitarlo, siempre te queda el 96% de lo que tenías. Falta un 4%, y falta igual sea cual sea el precio.\n\n¿Por qué? Porque el 20% de ida se calcula sobre la entrada, y el 20% de vuelta se calcula sobre el total, que es más grande. Se resta más de lo que se había sumado.\n\nEn factores, esto ya lo sabes escribir: la ida multiplica por **1,20** y la vuelta por **0,80**. Y 1,20 × 0,80 = **0,96**, no 1.\n\nAsí que quitar el porcentaje no es la operación inversa. La verdadera inversa de multiplicar por 1,20 es **dividir por 1,20**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos el hallazgo.\n\nSi te dan el total pagado y quieres recuperar el valor de la entrada de una sola vez, ¿por qué número hay que **dividir** ese total?\n\n(Te pedimos el divisor, no un precio.)",
+          "campos": [
+            {
+              "id": "divisorRecargo",
+              "etiqueta": "Número por el que hay que dividir el total pagado",
+              "respuestaCorrecta": 1.2,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "divisorRecargo",
+              "valorObtenido": 0.8,
+              "mensaje": "0,80 es el factor de la vuelta que acabas de ver fallar: es el que produce el 0,96 en vez de 1. El total se obtuvo multiplicando la entrada por 1,20, así que para deshacerlo hay que dividir por ese mismo 1,20.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "divisorRecargo",
+              "valorObtenido": 0.2,
+              "mensaje": "0,20 es solo el recargo, no el factor completo. El total no es «la entrada por 0,20»: es la entrada más su 20%, o sea la entrada por 1,20.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "divisorRecargo",
+              "valorObtenido": 0.96,
+              "mensaje": "0,96 es el resultado de la ida y la vuelta juntas — el número que probaba que el método fallaba. No es el factor de una sola de las dos operaciones. El de la ida es 1,20.",
+              "errorCatalogado": "error-7"
+            }
+          ],
+          "feedbackPorDefecto": "El total pagado se obtuvo multiplicando el valor de la entrada por un número. Ese número es el que aparece en la segunda columna de la tabla como operación. Para deshacer una multiplicación, se divide por el mismo número."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Para volver atrás, se divide",
+      "_notasInternas": [
+        "Recién acá se nombra y formaliza el concepto. La regla se enuncia para los dos sentidos (alza y descuento) porque la PAES pregunta por ambos.",
+        "El ejercicio usa cifras y sentido DISTINTOS a los del ejemplo trabajado (§2, regla del paso 6): el ejemplo es un descuento, el ejercicio es un alza.",
+        "Verificación del ejemplo: factor del descuento del 10% = 0,90. 12.600 ÷ 0,90 = 14.000. Comprobación: 14.000 × 0,90 = 12.600 ✓.",
+        "Verificación del ejercicio: factor del alza del 50% = 1,50. 27.000 ÷ 1,50 = 18.000. Comprobación: 18.000 × 1,50 = 27.000 ✓.",
+        "Verificación de los distractores: aplicar el porcentaje al revés → 27.000 × 0,50 = 13.500. Dividir por el porcentaje en vez del factor → 27.000 ÷ 0,50 = 54.000. Entregar el alza en vez del original → 27.000 − 18.000 = 9.000."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora la regla, y es más corta de lo que parece.\n\nTodo cambio porcentual es una **multiplicación por un factor**:\n\n- Un alza del p% multiplica por **1 + p/100**. El 20% da 1,20; el 50% da 1,50.\n- Un descuento del p% multiplica por **1 − p/100**. El 20% da 0,80; el 10% da 0,90.\n\nSi llamas V al valor inicial y X al valor final:\n\n**X = V × factor**, y por lo tanto **V = X ÷ factor**\n\nDeshacer una multiplicación es dividir. Nada más. Lo único que hay que hacer bien es **identificar el factor correcto** — y ahí es donde se pierde casi todo el mundo, porque el enunciado nunca te da el factor: te da el porcentaje.\n\nEjemplo trabajado. Un artículo tenía un 10% de descuento y se pagó **$12.600**. ¿Cuánto costaba antes?\n\n- El descuento del 10% multiplica por 0,90.\n- Entonces $12.600 = precio original × 0,90.\n- Precio original = 12.600 ÷ 0,90 = **$14.000**.\n\nComprobación hacia adelante, siempre: 14.000 × 0,90 = 12.600. ✓\n\nY fíjate en el contraste con lo que haría la intuición: sumarle un 10% a $12.600 daría $13.860, que no es el original. La operación inversa de un descuento del 10% **no** es un alza del 10%."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica la regla en el otro sentido, con cifras nuevas.\n\nEl arriendo mensual de una bodega **subió un 50%** y quedó en **$27.000**.\n\n¿Cuánto costaba antes del alza?",
+          "campos": [
+            {
+              "id": "arriendoAntes",
+              "etiqueta": "Arriendo antes del alza",
+              "respuestaCorrecta": 18000,
+              "unidad": "pesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "arriendoAntes",
+              "valorObtenido": 13500,
+              "mensaje": "Le aplicaste un descuento del 50% al valor final. Compruébalo hacia adelante: $13.500 subido un 50% da $20.250, no $27.000. El alza del 50% multiplicó por 1,50, así que hay que dividir por 1,50.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "arriendoAntes",
+              "valorObtenido": 54000,
+              "mensaje": "Dividir es correcto, pero por 1,50 y no por 0,50. Un alza del 50% no multiplica por 0,50: multiplica por 1 + 0,50. Además el resultado tiene que ser MENOR que $27.000, porque el precio subió.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "arriendoAntes",
+              "valorObtenido": 9000,
+              "mensaje": "$9.000 es cuánto SUBIÓ el arriendo, y de hecho está bien calculado. Pero la pregunta pide cuánto costaba antes, que es el valor final menos esa alza.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Primero identifica el factor: un alza del 50% multiplica por 1 + 50/100. Después divide los $27.000 por ese factor. Y comprueba tu resultado subiéndolo un 50%: tiene que darte $27.000 exactos."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: identificar el factor y dividir",
+      "_notasInternas": [
+        "Tres bloques de dificultad creciente. P1 es el caso más frecuente en la PAES (descuento invertido) e incluye el distractor canónico 17.280. P2 ataca la formulación verbal del error, sin cálculo. P3 sube la exigencia con un porcentaje distinto y pide discriminar entre el consumo, la propina y dos operaciones erradas.",
+        "Verificación P1: factor del descuento del 20% = 0,80. 14.400 ÷ 0,80 = 18.000. Comprobación: 18.000 × 0,80 = 14.400 ✓. Distractores: 14.400 × 1,20 = 17.280; 14.400 ÷ 1,20 = 12.000; 14.400 × 0,20 = 2.880.",
+        "Verificación P2: deshacer un alza del 20% con un descuento del 20% da 1,20 × 0,80 = 0,96, o sea el 96% del original. Falso.",
+        "Verificación P3: factor de la propina del 10% = 1,10. 22.000 ÷ 1,10 = 20.000. Comprobación: 20.000 × 1,10 = 22.000 ✓. Distractores: 22.000 × 0,90 = 19.800; 22.000 × 0,10 = 2.200; 22.000 × 1,10 = 24.200."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un artículo tenía un **20% de descuento** y se pagó por él **$14.400**.\n\n¿Cuál era su precio antes del descuento?",
+          "campos": [
+            {
+              "id": "precioAntesDescuento",
+              "etiqueta": "Precio antes del descuento",
+              "respuestaCorrecta": 18000,
+              "unidad": "pesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "precioAntesDescuento",
+              "valorObtenido": 17280,
+              "mensaje": "Le sumaste un 20% al precio pagado. Es el error más común de todos, y se detecta comprobando hacia adelante: a $17.280 quítale su 20% y te da $13.824, no $14.400. El descuento multiplicó por 0,80, así que hay que dividir por 0,80.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "precioAntesDescuento",
+              "valorObtenido": 12000,
+              "mensaje": "Dividiste por 1,20, que es el factor de un ALZA del 20%. Acá hubo un descuento, y el factor de un descuento del 20% es 0,80. Además, el precio original tiene que ser MAYOR que lo pagado.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "precioAntesDescuento",
+              "valorObtenido": 2880,
+              "mensaje": "Calculaste el 20% de lo pagado, no el precio original. Fíjate además en el tamaño: el precio antes del descuento no puede ser menor que lo que se pagó.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Identifica el factor del descuento del 20% —¿qué parte del precio queda?— y divide los $14.400 por él. Control de sensatez: el resultado tiene que ser mayor que $14.400."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si un precio subió un 20%, para recuperar el precio original basta con aplicarle un descuento del 20%.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Es exactamente la trampa de esta lección. Subir un 20% multiplica por 1,20 y bajar un 20% multiplica por 0,80, y 1,20 × 0,80 = 0,96: te queda el 96% del original, siempre un 4% corto. Para recuperar el precio hay que **dividir por 1,20**, no aplicar otro porcentaje.",
+          "feedbackFalso": "Correcto. El descuento del 20% se calcula sobre un precio ya inflado, así que quita más de lo que se había sumado: 1,20 × 0,80 = 0,96. La única operación que devuelve el original es dividir por 1,20."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "La cuenta de un restaurante llega con la **propina del 10% ya incluida** y suma **$22.000**.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "El consumo fue $20.000, porque $20.000 más su 10% da exactamente $22.000.",
+              "esCorrecta": true,
+              "feedback": "Exacto, y con la comprobación incluida. La propina multiplicó el consumo por 1,10, así que el consumo es 22.000 ÷ 1,10 = $20.000."
+            },
+            {
+              "id": "b",
+              "texto": "El consumo fue $19.800, porque hay que quitarle el 10% a la cuenta.",
+              "esCorrecta": false,
+              "feedback": "Compruébalo: a $19.800 súmale su 10% y obtienes $21.780, no $22.000. El 10% que quitaste se calculó sobre la cuenta completa, que ya incluye la propina, así que es mayor que la propina real.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "El consumo fue $2.200, porque ese es el 10% de la cuenta.",
+              "esCorrecta": false,
+              "feedback": "$2.200 es el 10% de la cuenta total, y ni siquiera es la propina: la propina real fue $2.000, porque se calculó sobre el consumo y no sobre la cuenta con propina incluida. La pregunta pide el consumo, que es la parte grande de la cuenta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "d",
+              "texto": "El consumo fue $24.200, porque hay que agregarle el 10% de propina a la cuenta.",
+              "esCorrecta": false,
+              "feedback": "Fuiste en la dirección contraria: la propina ya está incluida en los $22.000, así que sumarla otra vez aleja del consumo en vez de acercarlo. Y el consumo tiene que ser menor que la cuenta total, no mayor.",
+              "errorCatalogado": "error-7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La boleta y el precio neto",
+      "_notasInternas": [
+        "Contexto NUEVO respecto del paso 5 (§2, paso 8): sale del recargo por compra online y pasa a una boleta con IVA. Dominio verificado limpio por separado («boleta con IVA precio neto: NO»).",
+        "TASA: 19%, la real de Chile, no 20%. Ver la nota de nivel raíz sobre esta decisión. El factor 1,19 no es redondo a propósito: la transferencia es más exigente y el estudiante no puede apoyarse en el 1,20 memorizado del paso 5.",
+        "Verificación: 40.000 × 1,19 = 47.600. Por lo tanto 47.600 ÷ 1,19 = 40.000 ✓.",
+        "Verificación de los distractores: quitarle el 19% al total → 47.600 × 0,81 = 38.556. Entregar el IVA → 47.600 × 0,19 = 9.044. Volver a aplicar el IVA → 47.600 × 1,19 = 56.644."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En Chile, el IVA es un impuesto del **19%** que se suma al precio neto de un producto. Lo que aparece en la boleta es el precio neto más ese 19%.\n\nUna boleta muestra un total de **$47.600** con IVA incluido.\n\nParte 1: escribe la operación que da el precio neto. No la calcules todavía, solo escríbela.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "47.600 ÷ 1,19   (el IVA del 19% multiplicó el neto por 1 + 19/100 = 1,19; para deshacerlo se divide por ese mismo factor)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora sí, calcula. ¿Cuál es el precio neto del producto?",
+          "campos": [
+            {
+              "id": "precioNeto",
+              "etiqueta": "Precio neto (sin IVA)",
+              "respuestaCorrecta": 40000,
+              "unidad": "pesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "precioNeto",
+              "valorObtenido": 38556,
+              "mensaje": "Le quitaste el 19% al total de la boleta. Compruébalo: a $38.556 súmale su 19% y no llegas a $47.600, te quedas bastante corto. El IVA se calculó sobre el neto, no sobre el total, así que quitárselo al total descuenta de más.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "precioNeto",
+              "valorObtenido": 9044,
+              "mensaje": "Calculaste el 19% del total de la boleta. Eso no es el IVA: el IVA de esta boleta fue $7.600, porque se calculó sobre el neto y no sobre el total. Y la pregunta pide el neto, que es la parte grande.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "precioNeto",
+              "valorObtenido": 56644,
+              "mensaje": "Volviste a aplicar el IVA en vez de deshacerlo. El total de la boleta ya lo incluye, así que el neto tiene que ser MENOR que $47.600, no mayor.",
+              "errorCatalogado": "error-7"
+            }
+          ],
+          "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: divide los $47.600 por 1,19. Comprueba el resultado multiplicándolo por 1,19; tiene que devolverte los $47.600 exactos."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Vuelve a la entrada de $18.000",
+      "_notasInternas": [
+        "Fuerza la comparación explícita con el intento del paso 3 (§2, paso 9). La abierta no se corrige: se guarda anonimizada.",
+        "Señal de comprensión: que el estudiante mencione dividir por el factor, o que explique que el porcentaje de vuelta se calcula sobre una base más grande. Señal de alerta: que siga describiendo el método como «aplicar el porcentaje al revés» aunque haya acertado el número."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Al principio de la lección respondiste cuánto valía la entrada por la que se pagaron $18.000 con un 20% de recargo.\n\n¿Qué respondiste entonces y qué responderías ahora? Si tu respuesta cambió, explica con tus palabras qué fue lo que entendiste en el medio.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: mencionar la división por el factor, o explicar que el porcentaje de vuelta se calcula sobre una base mayor que la de ida. Señal de alerta: describir el método como «aplicar el porcentaje al revés» aun habiendo acertado el número, porque indica que el resultado se obtuvo por tanteo."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los tres errores que producen casi todas las respuestas incorrectas al volver atrás:\n\n1. **Aplicar el porcentaje al revés.** Quitarle un 20% a lo que se pagó no deshace un recargo del 20%: deja el 96%.\n2. **Dividir por el número equivocado.** Hay que dividir por el factor completo (1,20 o 0,80), no por el porcentaje suelto (0,20) ni por el complemento.\n3. **Entregar el cambio en vez del original.** Calcular bien cuánto subió o bajó, y responder eso cuando lo que se pedía era el valor de partida.\n\nY la herramienta que vale más que las tres juntas: **comprueba siempre hacia adelante**. Toma tu respuesta, aplícale el cambio del enunciado y mira si aterrizas en el número que te dieron. Si no aterriza, tu respuesta está mal — y lo sabes sin necesidad de que nadie te corrija."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Todo cambio porcentual es una multiplicación por un factor: alza del p% → **1 + p/100**; descuento del p% → **1 − p/100**.\n- Si conoces el valor final X y el factor, el valor inicial es **V = X ÷ factor**. Deshacer una multiplicación es dividir.\n- Aplicar el porcentaje al revés **no** es la operación inversa: subir un 20% y bajar un 20% deja el 96% del original.\n- Identificar el factor es todo el trabajo. El enunciado te da el porcentaje; el factor lo construyes tú.\n- Control de sensatez: si el enunciado dice que el precio subió, el original tiene que ser **menor** que el final. Si dice que bajó, **mayor**. Y siempre puedes comprobar hacia adelante.\n\n**Lo que viene:** ahora vas a resolver ítems en formato de prueba real, con las mismas cuatro alternativas y el mismo estilo de enunciado que vas a encontrar en la PAES."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "porcentaje-volver-atras-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Un artículo se vendió con un 20% de descuento y se pagó por él $52.000. ¿Cuál era el precio del artículo antes del descuento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$65.000",
+          "esCorrecta": true,
+          "feedback": "Correcto: el descuento del 20% multiplica por 0,80, así que el precio original es 52.000 ÷ 0,80 = 65.000. Comprobación: 65.000 × 0,80 = 52.000."
+        },
+        {
+          "clave": "B",
+          "texto": "$62.400",
+          "esCorrecta": false,
+          "feedback": "Le sumaste un 20% al precio pagado (52.000 × 1,20). Es el error más frecuente en este tipo de ítem. Compruébalo: a $62.400 quítale su 20% y obtienes $49.920, no $52.000. El 20% de ida y el 20% de vuelta no se calculan sobre la misma base.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "$41.600",
+          "esCorrecta": false,
+          "feedback": "Volviste a aplicar el descuento en vez de deshacerlo (52.000 × 0,80). El precio antes del descuento tiene que ser MAYOR que lo que se pagó, nunca menor.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "$10.400",
+          "esCorrecta": false,
+          "feedback": "Calculaste el 20% de lo pagado. Eso no es el descuento: el descuento real fue $13.000, porque el 20% se aplicó sobre el precio original y no sobre el pagado. Y la pregunta pide el precio de partida, no el descuento.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Un descuento del 20% multiplica el precio por 1 − 0,20 = 0,80. Si P es el precio original, entonces P × 0,80 = 52.000, de donde P = 52.000 ÷ 0,80 = $65.000. Verificación hacia adelante: 65.000 × 0,80 = 52.000. ✓ Control de sensatez: el precio original ($65.000) es mayor que el pagado ($52.000), como corresponde a un descuento."
+    },
+    {
+      "id": "porcentaje-volver-atras-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un producto se vendió con un descuento del 20% y se pagó por él P pesos. ¿Cuál de las siguientes expresiones representa el precio del producto antes del descuento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "P ÷ 0,80",
+          "esCorrecta": true,
+          "feedback": "Correcto: el descuento del 20% dejó el factor 0,80, y como el precio pagado se obtuvo multiplicando por ese factor, el original se recupera dividiendo por él."
+        },
+        {
+          "clave": "B",
+          "texto": "P × 1,20",
+          "esCorrecta": false,
+          "feedback": "Esta expresión aplica un alza del 20% al precio pagado, que es la intuición de «deshacer el porcentaje con el porcentaje». No funciona: 0,80 × 1,20 = 0,96, así que no devuelve el precio original sino el 96% de él.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "P ÷ 0,20",
+          "esCorrecta": false,
+          "feedback": "Dividir es la operación correcta, pero el divisor no es el porcentaje suelto: es el factor. Un descuento del 20% no multiplica por 0,20, multiplica por 1 − 0,20 = 0,80.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "P × 0,20",
+          "esCorrecta": false,
+          "feedback": "Esta expresión toma el 20% de lo pagado, que ni siquiera es el descuento: el descuento se calculó sobre el precio original, así que equivale a P × 0,25. Y en todo caso produce un valor menor que P, cuando el precio antes de un descuento tiene que ser mayor que el pagado.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Un descuento del 20% multiplica por 1 − 20/100 = 0,80. Si V es el precio original, el precio pagado es P = V × 0,80. Despejando V se obtiene V = P ÷ 0,80. Verificación con una cifra concreta: si V fuera 10.000, entonces P = 8.000, y 8.000 ÷ 0,80 = 10.000. ✓"
+    },
+    {
+      "id": "porcentaje-volver-atras-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "El valor de una entrada para un evento subió un 20% respecto del año pasado y este año cuesta $66.000.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El año pasado costaba $55.000, porque $55.000 aumentado en un 20% da $66.000.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y la justificación es la comprobación misma: el alza del 20% multiplica por 1,20, así que el valor anterior es 66.000 ÷ 1,20 = 55.000, y 55.000 × 1,20 devuelve exactamente los $66.000."
+        },
+        {
+          "clave": "B",
+          "texto": "El año pasado costaba $52.800, porque basta quitarle el 20% al precio de este año.",
+          "esCorrecta": false,
+          "feedback": "Quitar el mismo porcentaje no deshace el alza, porque el 20% de este año se calcula sobre un valor mayor que el del año pasado. Compruébalo: $52.800 subido un 20% da $63.360, no $66.000.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "El año pasado costaba $13.200, porque ese es el monto en que subió la entrada.",
+          "esCorrecta": false,
+          "feedback": "$13.200 es el 20% del precio actual, no el precio del año pasado. Y aunque fuera el alza exacta, la pregunta pide el valor de partida, no cuánto aumentó.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "El año pasado costaba $330.000, porque el precio actual es el 20% del anterior.",
+          "esCorrecta": false,
+          "feedback": "Cambiaste «subió UN 20%» por «quedó A un 20%». La primera expresión dice cuánto creció el precio; la segunda diría que el precio se desplomó hasta la quinta parte. Además el enunciado dice que subió, así que el valor anterior tiene que ser menor que $66.000.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Un alza del 20% multiplica el valor por 1 + 20/100 = 1,20. Si V es el precio del año pasado, entonces V × 1,20 = 66.000, de donde V = 66.000 ÷ 1,20 = $55.000. Verificación hacia adelante: 55.000 × 1,20 = 66.000. ✓ Control de sensatez: como el precio subió, el valor anterior ($55.000) debe ser menor que el actual ($66.000)."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), eje Números → Porcentaje — usado solo para calibrar alcance y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/mapa-modulos-m1.md — fuente única de id y título de esta lección.",
+      "docs/calibracion-lecciones-e-items.md §2, §3, §6 y §7 — arquitectura de 10 pasos, habilidades PAES, zonas de contexto saturadas y patrones de distractor.",
+      "content/lecciones/porcentaje-concepto.json y content/lecciones/porcentaje-rebaja-doble.json — leídas como referencia de densidad, tono y continuidad narrativa del módulo (lecciones propias del proyecto, no fuentes externas).",
+      "content/errores/porcentaje.json — catálogo de errores de la unidad, referenciado por errorCatalogado.",
+      "Tasa de IVA vigente en Chile (19%) — dato público de conocimiento general, usado como parámetro realista del paso 8."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos numéricos y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se corrió fuera de esta sesión mediante el mecanismo 2 de CLAUDE.md y devolvió NO en los siete términos consultados, incluida una keyword dedicada a medir la adyacencia con el framing de backward-solve que §6 prohíbe (ver _notasInternas). ADVERTENCIA: esta declaración cubre el proceso de redacción y la verificación de dominio registrada, NO una auditoría de originalidad completa — esa sigue pendiente, igual que la revisión matemática independiente.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
+    "fecha": "2026-08-12"
+  }
+}

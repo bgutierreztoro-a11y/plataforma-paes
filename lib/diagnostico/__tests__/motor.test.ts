@@ -208,8 +208,6 @@ describe("propagación por el DAG", () => {
       unidadId: "n1",
       aislante: true,
       enunciado: "raíz de la cadena",
-      estado: "publicable",
-      revisionMatematica: { aprobada: true, por: "fixture", fecha: "2026-08-02" },
       alternativas: [
         { clave: "A", texto: "ok", esCorrecta: true },
         { clave: "B", texto: "mal", esCorrecta: false, errorCatalogado: "err-cadena" },
@@ -323,26 +321,32 @@ describe("selección del siguiente ítem", () => {
   });
 });
 
-describe("regla 8: el selector solo sirve ítems revisados", () => {
-  test("esServible exige la conjunción: ninguno de los dos gates basta solo", () => {
-    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: true })), true);
-    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: false })), false);
-    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true })), false);
-    assert.equal(esServible(itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: false })), false);
+describe("regla 8: el selector solo sirve ítems estructuralmente completos", () => {
+  test("esServible exige las tres condiciones: ninguna falla sola pasa", () => {
+    assert.equal(esServible(itemSintetico("zeta", 1, true)), true);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { conEnunciado: false })), false);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { nAlternativas: 3 })), false);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { nCorrectas: 2 })), false);
+    assert.equal(esServible(itemSintetico("zeta", 1, true, { nCorrectas: 0 })), false);
   });
 
-  test("un ítem publicable con aprobada:false nunca se sirve, aunque sea el único de su unidad", () => {
-    const noAprobado = itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: false });
-    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [noAprobado]), null);
+  test("un ítem sin enunciado nunca se sirve, aunque sea el único de su unidad", () => {
+    const sinEnunciado = itemSintetico("zeta", 1, true, { conEnunciado: false });
+    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [sinEnunciado]), null);
   });
 
-  test("un ítem borrador nunca se sirve, aunque su revisión matemática esté aprobada", () => {
-    const borrador = itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true });
-    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [borrador]), null);
+  test("un ítem con un número de alternativas distinto de 4 nunca se sirve", () => {
+    const malFormado = itemSintetico("zeta", 1, true, { nAlternativas: 3 });
+    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [malFormado]), null);
   });
 
-  test("publicable Y aprobado sí se sirve: el filtro no bloquea el caso bueno", () => {
-    const servible = itemSintetico("zeta", 1, true, { estado: "publicable", aprobada: true });
+  test("un ítem sin exactamente una alternativa correcta nunca se sirve", () => {
+    const dosCorrectas = itemSintetico("zeta", 1, true, { nCorrectas: 2 });
+    assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [dosCorrectas]), null);
+  });
+
+  test("un ítem bien formado sí se sirve: el filtro no bloquea el caso bueno", () => {
+    const servible = itemSintetico("zeta", 1, true);
     const item = siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, [servible]);
     assert.equal(item?.id, servible.id);
   });
@@ -353,8 +357,8 @@ describe("regla 8: el selector solo sirve ítems revisados", () => {
     });
 
     const soloNoServibles = [
-      itemSintetico("zeta", 1, true, { estado: "borrador", aprobada: true }),
-      itemSintetico("alfa", 1, true, { estado: "publicable", aprobada: false }),
+      itemSintetico("zeta", 1, true, { conEnunciado: false }),
+      itemSintetico("alfa", 1, true, { nCorrectas: 2 }),
     ];
     assert.doesNotThrow(() => {
       assert.equal(siguienteItem(crearEstado(DAG_FIXTURE), DAG_FIXTURE, soloNoServibles), null);

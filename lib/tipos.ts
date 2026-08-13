@@ -17,7 +17,6 @@ export const ORDEN_PASOS = [
 ] as const;
 export type TipoPaso = (typeof ORDEN_PASOS)[number];
 
-export type Estado = "borrador" | "revision" | "publicable";
 export type Habilidad = "resolver" | "modelar" | "representar" | "argumentar";
 export type Dificultad = "baja" | "media" | "alta";
 export type ClaveAlternativa = "A" | "B" | "C" | "D";
@@ -203,21 +202,6 @@ export interface Proveniencia {
   fecha?: string;
 }
 
-export interface ChecklistOriginalidad {
-  enunciadosOriginales: boolean;
-  diagramasOriginales: boolean;
-  secuenciaOriginal: boolean;
-  provenienciaRegistrada: boolean;
-  revisadoPor?: string;
-  fecha?: string;
-}
-
-export interface RevisionMatematica {
-  aprobada: boolean;
-  revisadoPor?: string;
-  fecha?: string;
-}
-
 export interface ErrorCatalogado {
   id: string;
   descripcion: string;
@@ -226,10 +210,7 @@ export interface ErrorCatalogado {
 interface ContenidoBase {
   id: string;
   titulo: string;
-  estado: Estado;
   proveniencia: Proveniencia;
-  checklistOriginalidad?: ChecklistOriginalidad;
-  revisionMatematica?: RevisionMatematica;
   catalogoErrores?: ErrorCatalogado[];
   contextosNumericos?: string[];
 }

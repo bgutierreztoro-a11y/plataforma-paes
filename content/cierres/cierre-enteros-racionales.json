@@ -2,7 +2,6 @@
   "tipo": "cierre",
   "id": "cierre-enteros-racionales",
   "titulo": "Cierre del módulo: Enteros y racionales",
-  "estado": "publicable",
   "_notasInternas": [
     "Cierre del módulo 'Enteros y racionales' (docs/diseno-modulo-enteros-racionales.md), construido después de que las 3 lecciones (enteros-operar-y-ordenar, enteros-operar-y-comparar, enteros-problemas-en-contexto) quedaran en estado 'borrador' con npm run validar en verde.",
     "El catálogo de errores del módulo vive únicamente en content/lecciones/enteros-operar-y-ordenar.json (L1), mismo patrón que L2 y L3 — no se duplica aquí. Este archivo referencia error-1, error-2, error-3, error-4, error-5, error-7 y error-8 (todos ya definidos en L1). No se necesitó ningún id nuevo: cada vez que un distractor representaba un error sin id existente en el catálogo (p. ej. 'creer que un denominador más grande hace la fracción mayor', o 'creer que fracciones con diferencia numerador-denominador igual son equivalentes'), se dejó sin errorCatalogado en vez de forzar un id que no encaja — no se agregó ni propuso ningún error-9 sin consultarlo primero, tal como se pidió.",
@@ -315,19 +314,6 @@
     ],
     "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }
