@@ -1,8 +1,19 @@
 # Pendientes técnicos
 
-🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
+## ⬛ 2026-08-12 — Eliminado el sistema `estado` / `checklistOriginalidad` / `revisionMatematica`
+
+Se quitaron los tres campos del schema, del validador, de los tipos y de toda la UI: ya no hay pipeline `borrador → revision → publicable`, el validador exige el contrato completo a todo archivo de `content/`, y la revisión pasó a ser dos auditorías (matemática y de originalidad) corridas por Claude Code en hilos abiertos con `/clear`, aisladas del hilo que redactó — ver `CLAUDE.md` regla 5. `enConstruccion` sobrevive con un único origen: que una lección declarada en `lib/modulos.ts` todavía no tenga archivo en disco.
+
+**Las entradas marcadas `⬛ SUPERADA` más abajo quedaron sin objeto por este cambio. Se conservan sin reescribir**, porque registran por qué se decidió lo que se decidió y esa trazabilidad vale más que la limpieza. Se borró `docs/publicacion-l2-l3.md`, que era íntegramente el procedimiento de firma (recuperable: último commit `4b83b91`).
+
+---
+
+⬛ SUPERADA por la nota del 2026-08-12 — 🔴 REVERTIR: L2/L3 marcadas publicable + checklist/revisión completos sin revisión matemática real desde 2026-07-27 — revertir a borrador y false, o completar la revisión real, antes de dar el proyecto por cerrado.
 
 ## 🟡 Pendiente: revisión matemática humana real de lineal-modelamiento-paes
+
+⬛ SUPERADA por la nota del 2026-08-12: ya no hay campos que firmar. Lo que queda vigente de esta entrada es que la lección no ha pasado por la auditoría matemática en hilo aislado del nuevo flujo.
+
 Publicada con certificación parcial de Claude (independiente, recalculada
 desde cero) para que el profesor pueda revisarla en la plataforma. Falta que
 Benja y el profesor hagan la revisión real y firmen checklistOriginalidad y
@@ -239,6 +250,8 @@ Auditoría del deploy público antes de compartir el link con usuarios externos.
 
 **Resuelto:** `lib/sanitizar.ts` filtra por nombre de clave, a cualquier profundidad, antes de cruzar la frontera server→cliente: `proveniencia`, `checklistOriginalidad`, `revisionMatematica`, `catalogoErrores`, `contextosNumericos`, `_notasInternas`, `notaDiseno`, `notaVerificacionMatematica`, `solucion`. Ninguno se renderizaba. Se conservan `estado` (lo usa `BannerDemostracion`) y `respuestaModelo` (lo muestra `BloqueAbierta`). La app sigue 100% estática; no se agregó backend.
 
+⬛ SUPERADA PARCIALMENTE por la nota del 2026-08-12: `checklistOriginalidad`, `revisionMatematica` y `estado` ya no existen como campos, así que salieron de `CLAVES_INTERNAS` y la excepción de `estado` quedó sin objeto. El filtro y el resto de las claves siguen vigentes tal cual.
+
 ### Riesgo asumido: `esCorrecta` y el feedback por alternativa siguen viajando al cliente
 
 `esCorrecta`, `respuestaCorrecta` (bloques `numerica`/`verdaderoFalso`) y el `feedback` de cada alternativa siguen en el payload. Un usuario con DevTools puede ver la respuesta correcta de cualquier pregunta sin resolverla.
@@ -254,6 +267,8 @@ Auditoría del deploy público antes de compartir el link con usuarios externos.
 **Gatillo para reevaluar:** si alguna vez hay nota, certificación, ranking o cualquier incentivo para hacer trampa, esto pasa a ser un requisito y cruza el gate de backend del MOS §9–10.
 
 ### `estado: "publicable"` como gate de ruta: descartado, se usa el banner
+
+⬛ SUPERADA por la nota del 2026-08-12: no hay campo `estado` ni banner de demostración; la decisión que registra esta entrada ya no aplica a nada.
 
 Se evaluó bloquear `/cierre` y `/diagnostico` si su `estado !== "publicable"`. Hoy `cierre.json`, `diagnostico.json` y `l0-demo.json` están en `revision` — el gate dejaría el piloto inservible (el CTA de la portada moriría) y solo quedaría `/leccion/l1-patrones-de-cambio`. Además contradice la decisión de diseño ya existente en `RunnerLeccion`. En su lugar se extendió `BannerDemostracion` a `/cierre` y `/diagnostico`, que antes no lo mostraban: señal honesta de piloto, sin apagar el producto.
 
@@ -332,6 +347,8 @@ Ya está borrado y las cinco tablas quedaron en cero. La lección para el próxi
 
 ## CTA principal de `/` empujaba a contenido no publicable (2026-07-25) — RESUELTO EN PARTE
 
+⬛ SUPERADA por la nota del 2026-08-12: ya no existe "contenido no publicable" — todo lo que está en `content/` y valida es navegable.
+
 El CTA principal de la portada (`app/page.tsx`) era "Comenzar diagnóstico" y
 apuntaba a `/diagnostico`, cuyo contenido (`content/diagnostico.json`) está en
 `estado: revision`, no `publicable`.
@@ -369,6 +386,8 @@ y revisión matemática como cualquier lección. Tiene sentido recién cuando ha
 varias lecciones publicables entre las cuales enrutar (`plan-rediseno-entrada.md:19-22`).
 
 ## `/cierre` empuja al banner de demostración sin aviso — RESUELTO (2026-07-25)
+
+⬛ SUPERADA por la nota del 2026-08-12: el banner de demostración se eliminó junto con el campo `estado`, así que el problema que resolvió esta entrada ya no puede ocurrir.
 
 Al resolver el caso de `/diagnostico` (sección anterior) apareció un caso emparentado
 que no se tocó: `content/cierre.json:5` también está en `"estado": "revision"`, y
@@ -883,6 +902,9 @@ Fases ejecutadas, en orden, cada una con su propio commit y verde de
    (`PREVIEW_MOSTRAR_BORRADORES`), que estaba escrito pero sin commitear desde
    antes de esta sesión. `lib/contenido.ts`, `app/leccion/[id]/page.tsx`,
    `components/RunnerLeccion.tsx`.
+   ⬛ SUPERADA por la nota del 2026-08-12: la variable y las funciones
+   `previewMuestraBorradores()` / `idsPublicablesOPreview()` se eliminaron —
+   sin borradores que revelar, el bypass no tiene función.
 2. **Fase 2** (`9dbc212`) — estados de interacción: acierto anclado al objeto
    de la respuesta (alternativa, campo o botón elegido, no solo el panel), y
    el "Comprobar" de `SecuenciaMicropreguntas` presente-apagado en vez de

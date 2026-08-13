@@ -30,7 +30,6 @@
     "CERTIFICACIÓN PARCIAL (2026-08-02), a pedido explícito de Benjamín Gutiérrez en esta sesión ('aplica las revisiones que tú puedas hacer, la del profesor la hago después, pero necesito que se pueda ver la lección en la plataforma'): estado pasa a 'publicable' y se completan checklistOriginalidad y revisionMatematica para que la lección sea navegable. NO es la certificación humana independiente que exige CLAUDE.md ('los escribe siempre a mano el autor humano, después de leer el resultado de una auditoría real') — es una certificación asistida por Claude, y así queda declarado en revisadoPor de ambos campos, sin atribuirla a Benjamín ni al profesor. revisionMatematica.aprobada se basa en un recálculo independiente hecho en esta sesión, DE NUEVO y sin mirar el recálculo original de la redacción antes de comparar: los cinco modelos, los seis valores del Paso 3 y los distractores de los tres itemsPAES coinciden con lo ya registrado arriba, ninguna discrepancia. checklistOriginalidad se basa en que (a) los tres contextos ya fueron verificados contra el corpus por Benjamín Gutiérrez antes de esta sesión (mecanismo 2 de 'Aislamiento de fuentes externas'), (b) ningún texto, tabla ni secuencia de esta lección reproduce una fuente conocida, y (c) proveniencia ya está completa. Pendiente y explícitamente NO cubierto por esta certificación: la revisión matemática independiente del profesor, que Benjamín Gutiérrez hace aparte. Este cambio queda sin commitear.",
     "CERTIFICACIÓN PARCIAL, segunda pasada (2026-08-03), a pedido explícito de Benjamín Gutiérrez, retomando el cambio de 2026-08-02 que había quedado sin commitear: se recalculó de nuevo y de forma independiente toda la matemática de la lección antes de firmar nada — los cinco modelos (dron d = 30 + 9t, cable c = 280 − 9t, ítem 1 d = 50 + 7t, ítem 2 c = 180 − 6t, ítem 3 N = 16 + 4t), los seis valores de los distractores del Paso 3 (36, 39, 156, 90, 111, 390), los distractores de los tres itemsPAES, y las cuatro tablas del ítem 3 (A: 16,20,24,28; B: 0,4,8,12; C: 4,20,36,52; D: 16,20,20,20). Ninguna discrepancia con lo ya registrado arriba. Esto sigue sin ser la revisión matemática humana que exige CLAUDE.md ('los escribe siempre a mano el autor humano, después de leer el resultado de una auditoría real'): es un recálculo independiente hecho por Claude, no una revisión hecha por Benjamín Gutiérrez ni por el profesor. checklistOriginalidad y revisionMatematica quedan firmados como 'Claude (certificación parcial asistida)', fecha 2026-08-03, precisamente para que no se lean como firma humana. Pendiente, sin cambios: Benjamín Gutiérrez y el profesor tienen que hacer la revisión real y firmar ellos mismos, a mano, cuando puedan — registrado en docs/pendientes.md."
   ],
-  "estado": "publicable",
   "contextosNumericos": [
     "Dron de inspección topográfica: 30 m ya recorridos al empezar el registro, 9 m/s. Modelo d = 30 + 9t. Usado en los pasos 1 a 6 y 8.",
     "Cable que queda en la bobina del dron: 280 m enrollados al empezar el registro, 9 m sueltos por segundo. Modelo c = 280 − 9t. Usado en los pasos 6 y 7.",
@@ -494,18 +493,5 @@
       "Currículum nacional Mineduc/UCE, unidad de álgebra y funciones (documento curricular de uso público) — profundidad y secuencia esperadas para modelar situaciones de cambio constante mediante función afín. Usado solo para calibrar secuencia, nunca como origen de texto."
     ],
     "declaracionOriginalidad": "Enunciados, contextos, datos y tablas creados desde cero por el autor del proyecto. El temario PAES M1 y el currículum Mineduc se usaron solo para calibrar alcance, habilidades y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo, tabla ni diagrama de esas fuentes fue reproducido ni parafraseado. Los tres contextos de la lección (dron de inspección topográfica, cable que queda en la bobina, cinta transportadora que apila cajas) fueron verificados contra el corpus de fuentes aisladas por el autor del proyecto fuera de esta sesión de redacción, conforme al mecanismo 2 de 'Aislamiento de fuentes externas' (CLAUDE.md); el hilo que redactó este archivo no consultó el corpus por ningún medio. Originalidad NO firmada aún: pendiente de /revision-originalidad. Revisión matemática NO firmada aún: pendiente de /revision-matematica."
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "Claude (certificación parcial asistida)",
-    "fecha": "2026-08-03"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "Claude (certificación parcial asistida)",
-    "fecha": "2026-08-03"
   }
 }

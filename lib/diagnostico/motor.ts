@@ -163,16 +163,26 @@ function necesitaConfirmacion(unidad: EstadoUnidad): boolean {
 }
 
 /**
- * Regla 8 (2026-08-02): el selector solo puede servir ítems ya revisados. La
- * condición es la conjunción de dos gates independientes, no basta uno solo:
- * `estado` lo decide quien escribe el ítem, `revisionMatematica.aprobada` una
- * revisión matemática separada (MOS §4: "un error matemático publicado
- * destruye la confianza del mercado"). El encadenado con `?.` es deliberado:
- * un ítem real mal formado debe quedar afuera del banco servible, no tirar
- * abajo el selector con una excepción cruda.
+ * Regla 8 (2026-08-02, reescrita el 2026-08-12): el selector solo sirve ítems
+ * estructuralmente completos. Los dos gates de gobernanza que tenía —`estado`
+ * y `revisionMatematica.aprobada`— desaparecieron con el sistema de estado: la
+ * revisión del contenido ocurre antes de que el archivo entre al repositorio,
+ * no como un flag que el motor consulta en runtime.
+ *
+ * Lo que queda es la parte que el motor sí puede y debe verificar por su
+ * cuenta: que el ítem tenga enunciado y exactamente 4 alternativas con una
+ * sola correcta. Un ítem mal formado queda afuera del banco servible en vez de
+ * tirar abajo el selector con una excepción cruda, que es el mismo criterio
+ * defensivo de la versión anterior.
  */
 export function esServible(item: ItemDiagnostico): boolean {
-  return item.estado === "publicable" && item.revisionMatematica?.aprobada === true;
+  return (
+    typeof item.enunciado === "string" &&
+    item.enunciado.trim().length > 0 &&
+    Array.isArray(item.alternativas) &&
+    item.alternativas.length === 4 &&
+    item.alternativas.filter((a) => a?.esCorrecta === true).length === 1
+  );
 }
 
 /** Ítems del banco que sirven para preguntar por `unidadId` y no se han usado. */

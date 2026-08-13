@@ -4,15 +4,11 @@
   "title": "Contenido Plataforma M1 (lección, diagnóstico o cierre)",
   "$comment": "Schema v0. Los bloques de la sección 'pasos.bloques' fueron extraídos de leccion-1-guion.md y leccion-2-guion.md (no diseñados en abstracto). El validador (scripts/validar-contenido.mjs) aplica exigencia gradual según 'estado': borrador = estructura básica; revision = contrato completo; publicable = además checklist de originalidad, revisión matemática y cero placeholders. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan.",
   "type": "object",
-  "required": ["tipo", "id", "titulo", "estado", "proveniencia"],
+  "required": ["tipo", "id", "titulo", "proveniencia"],
   "properties": {
     "tipo": { "enum": ["leccion", "diagnostico", "cierre"] },
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, p. ej. l2-pendiente-intercepto" },
     "titulo": { "type": "string", "minLength": 1 },
-    "estado": {
-      "enum": ["borrador", "revision", "publicable"],
-      "description": "Nivel de madurez. Solo 'publicable' puede mostrarse a estudiantes."
-    },
     "objetivo": { "type": "string", "description": "Qué será capaz de hacer el estudiante al terminar (solo lecciones)" },
     "tiempoEstimadoMin": { "type": "number", "exclusiveMinimum": 0 },
     "prerrequisitos": { "type": "array", "items": { "type": "string" } },
@@ -54,9 +50,7 @@
       "description": "Registro de contextos y números usados, para que otras lecciones no los repitan.",
       "items": { "type": "string" }
     },
-    "proveniencia": { "$ref": "#/definitions/proveniencia" },
-    "checklistOriginalidad": { "$ref": "#/definitions/checklistOriginalidad" },
-    "revisionMatematica": { "$ref": "#/definitions/revisionMatematica" }
+    "proveniencia": { "$ref": "#/definitions/proveniencia" }
   },
   "definitions": {
 
@@ -396,33 +390,6 @@
         },
         "declaracionOriginalidad": { "type": "string", "description": "Declaración explícita de que todo el contenido fue creado desde cero" },
         "autor": { "type": "string" },
-        "fecha": { "type": "string" }
-      },
-      "additionalProperties": false
-    },
-
-    "checklistOriginalidad": {
-      "type": "object",
-      "description": "Checklist MOS §7.3. Las 4 respuestas deben ser true (= sin problema) para publicar. Ante duda: no se publica.",
-      "required": ["enunciadosOriginales", "diagramasOriginales", "secuenciaOriginal", "provenienciaRegistrada"],
-      "properties": {
-        "enunciadosOriginales": { "type": "boolean", "description": "Ningún enunciado/ejercicio es sustancialmente similar a una fuente conocida (cambiar palabras o números NO basta)" },
-        "diagramasOriginales": { "type": "boolean", "description": "Ningún diagrama/visualización replica la composición de uno existente" },
-        "secuenciaOriginal": { "type": "boolean", "description": "La secuencia interna no copia la estructura expresiva de una guía específica" },
-        "provenienciaRegistrada": { "type": "boolean" },
-        "revisadoPor": { "type": "string" },
-        "fecha": { "type": "string" }
-      },
-      "additionalProperties": false
-    },
-
-    "revisionMatematica": {
-      "type": "object",
-      "description": "Revisión independiente: recalcular todo desde cero antes de publicar",
-      "required": ["aprobada"],
-      "properties": {
-        "aprobada": { "type": "boolean" },
-        "revisadoPor": { "type": "string" },
         "fecha": { "type": "string" }
       },
       "additionalProperties": false

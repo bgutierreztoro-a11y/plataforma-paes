@@ -18,8 +18,7 @@ import type {
  * (MOS §7.2: las fuentes no se publican). Por eso el filtro corre en el server
  * component, antes de cruzar la frontera al cliente.
  *
- * `estado` no se filtra: BannerDemostracion lo necesita. `respuestaModelo`
- * tampoco: BloqueAbierta lo muestra.
+ * `respuestaModelo` no se filtra: BloqueAbierta lo muestra.
  *
  * Nota de alcance (decisión 2026-07-09): `esCorrecta`, `respuestaCorrecta` y el
  * `feedback` por alternativa siguen viajando al cliente. Esconderlos exige
@@ -28,8 +27,6 @@ import type {
  */
 const CLAVES_INTERNAS = [
   "proveniencia",
-  "checklistOriginalidad",
-  "revisionMatematica",
   "catalogoErrores",
   "contextosNumericos",
   "_notasInternas",

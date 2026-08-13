@@ -21,13 +21,13 @@ npm run build     # build de producción
 
 ## Dónde vive el contenido
 
-- `content/lecciones/*.json` — una lección por archivo (`l0-demo.json` es contenido de demostración técnica, nunca pasa a `"estado": "publicable"`).
+- `content/lecciones/*.json` — una lección por archivo (`l0-demo.json` es contenido de demostración técnica: queda fuera del alcance del estudiante porque no está asignada a ningún tema en `lib/modulos.ts`, no por su contenido).
 - `content/diagnostico.json`, `content/cierre.json` — sets de ítems formato PAES.
 - `content/schema/leccion.schema.json` — contrato que valida todo lo anterior.
 - Los tipos TypeScript en `lib/tipos.ts` son un espejo manual de ese schema (sin codegen); si el schema cambia, este archivo se actualiza a mano.
 - `lib/contenido.ts` carga y valida el contenido en el servidor (reutiliza `scripts/validar-contenido.mjs` y agrega una verificación de la forma interna de los bloques que el validador de CLI no cubre).
 
-`l1-patrones-de-cambio.json` (contenido real) está migrado a la forma de bloques del schema y en `"estado": "publicable"`: `checklistOriginalidad` y `revisionMatematica` firmadas (Benjamín Gutiérrez, 2026-07-08). `idsDeLecciones()` no lo excluye, la ruta `/leccion/l1-patrones-de-cambio` se genera como SSG y renderiza correctamente (verificada e2e).
+No hay campo `estado` ni pipeline `borrador → revision → publicable` (eliminado el 2026-08-12). Un archivo que existe en `content/` y pasa `npm run validar` es contenido terminado y navegable: `idsDeLecciones()` lo recoge y su ruta se genera como SSG. El validador aplica el contrato completo a todo archivo, sin exigencia gradual. La revisión ocurre antes del commit, en dos auditorías —matemática y de originalidad— corridas en hilos separados del que redactó el contenido (ver `CLAUDE.md`, regla 5).
 
 ## Analítica
 

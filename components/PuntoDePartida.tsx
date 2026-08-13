@@ -27,9 +27,7 @@ function abiertasEnOrden(
   temas: TemaDelCamino[],
 ): { leccion: LeccionDelTema; temaNombre: string }[] {
   return temas.flatMap((tema) =>
-    tema.lecciones
-      .filter((l) => l.publicable)
-      .map((leccion) => ({ leccion, temaNombre: tema.nombre })),
+    tema.lecciones.map((leccion) => ({ leccion, temaNombre: tema.nombre })),
   );
 }
 
@@ -59,7 +57,11 @@ function abiertasEnOrden(
  */
 export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   const montado = useMontado();
-  const enPreparacion = temas.some((t) => t.lecciones.some((l) => !l.publicable));
+  /* "Falta contenido por venir" = algún módulo declara más lecciones de las
+     que tienen archivo escrito. Es el mismo criterio que `estadoDelModulo`, y
+     desde que se eliminó el sistema de `estado` (2026-08-12) es el único: un
+     archivo que existe y valida es contenido terminado. */
+  const enPreparacion = temas.some((t) => t.estado !== "completo");
 
   /* El estado sale de `lib/estadoNodo.ts`, el mismo módulo que pinta los dos
      niveles del camino, y no de contar filas de `progresoLocal`.
@@ -198,7 +200,7 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
         titulo="Hiciste todo lo que está abierto"
         subtitulo={
           enPreparacion
-            ? "Las lecciones que siguen están en preparación: se abren cuando pasen la revisión matemática y de originalidad. Mientras tanto, las que ya hiciste se pueden repasar enteras."
+            ? "Las lecciones que siguen están en preparación: se abren a medida que se terminan de escribir. Mientras tanto, las que ya hiciste se pueden repasar enteras."
             : "Las lecciones que ya hiciste se pueden repasar enteras."
         }
       >

@@ -12,9 +12,6 @@
     "enunciado",
     "alternativas",
     "verificacionNumerica",
-    "revisionMatematica",
-    "checklistOriginalidad",
-    "estado",
     "contextoNumerico"
   ],
   "properties": {
@@ -93,25 +90,6 @@
           "additionalProperties": false
         }
       ]
-    },
-    "revisionMatematica": {
-      "type": "object",
-      "required": ["aprobada", "por", "fecha"],
-      "description": "Estado inicial al crear un ítem: { aprobada: false, por: null, fecha: null }. Pasa a aprobada:true solo tras una revisión real, recalculando desde cero. El selector del motor (lib/diagnostico/motor.ts, Regla 8) nunca sirve un ítem con aprobada !== true, sin importar 'estado'.",
-      "properties": {
-        "aprobada": { "type": "boolean" },
-        "por": { "type": ["string", "null"] },
-        "fecha": { "type": ["string", "null"] }
-      },
-      "additionalProperties": false
-    },
-    "checklistOriginalidad": {
-      "type": "boolean",
-      "description": "Sin problema de originalidad detectado. Ante duda razonable: false, y el ítem se descarta o se rehace (MOS §7.2-7.3)."
-    },
-    "estado": {
-      "enum": ["borrador", "publicable"],
-      "description": "Solo 'publicable' puede llegar al selector, y únicamente si además revisionMatematica.aprobada === true (motor.ts, Regla 8). Un ítem 'publicable' con aprobada:false es válido para este schema y para el validador: la Regla 8 que lo bloquea vive en el motor, no acá."
     },
     "contextoNumerico": {
       "type": "string",

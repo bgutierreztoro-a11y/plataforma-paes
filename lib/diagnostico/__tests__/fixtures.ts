@@ -60,37 +60,47 @@ export function errorDe(unidadId: string, clave: string): string {
 }
 
 /**
- * Estado de revisión por defecto: publicable y aprobado, o sea servible por el
- * selector. Los tests de la Regla 8 pasan un `revision` propio para construir
- * a propósito el caso contrario (borrador, o publicable sin aprobar).
+ * Por defecto el ítem sale bien formado, o sea servible por el selector. Los
+ * tests de la Regla 8 pasan una `forma` propia para construir a propósito el
+ * caso contrario: sin enunciado, con un número de alternativas distinto de 4,
+ * o sin exactamente una correcta.
  */
+export type FormaItem = {
+  /** `false` deja el enunciado vacío. */
+  conEnunciado?: boolean;
+  /** Cuántas alternativas emitir (por defecto 4). */
+  nAlternativas?: number;
+  /** Cuántas de ellas marcar como correctas (por defecto 1). */
+  nCorrectas?: number;
+};
+
 export function itemSintetico(
   unidadId: string,
   n: number,
   aislante = true,
-  revision: { estado: "borrador" | "publicable"; aprobada: boolean } = {
-    estado: "publicable",
-    aprobada: true,
-  },
+  forma: FormaItem = {},
 ): ItemDiagnostico {
+  const { conEnunciado = true, nAlternativas = 4, nCorrectas = 1 } = forma;
+  const claves = ["A", "B", "C", "D", "E"].slice(0, nAlternativas);
   return {
     id: `fx-${unidadId}-${n}`,
     unidadId,
     aislante,
-    enunciado: `Ítem sintético ${n} de ${unidadId}`,
-    estado: revision.estado,
-    revisionMatematica: revision.aprobada
-      ? { aprobada: true, por: "fixture", fecha: "2026-08-02" }
-      : { aprobada: false, por: null, fecha: null },
-    alternativas: [
-      { clave: "A", texto: "correcta", esCorrecta: true },
-      ...CLAVES_INCORRECTAS.map((clave) => ({
-        clave,
-        texto: `incorrecta ${clave}`,
-        esCorrecta: false,
-        errorCatalogado: errorDe(unidadId, clave),
-      })),
-    ],
+    enunciado: conEnunciado ? `Ítem sintético ${n} de ${unidadId}` : "",
+    /* Con la forma por defecto (4 alternativas, 1 correcta) esto produce
+       exactamente lo de antes: "A" correcta y B/C/D incorrectas con su
+       `errorCatalogado`. Los parámetros solo se apartan de ahí en los tests de
+       la Regla 8, que necesitan ítems mal formados a propósito. */
+    alternativas: claves.map((clave, i) =>
+      i < nCorrectas
+        ? { clave, texto: "correcta", esCorrecta: true }
+        : {
+            clave,
+            texto: `incorrecta ${clave}`,
+            esCorrecta: false,
+            errorCatalogado: errorDe(unidadId, clave),
+          },
+    ),
   };
 }
 

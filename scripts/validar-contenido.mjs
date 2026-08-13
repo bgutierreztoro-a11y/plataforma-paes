@@ -8,19 +8,14 @@
  *   node scripts/validar-contenido.mjs <ruta.json>      valida un archivo
  *   node scripts/validar-contenido.mjs --hook           modo hook de Claude Code
  *
- * Exigencia gradual según "estado":
- *   borrador   → estructura básica (tipo, estado, orden de los 10 pasos si existen)
- *   revision   → contrato completo (todos los campos, feedback en cada distractor)
- *   publicable → además: checklist de originalidad, revisión matemática,
- *                declaración de originalidad real y cero placeholders
+ * Exigencia única (desde 2026-08-12): todo archivo de content/ se mide contra
+ * el contrato completo —todos los campos, feedback en cada distractor,
+ * declaración de originalidad real y cero placeholders—. Ya no hay campo
+ * `estado` ni exigencia gradual: un archivo a medio escribir no se commitea.
  *
  * En modo hook lee el evento por stdin (tool_input.file_path) o CLAUDE_FILE_PATH.
  * Si el archivo editado es contenido y no valida, sale con código 2 para que
  * Claude Code reciba el error como feedback y lo corrija.
- *
- * checklistOriginalidad.revisadoPor, revisionMatematica.revisadoPor y estado
- * los escribe siempre a mano el autor humano, después de leer el resultado
- * de una auditoría real. Ningún proceso automático los escribe.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve, basename, join, sep } from 'node:path';
@@ -35,7 +30,6 @@ const HABILIDADES = ['resolver', 'modelar', 'representar', 'argumentar'];
 const DIFICULTADES = ['baja', 'media', 'alta'];
 const CLAVES = ['A', 'B', 'C', 'D'];
 const ITEMS_POR_TIPO = { leccion: [2, 3], diagnostico: [5, 5], cierre: [8, 8] };
-const NIVEL = { borrador: 0, revision: 1, publicable: 2 };
 // Solo marcadores explícitos en MAYÚSCULAS: en español "todo" y "pendiente" son
 // palabras normales (¡"pendiente" es el concepto central del módulo!).
 const PLACEHOLDERS = /\b(TODO|FIXME|PLACEHOLDER|XXX)\b|\[PENDIENTE\]|lorem ipsum/;
@@ -43,7 +37,7 @@ const MIN_FEEDBACK_PUBLICABLE = 40; // el feedback artesanal no puede ser un pla
 
 const esTexto = (v) => typeof v === 'string' && v.trim().length > 0;
 
-function validarItem(item, i, campo, nivel, errores) {
+function validarItem(item, i, campo, errores) {
   const p = `${campo}[${i}]`;
   if (!esTexto(item?.id)) errores.push(`${p}: falta id`);
   if (!HABILIDADES.includes(item?.habilidad)) errores.push(`${p}: habilidad debe ser una de: ${HABILIDADES.join(', ')}`);
@@ -66,8 +60,8 @@ function validarItem(item, i, campo, nivel, errores) {
     if (a?.esCorrecta !== true) {
       if (!esTexto(a?.feedback)) {
         errores.push(`${q}: distractor sin feedback artesanal (regla MOS §4: cada distractor explica el error que lo produce)`);
-      } else if (nivel >= 2 && a.feedback.trim().length < MIN_FEEDBACK_PUBLICABLE) {
-        errores.push(`${q}: feedback demasiado corto para publicar (<${MIN_FEEDBACK_PUBLICABLE} caracteres); debe explicar el error específico`);
+      } else if (a.feedback.trim().length < MIN_FEEDBACK_PUBLICABLE) {
+        errores.push(`${q}: feedback demasiado corto (<${MIN_FEEDBACK_PUBLICABLE} caracteres); debe explicar el error específico`);
       }
     }
   }
@@ -80,12 +74,6 @@ export function validarDatos(data) {
   if (!(tipo in ITEMS_POR_TIPO)) {
     return [`"tipo" debe ser leccion, diagnostico o cierre (recibido: ${JSON.stringify(tipo)})`];
   }
-  const nivel = NIVEL[data?.estado];
-  if (nivel === undefined) {
-    return [`"estado" debe ser borrador, revision o publicable (recibido: ${JSON.stringify(data?.estado)})`];
-  }
-
-  // El orden pedagógico se protege desde el borrador: si hay pasos, son 10 y en orden.
   if (tipo === 'leccion' && data.pasos !== undefined) {
     const pasos = data.pasos;
     if (!Array.isArray(pasos) || pasos.length !== 10) {
@@ -95,11 +83,9 @@ export function validarDatos(data) {
         if (paso?.tipo !== ORDEN_PASOS[i]) {
           errores.push(`pasos[${i}].tipo: debe ser "${ORDEN_PASOS[i]}" (recibido: ${JSON.stringify(paso?.tipo)})`);
         }
-        if (nivel >= 1) {
-          if (!esTexto(paso?.titulo)) errores.push(`pasos[${i}]: falta titulo`);
-          if (!Array.isArray(paso?.bloques) || paso.bloques.length === 0) {
-            errores.push(`pasos[${i}]: falta bloques[] con al menos un bloque`);
-          }
+        if (!esTexto(paso?.titulo)) errores.push(`pasos[${i}]: falta titulo`);
+        if (!Array.isArray(paso?.bloques) || paso.bloques.length === 0) {
+          errores.push(`pasos[${i}]: falta bloques[] con al menos un bloque`);
         }
       });
     }
@@ -111,29 +97,16 @@ export function validarDatos(data) {
   const esperadoItems = minItems === maxItems ? `${minItems}` : `${minItems}–${maxItems}`;
   const conteoOk = Array.isArray(items) && items.length >= minItems && items.length <= maxItems;
 
-  /**
-   * El CONTEO de ítems se exige desde borrador, igual que el orden de los 10
-   * pasos unas líneas más arriba. Un cierre con 4 o con 12 ítems no es un
-   * borrador a medio escribir: es un archivo estructuralmente mal formado, y
-   * hasta el 2026-08-03 pasaba en verde porque este chequeo vivía después del
-   * `return` de nivel 0. El error aparecía recién al subir el archivo a
-   * 'revision' —o sea, en el momento de publicar, que es el peor— y con 14
-   * módulos por producir eso muerde seguro.
-   *
-   * Se exige solo si el array EXISTE. Que los ítems todavía no estén escritos
-   * sí es una omisión legítima de borrador, y esa se sigue reportando abajo,
-   * a partir de 'revision'. Mismo criterio que usa `pasos` con su
-   * `data.pasos !== undefined`.
-   */
   if (items !== undefined && !conteoOk) {
     errores.push(
       `${campoItems}: se esperan ${esperadoItems} ítems (hay ${Array.isArray(items) ? items.length : 0})`,
     );
   }
 
-  if (nivel === 0) return errores; // borrador: libertad para redactar
-
-  // revision y publicable: contrato completo
+  // Contrato completo, siempre. Desde que se eliminó el sistema de `estado`
+  // (2026-08-12) no hay exigencia gradual: todo archivo de content/ se mide
+  // contra el contrato entero, que es el que antes solo se aplicaba a
+  // 'publicable'. Un archivo a medio escribir simplemente no se commitea.
   if (!esTexto(data?.id)) errores.push('falta id');
   if (!esTexto(data?.titulo)) errores.push('falta titulo');
 
@@ -145,40 +118,21 @@ export function validarDatos(data) {
     if (!Array.isArray(data?.conceptos)) errores.push('falta conceptos[]');
   }
 
-  // El conteo fuera de rango ya se reportó más arriba (se exige desde
-  // borrador); acá solo queda el caso que sí es una omisión legítima de
-  // borrador: que el array no exista todavía.
   if (items === undefined) {
     errores.push(`${campoItems}: se esperan ${esperadoItems} ítems (hay 0)`);
   } else if (conteoOk) {
-    items.forEach((it, i) => validarItem(it, i, campoItems, nivel, errores));
+    items.forEach((it, i) => validarItem(it, i, campoItems, errores));
   }
 
   const prov = data?.proveniencia;
   if (!prov || !Array.isArray(prov.fuentesAnalisis) || typeof prov.declaracionOriginalidad !== 'string') {
     errores.push('falta proveniencia { fuentesAnalisis[], declaracionOriginalidad } (MOS §7.2)');
+  } else if (prov.declaracionOriginalidad.trim().length < 30) {
+    errores.push('proveniencia requiere una declaración de originalidad real (≥30 caracteres)');
   }
 
-  if (nivel >= 2) {
-    if (!prov || prov.declaracionOriginalidad.trim().length < 30) {
-      errores.push('publicable requiere una declaración de originalidad real (≥30 caracteres) en proveniencia');
-    }
-
-    const ck = data?.checklistOriginalidad || {};
-    for (const campo of ['enunciadosOriginales', 'diagramasOriginales', 'secuenciaOriginal', 'provenienciaRegistrada']) {
-      if (ck[campo] !== true) errores.push(`publicable requiere checklistOriginalidad.${campo} = true (MOS §7.3)`);
-    }
-    if (!esTexto(ck.revisadoPor)) errores.push('publicable requiere checklistOriginalidad.revisadoPor');
-
-    const rm = data?.revisionMatematica || {};
-    if (rm.aprobada !== true) {
-      errores.push('publicable requiere revisionMatematica.aprobada = true (recalcular todo desde cero)');
-    }
-    if (!esTexto(rm.revisadoPor)) errores.push('publicable requiere revisionMatematica.revisadoPor');
-
-    if (PLACEHOLDERS.test(JSON.stringify(data))) {
-      errores.push('publicable no admite marcadores de trabajo pendiente (TODO, FIXME, [PENDIENTE], XXX, lorem ipsum)');
-    }
+  if (PLACEHOLDERS.test(JSON.stringify(data))) {
+    errores.push('no se admiten marcadores de trabajo pendiente (TODO, FIXME, [PENDIENTE], XXX, lorem ipsum)');
   }
 
   return errores;
@@ -578,13 +532,6 @@ function validarFormaItemDiagnostico(data, dag, erroresCatalogados) {
   } else {
     errores.push('verificacionNumerica.metodo debe ser "calculo" o "sin-calculo"');
   }
-
-  const rm = data?.revisionMatematica;
-  if (!rm || typeof rm !== 'object' || typeof rm.aprobada !== 'boolean') {
-    errores.push('falta revisionMatematica.aprobada (boolean)');
-  }
-  if (typeof data?.checklistOriginalidad !== 'boolean') errores.push('falta checklistOriginalidad (boolean)');
-  if (!['borrador', 'publicable'].includes(data?.estado)) errores.push('estado debe ser "borrador" o "publicable"');
 
   return errores;
 }

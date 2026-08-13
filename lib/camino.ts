@@ -9,7 +9,7 @@
  * El **estado** de cada nodo no se calcula acá: depende del progreso, que vive
  * en el dispositivo. Eso lo resuelve `estadoDeNodo` en components/camino/.
  */
-import { idsDeLecciones, obtenerLeccion, esPublicable, obtenerCierre } from "./contenido";
+import { idsDeLecciones, obtenerLeccion, obtenerCierre } from "./contenido";
 import { EJES, type Tema, type CierreId } from "./modulos";
 import { estadoDelModulo, type EstadoModulo } from "./estadoModulo";
 
@@ -19,7 +19,6 @@ export interface LeccionDelTema {
   id: string;
   titulo: string;
   minutos: number;
-  publicable: boolean;
   /** Denominador de "Aciertos X/Y". Sale del contenido, no se guarda en el
    *  progreso: el agregado se deriva del detalle, nunca se duplica. */
   totalItemsPAES: number;
@@ -35,9 +34,8 @@ export interface TemaDelCamino {
   lecciones: LeccionDelTema[];
   /** Derivado de `lecciones` y de las declaradas en el registro. Ver `EstadoModulo`. */
   estado: EstadoModulo;
-  /** El tema termina en /cierre/{id}. `cierrePublicable` decide si es navegable. */
+  /** El tema termina en /cierre/{id}, si tiene uno declarado en `lib/modulos.ts`. */
   cierreId?: CierreId;
-  cierrePublicable: boolean;
   /** Cuántos ítems trae ese cierre. Es el denominador para saber si se rindió
    *  entero: haber abierto el cierre no es haberlo terminado. */
   cierreTotalItems: number;
@@ -54,7 +52,6 @@ function leccionesDelTema(tema: Tema, validas: Set<string>): LeccionDelTema[] {
       id: leccion.id,
       titulo: leccion.titulo,
       minutos: leccion.tiempoEstimadoMin,
-      publicable: esPublicable(leccion),
       totalItemsPAES: leccion.itemsPAES?.length ?? 0,
     });
   }
@@ -84,7 +81,6 @@ export function temasDelCamino(): TemaDelCamino[] {
         lecciones,
         estado: estadoDelModulo(tema.lecciones.length, lecciones),
         cierreId,
-        cierrePublicable: cierre ? esPublicable(cierre) : false,
         cierreTotalItems: cierre?.items?.length ?? 0,
       };
     }),

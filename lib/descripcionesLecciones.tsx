@@ -79,6 +79,16 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Descubre que sacar un porcentaje es multiplicar por un número fijo, moviendo un grupo de estudiantes y viendo qué se mantiene igual.",
     Ilustracion: IlustracionPlano,
   },
+  "porcentaje-rebaja-doble": {
+    descripcion:
+      "Averigua por qué un 20% de descuento seguido de un 10% no es un 30%, y qué se multiplica cuando dos rebajas se aplican una tras otra.",
+    Ilustracion: IlustracionPlano,
+  },
+  "porcentaje-volver-atras": {
+    descripcion:
+      "Reconstruye el precio original a partir del precio final, y descubre por qué quitar el mismo porcentaje que se sumó nunca te devuelve al punto de partida.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

@@ -6,7 +6,6 @@
   "tiempoEstimadoMin": 20,
   "prerrequisitos": [],
   "conceptos": [],
-  "estado": "borrador",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -101,19 +100,6 @@
     "fuentesAnalisis": ["Temario oficial DEMRE M1 (solo calibración de formato y cobertura)"],
     "declaracionOriginalidad": "",
     "autor": "",
-    "fecha": ""
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": false,
-    "diagramasOriginales": false,
-    "secuenciaOriginal": false,
-    "provenienciaRegistrada": false,
-    "revisadoPor": "",
-    "fecha": ""
-  },
-  "revisionMatematica": {
-    "aprobada": false,
-    "revisadoPor": "",
     "fecha": ""
   }
 }

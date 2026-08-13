@@ -24,7 +24,6 @@
     "El Paso 8 (aplicación) combina el insight de esta lección con el de L2 (dividir/operar con fracciones) sumando 3/4 de grado por hora a una temperatura negativa — frase '3/4 de grado' reutilizada literalmente porque es la que pasó la verificación de colisión (ver nota de arriba), en vez de introducir una fracción nueva sin verificar.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
-  "estado": "publicable",
   "pasos": [
     {
       "tipo": "curiosidad",
@@ -463,19 +462,6 @@
     ],
     "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
-    "fecha": "2026-08-04"
-  },
-  "checklistOriginalidad": {
-    "enunciadosOriginales": true,
-    "diagramasOriginales": true,
-    "secuenciaOriginal": true,
-    "provenienciaRegistrada": true,
-    "revisadoPor": "benjamin gutierrez",
-    "fecha": "2026-08-04"
-  },
-  "revisionMatematica": {
-    "aprobada": true,
-    "revisadoPor": "benjamin gutierrez",
     "fecha": "2026-08-04"
   }
 }

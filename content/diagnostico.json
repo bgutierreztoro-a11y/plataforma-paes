@@ -2,7 +2,6 @@
   "tipo": "diagnostico",
   "id": "diagnostico-v0",
   "titulo": "Diagnóstico — antes de empezar",
-  "estado": "revision",
   "items": [
     {
       "id": "diag-1",
@@ -20,7 +19,7 @@
           "clave": "B",
           "texto": "12",
           "esCorrecta": false,
-          "feedback": "Calculaste 3×4 pero olvidaste restar 1."
+          "feedback": "Calculaste bien 3×4 = 12, pero te quedaste ahí: la expresión todavía tiene una resta pendiente. A esos 12 hay que restarles el 1."
         },
         {
           "clave": "C",
@@ -172,7 +171,7 @@
   ],
   "proveniencia": {
     "fuentesAnalisis": [],
-    "declaracionOriginalidad": "Set de diagnóstico de demostración técnica, creado desde cero para probar la cáscara del MVP. No es contenido pedagógico real ni pasa a estado publicable.",
+    "declaracionOriginalidad": "Set de diagnóstico de demostración técnica, creado desde cero para probar la cáscara del MVP. No es contenido pedagógico real: es andamiaje que se reemplaza cuando exista el banco de ítems de diagnóstico.",
     "autor": "IA (Claude) bajo dirección del autor del proyecto — andamiaje técnico, no contenido curatorial",
     "fecha": "2026-07-08"
   }

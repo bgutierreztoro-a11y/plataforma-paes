@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { EjecutorSetItems } from "@/components/EjecutorSetItems";
 import { Boton, EnlaceBoton } from "@/components/ui/Boton";
-import { BannerDemostracion } from "@/components/ui/Banner";
 import { Tarjeta } from "@/components/ui/Tarjeta";
 import { guardarResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
@@ -67,7 +66,6 @@ export function Diagnostico({
   if (fase === "entrada") {
     return (
       <div className="flex min-h-full flex-col">
-        {diagnostico.estado !== "publicable" && <BannerDemostracion />}
         <PantallaCentrada>
           <Tarjeta className="w-full max-w-lg p-8">
             <h1 className="text-3xl font-semibold text-ink">
@@ -95,7 +93,6 @@ export function Diagnostico({
 
   return (
     <div className="flex min-h-full flex-col">
-      {diagnostico.estado !== "publicable" && <BannerDemostracion />}
       <EjecutorSetItems
         items={diagnostico.items}
         mostrarFeedback={false}
