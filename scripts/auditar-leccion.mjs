@@ -358,6 +358,7 @@ const MODULO_POR_LECCION = {
   'lineal-pendiente-e-intercepto': 'funcion-lineal-afin',
   'proporcionalidad-directa': 'proporcionalidad',
   'proporcionalidad-inversa': 'proporcionalidad',
+  'proporcionalidad-reconocer': 'proporcionalidad',
 };
 
 /**

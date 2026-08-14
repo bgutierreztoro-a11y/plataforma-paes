@@ -1,0 +1,724 @@
+{
+  "tipo": "leccion",
+  "id": "proporcionalidad-reconocer",
+  "titulo": "¿Directa, inversa, o ninguna?",
+  "objetivo": "Discriminar si una tabla de dos cantidades es directamente proporcional, inversamente proporcional o ninguna de las dos, aplicando el cociente constante y el producto constante a todas las filas antes de concluir.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Proporción directa: cociente constante y constante de proporcionalidad (proporcionalidad-directa)",
+    "Proporción inversa: producto constante y constante de proporcionalidad (proporcionalidad-inversa)",
+    "Multiplicación y división de números enteros y decimales (módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "criterio de las dos pruebas: cociente constante o producto constante",
+    "verificación en todas las filas, no en una",
+    "relación con valor inicial distinto de cero que crece de forma regular sin ser proporcional",
+    "ninguna de las dos proporciones como resultado válido"
+  ],
+  "_notasInternas": [
+    "L3, cierre conceptual del módulo Proporcionalidad. Depende de proporcionalidad-directa.json (L1) y proporcionalidad-inversa.json (L2): el paso 5 EXIGE que el estudiante llegue con las dos herramientas ya construidas, porque acá no se enseña ninguna operación nueva — se enseña el PROTOCOLO de cuándo usar cada una y qué hacer cuando ninguna sirve.",
+      "DOMINIO DEL CASO TRAMPA: APROBADO 2026-08-14 — hielo derritiéndose. Historial completo de descarte, dos rondas: ronda 1 (fase 1 de diseño) caja/base/altura, estanque/tanque/agua/nivel, planta/semana — los tres SI. Ronda 2, candidatos adicionales corridos por Benja: vela (SI), cera (SI), resorte/estirar (SI), banda (SI), consumir (SI), cabello/pelo (SI), corte (SI). Único limpio: hielo, derretir, derretirse, fusión — los cuatro NO. RESTRICCIÓN ADICIONAL DE BENJA sobre el vocabulario del contenedor y la magnitud, aplicada en todo el paso: prohibidos «agua», «nivel», «estanque», «tanque», «recipiente», «llenar», «profundidad» y «altura» — los ocho SI. Solución: la magnitud es MASA (gramos de hielo derretido acumulados), no volumen ni altura, y el contenedor queda sin nombrar en todo el texto — no hace falta decir en qué está el hielo, solo que se está derritiendo y que antes de empezar a medir ya se había derretido algo.",
+    "MARCO PEDAGÓGICO (fijado antes de redactar, no negociable, texto aprobado por Benja el 2026-08-14): «Ante cualquier tabla hago dos pruebas: divido (¿mismo cociente?) y multiplico (¿mismo producto?). Si pasa la primera es directa, si pasa la segunda es inversa, y si no pasa ninguna no es proporcional — aunque suba de forma perfectamente ordenada. Crecer juntas no alcanza: tienen que crecer al mismo ritmo.» Este texto cierra el paso 5 literal, sin parafrasear.",
+    "DECISIÓN DE DOMINIO (Benja, instrucción de fase 1): los dos casos proporcionales del paso 5 REUTILIZAN esmaltes (L1, k=40) y auditorio (L2, k=900) con las FILAS EXACTAS ya publicadas — 3/120, 6/240, 8/320 para esmaltes; 20/45, 25/36, 30/30 para auditorio — sin inventar cifras nuevas para esos dos casos. El módulo cierra sobre sí mismo: un estudiante que hizo L1 y L2 reconoce las cifras antes de calcular, y esa es la mitad del punto — la otra mitad es que reconocerlas no basta, hay que seguir aplicando la prueba.",
+    "POR QUÉ 40 Y 900 NO NECESITAN LA REGLA 2 DE docs/reglas-modulo.md (constante no antes del paso 5) EN EL MISMO SENTIDO QUE EN L1/L2: son constantes YA PÚBLICAS, publicadas y comitteadas en dos archivos que este mismo estudiante ya completó. No hay nada que proteger ahí — filtrarlas no le regala nada que no tenga ya. Lo que SÍ está protegido con el mismo rigor que L1/L2 aplicaron a sus propias constantes es la CONCLUSIÓN de la tercera tabla del paso 5 (el hielo): ningún paso anterior al 5 la nombra ni la insinúa. Por diseño, los pasos 1 a 4 de este archivo NO tocan esmaltes, auditorio ni hielo — usan un tercer tono de esmalte, ya cleared por vocabulario (índigo, dentro del taller de esmaltes de L1), con una relación AFÍN (no proporcional) para plantar la duda temprano sin gastar el dominio trampa grande. auditoria.constante queda SIN DECLARAR: esta lección no tiene una sola constante que proteger de la forma en que lo exige el mecanismo escalar de docs/reglas-modulo.md — tiene dos ya públicas (40, 900) y tres instancias distintas de la relación afín del hielo (paso 5, P3 del paso 7, ítem 3), cada una con su propio valor inicial y su propia tasa. Ninguna de las cinco necesita protegerse con --constante= porque ninguna es un secreto nuevo que un paso anterior pueda filtrar sin que ya esté deliberadamente ahí (40 y 900 son callbacks públicos; las tres del hielo no aparecen en ningún paso antes de donde se usan, verificado a mano).",
+    "EL «CASO TEMPRANO» (pasos 2-3, tono índigo, k no existe): 16 + 23·pigmento. Es una relación AFÍN, dentro del dominio esmaltes YA VERIFICADO limpio por L1 (pigmento/base/mL/gramos/taller), así que no necesita verificación de dominio propia. Su función es distinta de la tabla trampa del paso 5: acá el estudiante hace las DOS pruebas él mismo por primera vez y descubre que ninguna funciona, en un solo caso concreto, ANTES de que el paso 5 generalice el protocolo con tres casos a la vez (incluido el hielo, dominio nuevo). Sin este caso temprano, el paso 5 tendría que enseñar el protocolo Y sorprender con un dominio nuevo al mismo tiempo — dos cargas cognitivas a la vez, que es justo lo que el marco pedagógico de L1 prohíbe.",
+    "EL HIELO (paso 5 tabla C, P3 del paso 7, ítem 3): tres instancias DISTINTAS de la misma relación afín, masa = valor inicial + tasa · horas, ninguna reutiliza la cifra de otra. Ninguna nombra el contenedor. La magnitud es masa (gramos de hielo derretido acumulados), nunca volumen, nivel ni altura — cumple la restricción de Benja. El valor inicial se justifica narrativamente como «lo que ya se había derretido antes de empezar a medir», sin necesidad de un segundo objeto ni de un contenedor: el hielo llevaba un rato derritiéndose antes de que alguien empezara a registrar cuánto llevaba. Verificación de que el modelo es afín puro y falla las dos pruebas, en las tres instancias: paso 5 (valor inicial 27, tasa 64 g/h) — filas 3h→219g, 6h→411g, 9h→603g; cociente 219/3=73, 411/6=68,5, 603/9=67,0 (cambia); producto 3×219=657, 6×411=2466 (cambia). P3 del paso 7 (valor inicial 44, tasa 61 g/h) — filas 2h→166g, 5h→349g, 8h→532g; cociente 166/2=83, 349/5=69,8, 532/8=66,5 (cambia); producto 2×166=332, 5×349=1745 (cambia). Ítem 3 (valor inicial 38, tasa 47 g/h) — filas 4h→226g, 7h→367g, 11h→555g; cociente 226/4=56,5, 367/7≈52,43, 555/11≈50,45 (cambia); producto 4×226=904, 7×367=2569, 11×555=6105 (cambia). Las tres pasan el chequeo del modelo afín (valor_inicial + tasa × horas, verificado fila por fila) y fallan las dos pruebas en las tres filas, no solo en una.",
+    "CIFRAS: barrido corrido contra los 26 archivos JSON de content/ (lecciones + cierres + diagnóstico), incluyendo ya proporcionalidad-inversa.json. Constantes nuevas introducidas y verificadas SIN colisión: 16+23p (índigo, pasos 2-3), 59 (esmalte turquesa, ejemplo paso 6), 792 (auditorio extra, ejercicio paso 6), 37 (esmalte lila, P1 paso 7), 29 (esmaltado de piezas, paso 8), 53 (esmalte coral, ítem 2), 728 (auditorio de un centro comunitario, ítem 1), y las tres instancias del hielo (paso 5, P3, ítem 3) documentadas en la nota anterior. Se descartaron por colisión real, antes de fijarse, varios candidatos: un valor de constante ya usado como distractor en el paso 5 de proporcionalidad-inversa.json; un tramo de la tabla índigo que coincidía con el lote fallido del paso 1 y un distractor de P1 del paso 7, ambos de proporcionalidad-directa.json; y un primer valor de distractor del hielo (216) que coincidía con la respuesta correcta del paso 8 de proporcionalidad-directa.json (12 piezas × 18 mL). Detalle completo, sin transcribir las cifras descartadas dos veces, en contextosNumericos.",
+    "CATÁLOGO: subconjunto de 10 ids de los 16 del módulo (error-1, error-3, error-4, error-5, error-7, error-10, error-11, error-12, error-13) más error-16 nuevo, copiados carácter a carácter desde L1/L2 en su versión POST-9f85feb (la generalizada). error-13 se usa en los distractores del ítem 2 (representar). error-3 y error-11 se agregaron al completar P3 del paso 7 y el ítem 3: error-3 para el distractor «sacó la constante de una sola fila y no verificó las demás», error-11 para el distractor «no es proporcional porque los números no son redondos» — el mismo mecanismo que L1 y L2 ya usaron en sus propios P3. No se incluyen error-2, error-6, error-8, error-9, error-14, error-15 porque ningún distractor de este archivo los usa.",
+    "error-7 YA CUBRE EL MECANISMO CENTRAL DE LA TRAMPA (verificado en fase 1, aprobado por Benja): «Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo.» No se creó ninguna entrada nueva para esto.",
+    "error-16 (NUEVO, aprobado por Benja el 2026-08-14, texto exacto sin cambios): «Aplica una sola de las dos pruebas — solo cociente, o solo producto — y concluye a partir de ese resultado sin probar la que falta: descarta proporcionalidad al fallar el cociente sin probar el producto, o la da por directa al pasar el cociente sin comprobar si el producto también se mantiene.» Es el mecanismo propio de esta lección: solo existe cuando hay que elegir entre dos pruebas, así que ni L1 ni L2 podían tenerlo.",
+    "REGLA DE PRODUCTO, PERMANENTE (heredada de L1/L2): sin interactivoSlider, sin representación de función lineal dibujada. El ítem 2 (representar) usa el mismo patrón de L2: tabla en markdown dentro del enunciado, alternativas como descripciones verbales de gráficos, porque definitions.item del schema no admite figuras.",
+    "PASO 8 (aplicación): se restringió a UN solo dominio de transferencia (esmaltado de piezas de cerámica, ya usado en el paso 8 de L1, con cifras nuevas) en vez de dos, para no sobrecargar el paso. La verificación de tipo en un dominio distinto al inverso ya la cubre el ítem 1 (auditorio, resolver). Si Benja prefiere un segundo dominio de transferencia acá, se puede agregar patio/losetas (L2) con cifras nuevas ya verificadas y en reserva: ancho 1.320 cm, filas 24/55 y 30/44, pedido 33 cm → 40 losetas — no incluidas en este borrador por decisión de alcance, no por falta de verificación.",
+    "REVISIÓN MATEMÁTICA Y AUDITORÍA DE ORIGINALIDAD: NO CORRIDAS. El archivo ya está completo y pasa npm run validar y npm run auditar, pero ninguna de las dos auditorías obligatorias ha corrido todavía. Se abren en hilos separados con /clear, como exige CLAUDE.md — este hilo redactó, así que no puede juzgar lo que redactó."
+  ],
+  "auditoria": {
+    "_nota": "Sin auditoria.constante declarada, deliberado: esta lección no tiene una sola constante que proteger con el mecanismo escalar. Tiene dos callbacks ya públicos (40, 900) y tres instancias de una relación afín (paso 5, P3 del paso 7, ítem 3), cada una con su propio valor inicial y tasa, verificadas a mano contra filtración. Ver _notasInternas."
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Usa diferencia constante en vez de cociente constante: ve que las dos columnas suben y asume proporcionalidad sumándole a una lo mismo que le sumó a la otra (si a 3 g le corresponden 120 mL, cree que a 12 g le corresponden 129 porque el pigmento subió 9)."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Escala una sola de las dos cantidades: multiplica el valor completo de una fila por la cantidad nueva, en vez de multiplicar la cantidad nueva por la constante, y rompe la razón que quería conservar."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
+    },
+    {
+      "id": "error-16",
+      "descripcion": "Aplica una sola de las dos pruebas — solo cociente, o solo producto — y concluye a partir de ese resultado sin probar la que falta: descarta proporcionalidad al fallar el cociente sin probar el producto, o la da por directa al pasar el cociente sin comprobar si el producto también se mantiene."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO GENERAL: mismo taller de esmaltes de L1 y mismo auditorio de un centro cultural de L2 (vocabulario ya verificado limpio en ambos), más un dominio nuevo aún no aprobado para el caso trampa.",
+    "curiosidad (Paso 1): sin tabla ni cifras. Meta-hook sobre no tener el título de la lección como pista.",
+    "problema (Paso 2) y pensar (Paso 3): esmalte ÍNDIGO, tercer tono del taller (no usado en L1). Relación AFÍN, no proporcional: base = 16 + 23 · pigmento. Filas: 2 g → 62 mL, 4 g → 108 mL, 6 g → 154 mL. Verificación cociente: 62/2=31, 108/4=27, 154/6=25,666...; no constante. Verificación producto: 2×62=124, 4×108=432; no constante. Ninguna de las dos pruebas pasa: es el «caso temprano», más chico que la trampa del paso 5. Cifras 62, 108, 154, 124, 432 y sus distractores 60, 104 (resta en vez de dividir) y 64, 112 (suma en vez de multiplica) verificadas sin colisión en todo content/.",
+    "descubrimiento (Paso 5): tabla A esmaltes, filas EXACTAS de proporcionalidad-directa.json (3/120, 6/240, 8/320, k=40, cociente). Tabla B auditorio, filas EXACTAS de proporcionalidad-inversa.json (20/45, 25/36, 30/30, k=900, producto). Tabla C: hielo derritiéndose, sin nombrar el contenedor, masa en gramos de hielo derretido acumulado vs. horas transcurridas desde que se empezó a medir. Relación afín: masa = 27 + 64 · horas. Filas: 3 h → 219 g, 6 h → 411 g, 9 h → 603 g. Cociente 73/68,5/67 (cambia); producto 657/2466/... (cambia). Falla las dos pruebas.",
+    "generalizacion (Paso 6): ejemplo trabajado esmalte TURQUESA (nuevo tono), k=59, filas 3 g/177 mL y 5 g/295 mL, solo interpretación, sin cálculo del estudiante. Ejercicio con cifras distintas: auditorio EXTRA del mismo centro cultural, k=792 (inversa), filas 18/44 y 22/36, pedido 24 butacas por hilera → 33 hileras; distractores 34 (canje 1 a 1 desde la fila de 22), 792 (entregó la constante) y 19.008 (multiplicó en vez de dividir). Cifras 59, 177, 295, 792, 34, 19008 verificadas sin colisión.",
+    "practica (Paso 7): P1 esmalte LILA (nuevo tono), k=37 (directa), filas 4 g/148 mL, 7 g/259 mL, 9 g/333 mL, pedido 11 g → 407 mL; distractores 335 (aditivo, +2 g sobre la fila de 9 g), 37 (entregó la constante) y 3.663 (escaló la fila completa). P2 verdaderoFalso sobre error-16, reutilizando el auditorio (900) con las filas 20/45 y 25/36 ya públicas: plantea la trampa de concluir «no son proporcionales» solo porque el cociente no coincide, sin probar el producto. P3: segunda instancia del hielo, masa = 44 + 61 · horas. Filas: 2 h → 166 g, 5 h → 349 g, 8 h → 532 g. Cociente 83/69,8/66,5 (cambia); producto 332/1745/... (cambia). Alternativas: (a) «sí, porque suben ordenadas» → error-7; (b) «sí, 166÷2=83 es la constante» → error-3; (c) correcta, ninguna prueba se repite en las tres filas; (d) «no, porque los números no son redondos» → error-11.",
+    "aplicacion (Paso 8): esmaltado de piezas de cerámica (mismo par de magnitudes de L1: piezas ↔ mL de esmalte), k=29 (directa), filas 6 piezas/174 mL y 9 piezas/261 mL, pedido 13 piezas → 377 mL; distractores 181 (aditivo desde la fila de 6 piezas), 29 (entregó la constante) y 3.393 (escaló la fila completa). Cifras 29, 174, 261, 377, 181, 3393 verificadas sin colisión — nótese que se evitó 265 como distractor porque colisionaba con la fila del ítem 2 de este mismo archivo (ver más abajo).",
+    "itemsPAES item-1 (resolver, baja): auditorio de un centro comunitario (nuevo, dentro del dominio auditorio ya limpio), k=728 (inversa), filas 8/91, 13/56, 26/28, pedido 14 butacas por hilera → 52 hileras; distractores 85 (canje/resta desde la fila de 8), 728 (entregó la constante) y 10.192 (multiplicó en vez de dividir). Cifras verificadas sin colisión en content/.",
+    "itemsPAES item-2 (representar, media): esmalte CORAL (nuevo tono), k=53 (directa), filas 3 g/159 mL, 5 g/265 mL, 8 g/424 mL; las cuatro alternativas son descripciones verbales de gráficos, no dibujos. Cifras 53, 159, 265, 424 verificadas sin colisión.",
+    "itemsPAES item-3 (argumentar, alta): tercera instancia del hielo, masa = 38 + 47 · horas. Filas: 4 h → 226 g, 7 h → 367 g, 11 h → 555 g. Cociente 56,5/52,43.../50,45... (cambia); producto 904/2569/6105 (cambia). Pone al estudiante frente a la afirmación «suben juntas, luego son directamente proporcionales» y pide evaluarla; correcta refuta con el cociente que cambia, distractores mapean a error-7 (suben ordenadas → sí), error-16 (descarta directa y asume inversa sin probar) y error-11 (números no redondos).",
+    "NOTA DE NO COLISIÓN (barrido corrido el 2026-08-14 contra los 26 archivos JSON de content/, incluyendo ya proporcionalidad-inversa.json), cada cifra nueva de índigo, turquesa, auditorio extra, lila, piezas, auditorio del centro comunitario, coral y las tres instancias del hielo (paso 5, P3, ítem 3) verificada una por una contra content/ completo. Todas nuevas en el corpus, sin excepción, salvo dígitos sueltos por debajo de 100 que reaparecen en otros módulos con otro rol y otras unidades — el mismo tipo de coincidencia que L1 y L2 ya documentaron como no bloqueante en sus propios archivos. Tres candidatos se descartaron ANTES de fijarse por colisión real con L1/L2 (detalle en la nota de _notasInternas raíz sobre CIFRAS, no acá): un valor de constante ya usado como distractor en el paso 5 de proporcionalidad-inversa.json, una primera versión de la tabla índigo cuyas filas coincidían con el lote fallido del paso 1 y un distractor del paso 7 de proporcionalidad-directa.json, y un primer distractor del hielo que coincidía con la respuesta correcta del paso 8 de proporcionalidad-directa.json. IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json): las cifras puntuales de esta verificación NO se transcriben acá a propósito. Enumerarlas haría que scripts/auditar-leccion.mjs las leyera como cifras propias de esta lección y devolviera colisiones falsas contra los archivos que ya las usan con otro rol — exactamente lo que le pasó a un borrador anterior de este archivo (🟡 colision-entre-archivos sobre cifras de reutilización deliberada del paso 5 y sobre las cifras descartadas de esta misma nota). Las filas de esmaltes y auditorio del paso 5, documentadas arriba en este mismo campo con sus valores completos porque son REUTILIZACIÓN DELIBERADA de L1/L2, no cuentan como colisión: es exactamente el diseño aprobado, y el 🟡 que su transcripción genera en npm run auditar es esperado y se reporta como tal, no se oculta."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Esta vez nadie te avisa",
+      "_notasInternas": [
+        "Gancho puramente meta, sin tabla ni cifras: no hay nada que verificar aritméticamente en este paso. El punto es narrativo — hacer explícito que las dos lecciones anteriores regalaban el tipo de proporción en el título, y esta vez no.",
+        "La predicción no tiene respuesta correcta marcada en este bloque (tipoRespuesta seleccionSimple sin corrección aquí): es una apuesta que se retoma recién en el paso 5, igual que L1 y L2 dejan viva la predicción de apertura hasta su descubrimiento."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "En las dos lecciones anteriores, el título te avisaba: «proporción directa» o «proporción inversa». Apenas veías una tabla, ya sabías si tenías que dividir o multiplicar.\n\nEn la prueba real nadie te va a avisar. Te van a dar una tabla, sin título, y vas a tener que decidir tú qué herramienta usar — o si ninguna de las dos sirve.\n\nAntes de seguir: cuando ves una tabla y las dos columnas suben juntas, de forma pareja y ordenada, ¿esa sola señal ya te alcanza para decir «esto es proporcional»?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí: si las dos suben juntas y de forma pareja, ya es proporcional",
+            "No, hace falta comprobar algo más, aunque no sepa bien qué",
+            "Depende de si suben rápido o lento"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Vas a construir el criterio completo en esta lección: qué comprobar, en qué orden, y qué hacer cuando ninguna de las dos pruebas funciona.\n\nY vas a ver un caso que engaña a cualquiera: dos columnas que suben tan ordenadas que parecen sacadas de un libro de texto — y que no son proporcionales de ninguna forma."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El esmalte índigo sube derechito, y aun así...",
+      "_notasInternas": [
+        "CASO TEMPRANO. Tono nuevo del taller (índigo), relación AFÍN: base = 16 + 23 · pigmento. Verificación: 16+23×2=62 ✓; 16+23×4=108 ✓; 16+23×6=154 ✓.",
+        "Verificación de la prueba pedida (cociente, la herramienta de L1): 62÷2=31; 108÷4=27. Ninguno se repite todavía con solo dos filas — y el texto de cierre agrega la tercera (154÷6=25,666...) para dejar clarísimo que no hay ninguna coincidencia posible.",
+        "Verificación de los distractores: restar en vez de dividir da 62−2=60 y 108−4=104 (error-1).",
+        "Esta tabla NO es la trampa grande del paso 5: es más chica y vive en un dominio ya limpio (esmaltes), a propósito, para no gastar la sorpresa del dominio nuevo enseñando el protocolo al mismo tiempo."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "El taller registró un nuevo tono, índigo, en tres lotes. A simple vista las dos columnas suben de forma perfectamente pareja.",
+          "datos": {
+            "columnas": ["Pigmento (g)", "Base (mL)"],
+            "filas": [[2, 62], [4, 108], [6, 154]]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "En la lección de proporción directa comprobabas si dos cantidades eran proporcionales dividiendo una por la otra en cada lote.\n\nAplica esa misma prueba acá. Divide **base ÷ pigmento** en los dos primeros lotes.",
+          "campos": [
+            {
+              "id": "cocienteIndigoMenor",
+              "etiqueta": "Base ÷ pigmento, en el lote de 2 g",
+              "respuestaCorrecta": 31,
+              "unidad": "mL/g"
+            },
+            {
+              "id": "cocienteIndigoMayor",
+              "etiqueta": "Base ÷ pigmento, en el lote de 4 g",
+              "respuestaCorrecta": 27,
+              "unidad": "mL/g"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cocienteIndigoMenor",
+              "valorObtenido": 60,
+              "mensaje": "Restaste en vez de dividir: 62 − 2 = 60. La prueba de proporción directa es una división, base entre pigmento, no una resta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "cocienteIndigoMayor",
+              "valorObtenido": 104,
+              "mensaje": "Restaste en vez de dividir: 108 − 4 = 104. Prueba dividiendo: 108 ÷ 4.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Divide la base por el pigmento en cada lote. En el primero, 62 ÷ 2. En el segundo, 108 ÷ 4. Anota los dos resultados uno al lado del otro."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "**31 y 27.** No coinciden — y el tercer lote (6 g, 154 mL) da 25,666..., otro número distinto.\n\nSegún la prueba que aprendiste en la lección de proporción directa, esto **no es directamente proporcional**. Y sin embargo mira la tabla: las dos columnas suben, y suben de forma perfectamente pareja —cada vez que el pigmento sube 2 g, la base sube 46 mL, siempre lo mismo—.\n\n¿Será entonces inversamente proporcional, como en la lección anterior? Ahí la prueba era otra: no dividir, sino multiplicar."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: prueba con la otra herramienta",
+      "_notasInternas": [
+        "Registro del intento genuino: el estudiante aplica por su cuenta la prueba de L2 (producto) sobre la MISMA tabla índigo, sin que se le diga todavía que también va a fallar.",
+        "Verificación: 2×62=124; 4×108=432. No coinciden, así que tampoco pasa la prueba de proporción inversa.",
+        "Verificación de los distractores: sumar en vez de multiplicar da 2+62=64 y 4+108=112 (error-12, forma simple: suma directa de los dos valores)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El cociente no sirvió. En la lección de proporción inversa la prueba era otra: multiplicar las dos cantidades.\n\nPruébala en los mismos dos lotes de esmalte índigo. Multiplica **pigmento × base**.",
+          "campos": [
+            {
+              "id": "productoIndigoMenor",
+              "etiqueta": "Pigmento × base, en el lote de 2 g",
+              "respuestaCorrecta": 124,
+              "unidad": "g·mL"
+            },
+            {
+              "id": "productoIndigoMayor",
+              "etiqueta": "Pigmento × base, en el lote de 4 g",
+              "respuestaCorrecta": 432,
+              "unidad": "g·mL"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "productoIndigoMenor",
+              "valorObtenido": 64,
+              "mensaje": "Sumaste en vez de multiplicar: 2 + 62 = 64. La prueba de proporción inversa es multiplicar las dos cantidades, no sumarlas.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "productoIndigoMayor",
+              "valorObtenido": 112,
+              "mensaje": "Sumaste en vez de multiplicar: 4 + 108 = 112. Multiplica: 4 × 108.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Multiplica pigmento por base en cada lote. En el primero, 2 × 62. En el segundo, 4 × 108. Compara los dos resultados."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el esmalte índigo",
+      "_notasInternas": [
+        "Gradación real: la 1 pide comparar los resultados de las dos pruebas ya hechas (ninguna se repitió); la 2 nombra que eso significa que la tabla no es NI directa NI inversa, aunque suba ordenada; la 3 adelanta, sin nombrar «afín», que sí hay algo que se mantiene fijo (la diferencia entre lotes consecutivos), preparando el paso 5 sin regalarlo.",
+        "Ninguna nombra el concepto formal ni ejecuta el paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Mira los dos resultados que ya calculaste: los cocientes (31 y 27) y los productos (124 y 432). Ninguno de los dos pares coincide entre sí."
+            },
+            {
+              "nivel": 2,
+              "texto": "Si ni el cociente ni el producto se repiten, la tabla no es directamente proporcional ni inversamente proporcional — aunque las dos columnas suban juntas y de forma pareja. Suben pareja no es lo mismo que proporcional."
+            },
+            {
+              "nivel": 3,
+              "texto": "Fíjate en la diferencia entre un lote y el siguiente, no en el cociente ni en el producto: de 2 g a 4 g la base sube 46 mL; de 4 g a 6 g, ¿cuánto sube? Hay algo que sí se mantiene fijo acá, pero no es ninguna de las dos pruebas que ya conoces."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Las dos pruebas, sobre tres tablas",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN, aprobado por Benja en fase 1. Tabla A (esmaltes, k=40) y tabla B (auditorio, k=900) usan las filas EXACTAS ya publicadas en L1 y L2 — sin inventar cifras. Tabla C es hielo derritiéndose (dominio aprobado el 2026-08-14), relación afín, primera instancia de tres en el archivo.",
+        "Verificación tabla A: 120÷3=40; 240÷6=40; 320÷8=40 ✓ (idéntico a proporcionalidad-directa.json).",
+        "Verificación tabla B: 20×45=900; 25×36=900; 30×30=900 ✓ (idéntico a proporcionalidad-inversa.json).",
+        "REGLA VIGENTE: ningún bloque de los pasos 1 a 4 nombra 40 ni 900 — la primera aparición de los dos es acá, y es deliberada (son callbacks, no secretos: ver la nota raíz sobre por qué la regla 2 de docs/reglas-modulo.md no aplica de la misma forma acá). Lo que SÍ debe seguir protegido hasta que se resuelva la tabla C es su propia conclusión.",
+        "Verificación tabla C (hielo, valor inicial 27, tasa 64 g/h): 27+64×3=219 ✓; 27+64×6=411 ✓; 27+64×9=603 ✓. Cociente: 219÷3=73, 411÷6=68,5, 603÷9=67 — distintos. Producto: 3×219=657, 6×411=2.466 — distintos. Falla las dos pruebas en las tres filas. Distractor del producto: 3+219=222 (sumó en vez de multiplicar, error-12)."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Vas a mirar tres tablas. Cada una viene de un contexto que ya conoces, o de uno nuevo. Ninguna trae título.\n\nPara cada una vas a hacer las dos pruebas: dividir (¿el cociente se repite?) y multiplicar (¿el producto se repite?).\n\nAntes de calcular nada: ¿crees que las tres se van a poder clasificar como directa o inversa, o alguna se te puede escapar?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Las tres van a ser directa o inversa: toda tabla es una de las dos",
+            "Puede que alguna no sea ninguna de las dos, aunque suba de forma ordenada",
+            "No se puede saber sin ver los títulos"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla A: tres lotes del taller de esmaltes.",
+          "datos": {
+            "columnas": ["Pigmento (g)", "Base (mL)"],
+            "filas": [[3, 120], [6, 240], [8, 320]]
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla B: tres configuraciones del auditorio de un centro cultural.",
+          "datos": {
+            "columnas": ["Butacas por hilera", "Hileras"],
+            "filas": [[20, 45], [25, 36], [30, 30]]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica las dos pruebas.\n\nEn la tabla A, divide base ÷ pigmento en cualquier fila. En la tabla B, multiplica butacas por hilera × hileras en cualquier fila.",
+          "campos": [
+            {
+              "id": "pruebaCocienteA",
+              "etiqueta": "Tabla A — resultado de base ÷ pigmento",
+              "respuestaCorrecta": 40,
+              "unidad": "mL/g"
+            },
+            {
+              "id": "pruebaProductoB",
+              "etiqueta": "Tabla B — resultado de butacas por hilera × hileras",
+              "respuestaCorrecta": 900,
+              "unidad": "butacas"
+            }
+          ],
+          "feedbackPorDefecto": "En la tabla A divide, por ejemplo, 120 ÷ 3. En la tabla B multiplica, por ejemplo, 20 × 45. Comprueba cada resultado en las otras filas de su propia tabla antes de darlo por seguro: una sola fila nunca prueba nada."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "**Tabla A: 40, siempre 40.** El cociente se repite en las tres filas — es directamente proporcional, y ya sabes de qué taller sale.\n\n**Tabla B: 900, siempre 900.** El producto se repite en las tres filas — es inversamente proporcional, y ya sabes de qué auditorio sale.\n\nReconocer las cifras no fue lo difícil. Lo difícil —y lo que de verdad estás aprendiendo— es que igual tuviste que aplicar la prueba: reconocer un contexto no reemplaza comprobarlo."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla C: un bloque de hielo lleva un rato derritiéndose. Alguien empezó a registrar cuántos gramos de hielo derretido se habían acumulado, hora a hora desde ese momento — no desde que el hielo empezó a derretirse, sino desde que se empezó a medir.",
+          "datos": {
+            "columnas": ["Horas desde que se empezó a medir", "Gramos de hielo derretido acumulados"],
+            "filas": [[3, 219], [6, 411], [9, 603]]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica las dos pruebas también en la tabla C. Divide gramos ÷ horas en la primera fila, y multiplica gramos × horas en la misma fila.",
+          "campos": [
+            {
+              "id": "pruebaCocienteC",
+              "etiqueta": "Tabla C — gramos ÷ horas, en la fila de 3 horas",
+              "respuestaCorrecta": 73,
+              "unidad": "g/h"
+            },
+            {
+              "id": "pruebaProductoC",
+              "etiqueta": "Tabla C — gramos × horas, en la fila de 3 horas",
+              "respuestaCorrecta": 657,
+              "unidad": "g·h"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "pruebaProductoC",
+              "valorObtenido": 222,
+              "mensaje": "Sumaste en vez de multiplicar: 3 + 219 = 222. La segunda prueba es multiplicar, no sumar.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Divide 219 ÷ 3 para el cociente, y multiplica 219 × 3 para el producto. Después comprueba los dos en la fila de 6 horas antes de decidir nada."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En la fila de 3 horas, el cociente da 73 y el producto da 657.\n\nCompruébalos en la fila de 6 horas: 411 ÷ 6 = 68,5 — **no es 73**. Y 6 × 411 = 2.466 — **no es 657**. Ninguna de las dos pruebas se repite.\n\nY sin embargo mira la tabla: las dos columnas suben, y suben de la forma más ordenada posible — cada hora se derriten exactamente los mismos gramos más que la hora anterior. Es el esmalte índigo otra vez, con otro disfraz: crecer juntas y de forma pareja no basta. Ni el cociente ni el producto se mantienen, así que esta tabla **no es proporcional de ninguna forma** — ni directa ni inversa."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ante cualquier tabla hago dos pruebas: divido (¿mismo cociente?) y multiplico (¿mismo producto?). Si pasa la primera es directa, si pasa la segunda es inversa, y si no pasa ninguna no es proporcional — aunque suba de forma perfectamente ordenada. Crecer juntas no alcanza: tienen que crecer al mismo ritmo."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "El criterio completo",
+      "_notasInternas": [
+        "Recién acá se formaliza el protocolo con nombre y pasos explícitos, como exige el marco pedagógico. Ni un paso antes.",
+        "Ejemplo trabajado, esmalte TURQUESA (tono nuevo), solo interpretación: 3 g/177 mL y 5 g/295 mL. Verificación: 177÷3=59; 295÷5=59 ✓. No pide cálculo al estudiante, solo que reconozca qué prueba aplicar y por qué da directa.",
+        "Ejercicio con cifras DISTINTAS al ejemplo (regla de §2 de calibración): auditorio EXTRA, k=792 (inversa). Verificación: 18×44=792; 22×36=792 ✓; pedido 792÷24=33 ✓.",
+        "Verificación de los distractores del ejercicio: canje 1 a 1 desde la fila de 22 (butacas +2, hileras −2): 36−2=34 (error-12). Entregar la constante: 792 (error-4). Multiplicar en vez de dividir: 24×792=19.008 (error-10)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El criterio completo, en un solo procedimiento:\n\n**Ante cualquier tabla de dos columnas:**\n\n1. **Divide** una columna por la otra, en una fila cualquiera.\n2. **Comprueba ese cociente en TODAS las filas.** Si se repite en todas, es **directamente proporcional**: el cociente es la constante k, y y = k · x.\n3. Si el cociente no se repite, **multiplica** las dos columnas en una fila cualquiera.\n4. **Comprueba ese producto en TODAS las filas.** Si se repite en todas, es **inversamente proporcional**: el producto es la constante k, y y = k ÷ x.\n5. Si ni el cociente ni el producto se repiten en todas las filas, **no es ninguna de las dos** — aunque las dos columnas suban juntas, y aunque suban de forma perfectamente ordenada.\n\nEl orden de los pasos 1 y 3 no importa: puedes probar primero multiplicar si lo prefieres. Lo que sí importa es no detenerte después de la primera prueba fallida sin probar la segunda, y no concluir nada con una sola fila."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El esmalte turquesa: con 3 g de pigmento se usan 177 mL de base, y con 5 g se usan 295 mL.\n\n¿Qué prueba conviene aplicar primero, y qué vas a encontrar?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Dividir; el cociente va a ser 59 en las dos filas, así que es directamente proporcional",
+              "esCorrecta": true,
+              "feedback": "Correcto. 177 ÷ 3 = 59 y 295 ÷ 5 = 59: el cociente se repite, así que es directamente proporcional con k = 59."
+            },
+            {
+              "id": "b",
+              "texto": "Multiplicar; el producto va a ser el mismo en las dos filas, así que es inversamente proporcional",
+              "esCorrecta": false,
+              "feedback": "Pruébalo: 3 × 177 = 531 y 5 × 295 = 1.475. No coinciden. El producto no es la prueba que funciona acá.",
+              "errorCatalogado": "error-16"
+            },
+            {
+              "id": "c",
+              "texto": "Ninguna prueba hace falta: las dos columnas suben juntas, así que ya se sabe que es proporcional",
+              "esCorrecta": false,
+              "feedback": "Que suban juntas no decide nada por sí solo — lo viste con el esmalte índigo, que subía igual de ordenado y no era proporcional. Siempre hay que aplicar la prueba.",
+              "errorCatalogado": "error-7"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Otro espacio del centro cultural, un auditorio extra: con 18 butacas por hilera quedan 44 hileras, y con 22 quedan 36.\n\n¿Cuántas hileras quedan si se reordena con 24 butacas por hilera?",
+          "campos": [
+            {
+              "id": "hilerasAuditorioExtra",
+              "etiqueta": "Hileras que quedan",
+              "respuestaCorrecta": 33,
+              "unidad": "hileras"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasAuditorioExtra",
+              "valorObtenido": 34,
+              "mensaje": "Le restaste a las hileras lo mismo que le sumaste al ancho: de 22 a 24 son +2 butacas, y le quitaste 2 a las 36. Pero una butaca de ancho no vale una hilera. Comprueba el total: 18 × 44 = 792 y 22 × 36 = 792. Ese es el número que hay que acomodar en hileras de 24.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "hilerasAuditorioExtra",
+              "valorObtenido": 792,
+              "mensaje": "Encontraste bien la constante: 18 × 44 = 792 butacas en total. Falta acomodar ese total en hileras de 24 butacas cada una.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "hilerasAuditorioExtra",
+              "valorObtenido": 19008,
+              "mensaje": "Multiplicaste el total por el ancho nuevo. El total ya está completo: lo que se pregunta es cuántas hileras de 24 butacas caben en él, y eso es una división.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Primero comprueba que 18 × 44 y 22 × 36 dan lo mismo — ese es el total de butacas del auditorio. Después acomoda ese total en hileras de 24 butacas."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: clasificar antes de calcular",
+      "_notasInternas": [
+        "Progresión estricta baja → media → media/alta, como exige §5.1 de calibración.",
+        "P1 (baja/media). Esmalte LILA (tono nuevo), k=37, directa. Verificación: 148÷4=37; 259÷7=37; 333÷9=37 ✓; pedido 11×37=407 ✓. Distractores: aditivo desde la fila de 9 g (+2 g → 333+2=335, error-1); entregar la constante (37, error-4); escalar la fila completa (333×11=3.663, error-5).",
+        "P2 (media). VerdaderoFalso sobre error-16, reutilizando el auditorio (900) con las filas ya públicas 20/45 y 25/36. Verificación: 45÷20=2,25; 36÷25=1,44 — no coinciden, así que un estudiante que se detiene ahí concluye erróneamente «no proporcional». Pero 20×45=900 y 25×36=900 sí coinciden: es inversamente proporcional. La afirmación del enunciado (que concluye «no proporcional» solo con el cociente) es FALSA.",
+        "P3 (media/alta). Hielo, segunda instancia: masa = 44 + 61 · horas. Verificación: 44+61×2=166 ✓; 44+61×5=349 ✓; 44+61×8=532 ✓. Cociente: 166÷2=83, 349÷5=69,8, 532÷8=66,5 — distintos ✓. Producto: 2×166=332, 5×349=1.745, 8×532=4.256 — distintos ✓. Falla las dos pruebas. Opción (a) mapea a error-7 (crece ordenado, se trata como proporcional); (b) a error-3 (constante de una sola fila); (d) a error-11 (criterio irrelevante, con contraejemplo real del propio archivo: el esmalte turquesa, k=59, del paso 6). Es el espejo exacto de P3 de L1 y de L2, mismo patrón de cuatro alternativas."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El esmalte lila: con 4 g de pigmento se usan 148 mL de base, con 7 g se usan 259 mL y con 9 g se usan 333 mL.\n\nClasifica la tabla y responde: ¿cuántos mL de base necesita un lote con 11 g de pigmento?",
+          "campos": [
+            {
+              "id": "baseEsmalteLila",
+              "etiqueta": "Base necesaria",
+              "respuestaCorrecta": 407,
+              "unidad": "mL"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "baseEsmalteLila",
+              "valorObtenido": 335,
+              "mensaje": "Le sumaste a la base los 2 g que le sumaste al pigmento desde la fila de 9 g. Pero cada gramo se lleva 37 mL, no 1: dos gramos más son 2 × 37 = 74 mL más, no 2.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "baseEsmalteLila",
+              "valorObtenido": 37,
+              "mensaje": "Ese es el cociente que se repite en las tres filas — la constante. Pero el lote tiene 11 gramos, no uno: falta multiplicar.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "baseEsmalteLila",
+              "valorObtenido": 3663,
+              "mensaje": "Multiplicaste los 333 mL completos por los 11 g. Esos 333 mL ya correspondían a 9 g: lo que se multiplica por la cantidad nueva es la constante (37), no el total de otra fila.",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Primero comprueba que 148÷4, 259÷7 y 333÷9 dan el mismo número: es directamente proporcional. Después multiplica esa constante por los 11 gramos."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En el auditorio, un estudiante dividió hileras entre butacas por hilera en dos configuraciones: 45 ÷ 20 = 2,25 y 36 ÷ 25 = 1,44. Como el cociente no dio igual en las dos, concluyó que butacas por hilera y hileras no son proporcionales de ninguna forma.\n\n¿Tiene razón?",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Se detuvo después de una sola prueba. El cociente en efecto no es constante, así que no es DIRECTAMENTE proporcional — hasta ahí tiene razón. Pero le faltó probar el producto: 20 × 45 = 900 y 25 × 36 = 900, sí coinciden. Es inversamente proporcional. Fallar una prueba no es fallar las dos.",
+          "feedbackFalso": "Bien visto. Que el cociente no sea constante solo descarta la proporción directa, no la proporcionalidad completa. Falta probar el producto: 20 × 45 = 900 y 25 × 36 = 900 — sí se repite, así que butacas por hilera y hileras son inversamente proporcionales."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un bloque de hielo se está derritiendo. Desde que alguien empezó a medir, van registrados: a las 2 horas, 166 g de hielo derretido acumulados; a las 5 horas, 349 g; a las 8 horas, 532 g.\n\nLas dos cantidades suben de forma muy ordenada: cada hora que pasa, se acumulan 61 g más.\n\n¿Son proporcionales las horas transcurridas y los gramos de hielo derretido acumulados?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Sí, porque las dos cantidades suben juntas de forma pareja",
+              "esCorrecta": false,
+              "feedback": "Que suban juntas y de forma pareja es necesario, pero no alcanza. La prueba es el cociente o el producto, no la dirección: 166 ÷ 2 = 83; 349 ÷ 5 = 69,8; 532 ÷ 8 = 66,5. El cociente cambia en cada fila, así que no es directamente proporcional.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "b",
+              "texto": "Sí, porque 166 ÷ 2 = 83 es la constante",
+              "esCorrecta": false,
+              "feedback": "Sacaste el cociente de la primera fila y te detuviste ahí. Ese es el paso que falta siempre: comprobarlo en las demás. 349 ÷ 5 = 69,8 y 532 ÷ 8 = 66,5, ninguno igual a 83. Una constante que solo vale en una fila no es una constante.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "No, porque ni el cociente ni el producto se repiten en las tres filas",
+              "esCorrecta": true,
+              "feedback": "Correcto, y por la razón correcta. Cocientes 83 / 69,8 / 66,5: distintos. Productos 2×166=332, 5×349=1.745, 8×532=4.256: también distintos. Ninguna de las dos pruebas da constante, así que no es proporcional de ninguna forma — aunque el hielo se derrita al ritmo más parejo posible."
+            },
+            {
+              "id": "d",
+              "texto": "No, porque los números no son redondos",
+              "esCorrecta": false,
+              "feedback": "Llegaste a la respuesta correcta por un camino que no sirve. Que los números sean feos no decide nada: el esmalte turquesa de esta misma lección tenía constante 59 y era perfectamente proporcional. Lo que decide es si el cociente o el producto se repiten, no cómo se ven las cifras.",
+              "errorCatalogado": "error-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Esmaltar un nuevo encargo de piezas",
+      "_notasInternas": [
+        "Contexto de transferencia: mismo par de magnitudes que el paso 8 de L1 (piezas ↔ mL de esmalte), con cifras NUEVAS, y con el requisito extra de que el estudiante clasifique primero — en L1 el tipo ya venía dado, acá no.",
+        "Restringido a un solo dominio de transferencia (ver nota raíz): el segundo dominio (patio/losetas) queda en reserva, ya verificado, si Benja lo pide.",
+        "Verificación: 174÷6=29; 261÷9=29 ✓ (directa). Pedido: 13×29=377 ✓.",
+        "Verificación de los distractores: aditivo desde la fila de 6 piezas (+7 piezas → 174+7=181, error-1); entregar la constante (29, error-4); escalar la fila completa (261×13=3.393, error-5)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "El taller esmalta piezas de cerámica. Con 6 piezas gastaron 174 mL de esmalte, y con 9 piezas gastaron 261 mL, todas del mismo tamaño.\n\nAhora tienen que esmaltar 13 piezas.\n\nParte 1: antes de calcular, decide qué prueba aplicar y por qué. Escribe la operación que responde cuánto esmalte necesitan las 13 piezas. No la calcules todavía.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "174÷6 = 29 y 261÷9 = 29 coinciden, así que es directamente proporcional. 13 × 29   (primero confirmar la constante con las dos filas, después multiplicarla por las 13 piezas)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora sí, calcula. ¿Cuántos mL de esmalte necesitan las 13 piezas?",
+          "campos": [
+            {
+              "id": "esmaltePiezasNuevo",
+              "etiqueta": "Esmalte necesario",
+              "respuestaCorrecta": 377,
+              "unidad": "mL"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "esmaltePiezasNuevo",
+              "valorObtenido": 181,
+              "mensaje": "Le sumaste 7 mL porque hay 7 piezas más desde la fila de 6. Pero cada pieza nueva no consume 1 mL: consume 29, la constante. Siete piezas más son 7 × 29 = 203 mL más, no 7.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "esmaltePiezasNuevo",
+              "valorObtenido": 29,
+              "mensaje": "Sacaste bien cuánto gasta una pieza (174 ÷ 6 = 29 mL). Con eso ya tienes la constante; falta multiplicarla por las 13 piezas del encargo.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "esmaltePiezasNuevo",
+              "valorObtenido": 3393,
+              "mensaje": "Multiplicaste los 261 mL completos por las 13 piezas. Esos 261 mL ya cubrían 9 piezas: lo que se multiplica por la cantidad nueva es el gasto de UNA pieza (29 mL), no el total de otra fila.",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: la constante que ya confirmaste (29 mL por pieza), multiplicada por las 13 piezas del encargo."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige, se guarda. Es el termómetro de si el criterio de las dos pruebas prendió o si el estudiante solo memorizó qué operación usar en cada dominio conocido.",
+        "La consigna fuerza la comparación con el paso 3, como exige §2 de calibración, y pide explícitamente el caso donde ninguna prueba funcionó.",
+        "El texto de cierre recoge los errores más frecuentes de ESTA lección específicamente: error-7 (crecimiento ordenado sin ser proporcional) y error-16 (una sola prueba) son los dos que ni L1 ni L2 podían enseñar."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Vuelve al esmalte índigo del principio, cuando probaste dividir y no funcionó. ¿Qué pensaste en ese momento, y qué harías ahora?\n\nY explícale a un compañero, con tus palabras, el criterio completo para clasificar cualquier tabla: qué pruebas hacer, en qué orden, y qué significa que ninguna de las dos funcione. Trata de no apoyarte en una fórmula memorizada: descríbelo como lo entendiste.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: que mencione las DOS pruebas, en TODAS las filas, y que explicite que ninguna de las dos puede dar «no es proporcional» sin haberlas probado ambas. Señal muy fuerte: que mencione que crecer juntas de forma ordenada no basta. Señal de alerta: describir el reconocimiento del dominio (esmaltes = directa, auditorio = inversa) en vez del criterio en sí."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al clasificar una tabla, y que ya viste en esta lección:\n\n1. **Confiar en que «las dos suben juntas y ordenadas».** El esmalte índigo lo hacía, y no era proporcional de ninguna forma. La forma de la tabla no decide nada; las pruebas sí.\n2. **Detenerse después de una sola prueba.** Que el cociente no sea constante solo descarta la proporción directa — falta probar el producto antes de concluir que no hay proporcionalidad en absoluto.\n3. **Comprobar una sola fila.** Una constante que vale en una fila y no en las demás no es una constante, sea cociente o producto.\n4. **Quedarse en la constante.** Encontrarla es la mitad del trabajo; falta aplicarla para responder lo que se pide.\n\nLa PAES arma sus alternativas incorrectas exactamente con estos cuatro. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis breve más puente explícito al formato PAES, según el criterio del paso 10.",
+        "Cierra el módulo Proporcionalidad: no anuncia una lección siguiente del mismo módulo, sino que puentea directo a los itemsPAES de cierre de esta lección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Ante cualquier tabla, hay **dos pruebas**: dividir (cociente constante → directamente proporcional) y multiplicar (producto constante → inversamente proporcional).\n- **Aplica las dos, no te quedes en la primera.** Que una falle no dice nada sobre la otra.\n- **Comprueba en todas las filas**, nunca en una sola.\n- **Que dos cantidades suban juntas no basta**, aunque suban de la forma más ordenada posible. Tienen que crecer al mismo ritmo — cociente o producto constante — no solo juntas.\n- Si ninguna de las dos pruebas da constante, la tabla **no es proporcional**, y esa es una respuesta tan válida como las otras dos.\n\n**Lo que viene:** ítems formato PAES que mezclan los tres casos sin avisarte cuál es cuál — exactamente como los vas a encontrar en la prueba."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "proporcionalidad-reconocer-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un auditorio de un centro comunitario se puede reordenar de varias maneras, siempre con las mismas butacas:\n\n| Butacas por hilera | Hileras |\n|---|---|\n| 8 | 91 |\n| 13 | 56 |\n| 26 | 28 |\n\nSe reordena con 14 butacas por hilera.\n\n¿Cuántas hileras quedan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "85 hileras",
+          "esCorrecta": false,
+          "feedback": "Le restaste a la fila de 8 butacas la diferencia hacia 14 (6 butacas más, 6 hileras menos: 91−6=85). Pero una butaca de ancho no vale una hilera. Comprueba el total: 8 × 91 = 728. Ese es el número que hay que acomodar en hileras de 14, no un ajuste fila por fila.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "B",
+          "texto": "52 hileras",
+          "esCorrecta": true,
+          "feedback": "Correcto: la constante es 8 × 91 = 728 butacas en total, y 728 ÷ 14 = 52 hileras."
+        },
+        {
+          "clave": "C",
+          "texto": "728 hileras",
+          "esCorrecta": false,
+          "feedback": "Eso es el total de butacas del auditorio, no el número de hileras. Cada hilera de esta configuración se lleva 14 de esas butacas, así que faltan bastantes menos hileras que butacas: falta acomodarlas.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "10.192 hileras",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste el total del auditorio por el ancho nuevo. El total ya incluye todas las butacas: multiplicarlo por 14 sería como llenar el auditorio catorce veces. Cuando conoces el total y el tamaño de cada parte, la operación que da el número de partes es la división.",
+          "errorCatalogado": "error-10"
+        }
+      ],
+      "solucion": "Se verifica primero que las tres filas comparten producto constante: 8×91=728, 13×56=728, 26×28=728 — inversamente proporcional. La constante es 728 butacas en total. Para 14 butacas por hilera, las hileras son 728÷14=52. Verificación: 52×14=728 ✓."
+    },
+    {
+      "id": "proporcionalidad-reconocer-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un taller registra así los lotes de esmalte coral:\n\n| Pigmento (g) | Base (mL) |\n|---|---|\n| 3 | 159 |\n| 5 | 265 |\n| 8 | 424 |\n\nSe quiere representar esta relación en un gráfico, con el pigmento en el eje horizontal y la base en el eje vertical.\n\n¿Cuál de las siguientes descripciones corresponde al gráfico de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que parte del origen y sube siempre con la misma inclinación.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El cociente base ÷ pigmento es 53 en las tres filas: es directamente proporcional. Una proporción directa se grafica como una recta que pasa por el origen — sin pigmento no hay base— y sube con pendiente constante, k = 53."
+        },
+        {
+          "clave": "B",
+          "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin llegar a tocarlos.",
+          "esCorrecta": false,
+          "feedback": "Esa es la forma de una proporción INVERSA, donde el producto (no el cociente) se mantiene fijo. Acá el cociente 159÷3, 265÷5 y 424÷8 da 53 las tres veces, y las dos cantidades suben juntas, no una sube mientras la otra baja.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "Una recta que sube con la misma inclinación, pero que no pasa por el origen.",
+          "esCorrecta": false,
+          "feedback": "Esa forma corresponde a una relación con valor inicial distinto de cero — sube ordenada, pero no es proporcional. No es el caso acá: el cociente 159÷3=53, 265÷5=53 y 424÷8=53 se repite exacto en las tres filas, así que la recta sí pasa por el origen.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "Una recta que baja de forma uniforme, cortando el eje horizontal.",
+          "esCorrecta": false,
+          "feedback": "Los datos suben, no bajan: con más pigmento hay más base en las tres filas. Una recta que baja contradice la tabla del enunciado.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "El cociente base÷pigmento es constante en las tres filas: 159÷3=53, 265÷5=53, 424÷8=53. Es una proporción directa, y = 53·x. Su gráfico es una recta que pasa por el origen (con pigmento 0 no hay esmalte que preparar) y sube con pendiente constante 53. La descripción correcta es la A."
+    },
+    {
+      "id": "proporcionalidad-reconocer-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un bloque de hielo se está derritiendo a ritmo constante. Antes de que alguien empezara a medir, ya se habían acumulado 38 g de hielo derretido. Desde ese momento, se registran estos datos:\n\n| Horas desde que se empezó a medir | Gramos de hielo derretido acumulados |\n|---|---|\n| 4 | 226 |\n| 7 | 367 |\n| 11 | 555 |\n\nAlguien afirma: «Las horas transcurridas y los gramos acumulados suben juntas, luego son directamente proporcionales.»\n\n¿Cuál de las siguientes afirmaciones evalúa correctamente ese argumento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El argumento es falso: el cociente gramos ÷ horas cambia en cada fila (226 ÷ 4 = 56,5; 367 ÷ 7 ≈ 52,4), así que no es directamente proporcional, aunque las dos cantidades suban juntas.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Que dos cantidades suban juntas es necesario pero no suficiente: hace falta que el cociente (o el producto) se mantenga fijo, y acá ninguno de los dos lo hace. La causa es que el hielo ya llevaba 38 g derretidos antes de empezar a medir — un valor inicial distinto de cero rompe la proporción directa aunque el crecimiento sea perfectamente regular."
+        },
+        {
+          "clave": "B",
+          "texto": "El argumento es verdadero: como las dos cantidades suben juntas y de forma pareja, tienen que ser directamente proporcionales.",
+          "esCorrecta": false,
+          "feedback": "Esta es exactamente la trampa que el argumento tiende. Que suban juntas y parejo no basta: hay que comprobar el cociente en todas las filas, y acá cambia (56,5 en la primera, 52,4 en la segunda, 50,45 en la tercera). Una relación puede crecer de forma perfectamente ordenada sin ser proporcional — lo viste con el esmalte índigo al principio de la lección.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "El argumento es falso, pero porque la relación es inversamente proporcional, no directamente.",
+          "esCorrecta": false,
+          "feedback": "Descartaste la proporción directa correctamente, pero diste por hecho la inversa sin probarla. El producto tampoco se repite: 4 × 226 = 904, 7 × 367 = 2.569, 11 × 555 = 6.105, los tres distintos. Descartar una prueba no prueba la otra: hay que comprobar las dos.",
+          "errorCatalogado": "error-16"
+        },
+        {
+          "clave": "D",
+          "texto": "El argumento es falso porque 226, 367 y 555 no son números redondos.",
+          "esCorrecta": false,
+          "feedback": "Llegaste a la conclusión correcta por un motivo que no sirve. Que las cifras no sean redondas no decide nada: el esmalte turquesa de esta misma lección tenía constante 59 —tampoco un número especialmente redondo— y era perfectamente proporcional. Lo que decide es si el cociente o el producto se repiten en todas las filas.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "El argumento «suben juntas, luego son directamente proporcionales» es falso. Se prueba el cociente gramos÷horas en las tres filas: 226÷4=56,5; 367÷7≈52,43; 555÷11≈50,45 — los tres distintos, así que no es directamente proporcional. Se prueba también el producto, para descartar la proporción inversa y no solo la directa: 4×226=904; 7×367=2.569; 11×555=6.105 — también distintos. Ninguna de las dos pruebas da constante: la relación no es proporcional de ninguna forma. La causa estructural es que masa = 38 + 47·horas es una relación AFÍN, con valor inicial 38 (lo que ya se había derretido antes de empezar a medir) y tasa constante 47 g/h — crece de forma perfectamente regular, pero el valor inicial distinto de cero impide que el cociente se mantenga fijo, y el hecho de que sea una suma y no un producto puro impide que el producto se mantenga fijo. La alternativa correcta es la A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Proporcionalidad, punto «Concepto de proporción directa e inversa con sus diferentes representaciones» (docs/temario-demre-m1-2027.md, línea 58) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos (§2), distribución de habilidades (§3.5), calibración de dificultad (§5.1), registro de zonas de contexto saturadas (§6).",
+      "docs/reglas-modulo.md — reglas de construcción del módulo: no filtración de la constante antes del descubrimiento (§2), distractores derivables (§3), ids de campo neutros (§4), catálogo embebido (§5).",
+      "content/lecciones/proporcionalidad-directa.json (L1) y content/lecciones/proporcionalidad-inversa.json (L2) — leídas enteras. Fuente de las filas exactas reutilizadas en el paso 5, del catálogo de errores del que se heredan 9 entradas literales, y de la lista de cifras que este archivo no puede repetir (lecciones propias del proyecto, no fuentes externas).",
+      "Corridas de scripts/consultar-fuentes.mjs sobre el corpus de fuentes aisladas para el dominio del caso trampa, ejecutadas por Benja fuera de la sesión de redacción, en dos rondas el 2026-08-14. Ronda 1 (fase de diseño): caja/base/altura, estanque/tanque/agua/nivel/profundidad, planta/brote/tallo/crecer/crecimiento/altura/semana — los tres candidatos completos volvieron SI. Ronda 2: vela, cera, resorte/estirar, banda, consumir, cabello/pelo, corte — todos SI. Único candidato limpio: hielo, derretir, derretirse, fusión — los cuatro NO. Restricción adicional sobre vocabulario de contenedor y magnitud, misma corrida: agua, nivel, estanque, tanque, recipiente, llenar, profundidad, altura — los ocho SI, ninguno usado en el texto final."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ESTADO AL 2026-08-14, DECLARADO SIN ADORNO. VERIFICACIÓN DE COLISIÓN DE DOMINIO — COMPLETA. (1) Esmaltes y auditorio: no requirió verificación propia, porque ambos dominios ya están cleared en las proveniencias de proporcionalidad-directa.json y proporcionalidad-inversa.json, y este archivo no introduce vocabulario nuevo de dominio en esas partes — solo cifras nuevas dentro de vocabulario ya limpio. (2) Hielo (caso trampa): verificado en dos rondas de consultar-fuentes.mjs, corridas por Benja fuera de la sesión de redacción, salida usada tal cual sin reformular (ver fuentesAnalisis para el detalle completo con los términos SI y NO). El dominio final —hielo, derretir, derretirse, fusión— volvió NO los cuatro. La restricción adicional de vocabulario del contenedor y la magnitud (agua, nivel, estanque, tanque, recipiente, llenar, profundidad, altura, los ocho SI) se cumplió construyendo el texto exclusivamente con masa en gramos y sin nombrar el contenedor en ningún momento — verificado por lectura del texto visible completo, cero apariciones de los ocho términos. VERIFICACIÓN DE CIFRAS — COMPLETA. Barrido corrido contra los 26 archivos JSON de content/, incluyendo proporcionalidad-inversa.json, para cada cifra nueva de este archivo (índigo, turquesa, auditorio extra, lila, piezas, auditorio del centro comunitario, coral, y las tres instancias del hielo). Tres candidatos numéricos se descartaron antes de fijarse por colisión real con L1/L2 (detalle en _notasInternas de contextosNumericos, no transcrito acá a propósito para no generar colisiones falsas en npm run auditar — ver la nota dentro de contextosNumericos sobre por qué). MODELO MATEMÁTICO DEL CASO TRAMPA — verificado por el autor durante la redacción, pendiente de confirmación independiente en la auditoría matemática: las tres instancias del hielo son afines puras (masa = valor inicial + tasa · horas), con cociente y producto que cambian fila a fila en las tres, cálculos completos en _notasInternas de cada paso. AMBAS AUDITORÍAS OBLIGATORIAS (matemática, originalidad) SIGUEN SIN CORRER. El archivo ya pasa npm run validar y npm run auditar — ningún marcador de trabajo pendiente, catálogo consistente contra L1/L2 — pero eso certifica el contrato y las reglas contables, no la aritmética ni la originalidad. Nada se dio por cumplido sin evidencia: donde este campo dice que algo se verificó, hay una corrida o un cálculo detrás, no una afirmación de intención.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Fase 1 (diseño del paso 5, id de error nuevo error-16) aprobada por Benja el 2026-08-14. Dominio del caso trampa (hielo derritiéndose) aprobado por Benja el 2026-08-14 tras dos rondas de verificación léxica corridas por él fuera de la sesión de redacción. Archivo completo: pasa npm run validar y npm run auditar. Sin revisión matemática independiente y sin auditoría de originalidad al momento de escribir este campo — corresponden en hilos separados abiertos con /clear.",
+    "fecha": "2026-08-14"
+  }
+}
