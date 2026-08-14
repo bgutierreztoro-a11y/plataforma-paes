@@ -46,7 +46,7 @@
     },
     {
       "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional una tabla donde el cociente en realidad cambia de fila en fila."
+      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
     },
     {
       "id": "error-4",
@@ -74,11 +74,11 @@
     },
     {
       "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (si a 1 g le corresponden 40 mL, cree que el lote de 520 mL llevaba 20.800 g de pigmento, o 560 g, cuando llevaba 13)."
+      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
     },
     {
       "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente se repite (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
+      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
     }
   ],
   "contextosNumericos": [

@@ -41,7 +41,7 @@
   "catalogoErrores": [
     {
       "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional una tabla donde el cociente en realidad cambia de fila en fila."
+      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
     },
     {
       "id": "error-4",
@@ -49,15 +49,15 @@
     },
     {
       "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (si a 1 g le corresponden 40 mL, cree que el lote de 520 mL llevaba 20.800 g de pigmento, o 560 g, cuando llevaba 13)."
+      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
     },
     {
       "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente se repite (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
+      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
     },
     {
       "id": "error-12",
-      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto."
+      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
     },
     {
       "id": "error-13",
@@ -69,7 +69,7 @@
     },
     {
       "id": "error-15",
-      "descripcion": "Representa una proporción inversa como una recta: dibuja o elige un gráfico de bajada uniforme que corta los ejes, en vez de una curva que decrece cada vez más despacio y se acerca a los dos ejes sin llegar a tocarlos."
+      "descripcion": "Representa mal el comportamiento de una proporción inversa en un gráfico: dibuja o elige una recta de bajada uniforme que corta los ejes, o una curva que cruza al lado negativo de un eje, en vez de una curva que decrece cada vez más despacio y se acerca a los dos ejes sin llegar a tocarlos ni cruzarlos."
     }
   ],
   "contextosNumericos": [
@@ -161,13 +161,13 @@
               "id": "cocienteHileraAngosta",
               "etiqueta": "Hileras ÷ butacas por hilera, en la configuración de hileras más angostas",
               "respuestaCorrecta": 2.25,
-              "unidad": "hileras por butaca"
+              "unidad": "hileras²/butaca"
             },
             {
               "id": "cocienteHileraAncha",
               "etiqueta": "Hileras ÷ butacas por hilera, en la configuración de hileras más anchas",
               "respuestaCorrecta": 1.44,
-              "unidad": "hileras por butaca"
+              "unidad": "hileras²/butaca"
             }
           ],
           "feedbackPorError": [
@@ -184,7 +184,7 @@
               "errorCatalogado": "error-12"
             }
           ],
-          "feedbackPorDefecto": "Divide, no restes ni sumes. En la primera configuración, 45 ÷ 20. En la segunda, 36 ÷ 25. Anota los dos resultados uno al lado del otro antes de seguir: lo que importa no es cuánto valen, sino si coinciden."
+          "feedbackPorDefecto": "Divide, no restes ni sumes. En la primera configuración, 45 ÷ 20. En la segunda, 36 ÷ 25. Anota los dos resultados uno al lado del otro antes de seguir: lo que importa no es cuánto valen, sino si coinciden. Este cociente no tiene un significado físico real —es apenas el resultado de aplicar la prueba vieja a datos donde no funciona—, así que no busques qué representa: solo compara los dos valores."
         },
         {
           "tipo": "texto",
@@ -413,7 +413,7 @@
               "id": "butacasPlanoLargo",
               "etiqueta": "Butacas por hilera de la configuración que tenía 75 hileras",
               "respuestaCorrecta": 12,
-              "unidad": "butacas"
+              "unidad": "butacas por hilera"
             }
           ],
           "feedbackPorError": [
@@ -775,8 +775,8 @@
           "clave": "D",
           "texto": "25 hileras",
           "esCorrecta": false,
-          "feedback": "Le sumaste a las hileras lo mismo que le sumaste al ancho, que es el razonamiento de una proporción directa: allá las dos cantidades crecen juntas. Acá crecen en sentidos opuestos, porque las butacas son las mismas: si cada hilera se lleva más, hacen falta menos hileras, no más.",
-          "errorCatalogado": "error-13"
+          "feedback": "Le sumaste a las hileras el mismo número que le sumaste al ancho: la diferencia entre butacas por hilera y hileras se mantuvo en 17 (38−21 y 42−25). Pero lo que no cambia en una proporción inversa es el producto, no la diferencia: 38×21=798 y 42×25=1.050, dos totales distintos, cuando el auditorio tiene siempre las mismas butacas.",
+          "errorCatalogado": "error-12"
         }
       ],
       "solucion": "Se obtiene la constante multiplicando las dos cantidades de la configuración conocida: 38 × 21 = 798 butacas en total. Como el total no cambia, el número de hileras nuevo sale de acomodarlo en hileras de 42: 798 ÷ 42 = 19 hileras. Verificación por otra vía: 42 es 798 ÷ 19, y 42 × 19 = 798 ✓. Segunda verificación de sentido: el ancho aumentó (de 38 a 42), así que las hileras tienen que disminuir (de 21 a 19), y disminuyen poco porque el ancho aumentó poco ✓."
