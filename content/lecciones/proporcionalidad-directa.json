@@ -21,11 +21,20 @@
     "MARCO PEDAGÓGICO (fijado antes de redactar, no negociable): la proporción directa se descubre como COCIENTE CONSTANTE. El estudiante divide y observa que el resultado se repite. Está PROHIBIDO en todo el archivo cualquier mención a procedimientos de proporciones memorizados; el anti-objetivo es explícito y el paso 9 se apoya en él.",
     "DIFERENCIACIÓN FRENTE A porcentaje-concepto.json (requisito de diseño): allá el estudiante recibía la constante ya dada (30%) y la aplicaba; el paso 5 solo confirmaba que 0,30 se repetía. Acá la constante es DESCONOCIDA: nadie la nombra, hay que extraerla de los datos, y la pregunta previa —¿existe siquiera un número que se repita?— se deja viva en la predicción del paso 5 con una opción explícita de 'no hay ninguno'. Además la constante de esta lección es mayor que 1 (40), lo que rompe a propósito la asociación 'la constante siempre es un decimal menor que 1' que dejó Porcentaje.",
     "REGLA DE PRODUCTO, PERMANENTE (Benja, 2026-08-13): no se usa una representación de función lineal en una lección cuyo concepto no la exige. La proporción directa se descubre en la TABLA, no en otra parte. Un borrador previo de este archivo cerraba el paso 5 con un bloque interactivo de función lineal; se eliminó por esta regla, no por una limitación técnica. La discriminación entre representaciones es materia de proporcionalidad-reconocer (L3), donde distinguir una forma de otra SÍ es el contenido evaluado. Efecto de la regla acá: el paso 5 cierra reconstruyendo filas ausentes de la tabla, que ejercita la constante como 'lo que le toca a uno' en los dos sentidos —de la cantidad al total y del total a la cantidad— sin salir del registro tabular.",
-    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Términos 'pigmento' y 'esmalte' volvieron NO en consultar-fuentes.mjs, corrido por Benja fuera de la sesión de redacción (mecanismo 2 de CLAUDE.md), salida pegada sin reformular. Se descartaron por SI del script: engranaje/diente, obrero/cuadrilla/jornada, llave/estanque/caudal/bomba, escala/mapa, receta/ingrediente/harina/masa, hilo/telar, litro/bencina/consumo/eléctrico, horno, resolución. Se descartaron por criterio pese a estar limpios: polea/correa (molde canónico de proporción inversa). PENDIENTE: auditoría de originalidad profunda sobre el texto ya redactado, en hilo aparte abierto con /clear.",
-    "REVISIÓN MATEMÁTICA: PENDIENTE. Toda la aritmética de este archivo se recalculó desde cero durante la redacción y quedó anotada en las _notasInternas de cada paso, pero eso NO reemplaza la auditoría matemática independiente, que va en hilo propio abierto con /clear.",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Términos 'pigmento' y 'esmalte' volvieron NO en consultar-fuentes.mjs, corrido por Benja fuera de la sesión de redacción (mecanismo 2 de CLAUDE.md), salida pegada sin reformular. Se descartaron por SI del script: engranaje/diente, obrero/cuadrilla/jornada, llave/estanque/caudal/bomba, escala/mapa, receta/ingrediente/harina/masa, hilo/telar, litro/bencina/consumo/eléctrico, horno, resolución. Se descartaron por criterio pese a estar limpios: polea/correa (molde canónico de proporción inversa). AUDITORÍA DE ORIGINALIDAD: corrida el 2026-08-13 en hilo aparte abierto con /clear, y cerrada — el detalle y la única adyacencia que hubo que resolver están en proveniencia.declaracionOriginalidad.",
+    "REVISIÓN MATEMÁTICA: CORRIDA el 2026-08-13 en hilo propio abierto con /clear; hallazgos aplicados en el commit cffbbe0. Levantó la dirección del tono del paso 1, el catálogo de errores, la tensión del paso 2 y —lo más determinante— cuatro filtraciones de la constante antes del paso 5: el bloque de texto del paso 1, el feedback del distractor 129 del paso 3, el feedback de la alternativa correcta del paso 2 y la pista de nivel 3 del paso 4. La aritmética recalculada durante la redacción quedó anotada en las _notasInternas de cada paso; esta auditoría la verificó de forma independiente, no la reemplazó. Desde el 2026-08-13 la no-filtración de la constante además se mide sola: `npm run auditar` la chequea contra auditoria.constante.",
     "El paso 8 cambia el par de magnitudes a propósito (piezas ↔ mL de esmalte, en vez de gramos de pigmento ↔ mL de base). Si se cambiara el contexto del paso 5 por el del paso 8 la lección NO seguiría funcionando igual, que es el chequeo de transferencia real que exige §2 de docs/calibracion-lecciones-e-items.md.",
     "El error-7 (relación con valor inicial distinto de cero que parece proporcional) se planta acá en la práctica P3 y en el ítem 3, pero se explota de verdad en proporcionalidad-reconocer (L3). Es deliberado: el paso 5 de esta lección deja viva la pregunta '¿existe la constante?', así que comprobar que a veces NO existe pertenece al alcance de L1."
   ],
+  "auditoria": {
+    "constante": 40,
+    "colisionesPermitidas": [
+      {
+        "valor": 40,
+        "motivo": "Es la constante de la lección, y la colisión es el diseño, no un descuido. Antes del paso 5 el 40 es distractor tres veces (error-4, «entregó la constante en vez del resultado»): en el campo baseLoteEncargo del paso 3 y en baseLoteIlegible y baseLoteGrande del paso 5. En el paso 5, campo cocienteConstante, el 40 es la respuesta correcta, porque ahí la pregunta cambia: ya no se pide un total de base sino el cociente mismo. Que el estudiante escriba 40 cuando se le pide un total es precisamente el error-4 —encontró la constante y se detuvo antes de aplicarla—, y su feedback lo dice sin repetir la cifra. Ver docs/reglas-modulo.md §3b."
+      }
+    ]
+  },
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -87,7 +96,7 @@
     "itemsPAES item-1 (resolver, baja): terracota 6 g / 132 mL (constante 22), pedido 15 g → 330 mL; distractores 141 (sumó 9), 22 (entregó la constante) y 1.980 (multiplicó 132 × 15)",
     "itemsPAES item-2 (modelar, media): 8 g / 184 mL (constante 23); se pide la EXPRESIÓN b = 23 · p, con distractores b = p ÷ 23, b = 184 · p y b = 184 + p",
     "itemsPAES item-3 (argumentar, alta): sin cifras; contrasta duplicar la cantidad contra agregarle 3 unidades, más la afirmación de que basta con que ambas columnas suban",
-    "NOTA DE NO COLISIÓN (verificada archivo por archivo contra los contextosNumericos de las 13 lecciones y los 4 cierres ya escritos). Ningún PAR cantidad→resultado, ninguna constante y ningún escenario de esta lección se repite en el contenido existente. Sí reaparecen dígitos sueltos, con otro significado y otras unidades: 40 aparece como «40 %» en el módulo Porcentaje y como término de una ecuación en ecuaciones-lineales; 12,5 aparece en inecuaciones-problemas como resultado de una división con redondeo; 22 y 23 aparecen en enteros-operar-y-ordenar como diferencias de profundidad. Ninguna de esas apariciones es una constante de proporcionalidad ni forma par con su contraparte acá. En particular se evitó la constante 0,30 de porcentaje-concepto.json y su tabla del paso 5 (20/30/40/50/60 → 6/9/12/15/18): esta tabla es 3/6/8/12/15 → 120/240/320/480/600 y no comparte ninguna fila con aquella. Las cifras nuevas introducidas el 2026-08-13 —240, 242 y 360 al rehacer las filas base del paso 2; 520, 13, 560 y 20.800 al cambiar el lote ilegible del paso 5— se barrieron una por una contra los 27 archivos de content/ y no aparecen en ninguno; tampoco existe en otro archivo el par 6 → 240 ni el par 520 → 13."
+    "NOTA DE NO COLISIÓN (verificada archivo por archivo contra los contextosNumericos de las 13 lecciones y los 4 cierres ya escritos). Ningún PAR cantidad→resultado, ninguna constante y ningún escenario de esta lección se repite en el contenido existente. Sí reaparecen dígitos sueltos, con otro significado y otras unidades: 40 aparece como «40 %» en el módulo Porcentaje y como término de una ecuación en ecuaciones-lineales; 12,5 aparece en inecuaciones-problemas como resultado de una división con redondeo; 22 y 23 aparecen en enteros-operar-y-ordenar como diferencias de profundidad. Ninguna de esas apariciones es una constante de proporcionalidad ni forma par con su contraparte acá. En particular se evitó la constante 0,30 de porcentaje-concepto.json y su tabla del paso 5 (20/30/40/50/60 → 6/9/12/15/18): esta tabla es 3/6/8/12/15 → 120/240/320/480/600 y no comparte ninguna fila con aquella. Las cifras nuevas introducidas el 2026-08-13 —240, 242 y 360 al rehacer las filas base del paso 2; 520, 13, 560 y 20.800 al cambiar el lote ilegible del paso 5— se barrieron una por una contra los 26 archivos JSON de content/ (las plantillas que empiezan con «_» no cuentan). Cuatro no aparecen en ningún otro archivo: 242, 520, 560 y 20.800. Las otras tres sí aparecen, siempre con otra magnitud y otras unidades: 240 como «240 estudiantes» en porcentaje-concepto.json y como metros de cinta en lineal-modelamiento-paes.json; 360 como «$360» en porcentaje-rebaja-doble.json; y 13, que por chico aparece en siete archivos. Ninguna de esas apariciones es una constante de proporcionalidad ni forma par con su contraparte acá: no existe en otro archivo el par 6 → 240 ni el par 520 → 13. CORREGIDO el 2026-08-13: la redacción anterior de esta misma nota afirmaba que las siete cifras no aparecían en ningún archivo, lo que era falso para 240, 360 y 13. Era una afirmación verificable escrita como verificada; se midió y se reescribió."
   ],
   "pasos": [
     {
@@ -123,7 +132,7 @@
         "Verificación: el taller tiene dos lotes correctos, 3 g / 120 mL y 6 g / 240 mL. Ambos dan 40 mL por gramo (120 ÷ 3 = 40; 240 ÷ 6 = 40) ✓.",
         "Verificación de los candidatos para 8 g: 320 ÷ 8 = 40 ✓ correcto. 242 ÷ 8 = 30,25 ✗. 360 ÷ 8 = 45 ✗.",
         "Los dos distractores comparten error-1 y ahora encarnan SUB-MECANISMOS DISTINTOS de la misma familia (usar la diferencia en vez del cociente). El 242 suma la diferencia de gramos al total de base de la fila: de 6 g a 8 g hay +2, y 240 + 2 = 242. El 360 traslada el salto de base de un tramo al otro: de 3 g a 6 g la base sube 120 mL, y le vuelve a sumar 120 a los 240 sin notar que ese tramo es de 2 g y no de 3. El 360 es además múltiplo de 40, así que parece un lote perfectamente legítimo —lo es, pero de otra cantidad de pigmento— y por eso es el distractor duro del ítem.",
-        "HISTORIAL DEL DISTRACTOR DURO, para no repetir el ciclo: (1) era 290 mL, no derivable de ningún procedimiento con los datos y mapeado a error-3, un error inalcanzable acá porque las dos filas comparten k y calcular la constante con un solo par sin verificar produce la respuesta correcta; (2) pasó a 280, que colisionaba con la respuesta correcta de baseLote7 en el paso 5; (3) pasó a 203, derivable y sin colisión, pero dejaba los dos distractores por debajo de 210 contra una correcta de 320, de modo que se podía acertar por sentido de magnitud sin dividir; (4) para arreglar eso se cambiaron las filas base, que era la vía correcta. Con 3 g y 6 g la diferencia es de 3 gramos y el salto trasladado cae en 360, a solo 12,5 % de la correcta.",
+        "HISTORIAL DEL DISTRACTOR DURO, para no repetir el ciclo: (1) era 290 mL, no derivable de ningún procedimiento con los datos y mapeado a error-3, un error inalcanzable acá porque las dos filas comparten k y calcular la constante con un solo par sin verificar produce la respuesta correcta; (2) pasó a 280, que colisionaba con la respuesta correcta del campo hoy llamado baseLoteIlegible en el paso 5 (entonces se llamaba baseLote7, antes del renombre a ids neutros del 2026-08-13); (3) pasó a 203, derivable y sin colisión, pero dejaba los dos distractores por debajo de 210 contra una correcta de 320, de modo que se podía acertar por sentido de magnitud sin dividir; (4) para arreglar eso se cambiaron las filas base, que era la vía correcta. Con 3 g y 6 g la diferencia es de 3 gramos y el salto trasladado cae en 360, a solo 12,5 % de la correcta.",
         "POR QUÉ ESTAS FILAS Y NO OTRAS. Con 8 g pedidos, el salto trasladado vale 40 · (2b − a). Las combinaciones que lo dejan cerca de 320 sin romper nada son pocas: a = 1 pondría una fila de 1 g / 40 mL y filtraría la constante dentro de la propia tabla; b = 7 pondría 7 g / 280 mL, que es justo el lote que el paso 5 manda reconstruir; y (2,5), (4,6) y (6,7) hacen que el error produzca 320, o sea la respuesta correcta, lo que premiaría el razonamiento equivocado. Queda (3,6). Bonus narrativo: el lote bueno de 6 g lleva 240 mL, que es exactamente lo que le faltó al lote del martes del paso 1 (6 g con 150 mL).",
         "ECO EVITADO: una versión previa dejaba 360 mL también en el paso 5, como base del lote ilegible. Se cambió ese lote a 520 mL → 13 g para que el 360 sea exclusivo de este ítem y su feedback no filtre nada del paso 5."
       ],
@@ -170,7 +179,7 @@
           "enunciado": "El taller recibe un encargo grande y necesita un lote de verde musgo con **12 g** de pigmento.\n\nLos lotes que ya salieron bien:\n\n| Pigmento (g) | Base (mL) |\n|---|---|\n| 3 | 120 |\n| 6 | 240 |\n| 8 | 320 |\n\n¿Cuántos mL de base necesita el lote de 12 g?",
           "campos": [
             {
-              "id": "baseLote12",
+              "id": "baseLoteEncargo",
               "etiqueta": "Base necesaria",
               "respuestaCorrecta": 480,
               "unidad": "mL"
@@ -178,19 +187,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "baseLote12",
+              "campoId": "baseLoteEncargo",
               "valorObtenido": 129,
               "mensaje": "Le sumaste a la base la misma cantidad que le sumaste al pigmento (9). Pero mira el lote de 3 g: tres gramos se llevaban 120 mL enteros, muchísima base para cada gramo. Con 129 mL para 12 g, cada gramo recibiría apenas 10,75 mL. El tono se te va a ir muy oscuro.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "baseLote12",
+              "campoId": "baseLoteEncargo",
               "valorObtenido": 40,
               "mensaje": "Ese número es importante y lo encontraste bien: son los mL de base que le tocan a UN gramo. Pero acá el lote tiene 12 gramos, no uno. Te falta el último movimiento.",
               "errorCatalogado": "error-4"
             },
             {
-              "campoId": "baseLote12",
+              "campoId": "baseLoteEncargo",
               "valorObtenido": 1440,
               "mensaje": "Multiplicaste los 120 mL del lote chico por los 12 g del lote nuevo. Pero los 120 mL ya venían acompañados de 3 g: al multiplicarlos por 12 estás ampliando la base 12 veces mientras el pigmento solo se multiplicó por 4. Ampliaste un lado y no el otro.",
               "errorCatalogado": "error-5"
@@ -314,7 +323,7 @@
           "enunciado": "Reconstruye los dos lotes borrados.\n\nLo único que necesitas es lo que ya sabes: a **1 gramo** de pigmento le corresponden **40 mL** de base.",
           "campos": [
             {
-              "id": "baseLote7",
+              "id": "baseLoteIlegible",
               "etiqueta": "Base del lote que tenía 7 g de pigmento",
               "respuestaCorrecta": 280,
               "unidad": "mL"
@@ -328,13 +337,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "baseLote7",
+              "campoId": "baseLoteIlegible",
               "valorObtenido": 47,
               "mensaje": "Le sumaste el 40 al pigmento (7 + 40). El 40 no se agrega una vez al final: es lo que se lleva cada gramo, y este lote tiene 7 gramos que reclaman los suyos.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "baseLote7",
+              "campoId": "baseLoteIlegible",
               "valorObtenido": 40,
               "mensaje": "Ese es el número que le corresponde a un solo gramo. El lote tiene 7, así que ese 40 hay que repetirlo 7 veces.",
               "errorCatalogado": "error-4"
@@ -359,7 +368,7 @@
           "enunciado": "Comprobemos que el número sirve fuera de la tabla.\n\nEl taller prepara un lote grande de verde musgo con **25 g** de pigmento.\n\n¿Cuántos mL de base necesita?",
           "campos": [
             {
-              "id": "baseLote25",
+              "id": "baseLoteGrande",
               "etiqueta": "Base necesaria",
               "respuestaCorrecta": 1000,
               "unidad": "mL"
@@ -367,19 +376,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "baseLote25",
+              "campoId": "baseLoteGrande",
               "valorObtenido": 65,
               "mensaje": "Sumaste el 40 una sola vez (25 + 40). Pero el 40 no es una cantidad que se agrega al final: es lo que se lleva CADA gramo. Con 25 gramos, hay que darle 40 mL a cada uno de los 25.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "baseLote25",
+              "campoId": "baseLoteGrande",
               "valorObtenido": 40,
               "mensaje": "Ese es el número que le toca a un solo gramo. El lote tiene 25 gramos, así que ese 40 hay que repetirlo 25 veces.",
               "errorCatalogado": "error-4"
             },
             {
-              "campoId": "baseLote25",
+              "campoId": "baseLoteGrande",
               "valorObtenido": 0.625,
               "mensaje": "Dividiste 25 entre 40. Control rápido de sentido: la base siempre sale un número mucho más grande que el pigmento —120 contra 3, 600 contra 15—, así que un resultado menor que 1 no puede ser una cantidad de base.",
               "errorCatalogado": "error-2"
@@ -442,7 +451,7 @@
           "enunciado": "Un tercer tono, el **ocre**: con 5 g de pigmento se usan 140 mL de base.\n\n¿Cuántos mL de base necesita un lote de ocre con 8 g de pigmento?",
           "campos": [
             {
-              "id": "baseOcre8",
+              "id": "baseOcre",
               "etiqueta": "Base necesaria",
               "respuestaCorrecta": 224,
               "unidad": "mL"
@@ -450,19 +459,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "baseOcre8",
+              "campoId": "baseOcre",
               "valorObtenido": 143,
               "mensaje": "Le sumaste a la base los 3 g que le sumaste al pigmento. Comprueba la razón: 143 ÷ 8 = 17,875 mL por gramo, cuando el lote original daba 28. Cambió la razón, así que cambió el tono.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "baseOcre8",
+              "campoId": "baseOcre",
               "valorObtenido": 28,
               "mensaje": "Encontraste bien la constante del ocre: 140 ÷ 5 = 28 mL por gramo. Falta el último paso, aplicarla a los 8 gramos del lote nuevo.",
               "errorCatalogado": "error-4"
             },
             {
-              "campoId": "baseOcre8",
+              "campoId": "baseOcre",
               "valorObtenido": 1120,
               "mensaje": "Multiplicaste los 140 mL completos por los 8 g. Pero esos 140 mL ya correspondían a 5 g: al multiplicarlos por 8 estás ampliando la base ocho veces mientras el pigmento solo creció de 5 a 8. Lo que se multiplica por la cantidad nueva es la constante, no el total anterior.",
               "errorCatalogado": "error-5"
@@ -488,7 +497,7 @@
           "enunciado": "El tono **gris perla** usa 100 mL de base con 8 g de pigmento.\n\n¿Cuántos mL necesita un lote de 14 g?",
           "campos": [
             {
-              "id": "baseGris14",
+              "id": "baseGrisPerla",
               "etiqueta": "Base necesaria",
               "respuestaCorrecta": 175,
               "unidad": "mL"
@@ -496,19 +505,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "baseGris14",
+              "campoId": "baseGrisPerla",
               "valorObtenido": 168,
               "mensaje": "La constante es 12,5 mL por gramo y la redondeaste a 12 antes de multiplicar. Con números chicos la diferencia se nota poco, pero acá te dejó 7 mL abajo — suficiente para que el gris salga más oscuro. Redondea al final, nunca a mitad de camino.",
               "errorCatalogado": "error-9"
             },
             {
-              "campoId": "baseGris14",
+              "campoId": "baseGrisPerla",
               "valorObtenido": 106,
               "mensaje": "Le sumaste a la base los 6 g que le sumaste al pigmento. Comprueba: 106 ÷ 14 = 7,57 mL por gramo, muy lejos de los 12,5 del lote original.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "baseGris14",
+              "campoId": "baseGrisPerla",
               "valorObtenido": 12.5,
               "mensaje": "Sacaste bien la constante (100 ÷ 8 = 12,5), pero eso es lo que necesita un solo gramo. El lote tiene 14.",
               "errorCatalogado": "error-4"
@@ -578,7 +587,7 @@
           "enunciado": "Parte 2: ahora sí, calcula. ¿Cuántos mL de esmalte necesitan las 12 piezas?",
           "campos": [
             {
-              "id": "esmalte12Piezas",
+              "id": "esmaltePiezas",
               "etiqueta": "Esmalte necesario",
               "respuestaCorrecta": 216,
               "unidad": "mL"
@@ -586,19 +595,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "esmalte12Piezas",
+              "campoId": "esmaltePiezas",
               "valorObtenido": 97,
               "mensaje": "Le sumaste 7 mL porque hay 7 piezas más. Pero cada pieza nueva no consume 1 mL: consume lo mismo que las anteriores, 18 mL. Siete piezas más son 7 × 18 = 126 mL más.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "esmalte12Piezas",
+              "campoId": "esmaltePiezas",
               "valorObtenido": 18,
               "mensaje": "Sacaste bien cuánto gasta una pieza (90 ÷ 5 = 18 mL). Con eso ya tienes la constante; falta multiplicarla por las 12 piezas del encargo.",
               "errorCatalogado": "error-4"
             },
             {
-              "campoId": "esmalte12Piezas",
+              "campoId": "esmaltePiezas",
               "valorObtenido": 1080,
               "mensaje": "Multiplicaste los 90 mL completos por las 12 piezas. Esos 90 mL ya cubrían 5 piezas, así que multiplicarlos por 12 daría para 60 piezas, no para 12. Lo que se multiplica por la cantidad nueva es el gasto de UNA pieza.",
               "errorCatalogado": "error-5"
@@ -760,10 +769,11 @@
       "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
       "docs/dag-m1-para-revision.md — arista 9 (Proporcionalidad ← Enteros y racionales, bloqueante), origen de los prerrequisitos declarados.",
       "Dominio 'taller de esmaltes': términos 'pigmento' y 'esmalte' verificados sin colisión léxica contra el corpus de fuentes aisladas mediante consultar-fuentes.mjs (chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción), corrido fuera de esta sesión. Se descartaron por colisión los dominios de engranajes, obreros/jornada, llaves y estanques, escalas y mapas, recetas y harina, hilo y telar, bencina y consumo eléctrico, horno y resolución.",
+      "Ampliación de la verificación léxica el 2026-08-13, durante la auditoría de originalidad: se corrieron además los términos que la verificación de redacción no había probado —colorante, disolver, diluir, mezcla, color, pintura, cerámica, barniz, y el vocabulario de tono del gancho (más oscuro, más claro, intensidad del color, mezcla de color)—. 'disolver', 'diluir', 'cerámica', 'barniz' y todo el vocabulario de tono vuelven NO contra el corpus completo. La única señal fue 'colorante' en la forma DEMRE 2026 liberada; ver la declaración de originalidad para cómo se resolvió.",
       "content/lecciones/porcentaje-concepto.json y la L2 del módulo Función lineal y afín — leídas como referencia de densidad, tono y calidad de feedback, y para garantizar que ninguna cifra ni formulación se repita (lecciones propias del proyecto, no fuentes externas)."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se limitó a un chequeo léxico SI/NO sobre los términos del contexto, corrido fuera de la sesión de redacción. ADVERTENCIA: esta declaración cubre el proceso de redacción, NO una auditoría de originalidad sobre el texto ya escrito — esa auditoría está pendiente y debe correrse en un hilo aparte abierto con /clear, igual que la revisión matemática independiente.",
-    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad independientes",
+    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. AUDITORÍAS INDEPENDIENTES, AMBAS CERRADAS EL 2026-08-13, cada una en hilo aparte abierto con /clear. (1) Revisión matemática: corrida, hallazgos aplicados en el commit cffbbe0. (2) Auditoría de originalidad: corrida; checklist MOS §7.3 con los cuatro puntos en SI. El punto 1 quedó abierto durante la auditoría por una sola adyacencia —el chequeo léxico marcó «colorante» en demre/paes-m1-2026-forma113.md, y el hilo auditor no podía comparar enunciado contra enunciado porque el subagente auditor-originalidad no existe como subagent_type en este entorno (docs/pendientes.md)—. La adyacencia quedó DESCARTADA por verificación directa del autor sobre el PDF de la forma liberada, el 2026-08-13: no existe en esa forma ningún ítem de gotas ni de colorante, y el escenario no coincide con el de esta lección. Los términos 'disolver' y 'diluir' vuelven NO contra el corpus completo. ADVERTENCIA PARA QUIEN RE-AUDITE: consultar-fuentes.mjs sigue devolviendo SI para «colorante» y «gotas de colorante» sobre la transcripción .md de esa forma, así que un chequeo léxico futuro va a volver a marcarlo. La discrepancia entre esa transcripción y el PDF revisado no está explicada; lo que cierra el punto es la revisión directa del PDF, que manda sobre el chequeo léxico. Ninguna otra adyacencia quedó abierta.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática independiente corrida el 2026-08-13, hallazgos aplicados en cffbbe0; auditoría de originalidad independiente corrida y cerrada el 2026-08-13, checklist MOS §7.3 con los cuatro puntos en SI",
     "fecha": "2026-08-13"
   }
 }
