@@ -89,6 +89,21 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Reconstruye el precio original a partir del precio final, y descubre por qué quitar el mismo porcentaje que se sumó nunca te devuelve al punto de partida.",
     Ilustracion: IlustracionPlano,
   },
+  "proporcionalidad-directa": {
+    descripcion:
+      "Descubre la razón fija que conecta dos cantidades que crecen juntas, y úsala para completar la tabla sin memorizar valores sueltos.",
+    Ilustracion: IlustracionPlano,
+  },
+  "proporcionalidad-inversa": {
+    descripcion:
+      "Reordena un total fijo entre dos cantidades que se mueven en sentido contrario, y descubre qué se mantiene igual cuando una sube y la otra baja.",
+    Ilustracion: IlustracionPlano,
+  },
+  "proporcionalidad-reconocer": {
+    descripcion:
+      "Ante una tabla sin título, decide con dos pruebas si es directa, inversa o ninguna de las dos — aunque las columnas suban parejo.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

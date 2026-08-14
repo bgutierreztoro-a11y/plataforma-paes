@@ -14,6 +14,8 @@ Salió al escribir `proporcionalidad-inversa.json`, cuyo concepto —una curva q
 
 **Cuando se aborde**, el orden importa: el punto 2 es el que limita de verdad (los ítems PAES son el cierre de cada lección y son formato de prueba real), y el punto 1 es más barato. Ese ítem es el primer candidato a reescribirse si aparece un renderer. Ojo también con el precedente: la regla 1 de `docs/reglas-modulo.md` prohíbe representaciones de función lineal donde el concepto no las exige, y la excepción de `interactivoSlider` se declara con `auditoria.sliderJustificado` — un renderer de curva nuevo debería entrar por una puerta parecida, no como capacidad de uso libre.
 
+**Precedente que se repitió al cerrar el módulo Proporcionalidad (2026-08-14):** el mismo hueco obligó al mismo patrón de escape (tabla en markdown + descripciones verbales de gráfico como alternativas) en el ítem `representar` de `proporcionalidad-directa.json`, `proporcionalidad-inversa.json` y `proporcionalidad-reconocer.json`, y en los ítems 4 y 8 de `content/cierres/cierre-proporcionalidad.json` (este último, además, integrador de los tres subtemas del módulo — el que más se beneficiaría de una figura real). Cinco archivos más en la lista de "primer candidato a reescribirse si aparece un renderer".
+
 ---
 
 ## ⬛ 2026-08-12 — Eliminado el sistema `estado` / `checklistOriginalidad` / `revisionMatematica`
@@ -1228,3 +1230,133 @@ directamente y se ignoró el esqueleto.
 
 **Gatillo para retomar:** antes de la próxima lección que alguien escriba
 partiendo de la plantilla, o al tocar el schema otra vez.
+
+---
+
+## 🟡 Arista #5 del DAG: `semejanza-proporcionalidad ← proporcionalidad`, ambigüedad sin resolver (abierta 2026-08-14, al cerrar el módulo Proporcionalidad)
+
+`content/diagnostico/dag-m1.json` declara `semejanza-proporcionalidad` con
+prerrequisitos `[proporcionalidad, figuras-geometricas]`. La arista desde
+`proporcionalidad` nunca se justificó por escrito en ningún doc del proyecto:
+no está claro si representa una dependencia de habilidad real (¿usar razón y
+proporción de la forma en que la enseña el módulo de Álgebra es de verdad
+prerrequisito de razonar sobre figuras semejantes en Geometría?) o si es una
+arista puesta por coincidencia de nombre («proporcionalidad» aparece en ambos
+títulos) sin que nadie haya verificado la dependencia pedagógica.
+
+**Por qué importa ahora:** con el módulo Proporcionalidad recién cerrado (L1,
+L2, L3 y `cierre-proporcionalidad` completos), esta arista pasa de ser
+hipotética a ser la que de verdad va a determinar si un estudiante llega a
+`semejanza-y-proporcionalidad` (eje Geometría) marcado como listo o no, la
+próxima vez que el motor de diagnóstico se integre de verdad (Gate 3, MOS §9).
+
+**Gatillo:** antes de integrar `lib/diagnostico/` con UI real (Gate 3), o antes
+de escribir la primera lección del tema `semejanza-y-proporcionalidad`,
+revisar si la arista se sostiene con criterio pedagógico explícito o si hay que
+sacarla/reemplazarla por una dependencia más precisa (p. ej. solo hacia
+`figuras-geometricas`).
+
+## 🟡 Discrepancia entre el gate del DAG y lo que hay commiteado: "aristas vacías" autorizadas, 22 aristas reales en el repo (abierta 2026-08-14)
+
+`CLAUDE.md`, en la excepción de grafo de conocimiento fechada 2026-07-02,
+autoriza construir `lib/diagnostico/` "como motor puro, sin UI, sin ítems
+reales y **con el DAG de aristas vacías**". Pero `content/diagnostico/dag-m1.json`
+ya tiene sus 22 aristas reales pobladas (`validarDagM1Archivo` en
+`scripts/validar-contenido.mjs` exige exactamente 22 y las verifica acíclicas
+con raíz única) — no es un esqueleto de 16 unidades sin conectar, es un grafo
+de prerrequisitos curriculares completo, incluida la arista de la sección
+anterior.
+
+**Por qué es una discrepancia y no solo una desactualización de texto:** el
+gate autoriza expresamente el motor SIN las decisiones curriculares reales
+("aristas vacías"), como forma de acotar el riesgo de construir sobre
+decisiones de contenido no firmadas. Si el DAG ya tiene las 22 aristas reales,
+esa acotación ya no describe lo que hay en el repo — alguien tomó las
+decisiones curriculares (qué depende de qué) sin que quede registro de una
+firma explícita para ese paso, distinta de la firma original del gate.
+
+**Gatillo:** decidir si el texto del gate en `CLAUDE.md` estaba describiendo mal
+desde el principio lo que se iba a necesitar (el DAG nunca pudo pasar su propio
+validador con aristas vacías, así que puede que "vacías" se refiriera a otra
+cosa) o si las 22 aristas reales exceden lo que el gate cubría y necesitan su
+propia firma retroactiva. No bloquea nada hoy porque `lib/diagnostico/` sigue
+sin UI ni ítems reales (la otra mitad de la condición del gate sigue vigente),
+pero hay que cerrarlo antes de Gate 3.
+
+## 🟡 Capa 2 sin catálogo embebido en Porcentaje: regresión real, no del módulo Proporcionalidad (abierta 2026-08-14)
+
+Las tres lecciones del módulo Porcentaje (`porcentaje-concepto`,
+`porcentaje-rebaja-doble`, `porcentaje-volver-atras`) **no tienen
+`catalogoErrores` embebido** — referencian `error-1`…`error-N` pelados,
+resueltos únicamente contra `content/errores/porcentaje.json`, que
+`lib/sanitizar.ts` no lee para resolver la Capa 2 del feedback (ver "Ningún
+cierre tiene `catalogoErrores`" más arriba, 2026-08-04: mismo mecanismo, ahí
+aplicado a los cierres). Resultado: ninguna de las tres lecciones de Porcentaje
+muestra la Capa 2 ("¿Por qué?") ni el paso de autoexplicación, aunque sus
+distractores sí declaran `errorCatalogado`.
+
+**Por qué es una regresión y no un estado original:** la decisión de
+arquitectura del 2026-08-14 (`docs/reglas-modulo.md` §5, aplicada primero en
+Proporcionalidad) establece que el catálogo embebido por subconjunto es lo que
+hace funcionar la Capa 2, precisamente porque `lib/sanitizar.ts` resuelve
+`errorCatalogado` contra el catálogo del mismo archivo. Las tres lecciones de
+Porcentaje se escribieron antes de esa decisión y nunca se migraron: siguen en
+el patrón antiguo (catálogo externo, sin espejo), así que hoy están en peor
+pie que Proporcionalidad para mostrar retroalimentación completa, sin que
+nadie haya decidido dejarlas así a propósito.
+
+**Gatillo:** la próxima vez que se toque contenido de Porcentaje, o al decidir
+si `content/errores/` deja de ser fuente única en general (ver "`content/errores/`
+es una copia, no la fuente" más arriba) — ahí se resuelven las dos deudas
+juntas en vez de una por módulo.
+
+## 🟡 Desajuste del slider en `porcentaje-concepto.json`: sin `auditoria.sliderJustificado` (abierta 2026-08-14, confirmada con `npm run auditar`)
+
+`content/lecciones/porcentaje-concepto.json` usa un bloque `interactivoSlider`
+(paso 5, descubrimiento) sin declarar `auditoria.sliderJustificado` (≥20
+caracteres). `scripts/auditar-leccion.mjs` lo marca 🔴 `slider-no-justificado`
+por diseño: la regla 1 de `docs/reglas-modulo.md` prohíbe representaciones de
+función lineal donde el concepto no las exige, y el slider necesita declarar
+por qué esta lección sí lo justifica (o dejar de usarlo). Confirmado corriendo
+`node scripts/auditar-leccion.mjs content/lecciones/porcentaje-concepto.json`
+sin la flag `--permitir-slider`: sale en rojo solo por este hallazgo, además de
+tres `id-con-cifra` y un `campo-sin-unidad` preexistentes y ajenos a este punto.
+
+**Por qué no se tocó ahora:** es contenido de otro módulo (Porcentaje), fuera
+del alcance del cierre de Proporcionalidad, y corregirlo (agregar la
+justificación o quitar el slider) es una decisión de contenido, no mecánica.
+
+**Gatillo:** la próxima vez que se toque `porcentaje-concepto.json`, o al
+decidir si `npm run auditar` (sin argumentos) debe correr en CI — hoy solo se
+corre a mano por archivo, así que este hallazgo lleva abierto sin bloquear
+nada desde antes del 2026-08-14.
+
+## 🔴 Guard `catalogo-divergente`: 10 hallazgos reales entre `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` (abierta 2026-08-14, backlog de otro módulo — confirmada, no introducida por Proporcionalidad)
+
+`npm run auditar` (sin argumentos, que audita todo `content/lecciones/`) sale
+en rojo hoy por un motivo ajeno a Proporcionalidad: los catálogos embebidos de
+`lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json`
+(módulo `funcion-lineal-afin` en `MODULO_POR_LECCION` de
+`scripts/auditar-leccion.mjs`) reciclan los mismos cinco ids —`error-1` a
+`error-5`— con descripciones distintas entre los dos archivos. El guard
+antidivergencia (mismo mecanismo que protege a Proporcionalidad, ver
+`docs/reglas-modulo.md` §5) lo detecta y lo marca 🔴 en las dos direcciones: 5
+hallazgos `catalogo-divergente` en cada archivo, 10 en total. Confirmado
+corriendo `node scripts/auditar-leccion.mjs content/lecciones/lineal-patrones-de-cambio.json
+content/lecciones/lineal-pendiente-e-intercepto.json` el 2026-08-14 (además de
+otros hallazgos preexistentes y ajenos a este punto: `catalogo-sin-usar`,
+`id-con-cifra`, `campo-sin-unidad`, `slider-no-justificado`, `habilidades`).
+
+**Por qué se documenta acá y no se corrige:** fusionar dos catálogos con
+significados distintos para el mismo id es la misma clase de decisión de
+contenido que ya está abierta más arriba ("`funcion-lineal-afin`: catálogo de
+errores sin fusionar, bloquea sus ítems de diagnóstico" y "`content/errores/`
+es una copia, no la fuente") — namespacing por lección, fusión con
+renumeración, o alguna otra convención, decidida por Benja. Este hallazgo es
+la primera vez que queda confirmado que el guard mecánico ya lo detecta en
+rojo, no solo que la ambigüedad existe en prosa.
+
+**Gatillo:** el mismo que las dos entradas relacionadas de arriba — se
+resuelven juntas. Mientras tanto, `npm run auditar` sin argumentos **no está
+en verde** por un motivo estructural preexistente al módulo Proporcionalidad;
+no confundir con una regresión de esta sesión.

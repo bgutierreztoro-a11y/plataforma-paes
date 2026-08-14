@@ -1,0 +1,385 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-proporcionalidad",
+  "titulo": "Cierre del módulo: Proporcionalidad",
+  "_notasInternas": [
+    "Cierre del tema 'Proporcionalidad' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: proporcionalidad-directa.json (L1), proporcionalidad-inversa.json (L2) y proporcionalidad-reconocer.json (L3).",
+    "CATÁLOGO DE ERRORES: EMBEBIDO, mismo patrón que las tres lecciones del módulo (decisión de arquitectura del 2026-08-14, docs/reglas-modulo.md §5: lib/sanitizar.ts resuelve errorCatalogado contra el catálogo del MISMO archivo). Este cierre no está en MODULO_POR_LECCION de scripts/auditar-leccion.mjs porque ese script solo audita content/lecciones/ (rechaza tipo distinto de 'leccion'), así que el guard antidivergencia automático no corre sobre este archivo — la garantía acá es manual: las 11 entradas se copiaron carácter a carácter desde el catálogo de la lección que las originó (directa, inversa o reconocer) y se verificaron una a una contra el texto fuente antes de pegarlas.",
+    "CERO DOMINIOS NUEVOS, CERO CIFRAS QUE REQUIERAN NUEVA VERIFICACIÓN DE FUENTE: los ocho ítems viven en los tres contextos ya cleared del módulo (esmaltes, auditorio, hielo). Cuatro ítems (2, 6, 7, 8) reutilizan constantes o filas YA PÚBLICAS del módulo (900, 792, 16+23p, 27+64h) sin inventar cifra nueva, siguiendo el mismo criterio con que proporcionalidad-reconocer.json reutilizó 40 y 900 en su paso 5: no hay nada que proteger en un número que el estudiante ya vio publicado en una lección anterior del mismo módulo. Los otros cuatro (1, 3, 4, 5) sí introducen combinaciones numéricas nuevas, pero DENTRO de una relación ya establecida (mismo k=40 de esmaltes en el ítem 1, mismo k=792 de auditorio-extra en el ítem 5, un tono nuevo del taller —turquesa, ya usado en L3— con pedido nuevo en el ítem 4, y una cuarta instancia de la relación afín del hielo en el ítem 3, mismo mecanismo que las tres que L3 ya introdujo). Ninguno de los cuatro exige correr consultar-fuentes.mjs de nuevo: el vocabulario de dominio (esmalte/pigmento/base, auditorio/butacas/hileras, hielo/derretir) ya está cleared en las proveniencias de L1, L2 y L3, y lo único que cambia es la aritmética, igual que cualquier lección introduce cifras nuevas dentro de un dominio ya limpio.",
+    "VERIFICACIÓN DE COLISIÓN DE CIFRAS: hecha con un script que recorre contextosNumericos de todo content/ y compara cada número ≥100 o con decimales de este archivo contra los de los demás. Resultado: limpio, salvo las cuatro reutilizaciones deliberadas del párrafo anterior (900, 792, y las filas de índigo y del hielo del paso 5 de L3), que SON la colisión esperada y documentada, no un hallazgo. El barrido completo, con los candidatos descartados antes de fijar los definitivos, se detalla por ítem más abajo en contextosNumericos.",
+    "REPARTO DE HABILIDADES: ciclo resolver/modelar/argumentar/representar repetido dos veces (ítems 1-4 y 5-8), así ninguna habilidad se repite en dos ítems consecutivos y las cuatro terminan con dos ítems cada una — mismo criterio de cobertura completa que cierre-porcentaje.json, aplicado acá de forma estrictamente cíclica porque con 8 ítems y 4 habilidades el ciclo cae exacto.",
+    "REPARTO DE SUBTEMA: directa en 1 y 4; inversa en 2, 5 y 7; reconocer/discriminación en 3, 6 y 8. Los tres subtemas están mezclados a lo largo de todo el set (nunca dos ítems seguidos del mismo subtema), con más peso en inversa y discriminación porque son las dos partes del temario que más se prestan a error una vez que se junta el módulo completo — discriminar es el objetivo explícito de L3 y por lo tanto del cierre.",
+    "REPARTO DE DIFICULTAD: baja 2 (ítems 1, 6), media 4 (ítems 2, 4, 5, 7), alta 2 (ítems 3, 8). Mismo reparto que cierre-porcentaje.json, cierre-enteros-racionales.json y cierre-v0.json, calibrado contra UMBRAL_DOMINIO = 0.6 de lib/umbrales.ts: con 8 ítems el estudiante necesita 5 aciertos, y cargar el set hacia 'alta' convertiría el instrumento de medición en un filtro.",
+    "COBERTURA DEL CATÁLOGO: error-1 (ítem 1), error-3 (ítem 3), error-4 (ítems 1, 2, 5, 7), error-5 (ítem 1), error-7 (ítems 3, 4, 6, 8), error-8 (ítems 2, 6), error-10 (ítem 5), error-11 (ítem 3), error-12 (ítems 5, 6), error-13 (ítems 2, 4, 7, 8), error-14 (ítem 7). Los seis errores más transversales del módulo (error-4, error-7, error-12, error-13 sobre todo) se repiten en 2 o más ítems a propósito: son los que cruzan las tres lecciones — confundir la constante con un valor, tratar como proporcional lo que no lo es, compensar con suma/resta lo que es multiplicación/división, y aplicar el modelo directo a una relación inversa.",
+    "ÍTEM 1 (resolver, baja, directa — esmaltes, k=40): mismo núcleo de L1/L3 (verde musgo, taller de esmaltes), pedido nuevo 16 g → 640 mL, no publicado antes en ningún archivo. Verificación: 16×40=640. Distractores desde la fila publicada más cercana (15 g/600 mL): aditivo 600+1=601 (error-1, trata el salto de +1 g como si sumara +1 mL en vez de +40); constante 40 (error-4); escalado 600×16=9.600 (error-5, multiplica el total de otra fila por la cantidad nueva en vez de la constante).",
+    "ÍTEM 2 (modelar, media, inversa — auditorio, k=900): abstracto, reutiliza el 900 ya público del núcleo de L2 y del paso 5 de L3 sin ninguna cifra nueva. Pide la expresión h = 900 ÷ b dado b butacas por hilera. Distractores: h = 900 × b (error-13, aplica el modelo directo); h = b ÷ 900 (error-8, intercambia qué magnitud se divide por cuál); h = 900 (error-4, entrega la constante en vez de la expresión).",
+    "ÍTEM 3 (argumentar, alta, reconocer — cuarta instancia de la relación afín del hielo): masa = 19 + 46 · horas, filas 3 h → 157 g, 7 h → 341 g, 12 h → 571 g. Verificación: 19+46×3=157; 19+46×7=341; 19+46×12=571 ✓. Cociente: 157/3≈52,33; 341/7≈48,71; 571/12≈47,58 — los tres distintos. Producto: 3×157=471; 7×341=2.387; 12×571=6.852 — los tres distintos. Falla las dos pruebas en las tres filas, igual que las tres instancias de L3. Mismo mecanismo argumentativo que el ítem 3 de L3: distractor 'sube ordenada, luego proporcional' → error-7; distractor 'cociente de una sola fila' → error-3; distractor 'no, porque los números no son redondos' → error-11.",
+    "ÍTEM 4 (representar, media, directa — esmalte turquesa, k=59): mismo tono que L3 paso 6 (introducido ahí solo para interpretación, sin ejercicio propio), pedido nuevo 4 g/236 mL, 6 g/354 mL, 10 g/590 mL — filas no usadas antes. Verificación: 4×59=236; 6×59=354; 10×59=590 ✓. Mismo patrón de cuatro alternativas que los ítems 'representar' de L1/L2/L3: recta por el origen con pendiente constante (correcta); curva inversa (error-13); recta que no pasa por el origen (error-7); recta que baja (error-13).",
+    "ÍTEM 5 (resolver, media, inversa — auditorio EXTRA de L3, k=792): mismo auditorio y misma constante que el ejercicio del paso 6 de L3 (filas publicadas 18/44 y 22/36, pedido 24→33), par nuevo no publicado: 8 butacas por hilera → 99 hileras. Verificación: 8×99=792 ✓ (divisor de 792 no usado antes en este auditorio). Distractores: canje 1 a 1 desde la fila de 22 (36−14=22, un ajuste directo del cambio en butacas) → error-12; constante 792 → error-4; multiplicó en vez de dividir, 8×792=6.336 → error-10.",
+    "ÍTEM 6 (modelar, baja, reconocer — esmalte índigo de L3, relación afín): reutiliza EXACTO las filas publicadas de L3 paso 2 (2 g→62 mL, 4 g→108 mL, 6 g→154 mL; base=16+23·pigmento), cero cifra nueva. Pide la expresión que modela la tabla. Correcta: b=16+23p. Distractores: b=23p, ignora el intercepto y trata la relación como directamente proporcional (error-7); p=16+23b, intercambia qué variable despeja a cuál (error-8); b=39p, suma 16+23 en un solo coeficiente en vez de mantener intercepto y pendiente separados (error-12, extensión razonable de 'combina mal dos valores que debían mantenerse separados').",
+    "ÍTEM 7 (argumentar, media, inversa — auditorio núcleo de L1/L2/L3, k=900): reutiliza EXACTO las filas del núcleo (20/45, 25/36), cero cifra nueva. Evalúa la afirmación 'si se duplican las butacas por hilera, se duplican las hileras'. Correcta: falsa, se reducen a la mitad (20→45 pasa a 40→22,5). Distractores: verdadera porque suben juntas (error-13); falsa pero porque la constante también se duplica (error-14, mal interpreta qué es lo fijo); falsa porque la constante 900 es lo que cambia (error-4).",
+    "ÍTEM 8 (representar, alta, reconocer — tabla C del paso 5 de L3, integrador): reutiliza EXACTO la primera instancia del hielo publicada en L3 (masa=27+64·horas; 3h→219g, 6h→411g, 9h→603g), cero cifra nueva. Cierra el módulo integrando los tres subtemas: pide identificar la descripción correcta del gráfico de una relación que falla las dos pruebas. Correcta: recta con pendiente constante que no pasa por el origen. Distractores: recta por el origen (error-7, la trataría como directamente proporcional); curva que decrece (error-13, la trataría como inversamente proporcional); recta que baja cortando el eje (error-13, forma incompatible con datos que suben).",
+    "VERIFICACIÓN MATEMÁTICA: toda la aritmética de los ocho ítems fue recalculada desde cero (ver detalle por ítem arriba), incluidas las comprobaciones hacia adelante de cada respuesta correcta y el valor exacto de cada distractor. Eso NO reemplaza la revisión matemática independiente en hilo separado, que sigue pendiente, igual que la auditoría de originalidad.",
+    "ESTADO: contenido completo, pasa npm run validar. Pendientes antes de commit-cierre-de-módulo: revisión matemática independiente y auditoría de originalidad (protocolo MOS §7.3), cada una en su propio hilo abierto con /clear, igual que las tres lecciones del módulo."
+  ],
+  "items": [
+    {
+      "id": "cierre-proporcionalidad-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En el taller de esmaltes, la razón entre mililitros de base y gramos de pigmento del esmalte verde musgo es siempre la misma: con 15 g de pigmento se usan 600 mL de base.\n\n¿Cuántos mL de base se necesitan para un lote de 16 g?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "640 mL",
+          "esCorrecta": true,
+          "feedback": "Correcto. La constante es 600 ÷ 15 = 40 mL por gramo, y 16 × 40 = 640."
+        },
+        {
+          "clave": "B",
+          "texto": "601 mL",
+          "esCorrecta": false,
+          "feedback": "Le sumaste a la base el mismo 1 que le sumaste al pigmento (de 15 g a 16 g). Pero cada gramo de pigmento se lleva 40 mL de base, no 1: un gramo más son 40 mL más, no uno.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "40 mL",
+          "esCorrecta": false,
+          "feedback": "Ese es el cociente que se repite en cada lote — la constante. Pero el lote pedido tiene 16 gramos, no uno: falta multiplicar la constante por los 16 g.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "9.600 mL",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste los 600 mL completos (que ya correspondían a 15 g) por los 16 g del pedido. Lo que se multiplica por la cantidad nueva es la constante (40 mL por gramo), no el total de otra fila.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "La razón base÷pigmento es constante: 600 ÷ 15 = 40 mL por gramo. Para 16 g, la base necesaria es 16 × 40 = 640 mL. Verificación: 640 ÷ 16 = 40, la misma constante que en la fila de 15 g ✓."
+    },
+    {
+      "id": "cierre-proporcionalidad-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "El auditorio de un centro cultural tiene siempre el mismo total de butacas: 900, repartidas en hileras iguales. Si $b$ es el número de butacas por hilera, ¿cuál expresión da el número de hileras $h$ que resultan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$h = 900 \\div b$",
+          "esCorrecta": true,
+          "feedback": "Correcto. El producto butacas por hilera × hileras es siempre 900, así que despejando hileras queda $h = 900 \\div b$."
+        },
+        {
+          "clave": "B",
+          "texto": "$h = 900 \\times b$",
+          "esCorrecta": false,
+          "feedback": "Esa es la expresión de una proporción DIRECTA (multiplicar por la constante). Acá butacas por hilera y hileras son inversamente proporcionales: cuando una sube, la otra baja, así que la operación que las relaciona es una división, no una multiplicación.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "$h = b \\div 900$",
+          "esCorrecta": false,
+          "feedback": "Invertiste qué se divide por qué. El total fijo (900) es lo que se reparte en hileras de tamaño $b$, no al revés: es 900 el que se divide por $b$, no $b$ el que se divide por 900.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "$h = 900$",
+          "esCorrecta": false,
+          "feedback": "900 es el total de butacas, una constante fija — no el número de hileras, que cambia según cuántas butacas por hilera se usen. Falta la operación que reparte ese total según $b$.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Butacas por hilera × hileras = 900 en cualquier configuración de este auditorio. Despejando el número de hileras: $h = 900 \\div b$. Comprobación con una configuración conocida: si $b = 20$, $h = 900 \\div 20 = 45$, que coincide con la configuración publicada del módulo ✓."
+    },
+    {
+      "id": "cierre-proporcionalidad-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un bloque de hielo se está derritiendo. Antes de que alguien empezara a medir, ya se habían acumulado 19 g de hielo derretido. Desde ese momento se registran estos datos:\n\n| Horas desde que se empezó a medir | Gramos de hielo derretido acumulados |\n|---|---|\n| 3 | 157 |\n| 7 | 341 |\n| 12 | 571 |\n\nAlguien afirma: «Las horas y los gramos acumulados suben juntas, luego son directamente proporcionales.»\n\n¿Cuál de las siguientes afirmaciones evalúa correctamente ese argumento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El argumento es falso: el cociente gramos ÷ horas cambia en cada fila (157 ÷ 3 ≈ 52,33; 341 ÷ 7 ≈ 48,71), así que no es directamente proporcional, aunque las dos cantidades suban juntas.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Que dos cantidades suban juntas es necesario pero no suficiente: hace falta que el cociente (o el producto) se mantenga fijo, y acá ninguno de los dos lo hace. La causa es que el hielo ya llevaba 19 g derretidos antes de empezar a medir — un valor inicial distinto de cero rompe la proporción directa aunque el crecimiento sea perfectamente regular."
+        },
+        {
+          "clave": "B",
+          "texto": "El argumento es verdadero: como las dos cantidades suben juntas y de forma pareja, tienen que ser directamente proporcionales.",
+          "esCorrecta": false,
+          "feedback": "Esta es exactamente la trampa que el argumento tiende. Que suban juntas y parejo no basta: hay que comprobar el cociente en todas las filas, y acá cambia (52,33 en la primera, 48,71 en la segunda, 47,58 en la tercera). Una relación puede crecer de forma perfectamente ordenada sin ser proporcional.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "El argumento es falso, pero porque 157 ÷ 3 ≈ 52,33 es la constante y no coincide con el enunciado.",
+          "esCorrecta": false,
+          "feedback": "Sacaste el cociente de una sola fila y te detuviste ahí, sin verificar que valiera lo mismo en las otras dos. Ese es el paso que falta siempre: comprobarlo en todas las filas antes de llamarlo constante. 341 ÷ 7 ≈ 48,71 y 571 ÷ 12 ≈ 47,58, ninguno igual a 52,33.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "El argumento es falso porque 157, 341 y 571 no son números redondos.",
+          "esCorrecta": false,
+          "feedback": "Llegaste a la conclusión correcta por un camino que no sirve. Que las cifras no sean redondas no decide nada: el esmalte turquesa de este mismo módulo tenía constante 59 —tampoco un número especialmente redondo— y era perfectamente proporcional. Lo que decide es si el cociente o el producto se repiten en todas las filas.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "El argumento «suben juntas, luego son directamente proporcionales» es falso. Cociente gramos÷horas en las tres filas: 157÷3≈52,33; 341÷7≈48,71; 571÷12≈47,58 — los tres distintos. Producto, para descartar también la proporción inversa: 3×157=471; 7×341=2.387; 12×571=6.852 — también distintos. Ninguna de las dos pruebas da constante: la relación no es proporcional de ninguna forma. La causa estructural es que masa = 19 + 46·horas es una relación AFÍN, con valor inicial 19 y tasa constante 46 g/h. Respuesta: A."
+    },
+    {
+      "id": "cierre-proporcionalidad-4",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El taller registra así los lotes de esmalte turquesa:\n\n| Pigmento (g) | Base (mL) |\n|---|---|\n| 4 | 236 |\n| 6 | 354 |\n| 10 | 590 |\n\nSe quiere representar esta relación en un gráfico, con el pigmento en el eje horizontal y la base en el eje vertical.\n\n¿Cuál de las siguientes descripciones corresponde al gráfico de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que parte del origen y sube siempre con la misma inclinación.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El cociente base ÷ pigmento es 59 en las tres filas: es directamente proporcional. Una proporción directa se grafica como una recta que pasa por el origen y sube con pendiente constante, k = 59."
+        },
+        {
+          "clave": "B",
+          "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin llegar a tocarlos.",
+          "esCorrecta": false,
+          "feedback": "Esa es la forma de una proporción INVERSA, donde el producto (no el cociente) se mantiene fijo. Acá el cociente 236÷4, 354÷6 y 590÷10 da 59 las tres veces, y las dos cantidades suben juntas, no una sube mientras la otra baja.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "Una recta que sube con la misma inclinación, pero que no pasa por el origen.",
+          "esCorrecta": false,
+          "feedback": "Esa forma corresponde a una relación con valor inicial distinto de cero — sube ordenada, pero no es proporcional. No es el caso acá: el cociente 236÷4=59, 354÷6=59 y 590÷10=59 se repite exacto en las tres filas, así que la recta sí pasa por el origen.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "Una recta que baja de forma uniforme, cortando el eje horizontal.",
+          "esCorrecta": false,
+          "feedback": "Los datos suben, no bajan: con más pigmento hay más base en las tres filas. Una recta que baja contradice la tabla del enunciado.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "El cociente base÷pigmento es constante en las tres filas: 236÷4=59, 354÷6=59, 590÷10=59. Es una proporción directa, y = 59·x. Su gráfico es una recta que pasa por el origen y sube con pendiente constante 59. La descripción correcta es la A."
+    },
+    {
+      "id": "cierre-proporcionalidad-5",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Otro espacio del mismo centro cultural, un auditorio extra, se puede reordenar de varias maneras, siempre con las mismas butacas:\n\n| Butacas por hilera | Hileras |\n|---|---|\n| 18 | 44 |\n| 22 | 36 |\n\nSe reordena con 8 butacas por hilera.\n\n¿Cuántas hileras quedan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "99 hileras",
+          "esCorrecta": true,
+          "feedback": "Correcto: la constante es 18 × 44 = 792 butacas en total, y 792 ÷ 8 = 99 hileras."
+        },
+        {
+          "clave": "B",
+          "texto": "50 hileras",
+          "esCorrecta": false,
+          "feedback": "Le sumaste a la fila de 22 butacas la diferencia hacia 8 (14 butacas menos, 14 hileras más: 36+14=50). Pero una butaca de ancho no vale una hilera. Comprueba el total: 18 × 44 = 792 y 22 × 36 = 792. Ese es el número que hay que acomodar en hileras de 8, no un ajuste fila por fila.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "792 hileras",
+          "esCorrecta": false,
+          "feedback": "Encontraste bien la constante: 18 × 44 = 792 butacas en total. Falta acomodar ese total en hileras de 8 butacas cada una.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "6.336 hileras",
+          "esCorrecta": false,
+          "feedback": "Multiplicaste el total por el ancho nuevo. El total ya está completo: lo que se pregunta es cuántas hileras de 8 butacas caben en él, y eso es una división, no una multiplicación.",
+          "errorCatalogado": "error-10"
+        }
+      ],
+      "solucion": "Se verifica primero que las dos filas comparten producto constante: 18×44=792, 22×36=792 — inversamente proporcional. La constante es 792 butacas en total. Para 8 butacas por hilera, las hileras son 792÷8=99. Verificación: 99×8=792 ✓."
+    },
+    {
+      "id": "cierre-proporcionalidad-6",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "enunciado": "El taller registró un tono índigo en tres lotes:\n\n| Pigmento (g) | Base (mL) |\n|---|---|\n| 2 | 62 |\n| 4 | 108 |\n| 6 | 154 |\n\nNo es una proporción directa (base ÷ pigmento no da lo mismo en las tres filas), pero sí sigue una regla fija.\n\n¿Cuál expresión modela correctamente esta tabla, con $p$ el pigmento en gramos y $b$ la base en mL?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$b = 16 + 23p$",
+          "esCorrecta": true,
+          "feedback": "Correcto. Verifica: 16 + 23×2 = 62; 16 + 23×4 = 108; 16 + 23×6 = 154. Hay un valor inicial fijo (16) más una tasa constante (23 mL por gramo)."
+        },
+        {
+          "clave": "B",
+          "texto": "$b = 23p$",
+          "esCorrecta": false,
+          "feedback": "Esta expresión ignora el valor inicial y trata la relación como si fuera directamente proporcional. Pero 23×2=46, no 62: falta el 16 que ya traía la mezcla antes de agregar pigmento.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "$p = 16 + 23b$",
+          "esCorrecta": false,
+          "feedback": "Intercambiaste qué variable depende de cuál. Es la base la que depende de cuánto pigmento se agrega, no al revés: con $p=2$ esta expresión daría un pigmento absurdo en vez de una base de 62 mL.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "$b = 39p$",
+          "esCorrecta": false,
+          "feedback": "Sumaste 16 y 23 en un solo coeficiente (16+23=39) en vez de mantenerlos separados: uno es el valor inicial fijo y el otro es la tasa que se multiplica por el pigmento. Verifica: 39×2=78, no 62.",
+          "errorCatalogado": "error-12"
+        }
+      ],
+      "solucion": "Cada lote suma 46 mL al pasar de un lote al siguiente (2 g más), o sea 23 mL por gramo, sobre una base inicial de 16 mL. La expresión es b = 16 + 23p. Verificación fila por fila: 16+23×2=62 ✓; 16+23×4=108 ✓; 16+23×6=154 ✓."
+    },
+    {
+      "id": "cierre-proporcionalidad-7",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "En el auditorio del centro cultural, con 20 butacas por hilera quedan 45 hileras. Un estudiante afirma: «Si se duplican las butacas por hilera (a 40), las hileras también se duplican (a 90).»\n\n¿Tiene razón?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: butacas por hilera y hileras son inversamente proporcionales, así que al duplicar una la otra se reduce a la mitad, no se duplica.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El producto butacas por hilera × hileras es constante (900). Si las butacas por hilera pasan de 20 a 40 (se duplican), las hileras pasan de 45 a 900÷40=22,5, la mitad, no el doble."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: si una cantidad se duplica, la relacionada también se duplica, sin importar el tipo de relación.",
+          "esCorrecta": false,
+          "feedback": "Eso vale para una proporción DIRECTA, no para esta. Acá butacas por hilera y hileras son inversamente proporcionales —su producto es constante, 900—, así que cuando una sube la otra baja. Compruébalo: 40 × 22,5 = 900, no 40 × 90.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "No tiene razón, pero porque la constante 900 también se duplicaría a 1.800.",
+          "esCorrecta": false,
+          "feedback": "La constante 900 es el total de butacas del auditorio: no cambia nunca, sea cual sea la configuración. Lo que cambia al reordenar las butacas por hilera es cómo se reparte ese total fijo entre las hileras, no el total mismo.",
+          "errorCatalogado": "error-14"
+        },
+        {
+          "clave": "D",
+          "texto": "No tiene razón, porque la constante 900 es la que cambia de una configuración a otra.",
+          "esCorrecta": false,
+          "feedback": "Es al revés: 900 es exactamente lo que NO cambia entre configuraciones del mismo auditorio — es el total de butacas. Lo que cambia son las butacas por hilera y las hileras, no la constante.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Butacas por hilera × hileras = 900 en cualquier configuración de este auditorio (producto constante, proporción inversa). Con 20 butacas por hilera hay 45 hileras (20×45=900). Al duplicar a 40 butacas por hilera, las hileras son 900÷40=22,5, la mitad de 45, no el doble. La afirmación del estudiante es falsa. Respuesta: A."
+    },
+    {
+      "id": "cierre-proporcionalidad-8",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "enunciado": "Un bloque de hielo se está derritiendo a ritmo constante. Antes de que alguien empezara a medir, ya se habían acumulado 27 g de hielo derretido. Desde ese momento se registran estos datos:\n\n| Horas desde que se empezó a medir | Gramos de hielo derretido acumulados |\n|---|---|\n| 3 | 219 |\n| 6 | 411 |\n| 9 | 603 |\n\nSe quiere representar esta relación en un gráfico, con las horas en el eje horizontal y los gramos acumulados en el eje vertical.\n\n¿Cuál de las siguientes descripciones corresponde al gráfico de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que sube con la misma inclinación, pero que no pasa por el origen.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El cociente gramos÷horas cambia en cada fila (219÷3=73, 411÷6=68,5, 603÷9=67), así que no es directamente proporcional: la recta no pasa por el origen. Pero cada hora se derriten 64 g más de forma perfectamente regular (relación afín, masa=27+64·horas), así que sí es una recta, con pendiente constante 64 y que parte de 27 g cuando horas=0."
+        },
+        {
+          "clave": "B",
+          "texto": "Una recta que parte del origen y sube siempre con la misma inclinación.",
+          "esCorrecta": false,
+          "feedback": "Esa forma es la de una proporción directa, y trataría este caso como si el cociente gramos÷horas fuera constante. No lo es: 219÷3=73, 411÷6=68,5, 603÷9=67, los tres distintos. El hielo ya llevaba 27 g derretidos antes de empezar a medir, así que la recta no puede partir del origen.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin llegar a tocarlos.",
+          "esCorrecta": false,
+          "feedback": "Esa es la forma de una proporción inversa, y acá el producto tampoco se mantiene fijo (3×219=657, 6×411=2.466, distintos). Además los datos suben, no bajan: a más horas, más gramos acumulados.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "D",
+          "texto": "Una recta que baja de forma uniforme, cortando el eje horizontal.",
+          "esCorrecta": false,
+          "feedback": "Los datos suben, no bajan: con más horas hay más gramos de hielo derretido acumulados en las tres filas. Una recta que baja contradice la tabla del enunciado.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "El cociente gramos÷horas cambia en cada fila (73, 68,5, 67), así que no es directamente proporcional. El producto también cambia (657, 2.466, ...), así que tampoco es inversamente proporcional. La relación es afín: masa = 27 + 64·horas, verificado fila por fila (27+64×3=219, 27+64×6=411, 27+64×9=603). Su gráfico es una recta con pendiente constante 64 que no pasa por el origen, porque parte de 27 g cuando horas=0. La descripción correcta es la A."
+    }
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Usa diferencia constante en vez de cociente constante: ve que las dos columnas suben y asume proporcionalidad sumándole a una lo mismo que le sumó a la otra (si a 3 g le corresponden 120 mL, cree que a 12 g le corresponden 129 porque el pigmento subió 9)."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Escala una sola de las dos cantidades: multiplica el valor completo de una fila por la cantidad nueva, en vez de multiplicar la cantidad nueva por la constante, y rompe la razón que quería conservar."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Nombra mal la constante al interpretarla: intercambia las dos magnitudes en la unidad, o la lee como un total en vez de como la cantidad que le corresponde a una unidad."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
+    },
+    {
+      "id": "error-14",
+      "descripcion": "Interpreta mal la constante de una proporción inversa: la lee como «lo que le corresponde a una unidad» —que es la lectura de la proporción directa— en vez de como el total que se reparte entre las dos cantidades."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-proporcionalidad-1 (esmaltes, resolver, baja): verde musgo k=40 (núcleo de L1/L3), fila publicada más cercana 15/600, pedido nuevo 16→640; distractores 601 (aditivo), 40 (constante) y 9.600 (escaló la fila completa). Cifras 640, 601 y 9.600 verificadas sin colisión contra el resto de content/.",
+    "cierre-proporcionalidad-2 (auditorio, modelar, media): abstracto, reutiliza 900 (núcleo de L2/L3) sin cifra nueva; expresión h=900÷b, distractores h=900×b, h=b÷900, h=900.",
+    "cierre-proporcionalidad-3 (hielo, argumentar, alta): cuarta instancia de la relación afín del módulo, masa=19+46·horas, filas 3h→157g, 7h→341g, 12h→571g. Cociente 52,33/48,71/47,58 (cambia); producto 471/2.387/6.852 (cambia). Cifras verificadas sin colisión.",
+    "cierre-proporcionalidad-4 (esmaltes, representar, media): turquesa k=59 (tono introducido en L3 paso 6, sin ejercicio propio ahí), filas nuevas 4/236, 6/354, 10/590; las cuatro alternativas son descripciones verbales de gráficos. Cifras verificadas sin colisión.",
+    "cierre-proporcionalidad-5 (auditorio, resolver, media): auditorio EXTRA de L3, k=792 (filas publicadas 18/44 y 22/36 reutilizadas exactas), par nuevo 8→99. Cifras 99 y 6.336 verificadas sin colisión; 792 es reutilización deliberada, colisión esperada contra proporcionalidad-reconocer.json.",
+    "cierre-proporcionalidad-6 (esmaltes, modelar, baja): esmalte índigo de L3, filas EXACTAS reutilizadas (2/62, 4/108, 6/154; b=16+23p), cero cifra nueva. Colisión esperada contra proporcionalidad-reconocer.json, documentada.",
+    "cierre-proporcionalidad-7 (auditorio, argumentar, media): núcleo del módulo, filas EXACTAS reutilizadas (20/45), cero cifra nueva salvo 22,5 (900÷40, resultado de duplicar el ancho). Colisión de 20/45/900 esperada contra L1/L2/L3, documentada; 22,5 verificado sin colisión.",
+    "cierre-proporcionalidad-8 (hielo, representar, alta, integrador): tabla C del paso 5 de L3, filas EXACTAS reutilizadas (3/219, 6/411, 9/603; masa=27+64·horas), cero cifra nueva. Colisión esperada contra proporcionalidad-reconocer.json, documentada — es la misma tabla que el estudiante ya vio ahí, usada acá para cerrar el módulo integrando los tres subtemas.",
+    "NOTA DE NO COLISIÓN: barrido corrido contra los contextosNumericos de todo content/ (script propio, mismo criterio que scripts/auditar-leccion.mjs: números ≥100 o con decimales). Las únicas coincidencias encontradas son las reutilizaciones deliberadas listadas arriba (900, 792, las filas de índigo y las del hielo del paso 5), todas colisiones esperadas de callbacks intramódulo, no cifras nuevas repetidas por accidente. Antes de fijar los valores definitivos se descartaron por colisión real contra otros archivos del corpus: 520 y 13 g (idéntico al par ya publicado en proporcionalidad-directa.json), 440 mL (coincide con un producto de la tabla no proporcional de proporcionalidad-inversa.json), y dos combinaciones del hielo cuyo cociente intermedio coincidía con uno ya publicado en proporcionalidad-reconocer.json (68,5) o cuya masa coincidía con un valor de content/porcentaje-volver-atras.json (150, 22,5 en un intento anterior)."
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Proporcionalidad — usado solo para calibrar alcance y formato de ítems, nunca como origen de texto, contextos ni ejemplos.",
+      "docs/calibracion-lecciones-e-items.md §2, §3.5, §5.1 y §6 — habilidades PAES, regla de distribución, calibración de dificultad y zonas de contexto saturadas.",
+      "content/lecciones/proporcionalidad-directa.json (L1), proporcionalidad-inversa.json (L2) y proporcionalidad-reconocer.json (L3) — leídas enteras. Fuente de todos los dominios, constantes reutilizadas y catálogo de errores del que se heredan las 11 entradas embebidas (lecciones propias del proyecto, no fuentes externas).",
+      "content/cierres/cierre-porcentaje.json — leído como referencia de formato y estructura de un cierre de módulo (archivo propio del proyecto).",
+      "docs/reglas-modulo.md §5 — decisión de arquitectura sobre catálogo embebido por subconjunto, aplicada acá igual que en las tres lecciones del módulo.",
+      "lib/umbrales.ts — constante UMBRAL_DOMINIO, consultada para calibrar el reparto de dificultad."
+    ],
+    "declaracionOriginalidad": "Enunciados y combinaciones numéricas creados desde cero por el autor del proyecto para este cierre, dentro de los tres dominios ya cleared del módulo (esmaltes, auditorio, hielo) y sin introducir ningún dominio nuevo. Cuatro ítems (2, 6, 7, 8) reutilizan constantes o filas ya públicas de L1/L2/L3 sin cifra nueva; los otros cuatro (1, 3, 4, 5) introducen combinaciones numéricas nuevas dentro de relaciones ya establecidas, verificadas una por una contra los contextosNumericos de las tres lecciones del módulo y del resto de content/ — ver detalle en _notasInternas y en contextosNumericos, incluidos los candidatos descartados por colisión real antes de fijarse. Ninguna verificación de dominio nueva fue necesaria: el vocabulario de los tres contextos ya está cleared en las proveniencias de L1, L2 y L3, y este archivo no introduce ningún sustantivo, verbo ni escenario que no estuviera ya ahí. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. AMBAS AUDITORÍAS OBLIGATORIAS (matemática, originalidad) SIGUEN SIN CORRER al momento de escribir este campo — corresponden en hilos separados abiertos con /clear, igual que en las tres lecciones del módulo. El archivo pasa npm run validar.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Archivo completo, pasa npm run validar. Sin revisión matemática independiente y sin auditoría de originalidad al momento de escribir este campo — corresponden en hilos separados abiertos con /clear.",
+    "fecha": "2026-08-14"
+  }
+}

@@ -115,6 +115,7 @@ export const IDS_CIERRE = [
   "cierre-enteros-racionales",
   "cierre-ecuaciones-lineales",
   "cierre-porcentaje",
+  "cierre-proporcionalidad",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -245,6 +246,7 @@ export const EJES = [
           "proporcionalidad-inversa",
           "proporcionalidad-reconocer",
         ],
+        cierreId: "cierre-proporcionalidad",
       },
       {
         id: "ecuaciones-e-inecuaciones-primer-grado",
