@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "validar": "node scripts/validar-contenido.mjs",
+    "auditar": "node scripts/auditar-leccion.mjs",
     "test:unit": "node --test \"lib/**/*.test.ts\"",
     "migrar": "node scripts/migrar.mjs",
     "capturas": "playwright test"
