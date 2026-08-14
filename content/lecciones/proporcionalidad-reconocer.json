@@ -155,13 +155,13 @@
               "campoId": "cocienteIndigoMenor",
               "valorObtenido": 60,
               "mensaje": "Restaste en vez de dividir: 62 − 2 = 60. La prueba de proporción directa es una división, base entre pigmento, no una resta.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "error-12"
             },
             {
               "campoId": "cocienteIndigoMayor",
               "valorObtenido": 104,
               "mensaje": "Restaste en vez de dividir: 108 − 4 = 104. Prueba dividiendo: 108 ÷ 4.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "error-12"
             }
           ],
           "feedbackPorDefecto": "Divide la base por el pigmento en cada lote. En el primero, 62 ÷ 2. En el segundo, 108 ÷ 4. Anota los dos resultados uno al lado del otro."
@@ -181,6 +181,15 @@
         "Verificación de los distractores: sumar en vez de multiplicar da 2+62=64 y 4+108=112 (error-12, forma simple: suma directa de los dos valores)."
       ],
       "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Los mismos dos lotes de esmalte índigo del paso anterior.",
+          "datos": {
+            "columnas": ["Pigmento (g)", "Base (mL)"],
+            "filas": [[2, 62], [4, 108]]
+          }
+        },
         {
           "tipo": "numerica",
           "enunciado": "El cociente no sirvió. En la lección de proporción inversa la prueba era otra: multiplicar las dos cantidades.\n\nPruébala en los mismos dos lotes de esmalte índigo. Multiplica **pigmento × base**.",
