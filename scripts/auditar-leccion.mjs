@@ -21,11 +21,14 @@
  * `auditor-originalidad` compara contra el corpus. Los tres son necesarios y
  * ninguno cubre al otro.
  *
- * SEVERIDADES. 🔴 falla la corrida (exit 1). 🟡 se reporta y no falla, y hoy
- * solo lo usa el chequeo de colisión numérica entre archivos, que tiene falsos
+ * SEVERIDADES. 🔴 falla la corrida (exit 1). 🟡 se reporta y no falla, y hoy lo
+ * usan dos chequeos. El de colisión numérica entre archivos, que tiene falsos
  * positivos conocidos y documentados: un dígito suelto reaparece de manera
  * legítima con otro significado y otras unidades (el 40 de esta unidad es «40 %»
- * en el módulo Porcentaje). Con --estricto los 🟡 también fallan.
+ * en el módulo Porcentaje). Y el guard antidivergencia de catálogos, cuando la
+ * lección no declara módulo en MODULO_POR_LECCION: ahí el chequeo se omite y lo
+ * dice, en vez de comparar a ciegas contra catálogos de otro módulo. Con
+ * --estricto los 🟡 también fallan.
  *
  * PARAMETRIZACIÓN. Opcionalmente la lección declara un bloque raíz `auditoria`:
  *
@@ -334,6 +337,83 @@ function chequearItemsPAES(data, add) {
 }
 
 /**
+ * Mapeo manual lección → módulo, para el guard antidivergencia de abajo.
+ *
+ * El contrato de lección no declara a qué módulo pertenece —igual que pasa en
+ * scripts/validar-contenido.mjs con MAPEO_LECCION_UNIDAD, y por la misma
+ * razón—, así que la correspondencia vive acá a mano. No se deriva del id ni
+ * del nombre de archivo a propósito: `lineal-patrones-de-cambio` y
+ * `lineal-pendiente-e-intercepto` comparten módulo sin compartir prefijo
+ * completo, y `ecuaciones-lineales` no lleva ninguno.
+ *
+ * Manténlo al día: una lección con catalogoErrores que no esté acá se reporta
+ * como chequeo omitido (🟡) en vez de compararse a ciegas. Comparar catálogos
+ * de módulos distintos daría puro ruido, porque los ids son locales al módulo
+ * ("error-1" significa cosas distintas en Enteros y en Proporcionalidad).
+ */
+const MODULO_POR_LECCION = {
+  'ecuaciones-lineales': 'ecuaciones-inecuaciones',
+  'enteros-operar-y-ordenar': 'enteros-racionales',
+  'lineal-patrones-de-cambio': 'funcion-lineal-afin',
+  'lineal-pendiente-e-intercepto': 'funcion-lineal-afin',
+  'proporcionalidad-directa': 'proporcionalidad',
+  'proporcionalidad-inversa': 'proporcionalidad',
+};
+
+/**
+ * 8b. Guard antidivergencia entre catálogos embebidos del MISMO módulo.
+ *
+ * Desde la decisión de arquitectura del 2026-08-14 (docs/reglas-modulo.md §5),
+ * cada lección embebe el subconjunto del catálogo de su módulo que realmente
+ * usa, copiado literalmente. Eso es lo único que hace funcionar la Capa 2 del
+ * feedback, porque lib/sanitizar.ts resuelve `errorCatalogado` estrictamente
+ * contra el catálogo del mismo archivo — pero crea una fuente doble sin dueño.
+ *
+ * Este chequeo es el precio de esa decisión: si dos lecciones del mismo módulo
+ * declaran el mismo id, la descripción tiene que coincidir carácter a carácter.
+ * Que diverjan en silencio sería tener dos versiones del mismo error catalogado
+ * sin que nadie se entere, y el estudiante vería una u otra según por qué
+ * lección haya entrado. Divergencia = 🔴, no advertencia.
+ *
+ * Un id reciclado con otro significado dentro del mismo módulo cae acá también,
+ * y es el mismo defecto visto desde el otro lado: los ids son únicos por módulo.
+ */
+function chequearDivergenciaDeCatalogo(data, rutaPropia, raizContent, add) {
+  const propio = data?.catalogoErrores;
+  if (!Array.isArray(propio) || propio.length === 0) return;
+
+  const modulo = MODULO_POR_LECCION[data?.id];
+  if (!modulo) {
+    add('🟡', 'catalogo-modulo-no-declarado',
+      `"${data?.id}" tiene catalogoErrores pero no está en MODULO_POR_LECCION: guard antidivergencia OMITIDO`);
+    return;
+  }
+
+  const mios = new Map();
+  for (const e of propio) if (e?.id) mios.set(e.id, e.descripcion);
+
+  for (const ruta of archivosDeLeccion(raizContent)) {
+    if (resolve(ruta) === resolve(rutaPropia)) continue;
+    let otro;
+    try {
+      otro = JSON.parse(readFileSync(ruta, 'utf8'));
+    } catch {
+      continue; // ese JSON roto ya lo reporta `npm run validar`
+    }
+    if (MODULO_POR_LECCION[otro?.id] !== modulo) continue;
+    if (!Array.isArray(otro?.catalogoErrores)) continue;
+
+    for (const e of otro.catalogoErrores) {
+      if (!e?.id || !mios.has(e.id)) continue;
+      if (mios.get(e.id) !== e.descripcion) {
+        add('🔴', 'catalogo-divergente',
+          `"${e.id}" tiene una descripción distinta en ${basename(ruta)} (mismo módulo "${modulo}"): las copias embebidas se copian literalmente y los ids no se reciclan con otro significado`);
+      }
+    }
+  }
+}
+
+/**
  * 8. Colisión de cifras distintivas contra los contextosNumericos de las demás
  * lecciones. Distintiva = ≥100 o con decimales: por debajo de eso los dígitos
  * se repiten por azar y el chequeo no diría nada.
@@ -403,6 +483,7 @@ function auditar(ruta, opciones, raizContent) {
   chequearCamposNumericos(data, add);
   chequearSlider(data, opciones.permitirSlider, add);
   chequearItemsPAES(data, add);
+  chequearDivergenciaDeCatalogo(data, ruta, raizContent, add);
   chequearColisionEntreArchivos(data, ruta, raizContent, add);
 
   return hallazgos;

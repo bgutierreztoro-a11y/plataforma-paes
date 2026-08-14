@@ -8,6 +8,8 @@ Cada una lleva su origen. Eso importa: una regla sin la historia que la produjo 
 
 Las reglas 2, 3 (parcialmente), 4 y 5 están mecanizadas en `npm run auditar` (`scripts/auditar-leccion.mjs`). Las que no se pueden contar las revisa `auditor-matematico`.
 
+**Nota de método (2026-08-14):** la regla 5 estuvo escrita al revés de lo que el código exige desde el 2026-08-13 hasta el 2026-08-14, y se detectó solo porque al escribir L2 se leyó `lib/sanitizar.ts` antes de redactar en vez de confiar en este documento. Este archivo es un resumen de decisiones, no una fuente de verdad sobre el comportamiento del runtime: ante cualquier regla que afirme algo sobre cómo se resuelve o valida el contenido, se verifica primero contra el código que la implementa.
+
 ---
 
 ## 1. Sin representación de función lineal donde el concepto no la exige
@@ -84,15 +86,21 @@ Un `campos[].id` nunca contiene la cifra del problema. `baseLote12` está mal; `
 
 ---
 
-## 5. El catálogo de errores vive embebido en la L1 del módulo
+## 5. Cada lección embebe el subconjunto del catálogo que usa, copiado literalmente
 
-El `catalogoErrores` de una unidad va **embebido en el archivo de su L1**. No se crea `content/errores/<unidad>.json` para módulos nuevos. L2, L3 y el cierre solo referencian los ids.
+El `catalogoErrores` de un módulo va **embebido en cada archivo que lo referencia**, no solo en la L1. Cada lección lleva exactamente el subconjunto de entradas que sus propios distractores usan, **copiado carácter a carácter** desde donde la entrada nació. No se crea `content/errores/<unidad>.json` para módulos nuevos. Los ids son **únicos a nivel de módulo**: nunca se recicla un id con otro significado en otra lección del mismo módulo.
 
-**Origen:** Benja, 2026-08-13, al escribir L1 de Proporcionalidad. Decisión explícita de no crear `content/errores/proporcionalidad.json`.
+**Origen:** Benja, 2026-08-13, al escribir L1 de Proporcionalidad (decisión explícita de no crear `content/errores/proporcionalidad.json`), y Benja, 2026-08-14, al escribir L2 (corrección de la regla, ver abajo).
 
-**Por qué es técnico, no de gusto:** `lib/sanitizar.ts` resuelve `errorCatalogado` estrictamente contra el catálogo del **mismo archivo**. Sin `catalogoErrores` embebido, la Capa 2 del feedback y el paso de autoexplicación no se resuelven. Las lecciones del módulo Porcentaje referencian `error-N` sin catálogo embebido y por eso hoy no muestran Capa 2 — es el síntoma que hizo visible la regla.
+**Por qué es técnico, no de gusto:** `lib/sanitizar.ts` resuelve `errorCatalogado` estrictamente contra el catálogo del **mismo archivo** — su propio comentario lo dice: «sin `catalogoErrores`, no se resuelve nada». Sin catálogo embebido, la Capa 2 del feedback y el paso de autoexplicación no se resuelven. Las lecciones del módulo Porcentaje referencian `error-N` sin catálogo embebido y por eso hoy no muestran Capa 2 — es el síntoma que hizo visible la regla.
 
-**Ojo con el validador:** `scripts/validar-contenido.mjs` mantiene un espejo antidivergencia entre `content/errores/<unidad>.json` y el catálogo embebido de su L1, vía `MAPEO_LECCION_UNIDAD`. Ese mapeo cubre unidades legadas (`enteros-racionales`, `funcion-lineal-afin`). **Un módulo nuevo no se agrega ahí**: no tiene artefacto en `content/errores/` que espejar.
+**Corrección del 2026-08-14 — esta regla decía lo contrario de lo que el runtime exige.** Hasta esa fecha la regla afirmaba que el catálogo vive «en la L1 del módulo» y que «L2, L3 y el cierre solo referencian los ids». Eso reproducía en L2 exactamente el defecto de Porcentaje que la propia regla citaba como síntoma: una L2 que solo referencia ids no muestra Capa 2. Se detectó al escribir `proporcionalidad-inversa.json`, verificando `lib/sanitizar.ts` antes de redactar en vez de confiar en este documento.
+
+Hay un segundo efecto que no era obvio y que cierra la puerta a la versión anterior de la regla: `scripts/auditar-leccion.mjs` marca 🔴 `catalogo-sin-usar` cualquier id embebido que ningún distractor **del mismo archivo** use. O sea que las entradas que necesita L2 tampoco se podían guardar en L1 «esperando»: habrían puesto a L1 en rojo. El subconjunto por archivo no es una preferencia, es la única forma que pasa los dos chequeos a la vez.
+
+**Costo asumido y cómo se paga.** Duplicar descripciones crea una fuente doble sin dueño. El espejo antidivergencia de `scripts/validar-contenido.mjs` (`MAPEO_LECCION_UNIDAD`) no sirve acá: cubre `content/errores/<unidad>.json` contra la L1, y un módulo nuevo no tiene artefacto en `content/errores/` que espejar. Por eso el guard vive en `npm run auditar`: `catalogo-divergente`, 🔴, compara todas las lecciones del mismo módulo y exige que un id compartido tenga la descripción idéntica carácter a carácter. Su tabla de módulos es `MODULO_POR_LECCION`, hand-maintained igual que la del validador y por la misma razón (el contrato de lección no declara módulo). Una lección con catálogo que no esté en esa tabla se reporta como chequeo omitido (🟡), nunca se compara a ciegas contra otro módulo: los ids son locales, y `error-1` significa cosas distintas en Enteros y en Proporcionalidad.
+
+**Deuda que el guard destapó al estrenarse (2026-08-14):** `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` son del mismo módulo y reciclan `error-1` a `error-5` con significados **completamente distintos** (en una, `error-1` es «olvidar el valor inicial»; en la otra, «confunde pendiente con intercepto»). Son 10 hallazgos 🔴, cinco por archivo. Es backlog del módulo Función lineal y afín, no bloqueo de lo nuevo — pero es exactamente el tipo de divergencia silenciosa que esta regla existe para impedir, y llevaba meses ahí.
 
 ---
 
@@ -101,7 +109,7 @@ El `catalogoErrores` de una unidad va **embebido en el archivo de su L1**. No se
 | Herramienta | Qué cubre | Qué no |
 |---|---|---|
 | `npm run validar` | Contrato del schema: campos, formato PAES, feedback mínimo, proveniencia | Nada de este documento |
-| `npm run auditar` | Reglas 1, 2, 3b, 4 + orden de pasos, habilidades, dificultad, unidades | Lo que exige recalcular o leer fuentes |
+| `npm run auditar` | Reglas 1, 2, 3b, 4, 5 (guard antidivergencia) + orden de pasos, habilidades, dificultad, unidades | Lo que exige recalcular o leer fuentes |
 | `auditor-matematico` | Aritmética desde cero, derivabilidad de cada distractor (regla 3), banda de magnitud | Originalidad |
 | `auditor-originalidad` | Checklist MOS §7.3, marcas, PII, proveniencia real | Matemática |
 

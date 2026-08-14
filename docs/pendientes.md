@@ -1,5 +1,21 @@
 # Pendientes técnicos
 
+## 🟡 No hay forma de dibujar un gráfico: ni en un bloque ni en un ítem (abierta 2026-08-14)
+
+Salió al escribir `proporcionalidad-inversa.json`, cuyo concepto —una curva que decrece cada vez más despacio y se acerca a los dos ejes sin tocarlos— es la primera cosa del proyecto que de verdad pide una figura.
+
+**Dos huecos distintos, y conviene no confundirlos.**
+
+1. **`BloqueVisualizacion` no tiene renderer para `variante: "grafico"`.** El schema admite la variante (`content/schema/leccion.schema.json`, `bloqueVisualizacion.variante` incluye `grafico`), pero `components/bloques/BloqueVisualizacion.tsx` solo resuelve `tabla`, `diagrama`, partición, eje vertical, regla de signos y bandas. Cualquier otra cosa cae al fallback del final, que imprime `descripcion` dentro de un recuadro «Figura». **No falla ni avisa**: renderiza texto donde el autor creía estar pidiendo un dibujo. Ese silencio es lo peor del asunto — un schema que acepta una variante que nadie implementó.
+
+2. **`definitions.item` no admite visuales de ninguna clase.** Tiene `additionalProperties: false` y sus únicos campos son `enunciado`, cuatro `alternativas` de texto y `solucion`. O sea que **ningún ítem PAES puede llevar figura**, ni en el enunciado ni en las alternativas, independiente de lo que se arregle en el punto 1. Lo único disponible hoy es una tabla en markdown dentro del `enunciado`.
+
+**Qué se hizo mientras tanto, y qué costó.** El ítem 2 de `proporcionalidad-inversa` (habilidad `representar`) pone la tabla en markdown en el enunciado y usa cuatro **descripciones verbales** de gráficos como alternativas: curva que se acerca a los ejes sin tocarlos (correcta), recta decreciente, recta creciente y curva que corta el eje. Sigue calificando como `representar` según §3.3 de `docs/calibracion-lecciones-e-items.md` —transferir entre sistemas de representación—, pero es tabla → descripción, no tabla → dibujo. Decisión de Benja, 2026-08-14.
+
+**Cuando se aborde**, el orden importa: el punto 2 es el que limita de verdad (los ítems PAES son el cierre de cada lección y son formato de prueba real), y el punto 1 es más barato. Ese ítem es el primer candidato a reescribirse si aparece un renderer. Ojo también con el precedente: la regla 1 de `docs/reglas-modulo.md` prohíbe representaciones de función lineal donde el concepto no las exige, y la excepción de `interactivoSlider` se declara con `auditoria.sliderJustificado` — un renderer de curva nuevo debería entrar por una puerta parecida, no como capacidad de uso libre.
+
+---
+
 ## ⬛ 2026-08-12 — Eliminado el sistema `estado` / `checklistOriginalidad` / `revisionMatematica`
 
 Se quitaron los tres campos del schema, del validador, de los tipos y de toda la UI: ya no hay pipeline `borrador → revision → publicable`, el validador exige el contrato completo a todo archivo de `content/`, y la revisión pasó a ser dos auditorías (matemática y de originalidad) corridas por Claude Code en hilos abiertos con `/clear`, aisladas del hilo que redactó — ver `CLAUDE.md` regla 5. `enConstruccion` sobrevive con un único origen: que una lección declarada en `lib/modulos.ts` todavía no tenga archivo en disco.

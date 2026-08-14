@@ -1,0 +1,871 @@
+{
+  "tipo": "leccion",
+  "id": "proporcionalidad-inversa",
+  "titulo": "Proporción inversa",
+  "objetivo": "Reconocer una proporción inversa comprobando que el producto entre las dos cantidades se mantiene constante, interpretar esa constante como el total que hay que acomodar entre las dos, y usarla para obtener cualquier par de valores de la relación.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Multiplicación y división de números enteros de dos y tres cifras (módulo Enteros y racionales)",
+    "Lectura de una tabla de dos columnas",
+    "Proporción directa: cociente constante y constante de proporcionalidad (proporcionalidad-directa)"
+  ],
+  "conceptos": [
+    "producto constante como criterio de proporción inversa",
+    "constante de proporcionalidad de una inversa",
+    "total que se acomoda entre dos cantidades",
+    "cantidades que se mueven en direcciones opuestas"
+  ],
+  "_notasInternas": [
+    "L2 del módulo Proporcionalidad. Depende de proporcionalidad-directa.json (L1), y la dependencia es de contenido, no solo de secuencia: el paso 2 EXIGE que el estudiante llegue con la herramienta del cociente constante para poder romperla. Si esta lección se leyera sin haber hecho L1, el paso 2 pierde su función completa.",
+    "DECISIONES DE ARQUITECTURA FIRMADAS POR BENJA EL 2026-08-14, aplicadas acá. (1) CATÁLOGO EMBEBIDO POR SUBCONJUNTO: este archivo lleva su propio catalogoErrores con las cuatro entradas heredadas que de verdad usa —error-3, error-4, error-10 y error-11, copiadas de proporcionalidad-directa.json carácter a carácter, sin reformular— más las cuatro nuevas. Razón técnica verificada en código antes de decidir: lib/sanitizar.ts resuelve errorCatalogado estrictamente contra el catálogo del MISMO archivo («sin catalogoErrores, no se resuelve nada»), así que una L2 sin catálogo embebido no muestra Capa 2 ni el paso de autoexplicación — exactamente el síntoma del módulo Porcentaje. Y scripts/auditar-leccion.mjs marca 🔴 catalogo-sin-usar cualquier id embebido que ningún distractor del mismo archivo use, así que las entradas nuevas TAMPOCO podían guardarse en L1 a la espera sin poner a L1 en rojo. docs/reglas-modulo.md §5 quedó corregido: decía lo contrario de lo que el runtime exige. (2) IDS NUEVOS: error-12 a error-15, aprobados con sus textos tal cual, numerados continuando la serie del módulo. Los ids son únicos a nivel de módulo y no se reciclan con otro significado. (3) GUARD ANTIDIVERGENCIA: el costo de duplicar descripciones se paga con el chequeo catalogo-divergente de scripts/auditar-leccion.mjs (🔴), que compara todas las lecciones del mismo módulo y exige que un id compartido tenga descripción idéntica carácter a carácter. Si alguien corrige el texto de una de las cuatro heredadas en L1 y no acá, la corrida se pone en rojo en vez de divergir en silencio.",
+    "MARCO PEDAGÓGICO (fijado antes de redactar, no negociable): la proporción inversa se descubre como PRODUCTO CONSTANTE, y se descubre DESPUÉS de que el método de L1 falle a la vista. El paso 2 no presenta un problema nuevo: hace que el estudiante aplique el cociente constante que ya sabe, con su propia mano, y obtenga dos números distintos. Sin esa ruptura visible el paso 5 sería una fórmula regalada.",
+    "REQUISITO DE ARCO, CUMPLIDO Y FRÁGIL: el paso 2 tiene cuatro bloques en este orden y el orden es el requisito. (1) la tabla de dos configuraciones; (2) un bloque numérico donde el estudiante DIVIDE hileras ÷ butacas por hilera en las dos configuraciones y escribe 2,25 y 1,44 — los escribe él, no se los mostramos; (3) un texto que constata que no coinciden y nombra lo que eso significa: la herramienta anterior se usó bien y dijo que no; (4) recién ahí el problema. Si alguien reordena estos bloques o reemplaza (2) por una afirmación nuestra de que los cocientes son distintos, la lección se cae: la ruptura deja de ser experimentada y pasa a ser contada.",
+    "DIFERENCIACIÓN FRENTE A proporcionalidad-directa.json: allá la pregunta era CUÁNTO VALE la constante (existía la duda de si había alguna, y se resolvía dividiendo). Acá el estudiante ya sabe que dividir no sirve, así que la pregunta es QUÉ OPERACIÓN produce la invariante. Y la lectura de k es la opuesta: en L1 k era «lo que le toca a una unidad» (40 mL por gramo); acá k es un TOTAL que se acomoda (900 butacas). Esa inversión de lectura es la razón por la que error-8 de L1 no se puede reutilizar acá: su descripción dice que leer la constante como un total es el error, y acá es la lectura correcta.",
+    "CONSECUENCIA DE LA REGLA 2 QUE NO ESTABA EN L1: el distractor «entregó la constante» (error-4) NO PUEDE usarse antes del paso 5 en esta lección. En L1 vivía en el paso 3 sin problema porque su valor (40) solo aparecía como valorObtenido de un feedbackPorError; acá, en cambio, el molde natural del distractor sería una alternativa de selección múltiple cuyo TEXTO mostraría el 900 y filtraría la constante. Por eso error-4 aparece por primera vez en el paso 5 y de ahí en adelante. Cualquier reescritura que quiera meter un «entregó la constante» en los pasos 2 o 3 tiene que revisar esto primero.",
+    "REGLA DE PRODUCTO, PERMANENTE (heredada de L1, docs/reglas-modulo.md §1): no se usa una representación de función lineal donde el concepto no la exige, y en particular no se usa interactivoSlider. Acá la curva de proporcionalidad inversa SÍ es contenido legítimo (es lo que el ítem 2 evalúa), pero no hay componente que la dibuje: components/bloques/BloqueVisualizacion.tsx tiene renderers para tabla, diagrama, partición, eje vertical, regla de signos y bandas, y la variante «grafico» cae al fallback que imprime la descripción como texto. Además definitions.item del schema tiene additionalProperties:false y solo admite enunciado más cuatro alternativas de texto, así que NINGÚN ítem PAES puede mostrar un gráfico, independiente de esto. EFECTO EN EL ÍTEM 2: la tabla va en markdown dentro del enunciado y las cuatro alternativas son descripciones verbales de gráficos. Sigue siendo «representar» según §3.3 de calibracion (transferir entre sistemas de representación), pero es tabla → descripción, no tabla → dibujo. Si algún día se construye un componente de curva, este ítem es el primer candidato a reescribirse.",
+    "VERIFICACIÓN DE COLISIÓN DE DOMINIO: el NÚCLEO está limpio y confirmado; el paso 8 NO. Corrida de consultar-fuentes.mjs del 2026-08-14, ejecutada por Benja fuera de la sesión de redacción, salida pegada sin reformular. Volvieron NO los seis términos del dominio principal: butaca, hilera, auditorio, aforo, espectador, acomodar. Con eso el vocabulario del núcleo queda confirmado limpio, incluidos los sinónimos y el verbo de la acción que docs/reglas-modulo.md señala como el hueco que dejó L1. CONSECUENCIA DIRECTA SOBRE EL TEXTO: la misma corrida devolvió SI para teatro, sala, asiento, silla, fila, platea, galería, público, entrada, distribuir, repartir y capacidad, y los doce se purgaron del texto visible al estudiante ese mismo día. Los recintos se unificaron bajo «auditorio» con un calificativo que los distingue (el del centro cultural, el chico, el municipal, el del liceo, el de un instituto), «fila» pasó a «configuración» —que además es más preciso, porque cada línea de la tabla ES una configuración de la sala— y «repartir» pasó a «acomodar», que es el verbo propio del dominio y volvió NO. Se revisó también que «función» no aparezca en su sentido teatral: la única ocurrencia era «una función escolar» en el paso 3, hoy «una actividad escolar». Un chequeo posterior sobre texto visible da cero residuos de los doce términos. EXCEPCIÓN DECLARADA: cuatro entradas de catalogoErrores conservan términos marcados SI —error-3 y error-4 dicen «fila», error-13 dice «fila» y error-14 dice «reparte»— y NO se tocaron. Las dos primeras son copias literales de proporcionalidad-directa.json y el guard catalogo-divergente las compara carácter a carácter, así que editarlas rompería la corrida; las otras dos son textos firmados por Benja el 2026-08-14. Son descripciones de mecanismo de error, no enunciados, y el criterio aplicado es el mismo que se aplicó al 900: un SI léxico sobre una palabra común, sin enunciado asociado, no es una colisión. Queda para que Benja decida si se generalizan en los dos archivos a la vez.",
+    "CONSTANTE 900, Y POR QUÉ NO 720. Un primer diseño usaba 720. Se descartó por evidencia del propio repo: docs/pendientes.md documenta un ítem de la forma DEMRE liberada 2026 con un estanque de 720 L. Es una adyacencia numérica innecesaria en una lección de proporcionalidad y no cuesta nada evitarla. 900 se eligió porque, en todo el rango 300–2.200, es la constante con más pares realistas (siete: 15/60, 20/45, 25/36, 30/30, 36/25, 45/20, 60/15, todos con las dos cantidades entre 15 y 60) que además evita todas las cifras de L1. Las constantes auxiliares son 624 (ejemplo del paso 6), 336 (ejercicio del paso 6), 780 (P1), 864 (paso 8, y es la única que no es un conteo de butacas sino una longitud en centímetros), 798 (ítem 1) y 576 (ítem 2), todas distintas entre sí y ninguna presente en los contextosNumericos de los otros 14 archivos.",
+    "El paso 8 cambia LAS MAGNITUDES a propósito: ya no son butacas y hileras (dos conteos de objetos físicos) sino el lado de una loseta en centímetros y una cantidad de losetas, con una LONGITUD como constante (el ancho del patio) en vez de un conteo. Si se cambiara el contexto del paso 5 por el del paso 8 la lección NO funcionaría igual: en el auditorio el total es un montón de objetos que se pueden contar uno por uno, y en el patio es una medida que habría que tomar con huincha. Ese es el chequeo de transferencia real que exige §2 de docs/calibracion-lecciones-e-items.md. El paso 8 llegó a este dominio en su tercer intento; el historial completo y el control anti-cuadrática están en sus propias _notasInternas.",
+    "REUTILIZACIÓN DE error-3 A REVISAR POR EL AUDITOR MATEMÁTICO. La opción b de P3 (paso 7) mapea a error-3, cuya descripción heredada de L1 termina diciendo «una tabla donde el COCIENTE en realidad cambia de una configuración a otra». Acá lo que cambia de una configuración a otra es el producto. La cabeza del mecanismo («calcula la constante con un solo par de valores y no verifica los demás») calza exacto y es lo que el distractor encarna; la cola es la instancia de L1. Se dejó el texto heredado LITERAL en vez de reescribirlo, para no abrir una divergencia silenciosa con L1 (ver el supuesto de arquitectura arriba). Queda marcado acá para que la auditoría matemática dictamine si amerita entrada propia o si la cola se puede generalizar en los dos archivos a la vez.",
+    "REVISIÓN MATEMÁTICA Y AUDITORÍA DE ORIGINALIDAD: NO CORRIDAS. La aritmética recalculada durante la redacción quedó anotada en las _notasInternas de cada paso, pero eso no es una auditoría: el hilo que redactó no puede juzgar lo que redactó. Ver proveniencia."
+  ],
+  "auditoria": {
+    "constante": 900,
+    "colisionesPermitidas": [
+      {
+        "valor": 900,
+        "motivo": "Es la constante de la lección, y la colisión es el diseño, no un descuido. En el campo totalDeButacas del paso 5, el 900 es la respuesta correcta, porque ahí la pregunta es cuánto vale la constante. En los campos hilerasPlanoAncho y hilerasFeria, también del paso 5, el 900 es distractor (error-4, «entregó la constante en vez del resultado»): el estudiante encontró el total del auditorio y se detuvo antes de acomodarlo en hileras. Su feedback lo dice sin ambigüedad. Ver docs/reglas-modulo.md §3b."
+      }
+    ]
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-3",
+      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional una tabla donde el cociente en realidad cambia de fila en fila."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (si a 1 g le corresponden 40 mL, cree que el lote de 520 mL llevaba 20.800 g de pigmento, o 560 g, cuando llevaba 13)."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente se repite (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
+    },
+    {
+      "id": "error-14",
+      "descripcion": "Interpreta mal la constante de una proporción inversa: la lee como «lo que le corresponde a una unidad» —que es la lectura de la proporción directa— en vez de como el total que se reparte entre las dos cantidades."
+    },
+    {
+      "id": "error-15",
+      "descripcion": "Representa una proporción inversa como una recta: dibuja o elige un gráfico de bajada uniforme que corta los ejes, en vez de una curva que decrece cada vez más despacio y se acerca a los dos ejes sin llegar a tocarlos."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: auditorio de un centro cultural que se reordena para cada evento. Magnitudes del núcleo: butacas por hilera y número de hileras. El producto butacas por hilera × hileras es el total de butacas del auditorio, que no cambia nunca.",
+    "Constantes usadas en el archivo, todas distintas entre sí: 900 (auditorio, núcleo de los pasos 1 a 5 y del paso 7 P2), 624 (auditorio chico, ejemplo trabajado del paso 6), 336 (auditorio municipal, ejercicio del paso 6), 780 (auditorio del liceo, práctica P1), 864 cm (ancho del patio, paso 8), 798 (auditorio de un instituto, ítem 1), 576 (auditorio del ítem 2). La del paso 8 es la única que no es un conteo de butacas: es una longitud.",
+    "curiosidad (Paso 1): configuración de la obra 20 butacas por hilera con 45 hileras; configuración del concierto 25 butacas por hilera, con menos hileras. La cifra de hileras del concierto NO se entrega: se entrega en el paso 2 como dato de tabla.",
+    "problema (Paso 2, ruptura): tabla de dos configuraciones, 20 butacas por hilera con 45 hileras y 25 con 36. El estudiante divide hileras ÷ butacas por hilera en las dos configuraciones y obtiene 2,25 y 1,44: distintos, así que la prueba de la proporción directa falla. Distractores de esa división: 65 (sumó 20 + 45) y 61 (sumó 25 + 36)",
+    "problema (Paso 2, pregunta): configuración de 30 butacas por hilera → 30 hileras. Distractores 27 (trasladó la caída de 9 hileras del tramo anterior) y 31 (canjeó una hilera por cada butaca de ancho, 36 − 5). Las filas base se eligieron para que los dos distractores cayeran a un 10 % y un 3,3 % de la correcta, uno por debajo y otro por encima, y ninguno se pudiera descartar por tamaño",
+    "pensar (Paso 3): configuración de 15 butacas por hilera → 60 hileras, con la tabla de 20/45, 25/36 y 30/30 a la vista. Distractores: 50 (canje 1 a 1 desde la fila de 20, 45 + 5) y 54 (trasladó la subida de 9 hileras del tramo anterior)",
+    "descubrimiento (Paso 5, insight fijado): tabla de 15/60, 20/45, 25/36, 30/30 y 36/25; butacas por hilera × hileras es siempre 900, y ese 900 es el total de butacas del auditorio. Distractores del producto: 75 (sumó 15 + 60) y 4 (dividió 60 ÷ 15, o sea aplicó la prueba de la lección anterior)",
+    "descubrimiento (Paso 5, reconstrucción de configuraciones ausentes): configuración de 45 butacas por hilera → 20 hileras, y configuración de 75 hileras → 12 butacas por hilera; distractores 900 (entregó la constante), 40.500 (multiplicó 45 × 900), 975 (sumó 900 + 75) y 67.500 (multiplicó 75 × 900)",
+    "descubrimiento (Paso 5, comprobación fuera de tabla): 60 butacas por hilera → 15 hileras; distractores 840 (restó 900 − 60), 900 (entregó la constante) y 960 (sumó 900 + 60). Acá NO se planta el distractor de multiplicar en vez de dividir, que en los demás campos numéricos sí está: su valor sería el producto de la constante por 60, y esa cifra ya la usa porcentaje-volver-atras.json en sus propios contextosNumericos. El mecanismo queda cubierto igual, porque aparece cuatro veces más en el archivo, y el feedbackPorDefecto de este campo trae el control de sentido que lo ataja",
+    "generalizacion (Paso 6): ejemplo trabajado auditorio chico 24 butacas por hilera con 26 hileras, constante 624, usado solo para interpretar el significado de k, sin cálculo. Ejercicio con cifras distintas: auditorio municipal 14 butacas por hilera con 24 hileras, constante 336, pedido 21 butacas por hilera → 16 hileras; distractores 357 (sumó 336 + 21), 336 (entregó la constante) y 7.056 (multiplicó 336 × 21)",
+    "practica (Paso 7): P1 auditorio del liceo 30 butacas por hilera con 26 hileras, constante 780, pedido 39 butacas por hilera → 20 hileras, distractores 17 (canje 1 a 1, 26 − 9), 780 (entregó la constante) y 30.420 (multiplicó 780 × 39); P2 verdadero/falso sobre duplicar las butacas por hilera del auditorio (falso), con la comprobación de que 1.800 butacas no caben en el auditorio; P3 tabla que NO es inversamente proporcional, 10 butacas por hilera con 44 hileras, 15 con 39 y 20 con 34, productos 440, 585 y 680",
+    "aplicacion (Paso 8, magnitudes nuevas): patio embaldosado con losetas cuadradas, ancho fijo de 864 cm; con losetas de 24 cm de lado caben 36 a lo ancho, y se pide cuántas caben con losetas de 27 cm → 32 losetas; distractores 33 (canje 1 a 1, 36 − 3), 864 (entregó la constante) y 23.328 (multiplicó 27 × 864). La pregunta se acota a «a lo ancho» a propósito: el número total de losetas de un patio sería inversamente proporcional al CUADRADO del lado y la lección dejaría de tratar de proporción inversa pura.",
+    "itemsPAES item-1 (resolver, baja): auditorio de un instituto 38 butacas por hilera con 21 hileras, constante 798, pedido 42 butacas por hilera → 19 hileras; distractores 17 (canje 1 a 1, 21 − 4), 21 (dejó las hileras de la configuración anterior) y 25 (le sumó a las hileras lo mismo que al ancho). Las cuatro alternativas quedan entre 17 y 25, así que ninguna se descarta por tamaño",
+    "itemsPAES item-2 (representar, media): auditorio con constante 576, tabla de 12/48, 16/36, 24/24 y 48/12; las cuatro alternativas son descripciones verbales de gráficos, no dibujos, porque ningún ítem del schema puede llevar figura",
+    "itemsPAES item-3 (argumentar, alta): sin cifras; contrasta duplicar el ancho de la hilera contra agregarle 4 butacas, más la afirmación de que el número de hileras puede llegar a cero",
+    "NOTA DE NO COLISIÓN (barrido corrido el 2026-08-14 sobre los contextosNumericos de los catorce archivos de content/ que los declaran: tres cierres y once lecciones). Ninguna de las siete constantes de esta lección aparece en ningún otro archivo, ni tampoco los tres productos de la tabla no proporcional de P3, ni los distractores grandes de los pasos cinco a ocho, ni los dos cocientes de la ruptura del paso dos. Sí reaparecen dígitos sueltos por debajo de cien, que es donde la coincidencia es azar y el chequeo mecánico no los mira: varios de los anchos y números de hileras de acá aparecen en el módulo Porcentaje como porcentajes y en Enteros como diferencias de temperatura o profundidad. Ninguna de esas apariciones es una constante de proporcionalidad ni forma par con su contraparte acá. IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA: las cifras de proporcionalidad-directa.json se verificaron una por una y ninguna reaparece acá como constante, como respuesta correcta ni como distractor, pero esa lista NO se transcribe en este campo a propósito. Enumerarla acá haría que scripts/auditar-leccion.mjs las leyera como cifras propias de esta lección y devolviera una colisión falsa con L1 por cada una, que es exactamente lo que le pasó al primer borrador de este archivo: veintitrés advertencias amarillas inventadas por la propia nota, suficientes para tapar la única señal real. La lista canónica vive en los contextosNumericos de L1, que es su lugar. Se descartó además la constante 720 por adyacencia con material DEMRE liberado, documentada en docs/pendientes.md."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "El mismo auditorio, y de pronto sobran hileras",
+      "_notasInternas": [
+        "Gancho: el estudiante viene de una lección donde las dos cantidades crecían juntas. Acá lo primero que ve es una que baja cuando la otra sube, encarnado en algo que no se puede discutir: las butacas son las mismas.",
+        "Verificación: 20 butacas por hilera × 45 hileras = 900 butacas. Con 25 butacas por hilera, 900 ÷ 25 = 36 hileras, o sea menos que 45. ✓ La afirmación cualitativa del texto (más ancho ⇒ menos hileras) es correcta.",
+        "El número 900 NO aparece en este paso, y esa ausencia es deliberada y frágil: hay que cuidarla en cada reescritura. El bloque de texto describe las dos configuraciones y sostiene el argumento cualitativo sin ejecutar ninguna multiplicación. Tampoco se entrega el número de hileras del concierto (36), que es dato del paso 2: entregarlo acá daría dos pares completos en la primera pantalla y le quitaría al paso 2 la mitad de su trabajo.",
+        "La predicción es cualitativa a propósito: no hay nada que calcular todavía y la opción correcta se puede razonar sin aritmética. El punto es que el estudiante APUESTE una dirección, para que en el paso 2 le importe que su herramienta no sirva."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "El auditorio de un centro cultural se reordena para cada evento. Las butacas van atornilladas al piso y se pueden mover, pero son siempre **las mismas**: nadie compra butacas nuevas ni saca ninguna.\n\nEl lunes, para la obra, quedó con **20 butacas en cada hilera** y **45 hileras** en total.\n\nEl sábado, para el concierto, ensancharon las hileras: **25 butacas en cada una**.\n\nSin calcular todavía: ¿qué le pasó al número de hileras el sábado?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Bajó: si cada hilera se lleva más butacas, hacen falta menos hileras",
+            "Subió: si una de las dos cantidades crece, la otra también crece",
+            "Quedó igual: cambiar el ancho de las hileras no afecta cuántas hay"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El sábado quedaron **menos** hileras que el lunes, y el auditorio era idéntico.\n\nNo hay truco. Si cada hilera se lleva más butacas que antes, cada hilera alcanza para más gente, y hacen falta menos hileras para colocarlas todas. Las butacas no desaparecieron: se acomodaron distinto.\n\nAhí está lo que hace distinto a este tipo de problema. En la lección anterior las dos cantidades **crecían juntas**: más pigmento, más base. Por eso el cociente entre ellas se mantenía, y por eso servía dividir.\n\nAcá una cantidad crece justo cuando la otra decrece. Y si eso es así, el cociente no se puede mantener: si el de arriba sube y el de abajo baja, el resultado de dividir tiene que moverse.\n\nAlgo se mantiene igual —las butacas del auditorio son siempre las mismas—, pero no es el cociente. En esta lección vas a encontrar el número que decide cuántas hileras caben, y nadie te lo va a decir: lo vas a sacar tú de los datos."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "La prueba de la lección anterior deja de funcionar",
+      "_notasInternas": [
+        "ESTE PASO ES EL REQUISITO DE ARCO. Su función no es plantear un problema difícil: es hacer que el método de L1 se rompa A LA VISTA, con el estudiante ejecutándolo. El orden de los cuatro bloques ES el requisito y no se reordena.",
+        "Verificación de la tabla: 900 ÷ 20 = 45 ✓; 900 ÷ 25 = 36 ✓. Las dos configuraciones tienen las mismas 900 butacas.",
+        "Verificación de la ruptura: 45 ÷ 20 = 2,25 exacto ✓; 36 ÷ 25 = 1,44 exacto ✓. Los dos cocientes son exactos (nada de decimales periódicos que distraigan) y claramente distintos, así que el estudiante no puede atribuir la diferencia a un redondeo suyo. Esa exactitud es la razón por la que se eligieron estas dos filas y no otras.",
+        "Verificación de los distractores de la división: sumar en vez de dividir da 20 + 45 = 65 y 25 + 36 = 61 (error-12).",
+        "Verificación de la pregunta: 900 ÷ 30 = 30 hileras ✓.",
+        "Verificación de los distractores de la pregunta: 31 = canje uno a uno, el ancho subió 5 butacas (de 25 a 30) y le restó 5 hileras a las 36 (error-12). 27 = trasladó la caída del tramo anterior: de 20 a 25 butacas por hilera las hileras bajaron 9 (de 45 a 36) y volvió a restar 9 (error-12). Los dos son sub-mecanismos DISTINTOS de la misma familia aditiva.",
+        "BANDA DE MAGNITUD: correcta 30, distractores 31 (+3,3 %) y 27 (−10 %). Uno por encima y otro por debajo, la correcta al medio, y los tres dentro de un rango de cinco hileras: no se puede acertar por sentido de tamaño. Los dos tramos de la tabla suben lo mismo (5 butacas por hilera cada uno), lo que hace que trasladar la caída parezca perfectamente razonable — y es justo lo que falla.",
+        "POR QUÉ ESTAS FILAS Y NO OTRAS: se buscaron por barrido todas las combinaciones de constante y filas base que dejaran los dos distractores dentro de ±13 % y en lados opuestos, con los dos cocientes de la ruptura exactos. En todo el rango de constantes de 200 a 2.400 quedaron tres candidatas, y esta es la única cuyas dos cantidades se mantienen entre 15 y 60 en las siete configuraciones del auditorio, o sea la única que describe un auditorio real.",
+        "El feedback de la alternativa correcta NO ejecuta la multiplicación 30 × 30 ni nombra el 900: nombra los operandos y manda a compararlos, igual que hace L1 en su paso 2 después de la purga de la constante. Los feedbacks de los dos distractores tampoco multiplican ningún par completo — el de 27 razona por reducción al absurdo (si la caída fuera fija, las hileras llegarían a cero) y el de 31 razona por el peso de una hilera. Esa reducción al absurdo es además la primera aparición de la idea de asíntota, que el ítem 2 y la alternativa D del ítem 3 explotan."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Las dos configuraciones del auditorio que ya conoces, anotadas juntas. Las butacas son las mismas en las dos: no se agregó ni se sacó ninguna.",
+          "datos": {
+            "columnas": [
+              "Butacas por hilera",
+              "Hileras"
+            ],
+            "filas": [
+              [
+                20,
+                45
+              ],
+              [
+                25,
+                36
+              ]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "En la lección anterior comprobabas si dos cantidades eran directamente proporcionales **dividiendo una por la otra en cada configuración**: si el resultado se repetía, había proporción.\n\nAplica esa misma prueba acá. Divide **hileras ÷ butacas por hilera** en cada una de las dos configuraciones.",
+          "campos": [
+            {
+              "id": "cocienteHileraAngosta",
+              "etiqueta": "Hileras ÷ butacas por hilera, en la configuración de hileras más angostas",
+              "respuestaCorrecta": 2.25,
+              "unidad": "hileras por butaca"
+            },
+            {
+              "id": "cocienteHileraAncha",
+              "etiqueta": "Hileras ÷ butacas por hilera, en la configuración de hileras más anchas",
+              "respuestaCorrecta": 1.44,
+              "unidad": "hileras por butaca"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cocienteHileraAngosta",
+              "valorObtenido": 65,
+              "mensaje": "Sumaste las dos columnas en vez de dividirlas. La pregunta pide la misma operación que usabas en la lección anterior para comprobar la proporción, y esa era una división: hileras entre butacas por hilera.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "cocienteHileraAncha",
+              "valorObtenido": 61,
+              "mensaje": "Sumaste las dos columnas en vez de dividirlas. Fíjate en que la suma tampoco se mantiene: en la primera configuración da 65 y en esta da 61. Ni la suma ni la división se están repitiendo, y eso ya es información.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Divide, no restes ni sumes. En la primera configuración, 45 ÷ 20. En la segunda, 36 ÷ 25. Anota los dos resultados uno al lado del otro antes de seguir: lo que importa no es cuánto valen, sino si coinciden."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "**2,25 y 1,44.** No coinciden.\n\nY no coinciden por poco: uno es más de una vez y media el otro. No es un redondeo tuyo ni un error de cálculo.\n\nEsto es lo importante: **usaste bien la herramienta y la herramienta te dijo que no.** En la lección anterior ese número se repetía en todas las configuraciones, y por eso servía para reconstruir cualquier lote. Acá cambia de una configuración a otra, así que no sirve para nada: no hay ningún cociente constante que puedas aplicar a una configuración nueva.\n\nLa conclusión es correcta y vale la pena decirla completa: las butacas por hilera y el número de hileras **no son directamente proporcionales**. La prueba que traías no falló; falló la hipótesis.\n\nY sin embargo hay algo que sigue siendo cierto y que no cambió en ninguna de las dos configuraciones: **son las mismas butacas**. El auditorio no creció ni se achicó. Guarda eso, porque es lo único que te queda."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para el próximo evento el auditorio se reordena con **30 butacas por hilera**. Las butacas son las mismas de siempre: no se agrega ni se saca ninguna.\n\nTres personas del centro cultural proponen un número de hileras distinto. ¿Cuál es el correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "27 hileras",
+              "esCorrecta": false,
+              "feedback": "Trasladaste la caída de un tramo al otro: de 20 a 25 butacas por hilera las hileras bajaron 9, de 45 a 36, y le volviste a restar 9. Los dos tramos ensanchan lo mismo, así que parece razonable — pero mira adónde lleva. Si la caída fuera fija de 9, de 30 a 35 butacas por hilera bajarían otras 9, y de 35 a 40 otras 9, y en algún punto el auditorio se quedaría con cero hileras teniendo todavía las butacas ahí. La caída se va achicando en cada tramo, no se mantiene.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "b",
+              "texto": "30 hileras",
+              "esCorrecta": true,
+              "feedback": "Correcto. Compruébalo tú, y no con esta configuración sola: multiplica butacas por hilera × hileras en las tres configuraciones —la de 20, la de 25 y esta— y mira los tres resultados juntos. Que se repitan en las tres no es casualidad, y es justo lo que vas a mirar de cerca en un momento."
+            },
+            {
+              "id": "c",
+              "texto": "31 hileras",
+              "esCorrecta": false,
+              "feedback": "Canjeaste una cosa por otra: el ancho subió 5 butacas por hilera, así que le restaste 5 hileras a las 36. Pero una hilera no vale una butaca. Cada hilera que sacas se lleva 30 butacas con ella, no una — por eso quitar cinco hileras deja muchísimas butacas sin lugar, y ensanchar las hileras en 5 butacas no alcanza ni de lejos para recibirlas.",
+              "errorCatalogado": "error-12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: hileras de 15 butacas",
+      "_notasInternas": [
+        "Registro del intento genuino ANTES de cualquier ayuda. Este es el dato pedagógico más valioso de la lección: acá se ve si el estudiante inventó el producto por su cuenta o si siguió intentando con diferencias.",
+        "Verificación: 900 ÷ 15 = 60 hileras ✓. Ruta alternativa: 15 es la mitad de 30, y la configuración de 30 butacas por hilera tenía 30 hileras, así que el doble son 60 ✓.",
+        "Verificación de los distractores: canje uno a uno desde la fila de 20, el ancho bajó 5 butacas y sumó 5 hileras, 45 + 5 = 50 (error-12). Trasladó la subida del tramo anterior: de 25 a 20 butacas por hilera las hileras subieron 9, de 36 a 45, y volvió a sumar 9, 45 + 9 = 54 (error-12).",
+        "Se eligió el ancho 15 y no otro para que la respuesta (60) no coincida con ninguna cifra de la tabla que el estudiante tiene a la vista: si el resultado ya estuviera en pantalla, el intento dejaría de ser un intento.",
+        "NO se puede plantar acá el distractor «entregó la constante» (error-4), que en L1 vivía en este mismo paso: acá su valor es 900 y aparecería en el feedback antes del descubrimiento. Ver la nota de arquitectura en la raíz.",
+        "El feedbackPorDefecto sí nombra la operación, igual que hace el de L1 en su paso 3. Eso es deliberado y es distinto de una pista: solo se dispara cuando el estudiante ya falló con un valor que no anticipamos, y su función es que nadie quede sin nada."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El auditorio se reordena otra vez, ahora para una actividad escolar con hileras angostas: **15 butacas por hilera**.\n\nLas configuraciones que ya están confirmadas:\n\n| Butacas por hilera | Hileras |\n|---|---|\n| 20 | 45 |\n| 25 | 36 |\n| 30 | 30 |\n\n¿Cuántas hileras quedan con 15 butacas por hilera?",
+          "campos": [
+            {
+              "id": "hilerasActividadEscolar",
+              "etiqueta": "Hileras que quedan",
+              "respuestaCorrecta": 60,
+              "unidad": "hileras"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasActividadEscolar",
+              "valorObtenido": 50,
+              "mensaje": "Canjeaste una hilera por cada butaca: el ancho bajó 5 butacas, así que le sumaste 5 hileras a las 45. Pero una hilera no equivale a una butaca. Piénsalo por el lado de las butacas que se pierden: al angostar las hileras de 20 a 15, cada hilera deja fuera 5 butacas, y con más de cuarenta hileras eso son muchísimas butacas que hay que colocar en otra parte. Cinco hileras nuevas no alcanzan.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "hilerasActividadEscolar",
+              "valorObtenido": 54,
+              "mensaje": "Trasladaste la subida de un tramo al otro: de 25 a 20 butacas por hilera las hileras subieron 9, y le volviste a sumar 9 a las 45. Ya viste que eso falla en el otro sentido: la variación no es fija, se va agrandando a medida que las hileras se angostan. Entre 25 y 20 subieron 9; entre 20 y 15 tienen que subir más que 9, no lo mismo.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Compara las tres configuraciones confirmadas entre sí. El auditorio no cambió entre una y otra: son las mismas butacas las tres veces. Combina las dos columnas de cada configuración con una sola operación —y ya comprobaste que no es una división— y anota los tres resultados antes de responder."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para las hileras de 15 butacas",
+      "_notasInternas": [
+        "Gradación real: la 1 reorienta la atención (mirar la fila completa y preguntarse qué es lo mismo en las tres), la 2 nombra qué cantidad es la invariante y descarta la resta, y la 3 nombra la operación y agrega el movimiento final. Ninguna nombra el concepto —«proporción inversa» es del paso 6— y ninguna nombra el 900 ni ejecuta ninguna multiplicación de un par completo.",
+        "La pista 3 se detiene justo antes del resultado: dice que hay que acomodar el total en hileras de 15, pero no dice cuánto vale el total ni hace la división. Es la misma frontera que quedó fijada en L1 al purgar la constante de los pasos 1 a 4.",
+        "Si en el piloto se ve que la pista 3 no ayuda lo suficiente, la vía NO es devolverle el número: es agregar una cuarta pista que trabaje el sentido de la operación."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Deja de mirar las dos columnas por separado, y deja de mirar cómo cambian de una configuración a la siguiente. Mira cada configuración completa y pregúntate qué cosa es exactamente la misma en las tres: el auditorio no cambió entre una y otra."
+            },
+            {
+              "nivel": 2,
+              "texto": "Lo que no cambia es cuántas butacas hay en el auditorio. Ese número está escondido en cada configuración, y sale de combinar las dos columnas con una sola operación. Ya descartaste la división, y la resta te dio tres resultados distintos. Queda una."
+            },
+            {
+              "nivel": 3,
+              "texto": "Multiplica butacas por hilera × hileras en cualquiera de las tres configuraciones que ya tienes, y compruébalo en las otras dos. Y cuando tengas ese resultado, acuérdate de que no es la respuesta: es el total de butacas del auditorio, y la pregunta te pide hileras. Falta acomodar ese total en hileras de 15 butacas cada una."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "¿Hay algo que no cambie?",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN, diseñado antes que todo el resto. El insight que el estudiante construye solo: al multiplicar las dos columnas el resultado NO cambia, y ese número fijo es el total de butacas del auditorio.",
+        "REQUISITO (a) CUMPLIDO: la predicción de apertura ofrece explícitamente la opción «no se mantiene nada». La existencia de la invariante está en duda hasta que el estudiante multiplica — y acá esa duda es más fuerte que en L1, porque el estudiante ACABA de comprobar con su propia mano que la prueba conocida falla. Ese es el pago del paso 2.",
+        "REQUISITO (b), RESUELTO DENTRO DEL REGISTRO TABULAR: el estudiante calcula los cinco productos con su propia mano y comprueba que coinciden, así que ve la invariante en vez de que se la cuenten. El cierre del paso no repite ese cálculo: le devuelve una tabla con dos configuraciones borradas para que el total deje de ser un número observado y pase a ser una herramienta que reconstruye datos que no están. Se ejercitan los dos sentidos —del ancho al número de hileras (45 → 20) y del número de hileras al ancho (75 → 12)—, lo que impide resolver por copia de un patrón.",
+        "REGLA VIGENTE PARA CUALQUIER REESCRITURA: ningún bloque anterior a este paso puede nombrar el 900 ni ejecutar una multiplicación butacas por hilera × hileras de un par completo. La única excepción admitida sería un feedbackPorError cuyo valorObtenido fuera 900, y hoy no existe ninguno antes de este paso.",
+        "Verificación de la tabla completa: 15 × 60 = 900 ✓; 20 × 45 = 900 ✓; 25 × 36 = 900 ✓; 30 × 30 = 900 ✓; 36 × 25 = 900 ✓. Las cinco filas dan producto entero y exacto, y las dos cantidades se mantienen entre 15 y 60 en todas: son configuraciones que un auditorio real podría tener.",
+        "Verificación de los distractores del producto: sumar en vez de multiplicar en la primera configuración da 15 + 60 = 75 (error-12). Dividir, o sea aplicar la prueba de la lección anterior, da 60 ÷ 15 = 4 (error-13).",
+        "Verificación de la reconstrucción: 900 ÷ 45 = 20 ✓; 900 ÷ 75 = 12 ✓. Distractores: entregar la constante, 900 (error-4); multiplicar en vez de dividir, 45 × 900 = 40.500 y 75 × 900 = 67.500 (error-10); sumar el dato al total, 900 + 75 = 975 (error-12).",
+        "Verificación de la comprobación fuera de tabla: 900 ÷ 60 = 15 ✓. Distractores: restar, 900 − 60 = 840 (error-12); entregar la constante, 900 (error-4); sumar, 900 + 60 = 960 (error-12). Este es el único campo numérico del archivo SIN distractor de error-10 (multiplicar en vez de dividir), y la omisión es deliberada: su valor sería 60 × 900, cifra que porcentaje-volver-atras.json ya usa en sus propios contextosNumericos, y npm run auditar la marcaba como colisión entre archivos. El mecanismo queda cubierto de todos modos —aparece en otros cuatro campos— y el feedbackPorDefecto de este trae el control de sentido que lo ataja. Si algún día se cambia el ancho de esta pregunta, revisar si conviene devolverle el distractor.",
+        "El texto de revelación conecta explícitamente con el paso 2 («eso es lo que el cociente no podía ver») y con L1 («el auditorio no reparte una cantidad por cada hilera, reparte un total entre las hileras»). Esa contraposición es la que prepara el error-14 del paso 6."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Ya comprobaste que dividir no sirve acá: el cociente cambia en cada configuración.\n\nVas a mirar cinco configuraciones del auditorio, todas reales y todas con las mismas butacas.\n\nAntes de calcular nada: ¿crees que hay algo que se mantenga igual en las cinco, o cada configuración es un caso aparte?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Cada configuración es un caso aparte: no se mantiene nada",
+            "Se mantiene la diferencia entre las dos columnas",
+            "Se mantiene el resultado de multiplicar las dos columnas",
+            "Se mantiene algo, pero no sé qué"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Cinco configuraciones del auditorio, todas correctas y todas con las mismas butacas. Toma cada configuración por separado y multiplica las dos columnas. Anota los cinco resultados antes de seguir.",
+          "datos": {
+            "columnas": [
+              "Butacas por hilera",
+              "Hileras"
+            ],
+            "filas": [
+              [
+                15,
+                60
+              ],
+              [
+                20,
+                45
+              ],
+              [
+                25,
+                36
+              ],
+              [
+                30,
+                30
+              ],
+              [
+                36,
+                25
+              ]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Multiplica butacas por hilera × hileras en las cinco configuraciones.\n\n¿Qué número te dio?",
+          "campos": [
+            {
+              "id": "totalDeButacas",
+              "etiqueta": "Resultado de butacas por hilera × hileras",
+              "respuestaCorrecta": 900,
+              "unidad": "butacas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "totalDeButacas",
+              "valorObtenido": 75,
+              "mensaje": "Sumaste en vez de multiplicar: 15 + 60 = 75. Prueba esa misma suma en la segunda configuración: 20 + 45 = 65, y en la cuarta: 30 + 30 = 60. Te dan tres números distintos, así que la suma tampoco es lo que se mantiene. Vuelve a intentarlo multiplicando.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "totalDeButacas",
+              "valorObtenido": 4,
+              "mensaje": "Dividiste: 60 ÷ 15. Esa es la prueba de la proporción directa, la que traías de la lección anterior, y ya la aplicaste hace dos pasos con este mismo auditorio: 45 ÷ 20 no daba lo mismo que 36 ÷ 25. La división no es lo que se repite acá. Queda la otra operación.",
+              "errorCatalogado": "error-13"
+            }
+          ],
+          "feedbackPorDefecto": "Empieza por la primera configuración: 15 × 60. Después haz lo mismo con 20 × 45 y con 25 × 36. Si los tres te dan lo mismo, ese es el número que busca la pregunta."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esto es lo que aparece al multiplicar una configuración por una:\n\n| Butacas por hilera | Hileras | Butacas × Hileras |\n|---|---|---|\n| 15 | 60 | 900 |\n| 20 | 45 | 900 |\n| 25 | 36 | 900 |\n| 30 | 30 | 900 |\n| 36 | 25 | 900 |\n\nLas dos primeras columnas no paran de cambiar, y encima se mueven en direcciones opuestas: una sube justo cuando la otra baja. La tercera no se mueve: **900 siempre**.\n\nY ese 900 no es un número suelto. Son **todas las butacas del auditorio**. Siempre fueron las mismas —nadie agregó ni sacó ninguna— y por eso el producto no se puede mover: cada configuración es una manera distinta de acomodar exactamente las mismas 900 butacas.\n\nAhí está lo que el cociente no podía ver. En la lección anterior la relación asignaba una cantidad **por cada** unidad: 40 mL de base por cada gramo de pigmento, y si había más gramos había más base. Acá la relación acomoda un **total entre** las hileras: mientras más se lleve cada hilera, menos hileras hacen falta. Por eso una sube cuando la otra baja, y por eso lo que se conserva es el producto y no el cociente.\n\nFíjate en algo importante: puede que el 900 ya te hubiera aparecido antes, cuando resolviste las hileras de 15 butacas. Lo que cambia acá es que ahora lo comprobamos **cinco veces seguidas** — si de verdad fuera casualidad, alguna configuración lo desmentiría. Y en ningún momento vino escrito en el enunciado: salió de los datos, multiplicando."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "El plano de dos configuraciones antiguas del auditorio quedó dañado, y en cada una se borró una columna distinta. No hace falta buscar el original: con el número que acabas de encontrar se reconstruyen las dos, aunque una esté borrada de un lado y la otra del lado contrario.",
+          "datos": {
+            "columnas": [
+              "Butacas por hilera",
+              "Hileras"
+            ],
+            "filas": [
+              [
+                45,
+                "ilegible"
+              ],
+              [
+                "ilegible",
+                75
+              ]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Reconstruye las dos configuraciones borradas.\n\nLo único que necesitas es lo que ya sabes: el auditorio tiene **900 butacas** y siempre son las mismas.",
+          "campos": [
+            {
+              "id": "hilerasPlanoAncho",
+              "etiqueta": "Hileras de la configuración que tenía 45 butacas por hilera",
+              "respuestaCorrecta": 20,
+              "unidad": "hileras"
+            },
+            {
+              "id": "butacasPlanoLargo",
+              "etiqueta": "Butacas por hilera de la configuración que tenía 75 hileras",
+              "respuestaCorrecta": 12,
+              "unidad": "butacas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasPlanoAncho",
+              "valorObtenido": 900,
+              "mensaje": "Ese es el total de butacas de toda el auditorio, y lo tienes bien. Pero acá te preguntan cuántas hileras había, no cuántas butacas. Cada hilera de esta configuración se lleva 45 de esas butacas: pregúntate cuántas veces cabe 45 dentro del total.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "hilerasPlanoAncho",
+              "valorObtenido": 40500,
+              "mensaje": "Multiplicaste cuando acá había que hacer lo contrario. Fíjate en el sentido: el total del auditorio es el número grande, y las hileras son una parte de cómo se acomodan, así que el resultado tiene que ser mucho más chico, no mucho más grande. Ningún auditorio tiene más hileras que butacas.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "campoId": "butacasPlanoLargo",
+              "valorObtenido": 975,
+              "mensaje": "Le sumaste las 75 hileras al total del auditorio. Pero las hileras no se agregan a las butacas: las butacas ya están todas contadas en ese total, y las 75 hileras son la forma en que se acomodaron. Lo que hay que hacer con un total acomodado en 75 partes iguales es dividirlo.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "butacasPlanoLargo",
+              "valorObtenido": 67500,
+              "mensaje": "Multiplicaste el total por las hileras. Comprueba adónde lleva: eso daría más de sesenta mil butacas en cada hilera de un auditorio que tiene 900 en total. Cuando te dan el total y te piden cuánto le toca a cada parte, la operación es dividir.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Las dos configuraciones se resuelven con el mismo 900, pero en sentidos opuestos. En la primera conoces el ancho de la hilera y buscas cuántas hileras hay: cuántas veces cabe 45 dentro de 900. En la segunda conoces las hileras y buscas el ancho: cómo se acomodan 900 butacas en 75 hileras."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos que el número sirve fuera de la tabla.\n\nPara una feria del libro quieren hileras muy anchas: **60 butacas por hilera**.\n\n¿Cuántas hileras quedan?",
+          "campos": [
+            {
+              "id": "hilerasFeria",
+              "etiqueta": "Hileras que quedan",
+              "respuestaCorrecta": 15,
+              "unidad": "hileras"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasFeria",
+              "valorObtenido": 840,
+              "mensaje": "Restaste las 60 butacas al total del auditorio. Pero esas 60 no son butacas que se van: son las que caben en UNA hilera, y siguen estando dentro de las 900. La pregunta es cuántas hileras de ese tamaño se pueden armar con el total, y eso se responde acomodando, no quitando.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "hilerasFeria",
+              "valorObtenido": 900,
+              "mensaje": "Ese es el total de butacas del auditorio, no las hileras. Cada hilera de esta configuración se lleva 60 de ellas, así que hay bastantes menos hileras que butacas: falta acomodarlas.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "hilerasFeria",
+              "valorObtenido": 960,
+              "mensaje": "Le sumaste el ancho de la hilera al total del auditorio. Pero esas 60 butacas no llegan de afuera: ya están contadas dentro de las 900, y son las que caben en una sola hilera. La pregunta es cuántas hileras de ese tamaño se arman con el total.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "El auditorio tiene 900 butacas y cada hilera se lleva 60. La pregunta es cuántas veces cabe 60 dentro de 900. Si tu resultado te sale más grande que el total, la operación estaba al revés: las hileras nunca pueden ser más que las butacas."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La constante de proporcionalidad inversa",
+      "_notasInternas": [
+        "Recién acá se nombra el concepto, se da la notación y la fórmula, como exige el marco pedagógico. Ni un paso antes.",
+        "El punto 1 del texto es el más importante del paso y existe por una razón concreta: el estudiante viene de una lección donde k se leía «lo que le toca a uno». Si nadie le dice explícitamente que acá la lectura es la contraria, arrastra la interpretación vieja y la aplica mal. Ese arrastre es el error-14 y es el que el bloque de selección evalúa.",
+        "Verificación del ejemplo trabajado: auditorio chico 24 × 26 = 624 ✓; 624 ÷ 24 = 26 ✓; 624 ÷ 26 = 24 ✓. El ejemplo NO pide calcular: pide interpretar. Es el único lugar del archivo donde se trabaja qué significa la constante.",
+        "Verificación del ejercicio, con cifras DISTINTAS a las del ejemplo (regla de §2 de calibracion): auditorio municipal 14 × 24 = 336 ✓; 336 ÷ 21 = 16 ✓.",
+        "Verificación de los distractores del ejercicio: sumar el ancho nuevo al total da 336 + 21 = 357 (error-12). Entregar la constante: 336 (error-4). Multiplicar en vez de dividir: 336 × 21 = 7.056 (error-10).",
+        "El distractor del canje uno a uno (24 − 7 = 17) se dejó fuera de este ejercicio a propósito: ya aparece en P1 del paso 7 con ese mismo valor, y repetir la cifra en dos ejercicios seguidos entrena el número en vez del mecanismo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora el nombre y la regla.\n\nCuando dos cantidades cumplen que **el producto entre ellas es siempre el mismo**, se dice que son **inversamente proporcionales**. Ese producto fijo también se llama **constante de proporcionalidad** y se anota **k**.\n\nSi llamamos *x* a una cantidad e *y* a la otra:\n\n**x · y = k**, o lo que es lo mismo, **y = k ÷ x**\n\nEn el auditorio, *x* eran las butacas por hilera, *y* las hileras, y k = 900.\n\nTres cosas que conviene tener claras desde ya:\n\n1. **Acá k no es «lo que le toca a uno».** Esa era la lectura de la proporción directa, y si la arrastras te va a hacer equivocarte. En una proporción inversa k es el **total que hay que acomodar**: las 900 butacas del auditorio, completas. Por eso la fórmula divide en vez de multiplicar.\n2. **Multiplicar una cantidad divide a la otra.** Si el ancho de la hilera se duplica, las hileras se parten a la mitad; si se triplica, quedan un tercio. Nunca se resta ni se suma: se divide.\n3. **Que las dos cantidades se muevan en direcciones opuestas no basta.** Tienen que moverse de modo que el producto no cambie. Vas a ver un caso donde una sube, la otra baja de forma perfectamente ordenada, y aun así no son inversamente proporcionales."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Otro espacio del mismo centro cultural, el **auditorio chico**: con 24 butacas por hilera quedan 26 hileras, así que su constante es k = 624.\n\n¿Qué significa exactamente ese 624?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que el auditorio chico tiene 624 butacas en total, y se acomodan en las hileras",
+              "esCorrecta": true,
+              "feedback": "Exacto. En una proporción inversa la constante es el total que hay que acomodar, no la porción que le toca a una unidad. Por eso funciona dividir: 624 ÷ 24 devuelve las 26 hileras, y 624 ÷ 26 devolvería las 24 butacas de cada una."
+            },
+            {
+              "id": "b",
+              "texto": "Que cada hilera del auditorio chico lleva 624 butacas",
+              "esCorrecta": false,
+              "feedback": "Esa es la lectura de una proporción directa: «tantos por cada uno». Acá no funciona así. Si cada hilera llevara 624 butacas, una sola hilera ya tendría más butacas que el auditorio chico entero, y ese auditorio tiene 26. La constante de una inversa es el total, no lo que le corresponde a una unidad.",
+              "errorCatalogado": "error-14"
+            },
+            {
+              "id": "c",
+              "texto": "Que el auditorio chico tiene 624 hileras",
+              "esCorrecta": false,
+              "feedback": "El auditorio chico tiene 26 hileras en esa configuración, y ese dato ya estaba en el enunciado. La constante no es ninguna de las dos columnas: es lo que sale de multiplicarlas, y por eso no se puede leer directamente de la tabla.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "id": "d",
+              "texto": "Que hay que sumarle 624 butacas al auditorio chico para la configuración nueva",
+              "esCorrecta": false,
+              "feedback": "La constante de una proporción inversa no se le suma ni se le resta a nada: es el total que ya está y que no cambia en ninguna configuración. Lo único que cambia es cómo se acomoda ese total entre las hileras.",
+              "errorCatalogado": "error-12"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un tercer espacio, la **auditorio municipal**: con 14 butacas por hilera quedan 24 hileras.\n\n¿Cuántas hileras quedan si se reordena con 21 butacas por hilera?",
+          "campos": [
+            {
+              "id": "hilerasAuditorioMunicipal",
+              "etiqueta": "Hileras que quedan",
+              "respuestaCorrecta": 16,
+              "unidad": "hileras"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasAuditorioMunicipal",
+              "valorObtenido": 357,
+              "mensaje": "Le sumaste el ancho nuevo al total del auditorio. Pero las 21 butacas de cada hilera ya están contadas dentro del total: no son butacas que lleguen de afuera. Lo que hay que hacer con un total que hay que acomodar en hileras de 21 es dividirlo.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "hilerasAuditorioMunicipal",
+              "valorObtenido": 336,
+              "mensaje": "Encontraste bien la constante de el auditorio municipal: 14 × 24 = 336 butacas en total. Falta el último paso, que es acomodar ese total en hileras de 21 butacas cada una.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "hilerasAuditorioMunicipal",
+              "valorObtenido": 7056,
+              "mensaje": "Multiplicaste el total del auditorio por el ancho nuevo. Pero el total ya incluye todas las butacas: multiplicarlo por 21 sería como llenar el auditorio veintiuna veces. Cuando conoces el total y el tamaño de cada parte, la operación que da el número de partes es la división.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Dos pasos. Primero saca la constante de el auditorio municipal multiplicando 14 por 24: ese es el total de butacas. Después acomoda ese total en hileras de 21 butacas."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: tres formas de equivocarse",
+      "_notasInternas": [
+        "Progresión estricta baja → media → media/alta, como exige §5.1 de calibracion.",
+        "P1 (baja/media). Verificación: auditorio del liceo 30 × 26 = 780 ✓; 780 ÷ 39 = 20 ✓. Verificación de los distractores: canje uno a uno, el ancho subió 9 butacas (de 30 a 39) y restó 9 hileras a 26, o sea 17 (error-12); entregar la constante, 780 (error-4); multiplicar en vez de dividir, 780 × 39 = 30.420 (error-10).",
+        "P2 (media). Verificación: el auditorio tiene k = 900. De 15 butacas por hilera (60 hileras) a 30 butacas por hilera hay exactamente el doble de ancho, y las hileras pasan de 60 a 30, o sea la mitad ✓. Duplicar las dos a la vez daría 30 × 60 = 1.800 butacas, el doble de las que hay ✓. La afirmación es falsa.",
+        "P3 (media/alta). Verificación de que la tabla NO es inversamente proporcional: 10 × 44 = 440; 15 × 39 = 585; 20 × 34 = 680. Tres productos distintos ✓. La relación es hileras = 54 − butacas por hilera (10 → 44 ✓; 15 → 39 ✓; 20 → 34 ✓): una columna baja exactamente lo que la otra sube, y por eso engaña, pero el total del auditorio tendría que crecer en cada configuración, lo que es imposible. Es el espejo exacto de P3 de L1, donde una relación con diferencias constantes se hacía pasar por directa.",
+        "La opción b de P3 mapea a error-3, cuya descripción heredada habla del cociente y no del producto. Ver la nota de la raíz: la cabeza del mecanismo calza, la cola es la instancia de L1, y queda marcado para la auditoría matemática.",
+        "La opción d de P3 es el criterio irrelevante (error-11) y se apoya en un contraejemplo real del propio archivo: el auditorio municipal del paso 6 tiene 336 butacas con 14 por hilera y es perfectamente inversa aunque los números no sean redondos."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El **auditorio del liceo** está ordenado en 26 hileras de 30 butacas.\n\nPara el acto de aniversario quieren hileras más anchas: 39 butacas por hilera. No se agrega ni se saca ninguna butaca.\n\n¿Cuántas hileras quedan?",
+          "campos": [
+            {
+              "id": "hilerasAuditorioLiceo",
+              "etiqueta": "Hileras que quedan",
+              "respuestaCorrecta": 20,
+              "unidad": "hileras"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "hilerasAuditorioLiceo",
+              "valorObtenido": 17,
+              "mensaje": "Canjeaste una hilera por cada butaca de ancho: el ancho subió 9 butacas, así que le restaste 9 hileras a las 26. Comprueba adónde lleva: 17 hileras de 39 butacas no alcanzan a colocar todas las butacas del auditorio. Cada hilera que sacas se lleva 39 butacas con ella, no una.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "hilerasAuditorioLiceo",
+              "valorObtenido": 780,
+              "mensaje": "Sacaste bien la constante del auditorio: 30 × 26 = 780 butacas en total. Pero eso son butacas, no hileras. Falta acomodar ese total en hileras de 39.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "hilerasAuditorioLiceo",
+              "valorObtenido": 30420,
+              "mensaje": "Multiplicaste el total del auditorio por el ancho nuevo. El total ya está completo: no hay nada que agregarle. Lo que se pregunta es en cuántas hileras de 39 butacas se pueden acomodar, y eso es una división.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Primero saca el total de butacas del auditorio multiplicando 30 por 26. Después acomoda ese total en hileras de 39 butacas cada una."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El auditorio tiene 900 butacas. Entonces, si se reordena con el doble de butacas por hilera, quedan el doble de hileras.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Es al revés, y la tabla del descubrimiento lo muestra: de 15 butacas por hilera (60 hileras) a 30 butacas por hilera, el ancho se duplica y las hileras pasan a 30, que es la MITAD de 60. Duplicar las dos cantidades a la vez pondría 30 × 60 = 1.800 butacas en el auditorio, el doble de las que hay, y nadie compró butacas nuevas.",
+          "feedbackFalso": "Bien visto. En una proporción inversa, multiplicar una cantidad divide a la otra por lo mismo. De 15 a 30 butacas por hilera el ancho se duplica y las hileras bajan de 60 a 30: la mitad. Si se duplicaran las dos, el auditorio necesitaría 1.800 butacas, y son siempre las mismas 900."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Otro auditorio anota así sus configuraciones:\n\n| Butacas por hilera | Hileras |\n|---|---|\n| 10 | 44 |\n| 15 | 39 |\n| 20 | 34 |\n\nUna columna sube y la otra baja, de forma muy ordenada: cada vez que el ancho sube 5 butacas, las hileras bajan exactamente 5.\n\n¿Son inversamente proporcionales el ancho de la hilera y el número de hileras en este auditorio?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Sí, porque cada vez que el ancho sube 5, las hileras bajan 5: el cambio es constante",
+              "esCorrecta": false,
+              "feedback": "Lo que se mantiene acá es la diferencia, no el producto, y son cosas distintas. Multiplica una configuración por una: 10 × 44 = 440; 15 × 39 = 585; 20 × 34 = 680. El auditorio tendría que ir consiguiendo butacas nuevas en cada configuración. En una proporción inversa el total es intocable.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "b",
+              "texto": "Sí, porque 10 × 44 da la constante del auditorio",
+              "esCorrecta": false,
+              "feedback": "Sacaste la constante de la primera configuración y te detuviste ahí. Ese es el paso que falta siempre: comprobarla en las demás. 15 × 39 = 585 y 20 × 34 = 680, ninguno igual a 440. Una constante que solo vale en una configuración no es una constante.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "No, porque el producto cambia en cada configuración",
+              "esCorrecta": true,
+              "feedback": "Correcto, y por la razón correcta. Los tres productos son 440, 585 y 680: distintos, así que no hay constante. Lo que sí se mantiene es la diferencia, 5 butacas de ancho por cada 5 hileras, y eso es otra cosa. Fíjate en el detalle que lo explica: si el auditorio siguiera esa regla, cada configuración nueva necesitaría más butacas que la anterior."
+            },
+            {
+              "id": "d",
+              "texto": "No, porque las divisiones no dan exactas",
+              "esCorrecta": false,
+              "feedback": "Llegaste a la respuesta correcta por un camino que no sirve. Que una división quede fea no decide nada: el auditorio municipal tenía 336 butacas acomodadas en hileras de 14 y era perfectamente inversa. Lo que decide es si el producto se repite en todas las configuraciones o no.",
+              "errorCatalogado": "error-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Embaldosar el patio",
+      "_notasInternas": [
+        "VERIFICACION DE DOMINIO DE ESTE PASO — CERRADA. «patio», «embaldosar» y «cortar» volvieron NO en consultar-fuentes.mjs (corrida de Benja, 2026-08-14), y los tres se usan acá. «baldosa» volvió SI, y por eso el objeto se llama LOSETA en todo el paso, nunca baldosa. «loseta» misma se corrió aparte (corrida de Benja, 2026-08-14, junto con pastelón, adoquín, vereda, terraza, cancha, multicancha y gimnasio): los ocho volvieron NO. «solar» volvió SI y no se usa en ningún texto de este paso. Con eso el dominio completo del paso 8 queda confirmado limpio.",
+        "HISTORIAL DE ESTE PASO, para no repetir el ciclo: es el TERCER dominio. (1) Velocidad ↔ tiempo sobre un recorrido fijo: descartado por criterio antes de redactar, porque velocidad × tiempo = distancia es el molde canónico de proporción inversa en el corpus escolar —el mismo razonamiento por el que L1 descartó polea/correa estando léxicamente limpio—; la corrida del 2026-08-14 lo confirmó por la vía dura, velocidad, recorrido, rapidez, trayecto, demora y tardar volvieron los seis SI. (2) La duración fija de un ensayo acomodada en escenas: se redactó entero y se descartó después, porque ensayo, escena, obra, acto, duración y minuto volvieron los seis SI. La lección de las dos rondas ya está en docs/reglas-modulo.md: el dominio se verifica ANTES de redactar, y se verifica el vocabulario completo, no solo el sustantivo principal.",
+        "CONTROL ANTI-CUADRÁTICA, y es la razón exacta por la que el enunciado pregunta «a lo ancho» y no «en total». Si se cubre un patio de área A con losetas cuadradas de lado L, el número TOTAL de losetas es A dividido por L al cuadrado: eso es inversamente proporcional al CUADRADO del lado, no al lado, y despejar L exigiría una raíz. Dejaría de ser una proporción inversa entre las dos magnitudes que el estudiante tiene delante, que es justo lo que esta lección enseña. Acotando la pregunta a una sola dirección —cuántas losetas caben a lo ancho, de borde a borde— las magnitudes son el lado de la loseta en centímetros y la cantidad de losetas, y su producto es el ancho del patio: una longitud fija. Proporción inversa pura, sin cuadrados ni raíces: 24 × 36 = 864 y 27 × 32 = 864.",
+        "CORRECCIÓN A LA FORMULACIÓN PEDIDA: la instrucción de trabajo decía que el producto constante era el ÁREA del patio. No lo es. «lado de la loseta × cantidad de losetas a lo ancho» da el ANCHO del patio, que es una longitud. Para que el producto fuera el área, la otra magnitud tendría que ser el área de cada loseta, y ahí vuelve el cuadrado que se quería evitar. Se usó la formulación de la longitud.",
+        "Contexto de transferencia: cambian LAS MAGNITUDES, no solo la historia. En el núcleo las dos cantidades son conteos de objetos (butacas y hileras) y la constante es otro conteo (900 butacas, que se podrían contar una por una). Acá una de las magnitudes es una MEDIDA CONTINUA —el lado de la loseta, en centímetros— y la constante es una LONGITUD, el ancho del patio. El estudiante ya no puede verificar el total contando: tendría que medirlo. Si se cambiara el contexto del paso 5 por este, la lección no funcionaría igual, que es el chequeo de transferencia real que exige §2 de docs/calibracion-lecciones-e-items.md.",
+        "Verificación: 24 × 36 = 864 cm de ancho ✓; 864 ÷ 27 = 32 losetas ✓. Comprobación cruzada: 32 × 27 = 864 ✓. Las dos configuraciones cubren el mismo ancho sin cortar ninguna loseta, que es la condición que hace fija a la constante.",
+        "Verificación de los distractores: canje uno a uno, el lado subió 3 cm y le restó 3 losetas a las 36, o sea 33 (error-12); su comprobación es 33 × 27 = 891 cm, 27 más que el patio, así que la última loseta sobresale del borde, y el feedback usa ese cálculo. Entregar la constante: 864 (error-4). Multiplicar en vez de dividir: 27 × 864 = 23.328 (error-10).",
+        "BANDA DE MAGNITUD: el canje queda en 33 contra una correcta de 32, o sea a +3,1 %. El estudiante que se equivoca así obtiene un número perfectamente creíble y no tiene ninguna señal de tamaño que lo delate; lo único que lo delata es hacer la comprobación. Es campo numérico y no selección múltiple, así que la banda no decide entre alternativas visibles, pero se cuidó igual: un distractor absurdo acá no enseñaría nada.",
+        "Las cifras 864, 33, 23.328 y 891 se barrieron contra los contextosNumericos de todo content/ y contra proporcionalidad-directa.json token por token: ninguna aparece en ningún otro archivo ni en L1. 24, 27, 32 y 36 sí reaparecen sueltas por debajo de 100, con otras magnitudes y otras unidades, que es donde la coincidencia es azar.",
+        "La parte 1 pide escribir la operación sin calcularla, igual que en L1: separa el modelamiento de la aritmética y deja ver si el estudiante sabe QUÉ hacer aunque después se equivoque en la cuenta."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "El patio del centro cultural se va a embaldosar con losetas cuadradas, todas del mismo tamaño y **sin cortar ninguna**.\n\nCon losetas de **24 cm** de lado caben exactamente **36** a lo ancho del patio, de borde a borde.\n\nEl proveedor cambió de formato: ahora las losetas son de **27 cm** de lado.\n\nParte 1: escribe la operación que responde cuántas losetas caben ahora a lo ancho. No la calcules todavía, solo escríbela.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "(24 × 36) ÷ 27 = 864 ÷ 27   (primero el ancho del patio en centímetros, después ese ancho acomodado en losetas de 27 cm)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora sí, calcula. ¿Cuántas losetas de 27 cm caben a lo ancho del patio?",
+          "campos": [
+            {
+              "id": "losetasALoAncho",
+              "etiqueta": "Losetas que caben a lo ancho",
+              "respuestaCorrecta": 32,
+              "unidad": "losetas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "losetasALoAncho",
+              "valorObtenido": 33,
+              "mensaje": "Canjeaste una loseta por cada centímetro: el lado subió 3 cm, así que le restaste 3 losetas a las 36. Pero una loseta no mide un centímetro. Comprueba tu número: 33 losetas de 27 cm suman 891 cm, y el patio no llega a tanto — la última loseta te queda colgando fuera del borde. Cada loseta que sacas o agregas mueve 27 cm, no uno.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "losetasALoAncho",
+              "valorObtenido": 864,
+              "mensaje": "Sacaste bien el ancho del patio: 24 × 36 = 864 cm. Pero eso son centímetros, no losetas. Falta acomodar ese ancho en losetas de 27 cm.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "losetasALoAncho",
+              "valorObtenido": 23328,
+              "mensaje": "Multiplicaste el ancho del patio por el lado de la loseta. Pero el patio ya está medido: no hay nada que agrandarle, y las losetas nuevas no lo ensanchan. Lo que se pregunta es cuántas losetas de 27 cm caben dentro de esos centímetros, y eso es una división.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: primero el ancho del patio en centímetros, multiplicando 24 por 36. Después ve cuántas veces cabe 27 dentro de ese ancho."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige, se guarda. Es el termómetro de si el insight del paso 5 prendió o si el estudiante solo ejecutó un procedimiento.",
+        "La consigna fuerza la comparación con el paso 3, como exige §2 de calibracion, y además pide explícitamente contrastar las dos lecciones del módulo: esa comparación es lo que proporcionalidad-reconocer (L3) va a evaluar, así que acá se planta.",
+        "El texto de cierre recoge los cuatro errores más frecuentes del catálogo aplicados a la inversa, que son los que la PAES usa para construir distractores."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Vuelve a las hileras de 15 butacas del principio, cuando todavía no sabías el método. ¿Qué hiciste entonces y qué harías ahora?\n\nY explícale a un compañero, con tus palabras, cómo distinguirías una tabla de proporción directa de una de proporción inversa. Trata de no apoyarte en ninguna fórmula memorizada: descríbelo como lo entendiste.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: que mencione multiplicar las dos columnas y comprobar que el resultado se repite en TODAS las filas, y que contraste eso con dividir en la directa. Señal muy fuerte: que nombre por qué el cociente no puede mantenerse cuando una columna baja. Señal de alerta: describir un procedimiento memorizado de proporciones sin mencionar qué operación se conserva, o decidir el tipo de proporción solo por la dirección en que se mueven las columnas."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los cuatro errores que más se repiten con proporciones inversas, y que ya viste en esta lección:\n\n1. **Compensar restando.** Si el ancho de la hilera sube 5 butacas, las hileras no bajan 5: bajan lo que haga falta para que el total no cambie. Lo que se conserva es el producto, no la diferencia.\n2. **Arrastrar el modelo de la directa.** «Si una se duplica, la otra se duplica» es verdad en la proporción directa y falso acá: si una se duplica, la otra se parte a la mitad.\n3. **Quedarse en la constante.** Encontrar que k = 900 es la mitad del trabajo; falta acomodarlas ese total según lo que te pidan.\n4. **Confiar en que «una sube y la otra baja».** También bajan juntas relaciones que no son inversamente proporcionales. Lo que decide es si el producto se repite.\n\nLa PAES arma sus alternativas incorrectas exactamente con estos cuatro. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis breve más puente explícito al formato PAES, según el criterio del paso 10.",
+        "El puente a la lección siguiente anuncia proporcionalidad-reconocer (L3) por lo que se va a hacer ahí —distinguir una de otra, y distinguir ambas de las que no son proporcionales— sin comprometer ningún contexto ni ninguna representación: el dominio de esa lección todavía no está decidido.",
+        "El último punto de la lista es la primera formulación explícita de la asíntota, y se apoya en algo que el estudiante ya razonó por su cuenta en el feedback del distractor 27 del paso 2. El ítem 2 y la alternativa D del ítem 3 lo evalúan."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Dos cantidades son **inversamente proporcionales** si el producto entre ellas es siempre el mismo. Ese producto fijo es la **constante de proporcionalidad, k**.\n- **Acá k es el total que hay que acomodar**, no lo que le corresponde a una unidad. Por eso la fórmula divide: **y = k ÷ x**.\n- **Multiplicar una cantidad divide a la otra por lo mismo.** El doble de ancho, la mitad de hileras. Nunca se compensa sumando ni restando.\n- Para comprobarlo hay que multiplicar en **todas** las configuraciones, no en una. Una sola configuración nunca prueba nada.\n- Que una cantidad suba mientras la otra baja **no basta**. Tienen que moverse de modo que el producto no cambie.\n- Control de sentido: en una proporción inversa ninguna de las dos cantidades puede llegar a cero. Se pueden hacer todo lo chicas que quieras, pero si una fuera cero el producto sería cero, y el total no es cero.\n\n**Lo que viene:** ya sabes reconocer las dos proporciones por separado. En la próxima lección van a aparecer mezcladas, y el trabajo va a ser decidir cuál es cuál —y darte cuenta de cuándo no es ninguna de las dos."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "proporcionalidad-inversa-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "El auditorio de un instituto está ordenado en 21 hileras de 38 butacas cada una. Se reordena con 42 butacas por hilera, sin agregar ni sacar ninguna butaca.\n\n¿Cuántas hileras quedan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "17 hileras",
+          "esCorrecta": false,
+          "feedback": "Canjeaste una hilera por cada butaca de ancho: el ancho subió 4 butacas, así que le restaste 4 hileras a las 21. Pero una hilera no vale una butaca: cada hilera que sacas se lleva 42 butacas con ella. El auditorio tiene 38 × 21 = 798 butacas, y 17 hileras de 42 solo alcanzan para 714.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "B",
+          "texto": "19 hileras",
+          "esCorrecta": true,
+          "feedback": "Correcto: la constante es 38 × 21 = 798 butacas en total, y 798 ÷ 42 = 19 hileras."
+        },
+        {
+          "clave": "C",
+          "texto": "21 hileras",
+          "esCorrecta": false,
+          "feedback": "Ese es el número de hileras que el auditorio tenía ANTES del reordenamiento, y ese dato ya estaba en el enunciado. Si las hileras se ensanchan y el número de hileras no cambia, el auditorio necesitaría más butacas de las que tiene: 42 × 21 son 882, y hay 798.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "25 hileras",
+          "esCorrecta": false,
+          "feedback": "Le sumaste a las hileras lo mismo que le sumaste al ancho, que es el razonamiento de una proporción directa: allá las dos cantidades crecen juntas. Acá crecen en sentidos opuestos, porque las butacas son las mismas: si cada hilera se lleva más, hacen falta menos hileras, no más.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "Se obtiene la constante multiplicando las dos cantidades de la configuración conocida: 38 × 21 = 798 butacas en total. Como el total no cambia, el número de hileras nuevo sale de acomodarlo en hileras de 42: 798 ÷ 42 = 19 hileras. Verificación por otra vía: 42 es 798 ÷ 19, y 42 × 19 = 798 ✓. Segunda verificación de sentido: el ancho aumentó (de 38 a 42), así que las hileras tienen que disminuir (de 21 a 19), y disminuyen poco porque el ancho aumentó poco ✓."
+    },
+    {
+      "id": "proporcionalidad-inversa-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un auditorio se puede ordenar de varias maneras, siempre con las mismas butacas:\n\n| Butacas por hilera | Hileras |\n|---|---|\n| 12 | 48 |\n| 16 | 36 |\n| 24 | 24 |\n| 48 | 12 |\n\nSe quiere representar esta relación en un gráfico, con las butacas por hilera en el eje horizontal y el número de hileras en el eje vertical.\n\n¿Cuál de las siguientes descripciones corresponde al gráfico de esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que baja siempre con la misma inclinación, hasta cortar el eje horizontal.",
+          "esCorrecta": false,
+          "feedback": "Una recta que baja siempre igual significa que a cada aumento fijo del ancho le corresponde una caída fija de hileras. La tabla dice lo contrario, y de la forma más clara posible: de 12 a 16 butacas por hilera —4 más— las hileras caen 12; de 24 a 48 —24 más, seis veces ese aumento— las hileras vuelven a caer 12. Un aumento seis veces mayor produce exactamente la misma caída, y eso ninguna recta lo hace. Además una recta que baja termina cortando el eje, y eso significaría cero hileras con las butacas todavía ahí.",
+          "errorCatalogado": "error-15"
+        },
+        {
+          "clave": "B",
+          "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin llegar a tocarlos.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Como el producto es fijo, al agrandar una cantidad la otra se divide, nunca se resta: por eso la bajada se va frenando. Y ninguna de las dos puede llegar a cero, porque el producto dejaría de dar el total, así que la curva se acerca a los ejes sin tocarlos."
+        },
+        {
+          "clave": "C",
+          "texto": "Una recta que sube: mientras más anchas las hileras, más hileras hay.",
+          "esCorrecta": false,
+          "feedback": "Eso es el gráfico de una proporción directa, donde las dos cantidades crecen juntas. Acá crecen en sentidos opuestos, y la tabla lo muestra: con 12 butacas por hilera hay 48 hileras, y con 48 butacas por hilera hay 12. Un gráfico que sube contradice los datos del enunciado.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "D",
+          "texto": "Una curva que baja rápido al principio y después cruza el eje horizontal, quedando por debajo de cero.",
+          "esCorrecta": false,
+          "feedback": "La primera mitad está bien vista: la bajada sí se va frenando. Pero cruzar el eje significaría un número negativo de hileras, y no existe un auditorio con menos de ninguna hilera. Por muy anchas que se hagan las hileras siempre hará falta al menos una, así que la curva se acerca al eje y nunca lo cruza.",
+          "errorCatalogado": "error-15"
+        }
+      ],
+      "solucion": "El producto de las dos columnas es constante en las cuatro configuraciones: 12 × 48 = 576; 16 × 36 = 576; 24 × 24 = 576; 48 × 12 = 576. La relación es entonces hileras = 576 ÷ (butacas por hilera), o sea una proporción inversa. Su gráfico no es una recta: al duplicar el ancho el número de hileras se divide por dos, no se le resta una cantidad fija, así que la caída se va haciendo cada vez menor. Se comprueba en la tabla: entre 12 y 16 butacas por hilera (4 más) las hileras caen 12, y entre 24 y 48 (24 más) caen también 12. Además ninguna de las dos cantidades puede valer cero, porque el producto tiene que seguir dando 576, de modo que la curva se aproxima a los dos ejes sin alcanzarlos. La descripción correcta es la B."
+    },
+    {
+      "id": "proporcionalidad-inversa-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "En un auditorio, el número de hileras es inversamente proporcional a la cantidad de butacas por hilera, porque las butacas son siempre las mismas.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Si se duplica la cantidad de butacas por hilera, el número de hileras se reduce a la mitad.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Si el total es k y el ancho es x, las hileras son k ÷ x. Al reemplazar el ancho por 2x se obtiene k ÷ (2x), que es la mitad de k ÷ x. Multiplicar una cantidad divide a la otra por ese mismo número: eso es exactamente lo que significa que el producto no cambie."
+        },
+        {
+          "clave": "B",
+          "texto": "Si se le agregan 4 butacas a cada hilera, hay que quitar 4 hileras.",
+          "esCorrecta": false,
+          "feedback": "Esta afirmación compensa restando, y en una proporción inversa lo que se conserva es el producto, no la diferencia. Además el número de hileras que hay que quitar depende de cuántas hileras haya: en un auditorio con pocas hileras muy anchas, agregar 4 butacas a cada una obliga a quitar muchas menos hileras que en un auditorio con muchas hileras angostas.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "Si se duplica la cantidad de butacas por hilera, el número de hileras también se duplica.",
+          "esCorrecta": false,
+          "feedback": "Eso sería cierto en una proporción directa, donde las dos cantidades crecen juntas. Acá no: duplicar las dos a la vez multiplicaría el producto por cuatro, o sea que el auditorio necesitaría cuatro veces las butacas que tiene. Como las butacas son las mismas, al duplicar una cantidad la otra tiene que dividirse por dos.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "D",
+          "texto": "Si las butacas por hilera siguen aumentando, en algún momento el número de hileras llega a cero.",
+          "esCorrecta": false,
+          "feedback": "El número de hileras se hace cada vez más chico, pero nunca llega a cero: si hubiera cero hileras el producto sería cero, y el total de butacas no es cero. Siempre hace falta al menos una hilera para colocarlas. Por eso el gráfico de una proporción inversa se acerca al eje sin llegar a tocarlo.",
+          "errorCatalogado": "error-15"
+        }
+      ],
+      "solucion": "Sea k el total de butacas y x el ancho de la hilera; entonces las hileras son y = k ÷ x. A es correcta: al reemplazar x por 2x se obtiene k ÷ (2x) = (k ÷ x) ÷ 2 = y ÷ 2, la mitad. B es falsa porque conserva la diferencia y no el producto, y además la cantidad de hileras que habría que quitar no es fija: depende del valor de x. C es falsa porque duplicar ambas cantidades multiplicaría el producto por 4, y el producto tiene que mantenerse en k. D es falsa porque k ÷ x nunca vale cero para ningún x, por grande que sea: el cociente se aproxima a cero sin alcanzarlo, que es la razón geométrica de que la curva no toque los ejes."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Proporcionalidad, punto «Concepto de proporción directa e inversa con sus diferentes representaciones» (docs/temario-demre-m1-2027.md, línea 58) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos (§2), distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
+      "docs/reglas-modulo.md — reglas de construcción que salieron de auditar L1: no filtración de la constante antes del descubrimiento (§2), distractores derivables y en banda (§3), ids de campo neutros (§4), catálogo embebido (§5).",
+      "docs/dag-m1-para-revision.md — arista 9 (Proporcionalidad ← Enteros y racionales, bloqueante), origen de los prerrequisitos declarados.",
+      "content/lecciones/proporcionalidad-directa.json — L1 del mismo módulo, leída entera. Es fuente de tres cosas distintas: el catálogo de errores del que se heredan cuatro entradas literales, la lista de cifras que esta lección no puede repetir, y el método de la proporción directa que el paso 2 hace fracasar deliberadamente (lección propia del proyecto, no fuente externa).",
+      "docs/pendientes.md — de ahí salió el descarte de la constante 720 por adyacencia con material DEMRE liberado, registrado ahí desde la auditoría de plantilla sintáctica del 2026-07-08.",
+      "Corridas de scripts/consultar-fuentes.mjs sobre el corpus de fuentes aisladas, ejecutadas por el autor fuera de la sesión de redacción: 2026-08-13 (butaca, hilera) y 2026-08-14 (dominio principal, doce términos periféricos, las tres constantes candidatas, y los vocabularios de los tres dominios que pasaron por el paso 8). Chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción. Los veredictos se usaron tal como los imprimió el script, sin reformular ni completar keywords que no se corrieron."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ESTADO DE VERIFICACIÓN AL 2026-08-14, DECLARADO SIN ADORNO. La verificación de dominio quedó cerrada salvo un término; las dos auditorías siguen abiertas. Nada se dio por cumplido sin evidencia y nada se sustituyó por una revisión del propio hilo de redacción. (1) VERIFICACIÓN DE COLISIÓN DE DOMINIO — NÚCLEO Y PASO 8 VERIFICADOS, UN TÉRMINO ABIERTO. Corridas de consultar-fuentes.mjs ejecutadas por el autor fuera de la sesión de redacción, con la salida pegada sin reformular ni completar. El 2026-08-13 se corrieron butaca e hilera. El 2026-08-14 se corrió el resto y devolvió: NO para butaca, hilera, auditorio, aforo, espectador y acomodar (dominio principal), y NO para patio, embaldosar y cortar (dominio del paso 8). Eso cubre los sustantivos del contexto, sus sinónimos y los verbos de la acción, que es el alcance que docs/reglas-modulo.md exige y que L1 no había cubierto. (1a) DOCE TÉRMINOS VOLVIERON SI Y SE PURGARON DEL TEXTO. La corrida del 2026-08-14 devolvió SI para teatro, sala, asiento, silla, fila, platea, galería, público, entrada, distribuir, repartir y capacidad, y los doce se sacaron del texto visible al estudiante ese mismo día, con un chequeo posterior que da cero residuos. Los recintos se unificaron bajo «auditorio» con un calificativo que los distingue, «fila» pasó a «configuración» —que además es más preciso, porque cada línea de la tabla ES una configuración— y «repartir» pasó a «acomodar», que volvió NO y es el verbo propio del dominio. También devolvió SI «baldosa», y por eso el objeto del paso 8 se llama LOSETA en todo el paso. (1b) VERIFICACIÓN DE DOMINIO CERRADA. «loseta» volvió NO en la corrida de consultar-fuentes.mjs del 2026-08-14 (Benja), corrida junto con pastelón, adoquín, vereda, terraza, cancha, multicancha y gimnasio — los ocho NO. «solar» volvió SI y no se usa en ningún texto del paso. Con esto la verificación de dominio del paso 8 queda cerrada: los tres sustantivos y verbos del núcleo (patio, embaldosar, cortar) y el objeto mismo (loseta) están confirmados limpios.(1c) EL 900 VUELVE SI, Y SE DECIDIÓ NO CAMBIARLO. Esto queda escrito completo porque un registro que solo dijera «dominio limpio» sería falso. El chequeo léxico del 2026-08-14 marcó SI para el numeral 900, que aparece en demre/paes-m1-2026-forma113.md y en otros cinco archivos del corpus. Se evaluó y se descartó como colisión: es un numeral suelto, sin enunciado asociado, y el checklist MOS §7.3 evalúa coincidencia de enunciado, no reaparición de una cifra. Decisión del autor, 2026-08-14: la constante NO se cambia. ADVERTENCIA PARA QUIEN RE-AUDITE: consultar-fuentes.mjs va a seguir devolviendo SI para «900», así que un chequeo léxico futuro lo va a volver a marcar; lo que cierra el punto es este juicio sobre el tipo de coincidencia, no el resultado del script. Es el mismo criterio y el mismo formato con que proporcionalidad-directa.json declaró la adyacencia de «colorante». Nótese el contraste deliberado con el 720, que sí se descartó antes de redactar: ahí la adyacencia documentada en docs/pendientes.md no era un numeral suelto sino un ítem completo (un estanque de 720 L), o sea un enunciado. (1d) DOS DOMINIOS DESCARTADOS EN EL PASO 8, AMBOS POR EL SCRIPT. El paso 8 está en su tercer dominio. Velocidad ↔ tiempo sobre un recorrido fijo se descartó por criterio antes de redactar (molde canónico de inversa) y la corrida lo confirmó: velocidad, recorrido, rapidez, trayecto, demora y tardar volvieron los seis SI. La duración fija de un ensayo acomodada en escenas se llegó a redactar entera y se descartó después: ensayo, escena, obra, acto, duración y minuto volvieron los seis SI. El costo de las dos rondas fue redactar y botar un paso completo, y la conclusión operativa es la que ya está en docs/reglas-modulo.md: el dominio se verifica antes de redactar y con el vocabulario completo, no solo con el sustantivo principal. (2) REVISIÓN MATEMÁTICA: NO CORRIDA. La aritmética se recalculó durante la redacción y quedó anotada paso por paso en las _notasInternas, pero eso no reemplaza a una auditoría en contexto limpio: el hilo que escribió no puede juzgar lo que escribió. El subagente auditor-matematico no está disponible como subagent_type en este entorno, así que la salida es abrir un hilo nuevo con /clear. Dos puntos que conviene que el auditor mire de frente: la reutilización de error-3 en la opción b de P3, marcada en las notas del paso 7, y el control anti-cuadrática del paso 8, marcado en las suyas. (3) AUDITORÍA DE ORIGINALIDAD: NO CORRIDA. El checklist MOS §7.3 no se ha aplicado a este archivo. (3a) DECISIÓN FIRMADA SOBRE EL CATÁLOGO, NO PENDIENTE. Cuatro entradas de catalogoErrores conservan términos que el chequeo léxico marcó SI: error-3, error-4 y error-13 dicen «fila», y error-14 dice «reparte». Se dejan tal cual por decisión del autor del 2026-08-14, por dos razones que se sostienen solas. Primero, son coincidencias léxicas de palabras comunes sin enunciado asociado, o sea el mismo criterio con que se resolvió el 900. Segundo, error-3 y error-4 son copias literales de proporcionalidad-directa.json y el guard catalogo-divergente de npm run auditar las compara carácter a carácter: editarlas pondría la corrida en rojo y rompería la única defensa que existe contra que los dos catálogos del módulo diverjan en silencio. No es un pendiente ni un descuido: es una decisión tomada, con su motivo, y quien re-audite debe leerla como tal. La verificación de dominio (1) queda cerrada completa, incluido el paso 8. Mientras (2) y (3) sigan abiertas, este archivo NO está certificado, aunque pase npm run validar, npm run auditar y npm run lint: los tres chequeos mecánicos miden el contrato, las reglas contables y el estilo, no la originalidad ni la aritmética.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Verificación léxica de dominio corrida por el autor los días 2026-08-13 y 2026-08-14, cerrada limpia en su totalidad, incluido el término «loseta» del paso 8. Sin revisión matemática independiente y sin auditoría de originalidad al momento de escribir este campo.",
+    "fecha": "2026-08-14"
+  }
+}
