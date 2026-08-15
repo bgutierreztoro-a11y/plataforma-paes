@@ -1,0 +1,381 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-expresiones-algebraicas",
+  "titulo": "Cierre del módulo",
+  "_notasInternas": [
+    "Cierre del módulo Expresiones algebraicas. Ocho ítems formato PAES que recorren los tres focos del módulo: operatoria con términos semejantes (L1), cuadrado de un binomio (L2) y factorización por diferencia de cuadrados (L3).",
+    "COBERTURA DELIBERADA, dos ítems por foco más dos mixtos: los ítems 1 y 4 son de L1, el 2 y el 5 de L2, el 3 y el 6 de L3, el 7 contrasta L2 con L3, y el 8 integra los tres. Ningún foco queda con un solo ítem ni concentra más de la cuarta parte del cierre.",
+    "CATÁLOGO EMBEBIDO PROPIO, no una referencia (docs/reglas-modulo.md §5). Doce entradas, cada una copiada carácter a carácter desde el archivo donde nació: error-2, error-4, error-6 y error-8 desde expresiones-sumar-lo-que-se-parece.json; error-9, error-10 y error-11 desde expresiones-rectangulo.json; error-12 a error-16 desde expresiones-deshacer-producto.json. Sin este catálogo embebido no habría Capa 2 ni autoexplicación, que es el defecto medido de los otros cuatro cierres del repo (docs/pendientes.md).",
+    "ADVERTENCIA PARA QUIEN MANTENGA ESTE ARCHIVO: scripts/auditar-leccion.mjs NO audita cierres. Solo recorre content/lecciones/ por los dos lados —ni los audita ni los usa como término de comparación—, así que el guard catalogo-divergente jamás va a mirar este archivo. La coherencia de estas doce descripciones con las de las tres lecciones no la protege ninguna herramienta: se verificó a mano al escribirlo y hay que volver a verificarla a mano cada vez que se toque una descripción en cualquiera de los cuatro archivos del módulo. Anotado en docs/pendientes.md.",
+    "El ítem 8 es el integrador y vale la pena entenderlo antes de tocarlo: (x + 5)² − (x − 5)² admite dos caminos que dan lo mismo. Por L2 más L1, se desarrollan los dos cuadrados y se reducen los términos semejantes. Por L3, la expresión es una diferencia de cuadrados con a = (x + 5) y b = (x − 5), así que factoriza como la suma por la diferencia: (2x)(10). Que las dos vías coincidan es el cierre natural del módulo y está dicho en la solución.",
+    "El ítem 5 es el único con habilidad representar, y transfiere de tabla de valores a expresión simbólica. La tabla empieza en x = 1 y no en x = 0 a propósito: con x = 0 el distractor x² + 16 daría el mismo valor que la respuesta correcta y la primera fila no discriminaría.",
+    "DISEÑO NUMÉRICO: las cifras se barrieron contra los contextosNumericos de todo content/ con las tres lecciones del módulo ya incluidas. El espacio de cuadrados de dos cifras sin colisión quedó casi agotado por L2 y L3 —el barrido devolvió uno solo—, y es el que usa el ítem 2. Conviene saberlo si alguna vez hay que rehacer este archivo.",
+    "AUDITORÍAS: pendientes. Este archivo sale del hilo de redacción sin auditar, igual que las tres lecciones."
+  ],
+  "items": [
+    {
+      "id": "cierre-expresiones-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una barcaza transporta contenedores de dos clases. Si *r* es la masa de un contenedor refrigerado y *s* la de uno seco, la carga del día se anota como\n\n**7r + 3s − 2r + 6s**\n\n¿Cuál es la expresión reducida?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5r + 9s",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los términos en r son 7r y −2r, que dan 5r. Los términos en s son 3s y 6s, que dan 9s. Los dos grupos no se pueden juntar entre sí porque tienen partes literales distintas."
+        },
+        {
+          "clave": "B",
+          "texto": "9r + 9s",
+          "esCorrecta": false,
+          "feedback": "La parte de las s está bien, pero en las r sumaste el 2 en vez de restarlo. El término es −2r: se están quitando dos, así que el coeficiente tiene que quedar por debajo de 7.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "14rs",
+          "esCorrecta": false,
+          "feedback": "Operaste los cuatro coeficientes juntos y pegaste las dos letras. Pero r y s son masas distintas: sus términos no son semejantes y no entran en la misma cuenta.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "9r + 5s",
+          "esCorrecta": false,
+          "feedback": "Las dos cuentas están bien hechas pero quedaron cruzadas: el 5 salió de los términos en r y el 9 de los términos en s, y en tu respuesta están al revés.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Se agrupan los términos por parte literal. En r: 7r − 2r = 5r. En s: 3s + 6s = 9s. La expresión reducida es 5r + 9s, que ya no admite reducción porque los dos términos no son semejantes. Verificación numérica con r = 2 y s = 3: la original da 14 + 9 − 4 + 18 = 37, y la reducida 10 + 27 = 37 ✓."
+    },
+    {
+      "id": "cierre-expresiones-2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es el valor de **99²**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8.181",
+          "esCorrecta": false,
+          "feedback": "Sumaste solo los dos cuadrados, 8.100 y 81, y perdiste el término del medio. Un control rápido lo descarta: 99 × 90 ya vale 8.910, y 99 × 99 tiene que superarlo.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "B",
+          "texto": "8.991",
+          "esCorrecta": false,
+          "feedback": "Calculaste el cruce como 90 × 9 = 810 y lo contaste una sola vez. En el desarrollo va duplicado: el término del medio es 1.620.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "C",
+          "texto": "9.801",
+          "esCorrecta": true,
+          "feedback": "Correcto. Partiendo 99 en 90 y 9: 8.100 más el doble de 90 × 9, que es 1.620, más 81. En total 9.801."
+        },
+        {
+          "clave": "D",
+          "texto": "9.720",
+          "esCorrecta": false,
+          "feedback": "Pusiste bien el cuadrado del primero y el doble del producto, pero te faltó el último término: 9² = 81.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Escribiendo 99 como 90 + 9 y aplicando (a + b)² = a² + 2ab + b²: 90² = 8.100, 2 · 90 · 9 = 1.620 y 9² = 81, de modo que 99² = 8.100 + 1.620 + 81 = 9.801. Verificación por otra vía: 99² = (100 − 1)² = 10.000 − 200 + 1 = 9.801 ✓. Control de magnitud: 99 × 90 = 8.910 y 99 × 100 = 9.900, así que el resultado cae entre ambos ✓."
+    },
+    {
+      "id": "cierre-expresiones-3",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es la factorización de **x² − 144**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(x + 12)(x − 12)",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los dos términos son cuadrados —x² y 12²— y están restándose, así que la expresión es la suma por la diferencia de sus raíces."
+        },
+        {
+          "clave": "B",
+          "texto": "(x − 12)²",
+          "esCorrecta": false,
+          "feedback": "Esa forma es el cuadrado de un binomio y trae término del medio: desarrollada da x² − 24x + 144. La expresión de partida no tiene término del medio, y su 144 es negativo.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "(x + 144)(x − 144)",
+          "esCorrecta": false,
+          "feedback": "Usaste el 144 sin extraerle la raíz. Dentro de los paréntesis va la raíz de cada término, y la de 144 es 12. Lo que escribiste, desarrollado, da x² − 20.736.",
+          "errorCatalogado": "error-14"
+        },
+        {
+          "clave": "D",
+          "texto": "(x + 72)(x − 2)",
+          "esCorrecta": false,
+          "feedback": "Buscaste dos números cuyo producto fuera 144, pero la forma no funciona así: los dos paréntesis tienen que llevar el mismo número, uno sumando y otro restando. Desarrolla lo que escribiste y vas a ver que aparece un término del medio, 70x, que la expresión original no tiene.",
+          "errorCatalogado": "error-14"
+        }
+      ],
+      "solucion": "La expresión x² − 144 es una resta entre dos cuadrados, porque 144 = 12². Aplicando a² − b² = (a + b)(a − b) con a = x y b = 12 se obtiene (x + 12)(x − 12). Verificación desarrollando: x² − 12x + 12x − 144 = x² − 144 ✓, con los cruces cancelándose. Verificación numérica con x = 13: la original vale 169 − 144 = 25 y el producto vale 25 × 1 = 25 ✓."
+    },
+    {
+      "id": "cierre-expresiones-4",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "Un estudiante afirma que **3a + 4b se puede escribir como 7ab**.\n\n¿Cuál de las siguientes evaluaciones de esa afirmación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es falsa, porque los dos términos tienen partes literales distintas y no se pueden juntar.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Solo se reducen los términos que comparten exactamente la misma parte literal, y 3a y 4b no la comparten. Además, sumar dos términos nunca produce un producto: de una suma no puede salir un ab."
+        },
+        {
+          "clave": "B",
+          "texto": "Es verdadera, porque 3 más 4 es 7 y las letras se juntan.",
+          "esCorrecta": false,
+          "feedback": "Los coeficientes solo se suman entre términos semejantes, y estos no lo son. Compruébalo con a = 1 y b = 1: la expresión original vale 7 y ahí coincide, pero con a = 2 y b = 1 vale 10, mientras que 7ab vale 14. Un caso que calza no prueba una igualdad.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "Es verdadera solo cuando a y b valen lo mismo.",
+          "esCorrecta": false,
+          "feedback": "Compruébalo: con a = b = 2, la expresión original vale 6 + 8 = 14 y 7ab vale 28. No coinciden. Que las dos letras valgan lo mismo no convierte una suma en un producto.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "No se puede decidir mientras no se sepa cuánto valen a y b.",
+          "esCorrecta": false,
+          "feedback": "Sí se puede: basta con un solo par de valores que no calce para descartar la igualdad, y con a = 2 y b = 1 los dos lados dan 10 y 14. Además la razón de fondo no depende de ningún valor — los términos no son semejantes.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Los términos 3a y 4b tienen partes literales distintas, así que no son semejantes y la expresión 3a + 4b ya está reducida. La afirmación es falsa, y basta un contraejemplo para probarlo: con a = 2 y b = 1, el lado izquierdo vale 6 + 4 = 10 y 7ab vale 7 · 2 · 1 = 14. La coincidencia que ocurre con a = b = 1, donde ambos valen 7, es casual y no salva la igualdad. C es falsa porque con a = b = 2 los lados valen 14 y 28. D es falsa porque un único contraejemplo decide la cuestión sin necesidad de conocer los valores en general."
+    },
+    {
+      "id": "cierre-expresiones-5",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "La tabla muestra el valor de una expresión para distintos valores de *x*:\n\n| x | Valor |\n|---|---|\n| 1 | 25 |\n| 2 | 36 |\n| 3 | 49 |\n| 4 | 64 |\n\n¿Cuál de las siguientes expresiones produce esos valores?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x² + 16",
+          "esCorrecta": false,
+          "feedback": "Con x = 1 esta expresión da 17, no 25. Le falta el término del medio: los valores de la tabla crecen mucho más rápido de lo que crece x² solo.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "B",
+          "texto": "(x + 4)²",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los cuatro valores de la tabla son los cuadrados de 5, 6, 7 y 8, o sea de x + 4 en cada fila. Desarrollada, la expresión es x² + 8x + 16."
+        },
+        {
+          "clave": "C",
+          "texto": "x² + 8x",
+          "esCorrecta": false,
+          "feedback": "Con x = 1 esta expresión da 9, no 25. Tiene el término del medio pero le falta el último, el 16, y por eso todos sus valores quedan justo 16 unidades por debajo de los de la tabla.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "D",
+          "texto": "(x + 4)(x − 4)",
+          "esCorrecta": false,
+          "feedback": "Ese producto es una diferencia de cuadrados: desarrollado da x² − 16, y con x = 1 vale −15. Los cruces se cancelan y el resultado queda por debajo de x², mientras que la tabla va muy por encima.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "Los valores 25, 36, 49 y 64 son los cuadrados de 5, 6, 7 y 8. Como las filas corresponden a x = 1, 2, 3 y 4, en cada caso el número que se eleva al cuadrado es x + 4, de modo que la expresión es (x + 4)², equivalente a x² + 8x + 16. Verificación fila por fila: con x = 1, (1 + 4)² = 25 ✓; con x = 2, 36 ✓; con x = 3, 49 ✓; con x = 4, 64 ✓. Los distractores fallan ya en la primera fila: x² + 16 da 17, x² + 8x da 9 y (x + 4)(x − 4) da −15."
+    },
+    {
+      "id": "cierre-expresiones-6",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es el valor de **72 × 78**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5.625",
+          "esCorrecta": false,
+          "feedback": "Ese es el cuadrado de 75, el número central. Falta descontarle el cuadrado del desvío: los dos factores se apartan 3 unidades, así que hay que restar 9.",
+          "errorCatalogado": "error-16"
+        },
+        {
+          "clave": "B",
+          "texto": "5.616",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los dos factores están a 3 unidades de 75, así que el producto es 75² − 3² = 5.625 − 9 = 5.616."
+        },
+        {
+          "clave": "C",
+          "texto": "5.634",
+          "esCorrecta": false,
+          "feedback": "Sumaste el cuadrado del desvío en vez de restarlo. El producto de dos números que rodean a un centro siempre queda por debajo del cuadrado de ese centro, nunca por encima.",
+          "errorCatalogado": "error-15"
+        },
+        {
+          "clave": "D",
+          "texto": "5.184",
+          "esCorrecta": false,
+          "feedback": "Ese es 72 × 72, o sea elevaste al cuadrado el menor de los dos factores en lugar de multiplicarlos entre sí. El centro del que hay que partir es el 75, que está justo en medio de 72 y 78.",
+          "errorCatalogado": "error-14"
+        }
+      ],
+      "solucion": "Los factores 72 y 78 se apartan ambos 3 unidades de 75, así que el producto es una diferencia de cuadrados: 72 × 78 = (75 − 3)(75 + 3) = 75² − 3² = 5.625 − 9 = 5.616. Verificación por multiplicación directa: 72 × 78 = 72 × 80 − 72 × 2 = 5.760 − 144 = 5.616 ✓. Control de magnitud: el resultado debe quedar entre 72² = 5.184 y 5.625, y 5.616 cumple ✓."
+    },
+    {
+      "id": "cierre-expresiones-7",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Al desarrollar **(a + b)²** aparecen tres términos, mientras que al desarrollar **(a + b)(a − b)** quedan solo dos.\n\n¿Cuál es la razón de esa diferencia?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Que en el primer caso los dos términos cruzados tienen el mismo signo y se suman, y en el segundo tienen signos opuestos y se cancelan.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y es la misma cuenta en los dos casos. Al repartir la multiplicación aparecen siempre cuatro pedazos, dos de ellos cruzados. En (a + b)² los dos cruces son +ab y se suman en 2ab; en (a + b)(a − b) uno es +ab y el otro −ab, y se anulan. Lo único que cambia es un signo."
+        },
+        {
+          "clave": "B",
+          "texto": "Que una es una suma y la otra una resta, y las restas siempre dan menos términos.",
+          "esCorrecta": false,
+          "feedback": "La conclusión coincide con lo que pasa acá, pero la razón no se sostiene: no hay ninguna regla que diga que restar produzca menos términos. Desarrolla (a − b)² y vas a obtener tres términos igual, con una resta de por medio. Lo que decide es el signo de los cruces, no el de la expresión.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "Que en el segundo caso no hay términos cruzados, porque los factores son distintos.",
+          "esCorrecta": false,
+          "feedback": "Los cruces sí existen en los dos casos: repartir la multiplicación siempre produce cuatro pedazos. La diferencia es que en el segundo caso los dos cruces se anulan entre sí, no que no lleguen a aparecer.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "D",
+          "texto": "Que elevar al cuadrado agrega un término extra que la multiplicación de dos factores distintos no tiene.",
+          "esCorrecta": false,
+          "feedback": "Elevar al cuadrado no agrega nada aparte: (a + b)² es exactamente (a + b)(a + b), una multiplicación de dos factores como cualquier otra. El término del medio no es un agregado del cuadrado, es la suma de los dos cruces que en ese caso no se cancelan.",
+          "errorCatalogado": "error-9"
+        }
+      ],
+      "solucion": "Al repartir la multiplicación de dos binomios se obtienen siempre cuatro productos parciales, dos de los cuales son cruzados. En (a + b)(a + b) los cruces son a·b y b·a, ambos positivos, de modo que se suman y dan 2ab: quedan tres términos, a² + 2ab + b². En (a + b)(a − b) los cruces son −ab y +ab, iguales en valor y opuestos en signo, así que se cancelan y quedan solo dos términos, a² − b². La diferencia está en el signo de los cruces, no en la cantidad de productos parciales ni en que una expresión sea suma y la otra resta: (a − b)² también tiene tres términos."
+    },
+    {
+      "id": "cierre-expresiones-8",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "¿A qué expresión equivale\n\n**(x + 5)² − (x − 5)²** ?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "20x",
+          "esCorrecta": true,
+          "feedback": "Correcto. Desarrollando, x² + 10x + 25 menos x² − 10x + 25: los x² se cancelan, los 25 también, y los dos términos del medio se suman en 20x. Hay un segundo camino más corto: la expresión es una diferencia de cuadrados con a = x + 5 y b = x − 5, y factoriza como (2x)(10)."
+        },
+        {
+          "clave": "B",
+          "texto": "0",
+          "esCorrecta": false,
+          "feedback": "Estarías diciendo que los dos cuadrados son iguales, y no lo son: (x + 5)² y (x − 5)² se diferencian justamente en el signo del término del medio. Compruébalo con x = 3: el primero vale 64 y el segundo 4."
+        },
+        {
+          "clave": "C",
+          "texto": "2x² + 50",
+          "esCorrecta": false,
+          "feedback": "Sumaste los dos desarrollos en vez de restarlos. Con la suma los términos del medio se cancelan y quedan los cuadrados; con la resta pasa exactamente al revés. Compruébalo con x = 3: la expresión original vale 60 y la tuya 68.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "20x + 50",
+          "esCorrecta": false,
+          "feedback": "Le aplicaste el signo menos solo al primer término del segundo paréntesis y dejaste el 25 sumando. Al restar una expresión completa hay que cambiarle el signo a todos sus términos: los dos 25 se cancelan entre sí.",
+          "errorCatalogado": "error-4"
+        }
+      ],
+      "solucion": "Por el camino de desarrollar y reducir: (x + 5)² = x² + 10x + 25 y (x − 5)² = x² − 10x + 25. Al restar la segunda de la primera hay que cambiar el signo de todos sus términos: x² + 10x + 25 − x² + 10x − 25. Los x² se cancelan, los términos independientes también, y quedan 10x + 10x = 20x. Por el camino de factorizar: la expresión es una diferencia de cuadrados con a = x + 5 y b = x − 5, así que equivale a (a + b)(a − b) = [(x + 5) + (x − 5)] · [(x + 5) − (x − 5)] = (2x)(10) = 20x. Las dos vías coinciden. Verificación numérica con x = 3: (8)² − (−2)² = 64 − 4 = 60, y 20 · 3 = 60 ✓."
+    }
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-2",
+      "descripcion": "Multiplica las letras al sumar: convierte una suma de términos con partes literales distintas en un único término que las lleva a todas pegadas (de 4r + 7s pasa a 11rs)."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Pierde el signo al reducir: trata un término que se está restando como si se sumara, y el coeficiente del resultado sale mayor en vez de menor."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Cruza los coeficientes entre las partes literales: hace bien las dos cuentas pero le entrega a una letra el resultado que le correspondía a la otra."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Encuentra el término del medio pero lo cuenta una sola vez: escribe (a+b)² como a² + ab + b² en vez de a² + 2ab + b², sin notar que el cruce ocurre dos veces."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Desarrolla el cuadrado de una suma y abandona el último término: escribe (a+b)² como a² + 2ab, perdiendo el cuadrado del segundo sumando."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Escribe la diferencia de dos cuadrados como un cuadrado de binomio: factoriza a² − b² como (a − b)², confundiendo la forma que produce dos factores distintos con la que produce un factor repetido. Es el reverso exacto del error-9: allá se perdía el término del medio al desarrollar, acá se inventa un término del medio que la expresión no tiene."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Aplica la forma de la diferencia de cuadrados a una suma: factoriza a² + b² como (a + b)(a − b), sin notar que ese producto devuelve una resta. Basta multiplicar los dos factores propuestos para ver que no reconstruyen la expresión de partida."
+    },
+    {
+      "id": "error-14",
+      "descripcion": "Aplica la forma sin comprobar que se cumplan sus condiciones: trata como diferencia de cuadrados una expresión cuyo segundo término no es un cuadrado, o usa el atajo del producto simétrico con dos factores que no se apartan lo mismo del número central."
+    },
+    {
+      "id": "error-15",
+      "descripcion": "Al calcular un producto simétrico, suma el cuadrado del desvío en vez de restarlo, y entrega un resultado mayor que el cuadrado del número central cuando siempre tiene que ser menor."
+    },
+    {
+      "id": "error-16",
+      "descripcion": "Entrega el cuadrado del número central sin descontar nada, olvidando que los dos factores se apartan de él y que ese apartamiento cuesta exactamente el cuadrado del desvío."
+    }
+  ],
+  "contextosNumericos": [
+    "COBERTURA: ocho ítems repartidos entre los tres focos del módulo. Los ítems 1 y 4 evalúan operatoria con términos semejantes (L1); el 2 y el 5, el cuadrado de un binomio (L2); el 3 y el 6, la factorización por diferencia de cuadrados (L3); el 7 contrasta las dos formas de L2 y L3; el 8 integra los tres.",
+    "cierre-expresiones-1 (barcazas, resolver, baja): reducción de una expresión con dos partes literales y un término que se resta; distractores por signo perdido, por fundir las dos clases y por cruzar los coeficientes. Reutiliza el dominio de L1 sin repetir ninguna de sus expresiones.",
+    "cierre-expresiones-2 (cálculo mental, resolver, media): 99 al cuadrado da 9801; distractores 8181 (sin término del medio), 8991 (cruce contado una sola vez) y 9720 (sin el último término).",
+    "cierre-expresiones-3 (algebraico, modelar, media): factorización de la diferencia entre el cuadrado de una letra y ciento cuarenta y cuatro; distractores con cuadrado de binomio, con la raíz sin extraer y con dos números distintos en los paréntesis.",
+    "cierre-expresiones-4 (algebraico, argumentar, media): evalúa la afirmación de que dos términos con letras distintas se pueden fundir en uno; contraejemplo con valores dos y uno.",
+    "cierre-expresiones-5 (tabla de valores, representar, media): tabla de cuatro filas cuyos valores son 25, 36, 49 y 64 para los valores uno a cuatro de la letra; la expresión es el cuadrado de la letra más cuatro. La tabla parte en uno y no en cero a propósito, porque en cero uno de los distractores coincidiría con la respuesta correcta.",
+    "cierre-expresiones-6 (cálculo mental, resolver, media): 72 por 78 da 5616, con centro 75; distractores 5625 (cuadrado del centro sin descontar), 5634 (sumó el cuadrado del desvío) y 5184 (elevó al cuadrado el menor de los factores).",
+    "cierre-expresiones-7 (algebraico, argumentar, alta): sin cifras; contrasta por qué el cuadrado de un binomio deja tres términos y el producto de la suma por la diferencia deja dos.",
+    "cierre-expresiones-8 (algebraico, modelar, alta, integrador): la resta entre el cuadrado de una letra más cinco y el cuadrado de esa letra menos cinco, que equivale a veinte veces la letra. Admite dos caminos, desarrollar y reducir o factorizar como diferencia de cuadrados, y ambos coinciden. Control con el valor tres, que da sesenta por las dos vías.",
+    "NOTA DE NO COLISIÓN: las cifras de este archivo se barrieron contra los contextosNumericos de todo content/ con las tres lecciones del módulo ya incluidas, y ninguna aparece en otro archivo. Se hace constar un dato útil para el futuro: el espacio de cuadrados de dos cifras sin colisión quedó casi agotado por L2 y L3, y el barrido devolvió un único candidato, que es el que usa el ítem 2.",
+    "IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json y de las tres lecciones del módulo): no se transcriben acá umbrales, conteos ni listas de cifras verificadas, porque scripts/auditar-leccion.mjs lee este campo como cifras propias del archivo y generaría colisiones falsas."
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Expresiones algebraicas (docs/temario-demre-m1-2027.md) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/calibracion-lecciones-e-items.md — formato de cierre de módulo, distribución de habilidades (§3.5) y calibración de dificultad (§5.1).",
+      "docs/reglas-modulo.md — regla 3 (todo distractor derivable y en banda de magnitud) y regla 5 en su versión corregida el 2026-08-14, de donde sale la decisión de embeber el catálogo también en el cierre.",
+      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — origen literal de las entradas error-2, error-4, error-6 y error-8 del catálogo embebido, y del dominio de barcazas del ítem 1.",
+      "content/lecciones/expresiones-rectangulo.json — origen literal de las entradas error-9, error-10 y error-11, y del dominio de cálculo mental de los ítems 2 y 6.",
+      "content/lecciones/expresiones-deshacer-producto.json — origen literal de las entradas error-12 a error-16.",
+      "content/cierres/cierre-proporcionalidad.json — leído como referencia de forma, densidad y distribución de habilidades de un cierre de módulo (archivo propio del proyecto, no fuente externa)."
+    ],
+    "declaracionOriginalidad": "Enunciados, expresiones y contextos creados desde cero por el autor del proyecto para este cierre. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. Los dominios reutilizados —barcazas y club de cálculo mental— son los de las tres lecciones del módulo, ya verificados sin colisión con consultar-fuentes.mjs corrido fuera del hilo de redacción, y ninguna de sus expresiones numéricas se repite acá. AUDITORÍAS INDEPENDIENTES: PENDIENTES a la fecha de este archivo, igual que en las tres lecciones. Ni la revisión matemática ni la auditoría de originalidad se han corrido todavía; ambas van en hilos aparte abiertos con /clear, porque el hilo que redactó no puede juzgar lo que escribió (CLAUDE.md regla 5). La aritmética anotada en las soluciones y en las _notasInternas es autochequeo del redactor, no verificación independiente. Se hace constar además que scripts/auditar-leccion.mjs no audita cierres, de modo que este archivo no tiene ninguna verificación mecánica de coherencia de catálogo con las lecciones del módulo: la que se hizo fue manual.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; auditorías matemática y de originalidad pendientes al momento de escribir este archivo",
+    "fecha": "2026-08-14"
+  }
+}

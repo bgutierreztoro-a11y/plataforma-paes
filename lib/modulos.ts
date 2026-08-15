@@ -116,6 +116,7 @@ export const IDS_CIERRE = [
   "cierre-ecuaciones-lineales",
   "cierre-porcentaje",
   "cierre-proporcionalidad",
+  "cierre-expresiones-algebraicas",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -243,6 +244,7 @@ export const EJES = [
           "expresiones-rectangulo",
           "expresiones-deshacer-producto",
         ],
+        cierreId: "cierre-expresiones-algebraicas",
       },
       {
         id: "proporcionalidad",
