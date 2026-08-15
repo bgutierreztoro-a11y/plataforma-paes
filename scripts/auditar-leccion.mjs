@@ -35,6 +35,9 @@
  *   "auditoria": {
  *     "constante": 40,
  *     "sliderJustificado": "por qué esta lección sí exige el slider",
+ *     "camposAdimensionales": {
+ *       "idDelCampo": "por qué este número no tiene magnitud que declarar"
+ *     },
  *     "colisionesPermitidas": [
  *       { "valor": 40, "motivo": "es la constante: distractor antes del paso 5, respuesta en el paso 5" }
  *     ]
@@ -264,13 +267,35 @@ function chequearFiltracionConstante(data, constante, add) {
   }
 }
 
-/** 4. Todo campo numérico declara unidad; ningún id de campo lleva la cifra dentro. */
+/**
+ * 4. Todo campo numérico declara unidad; ningún id de campo lleva la cifra dentro.
+ *
+ * EXCEPCIÓN ADIMENSIONAL (2026-08-14). La regla se escribió cuando todo el
+ * contenido medía magnitudes físicas —mililitros, butacas, toneladas— y un campo
+ * sin unidad era siempre un descuido. No cubre el contenido cuyos números no
+ * tienen magnitud: en el módulo Expresiones algebraicas «73 × 73» no se mide en
+ * nada, y lo mismo pasa en buena parte del eje Números. Inventarle una unidad a
+ * esos campos haría pasar el chequeo mintiendo y dejaría el precedente de que la
+ * unidad es un trámite.
+ *
+ * Por eso la salida es una excepción DECLARADA, mismo patrón que
+ * `auditoria.sliderJustificado`: la lección lista los campos adimensionales con
+ * su motivo en `auditoria.camposAdimensionales`, uno por campo, y con eso el
+ * chequeo pasa y deja rastro verde en vez de silencio. Un campo sin unidad que
+ * no esté declarado sigue siendo 🔴.
+ */
 function chequearCamposNumericos(data, add) {
+  const adimensionales = data?.auditoria?.camposAdimensionales ?? {};
   for (const { bloque, donde } of bloquesDe(data)) {
     if (bloque?.tipo !== 'numerica') continue;
     for (const c of bloque?.campos ?? []) {
       if (typeof c?.unidad !== 'string' || c.unidad.trim() === '') {
-        add('🔴', 'campo-sin-unidad', `${donde}: el campo "${c?.id}" no declara unidad`);
+        const motivo = adimensionales[c?.id];
+        if (typeof motivo === 'string' && motivo.trim().length >= 20) {
+          add('🟢', 'campo-adimensional', `${donde}: el campo "${c?.id}" no lleva unidad y está declarado en auditoria.camposAdimensionales`);
+        } else {
+          add('🔴', 'campo-sin-unidad', `${donde}: el campo "${c?.id}" no declara unidad. Si su número no tiene magnitud, decláralo en auditoria.camposAdimensionales con un motivo de ≥20 caracteres`);
+        }
       }
       if (/\d/.test(String(c?.id ?? ''))) {
         add('🔴', 'id-con-cifra', `${donde}: el id "${c?.id}" contiene una cifra; los ids son neutros (regla de docs/reglas-modulo.md)`);
