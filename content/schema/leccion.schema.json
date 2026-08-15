@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "leccion.schema.json",
   "title": "Contenido Plataforma M1 (lección, diagnóstico o cierre)",
-  "$comment": "Schema v0. Los bloques de la sección 'pasos.bloques' fueron extraídos de leccion-1-guion.md y leccion-2-guion.md (no diseñados en abstracto). El validador (scripts/validar-contenido.mjs) aplica exigencia gradual según 'estado': borrador = estructura básica; revision = contrato completo; publicable = además checklist de originalidad, revisión matemática y cero placeholders. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan.",
+  "$comment": "Schema v0. Los bloques de la sección 'pasos.bloques' fueron extraídos de leccion-1-guion.md y leccion-2-guion.md (no diseñados en abstracto). El validador (scripts/validar-contenido.mjs) exige el contrato completo a todo archivo de content/, sin gradualidad: no hay campo 'estado' ni pipeline borrador/revision/publicable, ni 'checklistOriginalidad' ni 'revisionMatematica' — los tres se eliminaron el 2026-08-12 (CLAUDE.md regla 5). Un archivo que existe en content/ y pasa 'npm run validar' es contenido terminado; la revisión son dos auditorías, matemática y de originalidad, corridas en hilos aislados del que redactó. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan.",
   "type": "object",
   "required": ["tipo", "id", "titulo", "proveniencia"],
   "properties": {
