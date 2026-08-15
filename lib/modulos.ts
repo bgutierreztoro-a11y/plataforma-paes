@@ -53,8 +53,8 @@ export const IDS_LECCION = [
   "porcentaje-rebaja-doble",
   "porcentaje-volver-atras",
   "potencias-multiplicar-corto",
-  "potencias-exponente-racional",
   "potencias-raiz-escondida",
+  "potencias-problemas-en-contexto",
 
   // Álgebra y funciones
   "expresiones-rectangulo",
@@ -212,8 +212,8 @@ export const EJES = [
           "Manejar potencias y raíces, incluidos los exponentes negativos y fraccionarios.",
         lecciones: [
           "potencias-multiplicar-corto",
-          "potencias-exponente-racional",
           "potencias-raiz-escondida",
+          "potencias-problemas-en-contexto",
         ],
       },
     ],

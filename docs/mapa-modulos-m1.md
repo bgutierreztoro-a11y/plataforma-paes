@@ -38,6 +38,14 @@ un profesor puede auditar contra el temario.
 > `porcentaje-concepto` el 2026-08-11: el motivo «cartel» ya estructura dos pasos
 > de `inecuaciones-problemas`, y el contenido real de la lección resultó ser una
 > encuesta de asistencia, no un cartel.
+>
+> Volvió a pasar con `potencias-exponente-racional` → `potencias-problemas-en-contexto`
+> el 2026-08-15, por la otra cara del mismo criterio: al repartir los tres
+> descriptores del temario uno por lección, esa L3 pasó a ser la de problemas en
+> contexto, y un id llamado «exponente-racional» sobre ella habría quedado
+> mintiendo. Tampoco había archivo que romper. En el mismo cambio, `potencias-raiz-escondida`
+> pasó de tercera a segunda posición y los tres títulos se alinearon con los
+> descriptores del temario.
 
 **Declarar no es escribir.** Los 48 ids están en el registro; 18 tienen archivo.
 Un id sin archivo no rompe nada: `verificarRegistroDeTemas()` lo deja pasar como
@@ -105,9 +113,9 @@ Cierre: `cierre-porcentaje`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `potencias-multiplicar-corto` | Propiedades de potencias de base racional | no |
-| `potencias-exponente-racional` | Exponente racional y su relación con las raíces | no |
-| `potencias-raiz-escondida` | Descomposición y propiedades de raíces enésimas | no |
+| `potencias-multiplicar-corto` | Propiedades de las potencias de base racional y exponente racional | no |
+| `potencias-raiz-escondida` | Descomposición y propiedades de las raíces enésimas en los números reales | no |
+| `potencias-problemas-en-contexto` | Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos | no |
 
 ---
 
