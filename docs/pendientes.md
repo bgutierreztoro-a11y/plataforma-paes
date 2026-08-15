@@ -1,5 +1,130 @@
 # Pendientes técnicos
 
+## 🔴 El guard `catalogo-divergente` no cubre los cierres: nada compara su catálogo con el de sus lecciones (abierta 2026-08-14, al cerrar el módulo Expresiones algebraicas)
+
+Desde la regla 5 de `docs/reglas-modulo.md` corregida el 2026-08-14, el catálogo
+de errores va embebido en **cada** archivo del módulo, cierre incluido, con las
+descripciones copiadas carácter a carácter. El guard `catalogo-divergente` de
+`scripts/auditar-leccion.mjs` existe justamente para impedir que esas copias
+deriven.
+
+**No mira los cierres, y por los dos lados.** `archivosDeLeccion()` lee
+únicamente `content/lecciones/`, así que la corrida por defecto nunca ve un
+cierre; pasarle uno a mano corta antes, en el chequeo de `tipo`, que solo acepta
+`leccion`. Y el bucle del guard itera sobre esa misma función, de modo que un
+cierre tampoco entra jamás como el "otro" archivo con el que comparar.
+
+**Consecuencia:** un cierre con catálogo embebido puede divergir de las
+lecciones de su módulo sin que nada lo reporte. `cierre-expresiones-algebraicas.json`
+lleva 12 entradas copiadas de sus tres lecciones y su coherencia se verificó **a
+mano** al escribirlo (15 pares comparados, 0 divergentes); no hay ninguna
+herramienta que la vuelva a verificar cuando alguien toque una descripción en
+cualquiera de los cuatro archivos. `cierre-proporcionalidad.json` está en la
+misma situación con sus 11 entradas.
+
+La entrada de `cierre-expresiones-algebraicas` ya está en `MODULO_POR_LECCION`,
+pero es inerte: registrar el id no sirve de nada mientras el auditor no recorra
+la carpeta. **Cerrarlo es ensanchar el auditor a `content/cierres/`**, no agregar
+entradas a esa tabla.
+
+## 🟡 Namespace de ids de unidad: el DAG y el registro usan nombres distintos (abierta 2026-08-14)
+
+`content/diagnostico/dag-m1.json` y `lib/modulos.ts` nombran las mismas unidades
+de forma distinta, y no hay nada que cruce las dos convenciones:
+
+| DAG | Registro / mapa |
+|---|---|
+| `enteros-racionales` | `enteros-y-racionales` |
+| `potencias-raices` | `potencias-y-raices` |
+| `ecuaciones-inecuaciones` | `ecuaciones-e-inecuaciones-primer-grado` |
+| `funcion-lineal-afin` | `funcion-lineal-y-afin` |
+| `semejanza-proporcionalidad` | `semejanza-y-proporcionalidad` |
+| `tablas-graficos` | `tablas-y-graficos` |
+| `medidas-posicion` | `medidas-de-posicion` |
+| `reglas-probabilidad` | `reglas-de-probabilidades` |
+
+Ocho de las dieciséis difieren. Hoy no rompe nada porque nadie cruza las dos
+listas programáticamente, pero cualquier chequeo futuro que quiera validar el
+orden de construcción contra el DAG —o el cargador de ítems de diagnóstico, que
+ya tiene su propio desajuste `unidad`/`unidadId` anotado más abajo— va a tener
+que resolver el mapeo a mano. Al detectarlo hubo que escribir la
+correspondencia a mano para calcular qué módulos eran elegibles.
+
+**Dato adicional del mismo barrido:** el DAG ya se violó una vez como orden de
+producción. `ecuaciones-inecuaciones` está construido y su prerrequisito
+`expresiones-algebraicas` se construyó después, el 2026-08-14. Conviene revisar
+si los `prerrequisitos` en prosa de las tres lecciones de Ecuaciones deberían
+referenciar ahora las tres de Expresiones algebraicas.
+
+## 🟡 `cierre-v0.json`: sin catálogo embebido y sin un solo `errorCatalogado` (abierta 2026-08-14)
+
+Es el cierre del módulo Función lineal y afín. Medido sobre los cinco cierres
+del repo:
+
+```
+cierre-ecuaciones-lineales.json   items=8  catalogoErrores=NO  distractores con errorCatalogado=17
+cierre-enteros-racionales.json    items=8  catalogoErrores=NO  distractores con errorCatalogado=21
+cierre-porcentaje.json            items=8  catalogoErrores=NO  distractores con errorCatalogado=24
+cierre-proporcionalidad.json      items=8  catalogoErrores=11  distractores con errorCatalogado=24
+cierre-v0.json                    items=8  catalogoErrores=NO  distractores con errorCatalogado=0
+```
+
+`cierre-v0` es el peor de los cinco y por partida doble: no tiene catálogo
+embebido —como tres de los otros cuatro— pero además **ninguno de sus 24
+distractores declara `errorCatalogado`**, así que ni siquiera tiene el cableado
+que los demás sí tienen. Los otros tres al menos quedarían resueltos con solo
+embeber el catálogo; este necesita además mapear distractor por distractor.
+
+Se conecta con la entrada ya abierta sobre la Capa 2 de los cierres, y con la
+deuda de `funcion-lineal-afin`, cuyo catálogo tiene dos L1 que reciclan
+`error-1` a `error-5` con significados distintos: **mapear los distractores de
+`cierre-v0` no se puede hacer antes de resolver esa colisión de ids**, porque
+hoy `error-1` es ambiguo dentro de ese módulo.
+
+## 🟢 Dos vestigios del pipeline retirado en `scripts/validar-contenido.mjs` (anotada 2026-08-14)
+
+El sistema `estado` / `checklistOriginalidad` / `revisionMatematica` se eliminó
+el 2026-08-12, y el `$comment` de `content/schema/leccion.schema.json` se
+corrigió el 2026-08-14 (commit `5e8b130`). Quedan dos rastros en el validador,
+los dos inofensivos y los dos capaces de confundir a quien lea el archivo:
+
+- **Línea ~465.** El comentario de `validarFormaItemDiagnostico` menciona «el
+  contrato de verificacionNumerica/revisionMatematica/checklistOriginalidad/estado».
+  Ninguno de esos tres campos existe en `content/schema/item-diagnostico.schema.json`
+  — verificado: sus propiedades son `id`, `unidad`, `unidadesInvolucradas`,
+  `temarioDemre`, `enunciado`, `alternativas`, `verificacionNumerica` y
+  `contextoNumerico`.
+- **Línea 36.** La constante se llama `MIN_FEEDBACK_PUBLICABLE`. Su valor (40) es
+  correcto y vigente; lo que arrastra es la palabra del pipeline retirado en el
+  nombre.
+
+No bloquea nada. Se anota para que se limpie junto con el próximo cambio que
+toque ese archivo, no como tarea propia.
+
+## 🟡 El espacio de cuadrados de dos cifras sin colisión numérica está casi agotado (abierta 2026-08-14)
+
+Al escribir el cierre de Expresiones algebraicas, el barrido de cuadrados de dos
+cifras cuyas piezas —el cuadrado, los dos cuadrados parciales y el valor del
+error de olvidar el término del medio— estuvieran todas libres contra los
+`contextosNumericos` de `content/` devolvió **un único candidato**, que es el que
+usa el ítem 2 de ese cierre. Cuando se empezó el módulo había diez.
+
+El módulo consumió cinco cuadrados y seis productos simétricos. Medido con el
+mismo criterio antes y después, las cifras distintas ocupadas en el rango que el
+auditor mira pasaron de **201 a 251**: el módulo se llevó cincuenta, una cuarta
+parte de todo lo que el corpus había acumulado en cinco módulos anteriores.
+
+**Por qué importa y a quién:** el módulo **Potencias y raíces enésimas** trabaja
+exactamente sobre este mismo material numérico —cuadrados y raíces de números de
+dos cifras— y va a chocar de frente con esto. Conviene decidir antes de
+empezarlo si el criterio de colisión sigue siendo el correcto para contenido
+adimensional: hoy `scripts/auditar-leccion.mjs` trata igual la reaparición de un
+`4900` que es «70 al cuadrado» en dos lecciones distintas que la de un `4900`
+que fuera una cantidad de litros, y en el primer caso la coincidencia no dice
+nada — el cuadrado de 70 es el cuadrado de 70 en cualquier contexto. Tal vez el
+chequeo deba distinguir cifras que son *datos de un contexto* de cifras que son
+*resultados aritméticos inevitables*.
+
 ## 🟡 No hay forma de dibujar un gráfico: ni en un bloque ni en un ítem (abierta 2026-08-14)
 
 Salió al escribir `proporcionalidad-inversa.json`, cuyo concepto —una curva que decrece cada vez más despacio y se acerca a los dos ejes sin tocarlos— es la primera cosa del proyecto que de verdad pide una figura.
