@@ -161,32 +161,10 @@
       "tipo": "descubrimiento",
       "titulo": "3 ÷ 3/4 = 4: dividir puede agrandar",
       "_notasInternas": [
-        "INSIGHT FIJADO del módulo (docs/diseno-modulo-enteros-racionales.md §a, L2). El control explora el tamaño de porción y muestra cuántas porciones completas caben en las 3 tazas fijas; a menor tamaño de porción, más porciones rinden. 3 ÷ 3/4 = 4 > 3, contradice 'dividir siempre achica' (error-7)."
+        "INSIGHT FIJADO del módulo (docs/diseno-modulo-enteros-racionales.md §a, L2). A menor tamaño de porción, más porciones rinden de las 3 tazas fijas; 3 ÷ 3/4 = 4 > 3, contradice 'dividir siempre achica' (error-7).",
+        "2026-08-15: se quitó el bloque interactivoSlider que exploraba esto con un control. Renderizaba GraficoPendiente (plano cartesiano de función lineal y=mx+b), que no aporta a este concepto y confundía. El bloque de texto siguiente ya explica el resultado exacto (3 ÷ 3/4 = 4)."
       ],
       "bloques": [
-        {
-          "tipo": "interactivoSlider",
-          "variante": "unaVariable",
-          "variables": [
-            {
-              "nombre": "tamaño de porción por bizcocho (tazas)",
-              "min": 0.25,
-              "max": 3,
-              "valorInicial": 0.75,
-              "editable": true
-            },
-            {
-              "nombre": "harina total disponible (tazas, fijo)",
-              "min": 0,
-              "max": 3,
-              "valorInicial": 3,
-              "editable": false
-            }
-          ],
-          "instruccion": "Mueve el control del tamaño de porción y observa cuántos bizcochos completos rinden las 3 tazas fijas de harina. ¿Qué pasa con el número de bizcochos cuando la porción se hace más chica? ¿Y cuando se hace más grande, cercana a 3?",
-          "exploracionMinima": 3,
-          "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba con una porción chica (cerca de 0,25), con la porción original (0,75) y con una porción grande (cercana a 3), antes de seguir."
-        },
         {
           "tipo": "texto",
           "contenido": "Con porciones de 3/4 de taza, las 3 tazas rinden exactamente:\n\n3 ÷ 3/4 = 3 × 4/3 = 12/3 = 4 bizcochos\n\nCuatro bizcochos. El resultado (4) es MAYOR que el número que dividiste (3). Dividir por una fracción menor que 1 no achica: agranda.\n\nTiene sentido si lo piensas como reparto: 3/4 de taza es MENOS que una taza completa, así que caben más porciones de 3/4 que tazas enteras hay. Igual que en el diagrama del paso anterior: 12 cuartos ÷ 3 cuartos por bizcocho = 4."

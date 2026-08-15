@@ -138,32 +138,9 @@
       "tipo": "pistas",
       "titulo": "Explora la recta numérica de profundidades",
       "_notasInternas": [
-        "Slider de una variable con marca fija de referencia en −27 m (Grupo B). Umbral de exploración mínima antes de avanzar."
+        "2026-08-15: se quitó el bloque interactivoSlider que había acá (slider de una variable con marca fija de referencia en −27 m). Renderizaba GraficoPendiente (plano cartesiano de función lineal y=mx+b), que no aporta a este concepto de recta numérica y confundía. El paso queda con el bloque de pistas."
       ],
       "bloques": [
-        {
-          "tipo": "interactivoSlider",
-          "variante": "unaVariable",
-          "variables": [
-            {
-              "nombre": "profundidad explorada (m)",
-              "min": -40,
-              "max": 0,
-              "valorInicial": -12,
-              "editable": true
-            },
-            {
-              "nombre": "marca de referencia: Grupo B (−27 m)",
-              "min": -40,
-              "max": 0,
-              "valorInicial": -27,
-              "editable": false
-            }
-          ],
-          "instruccion": "Mueve el control y observa su posición en la recta numérica de profundidades, comparándola con la marca fija del Grupo B en −27 m. ¿Cuándo tu control queda 'más profundo' que la marca? ¿Cuándo queda 'menos profundo'?",
-          "exploracionMinima": 3,
-          "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba llevar el control a un valor cercano a la superficie, a uno cercano a la marca fija, y a uno más profundo que la marca, antes de seguir."
-        },
         {
           "tipo": "pistas",
           "condicionActivacion": "bajoDemanda",

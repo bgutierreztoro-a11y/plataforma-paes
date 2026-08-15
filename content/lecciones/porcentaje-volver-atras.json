@@ -173,8 +173,8 @@
       "titulo": "La ida y la vuelta no cierran",
       "_notasInternas": [
         "EL CORAZÓN DE LA LECCIÓN. Insight que el estudiante construye solo: aplicar el recargo y después quitar el mismo porcentaje NO devuelve al punto de partida. La última columna marca 0,96 en todas las filas —nunca 1— y ese 0,96 es exactamente 1,20 × 0,80, el mismo mecanismo que el 0,72 de la lección anterior.",
-        "Mecánica: slider de una variable. El control editable es el valor de la entrada (2.000→6.000); el recargo queda fijo en 20% y NO es manipulable (editable: false). Cuatro columnas; la última es recuperado ÷ original y nunca cambia. exploracionMinima: 4.",
-        "ESCALERA CAMBIADA (2026-08-12, tras auditoría). El slider corría antes de 5.000 a 25.000 con las filas 5.000/10.000/15.000/20.000/25.000 — exactamente el mismo dominio y las mismas cinco bases que el slider de porcentaje-rebaja-doble.json, de modo que las dos lecciones consecutivas del módulo mostraban la misma escalera de precios. Se bajó a 2.000→6.000. Queda un solape residual aceptado por el autor: con precios redondos y los factores 1,20 y 0,80 no existe una escalera exacta sin ninguna cifra en común con L2. La fila 5.000 → 6.000 coincide a propósito con el caso de apertura del paso 1, para que el estudiante reconozca su propio ejemplo dentro de la tabla.",
+        "2026-08-15: se quitó el bloque interactivoSlider que había acá. Renderizaba GraficoPendiente (plano cartesiano de función lineal y=mx+b), que no aporta a este concepto y confundía. La tabla completa queda directamente en el bloque de texto siguiente; el patrón se ve igual, leído en vez de explorado con un control.",
+        "ESCALERA CAMBIADA (2026-08-12, tras auditoría). El slider (ya retirado) corría antes de 5.000 a 25.000 con las filas 5.000/10.000/15.000/20.000/25.000 — exactamente el mismo dominio y las mismas cinco bases que el slider de porcentaje-rebaja-doble.json, de modo que las dos lecciones consecutivas del módulo mostraban la misma escalera de precios. Se bajó a 2.000→6.000. Queda un solape residual aceptado por el autor: con precios redondos y los factores 1,20 y 0,80 no existe una escalera exacta sin ninguna cifra en común con L2. La fila 5.000 → 6.000 coincide a propósito con el caso de apertura del paso 1, para que el estudiante reconozca su propio ejemplo dentro de la tabla.",
         "La regla V = X ÷ f NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que la vuelta se queda corta SIEMPRE en la misma proporción.",
         "Verificación de la tabla completa: 2.000 × 1,20 = 2.400, y 2.400 × 0,80 = 1.920 (1.920/2.000 = 0,96); 3.000 → 3.600 → 2.880 (0,96); 4.000 → 4.800 → 3.840 (0,96); 5.000 → 6.000 → 4.800 (0,96); 6.000 → 7.200 → 5.760 (0,96). Los cinco valores dan cantidades exactas: elegidos así a propósito.",
         "Verificación de la micro-pregunta: el divisor que recupera el original es 1,2, porque el total es siempre original × 1,20. Distractores: 0,8 y 0,2 (divisores mal elegidos, ambos descritos en error-7); 0,96 (es el factor de la ida y vuelta completa, no el de la vuelta)."
@@ -191,31 +191,8 @@
           ]
         },
         {
-          "tipo": "interactivoSlider",
-          "variante": "unaVariable",
-          "instruccion": "Mueve el control del valor de la entrada y observa la última columna, que compara el valor recuperado con el valor original. Las tres primeras columnas cambian. La cuarta no cambia nunca — y no vale 1.",
-          "variables": [
-            {
-              "nombre": "Valor de la entrada ($)",
-              "min": 2000,
-              "max": 6000,
-              "valorInicial": 2000,
-              "editable": true
-            },
-            {
-              "nombre": "Recargo por compra online (%)",
-              "min": 20,
-              "max": 20,
-              "valorInicial": 20,
-              "editable": false
-            }
-          ],
-          "exploracionMinima": 4,
-          "feedbackExploracionInsuficiente": "Todavía no has probado suficientes entradas como para estar seguro de que hay un patrón. Prueba al menos cuatro valores distintos —por ejemplo 2.000, 3.000, 5.000 y 6.000— y anota qué muestra la última columna en cada uno."
-        },
-        {
           "tipo": "texto",
-          "contenido": "Esto es lo que aparece al recorrer el control:\n\n| Entrada | Total con 20% de recargo | Al total le quito el 20% | Recuperado ÷ Entrada |\n|---------|--------------------------|--------------------------|----------------------|\n| 2.000 | 2.400 | 1.920 | 0,96 |\n| 3.000 | 3.600 | 2.880 | 0,96 |\n| 4.000 | 4.800 | 3.840 | 0,96 |\n| 5.000 | 6.000 | 4.800 | 0,96 |\n| 6.000 | 7.200 | 5.760 | 0,96 |\n\nLa última columna nunca dice 1. Dice **0,96 siempre**.\n\nO sea: la ida y la vuelta **no cierran**. Después de sumar el 20% y volver a quitarlo, siempre te queda el 96% de lo que tenías. Falta un 4%, y falta igual sea cual sea el precio.\n\n¿Por qué? Porque el 20% de ida se calcula sobre la entrada, y el 20% de vuelta se calcula sobre el total, que es más grande. Se resta más de lo que se había sumado.\n\nEn factores, esto ya lo sabes escribir: la ida multiplica por **1,20** y la vuelta por **0,80**. Y 1,20 × 0,80 = **0,96**, no 1.\n\nAsí que quitar el porcentaje no es la operación inversa. La verdadera inversa de multiplicar por 1,20 es **dividir por 1,20**."
+          "contenido": "Así se ve la tabla completa:\n\n| Entrada | Total con 20% de recargo | Al total le quito el 20% | Recuperado ÷ Entrada |\n|---------|--------------------------|--------------------------|----------------------|\n| 2.000 | 2.400 | 1.920 | 0,96 |\n| 3.000 | 3.600 | 2.880 | 0,96 |\n| 4.000 | 4.800 | 3.840 | 0,96 |\n| 5.000 | 6.000 | 4.800 | 0,96 |\n| 6.000 | 7.200 | 5.760 | 0,96 |\n\nLa última columna nunca dice 1. Dice **0,96 siempre**.\n\nO sea: la ida y la vuelta **no cierran**. Después de sumar el 20% y volver a quitarlo, siempre te queda el 96% de lo que tenías. Falta un 4%, y falta igual sea cual sea el precio.\n\n¿Por qué? Porque el 20% de ida se calcula sobre la entrada, y el 20% de vuelta se calcula sobre el total, que es más grande. Se resta más de lo que se había sumado.\n\nEn factores, esto ya lo sabes escribir: la ida multiplica por **1,20** y la vuelta por **0,80**. Y 1,20 × 0,80 = **0,96**, no 1.\n\nAsí que quitar el porcentaje no es la operación inversa. La verdadera inversa de multiplicar por 1,20 es **dividir por 1,20**."
         },
         {
           "tipo": "numerica",

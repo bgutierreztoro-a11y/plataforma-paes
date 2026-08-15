@@ -168,9 +168,9 @@
       "titulo": "El número que no cambia nunca",
       "_notasInternas": [
         "EL CORAZÓN DE LA LECCIÓN. Insight que el estudiante construye solo: al cambiar el total, lo que se mantiene fijo no es cuánto se SUMA, sino por cuánto se MULTIPLICA. Ese factor fijo (0,30) ES el 30%.",
-        "Mecánica aprobada antes de redactar: slider de una variable. El control editable es el tamaño del grupo (20→60); el porcentaje queda fijo en 30 y NO es manipulable (editable: false). En pantalla, tres columnas que se recalculan solas; la tercera —el cociente— nunca cambia. exploracionMinima: 4 obliga a probar cuatro tamaños antes de avanzar, para que el patrón se vea y no se adivine.",
+        "2026-08-15: se quitó el bloque interactivoSlider que había acá. Renderizaba GraficoPendiente (plano cartesiano de función lineal y=mx+b), que no aporta a este concepto y confundía. La tabla completa queda directamente en el bloque de texto siguiente; el patrón se ve igual, leído en vez de explorado con un control.",
         "La definición 30% = 30/100 = 0,30 NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que el cociente es siempre 0,30.",
-        "Verificación de la tabla completa del slider: 20 × 0,30 = 6 (6/20 = 0,30); 30 × 0,30 = 9 (9/30 = 0,30); 40 × 0,30 = 12 (12/40 = 0,30); 50 × 0,30 = 15 (15/50 = 0,30); 60 × 0,30 = 18 (18/60 = 0,30). Los cinco tamaños dan cantidades enteras: elegidos así a propósito, para que ningún decimal distraiga del patrón.",
+        "Verificación de la tabla completa: 20 × 0,30 = 6 (6/20 = 0,30); 30 × 0,30 = 9 (9/30 = 0,30); 40 × 0,30 = 12 (12/40 = 0,30); 50 × 0,30 = 15 (15/50 = 0,30); 60 × 0,30 = 18 (18/60 = 0,30). Los cinco tamaños dan cantidades enteras: elegidos así a propósito, para que ningún decimal distraiga del patrón.",
         "Verificación de la micro-pregunta de cierre: 350 × 0,3 = 105. El campo pide el FACTOR (0,3), no el resultado (105); los distractores 30, 3 y 105 cubren los tres desvíos previsibles."
       ],
       "bloques": [
@@ -185,31 +185,8 @@
           ]
         },
         {
-          "tipo": "interactivoSlider",
-          "variante": "unaVariable",
-          "instruccion": "Mueve el control del tamaño del grupo y mira las tres columnas. Dos de ellas cambian. Una no cambia nunca. Encuentra cuál es y qué valor tiene.",
-          "variables": [
-            {
-              "nombre": "Tamaño del grupo encuestado",
-              "min": 20,
-              "max": 60,
-              "valorInicial": 20,
-              "editable": true
-            },
-            {
-              "nombre": "Porcentaje que camina al colegio (%)",
-              "min": 30,
-              "max": 30,
-              "valorInicial": 30,
-              "editable": false
-            }
-          ],
-          "exploracionMinima": 4,
-          "feedbackExploracionInsuficiente": "Todavía no has probado suficientes tamaños como para estar seguro de que hay un patrón. Prueba al menos cuatro distintos —por ejemplo 20, 30, 40 y 60— y anota qué pasa con la tercera columna en cada uno."
-        },
-        {
           "tipo": "texto",
-          "contenido": "Esto es lo que aparece al recorrer el control:\n\n| Grupo | Caminan | Caminan ÷ Grupo |\n|-------|---------|-----------------|\n| 20 | 6 | 0,30 |\n| 30 | 9 | 0,30 |\n| 40 | 12 | 0,30 |\n| 50 | 15 | 0,30 |\n| 60 | 18 | 0,30 |\n\nLas dos primeras columnas no paran de cambiar. La tercera no se mueve: **0,30 siempre**.\n\nY eso responde la pregunta del principio. Lo que se mantiene fijo cuando cambia el total no es cuánto se suma —de 20 a 30 estudiantes se sumaron 3 caminantes, de 30 a 60 se sumaron 9—, sino **por cuánto hay que multiplicar**. Ese número fijo es 0,30.\n\nO sea: calcular «el 30% de algo» es multiplicar ese algo por 0,30. Nada más."
+          "contenido": "Así se ve la tabla completa:\n\n| Grupo | Caminan | Caminan ÷ Grupo |\n|-------|---------|-----------------|\n| 20 | 6 | 0,30 |\n| 30 | 9 | 0,30 |\n| 40 | 12 | 0,30 |\n| 50 | 15 | 0,30 |\n| 60 | 18 | 0,30 |\n\nLas dos primeras columnas no paran de cambiar. La tercera no se mueve: **0,30 siempre**.\n\nY eso responde la pregunta del principio. Lo que se mantiene fijo cuando cambia el total no es cuánto se suma —de 20 a 30 estudiantes se sumaron 3 caminantes, de 30 a 60 se sumaron 9—, sino **por cuánto hay que multiplicar**. Ese número fijo es 0,30.\n\nO sea: calcular «el 30% de algo» es multiplicar ese algo por 0,30. Nada más."
         },
         {
           "tipo": "numerica",
@@ -448,7 +425,7 @@
       "bloques": [
         {
           "tipo": "texto",
-          "contenido": "Lo que te llevas:\n\n- Un porcentaje **no es una cantidad**: es una instrucción sobre qué hacer con un total.\n- **p% de X = (p ÷ 100) × X.** Convertir primero, multiplicar después.\n- El porcentaje escrito como decimal es el **factor que no cambia** aunque cambie el total. Eso fue lo que viste fijo en 0,30 al mover el control.\n- Control de sensatez: si te piden una parte de X y tu resultado es mayor que X, algo se rompió — casi siempre, la conversión a decimal.\n\n**Lo que viene:** en la próxima lección los porcentajes se aplican uno tras otro, sobre precios. Ahí vas a descubrir por qué un 20% de descuento seguido de otro 20% **no** es un 40% de descuento, aunque todo el mundo lo diga."
+          "contenido": "Lo que te llevas:\n\n- Un porcentaje **no es una cantidad**: es una instrucción sobre qué hacer con un total.\n- **p% de X = (p ÷ 100) × X.** Convertir primero, multiplicar después.\n- El porcentaje escrito como decimal es el **factor que no cambia** aunque cambie el total. Eso fue lo que viste fijo en 0,30 en la tabla.\n- Control de sensatez: si te piden una parte de X y tu resultado es mayor que X, algo se rompió — casi siempre, la conversión a decimal.\n\n**Lo que viene:** en la próxima lección los porcentajes se aplican uno tras otro, sobre precios. Ahí vas a descubrir por qué un 20% de descuento seguido de otro 20% **no** es un 40% de descuento, aunque todo el mundo lo diga."
         }
       ]
     }

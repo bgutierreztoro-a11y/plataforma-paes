@@ -174,7 +174,7 @@
       "titulo": "El número que aparece siempre, y no es 0,70",
       "_notasInternas": [
         "EL CORAZÓN DE LA LECCIÓN. Insight que el estudiante construye solo: al cambiar el precio de lista, lo que se mantiene fijo es el FACTOR que lleva del precio original al final. Ese factor es 0,72 —no 0,70—, y 0,72 es el producto 0,80 × 0,90.",
-        "Mecánica: slider de una variable. El control editable es el precio de lista (5.000→25.000); los dos porcentajes quedan fijos y NO son manipulables (editable: false). Cuatro columnas, la última es el cociente precio_final ÷ precio_lista y nunca cambia. exploracionMinima: 4 obliga a probar cuatro precios antes de avanzar.",
+        "2026-08-15: se quitó el bloque interactivoSlider que había acá. Renderizaba GraficoPendiente (plano cartesiano de función lineal y=mx+b), que no aporta a este concepto y confundía. La tabla completa queda directamente en el bloque de texto siguiente; el patrón se ve igual, leído en vez de explorado con un control.",
         "La fórmula (1 − p/100)(1 − q/100) NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que el cociente es siempre 0,72 y que 0,72 ≠ 0,70.",
         "Verificación de la tabla completa: 5.000 × 0,80 = 4.000 → × 0,90 = 3.600 (3.600/5.000 = 0,72); 10.000 → 8.000 → 7.200 (0,72); 15.000 → 12.000 → 10.800 (0,72); 20.000 → 16.000 → 14.400 (0,72); 25.000 → 20.000 → 18.000 (0,72). Los cinco precios dan cantidades exactas: elegidos así a propósito para que ningún decimal distraiga del patrón.",
         "Verificación de la micro-pregunta: el factor único equivalente es 0,72. Distractores: 0,70 (suma de porcentajes), 0,28 (el descuento en vez de lo que queda)."
@@ -191,38 +191,8 @@
           ]
         },
         {
-          "tipo": "interactivoSlider",
-          "variante": "unaVariable",
-          "instruccion": "Mueve el control del precio de lista y mira las cuatro columnas. Las tres primeras cambian. La cuarta no cambia nunca. Encuentra qué valor tiene, y compáralo con 0,70.",
-          "variables": [
-            {
-              "nombre": "Precio de lista del libro ($)",
-              "min": 5000,
-              "max": 25000,
-              "valorInicial": 5000,
-              "editable": true
-            },
-            {
-              "nombre": "Primer descuento del stand (%)",
-              "min": 20,
-              "max": 20,
-              "valorInicial": 20,
-              "editable": false
-            },
-            {
-              "nombre": "Descuento adicional de socio (%)",
-              "min": 10,
-              "max": 10,
-              "valorInicial": 10,
-              "editable": false
-            }
-          ],
-          "exploracionMinima": 4,
-          "feedbackExploracionInsuficiente": "Todavía no has probado suficientes precios como para estar seguro de que hay un patrón. Prueba al menos cuatro distintos —por ejemplo 5.000, 10.000, 20.000 y 25.000— y anota qué valor toma la última columna en cada uno."
-        },
-        {
           "tipo": "texto",
-          "contenido": "Esto es lo que aparece al recorrer el control:\n\n| Precio de lista | Tras el 20% | Precio final | Final ÷ Lista |\n|-----------------|-------------|--------------|---------------|\n| 5.000 | 4.000 | 3.600 | 0,72 |\n| 10.000 | 8.000 | 7.200 | 0,72 |\n| 15.000 | 12.000 | 10.800 | 0,72 |\n| 20.000 | 16.000 | 14.400 | 0,72 |\n| 25.000 | 20.000 | 18.000 | 0,72 |\n\nLas tres primeras columnas no paran de cambiar. La cuarta no se mueve: **0,72 siempre**.\n\nY ahí está la respuesta. Si el descuento total fuera del 30%, quedaría el 70% del precio y esa columna diría **0,70**. Dice 0,72. Queda el 72%, así que el descuento real es del **28%**.\n\n¿De dónde sale el 0,72? Míralo así: después del primer descuento queda el 80% del precio, o sea **0,80**. Del segundo descuento queda el 90% de eso, o sea **0,90**.\n\nY 0,80 × 0,90 = **0,72**.\n\nLos descuentos no se suman. Lo que se multiplica es lo que **queda** de cada uno."
+          "contenido": "Así se ve la tabla completa:\n\n| Precio de lista | Tras el 20% | Precio final | Final ÷ Lista |\n|-----------------|-------------|--------------|---------------|\n| 5.000 | 4.000 | 3.600 | 0,72 |\n| 10.000 | 8.000 | 7.200 | 0,72 |\n| 15.000 | 12.000 | 10.800 | 0,72 |\n| 20.000 | 16.000 | 14.400 | 0,72 |\n| 25.000 | 20.000 | 18.000 | 0,72 |\n\nLas tres primeras columnas no paran de cambiar. La cuarta no se mueve: **0,72 siempre**.\n\nY ahí está la respuesta. Si el descuento total fuera del 30%, quedaría el 70% del precio y esa columna diría **0,70**. Dice 0,72. Queda el 72%, así que el descuento real es del **28%**.\n\n¿De dónde sale el 0,72? Míralo así: después del primer descuento queda el 80% del precio, o sea **0,80**. Del segundo descuento queda el 90% de eso, o sea **0,90**.\n\nY 0,80 × 0,90 = **0,72**.\n\nLos descuentos no se suman. Lo que se multiplica es lo que **queda** de cada uno."
         },
         {
           "tipo": "numerica",
