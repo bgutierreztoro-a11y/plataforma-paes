@@ -10,7 +10,7 @@
     "El ítem 8 es el integrador y vale la pena entenderlo antes de tocarlo: (x + 5)² − (x − 5)² admite dos caminos que dan lo mismo. Por L2 más L1, se desarrollan los dos cuadrados y se reducen los términos semejantes. Por L3, la expresión es una diferencia de cuadrados con a = (x + 5) y b = (x − 5), así que factoriza como la suma por la diferencia: (2x)(10). Que las dos vías coincidan es el cierre natural del módulo y está dicho en la solución.",
     "El ítem 5 es el único con habilidad representar, y transfiere de tabla de valores a expresión simbólica. La tabla empieza en x = 1 y no en x = 0 a propósito: con x = 0 el distractor x² + 16 daría el mismo valor que la respuesta correcta y la primera fila no discriminaría.",
     "DISEÑO NUMÉRICO: las cifras se barrieron contra los contextosNumericos de todo content/ con las tres lecciones del módulo ya incluidas. El espacio de cuadrados de dos cifras sin colisión quedó casi agotado por L2 y L3 —el barrido devolvió uno solo—, y es el que usa el ítem 2. Conviene saberlo si alguna vez hay que rehacer este archivo.",
-    "AUDITORÍAS: pendientes. Este archivo sale del hilo de redacción sin auditar, igual que las tres lecciones."
+    "AUDITORÍAS (actualizado 2026-08-15): la revisión matemática CORRIÓ en hilo aparte y sus hallazgos están aplicados. La auditoría de originalidad está INCOMPLETA: cerró visualizaciones, marcas, datos personales y placeholders, y dejó en NO CERTIFICABLE el punto 1 del checklist MOS §7.3 porque auditor-originalidad no es invocable en este entorno. Hasta cerrar ese punto el archivo no está habilitado para publicarse."
   ],
   "items": [
     {
@@ -223,8 +223,7 @@
           "clave": "D",
           "texto": "5.184",
           "esCorrecta": false,
-          "feedback": "Ese es 72 × 72, o sea elevaste al cuadrado el menor de los dos factores en lugar de multiplicarlos entre sí. El centro del que hay que partir es el 75, que está justo en medio de 72 y 78.",
-          "errorCatalogado": "error-14"
+          "feedback": "Ese es 72 × 72, o sea elevaste al cuadrado el menor de los dos factores en lugar de multiplicarlos entre sí. El centro del que hay que partir es el 75, que está justo en medio de 72 y 78."
         }
       ],
       "solucion": "Los factores 72 y 78 se apartan ambos 3 unidades de 75, así que el producto es una diferencia de cuadrados: 72 × 78 = (75 − 3)(75 + 3) = 75² − 3² = 5.625 − 9 = 5.616. Verificación por multiplicación directa: 72 × 78 = 72 × 80 − 72 × 2 = 5.760 − 144 = 5.616 ✓. Control de magnitud: el resultado debe quedar entre 72² = 5.184 y 5.625, y 5.616 cumple ✓."
@@ -245,22 +244,19 @@
           "clave": "B",
           "texto": "Que una es una suma y la otra una resta, y las restas siempre dan menos términos.",
           "esCorrecta": false,
-          "feedback": "La conclusión coincide con lo que pasa acá, pero la razón no se sostiene: no hay ninguna regla que diga que restar produzca menos términos. Desarrolla (a − b)² y vas a obtener tres términos igual, con una resta de por medio. Lo que decide es el signo de los cruces, no el de la expresión.",
-          "errorCatalogado": "error-13"
+          "feedback": "La conclusión coincide con lo que pasa acá, pero la razón no se sostiene: no hay ninguna regla que diga que restar produzca menos términos. Desarrolla (a − b)² y vas a obtener tres términos igual, con una resta de por medio. Lo que decide es el signo de los cruces, no el de la expresión."
         },
         {
           "clave": "C",
           "texto": "Que en el segundo caso no hay términos cruzados, porque los factores son distintos.",
           "esCorrecta": false,
-          "feedback": "Los cruces sí existen en los dos casos: repartir la multiplicación siempre produce cuatro pedazos. La diferencia es que en el segundo caso los dos cruces se anulan entre sí, no que no lleguen a aparecer.",
-          "errorCatalogado": "error-9"
+          "feedback": "Los cruces sí existen en los dos casos: repartir la multiplicación siempre produce cuatro pedazos. La diferencia es que en el segundo caso los dos cruces se anulan entre sí, no que no lleguen a aparecer."
         },
         {
           "clave": "D",
           "texto": "Que elevar al cuadrado agrega un término extra que la multiplicación de dos factores distintos no tiene.",
           "esCorrecta": false,
-          "feedback": "Elevar al cuadrado no agrega nada aparte: (a + b)² es exactamente (a + b)(a + b), una multiplicación de dos factores como cualquier otra. El término del medio no es un agregado del cuadrado, es la suma de los dos cruces que en ese caso no se cancelan.",
-          "errorCatalogado": "error-9"
+          "feedback": "Elevar al cuadrado no agrega nada aparte: (a + b)² es exactamente (a + b)(a + b), una multiplicación de dos factores como cualquier otra. El término del medio no es un agregado del cuadrado, es la suma de los dos cruces que en ese caso no se cancelan."
         }
       ],
       "solucion": "Al repartir la multiplicación de dos binomios se obtienen siempre cuatro productos parciales, dos de los cuales son cruzados. En (a + b)(a + b) los cruces son a·b y b·a, ambos positivos, de modo que se suman y dan 2ab: quedan tres términos, a² + 2ab + b². En (a + b)(a − b) los cruces son −ab y +ab, iguales en valor y opuestos en signo, así que se cancelan y quedan solo dos términos, a² − b². La diferencia está en el signo de los cruces, no en la cantidad de productos parciales ni en que una expresión sea suma y la otra resta: (a − b)² también tiene tres términos."
@@ -294,7 +290,7 @@
           "clave": "D",
           "texto": "20x + 50",
           "esCorrecta": false,
-          "feedback": "Le aplicaste el signo menos solo al primer término del segundo paréntesis y dejaste el 25 sumando. Al restar una expresión completa hay que cambiarle el signo a todos sus términos: los dos 25 se cancelan entre sí.",
+          "feedback": "Le cambiaste el signo a los términos del segundo paréntesis salvo al último, y dejaste el 25 sumando. Al restar una expresión completa hay que cambiarle el signo a todos sus términos: los dos 25 se cancelan entre sí.",
           "errorCatalogado": "error-4"
         }
       ],
@@ -361,7 +357,7 @@
     "cierre-expresiones-6 (cálculo mental, resolver, media): 72 por 78 da 5616, con centro 75; distractores 5625 (cuadrado del centro sin descontar), 5634 (sumó el cuadrado del desvío) y 5184 (elevó al cuadrado el menor de los factores).",
     "cierre-expresiones-7 (algebraico, argumentar, alta): sin cifras; contrasta por qué el cuadrado de un binomio deja tres términos y el producto de la suma por la diferencia deja dos.",
     "cierre-expresiones-8 (algebraico, modelar, alta, integrador): la resta entre el cuadrado de una letra más cinco y el cuadrado de esa letra menos cinco, que equivale a veinte veces la letra. Admite dos caminos, desarrollar y reducir o factorizar como diferencia de cuadrados, y ambos coinciden. Control con el valor tres, que da sesenta por las dos vías.",
-    "NOTA DE NO COLISIÓN: las cifras de este archivo se barrieron contra los contextosNumericos de todo content/ con las tres lecciones del módulo ya incluidas, y ninguna aparece en otro archivo. Se hace constar un dato útil para el futuro: el espacio de cuadrados de dos cifras sin colisión quedó casi agotado por L2 y L3, y el barrido devolvió un único candidato, que es el que usa el ítem 2.",
+    "NOTA DE NO COLISIÓN: las cifras de este archivo se barrieron contra los contextosNumericos de todo content/ con las tres lecciones del módulo ya incluidas, y ninguna reaparece con el mismo rol pedagógico. La auditoría matemática midió el resto: hay coincidencias de dígitos con archivos de porcentaje y de inecuaciones, siempre con otro rol y otras unidades, que es el caso que el auditor declara no poder distinguir. Se hace constar un dato útil para el futuro: el espacio de cuadrados de dos cifras sin colisión quedó casi agotado por L2 y L3, y el barrido devolvió un único candidato, que es el que usa el ítem 2.",
     "IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json y de las tres lecciones del módulo): no se transcriben acá umbrales, conteos ni listas de cifras verificadas, porque scripts/auditar-leccion.mjs lee este campo como cifras propias del archivo y generaría colisiones falsas."
   ],
   "proveniencia": {
@@ -374,8 +370,8 @@
       "content/lecciones/expresiones-deshacer-producto.json — origen literal de las entradas error-12 a error-16.",
       "content/cierres/cierre-proporcionalidad.json — leído como referencia de forma, densidad y distribución de habilidades de un cierre de módulo (archivo propio del proyecto, no fuente externa)."
     ],
-    "declaracionOriginalidad": "Enunciados, expresiones y contextos creados desde cero por el autor del proyecto para este cierre. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. Los dominios reutilizados —barcazas y club de cálculo mental— son los de las tres lecciones del módulo, ya verificados sin colisión con consultar-fuentes.mjs corrido fuera del hilo de redacción, y ninguna de sus expresiones numéricas se repite acá. AUDITORÍAS INDEPENDIENTES: PENDIENTES a la fecha de este archivo, igual que en las tres lecciones. Ni la revisión matemática ni la auditoría de originalidad se han corrido todavía; ambas van en hilos aparte abiertos con /clear, porque el hilo que redactó no puede juzgar lo que escribió (CLAUDE.md regla 5). La aritmética anotada en las soluciones y en las _notasInternas es autochequeo del redactor, no verificación independiente. Se hace constar además que scripts/auditar-leccion.mjs no audita cierres, de modo que este archivo no tiene ninguna verificación mecánica de coherencia de catálogo con las lecciones del módulo: la que se hizo fue manual.",
-    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; auditorías matemática y de originalidad pendientes al momento de escribir este archivo",
+    "declaracionOriginalidad": "Enunciados, expresiones y contextos creados desde cero por el autor del proyecto para este cierre. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. Los dominios reutilizados —barcazas y club de cálculo mental— son los de las tres lecciones del módulo, ya verificados sin colisión con consultar-fuentes.mjs corrido fuera del hilo de redacción, y ninguna de sus expresiones numéricas se repite acá. AUDITORÍAS INDEPENDIENTES, estado al 2026-08-15. (a) REVISIÓN MATEMÁTICA: CORRIDA, en hilo aparte del de redacción. Recalculó los ocho ítems desde el enunciado, incluido el integrador por sus dos vías —desarrollo y factorización—, y no encontró ningún error de cálculo. Verificó las doce entradas del catálogo embebido carácter a carácter contra su archivo de origen: cero divergencias. Sus hallazgos fueron todos de mapeo de errorCatalogado y se concentraron acá, que es lo esperable porque este archivo no tiene red mecánica: tres alternativas del ítem 7 y una del ítem 6 quedaron sin errorCatalogado por no corresponder a ningún mecanismo del catálogo, y el feedback de una alternativa del ítem 8 describía un procedimiento que no produce el valor de esa alternativa. Todo aplicado en el mismo commit que esta declaración. (b) AUDITORÍA DE ORIGINALIDAD: INCOMPLETA, y este archivo NO está habilitado para publicarse hasta cerrarla. Quedaron cerrados los puntos de visualizaciones, marcas, datos personales y placeholders. Quedó en NO CERTIFICABLE el punto 1 del checklist MOS §7.3 —similitud sustancial con fuente conocida— porque exige lectura profunda del corpus aislado y el subagente auditor-originalidad, único con ese permiso, no es invocable en este entorno; por la misma razón quedó abierto el punto 3. Se hace constar además que scripts/auditar-leccion.mjs no audita cierres, de modo que este archivo no tiene ninguna verificación mecánica de coherencia de catálogo con las lecciones del módulo: la que se hizo fue manual, primero al escribirlo y después en la revisión matemática.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática corrida y aplicada en hilo independiente, auditoría de originalidad incompleta (punto 1 del checklist MOS §7.3 sin certificar)",
     "fecha": "2026-08-14"
   }
 }
