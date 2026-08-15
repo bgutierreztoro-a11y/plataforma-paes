@@ -1,0 +1,646 @@
+{
+  "tipo": "leccion",
+  "id": "expresiones-deshacer-producto",
+  "titulo": "Factorización de expresiones algebraicas",
+  "objetivo": "Reconocer una diferencia de cuadrados y escribirla como el producto de la suma por la diferencia de sus raíces, comprobando que los términos cruzados se cancelan, y distinguir los casos en que esa forma no se puede aplicar.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Reducción de términos semejantes y la idea de que una expresión sin semejantes ya está terminada (expresiones-sumar-lo-que-se-parece)",
+    "Desarrollo del cuadrado de un binomio, y en particular que los términos cruzados aparecen dos veces (expresiones-rectangulo)",
+    "Multiplicación de números enteros de dos cifras (módulo Enteros y racionales)",
+    "Cuadrados de los números terminados en cero y en cinco (módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "factorizar",
+    "diferencia de cuadrados",
+    "producto de la suma por la diferencia",
+    "términos cruzados que se cancelan",
+    "condiciones de aplicación de una forma"
+  ],
+  "_notasInternas": [
+    "L3 del módulo Expresiones algebraicas, y la que cierra el recorrido: L1 sumó expresiones, L2 las multiplicó, L3 recorre la multiplicación al revés. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5. Siete entradas: error-6 copiada carácter a carácter desde expresiones-sumar-lo-que-se-parece.json, error-9 copiada carácter a carácter desde expresiones-rectangulo.json, y error-12 a error-16 nuevas, firmadas por Benja el 2026-08-14.",
+    "PODA DEL CATÁLOGO: el plan previo incluía también error-11 («desarrolla el cuadrado de una suma y abandona el último término»), copiado de L2. Se retiró porque ningún distractor de este archivo lo usa: L3 no desarrolla cuadrados de sumas salvo en el ítem 3, donde el error vivo es error-9 y no error-11. Dejarlo embebido habría puesto el archivo en 🔴 catalogo-sin-usar. Reportado a Benja al cerrar la lección, como se acordó.",
+    "OBJETO DE DESCUBRIMIENTO (estructura, no constante): que el producto de la suma por la diferencia de dos números deja únicamente la resta de sus cuadrados, porque los dos términos cruzados se cancelan — y que esa igualdad, leída al revés, permite reconocer de qué producto viene una diferencia de cuadrados. Por eso no se declara auditoria.constante.",
+    "REGLA DURA DE NO FILTRACIÓN: la estructura no circula antes del paso 5. En los pasos 1 a 4 no aparece la cancelación de los cruces, ni la forma factorizada, ni el cuadrado del desvío como explicación. Lo que sí aparece es el valor de 68 × 72, porque el resultado no es la estructura: el paso 3 lo obtiene multiplicando y el paso 5 descubre de dónde sale la diferencia con 4.900.",
+    "CONTINUIDAD CON L2, decidida con Benja el 2026-08-14: el núcleo de esta lección se apoya en el mismo 70 al cuadrado que el club ya calculó en L2 para resolver 73 al cuadrado. No se introduce un número nuevo, se le da un uso nuevo a uno que el estudiante ya tiene. Se descartó reusar 73 al cuadrado como caso de entrada porque el objeto de L3 es un producto de dos factores distintos, no un cuadrado.",
+    "EL CONTRASTE CON L2 ES EL ARGUMENTO CENTRAL DEL PASO 5, y conviene no diluirlo en ninguna reescritura: en L2 los dos términos cruzados se SUMABAN y por eso aparecía el 2ab; acá los dos cruces tienen signos opuestos y se CANCELAN, y por eso no queda ningún término del medio. Es la misma cuenta —repartir la multiplicación dos veces— con un signo distinto, y ver las dos caras juntas es lo que convierte la forma en algo entendido en vez de memorizado.",
+    "LA TRAMPA VA COMO MECANISMO, NO COMO ADVERTENCIA (decisión de Fase 1, reafirmada por Benja): el caso 68 × 73 vive en el mismo 70 al cuadrado que el núcleo y sin embargo el atajo falla, porque los desvíos son −2 y +3 y no son simétricos. Dos casos casi idénticos a la vista y solo uno que funciona: la condición de simetría se nota en vez de enunciarse. Está en la práctica P2 como distractor mapeado a error-14, nunca como una frase de advertencia.",
+    "DISEÑO NUMÉRICO: los seis productos simétricos del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y conservando solo los casos cuyas piezas —el producto, el cuadrado del centro, el cuadrado del desvío y los valores de error-15 y error-16— estuvieran libres. Se descartó el caso más obvio del tema, el que se apoya en 50 al cuadrado, porque esa cifra ya está ocupada en cierre-porcentaje.json.",
+    "El paso 8 es transferencia de USO, no de contexto: la factorización deja de ser un fin y pasa a ser una herramienta para dividir de cabeza. Es la primera vez en el módulo que una forma algebraica sirve para resolver algo que sin ella cuesta más, y por eso el paso cierra el arco de los tres archivos.",
+    "AUDITORÍAS: pendientes. Este archivo sale del hilo de redacción sin auditar. Las dos corren en hilos aparte abiertos con /clear (CLAUDE.md regla 5)."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "productoDelDesafio": "El campo pide el valor de 68 × 72, un número puro: el dominio es cálculo mental y sus cantidades no miden nada. Ponerle unidad sería inventarle una magnitud que el problema no tiene.",
+      "productoComprobacion": "El campo pide el valor de un producto simétrico nuevo, otra vez un número puro, por la misma razón que el del paso 3.",
+      "divisionConFactorizacion": "El campo pide el resultado de una división entre números puros, resuelta reconociendo la factorización en vez de dividiendo. No hay magnitud que declarar en ninguno de los dos operandos."
+    },
+    "colisionesPermitidas": [
+      {
+        "valor": 4896,
+        "motivo": "Es el resultado del núcleo de la lección, respuesta correcta del campo productoDelDesafio en el paso 3, y es distractor en la práctica P2 (error-14). La colisión no es un subproducto: es el punto pedagógico del ejercicio. La trampa 68 × 73 vive en el mismo centro 70 que el núcleo 68 × 72, y quien fuerza el atajo pese a que los desvíos son −2 y +3 obtiene exactamente el resultado del otro problema. Que el número le suene conocido es la señal de que aplicó una forma sin comprobar su condición, y el feedback lo nombra: «el atajo te devolvió la respuesta de otro problema». Cambiar la base de la trampa lo evitaría, pero eliminaría el mejor feedback del paso y rompería el contraste entre dos casos casi idénticos de los que solo uno funciona. Además el orden es el favorable frente a lo que motiva la regla 3b: el 4896 ya fue confirmado como correcto en el paso 3 cuando aparece marcado en el paso 7, así que el estudiante no vive ninguna contradicción. Ver docs/reglas-modulo.md §3b."
+      }
+    ]
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-6",
+      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Escribe la diferencia de dos cuadrados como un cuadrado de binomio: factoriza a² − b² como (a − b)², confundiendo la forma que produce dos factores distintos con la que produce un factor repetido. Es el reverso exacto del error-9: allá se perdía el término del medio al desarrollar, acá se inventa un término del medio que la expresión no tiene."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Aplica la forma de la diferencia de cuadrados a una suma: factoriza a² + b² como (a + b)(a − b), sin notar que ese producto devuelve una resta. Basta multiplicar los dos factores propuestos para ver que no reconstruyen la expresión de partida."
+    },
+    {
+      "id": "error-14",
+      "descripcion": "Aplica la forma sin comprobar que se cumplan sus condiciones: trata como diferencia de cuadrados una expresión cuyo segundo término no es un cuadrado, o usa el atajo del producto simétrico con dos factores que no se apartan lo mismo del número central."
+    },
+    {
+      "id": "error-15",
+      "descripcion": "Al calcular un producto simétrico, suma el cuadrado del desvío en vez de restarlo, y entrega un resultado mayor que el cuadrado del número central cuando siempre tiene que ser menor."
+    },
+    {
+      "id": "error-16",
+      "descripcion": "Entrega el cuadrado del número central sin descontar nada, olvidando que los dos factores se apartan de él y que ese apartamiento cuesta exactamente el cuadrado del desvío."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: el mismo club de cálculo mental de expresiones-rectangulo, ahora con un desafío distinto — multiplicar dos números diferentes que están a la misma distancia de uno redondo. Magnitudes: números puros, sin unidades.",
+    "CONTINUIDAD DELIBERADA CON L2: el núcleo se apoya en el cuadrado de 70, que el club ya había calculado allá para resolver el cuadrado de 73. No se introduce un número nuevo, se le da un uso nuevo a uno conocido.",
+    "curiosidad (Paso 1): el desafío es 68 × 72. Sin operación: la pregunta es si sirve de algo que los dos estén a la misma distancia de 70.",
+    "problema (Paso 2, refutación sin revelar): alguien propone que el resultado es el cuadrado de 70, o sea 4900. Se derriba con un argumento de reparto que no calcula el producto ni dice cuánto falta.",
+    "pensar (Paso 3): 68 × 72 calculado a la antigua da 4896. Distractores 4900 (entregó el cuadrado del centro sin descontar) y 4904 (sumó el cuadrado del desvío en vez de restarlo).",
+    "descubrimiento (Paso 5, estructura fijada): tres productos simétricos comparados con el cuadrado de su centro — 68 × 72 da 4896 contra 4900; 37 × 43 da 1591 contra 1600; 26 × 44 da 1144 contra 1225 — con diferencias que son el cuadrado del desvío en cada caso. Comprobación fuera de tabla: 53 × 57 da 3021 contra 3025.",
+    "generalizacion (Paso 6): la forma con letras y su lectura inversa. Ejercicio con cifras distintas: 81 × 89 da 7209 contra 7225; distractores 7225 y 7241.",
+    "practica (Paso 7): P1 factorizar la diferencia entre el cuadrado de una letra y veinticinco; P2 la trampa, 68 × 73, donde los desvíos son de dos y de tres y el atajo falla — el valor real es 4964 y el atajo mal aplicado daría 4894; P3 la suma entre el cuadrado de una letra y treinta y seis, que no se parte, con control en el valor diez que da 136.",
+    "aplicacion (Paso 8, cambio de uso): la factorización como herramienta para dividir de cabeza, 4896 dividido por 72.",
+    "itemsPAES item-1 (resolver, baja): 63 × 67 da 4221; distractores 4225 (cuadrado del centro sin descontar), 4229 (sumó el cuadrado del desvío) y 3969 (elevó al cuadrado el menor de los factores).",
+    "itemsPAES item-2 (modelar, media): se pide la factorización de la diferencia entre el cuadrado de una letra y treinta y seis; distractores con cuadrado de binomio y con las raíces sin extraer.",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa qué se puede afirmar sobre una suma de cuadrados.",
+    "NOTA DE NO COLISIÓN: los productos simétricos del archivo se eligieron barriendo las cifras de tres dígitos o más de todos los contextosNumericos de content/ y conservando solo los casos cuyas piezas estuvieran libres. Se descartó el caso más obvio del tema, el que se apoya en el cuadrado de cincuenta, porque esa cifra ya está ocupada en un cierre. Las cifras de este archivo se verificaron una por una antes de redactar. El cuadrado del centro del núcleo es el mismo que L2 usó como apoyo, y esa coincidencia es la continuidad buscada, no un descuido.",
+    "IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json, L1 y L2): no se transcriben acá umbrales, conteos ni listas de cifras verificadas, porque scripts/auditar-leccion.mjs lee este campo como cifras propias de la lección y generaría colisiones falsas."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Dos números que se turnan",
+      "_notasInternas": [
+        "Gancho: un desafío que parece más difícil que los de L2 porque los dos factores son distintos, y que en realidad es más fácil si se ve la simetría. La pista está a la vista —68 y 72 rodean al 70— y no se explota todavía.",
+        "Verificación: no hay operación resuelta en este paso. Los únicos números son 68, 72 y 70.",
+        "NO PUEDE APARECER ACÁ: la cancelación de los cruces, el cuadrado del desvío, ni ninguna forma factorizada. La opción 2 de la predicción propone que el resultado sea el cuadrado del centro, que es error-16, y se ofrece sin corregir porque prediccion no lleva feedback por contrato."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "El club de cálculo mental volvió a reunirse. El desafío de hoy ya no es un cuadrado:\n\n**68 × 72**\n\nAlguien se da cuenta de algo antes de empezar: **68 y 72 están los dos a dos unidades de 70**. Uno por debajo, el otro por encima.\n\nSin calcular nada: ¿crees que esa simetría sirve de algo?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "No, es una casualidad sin importancia",
+            "Sí: como lo que le falta a uno le sobra al otro, el resultado debería ser 70 × 70",
+            "Sí, sirve de algo, pero no sé exactamente para qué",
+            "No estoy seguro"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La observación es buena. En los desafíos anteriores el club se apoyaba en un número redondo cercano para elevar al cuadrado, y acá hay uno que aparece solo: el **70** justo en medio de los dos factores.\n\nY la intuición de que «lo que le falta a uno le sobra al otro» es tentadora. Suena a que los dos desvíos deberían compensarse y dejar el resultado en 4.900, que es el cuadrado de 70 — un número que este club ya tiene calculado de la sesión pasada.\n\nEn la sala se armó la misma discusión de siempre: unos convencidos de que la compensación es exacta, otros con la sospecha de que algo no cuadra.\n\nAsí que, otra vez, hay que **ponerlo a prueba antes de creerle**."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "La compensación no es exacta",
+      "_notasInternas": [
+        "Misma pieza estructural que el paso 2 de L2: refuta sin revelar. El argumento compara los dos productos repartiendo la multiplicación, sin calcular ninguno de los dos ni decir cuánto se pierde.",
+        "Verificación del argumento: 68 × 72 = 68 × 70 + 68 × 2. Y 70 × 70 = 68 × 70 + 2 × 70. Los dos comparten el sumando 68 × 70, así que la comparación se reduce a comparar 68 × 2 contra 2 × 70, o sea 136 contra 140. Como 136 < 140, el producto 68 × 72 es menor que 4.900 ✓. El argumento es exacto y no entrega el resultado.",
+        "Verificación de los distractores: la opción b apela a que 4.900 es un cuadrado perfecto, lo que no impide que sea el resultado de un producto de factores distintos —de hecho 4.900 = 49 × 100— y por eso es un criterio inservible. La opción c acepta la compensación, que es error-16 en su forma más pura.",
+        "CUIDADO EN CUALQUIER REESCRITURA: decir acá «se pierden 4» o «falta el cuadrado del desvío» mataría el paso 5. La refutación tiene que quedarse en que el producto es menor."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Antes de multiplicar nada, alguien del club propone comparar los dos productos **repartiendo la multiplicación**, que es lo que ya saben hacer:\n\n- **68 × 72** es lo mismo que 68 × 70 más 68 × 2\n- **70 × 70** es lo mismo que 68 × 70 más 2 × 70\n\nLos dos empiezan igual: **68 × 70**. Así que toda la diferencia está en lo que se le suma a cada uno."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Con esos dos repartos a la vista:\n\n- **68 × 72** = 68 × 70 **+ 68 × 2**\n- **70 × 70** = 68 × 70 **+ 2 × 70**\n\n¿Qué se puede concluir, **sin calcular ninguno de los dos productos**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que 68 × 72 es menor que 4.900, porque 68 × 2 es menos que 2 × 70",
+              "esCorrecta": true,
+              "feedback": "Exacto, y fíjate en lo limpio del argumento. Los dos productos comparten el mismo primer pedazo, así que solo hay que comparar lo que se les suma: al primero se le agregan dos veces 68, y al segundo dos veces 70. Como 68 es menor que 70, el primero se queda corto. La compensación no es exacta, y todo esto sin resolver ninguna de las dos multiplicaciones."
+            },
+            {
+              "id": "b",
+              "texto": "Que 68 × 72 no puede dar 4.900, porque 4.900 es un cuadrado perfecto",
+              "esCorrecta": false,
+              "feedback": "Que un número sea un cuadrado perfecto no le impide ser el resultado de multiplicar dos factores distintos: 4.900 es 70 × 70, pero también es 49 × 100. Así que ese criterio no descarta nada. Vuelve a los dos repartos y compara lo que se le suma a cada uno.",
+              "errorCatalogado": "error-14"
+            },
+            {
+              "id": "c",
+              "texto": "Que los dos dan lo mismo, porque las dos unidades que baja uno las sube el otro",
+              "esCorrecta": false,
+              "feedback": "Esa es justamente la intuición que hay que revisar. Bajar dos unidades en un factor y subirlas en el otro no se compensa, porque cada desvío se multiplica por un número distinto: las dos que sube van multiplicadas por 68, y las dos que baja iban multiplicadas por 70. Míralo en los repartos de arriba.",
+              "errorCatalogado": "error-16"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: ¿cuánto da de verdad?",
+      "_notasInternas": [
+        "Registro del intento genuino. Se pide el producto real, obtenido como cada uno pueda. La estructura no hace falta para responder y por eso el paso no la filtra.",
+        "Verificación: 68 × 72. Por reparto, 68 × 70 = 4.760 y 68 × 2 = 136; sumados, 4.896 ✓. Por multiplicación en columna, 68 × 72 = 4.896 ✓. Dos vías coincidentes.",
+        "Verificación de los distractores: 4.900 es haber aceptado la compensación exacta, o sea entregar el cuadrado del centro sin descontar nada (error-16). 4.904 es haber notado que hay que corregir pero en el sentido contrario, sumando el cuadrado del desvío (error-15): 4.900 + 4.",
+        "Los dos distractores estructurales se plantan acá aunque la estructura no sea pública, y no la filtran: sus feedback remiten al argumento del paso 2 —el producto tiene que ser menor que 4.900— sin decir por cuánto."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "La compensación quedó descartada, así que hay que hacer la cuenta.\n\nCalcula **68 × 72** como prefieras: en columna, repartiendo como arriba, o como te acomode.",
+          "campos": [
+            {
+              "id": "productoDelDesafio",
+              "etiqueta": "68 × 72",
+              "respuestaCorrecta": 4896,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "productoDelDesafio",
+              "valorObtenido": 4900,
+              "mensaje": "Ese es el cuadrado de 70, o sea la compensación exacta que el club acaba de descartar. El argumento del paso anterior mostró que el producto tiene que quedar por debajo de 4.900. Haz la multiplicación completa.",
+              "errorCatalogado": "error-16"
+            },
+            {
+              "campoId": "productoDelDesafio",
+              "valorObtenido": 4904,
+              "mensaje": "Corregiste el 4.900, pero hacia el lado equivocado: te pasaste para arriba. Acuérdate de lo que quedó demostrado, que el producto es MENOR que el cuadrado de 70.",
+              "errorCatalogado": "error-15"
+            }
+          ],
+          "feedbackPorDefecto": "Una vía cómoda: reparte el segundo factor. 68 × 72 es 68 × 70 más 68 × 2. El primer producto sale de multiplicar por 7 y correr un cero."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el desafío",
+      "_notasInternas": [
+        "Gradación real: la 1 recuerda que hay una vía conocida, la 2 nombra el reparto del segundo factor —la distributiva, ya usada en L2— y la 3 aterriza el primero de los dos productos.",
+        "NINGUNA pista menciona la cancelación de cruces ni el cuadrado del desvío. La 3 se detiene antes de ejecutar el segundo producto, igual que en L2: entregar la cuenta hecha dejaría el paso 3 sin intento genuino."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "No necesitas ningún truco para esto. Es una multiplicación de dos cifras por dos cifras, de las que ya sabes hacer."
+            },
+            {
+              "nivel": 2,
+              "texto": "Si la quieres de cabeza, reparte el segundo factor: multiplicar por 72 es multiplicar por 70 y después por 2, y sumar los dos resultados."
+            },
+            {
+              "nivel": 3,
+              "texto": "El primero de esos dos productos es 68 × 70, que sale de multiplicar 68 por 7 y correrle un cero. Te falta el segundo, 68 × 2, y juntarlos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "¿Por qué se pierde justo eso?",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN, y el paso donde el módulo cierra su arco: los mismos cruces que en L2 se sumaban, acá se cancelan.",
+        "POR QUÉ TRES CASOS: con uno solo la diferencia es una cifra suelta. Con tres, las diferencias son 4, 9 y 81 —distintas entre sí y de tamaños muy distintos—, así que la única explicación que las cubre a las tres es una regla. Mismo criterio que las cinco filas de proporcionalidad-directa y los tres casos de L2.",
+        "Verificación del caso 68 × 72: producto 4.896 ✓. Centro 70, cuadrado 4.900. Diferencia 4.900 − 4.896 = 4. Desvío 2, y 2² = 4 ✓.",
+        "Verificación del caso 37 × 43: producto 1.591 ✓ (37 × 43 = 37 × 40 + 37 × 3 = 1.480 + 111 = 1.591). Centro 40, cuadrado 1.600. Diferencia 1.600 − 1.591 = 9. Desvío 3, y 3² = 9 ✓.",
+        "Verificación del caso 26 × 44: producto 1.144 ✓ (26 × 44 = 26 × 40 + 26 × 4 = 1.040 + 104 = 1.144). Centro 35, cuadrado 1.225. Diferencia 1.225 − 1.144 = 81. Desvío 9, y 9² = 81 ✓. Se eligió un desvío grande a propósito: con desvíos de 2 y 3 la diferencia es chica y se podría confundir con un ajuste menor; con 9 la pérdida es de 81 y obliga a que la regla dé cuenta del tamaño.",
+        "Verificación de la deducción con letras, que es el argumento central: (a − b)(a + b) se reparte en a·a + a·b − b·a − b·b. Los dos cruces son a·b y −b·a, iguales en valor y opuestos en signo, así que se cancelan y queda a² − b² ✓. Comprobación numérica con a = 70 y b = 2: 4.900 + 140 − 140 − 4 = 4.896 ✓.",
+        "EL CONTRASTE CON L2, que es lo que hay que preservar: allá los dos cruces se sumaban y daban 2ab; acá tienen signos opuestos y se anulan. Misma cuenta, distinto signo, resultado estructuralmente distinto.",
+        "Verificación de la comprobación fuera de tabla: 53 × 57. Centro 55, cuadrado 3.025; desvío 2, cuadrado 4. Resultado 3.025 − 4 = 3.021. Control independiente: 53 × 57 = 53 × 50 + 53 × 7 = 2.650 + 371 = 3.021 ✓.",
+        "Verificación de sus distractores: 3.025 es entregar el cuadrado del centro (error-16). 3.029 es sumar el cuadrado del desvío en vez de restarlo (error-15).",
+        "PRIMERA APARICIÓN de la estructura en todo el archivo. Verificado que los pasos 1 a 4 no contienen la cancelación de cruces, el cuadrado del desvío como explicación, ni ninguna forma factorizada."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Ya sabemos que el resultado verdadero es **4.896** y que el cuadrado de 70 es **4.900**.\n\nO sea que la compensación no falló por mucho: se perdieron exactamente **4**.\n\nAntes de seguir: ¿de dónde crees que sale ese 4?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Del desvío, que es 2, más otro 2",
+            "Del cuadrado del desvío: 2 × 2",
+            "De 72 menos 68",
+            "Es un ajuste que aparece porque sí, no sale de ninguna parte"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tres desafíos del mismo tipo: dos factores distintos que están a la misma distancia de un número central. Compara la última columna con el desvío de cada fila.",
+          "datos": {
+            "columnas": ["Producto", "Número central", "Cuadrado del centro", "Desvío", "Resultado verdadero", "Lo que se pierde"],
+            "filas": [
+              ["68 × 72", 70, 4900, 2, 4896, 4],
+              ["37 × 43", 40, 1600, 3, 1591, 9],
+              ["26 × 44", 35, 1225, 9, 1144, 81]
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Las tres pérdidas son muy distintas entre sí —4, 9 y 81—, así que no es un ajuste fijo. Míralas junto al desvío de cada fila:\n\n- Desvío 2, se pierden **4**.\n- Desvío 3, se pierden **9**.\n- Desvío 9, se pierden **81**.\n\nEn los tres casos, **lo que se pierde es el cuadrado del desvío.**\n\n¿Y por qué el cuadrado? Se ve repartiendo la multiplicación, igual que en la sesión pasada. Con el centro llamado *a* y el desvío *b*, los dos factores son (*a* − *b*) y (*a* + *b*):\n\n**(a − b)(a + b) = a·a + a·b − b·a − b·b**\n\nMira los dos términos del medio. Son **a·b** y **−b·a**: el mismo producto, con signos opuestos. **Se cancelan.**\n\nY ahí está la diferencia con la sesión pasada, que conviene tener bien clara:\n\n- Al elevar al cuadrado **(a + b)²**, los dos cruces eran positivos y se sumaban: por eso aparecía el 2ab.\n- Al multiplicar **(a − b)(a + b)**, un cruce es positivo y el otro negativo: por eso no queda ningún término del medio.\n\nEs la misma cuenta con un signo distinto, y el signo cambia el resultado por completo. Queda solo:\n\n**(a − b)(a + b) = a² − b²**\n\nCon los números del desafío: 4.900 − 4 = 4.896.\n\nY ahora lo importante, que es leer esta igualdad **al revés**. Si te encontraras con **a² − b²** —una resta entre dos cuadrados— ya sabrías de qué producto viene: de multiplicar la suma de los dos por su diferencia. Escribir una expresión como un producto se llama **factorizar**, y acabas de encontrar la primera forma de hacerlo."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos que sirve con un desafío nuevo.\n\nCalcula **53 × 57**. Los dos están a la misma distancia de **55**.",
+          "campos": [
+            {
+              "id": "productoComprobacion",
+              "etiqueta": "53 × 57",
+              "respuestaCorrecta": 3021,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "productoComprobacion",
+              "valorObtenido": 3025,
+              "mensaje": "Ese es el cuadrado de 55, o sea te quedaste sin descontar. Los dos factores se apartan 2 del centro, y ese apartamiento cuesta el cuadrado de 2.",
+              "errorCatalogado": "error-16"
+            },
+            {
+              "campoId": "productoComprobacion",
+              "valorObtenido": 3029,
+              "mensaje": "Sumaste el cuadrado del desvío en vez de restarlo. El producto de dos números que rodean a un centro siempre queda por debajo del cuadrado de ese centro, nunca por encima.",
+              "errorCatalogado": "error-15"
+            }
+          ],
+          "feedbackPorDefecto": "Dos pasos: el cuadrado de 55, y después descontarle el cuadrado del desvío. El desvío es lo que se apartan 53 y 57 del 55."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Diferencia de cuadrados",
+      "_notasInternas": [
+        "Recién acá se nombran los conceptos —factorizar, diferencia de cuadrados— y se da la forma en sus dos direcciones. Ni un paso antes.",
+        "El texto insiste en las dos lecturas de la misma igualdad, porque de eso trata la lección: hacia la derecha es multiplicar, hacia la izquierda es factorizar. El estudiante ya sabía la primera desde L2.",
+        "Verificación del ejercicio, con cifras DISTINTAS a las del núcleo: 81 × 89. Centro 85, cuadrado 7.225; desvío 4, cuadrado 16. Resultado 7.225 − 16 = 7.209. Control independiente: 81 × 89 = 81 × 90 − 81 = 7.290 − 81 = 7.209 ✓.",
+        "Verificación de los distractores del ejercicio: 7.225 es el cuadrado del centro sin descontar (error-16). 7.241 es 7.225 + 16, sumando el cuadrado del desvío (error-15). 7.209 es la correcta. La cuarta alternativa, 6.561, es el cuadrado del menor de los dos factores (81² = 6.561 ✓), un error real que no encaja en ninguno de los siete mecanismos del catálogo; se deja sin errorCatalogado antes que forzarle un id ajeno, con su feedback artesanal completo. Es el mismo criterio ya usado en la práctica P3 de L2.",
+        "Las cuatro alternativas quedan entre 6.561 y 7.241, así que ninguna se descarta por tamaño."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora los nombres.\n\n**Factorizar** una expresión es escribirla como un **producto**. Es el camino contrario al de la sesión pasada: allá partías de un producto y llegabas a una suma de términos; acá partes de la suma y buscas de qué producto vino.\n\nLa forma que acabas de descubrir se llama **diferencia de cuadrados**:\n\n**a² − b² = (a + b)(a − b)**\n\nY se lee en las dos direcciones, que es lo que la hace útil:\n\n- **Hacia la derecha**, es una multiplicación que se resuelve rápido: el producto de dos números que rodean a un centro es el cuadrado del centro menos el cuadrado del desvío.\n- **Hacia la izquierda**, es una factorización: cuando ves una resta entre dos cuadrados, ya sabes que viene de multiplicar la suma por la diferencia.\n\nDos condiciones que hay que comprobar antes de aplicarla, y que valen para las dos direcciones:\n\n1. **Tiene que ser una resta.** Con una suma de cuadrados esta forma no sirve, y más adelante vas a ver por qué.\n2. **Los dos términos tienen que ser cuadrados.** En x² − 49 lo son, porque 49 es 7². En x² − 50 no, porque 50 no es el cuadrado de ningún entero."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un desafío más del club, ahora con desvío más grande:\n\n**81 × 89**\n\nLos dos están a la misma distancia de **85**. ¿Cuánto da?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "7.209",
+              "esCorrecta": true,
+              "feedback": "Correcto. El cuadrado de 85 es 7.225, el desvío es 4 y su cuadrado es 16. Restando: 7.225 − 16 = 7.209. Comprobación por otra vía: 81 × 89 = 81 × 90 − 81 = 7.290 − 81 = 7.209."
+            },
+            {
+              "id": "b",
+              "texto": "7.225",
+              "esCorrecta": false,
+              "feedback": "Te quedaste en el cuadrado del centro sin descontar nada. Los dos factores se apartan 4 unidades del 85, y ese apartamiento cuesta exactamente 4² = 16.",
+              "errorCatalogado": "error-16"
+            },
+            {
+              "id": "c",
+              "texto": "7.241",
+              "esCorrecta": false,
+              "feedback": "Sumaste el cuadrado del desvío en lugar de restarlo. Acuérdate de la forma: es a² menos b², nunca más. El producto siempre queda por debajo del cuadrado del centro.",
+              "errorCatalogado": "error-15"
+            },
+            {
+              "id": "d",
+              "texto": "6.561",
+              "esCorrecta": false,
+              "feedback": "Ese es 81 × 81, o sea elevaste al cuadrado el menor de los dos factores en vez de multiplicarlos entre sí. El centro del que hay que partir es el 85, que está justo en medio de 81 y 89."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: cuándo sirve y cuándo no",
+      "_notasInternas": [
+        "Progresión estricta baja → media → media/alta, y progresión de propósito: P1 aplica la forma, P2 y P3 comprueban sus dos condiciones. Que las dos trampas vengan después de la aplicación es deliberado: primero se aprende a usarla, después dónde deja de valer.",
+        "P1 (baja). Verificación: x² − 25 = x² − 5², así que factoriza como (x + 5)(x − 5) ✓. Comprobación desarrollando: (x + 5)(x − 5) = x² − 5x + 5x − 25 = x² − 25 ✓.",
+        "Verificación de los distractores de P1: (x − 5)² es confundir la diferencia de cuadrados con el cuadrado de un binomio (error-12); desarrollado da x² − 10x + 25, que no es la expresión de partida. (x + 25)(x − 25) es no haber extraído la raíz del segundo término (error-14); desarrollado da x² − 625.",
+        "P2 (media). LA TRAMPA COMO MECANISMO. Verificación: 68 × 73 = 4.964 ✓ (68 × 70 + 68 × 3 = 4.760 + 204 = 4.964). Los desvíos respecto de 70 son −2 y +3, distintos, así que la forma NO aplica. Quien la aplica igual, tomando el desvío como 2, obtiene 4.900 − 4 = 4.896, que es justo el resultado del núcleo de la lección — coincidencia deliberada y muy útil: el estudiante que se equivoca acá obtiene un número que ya vio como correcto en otro problema. Quien multiplica los dos desvíos obtiene 4.900 − 6 = 4.894.",
+        "Verificación de los distractores de P2: 4.896 y 4.894 salen de los dos modos de forzar la forma sobre un caso que no la cumple, ambos error-14. La alternativa correcta no es un número sino la constatación de que hay que multiplicar a la antigua, lo que obliga a mirar la condición antes que el atajo.",
+        "P3 (media/alta). Verificación: x² + 36 es una SUMA de cuadrados y no se factoriza con esta forma. Control numérico con x = 10: la expresión vale 100 + 36 = 136, mientras que (x + 6)(x − 6) vale 16 × 4 = 64 y (x + 6)² vale 256. Ninguno coincide ✓. Se eligió x = 10 y no x = 8 porque con 8 el valor sería 100, cifra ya ocupada en el corpus."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P1.** Factoriza:\n\n**x² − 25**",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(x + 5)(x − 5)",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los dos términos son cuadrados —x² y 5²— y están restándose, así que la forma aplica: la suma por la diferencia de sus raíces. Compruébalo desarrollando: los cruces −5x y +5x se cancelan y queda x² − 25."
+            },
+            {
+              "id": "b",
+              "texto": "(x − 5)²",
+              "esCorrecta": false,
+              "feedback": "Confundiste las dos formas. Un cuadrado de binomio produce un término del medio: si desarrollas (x − 5)² obtienes x² − 10x + 25, que no es la expresión de partida. La diferencia de cuadrados da dos factores distintos, no uno repetido.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "c",
+              "texto": "(x + 25)(x − 25)",
+              "esCorrecta": false,
+              "feedback": "Usaste el 25 tal cual, sin extraerle la raíz. En la forma, lo que va dentro de los paréntesis es la raíz de cada término: la de 25 es 5. Compruébalo desarrollando lo que escribiste: da x² − 625.",
+              "errorCatalogado": "error-14"
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P2.** Otro desafío del club:\n\n**68 × 73**\n\n¿Cuánto da?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "4.896",
+              "esCorrecta": false,
+              "feedback": "Aplicaste el atajo, pero acá no se puede: mira las distancias al 70. El 68 está a 2 por debajo, y el 73 está a 3 por encima. No son simétricos, así que no hay un desvío único que elevar al cuadrado. Y fíjate en el número que te dio: es el resultado del primer desafío de la sesión, el de 68 × 72 — el atajo te devolvió la respuesta de otro problema.",
+              "errorCatalogado": "error-14"
+            },
+            {
+              "id": "b",
+              "texto": "4.894",
+              "esCorrecta": false,
+              "feedback": "Notaste que los desvíos son distintos y multiplicaste 2 por 3 para descontar 6. Es un buen intento, pero la forma no se arregla así: exige que los dos factores se aparten lo MISMO del centro, y acá no lo hacen. Cuando la condición no se cumple, no hay atajo que valga.",
+              "errorCatalogado": "error-14"
+            },
+            {
+              "id": "c",
+              "texto": "4.964",
+              "esCorrecta": true,
+              "feedback": "Correcto, y lo importante es cómo se llega: comprobando primero que el atajo NO aplica. El 68 está a 2 del 70 y el 73 está a 3, así que no hay simetría y hay que multiplicar a la antigua: 68 × 70 + 68 × 3 = 4.760 + 204 = 4.964. Reconocer cuándo una forma no sirve vale tanto como saber usarla."
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P3.** Y esta:\n\n**x² + 36**\n\n¿Cuál es su factorización?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(x + 6)(x − 6)",
+              "esCorrecta": false,
+              "feedback": "Ese producto no devuelve la expresión de partida. Desarróllalo y vas a ver que da x² − 36, con resta: los cruces se cancelan y el signo del segundo término queda negativo, siempre. Compruébalo con x = 10: tu producto vale 16 × 4 = 64, y x² + 36 vale 136.",
+              "errorCatalogado": "error-13"
+            },
+            {
+              "id": "b",
+              "texto": "(x + 6)²",
+              "esCorrecta": false,
+              "feedback": "Un cuadrado de binomio trae término del medio: (x + 6)² es x² + 12x + 36, no x² + 36. Con x = 10 tu expresión vale 256 y la de partida 136.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "No se puede factorizar con las formas de esta lección",
+              "esCorrecta": true,
+              "feedback": "Exacto. La forma que conoces exige una RESTA entre los dos cuadrados, y acá hay una suma. No es que falte encontrar el truco: el producto de la suma por la diferencia siempre deja una resta, así que ninguna combinación de esos factores puede dar x² + 36. Igual que en la lección anterior, que una expresión no se pueda transformar más es una respuesta legítima."
+            },
+            {
+              "id": "d",
+              "texto": "x(x + 36)",
+              "esCorrecta": false,
+              "feedback": "Sacaste como factor común una x que el segundo término no tiene. Desarrolla lo que escribiste: da x² + 36x, no x² + 36. El 36 está solo, sin ninguna x que lo acompañe.",
+              "errorCatalogado": "error-14"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Factorizar para dividir",
+      "_notasInternas": [
+        "Transferencia de USO, no de contexto: hasta acá factorizar era el ejercicio, y en este paso pasa a ser la herramienta para resolver otra cosa. Es la primera vez en el módulo que una forma algebraica sirve para algo que sin ella cuesta más, y por eso cierra el arco de los tres archivos.",
+        "Verificación: 4.896 ÷ 72. Como 4.896 = 68 × 72 —lo estableció el paso 3—, la división es exactamente 68, sin dividir nada. Control independiente por división larga: 72 × 68 = 4.896 ✓, así que 4.896 ÷ 72 = 68 ✓.",
+        "Verificación de los distractores: 70 es haber recordado el centro en vez del factor que falta, o haber dividido 4.900 entre 70. 68 es la correcta. 4.900 ÷ 72 no da entero (68,05…), así que quien parta del cuadrado del centro no encuentra respuesta limpia, y ese callejón sin salida es parte del valor del ejercicio.",
+        "La parte 1 pide el razonamiento sin el número y la parte 2 el número, mismo reparto que el paso 8 de L1 y L2."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Al final de la sesión alguien propone un desafío de otro tipo:\n\n**4.896 ÷ 72**\n\nY agrega: «el que se acuerde de lo de hoy no necesita dividir».\n\nParte 1: explica por qué la división se puede responder sin dividir. No des el resultado todavía, solo el razonamiento.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Porque 4.896 ya está factorizado desde el primer desafío: es 68 × 72. Si un número es el producto de 68 por 72, dividirlo por 72 devuelve el otro factor."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora sí, ¿cuánto da **4.896 ÷ 72**?",
+          "campos": [
+            {
+              "id": "divisionConFactorizacion",
+              "etiqueta": "4.896 ÷ 72",
+              "respuestaCorrecta": 68,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "divisionConFactorizacion",
+              "valorObtenido": 70,
+              "mensaje": "El 70 es el centro entre los dos factores, no uno de los factores. Los que multiplicados dan 4.896 son 68 y 72: si divides por uno, te queda el otro.",
+              "errorCatalogado": "error-16"
+            }
+          ],
+          "feedbackPorDefecto": "No dividas. Pregúntate qué dos números multiplicados dan 4.896 — ya los tienes desde el primer desafío de la sesión. Si divides ese producto por uno de ellos, queda el otro."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige, se guarda. Es el termómetro de si el estudiante entendió la cancelación o solo memorizó una fórmula más.",
+        "La consigna pide explícitamente comparar las dos formas del módulo, porque ahí se ve si entendió que es la misma cuenta con distinto signo. Un estudiante que las describa como dos fórmulas sin relación no captó el paso 5.",
+        "El texto de cierre recoge los cuatro errores del catálogo que más se repiten y que son los que la PAES usa para construir distractores."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En la sesión pasada elevabas al cuadrado y aparecía un término del medio. En esta multiplicas dos números distintos y no aparece ninguno.\n\nExplícale a un compañero **por qué en un caso el término del medio aparece y en el otro no**. Las dos cuentas se parecen muchísimo, así que la respuesta está en una sola diferencia: encuéntrala y cuéntala con tus palabras.\n\nY dinos: ¿en qué momento de la sesión te diste cuenta de que el atajo del comienzo no funcionaba?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: que mencione los signos de los dos cruces —iguales en un caso, opuestos en el otro— y que por eso se suman o se cancelan. Señal de alerta: describir las dos formas como fórmulas separadas sin relación entre ellas, o justificar la ausencia del término del medio diciendo solo que «la fórmula no lo tiene»."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los cuatro errores que más se repiten al factorizar, y que ya viste todos en esta lección:\n\n1. **Confundir las dos formas.** a² − b² se parte en dos factores distintos, (a + b)(a − b). Escribirlo como (a − b)² inventa un término del medio que la expresión no tiene.\n2. **Aplicarla a una suma.** El producto de la suma por la diferencia siempre deja una resta, así que a² + b² no sale de ahí por ningún camino.\n3. **No comprobar las condiciones.** Los dos términos tienen que ser cuadrados, y en el atajo numérico los dos factores tienen que apartarse lo mismo del centro. Si la condición falla, no hay atajo.\n4. **Olvidar el descuento, o hacerlo al revés.** El producto de dos números que rodean un centro siempre queda por debajo del cuadrado de ese centro, exactamente en el cuadrado del desvío.\n\nLa PAES arma sus alternativas incorrectas exactamente con estos cuatro. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis breve más cierre del módulo completo. Es la última lección de Expresiones algebraicas, así que el puente no anuncia otra lección sino el cierre del módulo, donde se mezclan los tres contenidos.",
+        "El resumen recoge explícitamente el arco de los tres archivos —sumar, multiplicar, deshacer— porque esa progresión es lo que da sentido al orden pedagógico que se fijó en a0d0fa9 y conviene que el estudiante la vea completa."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- **Factorizar** es escribir una expresión como un producto: el camino contrario a desarrollar.\n- La **diferencia de cuadrados** se factoriza en la suma por la diferencia de sus raíces:\n  **a² − b² = (a + b)(a − b)**\n- No queda término del medio porque los dos cruces tienen signos opuestos y **se cancelan**. Es la misma cuenta del cuadrado de un binomio, con un signo cambiado.\n- Como atajo numérico: el producto de dos números que rodean a un centro es **el cuadrado del centro menos el cuadrado del desvío**.\n- **Dos condiciones antes de aplicarla:** que sea una resta, y que los dos términos sean cuadrados. En el atajo numérico, que los dos factores se aparten lo mismo del centro. Si alguna falla, se multiplica a la antigua.\n- Una suma de cuadrados **no se factoriza** con esta forma, y eso no es que falte un truco: el producto disponible siempre deja una resta.\n\n**Con esto cierras el módulo.** Empezaste sumando expresiones y viendo que solo se juntan los términos que se parecen; después las multiplicaste y descubriste el término del medio; ahora recorriste la multiplicación al revés. Lo que viene es el cierre del módulo, donde los tres se mezclan."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "expresiones-deshacer-producto-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "¿Cuál es el valor de **63 × 67**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4.221",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los dos factores están a 2 unidades de 65, así que el producto es 65² − 2² = 4.225 − 4 = 4.221."
+        },
+        {
+          "clave": "B",
+          "texto": "4.225",
+          "esCorrecta": false,
+          "feedback": "Ese es el cuadrado de 65, el número central. Falta descontarle el cuadrado del desvío: los dos factores se apartan 2 unidades, así que hay que restar 4.",
+          "errorCatalogado": "error-16"
+        },
+        {
+          "clave": "C",
+          "texto": "4.229",
+          "esCorrecta": false,
+          "feedback": "Sumaste el cuadrado del desvío en vez de restarlo. El producto de dos números que rodean a un centro siempre queda por debajo del cuadrado de ese centro.",
+          "errorCatalogado": "error-15"
+        },
+        {
+          "clave": "D",
+          "texto": "3.969",
+          "esCorrecta": false,
+          "feedback": "Ese es 63 × 63, o sea elevaste al cuadrado el menor de los dos factores en lugar de multiplicarlos entre sí. El número del que hay que partir es el 65, que está justo en medio de 63 y 67."
+        }
+      ],
+      "solucion": "Los factores 63 y 67 se apartan ambos 2 unidades de 65, de modo que el producto es una diferencia de cuadrados: 63 × 67 = (65 − 2)(65 + 2) = 65² − 2² = 4.225 − 4 = 4.221. Verificación por multiplicación directa: 63 × 67 = 63 × 70 − 63 × 3 = 4.410 − 189 = 4.221 ✓. Control de magnitud: el resultado debe ser menor que 4.225 y mayor que 63² = 3.969, y 4.221 cumple ambas ✓."
+    },
+    {
+      "id": "expresiones-deshacer-producto-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es la factorización de **x² − 36**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(x + 6)(x − 6)",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los dos términos son cuadrados —x² y 6²— y están restándose, así que la expresión es la suma por la diferencia de sus raíces. Comprobación: al desarrollar, los cruces −6x y +6x se cancelan y queda x² − 36."
+        },
+        {
+          "clave": "B",
+          "texto": "(x − 6)²",
+          "esCorrecta": false,
+          "feedback": "Esa forma corresponde al cuadrado de un binomio, que trae término del medio: desarrollada da x² − 12x + 36. La expresión de partida no tiene término del medio ni el 36 es positivo en ella.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "(x + 36)(x − 36)",
+          "esCorrecta": false,
+          "feedback": "Usaste el 36 sin extraerle la raíz. Dentro de los paréntesis va la raíz de cada término, y la de 36 es 6. Compruébalo desarrollando lo que escribiste: da x² − 1.296.",
+          "errorCatalogado": "error-14"
+        },
+        {
+          "clave": "D",
+          "texto": "x(x − 36)",
+          "esCorrecta": false,
+          "feedback": "Sacaste como factor común una x que el segundo término no tiene: el 36 está solo. Al desarrollar, tu expresión da x² − 36x, con una x de más en el último término.",
+          "errorCatalogado": "error-14"
+        }
+      ],
+      "solucion": "La expresión x² − 36 es una resta entre dos cuadrados, porque 36 = 6². Aplicando a² − b² = (a + b)(a − b) con a = x y b = 6 se obtiene (x + 6)(x − 6). Verificación desarrollando: (x + 6)(x − 6) = x² − 6x + 6x − 36 = x² − 36 ✓, donde los dos términos cruzados se cancelan por tener signos opuestos. Verificación numérica con x = 10: la expresión original vale 100 − 36 = 64 y el producto vale 16 × 4 = 64 ✓."
+    },
+    {
+      "id": "expresiones-deshacer-producto-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma que **toda expresión de la forma x² + k², con k distinto de cero, se puede factorizar como (x + k)(x − k)**.\n\n¿Cuál de las siguientes evaluaciones de esa afirmación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es falsa, porque ese producto siempre devuelve una resta y nunca una suma.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y la razón es estructural, no un caso aislado. Al desarrollar (x + k)(x − k) los términos cruzados se cancelan y queda x² − k², con signo negativo, cualquiera sea k. Así que ese producto no puede dar x² + k² para ningún valor de k distinto de cero."
+        },
+        {
+          "clave": "B",
+          "texto": "Es verdadera, porque los dos términos son cuadrados y eso basta para aplicar la forma.",
+          "esCorrecta": false,
+          "feedback": "Que los dos términos sean cuadrados es una de las dos condiciones, pero falta la otra: tienen que estar restándose. Compruébalo con k = 6 y x = 10: la expresión vale 136 y el producto propuesto vale 16 × 4 = 64.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "Es falsa, pero se arregla escribiendo (x + k)² en su lugar.",
+          "esCorrecta": false,
+          "feedback": "Acertaste en que es falsa y erraste en el reemplazo. El cuadrado de un binomio trae término del medio: (x + k)² es x² + 2kx + k², que tiene un 2kx que la expresión original no tiene.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "D",
+          "texto": "Depende del valor de x: para algunos valores se cumple y para otros no.",
+          "esCorrecta": false,
+          "feedback": "Una factorización tiene que valer para todo valor de x, no para algunos. Y acá no vale para ninguno salvo casos que k distinto de cero excluye: la diferencia entre las dos expresiones es 2k², que no depende de x en absoluto.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Desarrollando el producto propuesto: (x + k)(x − k) = x² − kx + kx − k² = x² − k², porque los términos cruzados se cancelan. Comparado con x² + k², las dos expresiones difieren en 2k², cantidad que es distinta de cero siempre que k lo sea, y que además no depende de x. Por lo tanto la afirmación es falsa para todo k distinto de cero, lo que descarta B, y lo es de forma estructural y no según el valor de x, lo que descarta D. C también es falsa porque (x + k)² = x² + 2kx + k² introduce un término del medio ausente en la expresión original. Verificación numérica con k = 6 y x = 10: x² + k² = 136, mientras que (x + 6)(x − 6) = 64 y (x + 6)² = 256 ✓."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Expresiones algebraicas, punto «Factorizaciones y desarrollo de expresiones algebraicas» (docs/temario-demre-m1-2027.md) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
+      "docs/reglas-modulo.md — reglas 1 a 5, en particular la regla 3 (todo distractor derivable y en banda de magnitud) y la regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo con el subconjunto que ese archivo usa).",
+      "content/diagnostico/dag-m1.json — la unidad expresiones-algebraicas depende solo de enteros-racionales, de donde salen los prerrequisitos de aritmética declarados.",
+      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de la entrada error-6 del catálogo embebido y de uno de los prerrequisitos intramódulo.",
+      "content/lecciones/expresiones-rectangulo.json — L2 del mismo módulo: origen literal de la entrada error-9, origen del prerrequisito sobre el cuadrado de un binomio, y origen del cuadrado de 70 que esta lección reutiliza como continuidad deliberada.",
+      "Dominio «club de cálculo mental»: mismo dominio de L2, ya verificado contra el corpus de fuentes aisladas mediante consultar-fuentes.mjs corrido por el autor fuera de esta sesión. «club de cálculo mental» vuelve NO; la aparición de «cálculo mental» en un archivo de currículum fue clasificada por el autor como habilidad o eje curricular y no como actividad con la misma mecánica, de modo que no constituye colisión de contexto."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido. Se hace constar una decisión de diseño relevante para quien re-audite: se descartó el caso numérico más frecuente de este contenido, el que se apoya en el cuadrado de cincuenta, por colisión de cifra con un archivo ya publicado del corpus propio, no por adyacencia con material externo. AUDITORÍAS INDEPENDIENTES: PENDIENTES a la fecha de este archivo. Ni la revisión matemática ni la auditoría de originalidad se han corrido todavía; ambas van en hilos aparte abiertos con /clear, porque el hilo que redactó no puede juzgar lo que escribió (CLAUDE.md regla 5). La aritmética anotada en las _notasInternas de cada paso es autochequeo del redactor, no verificación independiente.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; auditorías matemática y de originalidad pendientes al momento de escribir este archivo",
+    "fecha": "2026-08-14"
+  }
+}
