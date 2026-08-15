@@ -19,7 +19,7 @@ un profesor puede auditar contra el temario.
 - **Título** — el nombre técnico DEMRE, campo `titulo` del JSON. Es lo único que
   se muestra y lo único que se audita.
 - **Archivo** — si existe o no `content/lecciones/{id}.json`, verificado el
-  2026-08-14. Es un hecho del disco, no un juicio de madurez: **no hay estados
+  2026-08-15. Es un hecho del disco, no un juicio de madurez: **no hay estados
   de contenido**. El pipeline `borrador → revision → publicable` y los campos
   `estado`, `checklistOriginalidad` y `revisionMatematica` se eliminaron el
   2026-08-12 (CLAUDE.md regla 5). Un archivo que existe y pasa `npm run validar`
@@ -39,7 +39,7 @@ un profesor puede auditar contra el temario.
 > de `inecuaciones-problemas`, y el contenido real de la lección resultó ser una
 > encuesta de asistencia, no un cartel.
 
-**Declarar no es escribir.** Los 48 ids están en el registro; 15 tienen archivo.
+**Declarar no es escribir.** Los 48 ids están en el registro; 18 tienen archivo.
 Un id sin archivo no rompe nada: `verificarRegistroDeTemas()` lo deja pasar como
 lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 `/camino`, fuera de `generateStaticParams`. Ver `lib/estadoModulo.ts`.
@@ -53,7 +53,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 1 | Números | Enteros y racionales | `enteros-y-racionales` | **completo** |
 | 2 | Números | Porcentaje | `porcentaje` | **completo** |
 | 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | sin contenido |
-| 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | sin contenido |
+| 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | **completo** |
 | 5 | Álgebra y funciones | Proporcionalidad | `proporcionalidad` | **completo** |
 | 6 | Álgebra y funciones | Ecuaciones e inecuaciones de primer grado | `ecuaciones-e-inecuaciones-primer-grado` | **completo** |
 | 7 | Álgebra y funciones | Sistemas de ecuaciones lineales (2x2) | `sistemas-2x2` | sin contenido |
@@ -67,7 +67,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-5 completos · 11 sin contenido · 15 de 48 lecciones escritas.
+6 completos · 10 sin contenido · 18 de 48 lecciones escritas.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
@@ -117,9 +117,11 @@ Cierre: `cierre-porcentaje`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `expresiones-sumar-lo-que-se-parece` | Operatoria con expresiones algebraicas | no |
-| `expresiones-rectangulo` | Productos notables | no |
-| `expresiones-deshacer-producto` | Factorización de expresiones algebraicas | no |
+| `expresiones-sumar-lo-que-se-parece` | Operatoria con expresiones algebraicas | sí |
+| `expresiones-rectangulo` | Productos notables | sí |
+| `expresiones-deshacer-producto` | Factorización de expresiones algebraicas | sí |
+
+Cierre: `cierre-expresiones-algebraicas`.
 
 Las filas van en orden pedagógico, que aquí no coincide con el del temario:
 factorizar es reconocer la forma que produce un producto notable, así que va
