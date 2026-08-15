@@ -228,10 +228,20 @@ export const EJES = [
           "Ya puedes reducir y factorizar expresiones sin perder términos.",
         objetivo:
           "Reducir, factorizar y evaluar expresiones con letras sin perder términos en el camino.",
+        /**
+         * Orden pedagógico, no el del temario: operatoria primero, después
+         * productos notables, factorización al final. Factorizar es reconocer
+         * la forma que produce un producto notable, así que no puede ir antes
+         * de haberlo construido; y la operatoria con términos semejantes es
+         * prerrequisito de las dos. El orden original (rectángulo, deshacer,
+         * sumar) venía de la carga masiva de los 48 ids en `9ee55fa` y dejaba
+         * la operatoria al final. Corregido el 2026-08-14, antes de que
+         * existiera ningún archivo del módulo.
+         */
         lecciones: [
+          "expresiones-sumar-lo-que-se-parece",
           "expresiones-rectangulo",
           "expresiones-deshacer-producto",
-          "expresiones-sumar-lo-que-se-parece",
         ],
       },
       {

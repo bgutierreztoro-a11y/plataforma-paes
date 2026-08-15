@@ -117,9 +117,14 @@ Cierre: `cierre-porcentaje`.
 
 | id | Título | Archivo |
 |---|---|---|
+| `expresiones-sumar-lo-que-se-parece` | Operatoria con expresiones algebraicas | no |
 | `expresiones-rectangulo` | Productos notables | no |
 | `expresiones-deshacer-producto` | Factorización de expresiones algebraicas | no |
-| `expresiones-sumar-lo-que-se-parece` | Operatoria con expresiones algebraicas | no |
+
+Las filas van en orden pedagógico, que aquí no coincide con el del temario:
+factorizar es reconocer la forma que produce un producto notable, así que va
+después. El orden lo impone `lecciones` en `lib/modulos.ts`; esta tabla lo
+refleja.
 
 ### 5. Proporcionalidad — `proporcionalidad`
 
