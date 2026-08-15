@@ -1,0 +1,669 @@
+{
+  "tipo": "leccion",
+  "id": "expresiones-rectangulo",
+  "titulo": "Productos notables",
+  "objetivo": "Desarrollar el cuadrado de un binomio reconociendo que tiene tres términos y que el del medio vale exactamente el doble del producto de los dos sumandos, y aplicar esa forma tanto a números como a expresiones con letras.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Términos semejantes: agrupar los términos que comparten la misma parte literal y dejar indicados los que no (expresiones-sumar-lo-que-se-parece)",
+    "La letra como cantidad genérica con la que se puede operar sin conocer su valor (expresiones-sumar-lo-que-se-parece)",
+    "Multiplicación de números enteros de dos y tres cifras (módulo Enteros y racionales)",
+    "Propiedad distributiva de la multiplicación respecto de la suma en números enteros (módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "cuadrado de un binomio",
+    "producto notable",
+    "término del medio",
+    "desarrollo de un producto"
+  ],
+  "_notasInternas": [
+    "L2 del módulo Expresiones algebraicas. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5 en su versión corregida el 2026-08-14. Seis entradas: error-5, error-6 y error-7 COPIADAS CARÁCTER A CARÁCTER desde expresiones-sumar-lo-que-se-parece.json, y error-9, error-10 y error-11 nuevas, firmadas por Benja el 2026-08-14. Los tres nuevos ids NO se retropropagan a L1: L1 no los usa y agregárselos lo pondría en 🔴 catalogo-sin-usar.",
+    "OBJETO DE DESCUBRIMIENTO (estructura, no constante): que el cuadrado de una suma tiene TRES términos y que el del medio vale exactamente el doble del producto de los dos sumandos. Por eso no se declara auditoria.constante, igual que en L1.",
+    "REGLA DURA DE NO FILTRACIÓN: el término del medio no circula antes del paso 5. En los pasos 1 a 4 no aparece el 420, ni la palabra «doble», ni ninguna descomposición en tres partes. Lo que sí puede aparecer —y aparece— es el valor de 73², porque el resultado no es la estructura: el paso 3 lo obtiene multiplicando a la antigua y el paso 5 descubre de dónde sale. Es el mismo reparto que en proporcionalidad-directa, donde el paso 3 pide el 480 y el paso 5 descubre la constante que lo produce.",
+    "EL PASO 2 REFUTA SIN REVELAR, y es la pieza de la que depende toda la lección. El error de partir 73² en 70² + 3² se derriba con un control de sentido puro: 73 × 70 ya vale 5110, así que 73 × 73 tiene que ser mayor, y 4909 no lo es. El estudiante queda sabiendo que el atajo falla y sin saber todavía por qué ni cuánto falta. Cuidado en cualquier reescritura: decir «faltan 420» acá mataría el paso 5.",
+    "POR QUÉ NO SE USA EL MODELO DE ÁREA, que es el contexto canónico de este contenido (decisión de Benja, 2026-08-14). Hay una razón de originalidad —el rectángulo partido en cuatro es el ejemplo más repetido del tema— y una razón técnica que la vuelve inapelable: definitions.item no admite figuras y BloqueVisualizacion no tiene renderer para variante 'grafico' (docs/pendientes.md), así que un cuadrado partido en cuatro terminaría descrito en palabras dentro de un recuadro «Figura». La regla 1 de docs/reglas-modulo.md apunta al mismo lado. Acá el término del medio se ve mejor en la aritmética que en un dibujo que no podemos dibujar: el paso 5 lo deduce aplicando la distributiva dos veces, que además deja la deducción al alcance de los prerrequisitos declarados.",
+    "ALCANCE, LÍMITE DURO: esta lección desarrolla (a+b)² y nada más. NO toca a² − b², ni el cuadrado de una diferencia, ni ninguna factorización. La diferencia de cuadrados y la lectura inversa de la forma son el objeto de descubrimiento de expresiones-deshacer-producto (L3) y adelantarlas acá le quitaría su razón de existir, igual que la regla 1 de reglas-modulo.md documentó para el caso de proporcionalidad. El puente del paso 10 anuncia L3 por su comportamiento, sin mostrar ninguna forma factorizada.",
+    "DISEÑO NUMÉRICO: los cinco cuadrados del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y quedándose con los casos cuyas cuatro piezas —el cuadrado, los dos cuadrados parciales y el valor del error-9— estuvieran libres. Se descartaron por colisión 51² (2500 y 100 ocupados), 64² (3600 y 480), 82² (6400 y 320), 47² (560), 36² (900 y 360) y 71² (140). Las 34 cifras de tres dígitos o más del archivo se verificaron una por una antes de redactar.",
+    "El 73 es buen núcleo por una razón medible: el término del medio vale 420 sobre un total de 5329, así que el error-9 se desvía casi un 8 % y no se puede confundir con un descuido de cálculo. Con números más chicos la diferencia se disimula.",
+    "El paso 8 es transferencia de REGISTRO, no de contexto: pasa del número a la letra. Es la transferencia que este contenido pide, porque la forma general con letras es lo que el estudiante va a usar en L3 y en la PAES; cambiar de historia manteniendo números habría sido más barato y menos útil.",
+    "AUDITORÍAS: pendientes. Este archivo sale del hilo de redacción sin auditar. Las dos corren en hilos aparte abiertos con /clear (CLAUDE.md regla 5)."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "cuadradoDelDesafio": "El campo pide el valor de 73 × 73, un número puro: el dominio de la lección es cálculo mental y sus cantidades no miden nada. Ponerle una unidad sería inventarle una magnitud que el problema no tiene.",
+      "cuadradoComprobacion": "El campo pide el valor de 97 × 97, un número puro, por la misma razón que el del paso 3: la lección opera sobre números, no sobre cantidades de algo.",
+      "comprobacionConValor": "El campo pide el valor de un desarrollo algebraico evaluado en t = 5. Es el resultado de una expresión con letras, y ni la letra ni el resultado representan una magnitud: en este módulo la letra es una cantidad genérica sin unidad asociada."
+    }
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-5",
+      "descripcion": "Cambia la parte literal al operar los coeficientes: al sumar términos semejantes multiplica también las letras y agrega un exponente que nadie pidió (de 4r + 5r pasa a 9r²)."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Reduce términos que comparten la letra pero tienen distinto exponente, como si x y x² fueran de la misma clase, y suma coeficientes que no se pueden sumar."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Encuentra el término del medio pero lo cuenta una sola vez: escribe (a+b)² como a² + ab + b² en vez de a² + 2ab + b², sin notar que el cruce ocurre dos veces."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Desarrolla el cuadrado de una suma y abandona el último término: escribe (a+b)² como a² + 2ab, perdiendo el cuadrado del segundo sumando."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: club de cálculo mental de un colegio, que compite calculando cuadrados de dos cifras de cabeza apoyándose en el número redondo más cercano. Magnitudes: números puros, sin unidades. Es un dominio deliberadamente sin objetos físicos, porque el contenido no los necesita y el modelo de área quedó descartado.",
+    "curiosidad (Paso 1): el desafío es 73 al cuadrado. Sin operación: la pregunta es si sirve calcular 70 al cuadrado y 3 al cuadrado y sumarlos.",
+    "problema (Paso 2, refutación sin revelar): el atajo propuesto da 4909. Se derriba con un control de sentido, 73 × 70 = 5110, que ya supera al candidato. No se dice cuánto falta.",
+    "pensar (Paso 3): 73 al cuadrado calculado a la antigua da 5329. Distractor 4909, el atajo del paso anterior.",
+    "descubrimiento (Paso 5, estructura fijada): tres casos comparados —21 al cuadrado da 441 contra 401; 41 al cuadrado da 1681 contra 1601; 73 al cuadrado da 5329 contra 4909— con diferencias 40, 80 y 420, que son el doble del producto de los dos sumandos en cada caso. Comprobación fuera de tabla: 97 al cuadrado da 9409, con distractores 8149 (sin el término del medio), 8779 (contó el cruce una sola vez) y 9360 (abandonó el último término).",
+    "generalizacion (Paso 6): ejemplo trabajado 45 al cuadrado, que da 2025 y cuyo atajo fallido da 1625. Ejercicio con cifras distintas: 93 al cuadrado da 8649, con distractor 8109.",
+    "practica (Paso 7): P1 numérico, 22 al cuadrado da 484 con distractor 404; P2 algebraico, el cuadrado de x más seis; P3 algebraico con coeficiente, el cuadrado de dos x más tres.",
+    "aplicacion (Paso 8, cambio de registro): el cuadrado de t más seis, comprobado con t igual a cinco, que da 121 por los dos caminos.",
+    "itemsPAES item-1 (resolver, baja): 79 al cuadrado da 6241; distractores 4981 (sin término del medio), 5611 (cruce contado una vez) y 6160 (sin el último término).",
+    "itemsPAES item-2 (modelar, media): se pide la EXPRESIÓN que desarrolla el cuadrado de x más cinco; distractores sin término del medio, con el cruce contado una vez y sin el último término.",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa cuándo la igualdad entre el cuadrado de una suma y la suma de los cuadrados llega a cumplirse.",
+    "NOTA DE NO COLISIÓN: los cinco cuadrados del archivo se eligieron barriendo las cifras de tres dígitos o más de todos los contextosNumericos de content/ y conservando solo los casos cuyas cuatro piezas estuvieran libres. Se descartaron por colisión real seis candidatos, entre ellos el más obvio del tema —el cuadrado de cincuenta y uno—, porque sus dos piezas principales ya están ocupadas. Las cifras de este archivo se verificaron una por una antes de redactar y ninguna aparece en otro archivo del corpus. Comparten módulo con L1 las cifras menores de cien, que es la zona donde la coincidencia es azar.",
+    "IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json y de L1): no se transcriben acá umbrales, conteos ni listas de cifras verificadas. scripts/auditar-leccion.mjs lee este campo como cifras propias de la lección, así que escribir el umbral numérico del propio auditor genera colisiones falsas contra todos los archivos que usen esa cifra con otro rol."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Setenta y tres al cuadrado, sin papel",
+      "_notasInternas": [
+        "Gancho: un desafío de cálculo mental que suena imposible y tiene truco. El atajo tentador —partir el número en su decena y su unidad y elevar cada parte— se ofrece como candidato en la predicción, sin corregir (prediccion no lleva feedback por contrato).",
+        "Verificación: no hay operación resuelta en este paso. Los únicos números son 73, 70 y 3.",
+        "NO PUEDE APARECER ACÁ: el 420, la palabra «doble», ni ninguna descomposición en tres partes. El texto de cierre deja la tensión abierta y no adelanta que al atajo le falte algo, solo que el club discute si sirve."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "En el club de cálculo mental del colegio se reúnen los martes a resolver cuentas de cabeza, sin papel y sin calculadora.\n\nEl desafío de hoy es este:\n\n**73 × 73**\n\nAlguien propone un atajo: «73 es 70 más 3. Entonces calculo 70 al cuadrado, que es fácil, calculo 3 al cuadrado, que es más fácil todavía, y los sumo».\n\nSin calcular nada: ¿crees que ese atajo da el resultado correcto?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, partir el número en dos y elevar cada parte tiene que funcionar",
+            "No, va a dar un número más chico que el verdadero",
+            "No, va a dar un número más grande que el verdadero",
+            "No estoy seguro"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La propuesta tiene algo atractivo: 70 al cuadrado y 3 al cuadrado son dos cuentas que cualquiera hace de memoria, mientras que 73 por 73 no.\n\nY la idea de partir un problema grande en dos chicos funciona en muchísimos lados. Por eso el atajo convence a la primera.\n\nEn el club se armó discusión. La mitad dice que es un hallazgo y la otra mitad desconfía, pero nadie sabe explicar bien por qué.\n\nAsí que hagamos lo que hay que hacer con cualquier atajo antes de creerle: **ponerlo a prueba.**"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El atajo no sobrevive a una revisión",
+      "_notasInternas": [
+        "LA PIEZA DE LA QUE DEPENDE TODA LA LECCIÓN: se refuta el atajo sin decir por qué falla ni cuánto le falta. El control de sentido es puro: 73 × 70 = 5110 ya supera a 4909, y 73 × 73 tiene que ser todavía mayor que 73 × 70. El estudiante queda sabiendo que el atajo está roto y sin la estructura que lo arregla.",
+        "Verificación: el atajo da 70² + 3² = 4900 + 9 = 4909. Control: 73 × 70 = 5110 ✓. Como 5110 > 4909 y además 73 × 73 > 73 × 70 porque 73 > 70, el candidato 4909 queda descartado sin necesidad de calcular 73² ✓.",
+        "Verificación de los distractores: la opción b apela a la paridad, que no dice nada del tamaño del resultado y es el tipo de criterio irrelevante que hay que desarmar. La opción c acepta el atajo, que es error-9 en su forma más pura.",
+        "CUIDADO EN CUALQUIER REESCRITURA: decir acá «faltan 420» o «al atajo le falta un término» mataría el paso 5. La refutación tiene que quedarse en que el número es demasiado chico."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Siguiendo el atajo: 70 al cuadrado son 4.900, y 3 al cuadrado son 9. Sumados dan **4.909**.\n\nAntes de festejar, alguien del club hace una revisión rápida — de esas que no calculan el resultado, solo comprueban si el candidato es razonable."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El atajo propone que **73 × 73 = 4.909**.\n\n¿Cuál de estas observaciones demuestra que ese resultado no puede ser correcto, **sin necesidad de calcular 73 × 73**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que 73 × 70 ya da 5.110, y 73 × 73 tiene que ser mayor que eso",
+              "esCorrecta": true,
+              "feedback": "Exacto, y fíjate en lo económico del argumento. Multiplicar 73 por 70 es fácil y da 5.110. Como 73 × 73 multiplica ese mismo 73 por un número aún mayor, el resultado verdadero tiene que pasar de 5.110. El candidato 4.909 se queda corto, así que está descartado — y todo esto sin resolver la cuenta original."
+            },
+            {
+              "id": "b",
+              "texto": "Que 4.909 es impar, y el cuadrado de un número impar no puede serlo",
+              "esCorrecta": false,
+              "feedback": "El cuadrado de un número impar sí es impar: 3 × 3 = 9, 5 × 5 = 25. Así que la paridad de 4.909 no tiene nada de sospechoso. Un criterio que no mira el tamaño del resultado no sirve para descartarlo; busca uno que compare 4.909 con alguna cuenta que sí sepas hacer."
+            },
+            {
+              "id": "c",
+              "texto": "Ninguna: 4.909 está bien, porque 70 y 3 son las dos partes de 73",
+              "esCorrecta": false,
+              "feedback": "Que 70 y 3 sean las dos partes de 73 es cierto, pero de ahí no se sigue que elevar cada parte y sumarlas dé el cuadrado del total. Compruébalo con el número más chico que se te ocurra: 5 es 4 más 1, y sin embargo 5 × 5 = 25, mientras que 4 × 4 más 1 × 1 da 17. El atajo ya falla ahí.",
+              "errorCatalogado": "error-9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: ¿cuánto da de verdad?",
+      "_notasInternas": [
+        "Registro del intento genuino. Se pide el resultado real, obtenido como cada uno pueda: multiplicando a la antigua, sumando 73 setenta y tres veces, o como sea. La estructura no hace falta para responder, y por eso el paso no la filtra.",
+        "Verificación: 73 × 73. Por descomposición del segundo factor, 73 × 70 = 5.110 y 73 × 3 = 219; sumados, 5.329 ✓. Por multiplicación en columna, 73 × 73 = 5.329 ✓. Dos vías coincidentes.",
+        "Verificación de los distractores: 4.909 es el atajo del paso anterior (error-9). 5.320 es haber llegado a la descomposición pero abandonar el último término (error-11): 4.900 + 420. 5.119 es contar el cruce una sola vez (error-10): 4.900 + 210 + 9.",
+        "Los tres distractores estructurales se plantan acá aunque la estructura todavía no sea pública, y no la filtran: sus feedback señalan que el número es demasiado chico y remiten al control de sentido del paso 2, sin descomponer nada. Un estudiante que llegue a 5.320 o a 5.119 lo hizo por su cuenta, y el feedback lo acompaña sin nombrar lo que el paso 5 va a nombrar."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El atajo quedó descartado, así que hay que hacer la cuenta de verdad.\n\nCalcula **73 × 73** como prefieras: en columna, partiendo el segundo factor en 70 y 3, o como te resulte más cómodo.",
+          "campos": [
+            {
+              "id": "cuadradoDelDesafio",
+              "etiqueta": "73 × 73",
+              "respuestaCorrecta": 5329,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cuadradoDelDesafio",
+              "valorObtenido": 4909,
+              "mensaje": "Ese es el atajo que el club acaba de descartar. Recuerda el control de sentido: 73 × 70 ya vale 5.110, así que el resultado verdadero tiene que ser mayor que eso. Haz la multiplicación completa.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "cuadradoDelDesafio",
+              "valorObtenido": 5320,
+              "mensaje": "Estás muy cerca y por buen camino, pero se te quedó algo afuera al final. Prueba a comprobar el resultado por otra vía: 73 × 70 más 73 × 3.",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "campoId": "cuadradoDelDesafio",
+              "valorObtenido": 5119,
+              "mensaje": "Otra vez por debajo de la cuenta, aunque menos que el atajo del club. Vuelve al control de sentido: el resultado tiene que superar los 5.110 de 73 × 70, y por bastante más que nueve.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Una vía cómoda: parte el segundo factor. 73 × 73 es lo mismo que 73 × 70 más 73 × 3. El primer producto ya lo tienes del paso anterior."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el desafío",
+      "_notasInternas": [
+        "Gradación real: la 1 recuerda que hay una vía conocida y no exige nada nuevo, la 2 nombra la partición del segundo factor —que es la propiedad distributiva, un prerrequisito declarado— y la 3 aterriza el primero de los dos productos aprovechando que ya está calculado.",
+        "NINGUNA pista descompone en tres partes ni menciona el término del medio. La 3 se detiene deliberadamente antes de ejecutar el segundo producto: entregar la cuenta hecha dejaría el paso 3 sin intento genuino y no ayudaría al paso 5, que trabaja sobre otra cosa."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "No hace falta ningún truco para responder esto. Es una multiplicación de dos cifras por dos cifras, de las que ya sabes hacer."
+            },
+            {
+              "nivel": 2,
+              "texto": "Si la quieres hacer de cabeza, parte el segundo factor: multiplicar por 73 es lo mismo que multiplicar por 70 y después por 3, y sumar los dos resultados."
+            },
+            {
+              "nivel": 3,
+              "texto": "El primero de esos dos productos ya lo calculaste en el paso anterior: 73 × 70 = 5.110. Te falta el segundo, 73 × 3, y juntarlos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "¿Qué se perdió el atajo?",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN. El insight: al atajo no le falta un pedacito cualquiera, le falta una cantidad que se puede predecir, y esa cantidad es el doble del producto de las dos partes.",
+        "POR QUÉ TRES CASOS Y NO UNO: con un solo caso el estudiante ve una diferencia de 420 y no tiene con qué relacionarla. Con tres casos las diferencias (40, 80, 420) son distintas entre sí, así que la única forma de explicarlas todas es una regla, no una cifra. Es el equivalente exacto de las cinco filas de proporcionalidad-directa.",
+        "Verificación del caso 21: 21² = 441 ✓. Atajo: 400 + 1 = 401. Diferencia 441 − 401 = 40. Y 2 × 20 × 1 = 40 ✓.",
+        "Verificación del caso 41: 41² = 1.681 ✓. Atajo: 1.600 + 1 = 1.601. Diferencia 1.681 − 1.601 = 80. Y 2 × 40 × 1 = 80 ✓.",
+        "Verificación del caso 73: 73² = 5.329 ✓. Atajo: 4.900 + 9 = 4.909. Diferencia 5.329 − 4.909 = 420. Y 2 × 70 × 3 = 420 ✓.",
+        "Verificación de la deducción del texto, que es el argumento que reemplaza al modelo de área: 73 × 73 = 73 × (70 + 3) = 73 × 70 + 73 × 3. Ahora se abre cada uno: 73 × 70 = (70 + 3) × 70 = 70 × 70 + 3 × 70, y 73 × 3 = 70 × 3 + 3 × 3. Sumando todo: 70² + 3 × 70 + 70 × 3 + 3² = 70² + 2 × (70 × 3) + 3² ✓. El cruce 70 × 3 aparece dos veces porque la distributiva se aplica dos veces, una por cada factor. Comprobación numérica: 4.900 + 420 + 9 = 5.329 ✓.",
+        "Verificación de la comprobación fuera de tabla: 97 = 90 + 7. 90² = 8.100; 2 × 90 × 7 = 1.260; 7² = 49. Total 8.100 + 1.260 + 49 = 9.409. Control independiente: 97 × 97 = 9.409 ✓.",
+        "Verificación de sus distractores: 8.149 es 8.100 + 49, el atajo sin término del medio (error-9). 8.779 es 8.100 + 630 + 49, con el cruce contado una sola vez, porque 90 × 7 = 630 (error-10). 9.360 es 8.100 + 1.260, abandonando el último término (error-11).",
+        "PRIMERA APARICIÓN de la estructura en todo el archivo. Verificado que los pasos 1 a 4 no contienen el 420, ni la palabra «doble», ni descomposición en tres términos."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Ya sabemos dos cosas: el resultado verdadero es **5.329** y el atajo daba **4.909**.\n\nO sea que el atajo se perdió **420** por el camino.\n\nAntes de seguir: ¿de dónde crees que sale ese 420?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "De 70 × 3",
+            "Del doble de 70 × 3",
+            "De 73 × 3",
+            "Es un número que aparece porque sí, no sale de ninguna parte"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tres desafíos del club, cada uno con su resultado verdadero y con lo que daría el atajo. Mira la última columna y compárala con las dos partes en que se parte cada número.",
+          "datos": {
+            "columnas": ["Número", "Se parte en", "Resultado verdadero", "Lo que da el atajo", "Lo que falta"],
+            "filas": [
+              [21, "20 y 1", 441, 401, 40],
+              [41, "40 y 1", 1681, 1601, 80],
+              [73, "70 y 3", 5329, 4909, 420]
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Las tres diferencias son distintas —40, 80 y 420—, así que no es una cifra fija que se le suma a todo. Es algo que **depende de las dos partes**.\n\nMíralas de cerca:\n\n- 21 se parte en 20 y 1. El producto de las partes es 20. Y falta **40**, que es su doble.\n- 41 se parte en 40 y 1. El producto es 40. Y falta **80**, que es su doble.\n- 73 se parte en 70 y 3. El producto es 210. Y falta **420**, que es su doble.\n\nEn los tres casos, **lo que el atajo se pierde es el doble del producto de las dos partes.**\n\n¿Y por qué el doble? Se puede ver siguiendo la cuenta con cuidado, sin dibujar nada.\n\nMultiplicar 73 × 73 es multiplicar 73 por (70 + 3), y eso se reparte:\n\n**73 × 73 = 73 × 70 + 73 × 3**\n\nAhora hay que abrir cada uno de esos dos productos, porque el 73 de adelante también es 70 + 3:\n\n- **73 × 70** es (70 + 3) × 70, o sea **70 × 70 + 3 × 70**\n- **73 × 3** es (70 + 3) × 3, o sea **70 × 3 + 3 × 3**\n\nJuntando las cuatro piezas:\n\n**70 × 70 + 3 × 70 + 70 × 3 + 3 × 3**\n\nY ahí está la respuesta: el cruce **70 × 3 aparece dos veces**, una por cada vez que se repartió. No es un descuido ni una casualidad — es que el 70 se cruza con el 3 en un sentido y el 3 se cruza con el 70 en el otro.\n\nPor eso el cuadrado de una suma tiene **tres** términos y no dos:\n\n**4.900 + 420 + 9 = 5.329**\n\nEl atajo del club no estaba mal en lo que ponía, estaba mal en lo que le faltaba."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos que sirve con un desafío nuevo.\n\nCalcula **97 × 97** partiendo el 97 en **90 y 7**, y acordándote de las tres piezas.",
+          "campos": [
+            {
+              "id": "cuadradoComprobacion",
+              "etiqueta": "97 × 97",
+              "respuestaCorrecta": 9409,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cuadradoComprobacion",
+              "valorObtenido": 8149,
+              "mensaje": "Sumaste 8.100 y 49, o sea volviste al atajo del principio. Falta la pieza del medio, que acá es el doble de 90 × 7.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "cuadradoComprobacion",
+              "valorObtenido": 8779,
+              "mensaje": "Encontraste el cruce, 90 × 7 = 630, pero lo contaste una sola vez. Acuérdate de por qué aparecía dos veces: el 90 se cruza con el 7 y el 7 se cruza con el 90.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "campoId": "cuadradoComprobacion",
+              "valorObtenido": 9360,
+              "mensaje": "Pusiste bien las dos primeras piezas, 8.100 y el doble de 90 × 7, pero te faltó la última: el cuadrado del 7.",
+              "errorCatalogado": "error-11"
+            }
+          ],
+          "feedbackPorDefecto": "Tres piezas, en este orden: el cuadrado de 90, después el doble de 90 × 7, y por último el cuadrado de 7. Súmalas."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "El cuadrado de un binomio",
+      "_notasInternas": [
+        "Recién acá se nombra el concepto y se da la forma general, como exige el marco pedagógico. Ni un paso antes.",
+        "El texto conecta explícitamente con L1: el término del medio y el último término no se pueden juntar porque no son semejantes, así que la forma desarrollada ya está reducida. Es la primera vez que el módulo usa una lección anterior como herramienta y conviene que se note.",
+        "Verificación del ejemplo trabajado: 45 = 40 + 5. 40² = 1.600; 2 × 40 × 5 = 400; 5² = 25. Total 1.600 + 400 + 25 = 2.025. Control independiente: 45 × 45 = 2.025 ✓. El atajo daría 1.600 + 25 = 1.625.",
+        "Verificación del ejercicio, con cifras DISTINTAS a las del ejemplo (regla de §2 de calibracion): 93 = 90 + 3. 90² = 8.100; 2 × 90 × 3 = 540; 3² = 9. Total 8.649. Control independiente: 93 × 93 = 8.649 ✓.",
+        "Verificación de los distractores del ejercicio: 8.109 es 8.100 + 9, el atajo (error-9). 8.379 es 8.100 + 270 + 9, con el cruce contado una vez, porque 90 × 3 = 270 (error-10). 8.640 es 8.100 + 540, sin el último término (error-11). Las cuatro alternativas quedan entre 8.109 y 8.649, dentro de un 7 % entre sí, así que ninguna se descarta por tamaño."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora el nombre y la forma general.\n\nUna suma de dos términos se llama **binomio**. Y elevar un binomio al cuadrado da siempre lo mismo, cualesquiera sean los dos términos:\n\n**(a + b)² = a² + 2ab + b²**\n\nSe lee así: el cuadrado del primero, más el doble del producto de los dos, más el cuadrado del segundo. **Tres términos.**\n\nA esta igualdad se le dice **producto notable**: notable porque aparece tantas veces que conviene reconocerla de inmediato en vez de desarrollarla cada vez.\n\nDos cosas que conviene fijar desde ya:\n\n1. **El término del medio nunca es opcional.** Solo desaparece si uno de los dos términos es cero, y entonces no hay binomio que valga.\n2. **Los tres términos no se pueden juntar entre sí.** Acuérdate de la lección anterior: a², 2ab y b² tienen partes literales distintas, así que no son semejantes. La forma desarrollada ya está reducida; no hay nada más que hacerle."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "**Ejemplo trabajado.** Calcular **45 × 45** con la forma.\n\nSe parte el 45 en 40 y 5. Entonces *a* = 40 y *b* = 5.\n\n- El cuadrado del primero: 40² = **1.600**\n- El doble del producto: 2 × 40 × 5 = **400**\n- El cuadrado del segundo: 5² = **25**\n\nSumados: 1.600 + 400 + 25 = **2.025**.\n\nY fíjate en el tamaño del término del medio en este caso: 400 sobre un total de 2.025. Quien se lo saltara se equivocaría por casi un veinte por ciento — no es un detalle fino."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora tú, con otro desafío del club:\n\n**93 × 93**\n\nParte el 93 en 90 y 3. ¿Cuál es el resultado?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "8.649",
+              "esCorrecta": true,
+              "feedback": "Correcto. Las tres piezas son 8.100, el doble de 90 × 3 que da 540, y 9. Sumadas dan 8.649."
+            },
+            {
+              "id": "b",
+              "texto": "8.109",
+              "esCorrecta": false,
+              "feedback": "Sumaste solo los dos cuadrados, 8.100 y 9. Es el mismo atajo que el club descartó en el primer desafío, y falla por la misma razón: se pierde el cruce entre las dos partes.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "8.379",
+              "esCorrecta": false,
+              "feedback": "Encontraste el cruce, 90 × 3 = 270, pero lo contaste una sola vez. En la forma es 2ab, no ab: el cruce ocurre dos veces, una por cada término que se reparte.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "d",
+              "texto": "8.640",
+              "esCorrecta": false,
+              "feedback": "Pusiste bien el cuadrado del primero y el doble del producto, pero te quedaste sin el tercer término. La forma tiene tres piezas y la última es el cuadrado del segundo, que acá es 3² = 9.",
+              "errorCatalogado": "error-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: del número a la letra",
+      "_notasInternas": [
+        "Progresión estricta baja → media → media/alta, como exige §5.1 de calibracion, y además progresión de registro: P1 numérico, P2 con letra, P3 con letra y coeficiente.",
+        "P1 (baja). Verificación: 22 = 20 + 2. 400 + 2 × 20 × 2 + 4 = 400 + 80 + 4 = 484. Control independiente: 22 × 22 = 484 ✓. Atajo fallido: 400 + 4 = 404.",
+        "P2 (media). Verificación: (x + 6)² = x² + 2 · x · 6 + 6² = x² + 12x + 36 ✓. Comprobación numérica con x = 4: la forma da 16 + 48 + 36 = 100, y (4 + 6)² = 10² = 100 ✓.",
+        "Verificación de los distractores de P2: x² + 36 es el atajo (error-9). 13x² + 36 es haber desarrollado bien y después reducir x² con 12x como si fueran semejantes, que es justo lo que L1 prohíbe (error-7). x² + 12x² + 36 es haberle puesto exponente al término del medio al escribirlo (error-5).",
+        "P3 (media/alta). Verificación: (2x + 3)² con a = 2x y b = 3. a² = (2x)² = 4x²; 2ab = 2 · 2x · 3 = 12x; b² = 9. Resultado 4x² + 12x + 9 ✓. Comprobación numérica con x = 1: la forma da 4 + 12 + 9 = 25, y (2 + 3)² = 25 ✓. Con x = 2: 16 + 24 + 9 = 49, y (4 + 3)² = 49 ✓.",
+        "Verificación de los distractores de P3: 2x² + 12x + 9 es no haber elevado al cuadrado el coeficiente del primer término, que es el error específico de este caso. 4x² + 9 es el atajo (error-9). 4x² + 6x + 9 cuenta el cruce una sola vez (error-10). El primer distractor no lleva errorCatalogado: no elevar el coeficiente no es ninguno de los seis mecanismos del catálogo, y antes que forzarle un id ajeno se deja sin mapear, con su feedback artesanal igual de completo."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P1.** Un desafío corto del club:\n\n**22 × 22**",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "484",
+              "esCorrecta": true,
+              "feedback": "Correcto: 400, más el doble de 20 × 2 que da 80, más 4."
+            },
+            {
+              "id": "b",
+              "texto": "404",
+              "esCorrecta": false,
+              "feedback": "Sumaste 400 y 4 y te saltaste el medio. Acá el término que falta es chico —80— pero igual te deja lejos: haz el control de sentido con 22 × 20 = 440 y vas a ver que 404 ni siquiera llega ahí.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "444",
+              "esCorrecta": false,
+              "feedback": "Contaste el cruce una sola vez: 400 + 40 + 4. Pero 20 × 2 aparece dos veces en el desarrollo, así que el término del medio es 80 y no 40.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P2.** La misma forma, ahora con una letra. Desarrolla:\n\n**(x + 6)²**",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "x² + 12x + 36",
+              "esCorrecta": true,
+              "feedback": "Correcto. El cuadrado del primero es x², el doble del producto es 2 · x · 6 = 12x, y el cuadrado del segundo es 36. Compruébalo con un número: si x fuera 4, la forma da 16 + 48 + 36 = 100, y (4 + 6)² es 10² = 100."
+            },
+            {
+              "id": "b",
+              "texto": "x² + 36",
+              "esCorrecta": false,
+              "feedback": "Es el atajo de siempre, ahora con letras. Compruébalo con x = 4: esta expresión da 16 + 36 = 52, mientras que (4 + 6)² es 100. La diferencia son los 48 del término del medio.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "13x² + 36",
+              "esCorrecta": false,
+              "feedback": "Desarrollaste bien y después juntaste x² con 12x, pero esos dos no son semejantes: uno tiene parte literal x² y el otro x. Es exactamente lo que viste en la lección anterior con 3x + 2x².",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "d",
+              "texto": "x² + 12x² + 36",
+              "esCorrecta": false,
+              "feedback": "El coeficiente del medio está bien, pero le agregaste un exponente que no le corresponde. El doble del producto es 2 · x · 6, y ahí la x aparece una sola vez: queda 12x, no 12x².",
+              "errorCatalogado": "error-5"
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "**P3.** Y esta, que trae un coeficiente adelante. Desarrolla:\n\n**(2x + 3)²**",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "4x² + 12x + 9",
+              "esCorrecta": true,
+              "feedback": "Correcto. Acá el primer término es 2x completo, así que su cuadrado es (2x)² = 4x². El doble del producto es 2 · 2x · 3 = 12x, y el cuadrado del segundo es 9. Comprobación con x = 1: la forma da 25, y (2 + 3)² = 25."
+            },
+            {
+              "id": "b",
+              "texto": "2x² + 12x + 9",
+              "esCorrecta": false,
+              "feedback": "Elevaste al cuadrado la x pero dejaste el 2 sin elevar. El primer término del binomio es 2x entero, así que hay que elevarlo entero: (2x)² es 2x · 2x = 4x². Compruébalo con x = 1: esta expresión da 23 y el resultado verdadero es 25."
+            },
+            {
+              "id": "c",
+              "texto": "4x² + 9",
+              "esCorrecta": false,
+              "feedback": "El atajo otra vez. Los dos cuadrados están bien calculados, pero falta el medio. Con x = 1 esta expresión da 13, contra los 25 del resultado verdadero.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "d",
+              "texto": "4x² + 6x + 9",
+              "esCorrecta": false,
+              "feedback": "Calculaste el cruce como 2x · 3 = 6x y lo pusiste una sola vez. Falta duplicarlo: el término del medio es 2ab, o sea 2 · 2x · 3 = 12x. Con x = 1 tu expresión da 19 y el resultado verdadero es 25.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Escribir la regla para el resto del curso",
+      "_notasInternas": [
+        "Transferencia de REGISTRO, no de contexto: del número concreto a la letra genérica. Es la transferencia que este contenido pide, porque la forma con letras es lo que se usa en L3 y en la PAES. Cambiar de historia manteniendo números habría sido más barato y menos útil.",
+        "La parte 1 pide escribir el desarrollo sin comprobarlo, y la parte 2 lo pone a prueba con un valor. Separar modelar de verificar es el mismo reparto que el paso 8 de L1.",
+        "Verificación: (t + 6)² = t² + 2 · t · 6 + 6² = t² + 12t + 36 ✓.",
+        "Verificación de la comprobación con t = 5: por el desarrollo, 25 + 60 + 36 = 121. Por el camino directo, (5 + 6)² = 11² = 121 ✓. Coinciden.",
+        "Verificación de los distractores: 61 es 25 + 36, el atajo (error-9). 85 es 25 + 60, sin el último término (error-11). 91 es 25 + 30 + 36, con el cruce contado una vez (error-10).",
+        "NOTA: el desarrollo de (t + 6)² es el mismo que el de (x + 6)² de la práctica P2, con otra letra. Es deliberado y no es repetición ociosa: allá el ejercicio terminaba en la expresión, acá la expresión es el punto de partida y lo que se evalúa es comprobarla contra un valor concreto. Son dos actos distintos sobre la misma forma."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "El club decide dejar por escrito el truco para el resto del curso, y quiere que sirva con **cualquier** número, no solo con los que ya probaron.\n\nAlguien propone escribirlo así: «cuando el número se parta en una parte redonda y un 6, llámale **t** a la parte redonda».\n\nParte 1: escribe el desarrollo de **(t + 6)²**. No lo compruebes todavía, solo escríbelo.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "(t + 6)² = t² + 12t + 36   (el cuadrado del primero, el doble del producto 2 · t · 6, y el cuadrado del segundo)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Parte 2: ahora pon la regla a prueba.\n\nSi **t = 5**, tu desarrollo tiene que dar lo mismo que calcular **(5 + 6)²** directamente.\n\n¿Cuánto da?",
+          "campos": [
+            {
+              "id": "comprobacionConValor",
+              "etiqueta": "Valor de (t + 6)² cuando t = 5",
+              "respuestaCorrecta": 121,
+              "unidad": ""
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "comprobacionConValor",
+              "valorObtenido": 61,
+              "mensaje": "Sumaste solo 25 y 36, o sea usaste el atajo dentro de tu propio desarrollo. Fíjate en que la regla que escribiste tiene tres términos, y el del medio con t = 5 vale 60.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "comprobacionConValor",
+              "valorObtenido": 85,
+              "mensaje": "Pusiste el cuadrado del primero y el término del medio, pero te faltó el 36 del final.",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "campoId": "comprobacionConValor",
+              "valorObtenido": 91,
+              "mensaje": "Calculaste el término del medio como t × 6 = 30 en vez de 2 × t × 6 = 60. El cruce va duplicado, también cuando hay letras.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Reemplaza t por 5 en los tres términos de tu desarrollo: 5², después 12 × 5, después 36. Y comprueba por el otro camino: 5 + 6 son 11, y 11 al cuadrado tiene que darte lo mismo."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige, se guarda. Es el termómetro de si el estudiante entendió POR QUÉ el término del medio va duplicado, o si solo memorizó que va un 2 adelante.",
+        "La consigna pide explícitamente explicar el doble, que es donde se separa la comprensión de la memorización. Un estudiante que diga «porque la fórmula tiene un 2» no descubrió nada.",
+        "El texto de cierre recoge los tres errores del catálogo propios de este contenido más el heredado de L1, que son los que la PAES usa para construir distractores."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Vuelve al primer desafío, cuando el club discutía si el atajo servía. ¿Qué habrías dicho entonces, y qué dirías ahora?\n\nY explícale a un compañero **por qué el término del medio va duplicado**. No vale decir «porque la fórmula lleva un 2»: cuenta de dónde salen las dos veces.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto. Señal de comprensión: que mencione que el cruce aparece dos veces al repartir, una por cada término, o que lo explique con el reparto de la multiplicación. Señal de alerta: justificar el doble solo por la fórmula, o describir el desarrollo como una secuencia de pasos memorizados sin nombrar el cruce."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los cuatro errores que más se repiten con el cuadrado de un binomio, y que ya viste todos en esta lección:\n\n1. **Repartir el cuadrado entre las partes.** (a + b)² no es a² + b². Es el error del atajo del club, y es el más común de todos.\n2. **Contar el cruce una sola vez.** El término del medio es 2ab, no ab. Aparece dos veces porque el reparto se hace dos veces.\n3. **Abandonar el último término.** Después del doble producto todavía falta el cuadrado del segundo.\n4. **Juntar términos que no son semejantes.** En x² + 12x + 36 no hay nada más que hacer: los tres términos tienen partes literales distintas.\n\nLa PAES arma sus alternativas incorrectas exactamente con estos cuatro. Ahora los conoces por dentro."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis breve más puente explícito al formato PAES, según el criterio del paso 10.",
+        "LÍMITE DURO EN EL PUENTE: anuncia L3 por lo que se hace —leer la forma al revés, partir de lo desarrollado— sin mostrar ninguna expresión factorizada y sin nombrar la diferencia de cuadrados. Ese es el objeto de descubrimiento de L3 y adelantarlo acá lo arruinaría. Cuidado en cualquier reescritura."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Un **binomio** es una suma de dos términos, y su cuadrado tiene siempre **tres** términos:\n  **(a + b)² = a² + 2ab + b²**\n- El del medio es el **doble del producto** de los dos, y va duplicado porque al repartir la multiplicación el cruce entre las dos partes aparece dos veces.\n- Se le llama **producto notable** porque conviene reconocerlo de una vez en lugar de desarrollarlo cada vez.\n- Sirve igual con números que con letras, y también cuando el primer término trae coeficiente: en (2x + 3)² hay que elevar el **2x** entero.\n- Los tres términos del resultado no son semejantes entre sí, así que la forma desarrollada **ya está reducida**.\n- Control de sentido, el que salvó al club: antes de aceptar un cuadrado, compáralo con una multiplicación cercana que sepas hacer de memoria.\n\n**Lo que viene:** en esta lección siempre partiste de la forma con paréntesis y llegaste al desarrollo. En la próxima vas a recorrer el camino contrario — te van a dar el resultado desarrollado y vas a tener que reconocer de dónde vino."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "expresiones-rectangulo-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "¿Cuál es el valor de **79²**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6.241",
+          "esCorrecta": true,
+          "feedback": "Correcto. Partiendo 79 en 70 y 9: 70² = 4.900, el doble del producto es 2 · 70 · 9 = 1.260, y 9² = 81. Sumados dan 6.241."
+        },
+        {
+          "clave": "B",
+          "texto": "4.981",
+          "esCorrecta": false,
+          "feedback": "Sumaste solo los dos cuadrados, 4.900 y 81, sin el término del medio. Un control rápido lo descarta: 79 × 70 ya vale 5.530, y 79 × 79 tiene que superarlo.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "5.611",
+          "esCorrecta": false,
+          "feedback": "Calculaste el cruce como 70 · 9 = 630 y lo contaste una sola vez. El término del medio es el doble de ese producto, 1.260, porque al desarrollar el cruce aparece dos veces.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "6.160",
+          "esCorrecta": false,
+          "feedback": "Pusiste bien el cuadrado del primero y el doble del producto, pero te quedaste sin el tercer término: falta 9² = 81.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Se escribe 79 como 70 + 9 y se aplica el desarrollo del cuadrado de un binomio: (70 + 9)² = 70² + 2 · 70 · 9 + 9² = 4.900 + 1.260 + 81 = 6.241. Verificación por multiplicación directa: 79 × 79 = 79 × 80 − 79 = 6.320 − 79 = 6.241 ✓. Control de magnitud: 79 × 70 = 5.530 y 79 × 80 = 6.320, así que el resultado debe caer entre esos dos valores, y 6.241 lo hace ✓."
+    },
+    {
+      "id": "expresiones-rectangulo-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "¿Cuál de las siguientes expresiones corresponde al desarrollo de **(x + 5)²**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x² + 25",
+          "esCorrecta": false,
+          "feedback": "Elevaste al cuadrado cada término por separado y perdiste el del medio. Compruébalo con x = 3: esta expresión da 34, mientras que (3 + 5)² es 64.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "B",
+          "texto": "x² + 10x + 25",
+          "esCorrecta": true,
+          "feedback": "Correcto. El cuadrado del primero es x², el doble del producto es 2 · x · 5 = 10x y el cuadrado del segundo es 25. Comprobación con x = 3: 9 + 30 + 25 = 64, igual que 8²."
+        },
+        {
+          "clave": "C",
+          "texto": "x² + 5x + 25",
+          "esCorrecta": false,
+          "feedback": "Encontraste el cruce, x · 5, pero lo contaste una sola vez. En el desarrollo va duplicado: 2 · x · 5 = 10x. Con x = 3 tu expresión da 49 y el valor correcto es 64.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "x² + 10x",
+          "esCorrecta": false,
+          "feedback": "Los dos primeros términos están bien, pero abandonaste el último: falta el cuadrado del segundo término, que es 25. Con x = 3 tu expresión da 39 en vez de 64.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Aplicando (a + b)² = a² + 2ab + b² con a = x y b = 5: a² = x², 2ab = 2 · x · 5 = 10x y b² = 25, de modo que (x + 5)² = x² + 10x + 25. La expresión no admite reducción porque los tres términos tienen partes literales distintas. Verificación numérica con x = 3: el desarrollo da 9 + 30 + 25 = 64 y el cálculo directo da (3 + 5)² = 8² = 64 ✓. Segunda verificación con x = 10: el desarrollo da 100 + 100 + 25 = 225 y el directo (10 + 5)² = 15² = 225 ✓."
+    },
+    {
+      "id": "expresiones-rectangulo-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma que **(a + b)² = a² + b²** para cualquier par de números *a* y *b*.\n\n¿Cuál de las siguientes evaluaciones de esa afirmación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es falsa en general, aunque se cumple cuando alguno de los dos vale cero.",
+          "esCorrecta": true,
+          "feedback": "Correcto, y la precisión importa. La igualdad falla siempre que 2ab no sea cero, y 2ab se anula exactamente cuando a = 0 o b = 0. Por ejemplo, con b = 0 los dos lados valen a². Refutar una afirmación general no obliga a que no se cumpla nunca."
+        },
+        {
+          "clave": "B",
+          "texto": "Es verdadera, porque el cuadrado se reparte entre los términos de la suma.",
+          "esCorrecta": false,
+          "feedback": "El cuadrado no se reparte sobre una suma: eso vale para un producto, no para una suma. Un solo contraejemplo basta para descartarla: con a = 1 y b = 1, el lado izquierdo es (1 + 1)² = 4 y el derecho es 1 + 1 = 2.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "Es falsa siempre, sin excepción, porque al desarrollar aparece un término del medio.",
+          "esCorrecta": false,
+          "feedback": "Vas bien en que el desarrollo lleva un término del medio, pero te pasaste al decir «siempre». Ese término es 2ab, y con a = 0 o b = 0 vale cero, de modo que ahí los dos lados coinciden. Es falsa en general, no falsa en todos los casos.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "D",
+          "texto": "No se puede decidir mientras no se sepa cuánto valen a y b.",
+          "esCorrecta": false,
+          "feedback": "Sí se puede decidir, y sin conocer ningún valor: basta desarrollar los dos lados y compararlos. El izquierdo da a² + 2ab + b² y el derecho a² + b², así que difieren en 2ab. Determinar cuándo esa diferencia se anula tampoco necesita valores concretos.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Desarrollando el lado izquierdo, (a + b)² = a² + 2ab + b². Comparado con el derecho, a² + b², la diferencia entre ambos es exactamente 2ab. Por lo tanto la igualdad se cumple si y solo si 2ab = 0, es decir si a = 0 o b = 0, y falla en cualquier otro caso. La afirmación del estudiante es entonces falsa como enunciado general, lo que descarta B, pero no es falsa sin excepción, lo que descarta C. Contraejemplo que refuta el caso general: con a = 1 y b = 1 el izquierdo vale 4 y el derecho 2. Caso en que sí se cumple: con a = 7 y b = 0, ambos lados valen 49. D es falsa porque la comparación se resuelve desarrollando, sin necesidad de valores particulares."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Álgebra y funciones → Expresiones algebraicas, punto «Productos notables» (docs/temario-demre-m1-2027.md) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
+      "docs/reglas-modulo.md — reglas 1 a 5, en particular la regla 1 (no usar una representación que el concepto no exige, que junto con la ausencia de renderer de figuras descarta el modelo de área), la regla 4 (ids de campo neutros) y la regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo).",
+      "content/diagnostico/dag-m1.json — la unidad expresiones-algebraicas depende solo de enteros-racionales, de donde salen los prerrequisitos de aritmética y distributiva declarados.",
+      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de las entradas error-5, error-6 y error-7 del catálogo embebido, y fuente de los dos prerrequisitos intramódulo declarados.",
+      "Dominio «club de cálculo mental»: el término se verificó contra el corpus de fuentes aisladas mediante consultar-fuentes.mjs, corrido por el autor fuera de esta sesión (chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción). «club de cálculo mental» vuelve NO. «cálculo mental» vuelve SI en un archivo de currículum, y el autor clasificó esa aparición como habilidad o eje curricular y no como actividad con la misma mecánica, de modo que no constituye colisión de contexto. El dominio de respaldo «viaje de estudios» se descartó por volver SI en el mismo chequeo."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular. Se hace constar una decisión de método relevante para quien re-audite: el chequeo léxico marcó SI para «cálculo mental» en un archivo de currículum, y la clasificación de esa aparición como habilidad curricular la hizo el autor con la evidencia a la vista, fuera de la sesión de redacción; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido, según la prohibición de CLAUDE.md sobre el hilo redactor. Se descartó además el modelo de área del rectángulo —el contexto canónico de este contenido— por originalidad y porque el schema no admite figuras. AUDITORÍAS INDEPENDIENTES: PENDIENTES a la fecha de este archivo. Ni la revisión matemática ni la auditoría de originalidad se han corrido todavía; ambas van en hilos aparte abiertos con /clear, porque el hilo que redactó no puede juzgar lo que escribió (CLAUDE.md regla 5). La aritmética anotada en las _notasInternas de cada paso es autochequeo del redactor, no verificación independiente.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; auditorías matemática y de originalidad pendientes al momento de escribir este archivo",
+    "fecha": "2026-08-14"
+  }
+}
