@@ -16,13 +16,20 @@ export function PasoLeccion({
   numeroPaso,
   onExploracionCompleta,
 }: PasoLeccionProps) {
-  /* Los bloques visuales (gráfico interactivo, tablas/diagramas) van arriba en
-     mobile y al costado en desktop; el resto conserva su orden de lectura.
-     Se separan preservando el índice original para que las keys y los eventos
-     por bloque no cambien entre layouts. */
+  /* Los bloques visuales (gráfico interactivo, tablas/diagramas) van al
+     costado en desktop, con posición de grid fija (col-start/row-start) que
+     no depende del orden en el DOM. En mobile no hay grid, así que el orden
+     en el DOM sí importa: el grupo que aparece primero en el JSON define cuál
+     de los dos bloques va arriba, para no adelantar un gráfico que revela el
+     patrón antes de que el estudiante llegue a la pregunta que lo antecede
+     (p. ej. un bloque `prediccion`). Se separan preservando el índice
+     original para que las keys y los eventos por bloque no cambien entre
+     layouts. */
   const bloquesConIndice = paso.bloques.map((bloque, i) => ({ bloque, i }));
   const visuales = bloquesConIndice.filter(({ bloque }) => TIPOS_VISUALES.includes(bloque.tipo));
   const lectura = bloquesConIndice.filter(({ bloque }) => !TIPOS_VISUALES.includes(bloque.tipo));
+  const visualesVanPrimero =
+    paso.bloques.length > 0 && TIPOS_VISUALES.includes(paso.bloques[0].tipo);
 
   function pintar({ bloque, i }: { bloque: BloqueTipo; i: number }) {
     return (
@@ -50,11 +57,19 @@ export function PasoLeccion({
             // top-20 (80px) = los 56px del header de HeaderLeccion.tsx más 24
             // de aire, para que no se pisen al hacer scroll en desktop. Venía
             // de top-28 (112px), calibrado contra el header viejo de 97px.
-            className="space-y-8 lg:sticky lg:top-20 lg:col-start-2 lg:row-start-1"
+            className={`space-y-8 lg:sticky lg:top-20 lg:col-start-2 lg:row-start-1 lg:order-none ${
+              visualesVanPrimero ? "order-1" : "order-2"
+            }`}
           >
             {visuales.map(pintar)}
           </div>
-          <div className="space-y-8 lg:col-start-1 lg:row-start-1">{lectura.map(pintar)}</div>
+          <div
+            className={`space-y-8 lg:col-start-1 lg:row-start-1 lg:order-none ${
+              visualesVanPrimero ? "order-2" : "order-1"
+            }`}
+          >
+            {lectura.map(pintar)}
+          </div>
         </div>
       ) : (
         <div className="mx-auto mt-6 max-w-2xl space-y-8">
