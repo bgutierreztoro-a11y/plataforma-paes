@@ -36,7 +36,7 @@ export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
         </fieldset>
       ) : (
         <input
-          type={bloque.tipoRespuesta === "numero" ? "number" : "text"}
+          type="text"
           inputMode={bloque.tipoRespuesta === "numero" ? "decimal" : undefined}
           disabled={enviado}
           value={respuesta}

@@ -7,6 +7,10 @@ import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloqueNumerica as BloqueNumericaTipo } from "@/lib/tipos";
 
+function aNumero(valor: string): number {
+  return Number(valor.trim().replace(",", "."));
+}
+
 function mensajeParaCampo(bloque: BloqueNumericaTipo, campoId: string, valor: number): string {
   const campo = bloque.campos.find((c) => c.id === campoId)!;
   if (valor === campo.respuestaCorrecta) return "¡Correcto!";
@@ -34,7 +38,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
       </div>
       <div className="space-y-3">
         {bloque.campos.map((campo) => {
-          const numero = Number(valores[campo.id]);
+          const numero = aNumero(valores[campo.id] ?? "");
           const esCorrecto = revelado && numero === campo.respuestaCorrecta;
           return (
             <div key={campo.id} className="space-y-1.5">
@@ -44,7 +48,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
               </label>
               <input
                 id={campo.id}
-                type="number"
+                type="text"
                 inputMode="decimal"
                 disabled={revelado}
                 value={valores[campo.id] ?? ""}
