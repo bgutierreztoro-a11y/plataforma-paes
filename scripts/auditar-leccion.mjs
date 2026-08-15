@@ -350,10 +350,26 @@ function chequearItemsPAES(data, add) {
  * como chequeo omitido (🟡) en vez de compararse a ciegas. Comparar catálogos
  * de módulos distintos daría puro ruido, porque los ids son locales al módulo
  * ("error-1" significa cosas distintas en Enteros y en Proporcionalidad).
+ *
+ * OJO con las entradas de cierre: hoy NO cubren nada. Este auditor solo mira
+ * `content/lecciones/` por los dos lados —`archivosDeLeccion()` lee ese único
+ * directorio, así que la corrida por defecto nunca ve un cierre y pasarle uno a
+ * mano corta en el chequeo de `tipo`; y el bucle del guard de abajo itera sobre
+ * esa misma función, así que un cierre tampoco entra jamás como el "otro"
+ * archivo con el que comparar—. O sea que un cierre con catálogo embebido puede
+ * divergir de las lecciones de su módulo sin que nada lo reporte, y ya pasa:
+ * `cierre-proporcionalidad.json` lleva 11 entradas y ninguna se compara contra
+ * las de sus tres lecciones. `cierre-expresiones-algebraicas` está registrado
+ * por adelantado para cuando eso se cierre, que es ensanchar el auditor a
+ * cierres, no agregar entradas a esta tabla. Anotado en docs/pendientes.md.
  */
 const MODULO_POR_LECCION = {
   'ecuaciones-lineales': 'ecuaciones-inecuaciones',
   'enteros-operar-y-ordenar': 'enteros-racionales',
+  'expresiones-sumar-lo-que-se-parece': 'expresiones-algebraicas',
+  'expresiones-rectangulo': 'expresiones-algebraicas',
+  'expresiones-deshacer-producto': 'expresiones-algebraicas',
+  'cierre-expresiones-algebraicas': 'expresiones-algebraicas',
   'lineal-patrones-de-cambio': 'funcion-lineal-afin',
   'lineal-pendiente-e-intercepto': 'funcion-lineal-afin',
   'proporcionalidad-directa': 'proporcionalidad',
