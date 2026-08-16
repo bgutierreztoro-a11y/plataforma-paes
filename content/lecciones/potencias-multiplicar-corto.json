@@ -1,0 +1,675 @@
+{
+  "tipo": "leccion",
+  "id": "potencias-multiplicar-corto",
+  "titulo": "La escalera que baja",
+  "objetivo": "Reconocer que subir un escalón de exponente entero multiplica por la base y bajar un escalón divide por la base, y usar ese patrón para justificar que toda potencia de exponente 0 vale 1 y que toda potencia de exponente negativo es el recíproco de la potencia positiva correspondiente, aplicando además el producto y el cociente de potencias de igual base, la potencia de una potencia, y el caso de una base racional, cuyo exponente se aplica tanto al numerador como al denominador.",
+  "tiempoEstimadoMin": 27,
+  "prerrequisitos": [
+    "Multiplicar y dividir números enteros y fracciones simples, incluyendo una fracción por un número entero (módulo Enteros y racionales)",
+    "Leer una potencia de exponente natural mayor que 1 como una multiplicación repetida de la base (contenido previo a la plataforma, sin lección propia en este proyecto)"
+  ],
+  "conceptos": [
+    "potencia de exponente entero",
+    "exponente cero",
+    "exponente negativo",
+    "recíproco",
+    "base racional",
+    "producto de potencias de igual base",
+    "cociente de potencias de igual base",
+    "potencia de una potencia"
+  ],
+  "_notasInternas": [
+    "L1 del módulo Potencias y raíces enésimas. Arquitectura fijada y firmada en docs/diseno-modulo-potencias-y-raices.md (commits 084c49a y fe410f5). Este archivo implementa §a (L1), embebe el subconjunto de §c que usa (error-1 a error-6, copiados carácter a carácter), y sigue el reparto de bloques de §e.",
+    "DOMINIO ELEGIDO: candidato (a) de §f, escalones de aumento de un microscopio escolar, base 4. Elección hecha en esta sesión de redacción, entre los tres candidatos limpios de L1 (a, b, c) que el documento dejó abiertos. Razón: es el único de los tres donde el escalón 0 tiene un significado físico directo —«verlo tal cual, sin aumentar nada»—, que es exactamente el ancla que el descubrimiento necesita para que a⁰ = 1 deje de ser una convención arbitraria. (c) además reutiliza el marco «torneo» de inecuaciones-problemas, motivo adicional para preferir (a). Las cifras núcleo (aumento ×4, escalón 0, imagen a tamaño real, 1024 aumentos, un dieciseisavo del aumento) son las mismas de la segunda tanda de consultas, LIMPIO.",
+    "OBJETO DE DESCUBRIMIENTO (patrón, no constante): que la escalera de exponentes no tiene un final arbitrario en 0 ni al bajar. Por eso este módulo no declara auditoria.constante (decisión ya fijada en §0 del documento de diseño, igual que Expresiones algebraicas). El chequeo de filtración de npm run auditar queda OMITIDO por diseño, no por olvido, y lo reporta como hallazgo 🟢 (visible con AUDITAR_VERBOSE=1).",
+    "LO QUE ESTA LECCIÓN NO RESUELVE, A PROPÓSITO: el medio escalón. El paso 10 cierra con la pregunta de cuánto vale subir medio escalón (4^(1/2)) sin insinuar la respuesta. L2 la retoma como su propio descubrimiento, cuando la raíz ya es un objeto manipulable. Ninguna pista, texto ni feedback de este archivo puede mencionar la raíz cuadrada ni sugerir que 4^(1/2) = 2.",
+    "TODOS LOS CAMPOS numerica DE ESTE ARCHIVO SON ADIMENSIONALES: el aumento de una perilla es una razón (cuántas veces más grande se ve), no una magnitud física con unidad propia, y en los pasos 6 y 7 los números son puros (regla de §0 y §e del documento de diseño). Cada campo se declara en auditoria.camposAdimensionales con su motivo, y por eso ningún campo lleva `unidad`.",
+    "IDS DE CAMPO SIN CIFRA: docs/reglas-modulo.md exige ids neutros. Por eso 'aumentoUnEscalonAbajo' y no 'aumentoEscalonMenos1', etc. — ningún id de este archivo contiene un dígito.",
+    "NOTACIÓN EN ALTERNATIVAS: las opciones que muestran notación de potencia en vez de un valor calculado (paso 2 seleccion, ítem 2) llevan la expresión envuelta en negrita markdown (**4⁻³**, no 4⁻³ suelto). No es solo estilo: scripts/auditar-leccion.mjs extrae como 'valor numérico' cualquier alternativa cuyo texto EMPIECE con un dígito seguido de caracteres no-dígito (así lee '4⁻³' como el valor 4), y sin el envoltorio ese 4 quedaría registrado como respuesta correcta o distractor según el caso, arriesgando falsos '🔴 colision-distractor-correcta' contra cualquier otro 4 suelto del archivo. Envolver en '**' antepone un carácter no numérico y el extractor no matchea nada. Las alternativas que SÍ son un valor calculado (256, 16, 1024, 0, 729, 243...) se dejan sin envolver a propósito, porque esas sí queremos que el chequeo de colisión las vea.",
+    "ERROR-3, LAS DOS DIRECCIONES: el catálogo describe error-3 como el mismo mecanismo en dos sentidos —convertir aᵐ·aⁿ en a^(m·n), o convertir (aᵐ)ⁿ en a^(m+n)—. Este archivo usa las dos: paso 6 (numerica, 2³·2⁴ leído como 2¹²=4096) es la primera dirección; paso 7 (seleccion, (3²)³ leído como 3⁵=243) es la segunda. Verificado que ninguna otra lección del módulo existe todavía para comparar divergencia de catálogo (L2 y L3 no están escritas), así que scripts/auditar-leccion.mjs reportará 🟡 catalogo-modulo-no-declarado hasta que MODULO_POR_LECCION incluya las tres — agregado en este mismo commit.",
+    "VERIFICACIÓN ARITMÉTICA GLOBAL (autochequeo del redactor, no reemplaza la auditoría matemática independiente): 4⁻¹=0,25 ✓; 4⁻²=0,0625 ✓; 4⁴=256 ✓; 4⁵=1024 ✓; 2³·2⁴=8·16=128=2⁷ ✓; 2³·2⁴ leído como 2^(3·4)=2¹²=4096 ✓ (error-3); 5⁶÷5⁴=15625÷625=25=5² ✓; 5⁶=15625 (distractor, olvida dividir) ✓; 5^(4−6)=5⁻²=0,04 (distractor, resta al revés) ✓; (3²)³=3⁶=729 ✓; 3^(2+3)=3⁵=243 (error-3) ✓; 3⁶ leído como 3×6=18 (error-1) ✓; (2x)³ no aplica acá, pero (3²)³ leído ignorando el exponente interno da 3³=27 (distractor) ✓; (3/4)²=9/16=0,5625 ✓; (3²)/4=9/4=2,25 (error-6, solo numerador) ✓; 3/4²=3/16=0,1875 (error-6, solo denominador) ✓; del escalón 2 al 5 hay 3 escalones de subida, 4³=64 ✓; bajar 2 escalones desde cualquier punto deja 1/4²=1/16=0,0625 del aumento anterior, verificado con escalón 3→1: 64/4=16, 16/4=4, y 4/64=0,0625 ✓.",
+    "AUDITORÍAS: PENDIENTES. Este archivo se redactó en el mismo hilo que fijó la arquitectura (docs/diseno-modulo-potencias-y-raices.md), así que CLAUDE.md prohíbe que este mismo hilo lo audite. La revisión matemática y la auditoría de originalidad se corren en un agente nuevo, sin memoria de esta conversación, antes de firmar el commit de contenido."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "aumentoUnEscalonAbajo": "El aumento de una perilla es una razón (cuántas veces más grande se ve lo observado), no una magnitud física con unidad propia asociada a este número.",
+      "aumentoDosEscalonesAbajo": "Misma razón que el campo anterior: el aumento es un número de veces, sin unidad, y bajar escalones no le agrega ninguna.",
+      "aumentoCuatroEscalonesArriba": "El aumento sigue siendo una razón adimensional; subir escalones lo multiplica pero no le da una magnitud nueva.",
+      "productoMismaBase": "El campo pide el valor de 2³ · 2⁴, un número puro: este paso trabaja con potencias sin contexto de dominio, según fija §0 del documento de diseño.",
+      "cocienteMismaBase": "El campo pide el valor de 5⁶ ÷ 5⁴, un número puro por la misma razón que el campo anterior: números sin magnitud asociada.",
+      "baseRacionalAlCuadrado": "El campo pide el valor de (3/4)², un número puro: la base racional se trabaja en abstracto, sin objeto físico que medir.",
+      "fraccionTrasBajarDosEscalones": "El campo pide una fracción del aumento anterior, que sigue siendo una razón sin unidad, igual que los demás campos de aumento de este archivo."
+    }
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; con bases distintas no hay un factor que se repita, así que no hay exponente que sumar."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que ahí la base sí es la misma y el problema es haber sumado sin que correspondiera."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Leer el exponente negativo como si el signo pasara al resultado: calcular 2⁻³ como −8 en vez de 1/8. Bajar escalones nunca cambia de signo, solo divide; el resultado de una potencia de base positiva es positivo aunque el exponente sea negativo."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Dar a⁰ = 0, leyendo el exponente cero como «no queda nada». Bajar un escalón divide por la base, así que el escalón cero es el que está justo antes de multiplicar por la base ninguna vez: vale 1, no 0. Se distingue de error-4, que es sobre el signo de los escalones de más abajo."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "En una potencia de base fraccionaria, elevar solo una parte de la fracción: dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador). La base es la fracción completa, así que el exponente se aplica arriba y abajo."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: perilla graduada en escalones de un microscopio escolar. Cada escalón hacia arriba multiplica por 4 lo que se ve; el escalón 0 es verlo tal cual, sin aumentar nada. Magnitud: el aumento, una razón adimensional (veces más grande), sin objetos físicos que medir más allá de eso.",
+    "curiosidad (Paso 1): tabla de escalones 0 a 3 (aumentos 1, 4, 16, 64). Predicción libre sobre el escalón 5 (sin corrección).",
+    "problema (Paso 2): pregunta genuina sobre qué hace bajar un escalón. Numérica: aumento del escalón −1, correcto 0,25. Distractores −4 (error-4) y otro no catalogado.",
+    "pensar (Paso 3): aumento del escalón −2, correcto 0,0625. Distractores −8 (error-1) y −16 (error-4).",
+    "descubrimiento (Paso 5): tabla completa de escalones −2 a 3. Numérica de confirmación: aumento del escalón 4 (contando desde 0), correcto 256, con un distractor por sumar en vez de multiplicar. Verdadero/falso sobre si el escalón 0 vale 1 y no 0.",
+    "generalizacion (Paso 6, números puros): 2³ · 2⁴ = 128, distractor 4096 (error-3, exponentes multiplicados en vez de sumados). Selección sobre 2³ · 3⁴, sin resultado en una sola potencia por tener bases distintas (error-2 como distractor).",
+    "practica (Paso 7, números puros): 5⁶ ÷ 5⁴ = 25, con dos distractores no catalogados. (3²)³ = 729, distractores 243 (error-3, exponentes sumados en vez de multiplicados), 18 (error-1) y 27. (3/4)² = 0,5625, distractores 2,25 y 0,1875 (error-6, cada uno elevando solo una parte de la fracción).",
+    "aplicacion (Paso 8, vuelta al dominio): cuánto se multiplica el aumento al subir 3 escalones (del escalón 2 al 5), correcto ×64. Numérica: qué fracción del aumento anterior queda al bajar 2 escalones desde cualquier punto, correcto 0,0625.",
+    "itemsPAES item-1 (resolver, baja): aumento del escalón 0, correcto 1, distractores 0 (error-5) y 4.",
+    "itemsPAES item-2 (representar, media): notación del aumento del escalón −3, correcto 4⁻³, distractores −4³ (error-4) y (1/4)·3 (error-1).",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa si el escalón 0 vale 1 para cualquier base de perilla, no solo para la de 4.",
+    "NOTA DE NO COLISIÓN (chequeo del redactor, no exhaustivo): se revisaron por coincidencia de dígito las cifras de tres cifras o más y las decimales de este archivo (1024, 256, 128, 0,5625, 243, 2,25, 0,1875) contra los demás archivos de content/lecciones/. 256 y 64 reaparecen en otros módulos (proporcionalidad, expresiones algebraicas, porcentaje) con otro rol y otras unidades. 2,25 reaparece en proporcionalidad-inversa.json como el cociente hileras/butacas de un problema de teatro, rol y unidad distintos del uso acá (distractor de (3/4)² por elevar solo el numerador). Son el caso que scripts/auditar-leccion.mjs declara no poder distinguir y por el que ese chequeo es 🟡 y no 🔴; verificado manualmente que no hay colisión de contenido real en ninguno de los dos casos. 1024, 128, 0,5625, 243 y 0,1875 no se encontraron en ningún otro archivo. La verificación completa la hace la corrida de `npm run auditar`, no esta nota."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Una perilla con escalones",
+      "_notasInternas": [
+        "Gancho: mostrar el patrón conocido (escalones 0 a 3) y pedir extrapolar hacia arriba, sin tocar todavía la idea de bajar ni el exponente 0 como algo especial.",
+        "NO PUEDE APARECER ACÁ: ninguna mención a bajar escalones, a exponentes negativos ni a que el escalón 0 sea distinto de 'lo esperable'. Eso es exactamente lo que arma el paso 2."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con los primeros escalones conocidos de la perilla de un microscopio escolar: escalón y aumento correspondiente. Deja ver que cada escalón hacia arriba multiplica por 4 el aumento del escalón anterior.",
+          "datos": {
+            "columnas": ["Escalón", "Aumento"],
+            "filas": [
+              [0, "×1 (tal cual se ve)"],
+              [1, "×4"],
+              [2, "×16"],
+              [3, "×64"]
+            ]
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "En el laboratorio del colegio hay un microscopio con una perilla de aumento graduada en escalones. Cada vez que subes un escalón, lo que ves se multiplica por 4.\n\nLa tabla muestra los escalones 0 a 3. Si el patrón se mantiene igual, ¿cuál crees que es el aumento del **escalón 5**?",
+          "tipoRespuesta": "numero"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Y si la perilla sigue hacia abajo?",
+      "_notasInternas": [
+        "Introduce la pregunta genuina: qué significa bajar un escalón. El primer bloque pide predecir la MECÁNICA (dividir), sin pedir todavía un número. El segundo ya pide un valor concreto para el escalón −1.",
+        "Verificación: bajar un escalón divide por 4, así que el escalón −1 tiene aumento 1/4 = 0,25.",
+        "Distractor −4 (error-4): lee el exponente negativo como si el signo pasara al resultado. Ningún aumento de una perilla puede ser negativo: es una razón de tamaños, siempre positiva."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El laboratorio también tiene un microscopio más viejo, cuya perilla sigue bajando del escalón 0. Ya sabes que subir un escalón multiplica por 4 lo que ves.\n\n¿Qué esperarías que hiciera **bajar** un escalón?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Vuelve a dividir por 4 lo que ves",
+              "esCorrecta": true,
+              "feedback": "Exacto. Si subir un escalón multiplica por 4, bajar un escalón tiene que deshacer exactamente eso: dividir por 4. Es la misma escalera, recorrida en el otro sentido."
+            },
+            {
+              "id": "b",
+              "texto": "Multiplica por 4 igual, porque subir y bajar dan lo mismo",
+              "esCorrecta": false,
+              "feedback": "Si subir y bajar hicieran lo mismo, la perilla no serviría para nada: dar dos pasos en sentidos opuestos te dejaría en un lugar distinto al de partida, y eso no pasa con una escalera real. Subir y bajar son operaciones que se deshacen entre sí."
+            },
+            {
+              "id": "c",
+              "texto": "Se vuelve negativo, porque bajar es como restar",
+              "esCorrecta": false,
+              "feedback": "El aumento de una perilla mide cuántas veces más grande se ve algo, y eso nunca puede ser negativo, ni siquiera bajando escalones. Bajar no resta al aumento: lo divide.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "id": "d",
+              "texto": "No se puede saber sin ver la perilla",
+              "esCorrecta": false,
+              "feedback": "Sí se puede saber, porque el patrón ya está a la vista: cada escalón hacia arriba multiplica por 4. Para que sea el mismo patrón recorrido al revés, bajar tiene que dividir por 4."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Entonces, si el patrón se mantiene: ¿cuál es el aumento del **escalón −1**?",
+          "campos": [
+            {
+              "id": "aumentoUnEscalonAbajo",
+              "etiqueta": "Aumento del escalón −1",
+              "respuestaCorrecta": 0.25
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "aumentoUnEscalonAbajo",
+              "valorObtenido": -4,
+              "mensaje": "El aumento no puede ser negativo: es una razón de tamaños, siempre positiva. Bajar un escalón divide por 4, no le cambia el signo a nada.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "aumentoUnEscalonAbajo",
+              "valorObtenido": 4,
+              "mensaje": "Ese es el aumento de subir un escalón, no de bajarlo. Si subir multiplica por 4, bajar tiene que dividir por 4 el aumento del escalón 0, que es 1."
+            }
+          ],
+          "feedbackPorDefecto": "El escalón 0 tiene aumento 1. Bajar un escalón divide ese valor por 4."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: dos escalones más abajo",
+      "_notasInternas": [
+        "Registro del intento genuino, sin pistas todavía. Verificación: escalón −2 = escalón −1 dividido otra vez por 4 = 0,25 / 4 = 0,0625.",
+        "Distractor −8 (error-1): 4 · (−2) = −8, leyendo el exponente como si multiplicara la base. Distractor −16 (error-4): toma el aumento del escalón 2 (16) y le pone signo negativo, mismo mecanismo que en el paso anterior."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El escalón −1 tenía aumento 0,25. Si el patrón sigue igual, ¿cuál es el aumento del **escalón −2**?",
+          "campos": [
+            {
+              "id": "aumentoDosEscalonesAbajo",
+              "etiqueta": "Aumento del escalón −2",
+              "respuestaCorrecta": 0.0625
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "aumentoDosEscalonesAbajo",
+              "valorObtenido": -8,
+              "mensaje": "Este valor sale de multiplicar 4 por −2, tratando el exponente como si fuera un factor de la base. El exponente no multiplica a la base: cuenta cuántas veces se divide.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "aumentoDosEscalonesAbajo",
+              "valorObtenido": -16,
+              "mensaje": "16 es el aumento del escalón 2, no del −2, y además el aumento nunca es negativo. Parte del escalón −1 (0,25) y divide otra vez por 4.",
+              "errorCatalogado": "error-4"
+            }
+          ],
+          "feedbackPorDefecto": "Sigue el mismo patrón que usaste para llegar al escalón −1: divide por 4 una vez más."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el escalón −2",
+      "_notasInternas": [
+        "Gradación real: la 1 recuerda el resultado ya obtenido, la 2 nombra la operación sin ejecutarla, la 3 dice qué dividir por qué sin calcular el resultado final."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Fíjate en lo que ya calculaste para el escalón −1: fue el resultado de dividir por 4 una sola vez desde el escalón 0."
+            },
+            {
+              "nivel": 2,
+              "texto": "El escalón −2 es un paso más abajo que el −1. Si bajar un escalón siempre divide por 4, ¿qué le toca al valor que ya tienes del escalón −1?"
+            },
+            {
+              "nivel": 3,
+              "texto": "El escalón −1 vale 0,25. Divide ese 0,25 por 4 y ya tienes el escalón −2."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La escalera no tiene un final arbitrario",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN: si el patrón de dividir por 4 al bajar no se rompe en ningún punto, el escalón 0 tiene que valer 1 (justo antes de dividir ninguna vez) y los escalones negativos tienen que ser fracciones cada vez más chicas, nunca números negativos.",
+        "Verificación de la tabla: −2→0,0625; −1→0,25; 0→1; 1→4; 2→16; 3→64. Todos verificados en pasos anteriores o por multiplicación directa.",
+        "Verificación de la numérica de confirmación: escalón 4 (uno más que el 3, que vale 64) = 64 · 4 = 256.",
+        "El verdaderoFalso ataca directamente error-5 sin poder tagearlo (el bloque no admite errorCatalogado); error-5 se usa formalmente en itemsPAES item-1."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla completa de la perilla, del escalón −2 al escalón 3, mostrando que el aumento nunca es negativo ni cero: se hace cada vez más chico hacia abajo, pero siempre queda una fracción positiva.",
+          "datos": {
+            "columnas": ["Escalón", "Aumento"],
+            "filas": [
+              [-2, "0,0625 (1/16)"],
+              [-1, "0,25 (1/4)"],
+              [0, "1 (tal cual se ve)"],
+              [1, "4"],
+              [2, "16"],
+              [3, "64"]
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Mira la tabla completa. Ningún aumento es negativo, ni siquiera bajo el escalón 0. Y el escalón 0 no es un vacío ni un «nada de aumento»: es **1**, ver la muestra tal cual es.\n\nPiénsalo desde el patrón, no desde la palabra «cero». Cada escalón hacia abajo divide por 4 el aumento del escalón de arriba:\n\n- Del escalón 1 al 0: 4 dividido por 4 es **1**.\n- Del escalón 0 al −1: 1 dividido por 4 es **0,25**.\n- Del escalón −1 al −2: 0,25 dividido por 4 es **0,0625**.\n\nEl escalón 0 es, exactamente, el que está **justo antes de dividir por 4 ninguna vez**. Por eso vale 1: no porque alguien lo haya decidido así, sino porque es lo único que hace que la escalera no se rompa al pasar por ahí.\n\nY los escalones negativos no son un problema aparte: son la misma escalera, siguiendo hacia abajo. Cada uno es una fracción, cada vez más chica, y nunca negativa — porque dividir un número positivo por 4 nunca lo vuelve negativo."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Comprobemos que el patrón sigue funcionando hacia arriba también. Si el escalón 3 tiene aumento 64, ¿cuál es el aumento del **escalón 4**?",
+          "campos": [
+            {
+              "id": "aumentoCuatroEscalonesArriba",
+              "etiqueta": "Aumento del escalón 4",
+              "respuestaCorrecta": 256
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "aumentoCuatroEscalonesArriba",
+              "valorObtenido": 68,
+              "mensaje": "68 es 64 más 4: sumaste el aumento del escalón anterior en vez de multiplicarlo. Subir un escalón multiplica por 4, no le suma 4."
+            }
+          ],
+          "feedbackPorDefecto": "Toma el aumento del escalón 3, que es 64, y multiplícalo por 4."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El escalón 0 de la perilla tiene aumento 1, no 0: ver algo «tal cual es» sigue siendo un aumento real, el que está justo antes de dividir por 4 ninguna vez.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto. Es fácil pensar que exponente 0 significa «no queda nada», pero el patrón dice lo contrario: bajar divide, y el escalón 0 es el punto de partida de esa división, no el resultado de una división que ya ocurrió.",
+          "feedbackFalso": "Revisa la tabla otra vez: si el escalón 0 valiera 0, entonces subir un escalón (multiplicar por 4) daría 0 · 4 = 0, y el escalón 1 no podría valer 4. El único valor que sostiene toda la escalera en el escalón 0 es 1."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla, con números puros",
+      "_notasInternas": [
+        "Recién acá se nombran las reglas generales y se sueltan los números del dominio, como exige el marco pedagógico.",
+        "Verificación numérica: 2³ · 2⁴ = 8 · 16 = 128 = 2⁷. Distractor 4096 = 2^(3·4) = 2¹², exponentes multiplicados en vez de sumados (error-3, primera dirección del catálogo).",
+        "Selección: 2³ · 3⁴ no se puede escribir como una sola potencia de exponente entero porque 2 y 3 no son la misma base. Distractor 'suma exponentes' es error-2 en su forma más pura."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ya viste el patrón con la perilla. Ahora, la forma general, con cualquier base *a* (distinta de 0) y cualquier exponente entero:\n\n**a⁰ = 1** — el escalón 0, siempre.\n\n**a⁻ⁿ = 1/aⁿ** — bajar *n* escalones es dividir *n* veces por la base, o sea el recíproco de la potencia positiva correspondiente.\n\nY dos reglas más, para cuando se combinan potencias de la **misma base**:\n\n**aᵐ · aⁿ = a^(m+n)** — multiplicar dos potencias de igual base suma los exponentes.\n\n**aᵐ ÷ aⁿ = a^(m−n)** — dividir dos potencias de igual base resta los exponentes.\n\nY una más, para una potencia elevada a otro exponente:\n\n**(aᵐ)ⁿ = a^(m·n)** — una potencia de una potencia MULTIPLICA los exponentes, no los suma. Es una regla distinta a la del producto, aunque las dos hablan de exponentes que se combinan."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica la regla del producto: ¿cuánto da **2³ · 2⁴**?",
+          "campos": [
+            {
+              "id": "productoMismaBase",
+              "etiqueta": "2³ · 2⁴",
+              "respuestaCorrecta": 128
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "productoMismaBase",
+              "valorObtenido": 4096,
+              "mensaje": "4096 es 2 elevado a 12, que sale de multiplicar los exponentes (3 · 4) en vez de sumarlos. Esa regla es para una potencia de una potencia, no para un producto de potencias.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Suma los exponentes: 2³ · 2⁴ = 2^(3+4) = 2⁷. Después calcula 2⁷."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cómo se escribe **2³ · 3⁴** como una sola potencia con exponente entero?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "No se puede: 2 y 3 no son la misma base, así que no hay exponentes que sumar",
+              "esCorrecta": true,
+              "feedback": "Correcto. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor. Acá no hay un factor que se repita: 2³ es 2 multiplicado tres veces por sí mismo, y 3⁴ es otra cosa completamente distinta. Se calcula cada una por separado y se multiplican los resultados."
+            },
+            {
+              "id": "b",
+              "texto": "Sí se puede: sumando los exponentes se obtiene **2⁷**",
+              "esCorrecta": false,
+              "feedback": "La regla de sumar exponentes solo funciona cuando la base se repite, porque ahí sí hay un mismo factor multiplicándose una y otra vez. Con bases distintas —2 y 3— no hay ningún factor común que contar, así que no hay exponente que sumar.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "c",
+              "texto": "Sí se puede: multiplicando las bases y sumando los exponentes se obtiene **6⁷**",
+              "esCorrecta": false,
+              "feedback": "Ni las bases ni los exponentes se combinan así. Multiplicar 2 por 3 y quedarte con el 6 no representa lo mismo que 2³ · 3⁴: son dos cantidades que crecieron de formas distintas y no se funden en una sola base."
+            },
+            {
+              "id": "d",
+              "texto": "Sí se puede: sumando las bases y dejando el exponente mayor se obtiene **5⁴**",
+              "esCorrecta": false,
+              "feedback": "Sumar las bases (2 + 3 = 5) y quedarte con el exponente más grande no corresponde a ninguna regla de potencias. Ninguna de las dos operaciones —producto, cociente o potencia de potencia— combina las bases sumándolas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: las cinco reglas",
+      "_notasInternas": [
+        "Progresión: cociente de igual base (numérica) → potencia de potencia (selección, ambas direcciones de error-3) → base racional (numérica, error-6).",
+        "Verificación cociente: 5⁶ ÷ 5⁴ = 15625 ÷ 625 = 25 = 5². Distractor 15625: olvida dividir. Distractor 0,04: resta al revés, 5^(4−6) = 5⁻² = 1/25.",
+        "Verificación potencia de potencia: (3²)³ = 3⁶ = 729. Distractor 243 = 3^(2+3), exponentes sumados en vez de multiplicados (error-3, segunda dirección). Distractor 18: lee 3⁶ como 3 · 6 (error-1). Distractor 27: calcula 3³ ignorando el exponente interno.",
+        "Verificación base racional: (3/4)² = 9/16 = 0,5625. Distractor 2,25 = 9/4, solo el numerador al cuadrado (error-6). Distractor 0,1875 = 3/16, solo el denominador al cuadrado (error-6)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora la regla del cociente: ¿cuánto da **5⁶ ÷ 5⁴**?",
+          "campos": [
+            {
+              "id": "cocienteMismaBase",
+              "etiqueta": "5⁶ ÷ 5⁴",
+              "respuestaCorrecta": 25
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cocienteMismaBase",
+              "valorObtenido": 15625,
+              "mensaje": "15625 es el valor de 5⁶ solo, sin dividir por 5⁴. Falta hacer la división: resta los exponentes."
+            },
+            {
+              "campoId": "cocienteMismaBase",
+              "valorObtenido": 0.04,
+              "mensaje": "Este valor sale de restar al revés, 4 − 6 en vez de 6 − 4. El exponente del resultado es el del dividendo menos el del divisor, siempre en ese orden."
+            }
+          ],
+          "feedbackPorDefecto": "Resta los exponentes: 5⁶ ÷ 5⁴ = 5^(6−4) = 5². Después calcula 5²."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuánto da **(3²)³**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "729",
+              "esCorrecta": true,
+              "feedback": "Correcto. Una potencia de una potencia multiplica los exponentes: (3²)³ = 3^(2·3) = 3⁶ = 729."
+            },
+            {
+              "id": "b",
+              "texto": "243",
+              "esCorrecta": false,
+              "feedback": "243 es 3 elevado a 5, que sale de sumar los exponentes (2 + 3) en vez de multiplicarlos. Esa es la regla del producto de potencias, no la de una potencia de una potencia.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "18",
+              "esCorrecta": false,
+              "feedback": "18 sale de calcular 3 · 6, como si el resultado final (3⁶) se obtuviera multiplicando la base por el exponente. El exponente no es un factor: dice cuántas veces se multiplica la base por sí misma.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "d",
+              "texto": "27",
+              "esCorrecta": false,
+              "feedback": "27 es 3³, como si el exponente de adentro (el 2 de 3²) no existiera. Pero (3²)³ parte de 3², no de 3 solo: primero hay que elevar 3 al cuadrado, y ese resultado es el que se eleva al cubo."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Y ahora con una base racional: ¿cuánto da **(3/4)²**?",
+          "campos": [
+            {
+              "id": "baseRacionalAlCuadrado",
+              "etiqueta": "(3/4)²",
+              "respuestaCorrecta": 0.5625
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "baseRacionalAlCuadrado",
+              "valorObtenido": 2.25,
+              "mensaje": "2,25 es 9/4: elevaste al cuadrado solo el numerador y dejaste el denominador tal cual. La base es la fracción completa, así que el exponente se aplica arriba y abajo.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "baseRacionalAlCuadrado",
+              "valorObtenido": 0.1875,
+              "mensaje": "0,1875 es 3/16: elevaste al cuadrado solo el denominador y dejaste el numerador tal cual. Falta elevar también el 3.",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "feedbackPorDefecto": "Eleva al cuadrado el numerador y el denominador por separado: 3² sobre 4²."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "De vuelta a la perilla",
+      "_notasInternas": [
+        "Vuelve al dominio para aplicar las reglas recién generalizadas en contexto, no para introducir nada nuevo.",
+        "Verificación selección: del escalón 2 al 5 hay 3 escalones de subida, 4³ = 64.",
+        "Verificación numérica: bajar 2 escalones desde cualquier punto deja 1/4² = 1/16 = 0,0625 del aumento anterior, sin importar en qué escalón se estaba parado."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "En la perilla del microscopio, pasar del **escalón 2** al **escalón 5** significa subir 3 escalones. ¿Por cuánto se multiplicó en total lo que se veía?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "**×64**, porque subir 3 escalones multiplica tres veces por 4",
+              "esCorrecta": true,
+              "feedback": "Correcto. Subir 3 escalones es aplicar el factor 4 tres veces seguidas: 4³ = 64. No importa desde qué escalón se partió, solo cuántos escalones se subieron."
+            },
+            {
+              "id": "b",
+              "texto": "**×3**, porque se subieron 3 escalones",
+              "esCorrecta": false,
+              "feedback": "3 es cuántos escalones se subieron, no por cuánto se multiplicó lo que se veía. Cada escalón multiplica por 4, así que subir 3 escalones multiplica por 4 tres veces, no por 3."
+            },
+            {
+              "id": "c",
+              "texto": "Un aumento mayor, como si el escalón de partida también multiplicara una vez más",
+              "esCorrecta": false,
+              "feedback": "Eso contaría un escalón de más: 4 pasos en vez de 3, que da 4⁴ = 256. Pero la pregunta es cuánto se multiplicó al pasar del escalón 2 al 5, y entre esos dos escalones hay exactamente 3 pasos, no 4. Cuenta solo los pasos entre esos dos escalones."
+            },
+            {
+              "id": "d",
+              "texto": "No se puede saber sin conocer los aumentos exactos de cada escalón",
+              "esCorrecta": false,
+              "feedback": "Sí se puede saber, y sin conocer ningún aumento absoluto: basta contar cuántos escalones separan al punto de partida del de llegada, porque cada uno multiplica por el mismo factor."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Si desde cualquier escalón bajas 2 escalones, ¿qué fracción del aumento que tenías te queda?",
+          "campos": [
+            {
+              "id": "fraccionTrasBajarDosEscalones",
+              "etiqueta": "Fracción del aumento anterior que queda",
+              "respuestaCorrecta": 0.0625
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "fraccionTrasBajarDosEscalones",
+              "valorObtenido": 16,
+              "mensaje": "16 sale de multiplicar por 4 dos veces, que es lo que pasa al SUBIR 2 escalones, no al bajarlos. Bajar divide."
+            }
+          ],
+          "feedbackPorDefecto": "Bajar 2 escalones divide por 4 dos veces seguidas, o sea divide por 4² = 16. Esa fracción es 1/16."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dilo con tus palabras",
+      "_notasInternas": [
+        "La abierta no se corrige, se guarda. Termómetro de si el estudiante entendió que el patrón obliga a esos valores, o si solo memorizó 'a⁰=1'."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Explícale a un compañero, sin usar la palabra «convención» ni «regla que hay que memorizar»: **¿por qué a⁰ tiene que valer 1?** Usa la idea de subir y bajar escalones en tu explicación.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que explique el escalón 0 como el punto justo antes de dividir por la base ninguna vez, no como un dato memorizado. Señal de alerta: repetir 'porque sí es la regla' sin apoyarse en el patrón de dividir."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas, y lo que falta",
+      "_notasInternas": [
+        "LÍMITE DURO: la abierta final es la pregunta del medio escalón, deliberadamente sin resolver. No puede aparecer ninguna pista sobre la raíz cuadrada ni sobre que la respuesta sea 2. L2 la retoma como su propio descubrimiento."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- Subir un escalón de exponente **multiplica** por la base; bajar un escalón **divide** por la base.\n- Por eso **a⁰ = 1**: es el escalón justo antes de dividir ninguna vez, para cualquier base.\n- Y por eso **a⁻ⁿ = 1/aⁿ**: bajar *n* escalones divide *n* veces, y el resultado nunca es negativo.\n- Cuando se combinan potencias de la **misma base**: el producto suma exponentes, el cociente los resta.\n- Una **potencia de una potencia** multiplica los exponentes — una regla distinta a la del producto, aunque las dos hablan de combinar exponentes.\n- En una base **racional**, el exponente se aplica al numerador y al denominador por separado.\n\nCon bases distintas no hay ninguna de estas reglas que aplicar: hay que calcular cada potencia por su cuenta."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Ya sabes que bajar un escalón entero divide por 4. Pero, ¿qué pasaría con **medio escalón**?\n\nSi subir un escalón entero significa multiplicar por 4, y medio escalón más medio escalón tienen que sumar exactamente un escalón entero... **¿qué número tendría que ser el aumento de medio escalón?**\n\nNo hace falta que llegues a un número exacto. Cuenta hasta dónde te lleva el razonamiento.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Pregunta abierta deliberadamente sin resolver. No mostrar respuesta modelo ni insinuar la raíz cuadrada en ningún feedback futuro de esta lección: L2 retoma esta misma pregunta como su propio descubrimiento. Señal de que el estudiante llegó al punto correcto: plantea que 'medio escalón · medio escalón' (o 'medio escalón dos veces') tiene que dar 4, sin necesariamente nombrar la raíz."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "potencias-multiplicar-corto-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una perilla de aumento donde cada escalón multiplica por 4 lo que se ve, ¿cuál es el aumento del **escalón 0**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1",
+          "esCorrecta": true,
+          "feedback": "Correcto. El escalón 0 es el que está justo antes de dividir por 4 ninguna vez, así que vale 1: verlo tal cual es, sin agrandar ni achicar."
+        },
+        {
+          "clave": "B",
+          "texto": "0",
+          "esCorrecta": false,
+          "feedback": "Leer el exponente 0 como «no queda nada» da 0, pero el patrón dice otra cosa: bajar un escalón divide por 4, y el escalón 0 es el punto de partida de esas divisiones, no el resultado de ninguna. Si valiera 0, subir un escalón (multiplicar por 4) daría 0 · 4 = 0, y el escalón 1 no podría valer 4.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "4",
+          "esCorrecta": false,
+          "feedback": "4 es el aumento del escalón 1, no del escalón 0. El escalón 0 es el punto de partida, antes de subir ningún escalón."
+        },
+        {
+          "clave": "D",
+          "texto": "No tiene aumento, no se puede definir",
+          "esCorrecta": false,
+          "feedback": "Sí se puede definir, y de una sola manera: es el único valor que hace que subir un escalón (multiplicar por 4) dé el aumento correcto del escalón 1. Ese valor es 1."
+        }
+      ],
+      "solucion": "El escalón 0 es el punto de partida de la escalera, antes de subir o bajar ningún escalón. Como bajar un escalón divide por 4, el escalón 0 tiene que ser el valor que está justo antes de dividir por 4 ninguna vez: 1. Verificación por consistencia hacia arriba: si el escalón 0 vale 1 y subir multiplica por 4, el escalón 1 vale 1 · 4 = 4, que coincide con el aumento conocido del primer escalón ✓."
+    },
+    {
+      "id": "potencias-multiplicar-corto-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Una perilla de aumento tiene escalones donde cada uno multiplica por 4 lo que se ve, y el escalón 0 es verlo tal cual. ¿Cuál expresión representa el aumento del **escalón −3**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "**4⁻³**",
+          "esCorrecta": true,
+          "feedback": "Correcto. Bajar 3 escalones es exactamente el exponente −3 sobre la base 4: representa dividir por 4 tres veces desde el escalón 0."
+        },
+        {
+          "clave": "B",
+          "texto": "**−4³**",
+          "esCorrecta": false,
+          "feedback": "Acá el signo negativo quedó pegado al resultado de 4³, no al exponente. El aumento de una perilla nunca es negativo; lo que baja al bajar escalones es el tamaño de la fracción, no su signo.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "**4³**",
+          "esCorrecta": false,
+          "feedback": "Esta expresión representa subir 3 escalones, no bajarlos: le falta el signo negativo en el exponente, que es lo que indica la dirección hacia abajo en la escalera."
+        },
+        {
+          "clave": "D",
+          "texto": "(1/4) · 3",
+          "esCorrecta": false,
+          "feedback": "Esta expresión trata el exponente como si fuera un factor que se multiplica, en vez de como un conteo de cuántas veces se divide por la base. El exponente −3 va arriba de la base, no aparte multiplicando.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Bajar n escalones equivale al exponente −n sobre la base de la perilla. Bajar 3 escalones desde el escalón 0 corresponde entonces a 4⁻³, que representa dividir por 4 tres veces: 4⁻³ = 1/4³ = 1/64. Verificación de consistencia: 4⁻³ · 4³ tiene que dar 4⁰ = 1 (subir y bajar los mismos 3 escalones vuelve al punto de partida), y en efecto (1/64) · 64 = 1 ✓."
+    },
+    {
+      "id": "potencias-multiplicar-corto-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma que el escalón 0 de **cualquier** perilla de aumento —sin importar cuánto multiplique cada escalón— siempre da aumento 1.\n\n¿Cuál de las siguientes evaluaciones de esa afirmación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es verdadera: el escalón 0 es el que está justo antes de dividir por la base ninguna vez, sin importar cuál sea esa base",
+          "esCorrecta": true,
+          "feedback": "Correcto. El argumento no depende de que la base sea 4: para cualquier base positiva, bajar un escalón divide por esa base, así que el escalón 0 es siempre el punto que antecede a la primera división. Ese punto es 1 pase lo que pase con la base."
+        },
+        {
+          "clave": "B",
+          "texto": "Es falsa: el escalón 0 significa que todavía no se multiplicó nada, así que su aumento debería ser 0, no 1",
+          "esCorrecta": false,
+          "feedback": "Leer el exponente 0 como «no queda nada» da 0, pero eso rompe el patrón: si el escalón 0 valiera 0, subir un escalón (multiplicar por la base) daría 0 otra vez, y el escalón 1 nunca podría tener un aumento distinto de 0. El único valor que sostiene la escalera completa es 1.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "Es falsa: depende de cuánto multiplique cada escalón, así que con una base distinta de 4 el resultado cambiaría",
+          "esCorrecta": false,
+          "feedback": "El argumento de por qué el escalón 0 vale 1 no usa en ningún momento que la base sea 4: solo usa que bajar un escalón divide por la base, sea cual sea esa base. Prueba el mismo razonamiento con base 2 o con base 10 y llegas al mismo 1."
+        },
+        {
+          "clave": "D",
+          "texto": "Depende de si el número de escalones que tiene la perilla es par o impar",
+          "esCorrecta": false,
+          "feedback": "La cantidad total de escalones de una perilla no interviene en el razonamiento: el escalón 0 siempre es el mismo punto de partida, sin importar hasta dónde llegue la perilla hacia arriba o hacia abajo."
+        }
+      ],
+      "solucion": "Sea a la base de cualquier perilla (a > 0), es decir, lo que multiplica cada escalón hacia arriba. Bajar un escalón divide por a, así que el escalón 0 es el valor v tal que subir un escalón (multiplicar por a) da el aumento del escalón 1, que por definición es a. Es decir, v · a = a, lo que obliga a v = 1 para cualquier a distinto de 0. El razonamiento no usa el valor específico de a en ningún paso, así que se cumple para toda base positiva, lo que descarta C y D. B se descarta porque v = 0 no satisface v · a = a salvo que a también fuera 0, caso que no corresponde a una perilla real."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Números → Potencias y raíces enésimas, descriptor «Propiedades de las potencias de base racional y exponente racional» (docs/temario-demre-m1-2027.md:41) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/diseno-modulo-potencias-y-raices.md (commits 084c49a, fe410f5) — arquitectura completa del módulo, firmada: arco de L1, catálogo de errores del módulo (§c, de donde se copiaron carácter a carácter error-1 a error-6), reparto de habilidades y dificultad (§d), diferenciación estructural por bloques (§e) y elección de dominio limpio de colisión (§f).",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5) y calibración de dificultad (§5.1).",
+      "docs/reglas-modulo.md — regla 3 (ajustar datos base, no el número del distractor), regla 4 (ids de campo neutros, sin cifra) y regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo, sin content/errores/ propio para módulos nuevos).",
+      "content/diagnostico/dag-m1.json — la unidad potencias-raices depende solo de enteros-racionales, de donde sale el prerrequisito de multiplicación y división de enteros y fracciones declarado.",
+      "Dominio «perilla de aumento de un microscopio escolar»: verificado en dos rondas mediante consultar-fuentes.mjs, corridas por el autor fuera de esta sesión (mecanismo 2 de CLAUDE.md, chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción). Ronda 1 (candidatos de dominio de L1, L2 y L3): los tres candidatos de L1 —microscopio, copia de imagen, campeonato de ajedrez— vuelven LIMPIO; «aumento» da hits en el corpus, pero de aumento porcentual (Porcentaje / Sistemas de Ecuaciones), dominio distinto, no colisión. Ronda 2 (cifras y frases núcleo de los ocho candidatos ya elegidos o en pie): «aumento 4 veces», «escalón del microscopio», «imagen a tamaño real», «1024 aumentos» y «un dieciseisavo del aumento» vuelven LIMPIO, sin hits. Salida pegada sin reformular en ambas rondas, registrada en docs/diseno-modulo-potencias-y-raices.md §f."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto de la perilla de aumento, expresiones y secuencia de los 10 pasos creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular en ambas rondas; el hilo que redactó este archivo nunca leyó fuentes_analisis-aisladas/ ni recibió su contenido. AUDITORÍAS INDEPENDIENTES, cada corrida en un agente nuevo sin memoria de esta conversación ni de corridas anteriores (aislamiento estructural, no solo /clear), antes de firmar este commit. (a) REVISIÓN MATEMÁTICA, dos corridas. Primera: RECHAZADA — un 🔴 (feedback del paso 8, opción c, afirmaba que 4⁴=256 era «el aumento total del escalón 5», cuando 4⁵=1024 es el aumento del escalón 5; 4⁴=256 es del escalón 4, y el mecanismo real del distractor es contar 4 pasos en vez de 3) y dos 🟡 (opción b del mismo bloque sin errorCatalogado pese a parecer error-1; la nota interna de no-colisión no listaba 2,25 ni 0,1875 entre las cifras revisadas). El hilo de redacción corrigió los tres tras el veredicto: feedback de la opción c reescrito sin la afirmación falsa, errorCatalogado «error-1» agregado a la opción b, nota de no-colisión completada. Segunda corrida (agente distinto, sin memoria de la primera): RECHAZADA de nuevo, sin 🔴, con dos 🟡 — detectó que el errorCatalogado «error-1» agregado a la opción b del paso 8 estaba mal mapeado (esa opción confunde el número de escalones con el resultado total, no lee la potencia como base×exponente, que es lo que describe error-1; el hallazgo de la primera corrida no se había corregido del todo, solo se le puso una etiqueta incorrecta), y reconfirmó la colisión mecánica de 2,25 con proporcionalidad-inversa.json, ya verificada como falso positivo por las dos corridas de esta auditoría y por la de originalidad. El primer hallazgo se corrigió quitando la etiqueta (la opción queda sin errorCatalogado, igual que otros distractores del archivo sin mecanismo catalogado). El segundo se dejó documentado y aceptado por decisión explícita del autor del proyecto, sin tocar el contenido: es el caso que scripts/auditar-leccion.mjs declara no poder distinguir por diseño. Toda la aritmética base, los siete campos numerica, las tres claves de itemsPAES y la consistencia completa de la escalera de escalones quedaron verificadas correctas en ambas corridas. (b) AUDITORÍA DE ORIGINALIDAD: APROBADA en su única corrida, los cuatro puntos del checklist MOS §7.3 en SI. Punto 1: chequeo léxico de «perilla», «microscopio», «escalón», «aumento», «recíproco» y los términos técnicos del temario contra el corpus completo, con apertura de fuente en cada hit — ninguna similitud estructural encontrada (el hit más cercano, MA-34_Potencia_Ecuacion_Exponencial.md, es álgebra con literales, sin dominio concreto ni arco de 10 pasos). Punto 2, ninguna composición de tabla replicada. Punto 3, secuencia de ejemplos propia, sin equivalente en el corpus. Punto 4, proveniencia coherente con el historial real del repositorio (archivo nuevo, sin commit previo). Marcas PAES/DEMRE descriptivas, cero PII.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática y auditoría de originalidad corridas en agentes aislados del hilo de redacción, hallazgos aplicados",
+    "fecha": "2026-08-16"
+  }
+}
