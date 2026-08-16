@@ -400,6 +400,9 @@ const MODULO_POR_LECCION = {
   'proporcionalidad-directa': 'proporcionalidad',
   'proporcionalidad-inversa': 'proporcionalidad',
   'proporcionalidad-reconocer': 'proporcionalidad',
+  'potencias-multiplicar-corto': 'potencias-raices',
+  'potencias-raiz-escondida': 'potencias-raices',
+  'potencias-problemas-en-contexto': 'potencias-raices',
 };
 
 /**
