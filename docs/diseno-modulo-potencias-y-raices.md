@@ -353,6 +353,26 @@ node scripts/consultar-fuentes.mjs "rebote de la pelota" "altura del rebote" "ca
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
 
+**Segunda tanda — cifras y frases exactas (Pendiente 4, resuelta).** Ocho de
+ocho candidatos, **LIMPIO, sin hits** en los cuatro términos de cada uno. Las
+cifras núcleo usadas en la consulta quedan confirmadas como base de redacción
+para cada candidato; no se abren de nuevo salvo hallazgo en redacción.
+
+| Candidato | Cifras/frases núcleo consultadas | Veredicto |
+|---|---|---|
+| L1(a) microscopio | «aumento 4 veces», «escalón del microscopio», «imagen a tamaño real», «1024 aumentos», «un dieciseisavo del aumento» | LIMPIO |
+| L1(b) copia de imagen | «mitad del lado de la imagen», «copia guardada», «un octavo del lado original», «1024 píxeles de lado», «resolución original de la imagen» | LIMPIO |
+| L1(c) campeonato de ajedrez | «64 jugadores de ajedrez», «ronda de eliminación», «octavos de final», «cuartos de final», «queda la mitad de los jugadores» | LIMPIO |
+| L2(a) baldosas | «180 baldosas», «patio cuadrado», «lado del patio», «raíz cuadrada de 180» | LIMPIO |
+| L2(b) diagonal de pantalla | «diagonal de 50 pulgadas», «pantalla cuadrada», «lado de la pantalla», «diagonal de la pantalla como raíz» | LIMPIO |
+| L2(c) envase cúbico | «envase cúbico de 125 cm³», «arista del envase», «raíz cúbica del volumen», «volumen del envase en cm³» | LIMPIO |
+| L3(a) potencias de diez | «10 elevado a menos 6 metros», «tamaño de una célula», «10 elevado a 9 metros», «orden de magnitud», «escala de tamaños» | LIMPIO |
+| L3(d) rebote de pelota | «altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote», «rebote de la pelota en el gimnasio» | LIMPIO |
+
+Con la segunda tanda cerrada, este documento queda **completo y firmado**: no
+se reabre salvo hallazgo concreto en redacción, auditoría matemática o
+auditoría de originalidad.
+
 ---
 
 ## g) `contextosNumericos` previstos
@@ -389,9 +409,11 @@ distractor (regla 3 de `docs/reglas-modulo.md`).
    (d) rebote de la pelota como respaldo. Dominios de L1 y L2 siguen abiertos
    entre sus tres candidatos limpios cada uno; la elección final se hace al
    redactar cada lección, no bloquea el resto del documento.
-4. Segunda tanda con las cifras y frases exactas del núcleo de cada lección.
+4. ~~Segunda tanda con las cifras y frases exactas del núcleo de cada
+   lección.~~ **Resuelto.** Ocho de ocho candidatos LIMPIO (detalle en §f).
+   Cifras núcleo confirmadas como base de redacción.
 
-Recién después de (3) y (4) se fijan situaciones y números, y empieza la
-redacción de L1. Cada lección va con `npm run validar` y `npm run auditar` en
-verde y las dos auditorías —matemática y de originalidad— corridas en hilo
-aislado del que redactó, antes de su commit.
+Con (1)-(4) resueltos, este documento de arquitectura queda completo y
+cerrado. Empieza la redacción de L1. Cada lección va con `npm run validar` y
+`npm run auditar` en verde y las dos auditorías —matemática y de
+originalidad— corridas en hilo aislado del que redactó, antes de su commit.
