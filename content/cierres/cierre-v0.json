@@ -40,19 +40,19 @@
       "id": "cierre-2",
       "habilidad": "representar",
       "dificultad": "media",
-      "enunciado": "Tabla: x = 0, 1, 2 con y = 4, 6, 8. ¿Cuál es el intercepto de esta relación?",
+      "enunciado": "Tabla: x = 0, 1, 2 con y = 4, 6, 8. ¿Cuál es el coeficiente de posición de esta relación?",
       "alternativas": [
         {
           "clave": "A",
           "texto": "4",
           "esCorrecta": true,
-          "feedback": "Correcto: el intercepto es el valor de y cuando x = 0, es decir, 4."
+          "feedback": "Correcto: el coeficiente de posición es el valor de y cuando x = 0, es decir, 4."
         },
         {
           "clave": "B",
           "texto": "2",
           "esCorrecta": false,
-          "feedback": "2 es la pendiente (la diferencia entre valores consecutivos de y), no el intercepto."
+          "feedback": "2 es la pendiente (la diferencia entre valores consecutivos de y), no el coeficiente de posición."
         },
         {
           "clave": "C",
@@ -67,7 +67,7 @@
           "feedback": "8 es el valor de y cuando x = 2, no cuando x = 0."
         }
       ],
-      "solucion": "El intercepto es el valor de y en x = 0: según la tabla, y = 4."
+      "solucion": "El coeficiente de posición es el valor de y en x = 0: según la tabla, y = 4."
     },
     {
       "id": "cierre-3",
@@ -118,7 +118,7 @@
           "clave": "B",
           "texto": "y = 2x − 5",
           "esCorrecta": false,
-          "feedback": "Aquí la pendiente es +2 (positiva); el signo negativo acompaña al intercepto, no a la pendiente."
+          "feedback": "Aquí la pendiente es +2 (positiva); el signo negativo acompaña al coeficiente de posición, no a la pendiente."
         },
         {
           "clave": "C",
@@ -178,7 +178,7 @@
           "clave": "A",
           "texto": "y = −3x + 10",
           "esCorrecta": true,
-          "feedback": "Correcto: y baja 3 por cada paso de x (pendiente −3) y parte en 10 cuando x = 0 (intercepto 10)."
+          "feedback": "Correcto: y baja 3 por cada paso de x (pendiente −3) y parte en 10 cuando x = 0 (coeficiente de posición 10)."
         },
         {
           "clave": "B",
@@ -190,16 +190,16 @@
           "clave": "C",
           "texto": "y = −3x − 10",
           "esCorrecta": false,
-          "feedback": "El intercepto está mal: cuando x = 0, la tabla muestra y = 10, no y = −10."
+          "feedback": "El coeficiente de posición está mal: cuando x = 0, la tabla muestra y = 10, no y = −10."
         },
         {
           "clave": "D",
           "texto": "y = 10x − 3",
           "esCorrecta": false,
-          "feedback": "Invertiste los roles de m y b: 10 es el intercepto (va sumado o restado solo), y −3 es la pendiente (va multiplicando a x)."
+          "feedback": "Invertiste los roles de m y b: 10 es el coeficiente de posición (va sumado o restado solo), y −3 es la pendiente (va multiplicando a x)."
         }
       ],
-      "solucion": "Diferencias consecutivas: 7−10=−3, 4−7=−3 (pendiente constante −3). Valor en x=0 es 10 (intercepto). Ecuación: y = −3x + 10."
+      "solucion": "Diferencias consecutivas: 7−10=−3, 4−7=−3 (pendiente constante −3). Valor en x=0 es 10 (coeficiente de posición). Ecuación: y = −3x + 10."
     },
     {
       "id": "cierre-7",
@@ -244,13 +244,13 @@
           "clave": "A",
           "texto": "Son la misma recta",
           "esCorrecta": true,
-          "feedback": "Correcto: tienen exactamente la misma pendiente (4) y el mismo intercepto (1), así que son idénticas."
+          "feedback": "Correcto: tienen exactamente la misma pendiente (4) y el mismo coeficiente de posición (1), así que son idénticas."
         },
         {
           "clave": "B",
           "texto": "Son paralelas pero distintas",
           "esCorrecta": false,
-          "feedback": "Paralelas distintas significa misma pendiente pero distinto intercepto. Aquí el intercepto también coincide: son la misma recta."
+          "feedback": "Paralelas distintas significa misma pendiente pero distinto coeficiente de posición. Aquí el coeficiente de posición también coincide: son la misma recta."
         },
         {
           "clave": "C",
@@ -265,7 +265,7 @@
           "feedback": "Dos rectas que se cruzan en un único punto tienen pendientes distintas. Aquí ambas ecuaciones son idénticas."
         }
       ],
-      "solucion": "Ambas ecuaciones tienen la misma pendiente (4) y el mismo intercepto (1): representan exactamente la misma recta."
+      "solucion": "Ambas ecuaciones tienen la misma pendiente (4) y el mismo coeficiente de posición (1): representan exactamente la misma recta."
     }
   ],
   "proveniencia": {

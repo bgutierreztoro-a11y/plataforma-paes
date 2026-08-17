@@ -2,14 +2,14 @@
   "tipo": "leccion",
   "id": "lineal-pendiente-e-intercepto",
   "titulo": "Tablas y gráficos de función lineal y afín",
-  "objetivo": "Entender qué controla la forma de una recta —la pendiente cambia la inclinación, el intercepto cambia dónde cruza el eje Y— para leer, escribir y comparar funciones lineales y afines con seguridad en los ítems de la PAES M1.",
+  "objetivo": "Entender qué controla la forma de una recta —la pendiente cambia la inclinación, el coeficiente de posición cambia dónde cruza el eje Y— para leer, escribir y comparar funciones lineales y afines con seguridad en los ítems de la PAES M1.",
   "tiempoEstimadoMin": 24,
   "prerrequisitos": [
     "Lección 1: cambio constante y la receta 'valor inicial + cambio por paso × número de pasos'"
   ],
   "conceptos": [
     "pendiente",
-    "intercepto",
+    "coeficiente de posición",
     "notación y = mx + n",
     "rectas paralelas",
     "punto de igualdad entre dos funciones lineales"
@@ -25,7 +25,7 @@
   "catalogoErrores": [
     {
       "id": "error-1",
-      "descripcion": "Confunde pendiente con intercepto (toma el término que multiplica a x como el punto de cruce con el eje Y, o viceversa)."
+      "descripcion": "Confunde pendiente con coeficiente de posición (toma el término que multiplica a x como el punto de cruce con el eje Y, o viceversa)."
     },
     {
       "id": "error-2",
@@ -33,7 +33,7 @@
     },
     {
       "id": "error-3",
-      "descripcion": "Confunde el eje X con el eje Y al leer el intercepto (lee el cruce en el eje equivocado)."
+      "descripcion": "Confunde el eje X con el eje Y al leer el coeficiente de posición (lee el cruce en el eje equivocado)."
     },
     {
       "id": "error-4",
@@ -41,7 +41,7 @@
     },
     {
       "id": "error-5",
-      "descripcion": "Olvida el término independiente / intercepto (cree que una función sin intercepto visible no lo tiene, o lo omite en el modelo)."
+      "descripcion": "Olvida el término independiente / coeficiente de posición (cree que una función sin coeficiente de posición visible no lo tiene, o lo omite en el modelo)."
     }
   ],
   "pasos": [
@@ -108,14 +108,14 @@
               "editable": true
             },
             {
-              "nombre": "intercepto (b)",
+              "nombre": "coeficiente de posición (b)",
               "min": -8,
               "max": 8,
               "valorInicial": 2,
               "editable": false
             }
           ],
-          "instruccion": "El intercepto está fijo por ahora: ese control no se mueve. Mueve solo el de la pendiente y observa la recta. ¿Qué cambia? ¿Qué se queda exactamente igual?",
+          "instruccion": "El coeficiente de posición está fijo por ahora: ese control no se mueve. Mueve solo el de la pendiente y observa la recta. ¿Qué cambia? ¿Qué se queda exactamente igual?",
           "exploracionMinima": 3,
           "feedbackExploracionInsuficiente": "Todavía no exploraste lo suficiente. Prueba llevar el control al mínimo, al máximo y a un valor del medio antes de decidir qué cambia."
         },
@@ -133,7 +133,7 @@
     },
     {
       "tipo": "descubrimiento",
-      "titulo": "Dos controles: pendiente e intercepto",
+      "titulo": "Dos controles: pendiente y coeficiente de posición",
       "_notasInternas": [
         "Pantalla original: Paso 5 (micro-preguntas 5.1, 5.2, 5.3). Secuencia predice→mueve→compara. 5.1 mapea a error-1 (confunde pendiente con intercepto); 5.3 mapea a error-2 (signo de la pendiente).",
         "2026-07-28: bloque interactivoSlider (dosVariables + secuenciaMicropreguntas) agregado — estaba ausente desde la creación del archivo (ver commit ea912b1). El schema se extendió con el campo opcional mensajeCorrecto en secuenciaMicropreguntas para no perder el feedback de la opción correcta de cada micro-pregunta."
@@ -141,14 +141,14 @@
       "bloques": [
         {
           "tipo": "texto",
-          "contenido": "Ahora se habilitan los dos controles: pendiente e intercepto. Vamos a hacer tres micro-experimentos: predice, mueve, compara."
+          "contenido": "Ahora se habilitan los dos controles: pendiente y coeficiente de posición. Vamos a hacer tres micro-experimentos: predice, mueve, compara."
         },
         {
           "tipo": "interactivoSlider",
           "variante": "dosVariables",
           "variables": [
             { "nombre": "pendiente (m)", "min": -5, "max": 5, "valorInicial": 1, "editable": true },
-            { "nombre": "intercepto (b)", "min": -8, "max": 8, "valorInicial": 2, "editable": true }
+            { "nombre": "coeficiente de posición (b)", "min": -8, "max": 8, "valorInicial": 2, "editable": true }
           ],
           "instruccion": "Ahora se mueven los dos controles. Antes de cada pregunta, predice — después muévelos y comprueba si tenías razón.",
           "secuenciaMicropreguntas": [
@@ -162,15 +162,15 @@
                   "errorCatalogado": "error-1"
                 }
               ],
-              "mensajeCorrecto": "Exacto. El intercepto es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
+              "mensajeCorrecto": "Exacto. El coeficiente de posición es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
             },
             {
               "id": "l2-p5-mp2",
               "enunciado": "5.2 — ¿Cuál control cambia la inclinación, o sea qué tan empinada sube la recta?",
               "feedbackPorPrediccion": [
                 {
-                  "prediccion": "El control del intercepto",
-                  "mensaje": "Prueba mover solo el control de intercepto. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
+                  "prediccion": "El control del coeficiente de posición",
+                  "mensaje": "Prueba mover solo el control de coeficiente de posición. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
                   "errorCatalogado": "error-1"
                 }
               ],
@@ -201,13 +201,13 @@
       "bloques": [
         {
           "tipo": "abierta",
-          "enunciado": "Con tus palabras, completa: la pendiente le hace ______ a la recta. El intercepto le hace ______.",
+          "enunciado": "Con tus palabras, completa: la pendiente le hace ______ a la recta. El coeficiente de posición le hace ______.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "La pendiente cambia la inclinación (qué tan empinada sube o baja). El intercepto cambia dónde la recta cruza el eje Y (la sube o baja completa sin cambiar su ángulo)."
+          "respuestaModelo": "La pendiente cambia la inclinación (qué tan empinada sube o baja). El coeficiente de posición cambia dónde la recta cruza el eje Y (la sube o baja completa sin cambiar su ángulo)."
         },
         {
           "tipo": "texto",
-          "contenido": "Los matemáticos escriben esto como y = mx + n.\n\nLa m es la pendiente (lo que cambia la inclinación). La n es el intercepto (dónde la recta cruza el eje Y).\n\nNada nuevo: solo un nombre para lo que ya descubriste moviendo los controles."
+          "contenido": "Los matemáticos escriben esto como y = mx + n.\n\nLa m es la pendiente (lo que cambia la inclinación). La n es el coeficiente de posición (dónde la recta cruza el eje Y).\n\nNada nuevo: solo un nombre para lo que ya descubriste moviendo los controles."
         }
       ]
     },
@@ -226,7 +226,7 @@
               "id": "a",
               "texto": "(0, −2)",
               "esCorrecta": true,
-              "feedback": "Correcto. El cruce con el eje Y ocurre cuando x = 0: y = 4·0 − 2 = −2. El intercepto es justamente ese −2."
+              "feedback": "Correcto. El cruce con el eje Y ocurre cuando x = 0: y = 4·0 − 2 = −2. El coeficiente de posición es justamente ese −2."
             },
             {
               "id": "b",
@@ -239,7 +239,7 @@
               "id": "c",
               "texto": "(−2, 0)",
               "esCorrecta": false,
-              "feedback": "Ojo con los ejes: el intercepto que buscamos es el cruce con el eje Y, así que la primera coordenada del punto debe ser 0. Revisa cuál eje estás mirando.",
+              "feedback": "Ojo con los ejes: el coeficiente de posición que buscamos es el cruce con el eje Y, así que la primera coordenada del punto debe ser 0. Revisa cuál eje estás mirando.",
               "errorCatalogado": "error-3"
             },
             {
@@ -325,7 +325,7 @@
       "bloques": [
         {
           "tipo": "texto",
-          "contenido": "Lo que te llevas:\n- La pendiente (m) controla la inclinación; el intercepto (n) controla dónde la recta cruza el eje Y.\n- Se escribe y = mx + n.\n- Dos rectas con la misma pendiente y distinto intercepto son paralelas: nunca se cruzan.\n- Para saber cuándo dos situaciones lineales se igualan, se igualan sus ecuaciones y se despeja.\n\nAhora, tres ítems formato PAES para consolidar."
+          "contenido": "Lo que te llevas:\n- La pendiente (m) controla la inclinación; el coeficiente de posición (n) controla dónde la recta cruza el eje Y.\n- Se escribe y = mx + n.\n- Dos rectas con la misma pendiente y distinto coeficiente de posición son paralelas: nunca se cruzan.\n- Para saber cuándo dos situaciones lineales se igualan, se igualan sus ecuaciones y se despeja.\n\nAhora, tres ítems formato PAES para consolidar."
         }
       ]
     }
@@ -341,13 +341,13 @@
           "clave": "A",
           "texto": "y = 3x + 5",
           "esCorrecta": true,
-          "feedback": "Correcto. Las diferencias de y son +3 constantes (pendiente 3) y en x = 0 vale 5 (intercepto). Entonces y = 3x + 5."
+          "feedback": "Correcto. Las diferencias de y son +3 constantes (pendiente 3) y en x = 0 vale 5 (coeficiente de posición). Entonces y = 3x + 5."
         },
         {
           "clave": "B",
           "texto": "y = 5x + 3",
           "esCorrecta": false,
-          "feedback": "Revisa cuál número es la pendiente y cuál el intercepto. La pendiente es cuánto AUMENTA y cada vez que x sube de a 1. El intercepto es el valor de y cuando x = 0. ¿Cuál es cuál en tu tabla?",
+          "feedback": "Revisa cuál número es la pendiente y cuál el coeficiente de posición. La pendiente es cuánto AUMENTA y cada vez que x sube de a 1. El coeficiente de posición es el valor de y cuando x = 0. ¿Cuál es cuál en tu tabla?",
           "errorCatalogado": "error-1"
         },
         {
@@ -365,7 +365,7 @@
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "Diferencias de y consecutivas: 8−5=3, 11−8=3, 14−11=3 → pendiente 3. En x=0, y=5 → intercepto 5. Ecuación: y = 3x + 5. Comprobación x=2: 3·2+5 = 11. ✓"
+      "solucion": "Diferencias de y consecutivas: 8−5=3, 11−8=3, 14−11=3 → pendiente 3. En x=0, y=5 → coeficiente de posición 5. Ecuación: y = 3x + 5. Comprobación x=2: 3·2+5 = 11. ✓"
     },
     {
       "id": "l2-item-2",
@@ -401,7 +401,7 @@
           "errorCatalogado": "error-2"
         }
       ],
-      "solucion": "Cantidad inicial (intercepto) = 160 plantines por sembrar. Por cada cantero se siembran 25, así que los que quedan bajan 25 por cantero (pendiente −25). Modelo: y = 160 − 25x. Comprobación x=4: 160 − 25·4 = 160 − 100 = 60 plantines quedan; sembrados 100, total 160. ✓ Resultado entero para todo x entero."
+      "solucion": "Cantidad inicial (coeficiente de posición) = 160 plantines por sembrar. Por cada cantero se siembran 25, así que los que quedan bajan 25 por cantero (pendiente −25). Modelo: y = 160 − 25x. Comprobación x=4: 160 − 25·4 = 160 − 100 = 60 plantines quedan; sembrados 100, total 160. ✓ Resultado entero para todo x entero."
     },
     {
       "id": "l2-item-3",
@@ -420,7 +420,7 @@
           "clave": "B",
           "texto": "No: pueden tener el mismo m pero distinto n, y ser rectas paralelas diferentes.",
           "esCorrecta": true,
-          "feedback": "Correcto. Igual pendiente y distinto intercepto = rectas paralelas distintas, que nunca se cruzan. La pendiente sola no determina la recta."
+          "feedback": "Correcto. Igual pendiente y distinto coeficiente de posición = rectas paralelas distintas, que nunca se cruzan. La pendiente sola no determina la recta."
         },
         {
           "clave": "C",
@@ -443,7 +443,7 @@
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — alcance, habilidades y formato de ítems de función lineal y afín.",
-      "mineduc-curriculum/03-unidad-2-algebra-funciones.md (currículum nacional Mineduc/UCE) — profundidad y secuencia de pendiente, intercepto y función afín (documento de uso público).",
+      "mineduc-curriculum/03-unidad-2-algebra-funciones.md (currículum nacional Mineduc/UCE) — profundidad y secuencia de pendiente, coeficiente de posición y función afín (documento de uso público).",
       "Ítem 10.2 (l2-item-2): dominio 'huerta escolar / plantines por sembrar' verificado sin colisión léxica contra el corpus de fuentes aisladas (demre/, mineduc-curriculum/, pdv-terceros/, pendiente-clasificar/, Material/) mediante el subagente consulta-fuentes (chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción): huerta, huerta escolar, plantín/plantines, cantero/canteros, sembrar/sembrados = NO. Se evitaron 'cultivo' (colisión) y 'curso' (colisión genérica), ambas ausentes del ítem. PENDIENTE: verificación de originalidad profunda sobre el texto redactado vía /revision-originalidad antes de pasar a 'publicable'."
     ],
     "declaracionOriginalidad": "Enunciados, contextos y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 y el currículum Mineduc se usaron solo para calibrar alcance, formato y secuencia (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de esas fuentes fue reproducido ni parafraseado. Originalidad NO firmada aún: pendiente de /revision-originalidad."

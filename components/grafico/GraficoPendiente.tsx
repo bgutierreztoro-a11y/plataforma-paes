@@ -183,7 +183,7 @@ export function GraficoPendiente({
           valorTexto={`pendiente ${formatoDecimalChileno(m)}`}
         />
         <SliderControl
-          etiqueta="Intercepto (b)"
+          etiqueta="Coeficiente de posición (b)"
           valor={b}
           min={configB.min}
           max={configB.max}
@@ -195,7 +195,7 @@ export function GraficoPendiente({
             registrarExploracion(v);
             registrarMovimiento("b");
           }}
-          valorTexto={`intercepto ${formatoDecimalChileno(b)}`}
+          valorTexto={`coeficiente de posición ${formatoDecimalChileno(b)}`}
         />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">

@@ -52,7 +52,7 @@
           "clave": "B",
           "texto": "5",
           "esCorrecta": false,
-          "feedback": "5 es el intercepto (el valor de y cuando x=0), no la pendiente."
+          "feedback": "5 es el coeficiente de posición (el valor de y cuando x=0), no la pendiente."
         },
         {
           "clave": "C",
@@ -112,7 +112,7 @@
           "clave": "A",
           "texto": "Son paralelas: suben al mismo ritmo pero parten de puntos distintos",
           "esCorrecta": true,
-          "feedback": "Correcto: misma pendiente significa mismo ritmo de cambio; distinto intercepto significa que parten de puntos distintos en el eje y."
+          "feedback": "Correcto: misma pendiente significa mismo ritmo de cambio; distinto coeficiente de posición significa que parten de puntos distintos en el eje y."
         },
         {
           "clave": "B",
@@ -124,16 +124,16 @@
           "clave": "C",
           "texto": "Se cruzan en exactamente un punto",
           "esCorrecta": false,
-          "feedback": "Dos rectas con la misma pendiente y distinto intercepto nunca se cruzan: son paralelas."
+          "feedback": "Dos rectas con la misma pendiente y distinto coeficiente de posición nunca se cruzan: son paralelas."
         },
         {
           "clave": "D",
           "texto": "Son la misma recta",
           "esCorrecta": false,
-          "feedback": "Tienen distinto intercepto (1 versus −3), así que no son la misma recta aunque compartan pendiente."
+          "feedback": "Tienen distinto coeficiente de posición (1 versus −3), así que no son la misma recta aunque compartan pendiente."
         }
       ],
-      "solucion": "Misma pendiente (2) y distinto intercepto (1 y −3): las rectas son paralelas y no se cruzan nunca."
+      "solucion": "Misma pendiente (2) y distinto coeficiente de posición (1 y −3): las rectas son paralelas y no se cruzan nunca."
     },
     {
       "id": "diag-5",

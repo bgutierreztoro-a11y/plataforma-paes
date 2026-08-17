@@ -409,7 +409,7 @@
       "bloques": [
         {
           "tipo": "texto",
-          "contenido": "Lo que te llevas:\n- Cambio constante = el mismo salto en cada paso (puede ser hacia arriba o hacia abajo).\n- Detector: restar valores consecutivos; todas las restas deben coincidir.\n- Receta: Total = valor inicial + cambio por paso × número de pasos.\n- Trampas clásicas: valor inicial olvidado y saltos mal contados.\n\nLo que viene (Lección 2): esta receta tiene un gráfico. El 'cambio por paso' se va a llamar pendiente, el 'valor inicial' se va a llamar intercepto, y vas a poder moverlos con tus propias manos."
+          "contenido": "Lo que te llevas:\n- Cambio constante = el mismo salto en cada paso (puede ser hacia arriba o hacia abajo).\n- Detector: restar valores consecutivos; todas las restas deben coincidir.\n- Receta: Total = valor inicial + cambio por paso × número de pasos.\n- Trampas clásicas: valor inicial olvidado y saltos mal contados.\n\nLo que viene (Lección 2): esta receta tiene un gráfico. El 'cambio por paso' se va a llamar pendiente, el 'valor inicial' se va a llamar coeficiente de posición, y vas a poder moverlos con tus propias manos."
         }
       ]
     }

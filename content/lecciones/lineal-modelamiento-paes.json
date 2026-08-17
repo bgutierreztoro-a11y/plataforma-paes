@@ -6,7 +6,7 @@
   "tiempoEstimadoMin": 25,
   "prerrequisitos": [
     "Lección 1: cambio constante y la receta 'valor inicial + cambio por paso × número de pasos'",
-    "Lección 2: pendiente e intercepto, y la notación y = mx + n"
+    "Lección 2: pendiente y coeficiente de posición, y la notación y = mx + n"
   ],
   "conceptos": [
     "modelamiento",
