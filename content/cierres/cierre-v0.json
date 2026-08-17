@@ -73,7 +73,7 @@
       "id": "cierre-3",
       "habilidad": "modelar",
       "dificultad": "media",
-      "enunciado": "Un taxi cobra $400 de bajada de bandera más $150 por kilómetro. ¿Cuánto cuesta un viaje de 5 km?",
+      "enunciado": "Un taxi cobra $400 de tarifa base más $150 por kilómetro. ¿Cuánto cuesta un viaje de 5 km?",
       "alternativas": [
         {
           "clave": "A",
@@ -85,7 +85,7 @@
           "clave": "B",
           "texto": "$750",
           "esCorrecta": false,
-          "feedback": "Ese es solo el costo de los kilómetros (150×5); falta sumar la bajada de bandera de $400."
+          "feedback": "Ese es solo el costo de los kilómetros (150×5); falta sumar la tarifa base de $400."
         },
         {
           "clave": "C",
@@ -97,7 +97,7 @@
           "clave": "D",
           "texto": "$2.750",
           "esCorrecta": false,
-          "feedback": "Multiplicaste (400 + 150) × 5, pero la bajada de bandera se cobra una sola vez, no se multiplica por los kilómetros."
+          "feedback": "Multiplicaste (400 + 150) × 5, pero la tarifa base se cobra una sola vez, no se multiplica por los kilómetros."
         }
       ],
       "solucion": "Costo = 400 + 150×5 = 400 + 750 = 1.150."
