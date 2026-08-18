@@ -28,6 +28,7 @@
     "NOTACIÓN EN ALTERNATIVAS: las opciones que muestran notación de potencia en vez de un valor calculado (paso 2 seleccion, ítem 2) llevan la expresión envuelta en negrita markdown (**4⁻³**, no 4⁻³ suelto). No es solo estilo: scripts/auditar-leccion.mjs extrae como 'valor numérico' cualquier alternativa cuyo texto EMPIECE con un dígito seguido de caracteres no-dígito (así lee '4⁻³' como el valor 4), y sin el envoltorio ese 4 quedaría registrado como respuesta correcta o distractor según el caso, arriesgando falsos '🔴 colision-distractor-correcta' contra cualquier otro 4 suelto del archivo. Envolver en '**' antepone un carácter no numérico y el extractor no matchea nada. Las alternativas que SÍ son un valor calculado (256, 16, 1024, 0, 729, 243...) se dejan sin envolver a propósito, porque esas sí queremos que el chequeo de colisión las vea.",
     "ERROR-3, LAS DOS DIRECCIONES: el catálogo describe error-3 como el mismo mecanismo en dos sentidos —convertir aᵐ·aⁿ en a^(m·n), o convertir (aᵐ)ⁿ en a^(m+n)—. Este archivo usa las dos: paso 6 (numerica, 2³·2⁴ leído como 2¹²=4096) es la primera dirección; paso 7 (seleccion, (3²)³ leído como 3⁵=243) es la segunda. Verificado que ninguna otra lección del módulo existe todavía para comparar divergencia de catálogo (L2 y L3 no están escritas), así que scripts/auditar-leccion.mjs reportará 🟡 catalogo-modulo-no-declarado hasta que MODULO_POR_LECCION incluya las tres — agregado en este mismo commit.",
     "VERIFICACIÓN ARITMÉTICA GLOBAL (autochequeo del redactor, no reemplaza la auditoría matemática independiente): 4⁻¹=0,25 ✓; 4⁻²=0,0625 ✓; 4⁴=256 ✓; 4⁵=1024 ✓; 2³·2⁴=8·16=128=2⁷ ✓; 2³·2⁴ leído como 2^(3·4)=2¹²=4096 ✓ (error-3); 5⁶÷5⁴=15625÷625=25=5² ✓; 5⁶=15625 (distractor, olvida dividir) ✓; 5^(4−6)=5⁻²=0,04 (distractor, resta al revés) ✓; (3²)³=3⁶=729 ✓; 3^(2+3)=3⁵=243 (error-3) ✓; 3⁶ leído como 3×6=18 (error-1) ✓; (2x)³ no aplica acá, pero (3²)³ leído ignorando el exponente interno da 3³=27 (distractor) ✓; (3/4)²=9/16=0,5625 ✓; (3²)/4=9/4=2,25 (error-6, solo numerador) ✓; 3/4²=3/16=0,1875 (error-6, solo denominador) ✓; del escalón 2 al 5 hay 3 escalones de subida, 4³=64 ✓; bajar 2 escalones desde cualquier punto deja 1/4²=1/16=0,0625 del aumento anterior, verificado con escalón 3→1: 64/4=16, 16/4=4, y 4/64=0,0625 ✓.",
+    "CATÁLOGO ACTUALIZADO DESPUÉS DEL COMMIT (2026-08-17): las cinco entradas propias de este archivo —error-1 a error-5— cambiaron de redacción. NO es una corrección de contenido de esta lección: es la revisión completa de §c del documento de diseño, corrida en hilo aislado después de que la redacción de L2 destapara tres afirmaciones falsas de corrido en el catálogo del módulo. De las 13 entradas de §c, cinco quedaron intactas y ocho se corrigieron; las cinco de este archivo estaban entre las ocho. Los defectos eran todos de cuantificador absoluto, no de aritmética: error-2 decía que con bases distintas no hay factor que se repita, falso en 4² · 2³ = 2⁷; error-4 decía que bajar escalones nunca cambia de signo, falso con base −2; error-5 afirmaba a⁰ = 1 sin excluir la base 0 y justificaba el resultado con una frase que no decía nada verificable; error-1 definía el exponente de un modo que esta misma lección refuta en su paso 5, porque no alcanza a los exponentes 0 ni negativos; y error-3 declaraba su frontera con error-2 al revés, afirmando de error-2 lo contrario de su propia definición. Ninguna cifra ni ningún distractor de esta lección cambió, y las descripciones nuevas siguen describiendo exactamente los mismos mecanismos que sus distractores producen. La copia es carácter a carácter contra §c, verificada programáticamente, igual que antes.",
     "AUDITORÍAS: PENDIENTES. Este archivo se redactó en el mismo hilo que fijó la arquitectura (docs/diseno-modulo-potencias-y-raices.md), así que CLAUDE.md prohíbe que este mismo hilo lo audite. La revisión matemática y la auditoría de originalidad se corren en un agente nuevo, sin memoria de esta conversación, antes de firmar el commit de contenido."
   ],
   "auditoria": {
@@ -44,23 +45,23 @@
   "catalogoErrores": [
     {
       "id": "error-1",
-      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
+      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: cuando es un número natural dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
     },
     {
       "id": "error-2",
-      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; con bases distintas no hay un factor que se repita, así que no hay exponente que sumar."
+      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; para usarla, las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo están."
     },
     {
       "id": "error-3",
-      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que ahí la base sí es la misma y el problema es haber sumado sin que correspondiera."
+      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que acá la base sí es la misma: lo que falló no es cuál base, sino cuál regla."
     },
     {
       "id": "error-4",
-      "descripcion": "Leer el exponente negativo como si el signo pasara al resultado: calcular 2⁻³ como −8 en vez de 1/8. Bajar escalones nunca cambia de signo, solo divide; el resultado de una potencia de base positiva es positivo aunque el exponente sea negativo."
+      "descripcion": "Leer el exponente negativo como si el signo pasara al resultado: calcular 2⁻³ como −8 en vez de 1/8. Con base positiva, bajar escalones nunca cambia de signo, solo divide: el signo menos del exponente dice «dividir», no «negativo»."
     },
     {
       "id": "error-5",
-      "descripcion": "Dar a⁰ = 0, leyendo el exponente cero como «no queda nada». Bajar un escalón divide por la base, así que el escalón cero es el que está justo antes de multiplicar por la base ninguna vez: vale 1, no 0. Se distingue de error-4, que es sobre el signo de los escalones de más abajo."
+      "descripcion": "Dar a⁰ = 0, leyendo el exponente cero como «no queda nada». Con cualquier base distinta de 0, bajar un escalón divide por la base: desde 5¹ = 5, bajar uno da 5 ÷ 5 = 1. El escalón cero vale 1, no 0. Se distingue de error-4, que es sobre el signo de los escalones de más abajo."
     },
     {
       "id": "error-6",
@@ -95,12 +96,27 @@
           "variante": "tabla",
           "descripcion": "Tabla con los primeros escalones conocidos de la perilla de un microscopio escolar: escalón y aumento correspondiente. Deja ver que cada escalón hacia arriba multiplica por 4 el aumento del escalón anterior.",
           "datos": {
-            "columnas": ["Escalón", "Aumento"],
+            "columnas": [
+              "Escalón",
+              "Aumento"
+            ],
             "filas": [
-              [0, "×1 (tal cual se ve)"],
-              [1, "×4"],
-              [2, "×16"],
-              [3, "×64"]
+              [
+                0,
+                "×1 (tal cual se ve)"
+              ],
+              [
+                1,
+                "×4"
+              ],
+              [
+                2,
+                "×16"
+              ],
+              [
+                3,
+                "×64"
+              ]
             ]
           }
         },
@@ -256,14 +272,35 @@
           "variante": "tabla",
           "descripcion": "Tabla completa de la perilla, del escalón −2 al escalón 3, mostrando que el aumento nunca es negativo ni cero: se hace cada vez más chico hacia abajo, pero siempre queda una fracción positiva.",
           "datos": {
-            "columnas": ["Escalón", "Aumento"],
+            "columnas": [
+              "Escalón",
+              "Aumento"
+            ],
             "filas": [
-              [-2, "0,0625 (1/16)"],
-              [-1, "0,25 (1/4)"],
-              [0, "1 (tal cual se ve)"],
-              [1, "4"],
-              [2, "16"],
-              [3, "64"]
+              [
+                -2,
+                "0,0625 (1/16)"
+              ],
+              [
+                -1,
+                "0,25 (1/4)"
+              ],
+              [
+                0,
+                "1 (tal cual se ve)"
+              ],
+              [
+                1,
+                "4"
+              ],
+              [
+                2,
+                "16"
+              ],
+              [
+                3,
+                "64"
+              ]
             ]
           }
         },

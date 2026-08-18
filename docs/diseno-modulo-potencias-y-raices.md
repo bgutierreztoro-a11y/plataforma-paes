@@ -161,7 +161,7 @@ de autoexplicación pueda distinguirlos.
 
 | id | L1 | L2 | L3 |
 |---|:--:|:--:|:--:|
-| `error-1` multiplicar base por exponente | ✓ | | |
+| `error-1` multiplicar base por exponente | ✓ | ✓ | |
 | `error-2` sumar exponentes de bases distintas | ✓ | | ✓ |
 | `error-3` la regla no va con esa operación | ✓ | | ✓ |
 | `error-4` el exponente negativo como signo | ✓ | | ✓ |
@@ -175,17 +175,52 @@ de autoexplicación pueda distinguirlos.
 | `error-12` la raíz como división por el índice | | ✓ | ✓ |
 | `error-13` responder otra magnitud | | | ✓ |
 
+**Revisión completa del catálogo (2026-08-17).** Las 13 descripciones se
+sometieron una por una a casos borde —bases 0, 1 y negativas; exponentes 0,
+negativos y fraccionarios; radicandos no cuadrados; índices pares e impares— en
+una auditoría corrida en hilo aislado, después de que la redacción de L2
+destapara tres afirmaciones falsas de corrido. Resultado: **cinco entradas
+quedaron intactas** (`error-6`, `error-7`, `error-8`, `error-10`, `error-13`) y
+**ocho se corrigieron** (`error-1` a `error-5`, `error-9`, `error-11`,
+`error-12`). Ningún ejemplo numérico estaba mal calculado: los 13 recálculos
+desde cero dan lo que su descripción dice. Todos los defectos estaban en las
+frases explicativas y en los cuantificadores absolutos —«nunca», «solo»,
+«ningún»—, que es donde una regla escrita para que se entienda se vuelve una
+promesa que no se cumple. El más grave era `error-3`, cuya frontera con
+`error-2` estaba invertida y afirmaba de `error-2` lo contrario de su propia
+definición dos entradas más arriba; es además el texto que alimenta el paso de
+autoexplicación, cuya única función es separar esos dos errores.
+
+**Restricciones de diseño de distractores que dejó esa revisión.** No son
+defectos de redacción, pero si se pierden entre el documento y el JSON producen
+ítems con dos respuestas correctas (`colision-distractor-correcta`, 🔴):
+
+- **`error-9`:** `2√18` **vale exactamente lo mismo** que `6√2`. Todo ítem que
+  use este error tiene que pedir la expresión completamente descompuesta, nunca
+  «¿cuánto vale?».
+- **`error-12`:** con `√4` y `√0` el método equivocado acierta por casualidad
+  (`4 ÷ 2 = 2 = √4`). Prohibidos como radicandos de este error.
+- **`error-3`:** con `m = n = 2`, o con base 0 o 1, sumar y multiplicar
+  exponentes dan el mismo resultado. Prohibidos.
+
+**Convención de conteo, para toda copia al JSON:** se escribe «aparece N veces»
+o «usado como factor N veces», que se lee sin ambigüedad como N factores. **No
+se usa «multiplicado por sí mismo N veces»**, que se lee como N+1 factores. La
+única forma admitida de esa expresión es el idiom de dos factores, «el número
+que multiplicado por sí mismo da 5».
+
 **Descripciones (redacción final, se copian literales al JSON):**
 
 - **`error-1`** — Leer la potencia como una multiplicación entre la base y el
   exponente: calcular `2⁵` como `2 · 5 = 10`, o `3⁴` como `12`. El exponente no
-  es un factor: dice cuántas veces aparece la base multiplicándose, no por cuánto
-  se multiplica.
+  es un factor: cuando es un número natural dice cuántas veces aparece la base
+  multiplicándose, no por cuánto se multiplica.
 
 - **`error-2`** — Sumar los exponentes cuando las bases no son la misma: tratar
   `2³ · 3⁴` como si fuera una sola potencia de exponente 7. La regla de sumar
-  exponentes describe qué pasa cuando **se repite el mismo factor**; con bases
-  distintas no hay un factor que se repita, así que no hay exponente que sumar.
+  exponentes describe qué pasa cuando **se repite el mismo factor**; para usarla,
+  las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo
+  están.
 
 - **`error-3`** — Aplicar a la operación equivocada la regla que corresponde a la
   otra: el mecanismo es uno solo, no saber cuál operación entre potencias se
@@ -193,17 +228,17 @@ de autoexplicación pueda distinguirlos.
   direcciones —convertir `aᵐ · aⁿ` en `a^(m·n)` o convertir `(aᵐ)ⁿ` en
   `a^(m+n)`— y la señal es siempre la misma: se eligió la operación de exponentes
   antes de mirar qué se estaba haciendo con las potencias. Se distingue de
-  `error-2` en que ahí la base sí es la misma y el problema es haber sumado sin
-  que correspondiera.
+  `error-2` en que acá la base **sí** es la misma: lo que falló no es cuál base,
+  sino cuál regla.
 
 - **`error-4`** — Leer el exponente negativo como si el signo pasara al
-  resultado: calcular `2⁻³` como `−8` en vez de `1/8`. Bajar escalones nunca
-  cambia de signo, solo divide; el resultado de una potencia de base positiva es
-  positivo aunque el exponente sea negativo.
+  resultado: calcular `2⁻³` como `−8` en vez de `1/8`. Con base positiva, bajar
+  escalones nunca cambia de signo, solo divide: el signo menos del exponente dice
+  «dividir», no «negativo».
 
 - **`error-5`** — Dar `a⁰ = 0`, leyendo el exponente cero como «no queda nada».
-  Bajar un escalón divide por la base, así que el escalón cero es el que está
-  justo antes de multiplicar por la base ninguna vez: vale 1, no 0. Se distingue
+  Con cualquier base distinta de 0, bajar un escalón divide por la base: desde
+  `5¹ = 5`, bajar uno da `5 ÷ 5 = 1`. El escalón cero vale 1, no 0. Se distingue
   de `error-4`, que es sobre el signo de los escalones de más abajo.
 
 - **`error-6`** — En una potencia de base fraccionaria, elevar solo una parte de
@@ -214,7 +249,8 @@ de autoexplicación pueda distinguirlos.
 - **`error-7`** — Cambiar de lugar el índice y el exponente al pasar entre raíz y
   potencia: leer `a^(m/n)` como `ᵐ√(aⁿ)` en vez de `ⁿ√(aᵐ)`. El denominador del
   exponente es el índice de la raíz y el numerador es el exponente del radicando;
-  invertirlos da otro número, salvo en el caso en que `m = n`.
+  invertirlos da otro número: con una base positiva distinta de 1, las dos
+  lecturas solo coinciden cuando `m = n`.
 
 - **`error-8`** — Repartir la raíz sobre una suma o una resta: dar
   `√(a + b) = √a + √b`. Las propiedades heredadas de las potencias reparten sobre
@@ -224,22 +260,24 @@ de autoexplicación pueda distinguirlos.
 - **`error-9`** — Descomponer a medias: extraer un factor con raíz exacta que no
   es el mayor posible y quedarse ahí, como dar `√72 = 2√18` sin notar que 18
   todavía tiene un factor cuadrado. La extracción está bien hecha; lo que falta es
-  seguir hasta que el radicando ya no tenga ningún factor con raíz exacta. Se
-  distingue de `error-10`, donde el paso mal hecho es la extracción misma.
+  seguir hasta que el radicando ya no tenga ningún factor mayor que 1 cuya raíz
+  **de ese mismo índice** sea exacta. Se distingue de `error-10`, donde el paso
+  mal hecho es la extracción misma.
 
 - **`error-10`** — Sacar el factor de la raíz sin sacarle la raíz: pasar de
   `√(36 · 2)` a `36√2` en vez de `6√2`. Lo que sale afuera es la raíz del factor,
   no el factor.
 
 - **`error-11`** — Sumar radicales que no son el mismo, como si fueran términos
-  semejantes: dar `2√3 + 3√2 = 5√5`. Solo se pueden juntar los que tienen el mismo
-  índice y el mismo radicando; `√3` y `√2` son dos números distintos, igual que `x`
-  e `y` en álgebra.
+  semejantes: dar `2√3 + 3√2 = 5√5`. Solo se pueden juntar los que, **ya
+  descompuestos**, quedan con el mismo índice y el mismo radicando; `√3` y `√2` no
+  se pueden descomponer más y son dos números distintos, igual que `x` e `y` en
+  álgebra.
 
 - **`error-12`** — Confundir sacar la raíz con dividir por el índice: dar
-  `√36 = 18` o `³√27 = 9`. La raíz busca el número que multiplicado por sí mismo la
-  cantidad de veces que dice el índice da el radicando; dividir no responde esa
-  pregunta.
+  `√36 = 18` o `³√27 = 9`. La raíz busca un número que, usado como factor tantas
+  veces como dice el índice, dé el radicando —`6 · 6 = 36`, `3 · 3 · 3 = 27`—;
+  dividir no responde esa pregunta.
 
 - **`error-13`** — Calcular bien y responder otra magnitud: entregar el área
   cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la
@@ -331,7 +369,7 @@ escolar de robótica, bolsas y bolitas.
 | Lección | Candidatos | Notas |
 |---|---|---|
 | L1 | **(a)** escalones de aumento de un microscopio escolar: cada escalón multiplica por 4, y el escalón 0 es «tal cual se ve» — el exponente 0 tiene significado físico, que es exactamente lo que necesita el descubrimiento. — **LIMPIO**. **(b)** copias sucesivas de una imagen que en cada guardado queda a la mitad de lado. — **LIMPIO**. **(c)** rondas de eliminación de un campeonato interescolar de ajedrez. — **LIMPIO**. | Los tres vuelven limpios. (a) sigue siendo el favorito. En (a) el término «aumento» da hits en el corpus, pero son de aumento porcentual (Porcentaje / Sistemas de Ecuaciones) — dominio distinto, no cuenta como colisión. (b) y (c) sin hits. (c) reutiliza el marco «torneo», que ya estructura `inecuaciones-problemas`; con veredicto limpio igual conviene preferir (a) o (b) por ese motivo de reparto interno, no por colisión de fuentes. Elección final entre los tres, pendiente. |
-| L2 | **(a)** patio cuadrado embaldosado: lado a partir del total de baldosas. — **LIMPIO**. **(b)** diagonal de una pantalla a partir de sus lados. — **LIMPIO**. **(c)** arista de un envase cúbico a partir de su volumen. — **LIMPIO**. | Los tres vuelven limpios. En (a) «lado del cuadrado» da hits, pero es término técnico genérico de Perímetros y Áreas, no del escenario baldosas/patio. En (b) «pulgadas» da hit en `TR01_Numeros_Taller_Repaso`, pero es un problema de escala de mapa/proporcionalidad — dominio distinto. (c) sin hits, pero sigue reservado: pisa el terreno del módulo 11 (Cuerpos geométricos), motivo de reparto interno, no de colisión. Elección final entre (a) y (b), pendiente. |
+| L2 | **(a)** patio cuadrado embaldosado: lado a partir del total de baldosas. — **LIMPIO** (ver nota de reemplazo abajo). **(b)** diagonal de una pantalla a partir de sus lados. — **LIMPIO**. **(c)** arista de un envase cúbico a partir de su volumen. — **LIMPIO**. | En (a) la consulta original dio hit en «lado del cuadrado» y el veredicto LIMPIO se obtuvo **reinterpretando ese hit**; ese veredicto queda **anulado** y reemplazado por la corrida del 2026-08-17, sin ese término, que vuelve NO en los cinco. Detalle abajo. En (b) «pulgadas» da hit en `TR01_Numeros_Taller_Repaso`, pero es un problema de escala de mapa/proporcionalidad — dominio distinto. (c) sin hits, pero sigue reservado: pisa el terreno del módulo 11 (Cuerpos geométricos), motivo de reparto interno, no de colisión. Dominio elegido: (a). |
 | L3 | **(a)** escalas de tamaño en potencias de diez, de lo microscópico a lo grande — **LIMPIO, aprobado**: es el dominio de L3. **(b)** ~~capacidad de almacenamiento digital en potencias de dos~~ — **BOTADO (colisión)**. **(c)** ~~códigos de un casillero: `sᵏ` y su raíz `k`-ésima~~ — **BOTADO (veredicto manual)**. **(d)** *respaldo* — **LIMPIO**: rebote de una pelota en el gimnasio del colegio. Se registran la altura de partida y la de cada rebote, y el registro muestra que cada rebote alcanza una fracción fija `r` de la altura anterior — dato medido, no modelo. Ida: altura tras `n` rebotes = `h·rⁿ`, con `r` racional simple (1/2, 2/3, 3/4). Vuelta: se conocen altura inicial, altura final y cuántos rebotes hubo, y falta `r = ⁿ√(h_final / h_inicial)`. | **(a)** vuelve limpio y queda aprobado. **(b)** COLISIÓN contra `MA-03_Numeros_Reales.md` (subcarpeta `Material/`): la fuente ya cubre el mismo escenario de capacidades en potencias de dos que la lección iba a montar. Se abandona entero, no se ajusta (§6.1). **(c)** no lo bota el script sino el veredicto manual: el corpus (`06-bibliografia-y-anexos.md`, subcarpeta `mineduc-curriculum/`) ancla la expresión «combinaciones posibles» al conteo sin orden del eje de Combinatoria, y un código de candado es multiplicativo **con** orden y repetición; el riesgo es que el estudiante importe la fórmula equivocada desde otro eje, y ese riesgo no se arregla cambiando las palabras del enunciado. El candidato «tiempo de caída desde distintas alturas» ya estaba descartado antes (constante `g` en un módulo que no declara `auditoria.constante`). **(d)** hereda el rol que tenía (c): potencia y raíz en las dos direcciones, sin constante física —`r` es un dato medido que entrega el enunciado, no una cifra del mundo—, sin combinatoria y sin almacenamiento digital, y la raíz cae sobre una fracción, lo que además retoma la base racional de L1. (d) vuelve LIMPIO en los cuatro términos y queda confirmado como respaldo: se usa solo si (a) cae en la segunda tanda, la de cifras y frases exactas. Riesgo que se arrastra igual: su mecanismo (multiplicar repetidamente por un factor fijo) es el mismo de «población que se duplica», así que si se activa hay que cuidar que el enunciado no derive en modelo físico —`r` se entrega como dato medido, nunca se deduce. **Regla que dejan los tres descartes:** un dominio sirve para L3 solo si su pregunta inversa natural es «¿por cuánto multiplica cada paso?» —raíz enésima— y no «¿cuántos pasos?», que es logaritmo y está fuera del temario M1. |
 
 **Comandos para correr fuera de la sesión** (uno por candidato; la sesión de
@@ -342,7 +380,7 @@ node scripts/consultar-fuentes.mjs "microscopio" "aumento" "escalones de aumento
 node scripts/consultar-fuentes.mjs "copia de una imagen" "resolución de la imagen" "mitad del lado" "cada copia"   # corrido: LIMPIO
 node scripts/consultar-fuentes.mjs "campeonato de ajedrez" "rondas de eliminación" "octavos de final" "equipos que quedan"   # corrido: LIMPIO
 
-node scripts/consultar-fuentes.mjs "baldosas" "patio cuadrado" "lado del cuadrado" "cuántas baldosas por lado"   # corrido: LIMPIO
+node scripts/consultar-fuentes.mjs "baldosas" "patio cuadrado" "lado del cuadrado" "cuántas baldosas por lado"   # ANULADA, ver §f "Ronda 1 rehecha"
 node scripts/consultar-fuentes.mjs "diagonal de la pantalla" "pulgadas" "ancho y alto de la pantalla"   # corrido: LIMPIO
 node scripts/consultar-fuentes.mjs "envase cúbico" "arista del cubo" "volumen del envase"   # corrido: LIMPIO
 
@@ -369,7 +407,95 @@ para cada candidato; no se abren de nuevo salvo hallazgo en redacción.
 | L3(a) potencias de diez | «10 elevado a menos 6 metros», «tamaño de una célula», «10 elevado a 9 metros», «orden de magnitud», «escala de tamaños» | LIMPIO |
 | L3(d) rebote de pelota | «altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote», «rebote de la pelota en el gimnasio» | LIMPIO |
 
-Con la segunda tanda cerrada, este documento queda **completo y firmado**: no
+**Ronda 1 rehecha para L2(a) — el veredicto original era inválido (2026-08-17).**
+
+**Qué estaba mal.** La ronda 1 sobre el dominio del patio embaldosado se registró
+como LIMPIO, pero la consulta **había dado hit** en «lado del cuadrado». El
+veredicto se obtuvo interpretando ese hit como «término técnico genérico de
+Perímetros y Áreas, no del escenario baldosas/patio». Esa interpretación es
+inválida por dos razones independientes, y la auditoría de originalidad de L2 la
+levantó:
+
+1. **`CLAUDE.md` lo prohíbe textualmente:** «Nunca inferir el tipo de colisión a
+   partir del nombre de archivo o la subcarpeta». El script no distingue colisión
+   de dominio de colisión de plantilla —esa clasificación exigiría leer el
+   corpus, que está prohibido—, así que el único registro válido es el veredicto
+   crudo.
+2. **`docs/calibracion-lecciones-e-items.md` §6.1, paso 3:** «Si vuelve SÍ en
+   cualquiera de las tres dimensiones, descartar el candidato completo — no
+   ajustarlo», con la nota de §6.1 sobre que «salvar» un candidato
+   reinterpretándolo ya había fallado dos veces en L1.
+
+O sea que el dominio de L2 se estaba sosteniendo sobre exactamente el patrón de
+fallo que el proyecto documentó y prohibió. **Ese veredicto queda anulado.**
+
+**Ronda rehecha.** Se volvió a consultar con los términos del escenario tal como
+quedaron en el archivo, **sin** «lado del cuadrado», que no aparece en el texto
+final de la lección —la lección dice «lado del patio» y «baldosas por lado»—, de
+modo que la consulta cubra el escenario real y no un término técnico de otro
+módulo. Mecanismo 2 de `CLAUDE.md`, corrida por Benja fuera del hilo de
+redacción.
+
+```
+node scripts/consultar-fuentes.mjs "baldosas" "patio cuadrado" "baldosas por lado" "lado del patio" "patio del colegio"
+```
+
+Salida, pegada tal cual la imprime el script y sin reformular:
+
+```
+baldosas: NO
+patio cuadrado: NO
+baldosas por lado: NO
+lado del patio: NO
+patio del colegio: NO
+```
+
+**Veredicto: LIMPIO, cinco de cinco, sin hits y sin interpretación de por medio.**
+Este resultado reemplaza al de la ronda 1 original y es el que sostiene la
+elección del dominio (a) para L2.
+
+**El estándar que deja este episodio.** Un hit no se argumenta: se registra crudo
+y bota el candidato. Si se sospecha que el hit viene de un término genérico y no
+del escenario, lo que se hace es **volver a consultar sin ese término** —como
+acá— y no explicar por qué el hit no cuenta. La diferencia no es de forma: la
+primera vía deja una decisión sin evidencia y la segunda produce evidencia nueva.
+
+**Tercera tanda — cifras de L2 que la segunda no cubría (2026-08-17).** Al
+redactar L2 se eligió el dominio (a), patio embaldosado, y los pasos 2 y 8
+necesitaron totales que dieran lado entero: 196 y 225. La segunda tanda solo
+había confirmado el 180, que es la cifra del paso 7. Se corrió una tercera
+consulta con las cifras y frases nuevas, con el mecanismo 2 de `CLAUDE.md`
+—ejecutada por Benja fuera del hilo de redacción—, **antes** de fijar esos
+números en el JSON.
+
+```
+node scripts/consultar-fuentes.mjs "196 baldosas" "225 baldosas" "patio rectangular de baldosas" "rearmar el patio"
+```
+
+Salida, pegada tal cual la imprime el script y sin reformular:
+
+```
+196 baldosas: NO
+225 baldosas: NO
+patio rectangular de baldosas: NO
+rearmar el patio: NO
+```
+
+| Candidato | Cifras/frases consultadas | Veredicto |
+|---|---|---|
+| L2(a) baldosas, cifras de los pasos 2 y 8 | «196 baldosas», «225 baldosas», «patio rectangular de baldosas», «rearmar el patio» | LIMPIO |
+
+**Por qué queda escrito acá y no solo en el JSON.** La auditoría de originalidad
+de L2 (2026-08-17) rechazó el archivo por este punto exacto: la lección
+declaraba en su `proveniencia` que la consulta se había corrido, pero no había
+ningún rastro en el repositorio —ni entrada en esta sección, ni commit—, así que
+el único respaldo era la afirmación del propio redactor, que es justo lo que la
+regla de aislamiento manda no aceptar como evidencia. Las rondas 1 y 2 sí eran
+verificables porque quedaron en el commit `fe410f5`. El estándar que deja este
+hallazgo: **una consulta que no está en este documento no existe**, y la ronda se
+registra acá antes de commitear el contenido que la usa.
+
+Con las tres tandas cerradas, este documento queda **completo y firmado**: no
 se reabre salvo hallazgo concreto en redacción, auditoría matemática o
 auditoría de originalidad.
 
@@ -412,6 +538,15 @@ distractor (regla 3 de `docs/reglas-modulo.md`).
 4. ~~Segunda tanda con las cifras y frases exactas del núcleo de cada
    lección.~~ **Resuelto.** Ocho de ocho candidatos LIMPIO (detalle en §f).
    Cifras núcleo confirmadas como base de redacción.
+5. ~~Tercera tanda con las cifras de los pasos 2 y 8 de L2 (196 y 225), que la
+   segunda no cubría.~~ **Resuelto el 2026-08-17.** Cuatro de cuatro términos
+   NO (detalle y salida cruda en §f). Se agregó a raíz del rechazo de la
+   auditoría de originalidad de L2, que detectó que la consulta se declaraba en
+   el JSON sin dejar rastro verificable en el repositorio.
+6. ~~Ronda 1 de L2(a), cuyo veredicto LIMPIO se había obtenido reinterpretando
+   un hit en «lado del cuadrado».~~ **Anulada y rehecha el 2026-08-17.** Cinco
+   de cinco términos NO, sin interpretación (detalle y salida cruda en §f).
+   También sale del rechazo de la auditoría de originalidad de L2.
 
 Con (1)-(4) resueltos, este documento de arquitectura queda completo y
 cerrado. Empieza la redacción de L1. Cada lección va con `npm run validar` y
