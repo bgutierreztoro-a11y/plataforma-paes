@@ -1,0 +1,645 @@
+{
+  "tipo": "leccion",
+  "id": "potencias-raiz-escondida",
+  "titulo": "La raíz escondida en el exponente",
+  "objetivo": "Reconocer que una raíz enésima es una potencia de exponente fraccionario —que ⁿ√a es a elevado a 1/n y que ⁿ√(aᵐ) es a elevado a m/n—, y usar esa identidad para heredar de las potencias las propiedades del producto y del cociente de raíces, para justificar por qué ninguna propiedad reparte una raíz sobre una suma, y para descomponer una raíz extrayendo el mayor factor de raíz exacta.",
+  "tiempoEstimadoMin": 28,
+  "prerrequisitos": [
+    "Subir y bajar escalones de exponente entero: que a⁰ = 1, que a⁻ⁿ = 1/aⁿ, y las reglas del producto, del cociente y de la potencia de una potencia de igual base (lección Propiedades de las potencias de base racional y exponente racional, potencias-multiplicar-corto)",
+    "Leer el símbolo de raíz cuadrada y reconocer los cuadrados de los números enteros hasta 15 (contenido previo a la plataforma, sin lección propia en este proyecto)",
+    "Descomponer un número en factores y operar con fracciones simples (módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "raíz enésima",
+    "exponente fraccionario",
+    "índice de la raíz",
+    "radicando",
+    "producto y cociente de raíces",
+    "descomposición de una raíz",
+    "factor de raíz exacta"
+  ],
+  "_notasInternas": [
+    "L2 del módulo Potencias y raíces enésimas. Arquitectura fijada y firmada en docs/diseno-modulo-potencias-y-raices.md, de donde viene el texto del catálogo que este archivo embebe. Este archivo implementa §a (L2), embebe el subconjunto de §c que usa y sigue el reparto de bloques de §e.",
+    "PUENTE CON L1, EXPLÍCITO Y DELIBERADO: el paso 10 de potencias-multiplicar-corto.json cierra con una pregunta abierta sin responder —cuánto vale el aumento de medio escalón en una perilla que multiplica por 4 por escalón, o sea 4^(1/2)—. El paso 1 de esta lección la retoma textualmente y el paso 5 la responde. §e del documento de diseño lo declara el único enganche narrativo entre lecciones del módulo. §a ilustra el descubrimiento con base 5 (5^(1/2) · 5^(1/2) = 5); acá se usa la base 4, que es la que L1 dejó realmente abierta, y el caso 5 aparece igual en el paso 5 como el ejemplo donde la respuesta NO es un entero. No es una desviación de §a: es §a anclada a la pregunta concreta que quedó en disco.",
+    "OBJETO DE DESCUBRIMIENTO (patrón, no constante): que la raíz no es una operación aparte con reglas propias, sino la misma escalera de exponentes con escalones fraccionarios. Por eso este módulo no declara auditoria.constante (decisión de §0 del documento de diseño, igual que Expresiones algebraicas). El chequeo de filtración de npm run auditar queda OMITIDO por diseño, no por olvido, y lo reporta como hallazgo 🟢 (visible con AUDITAR_VERBOSE=1).",
+    "DOMINIO ELEGIDO: candidato (a) de §f, patio cuadrado embaldosado. Elección hecha entre los dos candidatos que el documento dejó abiertos —(c) envase cúbico ya venía reservado por pisar el módulo 11, Cuerpos geométricos—. Razón: es el único cuya pregunta inversa natural (el lado a partir del total de baldosas) cae directo sobre la descomposición de un radicando que no es cuadrado perfecto, sin tener que importar el teorema de Pitágoras desde el módulo Figuras geométricas, que es lo que exigiría (b) diagonal de pantalla. La verificación de colisión de dominio y las cifras usadas quedan registradas en docs/diseno-modulo-potencias-y-raices.md §f.",
+    "UNIDADES — DESVIACIÓN DECLARADA DE §e: el documento de diseño dice que todos los campos numerica de este módulo son adimensionales salvo los de L3. Acá se cumple para los tres campos de números puros (pasos 5, 6 y 7), declarados en auditoria.camposAdimensionales con su motivo. Pero los dos campos que cuentan baldosas por lado (pasos 2 y 8) SÍ tienen una magnitud real y llevan unidad: \"baldosas\". Declararlos adimensionales habría hecho pasar el chequeo mintiendo, que es exactamente lo que §e prohíbe en la dirección opuesta (inventarle una unidad a un número puro). La desviación es a favor de la honestidad del dato, no en contra del documento.",
+    "ALTERNATIVAS DE VALOR IGUAL EN EL PASO 7, EXCEPCIÓN DECLARADA: en la selección del paso 7, la correcta 6√5 y el distractor 2√45 valen exactamente lo mismo, porque las dos son √180 (6² · 5 = 180 y 2² · 45 = 180). No es ambigüedad: es el mecanismo mismo de error-9, donde la extracción está bien hecha y lo que falta es seguir hasta que el radicando no tenga ningún factor con raíz exacta mayor que 1. El enunciado pide de forma inequívoca «la forma más simple» y define en el mismo enunciado qué significa eso, y el feedback de la alternativa B lo dice con todas sus letras. La colisión está declarada en auditoria.colisionesPermitidas, el campo sancionado por la regla 3b de docs/reglas-modulo.md, y no solo en esta nota interna. La definición de «forma más simple» del enunciado dice «mayor que 1» y no solo «con raíz exacta», porque el 1 es factor de todo número y tiene raíz exacta, y toda la desambiguación entre A y B descansa en esa frase.",
+    "NOTACIÓN EN ALTERNATIVAS: las opciones que muestran notación en vez de un valor calculado (paso 7 selección, ítem 1 alternativa C, ítem 2 completo) llevan la expresión envuelta en negrita markdown. Es la misma razón que documentó L1: scripts/auditar-leccion.mjs (valorDeAlternativa, línea 91) extrae un valor solo de alternativas cuyo texto entero sea una cifra sin dígitos después. Con expresiones como «6√5» o «2√45» el regex ya falla por su cuenta —el radicando aporta un dígito que rompe el match— y devuelve null; la negrita no es la que evita una lectura errónea acá, sino la defensa uniforme de notación que también protege casos donde sí podría fallar. Las alternativas que sí son un valor calculado (18, 324, 6) van sin envolver a propósito, porque esas sí queremos que el chequeo de colisión las vea.",
+    "IDS DE CAMPO SIN CIFRA (regla 4 de docs/reglas-modulo.md): baldosasPorLadoDelPatio, raizCubicaComoExponente, potenciaDeExponenteFraccionario, raizDeBaseRacional, baldosasPorLadoTrasRearmar. Ninguno de esos ids de campo contiene un dígito. La regla 4 alcanza solo a campos[].id; los ids de itemsPAES (potencias-raiz-escondida-item-1, -item-2, -item-3) sí llevan cifra y quedan fuera del alcance de la regla.",
+    "CATÁLOGO EMBEBIDO: las entradas de catalogoErrores son el subconjunto de §c que marca para L2 y quedan usadas por al menos un distractor de este mismo archivo —si no, catalogo-sin-usar es 🔴, verificado por npm run auditar—. Las entradas compartidas con L1 (error-1, error-6) se copiaron carácter a carácter desde potencias-multiplicar-corto.json, que es lo que compara el guard catalogo-divergente. Las demás nacieron en §c del documento de diseño y se copiaron carácter a carácter desde ahí.",
+    "REVISIÓN DE §c RELEVANTE PARA ESTA LECCIÓN: dos hallazgos de la revisión completa del catálogo tocan directamente a L2. error-11 prohibía juntar radicales de radicandos distintos, que es lo contrario de lo que el paso 7 enseña —√8 + √2 = 3√2—, y quedó acotado a los radicandos «ya descompuestos». error-9 no decía de qué índice tiene que ser la raíz exacta, lo que con índice 3 daba una regla falsa, porque ³√12 ya está descompuesta aunque 12 tenga el factor cuadrado 4; quedó acotado. La revisión además dejó escritas en §c dos restricciones de diseño de distractores que aplican a este archivo: los ítems de error-9 tienen que pedir la expresión completamente descompuesta y nunca el valor —que es lo que el paso 7 ya hace—, y ningún distractor de error-12 puede construirse sobre √4 ni √0, porque ahí dividir por el índice acierta por casualidad. La decisión de alcance fue etiquetar también los distractores que calzan con entradas que §c no asignaba a L2 de entrada: por eso están embebidos y usados error-1 (alternativa C del ítem 2 y distractor del paso 6) y error-13 (alternativa B del ítem 1). L1 no se toca porque ya tenía error-1 con texto idéntico, verificado contra potencias-multiplicar-corto.json por el guard catalogo-divergente; L3 tampoco, porque todavía no está escrita.",
+    "CORRECCIONES AL CATÁLOGO, aplicadas EN LOS DOS LUGARES A LA VEZ —§c del documento de diseño y esta copia embebida— para que la copia siga siendo carácter a carácter. Como estas descripciones se le muestran al estudiante en la Capa 2 del feedback, una afirmación falsa no podía quedarse. (1) error-7 decía «invertirlos da otro número, salvo en el caso en que m = n». Falso con base 0 y con base 1: ³√(1²) y ²√(1³) valen los dos 1 con m ≠ n; también falso con bases negativas: ³√((−1)¹) y ¹√((−1)³) valen los dos −1. Quedó acotado a lo que sí es cierto y es lo que la lección usa: «con una base positiva distinta de 1, las dos lecturas solo coinciden cuando m = n». Verificado por fuerza bruta sobre bases 2 a 9 y exponentes 1 a 6: cero contraejemplos. (2) error-9 pedía seguir «hasta que el radicando ya no tenga ningún factor con raíz exacta», condición que no se cumple nunca porque el 1 es factor de todo número y √1 = 1. Corregido a «mayor que 1», la misma acotación que ya se le había hecho al enunciado del paso 7 y que no se había propagado al catálogo; el feedback de la alternativa correcta del paso 7 arrastraba la misma frase sin acotar y también se corrigió. (3) error-12 usaba «multiplicado por sí mismo la cantidad de veces que dice el índice», que con índice 2 se lee como tres factores; reescrito a «usado como factor tantas veces como dice el índice», la convención que el resto del archivo ya usaba. El documento de diseño autoriza estas reaperturas: se declara cerrado «salvo hallazgo concreto en redacción, auditoría matemática o auditoría de originalidad».",
+    "VERIFICACIÓN ARITMÉTICA GLOBAL (autochequeo del redactor, no reemplaza la auditoría matemática independiente): 4^(1/2) · 4^(1/2) = 4^1 = 4, y 2 · 2 = 4 ✓; 14² = 196 ✓; 196 ÷ 2 = 98 y 98² = 9604 ✓; 196 ÷ 4 = 49 y 49² = 2401 ✓; 10²=100, 11²=121, 12²=144, 13²=169, 15²=225 ✓; 4^(3/2) = 8 ✓; 27^(1/3) = 3 porque 3³ = 27 ✓; 27 ÷ 3 = 9 y 9³ = 729 ✓; 8^(2/3) = ³√(8²) = ³√64 = 4, y también (³√8)² = 2² = 4 ✓; 16^(3/4) = (⁴√16)³ = 2³ = 8, y también ⁴√(16³) = ⁴√4096 = 8 ✓; ⁴√16 = 2 ✓; 16 · 3/4 = 12 ✓; √(9+16) = √25 = 5 mientras √9 + √16 = 3 + 4 = 7 ✓; √180 = 6√5 porque 6² · 5 = 36 · 5 = 180 ✓; 2√45 vale lo mismo porque 2² · 45 = 4 · 45 = 180 ✓, y 45 = 9 · 5 todavía tiene factor cuadrado ✓; 36√5 al cuadrado da 36² · 5 = 1296 · 5 = 6480 ≠ 180 ✓; 6√30 al cuadrado da 36 · 30 = 1080 ≠ 180 ✓; √(9/25) = 3/5 = 0,6 ✓; 3/25 = 0,12 ✓; 9/5 = 1,8 ✓; √(36+64) = √100 = 10 mientras √36 + √64 = 6 + 8 = 14 ✓; 5 · 80 = 400 y 20² = 400 ✓, y por la propiedad del producto √400 = √5 · √80 = √5 · 4√5 = 4 · 5 = 20 ✓; 80 ÷ 5 = 16 y 16² = 256 ✓; 400 ÷ 2 = 200 ✓; 12 · 27 = 324 y 18² = 324 ✓; √12 = 2√3 (4 · 3 = 12) y √27 = 3√3 (9 · 3 = 27), y 2√3 · 3√3 = 6 · 3 = 18 ✓, mientras multiplicar solo los coeficientes da 6 ✓; 12 + 27 = 39 y √39 ≈ 6,24 ✓; 7^(2/5) = ⁵√(7²) = ⁵√49, y como 2⁵ = 32 < 49 < 243 = 3⁵, está entre 2 y 3 ✓; ²√(7⁵) = √16807 ≈ 129,6 ✓; 7 · (2/5) = 2,8 ✓; ⁵√(2⁷) = ⁵√128 ≈ 2,64 ✓; √(4+9) = √13, entre 3 y 4 porque 9 < 13 < 16, mientras √4 + √9 = 2 + 3 = 5 ✓; 2√3 ≈ 3,46 y 3√2 ≈ 4,24, suma ≈ 7,7, mientras 5√5 ≈ 11,18 ✓; √36 = 6 porque 6 · 6 = 36, y 18 · 18 = 324 ≠ 36 ✓.",
+    "LEDGER DE COLISIÓN INTERNA (regla 3b): valorDeAlternativa (scripts/auditar-leccion.mjs:91) no lee ningún valor de la alternativa C del ítem 3 («2√3 + 3√2 = 5√5, porque…») porque exige que no queden dígitos después del número inicial. La única colisión 3b real del archivo no es de valores sino de expresiones equivalentes —6√5 y 2√45, que son las dos √180— y está declarada en auditoria.colisionesPermitidas con su motivo; npm run auditar verifica que no haya otras.",
+    "COLISIÓN CONTRA L1 (chequearColisionEntreArchivos): las cifras que este archivo comparte con potencias-multiplicar-corto.json en texto libre son potencias exactas (2⁷, 3⁵, 9³, 2¹²) que aparecen como hechos aritméticos en cálculos sin relación entre sí — falsos positivos, no colisión real de dominio. La base racional del paso 7 se escribió sobre 9/25 y no sobre 9/16 justamente para no reeditar los decimales que ya le costaron a L1 una advertencia del mismo chequeo. El detalle línea por línea lo produce npm run auditar, no esta nota.",
+    "AUDITORÍAS: cada una se corre en un agente nuevo, distinto del que redactó el contenido y distinto de corridas anteriores; ningún hallazgo se cierra por autocorrección del mismo hilo. Aprendizaje transferible al resto del módulo: (1) una etiqueta errorCatalogado se verifica contra la descripción LITERAL de la entrada, no contra la intención del redactor; (2) una colisión de la regla 3b se declara en auditoria.colisionesPermitidas, no en una nota interna, aunque el chequeo automático no la levante; (3) una consulta de colisión que no está registrada en docs/diseno-modulo-potencias-y-raices.md §f no existe, por más que se declare en la proveniencia."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "raizCubicaComoExponente": "El campo pide el valor de 27 elevado a 1/3, un número puro: este paso trabaja el exponente fraccionario sin contexto de dominio, según fija §0 del documento de diseño.",
+      "potenciaDeExponenteFraccionario": "El campo pide el valor de 16 elevado a 3/4, un número puro por la misma razón que el campo anterior: la generalización se hace sobre números sin magnitud asociada.",
+      "raizDeBaseRacional": "El campo pide la raíz cuadrada de una fracción, un número puro: la base racional se trabaja en abstracto, sin ningún objeto físico que medir."
+    },
+    "colisionesPermitidas": [
+      {
+        "valor": "√180, que es lo que valen tanto 6√5 como 2√45",
+        "motivo": "En la selección del paso 7, la alternativa correcta 6√5 y el distractor 2√45 valen exactamente lo mismo: las dos son √180 (6² · 5 = 180 y 2² · 45 = 180). Es la colisión que la regla 3b de docs/reglas-modulo.md manda declarar en vez de dejar pasar en silencio, y acá es deliberada porque es el mecanismo mismo de error-9: la extracción está bien hecha y lo que falta es seguir hasta que el radicando no tenga ningún factor cuadrado mayor que 1. La selección no queda ambigua porque el enunciado pide la forma más simple y define en su propio texto qué significa eso. El chequeo automático no la levanta —el regex de valorDeAlternativa (scripts/auditar-leccion.mjs:91) no extrae valor de expresiones como «6√5» o «2√45», porque quedan dígitos después de la cifra inicial—, y precisamente por eso se declara acá a mano."
+      }
+    ]
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: cuando es un número natural dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "En una potencia de base fraccionaria, elevar solo una parte de la fracción: dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador). La base es la fracción completa, así que el exponente se aplica arriba y abajo."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Cambiar de lugar el índice y el exponente al pasar entre raíz y potencia: leer a^(m/n) como ᵐ√(aⁿ) en vez de ⁿ√(aᵐ). El denominador del exponente es el índice de la raíz y el numerador es el exponente del radicando; invertirlos da otro número: con una base positiva distinta de 1, las dos lecturas solo coinciden cuando m = n."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Repartir la raíz sobre una suma o una resta: dar √(a + b) = √a + √b. Las propiedades heredadas de las potencias reparten sobre productos y cocientes, no sobre sumas: primero se resuelve lo que está dentro de la raíz y después se saca la raíz."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Descomponer a medias: extraer un factor con raíz exacta que no es el mayor posible y quedarse ahí, como dar √72 = 2√18 sin notar que 18 todavía tiene un factor cuadrado. La extracción está bien hecha; lo que falta es seguir hasta que el radicando ya no tenga ningún factor mayor que 1 cuya raíz de ese mismo índice sea exacta. Se distingue de error-10, donde el paso mal hecho es la extracción misma."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Sacar el factor de la raíz sin sacarle la raíz: pasar de √(36 · 2) a 36√2 en vez de 6√2. Lo que sale afuera es la raíz del factor, no el factor."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Sumar radicales que no son el mismo, como si fueran términos semejantes: dar 2√3 + 3√2 = 5√5. Solo se pueden juntar los que, ya descompuestos, quedan con el mismo índice y el mismo radicando; √3 y √2 no se pueden descomponer más y son dos números distintos, igual que x e y en álgebra."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Confundir sacar la raíz con dividir por el índice: dar √36 = 18 o ³√27 = 9. La raíz busca un número que, usado como factor tantas veces como dice el índice, dé el radicando —6 · 6 = 36, 3 · 3 · 3 = 27—; dividir no responde esa pregunta."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Calcular bien y responder otra magnitud: entregar el área cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el enunciado."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: patio cuadrado del colegio cubierto con baldosas cuadradas iguales. La magnitud es el número de baldosas por lado, que sí tiene unidad (baldosas); los pasos de números puros trabajan sin dominio.",
+    "curiosidad (Paso 1): retoma la pregunta abierta de potencias-multiplicar-corto.json, el aumento de medio escalón en una perilla de base 4. Predicción libre sobre qué número multiplicado por sí mismo da 4 (sin corrección).",
+    "problema (Paso 2): patio cuadrado de 196 baldosas, lado 14 baldosas. Distractores 98 (error-12, dividir por el índice) y 49 (dividir entre los cuatro lados, sin mecanismo catalogado).",
+    "pistas (Paso 4): tabla de baldosas por lado contra total, con las filas 10→100, 11→121, 12→144, 13→169 y 15→225. La fila del 14 se omite a propósito: la tabla acota la respuesta entre 169 y 225 sin entregarla.",
+    "descubrimiento (Paso 5): 4^(1/2) · 4^(1/2) = 4, luego 4^(1/2) = 2 = √4; y el caso 5^(1/2) = √5, donde la respuesta no es entera. Numérica de confirmación: 27^(1/3) = 3, distractor 9 (error-12). Tabla de la escalera con escalones fraccionarios de base 4: 0→1, ½→2, 1→4, 1½→8, 2→16.",
+    "generalizacion (Paso 6, números puros): ejemplo trabajado 8^(2/3) = 4; ejercicio con cifras distintas 16^(3/4) = 8, distractores 2 (raíz cuarta sola, sin elevar al cubo, sin mecanismo catalogado) y 12 (16 · 3/4, exponente usado como factor, error-1). Contraejemplo de la suma: √(9+16) = 5 contra 3 + 4 = 7.",
+    "practica (Paso 7): descomposición de √180 = 6√5, distractores 2√45 (error-9), 36√5 (error-10) y 6√30 (sin mecanismo catalogado: el factor extraído no tiene raíz exacta propia, así que no calza con error-10). Base racional √(9/25) = 0,6, distractores 0,12 (error-6, raíz solo al numerador) y 1,8 (error-6, raíz solo al denominador). Verdadero/falso sobre √(36+64) contra √36 + √64.",
+    "aplicacion (Paso 8): terraza rectangular de 5 por 80 baldosas, 400 en total, rearmada como patio cuadrado de 20 baldosas por lado. Distractores 16 (80 ÷ 5, sin mecanismo catalogado) y 200 (error-12). Ver nota del paso 8 sobre por qué se eligieron estas cifras y no otras.",
+    "itemsPAES item-1 (resolver, media): √12 · √27 = 18, distractores 324 (error-13: se calculó bien el radicando y se entregó esa magnitud en vez de la raíz que pedía la pregunta), √39 (radicandos sumados) y 6 (solo los coeficientes multiplicados), los dos últimos sin mecanismo catalogado.",
+    "itemsPAES item-2 (representar, media): notación de 7^(2/5), correcta ⁵√(7²), distractores ²√(7⁵) (error-7), 7 · (2/5) (error-1) y ⁵√(2⁷) (sin mecanismo catalogado).",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; cuatro afirmaciones sobre raíces, con error-8, error-11 y error-12 como las tres falsas.",
+    "NOTA DE FALSOS POSITIVOS (chequeo colision-entre-archivos): las cifras de la tabla de referencia del paso 4 son cuadrados de enteros —no cifras del dominio— y aparecen en otras lecciones como cantidades cualesquiera; la cifra núcleo del paso 7 mide otra magnitud en las lecciones con las que coincide. Ninguna es respuesta correcta de este archivo. Del otro lado, una de ellas sí es respuesta correcta en la lección con la que colisiona —el mismo hecho aritmético, 11² = 121, aparece en los dos—, pero acá no cumple ese rol: es una fila de tabla de referencia, no una respuesta ni un distractor. El detalle línea por línea de qué colisiona con qué lo produce npm run auditar, no esta nota."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "La pregunta que quedó abierta",
+      "_notasInternas": [
+        "Retoma literalmente la abierta final de potencias-multiplicar-corto.json: si subir un escalón entero multiplica por 4, ¿cuánto multiplica medio escalón? El texto reconstruye el argumento hasta el punto exacto donde L1 lo dejó, y ni un paso más.",
+        "NO PUEDE APARECER ACÁ: la palabra raíz, el símbolo √, ni el valor 2 como respuesta. El paso 5 es el que responde. La predicción es libre y no se corrige.",
+        "Verificación: 4^(1/2) · 4^(1/2) = 4^(1/2 + 1/2) = 4^1 = 4, usando la regla del producto de potencias de igual base que L1 ya estableció."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En la lección anterior quedó una pregunta sin responder, y esta lección empieza justo ahí.\n\nLa perilla del microscopio tenía escalones, y **subir un escalón entero multiplicaba por 4** lo que se veía. Bajar uno dividía por 4. La escalera funcionaba hacia arriba y hacia abajo sin romperse en ningún punto.\n\nEntonces apareció la pregunta incómoda: **¿y medio escalón?**\n\nHasta ahí llegaste, y el razonamiento llegaba bastante lejos:\n\n- Medio escalón, más medio escalón, tiene que dar **un escalón entero**.\n- Un escalón entero multiplica por 4.\n- Con la regla del producto de la lección anterior: 4^(1/2) · 4^(1/2) = 4^(1/2 + 1/2) = 4¹ = **4**.\n\nO sea: sea cual sea el número que multiplica medio escalón, ese número **multiplicado por sí mismo tiene que dar 4**.\n\nEsa es la pista completa. Falta el número."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de seguir, apuesta: **¿qué número multiplicado por sí mismo da 4?**\n\nNo hay corrección todavía. Anota el que se te venga a la cabeza.",
+          "tipoRespuesta": "numero"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El patio del colegio",
+      "_notasInternas": [
+        "Cambia de escenario a propósito: el mismo tipo de pregunta (deshacer una multiplicación repetida) en un contexto donde el estudiante puede atacarla por tanteo, para que el intento sea genuino antes de que exista la herramienta.",
+        "Verificación: 14 · 14 = 196.",
+        "Distractor 98 (error-12): 196 ÷ 2 = 98, confundir sacar la raíz con dividir por el índice. Comprobación de que es falso: 98 · 98 = 9604, no 196.",
+        "Distractor 49: 196 ÷ 4 = 49, repartir el total entre los cuatro lados del cuadrado. Comprobación: 49 · 49 = 2401, no 196. No lleva errorCatalogado: ninguna entrada del catálogo describe este mecanismo, y ponerle una etiqueta aproximada sería peor que dejarlo sin etiqueta."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "En el colegio hay un patio con forma de **cuadrado**, cubierto con baldosas cuadradas iguales, todas del mismo tamaño y sin espacios entre ellas.\n\nEl conserje sabe que en total hay **196 baldosas**, pero no se acuerda de cuántas van en cada lado.\n\n¿Cuántas baldosas hay en cada lado del patio?",
+          "campos": [
+            {
+              "id": "baldosasPorLadoDelPatio",
+              "etiqueta": "Baldosas en cada lado",
+              "respuestaCorrecta": 14,
+              "unidad": "baldosas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "baldosasPorLadoDelPatio",
+              "valorObtenido": 98,
+              "mensaje": "98 es 196 dividido por 2. Dividir por 2 no deshace un cuadrado: comprueba qué pasa si el patio tuviera 98 baldosas por lado, porque 98 · 98 = 9.604 baldosas, muy lejos de las 196 que hay.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "baldosasPorLadoDelPatio",
+              "valorObtenido": 49,
+              "mensaje": "49 es 196 repartido entre los cuatro lados del cuadrado. Pero las baldosas no están puestas solo en el borde: llenan toda la superficie. Un patio de 49 por lado tendría 49 · 49 = 2.401 baldosas."
+            }
+          ],
+          "feedbackPorDefecto": "Un patio cuadrado tiene el mismo número de baldosas a lo largo que a lo ancho. Busca el número que multiplicado por sí mismo da 196."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Qué hiciste, exactamente?",
+      "_notasInternas": [
+        "Registro del intento genuino, pero del razonamiento y no del número: el número ya se pidió en el paso 2. Este es el dato pedagógico que el paso 9 va a hacer que el estudiante relea.",
+        "No se corrige. La señal buscada es que el estudiante note que estuvo deshaciendo una potencia, aunque no tenga la palabra para nombrarlo."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Acabas de buscar un número sin que nadie te diera una fórmula.\n\n**Describe con tus palabras qué hiciste para encontrarlo.** ¿Probaste números? ¿Te acordaste de alguna multiplicación? ¿Fuiste subiendo o bajando?\n\nY una segunda pregunta, aunque no estés seguro: **¿esto tiene algo que ver con las potencias de la lección anterior?** Si crees que sí, di en qué.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que describa la operación como «deshacer» una multiplicación repetida, o que note que estaba buscando el exponente al revés. Señal de alerta: que describa el proceso como una división, que es el mecanismo de error-12 y va a reaparecer como distractor en varios pasos."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el lado del patio",
+      "_notasInternas": [
+        "Gradación real: la 1 reorienta hacia la forma del patio, la 2 nombra la estrategia sin ejecutarla, la 3 entrega el primer movimiento acotando entre dos valores, sin decir el número.",
+        "La tabla omite deliberadamente la fila del 14: acota la respuesta entre 169 y 225 y deja el hueco que el estudiante tiene que llenar. Verificación de las filas: 10²=100, 11²=121, 12²=144, 13²=169, 15²=225.",
+        "Ninguna pista nombra el concepto de raíz: eso es del paso 6."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Que el patio sea cuadrado no es un detalle decorativo: significa que tiene exactamente el mismo número de baldosas a lo largo que a lo ancho. El total sale de multiplicar esas dos cantidades, que son la misma."
+            },
+            {
+              "nivel": 2,
+              "texto": "Entonces no estás buscando un número que dividido dé 196: estás buscando un número que **multiplicado por sí mismo** dé 196. La tabla de al lado te dice entre cuáles dos está."
+            },
+            {
+              "nivel": 3,
+              "texto": "Mira la tabla: 13 baldosas por lado se quedan cortas (169 baldosas) y 15 se pasan (225 baldosas). Solo queda un número entero entre esos dos."
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de referencia con baldosas por lado y el total que cubren, para varios patios cuadrados. La fila correspondiente a 14 baldosas por lado se omite a propósito: la tabla acota la respuesta entre dos valores conocidos sin entregarla.",
+          "datos": {
+            "columnas": [
+              "Baldosas por lado",
+              "Baldosas en total"
+            ],
+            "filas": [
+              [
+                10,
+                100
+              ],
+              [
+                11,
+                121
+              ],
+              [
+                12,
+                144
+              ],
+              [
+                13,
+                169
+              ],
+              [
+                15,
+                225
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La raíz estaba escondida en el exponente",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN: 4^(1/2) · 4^(1/2) = 4^1 = 4 obliga a que 4^(1/2) sea el número positivo que multiplicado por sí mismo da 4, o sea 2, o sea √4. La raíz no es una operación aparte con reglas propias: es la misma escalera de L1 con escalones fraccionarios.",
+        "CUIDADO MATEMÁTICO: (−2) · (−2) también da 4. El texto dice explícitamente «el número positivo», que es la convención de la raíz cuadrada, y no afirma que sea el único número cuyo cuadrado es 4. La lección no puede decir algo falso ni siquiera por simplificar.",
+        "Verificación de la numérica: 27^(1/3) = 3 porque 3 · 3 · 3 = 27. Distractor 9 (error-12): 27 ÷ 3 = 9, y 9 · 9 · 9 = 729, no 27.",
+        "Verificación de la tabla: escalón 0 → 4⁰ = 1; escalón ½ → 4^(1/2) = 2; escalón 1 → 4; escalón 1½ → 4^(3/2) = 4 · 2 = 8; escalón 2 → 16. Se omiten los escalones negativos: el puente de esta lección es hacia los escalones fraccionarios, no hacia los de más abajo, que L1 ya cerró."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Volvamos al medio escalón, porque la respuesta estaba a un paso.\n\nYa habías llegado a que 4^(1/2) · 4^(1/2) = 4. Entonces 4^(1/2) es **el número positivo que multiplicado por sí mismo da 4**.\n\nY ese número lo conoces desde hace años: es **2**. Y también lo sabes escribir: **√4**.\n\nAhí está el descubrimiento, y no es un truco de notación:\n\n> **4^(1/2) y √4 son el mismo número escrito de dos maneras.**\n\nLa raíz cuadrada **no es una operación nueva con reglas propias que haya que memorizar aparte**. Es la escalera de la lección anterior, con un escalón que vale la mitad.\n\nY no se cae cuando la respuesta no es redonda. Repite el argumento con base 5: 5^(1/2) · 5^(1/2) = 5^1 = 5, así que 5^(1/2) es el número positivo que multiplicado por sí mismo da 5. Ese número no es entero —está entre 2 y 3, porque 2 · 2 = 4 y 3 · 3 = 9—, pero existe igual, y se escribe **√5**.\n\nY el patio del colegio era exactamente lo mismo: buscar cuántas baldosas van por lado era buscar 196^(1/2), o sea **√196**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Si medio escalón es el exponente 1/2, un **tercio** de escalón es el exponente 1/3, y el argumento es el mismo: 27^(1/3) usado **tres veces como factor** tiene que dar 27.\n\n¿Cuánto vale **27^(1/3)**?",
+          "campos": [
+            {
+              "id": "raizCubicaComoExponente",
+              "etiqueta": "27^(1/3)",
+              "respuestaCorrecta": 3
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "raizCubicaComoExponente",
+              "valorObtenido": 9,
+              "mensaje": "9 es 27 dividido por 3. Dividir por el 3 de abajo no es lo mismo que buscar el número que se usa tres veces como factor: 9 · 9 · 9 = 729, no 27.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Busca el número que, usado tres veces como factor, da 27: uno que cumpla que ese número, por ese mismo número, por ese mismo número otra vez, dé 27. Prueba con enteros chicos."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "La escalera de la perilla de base 4, ahora con los escalones intermedios visibles. Muestra que los escalones fraccionarios no son un caso aparte: se intercalan entre los enteros y siguen multiplicando por el mismo factor a cada medio paso.",
+          "datos": {
+            "columnas": [
+              "Escalón",
+              "Aumento",
+              "Escrito como potencia"
+            ],
+            "filas": [
+              [
+                0,
+                "1",
+                "4⁰"
+              ],
+              [
+                "½",
+                "2",
+                "4^(1/2)"
+              ],
+              [
+                1,
+                "4",
+                "4¹"
+              ],
+              [
+                "1½",
+                "8",
+                "4^(3/2)"
+              ],
+              [
+                2,
+                "16",
+                "4²"
+              ]
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Mira la columna del medio de la tabla: 1, 2, 4, 8, 16.\n\nCada **medio** escalón multiplica por 2. Dos medios escalones multiplican por 2 · 2 = 4, que es lo que ya sabías que hacía un escalón entero. La escalera nunca se rompió: solo tenía peldaños intermedios que no habíamos mirado.\n\nY eso vale para cualquier índice, no solo para el 2:\n\n- Un escalón de **1/2** es la raíz cuadrada.\n- Un escalón de **1/3** es la raíz cúbica, como el 27^(1/3) que acabas de calcular.\n- Un escalón de **1/n** es la raíz de índice *n*.\n\nEl número de abajo de la fracción es lo que dice **cuántas veces hay que usar el resultado como factor** para volver al número de adentro. En el paso siguiente le ponemos nombre y notación a todo esto."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Índice abajo, exponente arriba",
+      "_notasInternas": [
+        "Recién acá se nombran los objetos (índice, radicando) y aparece la notación general, como exige el marco pedagógico.",
+        "Ejemplo trabajado: 8^(2/3) = ³√(8²) = ³√64 = 4. Verificado también por el otro camino: (³√8)² = 2² = 4. Los dos caminos dan lo mismo, y el texto lo dice porque es la justificación de que la notación es coherente.",
+        "El ejercicio usa cifras DISTINTAS del ejemplo trabajado, como exige §2 de docs/calibracion-lecciones-e-items.md: 16^(3/4) = 8. Verificación por los dos caminos: (⁴√16)³ = 2³ = 8, y ⁴√(16³) = ⁴√4096 = 8.",
+        "Distractor 2: se quedó en ⁴√16 = 2 sin elevar al cubo. No lleva errorCatalogado: es un procedimiento incompleto, no uno de los mecanismos del catálogo.",
+        "Distractor 12: 16 · 3/4 = 12, usar el exponente como factor. Lleva errorCatalogado error-1, que es exactamente ese mecanismo.",
+        "Contraejemplo de la suma verificado: √(9+16) = √25 = 5, mientras √9 + √16 = 3 + 4 = 7."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Los nombres, para poder hablar de esto sin dar vueltas:\n\nEn **ⁿ√a**, el número *n* de arriba a la izquierda es el **índice** y el número *a* de adentro es el **radicando**. Si no aparece índice escrito, es 2: √a significa ²√a.\n\nY la identidad que descubriste, en general:\n\n**ⁿ√a = a^(1/n)**\n\nUn paso más. ¿Y si el exponente fraccionario no tiene un 1 arriba? Por ejemplo, 8^(2/3). Se lee usando las reglas que ya tienes de la lección anterior:\n\n8^(2/3) = 8^(2 · 1/3) = (8²)^(1/3) = ³√(8²) = ³√64 = **4**\n\nY da lo mismo por el otro camino: (³√8)² = 2² = **4**. Los dos caminos coinciden, y por eso la regla se puede escribir de una sola forma:\n\n**ⁿ√(aᵐ) = a^(m/n)**\n\nLa manera corta de acordarse: **el denominador es el índice, el numerador es el exponente**. Índice abajo, exponente arriba."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ahora lo que se gana con esto: **las propiedades de las raíces no hay que aprenderlas.** Se heredan de las potencias, porque una raíz *es* una potencia.\n\nDe la regla de la potencia de un producto sale directo, **con a y b mayores o iguales que 0**:\n\n**√(a · b) = √a · √b** — porque repartir el exponente 1/2 sobre un producto es lo mismo que repartir cualquier otro exponente.\n\n**√(a / b) = √a / √b** — misma historia con el cociente, y acá además b tiene que ser **distinto de 0**.\n\nLa condición de que no sean negativos no es letra chica: dentro de una raíz cuadrada no puede quedar un número negativo, porque ningún número multiplicado por sí mismo da un resultado negativo. Lo mismo vale para cualquier raíz de índice par. Con índice impar sí se puede, pero eso queda fuera de esta lección.\n\nY acá viene lo importante, que es lo que **no** se hereda:\n\n> **√(a + b) NO es √a + √b.**\n\nNo es un capricho ni una excepción que haya que memorizar: es que **ninguna propiedad de las potencias reparte un exponente sobre una suma**. Nunca la hubo. La lección anterior tenía reglas para el producto, para el cociente y para la potencia de una potencia — para la suma, ninguna.\n\nCompruébalo con números:\n\n- √(9 + 16) = √25 = **5**\n- √9 + √16 = 3 + 4 = **7**\n\nNo son el mismo número, y no se parecen. Dentro de una raíz, primero se resuelve la suma y después se saca la raíz."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Aplica la regla del exponente fraccionario con otras cifras: ¿cuánto vale **16^(3/4)**?\n\nAcuérdate: el denominador 4 es el índice de la raíz y el numerador 3 es el exponente.",
+          "campos": [
+            {
+              "id": "potenciaDeExponenteFraccionario",
+              "etiqueta": "16^(3/4)",
+              "respuestaCorrecta": 8
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "potenciaDeExponenteFraccionario",
+              "valorObtenido": 2,
+              "mensaje": "2 es ⁴√16, la raíz cuarta sola: hasta ahí vas bien, porque 2 · 2 · 2 · 2 = 16. Lo que falta es el 3 del numerador, que dice que ese resultado todavía hay que elevarlo al cubo."
+            },
+            {
+              "campoId": "potenciaDeExponenteFraccionario",
+              "valorObtenido": 12,
+              "mensaje": "12 es 16 · 3/4: usaste el exponente como un factor que multiplica a la base. En a^(m/n) el denominador es el índice de una raíz y el numerador es un exponente; no hay ninguna multiplicación por 3/4 en juego.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Sácale primero la raíz cuarta a 16 —el número que, usado cuatro veces como factor, da 16— y después eleva ese resultado al cubo."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: simplificar, repartir y no repartir",
+      "_notasInternas": [
+        "Progresión dentro del paso: descomposición (selección) → base racional bajo raíz (numérica) → suma bajo raíz (verdadero/falso, conceptual). §5.1 de la calibración pide baja → media → media/alta dentro de la práctica; acá el escalón «baja» —leer una raíz exacta— ya se ejercitó en los pasos 2 y 5, así que este paso corre media → media → alta. Queda declarado para que no se lea como progresión rota.",
+        "DOS ALTERNATIVAS DE IGUAL VALOR, DELIBERADO: 6√5 y 2√45 valen ambas √180. Es el mecanismo de error-9 y el enunciado define en su propio texto qué significa «la forma más simple», así que la selección no es ambigua. Ver la nota interna de la raíz del archivo.",
+        "Verificación de la selección: 180 = 36 · 5, y 36 es el mayor factor de 180 con raíz exacta, así que √180 = √36 · √5 = 6√5. Comprobación al cuadrado: 6² · 5 = 36 · 5 = 180.",
+        "Distractor 2√45 (error-9): 2² · 45 = 4 · 45 = 180, o sea vale lo mismo, pero 45 = 9 · 5 todavía tiene el factor cuadrado 9.",
+        "Distractor 36√5 (error-10): 36² · 5 = 1296 · 5 = 6480, muy lejos de 180. Salió el factor sin sacarle la raíz.",
+        "Distractor 6√30: 180 = 6 · 30, y se extrajo el 6 tal cual. Comprobación: 6² · 30 = 36 · 30 = 1080, no 180. Sin errorCatalogado: no es el mecanismo de error-10, que exige que el factor extraído tenga raíz exacta (36 → 6); acá el 6 no tiene raíz exacta propia, así que no hay ninguna entrada del catálogo que describa este mecanismo con exactitud, mismo criterio que otros distractores del archivo sin etiqueta.",
+        "Verificación de la numérica: √(9/25) = √9 / √25 = 3/5 = 0,6. Distractor 0,12 = 3/25 (raíz solo al numerador, error-6). Distractor 1,8 = 9/5 (raíz solo al denominador, error-6).",
+        "Verificación del verdadero/falso: √(36+64) = √100 = 10, mientras √36 + √64 = 6 + 8 = 14. La afirmación es falsa. El bloque verdaderoFalso no admite errorCatalogado, así que error-8 se usa formalmente en el ítem 3."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un patio cuadrado de **180 baldosas** no se puede armar: √180 no da un número entero de baldosas por lado. Pero √180 sí se puede escribir en su forma más simple, y eso sirve para compararlo con otros.\n\n**Forma más simple** significa: el número que queda adentro de la raíz ya no tiene ningún factor con raíz exacta **mayor que 1**.\n\n¿Cuál de estas es la forma más simple de **√180**?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "**6√5**",
+              "esCorrecta": true,
+              "feedback": "Correcto. 180 = 36 · 5, y 36 es el mayor factor de 180 con raíz exacta: sale afuera convertido en √36 = 6, y el 5 se queda adentro porque ya no tiene ningún factor cuadrado mayor que 1. Comprobación: 6² · 5 = 36 · 5 = 180."
+            },
+            {
+              "id": "b",
+              "texto": "**2√45**",
+              "esCorrecta": false,
+              "feedback": "Esta sí vale lo mismo que √180 —comprueba: 2² · 45 = 4 · 45 = 180—, así que la extracción está bien hecha. Lo que falta es seguir: 45 = 9 · 5, y el 9 todavía tiene raíz exacta. Mientras quede adentro un factor así, no es la forma más simple.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "**36√5**",
+              "esCorrecta": false,
+              "feedback": "Acá el 36 salió de la raíz tal cual, sin sacarle la raíz. Lo que sale afuera es √36 = 6, no el 36 entero. Comprobación de que no vale lo mismo: 36² · 5 = 1.296 · 5 = 6.480, no 180.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "d",
+              "texto": "**6√30**",
+              "esCorrecta": false,
+              "feedback": "180 = 6 · 30, pero 6 no es la raíz de ningún factor cuadrado de 180: no hay ninguna extracción correcta que deje 30 adentro. Comprobación de que no vale lo mismo: 6² · 30 = 36 · 30 = 1.080, no 180."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora una raíz de una fracción. Usa la propiedad del cociente: ¿cuánto vale **√(9/25)**?\n\nEscribe el resultado como decimal.",
+          "campos": [
+            {
+              "id": "raizDeBaseRacional",
+              "etiqueta": "√(9/25)",
+              "respuestaCorrecta": 0.6
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "raizDeBaseRacional",
+              "valorObtenido": 0.12,
+              "mensaje": "0,12 es 3/25: le sacaste la raíz solo al numerador y dejaste el 25 tal cual. El radicando es la fracción completa, así que la raíz se aplica arriba y abajo.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "raizDeBaseRacional",
+              "valorObtenido": 1.8,
+              "mensaje": "1,8 es 9/5: le sacaste la raíz solo al denominador y dejaste el 9 tal cual. Falta sacarle la raíz también al 9.",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "feedbackPorDefecto": "Sácale la raíz al numerador y al denominador por separado: √9 arriba y √25 abajo. Después pasa esa fracción a decimal."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "√(36 + 64) es lo mismo que √36 + √64.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Es la trampa más común de todo este tema, y por eso conviene comprobarla siempre con números: √(36 + 64) = √100 = 10, mientras que √36 + √64 = 6 + 8 = 14. No son el mismo número. La raíz se reparte sobre productos y cocientes, nunca sobre sumas.",
+          "feedbackFalso": "Correcto, y la comprobación lo confirma: √(36 + 64) = √100 = 10, mientras que √36 + √64 = 6 + 8 = 14. Dentro de una raíz, primero se resuelve la suma y recién después se saca la raíz."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Rearmar la terraza",
+      "_notasInternas": [
+        "Contexto nuevo respecto del paso 5, que trabajó sobre la perilla de L1 y números puros. Acá vuelve el embaldosado, pero con una situación distinta a la del paso 2: el total no viene dado, hay que construirlo, y la propiedad del producto de raíces es la que hace corto el camino.",
+        "CIFRAS ELEGIDAS: el total de la terraza es 5 × 80 = 400 baldosas, lado 20. Se descartó 5 × 45 = 225 (lado 15) porque 225 es exactamente la fila [15, 225] de la tabla de referencia del paso 4 —necesaria ahí para acotar 14 entre 13² y 15² en la pista de nivel 3, así que la tabla no se puede tocar sin romper esa pista—, y por lo tanto el paso 8 dejaba de ser aplicación y pasaba a ser una respuesta ya mostrada dos pasos antes.",
+        "Verificación: 5 · 80 = 400 baldosas en total; el lado del patio cuadrado es √400 = 20, porque 20 · 20 = 400.",
+        "Verificación del camino por la propiedad del producto: √400 = √(5 · 80) = √5 · √80; como √80 = 4√5 (16 · 5 = 80), queda √5 · 4√5 = 4 · (√5 · √5) = 4 · 5 = 20. Coincide.",
+        "Distractor 16: 80 ÷ 5 = 16, cuántas veces cabe el ancho en el largo. Comprobación: 16 · 16 = 256 baldosas, no 400. Sin errorCatalogado: no corresponde a ningún mecanismo del catálogo embebido, mismo motivo que el distractor equivalente de la versión anterior de este paso.",
+        "Distractor 200 (error-12): 400 ÷ 2 = 200, sacar la raíz confundida con dividir por el índice."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "En el mismo colegio hay una **terraza rectangular** embaldosada: **5 baldosas de ancho por 80 de largo**, con las mismas baldosas cuadradas de siempre.\n\nLa van a levantar entera y a rearmar como un patio **cuadrado**, usando exactamente las mismas baldosas, sin comprar ni sobrar ninguna.\n\n¿Cuántas baldosas van a quedar en cada lado del patio nuevo?",
+          "campos": [
+            {
+              "id": "baldosasPorLadoTrasRearmar",
+              "etiqueta": "Baldosas en cada lado del patio nuevo",
+              "respuestaCorrecta": 20,
+              "unidad": "baldosas"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "baldosasPorLadoTrasRearmar",
+              "valorObtenido": 16,
+              "mensaje": "16 es 80 dividido por 5, o sea cuántas veces cabe el ancho de la terraza en su largo. Ese no es el lado del patio nuevo: un patio de 16 por lado usaría 16 · 16 = 256 baldosas, y hay bastantes más."
+            },
+            {
+              "campoId": "baldosasPorLadoTrasRearmar",
+              "valorObtenido": 200,
+              "mensaje": "200 sale de dividir el total por 2. Un patio de 200 por lado usaría 200 · 200 = 40.000 baldosas, muchísimas más de las que hay: dividir por el índice no es sacar la raíz.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Primero averigua cuántas baldosas hay en total en la terraza, y después busca el lado del cuadrado que las usa todas. Si prefieres el camino corto, la propiedad del producto te deja repartir la raíz entre el ancho y el largo."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Vuelve a leer lo que escribiste",
+      "_notasInternas": [
+        "El verdaderoFalso es un chequeo directo del descubrimiento, no un cálculo: 5^(1/2) y √5 son notaciones del mismo número.",
+        "La abierta obliga a la comparación con el paso 3, que es lo que §2 de la calibración pide de este paso. No se corrige, se guarda."
+      ],
+      "bloques": [
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Escribir 5^(1/2) y escribir √5 es escribir el mismo número de dos maneras distintas.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto, y esa es toda la lección en una línea. 5^(1/2) · 5^(1/2) = 5¹ = 5, así que 5^(1/2) es el número positivo que multiplicado por sí mismo da 5 — que es exactamente la definición de √5. Dos notaciones, un solo número.",
+          "feedbackFalso": "Son el mismo número. El argumento es el que abrió la lección: 5^(1/2) · 5^(1/2) = 5^(1/2 + 1/2) = 5¹ = 5, así que 5^(1/2) es el número positivo que multiplicado por sí mismo da 5. Eso es lo que significa √5."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Antes de las pistas, describiste con tus palabras qué habías hecho para encontrar el lado del patio, y si eso tenía algo que ver con las potencias.\n\n**Vuelve a leer lo que escribiste ahí.**\n\n¿Qué le agregarías o le corregirías ahora? Y sobre todo: si tuvieras que decirle a alguien en una frase **qué es una raíz**, ¿qué le dirías?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que la frase final defina la raíz como un exponente fraccionario, o como el escalón intermedio de la escalera, y no como «una operación que deshace el cuadrado» a secas. Señal de alerta: que siga describiendo la raíz como una división."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis breve más el puente explícito al formato de prueba, como exige el paso 10.",
+        "No abre ninguna pregunta nueva: a diferencia de L1, esta lección cierra su propio arco. Lo que queda por delante son problemas en contexto, que es L3, y se nombra sin adelantar nada de su contenido."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n\n- **Una raíz es una potencia.** ⁿ√a = a^(1/n), y en general **ⁿ√(aᵐ) = a^(m/n)**: el denominador es el índice, el numerador es el exponente. Índice abajo, exponente arriba.\n- Por eso las propiedades **se heredan**, no se memorizan: **√(a · b) = √a · √b** y **√(a / b) = √a / √b** —con a y b no negativos, y b distinto de 0 en el cociente— son las reglas del producto y del cociente de potencias, aplicadas al exponente 1/n.\n- Y por eso **√(a + b) no es √a + √b**: no hay ninguna propiedad de las potencias que reparta un exponente sobre una suma. Nunca la hubo.\n- Para **simplificar** una raíz se extrae el **mayor** factor con raíz exacta, y sale afuera convertido en su raíz, no tal cual: √180 = √(36 · 5) = 6√5.\n- Y sacar una raíz **no es dividir por el índice**: √36 es 6, no 18.\n\nAhora vienen tres preguntas en el **formato de la prueba real**: enunciado, cuatro alternativas de la A a la D y una sola correcta. No son más difíciles que lo que acabas de hacer, pero están escritas como te las vas a encontrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "potencias-raiz-escondida-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es el valor de **√12 · √27**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "18",
+          "esCorrecta": true,
+          "feedback": "Correcto. Por la propiedad del producto, √12 · √27 = √(12 · 27) = √324 = 18, porque 18 · 18 = 324."
+        },
+        {
+          "clave": "B",
+          "texto": "324",
+          "esCorrecta": false,
+          "feedback": "324 es 12 · 27, o sea el número que queda **adentro** de la raíz al juntar las dos. Ese cálculo está bien hecho: el problema es cuál número entregaste. 324 es el radicando, no su raíz, y la pregunta pide cuánto vale √324, que es 18.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "C",
+          "texto": "**√39**",
+          "esCorrecta": false,
+          "feedback": "39 es 12 + 27: acá los radicandos se sumaron en vez de multiplicarse. La propiedad heredada dice √a · √b = √(a · b), porque el exponente 1/2 se reparte sobre un producto. Multiplicar dos raíces no suma lo de adentro."
+        },
+        {
+          "clave": "D",
+          "texto": "6",
+          "esCorrecta": false,
+          "feedback": "6 sale de descomponer bien las dos raíces —√12 = 2√3 y √27 = 3√3— y después multiplicar solo los números de afuera, 2 · 3. Pero los de adentro también se multiplican: √3 · √3 = 3, y ese 3 falta en el resultado."
+        }
+      ],
+      "solucion": "Por la propiedad del producto de raíces, √12 · √27 = √(12 · 27) = √324. Como 18 · 18 = 324, el resultado es 18. Verificación por el otro camino, descomponiendo primero: 12 = 4 · 3, así que √12 = 2√3; y 27 = 9 · 3, así que √27 = 3√3. Entonces √12 · √27 = (2√3) · (3√3) = (2 · 3) · (√3 · √3) = 6 · 3 = 18 ✓. Los dos caminos coinciden."
+    },
+    {
+      "id": "potencias-raiz-escondida-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "¿Cuál de las siguientes expresiones representa **7^(2/5)** escrito como raíz?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "**⁵√(7²)**",
+          "esCorrecta": true,
+          "feedback": "Correcto. En a^(m/n) el denominador es el índice de la raíz y el numerador es el exponente del radicando: el 5 de abajo va como índice y el 2 de arriba se queda elevando al 7."
+        },
+        {
+          "clave": "B",
+          "texto": "**²√(7⁵)**",
+          "esCorrecta": false,
+          "feedback": "Acá el índice y el exponente quedaron cambiados de lugar: el 5 del denominador es el índice y el 2 del numerador es el exponente, no al revés. Y no dan lo mismo: ⁵√(7²) = ⁵√49 está entre 2 y 3, mientras que ²√(7⁵) = √16.807 pasa de 129.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "**7 · (2/5)**",
+          "esCorrecta": false,
+          "feedback": "Esta expresión trata el exponente como un factor que multiplica a la base, y da 2,8. Pero 2/5 no multiplica al 7: su denominador dice qué raíz sacar y su numerador a qué exponente elevar. Un exponente nunca se convierte en factor.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "**⁵√(2⁷)**",
+          "esCorrecta": false,
+          "feedback": "Acá la base y el numerador del exponente se intercambiaron: el 7 es la base y el 2 es el exponente, así que adentro de la raíz va 7², no 2⁷. El índice 5 sí quedó bien puesto, pero el radicando quedó dado vuelta."
+        }
+      ],
+      "solucion": "La identidad general es a^(m/n) = ⁿ√(aᵐ): el denominador del exponente es el índice de la raíz y el numerador es el exponente del radicando. Con a = 7, m = 2 y n = 5, queda 7^(2/5) = ⁵√(7²) = ⁵√49, que es la alternativa A. Verificación de que las alternativas no son equivalentes entre sí: ⁵√49 está entre 2 y 3, porque 2⁵ = 32 y 3⁵ = 243, y 32 < 49 < 243; ²√(7⁵) = √16.807 ≈ 129,6; 7 · (2/5) = 2,8; y ⁵√(2⁷) = ⁵√128 ≈ 2,64. Los cuatro valores son distintos, así que la respuesta es única."
+    },
+    {
+      "id": "potencias-raiz-escondida-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Cuatro estudiantes escriben una afirmación sobre raíces y justifican cada uno la suya.\n\n¿Cuál de las cuatro afirmaciones es **verdadera**?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "√(a · b) = √a · √b para cualquier par de números a y b mayores o iguales que 0, porque el exponente 1/2 se reparte sobre un producto igual que cualquier otro exponente",
+          "esCorrecta": true,
+          "feedback": "Correcto, y la justificación es la parte que importa: no es una regla nueva de raíces, es la propiedad de la potencia de un producto aplicada al exponente 1/2. Como √a es a^(1/2), repartirla sobre un producto es exactamente lo mismo que repartir cualquier exponente."
+        },
+        {
+          "clave": "B",
+          "texto": "√(a + b) = √a + √b, porque si el exponente se reparte sobre un producto, también se reparte sobre una suma",
+          "esCorrecta": false,
+          "feedback": "La justificación suena razonable pero da un salto que no existe: ninguna propiedad de las potencias reparte un exponente sobre una suma. Contraejemplo con a = 4 y b = 9: √(4 + 9) = √13, que está entre 3 y 4 porque 9 < 13 < 16; en cambio √4 + √9 = 2 + 3 = 5.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "2√3 + 3√2 = 5√5, porque se suman los coeficientes por un lado y los radicandos por el otro",
+          "esCorrecta": false,
+          "feedback": "√3 y √2 son dos números distintos, así que 2√3 y 3√2 no son términos semejantes y no se pueden juntar: es como pretender que 2x + 3y sea 5xy. Los números lo confirman: 2√3 vale como 3,46 y 3√2 como 4,24, así que la suma anda por 7,7, mientras que 5√5 vale como 11,2.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "D",
+          "texto": "√36 = 18, porque sacar la raíz cuadrada es dividir por 2",
+          "esCorrecta": false,
+          "feedback": "La raíz cuadrada de 36 es el número que multiplicado por sí mismo da 36, y ese número es 6, porque 6 · 6 = 36. Dividir por el índice responde otra pregunta: con 18 la comprobación falla de lejos, porque 18 · 18 = 324, no 36.",
+          "errorCatalogado": "error-12"
+        }
+      ],
+      "solucion": "A es verdadera: como √x = x^(1/2), la igualdad √(a · b) = √a · √b es la propiedad de la potencia de un producto, (a · b)^k = aᵏ · bᵏ, con k = 1/2, válida para a y b no negativos. B es falsa porque no existe ninguna propiedad que reparta un exponente sobre una suma; contraejemplo: √(4 + 9) = √13 ≈ 3,61, mientras √4 + √9 = 2 + 3 = 5. C es falsa porque solo se pueden sumar radicales con el mismo índice y el mismo radicando; numéricamente, 2√3 + 3√2 ≈ 3,46 + 4,24 = 7,70, mientras 5√5 ≈ 11,18. D es falsa porque √36 = 6, ya que 6 · 6 = 36, y el 18 que propone no verifica: 18 · 18 = 324."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Números → Potencias y raíces enésimas, descriptor «Descomposición y propiedades de las raíces enésimas en los números reales» (docs/temario-demre-m1-2027.md:42) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/diseno-modulo-potencias-y-raices.md — arquitectura completa del módulo, firmada: arco de L2 (§a), catálogo de errores del módulo (§c, de donde se copiaron carácter a carácter las entradas del catálogo que no vienen de L1), reparto de habilidades y dificultad (§d), diferenciación estructural por bloques (§e) y candidatos de dominio con veredicto de colisión (§f).",
+      "content/lecciones/potencias-multiplicar-corto.json — L1 del mismo módulo: de ahí se copiaron carácter a carácter las entradas error-1 y error-6 del catálogo, y de su paso 10 sale la pregunta abierta que esta lección retoma en el paso 1 y responde en el paso 5.",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos (§2), distribución de habilidades (§3.5) y calibración de dificultad (§5.1).",
+      "docs/reglas-modulo.md — regla 3 y 3b (distractor derivable, en banda, y sin colisión con ninguna respuesta correcta del archivo), regla 4 (ids de campo neutros, sin cifra) y regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo, sin content/errores/ propio para módulos nuevos).",
+      "content/diagnostico/dag-m1.json — la unidad potencias-raices depende solo de enteros-racionales, de donde sale el prerrequisito de factorización y operatoria con fracciones que se declara.",
+      "Dominio «patio cuadrado embaldosado»: verificado con consultar-fuentes.mjs, corrido por el autor fuera de esta sesión de redacción (mecanismo 2 de CLAUDE.md, chequeo léxico, sin lectura de fuentes en el hilo de redacción), sobre los términos del dominio, las cifras núcleo, el singular y plural de «baldosa», el vocabulario técnico de la lección (radicando, índice de la raíz, raíz enésima, exponente fraccionario, forma más simple) y el segundo escenario (terraza, conserje). Los términos con hit se resolvieron leyendo a fondo los documentos de origen en un hilo separado del de redacción, con permiso explícito de lectura profunda: en todos los casos, sin similitud sustancial —coinciden en un verbo o una cifra aislada (hecho aritmético), pero no en escenario, magnitud ni estructura del problema—. El currículum MINEDUC, fuente de uno de esos hits, es además referencia de calibración autorizada (docs/calibracion-lecciones-e-items.md:16). El comando exacto y la salida cruda de cada consulta quedan registrados en docs/diseno-modulo-potencias-y-raices.md §f, no en este campo."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto del patio embaldosado, expresiones, cifras y secuencia de los 10 pasos creados desde cero para esta lección, con redacción asistida por Claude Code bajo dirección del autor del proyecto. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida cruda pegada sin reformular, registrada en docs/diseno-modulo-potencias-y-raices.md §f; el hilo que redactó este archivo nunca leyó fuentes-analisis-aisladas/ ni recibió su contenido. La revisión matemática (recálculo completo de toda la aritmética, cada distractor y su errorCatalogado) y la auditoría de originalidad (checklist MOS §7.3, con lectura real del corpus aislado por el subagente auditor-originalidad) se corrieron en agentes nuevos, aislados del hilo de redacción y de corridas anteriores, y quedaron sin hallazgos pendientes: toda la aritmética del archivo está verificada correcta, cada distractor es derivable por el mecanismo que declara, y no se encontró similitud sustancial con ningún material de fuentes-analisis-aisladas. Marcas PAES y DEMRE en uso descriptivo —cero apariciones en texto visible al estudiante, la única coincidencia es el nombre del campo itemsPAES— y cero datos personales: el conserje es un rol, no una persona. El detalle de cada corrida —comandos, salidas crudas y hallazgos aplicados— queda en el historial de git y en docs/diseno-modulo-potencias-y-raices.md §f, no en este campo.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Revisión matemática y auditoría de originalidad corridas en agentes nuevos, aislados del hilo de redacción; todos los hallazgos fueron aplicados y verificados con lectura real del corpus aislado. Los puntos 1 y 2 del checklist MOS §7.3 quedaron certificados con esa lectura real."
+  }
+}

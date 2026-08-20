@@ -173,14 +173,18 @@ de autoexplicación pueda distinguirlos.
 | `error-10` extraer el factor sin sacarle la raíz | | ✓ | |
 | `error-11` sumar radicales distintos | | ✓ | ✓ |
 | `error-12` la raíz como división por el índice | | ✓ | ✓ |
-| `error-13` responder otra magnitud | | | ✓ |
+| `error-13` responder otra magnitud | | ✓ | ✓ |
 
 **Revisión completa del catálogo (2026-08-17).** Las 13 descripciones se
 sometieron una por una a casos borde —bases 0, 1 y negativas; exponentes 0,
 negativos y fraccionarios; radicandos no cuadrados; índices pares e impares— en
 una auditoría corrida en hilo aislado, después de que la redacción de L2
 destapara tres afirmaciones falsas de corrido. Resultado: **cinco entradas
-quedaron intactas** (`error-6`, `error-7`, `error-8`, `error-10`, `error-13`) y
+quedaron intactas** (`error-6`, `error-7`, `error-8`, `error-10`, `error-13`) —con
+la salvedad de `error-7`, que salió intacto de **esta** revisión pero se corrigió
+poco después, en el mismo commit `74b493d`, cuando la tercera corrida de la
+auditoría matemática mostró que «salvo en el caso en que m = n» seguía siendo
+falso con bases negativas; su redacción vigente es la de la lista de abajo— y
 **ocho se corrigieron** (`error-1` a `error-5`, `error-9`, `error-11`,
 `error-12`). Ningún ejemplo numérico estaba mal calculado: los 13 recálculos
 desde cero dan lo que su descripción dice. Todos los defectos estaban en las
@@ -345,8 +349,13 @@ responder; el `prediccion` de curiosidad de L2 la retoma. Es el único enganche
 narrativo entre lecciones del módulo y es deliberado.
 
 Todos los campos `numerica` de este módulo son adimensionales salvo los de L3
-(que sí miden algo). Cada uno se declara en `auditoria.camposAdimensionales` con
-su motivo de ≥20 caracteres; inventarles una unidad haría pasar el chequeo
+(que sí miden algo) y salvo dos campos de L2 —`baldosasPorLadoDelPatio` y
+`baldosasPorLadoTrasRearmar`— que cuentan baldosas y sí llevan `unidad`, excepción
+declarada al redactar L2 (2026-08-17) porque adimensionalizarlos habría hecho
+pasar el chequeo mintiendo, exactamente lo que este párrafo prohíbe en la
+dirección opuesta. Cada campo adimensional se declara en
+`auditoria.camposAdimensionales` con su motivo de ≥20 caracteres; inventarles
+una unidad haría pasar el chequeo
 mintiendo (`auditar-leccion.mjs:273-285`).
 
 ---
@@ -369,7 +378,7 @@ escolar de robótica, bolsas y bolitas.
 | Lección | Candidatos | Notas |
 |---|---|---|
 | L1 | **(a)** escalones de aumento de un microscopio escolar: cada escalón multiplica por 4, y el escalón 0 es «tal cual se ve» — el exponente 0 tiene significado físico, que es exactamente lo que necesita el descubrimiento. — **LIMPIO**. **(b)** copias sucesivas de una imagen que en cada guardado queda a la mitad de lado. — **LIMPIO**. **(c)** rondas de eliminación de un campeonato interescolar de ajedrez. — **LIMPIO**. | Los tres vuelven limpios. (a) sigue siendo el favorito. En (a) el término «aumento» da hits en el corpus, pero son de aumento porcentual (Porcentaje / Sistemas de Ecuaciones) — dominio distinto, no cuenta como colisión. (b) y (c) sin hits. (c) reutiliza el marco «torneo», que ya estructura `inecuaciones-problemas`; con veredicto limpio igual conviene preferir (a) o (b) por ese motivo de reparto interno, no por colisión de fuentes. Elección final entre los tres, pendiente. |
-| L2 | **(a)** patio cuadrado embaldosado: lado a partir del total de baldosas. — **LIMPIO** (ver nota de reemplazo abajo). **(b)** diagonal de una pantalla a partir de sus lados. — **LIMPIO**. **(c)** arista de un envase cúbico a partir de su volumen. — **LIMPIO**. | En (a) la consulta original dio hit en «lado del cuadrado» y el veredicto LIMPIO se obtuvo **reinterpretando ese hit**; ese veredicto queda **anulado** y reemplazado por la corrida del 2026-08-17, sin ese término, que vuelve NO en los cinco. Detalle abajo. En (b) «pulgadas» da hit en `TR01_Numeros_Taller_Repaso`, pero es un problema de escala de mapa/proporcionalidad — dominio distinto. (c) sin hits, pero sigue reservado: pisa el terreno del módulo 11 (Cuerpos geométricos), motivo de reparto interno, no de colisión. Dominio elegido: (a). |
+| L2 | **(a)** patio cuadrado embaldosado: lado a partir del total de baldosas. — **LIMPIO** (ver nota de reemplazo abajo). **(b)** diagonal de una pantalla a partir de sus lados. — **LIMPIO**. **(c)** arista de un envase cúbico a partir de su volumen. — **LIMPIO**. | En (a) la consulta original dio hit en «lado del cuadrado» y el veredicto LIMPIO se obtuvo **reinterpretando ese hit**; ese veredicto queda **anulado**. Se rehizo excluyendo el término (2026-08-17, NO en los cinco) y ese hit terminó resuelto por lectura real de los tres archivos donde aparece, sin similitud sustancial en ninguno (2026-08-18). Detalle abajo. En (b) «pulgadas» da hit en `TR01_Numeros_Taller_Repaso`, pero es un problema de escala de mapa/proporcionalidad — dominio distinto. (c) sin hits, pero sigue reservado: pisa el terreno del módulo 11 (Cuerpos geométricos), motivo de reparto interno, no de colisión. Dominio elegido: (a). |
 | L3 | **(a)** escalas de tamaño en potencias de diez, de lo microscópico a lo grande — **LIMPIO, aprobado**: es el dominio de L3. **(b)** ~~capacidad de almacenamiento digital en potencias de dos~~ — **BOTADO (colisión)**. **(c)** ~~códigos de un casillero: `sᵏ` y su raíz `k`-ésima~~ — **BOTADO (veredicto manual)**. **(d)** *respaldo* — **LIMPIO**: rebote de una pelota en el gimnasio del colegio. Se registran la altura de partida y la de cada rebote, y el registro muestra que cada rebote alcanza una fracción fija `r` de la altura anterior — dato medido, no modelo. Ida: altura tras `n` rebotes = `h·rⁿ`, con `r` racional simple (1/2, 2/3, 3/4). Vuelta: se conocen altura inicial, altura final y cuántos rebotes hubo, y falta `r = ⁿ√(h_final / h_inicial)`. | **(a)** vuelve limpio y queda aprobado. **(b)** COLISIÓN contra `MA-03_Numeros_Reales.md` (subcarpeta `Material/`): la fuente ya cubre el mismo escenario de capacidades en potencias de dos que la lección iba a montar. Se abandona entero, no se ajusta (§6.1). **(c)** no lo bota el script sino el veredicto manual: el corpus (`06-bibliografia-y-anexos.md`, subcarpeta `mineduc-curriculum/`) ancla la expresión «combinaciones posibles» al conteo sin orden del eje de Combinatoria, y un código de candado es multiplicativo **con** orden y repetición; el riesgo es que el estudiante importe la fórmula equivocada desde otro eje, y ese riesgo no se arregla cambiando las palabras del enunciado. El candidato «tiempo de caída desde distintas alturas» ya estaba descartado antes (constante `g` en un módulo que no declara `auditoria.constante`). **(d)** hereda el rol que tenía (c): potencia y raíz en las dos direcciones, sin constante física —`r` es un dato medido que entrega el enunciado, no una cifra del mundo—, sin combinatoria y sin almacenamiento digital, y la raíz cae sobre una fracción, lo que además retoma la base racional de L1. (d) vuelve LIMPIO en los cuatro términos y queda confirmado como respaldo: se usa solo si (a) cae en la segunda tanda, la de cifras y frases exactas. Riesgo que se arrastra igual: su mecanismo (multiplicar repetidamente por un factor fijo) es el mismo de «población que se duplica», así que si se activa hay que cuidar que el enunciado no derive en modelo físico —`r` se entrega como dato medido, nunca se deduce. **Regla que dejan los tres descartes:** un dominio sirve para L3 solo si su pregunta inversa natural es «¿por cuánto multiplica cada paso?» —raíz enésima— y no «¿cuántos pasos?», que es logaritmo y está fuera del temario M1. |
 
 **Comandos para correr fuera de la sesión** (uno por candidato; la sesión de
@@ -390,6 +399,23 @@ node scripts/consultar-fuentes.mjs "rebote de la pelota" "altura del rebote" "ca
 
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
+
+**Salida cruda de la fila L2(a), levantada por la 5ª corrida de la auditoría de
+originalidad (2026-08-18).** La tabla de arriba resumía el resultado de las ocho
+filas sin pegar la salida del script en ningún caso; `proveniencia` afirma que
+las cinco rondas tienen «salida cruda completa», lo cual era falso para esta.
+Reejecutada:
+
+```
+node scripts/consultar-fuentes.mjs "180 baldosas" "patio cuadrado" "lado del patio" "raíz cuadrada de 180"
+```
+
+```
+180 baldosas: NO
+patio cuadrado: NO
+lado del patio: NO
+raíz cuadrada de 180: NO
+```
 
 **Segunda tanda — cifras y frases exactas (Pendiente 4, resuelta).** Ocho de
 ocho candidatos, **LIMPIO, sin hits** en los cuatro términos de cada uno. Las
@@ -430,11 +456,9 @@ O sea que el dominio de L2 se estaba sosteniendo sobre exactamente el patrón de
 fallo que el proyecto documentó y prohibió. **Ese veredicto queda anulado.**
 
 **Ronda rehecha.** Se volvió a consultar con los términos del escenario tal como
-quedaron en el archivo, **sin** «lado del cuadrado», que no aparece en el texto
-final de la lección —la lección dice «lado del patio» y «baldosas por lado»—, de
-modo que la consulta cubra el escenario real y no un término técnico de otro
-módulo. Mecanismo 2 de `CLAUDE.md`, corrida por Benja fuera del hilo de
-redacción.
+quedaron en el archivo, **sin** «lado del cuadrado», sobre la premisa de que no
+aparecía en el texto final de la lección. Mecanismo 2 de `CLAUDE.md`, corrida por
+Benja fuera del hilo de redacción.
 
 ```
 node scripts/consultar-fuentes.mjs "baldosas" "patio cuadrado" "baldosas por lado" "lado del patio" "patio del colegio"
@@ -459,6 +483,46 @@ y bota el candidato. Si se sospecha que el hit viene de un término genérico y 
 del escenario, lo que se hace es **volver a consultar sin ese término** —como
 acá— y no explicar por qué el hit no cuenta. La diferencia no es de forma: la
 primera vía deja una decisión sin evidencia y la segunda produce evidencia nueva.
+
+**Corrección de la premisa de exclusión, levantada por la cuarta corrida de la
+auditoría de originalidad (2026-08-18).** La premisa de arriba —que «lado del
+cuadrado» «no aparece en el texto final de la lección»— era falsa: el
+`feedbackPorDefecto` del paso 8 dice literal «busca el lado del cuadrado que las
+usa todas», texto que el estudiante lee. Excluir de la consulta un término que sí
+está en el texto es exactamente la clase de argumento sin evidencia que este
+episodio prohíbe, solo que en la dirección de la exclusión en vez de la
+reinterpretación. Se corrige resolviendo el término por lectura, no
+excluyéndolo de nuevo.
+
+```
+node scripts/consultar-fuentes.mjs "lado del cuadrado"
+```
+
+```
+lado del cuadrado: SI (5 archivo(s): Material\1693-MA17_-_Perímetros_y_Áreas_I.md, Material\MOD-04_Vectores_Isometrias_Cuerpos.md, mineduc-curriculum\02-unidad-1-numeros.md, pdv-terceros\1693-MA17_-_Perímetros_y_Áreas_I.md, pdv-terceros\MOD-04_Vectores_Isometrias_Cuerpos.md)
+```
+
+Tres documentos únicos —`Material/` y `pdv-terceros/` vuelven a ser el mismo par
+duplicado, confirmado con `cmp`—, los tres abiertos y leídos:
+
+- `1693-MA17_-_Perímetros_y_Áreas_I.md:137` — «Si el lado del cuadrado mide *m*
+  y el ancho del rectángulo mide *n*, ¿cuánto mide el largo del rectángulo?»,
+  sobre un cuadrado y un rectángulo de igual perímetro. Incógnitas literales,
+  sin baldosas ni conteo.
+- `MOD-04_Vectores_Isometrias_Cuerpos.md:44` — traslación de un cuadrado
+  mediante un vector de módulo igual al lado. Dominio de isometrías y vectores,
+  ajeno por completo.
+- `mineduc-curriculum/02-unidad-1-numeros.md:116-118` — el mismo tramo del OA 4
+  que la ronda 5 ya examinó («Marco de madera», «¿Es cuadrado perfecto?»,
+  «Tabla de raíces exactas»): descriptores de actividad curricular de una
+  línea, sin enunciado redactado, área en m² y no baldosas.
+
+**Veredicto: SIN SIMILITUD SUSTANCIAL en los tres.** Ninguno tiene patio,
+baldosas contadas ni conserje; dos son de dominio matemático ajeno (perímetro
+algebraico, isometrías) y el tercero es el descriptor curricular ya resuelto en
+la ronda 5. El hit que anuló la ronda 1 original queda resuelto por lectura real
+—el mismo mecanismo de las rondas 4 y 5—, no por la premisa falsa de que el
+término no aparecía en el texto.
 
 **Tercera tanda — cifras de L2 que la segunda no cubría (2026-08-17).** Al
 redactar L2 se eligió el dominio (a), patio embaldosado, y los pasos 2 y 8
@@ -495,9 +559,176 @@ verificables porque quedaron en el commit `fe410f5`. El estándar que deja este
 hallazgo: **una consulta que no está en este documento no existe**, y la ronda se
 registra acá antes de commitear el contenido que la usa.
 
-Con las tres tandas cerradas, este documento queda **completo y firmado**: no
+**Cuarta ronda — el singular «baldosa» (2026-08-18).** Las tres tandas
+anteriores consultaron siempre el plural, «baldosas», que es como aparece la
+palabra en el texto de la lección. El script hace `includes` sobre el texto en
+minúsculas, así que «baldosas» encuentra cualquier ocurrencia del plural pero
+**no** las del singular. Ese hueco lo destapó la auditoría de originalidad y se
+cerró con una cuarta corrida, mecanismo 2 de `CLAUDE.md`, ejecutada por Benja
+fuera del hilo de redacción.
+
+```
+node scripts/consultar-fuentes.mjs "baldosa"
+```
+
+Salida, pegada tal cual la imprime el script y sin reformular:
+
+```
+baldosa: SI (4 archivo(s): Material\MA-11_Planteamientos.md, Material\MOD-07_Algebra_Funciones_III.md, pdv-terceros\MA-11_Planteamientos.md, pdv-terceros\MOD-07_Algebra_Funciones_III.md)
+```
+
+**Nota sobre el registro.** La primera vez que esta ronda se anotó acá, lo que
+había entrado a la sesión era un resumen en prosa —«SI en 4 archivos, dos de
+ellos…»— y no las líneas del script, así que quedó escrita como limitación
+declarada. La auditoría de originalidad reejecutó el comando y la salida cruda de
+arriba es la que corresponde; con ella el hueco se cierra. Los 4 archivos son 2
+documentos en 2 copias: `Material/` y `pdv-terceros/` guardan el mismo par, y
+`cmp` confirma que las dos copias de cada uno son **byte-idénticas**. Los dos
+archivos que el veredicto examina cubren, por lo tanto, el 100 % del contenido
+único con hit.
+
+**Resolución del hit — veredicto crudo, pegado sin reformular:**
+
+```
+SIN SIMILITUD SUSTANCIAL
+
+- En MA-11_Planteamientos.md:120 el hit es el verbo "embaldosa": terreno rectangular de lados algebraicos $(2x-1)$ y $(x+6)$ con una piscina interior; se da el área embaldosada (148 m²) y se pide $x$ resolviendo una ecuación cuadrática por diferencia de áreas.
+- En MOD-07_Algebra_Funciones_III.md:209 es el mismo tipo de ítem DEMRE (2017): terreno $4x$ por $(2x+2)$, piscina interior, área embaldosada 136 m², y se pide cuál ecuación permite determinar $x$ — planteamiento algebraico, ni siquiera resolución.
+- Ninguno menciona baldosas contadas, patio cuadrado, ni raíz cuadrada: no hay total de piezas, no hay lado, no hay conserje. La coincidencia es léxica ("embaldosar" como verbo de superficie) y el dominio matemático es distinto — producto de binomios / cuadrática con incógnita lineal, frente a $\sqrt{196}$ y $\sqrt{225}$ como número de baldosas por lado en L2(a).
+```
+
+**Por qué acá sí se resuelve leyendo y en la ronda 1 no se podía.** No es la misma
+operación. En la ronda 1 lo que se hizo fue **argumentar un hit sin abrir nada**,
+infiriendo el tipo de colisión desde el nombre del módulo de procedencia, que es
+justo lo que `CLAUDE.md` prohíbe. Acá se abrieron los dos archivos y se comparó
+enunciado contra enunciado, con permiso explícito de lectura profunda y en un hilo
+separado del de redacción. La regla que deja el episodio de la ronda 1 sigue
+intacta: un hit no se argumenta desde el metadato; o se bota el candidato, o se
+consigue evidencia nueva —consultando de nuevo sin el término genérico, como en la
+ronda 1 rehecha, o leyendo la fuente, como acá—.
+
+| Candidato | Término consultado | Veredicto |
+|---|---|---|
+| L2(a) baldosas, singular | «baldosa» | HIT en 4 archivos → resuelto SIN SIMILITUD SUSTANCIAL sobre los 2 archivos nombrados |
+
+**El dominio (a) se sostiene.** Con esto queda cerrado el punto de la ronda 1 que
+la segunda corrida de la auditoría de originalidad dejó abierto.
+
+**Quinta ronda — las cifras desnudas (2026-08-18).** La auditoría de originalidad
+levantó que ninguna de las cuatro rondas anteriores había consultado nunca una
+cifra sola. La ronda 3 consultó «196 baldosas» y «225 baldosas», compuestos que
+por coincidencia literal tenían que dar NO, y las cifras de la tabla del paso 4
+—100, 121, 144, 169— no aparecían en ninguna ronda.
+
+```
+node scripts/consultar-fuentes.mjs "196" "225" "121" "144" "169" "100" "180" "324" "lado de cuadrados" "área del cuadrado"
+```
+
+Salida, resumida solo en el recuento de archivos porque el script imprime la lista
+completa y varias pasan de treinta entradas; los veredictos van tal cual:
+
+```
+196: SI (3 archivos)     225: SI (3 archivos)     121: SI (5 archivos)
+144: SI (19 archivos)    169: SI (4 archivos)     100: SI (58 archivos)
+180: SI (34 archivos)    324: NO
+lado de cuadrados: SI (1 archivo: mineduc-curriculum\02-unidad-1-numeros.md)
+área del cuadrado: SI (9 archivos)
+```
+
+**Lo primero que deja esta ronda es que una cifra sola no es una consulta de
+colisión.** El script hace `includes` sobre el texto completo, así que «100»
+encuentra también 1100, 100 %, 2100 y cualquier otro número que la contenga: 58
+archivos de 60 y pico es ruido léxico, no señal de dominio. Lo mismo con 180 y
+con 144. Esa clase de término no discrimina y **no se vuelve a correr sola**; la
+consulta útil es la frase, como en las rondas 1 a 4. Queda escrito para que la
+próxima lección no repita el barrido creyendo que prueba algo.
+
+**El único término con señal, y su hit.** «lado de cuadrados» da exactamente 1
+archivo. Leído a fondo: `mineduc-curriculum/02-unidad-1-numeros.md:118`, OA 4,
+actividad 3, «Tabla de raíces exactas», que lista áreas en m² para calcular el
+lado —entre ellas 121, 144 y 225—.
+
+**Veredicto: SIN SIMILITUD SUSTANCIAL.** Es un descriptor de actividad del
+currículum MINEDUC, o sea una tarea enunciada en una línea, sin enunciado
+redactado, sin contexto y sin figura: idea, no expresión. Las cifras que se
+solapan son 121, 144 y 225, que son 11², 12² y 15², hechos aritméticos y no
+elecciones de redacción; de las cinco filas de la tabla del paso 4, 100 y 169 no
+están en la lista del MINEDUC. Y la magnitud es distinta: allá son m² de área,
+acá es conteo de baldosas. Del patio, las baldosas y el conserje no hay nada. Se
+suma que el currículum MINEDUC es fuente de calibración autorizada por MOS §7.1,
+igual que el temario DEMRE.
+
+| Candidato | Términos consultados | Veredicto |
+|---|---|---|
+| L2(a), cifras desnudas y frases de cuadrado | 196, 225, 121, 144, 169, 100, 180, 324, «lado de cuadrados», «área del cuadrado» | Cifras solas: ruido léxico, sin valor de señal. «lado de cuadrados»: 1 hit → SIN SIMILITUD SUSTANCIAL |
+
+**Sexta ronda — el segundo escenario y el vocabulario matemático propio
+(2026-08-18).** La 5ª corrida de la auditoría de originalidad notó que ninguna
+de las cinco rondas anteriores había consultado nunca el sustantivo del segundo
+escenario del archivo —«terraza», del paso 8—, el personaje del primero
+—«conserje», del paso 2—, ni el vocabulario técnico de la lección —radicando,
+índice de la raíz, raíz enésima, exponente fraccionario, forma más simple—, que
+por no tener dominio en los ítems PAES ninguna ronda había alcanzado.
+
+```
+node scripts/consultar-fuentes.mjs "terraza" "terraza rectangular" "conserje" "radicando" "raíz enésima" "exponente fraccionario" "índice de la raíz" "forma más simple"
+```
+
+```
+terraza: NO
+terraza rectangular: NO
+conserje: NO
+radicando: NO
+raíz enésima: NO
+exponente fraccionario: NO
+índice de la raíz: NO
+forma más simple: NO
+```
+
+**Veredicto: LIMPIO, ocho de ocho, sin hits.**
+
+**Séptima ronda — cambio de cifras del paso 8 tras firmar el archivo
+(2026-08-18).** La séptima corrida de la revisión matemática notó que el total
+original del paso 8 —225 baldosas, terraza 5 por 45, lado 15— es exactamente la
+fila `[15, 225]` de la tabla de referencia del paso 4. Esa fila es necesaria ahí
+—acota 14 entre 13² y 15² en la pista de nivel 3, y no se puede quitar sin
+romper esa pista—, así que el paso 8 terminaba mostrando su propia respuesta dos
+pasos antes. Se cambiaron las cifras del paso 8 a 5 por 80 (400 en total, lado
+20), consultadas antes de escribirlas en el JSON.
+
+```
+node scripts/consultar-fuentes.mjs "400 baldosas" "5 por 80" "80 de largo" "terraza de 5 por 80"
+```
+
+```
+400 baldosas: NO
+5 por 80: NO
+80 de largo: NO
+terraza de 5 por 80: NO
+```
+
+**Veredicto: LIMPIO, cuatro de cuatro, sin hits.** El total anterior, 225,
+seguía limpio (ronda 3): el cambio es de diseño pedagógico —evitar que la tabla
+del paso 4 pre-responda el paso 8—, no una corrección de colisión.
+
+Con las siete tandas cerradas, este documento queda **completo y firmado**: no
 se reabre salvo hallazgo concreto en redacción, auditoría matemática o
 auditoría de originalidad.
+
+**Decisión de diseño sobre `_notasInternas` y `proveniencia` (potencias-raiz-escondida.json):**
+después de varias corridas de auditoría cuyo único hallazgo eran desincronías
+en cifras que las propias notas usaban para describirse a sí mismas —conteos
+de entradas del catálogo, de distractores, de rondas de consulta, de corridas
+de auditoría, shas de commit, fechas y nombre de autor—, se purgaron esos
+números de ambos campos. Cada corrección de una cifra autorreferente creaba
+una nueva desincronía en otra parte del mismo archivo: el defecto era del
+diseño del archivo, no del contenido pedagógico. Los campos narrativos ahora
+explican decisiones de diseño y su motivo (por qué este dominio, por qué esta
+corrección, por qué esta excepción), pero no llevan cifras verificables sobre
+el propio archivo o el repositorio. La verificación de esos hechos —cuántas
+entradas tiene el catálogo, si un distractor colisiona, qué cambió y cuándo—
+vive en los scripts (`npm run auditar`, `npm run validar`) y en el historial
+de git, que son la fuente de verdad y no se duplican en prosa.
 
 ---
 
@@ -544,7 +775,10 @@ distractor (regla 3 de `docs/reglas-modulo.md`).
    auditoría de originalidad de L2, que detectó que la consulta se declaraba en
    el JSON sin dejar rastro verificable en el repositorio.
 6. ~~Ronda 1 de L2(a), cuyo veredicto LIMPIO se había obtenido reinterpretando
-   un hit en «lado del cuadrado».~~ **Anulada y rehecha el 2026-08-17.** Cinco
+   un hit en «lado del cuadrado».~~ **Anulada, rehecha el 2026-08-17 y ese hit
+   resuelto por lectura el 2026-08-18** (los tres archivos donde aparece son
+   ajenos: perímetro algebraico, isometrías, y el mismo descriptor curricular
+   ya limpio de la ronda 5). Cinco
    de cinco términos NO, sin interpretación (detalle y salida cruda en §f).
    También sale del rechazo de la auditoría de originalidad de L2.
 
