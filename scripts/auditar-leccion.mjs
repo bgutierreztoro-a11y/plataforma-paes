@@ -403,6 +403,9 @@ const MODULO_POR_LECCION = {
   'potencias-multiplicar-corto': 'potencias-raices',
   'potencias-raiz-escondida': 'potencias-raices',
   'potencias-problemas-en-contexto': 'potencias-raices',
+  'sistemas-dos-historias': 'sistemas-2x2',
+  'sistemas-rectas-no-se-cruzan': 'sistemas-2x2',
+  'sistemas-plantear-antes-resolver': 'sistemas-2x2',
 };
 
 /**
