@@ -4,7 +4,7 @@
   "titulo": "Cierre del módulo: Sistemas de ecuaciones lineales (2x2)",
   "_notasInternas": [
     "Cierre del módulo 'Sistemas de ecuaciones lineales (2x2)' (docs/diseno-modulo-sistemas-2x2.md), construido después de que las 3 lecciones (sistemas-dos-historias, sistemas-rectas-no-se-cruzan, sistemas-plantear-antes-resolver) pasaran npm run validar y npm run auditar en verde.",
-    "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia error-5 y error-6, ambos ya definidos ahí. No se necesitó ningún id nuevo.",
+    "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia error-1, error-5 y error-6, los tres ya definidos ahí. No se necesitó ningún id nuevo.",
     "Contextos nuevos, sin repetir escena con ninguna de las 3 lecciones: kiosco escolar, ciclistas a distinta velocidad, entradas de un evento escolar, mezcla de café. El ítem 8 es el integrador pedido: combina el mecanismo de L1 (boletería de cine, sustitución) con el de L3 (edades de hermanos, plantear antes de resolver), reutilizando los resultados ya conocidos (24 adultos, 23 años) sin introducir escena nueva.",
     "No se corrió una verificación de colisión nueva y separada para este archivo: los cuatro contextos (kiosco, ciclistas, entradas de evento, café) ya estaban en la lista de 14 candidatos consultados por Benja el 2026-08-19 (ver docs/diseno-modulo-sistemas-2x2.md) y resultaron LIMPIO."
   ],
@@ -13,19 +13,19 @@
       "id": "cierre-sistemas-1",
       "habilidad": "resolver",
       "dificultad": "baja",
-      "enunciado": "Un kiosco escolar vende completos a $1.200 y jugos a $600. En un recreo vendió 60 productos entre completos y jugos, por un total de $52.800. ¿Cuántos completos se vendieron?",
+      "enunciado": "Un kiosco escolar vende completos a $1.200 y jugos a $600. En un recreo vendió 60 productos entre completos y jugos, por un total de $52.200. ¿Cuántos completos se vendieron?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "28",
+          "texto": "27",
           "esCorrecta": true,
-          "feedback": "Correcto. c + j = 60; 1.200c + 600j = 52.800. Sustituyendo j = 60 − c: 1.200c + 600(60 − c) = 52.800 → 600c = 16.800 → c = 28."
+          "feedback": "Correcto. c + j = 60; 1.200c + 600j = 52.200. Sustituyendo j = 60 − c: 1.200c + 600(60 − c) = 52.200 → 600c = 16.200 → c = 27."
         },
         {
           "clave": "B",
-          "texto": "32",
+          "texto": "33",
           "esCorrecta": false,
-          "feedback": "Ese es el número de jugos (j = 32), no de completos. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál producto.",
+          "feedback": "Ese es el número de jugos (j = 33), no de completos. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál producto.",
           "errorCatalogado": "error-5"
         },
         {
@@ -37,13 +37,13 @@
         },
         {
           "clave": "D",
-          "texto": "44",
+          "texto": "9",
           "esCorrecta": false,
-          "feedback": "Revisa la sustitución: al reemplazar j = 60 − c en 1.200c + 600j = 52.800, el 600 debe distribuirse en los dos términos del paréntesis (60 y −c), no solo en uno de ellos.",
+          "feedback": "Al despejar j en c + j = 60, hay que aplicar el signo negativo: j = 60 − c. Si se escribe j = 60 + c por no aplicar bien ese signo, la sustitución posterior (1.200c + 600(60 + c) = 52.200 → 1.800c = 16.200 → c = 9) lleva a un valor como este, que no cumple el sistema real.",
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "c + j = 60; 1.200c + 600j = 52.800. j = 60 − c → 1.200c + 600(60 − c) = 52.800 → 1.200c + 36.000 − 600c = 52.800 → 600c = 16.800 → c = 28, j = 32. Comprobación: 28 + 32 = 60 ✓; 1.200×28 + 600×32 = 33.600 + 19.200 = 52.800 ✓. ✓"
+      "solucion": "c + j = 60; 1.200c + 600j = 52.200. j = 60 − c → 1.200c + 600(60 − c) = 52.200 → 1.200c + 36.000 − 600c = 52.200 → 600c = 16.200 → c = 27, j = 33. Comprobación: 27 + 33 = 60 ✓; 1.200×27 + 600×33 = 32.400 + 19.800 = 52.200 ✓. ✓"
     },
     {
       "id": "cierre-sistemas-2",
@@ -193,55 +193,55 @@
       "id": "cierre-sistemas-6",
       "habilidad": "modelar",
       "dificultad": "alta",
-      "enunciado": "Otro evento escolar vende entradas general a $2.000 y preferencial a $3.000. Se vendieron 60 entradas por un total de $154.000. Modela la situación con un sistema de ecuaciones y resuélvelo: ¿cuántas entradas general se vendieron?",
+      "enunciado": "Otro evento escolar vende entradas general a $2.000 y preferencial a $3.000. Se vendieron 60 entradas por un total de $155.000. Modela la situación con un sistema de ecuaciones y resuélvelo: ¿cuántas entradas preferencial se vendieron?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "26",
+          "texto": "35",
           "esCorrecta": true,
-          "feedback": "Correcto. g + p = 60; 2.000g + 3.000p = 154.000. Sustituyendo p = 60 − g: 2.000g + 3.000(60 − g) = 154.000 → −1.000g = −26.000 → g = 26."
+          "feedback": "Correcto. g + p = 60; 2.000g + 3.000p = 155.000. Sustituyendo g = 60 − p: 2.000(60 − p) + 3.000p = 155.000 → 1.000p = 35.000 → p = 35."
         },
         {
           "clave": "B",
-          "texto": "34",
+          "texto": "25",
           "esCorrecta": false,
-          "feedback": "Ese es el número de entradas preferenciales (p = 34), no general. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de entrada.",
+          "feedback": "Ese es el número de entradas general (g = 25), no preferencial. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de entrada.",
           "errorCatalogado": "error-5"
         },
         {
           "clave": "C",
           "texto": "60",
           "esCorrecta": false,
-          "feedback": "Ese es el total de entradas vendidas (60), no la cantidad de entradas general. El total por sí solo no dice cómo se reparte entre general y preferencial; hace falta resolver el sistema.",
+          "feedback": "Ese es el total de entradas vendidas (60), no la cantidad de entradas preferencial. El total por sí solo no dice cómo se reparte entre general y preferencial; hace falta resolver el sistema.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
-          "texto": "40",
+          "texto": "7",
           "esCorrecta": false,
-          "feedback": "Revisa la sustitución: al reemplazar p = 60 − g en 2.000g + 3.000p = 154.000, el 3.000 debe distribuirse en los dos términos del paréntesis (60 y −g), no solo en uno de ellos.",
+          "feedback": "Al despejar g en g + p = 60, hay que aplicar el signo negativo: g = 60 − p. Si se escribe g = 60 + p por no aplicar bien ese signo, la sustitución posterior (2.000(60 + p) + 3.000p = 155.000 → 5.000p = 35.000 → p = 7) lleva a un valor como este, que no cumple el sistema real.",
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "g + p = 60; 2.000g + 3.000p = 154.000. p = 60 − g → 2.000g + 3.000(60 − g) = 154.000 → 2.000g + 180.000 − 3.000g = 154.000 → −1.000g = −26.000 → g = 26, p = 34. Comprobación: 26 + 34 = 60 ✓; 2.000×26 + 3.000×34 = 52.000 + 102.000 = 154.000 ✓. ✓"
+      "solucion": "g + p = 60; 2.000g + 3.000p = 155.000. g = 60 − p → 2.000(60 − p) + 3.000p = 155.000 → 120.000 − 2.000p + 3.000p = 155.000 → 1.000p = 35.000 → p = 35, g = 25. Comprobación: 25 + 35 = 60 ✓; 2.000×25 + 3.000×35 = 50.000 + 105.000 = 155.000 ✓. ✓"
     },
     {
       "id": "cierre-sistemas-7",
       "habilidad": "modelar",
       "dificultad": "media",
-      "enunciado": "Un café mezcla granos Arábica (a $9.000 el kilo) con granos Robusta (a $5.000 el kilo) para obtener 20 kilos de mezcla, con un costo total de $136.000. ¿Cuántos kilos de Arábica lleva la mezcla?",
+      "enunciado": "Un café mezcla granos Arábica (a $9.000 el kilo) con granos Robusta (a $5.000 el kilo) para obtener 20 kilos de mezcla, con un costo total de $128.000. ¿Cuántos kilos de Arábica lleva la mezcla?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "9",
+          "texto": "7",
           "esCorrecta": true,
-          "feedback": "Correcto. a + r = 20; 9.000a + 5.000r = 136.000. Sustituyendo r = 20 − a: 9.000a + 5.000(20 − a) = 136.000 → 4.000a = 36.000 → a = 9."
+          "feedback": "Correcto. a + r = 20; 9.000a + 5.000r = 128.000. Sustituyendo r = 20 − a: 9.000a + 5.000(20 − a) = 128.000 → 4.000a = 28.000 → a = 7."
         },
         {
           "clave": "B",
-          "texto": "11",
+          "texto": "13",
           "esCorrecta": false,
-          "feedback": "Ese es el número de kilos de Robusta (r = 11), no de Arábica. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de grano.",
+          "feedback": "Ese es el número de kilos de Robusta (r = 13), no de Arábica. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de grano.",
           "errorCatalogado": "error-5"
         },
         {
@@ -253,13 +253,13 @@
         },
         {
           "clave": "D",
-          "texto": "14",
+          "texto": "2",
           "esCorrecta": false,
-          "feedback": "Revisa la sustitución: al reemplazar r = 20 − a en 9.000a + 5.000r = 136.000, el 5.000 debe distribuirse en los dos términos del paréntesis (20 y −a), no solo en uno de ellos.",
+          "feedback": "Al despejar r en a + r = 20, hay que aplicar el signo negativo: r = 20 − a. Si se escribe r = 20 + a por no aplicar bien ese signo, la sustitución posterior (9.000a + 5.000(20 + a) = 128.000 → 14.000a = 28.000 → a = 2) lleva a un valor como este, que no cumple el sistema real.",
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "a + r = 20; 9.000a + 5.000r = 136.000. r = 20 − a → 9.000a + 5.000(20 − a) = 136.000 → 9.000a + 100.000 − 5.000a = 136.000 → 4.000a = 36.000 → a = 9, r = 11. Comprobación: 9 + 11 = 20 ✓; 9.000×9 + 5.000×11 = 81.000 + 55.000 = 136.000 ✓. ✓"
+      "solucion": "a + r = 20; 9.000a + 5.000r = 128.000. r = 20 − a → 9.000a + 5.000(20 − a) = 128.000 → 9.000a + 100.000 − 5.000a = 128.000 → 4.000a = 28.000 → a = 7, r = 13. Comprobación: 7 + 13 = 20 ✓; 9.000×7 + 5.000×13 = 63.000 + 65.000 = 128.000 ✓. ✓"
     },
     {
       "id": "cierre-sistemas-8",
@@ -299,13 +299,13 @@
     }
   ],
   "contextosNumericos": [
-    "cierre-sistemas-1 (kiosco, resolver): completos $1.200/jugos $600, 60 productos, $52.800 → (28, 32)",
+    "cierre-sistemas-1 (kiosco, resolver): completos $1.200/jugos $600, 60 productos, $52.200 → (27, 33)",
     "cierre-sistemas-2 (kiosco, representar): bebidas $900/snacks $700, 24 productos, $19.400 (plantear sistema)",
     "cierre-sistemas-3 (ciclistas, resolver): A con 5 km de ventaja a 15 km/h, B a 20 km/h desde el inicio → encuentro a los 20 km",
     "cierre-sistemas-4 (ciclistas, argumentar): C con 5 km de ventaja a 15 km/h, D a 12 km/h desde el inicio → nunca se encuentran (t negativo)",
     "cierre-sistemas-5 (entradas de evento, representar): general $2.500/preferencial $4.000, 80 entradas, $242.000 (plantear sistema)",
-    "cierre-sistemas-6 (entradas de evento, modelar): general $2.000/preferencial $3.000, 60 entradas, $154.000 → (26, 34)",
-    "cierre-sistemas-7 (mezcla de café, modelar): Arábica $9.000/Robusta $5.000, 20 kg, $136.000 → (9, 11)",
+    "cierre-sistemas-6 (entradas de evento, modelar): general $2.000/preferencial $3.000, 60 entradas, $155.000 → (25, 35)",
+    "cierre-sistemas-7 (mezcla de café, modelar): Arábica $9.000/Robusta $5.000, 20 kg, $128.000 → (7, 13)",
     "cierre-sistemas-8 (boletería + edades, argumentar, integrador): reutiliza los resultados ya conocidos de sistemas-dos-historias (24, 21) y sistemas-plantear-antes-resolver (23, 9), sin números nuevos"
   ],
   "proveniencia": {

@@ -16,7 +16,7 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (edades de dos hermanos, boletos de bus y metro, sueldo con bono fijo y comisión) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
-    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutilizan error-4 y error-5 de esa lección donde el error calza. El error propio de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, o plantear con el rol de las dos incógnitas invertido) va con feedback artesanal sin errorCatalogado."
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutilizan error-1, error-4, error-5 y error-6 de esa lección donde el error calza. El error propio de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, o plantear con el rol de las dos incógnitas invertido) va con feedback artesanal sin errorCatalogado."
   ],
   "pasos": [
     {
@@ -285,37 +285,37 @@
       "id": "l3-item-1",
       "habilidad": "resolver",
       "dificultad": "media",
-      "enunciado": "Un pasajero compró boletos de bus y de metro durante la semana. El boleto de bus cuesta $700 y el de metro $800. En total compró 12 boletos y gastó $9.100. ¿Cuántos boletos de metro compró?",
+      "enunciado": "Un pasajero compró boletos de bus y de metro durante la semana. El boleto de bus cuesta $300 y el de metro $800. En total compró 17 boletos y gastó $10.600. ¿Cuántos boletos de metro compró?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "7",
+          "texto": "11",
           "esCorrecta": true,
-          "feedback": "Correcto. b + m = 12; 700b + 800m = 9.100. Sustituyendo b = 12 − m: 700(12 − m) + 800m = 9.100 → 8.400 + 100m = 9.100 → m = 7."
+          "feedback": "Correcto. b + m = 17; 300b + 800m = 10.600. Sustituyendo b = 17 − m: 300(17 − m) + 800m = 10.600 → 5.100 + 500m = 10.600 → m = 11."
         },
         {
           "clave": "B",
-          "texto": "5",
+          "texto": "6",
           "esCorrecta": false,
-          "feedback": "Ese es el número de boletos de BUS (b = 5), no de metro. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de boleto.",
+          "feedback": "Ese es el número de boletos de BUS (b = 6), no de metro. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de boleto.",
           "errorCatalogado": "error-5"
         },
         {
           "clave": "C",
-          "texto": "12",
+          "texto": "17",
           "esCorrecta": false,
-          "feedback": "Ese es el total de boletos comprados (12), no la cantidad de boletos de metro. Falta resolver el sistema para saber cómo se reparte entre bus y metro.",
+          "feedback": "Ese es el total de boletos comprados (17), no la cantidad de boletos de metro. Falta resolver el sistema para saber cómo se reparte entre bus y metro.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
-          "texto": "9",
+          "texto": "5",
           "esCorrecta": false,
-          "feedback": "Revisa la sustitución: al reemplazar b = 12 − m en 700b + 800m = 9.100, hay que distribuir el 700 en los dos términos del paréntesis (12 y −m), no solo en uno de ellos.",
+          "feedback": "Al despejar b en b + m = 17, hay que aplicar el signo negativo: b = 17 − m. Si se escribe b = 17 + m por no aplicar bien ese signo, la sustitución posterior (300(17 + m) + 800m = 10.600 → 1.100m = 5.500 → m = 5) lleva a un valor como este, que no cumple el sistema real.",
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "b + m = 12; 700b + 800m = 9.100. b = 12 − m → 700(12 − m) + 800m = 9.100 → 8.400 − 700m + 800m = 9.100 → 100m = 700 → m = 7, b = 5. Comprobación: 5 + 7 = 12 ✓; 700×5 + 800×7 = 3.500 + 5.600 = 9.100 ✓. ✓"
+      "solucion": "b + m = 17; 300b + 800m = 10.600. b = 17 − m → 300(17 − m) + 800m = 10.600 → 5.100 − 300m + 800m = 10.600 → 500m = 5.500 → m = 11, b = 6. Comprobación: 6 + 11 = 17 ✓; 300×6 + 800×11 = 1.800 + 8.800 = 10.600 ✓. ✓"
     },
     {
       "id": "l3-item-2",
@@ -395,7 +395,7 @@
     "practica (Paso 7): Camila y Diego, suma 27, dentro de 3 años el doble de hace 3 años → (15, 12)",
     "aplicacion (Paso 8): Valentina y Tomás, suma 40, hace 5 años el doble → plantear sistema, sin resolver",
     "consolidacion (pregunta embebida, Paso 10): Isidora y Fernanda, suma 34, hace 3 años el triple → (24, 10)",
-    "itemsPAES l3-item-1 (resolver): boletos bus $700 / metro $800, 12 boletos, $9.100 → (5, 7)",
+    "itemsPAES l3-item-1 (resolver): boletos bus $300 / metro $800, 17 boletos, $10.600 → (6, 11)",
     "itemsPAES l3-item-2 (modelar): sueldo fijo $300.000+$2.000/producto vs. $250.000+$2.500/producto → plantear sistema",
     "itemsPAES l3-item-3 (argumentar): reutiliza el mecanismo general del desplazamiento temporal, sin números nuevos"
   ],
