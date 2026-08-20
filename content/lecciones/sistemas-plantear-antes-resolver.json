@@ -16,7 +16,7 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (edades de dos hermanos, boletos de bus y metro, sueldo con bono fijo y comisión) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
-    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutilizan error-1, error-4, error-5 y error-6 de esa lección donde el error calza. El error propio de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, o plantear con el rol de las dos incógnitas invertido) va con feedback artesanal sin errorCatalogado."
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza error-1 y error-5 de esa lección donde el error calza. Los errores propios de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, plantear con el rol de las dos incógnitas invertido, o no cerrar el desplazamiento temporal en la misma incógnita) van con feedback artesanal sin errorCatalogado. error-4 y error-6 se desmapearon el 2026-08-20 (auditoría matemática Ronda 1): ninguno de los dos describía el mecanismo real de los distractores a los que estaban asignados (consolidación D y l3-item-2.C respectivamente)."
   ],
   "pasos": [
     {
@@ -272,7 +272,7 @@
               "texto": "21",
               "esCorrecta": false,
               "feedback": "21 es la edad que tenía Isidora HACE 3 años (x − 3 = 21), no su edad de hoy. Encontraste el valor de x − 3 pero no volviste a sumar los 3 años para obtener la edad actual que pide la pregunta.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": null
             }
           ],
           "notaVerificacionMatematica": "x + y = 34; x − 3 = 3(y − 3). x = 34 − y → 34 − y − 3 = 3y − 9 → 40 = 4y → y = 10, x = 24. Comprobación: 24 + 10 = 34 ✓; hace 3 años, 21 = 3×7 ✓. ✓"
@@ -341,7 +341,7 @@
           "texto": "g = 2.000 + 300.000p ; g = 2.500 + 250.000p",
           "esCorrecta": false,
           "feedback": "Invertiste qué número es el sueldo fijo y cuál es la comisión por producto en las dos ecuaciones: el sueldo fijo ($300.000 y $250.000) no se multiplica por p, y la comisión ($2.000 y $2.500) sí.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": null
         },
         {
           "clave": "D",

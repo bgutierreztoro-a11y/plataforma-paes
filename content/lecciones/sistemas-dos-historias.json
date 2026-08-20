@@ -15,17 +15,13 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contexto (boletería de cine, adultos y niños) verificado LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19 (mecanismo (2) de CLAUDE.md); 'manzanas y peras' fue descartado del set de candidatos por colisión y no se usa en este módulo.",
-      "catalogoErrores incluye el catálogo COMPLETO del módulo 'Sistemas de ecuaciones lineales (2x2)' (error-1 a error-6). Los seis se usan activamente dentro de esta misma lección (ver pasos 2, 7, 8 e itemsPAES), para que la auditoría mecánica (npm run auditar) no reporte ningún id como sin uso.",
+      "catalogoErrores incluye el catálogo del módulo 'Sistemas de ecuaciones lineales (2x2)' (error-1, error-3 a error-6). Los cinco se usan activamente dentro de esta misma lección (ver pasos 2, 7, 8 e itemsPAES), para que la auditoría mecánica (npm run auditar) no reporte ningún id como sin uso. error-2 (sustitución circular, misma ecuación de la que se despejó) se eliminó del catálogo el 2026-08-20: por definición produce una identidad (40=40), no un valor numérico, así que no existe un distractor de opción múltiple genuinamente derivable de ese mecanismo; el único punto que lo usaba (l1-item-1.C) quedó con errorCatalogado null y feedback artesanal propio (auditoría matemática Ronda 1).",
     "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido) además del arreglo itemsPAES, con números propios distintos del resto de la lección."
   ],
   "catalogoErrores": [
     {
       "id": "error-1",
       "descripcion": "Al despejar una incógnita o distribuir una multiplicación sobre una suma/resta, aplicar la operación solo a una parte de la expresión en vez de a todos sus términos, rompiendo la igualdad."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Al sustituir la expresión despejada, reemplazarla en la MISMA ecuación de la que se despejó (verificación circular) en vez de en la otra ecuación del sistema, con lo que el sistema nunca se reduce a una incógnita."
     },
     {
       "id": "error-3",
@@ -334,8 +330,8 @@
           "clave": "C",
           "texto": "25 adultos y 15 niños",
           "esCorrecta": false,
-          "feedback": "Este par cumple a + n = 40, pero no cumple la ecuación del dinero (5.000×25 + 2.000×15 = $155.000, no $143.000). Es un reparto arbitrario elegido tras notar que sustituir n = 40 − a en la MISMA ecuación a + n = 40 no aporta información nueva (queda 40 = 40): eso no resuelve el sistema, hay que sustituir en la OTRA ecuación, la del dinero.",
-          "errorCatalogado": "error-2"
+          "feedback": "Este par cumple a + n = 40 (25 + 15 = 40), pero no cumple la ecuación del dinero: 5.000×25 + 2.000×15 = $155.000, no $143.000. Cumplir solo una de las dos condiciones no basta — hay que sustituir en la ecuación del dinero (la OTRA, no la misma de la que se despejó n) para encontrar el único par que cumple las dos a la vez.",
+          "errorCatalogado": null
         },
         {
           "clave": "D",
