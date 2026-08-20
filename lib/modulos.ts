@@ -117,6 +117,7 @@ export const IDS_CIERRE = [
   "cierre-porcentaje",
   "cierre-proporcionalidad",
   "cierre-expresiones-algebraicas",
+  "cierre-sistemas-2x2",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -286,6 +287,7 @@ export const EJES = [
           "sistemas-rectas-no-se-cruzan",
           "sistemas-plantear-antes-resolver",
         ],
+        cierreId: "cierre-sistemas-2x2",
       },
       {
         id: "funcion-lineal-y-afin",

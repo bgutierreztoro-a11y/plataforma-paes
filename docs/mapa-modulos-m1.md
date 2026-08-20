@@ -64,7 +64,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | **completo** |
 | 5 | Álgebra y funciones | Proporcionalidad | `proporcionalidad` | **completo** |
 | 6 | Álgebra y funciones | Ecuaciones e inecuaciones de primer grado | `ecuaciones-e-inecuaciones-primer-grado` | **completo** |
-| 7 | Álgebra y funciones | Sistemas de ecuaciones lineales (2x2) | `sistemas-2x2` | sin contenido |
+| 7 | Álgebra y funciones | Sistemas de ecuaciones lineales (2x2) | `sistemas-2x2` | **completo** |
 | 8 | Álgebra y funciones | Función lineal y afín | `funcion-lineal-y-afin` | **completo** |
 | 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | sin contenido |
 | 10 | Geometría | Figuras geométricas | `figuras-geometricas` | sin contenido |
@@ -75,7 +75,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-6 completos · 10 sin contenido · 18 de 48 lecciones escritas.
+7 completos · 9 sin contenido · 21 de 48 lecciones escritas.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
@@ -160,9 +160,11 @@ Cierre: `cierre-ecuaciones-lineales`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `sistemas-dos-historias` | Resolución de sistemas de ecuaciones 2x2 | no |
-| `sistemas-rectas-no-se-cruzan` | Sistemas sin solución o con infinitas soluciones | no |
-| `sistemas-plantear-antes-resolver` | Problemas con sistemas de ecuaciones 2x2 | no |
+| `sistemas-dos-historias` | Resolución de sistemas de ecuaciones 2x2 | sí |
+| `sistemas-rectas-no-se-cruzan` | Sistemas sin solución o con infinitas soluciones | sí |
+| `sistemas-plantear-antes-resolver` | Problemas con sistemas de ecuaciones 2x2 | sí |
+
+Cierre: `cierre-sistemas-2x2`.
 
 ### 8. Función lineal y afín — `funcion-lineal-y-afin`
 
