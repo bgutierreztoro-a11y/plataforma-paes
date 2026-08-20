@@ -1,0 +1,320 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-sistemas-2x2",
+  "titulo": "Cierre del módulo: Sistemas de ecuaciones lineales (2x2)",
+  "_notasInternas": [
+    "Cierre del módulo 'Sistemas de ecuaciones lineales (2x2)' (docs/diseno-modulo-sistemas-2x2.md), construido después de que las 3 lecciones (sistemas-dos-historias, sistemas-rectas-no-se-cruzan, sistemas-plantear-antes-resolver) pasaran npm run validar y npm run auditar en verde.",
+    "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia error-5 y error-6, ambos ya definidos ahí. No se necesitó ningún id nuevo.",
+    "Contextos nuevos, sin repetir escena con ninguna de las 3 lecciones: kiosco escolar, ciclistas a distinta velocidad, entradas de un evento escolar, mezcla de café. El ítem 8 es el integrador pedido: combina el mecanismo de L1 (boletería de cine, sustitución) con el de L3 (edades de hermanos, plantear antes de resolver), reutilizando los resultados ya conocidos (24 adultos, 23 años) sin introducir escena nueva.",
+    "No se corrió una verificación de colisión nueva y separada para este archivo: los cuatro contextos (kiosco, ciclistas, entradas de evento, café) ya estaban en la lista de 14 candidatos consultados por Benja el 2026-08-19 (ver docs/diseno-modulo-sistemas-2x2.md) y resultaron LIMPIO."
+  ],
+  "items": [
+    {
+      "id": "cierre-sistemas-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un kiosco escolar vende completos a $1.200 y jugos a $600. En un recreo vendió 60 productos entre completos y jugos, por un total de $52.800. ¿Cuántos completos se vendieron?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "28",
+          "esCorrecta": true,
+          "feedback": "Correcto. c + j = 60; 1.200c + 600j = 52.800. Sustituyendo j = 60 − c: 1.200c + 600(60 − c) = 52.800 → 600c = 16.800 → c = 28."
+        },
+        {
+          "clave": "B",
+          "texto": "32",
+          "esCorrecta": false,
+          "feedback": "Ese es el número de jugos (j = 32), no de completos. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál producto.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "60",
+          "esCorrecta": false,
+          "feedback": "Ese es el total de productos vendidos (60), no la cantidad de completos. El total por sí solo no dice cómo se reparte entre completos y jugos; hace falta resolver el sistema.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "44",
+          "esCorrecta": false,
+          "feedback": "Revisa la sustitución: al reemplazar j = 60 − c en 1.200c + 600j = 52.800, el 600 debe distribuirse en los dos términos del paréntesis (60 y −c), no solo en uno de ellos.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "c + j = 60; 1.200c + 600j = 52.800. j = 60 − c → 1.200c + 600(60 − c) = 52.800 → 1.200c + 36.000 − 600c = 52.800 → 600c = 16.800 → c = 28, j = 32. Comprobación: 28 + 32 = 60 ✓; 1.200×28 + 600×32 = 33.600 + 19.200 = 52.800 ✓. ✓"
+    },
+    {
+      "id": "cierre-sistemas-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El mismo kiosco vende bebidas a $900 y snacks a $700. En otro recreo vendió 24 productos entre bebidas y snacks, por un total de $19.400. Si b = bebidas y s = snacks, ¿cuál sistema representa esta situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "b + s = 24 ; 900b + 700s = 19.400",
+          "esCorrecta": true,
+          "feedback": "Correcto. La cantidad total de productos da b + s = 24, y el dinero recaudado (precio por cantidad, sumado) da 900b + 700s = 19.400."
+        },
+        {
+          "clave": "B",
+          "texto": "b + s = 19.400 ; 900b + 700s = 24",
+          "esCorrecta": false,
+          "feedback": "Invertiste a qué ecuación corresponde cada total. La ecuación de CANTIDAD de productos debe igualarse a 24, no a 19.400 (que es dinero); y la ecuación de DINERO debe igualarse a 19.400, no a 24.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "b + s = 24 ; 900b + 700s = 24",
+          "esCorrecta": false,
+          "feedback": "La segunda ecuación (el dinero recaudado) no puede igualarse a 24: ese 24 es el total de PRODUCTOS, no de pesos. El total recaudado, $19.400, es un número distinto y mucho mayor.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "b + s = 24 ; 700b + 900s = 19.400",
+          "esCorrecta": false,
+          "feedback": "Invertiste los precios: $900 corresponde a las bebidas y $700 a los snacks, no al revés. El coeficiente de b debe ser 900, y el de s debe ser 700.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "La cantidad de productos da b + s = 24. El dinero recaudado da 900b + 700s = 19.400 (900 con bebidas, 700 con snacks). El sistema correcto es el de la alternativa A. ✓"
+    },
+    {
+      "id": "cierre-sistemas-3",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Dos ciclistas comparten el mismo camino. Ciclista A parte con 5 km de ventaja y pedalea a 15 km/h. Ciclista B parte desde el inicio del camino (kilómetro 0) pedaleando a 20 km/h. ¿A qué distancia del inicio del camino se encuentran?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "20",
+          "esCorrecta": true,
+          "feedback": "Correcto. Posición de A: 5 + 15t. Posición de B: 20t. Igualando: 5 + 15t = 20t → 5 = 5t → t = 1 hora. Distancia: 20×1 = 20 km."
+        },
+        {
+          "clave": "B",
+          "texto": "5",
+          "esCorrecta": false,
+          "feedback": "5 km es la ventaja inicial de A, no la distancia a la que se encuentran. Hay que igualar las dos posiciones (5 + 15t y 20t) y resolver para t, y luego calcular la distancia con ese valor de t.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "15",
+          "esCorrecta": false,
+          "feedback": "15 km/h es la velocidad del Ciclista A, no la distancia del encuentro. Hay que resolver el sistema formado por las dos posiciones, no usar directamente uno de los datos del enunciado.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "25",
+          "esCorrecta": false,
+          "feedback": "Sumaste la ventaja (5) y la velocidad de B (20) sin resolver el sistema. Hay que igualar 5 + 15t = 20t, encontrar t = 1, y recién ahí calcular la distancia (20×1 = 20).",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "Posición de A: 5 + 15t. Posición de B: 20t. Igualando: 5 + 15t = 20t → 5t = 5 → t = 1 hora. Distancia del encuentro: 20×1 = 20 km (comprobación: 5+15×1 = 20 también). ✓"
+    },
+    {
+      "id": "cierre-sistemas-4",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Ciclista C parte con 5 km de ventaja pedaleando a 15 km/h. Ciclista D parte desde el inicio del camino pedaleando a 12 km/h. Un estudiante afirma: 'Como los dos avanzan a velocidad constante, D alcanzará a C en algún momento, sin importar que sea más lento.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: igualando 5 + 15t = 12t se obtiene t = −5/3, un tiempo negativo sin sentido en este problema. Como D es más lento que C y C ya llevaba ventaja, D nunca alcanza a C; la distancia entre ambos aumenta con el tiempo.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Un tiempo negativo como solución significa que el encuentro habría ocurrido 'antes de partir', lo que no tiene sentido físico: en el problema real, D nunca alcanza a C."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, porque ambos avanzan a velocidad constante y toda carrera con velocidad constante termina en un encuentro.",
+          "esCorrecta": false,
+          "feedback": "Eso no es cierto en general: si el que va atrás es más LENTO que el que va adelante, la distancia entre ambos crece con el tiempo en vez de achicarse, y nunca se encuentran.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "No se puede saber sin conocer cuánto dura la carrera.",
+          "esCorrecta": false,
+          "feedback": "El sistema (5 + 15t = 12t) ya responde la pregunta de forma definitiva: al resolverlo se obtiene un tiempo negativo, que indica que el encuentro no ocurre para ningún valor de t ≥ 0, sin necesitar saber cuánto dura la carrera.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, en el kilómetro 20, igual que en el caso de los ciclistas A y B.",
+          "esCorrecta": false,
+          "feedback": "Ese resultado corresponde al caso anterior (Ciclista B, más rápido que A). Acá D es MÁS LENTO que C, no más rápido, así que la situación es distinta: D nunca alcanza a C, no se encuentran en ningún kilómetro.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "Posición de C: 5 + 15t. Posición de D: 12t. Igualando: 5 + 15t = 12t → 5 = −3t → t = −5/3. Un tiempo negativo no tiene sentido en este contexto: para cualquier t ≥ 0, D nunca alcanza a C (de hecho, la distancia entre ambos crece, porque D es más lento y C partió con ventaja). La alternativa correcta es A. ✓"
+    },
+    {
+      "id": "cierre-sistemas-5",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un evento escolar vende entradas general a $2.500 y preferencial a $4.000. Se vendieron 80 entradas por un total de $242.000. Si g = entradas general y p = entradas preferencial, ¿cuál sistema representa esta situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "g + p = 80 ; 2.500g + 4.000p = 242.000",
+          "esCorrecta": true,
+          "feedback": "Correcto. El total de entradas da g + p = 80, y el dinero recaudado da 2.500g + 4.000p = 242.000."
+        },
+        {
+          "clave": "B",
+          "texto": "g + p = 242.000 ; 2.500g + 4.000p = 80",
+          "esCorrecta": false,
+          "feedback": "Invertiste a qué ecuación corresponde cada total. La ecuación de CANTIDAD de entradas debe igualarse a 80, no a 242.000 (que es dinero); y la ecuación de DINERO debe igualarse a 242.000, no a 80.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "g + p = 80 ; 2.500g + 4.000p = 80",
+          "esCorrecta": false,
+          "feedback": "La segunda ecuación (el dinero recaudado) no puede igualarse a 80: ese 80 es el total de ENTRADAS, no de pesos. El total recaudado, $242.000, es un número distinto y mucho mayor.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "g + p = 80 ; 4.000g + 2.500p = 242.000",
+          "esCorrecta": false,
+          "feedback": "Invertiste los precios: $2.500 corresponde a la entrada general y $4.000 a la preferencial, no al revés. El coeficiente de g debe ser 2.500, y el de p debe ser 4.000.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "El total de entradas da g + p = 80. El dinero recaudado da 2.500g + 4.000p = 242.000 (2.500 con general, 4.000 con preferencial). El sistema correcto es el de la alternativa A. ✓"
+    },
+    {
+      "id": "cierre-sistemas-6",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "Otro evento escolar vende entradas general a $2.000 y preferencial a $3.000. Se vendieron 60 entradas por un total de $154.000. Modela la situación con un sistema de ecuaciones y resuélvelo: ¿cuántas entradas general se vendieron?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "26",
+          "esCorrecta": true,
+          "feedback": "Correcto. g + p = 60; 2.000g + 3.000p = 154.000. Sustituyendo p = 60 − g: 2.000g + 3.000(60 − g) = 154.000 → −1.000g = −26.000 → g = 26."
+        },
+        {
+          "clave": "B",
+          "texto": "34",
+          "esCorrecta": false,
+          "feedback": "Ese es el número de entradas preferenciales (p = 34), no general. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de entrada.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "60",
+          "esCorrecta": false,
+          "feedback": "Ese es el total de entradas vendidas (60), no la cantidad de entradas general. El total por sí solo no dice cómo se reparte entre general y preferencial; hace falta resolver el sistema.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "40",
+          "esCorrecta": false,
+          "feedback": "Revisa la sustitución: al reemplazar p = 60 − g en 2.000g + 3.000p = 154.000, el 3.000 debe distribuirse en los dos términos del paréntesis (60 y −g), no solo en uno de ellos.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "g + p = 60; 2.000g + 3.000p = 154.000. p = 60 − g → 2.000g + 3.000(60 − g) = 154.000 → 2.000g + 180.000 − 3.000g = 154.000 → −1.000g = −26.000 → g = 26, p = 34. Comprobación: 26 + 34 = 60 ✓; 2.000×26 + 3.000×34 = 52.000 + 102.000 = 154.000 ✓. ✓"
+    },
+    {
+      "id": "cierre-sistemas-7",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un café mezcla granos Arábica (a $9.000 el kilo) con granos Robusta (a $5.000 el kilo) para obtener 20 kilos de mezcla, con un costo total de $136.000. ¿Cuántos kilos de Arábica lleva la mezcla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9",
+          "esCorrecta": true,
+          "feedback": "Correcto. a + r = 20; 9.000a + 5.000r = 136.000. Sustituyendo r = 20 − a: 9.000a + 5.000(20 − a) = 136.000 → 4.000a = 36.000 → a = 9."
+        },
+        {
+          "clave": "B",
+          "texto": "11",
+          "esCorrecta": false,
+          "feedback": "Ese es el número de kilos de Robusta (r = 11), no de Arábica. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de grano.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "20",
+          "esCorrecta": false,
+          "feedback": "Ese es el total de kilos de la mezcla (20), no la cantidad de Arábica. El total por sí solo no dice cómo se reparte entre los dos tipos de grano; hace falta resolver el sistema.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "14",
+          "esCorrecta": false,
+          "feedback": "Revisa la sustitución: al reemplazar r = 20 − a en 9.000a + 5.000r = 136.000, el 5.000 debe distribuirse en los dos términos del paréntesis (20 y −a), no solo en uno de ellos.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "a + r = 20; 9.000a + 5.000r = 136.000. r = 20 − a → 9.000a + 5.000(20 − a) = 136.000 → 9.000a + 100.000 − 5.000a = 136.000 → 4.000a = 36.000 → a = 9, r = 11. Comprobación: 9 + 11 = 20 ✓; 9.000×9 + 5.000×11 = 81.000 + 55.000 = 136.000 ✓. ✓"
+    },
+    {
+      "id": "cierre-sistemas-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "En la boletería de cine de sistemas-dos-historias (adulto $7.000, niño $4.000, 45 entradas, $252.000) la solución fue 24 adultos y 21 niños. En el problema de las edades de sistemas-plantear-antes-resolver, Sofía tiene 23 años y Mateo 9. Un estudiante afirma: 'El número de entradas de adulto (24) y la edad de Sofía (23) se obtienen con el mismo tipo de razonamiento: plantear dos ecuaciones y sustituir una en la otra.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: en ambos casos hay dos condiciones sobre dos cantidades desconocidas, cada una se traduce a una ecuación, y se sustituye una en la otra. La diferencia es que el problema de las edades exige además ajustar por el desplazamiento temporal ('hace 2 años') antes de comparar.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ambos son sistemas 2x2 resueltos por sustitución; la única diferencia real es que el de las edades tiene una condición temporal que hay que traducir con cuidado antes de plantear la ecuación."
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque un problema es sobre dinero y el otro sobre edades, así que los métodos matemáticos son distintos.",
+          "esCorrecta": false,
+          "feedback": "El contexto (dinero vs. edades) no cambia el método matemático: en ambos casos son dos ecuaciones lineales con dos incógnitas, resueltas de la misma forma, aunque los números representen cosas distintas en cada problema.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque el problema de las entradas tiene una única solución y el de las edades tiene infinitas soluciones.",
+          "esCorrecta": false,
+          "feedback": "Eso no es correcto: el sistema de las edades también tiene una única solución (23 años y 9 años), igual que el de las entradas. Ninguno de los dos es un caso de infinitas soluciones como los vistos en sistemas-rectas-no-se-cruzan.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, pero solo porque ambos números (24 y 23) son parecidos; si fueran muy distintos el método no funcionaría igual.",
+          "esCorrecta": false,
+          "feedback": "El método de sustitución no depende de que los resultados se parezcan entre sí: funciona igual sin importar qué tan distintos sean los números finales de cada problema.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "Los dos problemas son sistemas 2x2 con dos condiciones sobre dos incógnitas, resueltos despejando una incógnita en una ecuación y sustituyendo en la otra. La única diferencia estructural es que el problema de las edades incluye una condición con desplazamiento temporal, que exige restar 2 a cada edad antes de comparar. La alternativa correcta es A. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-sistemas-1 (kiosco, resolver): completos $1.200/jugos $600, 60 productos, $52.800 → (28, 32)",
+    "cierre-sistemas-2 (kiosco, representar): bebidas $900/snacks $700, 24 productos, $19.400 (plantear sistema)",
+    "cierre-sistemas-3 (ciclistas, resolver): A con 5 km de ventaja a 15 km/h, B a 20 km/h desde el inicio → encuentro a los 20 km",
+    "cierre-sistemas-4 (ciclistas, argumentar): C con 5 km de ventaja a 15 km/h, D a 12 km/h desde el inicio → nunca se encuentran (t negativo)",
+    "cierre-sistemas-5 (entradas de evento, representar): general $2.500/preferencial $4.000, 80 entradas, $242.000 (plantear sistema)",
+    "cierre-sistemas-6 (entradas de evento, modelar): general $2.000/preferencial $3.000, 60 entradas, $154.000 → (26, 34)",
+    "cierre-sistemas-7 (mezcla de café, modelar): Arábica $9.000/Robusta $5.000, 20 kg, $136.000 → (9, 11)",
+    "cierre-sistemas-8 (boletería + edades, argumentar, integrador): reutiliza los resultados ya conocidos de sistemas-dos-historias (24, 21) y sistemas-plantear-antes-resolver (23, 9), sin números nuevos"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Sistemas de ecuaciones lineales (2x2)' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md).",
+      "Este cierre reutiliza contextos ya verificados LIMPIO en la consulta del 2026-08-19 (docs/diseno-modulo-sistemas-2x2.md): kiosco escolar, ciclistas a distinta velocidad, entradas de un evento escolar y mezcla de café. No se ejecutó una consulta-fuentes nueva y separada para este archivo; ver _notasInternas."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando contextos ya verificados del módulo con números nuevos. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-19"
+  }
+}
