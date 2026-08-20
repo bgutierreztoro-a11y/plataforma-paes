@@ -1,0 +1,401 @@
+{
+  "tipo": "leccion",
+  "id": "sistemas-rectas-no-se-cruzan",
+  "titulo": "Sistemas sin solución o con infinitas soluciones",
+  "objetivo": "Reconocer, a partir de los coeficientes de un sistema 2x2, cuándo no tiene solución (mismo 'ritmo de cambio', distinto punto de partida) o tiene infinitas soluciones (la misma recta escrita de dos formas), distinguiendo ambos casos del caso con solución única visto en la lección anterior.",
+  "tiempoEstimadoMin": 22,
+  "prerrequisitos": [
+    "sistemas-dos-historias: método de sustitución para resolver un sistema 2x2 con solución única."
+  ],
+  "conceptos": [
+    "sistema sin solución (rectas paralelas)",
+    "sistema con infinitas soluciones (rectas coincidentes)",
+    "coeficiente de la incógnita como 'ritmo de cambio'",
+    "igualdad falsa vs. igualdad verdadera al eliminar la incógnita"
+  ],
+  "_notasInternas": [
+    "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (planes de telefonía, arriendo de bicicletas, estanques de agua) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza error-1 (Paso 7) del catálogo de esa lección. Los errores conceptuales propios de esta lección (confundir 'sin solución' con 'infinitas soluciones', o creer que depende del valor de la incógnita) van con feedback artesanal sin errorCatalogado, mismo patrón que cierre-enteros-racionales.json."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "¿Siempre hay un empate?",
+      "_notasInternas": [
+        "Presenta dos planes con el mismo costo por minuto. Predicción libre, sin corrección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Plan A de telefonía: $8.000 fijos al mes + $50 por minuto hablado.\nPlan B: $15.000 fijos al mes + $50 por minuto hablado.\n\nEn sistemas-dos-historias, todo sistema que resolviste tenía una única solución. ¿Será siempre así?"
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular nada todavía: ¿crees que existe algún número de minutos para el cual el Plan A y el Plan B cuesten exactamente lo mismo? Anota tu intuición y por qué.",
+          "tipoRespuesta": "numero",
+          "eventoAnalytics": "prediccion_registrada"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Prueba con 10 minutos",
+      "_notasInternas": [
+        "Calcula ambos costos a los 10 minutos. Correcto: costoA=8.500, costoB=15.500. Sin feedbackPorError: el punto es solo calcular, sin errores de método todavía."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "A los 10 minutos hablados, ¿cuánto cuesta cada plan? Plan A: $8.000 + $50 por minuto. Plan B: $15.000 + $50 por minuto.",
+          "campos": [
+            {
+              "id": "costoA",
+              "etiqueta": "Costo del Plan A a los 10 minutos",
+              "respuestaCorrecta": 8500,
+              "unidad": "$"
+            },
+            {
+              "id": "costoB",
+              "etiqueta": "Costo del Plan B a los 10 minutos",
+              "respuestaCorrecta": 15500,
+              "unidad": "$"
+            }
+          ],
+          "feedbackPorDefecto": "Plan A: 8.000 + 50×10 = 8.500. Plan B: 15.000 + 50×10 = 15.500. La diferencia entre los dos es 15.500 − 8.500 = 7.000."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Cambia la diferencia?",
+      "_notasInternas": [
+        "Predicción abierta sin corrección, previa al descubrimiento formal."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Ahora prueba con 100 minutos en vez de 10. Calcula el costo de cada plan y la diferencia entre ambos. ¿Cambió la diferencia respecto a los 10 minutos? ¿Por qué crees que pasa eso, mirando el precio por minuto de cada plan?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección. Con m=100: costoA=13.000, costoB=20.000, diferencia=7.000, igual que con m=10. Busca activar la intuición de que la diferencia es constante porque el coeficiente de m es igual en las dos ecuaciones."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "El mismo ritmo de cambio",
+      "_notasInternas": [
+        "Dos niveles: primero la idea del coeficiente igual, después el paso algebraico de igualar y restar 50m."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Los dos planes suben $50 por cada minuto adicional: el coeficiente de m (el 'ritmo de cambio') es igual en las dos ecuaciones. Por eso la diferencia entre ambos nunca cambia, sin importar cuántos minutos hables."
+            },
+            {
+              "nivel": 2,
+              "texto": "Iguala las dos expresiones: 8.000 + 50m = 15.000 + 50m. Resta 50m a los dos lados de la igualdad. ¿Qué te queda? ¿Puede ser cierto ese resultado para algún valor de m?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Una igualdad que nunca es cierta",
+      "_notasInternas": [
+        "INSIGHT FIJADO del módulo: cuando el coeficiente de la incógnita es igual en ambas ecuaciones, al igualar se cancela y queda una comparación entre constantes. Si es falsa, no hay solución."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Costo del Plan A: 8.000 + 50m\nCosto del Plan B: 15.000 + 50m\n\nPara encontrar en qué minuto costarían lo mismo, igualamos:\n\n8.000 + 50m = 15.000 + 50m\n\nRestamos 50m a los dos lados:\n\n8.000 + 50m − 50m = 15.000 + 50m − 50m\n8.000 = 15.000\n\nLa incógnita m desapareció por completo, y quedó una igualdad que es FALSA (8.000 no es igual a 15.000), sin importar qué valor tuviera m.\n\nEso significa que no existe ningún número de minutos para el cual los dos planes cuesten lo mismo: el sistema no tiene solución. Tiene sentido: los dos planes suben al mismo ritmo ($50 por minuto), así que la diferencia inicial de $7.000 entre sus cargos fijos nunca se cierra."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Sin solución, o infinitas: cómo distinguirlas",
+      "_notasInternas": [
+        "Notación formal de los tres casos + chequeo metacognitivo verdaderoFalso sobre la interpretación de 8.000 = 15.000."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Al resolver un sistema, si los coeficientes de la incógnita son iguales en las dos ecuaciones, al igualar las expresiones la incógnita se cancela y queda una comparación entre los términos independientes (números sin incógnita). Hay dos posibilidades:\n\n• Si esa comparación es FALSA (como 8.000 = 15.000): el sistema NO tiene solución. Gráficamente, son dos rectas paralelas que nunca se cruzan.\n\n• Si esa comparación es VERDADERA (como 0 = 0, o 12.000 = 12.000): el sistema tiene INFINITAS soluciones. Son la misma recta escrita de dos formas distintas (rectas coincidentes): cualquier valor de la incógnita cumple ambas ecuaciones a la vez.\n\nSi los coeficientes de la incógnita son DISTINTOS (como en sistemas-dos-historias), el sistema tiene una única solución: ese es el caso general, y el que viste primero."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si al resolver un sistema llegas a una igualdad como 8.000 = 15.000 (una afirmación falsa, sin ninguna incógnita), significa que cometiste un error de cálculo y debes revisar tu trabajo desde el principio.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "No es un error de cálculo: es el resultado correcto para un sistema sin solución. Cuando el coeficiente de la incógnita es igual en las dos ecuaciones y las constantes son distintas, SIEMPRE se llega a una igualdad falsa como esta, y eso es información válida (el sistema no tiene solución), no una señal de que algo salió mal.",
+          "feedbackFalso": "Correcto. Una igualdad falsa sin incógnitas (como 8.000 = 15.000) es el resultado esperado cuando el sistema no tiene solución; no indica un error de cálculo, sino que las dos rectas son paralelas y nunca se cruzan."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Practica: la misma oferta, escrita distinto",
+      "_notasInternas": [
+        "Introduce el caso de infinitas soluciones. Plan C1 = 12.000+40m, Plan C2 = 2×(6.000+20m). Correcto: 12.400 (a los 10 minutos, coinciden). feedbackPorError cubre error-1 (distribución parcial del 2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El Plan C se anuncia de dos formas. Forma 1: 12.000 + 40m. Forma 2 (una promoción): 'el doble de (6.000 + 20m)', es decir, 2 × (6.000 + 20m). Calcula el costo con la Forma 2, a los 10 minutos.",
+          "campos": [
+            {
+              "id": "costoPlanC",
+              "etiqueta": "Costo con la Forma 2, a los 10 minutos",
+              "respuestaCorrecta": 12400,
+              "unidad": "$"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "costoPlanC",
+              "valorObtenido": 12200,
+              "mensaje": "El 2 tiene que multiplicar a los DOS términos dentro del paréntesis: 2×6.000 y 2×(20×10), no solo al primero. 2 × (6.000 + 200) = 2×6.000 + 2×200 = 12.000 + 400 = 12.400.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "2 × (6.000 + 20×10) = 2 × (6.000 + 200) = 2 × 6.200 = 12.400. Coincide exactamente con la Forma 1 a los 10 minutos: 12.000 + 40×10 = 12.400. Son la misma recta, escrita de dos formas distintas."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Clasifica el sistema Plan A / Plan B",
+      "_notasInternas": [
+        "Retoma el escenario núcleo (Plan A / Plan B, sin solución). Tres distractores conceptuales propios de esta lección, sin errorCatalogado (no son errores de método sino de interpretación del caso sin solución vs. infinitas)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Plan A: $8.000 + $50 por minuto. Plan B: $15.000 + $50 por minuto. ¿Cuál de las siguientes afirmaciones sobre este sistema es correcta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "No tiene solución: los dos planes suben $50 por minuto (mismo coeficiente), pero parten de cargos fijos distintos, así que nunca van a costar lo mismo.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Al igualar las dos expresiones y restar 50m, queda 8.000 = 15.000, una igualdad falsa: no existe ningún minuto para el cual los dos planes cuesten lo mismo."
+            },
+            {
+              "id": "b",
+              "texto": "Tiene infinitas soluciones, porque los dos planes cobran lo mismo por minuto.",
+              "esCorrecta": false,
+              "feedback": "Que cobren lo mismo por minuto (mismo coeficiente) es la mitad de la historia. Para infinitas soluciones también necesitan partir del mismo cargo fijo, y aquí los cargos fijos son distintos (8.000 y 15.000): eso los hace paralelos, no coincidentes.",
+              "errorCatalogado": null
+            },
+            {
+              "id": "c",
+              "texto": "Tiene una única solución, en el minuto donde el cargo fijo se compensa.",
+              "esCorrecta": false,
+              "feedback": "Al resolver algebraicamente, la incógnita m se cancela por completo (el coeficiente es igual en ambas), así que no queda ningún minuto específico como solución: el resultado no depende de m en absoluto.",
+              "errorCatalogado": null
+            },
+            {
+              "id": "d",
+              "texto": "No se puede saber sin conocer cuántos minutos se van a hablar.",
+              "esCorrecta": false,
+              "feedback": "Al resolver el sistema, la incógnita m desaparece completamente de la ecuación (8.000 = 15.000, sin m). Eso significa que la respuesta NO depende de cuántos minutos se hablen: es siempre la misma, para cualquier m.",
+              "errorCatalogado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Qué señal te convenció?",
+      "_notasInternas": [
+        "Pregunta abierta no evaluada, instrumentación cualitativa (Test B, MOS §6)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "¿Qué te convenció más de que el Plan A y el Plan B nunca cuestan lo mismo: que la diferencia se mantuviera igual al probar con 10 y 100 minutos, o que la incógnita desapareciera al resolver el sistema algebraicamente?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Cierre formato PAES",
+      "_notasInternas": [
+        "Puente de texto + un cuarto chequeo formato PAES embebido (bloque 'pregunta'). Plan D/E, números propios distintos del resto de la lección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Si el coeficiente de la incógnita es igual en las dos ecuaciones, al igualar la incógnita se cancela y queda una comparación entre números.\n- Comparación falsa (como 8.000 = 15.000): sin solución, rectas paralelas.\n- Comparación verdadera (como 0 = 0): infinitas soluciones, la misma recta escrita de dos formas.\n- Coeficientes distintos: solución única, como en sistemas-dos-historias.\n\nUn último chequeo antes del cierre formal."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Plan D: $6.000 fijos + $35 por minuto. Plan E: $9.500 fijos + $35 por minuto. ¿Cuántas soluciones tiene el sistema formado por estos dos planes?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Ninguna",
+              "esCorrecta": true,
+              "feedback": "Correcto. Igualando: 6.000 + 35m = 9.500 + 35m → restando 35m a ambos lados → 6.000 = 9.500, falso. Los dos planes suben al mismo ritmo pero parten de cargos distintos: nunca cuestan lo mismo."
+            },
+            {
+              "clave": "B",
+              "texto": "Una",
+              "esCorrecta": false,
+              "feedback": "Al resolver, la incógnita m se cancela por completo (mismo coeficiente en ambas ecuaciones), así que no queda ningún valor específico de m como solución.",
+              "errorCatalogado": null
+            },
+            {
+              "clave": "C",
+              "texto": "Infinitas",
+              "esCorrecta": false,
+              "feedback": "Infinitas soluciones requiere que, además del mismo coeficiente, los cargos fijos también coincidan. Aquí son distintos (6.000 y 9.500), así que la igualdad final (6.000 = 9.500) es falsa, no verdadera.",
+              "errorCatalogado": null
+            },
+            {
+              "clave": "D",
+              "texto": "No se puede determinar sin más datos",
+              "esCorrecta": false,
+              "feedback": "Con las dos ecuaciones completas (cargo fijo y precio por minuto de cada plan) ya hay información suficiente: al igualarlas y simplificar se obtiene una respuesta definitiva, sin necesitar ningún dato adicional.",
+              "errorCatalogado": null
+            }
+          ],
+          "notaVerificacionMatematica": "6.000 + 35m = 9.500 + 35m → 6.000 = 9.500 (restando 35m a ambos lados), una igualdad falsa independiente de m. El sistema no tiene solución. ✓"
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Arriendo A: $5.000 fijos + $1.000 por hora. Arriendo B: $9.000 fijos + $1.000 por hora. Al igualar ambos costos para encontrar en qué hora cuestan lo mismo, ¿qué se obtiene?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5.000 = 9.000, una igualdad falsa: el sistema no tiene solución.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 5.000 + 1.000h = 9.000 + 1.000h → restando 1.000h a ambos lados → 5.000 = 9.000, falso. No existe ninguna hora para la cual ambos arriendos cuesten lo mismo."
+        },
+        {
+          "clave": "B",
+          "texto": "h = 0, porque a las 0 horas ambos cuestan lo mismo.",
+          "esCorrecta": false,
+          "feedback": "A las 0 horas, Arriendo A cuesta $5.000 y Arriendo B cuesta $9.000: no son iguales. h = 0 no es una solución de este sistema.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "Hay infinitas soluciones, porque el coeficiente de h es igual en ambas ecuaciones.",
+          "esCorrecta": false,
+          "feedback": "Que el coeficiente de h sea igual solo dice que la incógnita se va a cancelar. Para saber si el sistema tiene infinitas soluciones o ninguna, falta ver si los términos independientes (5.000 y 9.000) también coinciden, y aquí son distintos.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "h = 4, dividiendo la diferencia de cargos fijos (4.000) por el coeficiente de h (1.000).",
+          "esCorrecta": false,
+          "feedback": "Ese cálculo no corresponde a ningún paso válido para resolver el sistema: al igualar las dos ecuaciones, h se cancela por completo y no queda ninguna ecuación con h de la cual despejar un valor como 4.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "5.000 + 1.000h = 9.000 + 1.000h → 5.000 = 9.000 (restando 1.000h a ambos lados), falso para cualquier h. El sistema no tiene solución: los dos arriendos nunca cuestan lo mismo. ✓"
+    },
+    {
+      "id": "l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Estanque A: nivel(t) = 200 + 15t (litros, con t en minutos). Estanque B: nivel(t) = 2 × (100 + 7,5t). ¿Qué se puede afirmar sobre el sistema formado por estas dos expresiones?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tienen infinitas soluciones: al expandir, 2 × (100 + 7,5t) = 200 + 15t, exactamente la misma expresión que el Estanque A. Son la misma recta escrita de dos formas.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 2 × (100 + 7,5t) = 200 + 15t. Es idéntica a la expresión del Estanque A: cualquier valor de t cumple ambas ecuaciones a la vez, así que hay infinitas soluciones."
+        },
+        {
+          "clave": "B",
+          "texto": "No tienen solución, porque las expresiones se ven distintas a primera vista.",
+          "esCorrecta": false,
+          "feedback": "Que se vean distintas no significa que sean distintas: hay que expandir 2 × (100 + 7,5t) antes de comparar. Al expandirla, resulta ser exactamente la misma expresión que el Estanque A.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "Tienen una única solución, en el minuto donde el nivel de ambos estanques coincide por primera vez.",
+          "esCorrecta": false,
+          "feedback": "Los niveles no coinciden 'por primera vez' en un minuto específico: coinciden SIEMPRE, para cualquier t, porque son la misma expresión escrita de dos formas distintas.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "No se puede saber sin un valor de t.",
+          "esCorrecta": false,
+          "feedback": "Al expandir 2 × (100 + 7,5t) se obtiene 200 + 15t, idéntica a la expresión del Estanque A, sin necesitar ningún valor específico de t para compararlas.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "Expandiendo: 2 × (100 + 7,5t) = 200 + 15t. Es idéntica a la expresión del Estanque A. El sistema tiene infinitas soluciones: describen el mismo estanque. ✓"
+    },
+    {
+      "id": "l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: 'Si dos ecuaciones lineales tienen el mismo coeficiente para la incógnita, el sistema siempre tiene infinitas soluciones.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: depende también de los términos independientes. Si además coinciden, hay infinitas soluciones (rectas coincidentes); si no coinciden, no hay solución (rectas paralelas).",
+          "esCorrecta": true,
+          "feedback": "Correcto. El coeficiente igual solo garantiza que la incógnita se cancele al igualar; el resultado final (verdadero o falso) depende de si los términos independientes también coinciden."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, siempre, porque al restar las dos ecuaciones la incógnita desaparece por completo.",
+          "esCorrecta": false,
+          "feedback": "Que la incógnita desaparezca es cierto, pero no implica infinitas soluciones por sí solo: si lo que queda después es una igualdad FALSA (como 8.000 = 15.000), el sistema no tiene ninguna solución, no infinitas.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "No, en ese caso el sistema nunca tiene solución.",
+          "esCorrecta": false,
+          "feedback": "Tampoco es cierto en todos los casos: si los términos independientes también coinciden (como en el Plan C de esta lección), la igualdad que queda es VERDADERA, y el sistema tiene infinitas soluciones, no ninguna.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "Depende de si las ecuaciones están escritas en la misma unidad de medida.",
+          "esCorrecta": false,
+          "feedback": "La unidad de medida no determina el número de soluciones de un sistema: eso depende únicamente de los coeficientes y los términos independientes de las ecuaciones, ya escritas en las mismas unidades.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "El coeficiente igual asegura que la incógnita se cancele al igualar las ecuaciones, pero el resultado depende de los términos independientes: si coinciden, la igualdad final es verdadera (infinitas soluciones); si no coinciden, es falsa (sin solución). La alternativa correcta es A. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad/problema/pensar/pistas/descubrimiento/generalizacion/aplicacion: escenario núcleo, Plan A $8.000+$50/min y Plan B $15.000+$50/min → sin solución",
+    "practica (Paso 7): Plan C, dos formas equivalentes (12.000+40m y 2×(6.000+20m)) → infinitas soluciones",
+    "consolidacion (pregunta embebida, Paso 10): Plan D $6.000+$35/min y Plan E $9.500+$35/min → sin solución",
+    "itemsPAES l2-item-1 (resolver): Arriendo A $5.000+$1.000/h y Arriendo B $9.000+$1.000/h → sin solución",
+    "itemsPAES l2-item-2 (modelar): Estanque A 200+15t y Estanque B 2×(100+7,5t) → infinitas soluciones",
+    "itemsPAES l2-item-3 (argumentar): reutiliza el mecanismo general (coeficiente igual) sin números nuevos, evalúa una afirmación abstracta"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Sistemas de ecuaciones lineales (2x2)' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md).",
+      "Verificación de colisión de los candidatos de contexto ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-08-19, con node scripts/consultar-fuentes.mjs. Contextos usados en esta lección ('planes de telefonía', 'arriendo de bicicletas', 'estanques de agua') resultaron NO (limpio). Detalle completo en docs/diseno-modulo-sistemas-2x2.md."
+    ],
+    "declaracionOriginalidad": "Enunciados y contextos (planes de telefonía, arriendo de bicicletas, estanques de agua) creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-19"
+  }
+}
