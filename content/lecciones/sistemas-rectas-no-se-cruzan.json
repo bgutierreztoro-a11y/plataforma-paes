@@ -14,7 +14,7 @@
     "igualdad falsa vs. igualdad verdadera al eliminar la incógnita"
   ],
   "_notasInternas": [
-    "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (planes de telefonía, arriendo de bicicletas, estanques de agua) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
+    "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (planes de telefonía, arriendo de bicicletas) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19. El contexto de l2-item-2 ('estanques de agua') fue rechazado en la Ronda 2 de auditoría de originalidad (2026-08-19) por coincidir con un arquetipo clásico presente en el material fuente específico del tema (MOD-06_Ecuacion_Recta_Sistemas.md, MA-30_Sistemas_Ecuaciones.md); se reemplazó por 'ahorro semanal de dos amigos', verificado LIMPIO por Benja el mismo día.",
     "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza error-1 (Paso 7) del catálogo de esa lección. Los errores conceptuales propios de esta lección (confundir 'sin solución' con 'infinitas soluciones', o creer que depende del valor de la incógnita) van con feedback artesanal sin errorCatalogado, mismo patrón que cierre-enteros-racionales.json."
   ],
   "pasos": [
@@ -312,37 +312,37 @@
       "id": "l2-item-2",
       "habilidad": "modelar",
       "dificultad": "media",
-      "enunciado": "Estanque A: nivel(t) = 200 + 15t (litros, con t en minutos). Estanque B: nivel(t) = 2 × (100 + 7,5t). ¿Qué se puede afirmar sobre el sistema formado por estas dos expresiones?",
+      "enunciado": "Ahorro de Camila: total(s) = 20.000 + 1.500s (pesos, con s en semanas ahorradas). Ahorro de Benjamín: total(s) = 2 × (10.000 + 750s). ¿Qué se puede afirmar sobre el sistema formado por estas dos expresiones?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Tienen infinitas soluciones: al expandir, 2 × (100 + 7,5t) = 200 + 15t, exactamente la misma expresión que el Estanque A. Son la misma recta escrita de dos formas.",
+          "texto": "Tienen infinitas soluciones: al expandir, 2 × (10.000 + 750s) = 20.000 + 1.500s, exactamente la misma expresión que la de Camila. Son la misma recta escrita de dos formas.",
           "esCorrecta": true,
-          "feedback": "Correcto. 2 × (100 + 7,5t) = 200 + 15t. Es idéntica a la expresión del Estanque A: cualquier valor de t cumple ambas ecuaciones a la vez, así que hay infinitas soluciones."
+          "feedback": "Correcto. 2 × (10.000 + 750s) = 20.000 + 1.500s. Es idéntica a la expresión del ahorro de Camila: cualquier valor de s cumple ambas ecuaciones a la vez, así que hay infinitas soluciones."
         },
         {
           "clave": "B",
           "texto": "No tienen solución, porque las expresiones se ven distintas a primera vista.",
           "esCorrecta": false,
-          "feedback": "Que se vean distintas no significa que sean distintas: hay que expandir 2 × (100 + 7,5t) antes de comparar. Al expandirla, resulta ser exactamente la misma expresión que el Estanque A.",
+          "feedback": "Que se vean distintas no significa que sean distintas: hay que expandir 2 × (10.000 + 750s) antes de comparar. Al expandirla, resulta ser exactamente la misma expresión que la de Camila.",
           "errorCatalogado": null
         },
         {
           "clave": "C",
-          "texto": "Tienen una única solución, en el minuto donde el nivel de ambos estanques coincide por primera vez.",
+          "texto": "Tienen una única solución, en la semana donde el ahorro de ambos coincide por primera vez.",
           "esCorrecta": false,
-          "feedback": "Los niveles no coinciden 'por primera vez' en un minuto específico: coinciden SIEMPRE, para cualquier t, porque son la misma expresión escrita de dos formas distintas.",
+          "feedback": "Los ahorros no coinciden 'por primera vez' en una semana específica: coinciden SIEMPRE, para cualquier s, porque son la misma expresión escrita de dos formas distintas.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
-          "texto": "No se puede saber sin un valor de t.",
+          "texto": "No se puede saber sin un valor de s.",
           "esCorrecta": false,
-          "feedback": "Al expandir 2 × (100 + 7,5t) se obtiene 200 + 15t, idéntica a la expresión del Estanque A, sin necesitar ningún valor específico de t para compararlas.",
+          "feedback": "Al expandir 2 × (10.000 + 750s) se obtiene 20.000 + 1.500s, idéntica a la expresión del ahorro de Camila, sin necesitar ningún valor específico de s para compararlas.",
           "errorCatalogado": null
         }
       ],
-      "solucion": "Expandiendo: 2 × (100 + 7,5t) = 200 + 15t. Es idéntica a la expresión del Estanque A. El sistema tiene infinitas soluciones: describen el mismo estanque. ✓"
+      "solucion": "Expandiendo: 2 × (10.000 + 750s) = 20.000 + 1.500s. Es idéntica a la expresión del ahorro de Camila. El sistema tiene infinitas soluciones: describen el mismo ahorro. ✓"
     },
     {
       "id": "l2-item-3",
@@ -386,15 +386,16 @@
     "practica (Paso 7): Plan C, dos formas equivalentes (12.000+40m y 2×(6.000+20m)) → infinitas soluciones",
     "consolidacion (pregunta embebida, Paso 10): Plan D $6.000+$35/min y Plan E $9.500+$35/min → sin solución",
     "itemsPAES l2-item-1 (resolver): Arriendo A $5.000+$1.000/h y Arriendo B $9.000+$1.000/h → sin solución",
-    "itemsPAES l2-item-2 (modelar): Estanque A 200+15t y Estanque B 2×(100+7,5t) → infinitas soluciones",
+    "itemsPAES l2-item-2 (modelar): Ahorro de Camila 20.000+1.500s y ahorro de Benjamín 2×(10.000+750s) → infinitas soluciones",
     "itemsPAES l2-item-3 (argumentar): reutiliza el mecanismo general (coeficiente igual) sin números nuevos, evalúa una afirmación abstracta"
   ],
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Sistemas de ecuaciones lineales (2x2)' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md).",
-      "Verificación de colisión de los candidatos de contexto ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-08-19, con node scripts/consultar-fuentes.mjs. Contextos usados en esta lección ('planes de telefonía', 'arriendo de bicicletas', 'estanques de agua') resultaron NO (limpio). Detalle completo en docs/diseno-modulo-sistemas-2x2.md."
+      "Verificación de colisión de los candidatos de contexto ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-08-19, con node scripts/consultar-fuentes.mjs. Términos sueltos exactos consultados (cada uno como argumento propio del script, no como frase agregada): 'planes de telefonía' → NO; 'arriendo de bicicletas' → NO. Detalle completo en docs/diseno-modulo-sistemas-2x2.md.",
+      "Ronda 2 de auditoría de originalidad (2026-08-19): el contexto 'estanques de agua' de l2-item-2 fue rechazado por coincidir con un arquetipo clásico presente en el material fuente específico del tema (MOD-06_Ecuacion_Recta_Sistemas.md, MA-30_Sistemas_Ecuaciones.md), pese a que la consulta original de 2026-08-19 lo había marcado NO contra el corpus general. Se reemplazó por 'ahorro semanal de dos amigos'; término suelto exacto consultado el 2026-08-19 por Benja: 'ahorro semanal de dos amigos' → NO. Esta declaración cubre exactamente ese término, no 'ahorro' ni 'amigos' por separado ni ninguna otra combinación no consultada."
     ],
-    "declaracionOriginalidad": "Enunciados y contextos (planes de telefonía, arriendo de bicicletas, estanques de agua) creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "declaracionOriginalidad": "Enunciados y contextos (planes de telefonía, arriendo de bicicletas, ahorro semanal de dos amigos) creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-19"
   }

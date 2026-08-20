@@ -32,11 +32,24 @@ L2 y L3 reutilizan estos ids donde el error calza (típicamente `error-1`, `erro
 ## Mapa de contextos numéricos (sin repetir escena entre lecciones ni con el cierre)
 
 - **L1** — boletería de cine (adulto/niño), tres funciones con precios y totales distintos; ítems con boletería adicional; consolidación con una cuarta boletería.
-- **L2** — planes de telefonía con cargo fijo + costo por minuto (caso sin solución) y una oferta escrita de dos formas equivalentes (caso infinitas soluciones); ítems con arriendo de bicicletas y estanques de agua.
+- **L2** — planes de telefonía con cargo fijo + costo por minuto (caso sin solución) y una oferta escrita de dos formas equivalentes (caso infinitas soluciones); ítems con arriendo de bicicletas y ahorro semanal de dos amigos.
 - **L3** — edades de dos hermanos (escena núcleo); ítems con boletos de bus/metro y sueldo con bono fijo + comisión.
-- **Cierre** — kiosco escolar, ciclistas a distinta velocidad, entradas a un evento escolar, mezcla de café, e ítem integrador que combina el mecanismo de L1 (boletería, sustitución) con el de L3 (edades, traducir antes de resolver).
+- **Cierre** — kiosco escolar, drones en un trayecto, repartidores en bicicleta, entradas a un evento escolar, collares de piedra y madera, e ítem integrador que combina el mecanismo de L1 (boletería, sustitución) con el de L3 (edades, traducir antes de resolver).
 
-Ninguno de estos ocho candidatos reutiliza "manzanas y peras" (descartado) ni un candidato con colisión.
+Ninguno de estos candidatos reutiliza "manzanas y peras" (descartado) ni un candidato con colisión.
+
+### Ronda 2 — reemplazos por auditoría de originalidad (2026-08-19)
+
+La Ronda 1 de verificación (arriba) comparó contra el corpus general de fuentes aisladas y marcó NO para todos los candidatos usados en ese momento. Una Ronda 2 posterior, específica sobre el material fuente del tema (`MOD-06_Ecuacion_Recta_Sistemas.md`, `MA-30_Sistemas_Ecuaciones.md`), identificó que 4 de esos contextos —aunque técnicamente "NO" contra el corpus general— eran arquetipos clásicos de sistemas de ecuaciones que sí aparecen en ese material específico, y los rechazó:
+
+| Ubicación | Contexto rechazado | Reemplazo | Verificación del reemplazo |
+|---|---|---|---|
+| L2 `l2-item-2` | estanques de agua | ahorro semanal de dos amigos | NO (Benja, 2026-08-19) |
+| Cierre `cierre-sistemas-3` | ciclistas a distinta velocidad | drones en un trayecto | NO (Benja, 2026-08-19) |
+| Cierre `cierre-sistemas-4` | ciclistas a distinta velocidad | repartidores en bicicleta | NO (Benja, 2026-08-19) |
+| Cierre `cierre-sistemas-7` | mezcla de café | collares de piedra y madera | NO (Benja, 2026-08-19) |
+
+Cada verificación de la columna derecha corresponde exactamente al término suelto entre comillas (frase completa pasada como argumento propio a `consultar-fuentes.mjs`), no a palabras sueltas dentro de ella ni a ninguna otra combinación. El resto de los contextos del mapa (boletería de cine, planes de telefonía, arriendo de bicicletas, edades de hermanos, boletos de bus/metro, sueldo con bono, kiosco escolar, entradas de evento escolar) no fue tocado por la Ronda 2 y sigue vigente la verificación original de arriba.
 
 ## Decisión sobre el campo `estado`
 

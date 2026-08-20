@@ -5,8 +5,8 @@
   "_notasInternas": [
     "Cierre del módulo 'Sistemas de ecuaciones lineales (2x2)' (docs/diseno-modulo-sistemas-2x2.md), construido después de que las 3 lecciones (sistemas-dos-historias, sistemas-rectas-no-se-cruzan, sistemas-plantear-antes-resolver) pasaran npm run validar y npm run auditar en verde.",
     "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia error-1, error-5 y error-6, los tres ya definidos ahí. No se necesitó ningún id nuevo.",
-    "Contextos nuevos, sin repetir escena con ninguna de las 3 lecciones: kiosco escolar, ciclistas a distinta velocidad, entradas de un evento escolar, mezcla de café. El ítem 8 es el integrador pedido: combina el mecanismo de L1 (boletería de cine, sustitución) con el de L3 (edades de hermanos, plantear antes de resolver), reutilizando los resultados ya conocidos (24 adultos, 23 años) sin introducir escena nueva.",
-    "No se corrió una verificación de colisión nueva y separada para este archivo: los cuatro contextos (kiosco, ciclistas, entradas de evento, café) ya estaban en la lista de 14 candidatos consultados por Benja el 2026-08-19 (ver docs/diseno-modulo-sistemas-2x2.md) y resultaron LIMPIO."
+    "Contextos nuevos, sin repetir escena con ninguna de las 3 lecciones: kiosco escolar, drones en un trayecto, repartidores en bicicleta, entradas de un evento escolar, collares de piedra y madera. El ítem 8 es el integrador pedido: combina el mecanismo de L1 (boletería de cine, sustitución) con el de L3 (edades de hermanos, plantear antes de resolver), reutilizando los resultados ya conocidos (24 adultos, 23 años) sin introducir escena nueva.",
+    "Ronda 2 de auditoría de originalidad (2026-08-19): los contextos 'ciclistas a distinta velocidad' (items 3 y 4) y 'mezcla de café' (item 7) fueron rechazados por coincidir con arquetipos clásicos presentes en el material fuente específico del tema (MOD-06_Ecuacion_Recta_Sistemas.md, MA-30_Sistemas_Ecuaciones.md), pese a que la verificación original de 2026-08-19 los había marcado NO contra el corpus general (esa verificación de origen sigue siendo válida para 'kiosco escolar' y 'entradas de un evento escolar', que no se tocaron). Se reemplazaron por 'drones en un trayecto', 'repartidores en bicicleta' y 'collares de piedra y madera'; términos sueltos exactos consultados el 2026-08-19 por Benja: 'drones en un trayecto' → NO, 'repartidores en bicicleta' → NO, 'collares de piedra y madera' → NO. Esta declaración cubre exactamente esos tres términos, no combinaciones ni palabras sueltas no consultadas."
   ],
   "items": [
     {
@@ -85,73 +85,73 @@
       "id": "cierre-sistemas-3",
       "habilidad": "resolver",
       "dificultad": "media",
-      "enunciado": "Dos ciclistas comparten el mismo camino. Ciclista A parte con 5 km de ventaja y pedalea a 15 km/h. Ciclista B parte desde el inicio del camino (kilómetro 0) pedaleando a 20 km/h. ¿A qué distancia del inicio del camino se encuentran?",
+      "enunciado": "Dos drones sobrevuelan el mismo trayecto en línea recta. El Dron A despega desde un punto ubicado a 6 km del inicio del trayecto y avanza a 10 km/h. El Dron B despega desde el inicio del trayecto (kilómetro 0) avanzando a 16 km/h. ¿A qué distancia del inicio del trayecto se encuentran?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "20",
+          "texto": "16",
           "esCorrecta": true,
-          "feedback": "Correcto. Posición de A: 5 + 15t. Posición de B: 20t. Igualando: 5 + 15t = 20t → 5 = 5t → t = 1 hora. Distancia: 20×1 = 20 km."
+          "feedback": "Correcto. Posición de A: 6 + 10t. Posición de B: 16t. Igualando: 6 + 10t = 16t → 6 = 6t → t = 1 hora. Distancia: 16×1 = 16 km."
         },
         {
           "clave": "B",
-          "texto": "5",
+          "texto": "6",
           "esCorrecta": false,
-          "feedback": "5 km es la ventaja inicial de A, no la distancia a la que se encuentran. Hay que igualar las dos posiciones (5 + 15t y 20t) y resolver para t, y luego calcular la distancia con ese valor de t.",
+          "feedback": "6 km es la ventaja inicial de A, no la distancia a la que se encuentran. Hay que igualar las dos posiciones (6 + 10t y 16t) y resolver para t, y luego calcular la distancia con ese valor de t.",
           "errorCatalogado": null
         },
         {
           "clave": "C",
-          "texto": "15",
+          "texto": "10",
           "esCorrecta": false,
-          "feedback": "15 km/h es la velocidad del Ciclista A, no la distancia del encuentro. Hay que resolver el sistema formado por las dos posiciones, no usar directamente uno de los datos del enunciado.",
+          "feedback": "10 km/h es la velocidad del Dron A, no la distancia del encuentro. Hay que resolver el sistema formado por las dos posiciones, no usar directamente uno de los datos del enunciado.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
-          "texto": "25",
+          "texto": "22",
           "esCorrecta": false,
-          "feedback": "Sumaste la ventaja (5) y la velocidad de B (20) sin resolver el sistema. Hay que igualar 5 + 15t = 20t, encontrar t = 1, y recién ahí calcular la distancia (20×1 = 20).",
+          "feedback": "Sumaste la ventaja (6) y la velocidad de B (16) sin resolver el sistema. Hay que igualar 6 + 10t = 16t, encontrar t = 1, y recién ahí calcular la distancia (16×1 = 16).",
           "errorCatalogado": null
         }
       ],
-      "solucion": "Posición de A: 5 + 15t. Posición de B: 20t. Igualando: 5 + 15t = 20t → 5t = 5 → t = 1 hora. Distancia del encuentro: 20×1 = 20 km (comprobación: 5+15×1 = 20 también). ✓"
+      "solucion": "Posición de A: 6 + 10t. Posición de B: 16t. Igualando: 6 + 10t = 16t → 6t = 6 → t = 1 hora. Distancia del encuentro: 16×1 = 16 km (comprobación: 6+10×1 = 16 también). ✓"
     },
     {
       "id": "cierre-sistemas-4",
       "habilidad": "argumentar",
       "dificultad": "alta",
-      "enunciado": "Ciclista C parte con 5 km de ventaja pedaleando a 15 km/h. Ciclista D parte desde el inicio del camino pedaleando a 12 km/h. Un estudiante afirma: 'Como los dos avanzan a velocidad constante, D alcanzará a C en algún momento, sin importar que sea más lento.' ¿Es correcta esta afirmación?",
+      "enunciado": "Dos repartidores en bicicleta comparten el mismo trayecto. El Repartidor C parte con 6 km de ventaja pedaleando a 10 km/h. El Repartidor D parte desde el inicio del trayecto pedaleando a 8 km/h. Un estudiante afirma: 'Como los dos avanzan a velocidad constante, D alcanzará a C en algún momento, sin importar que sea más lento.' ¿Es correcta esta afirmación?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "No: igualando 5 + 15t = 12t se obtiene t = −5/3, un tiempo negativo sin sentido en este problema. Como D es más lento que C y C ya llevaba ventaja, D nunca alcanza a C; la distancia entre ambos aumenta con el tiempo.",
+          "texto": "No: igualando 6 + 10t = 8t se obtiene t = −3, un tiempo negativo sin sentido en este problema. Como D es más lento que C y C ya llevaba ventaja, D nunca alcanza a C; la distancia entre ambos aumenta con el tiempo.",
           "esCorrecta": true,
           "feedback": "Correcto. Un tiempo negativo como solución significa que el encuentro habría ocurrido 'antes de partir', lo que no tiene sentido físico: en el problema real, D nunca alcanza a C."
         },
         {
           "clave": "B",
-          "texto": "Sí, porque ambos avanzan a velocidad constante y toda carrera con velocidad constante termina en un encuentro.",
+          "texto": "Sí, porque ambos avanzan a velocidad constante y todo trayecto con velocidad constante termina en un encuentro.",
           "esCorrecta": false,
           "feedback": "Eso no es cierto en general: si el que va atrás es más LENTO que el que va adelante, la distancia entre ambos crece con el tiempo en vez de achicarse, y nunca se encuentran.",
           "errorCatalogado": null
         },
         {
           "clave": "C",
-          "texto": "No se puede saber sin conocer cuánto dura la carrera.",
+          "texto": "No se puede saber sin conocer cuánto dura el trayecto.",
           "esCorrecta": false,
-          "feedback": "El sistema (5 + 15t = 12t) ya responde la pregunta de forma definitiva: al resolverlo se obtiene un tiempo negativo, que indica que el encuentro no ocurre para ningún valor de t ≥ 0, sin necesitar saber cuánto dura la carrera.",
+          "feedback": "El sistema (6 + 10t = 8t) ya responde la pregunta de forma definitiva: al resolverlo se obtiene un tiempo negativo, que indica que el encuentro no ocurre para ningún valor de t ≥ 0, sin necesitar saber cuánto dura el trayecto.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
-          "texto": "Sí, en el kilómetro 20, igual que en el caso de los ciclistas A y B.",
+          "texto": "Sí, en el kilómetro 16, igual que en el caso de los drones A y B.",
           "esCorrecta": false,
-          "feedback": "Ese resultado corresponde al caso anterior (Ciclista B, más rápido que A). Acá D es MÁS LENTO que C, no más rápido, así que la situación es distinta: D nunca alcanza a C, no se encuentran en ningún kilómetro.",
+          "feedback": "Ese resultado corresponde al caso anterior (Dron B, más rápido que A). Acá D es MÁS LENTO que C, no más rápido, así que la situación es distinta: D nunca alcanza a C, no se encuentran en ningún kilómetro.",
           "errorCatalogado": null
         }
       ],
-      "solucion": "Posición de C: 5 + 15t. Posición de D: 12t. Igualando: 5 + 15t = 12t → 5 = −3t → t = −5/3. Un tiempo negativo no tiene sentido en este contexto: para cualquier t ≥ 0, D nunca alcanza a C (de hecho, la distancia entre ambos crece, porque D es más lento y C partió con ventaja). La alternativa correcta es A. ✓"
+      "solucion": "Posición de C: 6 + 10t. Posición de D: 8t. Igualando: 6 + 10t = 8t → 6 = −2t → t = −3. Un tiempo negativo no tiene sentido en este contexto: para cualquier t ≥ 0, D nunca alcanza a C (de hecho, la distancia entre ambos crece, porque D es más lento y C partió con ventaja). La alternativa correcta es A. ✓"
     },
     {
       "id": "cierre-sistemas-5",
@@ -229,37 +229,37 @@
       "id": "cierre-sistemas-7",
       "habilidad": "modelar",
       "dificultad": "media",
-      "enunciado": "Un café mezcla granos Arábica (a $9.000 el kilo) con granos Robusta (a $5.000 el kilo) para obtener 20 kilos de mezcla, con un costo total de $128.000. ¿Cuántos kilos de Arábica lleva la mezcla?",
+      "enunciado": "Una feria de artesanías arma una vitrina con collares de piedra (a $9.000 cada uno) y collares de madera (a $5.000 cada uno), con 20 collares en total, por un valor de $128.000. ¿Cuántos collares de piedra tiene la vitrina?",
       "alternativas": [
         {
           "clave": "A",
           "texto": "7",
           "esCorrecta": true,
-          "feedback": "Correcto. a + r = 20; 9.000a + 5.000r = 128.000. Sustituyendo r = 20 − a: 9.000a + 5.000(20 − a) = 128.000 → 4.000a = 28.000 → a = 7."
+          "feedback": "Correcto. p + m = 20; 9.000p + 5.000m = 128.000. Sustituyendo m = 20 − p: 9.000p + 5.000(20 − p) = 128.000 → 4.000p = 28.000 → p = 7."
         },
         {
           "clave": "B",
           "texto": "13",
           "esCorrecta": false,
-          "feedback": "Ese es el número de kilos de Robusta (r = 13), no de Arábica. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de grano.",
+          "feedback": "Ese es el número de collares de madera (m = 13), no de piedra. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de collar.",
           "errorCatalogado": "error-5"
         },
         {
           "clave": "C",
           "texto": "20",
           "esCorrecta": false,
-          "feedback": "Ese es el total de kilos de la mezcla (20), no la cantidad de Arábica. El total por sí solo no dice cómo se reparte entre los dos tipos de grano; hace falta resolver el sistema.",
+          "feedback": "Ese es el total de collares de la vitrina (20), no la cantidad de collares de piedra. El total por sí solo no dice cómo se reparte entre los dos tipos de collar; hace falta resolver el sistema.",
           "errorCatalogado": null
         },
         {
           "clave": "D",
           "texto": "2",
           "esCorrecta": false,
-          "feedback": "Al despejar r en a + r = 20, hay que aplicar el signo negativo: r = 20 − a. Si se escribe r = 20 + a por no aplicar bien ese signo, la sustitución posterior (9.000a + 5.000(20 + a) = 128.000 → 14.000a = 28.000 → a = 2) lleva a un valor como este, que no cumple el sistema real.",
+          "feedback": "Al despejar m en p + m = 20, hay que aplicar el signo negativo: m = 20 − p. Si se escribe m = 20 + p por no aplicar bien ese signo, la sustitución posterior (9.000p + 5.000(20 + p) = 128.000 → 14.000p = 28.000 → p = 2) lleva a un valor como este, que no cumple el sistema real.",
           "errorCatalogado": "error-1"
         }
       ],
-      "solucion": "a + r = 20; 9.000a + 5.000r = 128.000. r = 20 − a → 9.000a + 5.000(20 − a) = 128.000 → 9.000a + 100.000 − 5.000a = 128.000 → 4.000a = 28.000 → a = 7, r = 13. Comprobación: 7 + 13 = 20 ✓; 9.000×7 + 5.000×13 = 63.000 + 65.000 = 128.000 ✓. ✓"
+      "solucion": "p + m = 20; 9.000p + 5.000m = 128.000. m = 20 − p → 9.000p + 5.000(20 − p) = 128.000 → 9.000p + 100.000 − 5.000p = 128.000 → 4.000p = 28.000 → p = 7, m = 13. Comprobación: 7 + 13 = 20 ✓; 9.000×7 + 5.000×13 = 63.000 + 65.000 = 128.000 ✓. ✓"
     },
     {
       "id": "cierre-sistemas-8",
@@ -301,17 +301,17 @@
   "contextosNumericos": [
     "cierre-sistemas-1 (kiosco, resolver): completos $1.200/jugos $600, 60 productos, $52.200 → (27, 33)",
     "cierre-sistemas-2 (kiosco, representar): bebidas $900/snacks $700, 24 productos, $19.400 (plantear sistema)",
-    "cierre-sistemas-3 (ciclistas, resolver): A con 5 km de ventaja a 15 km/h, B a 20 km/h desde el inicio → encuentro a los 20 km",
-    "cierre-sistemas-4 (ciclistas, argumentar): C con 5 km de ventaja a 15 km/h, D a 12 km/h desde el inicio → nunca se encuentran (t negativo)",
+    "cierre-sistemas-3 (drones, resolver): A con 6 km de ventaja a 10 km/h, B a 16 km/h desde el inicio → encuentro a los 16 km",
+    "cierre-sistemas-4 (repartidores en bicicleta, argumentar): C con 6 km de ventaja a 10 km/h, D a 8 km/h desde el inicio → nunca se encuentran (t negativo)",
     "cierre-sistemas-5 (entradas de evento, representar): general $2.500/preferencial $4.000, 80 entradas, $242.000 (plantear sistema)",
     "cierre-sistemas-6 (entradas de evento, modelar): general $2.000/preferencial $3.000, 60 entradas, $155.000 → (25, 35)",
-    "cierre-sistemas-7 (mezcla de café, modelar): Arábica $9.000/Robusta $5.000, 20 kg, $128.000 → (7, 13)",
+    "cierre-sistemas-7 (collares de piedra y madera, modelar): piedra $9.000/madera $5.000, 20 collares, $128.000 → (7, 13)",
     "cierre-sistemas-8 (boletería + edades, argumentar, integrador): reutiliza los resultados ya conocidos de sistemas-dos-historias (24, 21) y sistemas-plantear-antes-resolver (23, 9), sin números nuevos"
   ],
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Sistemas de ecuaciones lineales (2x2)' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md).",
-      "Este cierre reutiliza contextos ya verificados LIMPIO en la consulta del 2026-08-19 (docs/diseno-modulo-sistemas-2x2.md): kiosco escolar, ciclistas a distinta velocidad, entradas de un evento escolar y mezcla de café. No se ejecutó una consulta-fuentes nueva y separada para este archivo; ver _notasInternas."
+      "Este cierre reutiliza dos contextos ya verificados LIMPIO en la consulta del 2026-08-19 (docs/diseno-modulo-sistemas-2x2.md): 'kiosco escolar' y 'entradas de un evento escolar'. Los otros tres ('ciclistas a distinta velocidad', 'mezcla de café') fueron rechazados en la Ronda 2 de auditoría de originalidad (2026-08-19) y reemplazados; ver _notasInternas para el detalle y los términos sueltos exactos verificados para sus reemplazos ('drones en un trayecto', 'repartidores en bicicleta', 'collares de piedra y madera')."
     ],
     "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando contextos ya verificados del módulo con números nuevos. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
