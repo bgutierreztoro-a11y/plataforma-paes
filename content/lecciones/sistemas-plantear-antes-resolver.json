@@ -1,0 +1,411 @@
+{
+  "tipo": "leccion",
+  "id": "sistemas-plantear-antes-resolver",
+  "titulo": "Problemas con sistemas de ecuaciones 2x2",
+  "objetivo": "Traducir un problema en palabras a un sistema de dos ecuaciones lineales con dos incógnitas —identificando qué va en cada ecuación, incluyendo condiciones con desplazamiento temporal ('hace n años', 'dentro de n años')— y resolverlo con el método ya dominado.",
+  "tiempoEstimadoMin": 25,
+  "prerrequisitos": [
+    "sistemas-dos-historias: método de sustitución para resolver un sistema 2x2.",
+    "sistemas-rectas-no-se-cruzan: reconocer cuándo un sistema no tiene solución o tiene infinitas."
+  ],
+  "conceptos": [
+    "traducción de un problema a un sistema de ecuaciones",
+    "condiciones con desplazamiento temporal (hace n años, dentro de n años)",
+    "identificación de las dos incógnitas de un problema",
+    "verificación de la solución contra el enunciado original"
+  ],
+  "_notasInternas": [
+    "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (edades de dos hermanos, boletos de bus y metro, sueldo con bono fijo y comisión) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutilizan error-4 y error-5 de esa lección donde el error calza. El error propio de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, o plantear con el rol de las dos incógnitas invertido) va con feedback artesanal sin errorCatalogado."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Dos hermanos, dos historias",
+      "_notasInternas": [
+        "Presenta el problema de edades sin traducir a ecuaciones. Predicción libre, sin corrección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La suma de las edades de Sofía y su hermano Mateo es 32 años.\n\nHace 2 años, la edad de Sofía era el triple de la edad que tenía Mateo en ese momento.\n\nA diferencia de sistemas-dos-historias, acá nadie te entrega las ecuaciones armadas: hay que construirlas a partir del enunciado."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin plantear ecuaciones todavía: ¿quién crees que es mayor, Sofía o Mateo? Da un número aproximado para cada edad.",
+          "tipoRespuesta": "numero",
+          "eventoAnalytics": "prediccion_registrada"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Prueba con una repartición",
+      "_notasInternas": [
+        "Verifica una repartición concreta (Sofía 20, Mateo 12) contra la segunda condición. Correcto: 3×(12−2)=30. Sofía hace 2 años tenía 18, que no coincide con 30: la repartición no cumple la Historia 2."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Supón que Sofía tiene 20 años y Mateo 12 (20 + 12 = 32, cumple la primera condición). Hace 2 años, Mateo tenía 12 − 2 = 10 años. ¿Cuánto es el triple de esa edad?",
+          "campos": [
+            {
+              "id": "tresVecesMateo",
+              "etiqueta": "El triple de la edad de Mateo hace 2 años",
+              "respuestaCorrecta": 30,
+              "unidad": "años"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "tresVecesMateo",
+              "valorObtenido": 36,
+              "mensaje": "Calculaste el triple de la edad ACTUAL de Mateo (3 × 12 = 36), no de la edad que tenía hace 2 años. Primero hay que restar los 2 años (12 − 2 = 10) y recién ahí multiplicar por 3.",
+              "errorCatalogado": null
+            }
+          ],
+          "feedbackPorDefecto": "Hace 2 años Mateo tenía 12 − 2 = 10 años. El triple de esa edad es 3 × 10 = 30. Pero hace 2 años Sofía tenía 20 − 2 = 18 años, que no es igual a 30: la repartición (20, 12) no cumple la segunda condición del problema."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Cómo se traduce 'hace 2 años'?",
+      "_notasInternas": [
+        "Predicción abierta sin corrección, previa al descubrimiento formal."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "La repartición (20, 12) no funcionó. Si llamas x a la edad de Sofía e y a la de Mateo, ¿cómo escribirías con símbolos la frase 'hace 2 años, la edad de Sofía era el triple de la edad de Mateo'? Anota tu intento, aunque no estés seguro.",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección. Busca activar la idea de que 'hace 2 años' obliga a restar 2 a CADA edad antes de comparar, antes de mostrarlo formalmente en el Paso 5."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Restar antes de comparar",
+      "_notasInternas": [
+        "Dos niveles: primero la ecuación directa, después el manejo del desplazamiento temporal."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "bajoDemanda",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Llama x a la edad actual de Sofía e y a la edad actual de Mateo. La primera condición se traduce directo: x + y = 32."
+            },
+            {
+              "nivel": 2,
+              "texto": "La segunda condición habla del pasado: hay que restar 2 a CADA edad antes de comparar. 'La edad de Sofía hace 2 años' es (x − 2); 'la edad de Mateo hace 2 años' es (y − 2). La condición completa es: x − 2 = 3 × (y − 2)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El sistema completo, resuelto",
+      "_notasInternas": [
+        "INSIGHT FIJADO del módulo: traducir primero, resolver después. Primera vez que se revela el resultado exacto (23, 9)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Llamemos x a la edad actual de Sofía e y a la edad actual de Mateo.\n\nHistoria 1 (suma de edades): x + y = 32\nHistoria 2 (hace 2 años, el triple): x − 2 = 3(y − 2)\n\nDespejamos x de la primera ecuación: x = 32 − y.\n\nSustituimos en la segunda (la OTRA ecuación):\n\n(32 − y) − 2 = 3(y − 2)\n30 − y = 3y − 6\n30 + 6 = 3y + y\n36 = 4y\ny = 9\n\nY con y = 9: x = 32 − 9 = 23.\n\nComprobación: 23 + 9 = 32 ✓ (cumple la Historia 1). Hace 2 años, Sofía tenía 21 y Mateo tenía 7; 21 = 3 × 7 ✓ (cumple la Historia 2). Sofía tiene 23 años y Mateo 9."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Plantear antes de resolver: la receta",
+      "_notasInternas": [
+        "Notación formal del proceso de planteamiento + chequeo metacognitivo verdaderoFalso."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Para resolver un problema con un sistema 2x2, primero hay que PLANTEAR antes de resolver:\n\n1. Identifica las dos incógnitas y ponles un nombre (x, y, o letras que representen lo que son).\n2. Traduce cada condición del enunciado a una ecuación, una por una.\n3. Cuidado con las condiciones con desplazamiento temporal ('hace n años', 'dentro de n años', 'el próximo mes'): hay que restar o sumar n a CADA cantidad involucrada ANTES de comparar, no comparar las cantidades actuales directamente.\n4. Recién con el sistema completo, resuelve con sustitución (o reducción), y verifica el resultado contra el enunciado original, no solo contra las ecuaciones."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En un problema de edades que dice 'hace 3 años', para plantear la ecuación de esa condición puedo usar las edades actuales directamente, sin restar 3.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Eso arma una ecuación que no representa lo que dice el enunciado. 'Hace 3 años' significa que hay que restar 3 a cada edad ANTES de compararlas: si no restas, estás comparando las edades de HOY, no las de hace 3 años.",
+          "feedbackFalso": "Correcto. Hay que restar 3 a cada edad involucrada antes de escribir la comparación; usar las edades actuales directamente arma una ecuación que no representa la condición del enunciado."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Practica: otra pareja de hermanos",
+      "_notasInternas": [
+        "Nueva pareja (Camila y Diego, suma 27, condición con 'dentro de 3 años' y 'hace 3 años' combinadas). Correcto: Camila = 15 (Diego = 12). feedbackPorError cubre error-5 (swap) y un error propio de la lección (ignora el desplazamiento temporal), sin id."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Camila y su hermano Diego: la suma de sus edades es 27. Dentro de 3 años, Camila tendrá el doble de la edad que Diego tenía hace 3 años. ¿Cuántos años tiene Camila hoy?",
+          "campos": [
+            {
+              "id": "edadCamila",
+              "etiqueta": "Edad de Camila hoy",
+              "respuestaCorrecta": 15,
+              "unidad": "años"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "edadCamila",
+              "valorObtenido": 12,
+              "mensaje": "Ese es el resultado para Diego, no para Camila. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál hermano.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "edadCamila",
+              "valorObtenido": 18,
+              "mensaje": "Planteaste la condición sin el desplazamiento temporal (x = 2y en vez de x + 3 = 2(y − 3)). 'Dentro de 3 años' y 'hace 3 años' obligan a sumar y restar 3 antes de comparar, no a comparar las edades actuales directamente.",
+              "errorCatalogado": null
+            }
+          ],
+          "feedbackPorDefecto": "x + y = 27; (x + 3) = 2(y − 3). Despejando x = 27 − y y sustituyendo: (27 − y + 3) = 2(y − 3) → 30 − y = 2y − 6 → 36 = 3y → y = 12. Con y = 12: x = 27 − 12 = 15. Camila tiene 15 años."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Elige el sistema correcto",
+      "_notasInternas": [
+        "Elegir el sistema (no resolver) para una tercera pareja. Los tres distractores son errores propios de planteamiento de esta lección, sin errorCatalogado (no calzan con los 6 ids de sistemas-dos-historias)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "La suma de las edades de Valentina y su hermano Tomás es 40. Hace 5 años, la edad de Valentina era el doble de la edad que tenía Tomás en ese momento. Si x = edad actual de Valentina e y = edad actual de Tomás, ¿cuál sistema representa esta situación?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "x + y = 40 ; x − 5 = 2(y − 5)",
+              "esCorrecta": true,
+              "feedback": "Correcto. La suma de edades actuales da x + y = 40. La condición de hace 5 años resta 5 a las dos edades antes de comparar: x − 5 = 2(y − 5)."
+            },
+            {
+              "id": "b",
+              "texto": "x + y = 40 ; x − 5 = 2y",
+              "esCorrecta": false,
+              "feedback": "El desplazamiento temporal ('hace 5 años') tiene que aplicarse a LAS DOS edades, no solo a la de Valentina. La edad de Tomás hace 5 años es (y − 5), no y directamente.",
+              "errorCatalogado": null
+            },
+            {
+              "id": "c",
+              "texto": "x + y = 40 ; x + 5 = 2(y + 5)",
+              "esCorrecta": false,
+              "feedback": "'Hace 5 años' significa RESTAR 5 (mirar al pasado), no sumar. Sumar 5 representaría 'dentro de 5 años', una condición distinta a la del enunciado.",
+              "errorCatalogado": null
+            },
+            {
+              "id": "d",
+              "texto": "x − y = 40 ; x − 5 = 2(y − 5)",
+              "esCorrecta": false,
+              "feedback": "La primera condición es sobre la SUMA de las edades ('la suma... es 40'), no sobre su diferencia. La ecuación correcta es x + y = 40, no x − y = 40.",
+              "errorCatalogado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Qué parte del planteamiento te costó más?",
+      "_notasInternas": [
+        "Pregunta abierta no evaluada, instrumentación cualitativa (Test B, MOS §6)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "De todo el proceso de plantear un problema de edades, ¿qué te costó más: identificar las dos incógnitas, traducir la condición con 'hace n años' o 'dentro de n años', o resolver el sistema una vez planteado?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda la respuesta (anonimizada) para revisión del piloto."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Cierre formato PAES",
+      "_notasInternas": [
+        "Puente de texto + un cuarto chequeo formato PAES embebido (bloque 'pregunta'). Isidora y Fernanda, números propios distintos del resto de la lección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Antes de resolver, hay que PLANTEAR: identificar las dos incógnitas y traducir cada condición a una ecuación.\n- Las condiciones con 'hace n años' o 'dentro de n años' obligan a sumar o restar n a CADA cantidad antes de comparar.\n- Verifica siempre la solución contra el enunciado original, no solo contra las ecuaciones.\n\nUn último chequeo antes del cierre formal."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Isidora y su hermana Fernanda: juntas suman 34 años. Hace 3 años, la edad de Isidora era el triple de la edad que tenía Fernanda. ¿Cuántos años tiene Isidora hoy?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "24",
+              "esCorrecta": true,
+              "feedback": "Correcto. x + y = 34; x − 3 = 3(y − 3). Despejando x = 34 − y y sustituyendo: 34 − y − 3 = 3y − 9 → 40 = 4y → y = 10. Con y = 10: x = 34 − 10 = 24."
+            },
+            {
+              "clave": "B",
+              "texto": "10",
+              "esCorrecta": false,
+              "feedback": "Ese es el resultado para Fernanda, no para Isidora. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál hermana.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "clave": "C",
+              "texto": "34",
+              "esCorrecta": false,
+              "feedback": "Ese es el total de la suma de edades (34), no la edad de Isidora. El total por sí solo no dice cómo se reparte entre las dos hermanas; hace falta resolver el sistema.",
+              "errorCatalogado": null
+            },
+            {
+              "clave": "D",
+              "texto": "21",
+              "esCorrecta": false,
+              "feedback": "21 es la edad que tenía Isidora HACE 3 años (x − 3 = 21), no su edad de hoy. Encontraste el valor de x − 3 pero no volviste a sumar los 3 años para obtener la edad actual que pide la pregunta.",
+              "errorCatalogado": "error-4"
+            }
+          ],
+          "notaVerificacionMatematica": "x + y = 34; x − 3 = 3(y − 3). x = 34 − y → 34 − y − 3 = 3y − 9 → 40 = 4y → y = 10, x = 24. Comprobación: 24 + 10 = 34 ✓; hace 3 años, 21 = 3×7 ✓. ✓"
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Un pasajero compró boletos de bus y de metro durante la semana. El boleto de bus cuesta $700 y el de metro $800. En total compró 12 boletos y gastó $9.100. ¿Cuántos boletos de metro compró?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7",
+          "esCorrecta": true,
+          "feedback": "Correcto. b + m = 12; 700b + 800m = 9.100. Sustituyendo b = 12 − m: 700(12 − m) + 800m = 9.100 → 8.400 + 100m = 9.100 → m = 7."
+        },
+        {
+          "clave": "B",
+          "texto": "5",
+          "esCorrecta": false,
+          "feedback": "Ese es el número de boletos de BUS (b = 5), no de metro. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de boleto.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "12",
+          "esCorrecta": false,
+          "feedback": "Ese es el total de boletos comprados (12), no la cantidad de boletos de metro. Falta resolver el sistema para saber cómo se reparte entre bus y metro.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "9",
+          "esCorrecta": false,
+          "feedback": "Revisa la sustitución: al reemplazar b = 12 − m en 700b + 800m = 9.100, hay que distribuir el 700 en los dos términos del paréntesis (12 y −m), no solo en uno de ellos.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "b + m = 12; 700b + 800m = 9.100. b = 12 − m → 700(12 − m) + 800m = 9.100 → 8.400 − 700m + 800m = 9.100 → 100m = 700 → m = 7, b = 5. Comprobación: 5 + 7 = 12 ✓; 700×5 + 800×7 = 3.500 + 5.600 = 9.100 ✓. ✓"
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Vendedor A: sueldo fijo de $300.000 más $2.000 por cada producto vendido. Vendedor B: sueldo fijo de $250.000 más $2.500 por cada producto vendido. Si p = cantidad de productos vendidos y g = ganancia total, ¿cuál sistema permite encontrar para qué cantidad de productos ambos vendedores ganan lo mismo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "g = 300.000 + 2.000p ; g = 250.000 + 2.500p",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada ecuación traduce directamente el sueldo fijo (término independiente) más la comisión por producto (coeficiente de p) de cada vendedor."
+        },
+        {
+          "clave": "B",
+          "texto": "g = 300.000 + 2.000p ; g = 250.000p + 2.500",
+          "esCorrecta": false,
+          "feedback": "En la segunda ecuación, el sueldo fijo ($250.000) y la comisión por producto ($2.500) quedaron en el lugar equivocado: el fijo va solo (sin multiplicar por p), y la comisión va multiplicada por p, no al revés.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "g = 2.000 + 300.000p ; g = 2.500 + 250.000p",
+          "esCorrecta": false,
+          "feedback": "Invertiste qué número es el sueldo fijo y cuál es la comisión por producto en las dos ecuaciones: el sueldo fijo ($300.000 y $250.000) no se multiplica por p, y la comisión ($2.000 y $2.500) sí.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "g = 300.000 + 2.000p ; g = 250.000 + 2.000p",
+          "esCorrecta": false,
+          "feedback": "Usaste la misma comisión por producto ($2.000) para los dos vendedores, pero el enunciado dice que el Vendedor B tiene una comisión distinta ($2.500). Cada ecuación debe usar los datos de su propio vendedor.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "La ganancia de cada vendedor es su sueldo fijo más su comisión por producto vendido: g = 300.000 + 2.000p para A, y g = 250.000 + 2.500p para B. El sistema correcto es el de la alternativa A. ✓"
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: 'Para plantear un problema de edades con «hace n años» o «dentro de n años», puedo usar las edades actuales directamente en la ecuación, porque al resolver el sistema los números se van a ajustar solos.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: hay que restar o sumar n a cada edad ANTES de plantear la ecuación de esa condición; resolver el sistema no corrige un planteamiento que ya representa una condición distinta a la del enunciado.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El sistema resuelve exactamente las ecuaciones que se plantearon. Si esas ecuaciones no incluyen el desplazamiento temporal correcto, la solución que se obtiene responde a un problema distinto al del enunciado, aunque el álgebra esté bien hecha."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, porque el método de sustitución ya considera automáticamente cualquier desplazamiento en el tiempo que tenga el problema.",
+          "esCorrecta": false,
+          "feedback": "El método de sustitución resuelve el sistema tal como fue planteado; no 'sabe' nada sobre lo que dice el enunciado en palabras. Si la ecuación no representa correctamente la condición temporal, el resultado tampoco lo hará.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "C",
+          "texto": "Sí, porque las edades actuales y las de hace n años difieren en una constante que no afecta el resultado final del sistema.",
+          "esCorrecta": false,
+          "feedback": "Esa diferencia constante es justamente la que cambia qué comparación se está haciendo: comparar edades actuales no es lo mismo que comparar edades de hace n años, y el sistema entrega una solución distinta según cuál se plantee.",
+          "errorCatalogado": null
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, pero solo para problemas con 'dentro de n años', no para problemas con 'hace n años'.",
+          "esCorrecta": false,
+          "feedback": "El error afecta a los dos tipos de condición por igual: tanto 'hace n años' (restar n) como 'dentro de n años' (sumar n) necesitan ese ajuste antes de comparar; usar las edades actuales sin ajustar falla en ambos casos.",
+          "errorCatalogado": null
+        }
+      ],
+      "solucion": "El sistema resuelve exactamente lo que se planteó: si la ecuación usa las edades actuales en vez de las edades desplazadas en el tiempo, representa una condición distinta a la del enunciado, y ningún paso de resolución corrige eso. La alternativa correcta es A. ✓"
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad/problema/pensar/pistas/descubrimiento/generalizacion: escenario núcleo, Sofía y Mateo, suma 32, hace 2 años el triple → (23, 9)",
+    "practica (Paso 7): Camila y Diego, suma 27, dentro de 3 años el doble de hace 3 años → (15, 12)",
+    "aplicacion (Paso 8): Valentina y Tomás, suma 40, hace 5 años el doble → plantear sistema, sin resolver",
+    "consolidacion (pregunta embebida, Paso 10): Isidora y Fernanda, suma 34, hace 3 años el triple → (24, 10)",
+    "itemsPAES l3-item-1 (resolver): boletos bus $700 / metro $800, 12 boletos, $9.100 → (5, 7)",
+    "itemsPAES l3-item-2 (modelar): sueldo fijo $300.000+$2.000/producto vs. $250.000+$2.500/producto → plantear sistema",
+    "itemsPAES l3-item-3 (argumentar): reutiliza el mecanismo general del desplazamiento temporal, sin números nuevos"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Sistemas de ecuaciones lineales (2x2)' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md).",
+      "Verificación de colisión de los candidatos de contexto ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-08-19, con node scripts/consultar-fuentes.mjs. Contextos usados en esta lección ('edades de dos hermanos', 'boletos de bus y metro', 'sueldo bono comisión') resultaron NO (limpio). Detalle completo en docs/diseno-modulo-sistemas-2x2.md."
+    ],
+    "declaracionOriginalidad": "Enunciados y contextos (edades de hermanos, boletos de bus y metro, sueldo con bono fijo y comisión) creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez",
+    "fecha": "2026-08-19"
+  }
+}
