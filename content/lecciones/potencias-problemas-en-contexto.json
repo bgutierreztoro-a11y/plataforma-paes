@@ -242,8 +242,7 @@
             {
               "campoId": "alturaTrasSeisRebotes",
               "valorObtenido": 0.0625,
-              "mensaje": "0,0625 es la altura del quinto rebote, no del sexto. Falta un rebote más: multiplica ese valor por 1/2 una vez más.",
-              "errorCatalogado": "error-13"
+              "mensaje": "0,0625 es la altura del quinto rebote, no del sexto. Falta un rebote más: multiplica ese valor por 1/2 una vez más."
             }
           ],
           "feedbackPorDefecto": "Parte de la altura del cuarto rebote (0,125 m) y multiplica por 1/2 dos veces más, para llegar al sexto rebote."
