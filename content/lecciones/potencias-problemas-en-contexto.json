@@ -1,0 +1,584 @@
+{
+  "tipo": "leccion",
+  "id": "potencias-problemas-en-contexto",
+  "titulo": "Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos",
+  "objetivo": "Decidir, a partir de lo que entrega un enunciado, si corresponde aplicar una potencia o una raíz enésima para resolverlo, y aplicar esa decisión en situaciones de multiplicación repetida por un factor fijo: calcular el resultado cuando el factor y la cantidad de repeticiones son conocidos, y encontrar el factor desconocido cuando lo que se conoce es el resultado final y la cantidad de repeticiones.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Las cinco reglas de las potencias de exponente entero: a⁰ = 1, a⁻ⁿ = 1/aⁿ, producto, cociente y potencia de una potencia de igual base (lección Propiedades de las potencias de base racional y exponente racional, potencias-multiplicar-corto)",
+    "Que ⁿ√a es lo mismo que a^(1/n), que ⁿ√(aᵐ) es lo mismo que a^(m/n), y que ninguna propiedad reparte una raíz sobre una suma (lección Descomposición y propiedades de las raíces enésimas en los números reales, potencias-raiz-escondida)",
+    "Operar con fracciones simples y multiplicar decimales (módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "potencia de exponente racional",
+    "raíz enésima",
+    "multiplicación repetida por un factor fijo",
+    "dirección de una pregunta: calcular el resultado o deshacer el resultado",
+    "producto de potencias de igual base",
+    "índice y exponente en la notación de raíz"
+  ],
+  "_notasInternas": [
+    "L3 del módulo Potencias y raíces enésimas. Arquitectura fijada y firmada en docs/diseno-modulo-potencias-y-raices.md. Este archivo implementa §a (L3), embebe el subconjunto de §c que usa (error-2, error-3, error-7, error-8, error-11, error-12, error-13, copiados carácter a carácter desde potencias-multiplicar-corto.json y potencias-raiz-escondida.json) y sigue el reparto de bloques de §e.",
+      "DOMINIO ELEGIDO: respaldo (d) de §f, rebote de una pelota en el gimnasio del colegio — decisión explícita de Benja en la sesión de redacción, en vez del candidato (a) aprobado (escalas de tamaño en potencias de diez). Motivo: (a) no traía un mecanismo de raíz ya resuelto (solo estaba aprobado el dominio, no la mecánica), y la regla del propio documento de diseño exige que la pregunta inversa natural del dominio sea «¿por cuánto multiplica cada paso?» y no «¿cuántos pasos?» (que es logaritmo, fuera del temario). (d) trae esa mecánica ya cerrada: ida h·rⁿ, vuelta r = ⁿ√(h_final/h_inicial), con r racional simple (1/2, 2/3, 3/4). Las cinco frases núcleo verificadas LIMPIO para (d) en la segunda tanda de §f («altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote», «rebote de la pelota en el gimnasio») son las que ancla este archivo: altura inicial 2 m y factor 1/2 se usan en todo el archivo, y el caso de 4 rebotes es el ejemplo trabajado de la dirección ida (potencia), en curiosidad y confirmado en descubrimiento.",
+      "IDA VS. VUELTA, Y POR QUÉ NO SE MEZCLAN EN LA MISMA PELOTA: la pelota del ejemplo trabajado (curiosidad/descubrimiento) tiene r = 1/2 conocido desde el enunciado — ahí solo se pide calcular hacia adelante (potencia). La «pelota de tenis» de problema/pensar/pistas tiene r oculto a propósito: el enunciado da altura inicial, altura final y cantidad de rebotes, y r es la incógnita (raíz) — nunca se dice que es la misma fracción 1/2, aunque matemáticamente lo sea; el estudiante lo encuentra, no lo recuerda. Es deliberado que el resultado coincida con el 1/2 ya visto: refuerza que el método funciona, no es una casualidad que haya que ocultar.",
+      "OBJETO DE DESCUBRIMIENTO (patrón, no constante): que la misma relación h_n = h · rⁿ se lee en dos direcciones, y que el enunciado —no la lección— dice cuál dirección hace falta. Por eso este módulo no declara auditoria.constante (decisión ya fijada en §0 del documento de diseño, igual que en L1 y L2).",
+      "UNIDADES: a diferencia de L1 y L2, en L3 los campos numerica SÍ miden una magnitud real (metros), según fija §0 y §e del documento de diseño. Todos los campos que piden una altura llevan \"unidad\": \"metros\". La única excepción es el campo que pide la fracción r (paso pistas): r es una razón adimensional —la misma naturaleza que el «aumento» de L1—, así que se declara en auditoria.camposAdimensionales, no se le inventa una unidad.",
+      "IDS DE CAMPO SIN CIFRA (regla 4 de docs/reglas-modulo.md): fraccionPorRebote, alturaTrasSeisRebotes, alturaTrasSieteRebotes — ninguno lleva un dígito; los números de rebotes se escriben en palabras dentro del id, no como cifra.",
+      "NÚMEROS SIN COLISIÓN INTERNA (regla 3b), verificados con node -e antes de commitear: valores correctos usados en campos/alternativas — 0,125 (item-1 A); 0,5 (pistas numerica, aplicación pregunta A); 0,03125 (descubrimiento numerica); 0,015625 (practica numerica). Valores distractor — 0,00625 (pistas, error-12); 0,25 (item-1 B, aplicación pregunta B — mismo valor en dos archivos distintos del mismo archivo, ninguno de los dos coincide con ningún correcto); 1,875 (item-1 C, error-13); 1 (item-1 D); 0,00048828125 (practica numerica, error-3); 1/24 y la expresión sin evaluar (0,25/2)³ (aplicación pregunta C y D, envueltas en negrita markdown para que scripts/auditar-leccion.mjs no las lea como valor numérico, mismo mecanismo documentado en L1 y L2). Ninguno de los valores distractor coincide con ningún valor declarado correcto en este archivo. La verificación mecánica completa la hace npm run auditar, esta nota es el chequeo manual previo.",
+      "AUDITORÍAS: PENDIENTES. Este archivo se redactó en el mismo hilo donde se decidió cambiar de dominio (a → d), así que CLAUDE.md prohíbe que este mismo hilo lo audite. La revisión matemática y la auditoría de originalidad se corren en un hilo nuevo, sin memoria de esta conversación, antes de firmar el commit de contenido."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "fraccionPorRebote": "La fracción r que representa cuánto alcanza cada rebote respecto al anterior es una razón (cuántas veces más chico), no una magnitud física con unidad propia asociada a este número."
+    }
+  },
+  "catalogoErrores": [
+    {
+      "id": "error-2",
+      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; para usarla, las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo están."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que acá la base sí es la misma: lo que falló no es cuál base, sino cuál regla."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Cambiar de lugar el índice y el exponente al pasar entre raíz y potencia: leer a^(m/n) como ᵐ√(aⁿ) en vez de ⁿ√(aᵐ). El denominador del exponente es el índice de la raíz y el numerador es el exponente del radicando; invertirlos da otro número: con una base positiva distinta de 1, las dos lecturas solo coinciden cuando m = n."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Repartir la raíz sobre una suma o una resta: dar √(a + b) = √a + √b. Las propiedades heredadas de las potencias reparten sobre productos y cocientes, no sobre sumas: primero se resuelve lo que está dentro de la raíz y después se saca la raíz."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Sumar radicales que no son el mismo, como si fueran términos semejantes: dar 2√3 + 3√2 = 5√5. Solo se pueden juntar los que, ya descompuestos, quedan con el mismo índice y el mismo radicando; √3 y √2 no se pueden descomponer más y son dos números distintos, igual que x e y en álgebra."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Confundir sacar la raíz con dividir por el índice: dar √36 = 18 o ³√27 = 9. La raíz busca un número que, usado como factor tantas veces como dice el índice, dé el radicando —6 · 6 = 36, 3 · 3 · 3 = 27—; dividir no responde esa pregunta."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Calcular bien y responder otra magnitud: entregar el área cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el enunciado."
+    }
+  ],
+  "contextosNumericos": [
+    "DOMINIO: una pelota que se deja caer en el gimnasio del colegio y rebota, alcanzando cada vez una fracción fija r de la altura del rebote anterior. Magnitud: la altura, en metros (a diferencia de L1 y L2, este módulo sí mide algo real). r mismo es una razón adimensional.",
+    "curiosidad (Paso 1): pelota que parte de 2 m, r = 1/2 conocido (dado en el enunciado). Tabla de rebotes 0 a 3 (alturas 2, 1, 0,5, 0,25 m). Predicción libre sobre el rebote 4 (sin corrección).",
+    "problema (Paso 2): pelota de tenis distinta, misma altura inicial (2 m), 5 rebotes contados, altura final 0,0625 m, r desconocido. Selección pedagógica sobre qué dato falta.",
+    "pensar (Paso 3): predicción libre sobre el valor de r de la pelota de tenis, sin corrección.",
+    "pistas (Paso 4): resolución guiada del r de la pelota de tenis. Numérica: r = 0,5, distractor 0,00625 (error-12, razón 0,03125 dividida por el índice 5).",
+    "descubrimiento (Paso 5): conecta el tanteo del paso 4 con la raíz quinta. Numérica de refuerzo hacia adelante: altura tras 6 rebotes de la pelota original (r = 1/2, h = 2 m), correcto 0,03125 m.",
+    "generalizacion (Paso 6): fórmula general h_n = h·rⁿ y r = (h_n/h)^(1/n). Selección sobre cuál expresión representa r, distractor error-13 (se queda en la razón total) y error-7 (índice y exponente invertidos).",
+    "practica (Paso 7): combinación de exponentes de igual base, r² · r³ = r⁵ (selección, distractor error-3: r⁶). Verdadero/falso sobre no poder combinar factores de dos pelotas distintas sumando exponentes (error-2, sin poder etiquetarlo por ser bloque verdaderoFalso). Numérica: altura tras 7 rebotes (r³ · r⁴), correcto 0,015625 m, distractor error-3: 0,00048828125 m (exponentes multiplicados, 3·4, en vez de sumados).",
+    "aplicacion (Paso 8, pregunta formato PAES embebida): tercera pelota, parte de 2 m, tras 3 rebotes llega a 0,25 m, r desconocido. Correcto 1/2, distractores error-13 (0,25, repite la altura final), error-7 ((0,25/2)³, índice y exponente invertidos) y error-12 (1/24, razón 1/8 dividida por el índice 3).",
+    "itemsPAES item-1 (resolver, media): pelota original, r = 1/2 conocido, altura tras 4 rebotes. Correcto 0,125 m. Distractores 0,0625 (un rebote de más, sin catalogar), 1,875 (error-13, altura perdida en vez de restante) y 1 (altura del primer rebote, sin catalogar).",
+    "itemsPAES item-2 (modelar, media): pelota que parte de 2 m y llega a 0,03125 m tras 6 rebotes, r desconocido. Pide la expresión de r, no el valor. Distractores error-7 (exponente 6 en vez de 1/6) y error-12 (dividir por 6 en vez de la raíz sexta), más un cuarto distractor sin catalogar.",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa cuatro afirmaciones generales sobre potencias y raíces, con error-2, error-8 y error-11 como las tres falsas.",
+    "NOTA DE NO COLISIÓN (chequeo del redactor, no exhaustivo): 0,125 y 0,25 son las mismas cifras que aparecen como filas de tabla en curiosidad (Paso 1); potencias-raiz-escondida.json comparte algún dígito suelto con este archivo, pero son magnitudes de otro dominio (baldosas de un patio), sin relación real. 2 metros como altura inicial se repite en varios pasos del mismo archivo a propósito, es el ancla del dominio; no colisiona con ningún otro archivo de content/ porque ninguno mide alturas de rebote. La verificación completa la hace npm run auditar, no esta nota."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "La pelota que pierde altura por partes iguales",
+      "_notasInternas": [
+        "Gancho: mostrar el patrón conocido (rebotes 0 a 3) con r ya dado y pedir extrapolar hacia el rebote 4. No hay misterio en este paso: r se conoce desde el enunciado. El misterio aparece recién en el paso 2, con una pelota distinta.",
+        "Verificación: 2 · (1/2) = 1; 1 · (1/2) = 0,5; 0,5 · (1/2) = 0,25; 0,25 · (1/2) = 0,125 (esta última no se muestra todavía, es la predicción)."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con los primeros rebotes de una pelota que se deja caer en el gimnasio del colegio desde 2 metros de altura. Cada rebote alcanza la mitad de la altura del rebote anterior.",
+          "datos": {
+            "columnas": ["Rebote", "Altura"],
+            "filas": [
+              [0, "2 m (altura inicial)"],
+              [1, "1 m"],
+              [2, "0,5 m"],
+              [3, "0,25 m"]
+            ]
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "En el gimnasio del colegio, una pelota se deja caer desde 2 metros de altura. Cada rebote alcanza la mitad de la altura del rebote anterior.\n\nLa tabla muestra los rebotes 0 a 3. Si el patrón se mantiene igual, ¿cuál crees que es la altura después del **cuarto rebote**?",
+          "tipoRespuesta": "numero"
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "La pelota que no dice su secreto",
+      "_notasInternas": [
+        "Cambia de pelota a propósito: esta segunda pelota (de tenis) tiene r desconocido. El profesor conoce altura inicial, cantidad de rebotes y altura final — todo menos la fracción r. Esto es la dirección «vuelta» del mecanismo, la que exige raíz.",
+        "La selección es pedagógica (no formato PAES): busca que el estudiante identifique CUÁL dato falta, no que calcule nada todavía."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El profesor de Educación Física tiene otra pelota, esta vez de tenis, y quiere estudiar cómo rebota.\n\nLa deja caer desde **2 metros** de altura, la misma que la pelota anterior. Cuenta con cuidado **5 rebotes**, y en el último mide que la pelota llegó a **0,0625 metros**.\n\nSabe la altura inicial. Sabe cuántos rebotes contó. Sabe la altura final. Pero no midió cada rebote por separado, así que no sabe qué fracción de la altura anterior alcanza cada uno."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Qué le falta averiguar al profesor?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "La fracción r que representa cuánto alcanza cada rebote respecto al anterior",
+              "esCorrecta": true,
+              "feedback": "Exacto. Tiene la altura inicial, la altura final y la cantidad de rebotes — los tres datos que sobran para calcular hacia adelante. Lo único que no midió directamente es la fracción que se repite en cada rebote."
+            },
+            {
+              "id": "b",
+              "texto": "Cuántos rebotes dio la pelota",
+              "esCorrecta": false,
+              "feedback": "Ese dato ya lo tiene: contó 5 rebotes con cuidado. No es lo que le falta."
+            },
+            {
+              "id": "c",
+              "texto": "La altura inicial de la pelota",
+              "esCorrecta": false,
+              "feedback": "Ese dato también lo tiene: la soltó desde 2 metros y lo midió antes de dejarla caer. No es lo que le falta."
+            },
+            {
+              "id": "d",
+              "texto": "La altura final de la pelota",
+              "esCorrecta": false,
+              "feedback": "Ese dato lo midió al final: 0,0625 metros después del quinto rebote. No es lo que le falta."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Ahora tú: adivina la fracción",
+      "_notasInternas": [
+        "Registro del intento genuino, sin pistas todavía. No se corrige: es el mismo tipo de bloque que curiosidad, pero acá el estudiante no tiene un patrón visible que extrapolar, solo tres datos sueltos (altura inicial, altura final, cantidad de rebotes)."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "La pelota de tenis partió de 2 metros, dio 5 rebotes, y llegó a 0,0625 metros.\n\nAntes de seguir: ¿qué número crees que podría ser la fracción r que se repite en cada rebote? No hace falta que estés seguro, solo anota tu mejor estimación.",
+          "tipoRespuesta": "numero"
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para encontrar la fracción escondida",
+      "_notasInternas": [
+        "Gradación real: la 1 recuerda que el mismo factor se repite 5 veces, la 2 nombra la operación (buscar un número que usado 5 veces como factor dé cierta razón) sin ejecutarla, la 3 entrega la razón ya calculada y deja solo el tanteo final.",
+        "Verificación: razón = 0,0625 ÷ 2 = 0,03125. El número que usado 5 veces como factor da 0,03125 es 0,5, porque 0,5⁵ = 0,03125.",
+        "Distractor 0,00625 (error-12): 0,03125 ÷ 5 = 0,00625, confundir sacar la raíz con dividir por el índice."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La pelota dio 5 rebotes, y en cada uno se aplicó la MISMA fracción r. No son 5 fracciones distintas: es la misma, repetida 5 veces seguidas."
+            },
+            {
+              "nivel": 2,
+              "texto": "Compara la altura final con la inicial: 0,0625 metros contra 2 metros. Esa comparación (0,0625 dividido por 2) es el resultado total de multiplicar por r cinco veces. Buscas el número que, usado como factor 5 veces, dé esa comparación — no el número que la divide."
+            },
+            {
+              "nivel": 3,
+              "texto": "0,0625 dividido por 2 es 0,03125. Ahora busca: ¿qué número, multiplicado por sí mismo 5 veces (r · r · r · r · r), da 0,03125? Prueba con fracciones simples como 1/2."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuál es la fracción r de la pelota de tenis?",
+          "campos": [
+            {
+              "id": "fraccionPorRebote",
+              "etiqueta": "Fracción r",
+              "respuestaCorrecta": 0.5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "fraccionPorRebote",
+              "valorObtenido": 0.00625,
+              "mensaje": "0,00625 sale de dividir 0,03125 por 5. Pero dividir por el índice no es lo mismo que sacar la raíz: buscas el número que usado 5 veces como factor da 0,03125, no el que resulta de repartir 0,03125 entre 5 partes.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Divide 0,0625 por 2 para obtener la razón total (0,03125), y busca el número que multiplicado por sí mismo 5 veces da esa razón."
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Encontrar la fracción escondida era sacar una raíz",
+      "_notasInternas": [
+        "EL CORAZÓN DE LA LECCIÓN: el tanteo del paso anterior —buscar el número que usado 5 veces como factor da 0,03125— es exactamente ⁵√0,03125. No es una operación nueva: es la misma raíz enésima de la lección anterior, aplicada a un problema con contexto en vez de a un número puro.",
+        "Verificación numérica de refuerzo: pelota original (r = 1/2 conocido, h = 2 m), altura tras 6 rebotes = 2 · (1/2)⁶ = 2 · 0,015625 = 0,03125 m.",
+        "El abierta conecta con L2 (patio de baldosas): ahí también se buscaba un número que multiplicado por sí mismo daba un total conocido; acá el «multiplicado por sí mismo» pasa a ser «multiplicado por sí mismo n veces», con n mayor que 2."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Vuelve a la pelota de tenis. Sabías que 0,03125 era el resultado de multiplicar r por sí mismo **5 veces**:\n\nr · r · r · r · r = 0,03125\n\nY eso, escrito con la notación que ya conoces, es exactamente:\n\n**r⁵ = 0,03125**\n\nEntonces r es el número que, elevado a 5, da 0,03125. Y eso tiene nombre: r es la **raíz quinta** de 0,03125.\n\n**r = ⁵√0,03125 = 0,5**\n\nNo es una operación nueva. Es la misma raíz de la lección anterior —la que usaste para encontrar el lado de un patio cuadrado a partir de su área—, aplicada ahora a un exponente distinto de 2, y a un problema con una pelota en vez de con baldosas.\n\nLa diferencia entre esta lección y la anterior no es el concepto: es que **acá el enunciado no te dice si necesitas multiplicar o si necesitas deshacer una multiplicación**. Eso lo tienes que decidir tú, leyendo qué datos te da y qué te pregunta."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Confirmemos que el patrón sigue funcionando hacia adelante, con la pelota original (la que partía de 2 metros y cuya fracción era 1/2, conocida desde el principio).\n\nSi después de 4 rebotes esa pelota llega a 0,125 metros, ¿cuál es su altura después del **sexto rebote**?",
+          "campos": [
+            {
+              "id": "alturaTrasSeisRebotes",
+              "etiqueta": "Altura tras 6 rebotes",
+              "respuestaCorrecta": 0.03125,
+              "unidad": "metros"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaTrasSeisRebotes",
+              "valorObtenido": 0.0625,
+              "mensaje": "0,0625 es la altura del quinto rebote, no del sexto. Falta un rebote más: multiplica ese valor por 1/2 una vez más.",
+              "errorCatalogado": "error-13"
+            }
+          ],
+          "feedbackPorDefecto": "Parte de la altura del cuarto rebote (0,125 m) y multiplica por 1/2 dos veces más, para llegar al sexto rebote."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "En la lección anterior, encontrar el lado de un patio cuadrado a partir de su área también era buscar un número que, multiplicado por sí mismo, diera un total conocido.\n\n**¿En qué se parece eso a encontrar la fracción r de la pelota de tenis, y en qué es distinto?**",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que note que ambos son 'deshacer' una multiplicación repetida (raíz), y que la diferencia es solo cuántas veces se repite el factor (2 veces en el patio, 5 en la pelota de tenis). Señal de alerta: describir la pelota como una división, arrastrando el error-12."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, para cualquier pelota",
+      "_notasInternas": [
+        "Recién acá se nombra la fórmula general, como exige el marco pedagógico.",
+        "Verificación selección: r = (h_n/h)^(1/n) es la forma correcta. Distractor b (error-13): h_n/h se queda en la razón total, sin sacar la raíz — exactamente 'quedarse en la potencia cuando lo que se pedía era deshacerla'. Distractor c (error-7): (h_n/h)^n invierte índice y exponente. Distractor d: invierte cuál altura va arriba, sin mecanismo catalogado exacto."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ya lo viste con la pelota de tenis. La forma general, para cualquier altura inicial *h*, cualquier cantidad de rebotes *n*, y cualquier fracción *r*:\n\n**Ida** (conoces r y n, buscas la altura final h_n):\n\n**h_n = h · rⁿ**\n\n**Vuelta** (conoces h, h_n y n, buscas la fracción r):\n\n**r = (h_n / h)^(1/n) = ⁿ√(h_n / h)**\n\nSon la misma relación, leída en dos direcciones. Y una regla más, para cuando se combinan rebotes de una misma pelota: si ya pasaron *a* rebotes y le siguen *b* rebotes más, el factor total de los *a + b* rebotes es:\n\n**rᵃ · rᵇ = r^(a+b)**\n\nExactamente la misma regla del producto de potencias de igual base que ya conoces."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un profesor conoce la altura inicial *h*, la altura *h_n* tras *n* rebotes, y la cantidad de rebotes *n*. ¿Cuál expresión representa correctamente la fracción r?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "**(h_n / h)^(1/n)**",
+              "esCorrecta": true,
+              "feedback": "Correcto. r es el número que, usado como factor n veces, transforma h en h_n. Eso es exactamente la raíz de índice n de la razón h_n/h, o sea (h_n/h)^(1/n)."
+            },
+            {
+              "id": "b",
+              "texto": "**h_n / h**",
+              "esCorrecta": false,
+              "feedback": "h_n/h es la razón total entre las dos alturas, no la fracción por rebote: es rⁿ, no r. Falta seguir hasta deshacer el exponente n, sacando la raíz de índice n.",
+              "errorCatalogado": "error-13"
+            },
+            {
+              "id": "c",
+              "texto": "**(h_n / h)^n**",
+              "esCorrecta": false,
+              "feedback": "Acá el exponente n quedó arriba en vez de abajo: elevar a n en vez de sacar la raíz de índice n invierte exactamente el índice y el exponente. La operación que deshace una potencia n no es otra potencia n, es su raíz.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "d",
+              "texto": "**(h / h_n)^(1/n)**",
+              "esCorrecta": false,
+              "feedback": "Esta expresión invirtió cuál altura va arriba: compara la altura inicial sobre la final, cuando lo que se necesita es cuánto se achicó, o sea la final sobre la inicial."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Práctica: combinar rebotes con cuidado",
+      "_notasInternas": [
+        "Progresión: combinar exponentes de la misma pelota (selección) → no poder combinar los de dos pelotas distintas (verdadero/falso, error-2 sin poder etiquetarlo) → cálculo numérico concreto de la combinación (numérica, error-3).",
+        "Verificación selección: r² · r³ = r⁵ (regla del producto de potencias de igual base). Distractor error-3: r⁶ = r^(2·3), exponentes multiplicados en vez de sumados.",
+        "Verificación verdadero/falso: dos pelotas con factores rA y rB distintos no comparten base, así que (rA)² · (rB)³ no se puede escribir como una sola potencia sumando exponentes. La afirmación es falsa.",
+        "Verificación numérica: pelota original, r = 1/2, h = 2 m. Altura tras 7 rebotes = 2 · (1/2)⁷ = 0,015625 m (equivalente a combinar 3 rebotes y 4 rebotes más: r³ · r⁴ = r⁷). Distractor error-3: exponentes multiplicados (3 · 4 = 12) en vez de sumados: 2 · (1/2)¹² = 0,00048828125 m."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Una pelota ya dio 2 rebotes (factor total r²) y le quedan 3 rebotes más (factor r³). ¿Cuál expresión representa el factor total de los 5 rebotes?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "**r⁵**",
+              "esCorrecta": true,
+              "feedback": "Correcto. r² · r³ combina dos potencias de la misma base r: se suman los exponentes, 2 + 3 = 5."
+            },
+            {
+              "id": "b",
+              "texto": "**r⁶**",
+              "esCorrecta": false,
+              "feedback": "r⁶ sale de multiplicar los exponentes (2 · 3) en vez de sumarlos. Esa regla es para una potencia de una potencia —(r²)³—, no para el producto de dos potencias de igual base.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "**2r⁵**",
+              "esCorrecta": false,
+              "feedback": "El factor total no lleva un 2 multiplicando: r² · r³ es una sola potencia de r, no el doble de una potencia."
+            },
+            {
+              "id": "d",
+              "texto": "No se puede combinar en una sola potencia sin saber el valor de r",
+              "esCorrecta": false,
+              "feedback": "Sí se puede combinar, y sin conocer el valor de r: la regla del producto de potencias de igual base no necesita saber cuánto vale la base, solo que las dos potencias comparten la misma."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Dos pelotas distintas rebotan con factores diferentes, rA y rB. Después de que la primera dio 2 rebotes y la segunda dio 3, el producto (rA)² · (rB)³ se puede escribir como una sola potencia sumando los exponentes: (rA · rB)⁵.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "La regla de sumar exponentes solo funciona cuando la base se repite. Acá hay dos bases distintas, rA y rB, así que no hay ningún factor que se repita cinco veces: son dos cantidades que crecieron de formas distintas y no se funden en una sola potencia.",
+          "feedbackFalso": "Correcto. rA y rB son bases distintas: (rA)² es rA multiplicado dos veces por sí mismo, y (rB)³ es otra cosa completamente distinta. No hay ningún exponente que sumar porque no hay una base común que se esté repitiendo."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "La pelota original (la que parte de 2 metros con factor 1/2) ya dio 3 rebotes. Si le quedan 4 rebotes más, ¿cuál es su altura después de los 7 rebotes en total?",
+          "campos": [
+            {
+              "id": "alturaTrasSieteRebotes",
+              "etiqueta": "Altura tras 7 rebotes",
+              "respuestaCorrecta": 0.015625,
+              "unidad": "metros"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaTrasSieteRebotes",
+              "valorObtenido": 0.00048828125,
+              "mensaje": "Este valor sale de combinar los 3 rebotes y los 4 rebotes multiplicando los exponentes (3 · 4 = 12) en vez de sumarlos (3 + 4 = 7). Esa regla es para una potencia de una potencia, no para combinar dos tandas de rebotes seguidas.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Los 3 rebotes y los 4 rebotes se combinan sumando los exponentes: r³ · r⁴ = r⁷. Calcula 2 · (1/2)⁷."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Otra pelota, mismo gimnasio",
+      "_notasInternas": [
+        "Vuelve a la dirección vuelta (raíz), con una tercera pelota y cifras nuevas, para cerrar el ciclo ida/vuelta con un ítem formato PAES embebido.",
+        "Verificación: h = 2 m, h_3 = 0,25 m, razón = 0,25/2 = 0,125 = 1/8. r = ³√(1/8) = 1/2, porque (1/2)³ = 1/8.",
+        "Distractor B (error-13): 0,25, repite la altura final dada en vez de encontrar r. Distractor C (error-7): (0,25/2)³ eleva al cubo en vez de sacar la raíz cúbica —índice y exponente invertidos—, se deja como expresión sin evaluar. Distractor D (error-12): 1/8 dividido por el índice 3 es 1/24, en vez de sacar la raíz cúbica de 1/8.",
+        "Alternativas con notación envueltas en negrita markdown (mismo mecanismo que L1 y L2): scripts/auditar-leccion.mjs solo extrae un valor de un texto que sea una cifra sin dígitos después; '(0,25/2)³' y '1/24' ya rompen ese patrón por su cuenta, pero se envuelven igual por consistencia con el resto del módulo."
+      ],
+      "bloques": [
+        {
+          "tipo": "pregunta",
+          "enunciado": "Otra pelota, en el mismo gimnasio, se deja caer desde una altura de 2 metros. Después de 3 rebotes, alcanza una altura de 0,25 metros.\n\n¿Cuál es la fracción r que representa cada rebote?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "**1/2**",
+              "esCorrecta": true,
+              "feedback": "Correcto. La razón entre la altura final y la inicial es 0,25/2 = 1/8, y la raíz cúbica de 1/8 es 1/2, porque (1/2)³ = 1/8."
+            },
+            {
+              "clave": "B",
+              "texto": "0,25",
+              "esCorrecta": false,
+              "feedback": "0,25 es la altura final que ya entrega el enunciado, no la fracción r que se repite en cada rebote. Falta usar esa altura para encontrar el factor, no repetirla como si fuera la respuesta.",
+              "errorCatalogado": "error-13"
+            },
+            {
+              "clave": "C",
+              "texto": "**(0,25/2)³**",
+              "esCorrecta": false,
+              "feedback": "Esta expresión eleva la razón al cubo en vez de sacarle la raíz cúbica: invierte el índice y el exponente. La operación que deshace 3 rebotes no es otra potencia de exponente 3, es la raíz de índice 3.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "D",
+              "texto": "**1/24**",
+              "esCorrecta": false,
+              "feedback": "1/24 sale de dividir la razón 1/8 por el índice 3, confundiendo sacar la raíz con dividir por el índice. Lo que se busca es el número que usado 3 veces como factor da 1/8, no el resultado de repartir 1/8 en 3 partes.",
+              "errorCatalogado": "error-12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Cuándo potencia y cuándo raíz",
+      "_notasInternas": [
+        "Cierra el arco de decisión que es el corazón de la lección: no un concepto nuevo, sino saber elegir entre las dos direcciones según lo que el enunciado entrega."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Piensa en el problema del profesor con la pelota de tenis, al principio de esta lección.\n\n**¿Cómo supiste que había que sacar una raíz, y no simplemente dividir la altura final por el número de rebotes?**",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que identifique que dividir no deshace una multiplicación repetida, y que la raíz es la operación que sí lo hace. Señal de alerta: cualquier explicación que reduzca el argumento a 'porque así se hace', sin apoyarse en qué deshace qué."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si un enunciado entrega cuánto multiplica cada paso y cuántos pasos hay, y pide el resultado final, corresponde una potencia. Si entrega el resultado final y cuántos pasos hay, pero no cuánto multiplica cada paso, corresponde una raíz.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Correcto. Esa es la decisión completa de esta lección: lo que cambia entre potencia y raíz no es el concepto, es cuál de los tres datos —el factor, la cantidad de pasos, o el resultado— es el que falta.",
+          "feedbackFalso": "Revisa la pelota de tenis: se conocían la altura inicial, la final y la cantidad de rebotes, pero no la fracción r. Encontrar ese dato que falta —el factor, no el resultado— fue exactamente lo que pidió sacar una raíz en vez de calcular una potencia."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas de las tres lecciones",
+      "_notasInternas": [
+        "Última lección del módulo: no deja una pregunta abierta para una lección siguiente (a diferencia de L1→L2), sino que cierra mirando atrás a las tres lecciones juntas."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas de esta lección:\n\n- Una potencia y una raíz son la **misma relación**, h_n = h · rⁿ, leída en dos direcciones distintas.\n- Cuando conoces el factor r y la cantidad de pasos n, y buscas el resultado: **potencia**.\n- Cuando conoces el resultado y la cantidad de pasos n, y buscas el factor r: **raíz enésima**, r = (h_n/h)^(1/n).\n- Combinar dos tandas de la misma pelota suma los exponentes: rᵃ · rᵇ = r^(a+b). Combinar dos pelotas distintas no se puede reducir a una sola potencia, porque no comparten base.\n- Lo que decide cuál operación usar no es el tema del problema: es **qué dato falta** en el enunciado."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "En este módulo viste tres formas distintas de la misma idea: los escalones de una perilla de microscopio, las baldosas de un patio cuadrado, y ahora los rebotes de una pelota.\n\nEn tus palabras: **¿qué tienen en común una potencia y una raíz, más allá de los ejemplos específicos?**",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Cierre del módulo, no gancho hacia otra lección: no hay ninguna pregunta sin responder que quede pendiente para el cierre del módulo. Señal de comprensión: que la raíz enésima se describa como la operación que deshace una potencia de exponente n, sin importar el contexto (escalones, baldosas o rebotes)."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "potencias-problemas-en-contexto-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Una pelota se deja caer en el gimnasio del colegio desde una altura de 2 metros. Cada rebote alcanza la mitad de la altura del rebote anterior. ¿Cuál es la altura, en metros, después del cuarto rebote?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,125",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cuatro rebotes multiplican la altura inicial por (1/2)⁴: 2 · 0,0625 = 0,125 metros."
+        },
+        {
+          "clave": "B",
+          "texto": "0,0625",
+          "esCorrecta": false,
+          "feedback": "0,0625 metros es la altura del quinto rebote, no del cuarto: contaste un rebote de más. Multiplica la altura inicial por 1/2 exactamente cuatro veces, ni una más."
+        },
+        {
+          "clave": "C",
+          "texto": "1,875",
+          "esCorrecta": false,
+          "feedback": "1,875 es cuánto BAJÓ la pelota (2 − 0,125), no la altura a la que llegó. La pregunta pide la altura del cuarto rebote, no la altura perdida en el camino.",
+          "errorCatalogado": "error-13"
+        },
+        {
+          "clave": "D",
+          "texto": "1",
+          "esCorrecta": false,
+          "feedback": "1 metro es la altura del primer rebote, no del cuarto. Falta aplicar la mitad tres veces más."
+        }
+      ],
+      "solucion": "La altura tras n rebotes es h · rⁿ, con h = 2 m y r = 1/2. Tras 4 rebotes: 2 · (1/2)⁴ = 2 · 1/16 = 2/16 = 0,125 metros. Verificación paso a paso: 2 → 1 → 0,5 → 0,25 → 0,125, cuatro multiplicaciones por 1/2 desde la altura inicial ✓."
+    },
+    {
+      "id": "potencias-problemas-en-contexto-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Una pelota se deja caer desde una altura de 2 metros y, después de 6 rebotes, llega a una altura de 0,03125 metros. No se conoce la fracción r que representa cada rebote. ¿Cuál expresión permite calcularla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "**(0,03125 / 2)^(1/6)**",
+          "esCorrecta": true,
+          "feedback": "Correcto. La razón entre la altura final y la inicial es 0,03125/2, y r es el número que usado 6 veces como factor da esa razón: la raíz de índice 6, o sea el exponente 1/6."
+        },
+        {
+          "clave": "B",
+          "texto": "**(0,03125 / 2)⁶**",
+          "esCorrecta": false,
+          "feedback": "Esta expresión eleva la razón a la 6 en vez de sacarle la raíz de índice 6: invierte el índice y el exponente. La operación que deshace 6 rebotes no es otra potencia de exponente 6.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "**(0,03125 / 2) / 6**",
+          "esCorrecta": false,
+          "feedback": "Esta expresión divide la razón por el índice 6, confundiendo sacar la raíz con repartir en partes iguales. Se busca el número que usado 6 veces como factor da esa razón, no el resultado de dividirla entre 6.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "D",
+          "texto": "**6 · (0,03125 / 2)**",
+          "esCorrecta": false,
+          "feedback": "Esta expresión multiplica la razón por 6, en vez de deshacer una multiplicación repetida por r. Multiplicar por 6 no tiene relación con encontrar un factor que se aplicó 6 veces."
+        }
+      ],
+      "solucion": "r es el número que, usado como factor 6 veces, transforma la altura inicial en la final: h · r⁶ = h_6, o sea r⁶ = h_6/h. Despejando, r = (h_6/h)^(1/6) = ⁶√(h_6/h) = ⁶√(0,03125/2). Verificación: 0,03125/2 = 0,015625, y 0,015625^(1/6) = 0,5, porque 0,5⁶ = 0,015625 ✓."
+    },
+    {
+      "id": "potencias-problemas-en-contexto-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "¿Cuál de las siguientes afirmaciones sobre potencias y raíces es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Si dos números están escritos como potencias de la misma base, sus exponentes se pueden sumar al multiplicarlos; pero si las bases son distintas, no existe ninguna regla que permita combinar los exponentes en una sola potencia.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La regla de sumar exponentes describe qué pasa cuando un mismo factor se repite. Sin una base compartida no hay ningún factor que se esté repitiendo, y no hay ninguna regla —ni de potencias ni de raíces— que combine bases distintas en una sola."
+        },
+        {
+          "clave": "B",
+          "texto": "Toda multiplicación de dos potencias, sin importar si las bases son iguales o distintas, se puede escribir como una sola potencia sumando los exponentes.",
+          "esCorrecta": false,
+          "feedback": "Falso. La regla de sumar exponentes exige que las dos potencias compartan la misma base: 2³ · 2⁴ se puede escribir como 2⁷ porque ambas son potencias de 2, pero 2³ · 3⁴ no tiene ninguna base común que repetirse, así que no existe una sola potencia equivalente.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "La raíz de una suma es igual a la suma de las raíces: √(a + b) = √a + √b, para cualquier a y b positivos.",
+          "esCorrecta": false,
+          "feedback": "Falso. Ninguna propiedad heredada de las potencias reparte una raíz sobre una suma: por ejemplo, √(9 + 16) = √25 = 5, mientras que √9 + √16 = 3 + 4 = 7. Primero se resuelve la suma dentro de la raíz, y recién después se saca la raíz.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "Dos radicales con índices y radicandos distintos siempre se pueden sumar directamente, igual que si fueran el mismo término: por ejemplo, 2√3 + 3√2 = 5√5.",
+          "esCorrecta": false,
+          "feedback": "Falso. Solo se pueden sumar directamente radicales que, ya descompuestos, comparten el mismo índice y el mismo radicando. √3 y √2 son dos números distintos que no se pueden descomponer más, igual que x e y en álgebra: no se funden en un solo término sumando los coeficientes.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "La única afirmación verdadera es A: la regla de sumar exponentes en un producto de potencias depende estrictamente de que ambas compartan la misma base, y no existe ninguna regla —de potencias o de raíces— que combine bases distintas en una sola expresión. B contradice esto directamente. C y D son falsas porque ni la raíz ni la suma de radicales distintos se comportan como B propone: ambas se refutan con un contraejemplo numérico simple (√(9+16) ≠ √9+√16; 2√3+3√2 ≠ 5√5, verificable con valores aproximados: 2√3+3√2 ≈ 3,46+4,24 = 7,7, mientras 5√5 ≈ 11,18)."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Números → Potencias y raíces enésimas, descriptor «Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos» (docs/temario-demre-m1-2027.md:41-43) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
+      "docs/diseno-modulo-potencias-y-raices.md — arquitectura completa del módulo, firmada: arco de L3 (§a), catálogo de errores del módulo (§c, de donde se copiaron carácter a carácter error-2, error-3, error-7, error-8, error-11, error-12 y error-13), reparto de habilidades y dificultad (§d), diferenciación estructural por bloques (§e) y elección de dominio limpio de colisión, respaldo (d) rebote de pelota, usado en vez del candidato (a) aprobado por decisión explícita de Benja en esta sesión (§f).",
+      "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5) y calibración de dificultad (§5.1).",
+      "docs/reglas-modulo.md — regla 3 (ajustar datos base, no el número del distractor), regla 3b (ningún distractor vale lo mismo que una respuesta correcta del archivo), regla 4 (ids de campo neutros, sin cifra) y regla 5 (catálogo embebido por archivo, subconjunto copiado carácter a carácter).",
+      "content/lecciones/potencias-multiplicar-corto.json y content/lecciones/potencias-raiz-escondida.json — origen literal de las siete entradas de catalogoErrores embebidas en este archivo (copia carácter a carácter, verificada por el guard catalogo-divergente de scripts/auditar-leccion.mjs).",
+      "content/diagnostico/dag-m1.json — la unidad potencias-raices depende solo de enteros-racionales; los prerrequisitos de esta lección son los conceptos de L1 y L2 del propio módulo, ya construidos.",
+      "Dominio «rebote de una pelota en el gimnasio del colegio»: verificado LIMPIO en la segunda tanda de consultar-fuentes.mjs, corrida por el autor fuera de esta sesión (mecanismo 2 de CLAUDE.md, chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción), registrada en docs/diseno-modulo-potencias-y-raices.md §f: «altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote» y «rebote de la pelota en el gimnasio» vuelven LIMPIO, sin hits. Las cifras adicionales usadas en este archivo (5 rebotes, 6 rebotes, 7 rebotes, 3 rebotes, y las razones y fracciones derivadas de ellas) son variaciones aritméticas del mismo mecanismo ya aprobado (ida h·rⁿ / vuelta r=ⁿ√(h_final/h_inicial), con r racional simple 1/2, 2/3, 3/4), no frases narrativas nuevas que requieran una consulta propia — mismo criterio ya aplicado en L1 y L2 de este módulo, donde solo las frases núcleo del dominio se verificaron individualmente y el resto de las cifras se derivó libremente de ellas."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto de la pelota que rebota en el gimnasio, expresiones y secuencia de los 10 pasos creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular, registrada en docs/diseno-modulo-potencias-y-raices.md §f; el hilo que redactó este archivo nunca leyó fuentes-analisis-aisladas/ ni recibió su contenido. AUDITORÍAS INDEPENDIENTES: PENDIENTES, cada una a correr en un agente o hilo nuevo sin memoria de esta conversación (aislamiento estructural, no solo /clear), antes de firmar el commit de contenido. (a) Revisión matemática: recalcular desde cero toda la aritmética de los tres pasos numéricos, las tres selecciones, el verdadero/falso, la pregunta embebida y los tres itemsPAES, y verificar que cada errorCatalogado corresponda exactamente al mecanismo del distractor que lo usa. (b) Auditoría de originalidad: checklist MOS §7.3 completo, con atención especial a que el cambio de dominio (a → d) respecto de lo aprobado en el documento de diseño no reintroduzca ningún riesgo de colisión no verificado.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática y auditoría de originalidad pendientes, a correr en agentes o hilos aislados del hilo de redacción antes de firmar el commit de contenido.",
+    "fecha": "2026-08-21"
+  }
+}
