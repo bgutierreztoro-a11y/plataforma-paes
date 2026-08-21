@@ -26,7 +26,7 @@ git fetch
 
 ## 1. Reglas duras (no negociables, de CLAUDE.md)
 
-1. `catalogoErrores` vive UNA sola vez, en el JSON de L1 del módulo. L2, L3 y el cierre referencian IDs vía `errorCatalogado`. Nunca duplicar el array.
+1. `catalogoErrores` **nace** una sola vez, con su redacción original en el JSON de L1 del módulo. Pero cada archivo que lo usa (L2, L3, cierre) debe **embeber** el subconjunto exacto de entradas que sus propios distractores referencian vía `errorCatalogado`, copiado carácter a carácter desde donde nació — nunca solo el ID suelto sin el catálogo embebido (`docs/reglas-modulo.md` regla 5, corregida 2026-08-14; motivo técnico en la sección 2d de abajo). "No duplicar" se refiere a no reescribir una entrada con otro texto o significado en otro archivo, no a evitar embeberla.
 2. La clave del schema para ítems de lección es `itemsPAES` (NO `paesItems`). El cierre usa `items`.
 3. Nunca corras `scripts/consultar-fuentes.mjs` ni leas `fuentes-analisis-aisladas/` tú mismo (CC). Eso lo corre Benja manualmente y pega la salida cruda en el chat. Esto aplica también dentro de una sesión de auditoría: si el hook `check-fuentes-aisladas.mjs` te bloquea Read/Grep/Glob sobre esa carpeta, no lo rodees — repórtalo como NO CERTIFICABLE y sigue.
 4. Si necesitas un error que no tiene ID en `catalogoErrores`: PARA, propone el texto exacto, espera aprobación. No inventes IDs sin autorización.
@@ -49,7 +49,7 @@ Estos son bugs y confusiones reales que ocurrieron produciendo el módulo sistem
 
 **c) Colisión de fuentes: buscar solo la frase compuesta no basta.** `consultar-fuentes.mjs "estanques de agua"` puede dar NO mientras las palabras sueltas "estanque" y "agua" por separado dan SI en el material fuente. Al generar candidatos de contexto para Fase 1, incluye SIEMPRE también las palabras clave sueltas más distintivas de cada candidato, no solo la frase completa. Prioriza como alto riesgo cualquier término que aparezca en archivos con nombre relacionado directamente al tema de la lección (ej. `MOD-06_Ecuacion_Recta_Sistemas.md` para un módulo de sistemas de ecuaciones) — eso es señal de arquetipo específico, no ruido de vocabulario genérico.
 
-**d) `catalogoErrores` no se resuelve cross-file en runtime.** `lib/sanitizar.ts` resuelve `errorCatalogado` → descripción SOLO contra el `catalogoErrores` del mismo archivo que se está sanitizando (`catalogoDe(contenido)` usa `contenido.catalogoErrores ?? []`, sin fusionar el de la L1 del módulo). Esto significa que aunque la regla dura #1 diga "el catálogo vive una sola vez en L1", el feedback de Capa 2 en L2/L3/cierre puede quedar mudo en producción para esos IDs referenciados. Es un bug preexistente confirmado en 5 módulos ya publicados (ver `docs/deuda-catalogo-errores-crossfile.md`), NO bloqueante para auditoría (el contenido nuevo no queda peor que el resto), pero regístralo si lo detectas de nuevo en un módulo distinto — no lo arregles sin autorización, es un cambio de arquitectura.
+**d) `catalogoErrores` no se resuelve cross-file en runtime — por eso la regla es embeber, no solo referenciar.** `lib/sanitizar.ts` resuelve `errorCatalogado` → descripción SOLO contra el `catalogoErrores` del mismo archivo que se está sanitizando (`catalogoDe(contenido)` usa `contenido.catalogoErrores ?? []`, sin fusionar el de la L1 del módulo). Por eso `docs/reglas-modulo.md` regla 5 (corregida 2026-08-14) es una regla vigente y activa, no una nota de deuda: **cada archivo que referencia un error DEBE embeber su propio subconjunto exacto**, copiado carácter a carácter desde donde la entrada nació. Esta regla anula la #1 de más arriba en cuanto a "vive una sola vez" — el catálogo *nace* una sola vez (en L1), pero se *embebe* en cada archivo que lo usa. Si encuentras un módulo antiguo que no lo hace (`porcentaje`, `enteros-racionales`, `ecuaciones-inecuaciones`, `funcion-lineal-afin`, `sistemas-2x2` — ver `docs/deuda-catalogo-errores-crossfile.md`), es contenido desactualizado pendiente de corrección, no un patrón aceptable a replicar. No lo arregles sin autorización (es trabajo aparte sobre módulos ya publicados), pero nunca repitas el patrón sin embeber en contenido nuevo.
 
 **e) Confusión de repositorio/checkout.** Hay dos clones en el disco de Benja: `Desktop\plataforma-paes-clean` (canónico, el único válido) y `Desktop\Plataforma PAES` (obsoleto). Si en algún punto "los archivos no existen" pero Benja jura que sí, lo primero es comparar `pwd` y `git rev-parse HEAD` entre tu sesión y la de Benja antes de asumir pérdida de trabajo o hacer cualquier operación destructiva.
 
@@ -91,10 +91,10 @@ Requisitos pedagógicos (estilo Brilliant, solo con bloques existentes):
 - Cada distractor de cada ítem tiene `feedback` artesanal ≥40 caracteres, específico al error, referenciando un `errorCatalogado` válido y verificado (ver sección 2a/2b antes de escribir cada uno).
 
 ### Fase 4 — L2
-Igual que L1, pero SIN `catalogoErrores` propio (referencia por ID a L1 — ten presente el bug de la sección 2d, no es bloqueante pero regístralo si aplica).
+Igual que L1, pero embebe su propio subconjunto de `catalogoErrores` — copiado carácter a carácter desde L1 para cada error que sus propios distractores usan. No basta con referenciar el ID: sin el subconjunto embebido, la Capa 2 del feedback queda muda (`lib/sanitizar.ts` resuelve solo contra el catálogo del mismo archivo).
 
 ### Fase 5 — L3
-Igual que L2. Mayor densidad de formato PAES, cierra la progresión.
+Igual que L2: embebe su propio subconjunto de `catalogoErrores` — copiado carácter a carácter desde L1 para cada error que sus propios distractores usan. No basta con referenciar el ID: sin el subconjunto embebido, la Capa 2 del feedback queda muda (`lib/sanitizar.ts` resuelve solo contra el catálogo del mismo archivo). Mayor densidad de formato PAES, cierra la progresión.
 
 ### Fase 6 — Cierre
 `content/cierres/cierre-{modulo}.json`, `tipo: "cierre"`, exactamente 8 `items`, cobertura balanceada de las 3 lecciones y de las 4 habilidades (resolver, modelar, representar, argumentar). Referencia IDs del catálogo de L1.
