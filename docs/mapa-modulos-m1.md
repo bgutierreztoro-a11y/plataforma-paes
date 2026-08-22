@@ -19,8 +19,8 @@ un profesor puede auditar contra el temario.
 - **Título** — el nombre técnico DEMRE, campo `titulo` del JSON. Es lo único que
   se muestra y lo único que se audita.
 - **Archivo** — si existe o no `content/lecciones/{id}.json`, verificado el
-  2026-08-15. Es un hecho del disco, no un juicio de madurez: **no hay estados
-  de contenido**. El pipeline `borrador → revision → publicable` y los campos
+  2026-08-22 con `ls` sobre `content/lecciones`. Es un hecho del disco, no un
+  juicio de madurez: **no hay estados de contenido**. El pipeline `borrador → revision → publicable` y los campos
   `estado`, `checklistOriginalidad` y `revisionMatematica` se eliminaron el
   2026-08-12 (CLAUDE.md regla 5). Un archivo que existe y pasa `npm run validar`
   es contenido terminado; la revisión son las dos auditorías en hilos aislados.
@@ -47,7 +47,7 @@ un profesor puede auditar contra el temario.
 > pasó de tercera a segunda posición y los tres títulos se alinearon con los
 > descriptores del temario.
 
-**Declarar no es escribir.** Los 48 ids están en el registro; 18 tienen archivo.
+**Declarar no es escribir.** Los 48 ids están en el registro; 24 tienen archivo.
 Un id sin archivo no rompe nada: `verificarRegistroDeTemas()` lo deja pasar como
 lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 `/camino`, fuera de `generateStaticParams`. Ver `lib/estadoModulo.ts`.
@@ -60,7 +60,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 |---|---|---|---|---|
 | 1 | Números | Enteros y racionales | `enteros-y-racionales` | **completo** |
 | 2 | Números | Porcentaje | `porcentaje` | **completo** |
-| 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | sin contenido |
+| 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | 3 lecciones · sin cierre |
 | 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | **completo** |
 | 5 | Álgebra y funciones | Proporcionalidad | `proporcionalidad` | **completo** |
 | 6 | Álgebra y funciones | Ecuaciones e inecuaciones de primer grado | `ecuaciones-e-inecuaciones-primer-grado` | **completo** |
@@ -75,12 +75,20 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-7 completos · 9 sin contenido · 21 de 48 lecciones escritas.
+7 completos · 1 con las 3 lecciones pero sin cierre · 8 sin contenido ·
+24 de 48 lecciones escritas.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
 `funcion-lineal-y-afin` arrastran defectos de Capa 2 documentados en
 `docs/pendientes.md`.
+
+`potencias-y-raices` cae justo entre las dos categorías y por eso lleva estado
+propio: sus 3 lecciones existen, validan y pasan `npm run auditar` sin
+bloqueantes, pero `content/cierres/cierre-potencias-y-raices.json` no existe y
+el tema no declara `cierreId` en `lib/modulos.ts`, así que todavía no es
+«completo». La tabla decía «sin contenido» hasta el 2026-08-22, cuando se
+verificó contra el disco: los tres archivos llevaban ahí desde antes.
 
 Los `id` de tema **no** cambian aunque cambie el `nombre`: son rutas
 (`/tema/{id}`, `/cierre/{id}`) y renombrarlas rompe enlaces sin ganancia.
@@ -113,9 +121,11 @@ Cierre: `cierre-porcentaje`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `potencias-multiplicar-corto` | Propiedades de las potencias de base racional y exponente racional | no |
-| `potencias-raiz-escondida` | Descomposición y propiedades de las raíces enésimas en los números reales | no |
-| `potencias-problemas-en-contexto` | Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos | no |
+| `potencias-multiplicar-corto` | Propiedades de las potencias de base racional y exponente racional | sí |
+| `potencias-raiz-escondida` | Descomposición y propiedades de las raíces enésimas en los números reales | sí |
+| `potencias-problemas-en-contexto` | Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos | sí |
+
+Cierre: pendiente. Es lo único que le falta al módulo.
 
 ---
 
