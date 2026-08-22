@@ -380,7 +380,7 @@ escolar de robótica, bolsas y bolitas.
 |---|---|---|
 | L1 | **(a)** escalones de aumento de un microscopio escolar: cada escalón multiplica por 4, y el escalón 0 es «tal cual se ve» — el exponente 0 tiene significado físico, que es exactamente lo que necesita el descubrimiento. — **LIMPIO**. **(b)** copias sucesivas de una imagen que en cada guardado queda a la mitad de lado. — **LIMPIO**. **(c)** rondas de eliminación de un campeonato interescolar de ajedrez. — **LIMPIO**. | Los tres vuelven limpios. (a) sigue siendo el favorito. En (a) el término «aumento» da hits en el corpus, pero son de aumento porcentual (Porcentaje / Sistemas de Ecuaciones) — dominio distinto, no cuenta como colisión. (b) y (c) sin hits. (c) reutiliza el marco «torneo», que ya estructura `inecuaciones-problemas`; con veredicto limpio igual conviene preferir (a) o (b) por ese motivo de reparto interno, no por colisión de fuentes. Elección final entre los tres, pendiente. |
 | L2 | **(a)** patio cuadrado embaldosado: lado a partir del total de baldosas. — **LIMPIO** (ver nota de reemplazo abajo). **(b)** diagonal de una pantalla a partir de sus lados. — **LIMPIO**. **(c)** arista de un envase cúbico a partir de su volumen. — **LIMPIO**. | En (a) la consulta original dio hit en «lado del cuadrado» y el veredicto LIMPIO se obtuvo **reinterpretando ese hit**; ese veredicto queda **anulado**. Se rehizo excluyendo el término (2026-08-17, NO en los cinco) y ese hit terminó resuelto por lectura real de los tres archivos donde aparece, sin similitud sustancial en ninguno (2026-08-18). Detalle abajo. En (b) «pulgadas» da hit en `TR01_Numeros_Taller_Repaso`, pero es un problema de escala de mapa/proporcionalidad — dominio distinto. (c) sin hits, pero sigue reservado: pisa el terreno del módulo 11 (Cuerpos geométricos), motivo de reparto interno, no de colisión. Dominio elegido: (a). |
-| L3 | **(a)** escalas de tamaño en potencias de diez, de lo microscópico a lo grande — **LIMPIO, aprobado**: es el dominio de L3. **(b)** ~~capacidad de almacenamiento digital en potencias de dos~~ — **BOTADO (colisión)**. **(c)** ~~códigos de un casillero: `sᵏ` y su raíz `k`-ésima~~ — **BOTADO (veredicto manual)**. **(d)** *respaldo* — **LIMPIO**: rebote de una pelota en el gimnasio del colegio. Se registran la altura de partida y la de cada rebote, y el registro muestra que cada rebote alcanza una fracción fija `r` de la altura anterior — dato medido, no modelo. Ida: altura tras `n` rebotes = `h·rⁿ`, con `r` racional simple (1/2, 2/3, 3/4). Vuelta: se conocen altura inicial, altura final y cuántos rebotes hubo, y falta `r = ⁿ√(h_final / h_inicial)`. | **(a)** vuelve limpio y queda aprobado. **(b)** COLISIÓN contra `MA-03_Numeros_Reales.md` (subcarpeta `Material/`): la fuente ya cubre el mismo escenario de capacidades en potencias de dos que la lección iba a montar. Se abandona entero, no se ajusta (§6.1). **(c)** no lo bota el script sino el veredicto manual: el corpus (`06-bibliografia-y-anexos.md`, subcarpeta `mineduc-curriculum/`) ancla la expresión «combinaciones posibles» al conteo sin orden del eje de Combinatoria, y un código de candado es multiplicativo **con** orden y repetición; el riesgo es que el estudiante importe la fórmula equivocada desde otro eje, y ese riesgo no se arregla cambiando las palabras del enunciado. El candidato «tiempo de caída desde distintas alturas» ya estaba descartado antes (constante `g` en un módulo que no declara `auditoria.constante`). **(d)** hereda el rol que tenía (c): potencia y raíz en las dos direcciones, sin constante física —`r` es un dato medido que entrega el enunciado, no una cifra del mundo—, sin combinatoria y sin almacenamiento digital, y la raíz cae sobre una fracción, lo que además retoma la base racional de L1. (d) vuelve LIMPIO en los cuatro términos y queda confirmado como respaldo: se usa solo si (a) cae en la segunda tanda, la de cifras y frases exactas. Riesgo que se arrastra igual: su mecanismo (multiplicar repetidamente por un factor fijo) es el mismo de «población que se duplica», así que si se activa hay que cuidar que el enunciado no derive en modelo físico —`r` se entrega como dato medido, nunca se deduce. **Regla que dejan los tres descartes:** un dominio sirve para L3 solo si su pregunta inversa natural es «¿por cuánto multiplica cada paso?» —raíz enésima— y no «¿cuántos pasos?», que es logaritmo y está fuera del temario M1. |
+| L3 | **(a)** escalas de tamaño en potencias de diez, de lo microscópico a lo grande — **LIMPIO, aprobado inicialmente**. **(b)** ~~capacidad de almacenamiento digital en potencias de dos~~ — **BOTADO (colisión)**. **(c)** ~~códigos de un casillero: `sᵏ` y su raíz `k`-ésima~~ — **BOTADO (veredicto manual)**. **(d)** ~~rebote de una pelota en el gimnasio del colegio~~ — **BOTADO (colisión real, post-redacción, ver nota abajo)**. **(e)** *dominio elegido* — **LIMPIO**: medicamento que se elimina del organismo por intervalos. Se conoce la dosis inicial y, cada intervalo, el organismo elimina una fracción fija de la dosis presente, dejando cada vez una fracción fija `r` respecto al intervalo anterior — dato entregado en el enunciado, no un modelo de vida media real. Ida: dosis tras `n` intervalos = `D·rⁿ`, con `r` racional simple (1/4, 1/5, 1/3). Vuelta: se conocen dosis inicial, dosis final y cuántos intervalos hubo, y falta `r = ⁿ√(D_final / D_inicial)`. | **(a)** volvió limpio en las dos tandas y quedó aprobado en este documento, pero **no fue el dominio que terminó redactado**: en la sesión de redacción se usó (d) en su lugar, por decisión explícita de Benja (ver nota de la lección, `_notasInternas` del JSON hasta el reemplazo) — (a) sigue limpio y disponible pero no se usó. **(b)** COLISIÓN contra `MA-03_Numeros_Reales.md` (subcarpeta `Material/`): la fuente ya cubre el mismo escenario de capacidades en potencias de dos que la lección iba a montar. Se abandona entero, no se ajusta (§6.1). **(c)** no lo bota el script sino el veredicto manual: el corpus (`06-bibliografia-y-anexos.md`, subcarpeta `mineduc-curriculum/`) ancla la expresión «combinaciones posibles» al conteo sin orden del eje de Combinatoria, y un código de candado es multiplicativo **con** orden y repetición; el riesgo es que el estudiante importe la fórmula equivocada desde otro eje. **(d)** volvió LIMPIO en las dos tandas de consulta léxica de esta sección (líneas de abajo) y se redactó el archivo completo sobre este dominio — pero **tuvo colisión real, detectada después de redactado**: un ítem DEMRE 2024 en `Material/MA-02_Numeros_Racionales.md:106` cubre el mismo escenario de rebote con el mismo mecanismo. El chequeo léxico de esta sección no lo detectó porque las frases consultadas («rebote de la pelota», «altura del rebote», etc.) no coinciden con cómo está redactado ese ítem — la colisión real es de mecanismo y escenario, no de las palabras exactas consultadas. Se descartó el archivo completo (2026-08-21), sin ajustar ninguna cifra (§6.1: un candidato que colisiona se abandona entero). **(e)** hereda el rol de (d): potencia y raíz en las dos direcciones, sin constante física —`r` es un dato medido que entrega el enunciado, no una cifra del mundo—, sin combinatoria y sin almacenamiento digital. Verificado LIMPIO en la primera tanda (medicamento, dosis, torrente sanguíneo, metabolismo, eliminación, fármaco: NO; organismo: SI con 3 hits, resueltos LIMPIO por lectura profunda del subagente `auditor-originalidad`, único con permiso sobre `fuentes-analisis-aisladas/`: los tres hits son lenguaje curricular genérico o de otro mecanismo). Es el dominio con el que se redactó la lección el 2026-08-21. Riesgo que se arrastra igual que (d): su mecanismo (multiplicar repetidamente por un factor fijo) es el mismo de «población que se duplica» y de un modelo de vida media real, así que el enunciado cuida explícitamente que `r` sea un dato entregado, nunca derivado de una fórmula de decaimiento. **Regla que dejan los cuatro descartes:** un dominio sirve para L3 solo si su pregunta inversa natural es «¿por cuánto multiplica cada paso?» —raíz enésima— y no «¿cuántos pasos?», que es logaritmo y está fuera del temario M1; y un veredicto LIMPIO de consulta léxica no blinda contra una colisión de mecanismo/escenario descubierta por lectura real — (d) es el caso de referencia. |
 
 **Comandos para correr fuera de la sesión** (uno por candidato; la sesión de
 redacción no los ejecuta, y la salida se pega tal cual la imprime el script):
@@ -395,8 +395,43 @@ node scripts/consultar-fuentes.mjs "diagonal de la pantalla" "pulgadas" "ancho y
 node scripts/consultar-fuentes.mjs "envase cúbico" "arista del cubo" "volumen del envase"   # corrido: LIMPIO
 
 node scripts/consultar-fuentes.mjs "potencias de diez" "orden de magnitud" "notación científica" "tamaño de una célula"   # corrido: LIMPIO
-node scripts/consultar-fuentes.mjs "rebote de la pelota" "altura del rebote" "cada rebote alcanza" "altura inicial"   # corrido: LIMPIO
+node scripts/consultar-fuentes.mjs "rebote de la pelota" "altura del rebote" "cada rebote alcanza" "altura inicial"   # corrido: LIMPIO — colisión real igual, ver §f
 ```
+
+**Reemplazo de dominio L3 (2026-08-21) — primera tanda del candidato (e).** Corrida por
+Benja fuera de esta sesión, mecanismo 2 de `CLAUDE.md`:
+
+```
+node scripts/consultar-fuentes.mjs "medicamento" "dosis" "torrente sanguíneo" "metabolismo" "eliminación" "fármaco" "organismo"
+```
+
+```
+medicamento: NO
+dosis: NO
+torrente sanguíneo: NO
+metabolismo: NO
+eliminación: NO
+fármaco: NO
+organismo: SI (3 archivo(s): Material/MA-34_Potencia_Ecuacion_Exponencial.md, mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md, pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md)
+```
+
+Los tres hits de «organismo» se resolvieron con lectura profunda sancionada del
+subagente `auditor-originalidad` (único con permiso sobre
+`fuentes-analisis-aisladas/`): los tres son lenguaje curricular genérico o de otro
+mecanismo — ninguno es un ítem con el mecanismo dato inicial → fracción fija
+repetida n veces → valor final de este candidato. Veredicto: **LIMPIO**.
+
+**Segunda tanda — cifras y frases exactas del archivo redactado, pendiente de
+correr por Benja:**
+
+```
+node scripts/consultar-fuentes.mjs "dosis inicial de 1024 miligramos" "el organismo elimina" "cada intervalo de tiempo" "dosis que queda en el organismo" "medicamento que se elimina del organismo"
+```
+
+Salida todavía no registrada en este documento. Hasta que vuelva, el dominio (e)
+queda LIMPIO en la primera tanda solamente — mismo estado en el que estaba (d)
+antes de su colisión real, así que no se firma el módulo como aprobado sin este
+segundo resultado.
 
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
@@ -432,7 +467,8 @@ para cada candidato; no se abren de nuevo salvo hallazgo en redacción.
 | L2(b) diagonal de pantalla | «diagonal de 50 pulgadas», «pantalla cuadrada», «lado de la pantalla», «diagonal de la pantalla como raíz» | LIMPIO |
 | L2(c) envase cúbico | «envase cúbico de 125 cm³», «arista del envase», «raíz cúbica del volumen», «volumen del envase en cm³» | LIMPIO |
 | L3(a) potencias de diez | «10 elevado a menos 6 metros», «tamaño de una célula», «10 elevado a 9 metros», «orden de magnitud», «escala de tamaños» | LIMPIO |
-| L3(d) rebote de pelota | «altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote», «rebote de la pelota en el gimnasio» | LIMPIO |
+| L3(d) rebote de pelota | «altura inicial de 2 metros», «cada rebote alcanza la mitad», «después de 4 rebotes», «altura final del rebote», «rebote de la pelota en el gimnasio» | LIMPIO en la consulta léxica — **colisión real igual, ver nota de descarte en §f: `Material/MA-02_Numeros_Racionales.md:106`, ítem DEMRE 2024, detectada por lectura, no por esta consulta** |
+| L3(e) medicamento en el organismo | Primera tanda (términos genéricos, corrida por Benja): «medicamento», «dosis», «torrente sanguíneo», «metabolismo», «eliminación», «fármaco» → NO; «organismo» → SI, 3 hits, resueltos LIMPIO por `auditor-originalidad` (detalle en §f). Segunda tanda (cifras y frases exactas del archivo redactado): **pendiente**, comando abajo. | Primera tanda LIMPIO. Segunda tanda pendiente de correr. |
 
 **Ronda 1 rehecha para L2(a) — el veredicto original era inválido (2026-08-17).**
 
@@ -739,7 +775,7 @@ de git, que son la fuente de verdad y no se duplican en prosa.
 |---|---|---|
 | L1 | Dominio elegido en (f); números puros en los pasos 6 y 7 | Bases 2, 3, 4, 5 y fracciones simples (1/2, 2/3, 3/4); exponentes de −4 a 5 |
 | L2 | Dominio elegido en (f) | Radicandos con factor cuadrado o cúbico exacto entre 8 y 200; índices 2 y 3 |
-| L3 | Dominio elegido en (f): (a) escalas de tamaño | Potencias de 10 entre −6 y 9 |
+| L3 | Dominio con el que se redactó (2026-08-21): (e) medicamento en el organismo, tras el descarte por colisión real de (d) rebote de pelota | Fracciones simples 1/4, 1/5, 1/3; dosis en miligramos, potencias de esas fracciones entre exponente 1 y 12 |
 | Cierre | Mezcla de los tres, sin contexto nuevo | Cifras distintas de las usadas en las lecciones |
 
 Regla que aplica al fijar cifras: ningún distractor puede valer lo mismo que una
@@ -763,10 +799,18 @@ distractor (regla 3 de `docs/reglas-modulo.md`).
    `MA-03_Numeros_Reales.md`— y uno adicional BOTADO por veredicto manual sin
    pasar por el script —L3(c) código de casillero, por el mismo motivo de
    riesgo de confusión con Combinatoria que el corpus no permite descartar
-   ajustando el enunciado. Dominio de L3 cerrado: (a) potencias de diez, con
-   (d) rebote de la pelota como respaldo. Dominios de L1 y L2 siguen abiertos
-   entre sus tres candidatos limpios cada uno; la elección final se hace al
-   redactar cada lección, no bloquea el resto del documento.
+   ajustando el enunciado. Dominio de L3 cerrado en este documento: (a) potencias
+   de diez, con (d) rebote de la pelota como respaldo. Dominios de L1 y L2 siguen
+   abiertos entre sus tres candidatos limpios cada uno; la elección final se hace
+   al redactar cada lección, no bloquea el resto del documento.
+7. **Reemplazo de dominio L3 (2026-08-21), no previsto al firmar este documento.**
+   La lección se redactó con (d) rebote de la pelota en vez de (a), por decisión
+   de Benja en la sesión de redacción. (d) tuvo colisión real confirmada, después
+   de redactado, contra un ítem DEMRE 2024 en `Material/MA-02_Numeros_Racionales.md:106`
+   — se descartó el archivo completo, sin ajustar cifras (§6.1). Dominio nuevo:
+   (e) medicamento que se elimina del organismo por intervalos, LIMPIO en la
+   primera tanda (detalle en §f). Pendiente la segunda tanda antes de dar el
+   módulo por aprobado.
 4. ~~Segunda tanda con las cifras y frases exactas del núcleo de cada
    lección.~~ **Resuelto.** Ocho de ocho candidatos LIMPIO (detalle en §f).
    Cifras núcleo confirmadas como base de redacción.
