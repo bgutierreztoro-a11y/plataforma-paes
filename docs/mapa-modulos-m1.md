@@ -60,7 +60,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 |---|---|---|---|---|
 | 1 | Números | Enteros y racionales | `enteros-y-racionales` | **completo** |
 | 2 | Números | Porcentaje | `porcentaje` | **completo** |
-| 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | 3 lecciones · sin cierre |
+| 3 | Números | Potencias y raíces enésimas | `potencias-y-raices` | **completo** |
 | 4 | Álgebra y funciones | Expresiones algebraicas | `expresiones-algebraicas` | **completo** |
 | 5 | Álgebra y funciones | Proporcionalidad | `proporcionalidad` | **completo** |
 | 6 | Álgebra y funciones | Ecuaciones e inecuaciones de primer grado | `ecuaciones-e-inecuaciones-primer-grado` | **completo** |
@@ -75,20 +75,18 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-7 completos · 1 con las 3 lecciones pero sin cierre · 8 sin contenido ·
-24 de 48 lecciones escritas.
+8 completos · 8 sin contenido · 24 de 48 lecciones escritas.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
 `funcion-lineal-y-afin` arrastran defectos de Capa 2 documentados en
 `docs/pendientes.md`.
 
-`potencias-y-raices` cae justo entre las dos categorías y por eso lleva estado
-propio: sus 3 lecciones existen, validan y pasan `npm run auditar` sin
-bloqueantes, pero `content/cierres/cierre-potencias-y-raices.json` no existe y
-el tema no declara `cierreId` en `lib/modulos.ts`, así que todavía no es
-«completo». La tabla decía «sin contenido» hasta el 2026-08-22, cuando se
-verificó contra el disco: los tres archivos llevaban ahí desde antes.
+`potencias-y-raices` pasó a completo el 2026-08-22: sus 3 lecciones ya
+existían y validaban desde antes (la tabla decía «sin contenido» hasta esa
+fecha, corregido tras verificar contra el disco), y ese mismo día se agregó
+`content/cierres/cierre-potencias-y-raices.json` y su `cierreId` en
+`lib/modulos.ts`.
 
 Los `id` de tema **no** cambian aunque cambie el `nombre`: son rutas
 (`/tema/{id}`, `/cierre/{id}`) y renombrarlas rompe enlaces sin ganancia.
@@ -125,7 +123,7 @@ Cierre: `cierre-porcentaje`.
 | `potencias-raiz-escondida` | Descomposición y propiedades de las raíces enésimas en los números reales | sí |
 | `potencias-problemas-en-contexto` | Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos | sí |
 
-Cierre: pendiente. Es lo único que le falta al módulo.
+Cierre: `cierre-potencias-y-raices`.
 
 ---
 
