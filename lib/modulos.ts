@@ -118,6 +118,7 @@ export const IDS_CIERRE = [
   "cierre-proporcionalidad",
   "cierre-expresiones-algebraicas",
   "cierre-sistemas-2x2",
+  "cierre-potencias-y-raices",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -216,6 +217,7 @@ export const EJES = [
           "potencias-raiz-escondida",
           "potencias-problemas-en-contexto",
         ],
+        cierreId: "cierre-potencias-y-raices",
       },
     ],
   },
