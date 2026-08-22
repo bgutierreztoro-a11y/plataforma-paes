@@ -245,10 +245,11 @@ que multiplicado por sí mismo da 5».
   `5¹ = 5`, bajar uno da `5 ÷ 5 = 1`. El escalón cero vale 1, no 0. Se distingue
   de `error-4`, que es sobre el signo de los escalones de más abajo.
 
-- **`error-6`** — En una potencia de base fraccionaria, elevar solo una parte de
-  la fracción: dar `(2/3)³ = 8/3` (solo el numerador) o `= 2/27` (solo el
-  denominador). La base es la fracción completa, así que el exponente se aplica
-  arriba y abajo.
+- **`error-6`** — En una potencia o raíz de base fraccionaria, operar solo una
+  parte de la fracción: al elevar, dar `(2/3)³ = 8/3` (solo el numerador) o
+  `= 2/27` (solo el denominador); al sacar raíz, dar `√(9/25) = 3/25` (solo el
+  numerador) o `= 9/5` (solo el denominador). La base o el radicando es la
+  fracción completa: el exponente o la raíz se aplica arriba y abajo.
 
 - **`error-7`** — Cambiar de lugar el índice y el exponente al pasar entre raíz y
   potencia: leer `a^(m/n)` como `ᵐ√(aⁿ)` en vez de `ⁿ√(aᵐ)`. El denominador del
