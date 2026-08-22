@@ -518,6 +518,68 @@ Con esta tercera tanda, el dominio (e) queda verificado contra el vocabulario de
 rol y las cifras sueltas del texto final, además del léxico genérico (primera
 tanda) y las frases compuestas (segunda tanda).
 
+**Cuarta tanda — verbos y sustantivos funcionales del texto final, y cierre
+definitivo del punto 1 (2026-08-22, mecanismo 2, Benja fuera de esta sesión).**
+Levantada por una tercera reverificación de originalidad: los verbos centrales
+del mecanismo del escenario («elimina», «reduce», «queda»/«quedan») nunca se
+habían probado como palabra suelta, solo dentro de frases compuestas ya
+descartadas.
+
+```
+node scripts/consultar-fuentes.mjs "elimina" "reduce" "queda" "quedan" "sangre" "cuerpo" "medicamento" "torrente" "dosificacion" "farmaco" "concentracion" "vida media"
+```
+
+```
+elimina: SI (4 archivo(s): Material/1470-RMA-Resumen_N°6_Álgebra_y_Funciones.md, Material/MOD-07_Algebra_Funciones_III.md, y copias en pdv-terceros)
+reduce: SI (3 archivo(s): TR01_Numeros_Taller_Repaso.md, mineduc-curriculum/03-unidad-2-algebra-funciones.md)
+queda: SI (43 archivo(s), prácticamente todo el corpus)
+quedan: SI (11 archivo(s))
+sangre: SI (4 archivo(s), todos de geometría/probabilidad-estadística)
+cuerpo: SI (14 archivo(s), mayoritariamente geometría — "cuerpos geométricos" — y un uso institucional en mineduc-curriculum)
+medicamento: NO
+torrente: NO
+dosificacion: NO
+farmaco: NO
+concentracion: NO
+vida media: NO
+```
+
+- **«elimina»** — los 4 hits son de Álgebra y Funciones (eliminación de
+  incógnitas/términos en sistemas de ecuaciones), dominio ajeno.
+- **«reduce»** — los 3 hits son de Álgebra genérica (reducción de expresiones),
+  dominio ajeno.
+- **«queda»** — 43 de los archivos del corpus, prácticamente su totalidad: es
+  palabra funcional del idioma español, sin valor discriminante. No es una
+  consulta de colisión, igual que ya estableció la quinta ronda de la sección
+  L2(a) más abajo sobre cifras sueltas de alta frecuencia.
+- **«quedan»** — mismo caso, 11 archivos, plural de «queda».
+- **«sangre»**, **«cuerpo»** — hits en geometría («cuerpos geométricos») y
+  probabilidad/estadística, sin relación con «cuerpo humano» ni con el
+  mecanismo de este archivo.
+- **«medicamento», «torrente», «dosificacion», «farmaco», «concentracion»,
+  «vida media»** — NO en todo el corpus.
+
+**Veredicto y cierre definitivo del punto 1 del checklist §7.3 para L3.**
+«elimina», «reduce», «queda», «quedan», «sangre» y «cuerpo» son palabras de uso
+común del español —verbos y sustantivos funcionales— que aparecen en cualquier
+corpus de matemática de tamaño no trivial por pura frecuencia del idioma, no
+por relación temática; ninguno de los archivos que las contienen comparte
+dominio (medicamento/dosis/organismo/farmacocinética) ni mecanismo
+(`Dₙ = D·rⁿ` con `r` dato conocido del enunciado, arco ida/vuelta
+potencia↔raíz) con este archivo. El punto 1 del checklist MOS §7.3 pregunta por
+similitud **sustancial** de enunciado o ejercicio, no por coincidencia de
+palabras sueltas de uso común — ese criterio no converge nunca, como
+demostraron las cuatro rondas de este dominio. Con la evidencia acumulada de
+las cuatro tandas (primera: léxico genérico del dominio; segunda: frases
+compuestas exactas del texto; tercera: vocabulario de rol y cifras sueltas;
+cuarta: verbos y sustantivos funcionales) — en **ninguna** ronda se encontró
+colisión de dominio, mecanismo, plantilla sintáctica ni frase distintiva, solo
+adyacencias descartadas por lectura real y ruido léxico de palabras genéricas —
+el punto 1 del checklist queda **CERTIFICADO** para L3. No se corren más
+rondas de términos sueltos sobre este archivo: el criterio de palabra genérica
+aislada no es señal de colisión y seguir iterando sobre él no reduce
+incertidumbre real.
+
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
 
