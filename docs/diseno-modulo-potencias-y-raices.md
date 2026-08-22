@@ -481,6 +481,43 @@ dosis que queda en el organismo: NO
 «organismo» resueltos y la segunda tanda cerrada, el dominio (e) queda **LIMPIO
 en su totalidad.**
 
+**Tercera tanda — vocabulario de rol y cifras sueltas del texto final
+(2026-08-22, mecanismo 2, Benja fuera de esta sesión).** Levantada por la
+reverificación de originalidad: ninguna de las dos tandas anteriores había
+probado el vocabulario de rol del escenario («paciente», «médico», «hospital»)
+ni las cifras sueltas que aparecen fuera de la frase compuesta «1024
+miligramos» (6250, 135).
+
+```
+node scripts/consultar-fuentes.mjs "paciente" "médico" "hospital" "6250" "135"
+```
+
+```
+paciente: SI (2 archivo(s): Material\MOD-05_Estadistica_Probabilidades.md, pdv-terceros\MOD-05_Estadistica_Probabilidades.md)
+médico: NO
+hospital: NO
+6250: NO
+135: SI (12 archivo(s): Material\1693-MA17_-_Perímetros_y_Áreas_I.md, Material\331-MA15_-_Polígonos.md, Material\4185-MA14_-_Congruencia_de_triangulos.md, Material\618-JMA-M1-01-2024.md, Material\MA-22_Cuerpos_Geometricos.md, Material\MA-29_Ecuacion_Recta.md, pdv-terceros\1693-MA17_-_Perímetros_y_Áreas_I.md, pdv-terceros\331-MA15_-_Polígonos.md, pdv-terceros\4185-MA14_-_Congruencia_de_triangulos.md, pdv-terceros\MA-22_Cuerpos_Geometricos.md, pdv-terceros\MA-29_Ecuacion_Recta.md, pendiente-clasificar\618-JMA-M1-01-2024.md)
+```
+
+- **«paciente»** — `Material/MOD-05_Estadistica_Probabilidades.md:66`: «Un
+  nutricionista que decide someter a una dieta a 10 de sus pacientes... se le
+  realiza mediciones para determinar la variación del índice de masa corporal
+  (IMC) durante este tiempo...». Ítem de estadística/probabilidad (análisis de
+  datos de IMC de pacientes en dieta), dominio ajeno: estadística descriptiva
+  aplicada a nutrición, sin decaimiento geométrico, sin `Dₙ = D·rⁿ`, sin arco
+  ida/vuelta potencia↔raíz. **Veredicto: sin colisión.**
+- **«135»** — los 12 archivos son de Geometría (perímetros, polígonos,
+  congruencia de triángulos, ecuación de la recta, cuerpos geométricos),
+  dominio ya descartado como ajeno en la segunda tanda de este mismo bloque.
+  **Veredicto: sin colisión**, mismo criterio que ya se aplicó ahí.
+- **«6250», «médico», «hospital»**: NO en todo el corpus. Cierran sin acción.
+
+**Veredicto: LIMPIO en los cinco términos, sin colisión sustancial en ninguno.**
+Con esta tercera tanda, el dominio (e) queda verificado contra el vocabulario de
+rol y las cifras sueltas del texto final, además del léxico genérico (primera
+tanda) y las frases compuestas (segunda tanda).
+
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
 
