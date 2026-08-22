@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "potencias-raiz-escondida",
-  "titulo": "La raíz escondida en el exponente",
+  "titulo": "Descomposición y propiedades de las raíces enésimas en los números reales",
   "objetivo": "Reconocer que una raíz enésima es una potencia de exponente fraccionario —que ⁿ√a es a elevado a 1/n y que ⁿ√(aᵐ) es a elevado a m/n—, y usar esa identidad para heredar de las potencias las propiedades del producto y del cociente de raíces, para justificar por qué ninguna propiedad reparte una raíz sobre una suma, y para descomponer una raíz extrayendo el mayor factor de raíz exacta.",
   "tiempoEstimadoMin": 28,
   "prerrequisitos": [

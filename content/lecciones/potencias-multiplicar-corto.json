@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "potencias-multiplicar-corto",
-  "titulo": "La escalera que baja",
+  "titulo": "Propiedades de las potencias de base racional y exponente racional",
   "objetivo": "Reconocer que subir un escalón de exponente entero multiplica por la base y bajar un escalón divide por la base, y usar ese patrón para justificar que toda potencia de exponente 0 vale 1 y que toda potencia de exponente negativo es el recíproco de la potencia positiva correspondiente, aplicando además el producto y el cociente de potencias de igual base, la potencia de una potencia, y el caso de una base racional, cuyo exponente se aplica tanto al numerador como al denominador.",
   "tiempoEstimadoMin": 27,
   "prerrequisitos": [
