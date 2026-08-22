@@ -65,7 +65,7 @@
     },
     {
       "id": "error-6",
-      "descripcion": "En una potencia de base fraccionaria, elevar solo una parte de la fracción: dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador). La base es la fracción completa, así que el exponente se aplica arriba y abajo."
+      "descripcion": "En una potencia o raíz de base fraccionaria, operar solo una parte de la fracción: al elevar, dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador); al sacar raíz, dar √(9/25) = 3/25 (solo el numerador) o = 9/5 (solo el denominador). La base o el radicando es la fracción completa: el exponente o la raíz se aplica arriba y abajo."
     }
   ],
   "contextosNumericos": [
