@@ -425,22 +425,61 @@ esta sesión) `Material/MA-34_Potencia_Ecuacion_Exponencial.md` — **LIMPIO**, 
 ítem 25 es reproducción de amebas, con mecanismo inverso (crecimiento, no
 eliminación) y dominio distinto, sin escenario compartido con este candidato.
 
-Los otros dos hits de «organismo» —`mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md`
-y `pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md`— **siguen sin resolver**,
-bloqueados por el mismo hook roto. El candidato (e) no está confirmado LIMPIO en
-su totalidad todavía.
-
-**Segunda tanda — cifras y frases exactas del archivo redactado, pendiente de
-correr por Benja:**
+**Resolución de los dos hits restantes (2026-08-22, mecanismo 2, Benja fuera de
+esta sesión):**
 
 ```
-node scripts/consultar-fuentes.mjs "dosis inicial de 1024 miligramos" "el organismo elimina" "cada intervalo de tiempo" "dosis que queda en el organismo" "medicamento que se elimina del organismo"
+node scripts/consultar-fuentes.mjs "organismo"
 ```
 
-Salida todavía no registrada en este documento. Hasta que vuelva, el dominio (e)
-queda LIMPIO en la primera tanda solamente — mismo estado en el que estaba (d)
-antes de su colisión real, así que no se firma el módulo como aprobado sin este
-segundo resultado.
+```
+organismo: SI (3 archivo(s): Material\MA-34_Potencia_Ecuacion_Exponencial.md, mineduc-curriculum\2027-26-03-19-temario-paes-regular-m1.md, pdv-terceros\MA-34_Potencia_Ecuacion_Exponencial.md)
+```
+
+- `mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md`: el término
+  aparece en «DEMRE, como organismo técnico responsable de desarrollar la
+  batería de instrumentos de evaluación...» — organismo = institución (DEMRE),
+  no cuerpo humano. Sin relación de dominio con L3. **Falso positivo, sin
+  colisión.**
+- `pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md`: el término aparece dos
+  veces en ese archivo — ítem 19 (alometría, superficie corporal vs. masa,
+  potencia de exponente fijo 2/3, relación estática sin intervalos de tiempo) y
+  en el enunciado marco del ítem 25 (amebas, bipartición cada 20 min). Se
+  revisaron también los ítems 21 (Pudú, `90·0,5^x`), 23 (bacterias) y 24
+  (elemento radioactivo) por compartir el dominio genérico de
+  decaimiento/crecimiento exponencial aplicado a un ser vivo o proceso físico.
+  Ningún ítem del archivo usa el mecanismo de L3 (`Dₙ = D·rⁿ` con `r` dato
+  conocido del enunciado, arco ida/vuelta potencia↔raíz para hallar `r`
+  desconocido). El más cercano por mecanismo es el ítem 21 (Pudú): decaimiento
+  por fracción fija cada intervalo fijo, pero de un solo disparo (calcula un
+  valor dado la fórmula), sin el paso de hallar `r` por raíz ni el arco
+  ida/vuelta que es el corazón pedagógico de L3; dominio (fauna silvestre) y
+  cifras sin solape con L3 (dosis de medicamento). **Veredicto: sin colisión
+  sustancial** — adyacencia de mecanismo genérico de decaimiento exponencial
+  (plantilla ubicua, no exclusiva de esta fuente), registrada como observación
+  🟢 no bloqueante.
+- `Material/MA-34_Potencia_Ecuacion_Exponencial.md` (ítem 25, amebas): ya
+  cerrado antes por revisión manual de Benja (2026-08-21) — mecanismo inverso
+  (crecimiento, no eliminación), sin colisión.
+
+**Segunda tanda — cifras y frases exactas del archivo redactado (2026-08-22,
+mecanismo 2, Benja fuera de esta sesión):**
+
+```
+node scripts/consultar-fuentes.mjs "dosis inicial" "1024 miligramos" "el organismo elimina" "cada intervalo de tiempo" "dosis que queda en el organismo"
+```
+
+```
+dosis inicial: NO
+1024 miligramos: NO
+el organismo elimina: NO
+cada intervalo de tiempo: NO
+dosis que queda en el organismo: NO
+```
+
+**Veredicto: LIMPIO, cinco de cinco, sin hits.** Con los tres hits de
+«organismo» resueltos y la segunda tanda cerrada, el dominio (e) queda **LIMPIO
+en su totalidad.**
 
 Cuando esté elegido el dominio de cada lección se corre una segunda tanda con las
 **cifras y frases exactas** del enunciado, antes de fijar los números en el JSON.
@@ -817,9 +856,8 @@ distractor (regla 3 de `docs/reglas-modulo.md`).
    de Benja en la sesión de redacción. (d) tuvo colisión real confirmada, después
    de redactado, contra un ítem DEMRE 2024 en `Material/MA-02_Numeros_Racionales.md:106`
    — se descartó el archivo completo, sin ajustar cifras (§6.1). Dominio nuevo:
-   (e) medicamento que se elimina del organismo por intervalos, LIMPIO en la
-   primera tanda (detalle en §f). Pendiente la segunda tanda antes de dar el
-   módulo por aprobado.
+   (e) medicamento que se elimina del organismo por intervalos, LIMPIO en su
+   totalidad (primera y segunda tanda, detalle en §f, cerrado el 2026-08-22).
 4. ~~Segunda tanda con las cifras y frases exactas del núcleo de cada
    lección.~~ **Resuelto.** Ocho de ocho candidatos LIMPIO (detalle en §f).
    Cifras núcleo confirmadas como base de redacción.
