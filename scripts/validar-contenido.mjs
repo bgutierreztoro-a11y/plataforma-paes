@@ -18,9 +18,20 @@
  * Claude Code reciba el error como feedback y lo corrija.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { resolve, basename, join, sep } from 'node:path';
+import { resolve, dirname, basename, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { construirDag, ancestros } from '../lib/diagnostico/dag.ts';
+
+// Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
+// 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
+// resolvía `content/` contra process.cwd(), que depende de desde dónde se lance
+// el proceso. El comando del hook PostToolUse en settings.json ya no depende de
+// $CLAUDE_PROJECT_DIR (mismo bug de fondo que el hook de fuentes aisladas), así
+// que esto solo importaba para invocaciones directas con cwd distinto — se
+// endurece igual, por el mismo patrón, para no dejar la última dependencia de
+// cwd en el script.
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = resolve(__dirname, '..');
 
 const ORDEN_PASOS = [
   'curiosidad', 'problema', 'pensar', 'pistas', 'descubrimiento',
@@ -723,9 +734,9 @@ if (arg) {
   process.exit(reportar(ruta, errores) ? 0 : 1);
 }
 
-const raiz = resolve(process.cwd(), 'content');
+const raiz = resolve(PROJECT_ROOT, 'content');
 if (!existsSync(raiz)) {
-  console.error('No existe el directorio content/ en el directorio actual.');
+  console.error(`No existe el directorio content/ en ${PROJECT_ROOT}.`);
   process.exit(1);
 }
 let ok = true;

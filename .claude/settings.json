@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/check-fuentes-aisladas.mjs\""
+            "command": "node scripts/check-fuentes-aisladas.mjs"
           }
         ]
       }
@@ -45,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/validar-contenido.mjs\" --hook"
+            "command": "node scripts/validar-contenido.mjs --hook"
           }
         ]
       }
