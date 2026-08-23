@@ -1,17 +1,5 @@
-import {
-  DOMINIO,
-  TAMANO_SVG,
-  calcularTriangulo,
-  segmentoRecta,
-  xAPixel,
-  yAPixel,
-} from "@/lib/planoCartesiano";
-
-const ENTEROS = Array.from(
-  { length: DOMINIO.max - DOMINIO.min + 1 },
-  (_, i) => DOMINIO.min + i,
-);
-const ROTULOS = ENTEROS.filter((n) => n % 5 === 0);
+import { PlanoBase } from "./PlanoBase";
+import { calcularTriangulo, segmentoRecta, xAPixel, yAPixel } from "@/lib/planoCartesiano";
 
 interface PlanoCartesianoProps {
   m: number;
@@ -24,58 +12,7 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
   const triangulo = mostrarCambio ? calcularTriangulo(m, b) : null;
 
   return (
-    <svg
-      viewBox={`0 0 ${TAMANO_SVG} ${TAMANO_SVG}`}
-      role="img"
-      aria-label={`Plano cartesiano con la recta y = ${m}x + ${b}`}
-      className="aspect-square h-auto w-full max-w-md rounded-tarjeta border border-border bg-surface"
-    >
-      {ENTEROS.map((n) => (
-        <line
-          key={`v${n}`}
-          x1={xAPixel(n)}
-          y1={yAPixel(DOMINIO.min)}
-          x2={xAPixel(n)}
-          y2={yAPixel(DOMINIO.max)}
-          stroke={n === 0 ? "var(--color-ink-suave)" : "var(--color-grid-fina)"}
-          strokeWidth={n === 0 ? 1.5 : 1}
-        />
-      ))}
-      {ENTEROS.map((n) => (
-        <line
-          key={`h${n}`}
-          x1={xAPixel(DOMINIO.min)}
-          y1={yAPixel(n)}
-          x2={xAPixel(DOMINIO.max)}
-          y2={yAPixel(n)}
-          stroke={n === 0 ? "var(--color-ink-suave)" : "var(--color-grid-fina)"}
-          strokeWidth={n === 0 ? 1.5 : 1}
-        />
-      ))}
-      {ROTULOS.filter((n) => n !== 0).map((n) => (
-        <text
-          key={`rx${n}`}
-          x={xAPixel(n)}
-          y={yAPixel(0) + 12}
-          fontSize={9}
-          textAnchor="middle"
-          className="fill-ink-suave num"
-        >
-          {n}
-        </text>
-      ))}
-      {ROTULOS.filter((n) => n !== 0).map((n) => (
-        <text
-          key={`ry${n}`}
-          x={xAPixel(0) - 8}
-          y={yAPixel(n) + 3}
-          fontSize={9}
-          textAnchor="end"
-          className="fill-ink-suave num"
-        >
-          {n}
-        </text>
-      ))}
+    <PlanoBase ariaLabel={`Plano cartesiano con la recta y = ${m}x + ${b}`}>
       <line
         x1={xAPixel(p1.x)}
         y1={yAPixel(p1.y)}
@@ -130,6 +67,6 @@ export function PlanoCartesiano({ m, b, mostrarCambio }: PlanoCartesianoProps) {
           </text>
         </g>
       )}
-    </svg>
+    </PlanoBase>
   );
 }
