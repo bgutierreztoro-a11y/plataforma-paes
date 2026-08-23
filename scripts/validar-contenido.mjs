@@ -78,6 +78,34 @@ function validarItem(item, i, campo, errores) {
   }
 }
 
+/**
+ * Contrato del bloque `interactivoSlider` (content/schema/leccion.schema.json,
+ * `bloqueInteractivoSlider`): `objeto` es "recta", "parabola" o ausente
+ * (ausente = "recta", mismo default que `BloqueInteractivo.tsx`), y el número
+ * de controles en `variables[]` lo fija ESE objeto, no `variante` — la
+ * parábola necesita exactamente a, b y c; la recta admite como máximo dos.
+ *
+ * El schema JSON ya declara este contrato (commit be6f51b), pero
+ * `npm run validar` no lo lee: es un validador escrito a mano, sin ajv de por
+ * medio. Sin este chequeo, un bloque con `objeto: "circulo"` o una parábola con
+ * 2 controles pasaba en silencio.
+ */
+function validarBloqueInteractivoSlider(bloque, donde, errores) {
+  const objeto = bloque?.objeto;
+  if (objeto !== undefined && objeto !== 'recta' && objeto !== 'parabola') {
+    errores.push(`${donde}.objeto: debe ser "recta", "parabola" o estar ausente (recibido: ${JSON.stringify(objeto)})`);
+  }
+
+  const variables = bloque?.variables;
+  const cantidad = Array.isArray(variables) ? variables.length : 0;
+  const esperadas = objeto === 'parabola' ? 3 : 2;
+  if (cantidad !== esperadas) {
+    errores.push(
+      `${donde}.variables: con objeto ${objeto === 'parabola' ? '"parabola"' : '"recta" (o ausente)'} se esperan ${esperadas} controles (hay ${cantidad})`,
+    );
+  }
+}
+
 export function validarDatos(data) {
   const errores = [];
 
@@ -97,6 +125,12 @@ export function validarDatos(data) {
         if (!esTexto(paso?.titulo)) errores.push(`pasos[${i}]: falta titulo`);
         if (!Array.isArray(paso?.bloques) || paso.bloques.length === 0) {
           errores.push(`pasos[${i}]: falta bloques[] con al menos un bloque`);
+        } else {
+          paso.bloques.forEach((bloque, j) => {
+            if (bloque?.tipo === 'interactivoSlider') {
+              validarBloqueInteractivoSlider(bloque, `pasos[${i}].bloques[${j}]`, errores);
+            }
+          });
         }
       });
     }
