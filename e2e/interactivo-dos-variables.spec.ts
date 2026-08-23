@@ -40,19 +40,26 @@ test("predice, mueve, comprueba, confirma — con una predicción declarada", as
 
   await page.getByRole("radio", { name: "También sube" }).click();
 
-  // Fase "mueve": sin mover, "Comprobar" no aparece.
+  /* Fase "mueve": "Comprobar" aparece de inmediato pero apagado. Es presente y
+     deshabilitado a propósito (SecuenciaMicropreguntas.tsx) — antes se montaba
+     recién al tocar los dos controles y el bloque crecía de golpe con la mano en
+     el slider. Se comprueba `toBeDisabled`, no `toHaveCount(0)`. */
   await expect(page.getByText("Mueve los dos controles para comprobar")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Comprobar" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Comprobar" })).toBeDisabled();
 
   const pendiente = page.getByRole("slider", { name: "Pendiente (m)" });
-  const intercepto = page.getByRole("slider", { name: "Intercepto (b)" });
+  /* El rótulo sale de `GraficoPendiente`, no del `nombre` del fixture: el
+     componente los tiene hardcodeados y nunca lee `variable.nombre`. El fixture
+     dice "intercepto (b)" y el control se rotula "Coeficiente de posición (b)";
+     buscar por el nombre del fixture no encontraba nada. */
+  const intercepto = page.getByRole("slider", { name: "Coeficiente de posición (b)" });
   await pendiente.focus();
   await page.keyboard.press("ArrowRight");
   // Un solo control no alcanza: "mueve" pide los dos, no cualquiera de los dos.
-  await expect(page.getByRole("button", { name: "Comprobar" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Comprobar" })).toBeDisabled();
   await intercepto.focus();
   await page.keyboard.press("ArrowLeft");
-  await expect(page.getByRole("button", { name: "Comprobar" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Comprobar" })).toBeEnabled();
 
   await page.getByRole("button", { name: "Comprobar" }).click();
 
@@ -80,7 +87,7 @@ test("responder 'No' en la confirmación muestra el aviso y no bloquea el avance
   await page.getByRole("radio", { name: "También sube" }).click();
   await page.getByRole("slider", { name: "Pendiente (m)" }).focus();
   await page.keyboard.press("ArrowRight");
-  await page.getByRole("slider", { name: "Intercepto (b)" }).focus();
+  await page.getByRole("slider", { name: "Coeficiente de posición (b)" }).focus();
   await page.keyboard.press("ArrowLeft");
   await page.getByRole("button", { name: "Comprobar" }).click();
 
@@ -96,7 +103,7 @@ test("el catch-all 'No estoy seguro' no inventa una respuesta", async ({ page })
   await page.getByRole("radio", { name: "También sube" }).click();
   await page.getByRole("slider", { name: "Pendiente (m)" }).focus();
   await page.keyboard.press("ArrowRight");
-  await page.getByRole("slider", { name: "Intercepto (b)" }).focus();
+  await page.getByRole("slider", { name: "Coeficiente de posición (b)" }).focus();
   await page.keyboard.press("ArrowLeft");
   await page.getByRole("button", { name: "Comprobar" }).click();
   await page.getByRole("button", { name: "Sí", exact: true }).click();
@@ -107,7 +114,7 @@ test("el catch-all 'No estoy seguro' no inventa una respuesta", async ({ page })
 
   await page.getByRole("slider", { name: "Pendiente (m)" }).focus();
   await page.keyboard.press("ArrowLeft");
-  await page.getByRole("slider", { name: "Intercepto (b)" }).focus();
+  await page.getByRole("slider", { name: "Coeficiente de posición (b)" }).focus();
   await page.keyboard.press("ArrowRight");
   await page.getByRole("button", { name: "Comprobar" }).click();
 
@@ -139,7 +146,7 @@ test("'Volver a empezar' reinicia los sliders a su valor inicial", async ({ page
   await expect(reiniciar).toBeDisabled();
 
   const pendiente = page.getByRole("slider", { name: "Pendiente (m)" });
-  const intercepto = page.getByRole("slider", { name: "Intercepto (b)" });
+  const intercepto = page.getByRole("slider", { name: "Coeficiente de posición (b)" });
   await pendiente.focus();
   await page.keyboard.press("ArrowRight");
   await intercepto.focus();
@@ -157,7 +164,7 @@ test("flujo completo: explorar, reiniciar, predecir, feedback, confirmar", async
 
   // Explorar libremente antes de comprometer una predicción.
   const pendiente = page.getByRole("slider", { name: "Pendiente (m)" });
-  const intercepto = page.getByRole("slider", { name: "Intercepto (b)" });
+  const intercepto = page.getByRole("slider", { name: "Coeficiente de posición (b)" });
   await pendiente.focus();
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("ArrowRight");
