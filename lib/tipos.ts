@@ -136,12 +136,25 @@ export interface MicropreguntaSlider {
 
 export interface BloqueInteractivoSlider {
   tipo: "interactivoSlider";
+  /* El guion pedagógico: `unaVariable` es umbral de exploración, `dosVariables`
+     es predice → mueve → comprueba. NO dice qué se dibuja — para eso está
+     `objeto`, que es un eje aparte. */
   variante: "unaVariable" | "dosVariables";
+  /* Qué se dibuja. Ausente significa "recta", así que todo el contenido escrito
+     antes de que existiera la parábola sigue valiendo sin tocarlo.
+     Contrato posicional de `variables`: con recta es [m, b]; con parábola es
+     [a, b, c], en el orden de lectura de y = ax² + bx + c. */
+  objeto?: "recta" | "parabola";
   variables: VariableSlider[];
   instruccion?: string;
   exploracionMinima?: number;
   feedbackExploracionInsuficiente?: string;
   secuenciaMicropreguntas?: MicropreguntaSlider[];
+  /* Solo parábola. Marcas opcionales: un paso sobre "¿hacia dónde abre?" no
+     tiene por qué regalar el vértice, y uno sobre el vértice no tiene por qué
+     mostrar los ceros. */
+  mostrarVertice?: boolean;
+  mostrarCeros?: boolean;
 }
 
 export interface NivelPista {
