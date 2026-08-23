@@ -235,15 +235,19 @@
 
     "bloqueInteractivoSlider": {
       "type": "object",
-      "description": "Gráfico interactivo con control(es) deslizante(s). Dos variantes: unaVariable (todo fijo menos un control, con umbral de exploración mínima) y dosVariables (ambos controles habilitados, con secuencia de micro-preguntas predice-mueve-compara). Ej: Pasos 4 y 5 de Lección 2.",
+      "description": "Gráfico interactivo con control(es) deslizante(s). Dos ejes independientes: `variante` es el guion pedagógico —unaVariable (todo fijo menos un control, con umbral de exploración mínima) o dosVariables (ambos controles habilitados, con secuencia de micro-preguntas predice-mueve-compara)— y `objeto` es lo que se dibuja: la recta y = mx + b o la parábola y = ax² + bx + c. Ej: Pasos 4 y 5 de Lección 2.",
       "required": ["tipo", "variante", "variables"],
       "properties": {
         "tipo": { "const": "interactivoSlider" },
         "variante": { "enum": ["unaVariable", "dosVariables"] },
+        "objeto": {
+          "enum": ["recta", "parabola"],
+          "description": "Qué se dibuja. Ausente equivale a \"recta\": el contenido escrito antes de que existiera la parábola sigue siendo válido sin tocarlo."
+        },
         "variables": {
           "type": "array",
+          "description": "Contrato posicional. Con recta: [pendiente m, intercepto b]. Con parábola: [a, b, c], en el orden de lectura de y = ax² + bx + c. El rango exacto lo fija el bloque allOf de abajo.",
           "minItems": 1,
-          "maxItems": 2,
           "items": {
             "type": "object",
             "required": ["nombre", "min", "max", "editable"],
@@ -297,9 +301,32 @@
             },
             "additionalProperties": false
           }
+        },
+        "mostrarVertice": {
+          "type": "boolean",
+          "description": "Solo objeto parabola. Marca el vértice en el gráfico. Sin este flag no se dibuja: un paso sobre \"¿hacia dónde abre?\" no tiene por qué regalarlo. Con a = 0 no hay vértice y no se dibuja aunque el flag esté."
+        },
+        "mostrarCeros": {
+          "type": "boolean",
+          "description": "Solo objeto parabola. Marca los ceros (0, 1 o 2 según el discriminante) sobre el eje x. Sin este flag no se dibujan."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "$comment": "El número de controles lo fija el objeto, no la variante: la parábola necesita exactamente a, b y c, y la recta sigue admitiendo como máximo dos.",
+          "if": {
+            "properties": { "objeto": { "const": "parabola" } },
+            "required": ["objeto"]
+          },
+          "then": {
+            "properties": { "variables": { "minItems": 3, "maxItems": 3 } }
+          },
+          "else": {
+            "properties": { "variables": { "maxItems": 2 } }
+          }
+        }
+      ]
     },
 
     "bloquePistas": {
