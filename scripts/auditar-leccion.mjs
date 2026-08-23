@@ -310,8 +310,14 @@ function chequearSlider(data, permitidoPorFlag, add) {
   const declarado = permitidoPorFlag || (typeof justificacion === 'string' && justificacion.trim().length >= 20);
   for (const { bloque, donde } of bloquesDe(data)) {
     if (bloque?.tipo !== 'interactivoSlider') continue;
+    /* El mensaje nombra el objeto real del bloque. Antes decía siempre "función
+       lineal", que dejó de ser cierto cuando apareció la parábola: un hallazgo
+       que describe mal lo que encontró es un hallazgo que se ignora. `objeto`
+       ausente significa recta (contrato de BloqueInteractivo). */
+    const representacion =
+      bloque.objeto === 'parabola' ? 'una parábola' : 'una recta de función lineal';
     if (declarado) add('🟢', 'slider-justificado', `${donde}: slider presente y declarado`);
-    else add('🔴', 'slider-no-justificado', `${donde}: hay interactivoSlider sin auditoria.sliderJustificado (≥20 caracteres). No se usa una representación de función lineal en una lección cuyo concepto no la exige`);
+    else add('🔴', 'slider-no-justificado', `${donde}: hay interactivoSlider sin auditoria.sliderJustificado (≥20 caracteres). No se usa ${representacion} en una lección cuyo concepto no la exige`);
   }
 }
 
