@@ -104,6 +104,51 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Ante una tabla sin título, decide con dos pruebas si es directa, inversa o ninguna de las dos — aunque las columnas suban parejo.",
     Ilustracion: IlustracionPlano,
   },
+  "potencias-multiplicar-corto": {
+    descripcion:
+      "Descubre cómo subir o bajar un escalón de exponente multiplica o divide por la base, y usa ese patrón para explicar el exponente cero y los negativos.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "potencias-raiz-escondida": {
+    descripcion:
+      "Reconoce una raíz enésima como una potencia con exponente fraccionario, y úsala para simplificar raíces y descomponerlas en su mayor factor exacto.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "potencias-problemas-en-contexto": {
+    descripcion:
+      "Decide si un problema pide una potencia o una raíz, y encuentra el resultado o el factor desconocido en situaciones de crecimiento repetido.",
+    Ilustracion: IlustracionPlano,
+  },
+  "expresiones-rectangulo": {
+    descripcion:
+      "Desarrolla el cuadrado de un binomio viendo por qué el término del medio es exactamente el doble del producto de sus partes.",
+    Ilustracion: IlustracionPlano,
+  },
+  "expresiones-deshacer-producto": {
+    descripcion:
+      "Reconoce una diferencia de cuadrados y factorízala como el producto de una suma por una resta, comprobando que los términos cruzados se cancelan.",
+    Ilustracion: IlustracionBalanza,
+  },
+  "expresiones-sumar-lo-que-se-parece": {
+    descripcion:
+      "Reduce una expresión agrupando los términos que comparten la misma parte literal, y decide cuándo ya no se puede simplificar más.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "sistemas-dos-historias": {
+    descripcion:
+      "Resuelve un sistema de dos ecuaciones por sustitución y encuentra el único par de valores que cumple ambas historias a la vez.",
+    Ilustracion: IlustracionBalanza,
+  },
+  "sistemas-rectas-no-se-cruzan": {
+    descripcion:
+      "Reconoce en los coeficientes de un sistema cuándo las rectas nunca se cruzan y cuándo son la misma recta escrita de dos formas.",
+    Ilustracion: IlustracionPendiente,
+  },
+  "sistemas-plantear-antes-resolver": {
+    descripcion:
+      "Traduce un problema en palabras a un sistema de dos ecuaciones, incluyendo condiciones de 'hace n años' o 'dentro de n años', y resuélvelo.",
+    Ilustracion: IlustracionBalanza,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

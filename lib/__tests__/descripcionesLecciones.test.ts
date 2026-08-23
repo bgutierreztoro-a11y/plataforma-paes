@@ -3,8 +3,8 @@
  *
  * Reemplaza la garantía que daba `Record<LeccionId, ...>` cuando el registro
  * declaraba solo las lecciones escritas. Desde que declara las 48 del temario
- * (16 módulos × 3) teniendo 9 en disco, un `Record` total exigiría copy de
- * interfaz para 39 lecciones inexistentes; el contrato se mide ahora contra la
+ * (16 módulos × 3) teniendo 25 en disco, un `Record` total exigiría copy de
+ * interfaz para 23 lecciones inexistentes; el contrato se mide ahora contra la
  * realidad: **toda lección con archivo en disco necesita entrada propia**. Las
  * planeadas caen legítimamente en `RESPALDO`.
  *
@@ -66,10 +66,10 @@ describe("descripcionesLecciones: cobertura del catálogo", () => {
     );
   });
 
-  test("el catálogo cubre exactamente las 13 lecciones que hoy existen", () => {
+  test("el catálogo cubre exactamente las 25 lecciones que hoy existen", () => {
     // Ancla el número para que agregar contenido nuevo sin su copy de interfaz
     // se note acá y no en producción, donde el fallback es silencioso.
-    assert.equal(leccionesEnDisco().length, 13);
-    assert.equal(clavesDelCatalogo().length, 13);
+    assert.equal(leccionesEnDisco().length, 25);
+    assert.equal(clavesDelCatalogo().length, 25);
   });
 });
