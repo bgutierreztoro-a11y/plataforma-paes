@@ -85,7 +85,11 @@ export function PlanoParabola({
           />
           <text
             x={xAPixel(vertice.x)}
-            y={yAPixel(vertice.y) - 10}
+            /* El rótulo va del lado hacia el que NO abre la curva: con a > 0 el
+               vértice es el punto más bajo y arriba pasa la parábola, así que
+               el texto va abajo. Fijarlo siempre arriba lo dejaba tachado por
+               el propio trazo. */
+            y={yAPixel(vertice.y) + (a > 0 ? 20 : -12)}
             fontSize={10}
             textAnchor="middle"
             className="fill-ink num"
