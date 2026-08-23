@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SliderControl } from "./SliderControl";
+import { SliderControl, type ConfigControl } from "./SliderControl";
 import { PlanoCartesiano } from "./PlanoCartesiano";
 import {
   SecuenciaMicropreguntas,
@@ -11,13 +11,6 @@ import {
 import { Boton } from "@/components/ui/Boton";
 import { formatoDecimalChileno } from "@/lib/planoCartesiano";
 import type { MicropreguntaSlider } from "@/lib/tipos";
-
-interface ConfigControl {
-  min: number;
-  max: number;
-  valorInicial: number;
-  editable: boolean;
-}
 
 interface GraficoPendienteProps {
   instruccion?: string;

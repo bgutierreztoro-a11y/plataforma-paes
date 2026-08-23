@@ -2,6 +2,19 @@
 
 import type { CSSProperties } from "react";
 
+/**
+ * Lo que el contenido declara por control en `variables[]`, ya traducido por
+ * `BloqueInteractivo`. Vive acá y no en `lib/tipos.ts` porque no es una forma
+ * del schema: es la config de este control, y los dos gráficos (recta y
+ * parábola) la arman igual.
+ */
+export interface ConfigControl {
+  min: number;
+  max: number;
+  valorInicial: number;
+  editable: boolean;
+}
+
 interface SliderControlProps {
   etiqueta: string;
   valor: number;
