@@ -1,0 +1,649 @@
+{
+  "tipo": "leccion",
+  "id": "cuadratica-sube-y-baja",
+  "titulo": "Ecuaciones de segundo grado",
+  "objetivo": "Resolver ecuaciones de segundo grado que surgen de relacionar dos cantidades por un producto (no una suma), factorizando y aplicando la propiedad del producto nulo; reconocer que una ecuación así puede tener dos soluciones matemáticas, y filtrar la que corresponde al contexto del problema.",
+  "tiempoEstimadoMin": 25,
+  "prerrequisitos": [
+    "Multiplicación de expresiones algebraicas (producto de binomios)",
+    "Resolución de ecuaciones lineales de una incógnita"
+  ],
+  "conceptos": [
+    "ecuación de segundo grado",
+    "producto de dos cantidades relacionadas por una diferencia fija",
+    "factorización por producto nulo",
+    "dos soluciones matemáticas de una misma ecuación",
+    "filtrar la solución según el contexto del problema"
+  ],
+  "_notasInternas": [
+    "Lección 1 del módulo función cuadrática. Sigue docs/diseno-modulo-funcion-cuadratica.md: núcleo = dos números pares positivos consecutivos cuyo producto es un valor dado (puzzle numérico puro, sin envoltorio real); aplicación = caja de cartón para manualidades; ítem PAES adicional = campeonato de tenis de mesa todos-contra-todos.",
+      "Verificación de colisión ejecutada por Benja (mecanismo 2 de CLAUDE.md) sobre los 9 candidatos de Fase 1 del módulo. Los tres candidatos de esta lección (números pares consecutivos, caja de cartón, campeonato de tenis de mesa) dieron LIMPIO. El único candidato descartado del módulo ('arco de un puente peatonal') pertenece a L2, no se usa acá.",
+    "Sin interactivoSlider: esta lección es puramente algebraica (descriptor DEMRE 1, 'Resolución y problemas de ecuaciones de segundo grado'). El gráfico de la parábola se introduce recién en L2.",
+    "Todos los valores numéricos (raíces, distractores) verificados con node -e antes de escribir el JSON; salida cruda pegada en el reporte de la sesión que produjo este archivo, no repetida acá para no duplicar texto que ya vive fuera del contenido del estudiante."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Al traducir el enunciado a una ecuación, plantear la suma de las dos cantidades igualada al valor dado en vez de su producto (o viceversa), obteniendo una ecuación lineal que no representa la relación cuadrática del problema."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Al expandir un producto de binomios o un cuadrado de binomio, distribuir la operación solo sobre uno de los términos en vez de todos, rompiendo la igualdad antes de resolver."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de las raíces reportadas — dar p y q en vez de −p y −q —, confundiendo el signo dentro del factor con el signo de la raíz."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: dos números pares positivos consecutivos, producto 48 (6 y 8)",
+    "problema: mismo tipo, producto 168 (12 y 14); ilustrativo sin resolver: producto 15.180, solo para mostrar que el método no depende de números amables (no registrado como ejercicio nuevo)",
+    "pensar/pistas: producto 288 (16 y 18; raíz espuria −18 y −16)",
+    "descubrimiento: producto 120 (10 y 12; raíz espuria −12; ejemplo trabajado de factorización y producto nulo)",
+    "generalizacion: expansión de (n−14)(n+16) y ejercicio con producto 224 (14 y 16; raíz espuria −16)",
+    "practica: producto 440 (20 y 22, bloque seleccion/verdaderoFalso) y producto 528 (22 y 24, bloque numerica)",
+    "aplicacion: caja de cartón para manualidades, ancho w y largo w+3 cm, área 88 cm² (ancho 8, largo 11; raíz espuria −11)",
+    "itemsPAES: campeonato escolar de tenis de mesa todos-contra-todos con 45 partidas (10 participantes); números pares positivos consecutivos con producto 728 (26 y 28); razonamiento abstracto sobre (n−7)(n+9)=0"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Dos números pares, uno al lado del otro",
+      "_notasInternas": [
+        "Producto 48: n=6, n+2=8. Verificado con node -e: 6*8=48. Gancho de predicción libre, sin método todavía.",
+        "El bloque de texto contrasta con el error-3 (sumar en vez de multiplicar) usando 23+25=48 pero 23×25=575≠48, sin nombrar el error todavía — mismo patrón que la palanca B de ecuaciones-lineales.json (contraste con respuesta errónea plausible)."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Piensa en dos números **pares positivos**, uno inmediatamente después del otro en la fila de los pares (por ejemplo 4 y 6, o 10 y 12 — nunca dos que se salten uno). Si multiplicados dan exactamente **48**, ¿cuál es el **menor** de los dos?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los números son **6 y 8**: 6 × 8 = 48.\n\nSi llegaste ahí probando pares cercanos, bien. Pero fíjate en un camino que NO funciona: si en vez de multiplicar hubieras buscado dos números que **sumaran** 48, habrías llegado a otra pareja completamente distinta — por ejemplo 23 y 25 (23 + 25 = 48), que ni siquiera son consecutivos entre los pares, y que multiplicados dan 23 × 25 = 575, no 48.\n\nEsa confusión —sumar cuando el problema pide multiplicar— es un error real que vas a volver a encontrarte en esta lección. Por ahora, quédate con esto: **el dato es un producto, no una suma**, y eso es justo lo que hace que la ecuación que viene sea de un tipo nuevo: una **ecuación de segundo grado**."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Ahora el producto es mucho más difícil de adivinar",
+      "_notasInternas": [
+        "Producto 168: n=12, n+2=14. Verificado con node -e: 12*14=168.",
+        "Bloque seleccion: opción (a) plantea la suma en vez del producto -> error-3. Opción (c) es 'adivinar', sin errorCatalogado (mismo patrón que la opción de tanteo en ecuaciones-lineales, que tampoco lleva id).",
+        "Bloque verdaderoFalso usa 15.180 como número puramente ilustrativo de 'feo/grande', sin resolverlo ni registrarlo como ejercicio nuevo — mismo patrón que 137 y 1.943 en ecuaciones-lineales.json (palanca F)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora buscas dos números pares positivos consecutivos cuyo producto sea **168**. Adivinar a ojo ya cuesta bastante más. De estas tres formas de encararlo, ¿cuál te **garantiza** la respuesta sin importar qué tan grande fuera el producto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Llamar n al menor y buscar una pareja de números que SUMEN 168.",
+              "esCorrecta": false,
+              "feedback": "168 es el PRODUCTO de los dos números, no su suma. Si buscas una pareja que sume 168 vas a terminar resolviendo un problema distinto, con otra respuesta. El dato que tienes exige plantear una multiplicación, no una suma.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "b",
+              "texto": "Llamar n al menor y n+2 al mayor, plantear n(n+2) = 168, y resolver la ecuación que resulta.",
+              "esCorrecta": true,
+              "feedback": "Exacto. Plantear el producto tal como lo describe el problema —n(n+2) = 168— te da una ecuación que se puede resolver con un método fijo, sin importar si el 168 fuera un número mucho más grande o más feo."
+            },
+            {
+              "id": "c",
+              "texto": "Probar pares al azar (4×6, 6×8, 8×10, 10×12...) hasta que alguno dé 168.",
+              "esCorrecta": false,
+              "feedback": "Probar puede funcionar con productos chicos, pero no escala: si el producto fuera un número de varios dígitos, podrías tardar mucho o nunca encontrarlo por tanteo. Existe una forma de plantear la ecuación que te da la respuesta directo."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "La ecuación n(n+2) = 168, es decir n² + 2n − 168 = 0, ¿se puede resolver con el mismo método aunque el producto dado fuera un número mucho menos amable, como **15.180** en vez de 168?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El método —plantear el producto como ecuación y resolverla— no depende de que el número sea bonito. Funciona exactamente igual con 168 que con 15.180: lo único que cambia es que factorizar a mano se vuelve más laborioso, no que el método deje de servir.",
+          "feedbackFalso": "En realidad sí funcionaría igual. El método no depende de que el producto sea un número amable: depende solo de que puedas plantear n(n+2) igualado a ese número y resolver la ecuación resultante, sea 168 o 15.180."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra los dos números",
+      "_notasInternas": [
+        "Producto 288: n=16, n+2=18. Verificado con node -e: raices de n^2+2n-288=0 son 16 y -18. Raiz espuria: si un estudiante reporta la pareja negativa (-18 y -16, que tambien multiplican 288), corresponde a error-1 en ambos campos.",
+        "Distractor de campo cruzado (18 en numeroMenor, 16 en numeroMayor invertido) no lleva errorCatalogado: es un error de lectura de la pregunta (cuál campo es cuál), no un error de método de los 5 catalogados."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Dos números pares **positivos** consecutivos tienen un producto de **288**. Intenta encontrarlos antes de pedir pistas.\n\n**Parte 1.** ¿Cuál es el menor de los dos?\n**Parte 2.** ¿Cuál es el mayor?",
+          "campos": [
+            {
+              "id": "numeroMenor",
+              "etiqueta": "El menor de los dos números",
+              "respuestaCorrecta": 16
+            },
+            {
+              "id": "numeroMayor",
+              "etiqueta": "El mayor de los dos números",
+              "respuestaCorrecta": 18
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": -18,
+              "mensaje": "−18 SÍ es parte de una solución matemática: −18 × −16 = 288 también. Pero el problema pide números pares POSITIVOS, y −18 no lo es. Esa pareja negativa hay que descartarla, no reportarla.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "numeroMayor",
+              "valorObtenido": -16,
+              "mensaje": "−16 SÍ es parte de una solución matemática: −18 × −16 = 288. Pero el problema exige números positivos, así que esta pareja negativa no es la respuesta que se pide.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": 18,
+              "mensaje": "18 es el número correcto, pero es el MAYOR de los dos, no el menor. Revisa cuál campo estás llenando: la Parte 1 pide el menor."
+            }
+          ],
+          "feedbackPorDefecto": "Llama n al menor de los dos números. El mayor es n+2. El producto es n(n+2) = 288, es decir n² + 2n − 288 = 0. Busca dos números que sumen 2 y multiplicados den −288 para factorizar."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para los dos números",
+      "_notasInternas": [
+        "Nivel 3 no entrega el resultado final (16 y 18): deja que el estudiante resuelva n-16=0 y n+18=0 él mismo, mismo criterio que ecuaciones-lineales.json (palanca H)."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Llama n al menor de los dos números. El mayor es n + 2 (dos unidades más, porque son pares consecutivos). El producto de ambos es 288: n(n + 2) = 288, es decir n² + 2n = 288. Pasa todo a un lado: n² + 2n − 288 = 0."
+            },
+            {
+              "nivel": 2,
+              "texto": "Para factorizar n² + 2n − 288, busca dos números que SUMEN 2 (el coeficiente de n) y que MULTIPLICADOS den −288. Esos números son 18 y −16, porque 18 + (−16) = 2 y 18 × (−16) = −288. Con ellos, la ecuación se factoriza como (n − 16)(n + 18) = 0."
+            },
+            {
+              "nivel": 3,
+              "texto": "Un producto de dos factores es cero solo si alguno de los dos factores es cero. ¿Qué valor de n hace cero a (n − 16)? ¿Y qué valor hace cero a (n + 18)? De esas dos posibilidades, ¿cuál es la que corresponde a un número par positivo?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El producto nulo: por qué aparecen dos soluciones",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Producto 120: n=10, n+2=12. Verificado con node -e: raices de n^2+2n-120=0 son 10 y -12; factorizacion (n-10)(n+12).",
+        "Bloque seleccion 'soluciones completas' houses error-2 (opcion a, reporta solo n=10) y error-5 (opcion c, signos invertidos -10 y 12). Opcion d (solo -12) sin id: descarta la unica solucion positiva por completo, error distinto de los 5 catalogados (mas cercano a una lectura invertida del filtro, no a un mecanismo algebraico especifico).",
+        "Bloque pregunta (formato PAES embebido) houses error-1 (opcion B, -12 sin filtrar) y error-5 (opcion C, -10 por inversion de signo). Opcion D (12) sin id: confunde mayor con menor.",
+        "Verificacion notaVerificacionMatematica: (n-10)(n+12) expandido = n^2 + 12n - 10n - 120 = n^2 + 2n - 120. Correcto."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Llamemos **n** al menor de dos números pares positivos consecutivos cuyo producto es **120**. El mayor es n + 2, así que:\n\n**n(n + 2) = 120**, es decir **n² + 2n − 120 = 0**.\n\nEsta es una **ecuación de segundo grado**: la incógnita aparece elevada al cuadrado, porque viene de un PRODUCTO de dos cantidades que dependen de n."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de resolverla: ¿cuántos valores de n crees que pueden hacer cierta la igualdad n² + 2n − 120 = 0?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Solo uno",
+            "Dos, matemáticamente",
+            "Ninguno"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Secuencia de cuatro filas mostrando cómo se resuelve n² + 2n − 120 = 0 por factorización y producto nulo, terminando en el filtro por el contexto del problema.",
+          "datos": {
+            "pasos": [
+              {
+                "izquierda": "n² + 2n − 120",
+                "derecha": "0",
+                "accion": "Ecuación de segundo grado, planteada a partir del producto n(n+2) = 120."
+              },
+              {
+                "izquierda": "(n − 10)(n + 12)",
+                "derecha": "0",
+                "accion": "Factorización: 10 y −12 son los números que suman 2 y multiplicados dan −120."
+              },
+              {
+                "izquierda": "n − 10 = 0   o   n + 12 = 0",
+                "derecha": "",
+                "accion": "Producto nulo: un producto de dos factores es cero solo si alguno de los dos factores lo es."
+              },
+              {
+                "izquierda": "n = 10   o   n = −12",
+                "derecha": "",
+                "accion": "Dos soluciones matemáticas. Solo n = 10 es un número par positivo: esa es la que responde el problema."
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Sin aplicar todavía ninguna restricción del problema: ¿cuál es la lista COMPLETA de soluciones de la ecuación n² + 2n − 120 = 0?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "n = 10",
+              "esCorrecta": false,
+              "feedback": "10 es una de las soluciones, pero no la única: la ecuación se factoriza en dos factores, (n − 10) y (n + 12), y CUALQUIERA de los dos puede anularse. Falta la otra solución.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "b",
+              "texto": "n = 10 y n = −12",
+              "esCorrecta": true,
+              "feedback": "Correcto. La ecuación factorizada (n − 10)(n + 12) = 0 se anula si n = 10 O si n = −12: matemáticamente hay dos soluciones, aunque el problema original solo acepte una de ellas."
+            },
+            {
+              "id": "c",
+              "texto": "n = −10 y n = 12",
+              "esCorrecta": false,
+              "feedback": "Invertiste los signos: el factor (n − 10) se anula en n = 10 (no en n = −10), y el factor (n + 12) se anula en n = −12 (no en n = 12). El signo dentro del factor es el opuesto del signo de la raíz.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "d",
+              "texto": "n = −12",
+              "esCorrecta": false,
+              "feedback": "−12 es una de las dos soluciones matemáticas, pero te quedaste solo con ella y descartaste la otra (n = 10) por completo. La lista completa —antes de filtrar por el contexto— tiene dos valores."
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Retomando el problema original —dos números pares POSITIVOS consecutivos cuyo producto es 120—, ¿cuál es el menor de los dos?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "10",
+              "esCorrecta": true,
+              "feedback": "Correcto. De las dos soluciones matemáticas de la ecuación (10 y −12), solo 10 es un número par positivo."
+            },
+            {
+              "clave": "B",
+              "texto": "−12",
+              "esCorrecta": false,
+              "feedback": "−12 es, en efecto, una solución matemática de la ecuación n² + 2n − 120 = 0. Pero el problema pide números pares POSITIVOS, y −12 no lo es: hay que descartarla y quedarse con la otra.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "C",
+              "texto": "−10",
+              "esCorrecta": false,
+              "feedback": "Invertiste el signo del factor: (n − 10) se anula en n = 10, no en n = −10. −10 ni siquiera es una solución de la ecuación.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "clave": "D",
+              "texto": "12",
+              "esCorrecta": false,
+              "feedback": "12 es el mayor de los dos números (12 = 10 + 2), no el menor que pide la pregunta."
+            }
+          ],
+          "notaVerificacionMatematica": "n² + 2n − 120 = 0. Se buscan p, q tales que p + q = 2 (coeficiente de n) y p·q = −120 (término independiente): p=12, q=−10 cumplen 12+(−10)=2 ✓ y 12·(−10)=−120 ✓. Factorización: (n + 12)(n − 10) = 0, equivalente a (n − 10)(n + 12) = 0 (el orden de los factores no altera el producto). Raíces: n = 10 o n = −12. Comprobación: 10² + 2·10 − 120 = 100+20−120 = 0 ✓. (−12)² + 2·(−12) − 120 = 144−24−120 = 0 ✓. Ambas correctas; solo n=10 es un número par positivo."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de ver es la propiedad del **producto nulo**: si dos factores multiplicados dan cero, entonces alguno de los dos —o ambos— tiene que ser cero. Por eso una ecuación de segundo grado como n² + 2n − 120 = 0 puede tener **dos soluciones matemáticas**: una por cada factor que se puede anular.\n\nEso no es un error ni una casualidad. Es que el problema real —números pares POSITIVOS— es más exigente que la ecuación pura: la ecuación acepta cualquier n que la haga cero, pero el problema solo acepta la que además cumple la condición extra. Resolver bien significa dos pasos, no uno: **encontrar las dos soluciones matemáticas, y después filtrar la que sirve.**"
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla: factorizar, aplicar el producto nulo, filtrar por el contexto",
+      "_notasInternas": [
+        "Bloque seleccion de expansion (FOIL) con K=224: (n-14)(n+16). Verificado con node -e: expandido correcto = n^2+2n-224. Opcion b (n^2-224) = error-4 (solo multiplica los extremos, omite los terminos cruzados 16n y -14n). Opcion c (n^2+30n-224) sin id (sumo 14+16 en vez de restar). Opcion d (n^2+2n+224) = error-5 (signo del termino independiente invertido).",
+        "Bloque numerica con K=224: n=14, n+2=16. Raiz espuria -16 (error-1). Distractor -14 (error-5, invierte el signo de la raiz que sale del factor (n-14))."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En esta lección, toda ecuación que armaste tiene la forma **n² + bn + c = 0**. El método que ya usaste varias veces se puede resumir en tres pasos:\n\n1. **Plantear** la ecuación igualada a cero (el producto de las dos cantidades, menos el valor dado).\n2. **Factorizar**: buscar dos números p y q tales que p + q sea el coeficiente de n, y p · q sea el término independiente. La ecuación queda (n − p)(n − q) = 0.\n3. **Aplicar el producto nulo**: n = p o n = q. Si el problema tiene una restricción (como 'positivo'), **filtrar** cuál de las dos soluciones matemáticas es la que responde."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Antes de seguir, conviene poder comprobar una factorización expandiendo hacia atrás. Por ejemplo, si (n − 14)(n + 16) es correcta como factorización de n² + 2n − 224, al multiplicarla de vuelta tiene que devolver exactamente esa ecuación: cada término del primer factor se multiplica por cada término del segundo, y los cuatro resultados se suman."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para comprobar que (n − 14)(n + 16) es la factorización correcta de n² + 2n − 224, hay que expandir el producto completo. ¿Cuál de estas expansiones es la correcta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "n² + 2n − 224",
+              "esCorrecta": true,
+              "feedback": "Correcto. n × n = n²; n × 16 = 16n; −14 × n = −14n (juntos, 16n − 14n = 2n); y −14 × 16 = −224. Sumando todo: n² + 2n − 224."
+            },
+            {
+              "id": "b",
+              "texto": "n² − 224",
+              "esCorrecta": false,
+              "feedback": "Multiplicaste solo los términos de los extremos (n × n y −14 × 16) y te saltaste los dos términos cruzados (n × 16 y −14 × n). Un producto de binomios tiene CUATRO productos parciales, no dos: sin los cruzados, pierdes el término en n.",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "id": "c",
+              "texto": "n² + 30n − 224",
+              "esCorrecta": false,
+              "feedback": "Sumaste 14 + 16 = 30 para el coeficiente de n, pero uno de los dos términos del factor es negativo (−14): lo que corresponde es 16 + (−14) = 2, no 16 + 14."
+            },
+            {
+              "id": "d",
+              "texto": "n² + 2n + 224",
+              "esCorrecta": false,
+              "feedback": "El término en n está bien, pero el término independiente tiene el signo invertido: −14 × 16 = −224 (negativo), no +224.",
+              "errorCatalogado": "error-5"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora tú: dos números pares positivos consecutivos tienen un producto de **224**. ¿Cuál es el menor de los dos?",
+          "campos": [
+            {
+              "id": "numeroMenor",
+              "etiqueta": "El menor de los dos números",
+              "respuestaCorrecta": 14
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": -16,
+              "mensaje": "−16 es, junto con −14, una solución matemática de n² + 2n − 224 = 0 (−16 × −14 = 224). Pero el problema pide números positivos, así que esa pareja negativa no sirve como respuesta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": -14,
+              "mensaje": "Invertiste el signo: el factor que corresponde a esta solución es (n − 14), que se anula en n = 14 (no en n = −14).",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Plantea n(n + 2) = 224, es decir n² + 2n − 224 = 0. Busca dos números que sumen 2 y multiplicados den −224 para factorizar, y quédate con la raíz que sea un número par positivo."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios con el mismo método",
+      "_notasInternas": [
+        "Seleccion y verdaderoFalso con producto 440: n=20, n+2=22. Verificado con node -e: raices de n^2+2n-440=0 son 20 y -22.",
+        "Numerica con producto 528: n=22, n+2=24. Verificado con node -e: raices de n^2+2n-528=0 son 22 y -24."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para resolver 'dos números pares positivos consecutivos cuyo producto es 440', ¿cuál de estos pasos corresponde al método?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Plantear 2n = 440 y despejar n.",
+              "esCorrecta": false,
+              "feedback": "Esto ignora que el mayor de los números es n + 2, no otro n: la relación no es 'dos veces n', es 'n multiplicado por (n+2)'. Por eso la ecuación tiene que llevar n², no solo 2n."
+            },
+            {
+              "id": "b",
+              "texto": "Plantear n(n + 2) = 440, factorizar la ecuación resultante y aplicar el producto nulo.",
+              "esCorrecta": true,
+              "feedback": "Correcto. n(n + 2) = 440 lleva a n² + 2n − 440 = 0, que se resuelve factorizando y aplicando el producto nulo, igual que en los ejercicios anteriores."
+            },
+            {
+              "id": "c",
+              "texto": "Sumar dos números cualesquiera y comprobar que el resultado se parece a 440.",
+              "esCorrecta": false,
+              "feedback": "Esto no resuelve nada: 440 es el producto que buscas, no una suma de referencia, y 'parecerse' no es un criterio matemático. Necesitas plantear la ecuación y resolverla."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El método de plantear n(n+2) igualado al producto dado, factorizar y aplicar el producto nulo, ¿sigue funcionando igual si el producto fuera un número de varias cifras y nada redondo, como 41.808?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El método no depende de que el número sea redondo o chico: sigue siendo plantear n(n+2) = valor, pasar todo a un lado y factorizar (o usar la fórmula general si factorizar a mano se vuelve muy difícil). Lo que cambia con números feos es el esfuerzo de cálculo, no el método.",
+          "feedbackFalso": "En realidad sí seguiría funcionando. El método —plantear, factorizar, aplicar el producto nulo, filtrar— no depende de que el producto sea un número amable."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Dos números pares positivos consecutivos tienen un producto de **528**. ¿Cuál es el menor de los dos?",
+          "campos": [
+            {
+              "id": "numeroMenor",
+              "etiqueta": "El menor de los dos números",
+              "respuestaCorrecta": 22
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": -24,
+              "mensaje": "−24 es parte de la otra solución matemática de la ecuación (−24 × −22 = 528), pero el problema pide números positivos. Descarta esa pareja negativa.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "numeroMenor",
+              "valorObtenido": -22,
+              "mensaje": "Invertiste el signo de la raíz: el factor correspondiente se anula en n = 22 (positivo), no en n = −22.",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Plantea n(n + 2) = 528, es decir n² + 2n − 528 = 0, y resuélvela factorizando como en los ejercicios anteriores."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Una caja de cartón para manualidades",
+      "_notasInternas": [
+        "Contexto de transferencia (descriptor 4, problemas en contexto): caja de carton, ancho w, largo w+3, area 88. Verificado con node -e: raices de w^2+3w-88=0 son 8 y -11; factorizacion (w-8)(w+11).",
+        "Distractor 11 = error-5 (toma la magnitud del factor con signo invertido: el factor es (w+11), que se anula en w=-11, no en w=11). Distractor -11 = error-1 (raiz matematicamente valida pero negativa, invalida para un ancho).",
+        "Estructura actuar-antes-de-nombrar (numerica primero, abierta despues), mismo criterio que el paso 8 de ecuaciones-lineales.json."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Para un taller de manualidades del colegio se necesita cortar una **caja de cartón rectangular** cuyo **largo mide 3 cm más que el ancho**, y cuya **área sea 88 cm²**.\n\n¿Cuántos centímetros mide el **ancho** de la caja?",
+          "campos": [
+            {
+              "id": "anchoCm",
+              "etiqueta": "Ancho de la caja",
+              "respuestaCorrecta": 8,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "anchoCm",
+              "valorObtenido": -11,
+              "mensaje": "−11 es, matemáticamente, una solución de la ecuación w² + 3w − 88 = 0. Pero un ancho no puede ser negativo: esa raíz no sirve para este problema, aunque sea válida en la ecuación pura.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "anchoCm",
+              "valorObtenido": 11,
+              "mensaje": "11 cm es el LARGO de la caja (8 + 3), no el ancho. Si llegaste a 11 tomando el factor (w + 11) con el signo cambiado, revisa: ese factor se anula en w = −11, no en w = 11.",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Si w es el ancho, el largo es w + 3 y el área es w(w + 3) = 88, es decir w² + 3w − 88 = 0. Factoriza buscando dos números que sumen 3 y multiplicados den −88."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Ya encontraste el ancho de la caja. Ahora hazlo explícito: llama w al ancho en centímetros y escribe la ecuación de segundo grado que representa esta situación.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "w(w + 3) = 88, es decir w² + 3w − 88 = 0 (el ancho w, multiplicado por el largo w + 3, da el área de 88 cm²)."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Por qué dos soluciones, si el problema solo acepta una?",
+      "_notasInternas": [
+        "Metacognicion sobre el principio (producto nulo + filtro por contexto), no sobre un calculo puntual. Texto de cierre nombra en lenguaje llano los 5 errores catalogados, sin mostrar los ids al estudiante (mismo criterio que ecuaciones-lineales.json)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué una ecuación de segundo grado como n² + 2n − 120 = 0 puede tener DOS soluciones matemáticas, y por qué en los problemas de esta lección casi siempre solo una de esas dos sirve como respuesta?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que mencione 'la ecuación viene de dos factores y cualquiera puede anularse, pero el problema pide además que sea positivo/tenga sentido' indica que entendió el principio del producto nulo Y el filtro por contexto, no solo el procedimiento mecánico."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al resolver este tipo de ecuación —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Plantear una suma en vez de un producto**, cuando el enunciado describe una multiplicación de dos cantidades.\n2. **Reportar solo una de las dos soluciones matemáticas**, sin darse cuenta de que la ecuación factorizada tiene dos factores que se pueden anular.\n3. **No descartar la solución que no cumple la condición del problema** (por ejemplo, un ancho o una cantidad negativa).\n4. **Invertir el signo al leer las raíces desde los factores**: el factor (n − p) se anula en n = p, no en n = −p.\n5. **Expandir un producto de binomios a medias**, olvidando los términos cruzados y perdiendo el término del medio.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis + puente a L2 (vertice) del mismo modulo, sin comprometer detalles de L2 mas alla de mencionar que la parabola se grafica."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Cuando dos cantidades relacionadas por una diferencia fija se **multiplican** para dar un total, aparece una **ecuación de segundo grado**.\n- El método: **plantear** la ecuación igualada a cero, **factorizar** buscando dos números que sumen el coeficiente de n y multiplicados den el término independiente, y aplicar el **producto nulo**.\n- Una ecuación así casi siempre tiene **dos soluciones matemáticas**. El problema real, con sus restricciones (positivo, ancho, cantidad de personas), suele aceptar solo una: hay que **filtrarla**, no elegirla al azar.\n- Trampas clásicas: confundir suma con producto, quedarse con una sola solución, no descartar la que no cumple el contexto, invertir signos al leer las raíces, y expandir un producto a medias.\n\nDónde se conecta: la próxima lección toma esta misma ecuación —n² + bn + c— y la mira como una curva completa, no solo como un par de soluciones sueltas. Ahí vas a ver que esas 'dos soluciones' son, en realidad, los dos puntos donde esa curva cruza el eje horizontal, y que tiene además un punto más alto o más bajo que también se puede calcular.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l1-item-1",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En un campeonato escolar de tenis de mesa, cada participante juega exactamente una vez contra cada uno de los demás (formato todos contra todos). Si en total se jugaron 45 partidas, ¿cuántos participantes tuvo el campeonato?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "10",
+          "esCorrecta": true,
+          "feedback": "Correcto. Con n participantes se juegan n(n−1)/2 partidas. Planteando n(n−1)/2 = 45 se obtiene n² − n − 90 = 0, que factoriza como (n − 10)(n + 9) = 0. La solución positiva es n = 10. Comprobación: 10 × 9 / 2 = 45. ✓"
+        },
+        {
+          "clave": "B",
+          "texto": "9",
+          "esCorrecta": false,
+          "feedback": "Este valor sale de usar la fórmula n(n+1)/2 = 45 en vez de n(n−1)/2 = 45 — es decir, de contar como si cada participante jugara también contra sí mismo o contra uno de más. Con n personas, los rivales posibles para cada una son las OTRAS n−1, no n+1."
+        },
+        {
+          "clave": "C",
+          "texto": "−9",
+          "esCorrecta": false,
+          "feedback": "−9 es, matemáticamente, la otra raíz de n² − n − 90 = 0. Pero una cantidad de participantes no puede ser negativa: esa solución no tiene sentido en este problema y hay que descartarla.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "45",
+          "esCorrecta": false,
+          "feedback": "45 es el número de PARTIDAS jugadas, no el número de participantes. Son dos cantidades distintas relacionadas por la fórmula n(n−1)/2, no el mismo número."
+        }
+      ],
+      "solucion": "Con n participantes en formato todos-contra-todos, el número de partidas es n(n−1)/2 (cada par de participantes juega exactamente una vez). Planteando n(n−1)/2 = 45: n(n−1) = 90, es decir n² − n − 90 = 0. Factorizando: (n − 10)(n + 9) = 0, así que n = 10 o n = −9. Como n es una cantidad de participantes, se descarta la solución negativa: n = 10. Comprobación: 10 × 9 / 2 = 45. ✓"
+    },
+    {
+      "id": "l1-item-2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Dos números pares positivos consecutivos tienen un producto de 728. ¿Cuál es el menor de los dos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "26",
+          "esCorrecta": true,
+          "feedback": "Correcto. Planteando n(n+2) = 728 se obtiene n² + 2n − 728 = 0, que factoriza como (n − 26)(n + 28) = 0. La solución que es un número par positivo es n = 26. Comprobación: 26 × 28 = 728. ✓"
+        },
+        {
+          "clave": "B",
+          "texto": "28",
+          "esCorrecta": false,
+          "feedback": "28 es correcto como número, pero es el MAYOR de los dos (28 = 26 + 2), no el menor que pide la pregunta."
+        },
+        {
+          "clave": "C",
+          "texto": "−28",
+          "esCorrecta": false,
+          "feedback": "−28 es, junto con −26, la otra solución matemática de la ecuación (−28 × −26 = 728). Pero el problema pide números positivos, así que esa pareja negativa no es la respuesta.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "−26",
+          "esCorrecta": false,
+          "feedback": "−26 no es una solución de la ecuación n² + 2n − 728 = 0: el factor correspondiente, (n − 26), se anula en n = 26 (positivo), no en n = −26. Invertiste el signo al leer la raíz desde el factor.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "Si n es el menor de los dos números, el mayor es n + 2, y su producto es n(n + 2) = 728, es decir n² + 2n − 728 = 0. Factorizando: se buscan dos números que sumen 2 y multiplicados den −728: esos números son 28 y −26. La ecuación queda (n − 26)(n + 28) = 0, así que n = 26 o n = −28. Como se piden números positivos, la respuesta es n = 26. Comprobación: 26 × 28 = 728. ✓"
+    },
+    {
+      "id": "l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Al resolver la ecuación (n − 7)(n + 9) = 0, un estudiante concluye que la única solución es n = 7, \"porque ese es el número que aparece primero en la factorización\". ¿Es correcto su razonamiento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: el producto de dos factores es cero si CUALQUIERA de los dos lo es, así que también hay que considerar n = −9 como solución matemática.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La propiedad del producto nulo dice que (n−7)(n+9) = 0 se cumple si n−7 = 0 O si n+9 = 0, sin importar el orden en que aparezcan los factores. Las dos soluciones son n = 7 y n = −9."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcto: en una multiplicación el primer factor escrito es el que determina la solución, así que solo importa (n − 7).",
+          "esCorrecta": false,
+          "feedback": "El orden en que se escriben los factores no tiene ningún efecto matemático: (n−7)(n+9) es exactamente lo mismo que (n+9)(n−7). El estudiante se quedó con una sola solución y omitió la segunda, que es igual de válida.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: la solución correcta es n = 9, porque el factor (n + 9) es el que determina el signo de la respuesta.",
+          "esCorrecta": false,
+          "feedback": "El factor (n + 9) se anula en n = −9, no en n = 9: para que n + 9 valga cero, n tiene que ser el opuesto de 9. Invertiste el signo al leer la raíz desde el factor.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "Es correcto: para que un producto sea cero, ambos factores deben ser cero AL MISMO TIEMPO, y eso ocurre en n = 7.",
+          "esCorrecta": false,
+          "feedback": "Un producto es cero si AL MENOS UNO de los factores es cero, no si los dos lo son a la vez (de hecho, (n−7) y (n+9) nunca son cero al mismo tiempo, para ningún valor de n). Esa confusión entre 'o' y 'y' es justo lo que lleva a perder la segunda solución."
+        }
+      ],
+      "solucion": "La propiedad del producto nulo establece que si a · b = 0, entonces a = 0 o b = 0 (no exclusivo, pero aquí no pueden ser ambos a la vez). Aplicada a (n−7)(n+9) = 0: n−7 = 0 da n = 7; n+9 = 0 da n = −9. Ambas son soluciones matemáticas de la ecuación, sin necesidad de ninguna restricción de contexto en este caso abstracto. El razonamiento del estudiante es incorrecto porque descarta una solución válida sin justificación. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Álgebra y funciones: ecuaciones de segundo grado), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (números pares consecutivos, caja de cartón, campeonato de tenis de mesa) y la secuencia didáctica creados desde cero por el autor del proyecto. Los tres contextos de esta lección fueron verificados sin colisión contra el corpus de fuentes aisladas por Benja, fuera de esta sesión de redacción, con node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), junto con los otros 6 candidatos del módulo función cuadrática; el único candidato descartado del módulo entero ('arco de un puente peatonal') no pertenece a esta lección. Pendiente /revision-matematica y /revision-originalidad en hilos aislados antes de cualquier commit o publicación.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
