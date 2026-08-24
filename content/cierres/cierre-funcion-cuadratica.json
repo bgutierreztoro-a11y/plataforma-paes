@@ -1,0 +1,319 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-funcion-cuadratica",
+  "titulo": "Cierre del módulo: Función cuadrática",
+  "_notasInternas": [
+    "Cierre del módulo 'Función cuadrática' (docs/diseno-modulo-funcion-cuadratica.md), construido después de que las 3 lecciones (cuadratica-sube-y-baja, cuadratica-punto-mas-alto, cuadratica-donde-toca-el-eje) pasaran npm run validar.",
+    "Cobertura por lección: L1 (cuadratica-sube-y-baja) = items 1,2,3. L2 (cuadratica-punto-mas-alto) = items 4,5. L3 (cuadratica-donde-toca-el-eje) = items 6,7,8. Cobertura por habilidad: resolver = items 1,4. representar = items 2,6. modelar = items 3,7. argumentar = items 5,8 (2 de cada una de las 4).",
+    "Contextos reutilizados del módulo, todos con cifras NUEVAS respecto de las 3 lecciones (verificado contra contextosNumericos de cada archivo de lección antes de fijar los números): números pares consecutivos (item1, K=960 — las lecciones usaron 48,168,288,120,224,528,728), caja de cartón (item2, largo=ancho+5, área=150 — las lecciones usaron largo=ancho+3, área=88), campeonato de tenis de mesa (item3, P=66 — la lección usó P=45), huerto escolar (item4, total(d)=−2d²+20d — las lecciones usaron los coeficientes (a,b) = (−4,24),(−5,30),(−3,18),(−2,16); este item usa (−2,20), no repetido), dron de reparto (item5, h(t)=−3t²+18t — la lección usó −2t²+8t), letrero-arco de gimnasio (item6, h(x)=−x²+6x+27 — las lecciones usaron −x²+4, −x²+2x+8, −x²+4x+5), llaveros (item7, derivado de I(q)=−q²+20q y C(q)=6q+24 → G(q)=−q²+14q−24 — la lección usó G(q)=−q²+20q−64 directamente, sin derivarlo de ingreso/costo).",
+    "Octavo contexto: se usó la RESERVA del módulo, 'perfil de una rampa de snow park' (candidato 8 de Fase 1, verificado LIMPIO por Benja, no usado en ninguna lección) para el item8, con h(x)=−x²+8x−12. Es además el item integrador: conecta explícitamente el método de L1/L3 (factorizar, encontrar ceros) con el de L2 (fórmula del vértice), pidiendo reconocer que el vértice cae siempre a mitad de camino entre los dos ceros — mismo rol que el item8 de cierre-sistemas-2x2.json.",
+    "catalogoErrores: subconjunto EXACTO de cuadratica-sube-y-baja.json (L1) referenciado por los distractores de este cierre, copiado carácter a carácter (mismo criterio que cuadratica-donde-toca-el-eje.json/L3). Se usan error-1 (item1, item3), error-2 (item6), error-3 (item2) y error-5 (item1, item6). error-4 (expansión FOIL de un producto de binomios) NO se usa: el item7 tiene una distractor que distribuye mal un signo negativo al restar C(q), pero ese mecanismo es sobre resta de una expresión, no sobre expandir un producto de binomios — no calza con la descripción de error-4, así que ese distractor queda sin errorCatalogado en vez de forzar la reutilización. No se necesitó ningún id nuevo."
+  ],
+  "items": [
+    {
+      "id": "cierre-cuadratica-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Dos números pares positivos consecutivos tienen un producto de 960. ¿Cuál es el menor de los dos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "30",
+          "esCorrecta": true,
+          "feedback": "Correcto. n(n+2) = 960 lleva a n² + 2n − 960 = 0, que factoriza como (n − 30)(n + 32) = 0. La solución que es un número par positivo es n = 30."
+        },
+        {
+          "clave": "B",
+          "texto": "32",
+          "esCorrecta": false,
+          "feedback": "32 es correcto como número, pero es el MAYOR de los dos (32 = 30 + 2), no el menor que pide la pregunta."
+        },
+        {
+          "clave": "C",
+          "texto": "−32",
+          "esCorrecta": false,
+          "feedback": "−32 es, junto con −30, la otra solución matemática de la ecuación (−32 × −30 = 960). Pero el problema pide números positivos, así que esa pareja negativa no es la respuesta.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "−30",
+          "esCorrecta": false,
+          "feedback": "−30 no es una solución de la ecuación n² + 2n − 960 = 0: el factor correspondiente, (n − 30), se anula en n = 30 (positivo), no en n = −30. Invertiste el signo al leer la raíz desde el factor.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "Si n es el menor de los dos números, el mayor es n + 2, y su producto es n(n + 2) = 960, es decir n² + 2n − 960 = 0. Factorizando: se buscan dos números que sumen 2 y multiplicados den −960: esos números son 32 y −30. La ecuación queda (n − 30)(n + 32) = 0, así que n = 30 o n = −32. Como se piden números positivos, la respuesta es n = 30. Comprobación: 30 × 32 = 960. ✓"
+    },
+    {
+      "id": "cierre-cuadratica-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Para un taller de manualidades se necesita una caja de cartón rectangular cuyo largo mide 5 cm más que el ancho, y cuya área es 150 cm². Si w es el ancho, ¿cuál ecuación representa esta situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "w(w + 5) = 150",
+          "esCorrecta": true,
+          "feedback": "Correcto. El área de un rectángulo es ancho × largo: w × (w + 5) = 150."
+        },
+        {
+          "clave": "B",
+          "texto": "w + (w + 5) = 150",
+          "esCorrecta": false,
+          "feedback": "150 cm² es un ÁREA, que se obtiene multiplicando ancho por largo, no sumándolos. Sumar w + (w+5) daría el perímetro parcial, no el área.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "w(w − 5) = 150",
+          "esCorrecta": false,
+          "feedback": "El enunciado dice que el largo SUPERA al ancho en 5 cm, es decir largo = w + 5 (mayor que el ancho), no w − 5 (que sería menor). El signo de la relación está invertido."
+        },
+        {
+          "clave": "D",
+          "texto": "(w + 5)² = 150",
+          "esCorrecta": false,
+          "feedback": "Esto calcularía el área de un CUADRADO de lado (w+5), no el área de un rectángulo con ancho w y largo w+5. El área de este rectángulo es w × (w+5), no (w+5) × (w+5)."
+        }
+      ],
+      "solucion": "El área de un rectángulo es ancho × largo. Con ancho w y largo w + 5 (5 cm más que el ancho), el área es w(w + 5) = 150. Esa es la ecuación de la alternativa A. (Resolviéndola: w² + 5w − 150 = 0 → (w−10)(w+15) = 0 → w = 10 cm, largo = 15 cm; comprobación 10×15 = 150 ✓, dato no pedido en este ítem porque la habilidad evaluada es representar, no resolver.)"
+    },
+    {
+      "id": "cierre-cuadratica-3",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En un campeonato escolar de ajedrez, cada participante juega exactamente una vez contra cada uno de los demás (formato todos contra todos). Si en total se jugaron 66 partidas, ¿cuántos participantes tuvo el campeonato?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "12",
+          "esCorrecta": true,
+          "feedback": "Correcto. Con n participantes se juegan n(n−1)/2 partidas. Planteando n(n−1)/2 = 66 se obtiene n² − n − 132 = 0, que factoriza como (n − 12)(n + 11) = 0. La solución positiva es n = 12. Comprobación: 12 × 11 / 2 = 66. ✓"
+        },
+        {
+          "clave": "B",
+          "texto": "11",
+          "esCorrecta": false,
+          "feedback": "Este valor sale de usar la fórmula n(n+1)/2 = 66 en vez de n(n−1)/2 = 66 — como si cada participante jugara también contra uno de más. Con n personas, los rivales posibles para cada una son las OTRAS n−1, no n+1."
+        },
+        {
+          "clave": "C",
+          "texto": "−11",
+          "esCorrecta": false,
+          "feedback": "−11 es, matemáticamente, la otra raíz de n² − n − 132 = 0. Pero una cantidad de participantes no puede ser negativa: esa solución no tiene sentido en este problema y hay que descartarla.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "66",
+          "esCorrecta": false,
+          "feedback": "66 es el número de PARTIDAS jugadas, no el número de participantes. Son dos cantidades distintas relacionadas por la fórmula n(n−1)/2, no el mismo número."
+        }
+      ],
+      "solucion": "Con n participantes en formato todos-contra-todos, el número de partidas es n(n−1)/2. Planteando n(n−1)/2 = 66: n(n−1) = 132, es decir n² − n − 132 = 0. Factorizando: (n − 12)(n + 11) = 0, así que n = 12 o n = −11. Como n es una cantidad de participantes, se descarta la solución negativa: n = 12. Comprobación: 12 × 11 / 2 = 66. ✓"
+    },
+    {
+      "id": "cierre-cuadratica-4",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "El rendimiento total (en kg) de un huerto escolar se modela por total(d) = −2d² + 20d, donde d es la densidad de plantas por m². ¿Para qué densidad se obtiene el rendimiento máximo, y cuál es ese rendimiento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Densidad 5, rendimiento 50 kg",
+          "esCorrecta": true,
+          "feedback": "Correcto. d_v = −20/(2×−2) = 5. total(5) = −2×25+100 = −50+100 = 50."
+        },
+        {
+          "clave": "B",
+          "texto": "Densidad 5, rendimiento 20 kg",
+          "esCorrecta": false,
+          "feedback": "La densidad (5) está correcta, pero 20 es solo el valor de b, no el rendimiento máximo. Falta sustituir d=5 en total(d) = −2d² + 20d para obtener el rendimiento real: total(5) = 50, no 20."
+        },
+        {
+          "clave": "C",
+          "texto": "Densidad −5, rendimiento −150 kg",
+          "esCorrecta": false,
+          "feedback": "Te faltó negar b en la fórmula: calculaste d = b/(2a) = 20/(2×−2) = −5 en vez de d = −b/(2a) = −20/(2×−2) = 5. Revisa el signo."
+        },
+        {
+          "clave": "D",
+          "texto": "Densidad 10, rendimiento 0 kg",
+          "esCorrecta": false,
+          "feedback": "Usaste d = −b/a en vez de d = −b/(2a): te faltó dividir por 2. Con a=−2 y b=20, la fórmula correcta da d = −20/(2×−2) = 5, no 10."
+        }
+      ],
+      "solucion": "d_v = −b/(2a) con a=−2, b=20: d_v = −20/(2×−2) = −20/−4 = 5. Sustituyendo: total(5) = −2(5)² + 20(5) = −50+100 = 50. La densidad óptima es 5 plantas/m², con un rendimiento máximo de 50 kg."
+    },
+    {
+      "id": "cierre-cuadratica-5",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante calcula el vértice de la trayectoria de un dron de reparto, h(t) = −3t² + 18t, y obtiene (3, 27). Afirma: \"La altura máxima del dron es 27 metros, porque el vértice de cualquier parábola es su punto más alto\". ¿Es un argumento válido?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El resultado (27 m) es correcto, pero el argumento no lo es: falta decir que a=−3 es negativo, que es justamente lo que garantiza que el vértice sea un máximo y no un mínimo.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El vértice no es 'siempre' el punto más alto: lo es en este caso PORQUE a=−3<0. Un argumento completo tiene que apoyarse en el signo de a, no en una regla general falsa."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, es un argumento completamente válido: todo vértice de una parábola es su punto más alto.",
+          "esCorrecta": false,
+          "feedback": "Esa regla general es falsa: si a fuera positivo, el vértice sería el punto MÁS BAJO, no el más alto. El resultado numérico (27 m) es correcto en este caso, pero solo porque a=−3 es negativo, no porque 'todo vértice' cumpla esa propiedad."
+        },
+        {
+          "clave": "C",
+          "texto": "No, ni el resultado ni el argumento son correctos: la altura máxima real es 18 m, el valor de b.",
+          "esCorrecta": false,
+          "feedback": "18 es el coeficiente b, no la altura máxima. La altura máxima es el valor de h en el vértice: h(3) = −3(9)+18(3) = −27+54 = 27 m, no 18."
+        },
+        {
+          "clave": "D",
+          "texto": "El argumento es válido, pero el resultado está mal: la altura máxima correcta es 3 m, no 27.",
+          "esCorrecta": false,
+          "feedback": "3 es el instante t_v (en segundos) en que ocurre la altura máxima, no la altura misma. La altura máxima es h(3) = 27 m."
+        }
+      ],
+      "solucion": "t_v = −b/(2a) = −18/(2×−3) = 3. h(3) = −3(3)²+18(3) = −27+54 = 27. El vértice (3,27) es correcto, y es un máximo porque a=−3<0 (la parábola abre hacia abajo). El argumento del estudiante llega al resultado correcto pero con una justificación incompleta/falsa como regla general: falta mencionar el signo de a. Respuesta: A."
+    },
+    {
+      "id": "cierre-cuadratica-6",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un letrero luminoso en forma de arco sobre la entrada de un gimnasio sigue la curva h(x) = −x² + 6x + 27. ¿Dónde toca el suelo (los dos puntos donde h(x) = 0)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "En x = 9 y x = −3",
+          "esCorrecta": true,
+          "feedback": "Correcto. −x² + 6x + 27 = −(x² − 6x − 27) = −(x − 9)(x + 3). Por el producto nulo: x = 9 o x = −3."
+        },
+        {
+          "clave": "B",
+          "texto": "Solo en x = 9",
+          "esCorrecta": false,
+          "feedback": "La ecuación factorizada tiene dos factores, y cualquiera de los dos puede anularse: hay dos ceros, x=9 y x=−3, no solo uno.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "C",
+          "texto": "En x = −9 y x = 3",
+          "esCorrecta": false,
+          "feedback": "Los signos están invertidos: el factor (x − 9) se anula en x = 9 (no en x = −9), y el factor (x + 3) se anula en x = −3 (no en x = 3).",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "En x = 6 y x = 27",
+          "esCorrecta": false,
+          "feedback": "6 y 27 son los coeficientes b y c de la ecuación, no sus ceros. Los ceros se obtienen factorizando e igualando a 0, no leyendo directamente los coeficientes."
+        }
+      ],
+      "solucion": "−x² + 6x + 27 = 0 equivale a x² − 6x − 27 = 0, que factoriza como (x − 9)(x + 3) = 0. Por el producto nulo, x = 9 o x = −3: el arco toca el suelo en esos dos puntos."
+    },
+    {
+      "id": "cierre-cuadratica-7",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "El ingreso de un emprendimiento de llaveros, según la cantidad q vendida, es I(q) = −q² + 20q (en miles de pesos). El costo total es C(q) = 6q + 24. ¿Cuál expresión representa correctamente la ganancia neta G(q) = I(q) − C(q)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "G(q) = −q² + 14q − 24",
+          "esCorrecta": true,
+          "feedback": "Correcto. G(q) = (−q²+20q) − (6q+24) = −q² + 20q − 6q − 24 = −q² + 14q − 24."
+        },
+        {
+          "clave": "B",
+          "texto": "G(q) = −q² + 26q + 24",
+          "esCorrecta": false,
+          "feedback": "Este resultado sale de SUMAR C(q) a I(q) en vez de restarlo: (−q²+20q) + (6q+24) = −q²+26q+24. Pero la ganancia es ingreso MENOS costo, no ingreso más costo."
+        },
+        {
+          "clave": "C",
+          "texto": "G(q) = −q² + 14q + 24",
+          "esCorrecta": false,
+          "feedback": "El término en q está bien (restaste correctamente el 6q), pero al restar C(q)=6q+24 hay que restar TAMBIÉN el 24, no sumarlo: −q²+20q−6q−24, no −q²+20q−6q+24. Faltó distribuir el signo negativo al segundo término de C(q)."
+        },
+        {
+          "clave": "D",
+          "texto": "G(q) = q² + 14q − 24",
+          "esCorrecta": false,
+          "feedback": "El signo del término cuadrático está invertido: como I(q) tiene −q² y C(q) no tiene término en q², la resta mantiene el −q², no lo convierte en +q²."
+        }
+      ],
+      "solucion": "G(q) = I(q) − C(q) = (−q² + 20q) − (6q + 24) = −q² + 20q − 6q − 24 = −q² + 14q − 24. (Sus ceros, no pedidos en este ítem porque la habilidad evaluada es modelar, no resolver, son q=2 y q=12: verificados con −q²+14q−24=0 → q²−14q+24=0 → (q−2)(q−12)=0.)"
+    },
+    {
+      "id": "cierre-cuadratica-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Para el perfil de una rampa de snow park, h(x) = −x² + 8x − 12, un estudiante factoriza y encuentra los ceros (x=2 y x=6), y por separado calcula el vértice con la fórmula (x=4, h=4). Nota que 4 es exactamente el punto medio entre 2 y 6, y se pregunta si eso es una coincidencia. ¿Qué explica mejor esta observación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es coincidencia: la parábola es simétrica respecto de la recta vertical que pasa por el vértice, así que el vértice siempre queda exactamente a mitad de camino entre dos ceros reales.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Es la misma simetría que se usó en la Lección 2 para encontrar máximos: si hay dos ceros, el vértice —el eje de simetría de la curva— cae siempre en su punto medio."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es una coincidencia; en general, el vértice no tiene ninguna relación con la posición de los ceros.",
+          "esCorrecta": false,
+          "feedback": "No es coincidencia: es consecuencia directa de la simetría de toda parábola respecto de la recta vertical que pasa por su vértice. Esa relación se cumple siempre que existan dos ceros reales."
+        },
+        {
+          "clave": "C",
+          "texto": "No es coincidencia, pero solo porque a=−1 en este caso; con otros valores de a la relación no se cumpliría.",
+          "esCorrecta": false,
+          "feedback": "La simetría de la parábola respecto de su vértice se cumple para cualquier valor de a (mientras a≠0), no solo cuando a=−1. El signo de a decide si el vértice es máximo o mínimo, pero no afecta que sea el punto medio entre los ceros."
+        },
+        {
+          "clave": "D",
+          "texto": "No es coincidencia, pero el vértice está exactamente a mitad de camino solo cuando hay una raíz doble (un único cero).",
+          "esCorrecta": false,
+          "feedback": "Es justo al revés: cuando hay una raíz doble, el vértice y el único cero son EL MISMO punto (distancia cero). El caso de 'vértice a mitad de camino entre dos puntos distintos' es precisamente cuando hay DOS ceros reales, como en este ejemplo."
+        }
+      ],
+      "solucion": "h(x)=−x²+8x−12. Ceros: −x²+8x−12=0 → x²−8x+12=0 → (x−2)(x−6)=0 → x=2 o x=6. Vértice: x_v=−8/(2×−1)=4, h(4)=−16+32−12=4. El punto medio entre los ceros es (2+6)/2=4, que coincide con x_v. Esto no es casualidad: toda parábola es simétrica respecto de la recta vertical x=x_v, así que si tiene dos ceros reales, estos son equidistantes del vértice y su punto medio es siempre x_v. Respuesta: A."
+    }
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Al traducir el enunciado a una ecuación, plantear la suma de las dos cantidades igualada al valor dado en vez de su producto (o viceversa), obteniendo una ecuación lineal que no representa la relación cuadrática del problema."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de las raíces reportadas — dar p y q en vez de −p y −q —, confundiendo el signo dentro del factor con el signo de la raíz."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-cuadratica-1 (números pares consecutivos, resolver): producto 960 → (30, 32)",
+    "cierre-cuadratica-2 (caja de cartón, representar): largo = ancho+5, área 150 (plantear ecuación)",
+    "cierre-cuadratica-3 (campeonato de ajedrez todos-contra-todos, modelar): 66 partidas → 12 participantes",
+    "cierre-cuadratica-4 (huerto escolar, resolver): total(d) = −2d² + 20d → densidad óptima 5, rendimiento máximo 50",
+    "cierre-cuadratica-5 (dron de reparto, argumentar): h(t) = −3t² + 18t → vértice (3, 27)",
+    "cierre-cuadratica-6 (letrero-arco de gimnasio, representar): h(x) = −x² + 6x + 27 → ceros 9 y −3",
+    "cierre-cuadratica-7 (llaveros, modelar): I(q)=−q²+20q, C(q)=6q+24 → G(q)=−q²+14q−24 (plantear la ganancia, no resuelto en el ítem)",
+    "cierre-cuadratica-8 (rampa de snow park — contexto de reserva del módulo, integrador L1+L2+L3, argumentar): h(x) = −x² + 8x − 12 → ceros 2 y 6, vértice (4, 4)"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, módulo 'Función cuadrática' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md y docs/temario-demre-m1-2027.md)."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los 7 contextos ya verificados del módulo (números pares consecutivos, caja de cartón, campeonato de tenis de mesa/ajedrez, huerto escolar, dron de reparto, letrero-arco de gimnasio, llaveros) con cifras nuevas, más el octavo contexto de reserva ('perfil de una rampa de snow park', candidato 8 de Fase 1, verificado LIMPIO por Benja y no usado en ninguna lección) para el ítem integrador. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
