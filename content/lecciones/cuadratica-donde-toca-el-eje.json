@@ -1,0 +1,569 @@
+{
+  "tipo": "leccion",
+  "id": "cuadratica-donde-toca-el-eje",
+  "titulo": "Ceros e intersección con los ejes",
+  "objetivo": "Encontrar los ceros de una función cuadrática por factorización y producto nulo, leerlos como los puntos donde la parábola cruza el eje X; reconocer que puede haber dos, uno o ningún cero real según el discriminante; y obtener la intersección con el eje Y directamente como (0, c), sin necesidad de resolver nada.",
+  "tiempoEstimadoMin": 27,
+  "prerrequisitos": [
+    "Ecuaciones de segundo grado (Lección 1 de este módulo): factorización y producto nulo",
+    "Vértice y parámetros de la función cuadrática (Lección 2 de este módulo): fórmula del vértice y efecto de a, b y c"
+  ],
+  "conceptos": [
+    "ceros de una función cuadrática",
+    "intersección con el eje X",
+    "intersección con el eje Y en (0, c)",
+    "discriminante y número de ceros reales (dos, uno o ninguno)",
+    "factorización como lectura gráfica"
+  ],
+  "_notasInternas": [
+    "Lección 3 del módulo función cuadrática. Sigue docs/diseno-modulo-funcion-cuadratica.md: núcleo = letrero luminoso en forma de arco sobre la entrada de un gimnasio (ancho de la base según altura máxima); aplicación = ganancia neta de emprendimiento de llaveros (ceros = cantidades de equilibrio). Ambos contextos verificados sin colisión por Benja junto con el resto del módulo; el único candidato descartado del módulo ('arco de un puente peatonal') no pertenece a esta lección.",
+    "DESVIACIÓN DELIBERADA de la instrucción literal 'NO copies el texto, solo referencia el id' para error-1 y error-2: CLAUDE.md regla 1 (no negociable, motivo técnico en su sección 2d) exige que cada archivo que referencia un error de otro archivo EMBEBA el subconjunto exacto copiado carácter a carácter, porque lib/sanitizar.ts resuelve errorCatalogado solo contra el catalogoErrores del MISMO archivo (no fusiona el de L1). Un errorCatalogado sin el catálogo embebido deja muda la Capa 2 del feedback en producción. Interpreto la instrucción del autor como 'no reformules la descripción con tus propias palabras' (que sí cumplo: las dos entradas de abajo son copia carácter a carácter de cuadratica-sube-y-baja.json), no como 'omite el catálogo'. Lo marco explícito para que el autor lo corrija si quería lo segundo.",
+      "El umbral de 3+ para pausar y proponer un id nuevo aplica SOLO a los 2 errores propios de L3 sin id ('no hay ceros reales' != 'error de calculo'; 'olvida que el eje Y es (0,c) sin resolver'), no a la reutilización de error-1/error-2 de L1 (esos se reusan tantas veces como el mecanismo calce, sin tope). Conteo de los 2 propios de L3: 'no hay ceros reales != error de calculo' usado 2 veces (paso descubrimiento, bloque pregunta, alternativa B; item l3-item-3). 'eje Y es (0,c) sin resolver' usado 1 vez (paso generalizacion, bloque seleccion, opcion b). Ninguno llega a 3.",
+    "Interactivo: un solo interactivoSlider (paso descubrimiento), exactamente como se especificó: objeto parabola, variante unaVariable, a fijo en -1 y b fijo en 0 (editable:false, igual que en L2), c editable con valorInicial=4 (min/max en los defaults [-5,5]). Con a=-1,b=0 fijos, variar c reproduce los 3 casos del discriminante moviendo un solo control: c=4 -> 2 ceros, c=0 -> 1 cero (raiz doble), c<0 -> 0 ceros reales (verificado con node -e). mostrarVertice:true (ya se gano en L2) y mostrarCeros:true (nuevo en esta leccion).",
+    "El estado inicial del slider (a=-1,b=0,c=4, es decir y=-x²+4) coincide deliberadamente con el ejemplo numerico del letrero luminoso de la curiosidad (mismos ceros ±2, mismo vertice (0,4)): el interactivo es literalmente el mismo arco que el estudiante ya calculo a mano, ahora explorable."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: letrero luminoso en forma de arco, h(x) = −x² + 4 (metros, x medido desde el centro); toca el suelo en x=2 y x=−2, ancho total 4 m, altura máxima 4 m",
+    "problema: segundo letrero, no centrado: h(x) = −x² + 2x + 8; toca el suelo en x=−2 y x=4, ancho 6 m",
+    "pensar/pistas: tercer letrero, h(x) = −x² + 4x + 5; toca el suelo en x=−1 y x=5",
+    "descubrimiento: retoma h(x)=−x²+4 factorizado; interactivoSlider abstracto (c variable, a=−1 y b=0 fijos); bloque pregunta con y=−x²−3 (sin ceros reales)",
+    "generalizacion: y=x²−6x+9 (raíz doble, 1 cero); y=3x²−5x+2 (intersección eje Y)",
+    "practica: y=x²−x−12 (ceros −3 y 4); y=−x²+7x−10 (ceros 2 y 5)",
+    "aplicacion: emprendimiento estudiantil de llaveros, ganancia G(q) = −q² + 20q − 64 (q = cantidad vendida); equilibrio en q=4 y q=16, ganancia máxima 36 en q=10",
+    "itemsPAES: y=x²−2x−15 (ceros −3 y 5, eje Y en (0,−15)); ganancia de una promoción de llaveros G(d)=−d²+6d+7 según días desde el lanzamiento (ceros −1 y 7, se descarta −1); y=2x²+3x+10 (sin ceros reales)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "El letrero que toca el suelo dos veces",
+      "_notasInternas": [
+        "h(x)=-x^2+4. Verificado con node -e: ceros en x=-2 y x=2 (discriminante 16), vertice (0,4). Coincide exactamente con el estado inicial del interactivoSlider de la Lección."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "A la entrada de un gimnasio hay un **letrero luminoso en forma de arco**. Su altura, en metros, según la distancia horizontal x (en metros, medida desde el centro de la entrada), sigue la curva h(x) = −x² + 4.\n\nEl lado DERECHO del arco toca el suelo (h = 0) exactamente en **x = 2**."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Usando lo que sabes de la simetría de una parábola (Lección 2): ¿en qué otro valor de x, al lado IZQUIERDO, vuelve a tocar el suelo el arco?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El arco también toca el suelo en **x = −2**. Como el vértice de este arco está justo sobre el centro (x=0), los dos puntos donde toca el suelo son simétricos: uno a 2 metros a la derecha, otro a 2 metros a la izquierda. El ancho total de la base del letrero es 4 metros, y su altura máxima es 4 metros.\n\nEsos dos puntos —x = 2 y x = −2, donde h(x) = 0— son los **ceros** de la función: los lugares donde la curva cruza el eje horizontal."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Un letrero que no es simétrico respecto del centro",
+      "_notasInternas": [
+        "h(x)=-x^2+2x+8. Verificado con node -e: ceros -2 y 4 (discriminante 36), vertice (1,9). Factorizacion -(x-4)(x+2) expandida coincide."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Otro gimnasio instala un letrero parecido, pero esta vez el arco no está centrado en el medio de la entrada: h(x) = −x² + 2x + 8."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El vértice de este arco ya no está en x = 0, así que la simetría alrededor del centro no te sirve directamente para adivinar el segundo punto. ¿Cómo encontrarías dónde toca el suelo esta vez?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Igualar h(x) a 0, factorizar la ecuación resultante y aplicar el producto nulo, igual que en la Lección 1.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Encontrar dónde toca el suelo es exactamente resolver −x² + 2x + 8 = 0: el mismo método de factorización y producto nulo que ya usaste, ahora leído como puntos del gráfico."
+            },
+            {
+              "id": "b",
+              "texto": "Ir probando valores de x hasta que h(x) dé un resultado cercano a 0.",
+              "esCorrecta": false,
+              "feedback": "Probar puede acercarte, pero no te da el valor exacto y no escala si los ceros no son números enteros pequeños. Existe un método directo: factorizar la ecuación."
+            },
+            {
+              "id": "c",
+              "texto": "Usar la fórmula del vértice de la Lección 2 (x = −b/2a) para encontrar los dos puntos.",
+              "esCorrecta": false,
+              "feedback": "Esa fórmula te da UN punto: el vértice (el punto más alto o más bajo), no los puntos donde la curva cruza el eje X. Vértice y ceros son cosas distintas, aunque de la misma ecuación."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Factorizando: −x² + 2x + 8 = −(x² − 2x − 8) = −(x − 4)(x + 2). Por el producto nulo, esto es cero cuando x = 4 o cuando x = −2. El arco toca el suelo en esos dos puntos: el ancho de la base es 4 − (−2) = 6 metros."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra los dos ceros",
+      "_notasInternas": [
+        "h(x)=-x^2+4x+5. Verificado con node -e: ceros -1 y 5 (discriminante 36), vertice (2,9). Factorizacion -(x-5)(x+1).",
+        "Distractor ceroMenor=1: confunde el signo del factor (x+1) pensando que la raiz es +1 en vez de -1 -- error propio de este item, sin errorCatalogado (no es error-1 ni error-2; es un error de lectura de signo en la factorizacion, deliberadamente NO catalogado por instruccion del autor de reusar solo error-1/error-2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un tercer letrero: h(x) = −x² + 4x + 5.\n\nFactoriza y encuentra dónde toca el suelo (los dos ceros).",
+          "campos": [
+            {
+              "id": "ceroMenor",
+              "etiqueta": "El cero menor",
+              "respuestaCorrecta": -1
+            },
+            {
+              "id": "ceroMayor",
+              "etiqueta": "El cero mayor",
+              "respuestaCorrecta": 5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ceroMenor",
+              "valorObtenido": 1,
+              "mensaje": "La factorización es −(x − 5)(x + 1) = 0. El factor (x + 1) se anula en x = −1, no en x = 1: el signo dentro del factor es el opuesto del signo de la raíz."
+            }
+          ],
+          "feedbackPorDefecto": "Iguala h(x) a 0: −x² + 4x + 5 = 0, o bien x² − 4x − 5 = 0. Busca dos números que sumen −4 y multiplicados den −5 para factorizar."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para los dos ceros",
+      "_notasInternas": [
+        "Nivel 3 no entrega los valores finales (-1 y 5), deja que el estudiante resuelva x-5=0 y x+1=0 el mismo."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Iguala h(x) a 0: −x² + 4x + 5 = 0. Multiplica toda la ecuación por −1 para trabajar con el término cuadrático positivo: x² − 4x − 5 = 0."
+            },
+            {
+              "nivel": 2,
+              "texto": "Busca dos números que sumen −4 y multiplicados den −5. Esos números son −5 y 1: (−5) + 1 = −4, y (−5) × 1 = −5. Con ellos, la ecuación se factoriza como (x − 5)(x + 1) = 0."
+            },
+            {
+              "nivel": 3,
+              "texto": "Un producto de dos factores es cero solo si alguno de los dos factores es cero. ¿Qué valor de x hace cero a (x − 5)? ¿Y qué valor hace cero a (x + 1)? Esos dos valores son los ceros que buscas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "¿Cuántos ceros puede tener una parábola?",
+      "_notasInternas": [
+        "CORAZON DE LA LECCION. Retoma h(x)=-x^2+4 (curiosidad) factorizado como -(x-2)(x+2), conectando el algebra de L1 con la lectura grafica.",
+        "Bloque seleccion houses error-2 (opcion b, reporta solo un cero) via errorCatalogado (id reusado de L1, texto embebido arriba).",
+        "interactivoSlider: objeto parabola, variante unaVariable, a=-1 fijo, b=0 fijo, c editable min:-5 max:5 valorInicial:4. Verificado con node -e: c=4->2 ceros, c=2-> 2 ceros (irracionales), c=1->2 ceros, c=0->1 cero (raiz doble en x=0), c=-1 y c=-3 -> 0 ceros reales (discriminante negativo). exploracionMinima=6 con instruccion explicita de bajar c hasta un valor negativo, para garantizar que la exploracion cruce los 3 casos.",
+        "Bloque pregunta: y=-x^2-3 (a=-1,b=0,c=-3). Verificado con node -e: discriminante=-12<0, sin ceros reales. Alternativa B houses el error propio de L3 'no hay ceros reales != error de calculo' (uso 1/2, sin errorCatalogado)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Recuerda el primer letrero de esta lección: h(x) = −x² + 4. Factorizado, es −(x − 2)(x + 2) = 0, así que x = 2 o x = −2.\n\nEsos son EXACTAMENTE los mismos dos números que ves en el gráfico, en el lugar exacto donde la curva cruza el eje X. Resolver la ecuación por factorización —lo que aprendiste en la Lección 1— y encontrar los ceros del gráfico son la misma tarea, vista de dos formas distintas."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para reportar completamente dónde el arco del letrero toca el suelo, ¿qué necesitas dar como respuesta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Los DOS valores de x: x = 2 y x = −2.",
+              "esCorrecta": true,
+              "feedback": "Correcto. La ecuación factorizada tiene dos factores, y cualquiera de los dos puede anularse: hay dos ceros, y ambos son parte de la respuesta completa."
+            },
+            {
+              "id": "b",
+              "texto": "Solo el valor positivo, x = 2, porque es 'el' cero de la función.",
+              "esCorrecta": false,
+              "feedback": "Una función cuadrática puede tener DOS ceros reales, y ambos son igual de válidos matemáticamente. Quedarte solo con el positivo es reportar una respuesta incompleta.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "c",
+              "texto": "El promedio de los dos, x = 0, porque ahí está el punto central.",
+              "esCorrecta": false,
+              "feedback": "x = 0 es la posición horizontal del VÉRTICE en este arco (que es un dato distinto), no un cero: h(0) = 4, no 0. Los ceros son los puntos donde la altura es exactamente 0."
+            }
+          ]
+        },
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "objeto": "parabola",
+          "instruccion": "Esta parábola empieza igual que el primer letrero: y = −x² + 4, con dos ceros en x=±2. Mueve el control c hacia abajo, pasando por 0, hasta llegar a un valor negativo, y observa qué pasa con los puntos marcados sobre el eje X.",
+          "variables": [
+            { "nombre": "a", "min": -2, "max": 2, "valorInicial": -1, "editable": false },
+            { "nombre": "b", "min": -3, "max": 3, "valorInicial": 0, "editable": false },
+            { "nombre": "c", "min": -5, "max": 5, "valorInicial": 4, "editable": true }
+          ],
+          "mostrarVertice": true,
+          "mostrarCeros": true,
+          "exploracionMinima": 6,
+          "feedbackExploracionInsuficiente": "Todavía te falta explorar: sigue moviendo c hacia abajo (al menos 6 valores distintos) hasta llegar a un número negativo, y fíjate cuántos puntos quedan marcados sobre el eje X en cada caso."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Para la función y = −x² − 3 (es decir, a=−1, b=0, c=−3), ¿cuántos ceros reales tiene?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Ninguno: la parábola no cruza el eje X en ningún punto.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Con a=−1 (abre hacia abajo) y c=−3 (vértice por debajo del eje X, en (0,−3)), toda la curva queda por debajo del eje X: nunca lo cruza."
+            },
+            {
+              "clave": "B",
+              "texto": "Tiene que haber al menos un cero: si el cálculo da 'ninguno', algo salió mal en el procedimiento.",
+              "esCorrecta": false,
+              "feedback": "No todas las parábolas cruzan el eje X. Que el discriminante sea negativo (aquí, b²−4ac = 0−12 = −12) es un resultado real y válido: significa que la curva completa queda de un solo lado del eje X, no que hubo un error de cálculo."
+            },
+            {
+              "clave": "C",
+              "texto": "Uno, en x = 0.",
+              "esCorrecta": false,
+              "feedback": "x = 0 no es un cero de esta función: y(0) = −3, no 0. Ese punto es donde la curva cruza el eje Y, no el eje X."
+            },
+            {
+              "clave": "D",
+              "texto": "Dos, en x = √3 y x = −√3.",
+              "esCorrecta": false,
+              "feedback": "Esos valores no son ceros de esta función: sustituyendo, y(√3) = −3−3 = −6, no 0. La ecuación −x²−3=0 no tiene solución real, porque llevaría a x²=−3, y ningún número real elevado al cuadrado da negativo."
+            }
+          ],
+          "notaVerificacionMatematica": "y = −x²−3: a=−1, b=0, c=−3. Discriminante = b²−4ac = 0−4(−1)(−3) = 0−12 = −12 < 0. No hay ceros reales. Correcto: A."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Como acabas de ver con el control c, una parábola puede tener **dos, uno o ningún** cero real:\n\n- Si la curva cruza el eje X en dos puntos distintos → **dos ceros**.\n- Si el vértice queda apoyado exactamente sobre el eje X → **un cero** (el vértice mismo).\n- Si toda la curva queda de un solo lado del eje X (sin tocarlo) → **ningún cero real**.\n\nQue no haya ceros reales **no es un error de tu cálculo**: es información real sobre esa curva en particular."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "El discriminante, y el eje Y sin resolver nada",
+      "_notasInternas": [
+        "y=x^2-6x+9. Verificado con node -e: discriminante=0, raiz doble en x=3, vertice (3,0).",
+        "Bloque seleccion sobre eje Y: y=3x^2-5x+2. Opcion (a) correcta, lee c=2 directo. Opcion (b) houses el error propio de L3 'olvida que el eje Y es (0,c) sin resolver' (uso 1/1, sin errorCatalogado). Opciones (c) y (d) distractores propios del item."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El número que decide cuántos ceros reales tiene una parábola y = ax² + bx + c se llama **discriminante**: Δ = b² − 4ac.\n\n- Si Δ > 0 → **dos** ceros reales distintos.\n- Si Δ = 0 → **un** cero real (una raíz doble: el vértice está apoyado sobre el eje X).\n- Si Δ < 0 → **ningún** cero real."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ejemplo del caso Δ = 0: y = x² − 6x + 9. Δ = (−6)² − 4(1)(9) = 36 − 36 = 0. Factorizando: x² − 6x + 9 = (x − 3)(x − 3) = (x − 3)². El único cero es x = 3 — y coincide exactamente con el vértice, en (3, 0). Cuando el discriminante es 0, el vértice y el (único) cero son el mismo punto."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la intersección con el eje Y de y = 3x² − 5x + 2?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(0, 2): se lee directo el valor de c, sin resolver ninguna ecuación.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cuando x = 0, y = 3(0)² − 5(0) + 2 = 2. Da exactamente c, sin necesidad de factorizar ni de calcular ningún discriminante."
+            },
+            {
+              "id": "b",
+              "texto": "Hay que resolver 3x² − 5x + 2 = 0 primero, y de ahí sacar el punto.",
+              "esCorrecta": false,
+              "feedback": "Eso encontraría los CEROS (la intersección con el eje X), que es un cálculo distinto. La intersección con el eje Y no requiere resolver ninguna ecuación: es simplemente el punto (0, c)."
+            },
+            {
+              "id": "c",
+              "texto": "(0, −5)",
+              "esCorrecta": false,
+              "feedback": "−5 es el coeficiente b, no c. La intersección con el eje Y usa el término independiente (c = 2), no el coeficiente de x."
+            },
+            {
+              "id": "d",
+              "texto": "(0, 0): toda parábola pasa por el origen.",
+              "esCorrecta": false,
+              "feedback": "Eso solo es cierto cuando c = 0. En esta ecuación c = 2, así que la curva cruza el eje Y en (0, 2), no en el origen."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Cerrando el círculo con el primer letrero de esta lección, h(x) = −x² + 4: sus ceros son x = 2 y x = −2 (dos puntos sobre el eje X), y su intersección con el eje Y es (0, 4) — que en este caso particular coincide con la altura máxima, porque el vértice de ese arco está justo sobre el eje Y."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios con ceros y ejes",
+      "_notasInternas": [
+        "Seleccion: y=x^2-x-12=(x-4)(x+3). Verificado con node -e: ceros -3 y 4.",
+        "Numerica: y=-x^2+7x-10. Verificado con node -e: ceros 2 y 5, vertice (3.5, 2.25)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuáles son los ceros de y = x² − x − 12?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "x = 4 y x = −3",
+              "esCorrecta": true,
+              "feedback": "Correcto. x² − x − 12 = (x − 4)(x + 3). Por el producto nulo, x = 4 o x = −3."
+            },
+            {
+              "id": "b",
+              "texto": "Solo x = 4, porque es la solución positiva.",
+              "esCorrecta": false,
+              "feedback": "Ambos factores pueden anularse: (x − 4) da x = 4, pero (x + 3) también da un valor válido, x = −3. La respuesta completa incluye los dos.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "c",
+              "texto": "x = −4 y x = 3",
+              "esCorrecta": false,
+              "feedback": "Los signos están invertidos: el factor (x − 4) se anula en x = 4 (no en x = −4), y el factor (x + 3) se anula en x = −3 (no en x = 3)."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El discriminante Δ = b² − 4ac, ¿sigue siendo el criterio válido para saber cuántos ceros reales tiene una parábola aunque a, b y c sean números grandes o feos, como a = 4, b = −317 y c = 205?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. La fórmula Δ = b² − 4ac funciona para cualquier a, b y c: el signo del resultado (positivo, cero o negativo) siempre te dice cuántos ceros reales hay, sin importar qué tan grandes o feos sean los números.",
+          "feedbackFalso": "En realidad sí sigue siendo válido. El discriminante no depende de que los coeficientes sean números redondos: Δ > 0, Δ = 0 o Δ < 0 clasifica el número de ceros reales para cualquier a, b, c."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Encuentra los ceros de y = −x² + 7x − 10.",
+          "campos": [
+            {
+              "id": "ceroMenor",
+              "etiqueta": "El cero menor",
+              "respuestaCorrecta": 2
+            },
+            {
+              "id": "ceroMayor",
+              "etiqueta": "El cero mayor",
+              "respuestaCorrecta": 5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ceroMenor",
+              "valorObtenido": -2,
+              "mensaje": "El signo está invertido: el factor correspondiente se anula en x = 2 (positivo), no en x = −2."
+            }
+          ],
+          "feedbackPorDefecto": "Iguala a 0: −x² + 7x − 10 = 0, o bien x² − 7x + 10 = 0. Busca dos números que sumen −7 y multiplicados den 10 para factorizar."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El equilibrio de un emprendimiento de llaveros",
+      "_notasInternas": [
+        "G(q)=-q^2+20q-64. Verificado con node -e: ceros 4 y 16 (discriminante 144), vertice (10,36). q=4->0, q=16->0, q=10->36.",
+        "Bloque abierta houses error-2 (uso 2/2, via texto de feedback conceptual, no distractor formal con id -- ver bloque numerica que SI usa errorCatalogado en su feedbackPorError)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un curso organiza un emprendimiento estudiantil vendiendo llaveros. Su ganancia neta, en miles de pesos, según la cantidad q de llaveros vendidos, sigue la curva **G(q) = −q² + 20q − 64**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Las cantidades de EQUILIBRIO son aquellas donde la ganancia es exactamente cero (ni ganan ni pierden). Encuentra las dos cantidades de equilibrio.",
+          "campos": [
+            {
+              "id": "equilibrioMenor",
+              "etiqueta": "Cantidad de equilibrio menor",
+              "respuestaCorrecta": 4,
+              "unidad": "llaveros"
+            },
+            {
+              "id": "equilibrioMayor",
+              "etiqueta": "Cantidad de equilibrio mayor",
+              "respuestaCorrecta": 16,
+              "unidad": "llaveros"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "equilibrioMayor",
+              "valorObtenido": 4,
+              "mensaje": "4 es la cantidad de equilibrio MENOR (la que ya pusiste en el otro campo). La ecuación −q² + 20q − 64 = 0 tiene dos soluciones distintas, y aquí se pide la mayor de las dos.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Iguala G(q) a 0: −q² + 20q − 64 = 0, o bien q² − 20q + 64 = 0. Busca dos números que sumen −20 y multiplicados den 64 para factorizar."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Entre las dos cantidades de equilibrio que encontraste, ¿el emprendimiento gana o pierde dinero? Da un ejemplo concreto (una cantidad q dentro de ese rango) que respalde tu respuesta.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Entre q=4 y q=16 el emprendimiento GANA: por ejemplo, en q=10, G(10) = −100+200−64 = 36 (positivo). Fuera de ese rango (menos de 4 o más de 16 llaveros vendidos), la ganancia es negativa: se pierde dinero. Reportar solo una de las dos cantidades de equilibrio no basta para saber esto — se necesitan ambas para describir el rango completo donde el negocio es rentable."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Lo mismo, visto de tres formas",
+      "_notasInternas": [
+        "Metacognicion sobre la conexion algebra-grafico. Texto de cierre nombra en lenguaje llano los 2 errores propios de L3 y menciona los 2 reutilizados de L1, sin mostrar ids."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿qué relación hay entre 'resolver una ecuación de segundo grado' (Lección 1) y 'encontrar los ceros de una parábola' (esta lección)? ¿Son cosas distintas o la misma cosa vista de otra forma?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que reconozca que son la MISMA operación algebraica (factorizar e igualar a cero), solo que ahora interpretada como puntos de un gráfico, indica comprensión real de la conexión entre L1 y L3."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al buscar ceros e intersecciones —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Reportar solo uno de los dos ceros**, cuando la ecuación factorizada tiene dos factores que se pueden anular (el mismo error de la Lección 1, ahora leído en el gráfico).\n2. **Descartar (o no descartar) un cero según el contexto**, igual que en la Lección 1: no todo cero matemático tiene sentido en el problema real.\n3. **Pensar que 'ningún cero real' significa que algo salió mal en el cálculo**, cuando en realidad es información válida: esa parábola en particular no cruza el eje X.\n4. **Olvidar que la intersección con el eje Y es siempre (0, c)**, y ponerse a resolver una ecuación innecesariamente para encontrarla.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis integrando L1+L2+L3, puente al cierre del modulo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Los **ceros** de una función cuadrática son los puntos donde cruza el eje X — se encuentran factorizando e igualando a 0, exactamente el método de la Lección 1.\n- Una parábola puede tener **dos, uno o ningún** cero real, según el signo del discriminante Δ = b² − 4ac. Que no haya ceros reales no es un error: es información real sobre esa curva.\n- La intersección con el eje **Y** es siempre **(0, c)** — se lee directo, sin resolver nada.\n- Las mismas trampas de la Lección 1 (reportar solo una solución, no filtrar la que no cumple el contexto) reaparecen acá, ahora vistas como puntos del gráfico.\n\nDónde se conecta: ya viste las tres piezas de la función cuadrática — resolver la ecuación (Lección 1), encontrar el vértice (Lección 2), y encontrar los ceros y la intersección con los ejes (esta lección). El cierre del módulo las integra a las tres.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuáles son los ceros de y = x² − 2x − 15, y cuál es su intersección con el eje Y?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Ceros: x = 5 y x = −3. Eje Y: (0, −15).",
+          "esCorrecta": true,
+          "feedback": "Correcto. x² − 2x − 15 = (x − 5)(x + 3), así que x = 5 o x = −3. La intersección con el eje Y es directamente (0, c) = (0, −15)."
+        },
+        {
+          "clave": "B",
+          "texto": "Ceros: x = 5 y x = −3. Eje Y: (0, 0).",
+          "esCorrecta": false,
+          "feedback": "Los ceros están correctos, pero la intersección con el eje Y no es (0,0): eso solo pasaría si c=0. Aquí c = −15, así que la curva cruza el eje Y en (0, −15)."
+        },
+        {
+          "clave": "C",
+          "texto": "Solo x = 5. Eje Y: (0, −15).",
+          "esCorrecta": false,
+          "feedback": "La ecuación factorizada (x−5)(x+3)=0 tiene DOS soluciones: falta x = −3, que también es un cero válido de la función.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "Ceros: x = −5 y x = 3. Eje Y: (0, −15).",
+          "esCorrecta": false,
+          "feedback": "Los signos de los ceros están invertidos: el factor (x−5) se anula en x=5 (no en x=−5), y (x+3) se anula en x=−3 (no en x=3)."
+        }
+      ],
+      "solucion": "x² − 2x − 15 = (x − 5)(x + 3). Por el producto nulo: x = 5 o x = −3. La intersección con el eje Y se lee directo del término independiente: (0, c) = (0, −15), sin necesidad de resolver nada."
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "La ganancia diaria (en miles de pesos) de una promoción de llaveros, según los días d transcurridos desde su lanzamiento, sigue G(d) = −d² + 6d + 7. ¿En qué día la ganancia vuelve a ser exactamente cero?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Día 7",
+          "esCorrecta": true,
+          "feedback": "Correcto. −d² + 6d + 7 = 0 factoriza como −(d−7)(d+1) = 0, dando d = 7 o d = −1. Como d representa días desde el lanzamiento, no puede ser negativo: la respuesta es d = 7."
+        },
+        {
+          "clave": "B",
+          "texto": "Día −1",
+          "esCorrecta": false,
+          "feedback": "−1 es, matemáticamente, la otra solución de la ecuación. Pero d representa días transcurridos desde el lanzamiento de la promoción, y no puede ser negativo: esa solución no tiene sentido en este problema.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Día 6",
+          "esCorrecta": false,
+          "feedback": "6 es el coeficiente b de la ecuación, no una solución de G(d) = 0. Sustituyendo, G(6) = −36+36+7 = 7, que no es cero."
+        },
+        {
+          "clave": "D",
+          "texto": "Día 7 y también día −1: ambas cuentan como respuesta.",
+          "esCorrecta": false,
+          "feedback": "Matemáticamente hay dos soluciones, pero el contexto (días desde un lanzamiento) exige un valor no negativo. Hay que filtrar y quedarse solo con d = 7."
+        }
+      ],
+      "solucion": "−d² + 6d + 7 = 0 equivale a d² − 6d − 7 = 0, que factoriza como (d−7)(d+1) = 0. Las soluciones matemáticas son d=7 y d=−1. Como d representa días transcurridos desde el lanzamiento de la promoción, debe ser un valor no negativo: se descarta d=−1 y la respuesta es d=7."
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Al calcular el discriminante de y = 2x² + 3x + 10, un estudiante obtiene Δ = −71 y concluye: \"debo haberme equivocado en algún paso, porque una parábola no puede dar un resultado negativo aquí\". ¿Es correcta esta conclusión?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: un discriminante negativo es un resultado válido y significa que esa parábola no tiene ceros reales, no que hubo un error de cálculo.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Δ = 3² − 4(2)(10) = 9 − 80 = −71, correctamente calculado. Un discriminante negativo simplemente indica que la parábola no cruza el eje X en ningún punto real."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: el discriminante de una parábola siempre debe ser positivo o cero, así que un valor negativo indica un error en el cálculo.",
+          "esCorrecta": false,
+          "feedback": "El discriminante puede ser positivo, cero o negativo perfectamente bien: cada caso corresponde a una situación real (dos ceros, un cero, o ningún cero real). Un valor negativo no es señal de error."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: el discriminante está mal calculado, el valor correcto es Δ = 71 (positivo).",
+          "esCorrecta": false,
+          "feedback": "El cálculo Δ = 3² − 4(2)(10) = 9 − 80 = −71 es correcto: 4×2×10 = 80, y 9−80 = −71. No hay error de signo en ese cálculo."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, pero solo porque el coeficiente c=10 es demasiado grande comparado con a y b.",
+          "esCorrecta": false,
+          "feedback": "El discriminante puede dar negativo con cualquier combinación de coeficientes donde 4ac supere a b²; no hay una regla de 'c demasiado grande' aparte del cálculo mismo de b²−4ac."
+        }
+      ],
+      "solucion": "Δ = b²−4ac = 3²−4(2)(10) = 9−80 = −71. El cálculo es correcto. Un discriminante negativo no es un error: indica que la parábola y=2x²+3x+10 (que abre hacia arriba, con vértice por encima del eje X) no cruza el eje X en ningún punto real. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Álgebra y funciones: puntos especiales de la gráfica de la función cuadrática — vértice, ceros e intersección con los ejes), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (letrero luminoso en forma de arco, emprendimiento de llaveros) y la secuencia didáctica creados desde cero por el autor del proyecto. Ambos contextos de esta lección fueron verificados sin colisión contra el corpus de fuentes aisladas por Benja, fuera de esta sesión de redacción, con node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), junto con los otros candidatos del módulo función cuadrática; el único candidato descartado del módulo entero ('arco de un puente peatonal') no pertenece a esta lección. Pendiente /revision-matematica y /revision-originalidad en hilos aislados antes de cualquier commit o publicación.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
