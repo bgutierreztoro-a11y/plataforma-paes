@@ -1,0 +1,585 @@
+{
+  "tipo": "leccion",
+  "id": "cuadratica-punto-mas-alto",
+  "titulo": "Vértice y parámetros de la función cuadrática",
+  "objetivo": "Identificar el vértice de una función cuadrática como su punto extremo (máximo si a < 0, mínimo si a > 0), calcularlo mediante x = −b/(2a), y reconocer cómo los parámetros a, b y c modifican la forma y la posición de la parábola.",
+  "tiempoEstimadoMin": 26,
+  "prerrequisitos": [
+    "Ecuaciones de segundo grado (Lección 1 de este módulo): factorización, producto nulo y raíces de una ecuación cuadrática",
+    "Lectura de coordenadas en el plano cartesiano"
+  ],
+  "conceptos": [
+    "vértice de una parábola",
+    "parámetros a, b y c de y = ax² + bx + c",
+    "máximo y mínimo según el signo de a",
+    "fórmula del vértice x = −b/(2a)",
+    "desplazamiento vertical mediante c"
+  ],
+  "_notasInternas": [
+    "Lección 2 del módulo función cuadrática. Sigue docs/diseno-modulo-funcion-cuadratica.md: núcleo = huerto escolar (rendimiento total según densidad de plantas por m², producto de dos cantidades que se mueven en direcciones opuestas); aplicación = dron de reparto (altura vertical, vértice = altura máxima del vuelo). Ambos contextos verificados sin colisión por Benja junto con el resto del módulo; el único candidato descartado del módulo ('arco de un puente peatonal') no pertenece a esta lección.",
+    "catalogoErrores DELIBERADAMENTE OMITIDO (array vacío no incluido, campo ausente): ninguno de los 5 errores de cuadratica-sube-y-baja.json (factorización, producto nulo, raíz espuria, suma-vs-producto, expansión FOIL) es referenciado por ningún distractor de esta lección — el dominio de error de L2 es otro (lectura del vértice, no factorización). Regla CLAUDE.md 1: solo se embebe el subconjunto EXACTO referenciado; si el subconjunto es vacío, no se copia el catálogo completo por inercia.",
+    "Los 3 errores conceptuales propios de L2 (confundir signo de a con máximo/mínimo; evaluar y del vértice en x=0 en vez de x=-b/2a; pensar que c mueve el vértice horizontalmente) van con feedback artesanal SIN errorCatalogado, instrucción explícita del autor. Conteo de uso en este archivo (para no cruzar el umbral de 3+ sin pausar): 'confunde signo de a' usado 2 veces (paso descubrimiento, bloque pregunta, alternativa B; item l2-item-3, alternativa B). 'evalúa y en x=0' usado 2 veces (paso generalizacion, bloque numerica; paso aplicacion, bloque numerica). 'c mueve horizontalmente' usado 1 vez (paso generalizacion, bloque seleccion). Ninguno llega a 3; no hace falta pausar a proponer un id nuevo.",
+    "Interactivo: un solo interactivoSlider (paso descubrimiento), exactamente como se especificó: objeto parabola, variante unaVariable, configA.valorInicial=-1, min/max en los defaults [-2,2] sin estrechar, b y c fijos en 0 (editable:false) para aislar el efecto del signo de a sin que se mueva la posición del vértice (con b=0,c=0 el vértice es (0,0) para cualquier a≠0 — verificado con node -e). mostrarVertice:true, mostrarCeros ausente (no se regalan los ceros, eso es L3). exploracionMinima:4 fuerza moverse a ambos signos.",
+    "Deliberadamente NO se agregó un segundo interactivoSlider para c: el efecto de c se cubre con un ejemplo trabajado por texto (comparación y=-x² vs y=-x²+4) y un bloque seleccion, no con un segundo componente interactivo — mantiene el archivo dentro de lo pedido explícitamente para esta fase."
+  ],
+  "contextosNumericos": [
+    "curiosidad: huerto escolar, rendimiento total(d) = -4d² + 24d; tabla d=1,2,4,5 (20,32,32,20), predicción d=3 (36)",
+    "problema: mismo huerto, otro cultivo, total(d) = -5d² + 30d; d=1 y d=5 (ambos 25), predicción del máximo en d=3 (45)",
+    "pensar/pistas: tercer cultivo, total(d) = -3d² + 18d; d=2,3,4 (24,27,24)",
+    "descubrimiento: interactivoSlider abstracto (a,b,c genéricos, sin dominio real); bloque pregunta con y=-3x²+12x-5 (vértice (2,7), máximo)",
+    "generalizacion: ejemplo abstracto y=2x²-8x+5 (vértice (2,-3)); confirmación con un cuarto cultivo del huerto, total(d)=-2d²+16d (vértice d=4, 32); comparación y=-x² vs y=-x²+4 para el rol de c",
+    "practica: y=-x²+6x-5 (vértice (3,4)); y=3x²-12x+7 (vértice (2,-5))",
+    "aplicacion: dron de reparto, h(t) = -2t² + 8t (altura máxima 8 m en t=2 s, aterriza en t=4 s)",
+    "itemsPAES: y=x²-4x+1 (vértice (2,-3)); huerto nuevo R(d) = -d² + 10d (vértice (5,25)); razonamiento abstracto sobre si el vértice es siempre el punto más alto"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Un huerto que rinde más... o menos",
+      "_notasInternas": [
+        "total1(d) = -4d^2+24d. Verificado con node -e: d=1->20, d=2->32, d=3->36, d=4->32, d=5->20. Vertice (3,36).",
+        "Curiosidad da la tabla SIN el valor de d=3, apoyandose en la simetria (2 y 4 dan lo mismo, 1 y 5 dan lo mismo) para que el estudiante prediga el maximo antes de tener metodo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En un huerto escolar, mientras más plantas hay por metro cuadrado (más **densidad**), MENOS rinde cada planta individual: compiten por luz, agua y espacio. Por eso el **rendimiento total** (densidad × rendimiento por planta) no crece sin límite.\n\nEsta tabla muestra el rendimiento total, en kg por m², para distintas densidades:\n\n| Densidad (plantas/m²) | Rendimiento total (kg/m²) |\n|---|---|\n| 1 | 20 |\n| 2 | 32 |\n| 3 | ? |\n| 4 | 32 |\n| 5 | 20 |"
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Fíjate en el patrón: densidad 2 y densidad 4 dan EXACTAMENTE el mismo rendimiento (32). Lo mismo pasa entre densidad 1 y densidad 5 (20 y 20). Antes de calcular nada: ¿cuánto crees que rinde la densidad 3, la que está justo en el medio?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En densidad 3 el rendimiento es **36 kg/m²** — más alto que sus dos vecinos (32 y 32).\n\nNo es casualidad: la densidad 3 es exactamente el punto medio entre 2 y 4 (y también entre 1 y 5), y ahí es donde está el **punto más alto** de toda la curva. Ese patrón —el punto más alto cae justo a mitad de camino entre dos puntos que dan el mismo resultado— va a ser la clave de esta lección."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Encuentra el máximo sin construir toda la tabla",
+      "_notasInternas": [
+        "total2(d) = -5d^2+30d. Verificado con node -e: d=1->25, d=5->25 (simetricos). d=3->45 (maximo real, vertice (3,45)).",
+        "Bloque seleccion sobre POR QUE funciona el metodo de simetria: opcion (a) correcta (simetria respecto de una recta vertical por el vertice), opciones (b) y (c) sin errorCatalogado (afirmaciones plausibles pero falsas en general, no mapean a ninguno de los 3 errores conceptuales de L2)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Otro cultivo del mismo huerto: sabes que con densidad **1** el rendimiento total es **25 kg/m²**, y con densidad **5** también es **25 kg/m²**. Esta vez NO te voy a dar el resto de la tabla."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Usando solo esos dos datos (densidad 1 → 25, densidad 5 → 25) y lo que descubriste antes: ¿en qué densidad crees que ocurre el rendimiento MÁXIMO?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La densidad 3 —el punto medio entre 1 y 5— da el máximo: **45 kg/m²**. Puedes comprobarlo: rendimiento(3) = −5×3² + 30×3 = −45 + 90 = 45, que es mayor que 25."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Por qué basta con encontrar DOS densidades que den el mismo rendimiento para saber dónde está el máximo, sin necesidad de probar cada densidad posible?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Porque la curva del rendimiento es simétrica respecto de una línea vertical que pasa exactamente por el punto más alto: dos puntos con el mismo valor están siempre a la misma distancia de esa línea.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Esa línea vertical de simetría pasa por el vértice, así que el punto medio entre dos densidades que dan el mismo rendimiento es exactamente la densidad del vértice."
+            },
+            {
+              "id": "b",
+              "texto": "Porque el rendimiento siempre aumenta hasta el final de la tabla y después empieza a bajar, así que el máximo está cerca del centro de cualquier tabla.",
+              "esCorrecta": false,
+              "feedback": "Eso no es una razón matemática, solo una observación vaga sobre 'el centro'. La razón real es la simetría exacta de la curva respecto de una línea vertical: por eso el punto medio entre dos valores IGUALES da exactamente el máximo, no solo 'cerca' de él."
+            },
+            {
+              "id": "c",
+              "texto": "Porque el promedio de cualesquiera dos densidades siempre da la densidad del máximo, sin importar qué rendimiento tengan.",
+              "esCorrecta": false,
+              "feedback": "Esto solo funciona si las dos densidades dan el MISMO rendimiento (son simétricas respecto del vértice). El promedio de dos densidades cualesquiera con rendimientos distintos no tiene por qué caer en el máximo."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Calcula el rendimiento en tres densidades",
+      "_notasInternas": [
+        "total3(d) = -3d^2+18d. Verificado con node -e: d=2->24, d=3->27, d=4->24. Distractor sign-flip en d=2 (usa +3d^2 en vez de -3d^2): 48."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un tercer cultivo del huerto tiene rendimiento total(d) = −3d² + 18d.\n\nCalcula el rendimiento total para **d = 2**, **d = 3** y **d = 4**.",
+          "campos": [
+            {
+              "id": "rendimientoD2",
+              "etiqueta": "Rendimiento en d = 2",
+              "respuestaCorrecta": 24,
+              "unidad": "kg/m²"
+            },
+            {
+              "id": "rendimientoD3",
+              "etiqueta": "Rendimiento en d = 3",
+              "respuestaCorrecta": 27,
+              "unidad": "kg/m²"
+            },
+            {
+              "id": "rendimientoD4",
+              "etiqueta": "Rendimiento en d = 4",
+              "respuestaCorrecta": 24,
+              "unidad": "kg/m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "rendimientoD2",
+              "valorObtenido": 48,
+              "mensaje": "Te comiste el signo negativo de −3d²: calculaste +3×2² + 18×2 = 12 + 36 = 48 en vez de −3×2² + 18×2 = −12 + 36 = 24. El primer término resta, no suma."
+            }
+          ],
+          "feedbackPorDefecto": "Sustituye cada valor de d en −3d² + 18d con cuidado en el signo del primer término (es −3d², no +3d²)."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para encontrar el máximo",
+      "_notasInternas": [
+        "Nivel 3 no entrega el valor final (27): deja que el estudiante calcule -3*9+18*3 el mismo."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Ya calculaste que en d=2 y en d=4 el rendimiento es el mismo (24). Por simetría, el máximo debería estar justo en el punto medio entre esos dos valores de d."
+            },
+            {
+              "nivel": 2,
+              "texto": "El punto medio entre d=2 y d=4 es (2+4)/2 = 3. Ya lo calculaste en el paso anterior, pero fíjate: ese 3 no salió de adivinar, salió de promediar los dos puntos simétricos."
+            },
+            {
+              "nivel": 3,
+              "texto": "Para confirmar que 3 es realmente el máximo, compáralo con sus vecinos: total(3) = −3×3² + 18×3. Calcula −3×9 y 18×3 por separado, y súmalos. ¿Es mayor que 24?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "¿El vértice siempre es el punto más alto?",
+      "_notasInternas": [
+        "CORAZON DE LA LECCION. Slider abstracto: objeto parabola, variante unaVariable, a editable (min:-2,max:2,valorInicial:-1), b y c fijos en 0 (editable:false). Con b=0,c=0 el vertice es (0,0) para cualquier a, verificado con node -e (x=-0/(2a)=0, y=a*0+0+0=0). Esto aisla el efecto del SIGNO de a sin que la posicion del vertice se mueva -- unico factor que cambia es si el vertice es techo o piso.",
+        "exploracionMinima=4 fuerza al estudiante a probar al menos 4 valores distintos de a; la instruccion pide explicitamente probar positivos y negativos.",
+        "Bloque pregunta: y=-3x^2+12x-5. Verificado con node -e: vertice (2,7). Alternativa B ('es un minimo porque a=-3 es negativo') houses el error conceptual L2 'confunde signo de a con maximo/minimo' (invertido), sin errorCatalogado. Alternativas C y D son distractores propios de este item (confunden el rol de c y de b con el de a), tambien sin errorCatalogado, no cuentan para el conteo de los 3 errores L2 tracked porque no son ninguno de los 3 nombrados."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El rendimiento total de tu huerto, como función de la densidad, tiene la forma **y = ax² + bx + c** (en los ejemplos de arriba, a era siempre negativo). El punto más alto —o más bajo, según el caso— de esta curva se llama **vértice**."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "¿Crees que el vértice de una parábola SIEMPRE es su punto más alto?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Siempre es el punto más alto",
+            "Depende del signo de a: a veces es el más alto, a veces el más bajo",
+            "Nunca es ni el más alto ni el más bajo"
+          ]
+        },
+        {
+          "tipo": "interactivoSlider",
+          "variante": "unaVariable",
+          "objeto": "parabola",
+          "instruccion": "Esta es la misma forma general que la del rendimiento de tu huerto: y = ax² + bx + c. Aquí b y c están fijos en 0. Mueve el control a y observa qué le pasa al punto marcado (el vértice). Prueba varios valores, incluyendo positivos y negativos.",
+          "variables": [
+            { "nombre": "a", "min": -2, "max": 2, "valorInicial": -1, "editable": true },
+            { "nombre": "b", "min": -3, "max": 3, "valorInicial": 0, "editable": false },
+            { "nombre": "c", "min": -5, "max": 5, "valorInicial": 0, "editable": false }
+          ],
+          "mostrarVertice": true,
+          "exploracionMinima": 4,
+          "feedbackExploracionInsuficiente": "Todavía te falta explorar: mueve el control a por al menos 4 valores distintos, incluyendo alguno positivo y alguno negativo, antes de continuar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Para la función y = −3x² + 12x − 5, el vértice es (2, 7). ¿Es un máximo o un mínimo, y por qué?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Es un máximo, porque a = −3 es negativo (la parábola abre hacia abajo).",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cuando a es negativo, la parábola abre hacia abajo y su vértice es el punto más alto de toda la curva."
+            },
+            {
+              "clave": "B",
+              "texto": "Es un mínimo, porque a = −3 es negativo.",
+              "esCorrecta": false,
+              "feedback": "Es justo al revés: cuando a es negativo, la parábola abre hacia ABAJO (como un techo), y el vértice es un máximo. Un mínimo ocurre cuando a es positivo (la parábola abre hacia arriba, como un piso)."
+            },
+            {
+              "clave": "C",
+              "texto": "Es un máximo, porque c = −5 es negativo.",
+              "esCorrecta": false,
+              "feedback": "El signo de c no determina si el vértice es máximo o mínimo: c solo desplaza la parábola verticalmente. El que decide máximo o mínimo es el signo de a."
+            },
+            {
+              "clave": "D",
+              "texto": "Es un mínimo, porque el coeficiente de x (b = 12) es positivo.",
+              "esCorrecta": false,
+              "feedback": "El signo de b no determina si el vértice es máximo o mínimo: b influye en la posición del vértice, no en si abre hacia arriba o hacia abajo. Otra vez, el que decide es el signo de a."
+            }
+          ],
+          "notaVerificacionMatematica": "y = −3x² + 12x − 5. x_v = −12/(2·−3) = −12/−6 = 2. y_v = −3(2)² + 12(2) − 5 = −12 + 24 − 5 = 7. Vértice (2,7). a = −3 < 0 ⟹ la parábola abre hacia abajo ⟹ el vértice es un máximo. Correcto: A."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ya lo viste con el control a: el vértice **no siempre** es el punto más alto. Es un **extremo** —el punto más alto o el más bajo de toda la curva—, y cuál de los dos es depende del signo de a:\n\n- Si **a < 0**, la parábola abre hacia abajo (como un techo) y el vértice es un **máximo**.\n- Si **a > 0**, la parábola abre hacia arriba (como un piso) y el vértice es un **mínimo**.\n\nEn tu huerto, a siempre fue negativo, por eso el vértice era siempre el rendimiento MÁXIMO. Pero la regla general depende del signo de a, no es automática."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula del vértice, y el rol de cada parámetro",
+      "_notasInternas": [
+        "Formula x=-b/2a derivada por texto, apoyada en el argumento de simetria ya visto en pistas/problema. Ejemplo abstracto y=2x^2-8x+5: vertice (2,-3) verificado con node -e; distractor yVertice=5 (evalua en x=0) = error conceptual L2 'evalua y en x=0' (uso 1/2).",
+        "Confirmacion huerto: total4(d)=-2d^2+16d, verificado con node -e: d=3->30, d=4->32, d=5->30, vertice (4,32). Cierra el ciclo: la formula confirma lo que la simetria ya habia encontrado en pasos anteriores.",
+        "Bloque seleccion sobre el rol de c: comparacion y=-x^2 (vertice 0,0) vs y=-x^2+4 (vertice 0,4). Opcion (a) 'lo corrio hacia arriba' correcta. Opcion (b) 'lo corrio hacia la derecha' = error conceptual L2 'c mueve horizontalmente' (uso 1/2, sin errorCatalogado). Opciones (c) y (d) distractores propios del item, no de los 3 nombrados."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Generalicemos lo que descubriste con la simetría: para cualquier parábola y = ax² + bx + c, existe una línea vertical de simetría que pasa exactamente por el vértice. Esa línea —y por lo tanto la posición horizontal (x) del vértice— está en:\n\n**x = −b / (2a)**\n\nUna vez que tienes ese valor de x, sustitúyelo en la ecuación original para obtener el y del vértice."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Confirmemos que la fórmula coincide con el método de simetría, usando un cuarto cultivo: total(d) = −2d² + 16d.\n\nCon la fórmula: x_v = −16 / (2×−2) = −16/−4 = **4**. Sustituyendo: total(4) = −2×16 + 64 = −32 + 64 = **32**.\n\nSi lo revisas con simetría, llegas a lo mismo: total(3) = −18+48 = 30, y total(5) = −50+80 = 30 — iguales, así que el punto medio (d=4) es el máximo, con rendimiento 32. Los dos métodos coinciden, como tiene que ser."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora sin ningún contexto, solo la ecuación: **y = 2x² − 8x + 5**.\n\nEncuentra las coordenadas de su vértice.",
+          "campos": [
+            {
+              "id": "xVertice",
+              "etiqueta": "x del vértice",
+              "respuestaCorrecta": 2
+            },
+            {
+              "id": "yVertice",
+              "etiqueta": "y del vértice",
+              "respuestaCorrecta": -3
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "yVertice",
+              "valorObtenido": 5,
+              "mensaje": "5 es el valor de c, que es y cuando x = 0 — pero el vértice NO está en x = 0 en esta ecuación. Primero calcula x_v = −b/(2a) = 2, y recién ahí sustituye ese x = 2 en la ecuación para obtener el y del vértice."
+            }
+          ],
+          "feedbackPorDefecto": "Primero calcula x_v = −b/(2a) con a=2, b=−8. Después sustituye ese valor de x en y = 2x² − 8x + 5 para obtener el y del vértice."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Compara estas dos parábolas: y = −x² tiene vértice en (0, 0). y = −x² + 4 tiene vértice en (0, 4). ¿Qué le hizo el +4 al vértice?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Lo corrió hacia ARRIBA, sin cambiar su posición horizontal.",
+              "esCorrecta": true,
+              "feedback": "Correcto. c desplaza toda la parábola verticalmente: el vértice sube (o baja) exactamente lo que vale c, pero su coordenada x no cambia."
+            },
+            {
+              "id": "b",
+              "texto": "Lo corrió hacia la DERECHA, sin cambiar su altura.",
+              "esCorrecta": false,
+              "feedback": "El vértice no se movió horizontalmente: su x siguió siendo 0 en ambos casos. Lo que cambió fue la altura (de 0 a 4), es decir, un desplazamiento vertical, no horizontal."
+            },
+            {
+              "id": "c",
+              "texto": "Hizo que la parábola pasara de abrir hacia abajo a abrir hacia arriba.",
+              "esCorrecta": false,
+              "feedback": "Ambas parábolas abren hacia abajo: en las dos, a = −1 (negativo). Cambiar c no afecta hacia dónde abre la parábola; eso depende únicamente del signo de a."
+            },
+            {
+              "id": "d",
+              "texto": "Hizo que la parábola se volviera más angosta.",
+              "esCorrecta": false,
+              "feedback": "El ancho de la parábola (qué tan cerrada o abierta se ve) depende del valor de a, no de c. Cambiar c solo desplaza la curva hacia arriba o hacia abajo, sin cambiar su forma."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios con vértices",
+      "_notasInternas": [
+        "Seleccion: y=-x^2+6x-5. Verificado con node -e: vertice correcto (3,4). Distractores: (6,-5) [formula x=-b/a, olvida dividir por 2]; (-3,-32) [signo de x invertido]; (3,22) [trata a como +1 al calcular y]. Ninguno de los tres corresponde a los 3 errores conceptuales L2 nombrados (no son sobre signo-de-a-determina-maximo/minimo, ni evaluar en x=0, ni c-horizontal), asi que van sin errorCatalogado como distractores propios del item, sin necesidad de contarlos en el tracking.",
+        "Numerica: y=3x^2-12x+7. Verificado con node -e: vertice correcto (2,-5). Distractor: x=-2 (formula b/2a sin negar), y en ese x = 43."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es el vértice de y = −x² + 6x − 5?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(3, 4)",
+              "esCorrecta": true,
+              "feedback": "Correcto. x_v = −6/(2×−1) = 3. y_v = −(3)² + 6(3) − 5 = −9+18−5 = 4."
+            },
+            {
+              "id": "b",
+              "texto": "(6, −5)",
+              "esCorrecta": false,
+              "feedback": "Usaste x = −b/a en vez de x = −b/(2a): te faltó dividir por 2. Con a=−1 y b=6, la fórmula correcta da x = −6/(2×−1) = 3, no 6."
+            },
+            {
+              "id": "c",
+              "texto": "(−3, −32)",
+              "esCorrecta": false,
+              "feedback": "El x del vértice tiene el signo invertido: es 3, no −3. Revisa la fórmula x = −b/(2a) con cuidado en el signo."
+            },
+            {
+              "id": "d",
+              "texto": "(3, 22)",
+              "esCorrecta": false,
+              "feedback": "El x = 3 está bien, pero al calcular y trataste el coeficiente a como si fuera +1 en vez de −1. Con a = −1: y = −(3)² + 6(3) − 5 = −9+18−5 = 4, no +9+18−5 = 22."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "La fórmula x = −b/(2a) para encontrar el vértice, ¿sigue funcionando igual si a, b y c fueran números mucho menos amables, como a = 7, b = −253 y c = 1.048?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. La fórmula no depende de que los coeficientes sean números bonitos: x = −(−253)/(2×7) = 253/14 da igual un resultado válido, aunque no sea un número entero.",
+          "feedbackFalso": "En realidad sí seguiría funcionando. La fórmula x = −b/(2a) es válida para cualquier a, b y c (con a distinto de cero), sean números redondos o no."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Encuentra el vértice de y = 3x² − 12x + 7.",
+          "campos": [
+            {
+              "id": "xVertice",
+              "etiqueta": "x del vértice",
+              "respuestaCorrecta": 2
+            },
+            {
+              "id": "yVertice",
+              "etiqueta": "y del vértice",
+              "respuestaCorrecta": -5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "xVertice",
+              "valorObtenido": -2,
+              "mensaje": "Te faltó negar b en la fórmula: calculaste x = b/(2a) = −12/6 = −2 en vez de x = −b/(2a) = 12/6 = 2. Revisa el signo."
+            },
+            {
+              "campoId": "yVertice",
+              "valorObtenido": 43,
+              "mensaje": "Este valor sale de sustituir el x incorrecto (−2, con el signo sin corregir) en vez del x correcto (2). Revisa primero el x del vértice."
+            }
+          ],
+          "feedbackPorDefecto": "Calcula x_v = −b/(2a) con a=3, b=−12. Después sustituye ese x en y = 3x² − 12x + 7 para obtener el y del vértice."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Un dron de reparto",
+      "_notasInternas": [
+        "Contexto de transferencia (descriptor 4): dron de reparto, altura vertical h(t)=-2t^2+8t. Verificado con node -e: t=0->0, t=1->6, t=2->8 (vertice), t=3->6, t=4->0. Distractor alturaMaxima=0 (evalua en t=0, el despegue) = error conceptual L2 'evalua y en x=0' (uso 2/2). Distractor tiempoMaximo=4 (confunde el instante del maximo con el instante de aterrizaje) es propio del item, sin errorCatalogado.",
+        "Estructura actuar-antes-de-nombrar (numerica primero, abierta despues), mismo criterio que L1 y ecuaciones-lineales.json."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un dron de reparto despega desde el suelo en un patio, sube, entrega un paquete en el punto más alto de su vuelo, y desciende de vuelta al suelo. Su altura en metros, según el tiempo t en segundos, sigue la curva **h(t) = −2t² + 8t**.\n\n¿En qué instante alcanza la altura máxima, y cuál es esa altura?",
+          "campos": [
+            {
+              "id": "tiempoMaximo",
+              "etiqueta": "Instante de la altura máxima",
+              "respuestaCorrecta": 2,
+              "unidad": "s"
+            },
+            {
+              "id": "alturaMaxima",
+              "etiqueta": "Altura máxima",
+              "respuestaCorrecta": 8,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "tiempoMaximo",
+              "valorObtenido": 4,
+              "mensaje": "4 s es el instante en que el dron ATERRIZA (h(4) = 0), no el instante de la altura máxima. El vértice está a mitad de camino entre el despegue (t=0) y el aterrizaje (t=4): en t=2."
+            },
+            {
+              "campoId": "alturaMaxima",
+              "valorObtenido": 0,
+              "mensaje": "0 m es la altura en t = 0, el instante del DESPEGUE, no el vértice. Primero encuentra t_v = −8/(2×−2) = 2, y recién ahí sustituye t=2 en h(t) para obtener la altura máxima."
+            }
+          ],
+          "feedbackPorDefecto": "Calcula t_v = −b/(2a) con a=−2, b=8. Después sustituye ese t en h(t) = −2t² + 8t para obtener la altura máxima."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Ya encontraste el instante y la altura del punto más alto del vuelo. Ahora hazlo explícito: escribe cómo calculaste t_v y h(t_v) a partir de a=−2 y b=8, en tus propias palabras.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "t_v = −b/(2a) = −8/(2×−2) = −8/−4 = 2. Sustituyendo en h(t): h(2) = −2×(2)² + 8×2 = −8+16 = 8. El dron alcanza 8 metros en el segundo 2."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Qué determina cada parámetro?",
+      "_notasInternas": [
+        "Metacognicion sobre el rol de a, b y c. Texto de cierre nombra en lenguaje llano los 3 errores conceptuales de L2, sin mostrar ids (no hay ids, son sin catalogar)."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿cómo le explicarías a un compañero la diferencia entre lo que hace el signo de a, lo que hace b, y lo que hace c en una parábola y = ax² + bx + c?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que distinga 'a decide si el vértice es máximo o mínimo (y qué tan angosta es la parábola)' de 'b y c mueven la posición del vértice, calculada con la fórmula' indica comprensión real, no solo memorización de la fórmula."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al leer el vértice de una parábola —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Confundir el signo de a con si el vértice es máximo o mínimo**, o peor, asumir que el vértice SIEMPRE es el punto más alto sin fijarse en el signo de a.\n2. **Calcular el y del vértice evaluando en x = 0** (que da directamente c) en vez de evaluar en x = −b/(2a), el x real del vértice.\n3. **Pensar que c desplaza el vértice horizontalmente**, cuando en realidad c lo desplaza verticalmente; lo que mueve la posición horizontal es b (junto con a), a través de la fórmula.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis + puente a L3 (ceros e interseccion con los ejes) del mismo modulo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- El **vértice** de una parábola es su punto extremo: **máximo** si a < 0, **mínimo** si a > 0. No es automáticamente 'el punto más alto' — depende del signo de a.\n- Fórmula del vértice: **x_v = −b/(2a)**, y después sustituyes ese x en la ecuación para obtener y_v.\n- **a** decide si abre hacia arriba o hacia abajo (y qué tan angosta es). **b** y **c** — juntos, a través de la fórmula — determinan dónde queda el vértice; **c** en particular desplaza la curva verticalmente.\n- Trampa clásica: evaluar en x = 0 (eso da c, no el vértice) en vez de evaluar en x = −b/(2a).\n\nDónde se conecta: la próxima lección usa esta misma parábola para encontrar sus **ceros** — los puntos donde cruza el eje horizontal —, que son las mismas soluciones que aprendiste a encontrar por factorización en la Lección 1, ahora vistas como parte de la curva completa.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "¿Cuál es el vértice de la función y = x² − 4x + 1?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(2, −3)",
+          "esCorrecta": true,
+          "feedback": "Correcto. x_v = −(−4)/(2×1) = 2. y_v = (2)² − 4(2) + 1 = 4−8+1 = −3."
+        },
+        {
+          "clave": "B",
+          "texto": "(−2, 13)",
+          "esCorrecta": false,
+          "feedback": "El x del vértice tiene el signo invertido: es 2, no −2. Con x = −2 el resultado de sustituir en la ecuación no corresponde al vértice."
+        },
+        {
+          "clave": "C",
+          "texto": "(2, 1)",
+          "esCorrecta": false,
+          "feedback": "1 es el valor de c, que es y cuando x = 0. Pero el vértice no está en x = 0 en esta ecuación: está en x = 2. Sustituye x = 2 (no x = 0) en la ecuación para obtener el y del vértice."
+        },
+        {
+          "clave": "D",
+          "texto": "(4, 1)",
+          "esCorrecta": false,
+          "feedback": "4 es el valor de −b (con b=−4), pero ese no es directamente el x del vértice: falta dividirlo por 2a. x_v = −b/(2a) = 4/2 = 2, no 4."
+        }
+      ],
+      "solucion": "x_v = −b/(2a) con a=1, b=−4: x_v = −(−4)/(2×1) = 4/2 = 2. Sustituyendo en la ecuación: y_v = (2)² − 4(2) + 1 = 4 − 8 + 1 = −3. Vértice: (2, −3). Como a = 1 > 0, es un mínimo."
+    },
+    {
+      "id": "l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "El rendimiento total (en kg) de un cultivo se modela por R(d) = −d² + 10d, donde d es la densidad de plantas por m². ¿Para qué densidad se obtiene el rendimiento máximo, y cuál es ese rendimiento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Densidad 5, rendimiento 25 kg",
+          "esCorrecta": true,
+          "feedback": "Correcto. d_v = −10/(2×−1) = 5. R(5) = −25+50 = 25."
+        },
+        {
+          "clave": "B",
+          "texto": "Densidad 10, rendimiento 0 kg",
+          "esCorrecta": false,
+          "feedback": "Usaste d = −b/a en vez de d = −b/(2a): te faltó dividir por 2. Con a=−1 y b=10, la fórmula correcta da d = −10/(2×−1) = 5, no 10."
+        },
+        {
+          "clave": "C",
+          "texto": "Densidad −5, rendimiento −75 kg",
+          "esCorrecta": false,
+          "feedback": "El signo de la densidad del vértice está invertido: es 5, no −5. Además, una densidad negativa no tiene sentido en este contexto."
+        },
+        {
+          "clave": "D",
+          "texto": "Densidad 5, rendimiento 10 kg",
+          "esCorrecta": false,
+          "feedback": "La densidad (5) está correcta, pero 10 es solo el valor de b, no el rendimiento máximo. Falta sustituir d=5 en R(d) = −d² + 10d para obtener el rendimiento real: R(5) = 25, no 10."
+        }
+      ],
+      "solucion": "d_v = −b/(2a) con a=−1, b=10: d_v = −10/(2×−1) = −10/−2 = 5. Sustituyendo: R(5) = −(5)² + 10(5) = −25+50 = 25. La densidad óptima es 5 plantas/m², con un rendimiento máximo de 25 kg. Como a=−1<0, es efectivamente un máximo."
+    },
+    {
+      "id": "l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: \"El vértice de cualquier parábola es siempre su punto más alto, porque el vértice es el punto más destacado de la curva\". ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: el vértice es siempre un punto extremo, pero es un máximo solo si a < 0; si a > 0, es un mínimo (el punto más bajo, no el más alto).",
+          "esCorrecta": true,
+          "feedback": "Correcto. 'Punto extremo' no significa automáticamente 'punto más alto': hay que fijarse en el signo de a para saber si ese extremo es un máximo o un mínimo."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: sin importar el signo de a, el vértice concentra siempre el valor más grande que puede tomar la función.",
+          "esCorrecta": false,
+          "feedback": "Contraejemplo: en y = x² (a=1>0), el vértice es (0,0), pero la función crece sin límite hacia ambos lados — (0,0) es el punto MÁS BAJO, no el más alto. La afirmación falla justo cuando a es positivo."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: en realidad el vértice nunca es ni el punto más alto ni el más bajo, es solo el punto donde la parábola cambia de dirección sin ser un extremo real.",
+          "esCorrecta": false,
+          "feedback": "El vértice SÍ es un extremo real de la función (el valor máximo o mínimo que la función alcanza), no un punto de inflexión sin importancia. La parte que falla en la afirmación original es asumir que SIEMPRE es un máximo, no que sea o no un extremo."
+        },
+        {
+          "clave": "D",
+          "texto": "Es correcta, pero solo cuando b = 0.",
+          "esCorrecta": false,
+          "feedback": "El valor de b no tiene relación con si el vértice es máximo o mínimo: b solo influye en la posición del vértice a través de la fórmula x=−b/(2a). Lo que decide máximo o mínimo es exclusivamente el signo de a."
+        }
+      ],
+      "solucion": "La afirmación es falsa en general. El vértice de y=ax²+bx+c es siempre un extremo (máximo o mínimo) de la función, pero cuál de los dos depende del signo de a: si a<0, la parábola abre hacia abajo y el vértice es un máximo; si a>0, abre hacia arriba y el vértice es un mínimo. Un contraejemplo simple es y=x² (a=1>0): su vértice (0,0) es el punto MÁS BAJO de la curva, no el más alto. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Álgebra y funciones: tablas y gráficos de la función cuadrática considerando la variación de sus parámetros; vértice), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (huerto escolar, dron de reparto) y la secuencia didáctica creados desde cero por el autor del proyecto. Ambos contextos de esta lección fueron verificados sin colisión contra el corpus de fuentes aisladas por Benja, fuera de esta sesión de redacción, con node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), junto con los otros candidatos del módulo función cuadrática; el único candidato descartado del módulo entero ('arco de un puente peatonal') no pertenece a esta lección. Pendiente /revision-matematica y /revision-originalidad en hilos aislados antes de cualquier commit o publicación.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
