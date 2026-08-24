@@ -66,7 +66,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 6 | Álgebra y funciones | Ecuaciones e inecuaciones de primer grado | `ecuaciones-e-inecuaciones-primer-grado` | **completo** |
 | 7 | Álgebra y funciones | Sistemas de ecuaciones lineales (2x2) | `sistemas-2x2` | **completo** |
 | 8 | Álgebra y funciones | Función lineal y afín | `funcion-lineal-y-afin` | **completo** |
-| 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | sin contenido |
+| 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | **completo** |
 | 10 | Geometría | Figuras geométricas | `figuras-geometricas` | sin contenido |
 | 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | sin contenido |
 | 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | sin contenido |
@@ -75,7 +75,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-8 completos · 8 sin contenido · 24 de 48 lecciones escritas.
+9 completos · 7 sin contenido · 27 de 48 lecciones escritas.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
@@ -87,6 +87,14 @@ existían y validaban desde antes (la tabla decía «sin contenido» hasta esa
 fecha, corregido tras verificar contra el disco), y ese mismo día se agregó
 `content/cierres/cierre-potencias-y-raices.json` y su `cierreId` en
 `lib/modulos.ts`.
+
+`funcion-cuadratica` pasó a completo el 2026-08-24: se escribieron sus 3
+lecciones (`cuadratica-sube-y-baja`, `cuadratica-punto-mas-alto`,
+`cuadratica-donde-toca-el-eje`) y `content/cierres/cierre-funcion-cuadratica.json`
+en la misma sesión, todos verificados con `npm run validar` antes de este
+registro; y se agregó `cierreId: "cierre-funcion-cuadratica"` en `lib/modulos.ts`.
+Pendiente de las dos auditorías (matemática y de originalidad) en hilos
+aislados antes de cualquier `git push`.
 
 Los `id` de tema **no** cambian aunque cambie el `nombre`: son rutas
 (`/tema/{id}`, `/cierre/{id}`) y renombrarlas rompe enlaces sin ganancia.
@@ -189,9 +197,11 @@ paso 5 de `lineal-pendiente-e-intercepto`).
 
 | id | Título | Archivo |
 |---|---|---|
-| `cuadratica-sube-y-baja` | Ecuaciones de segundo grado | no |
-| `cuadratica-punto-mas-alto` | Vértice y parámetros de la función cuadrática | no |
-| `cuadratica-donde-toca-el-eje` | Ceros e intersección con los ejes | no |
+| `cuadratica-sube-y-baja` | Ecuaciones de segundo grado | sí |
+| `cuadratica-punto-mas-alto` | Vértice y parámetros de la función cuadrática | sí |
+| `cuadratica-donde-toca-el-eje` | Ceros e intersección con los ejes | sí |
+
+Cierre: `cierre-funcion-cuadratica`.
 
 ---
 

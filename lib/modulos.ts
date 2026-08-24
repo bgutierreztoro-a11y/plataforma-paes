@@ -119,6 +119,7 @@ export const IDS_CIERRE = [
   "cierre-expresiones-algebraicas",
   "cierre-sistemas-2x2",
   "cierre-potencias-y-raices",
+  "cierre-funcion-cuadratica",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -317,6 +318,7 @@ export const EJES = [
           "cuadratica-punto-mas-alto",
           "cuadratica-donde-toca-el-eje",
         ],
+        cierreId: "cierre-funcion-cuadratica",
       },
     ],
   },

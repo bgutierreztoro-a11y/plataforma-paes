@@ -412,6 +412,10 @@ const MODULO_POR_LECCION = {
   'sistemas-dos-historias': 'sistemas-2x2',
   'sistemas-rectas-no-se-cruzan': 'sistemas-2x2',
   'sistemas-plantear-antes-resolver': 'sistemas-2x2',
+  'cuadratica-sube-y-baja': 'funcion-cuadratica',
+  'cuadratica-punto-mas-alto': 'funcion-cuadratica',
+  'cuadratica-donde-toca-el-eje': 'funcion-cuadratica',
+  'cierre-funcion-cuadratica': 'funcion-cuadratica',
 };
 
 /**
