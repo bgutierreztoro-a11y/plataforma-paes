@@ -37,8 +37,10 @@ export function IconoInicio({ className = "" }: IconoNavProps) {
 }
 
 /**
- * Nodos sobre una curva, no un mapa literal: es la misma metáfora que ya usa
- * `/camino` (checkpoints), no una ruta geográfica.
+ * Tres checkpoints sobre un trazo recto en zigzag, no una curva suave: la
+ * curva anterior con un punto en cada extremo leía como un teléfono, no como
+ * progreso. El zigzag en línea recta y el nodo del medio son lo que rompe esa
+ * lectura.
  */
 export function IconoCamino({ className = "" }: IconoNavProps) {
   return (
@@ -49,14 +51,15 @@ export function IconoCamino({ className = "" }: IconoNavProps) {
       className={`h-6 w-6 shrink-0 ${className}`}
     >
       <path
-        d="M4 18Q9 6 20 6"
+        d="M4.5 18.5L9.5 12.5L14.5 12.5L19.5 5.5"
         stroke="currentColor"
         strokeWidth="1.75"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <circle cx="4" cy="18" r="2" fill="currentColor" />
-      <circle cx="12" cy="9.5" r="2" fill="currentColor" />
-      <circle cx="20" cy="6" r="2" fill="currentColor" />
+      <circle cx="4.5" cy="18.5" r="2" fill="currentColor" />
+      <circle cx="12" cy="12.5" r="2" fill="currentColor" />
+      <circle cx="19.5" cy="5.5" r="2" fill="currentColor" />
     </svg>
   );
 }
