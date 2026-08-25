@@ -2,6 +2,12 @@ import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos
 import { IlustracionBandas } from "@/components/ilustraciones/IlustracionBandas";
 import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
 import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
+import {
+  FIGURAS_GEOMETRICAS_VALIDAS,
+  IlustracionFiguraGeometrica,
+  type DatosFiguraGeometrica,
+  type DatosTrianguloPitagoras,
+} from "@/components/ilustraciones/IlustracionFiguraGeometrica";
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
@@ -101,6 +107,27 @@ function esDatosReglaSignos(datos: unknown): datos is DatosReglaSignos {
         (s?.direccion === "izquierda" || s?.direccion === "derecha"),
     )
   );
+}
+
+function esDatosFiguraGeometrica(datos: unknown): datos is DatosFiguraGeometrica {
+  const d = datos as { figura?: unknown } | null;
+  if (typeof d !== "object" || d === null) return false;
+  if (!FIGURAS_GEOMETRICAS_VALIDAS.includes(d.figura as (typeof FIGURAS_GEOMETRICAS_VALIDAS)[number])) {
+    return false;
+  }
+  if (d.figura === "trianguloPitagoras") {
+    const t = d as Partial<DatosTrianguloPitagoras>;
+    return (
+      typeof t.catetoA === "number" &&
+      typeof t.catetoB === "number" &&
+      typeof t.etiquetaCatetoA === "string" &&
+      typeof t.etiquetaCatetoB === "string" &&
+      typeof t.etiquetaHipotenusa === "string"
+    );
+  }
+  // Otras figuras (triangulo, paralelogramo, trapecio, circulo): solo el
+  // discriminador por ahora, todavía no tienen campos propios (pendiente L2).
+  return true;
 }
 
 function esDatosBandas(datos: unknown): datos is DatosBandas {
@@ -223,6 +250,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
       <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionBandas bandas={bloque.datos.bandas} />
+      </figure>
+    );
+  }
+
+  if (esDatosFiguraGeometrica(bloque.datos)) {
+    return (
+      <figure className="rounded-panel border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionFiguraGeometrica {...bloque.datos} />
       </figure>
     );
   }
