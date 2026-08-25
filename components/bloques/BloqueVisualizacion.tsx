@@ -5,7 +5,11 @@ import { IlustracionParticion } from "@/components/ilustraciones/IlustracionPart
 import {
   FIGURAS_GEOMETRICAS_VALIDAS,
   IlustracionFiguraGeometrica,
+  type DatosCirculo,
   type DatosFiguraGeometrica,
+  type DatosParalelogramo,
+  type DatosTrapecio,
+  type DatosTriangulo,
   type DatosTrianguloPitagoras,
 } from "@/components/ilustraciones/IlustracionFiguraGeometrica";
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
@@ -115,19 +119,76 @@ function esDatosFiguraGeometrica(datos: unknown): datos is DatosFiguraGeometrica
   if (!FIGURAS_GEOMETRICAS_VALIDAS.includes(d.figura as (typeof FIGURAS_GEOMETRICAS_VALIDAS)[number])) {
     return false;
   }
-  if (d.figura === "trianguloPitagoras") {
-    const t = d as Partial<DatosTrianguloPitagoras>;
-    return (
-      typeof t.catetoA === "number" &&
-      typeof t.catetoB === "number" &&
-      typeof t.etiquetaCatetoA === "string" &&
-      typeof t.etiquetaCatetoB === "string" &&
-      typeof t.etiquetaHipotenusa === "string"
-    );
+  switch (d.figura) {
+    case "trianguloPitagoras": {
+      const t = d as Partial<DatosTrianguloPitagoras>;
+      return (
+        typeof t.catetoA === "number" &&
+        typeof t.catetoB === "number" &&
+        typeof t.etiquetaCatetoA === "string" &&
+        typeof t.etiquetaCatetoB === "string" &&
+        typeof t.etiquetaHipotenusa === "string"
+      );
+    }
+    case "triangulo": {
+      const t = d as Partial<DatosTriangulo>;
+      if (!(typeof t.base === "number" && t.base > 0)) return false;
+      if (!(typeof t.altura === "number" && t.altura > 0)) return false;
+      if (t.etiquetaAltura !== undefined) {
+        // Modo área: base + altura visibles. Los lados son opcionales.
+        return typeof t.etiquetaAltura === "string" && typeof t.etiquetaBase === "string";
+      }
+      // Sin etiquetaAltura: modo perímetro, exige los 3 lados juntos (sin mezcla parcial).
+      return (
+        typeof t.etiquetaBase === "string" &&
+        typeof t.etiquetaLadoIzquierdo === "string" &&
+        typeof t.etiquetaLadoDerecho === "string"
+      );
+    }
+    case "paralelogramo": {
+      const p = d as Partial<DatosParalelogramo>;
+      return (
+        typeof p.base === "number" &&
+        p.base > 0 &&
+        typeof p.altura === "number" &&
+        p.altura > 0 &&
+        typeof p.etiquetaBase === "string"
+      );
+    }
+    case "trapecio": {
+      const t = d as Partial<DatosTrapecio>;
+      if (
+        !(
+          typeof t.baseMayor === "number" &&
+          typeof t.baseMenor === "number" &&
+          t.baseMayor > t.baseMenor &&
+          t.baseMenor > 0
+        )
+      ) {
+        return false;
+      }
+      if (!(typeof t.altura === "number" && t.altura > 0)) return false;
+      if (
+        t.desplazamientoIzquierdo !== undefined &&
+        !(t.desplazamientoIzquierdo >= 0 && t.desplazamientoIzquierdo <= t.baseMayor - t.baseMenor)
+      ) {
+        return false;
+      }
+      if (t.etiquetaLadoIzquierdo !== undefined || t.etiquetaLadoDerecho !== undefined) {
+        // Sin mezcla parcial: si se etiqueta un lado no paralelo, se etiquetan los dos.
+        if (typeof t.etiquetaLadoIzquierdo !== "string" || typeof t.etiquetaLadoDerecho !== "string") {
+          return false;
+        }
+      }
+      return typeof t.etiquetaBaseMayor === "string" && typeof t.etiquetaBaseMenor === "string";
+    }
+    case "circulo": {
+      const c = d as Partial<DatosCirculo>;
+      return typeof c.radio === "number" && c.radio > 0;
+    }
+    default:
+      return false;
   }
-  // Otras figuras (triangulo, paralelogramo, trapecio, circulo): solo el
-  // discriminador por ahora, todavía no tienen campos propios (pendiente L2).
-  return true;
 }
 
 function esDatosBandas(datos: unknown): datos is DatosBandas {
