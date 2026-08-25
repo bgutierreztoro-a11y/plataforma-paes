@@ -306,7 +306,7 @@
         },
         {
           "tipo": "texto",
-          "contenido": "Cerrando el círculo con el primer letrero de esta lección, h(x) = −x² + 4: sus ceros son x = 2 y x = −2 (dos puntos sobre el eje X), y su intersección con el eje Y es (0, 4) — que en este caso particular coincide con la altura máxima, porque el vértice de ese arco está justo sobre el eje Y."
+          "contenido": "Cerrando el círculo con el primer letrero de esta lección, h(x) = −x² + 4: sus ceros son x = 2 y x = −2 (dos puntos sobre el eje X), y su intersección con el eje Y es (0, 4) — que en este caso particular coincide con la altura máxima del letrero. Esa coincidencia ocurre porque, en esta parábola en particular, el vértice queda justo sobre el eje Y."
         }
       ]
     },
