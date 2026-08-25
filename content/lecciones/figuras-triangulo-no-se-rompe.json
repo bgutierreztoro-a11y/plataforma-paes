@@ -1,0 +1,705 @@
+{
+  "tipo": "leccion",
+  "id": "figuras-triangulo-no-se-rompe",
+  "titulo": "Teorema de Pitágoras",
+  "objetivo": "Aplicar el teorema de Pitágoras para encontrar un lado desconocido (la hipotenusa o un cateto) de un triángulo rectángulo en contextos de distancia en línea recta versus recorrido por el borde, verificando que el resultado tenga sentido comparado con los otros dos lados.",
+  "tiempoEstimadoMin": 25,
+  "prerrequisitos": [
+    "Cálculo del cuadrado de un número entero",
+    "Cálculo de la raíz cuadrada de un cuadrado perfecto",
+    "Perímetro de un rectángulo (suma de sus cuatro lados)"
+  ],
+  "conceptos": [
+    "catetos e hipotenusa de un triángulo rectángulo",
+    "teorema de Pitágoras (a² + b² = c²)",
+    "raíz cuadrada como operación inversa del cuadrado",
+    "distancia en línea recta (diagonal) versus recorrido por el borde"
+  ],
+  "_notasInternas": [
+    "Lección 1 del módulo figuras-geometricas (eje Geometría). Descriptor DEMRE 1: 'Problemas que involucren el Teorema de Pitágoras en diversos contextos'.",
+    "Dominio único confirmado por Benja vía scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md): diagonal de una cancha/patio rectangular (recorrido por catetos vs. hipotenusa). Los otros dos candidatos propuestos en el plan de arquitectura (escalera apoyada en pared, volantín con hilo y sombra) NO fueron confirmados y no se usan en esta lección — todos los contextos numéricos de este archivo son variaciones del mismo dominio confirmado (distintos tamaños de patio/cancha rectangular).",
+    "Un solo descubrimiento nuclear: a² + b² = c² para encontrar CUALQUIER lado desconocido de un triángulo rectángulo (hipotenusa o cateto). El caso 'cateto desconocido' en generalización es la misma relación despejada de otra forma, no un segundo descubrimiento — se evita deliberadamente introducir el recíproco del teorema (verificar si un triángulo cualquiera es rectángulo a partir de sus tres lados), que sí sería una idea distinta, para no sobrecargar la lección con dos descubrimientos.",
+    "Bloque visualizacion con datos.figura: 'trianguloPitagoras' (componente IlustracionFiguraGeometrica construido en la Fase 2 de esta sesión) en los pasos 'descubrimiento' y 'generalizacion' — no interactivoSlider, porque el concepto no involucra manipular un parámetro con slider, sino calcular un lado de una figura dada.",
+    "Todos los valores numéricos (triples pitagóricas y distractores) verificados con node -e antes de escribir el JSON. Verificación completa: 3-4-5, 9-40-41 (contexto de 'problema', no resuelto en ese paso), 6-8-10, 5-12-13, 8-15-17 (ilustrativo en 'generalizacion'), 12-35-37, 7-24-25, 33-56-65, 16-30-34, 9-40-41 (reutilizado en 'generalizacion' para el caso inverso: hipotenusa 41, cateto 9, cateto buscado 40), 18-24-30, 11-60-61, 9-12-15. Todo distractor numérico calculado con node -e (suma directa, suma de cuadrados sin raíz, cuadrado calculado como el doble) y verificado contra el set completo de respuestas correctas del archivo para descartar colisión (regla 3 de docs/reglas-modulo.md): ningún distractor coincide con ninguna respuesta correcta de ningún otro bloque o ítem de este archivo. Salida cruda de la verificación pegada en el reporte de esta sesión, no repetida acá."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Al buscar un cateto desconocido conociendo la hipotenusa y el otro cateto, sumar los cuadrados de ambos valores dados (hipotenusa² + cateto²) en vez de restarlos, aplicando el mismo patrón de 'sumar cuadrados' del caso de buscar la hipotenusa, sin notar que aquí el valor desconocido ya no es la hipotenusa."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "Al buscar un cateto desconocido, tratar el cateto ya conocido como si fuera la hipotenusa —despejando con ese valor en el lugar de c— en vez de identificar que la hipotenusa es siempre el lado más largo, opuesto al ángulo recto."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Error aritmético al elevar un número al cuadrado: calcular a² como 2 × a (el doble del número) en vez de a × a, subestimando sistemáticamente el resultado."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Suma los catetos antes de elevar al cuadrado: calcula (a+b)² en vez de a²+b², confundiendo la propiedad distributiva del cuadrado de una suma con el teorema de Pitágoras."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: patio rectangular de 3 m × 4 m, diagonal 5 m; contraste bordear (3+4=7 m) vs. cruzar (5 m), ahorro 2 m",
+    "problema: cancha de 9 m × 40 m, NO resuelta en este paso (solo elección de método); ilustrativo sin resolver: 187 m × 340 m, no registrado como ejercicio nuevo",
+    "pensar/pistas: patio de 6 m × 8 m, diagonal 10 m",
+    "descubrimiento: patio de 5 m × 12 m, diagonal 13 m (ejemplo nuclear de la lección)",
+    "generalizacion: ejemplo ilustrativo de verificación 8 m × 15 m, diagonal 17 m; caso inverso: patio con diagonal 41 m y un cateto de 9 m, cateto buscado 40 m",
+    "practica: cancha de 7 m × 24 m (diagonal 25 m, bloque selección); patio de 12 m × 35 m (diagonal 37 m, bloque verdaderoFalso); cancha de 33 m × 56 m (diagonal 65 m, bloque numérica)",
+    "aplicacion: patio de 16 m × 30 m, diagonal 34 m, ahorro de 12 m cruzando en diagonal",
+    "itemsPAES: patio de 18 m × 24 m (diagonal 30 m); patio con diagonal 61 m y un cateto de 11 m (cateto buscado 60 m); patio de 9 m × 12 m (diagonal 15 m, ítem de argumentación sobre una afirmación errónea de 21 m)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Bordear o cruzar",
+      "_notasInternas": [
+        "Patio 3x4, diagonal 5. Verificado con node -e: 3^2+4^2=25=5^2. Ahorro: 3+4-5=2.",
+        "Predicción libre, sin método todavía. El bloque de texto revela la diagonal y contrasta con el recorrido por el borde, sembrando la pregunta de si esa relación (7 vs 5) se mantiene con cualquier patio."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Imagina un patio rectangular de **3 metros por 4 metros**. Puedes cruzarlo en línea recta, de una esquina a la otra (la diagonal), o bordearlo caminando por dos de sus lados. Sin medir nada todavía: ¿cuántos metros crees que mide la diagonal, cruzando directo de esquina a esquina?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La diagonal mide exactamente **5 metros**.\n\nFíjate en la diferencia: bordear el patio por dos lados (3 + 4) son **7 metros**. Cruzarlo en línea recta son **5 metros**. Cruzar en diagonal ahorra 2 metros, en un patio tan chico que casi ni se nota.\n\nAhora la pregunta interesante: ¿esa relación entre los lados (3, 4 y 5) es pura coincidencia de este patio, o hay algo fijo que conecta siempre los tres lados de un triángulo con un ángulo recto? Eso es lo que vas a descubrir en esta lección: el **Teorema de Pitágoras**."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Un patio donde adivinar ya no sirve",
+      "_notasInternas": [
+        "Cancha 9x40, diagonal 41 (verificado: 9^2+40^2=1681=41^2), pero NO se resuelve en este paso — solo se elige el método que garantiza la respuesta, mismo patrón que cuadratica-sube-y-baja.json paso 'problema'.",
+        "verdaderoFalso usa 187 x 340 como número puramente ilustrativo de 'grande y feo', sin resolverlo ni registrarlo como ejercicio nuevo — mismo patrón que 15.180 en cuadratica-sube-y-baja.json."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora piensa en una cancha rectangular de **9 metros por 40 metros**. A simple vista, adivinar la medida exacta de la diagonal ya no es realista. De estas tres formas de encararlo, ¿cuál te **garantiza** la respuesta exacta, sin importar qué tan grandes fueran los lados?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Sumar los dos lados: 9 + 40.",
+              "esCorrecta": false,
+              "feedback": "Sumar los lados da la distancia que recorrerías bordeando el patio por dos de sus lados, no la distancia en línea recta de esquina a esquina. Son dos trayectos distintos, con dos medidas distintas.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "b",
+              "texto": "Elevar cada lado al cuadrado, sumar esos dos cuadrados, y sacar la raíz cuadrada del resultado.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Ese procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— te da la medida exacta de la diagonal sin importar si los lados fueran 9 y 40, o números mucho más grandes."
+            },
+            {
+              "id": "c",
+              "texto": "Medir con una huincha imaginaria y estimar a ojo.",
+              "esCorrecta": false,
+              "feedback": "Estimar a ojo puede funcionar para tener una idea aproximada, pero no te da la medida exacta, y con lados grandes el margen de error crece. Existe un procedimiento que te da la respuesta exacta, sin adivinar."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El procedimiento de elevar los catetos al cuadrado, sumarlos y sacar la raíz cuadrada, ¿sigue funcionando igual si el patio fuera muchísimo más grande, como uno de **187 metros por 340 metros**?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El procedimiento no depende de que los números sean amables o chicos: funciona exactamente igual con 9 y 40 que con 187 y 340. Lo único que cambia es que calcular a mano se vuelve más largo, no que el método deje de servir.",
+          "feedbackFalso": "En realidad sí seguiría funcionando igual. El procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— no depende de que los lados sean números redondos ni chicos."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra la diagonal",
+      "_notasInternas": [
+        "Patio 6x8, diagonal 10. Verificado: 6^2+8^2=100=10^2. Distractor error-1: 6+8=14. Distractor error-2: 6^2+8^2=100 sin raiz (coincide con el valor intermedio correcto del calculo, pero como respuesta final es incorrecto)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un patio rectangular mide **6 metros por 8 metros**. Intenta encontrar la medida de su diagonal —la línea recta de esquina a esquina— antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "diagonalPatioM",
+              "etiqueta": "Diagonal del patio",
+              "respuestaCorrecta": 10,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diagonalPatioM",
+              "valorObtenido": 14,
+              "mensaje": "14 es lo que mide bordear el patio por dos de sus lados (6 + 8), no la diagonal en línea recta. Son dos trayectos distintos.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "diagonalPatioM",
+              "valorObtenido": 100,
+              "mensaje": "100 es la suma de los cuadrados de los catetos (6² + 8²), un paso intermedio del cálculo. Falta el último paso: sacarle la raíz cuadrada a ese 100.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Prueba elevando cada lado al cuadrado, sumando esos dos resultados, y sacando la raíz cuadrada de esa suma."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para encontrar la diagonal",
+      "_notasInternas": [
+        "Mismo patio 6x8 del paso anterior. Nivel 3 no entrega el resultado final (10): deja que el estudiante calcule la raiz de 100 el mismo, mismo criterio que ecuaciones-lineales.json y cuadratica-sube-y-baja.json."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El triángulo que forma el patio tiene un ángulo recto en una de sus esquinas. Los dos lados que forman ese ángulo recto (6 m y 8 m) se llaman **catetos**. La diagonal, el lado inclinado que va de esquina a esquina, se llama **hipotenusa**."
+            },
+            {
+              "nivel": 2,
+              "texto": "Eleva cada cateto al cuadrado por separado: 6² y 8². Luego suma esos dos resultados. Ese número —la suma de los cuadrados de los catetos— es el cuadrado de la hipotenusa."
+            },
+            {
+              "nivel": 3,
+              "texto": "6² = 36 y 8² = 64. Sumados: 36 + 64 = 100. Ese 100 es el cuadrado de la hipotenusa, no la hipotenusa misma. ¿Qué número, elevado al cuadrado, da exactamente 100?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El teorema: el cuadrado de la hipotenusa",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Patio 5x12, diagonal 13. Verificado: 5^2+12^2=169=13^2.",
+        "Visualizacion 1: triangulo con hipotenusa '?' (sin revelar 13 todavia). Visualizacion 2 (tras la revelacion): mismo triangulo con hipotenusa '13 m' ya etiquetada, de refuerzo.",
+        "Seleccion: opcion a=13(correcta) b=17(error-1, 5+12) c=169(error-2, 5^2+12^2 sin raiz) d=12(sin id, repite un cateto dado por error de lectura de la pregunta).",
+        "Pregunta embebida (formato PAES) reutiliza el mismo set de valores en formato A-D: A=13(correcta) B=17(error-1) C=169(error-2) D=12(sin id).",
+        "Notacion formal (a^2+b^2=c^2 con letras) se deja para el paso 'generalizacion' a proposito — aqui el patron se describe en palabras, con los numeros concretos del ejemplo, siguiendo el requisito pedagogico de que la regla formal aparezca recien en generalizacion."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora un patio de **5 metros por 12 metros**. Con el mismo procedimiento que acabas de descubrir —cuadrado, cuadrado, suma, raíz cuadrada— vas a encontrar su diagonal."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de calcular: ¿crees que existe una relación FIJA entre los tres lados de cualquier triángulo con un ángulo recto (los dos catetos y la hipotenusa), o depende de cada triángulo en particular?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, siempre la misma relación",
+            "Depende de cada triángulo",
+            "No hay ninguna relación fija"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Triángulo rectángulo con el ángulo recto marcado con un pequeño cuadrado en la esquina inferior izquierda. El cateto horizontal, en la base, mide 5 m y está etiquetado debajo del lado. El cateto vertical, a la izquierda, mide 12 m y está etiquetado junto al lado. La hipotenusa —el lado inclinado que conecta el extremo derecho de la base con el extremo superior del cateto vertical— está etiquetada con un signo de interrogación: es la medida que hay que encontrar.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 5,
+            "catetoB": 12,
+            "etiquetaCatetoA": "5 m",
+            "etiquetaCatetoB": "12 m",
+            "etiquetaHipotenusa": "?"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Aplicando el procedimiento —elevar cada cateto al cuadrado, sumar, y sacar raíz cuadrada— a este patio de 5 m por 12 m, ¿cuánto mide la diagonal?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "13 metros",
+              "esCorrecta": true,
+              "feedback": "Correcto. 5² = 25, 12² = 144, sumados dan 169, y la raíz cuadrada de 169 es 13."
+            },
+            {
+              "id": "b",
+              "texto": "17 metros",
+              "esCorrecta": false,
+              "feedback": "17 es la suma directa de los catetos (5 + 12), no el resultado de elevarlos al cuadrado, sumarlos y sacar raíz cuadrada. Esa suma directa mide el recorrido por el borde, no la diagonal.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "169 metros",
+              "esCorrecta": false,
+              "feedback": "169 es la suma de los cuadrados (5² + 12²), un paso intermedio correcto. Pero es el cuadrado de la diagonal, no la diagonal misma: falta sacarle la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "12 metros",
+              "esCorrecta": false,
+              "feedback": "12 metros es uno de los catetos que ya te dieron como dato, no la diagonal que se pregunta. Revisa cuál medida te están pidiendo."
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El mismo triángulo rectángulo del diagrama anterior, ahora con las tres medidas visibles: cateto horizontal 5 m, cateto vertical 12 m, e hipotenusa 13 m ya calculada y etiquetada sobre el lado inclinado.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 5,
+            "catetoB": 12,
+            "etiquetaCatetoA": "5 m",
+            "etiquetaCatetoB": "12 m",
+            "etiquetaHipotenusa": "13 m"
+          }
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un patio rectangular mide 5 metros por 12 metros. ¿Cuál es la medida de su diagonal?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "13 m",
+              "esCorrecta": true,
+              "feedback": "Correcto. 5² + 12² = 25 + 144 = 169, y √169 = 13."
+            },
+            {
+              "clave": "B",
+              "texto": "17 m",
+              "esCorrecta": false,
+              "feedback": "17 m es la suma directa de los dos catetos (5 + 12), la distancia que recorrerías bordeando el patio, no la diagonal en línea recta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "C",
+              "texto": "169 m",
+              "esCorrecta": false,
+              "feedback": "169 es el resultado de sumar los cuadrados de los catetos (5² + 12²), pero ese número es el cuadrado de la hipotenusa. Falta aplicar la raíz cuadrada para obtener la medida real.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "D",
+              "texto": "12 m",
+              "esCorrecta": false,
+              "feedback": "12 m es uno de los catetos dados en el enunciado, no la diagonal que se pregunta."
+            }
+          ],
+          "notaVerificacionMatematica": "5² + 12² = 25 + 144 = 169. √169 = 13 (porque 13 × 13 = 169). Verificado con node -e."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que la diagonal (13 m) sea MAYOR que cualquiera de los dos catetos por separado (5 m y 12 m), pero MENOR que la suma de ambos (5 + 12 = 17 m)?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. La diagonal siempre es más larga que cada cateto por separado (es el lado más largo del triángulo), pero siempre más corta que la suma de los dos catetos: cruzar en línea recta nunca es más largo que bordear, pero cada cateto solo es 'una parte' del camino bordeando.",
+          "feedbackFalso": "En realidad sí tiene sentido. Piénsalo así: la hipotenusa es el lado más largo del triángulo (por eso es mayor que cada cateto solo), pero cruzar en línea recta siempre acorta camino comparado con bordear los dos lados juntos (por eso es menor que la suma)."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de comprobar no es casualidad de este patio: en CUALQUIER triángulo que tenga un ángulo recto, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los dos catetos. Ese es el **Teorema de Pitágoras**, y es la razón por la que el procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— funciona siempre, sin importar el tamaño del triángulo."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, y el caso al revés",
+      "_notasInternas": [
+        "Notacion formal a^2+b^2=c^2 aparece aqui por primera vez con letras, como pide el requisito pedagogico.",
+        "Ejemplo ilustrativo 8,15,17 (verificado: 8^2+15^2=289=17^2) usado SOLO para el chequeo de verificacion, no resuelto como 'encontrar la diagonal' (ya se hizo ese tipo de ejercicio en pasos anteriores).",
+        "Seleccion 1 (verificar 8,15,17): a=correcta, b=error-5 (16,30 en vez de 64,225 — calcula el cuadrado como el doble), c=error-1 (8+15=23, verificacion con suma lineal en vez de cuadrados), d=error-6 ((a+b)^2=23^2=529 en vez de a^2+b^2=289 — confunde la propiedad distributiva del cuadrado de una suma con el teorema).",
+        "Seleccion 2 (formula de despeje para un cateto, abstracta con letras a,b,c): a=correcta b=√(c²-a²), b=error-1 (b=c-a, lineal), c=error-3 (b=√(c²+a²), suma en vez de resta), d=error-4 (usar el cateto conocido como si fuera la hipotenusa).",
+        "Caso inverso concreto: hipotenusa 41, cateto conocido 9, cateto buscado 40. Verificado: 41^2-9^2=1600=40^2. Distractor error-2: 1600 (sin raiz).",
+        "Visualizacion del caso inverso: catetoA=9 (conocido, valor real para el dibujo), catetoB=40 (valor real para el dibujo, oculto tras etiqueta '?'), hipotenusa etiquetada '41 m' (dato conocido en este caso, a diferencia del descubrimiento donde la hipotenusa era la incognita)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que descubriste se escribe así, usando letras para cualquier triángulo rectángulo: si **a** y **b** son los catetos y **c** es la hipotenusa,\n\n**a² + b² = c²**\n\nPor ejemplo, con un triángulo de catetos 8 y 15: 8² + 15² = 64 + 225 = 289, y 17² = 289 también. Se cumple."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para comprobar que un triángulo de catetos 8 y 15 tiene hipotenusa 17, es decir que 8² + 15² = 17², ¿cuál de estos cálculos es el correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "8² = 64, 15² = 225. 64 + 225 = 289, y 17² = 289. Se cumple.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cada cateto se eleva al cuadrado por separado (multiplicándolo por sí mismo), los dos cuadrados se suman, y ese resultado coincide con el cuadrado de la hipotenusa."
+            },
+            {
+              "id": "b",
+              "texto": "8² = 16, 15² = 30 (el doble de cada número). 16 + 30 = 46, que no es 289: no se cumple.",
+              "esCorrecta": false,
+              "feedback": "El error está en cómo calculaste los cuadrados: elevar al cuadrado es multiplicar el número por sí mismo (8 × 8 = 64), no multiplicarlo por 2 (8 × 2 = 16). Con los cuadrados bien calculados, sí se cumple la igualdad.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "8 + 15 = 23, que no es 17: no se cumple.",
+              "esCorrecta": false,
+              "feedback": "Sumaste los catetos directamente en vez de elevarlos al cuadrado antes de sumarlos. El teorema compara la SUMA DE LOS CUADRADOS con el cuadrado de la hipotenusa, no la suma directa de los catetos con la hipotenusa.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "d",
+              "texto": "(8 + 15)² = 23² = 529, que no es 17² = 289: no se cumple.",
+              "esCorrecta": false,
+              "feedback": "Elevaste al cuadrado la SUMA de los catetos (8 + 15)² en vez de sumar cada cuadrado por separado (8² + 15²). Son operaciones distintas: el cuadrado de una suma no es lo mismo que la suma de los cuadrados.",
+              "errorCatalogado": "error-6"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Hasta ahora siempre buscaste la hipotenusa, conociendo los dos catetos. Pero la misma relación a² + b² = c² sirve también al revés: si conoces la hipotenusa y UN cateto, puedes encontrar el cateto que falta."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Si conoces la hipotenusa c y un cateto a, y quieres encontrar el cateto que falta, b, ¿cuál despeje es el correcto a partir de a² + b² = c²?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "b = √(c² − a²)",
+              "esCorrecta": true,
+              "feedback": "Correcto. Despejando b² = c² − a² de la ecuación original, y luego sacando raíz cuadrada a ambos lados."
+            },
+            {
+              "id": "b",
+              "texto": "b = c − a",
+              "esCorrecta": false,
+              "feedback": "Esto resta los lados directamente, sin pasar por los cuadrados ni la raíz cuadrada. El teorema relaciona los CUADRADOS de los lados, no los lados directamente.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "b = √(c² + a²)",
+              "esCorrecta": false,
+              "feedback": "Sumaste los cuadrados en vez de restarlos. Esa fórmula —sumar los cuadrados— es la que se usa para encontrar la HIPOTENUSA a partir de los dos catetos, no para encontrar un cateto a partir de la hipotenusa y el otro cateto.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "d",
+              "texto": "b = √(a² − c²), usando el cateto conocido a como si fuera la hipotenusa",
+              "esCorrecta": false,
+              "feedback": "El cateto conocido a nunca puede ser mayor que la hipotenusa c (la hipotenusa es siempre el lado más largo), así que a² − c² daría un número negativo, sin raíz cuadrada real. El lado que va al cuadrado y se resta primero siempre es la hipotenusa, no un cateto.",
+              "errorCatalogado": "error-4"
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Triángulo rectángulo con el ángulo recto marcado en la esquina inferior izquierda. El cateto horizontal mide 9 m y está etiquetado en la base. El cateto vertical está etiquetado con un signo de interrogación: es el cateto que hay que encontrar. La hipotenusa, el lado inclinado, está etiquetada con 41 m: en este caso la hipotenusa es un dato conocido, no la incógnita.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 9,
+            "catetoB": 40,
+            "etiquetaCatetoA": "9 m",
+            "etiquetaCatetoB": "?",
+            "etiquetaHipotenusa": "41 m"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un patio rectangular tiene una diagonal de **41 metros**, y uno de sus lados mide **9 metros**. ¿Cuánto mide el otro lado?",
+          "campos": [
+            {
+              "id": "catetoDesconocidoM",
+              "etiqueta": "Lado que falta",
+              "respuestaCorrecta": 40,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "catetoDesconocidoM",
+              "valorObtenido": 1600,
+              "mensaje": "1600 es el resultado de 41² − 9², un paso intermedio correcto. Pero ese número es el CUADRADO del lado que falta, no el lado mismo: falta sacarle la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Usa b = √(c² − a²), con c = 41 (la hipotenusa) y a = 9 (el cateto conocido). Eleva ambos al cuadrado, resta, y saca raíz cuadrada al resultado."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios con el mismo procedimiento",
+      "_notasInternas": [
+        "Seleccion con 7,24,25 (verificado: 7^2+24^2=625=25^2). a=25(correcta) b=31(error-1,7+24) c=625(error-2,7^2+24^2 sin raiz) d=24(sin id, repite un lado dado).",
+        "VerdaderoFalso con 12,35,37 (verificado: 12^2+35^2=1369=37^2), sin campo numerico a calcular.",
+        "Numerica con 33,56,65 (verificado: 33^2+56^2=4225=65^2). Distractor error-1: 89 (33+56). Distractor error-2: 4225 (sin raiz)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Una cancha rectangular mide 7 metros por 24 metros. ¿Cuánto mide su diagonal?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "25 metros",
+              "esCorrecta": true,
+              "feedback": "Correcto. 7² + 24² = 49 + 576 = 625, y √625 = 25."
+            },
+            {
+              "id": "b",
+              "texto": "31 metros",
+              "esCorrecta": false,
+              "feedback": "31 es la suma directa de los dos lados (7 + 24), la distancia bordeando la cancha, no la diagonal en línea recta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "625 metros",
+              "esCorrecta": false,
+              "feedback": "625 es la suma de los cuadrados (7² + 24²), un paso intermedio. Es el cuadrado de la diagonal, no la diagonal: falta la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "24 metros",
+              "esCorrecta": false,
+              "feedback": "24 metros es uno de los lados que ya te dieron como dato, no la diagonal que se pregunta."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Es cierto que un patio rectangular de 12 metros por 35 metros tiene una diagonal de exactamente 37 metros?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. 12² + 35² = 144 + 1225 = 1369, y √1369 = 37. Se cumple exactamente.",
+          "feedbackFalso": "En realidad sí es exacto: 12² + 35² = 144 + 1225 = 1369, y √1369 = 37."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Una cancha rectangular mide 33 metros por 56 metros. ¿Cuánto mide su diagonal?",
+          "campos": [
+            {
+              "id": "diagonalCanchaM",
+              "etiqueta": "Diagonal de la cancha",
+              "respuestaCorrecta": 65,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diagonalCanchaM",
+              "valorObtenido": 89,
+              "mensaje": "89 es la suma directa de los dos lados (33 + 56), no la diagonal en línea recta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "diagonalCanchaM",
+              "valorObtenido": 4225,
+              "mensaje": "4225 es la suma de los cuadrados (33² + 56²), un paso intermedio. Falta sacarle la raíz cuadrada para obtener la diagonal real.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Eleva cada lado al cuadrado, suma los resultados, y saca raíz cuadrada de esa suma."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Cuánto se ahorra cruzando en diagonal",
+      "_notasInternas": [
+        "Transferencia con patio 16x30, diagonal 34 (verificado: 16^2+30^2=1156=34^2). Ahorro: 16+30-34=12.",
+        "Estructura numerica-primero-abierta-despues, mismo criterio que cuadratica-sube-y-baja.json paso 'aplicacion'."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El patio de un colegio es rectangular, de **16 metros por 30 metros**. Un grupo de estudiantes quiere saber cuántos metros se ahorran cruzando el patio en diagonal, en vez de bordearlo caminando por dos de sus lados.\n\nPrimero: ¿cuántos metros mide la diagonal del patio?",
+          "campos": [
+            {
+              "id": "diagonalM",
+              "etiqueta": "Diagonal del patio",
+              "respuestaCorrecta": 34,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "diagonalM",
+              "valorObtenido": 46,
+              "mensaje": "46 es la suma directa de los dos lados (16 + 30), el recorrido bordeando el patio, no la diagonal en línea recta.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "diagonalM",
+              "valorObtenido": 1156,
+              "mensaje": "1156 es la suma de los cuadrados (16² + 30²), un paso intermedio. Falta sacarle la raíz cuadrada para obtener la diagonal real.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Eleva cada lado al cuadrado, suma los resultados, y saca raíz cuadrada de esa suma."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Ya encontraste la diagonal del patio. Ahora hazlo explícito: escribe la ecuación del Teorema de Pitágoras que usaste para este patio de 16 m por 30 m, con los números reemplazados, y calcula cuántos metros se ahorran cruzando en diagonal en vez de bordear.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "16² + 30² = 34², es decir 256 + 900 = 1156 = 34² (el patio, 16 m por un lado y 30 m por el otro, tiene diagonal 34 m). Bordear por dos lados son 16 + 30 = 46 m. Cruzar en diagonal son 34 m. El ahorro es 46 − 34 = 12 metros."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Por qué funciona siempre?",
+      "_notasInternas": [
+        "Metacognicion sobre el principio (a^2+b^2=c^2 y por que hay que elevar al cuadrado, no operar los lados directamente), no sobre un calculo puntual. Texto de cierre nombra los 5 errores catalogados en lenguaje llano, sin mostrar los ids, mismo criterio que cuadratica-sube-y-baja.json."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué NO basta con sumar los dos catetos para encontrar la hipotenusa, aunque a primera vista parezca lo más directo? ¿Qué relación hay realmente entre los tres lados de un triángulo rectángulo?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que mencione 'la relación es entre los CUADRADOS de los lados, no los lados directamente, por eso hay que elevar al cuadrado antes de sumar y sacar raíz al final' indica que entendió el principio, no solo el procedimiento mecánico."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al aplicar el Teorema de Pitágoras —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Sumar o restar los lados directamente**, sin pasar por los cuadrados: bordear no es lo mismo que cruzar en diagonal.\n2. **Elevar al cuadrado y sumar (o restar) bien, pero olvidar la raíz cuadrada final**: el resultado intermedio no es la medida del lado, es su cuadrado.\n3. **Al buscar un cateto, sumar los cuadrados en vez de restarlos**: esa fórmula es para encontrar la hipotenusa, no un cateto.\n4. **Confundir cuál lado es la hipotenusa**: siempre es el lado más largo, opuesto al ángulo recto.\n5. **Calcular mal el cuadrado de un número**, por ejemplo confundiéndolo con el doble.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis + puente a L2 del mismo modulo (perimetro y area), que es un tema DISTINTO dentro del eje Geometria, no una continuacion directa de Pitagoras — el puente es honesto sobre eso, sin comprometer detalles de L2 que aun no se han diseñado."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- En cualquier triángulo con un ángulo recto, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los dos catetos: **a² + b² = c²**.\n- El procedimiento: elevar al cuadrado, sumar (o restar, si buscas un cateto), y sacar raíz cuadrada al final. Nunca operar los lados directamente.\n- La misma relación sirve en dos direcciones: para encontrar la hipotenusa conociendo los catetos, o para encontrar un cateto conociendo la hipotenusa y el otro cateto.\n- Trampas clásicas: sumar los lados directamente, olvidar la raíz cuadrada final, sumar en vez de restar al buscar un cateto, confundir cuál lado es la hipotenusa, y errores de cálculo al elevar al cuadrado.\n\nDónde se conecta: la próxima lección deja el Teorema de Pitágoras por un momento y se enfoca en otra pregunta sobre las mismas figuras: cuánto perímetro y cuánta área tienen triángulos, paralelogramos, trapecios y círculos.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Un patio rectangular mide 18 metros por 24 metros. ¿Cuántos metros mide su diagonal?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "30 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. 18² + 24² = 324 + 576 = 900, y √900 = 30."
+        },
+        {
+          "clave": "B",
+          "texto": "42 m",
+          "esCorrecta": false,
+          "feedback": "42 m es la suma directa de los dos lados (18 + 24), el recorrido bordeando el patio, no la diagonal en línea recta.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "900 m",
+          "esCorrecta": false,
+          "feedback": "900 es la suma de los cuadrados (18² + 24²), un paso intermedio del cálculo. Es el cuadrado de la diagonal, no la diagonal: falta la raíz cuadrada.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "18 m",
+          "esCorrecta": false,
+          "feedback": "18 m es uno de los lados que ya te dieron como dato en el enunciado, no la diagonal que se pregunta."
+        }
+      ],
+      "solucion": "Con catetos 18 m y 24 m: 18² + 24² = 324 + 576 = 900. La diagonal es √900 = 30 m. Comprobación: 30² = 900. ✓"
+    },
+    {
+      "id": "l1-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un terreno rectangular tiene una diagonal de 61 metros. Uno de sus lados mide 11 metros. ¿Cuánto mide el otro lado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "60 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. Con c = 61 (hipotenusa) y a = 11 (cateto conocido): b = √(61² − 11²) = √(3721 − 121) = √3600 = 60."
+        },
+        {
+          "clave": "B",
+          "texto": "50 m",
+          "esCorrecta": false,
+          "feedback": "50 m sale de restar los lados directamente (61 − 11), sin elevar al cuadrado ni sacar raíz cuadrada. El teorema relaciona los cuadrados de los lados, no los lados directamente.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "3.600 m",
+          "esCorrecta": false,
+          "feedback": "3.600 es el resultado de 61² − 11², un paso intermedio correcto. Pero ese número es el cuadrado del lado buscado, no el lado mismo: falta sacarle la raíz cuadrada.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "11 m",
+          "esCorrecta": false,
+          "feedback": "11 m es el lado que ya te dieron como dato en el enunciado, no el lado que falta por encontrar."
+        }
+      ],
+      "solucion": "Sea c = 61 m la hipotenusa (diagonal) y a = 11 m un cateto conocido. El cateto que falta es b = √(c² − a²) = √(61² − 11²) = √(3721 − 121) = √3600 = 60 m. Comprobación: 11² + 60² = 121 + 3600 = 3721 = 61². ✓"
+    },
+    {
+      "id": "l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un patio rectangular mide 9 metros por 12 metros. Un estudiante afirma que la diagonal mide 21 metros, \"porque basta sumar los dos lados: 9 + 12 = 21\". ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: hay que elevar los catetos al cuadrado, sumarlos y sacar raíz cuadrada. √(9² + 12²) = √225 = 15, no 21.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El Teorema de Pitágoras relaciona los CUADRADOS de los lados, no los lados directamente: 9² + 12² = 81 + 144 = 225, y √225 = 15. La diagonal mide 15 m, no 21 m."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcta: sumar los dos catetos da directamente la medida de la diagonal.",
+          "esCorrecta": false,
+          "feedback": "Sumar los catetos directamente (9 + 12 = 21) da la distancia bordeando el patio por dos de sus lados, no la diagonal en línea recta. La diagonal real, aplicando el teorema, es 15 m.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: la diagonal real es 225 metros, resultado de sumar los cuadrados de los catetos.",
+          "esCorrecta": false,
+          "feedback": "225 es la suma de los cuadrados (9² + 12²), un paso intermedio correcto. Pero ese número es el cuadrado de la diagonal, no la diagonal misma: falta sacarle la raíz cuadrada, que da 15.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: la diagonal real es 441 metros.",
+          "esCorrecta": false,
+          "feedback": "441 sería el resultado de elevar al cuadrado la suma de los catetos, (9+12)²=441 — pero el teorema pide elevar cada cateto al cuadrado por separado y sumar esos cuadrados, no sumar primero y elevar después. El mismo error aparece marcado antes en esta lección con el ejemplo 8 y 15.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "El Teorema de Pitágoras dice a² + b² = c², donde c es la hipotenusa. Con catetos 9 y 12: 9² + 12² = 81 + 144 = 225. La diagonal es √225 = 15 m, no 9 + 12 = 21 m. Sumar los catetos directamente ignora que la relación es entre los CUADRADOS de los lados, no entre los lados mismos. Comprobación: 9² + 12² = 81 + 144 = 225 = 15². ✓ Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: Teorema de Pitágoras), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (patio/cancha rectangular, distintas medidas) y la secuencia didáctica creados desde cero por el autor del proyecto. Auditoría matemática completa (recálculo desde cero de toda la aritmética; feedback de cada distractor verificado contra su errorCatalogado). Auditoría de originalidad completa al 2026-08-24: (a) colisión de dominio contra el corpus de fuentes aisladas verificada con node scripts/consultar-fuentes.mjs sobre frases y keywords reales del archivo (los 10 pasos + los 3 itemsPAES) — sin colisión de enunciado ni de mecanismo; las únicas coincidencias fueron vocabulario genérico de geometría ('catetos', 'hipotenusa'). Nota de proceso: un primer intento corrió esta misma consulta directamente en el hilo de auditoría (mecanismo 3 de CLAUDE.md, invocado por error). Ese intento quedó superado el mismo día por la corrida válida: mecanismo 2, ejecución manual por Benja fuera de esta sesión, con las mismas 30 consultas y resultado idéntico (mismos 2 SI de vocabulario genérico, cero colisiones reales). Es esta corrida por mecanismo 2 la que queda como registro válido de la auditoría. (b) Checklist MOS §7.3 revisado el 2026-08-24: sin PII de estudiantes ni RUT, sin placeholders (TODO/FIXME/PLACEHOLDER/XXX/lorem ipsum), uso de 'PAES'/'DEMRE' descriptivo en todas sus apariciones, sin implicar afiliación ni respaldo oficial.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
