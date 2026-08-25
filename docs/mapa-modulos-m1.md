@@ -212,7 +212,7 @@ Cierre: `cierre-funcion-cuadratica`.
 | id | Título | Archivo |
 |---|---|---|
 | `figuras-triangulo-no-se-rompe` | Teorema de Pitágoras | no |
-| `figuras-borde-y-superficie` | Perímetro y área de triángulos, paralelogramos, trapecios y círculos | no |
+| `figuras-borde-y-superficie` | Perímetro y área de triángulos, paralelogramos, trapecios y círculos | sí |
 | `figuras-problemas-con-forma` | Aplicaciones de perímetro y área en contexto | no |
 
 ### 11. Cuerpos geométricos — `cuerpos-geometricos`

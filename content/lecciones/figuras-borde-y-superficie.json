@@ -1,0 +1,785 @@
+{
+  "tipo": "leccion",
+  "id": "figuras-borde-y-superficie",
+  "titulo": "Perímetro y área de triángulos, paralelogramos, trapecios y círculos",
+  "objetivo": "Calcular el área y el perímetro de triángulos, trapecios, paralelogramos y círculos, aplicando la fórmula correcta según la figura y según si se pide superficie (área) o borde (perímetro), incluyendo el uso del teorema de Pitágoras para encontrar la longitud real de un lado inclinado cuando no se entrega directamente.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Teorema de Pitágoras para encontrar un lado desconocido de un triángulo rectángulo (Lección 1 de este módulo)",
+    "Multiplicación y división de números decimales",
+    "Perímetro como suma de los lados de una figura"
+  ],
+  "conceptos": [
+    "área como medida de superficie cubierta, distinta del perímetro como medida del borde",
+    "área de un triángulo: (base × altura) ÷ 2",
+    "área de un trapecio: ((base mayor + base menor) ÷ 2) × altura",
+    "perímetro de un paralelogramo con un lado inclinado, usando Pitágoras para encontrar su longitud real",
+    "circunferencia (2 × π × radio) y área (π × radio²) de un círculo, con π ≈ 3,14"
+  ],
+  "_notasInternas": [
+    "Lección 2 del módulo figuras-geometricas (eje Geometría). Descriptor DEMRE / mapa-modulos-m1.md: 'Perímetro y área de triángulos, paralelogramos, trapecios y círculos'.",
+    "Dominio 'velas de embarcación' confirmado por Benja vía scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md): sin colisiones de dominio reales sobre los 4 candidatos aprobados (vela mayor/triángulo/área, vela de trinquete-cangreja/trapecio/área, paño con lado inclinado/paralelogramo/perímetro, ollao/círculo/perímetro+área). Único hit: 'bies' (1 coincidencia genérica, no relacionada al tema) — evitado como término distintivo en todo el archivo; se usa 'paño con lado inclinado' o 'corte inclinado' en su lugar.",
+    "A diferencia de L1 (un solo descubrimiento nuclear), esta lección es un LEVANTAMIENTO de 4 figuras/modos por diseño del módulo (así lo indica el título DEMRE de la propia lección). El 'descubrimiento nuclear' es conceptual y único: 'cada figura tiene su propia fórmula de área/perímetro, derivada de cómo se arma respecto a un rectángulo o triángulo conocido'; los 4 candidatos aprobados por Benja se despliegan en orden (triángulo área → trapecio área en generalización → círculo perímetro en práctica → paralelogramo perímetro + círculo área combinados en aplicación) en vez de tener cada uno su propio ciclo pensar/pistas/descubrimiento completo, que el formato fijo de 10 pasos no permite para 4 sub-temas. Zona de riesgo pedagógico que Benja debería revisar: la introducción del círculo (perímetro) en 'práctica' y del paralelogramo (perímetro) en 'aplicación' tienen menos andamiaje (sin pensar/pistas propios) que el triángulo. Ver además nota siguiente sobre candidato 4.",
+    "Candidato 4 (círculo) pedido explícitamente 'en pasos distintos, como cierre que combina ambos modos': perímetro (circunferencia) introducido en 'práctica' con radio 15 cm, y área de un SEGUNDO ollao (radio 10 cm, otra esquina de la misma vela) calculada en 'aplicación'. Interpretación de 'pasos distintos' = dos paso.tipo distintos (práctica y aplicación), no dos bloques dentro de un mismo paso. Si Benja quería algo distinto (p. ej. ambos modos dentro del mismo paso), avisar antes de tocar catalogoErrores. CAMBIO 2026-08-25 (auditoría mecánica): el diseño original usaba el MISMO radio (15 cm) en ambos pasos por continuidad narrativa, pero eso hace que la 'fórmula equivocada' de un paso (distractor error-9) sea siempre, exactamente, la respuesta correcta del otro paso — un choque estructural que el chequeo de colisión distractor/correcta detecta como bloqueante. Se resolvió cambiando el radio de 'aplicación' a 10 cm (segundo ollao, ya no 'el mismo'). Ver notas del paso 'aplicacion' para el detalle numérico.",
+    "catalogoErrores embebido: SOLO error-1 y error-2, copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1), reutilizados en el sub-cálculo de Pitágoras del lado inclinado del paralelogramo (aplicación, ítem l2-item-2). error-5 y error-6 de L1 NO se reutilizan: ningún distractor de este archivo tiene el mecanismo exacto de 'a²=2a' ni de '(a+b)² en vez de a²+b²' — no se fuerza su uso (regla 2b de la skill).",
+    "error-7, error-8 y error-9 APROBADOS por Benja en el chat (texto tal cual lo propuesto, sin cambios) y agregados a catalogoErrores de este archivo — nace acá, no se duplica desde L1. Referenciados en 13 distractores en total: error-7 (8 usos: pensar numerica, descubrimiento seleccion+pregunta, generalizacion seleccion triángulo y seleccion trapecio, ejercicio numérico trapecio, práctica seleccion, itemsPAES l2-item-1 opción B), error-8 (2 usos: aplicación numérica perimetroM, itemsPAES l2-item-2 opción B), error-9 (3 usos: práctica numérica círculo, aplicación numérica círculo, itemsPAES l2-item-3 opción B).",
+    "Todos los valores numéricos (respuestas correctas y distractores) verificados con node -e antes de escribir este JSON, incluyendo los decimales de π≈3,14 (94.2, 314, 62.8, 1256, 200.96, 50.24, 25.12) para descartar sorpresas de punto flotante — todos verificados como exactos, sin decimales adicionales. Salida cruda de la verificación pegada en el reporte de esta sesión, no repetida acá.",
+    "Auditoría mecánica del 2026-08-25 (scripts/auditar-leccion.mjs): 5 colisiones distractor/correcta corregidas cambiando números de entrada (el paralelogramo de 'aplicación' pasó de base 12/altura 8/desplazamiento 6/lado 10/perímetro 44 a base 13/altura 24/desplazamiento 7/lado 25/perímetro 76; el segundo ollao de 'aplicación' pasó de radio 15 a radio 10, área 706,5→314; el paralelogramo de l2-item-2 pasó de base 20/altura 5/desplazamiento 12/lado 13/perímetro 66 a base 19/altura 20/desplazamiento 21/lado 29/perímetro 96, lo que de paso quitó la colisión del distractor 'D' de ese ítem con areaTriangulo=20 de 'pensar'), 3 ids de campo renombrados sin cifra (areaTrianguloM2→areaTriangulo, areaTrapecioM2→areaTrapecio, areaOllaoCm2→areaOllao) y el orden de dificultad de itemsPAES corregido a baja/media/alta (l2-item-1 media→baja, l2-item-2 alta→media). Recalculado todo con node -e, ver reporte de esta sesión.",
+    "π se usa siempre como 3,14 (aproximación exacta, no Math.PI), instruido explícitamente en cada enunciado que lo requiere, porque BloqueNumerica.tsx compara con igualdad estricta (numero === respuestaCorrecta), sin tolerancia — ver components/bloques/BloqueNumerica.tsx líneas 41-42."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Olvida el factor 1/2 (o la división por 2) en una fórmula de área que lo incluye: calcula el área de un triángulo como base×altura, en vez de base×altura÷2, o el área de un trapecio como (baseMayor+baseMenor)×altura, en vez de dividir esa suma por 2 antes de multiplicar por la altura — tratando la figura como si fuera un paralelogramo completo en vez de la mitad de uno."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Calcula el perímetro de una figura con al menos un lado inclinado (como un paralelogramo cortado con un desplazamiento horizontal) usando la altura vertical como si fuera la medida de ese lado inclinado, en vez de calcular su longitud real aplicando el teorema de Pitágoras sobre la altura y el desplazamiento."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: vela mayor triangular 4 m base × 3 m altura, área 6 m² (perímetro no calculado, solo mencionado como 'requiere los 3 lados')",
+    "problema: vela mayor 12 m × 9 m, NO resuelta (solo elección de método); ilustrativo sin resolver: 50 m × 36 m, área 900 m²",
+    "pensar/pistas: paño triangular 8 m × 5 m, área 20 m²",
+    "descubrimiento: vela mayor 10 m base × 7 m altura, área 35 m² (ejemplo nuclear)",
+    "generalizacion: triángulo de verificación 9 m × 4 m, área 18 m²; trapecio (vela de trinquete) pujamen 8 m, pena 4 m, altura 5 m, área 30 m²; ejercicio trapecio pujamen 10 m, pena 6 m, altura 7 m, área 56 m²",
+    "practica: paño triangular 9 m × 6 m, área 27 m²; trapecio pujamen 14 m, pena 10 m, altura 6 m (afirmación falsa de 68 m², real 72 m²); ollao circular radio 15 cm, circunferencia 94,2 cm",
+    "aplicacion: paño paralelogramo base 13 m, altura 24 m, desplazamiento 7 m, lado inclinado 25 m (Pitágoras), perímetro 76 m; segundo ollao circular (otra esquina) radio 10 cm, área 314 cm²",
+    "itemsPAES: paño triangular 11 m × 6 m (área 33 m²); paño paralelogramo base 19 m, altura 20 m, desplazamiento 21 m, lado 29 m, perímetro 96 m; ollao circular radio 8 cm (área 200,96 cm², afirmación errónea de 50,24 cm²)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Cubrir o bordear",
+      "_notasInternas": [
+        "Vela 4x3, área 6 (4*3/2=6, verificado). Perímetro deliberadamente NO calculado (lado inclinado desconocido): siembra la idea de que área y perímetro piden datos distintos."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Para hacer la vela mayor de un velero, hacen falta dos cosas: la tela que la cubre por completo, y una cinta de refuerzo que recorre todo su borde. Sin calcular nada todavía: ¿crees que ambas cantidades —la tela y la cinta— se calculan con los mismos datos de la vela?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, ambas se calculan con los mismos datos",
+            "No, cada una necesita datos distintos",
+            "Depende del tamaño de la vela"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Piensa en una vela mayor triangular con una base (el pie) de 4 metros y una altura (el grátil) de 3 metros. La tela que la cubre —su **área**— mide 6 metros cuadrados (la mitad de 4 × 3).\n\nPero la cinta de refuerzo de su borde —su **perímetro**— no se puede calcular solo con esos dos datos: hace falta conocer los TRES lados del triángulo, no solo la base y la altura. Área y perímetro miden cosas distintas, y muchas veces necesitan datos distintos.\n\nEn esta lección vas a aprender a calcular ambos —área y perímetro— para las figuras que forman las velas de una embarcación: triángulos, trapecios, paralelogramos y círculos."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Una vela donde adivinar ya no sirve",
+      "_notasInternas": [
+        "Vela 12x9, área 54 si se resolviera (NO se resuelve en este paso, solo se elige el método). Verdadero/falso ilustrativo con 50x36=900, no resuelto como ejercicio nuevo, mismo patrón que figuras-triangulo-no-se-rompe.json paso 'problema'."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un taller de velas necesita cortar la tela para una vela mayor triangular mucho más grande, de 12 metros de base y 9 metros de altura. De estos tres métodos, ¿cuál te da el área correcta, sin importar qué tan grande sea el triángulo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Multiplicar base por altura, y dividir ese resultado por 2.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El triángulo es siempre la mitad de un paralelogramo (o rectángulo) con esa misma base y esa misma altura, por eso hay que dividir por 2."
+            },
+            {
+              "id": "b",
+              "texto": "Sumar la base y la altura.",
+              "esCorrecta": false,
+              "feedback": "Sumar la base y la altura no tiene relación con la superficie que cubre el triángulo: esa suma no mide el área. El área multiplica esas dos medidas y luego divide por 2."
+            },
+            {
+              "id": "c",
+              "texto": "Medir con una huincha imaginaria y estimar a ojo.",
+              "esCorrecta": false,
+              "feedback": "Estimar a ojo puede dar una idea aproximada, pero no la medida exacta, y con triángulos grandes el margen de error crece. Existe una fórmula que da la respuesta exacta, sin adivinar."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Este mismo procedimiento —multiplicar base por altura y dividir por 2— sigue funcionando igual si la vela fuera muchísimo más grande, como una de 50 metros de base por 36 metros de altura?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El procedimiento no depende de que los números sean chicos o amables: funciona igual con 12 y 9 que con 50 y 36 (el área de esa vela sería (50 × 36) ÷ 2 = 900 m²). Lo único que cambia es que calcular a mano toma más tiempo, no que el método deje de servir.",
+          "feedbackFalso": "En realidad sí seguiría funcionando igual. El procedimiento —multiplicar base por altura, dividir por 2— no depende de que los números sean redondos ni chicos: con 50 y 36 el área sería (50 × 36) ÷ 2 = 900 m²."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra el área",
+      "_notasInternas": [
+        "Paño 8x5, área 20 (8*5/2=20, verificado). Distractor error-7: 8*5=40. Distractor ad-hoc: 8+5=13."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Un paño triangular para una vela mide 8 metros de base y 5 metros de altura. Intenta encontrar cuántos metros cuadrados de tela se necesitan, antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "areaTriangulo",
+              "etiqueta": "Área del paño",
+              "respuestaCorrecta": 20,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaTriangulo",
+              "valorObtenido": 40,
+              "mensaje": "40 es base × altura (8 × 5) sin dividir por 2: es el área de un rectángulo de 8 m por 5 m, no la de un triángulo, que es la mitad de esa superficie.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "areaTriangulo",
+              "valorObtenido": 13,
+              "mensaje": "13 es la suma de la base y la altura (8 + 5), no el resultado de multiplicarlas. El área de un triángulo multiplica esas dos medidas y luego divide por 2."
+            }
+          ],
+          "feedbackPorDefecto": "Multiplica la base por la altura, y divide ese resultado por 2."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para encontrar el área",
+      "_notasInternas": [
+        "Mismo paño 8x5 del paso anterior. Nivel 3 no entrega el resultado final (20): deja que el estudiante calcule 40÷2 él mismo, mismo criterio que L1."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El área de una figura mide cuánta superficie cubre, no cuánto mide su borde. Para un triángulo, los datos que necesitas son su base (8 m) y su altura (5 m): la altura es la distancia perpendicular desde la base hasta el vértice opuesto."
+            },
+            {
+              "nivel": 2,
+              "texto": "Un triángulo es exactamente la mitad de un paralelogramo (o rectángulo) que tuviera esa misma base y esa misma altura. Por eso, primero multiplicas base por altura, y ese resultado lo divides por 2."
+            },
+            {
+              "nivel": 3,
+              "texto": "8 × 5 = 40. Ese 40 sería el área de un rectángulo de 8 m por 5 m, no la del triángulo. ¿Cuánto es 40 dividido por 2?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El área: la mitad del rectángulo que la contiene",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Vela 10x7, área 35 (10*7/2=35, verificado). Seleccion y pregunta reutilizan el mismo set: a=35(correcta) b=70(error-7, 10*7 sin /2) c=17(ad-hoc, 10+7) d=10(ad-hoc, repite la base).",
+        "Notacion formal (A = (base×altura)÷2) se deja para el paso 'generalizacion' a propósito, siguiendo el requisito pedagógico de que la regla formal aparezca recién ahí — aquí el patrón se describe en palabras.",
+        "Sin segunda visualizacion 'revelada' (a diferencia de L1): el área no es un segmento etiquetable dentro de la figura (DatosTriangulo no tiene etiquetaArea), así que una sola visualizacion (base+altura) basta; el valor de área se discute en el texto/seleccion, no en el SVG."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora una vela mayor triangular más grande: base (pie) de 10 metros y altura (grátil) de 7 metros. Con la misma idea que acabas de descubrir —la mitad de base por altura— vas a encontrar cuánta tela cubre completa esta vela."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de calcular: ¿crees que existe una fórmula FIJA para el área de cualquier triángulo —la mitad de base por altura—, o depende de la forma particular de cada triángulo?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, siempre la misma fórmula: la mitad de base por altura",
+            "Depende de la forma del triángulo",
+            "No hay ninguna fórmula fija"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Triángulo que representa una vela mayor, con la base horizontal en la parte inferior etiquetada '10 m' (el pie de la vela) y una línea punteada vertical desde el vértice superior hasta la base, marcando la altura, etiquetada '7 m' (la caída o grátil de la vela).",
+          "datos": {
+            "figura": "triangulo",
+            "base": 10,
+            "altura": 7,
+            "etiquetaBase": "10 m",
+            "etiquetaAltura": "7 m"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Aplicando la idea de que el triángulo es la mitad de un rectángulo con esa misma base y altura, ¿cuántos metros cuadrados de tela cubre esta vela mayor de 10 m de base por 7 m de altura?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "35 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. 10 × 7 = 70 sería el área de un rectángulo con esos lados; como el triángulo es la mitad de ese rectángulo, el área real es 70 ÷ 2 = 35 m²."
+            },
+            {
+              "id": "b",
+              "texto": "70 m²",
+              "esCorrecta": false,
+              "feedback": "70 m² es el resultado de multiplicar base por altura (10 × 7), pero ese número es el área de un RECTÁNGULO con esos lados, no la del triángulo: falta dividirlo por 2, porque el triángulo es solo la mitad de ese rectángulo.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "17 m²",
+              "esCorrecta": false,
+              "feedback": "17 es la suma directa de la base y la altura (10 + 7), no el resultado de multiplicarlas. El área de un triángulo se calcula multiplicando esas dos medidas y dividiendo por 2, no sumándolas."
+            },
+            {
+              "id": "d",
+              "texto": "10 m²",
+              "esCorrecta": false,
+              "feedback": "10 m² repite la medida de la base que ya te dieron en el enunciado, no es el resultado de ningún cálculo de área."
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Una vela mayor triangular tiene una base (pie) de 10 metros y una altura (grátil) de 7 metros. ¿Cuántos metros cuadrados de tela se necesitan para cubrirla por completo?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "35 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. El área de un triángulo es (base × altura) ÷ 2 = (10 × 7) ÷ 2 = 70 ÷ 2 = 35 m²."
+            },
+            {
+              "clave": "B",
+              "texto": "70 m²",
+              "esCorrecta": false,
+              "feedback": "70 m² es base × altura sin dividir por 2: es el área del rectángulo que contiene al triángulo, no la del triángulo mismo, que es solo la mitad de esa superficie.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "C",
+              "texto": "17 m²",
+              "esCorrecta": false,
+              "feedback": "17 es la suma de la base y la altura (10 + 7). El área de un triángulo se obtiene multiplicando esas medidas y dividiendo por 2, no sumándolas."
+            },
+            {
+              "clave": "D",
+              "texto": "10 m²",
+              "esCorrecta": false,
+              "feedback": "10 m² es la medida de la base dada en el enunciado, no el área calculada de la vela."
+            }
+          ],
+          "notaVerificacionMatematica": "10 × 7 = 70. 70 ÷ 2 = 35. Verificado con node -e."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que el área de esta vela triangular (35 m²) sea exactamente la MITAD del área de un rectángulo con la misma base y la misma altura (10 × 7 = 70 m²)?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. Un triángulo con base b y altura h siempre cabe exactamente dos veces dentro de un paralelogramo (o rectángulo) con esa misma base y altura — por eso su área es siempre la mitad: (b × h) ÷ 2.",
+          "feedbackFalso": "En realidad sí tiene sentido. Un triángulo con base b y altura h siempre cabe exactamente dos veces dentro de un rectángulo con esa misma base y altura, por eso su área es la mitad: (b × h) ÷ 2, y 70 ÷ 2 = 35."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de comprobar no es casualidad de esta vela: en CUALQUIER triángulo, el área es la mitad de lo que mediría un paralelogramo (o rectángulo) con esa misma base y esa misma altura. Por eso la fórmula siempre lleva ese '÷ 2' — no es un paso extra que se pueda saltar, es parte de lo que hace que la figura sea un triángulo y no un paralelogramo completo."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, y una figura con dos bases",
+      "_notasInternas": [
+        "Notacion formal A=(base×altura)÷2 aparece aqui por primera vez, como pide el requisito pedagogico.",
+        "Sub-tema 1 (triángulo, verificar formula): base 9, altura 4, área 18. a=correcta b=error-7(36) c=ad-hoc suma(13) d=ad-hoc repite base(9).",
+        "Sub-tema 2 (trapecio, vela de trinquete): pujamen 8, pena 4, altura 5, área 30 (verificado (8+4)/2*5=30). a=correcta b=error-7(60, suma sin promediar) c=ad-hoc usa solo pujamen(8*5=40) d=ad-hoc repite pena(4).",
+        "Ejercicio numerico trapecio: pujamen 10, pena 6, altura 7, área 56 (verificado (10+6)/2*7=56). Distractor error-7: (10+6)*7=112. Distractor ad-hoc: (6*7)/2=21 (usa solo la pena con formula de triangulo).",
+        "Bloque texto final AGREGADO a pedido de Benja (revisión de este paso): conecta explícitamente el patrón 'mitad de un rectángulo/paralelogramo' a las 4 figuras antes de que paralelogramo (perímetro, en aplicación) y círculo (perímetro+área, en práctica/aplicación) aparezcan sin su propio pensar/pistas/descubrimiento. Trapecio: derivación real (dos trapecios giro 180° arman un paralelogramo), no la 'triángulo con la punta cortada' usada más arriba en el mismo paso — ambas son válidas y no se contradicen, se complementan. Paralelogramo: framing explícito de por qué NO lleva ÷2 (es la figura de referencia, no la mitad de nada) y por qué en esta lección se usa para perímetro, no área. Círculo: derivación clásica de gajos reacomodados en un rectángulo de base π×radio y altura=radio, mencionada en una frase, sin pedir que el estudiante la reproduzca (no hay ítem que la evalúe)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que descubriste se escribe así, para cualquier triángulo: si **b** es la base y **h** es la altura,\n\n**A = (b × h) ÷ 2**\n\nPor ejemplo, con un triángulo de base 9 m y altura 4 m: A = (9 × 4) ÷ 2 = 36 ÷ 2 = 18 m²."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para comprobar que un triángulo de base 9 m y altura 4 m tiene área 18 m², ¿cuál de estos cálculos es el correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "9 × 4 = 36. 36 ÷ 2 = 18 m². Se cumple.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Primero se multiplica base por altura, y ese resultado se divide por 2."
+            },
+            {
+              "id": "b",
+              "texto": "9 × 4 = 36 m². No hace falta dividir por 2: el área ya es 36 m².",
+              "esCorrecta": false,
+              "feedback": "36 m² es el área de un RECTÁNGULO de 9 m por 4 m, no la de un triángulo. El triángulo es la mitad de ese rectángulo, así que sí hay que dividir por 2: el área real es 18 m².",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "9 + 4 = 13, y 13 ÷ 2 = 6,5 m².",
+              "esCorrecta": false,
+              "feedback": "Sumaste la base y la altura en vez de multiplicarlas. La fórmula del área multiplica base por altura y luego divide por 2; no suma esas dos medidas."
+            },
+            {
+              "id": "d",
+              "texto": "El área es 9 m², la misma medida que la base.",
+              "esCorrecta": false,
+              "feedback": "9 m² repite el valor de la base dada en el enunciado. No es el resultado de aplicar la fórmula del área a los dos datos entregados."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El área de un triángulo depende de tener UNA base y UNA altura. Pero, ¿qué pasa con una figura que tiene DOS bases distintas, una arriba y otra abajo? Eso es exactamente lo que forma la vela de un trinquete o una vela cangreja: una figura de cuatro lados llamada **trapecio**, donde la base de arriba (la **pena**) es más corta que la de abajo (el **pujamen**)."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Trapecio que representa una vela de trinquete: el pujamen (base mayor, abajo) etiquetado '8 m (pujamen)', la pena (base menor, arriba) etiquetada '4 m (pena)', y una línea punteada vertical que marca la altura entre ambas, etiquetada '5 m'.",
+          "datos": {
+            "figura": "trapecio",
+            "baseMayor": 8,
+            "baseMenor": 4,
+            "altura": 5,
+            "etiquetaBaseMayor": "8 m (pujamen)",
+            "etiquetaBaseMenor": "4 m (pena)",
+            "etiquetaAltura": "5 m"
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un trapecio es, en el fondo, un triángulo al que le cortaron la punta: por eso su fórmula de área se parece a la del triángulo, pero en vez de UNA base usa el PROMEDIO de las dos bases:\n\n**A = ((pujamen + pena) ÷ 2) × altura**\n\nCon pujamen 8 m, pena 4 m y altura 5 m: A = ((8 + 4) ÷ 2) × 5 = (12 ÷ 2) × 5 = 6 × 5 = 30 m²."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para comprobar que esta vela de trinquete (pujamen 8 m, pena 4 m, altura 5 m) tiene área 30 m², ¿cuál cálculo es correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(8 + 4) ÷ 2 = 6. 6 × 5 = 30 m².",
+              "esCorrecta": true,
+              "feedback": "Correcto. Primero se promedian las dos bases, y ese promedio se multiplica por la altura."
+            },
+            {
+              "id": "b",
+              "texto": "(8 + 4) × 5 = 60 m², sin promediar las bases.",
+              "esCorrecta": false,
+              "feedback": "60 m² sale de multiplicar la SUMA de las bases por la altura, sin promediarlas antes (sin dividir por 2). Como el trapecio no es un rectángulo completo, hay que promediar las dos bases, no solo sumarlas.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "8 × 5 = 40 m², usando solo el pujamen (base mayor).",
+              "esCorrecta": false,
+              "feedback": "Usaste solo el pujamen (la base mayor) y la altura, como si fuera un rectángulo con una sola base. El trapecio tiene DOS bases distintas y hay que promediarlas antes de multiplicar por la altura."
+            },
+            {
+              "id": "d",
+              "texto": "4 m², la misma medida que la pena.",
+              "esCorrecta": false,
+              "feedback": "4 m² repite el valor de la pena (base menor) dado en el enunciado, no es el resultado de calcular el área."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Una vela de trinquete trapezoidal tiene un pujamen de 10 m, una pena de 6 m y una altura de 7 m. ¿Cuántos metros cuadrados de tela lleva?",
+          "campos": [
+            {
+              "id": "areaTrapecio",
+              "etiqueta": "Área de la vela",
+              "respuestaCorrecta": 56,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaTrapecio",
+              "valorObtenido": 112,
+              "mensaje": "112 sale de multiplicar la suma de las bases (10 + 6 = 16) por la altura (7), sin promediar las bases antes (sin dividir por 2). Recuerda promediar pujamen y pena primero.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "areaTrapecio",
+              "valorObtenido": 21,
+              "mensaje": "21 sale de usar solo la pena (base menor: 6 m) con la fórmula del triángulo, (6 × 7) ÷ 2. Pero esta figura tiene DOS bases distintas: hay que promediar pujamen (10 m) y pena (6 m) antes de multiplicar por la altura."
+            }
+          ],
+          "feedbackPorDefecto": "Promedia las dos bases —(10 + 6) ÷ 2— y multiplica ese promedio por la altura (7)."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El patrón detrás de las cuatro figuras de esta lección es siempre el mismo: comparar la figura con un rectángulo o un paralelogramo conocido.\n\n- El **triángulo** es la MITAD de un rectángulo con su misma base y altura — por eso su área lleva ÷2.\n- El **trapecio** es la MITAD de un paralelogramo: si tomas dos trapecios idénticos y giras uno 180° respecto al otro, encajan exactamente y forman un paralelogramo de base (pujamen + pena) y la misma altura — por eso su área también lleva ÷2, pero promediando primero las dos bases.\n- El **paralelogramo**, en cambio, YA ES el rectángulo de referencia: no es la mitad de nada, así que su área (si la necesitaras) sería directamente base × altura, sin ÷2. En esta lección vas a usar el paralelogramo para su PERÍMETRO, no su área — y ahí aparece un problema distinto: cuando un lado no es vertical, medirlo bien requiere el teorema de Pitágoras.\n- El **círculo** no tiene lados rectos, pero el mismo patrón funciona: si lo cortas en gajos delgados y los acomodas en fila, forman casi un rectángulo de base π × radio (la mitad de la circunferencia) y altura = radio — por eso su área también es, en el fondo, un producto de dos medidas: π × radio × radio.\n\nCon esta idea en mente, las próximas dos partes de la lección —práctica y aplicación— usan el paralelogramo y el círculo directamente, sin repetir todo el proceso de descubrimiento paso a paso."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios, y una figura nueva",
+      "_notasInternas": [
+        "Seleccion triangulo 9x6=27 (verificado 9*6/2=27). a=correcta b=error-7(54) c=ad-hoc suma(15) d=ad-hoc repite base(9).",
+        "VerdaderoFalso trapecio: pujamen 14, pena 10, altura 6; afirmacion 68 m² es FALSA, real 72 (verificado (14+10)/2*6=72).",
+        "Introduce el circulo (candidato 4, mitad perimetro) con radio 15 cm: circunferencia 94.2 cm (verificado 2*3.14*15=94.2). Distractor error-9: 3.14*225=706.5 (formula de area en vez de perimetro). Distractor ad-hoc: 2*15=30 (olvida pi).",
+        "Desviación de L1: incluye un bloque 'texto' introductorio y una 'visualizacion' dentro de practica (L1 no las tenía ahí) porque esta lección introduce el círculo por primera vez sin un descubrimiento/pensar/pistas propio — ver nota de diseño en el nivel superior del archivo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una figura más aparece en las velas de una embarcación: el **círculo**. Los refuerzos redondos cosidos en las esquinas de una vela (los **ollaos**) también tienen un borde que medir: la **circunferencia**. Se calcula como 2 × π × radio, usando π ≈ 3,14."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un paño triangular de repuesto para una vela mide 9 m de base y 6 m de altura. ¿Cuántos metros cuadrados de tela se necesitan para cortarlo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "27 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. (9 × 6) ÷ 2 = 54 ÷ 2 = 27 m²."
+            },
+            {
+              "id": "b",
+              "texto": "54 m²",
+              "esCorrecta": false,
+              "feedback": "54 m² es base × altura sin dividir por 2: es el área de un rectángulo de 9 m por 6 m, no la de un triángulo, que es la mitad de esa superficie.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "15 m²",
+              "esCorrecta": false,
+              "feedback": "15 es la suma de la base y la altura (9 + 6), no el resultado de multiplicarlas. El área multiplica esas medidas y luego divide por 2."
+            },
+            {
+              "id": "d",
+              "texto": "9 m²",
+              "esCorrecta": false,
+              "feedback": "9 m² repite la medida de la base dada en el enunciado, no es el área calculada del paño."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Es cierto que una vela de trinquete trapezoidal con pujamen 14 m, pena 10 m y altura 6 m tiene un área de 68 m²?",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad no es cierto. El área real es ((14 + 10) ÷ 2) × 6 = 12 × 6 = 72 m², no 68 m². Revisa el promedio de las dos bases y la multiplicación final.",
+          "feedbackFalso": "Correcto, no es cierto. El área real es ((14 + 10) ÷ 2) × 6 = (24 ÷ 2) × 6 = 12 × 6 = 72 m², no 68 m²."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Círculo que representa un ollao reforzado en la esquina de una vela, con el radio marcado desde el centro hasta el borde, etiquetado '15 cm', y el borde completo etiquetado con un signo de interrogación: es la medida que hay que encontrar.",
+          "datos": {
+            "figura": "circulo",
+            "radio": 15,
+            "etiquetaRadio": "15 cm",
+            "etiquetaCircunferencia": "?"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ese ollao circular tiene un radio de 15 cm. ¿Cuántos centímetros de cabo de refuerzo hay que coser en todo su borde (su circunferencia)? Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "circunferenciaOllaoCm",
+              "etiqueta": "Circunferencia del ollao",
+              "respuestaCorrecta": 94.2,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "circunferenciaOllaoCm",
+              "valorObtenido": 706.5,
+              "mensaje": "706,5 es el resultado de usar la fórmula del ÁREA (π × radio² = 3,14 × 15²), no la de la circunferencia. La circunferencia —el borde— se calcula como 2 × π × radio.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "circunferenciaOllaoCm",
+              "valorObtenido": 30,
+              "mensaje": "30 es 2 × 15, el diámetro del ollao, sin multiplicar por π. La circunferencia es 2 × π × radio, no solo 2 × radio."
+            }
+          ],
+          "feedbackPorDefecto": "Usa la fórmula 2 × π × radio, con π ≈ 3,14 y radio = 15 cm."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Reforzando la vela: dos bordes más",
+      "_notasInternas": [
+        "Candidato 3 (paralelogramo, perimetro): base 13, altura 24, desplazamiento 7, lado oblicuo 25 (verificado sqrt(24^2+7^2)=25). Reutiliza error-1 (31, suma lineal 24+7) y error-2 (625, 24^2+7^2 sin raiz) de L1 para el sub-calculo del lado. Perimetro correcto 2*(13+25)=76. Distractor error-8: 2*(13+24)=74 (usa altura como si fuera el lado). Distractor ad-hoc: 13+25=38 (olvida multiplicar por 2). Cifras cambiadas en la auditoría mecánica del 2026-08-25: la terna 8-6-10 original hacía que el lado oblicuo (10) colisionara como respuesta correcta contra el distractor 'd' del paso 5 (descubrimiento), que también vale 10 (repite la base del triángulo 10×7 de ese paso). Nueva terna sin colisión con ningún otro valor del archivo (correctas ni distractores).",
+        "Candidato 4, segunda mitad (circulo, area): radio DISTINTO al del paso 'practica' (10 cm en vez de 15 cm) — cambiado en la misma auditoría del 2026-08-25. Con el mismo radio 15 cm de 'practica', el área correcta de este paso (3.14*225=706.5) colisionaba como respuesta correcta contra el distractor error-9 del paso 'practica' (que vale 706.5, la trampa 'usó área en vez de perímetro'), y a la inversa la circunferencia correcta de 'practica' (94.2) colisionaba contra el distractor error-9 de este paso (que con radio 15 también daba 94.2). Es un choque estructural: con el MISMO radio en ambos pasos, la 'fórmula equivocada' de un paso siempre da exactamente la respuesta correcta del otro. Se rompe cambiando el radio de este paso a 10 cm — ya no es 'el mismo ollao', es un segundo ollao más chico en otra esquina de la vela. Area correcta 3.14*100=314. Distractor error-9: 2*3.14*10=62.8 (formula de perimetro en vez de area). Distractor ad-hoc: 3.14*20^2=1256 (usa diametro en vez de radio).",
+        "Bloque abierta final sintetiza AMBOS sub-temas (paralelogramo + circulo), mismo criterio que 'aplicacion' de L1 (numerica primero, abierta despues) pero con dos numericas en vez de una por la naturaleza de 'cierre que combina ambos modos' pedida para el candidato 4."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Para terminar de coser la vela hacen falta dos refuerzos más. Primero, el borde de un paño cortado con forma de paralelogramo (un lado inclinado, no recto). Segundo, un ollao circular más pequeño, cosido en otra esquina de la misma vela: hay que calcular cuánta tela extra lleva el parche que lo refuerza por dentro."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Paralelogramo que representa un paño de vela cortado al sesgo: la base horizontal abajo etiquetada '13 m', una línea punteada vertical marcando la altura etiquetada '24 m', y el lado inclinado etiquetado con un signo de interrogación: es la medida que hay que encontrar primero.",
+          "datos": {
+            "figura": "paralelogramo",
+            "base": 13,
+            "altura": 24,
+            "desplazamiento": 7,
+            "etiquetaBase": "13 m",
+            "etiquetaAltura": "24 m",
+            "etiquetaLado": "?"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un paño de vela con forma de paralelogramo mide 13 m de base, con una altura vertical de 24 m y un desplazamiento horizontal (la inclinación del corte) de 7 m.\n\nPrimero encuentra la longitud real del lado inclinado, usando el teorema de Pitágoras sobre la altura y el desplazamiento. Luego, con esa longitud, calcula el perímetro completo del paño.",
+          "campos": [
+            {
+              "id": "ladoOblicuoM",
+              "etiqueta": "Lado inclinado",
+              "respuestaCorrecta": 25,
+              "unidad": "m"
+            },
+            {
+              "id": "perimetroM",
+              "etiqueta": "Perímetro del paño",
+              "respuestaCorrecta": 76,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoOblicuoM",
+              "valorObtenido": 31,
+              "mensaje": "31 es la suma directa de la altura y el desplazamiento (24 + 7), sin elevarlos al cuadrado. El lado inclinado se encuentra igual que una hipotenusa: cuadrado, cuadrado, suma, raíz cuadrada.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "ladoOblicuoM",
+              "valorObtenido": 625,
+              "mensaje": "625 es 24² + 7² (576 + 49), un paso intermedio correcto. Pero ese número es el CUADRADO del lado inclinado, no el lado mismo: falta sacarle la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "perimetroM",
+              "valorObtenido": 74,
+              "mensaje": "74 sale de usar la altura vertical (24 m) como si fuera la medida del lado inclinado: 2 × (13 + 24). Pero la altura y el lado inclinado NO miden lo mismo en un paralelogramo cortado al sesgo: el lado real, calculado con Pitágoras, mide 25 m.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "campoId": "perimetroM",
+              "valorObtenido": 38,
+              "mensaje": "38 es solo la suma de un lado de cada tipo (13 + 25), sin multiplicar por 2. Un paralelogramo tiene DOS lados de cada medida: dos de 13 m y dos de 25 m."
+            }
+          ],
+          "feedbackPorDefecto": "Primero encuentra el lado inclinado con Pitágoras: √(24² + 7²). Luego, el perímetro es 2 × (base + lado inclinado)."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Además del ollao de la esquina anterior, esta vela lleva un segundo ollao de refuerzo, más pequeño, cosido en otra esquina: mide 10 cm de radio. Falta calcular cuánta tela extra lleva el parche que lo refuerza por dentro."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Un segundo ollao circular, más pequeño que el de la esquina anterior, con el radio marcado desde el centro hasta el borde, etiquetado '10 cm', destacando toda la superficie interior que hay que cubrir con tela de refuerzo.",
+          "datos": {
+            "figura": "circulo",
+            "radio": 10,
+            "etiquetaRadio": "10 cm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuántos centímetros cuadrados de tela extra lleva el parche que refuerza por dentro este segundo ollao, de 10 cm de radio? Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "areaOllao",
+              "etiqueta": "Área del parche",
+              "respuestaCorrecta": 314,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaOllao",
+              "valorObtenido": 62.8,
+              "mensaje": "62,8 es el resultado de usar la fórmula de la CIRCUNFERENCIA (2 × π × radio), no la del área. El área de un círculo se calcula como π × radio², elevando el radio al cuadrado.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "areaOllao",
+              "valorObtenido": 1256,
+              "mensaje": "1256 sale de usar el diámetro (20 cm) en vez del radio dentro de la fórmula del área: 3,14 × 20². La fórmula pide el radio (10 cm), no el diámetro: 3,14 × 10² = 314."
+            }
+          ],
+          "feedbackPorDefecto": "Usa la fórmula π × radio², con π ≈ 3,14 y radio = 10 cm."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escribe, con tus propios números, las dos fórmulas completas que usaste en este paso: la del perímetro del paño de vela (incluyendo el paso de Pitágoras para encontrar el lado inclinado) y la del área del parche circular. ¿Por qué la altura del paralelogramo NO sirve como medida de su lado inclinado?",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Lado inclinado: √(24² + 7²) = √(576 + 49) = √625 = 25 m. Perímetro: 2 × (13 + 25) = 76 m. Área del parche: 3,14 × 10² = 3,14 × 100 = 314 cm². La altura (24 m) no sirve como lado inclinado porque mide la distancia VERTICAL entre las dos bases, mientras que el lado inclinado recorre esa misma distancia vertical MÁS el desplazamiento horizontal (7 m): por eso el lado real (25 m) es más largo que la altura (24 m), y solo Pitágoras conecta ambas medidas."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "¿Por qué no se calculan igual?",
+      "_notasInternas": [
+        "Metacognicion sobre el principio (área ≠ perímetro, y por qué a veces Pitágoras aparece dentro de un problema de perímetro), no sobre un cálculo puntual. Texto de cierre nombra los 3 errores nuevos en lenguaje llano, sin mostrar IDs (ninguno tiene ID todavía de todos modos), mismo criterio que L1."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué el área y el perímetro de una misma figura casi nunca se calculan con los mismos datos? Y en el caso del paralelogramo inclinado, ¿por qué hizo falta el teorema de Pitágoras para calcular su perímetro, si esta lección es sobre área y perímetro, no sobre triángulos rectángulos?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que mencione que el área mide superficie (para eso sirven la base y la altura, que definen 'cuánto espacio cubre'), mientras que el perímetro mide el CONTORNO (para eso hace falta la longitud real de cada lado, no la altura), y que Pitágoras aparece porque el lado inclinado de un paralelogramo es, en el fondo, la hipotenusa de un triángulo rectángulo escondido dentro de la figura, indica que entendió el principio."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al calcular área y perímetro —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Olvidar el ÷2 en el área de un triángulo o un trapecio**: tratarlos como si fueran un paralelogramo completo, cuando en realidad son la mitad (triángulo) o dependen del promedio de dos bases (trapecio).\n2. **Usar la altura como si fuera un lado inclinado**: en una figura con lados que no son verticales, la altura y el lado real casi nunca miden lo mismo — hay que usar Pitágoras para encontrar la longitud real.\n3. **Confundir la circunferencia con el área de un círculo**: 2 × π × radio mide un borde (una longitud); π × radio² mide una superficie. Son fórmulas distintas para preguntas distintas.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis + puente a L3 (figuras-problemas-con-forma: Aplicaciones de perímetro y área en contexto), sin comprometer detalles de L3 que aún no se han diseñado."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- El **área** mide cuánta superficie cubre una figura; el **perímetro** mide cuánto mide su borde. Casi nunca se calculan con los mismos datos.\n- Área de un triángulo: A = (base × altura) ÷ 2 — porque el triángulo es la mitad de un rectángulo con esa base y esa altura.\n- Área de un trapecio: A = ((base mayor + base menor) ÷ 2) × altura — porque es un triángulo con la punta cortada, con dos bases en vez de una.\n- Perímetro de un paralelogramo: si tiene un lado inclinado, esa longitud NO es la altura — hay que encontrarla con el teorema de Pitágoras.\n- Circunferencia de un círculo: 2 × π × radio (su borde). Área de un círculo: π × radio² (su superficie). Con π ≈ 3,14.\n\nDónde se conecta: la próxima lección deja de enseñar fórmulas nuevas y se enfoca en aplicar todo esto —perímetro y área de las cuatro figuras— en problemas de contexto más elaborados, mezclando figuras dentro de un mismo problema.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un paño triangular para una vela tiene una base de 11 metros y una altura de 6 metros. ¿Cuántos metros cuadrados de tela se necesitan para cubrirlo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "33 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. (11 × 6) ÷ 2 = 66 ÷ 2 = 33 m²."
+        },
+        {
+          "clave": "B",
+          "texto": "66 m²",
+          "esCorrecta": false,
+          "feedback": "66 m² es base × altura sin dividir por 2: es el área de un rectángulo de 11 m por 6 m, no la de un triángulo, que es la mitad de esa superficie.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "17 m²",
+          "esCorrecta": false,
+          "feedback": "17 es la suma de la base y la altura (11 + 6), no el resultado de multiplicarlas. El área de un triángulo multiplica esas medidas y luego divide por 2."
+        },
+        {
+          "clave": "D",
+          "texto": "11 m²",
+          "esCorrecta": false,
+          "feedback": "11 m² repite la medida de la base dada en el enunciado, no es el área calculada del paño."
+        }
+      ],
+      "solucion": "Área de un triángulo = (base × altura) ÷ 2. Con base 11 m y altura 6 m: (11 × 6) ÷ 2 = 66 ÷ 2 = 33 m². Comprobación: 33 × 2 = 66 = 11 × 6. ✓"
+    },
+    {
+      "id": "l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un paño de vela con forma de paralelogramo tiene una base de 19 metros. Su altura vertical es de 20 metros y el desplazamiento horizontal de su corte inclinado es de 21 metros. ¿Cuántos metros de cinta de refuerzo se necesitan para todo su contorno (su perímetro)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "96 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. El lado inclinado mide √(20² + 21²) = √(400 + 441) = √841 = 29 m. El perímetro es 2 × (19 + 29) = 2 × 48 = 96 m."
+        },
+        {
+          "clave": "B",
+          "texto": "78 m",
+          "esCorrecta": false,
+          "feedback": "78 m sale de usar la altura vertical (20 m) como si fuera la medida del lado inclinado: 2 × (19 + 20). Pero el lado real, calculado con Pitágoras, mide 29 m, no 20 m.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "120 m",
+          "esCorrecta": false,
+          "feedback": "120 m sale de calcular el lado inclinado como la suma directa de la altura y el desplazamiento (20 + 21 = 41), en vez de aplicar el teorema de Pitágoras. El lado real es √(20² + 21²) = 29 m, no 41 m.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "19 m",
+          "esCorrecta": false,
+          "feedback": "19 m repite la base dada en el enunciado, no es el perímetro completo del paño."
+        }
+      ],
+      "solucion": "Lado inclinado: √(20² + 21²) = √(400 + 441) = √841 = 29 m. Perímetro: 2 × (base + lado) = 2 × (19 + 29) = 2 × 48 = 96 m. Comprobación: 29² = 841 = 20² + 21² = 400 + 441. ✓"
+    },
+    {
+      "id": "l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante calcula el área de un ollao circular de 8 cm de radio multiplicando 2 × 3,14 × 8, y obtiene 50,24 cm². ¿Es correcto este cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: usó la fórmula de la circunferencia (2 × π × radio, que mide el borde) en vez de la del área (π × radio², que mide la superficie). El área real es 3,14 × 8² = 200,96 cm².",
+          "esCorrecta": true,
+          "feedback": "Correcto. 2 × π × radio da la circunferencia (un borde, en cm), no el área (una superficie, en cm²). El área correcta es π × radio² = 3,14 × 64 = 200,96 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: 50,24 cm² es el área del ollao.",
+          "esCorrecta": false,
+          "feedback": "50,24 cm² es la circunferencia del ollao (su borde), no su área. El estudiante usó 2 × π × radio, la fórmula del perímetro, en vez de π × radio², la fórmula del área.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: el área real es 25,12 cm², porque el área se calcula como π × radio, sin elevar el radio al cuadrado.",
+          "esCorrecta": false,
+          "feedback": "25,12 cm² sale de multiplicar π por el radio sin elevarlo al cuadrado (3,14 × 8). La fórmula correcta del área eleva el radio al cuadrado antes de multiplicar por π: 3,14 × 8² = 200,96 cm²."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: el área real es 8 cm², el mismo radio dado en el enunciado.",
+          "esCorrecta": false,
+          "feedback": "8 cm² repite el radio dado en el enunciado, no es el resultado de aplicar ninguna fórmula de área."
+        }
+      ],
+      "solucion": "El área de un círculo es π × radio², no 2 × π × radio (que es la circunferencia, su borde). Con radio 8 cm: π × radio² = 3,14 × 64 = 200,96 cm². El cálculo del estudiante (2 × 3,14 × 8 = 50,24) corresponde a la circunferencia, no al área. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: perímetro y área de triángulos, paralelogramos, trapecios y círculos), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (velas de embarcación: vela mayor, vela de trinquete/cangreja, paño de vela con lado inclinado, ollao de refuerzo circular) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de esta sesión, sobre la frase compuesta y las palabras clave sueltas de cada candidato de dominio (vela mayor, vela de trinquete, vela cangreja, paño con lado inclinado / al bies, cinta de refuerzo, ollao, puño de la vela, trapecio vela, paralelogramo vela, círculo vela, cabo de refuerzo, grátil, pujamen, pena) — sin colisiones de dominio reales; el único hit fue 'bies' (1 coincidencia genérica en archivos no relacionados al tema), por lo que ese término se evitó como palabra distintiva en todo el contenido, reemplazado por 'paño con lado inclinado' o 'corte inclinado'. Auditoría matemática y de originalidad AÚN PENDIENTES (regla de CLAUDE.md: hilos separados del que redactó): este archivo es un borrador para revisión de Benjamín. error-7, error-8 y error-9 fueron propuestos por CC y aprobados por Benjamín en el chat de esta sesión (texto sin cambios); catalogoErrores nace en este archivo, no se duplica desde L1 (ver _notasInternas del nivel superior).",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
