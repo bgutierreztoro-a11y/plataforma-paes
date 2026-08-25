@@ -22,6 +22,19 @@
     "Interactivo: un solo interactivoSlider (paso descubrimiento), exactamente como se especificó: objeto parabola, variante unaVariable, a fijo en -1 y b fijo en 0 (editable:false, igual que en L2), c editable con valorInicial=4 (min/max en los defaults [-5,5]). Con a=-1,b=0 fijos, variar c reproduce los 3 casos del discriminante moviendo un solo control: c=4 -> 2 ceros, c=0 -> 1 cero (raiz doble), c<0 -> 0 ceros reales (verificado con node -e). mostrarVertice:true (ya se gano en L2) y mostrarCeros:true (nuevo en esta leccion).",
     "El estado inicial del slider (a=-1,b=0,c=4, es decir y=-x²+4) coincide deliberadamente con el ejemplo numerico del letrero luminoso de la curiosidad (mismos ceros ±2, mismo vertice (0,4)): el interactivo es literalmente el mismo arco que el estudiante ya calculo a mano, ahora explorable."
   ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "ceroMenor": "El campo pide el valor x del cero menor de una función cuadrática (el punto donde cruza el eje horizontal), una coordenada sin magnitud física declarada en el enunciado — mismo criterio que las coordenadas del vértice en la Lección 2 del módulo.",
+      "ceroMayor": "El campo pide el valor x del cero mayor de la misma función, una coordenada por la misma razón que ceroMenor: no hay unidad que declarar en un valor de x sobre el eje."
+    },
+    "colisionesPermitidas": [
+      {
+        "valor": 4,
+        "motivo": "En el bloque numérico del paso 8 (aplicación), feedbackPorError da retroalimentación específica cuando el estudiante escribe 4 en el campo equilibrioMayor por confundir cuál campo llena (4 es, correctamente, la respuesta de equilibrioMenor en ese mismo bloque). La colisión es inofensiva: components/bloques/BloqueNumerica.tsx:17-19 filtra feedbackPorError por campoId Y valorObtenido a la vez (f.campoId === campoId && f.valorObtenido === valor), así que un 4 ingresado en el campo equilibrioMenor nunca dispara el mensaje escrito para equilibrioMayor. Verificado leyendo ese archivo, no asumido."
+      }
+    ],
+    "sliderJustificado": "El concepto central de este paso es que una parábola puede tener dos, uno o ningún cero real según el discriminante; el slider deja mover c y ver en vivo cómo los puntos marcados sobre el eje X pasan de dos a uno a ninguno, algo que ningún ejemplo estático puede mostrar igual de bien."
+  },
   "catalogoErrores": [
     {
       "id": "error-1",
@@ -494,7 +507,7 @@
     {
       "id": "l3-item-2",
       "habilidad": "modelar",
-      "dificultad": "alta",
+      "dificultad": "media",
       "enunciado": "La ganancia diaria (en miles de pesos) de una promoción de llaveros, según los días d transcurridos desde su lanzamiento, sigue G(d) = −d² + 6d + 7. ¿En qué día la ganancia vuelve a ser exactamente cero?",
       "alternativas": [
         {

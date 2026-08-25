@@ -21,6 +21,18 @@
     "Sin interactivoSlider: esta lección es puramente algebraica (descriptor DEMRE 1, 'Resolución y problemas de ecuaciones de segundo grado'). El gráfico de la parábola se introduce recién en L2.",
     "Todos los valores numéricos (raíces, distractores) verificados con node -e antes de escribir el JSON; salida cruda pegada en el reporte de la sesión que produjo este archivo, no repetida acá para no duplicar texto que ya vive fuera del contenido del estudiante."
   ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "numeroMenor": "El campo pide el menor de dos números pares positivos consecutivos cuyo producto se dio, un número puro: el enunciado no mide ninguna magnitud física, solo pide identificar el entero correspondiente.",
+      "numeroMayor": "El campo pide el mayor de los dos números pares positivos consecutivos, un número puro por la misma razón que numeroMenor: no hay magnitud que declarar."
+    },
+    "colisionesPermitidas": [
+      {
+        "valor": 18,
+        "motivo": "En el bloque numérico del paso 3 (pensar), feedbackPorError da retroalimentación específica cuando el estudiante escribe 18 en el campo numeroMenor por confundir cuál campo llena (18 es, correctamente, la respuesta de numeroMayor en ese mismo bloque). La colisión es inofensiva: components/bloques/BloqueNumerica.tsx:17-19 filtra feedbackPorError por campoId Y valorObtenido a la vez (f.campoId === campoId && f.valorObtenido === valor), así que un 18 ingresado en el campo numeroMayor nunca dispara el mensaje escrito para numeroMenor. Verificado leyendo ese archivo, no asumido."
+      }
+    ]
+  },
   "catalogoErrores": [
     {
       "id": "error-1",

@@ -22,6 +22,13 @@
     "Interactivo: un solo interactivoSlider (paso descubrimiento), exactamente como se especificó: objeto parabola, variante unaVariable, configA.valorInicial=-1, min/max en los defaults [-2,2] sin estrechar, b y c fijos en 0 (editable:false) para aislar el efecto del signo de a sin que se mueva la posición del vértice (con b=0,c=0 el vértice es (0,0) para cualquier a≠0 — verificado con node -e). mostrarVertice:true, mostrarCeros ausente (no se regalan los ceros, eso es L3). exploracionMinima:4 fuerza moverse a ambos signos.",
     "Deliberadamente NO se agregó un segundo interactivoSlider para c: el efecto de c se cubre con un ejemplo trabajado por texto (comparación y=-x² vs y=-x²+4) y un bloque seleccion, no con un segundo componente interactivo — mantiene el archivo dentro de lo pedido explícitamente para esta fase."
   ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "xVertice": "El campo pide la coordenada x del vértice de una parábola abstracta (y = 2x² − 8x + 5, sin contexto de dominio), un número puro sin magnitud física asociada.",
+      "yVertice": "El campo pide la coordenada y del mismo vértice abstracto, un número puro por la misma razón que xVertice: no hay magnitud que declarar en una ecuación sin dominio real."
+    },
+    "sliderJustificado": "El concepto central de este paso es que el vértice es máximo o mínimo según el signo de a; el slider deja mover a por valores positivos y negativos y ver en vivo cómo cambia entre techo y piso, algo que ningún ejemplo estático puede mostrar igual de bien."
+  },
   "contextosNumericos": [
     "curiosidad: huerto escolar, rendimiento total(d) = -4d² + 24d; tabla d=1,2,4,5 (20,32,32,20), predicción d=3 (36)",
     "problema: mismo huerto, otro cultivo, total(d) = -5d² + 30d; d=1 y d=5 (ambos 25), predicción del máximo en d=3 (45)",
@@ -115,19 +122,19 @@
           "enunciado": "Un tercer cultivo del huerto tiene rendimiento total(d) = −3d² + 18d.\n\nCalcula el rendimiento total para **d = 2**, **d = 3** y **d = 4**.",
           "campos": [
             {
-              "id": "rendimientoD2",
+              "id": "rendimientoDensidadDos",
               "etiqueta": "Rendimiento en d = 2",
               "respuestaCorrecta": 24,
               "unidad": "kg/m²"
             },
             {
-              "id": "rendimientoD3",
+              "id": "rendimientoDensidadTres",
               "etiqueta": "Rendimiento en d = 3",
               "respuestaCorrecta": 27,
               "unidad": "kg/m²"
             },
             {
-              "id": "rendimientoD4",
+              "id": "rendimientoDensidadCuatro",
               "etiqueta": "Rendimiento en d = 4",
               "respuestaCorrecta": 24,
               "unidad": "kg/m²"
@@ -135,7 +142,7 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "rendimientoD2",
+              "campoId": "rendimientoDensidadDos",
               "valorObtenido": 48,
               "mensaje": "Te comiste el signo negativo de −3d²: calculaste +3×2² + 18×2 = 12 + 36 = 48 en vez de −3×2² + 18×2 = −12 + 36 = 24. El primer término resta, no suma."
             }
