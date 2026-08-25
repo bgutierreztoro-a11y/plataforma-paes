@@ -97,7 +97,7 @@ const localizacion = {
  */
 const apariencia: ClerkAppearanceTheme = {
   variables: {
-    colorPrimary: "#4640d6", // --color-accent (indigo-600)
+    colorPrimary: "#4a4fe0", // --color-accent (indigo-600)
     colorPrimaryForeground: "#ffffff", // texto sobre accent (Boton: text-white)
     colorForeground: "#16142b", // --color-ink (ink-900)
     colorMutedForeground: "#45435c", // --color-ink-suave (ink-600)
@@ -108,7 +108,7 @@ const apariencia: ClerkAppearanceTheme = {
     colorNeutral: "#16142b", // --color-ink: base de bordes/sombras/estados neutros
     colorDanger: "#b3261e", // --color-error
     colorSuccess: "#0e7c57", // --color-success
-    colorRing: "#4640d6", // --color-accent: anillo de foco, igual que Boton (outline-accent)
+    colorRing: "#4a4fe0", // --color-accent: anillo de foco, igual que Boton (outline-accent)
     fontFamily: "var(--font-inter)", // --font-sans
     fontFamilyButtons: "var(--font-inter)", // --font-sans
     fontSize: "1rem", // text-base, la escala de texto de la plataforma (Boton, labels)
