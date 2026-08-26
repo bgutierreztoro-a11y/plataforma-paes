@@ -120,6 +120,7 @@ export const IDS_CIERRE = [
   "cierre-sistemas-2x2",
   "cierre-potencias-y-raices",
   "cierre-funcion-cuadratica",
+  "cierre-figuras-geometricas",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -338,6 +339,7 @@ export const EJES = [
           "figuras-borde-y-superficie",
           "figuras-problemas-con-forma",
         ],
+        cierreId: "cierre-figuras-geometricas",
       },
       {
         id: "cuerpos-geometricos",

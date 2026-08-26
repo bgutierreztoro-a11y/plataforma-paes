@@ -1,0 +1,357 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-figuras-geometricas",
+  "titulo": "Cierre del módulo: Figuras geométricas",
+  "_notasInternas": [
+    "Cierre del módulo 'Figuras geométricas', construido después de que las 3 lecciones (figuras-triangulo-no-se-rompe, figuras-borde-y-superficie, figuras-problemas-con-forma) pasaran npm run validar.",
+    "Cobertura por lección: L1 (figuras-triangulo-no-se-rompe, Pitágoras) = items 1,2,3. L2 (figuras-borde-y-superficie, perímetro y área) = items 4,5. L3 (figuras-problemas-con-forma, techos e invernaderos) = items 6,7,8. Cobertura por habilidad: resolver = items 1,4. modelar = items 2,6. representar = items 5,7. argumentar = items 3,8 (2 de cada una de las 4).",
+    "Contextos reutilizados del módulo, todos ya verificados como limpios en las 3 lecciones y con cifras NUEVAS respecto de ellas (verificado contra los contextosNumericos de cada archivo de lección antes de fijar los números): cancha/terreno rectangular y su diagonal (items 1,2,3 — 20×48→52, diagonal 89 con lado 39→80, diagonal 53 con lado 28→45; las lecciones usaron 3-4-5, 6-8-10, 5-12-13, 8-15-17, 9-40-41, 7-24-25, 12-35-37, 33-56-65, 16-30-34, 18-24-30, 11-60-61, 9-12-15), ollao circular de una vela (item 4, radio 12 cm — las lecciones usaron radios 15, 10, 8 y 25), paño de vela trapezoidal (item 5, pujamen 16 / pena 9 / altura 12 — las lecciones usaron 8/4/5, 10/6/7 y 14/10/6), techo triangular de bodega (item 6, ancho 30 / cumbrera 39 / altura 36 — las lecciones usaron 6/5/4, 10/13/12, 18/41/40, 40/29/21, 14/25/24), techo trapezoidal de galpón (item 7, bases 38 y 14 / lado 20 / altura 16 — las lecciones usaron 18-8/13/12, 26-12/25/24, 27-11/17/15), invernadero compuesto muro+techo (item 8, muro 64×7 / cumbrera 40 / altura 24 — las lecciones usaron muro 24×6 con cumbrera 37, y muro 42×4 con cumbrera 75). No se necesitó ningún dominio nuevo, así que no hubo que correr scripts/consultar-fuentes.mjs.",
+    "El item 8 es el integrador: obliga a usar los tres sub-temas en una sola respuesta —Pitágoras para sacar la altura del techo desde la cumbrera (L1), la fórmula del área con el factor 1/2 (L2) y el criterio de borde exterior de una figura compuesta (L3)— juzgando DOS resultados del estudiante a la vez (el marco y la lona). Deliberadamente no repite la plantilla del l3-item-3 de figuras-problemas-con-forma, que juzgaba solo el marco. Mismo rol que el item 8 de cierre-sistemas-2x2.json y cierre-funcion-cuadratica.json.",
+    "catalogoErrores: subconjunto EXACTO de los errores del módulo referenciados por los distractores de este cierre, copiado carácter a carácter desde el archivo que define cada uno (error-1, error-2, error-3, error-5 y error-6 desde figuras-triangulo-no-se-rompe.json; error-7, error-8 y error-9 desde figuras-borde-y-superficie.json; error-10 y error-11 desde figuras-problemas-con-forma.json). No se creó ningún id nuevo.",
+    "error-4 (tratar el cateto conocido como si fuera la hipotenusa) NO se usa, a propósito. Para que produzca un distractor con cifra entera hacen falta dos catetos a<b tales que a²+b² y b²−a² sean cuadrados perfectos a la vez —el problema de las formas concordantes—, cuyas soluciones mínimas son de cuatro cifras: una búsqueda exhaustiva con node sobre todas las ternas con a≤60 y b≤200 no devolvió ninguna. En cualquier otra configuración el cálculo pide la raíz de un número negativo, o sea un distractor imposible que ningún estudiante marcaría. Se deja fuera en vez de forzar la reutilización, mismo criterio que el error-4 sin usar de cierre-funcion-cuadratica.json.",
+    "Toda la aritmética de los 8 items y de sus 24 distractores fue recalculada desde cero con node -e a partir de los números propios de cada item, nunca por ingeniería inversa desde una alternativa deseada."
+  ],
+  "items": [
+    {
+      "id": "cierre-figuras-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una cancha rectangular mide 20 metros por 48 metros. ¿Cuántos metros mide su diagonal?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "52 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. La diagonal es la hipotenusa del triángulo rectángulo que forman los dos lados: √(20² + 48²) = √(400 + 2.304) = √2.704 = 52 m."
+        },
+        {
+          "clave": "B",
+          "texto": "68 m",
+          "esCorrecta": false,
+          "feedback": "68 es 20 + 48, la suma directa de los dos lados. Pitágoras no suma los lados: eleva cada uno al cuadrado, los suma, y recién ahí saca la raíz. Además, ir por el borde (68 m) siempre es más largo que cruzar en diagonal.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "2.704 m",
+          "esCorrecta": false,
+          "feedback": "2.704 es 20² + 48², que es correcto hasta ahí, pero es el cuadrado de la diagonal, no la diagonal. Falta el último paso: sacar la raíz cuadrada, √2.704 = 52 m.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "4.624 m",
+          "esCorrecta": false,
+          "feedback": "4.624 es (20 + 48)², o sea 68². Sumaste los catetos antes de elevar al cuadrado, pero (a+b)² no es lo mismo que a²+b²: hay que elevar cada lado por separado y sumar después.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Los dos lados de la cancha son los catetos de un triángulo rectángulo y la diagonal es su hipotenusa. Entonces d² = 20² + 48² = 400 + 2.304 = 2.704, y d = √2.704 = 52 m. Comprobación: 52² = 2.704 = 400 + 2.304. ✓"
+    },
+    {
+      "id": "cierre-figuras-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un terreno rectangular tiene una diagonal de 89 metros. Uno de sus lados mide 39 metros. ¿Cuánto mide el otro lado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "80 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. Acá el lado desconocido es un cateto, así que se resta: √(89² − 39²) = √(7.921 − 1.521) = √6.400 = 80 m."
+        },
+        {
+          "clave": "B",
+          "texto": "50 m",
+          "esCorrecta": false,
+          "feedback": "50 es 89 − 39, la resta directa entre la diagonal y el lado conocido. Pitágoras trabaja con los cuadrados, no con los lados: hay que restar 89² − 39² y después sacar la raíz.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "6.400 m",
+          "esCorrecta": false,
+          "feedback": "6.400 es 89² − 39², y esa resta está bien planteada, pero es el cuadrado del lado buscado, no el lado. Falta sacar la raíz cuadrada: √6.400 = 80 m.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "10 m",
+          "esCorrecta": false,
+          "feedback": "10 sale de calcular √(2×89 − 2×39) = √100. Elevar al cuadrado no es multiplicar por 2: 89² es 89×89 = 7.921, no 178. Ese atajo subestima muchísimo el resultado.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "La diagonal de 89 m es la hipotenusa y los dos lados son los catetos. Si x es el lado que falta, 39² + x² = 89², así que x² = 89² − 39² = 7.921 − 1.521 = 6.400 y x = √6.400 = 80 m. Comprobación: 39² + 80² = 1.521 + 6.400 = 7.921 = 89². ✓"
+    },
+    {
+      "id": "cierre-figuras-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un patio rectangular tiene una diagonal de 53 metros y uno de sus lados mide 28 metros. Para calcular el otro lado, un estudiante propone hacer √(53² + 28²), \"porque el teorema de Pitágoras siempre suma los cuadrados de los dos datos que uno conoce\". ¿Es correcto su método?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: se suman los cuadrados solo cuando el lado buscado es la hipotenusa. Acá la hipotenusa (53 m) ya se conoce y falta un cateto, así que hay que restar: √(53² − 28²) = √(2.809 − 784) = √2.025 = 45 m.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La suma de cuadrados construye la hipotenusa; la resta recupera un cateto. Acá la diagonal ya está dada, así que el lado que falta mide 45 m."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: el teorema de Pitágoras suma los cuadrados de los dos datos conocidos, sea cual sea el lado que falta.",
+          "esCorrecta": false,
+          "feedback": "Ese es justamente el error. Sumar los cuadrados da un resultado MAYOR que los dos datos, y el lado que falta tiene que ser menor que la diagonal de 53 m, no mayor. La suma solo sirve cuando lo que falta es la hipotenusa.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: el otro lado mide 25 metros, porque basta restar 53 − 28.",
+          "esCorrecta": false,
+          "feedback": "La conclusión de que hay que restar es correcta, pero se resta mal: Pitágoras resta los CUADRADOS, no los lados. Con 53 − 28 = 25 el triángulo no cierra, porque 28² + 25² = 1.409, muy lejos de 53² = 2.809.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: el otro lado mide 2.025 metros, que es 53² − 28².",
+          "esCorrecta": false,
+          "feedback": "2.025 es el cuadrado del lado buscado, no el lado. La resta de cuadrados está bien hecha, pero falta el último paso: √2.025 = 45 m. Un patio con un lado de 2.025 m tampoco calza con una diagonal de 53 m.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "En el triángulo rectángulo que forma la diagonal, la hipotenusa es la diagonal (53 m) y los catetos son los dos lados del patio. Como el lado desconocido es un cateto, se despeja restando: x² = 53² − 28² = 2.809 − 784 = 2.025, así que x = √2.025 = 45 m. El método del estudiante habría dado √(2.809 + 784) = √3.593 ≈ 59,9 m, un valor mayor que la propia diagonal, que es imposible: en un triángulo rectángulo la hipotenusa siempre es el lado más largo. Comprobación: 28² + 45² = 784 + 2.025 = 2.809 = 53². ✓"
+    },
+    {
+      "id": "cierre-figuras-4",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un ollao circular de una vela tiene 12 centímetros de radio. ¿Cuál es su área? (Usa π = 3,14.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "452,16 cm²",
+          "esCorrecta": true,
+          "feedback": "Correcto. El área de un círculo es π × radio² = 3,14 × 12² = 3,14 × 144 = 452,16 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "75,36 cm²",
+          "esCorrecta": false,
+          "feedback": "75,36 es 2 × 3,14 × 12, la circunferencia del ollao: mide su borde, una longitud en centímetros. La pregunta es por el área, la superficie que ocupa, y esa es π × radio².",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "37,68 cm²",
+          "esCorrecta": false,
+          "feedback": "37,68 es 3,14 × 12, o sea π por el radio sin elevarlo al cuadrado. El radio va al cuadrado en la fórmula del área: π × 12² = π × 144, no π × 12."
+        },
+        {
+          "clave": "D",
+          "texto": "144 cm²",
+          "esCorrecta": false,
+          "feedback": "144 es 12², el cuadrado del radio, pero falta multiplicarlo por π. Ese 144 sería el área de un cuadrado de 12 cm de lado; el círculo inscrito en él ocupa algo más de tres cuartos de esa superficie."
+        }
+      ],
+      "solucion": "El área de un círculo es A = π × radio². Con radio = 12 cm y π = 3,14: A = 3,14 × 12² = 3,14 × 144 = 452,16 cm². Como referencia, la circunferencia (el borde) de ese mismo ollao sería 2 × 3,14 × 12 = 75,36 cm, un número muy distinto y en otras unidades."
+    },
+    {
+      "id": "cierre-figuras-5",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un paño de vela con forma de trapecio tiene un pujamen (la base mayor) de 16 metros, una pena (la base menor) de 9 metros y una altura de 12 metros. ¿Cuál de estas expresiones permite calcular los metros cuadrados de tela del paño?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(16 + 9) ÷ 2 × 12",
+          "esCorrecta": true,
+          "feedback": "Correcto. El área de un trapecio es el promedio de sus dos bases por la altura: (16 + 9) ÷ 2 × 12 = 12,5 × 12 = 150 m²."
+        },
+        {
+          "clave": "B",
+          "texto": "(16 + 9) × 12",
+          "esCorrecta": false,
+          "feedback": "Esa expresión da 300 m² y olvida dividir por 2. Sin ese factor estás calculando el área de un paralelogramo de base 25 m, que es exactamente el doble del trapecio: la tela te sobraría al doble.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "16 × 9 ÷ 2",
+          "esCorrecta": false,
+          "feedback": "Esa expresión multiplica las dos bases entre sí (72 m²) y deja la altura fuera del cálculo. Las dos bases no se multiplican: se promedian, y ese promedio se multiplica por la altura de 12 m."
+        },
+        {
+          "clave": "D",
+          "texto": "(16 − 9) × 12 ÷ 2",
+          "esCorrecta": false,
+          "feedback": "Esa expresión resta las bases en vez de sumarlas y da 42 m². La resta 16 − 9 mide cuánto sobresale el pujamen respecto de la pena, no el ancho promedio del paño, que es lo que hay que multiplicar por la altura."
+        }
+      ],
+      "solucion": "El área de un trapecio es A = (baseMayor + baseMenor) ÷ 2 × altura. Con pujamen 16 m, pena 9 m y altura 12 m: A = (16 + 9) ÷ 2 × 12 = 25 ÷ 2 × 12 = 12,5 × 12 = 150 m². Otra forma de verlo: el trapecio equivale a un rectángulo de 12,5 m de ancho (el promedio de las bases) por 12 m de alto."
+    },
+    {
+      "id": "cierre-figuras-6",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "El techo triangular de una bodega mide 30 metros de ancho, y cada cumbrera mide 39 metros. ¿Cuántos metros cuadrados de lona cubren el techo completo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "540 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. La altura sale de Pitágoras con la mitad del ancho: √(39² − 15²) = √(1.521 − 225) = √1.296 = 36 m. Luego el área es 30 × 36 ÷ 2 = 540 m²."
+        },
+        {
+          "clave": "B",
+          "texto": "585 m²",
+          "esCorrecta": false,
+          "feedback": "585 sale de usar 30 × 39 ÷ 2, o sea la cumbrera como si fuera la altura. La cumbrera es el lado inclinado del techo y siempre mide más que la altura vertical: la altura real es 36 m, no 39 m.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "C",
+          "texto": "1.080 m²",
+          "esCorrecta": false,
+          "feedback": "1.080 es 30 × 36, con la altura correcta pero sin dividir por 2. Ese es el área de un rectángulo de 30 m por 36 m; el techo triangular es exactamente la mitad de él.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "360 m²",
+          "esCorrecta": false,
+          "feedback": "360 sale de tomar la altura como 39 − 15 = 24 m y calcular 30 × 24 ÷ 2. La altura no se obtiene restando los lados: hay que restar sus cuadrados y sacar la raíz, √(39² − 15²) = 36 m.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "La altura del techo divide el triángulo en dos triángulos rectángulos cuya base es la mitad del ancho: 30 ÷ 2 = 15 m. Cada cumbrera de 39 m es la hipotenusa, así que la altura es h = √(39² − 15²) = √(1.521 − 225) = √1.296 = 36 m. El área del techo completo es base × altura ÷ 2 = 30 × 36 ÷ 2 = 540 m². Comprobación: 15² + 36² = 225 + 1.296 = 1.521 = 39². ✓"
+    },
+    {
+      "id": "cierre-figuras-7",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El techo trapezoidal de un galpón tiene una base mayor (el ancho del muro) de 38 metros, una base menor (la parte plana de arriba) de 14 metros, y cada lado inclinado mide 20 metros. ¿Cuál de estas expresiones da los metros de cinta de sellado que necesita todo el contorno del techo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "38 + 14 + 2 × 20",
+          "esCorrecta": true,
+          "feedback": "Correcto. El contorno del trapecio son sus dos bases más los dos lados inclinados: 38 + 14 + 2 × 20 = 92 m."
+        },
+        {
+          "clave": "B",
+          "texto": "38 + 14 + 2 × 16",
+          "esCorrecta": false,
+          "feedback": "Esa expresión usa 16 m, que es la altura vertical del techo, como si fuera la medida del lado inclinado. La cinta se pega sobre el lado inclinado, que mide 20 m: la altura no es un borde del trapecio.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "38 + 14 + 2 × (12 + 16)",
+          "esCorrecta": false,
+          "feedback": "Esa expresión calcula el lado inclinado como 12 + 16 = 28 m, sumando directamente el desplazamiento horizontal y la altura. Pitágoras no suma los catetos: √(12² + 16²) = √400 = 20 m, no 28 m.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "38 + 14",
+          "esCorrecta": false,
+          "feedback": "Esa expresión suma solo las dos bases y da 52 m, dejando fuera los dos lados inclinados. El contorno de un trapecio tiene cuatro lados, y los dos inclinados aportan 2 × 20 = 40 m más."
+        }
+      ],
+      "solucion": "El perímetro de un trapecio es la suma de sus cuatro lados: las dos bases más los dos lados inclinados. Acá los lados inclinados ya están dados (20 m cada uno), así que el contorno es 38 + 14 + 2 × 20 = 92 m. De paso, esos 20 m son coherentes con la figura: cada lado inclinado se apoya sobre un desplazamiento horizontal de (38 − 14) ÷ 2 = 12 m y una altura de 16 m, y √(12² + 16²) = √(144 + 256) = √400 = 20 m. ✓"
+    },
+    {
+      "id": "cierre-figuras-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un invernadero tiene un muro rectangular de 64 metros de ancho por 7 metros de alto, y encima un techo triangular con una cumbrera de 40 metros a cada lado. Un estudiante entrega dos resultados: que el marco metálico del contorno mide 286 metros (sumando el perímetro del muro, 2 × (64 + 7) = 142 m, más el perímetro del techo, 64 + 2 × 40 = 144 m) y que la lona del techo son 1.280 m² (calculando 64 × 40 ÷ 2). ¿Cuál de estos dos resultados está bien?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Ninguno de los dos: el marco real mide 158 m y la lona real son 768 m².",
+          "esCorrecta": true,
+          "feedback": "Correcto. El marco cuenta dos veces el ancho de 64 m, que es un borde interior, y la lona usa la cumbrera de 40 m como si fuera la altura, cuando la altura real es √(40² − 32²) = 24 m."
+        },
+        {
+          "clave": "B",
+          "texto": "Solo el marco (286 m) está bien; la lona está mal calculada.",
+          "esCorrecta": false,
+          "feedback": "El marco también está mal. Al sumar el contorno del muro y el del techo por separado, el ancho de 64 m se cuenta dos veces —una como techo del muro, otra como base del techo—, pero ese borde es interior y no lleva marco. El contorno real es 64 + 2 × 7 + 2 × 40 = 158 m.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "C",
+          "texto": "Solo la lona (1.280 m²) está bien; el marco está mal calculado.",
+          "esCorrecta": false,
+          "feedback": "La lona también está mal. Usar 64 × 40 ÷ 2 toma la cumbrera como si fuera la altura del techo, pero la cumbrera es el lado inclinado y siempre mide más: la altura real es √(40² − 32²) = √576 = 24 m, y la lona son 64 × 24 ÷ 2 = 768 m².",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "Los dos están bien.",
+          "esCorrecta": false,
+          "feedback": "Los dos tienen un error distinto: el marco suma dos veces el borde interior de 64 m (real: 158 m) y la lona confunde la cumbrera de 40 m con la altura del techo, que en realidad mide 24 m (real: 768 m²)."
+        }
+      ],
+      "solucion": "Marco: el contorno visible del invernadero es la base del muro (64 m), sus dos costados (2 × 7 = 14 m) y las dos cumbreras (2 × 40 = 80 m), es decir 64 + 14 + 80 = 158 m. La línea donde el techo se apoya sobre el muro mide 64 m pero es un borde interior: el cálculo del estudiante la cuenta dos veces, y por eso su 286 m se pasa exactamente en 2 × 64 = 128 m. Lona: la altura del techo sale de Pitágoras con la mitad del ancho, 64 ÷ 2 = 32 m, y la cumbrera como hipotenusa: h = √(40² − 32²) = √(1.600 − 1.024) = √576 = 24 m. El área del techo es 64 × 24 ÷ 2 = 768 m². Comprobación: 32² + 24² = 1.024 + 576 = 1.600 = 40². ✓"
+    }
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "Al buscar un cateto desconocido conociendo la hipotenusa y el otro cateto, sumar los cuadrados de ambos valores dados (hipotenusa² + cateto²) en vez de restarlos, aplicando el mismo patrón de 'sumar cuadrados' del caso de buscar la hipotenusa, sin notar que aquí el valor desconocido ya no es la hipotenusa."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "Error aritmético al elevar un número al cuadrado: calcular a² como 2 × a (el doble del número) en vez de a × a, subestimando sistemáticamente el resultado."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Suma los catetos antes de elevar al cuadrado: calcula (a+b)² en vez de a²+b², confundiendo la propiedad distributiva del cuadrado de una suma con el teorema de Pitágoras."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Olvida el factor 1/2 (o la división por 2) en una fórmula de área que lo incluye: calcula el área de un triángulo como base×altura, en vez de base×altura÷2, o el área de un trapecio como (baseMayor+baseMenor)×altura, en vez de dividir esa suma por 2 antes de multiplicar por la altura — tratando la figura como si fuera un paralelogramo completo en vez de la mitad de uno."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Calcula el perímetro de una figura con al menos un lado inclinado (como un paralelogramo cortado con un desplazamiento horizontal) usando la altura vertical como si fuera la medida de ese lado inclinado, en vez de calcular su longitud real aplicando el teorema de Pitágoras sobre la altura y el desplazamiento."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Usa el lado inclinado de la figura (por ejemplo, la cumbrera de un techo o un lado dado como hipotenusa) directamente como si fuera la altura al aplicar una fórmula de área o perímetro, en vez de calcular primero la altura real mediante el teorema de Pitágoras. Es el error inverso al de error-8: ahí se usaba la altura como si fuera el lado inclinado; aquí se usa el lado inclinado como si fuera la altura."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Al calcular el perímetro (o el material de borde) de una figura compuesta por dos piezas —como un muro rectangular con un techo triangular encima—, suma el contorno de cada pieza por separado incluyendo el borde donde ambas piezas se unen, en vez de contar solo el borde exterior visible de la figura completa (esa unión no es un borde real de la figura compuesta)."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-figuras-1 (cancha rectangular, resolver): 20 m × 48 m → diagonal 52 m",
+    "cierre-figuras-2 (terreno rectangular, modelar): diagonal 89 m, lado 39 m → otro lado 80 m",
+    "cierre-figuras-3 (patio rectangular, argumentar): diagonal 53 m, lado 28 m → otro lado 45 m (método erróneo del estudiante: √(53²+28²) ≈ 59,9 m, mayor que la propia diagonal)",
+    "cierre-figuras-4 (ollao circular de una vela, resolver): radio 12 cm, π = 3,14 → área 452,16 cm² (circunferencia de referencia 75,36 cm)",
+    "cierre-figuras-5 (paño de vela trapezoidal, representar): pujamen 16 m, pena 9 m, altura 12 m → área 150 m²",
+    "cierre-figuras-6 (techo triangular de bodega, modelar): ancho 30 m (semiancho 15 m), cumbrera 39 m → altura 36 m, área 540 m²",
+    "cierre-figuras-7 (techo trapezoidal de galpón, representar): base mayor 38 m, base menor 14 m, lado inclinado 20 m (desplazamiento 12 m, altura 16 m) → perímetro 92 m",
+    "cierre-figuras-8 (invernadero compuesto — integrador L1+L2+L3, argumentar): muro 64 m × 7 m, techo con semiancho 32 m y cumbrera 40 m → altura 24 m, marco 158 m, lona 768 m²"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, módulo 'Figuras geométricas' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md y docs/temario-demre-m1-2027.md)."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, reutilizando los contextos ya verificados como limpios de las tres lecciones del módulo (cancha/patio/terreno rectangular y su diagonal, ollao circular y paño de vela trapezoidal, techo triangular de bodega, techo trapezoidal de galpón e invernadero compuesto de muro y techo) con cifras nuevas respecto de todas ellas. No se introdujo ningún dominio nuevo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Ronda 1 (auditoría matemática) y Ronda 2 (auditoría de originalidad) completadas en hilos aislados el 2026-08-26, sin hallazgos bloqueantes: Ronda 1 recalculó los 8 ítems y sus 24 distractores desde los números propios de cada uno; Ronda 2 corrió el checklist MOS §7.3 completo, con veredicto LIMPIO.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
