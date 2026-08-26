@@ -1,0 +1,848 @@
+{
+  "tipo": "leccion",
+  "id": "figuras-problemas-con-forma",
+  "titulo": "Aplicaciones de perímetro y área en contexto",
+  "objetivo": "Resolver problemas de perímetro y área de triángulos, trapecios, paralelogramos y círculos en contexto (techos e invernaderos), reconociendo cuándo falta una medida lineal que debe obtenerse primero con el teorema de Pitágoras antes de aplicar la fórmula correspondiente, incluyendo figuras compuestas por dos piezas.",
+  "tiempoEstimadoMin": 35,
+  "prerrequisitos": [
+    "Teorema de Pitágoras para encontrar un lado desconocido de un triángulo rectángulo (Lección 1 de este módulo)",
+    "Área y perímetro de triángulos, trapecios, paralelogramos y círculos (Lección 2 de este módulo)",
+    "Multiplicación y división de números decimales"
+  ],
+  "conceptos": [
+    "reconocer cuándo una medida lineal necesaria para un cálculo de área o perímetro no está dada directamente",
+    "encadenar el teorema de Pitágoras con la fórmula de área o perímetro que corresponda",
+    "el lado inclinado de una figura y su altura real son medidas distintas: una nunca reemplaza a la otra",
+    "perímetro de una figura compuesta por dos piezas: solo cuenta el borde exterior, no la unión interna entre las piezas"
+  ],
+  "_notasInternas": [
+    "Lección 3 (última) del módulo figuras-geometricas (eje Geometría). Descriptor DEMRE: 'Aplicaciones de perímetro y área en contexto'. Es la lección de síntesis del módulo: no introduce una figura nueva, integra Pitágoras (L1) con área/perímetro de las 4 figuras (L2) en problemas de dos pasos.",
+    "Dominio 'techo/invernadero' declarado por Benjamín Gutiérrez como YA CONFIRMADO sin colisión al inicio de esta tarea ('dominio ya confirmado sin colisión, no lo vuelvas a verificar'). A diferencia de L1 y L2, en este hilo NO se corrió scripts/consultar-fuentes.mjs ni se pegó salida cruda de esa verificación — quedó fuera de esta sesión, por instrucción explícita. Ver proveniencia.declaracionOriginalidad para el detalle honesto de este punto.",
+    "Ilustraciones: decisión explícita de Benjamín (AskUserQuestion de esta sesión) de usar SOLO figuras separadas con los componentes ya existentes (trianguloPitagoras, triangulo, paralelogramo con desplazamiento:0 como rectángulo, trapecio, circulo), sin fusionar geometrías nuevas. Cero cambios en lib/figurasGeometricas.ts, components/ilustraciones/IlustracionFiguraGeometrica.tsx ni components/bloques/BloqueVisualizacion.tsx. El muro rectangular del invernadero se dibuja con 'paralelogramo' y desplazamiento:0 explícito (colapsa a rectángulo real, ya soportado por verticesParalelogramo).",
+    "catalogoErrores embebido: error-1 y error-2 copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1), reutilizados en los sub-cálculos de Pitágoras dentro de un problema de área/perímetro. error-7, error-8 y error-9 copiados carácter a carácter desde figuras-borde-y-superficie.json (L2); error-8 se reutiliza aquí también en un trapecio, no solo en un paralelogramo (su descripción ya lo permite: 'como un paralelogramo cortado...' es un ejemplo, no una restricción de figura). error-3, error-4, error-5 y error-6 de L1 NO se reutilizan: ningún distractor de este archivo produce su mecanismo exacto con los datos reales (regla 2b de la skill) — no se fuerza su uso.",
+    "error-10 y error-11 son NUEVOS, nacen en este archivo (no en L1). Ambos fueron propuestos por CC en el chat de esta sesión, con el texto exacto y los números calculados con node -e mostrados ANTES de escribir este JSON, y aprobados por Benjamín ('Asigna error-10 al Candidato A y error-11 al Candidato B, con los textos exactos ya propuestos en el plan'). error-10 ('usa el lado inclinado como si fuera la altura') es el mecanismo específico de síntesis de esta lección: aparece en pensar, descubrimiento, generalizacion (trapecio), practica, aplicacion e itemsPAES l3-item-1 — siempre con un valor numérico distinto y reproducible, nunca forzado. error-11 ('perímetro de figura compuesta cuenta el borde interior compartido') aparece en aplicacion e itemsPAES l3-item-3, con el invernadero muro+techo como única figura compuesta del archivo.",
+    "Verificación de colisiones: TODOS los valores numéricos (triples pitagóricas, alturas, áreas, perímetros, y los valores que produce cada mecanismo de error) se generaron con un script node dedicado que probó combinaciones hasta encontrar un set con CERO colisiones distractor-vs-respuesta-correcta en todo el archivo (incluyendo curiosidad, que no tiene distractores pero sí valores 'correctos' narrados). Salida cruda de esa verificación (0 colisiones) pegada en el reporte de esta sesión, no repetida acá. Cuatro valores 'correctos' se repiten entre bloques distintos sin que eso sea una colisión real (pensar.altura=12 y generalizacion.altura=12; practicaTrapVF.altura=24 y item1.altura=24; item2.perimetro=72 y item3.altura... no, ver nota siguiente): son números correctos de EJERCICIOS DISTINTOS que coinciden por azar, igual que ocurre en L1/L2 con valores como 12 o 18 — no afecta el chequeo mecánico, que solo bloquea cuando un DISTRACTOR coincide con la respuesta correcta de otro bloque.",
+    "π se usa siempre como 3,14 (no Math.PI). El único uso de círculo en este archivo (practica) usa radio 25 cm precisamente porque 2×3,14×25=157 y 3,14×25²=1962,5 son ambos exactos en punto flotante de JavaScript (verificado con node -e: literales como 31,4 o 62,8 con otros radios NO son exactos, ver verificación de esta sesión) — evita el problema de comparación estricta de BloqueNumerica.tsx documentado en las notas de L2.",
+    "Es la última lección del módulo: el puente de 'consolidacion' apunta al cierre del módulo (aún no construido en esta tarea), no a una lección siguiente."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Olvida el factor 1/2 (o la división por 2) en una fórmula de área que lo incluye: calcula el área de un triángulo como base×altura, en vez de base×altura÷2, o el área de un trapecio como (baseMayor+baseMenor)×altura, en vez de dividir esa suma por 2 antes de multiplicar por la altura — tratando la figura como si fuera un paralelogramo completo en vez de la mitad de uno."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "Calcula el perímetro de una figura con al menos un lado inclinado (como un paralelogramo cortado con un desplazamiento horizontal) usando la altura vertical como si fuera la medida de ese lado inclinado, en vez de calcular su longitud real aplicando el teorema de Pitágoras sobre la altura y el desplazamiento."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Usa el lado inclinado de la figura (por ejemplo, la cumbrera de un techo o un lado dado como hipotenusa) directamente como si fuera la altura al aplicar una fórmula de área o perímetro, en vez de calcular primero la altura real mediante el teorema de Pitágoras. Es el error inverso al de error-8: ahí se usaba la altura como si fuera el lado inclinado; aquí se usa el lado inclinado como si fuera la altura."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Al calcular el perímetro (o el material de borde) de una figura compuesta por dos piezas —como un muro rectangular con un techo triangular encima—, suma el contorno de cada pieza por separado incluyendo el borde donde ambas piezas se unen, en vez de contar solo el borde exterior visible de la figura completa (esa unión no es un borde real de la figura compuesta)."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: techo de una caseta de herramientas, ancho 6 m (semiancho 3 m), cumbrera 5 m, altura 4 m, área 12 m² (triple 3-4-5, revelado completo, sin distractores)",
+    "problema: techo de un invernadero grande, ancho 16 m (semiancho 8 m), cumbrera 17 m, NO resuelto (solo elección de método); verdaderoFalso ilustrativo con un ancho de 60 m, no resuelto",
+    "pensar/pistas: techo ancho 10 m (semiancho 5 m), cumbrera 13 m, altura 12 m, área 60 m²",
+    "descubrimiento: techo ancho 18 m (semiancho 9 m), cumbrera 41 m, altura 40 m, área 360 m² (ejemplo nuclear)",
+    "generalizacion: techo trapezoidal (a cuatro aguas) con base mayor 18 m, base menor 8 m, lado inclinado 13 m, altura 12 m, área 156 m²",
+    "practica: techo triangular ancho 40 m (semiancho 20 m), cumbrera 29 m, altura 21 m, área 420 m²; techo trapezoidal base mayor 26 m, base menor 12 m, lado 25 m, altura 24 m, perímetro 88 m (afirmación falsa de 86 m); ventana circular de invernadero, radio 25 cm, circunferencia 157 cm",
+    "aplicacion: invernadero con muro rectangular de 24 m de ancho por 6 m de alto y techo triangular con semiancho 12 m y cumbrera 37 m (altura real 35 m, área del techo 420 m²), perímetro total del marco 110 m",
+    "itemsPAES: techo triangular ancho 14 m (semiancho 7 m), cumbrera 25 m, área 168 m²; techo trapezoidal base mayor 27 m, base menor 11 m, lado 17 m, altura 15 m, perímetro 72 m; invernadero muro 42 m de ancho por 4 m de alto, techo con semiancho 21 m y cumbrera 75 m, perímetro total 200 m"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Falta un dato, aunque no lo parezca",
+      "_notasInternas": [
+        "Techo 3-4-5. Verificado: 3²+4²=9+16=25=5². Área=6×4÷2=12. Sin distractores: solo plantea la pregunta, revela la respuesta completa, mismo patrón que curiosidad de L1/L2."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "El techo triangular de una caseta de herramientas mide 6 metros de ancho de lado a lado, y cada lado inclinado del techo (la cumbrera) mide 5 metros. Para saber cuánta lona hace falta para cubrirlo, necesitas el área del triángulo: base por altura, dividido por 2. Sin calcular nada todavía: ¿con esos dos datos —ancho y cumbrera— ya tienes todo lo que necesitas para calcular el área?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Sí, con el ancho y la cumbrera basta",
+            "No, falta un dato más",
+            "No se puede saber sin medir la lona directamente"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "No basta. La fórmula del área pide base y **altura**, y la altura de este techo —la distancia vertical desde el vértice hasta el ancho— no es ninguno de los dos datos que tienes. La cumbrera (5 m) es el lado INCLINADO del techo, no la altura.\n\nPero fíjate: la mitad del ancho (3 m), la altura que falta, y la cumbrera (5 m) forman un triángulo rectángulo. Con el Teorema de Pitágoras: 3² + altura² = 5², así que la altura mide **4 metros**. Recién con eso, el área es (6 × 4) ÷ 2 = **12 metros cuadrados**.\n\nEsta lección junta dos herramientas que ya conoces —Pitágoras y las fórmulas de área y perímetro— para resolver problemas donde falta un dato que hay que encontrar primero."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Un techo que no se resuelve de un solo paso",
+      "_notasInternas": [
+        "Techo 8-15-17, NO resuelto (solo elige método). Verificado: 8²+15²=64+225=289=17². VerdaderoFalso con ancho 60 m, puramente ilustrativo, sin resolver."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El techo de un invernadero grande mide 16 metros de ancho, y cada cumbrera mide 17 metros. Se necesita el área completa del techo para calcular cuánto plástico comprar. ¿Cuál de estos tres caminos te da el área correcta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Usar directamente el ancho (16 m) y la cumbrera (17 m) en la fórmula del área: (16 × 17) ÷ 2.",
+              "esCorrecta": false,
+              "feedback": "La cumbrera es el lado inclinado del techo, no su altura real. Usarla directamente en la fórmula del área da un resultado más grande que el verdadero: hay que encontrar la altura real primero.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "b",
+              "texto": "Primero encontrar la altura real del techo con el teorema de Pitágoras (usando la mitad del ancho y la cumbrera), y luego aplicar la fórmula del área con esa altura.",
+              "esCorrecta": true,
+              "feedback": "Correcto. La mitad del ancho y la cumbrera forman un triángulo rectángulo con la altura real como el otro cateto: Pitágoras encuentra esa altura, y recién con ella se calcula el área."
+            },
+            {
+              "id": "c",
+              "texto": "Medir con una huincha imaginaria y estimar a ojo.",
+              "esCorrecta": false,
+              "feedback": "Estimar a ojo puede dar una idea aproximada, pero no la medida exacta. Existe un procedimiento que da la respuesta exacta, sin adivinar."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Este mismo camino —Pitágoras primero, para encontrar la altura, y luego la fórmula de área— sigue funcionando igual si el techo fuera mucho más grande, como uno de 60 metros de ancho?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El camino no depende de que los números sean chicos o amables: funciona igual con un techo de 16 m que con uno de 60 m de ancho. Lo único que cambia es que calcular a mano toma más tiempo, no que el método deje de servir.",
+          "feedbackFalso": "En realidad sí seguiría funcionando igual. El camino —Pitágoras para la altura, luego la fórmula de área— no depende del tamaño del techo."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Encuentra la altura, y después el área",
+      "_notasInternas": [
+        "Techo 5-13, semiancho5 cumbrera13 altura12 (verificado 5²+12²=25+144=169=13²). Ancho10, área60 (10×12÷2). Dos campos en un mismo bloque numerica, mismo patrón que la 'aplicacion' de L2.",
+        "alturaTechoM: error-1 (13-5=8), error-2 (13²-5²=144, sin raíz). areaTechoM: error-7 (10×12=120, sin ÷2), error-10 (10×13÷2=65, cumbrera como altura)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "El techo triangular de una bodega mide 10 metros de ancho, y cada cumbrera mide 13 metros. Intenta encontrar primero la altura real del techo (usando la mitad del ancho y la cumbrera), y luego el área completa del techo, antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "alturaTechoM",
+              "etiqueta": "Altura real del techo",
+              "respuestaCorrecta": 12,
+              "unidad": "m"
+            },
+            {
+              "id": "areaTechoM",
+              "etiqueta": "Área del techo",
+              "respuestaCorrecta": 60,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaTechoM",
+              "valorObtenido": 8,
+              "mensaje": "8 es la resta directa entre la cumbrera y la mitad del ancho (13 − 5), sin pasar por los cuadrados ni la raíz cuadrada. La altura real se encuentra igual que un cateto: cuadrado, cuadrado, resta, raíz cuadrada.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "alturaTechoM",
+              "valorObtenido": 144,
+              "mensaje": "144 es 13² − 5² (169 − 25), un paso intermedio correcto. Pero ese número es el CUADRADO de la altura, no la altura misma: falta sacarle la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "areaTechoM",
+              "valorObtenido": 120,
+              "mensaje": "120 es ancho × altura (10 × 12) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo, que es la mitad de esa superficie.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "areaTechoM",
+              "valorObtenido": 65,
+              "mensaje": "65 sale de usar la cumbrera (13 m) directamente como si fuera la altura: (10 × 13) ÷ 2. Pero la cumbrera es el lado INCLINADO del techo, no su altura real: la altura real (12 m) es la que encontraste con Pitágoras, y es menor que la cumbrera.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Primero encuentra la altura con Pitágoras: la mitad del ancho (5 m) y la altura son los catetos, la cumbrera (13 m) es la hipotenusa. Luego usa esa altura en la fórmula del área del triángulo."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el techo de la bodega",
+      "_notasInternas": [
+        "Mismo techo 5-13 del paso anterior. Nivel 3 no entrega el área final (60): deja que el estudiante calcule 10×12÷2, mismo criterio que L1/L2."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La mitad del ancho del techo (5 m), la altura real (la que falta) y la cumbrera (13 m) forman un triángulo rectángulo escondido dentro del techo completo. Ese triángulo rectángulo es la mitad del techo, cortado justo por el centro."
+            },
+            {
+              "nivel": 2,
+              "texto": "Aplica Pitágoras a ese triángulo rectángulo: 5² + altura² = 13². Despejando, altura² = 13² − 5². Una vez que tengas la altura, el área del techo completo es (ancho × altura) ÷ 2, usando el ancho COMPLETO (10 m), no la mitad."
+            },
+            {
+              "nivel": 3,
+              "texto": "13² − 5² = 169 − 25 = 144, y √144 = 12: esa es la altura real. Con ancho 10 m y altura 12 m, ¿cuánto es (10 × 12) dividido por 2?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El techo escondía un triángulo rectángulo",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Techo 9-40-41 (verificado 9²+40²=81+1600=1681=41²). Ancho18, área360 (18×40÷2).",
+        "Seleccion altura: a=40(correcta) b=32(error-1,41-9) c=1600(error-2,41²-9² sin raíz) d=9(ad-hoc, repite semiancho).",
+        "Seleccion/pregunta area: a=360(correcta) b=720(error-7,18×40 sin ÷2) c=369(error-10,18×41÷2) d=18(ad-hoc, repite ancho).",
+        "Notacion formal se deja para 'generalizacion', aquí el patrón se describe en palabras con los números concretos."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El techo de un galpón mide 18 metros de ancho, y cada cumbrera mide 41 metros. Para calcular el área completa del techo, primero hay que encontrar su altura real —y esa altura está escondida dentro de un triángulo rectángulo que forma la mitad del techo."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de calcular: la mitad del ancho de este techo (9 m) y su cumbrera (41 m) forman un triángulo rectángulo con la altura real como el otro cateto. ¿Crees que esa altura real es MAYOR o MENOR que la cumbrera (41 m)?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Mayor que la cumbrera",
+            "Menor que la cumbrera",
+            "Exactamente igual a la cumbrera"
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Triángulo rectángulo que representa la mitad del techo, con el ángulo recto en la esquina inferior izquierda. El cateto horizontal, la mitad del ancho, mide 9 m. La hipotenusa, la cumbrera, mide 41 m. El cateto vertical, la altura real del techo, está etiquetado con un signo de interrogación: es la medida que hay que encontrar.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 9,
+            "catetoB": 40,
+            "etiquetaCatetoA": "9 m",
+            "etiquetaCatetoB": "?",
+            "etiquetaHipotenusa": "41 m"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Aplicando Pitágoras a ese triángulo rectángulo (cateto 9 m, hipotenusa 41 m), ¿cuánto mide la altura real del techo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "40 metros",
+              "esCorrecta": true,
+              "feedback": "Correcto. 41² − 9² = 1681 − 81 = 1600, y √1600 = 40."
+            },
+            {
+              "id": "b",
+              "texto": "32 metros",
+              "esCorrecta": false,
+              "feedback": "32 es la resta directa entre la cumbrera y la mitad del ancho (41 − 9), sin pasar por los cuadrados ni la raíz cuadrada. La altura real se encuentra igual que un cateto: cuadrado, cuadrado, resta, raíz cuadrada.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "1.600 metros",
+              "esCorrecta": false,
+              "feedback": "1.600 es 41² − 9², un paso intermedio correcto. Pero ese número es el cuadrado de la altura, no la altura misma: falta sacarle la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "9 metros",
+              "esCorrecta": false,
+              "feedback": "9 metros es la mitad del ancho que ya te dieron como dato, no la altura que se pregunta."
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El mismo triángulo rectángulo del diagrama anterior, ahora con la altura real ya calculada y etiquetada: 40 m.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 9,
+            "catetoB": 40,
+            "etiquetaCatetoA": "9 m",
+            "etiquetaCatetoB": "40 m",
+            "etiquetaHipotenusa": "41 m"
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El techo completo, un triángulo con el ancho horizontal en la base etiquetado '18 m' y una línea punteada vertical desde el vértice superior marcando la altura real, etiquetada '40 m'.",
+          "datos": {
+            "figura": "triangulo",
+            "base": 18,
+            "altura": 40,
+            "etiquetaBase": "18 m",
+            "etiquetaAltura": "40 m"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Con el ancho completo del techo (18 m) y la altura real que acabas de encontrar (40 m), ¿cuántos metros cuadrados de lona cubren este techo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "360 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. (18 × 40) ÷ 2 = 720 ÷ 2 = 360 m²."
+            },
+            {
+              "id": "b",
+              "texto": "720 m²",
+              "esCorrecta": false,
+              "feedback": "720 m² es ancho × altura (18 × 40) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo, que es la mitad de esa superficie.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "369 m²",
+              "esCorrecta": false,
+              "feedback": "369 sale de usar la cumbrera (41 m) directamente como si fuera la altura: (18 × 41) ÷ 2. Pero la cumbrera es el lado inclinado del techo, no su altura real, que ya calculaste con Pitágoras: 40 m.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "d",
+              "texto": "18 m²",
+              "esCorrecta": false,
+              "feedback": "18 m² repite el ancho del techo dado en el enunciado, no es el área calculada."
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "El techo de un galpón mide 18 metros de ancho y cada cumbrera mide 41 metros. ¿Cuántos metros cuadrados de lona cubren el techo completo?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "360 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. La altura real es √(41² − 9²) = √1600 = 40 m. El área es (18 × 40) ÷ 2 = 360 m²."
+            },
+            {
+              "clave": "B",
+              "texto": "720 m²",
+              "esCorrecta": false,
+              "feedback": "720 m² es ancho × altura sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "C",
+              "texto": "369 m²",
+              "esCorrecta": false,
+              "feedback": "369 sale de usar la cumbrera (41 m) directamente como si fuera la altura, en vez de calcular la altura real (40 m) con Pitágoras primero.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "clave": "D",
+              "texto": "18 m²",
+              "esCorrecta": false,
+              "feedback": "18 m² repite el ancho del techo dado en el enunciado, no el área calculada."
+            }
+          ],
+          "notaVerificacionMatematica": "9² + 40² = 81 + 1600 = 1681 = 41². Altura = 40 m. Área = (18 × 40) ÷ 2 = 360 m². Verificado con node -e."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que la altura real del techo (40 m) sea MENOR que la cumbrera (41 m), aunque estén tan cerca en valor?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. La cumbrera es la hipotenusa del triángulo rectángulo escondido en la mitad del techo, y la hipotenusa siempre es el lado más largo. La altura real —un cateto— siempre es menor, aunque a veces la diferencia sea chica.",
+          "feedbackFalso": "En realidad sí tiene sentido. La cumbrera es la hipotenusa de ese triángulo rectángulo, y la hipotenusa siempre es el lado más largo: la altura real (un cateto) siempre es menor, aunque la diferencia entre ambas sea chica, como en este caso (40 y 41)."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esto no es casualidad de este techo: cada vez que conoces el ancho y la cumbrera de un techo triangular, la mitad del ancho, la altura real y la cumbrera forman un triángulo rectángulo. Pitágoras encuentra esa altura, y recién con ella —nunca con la cumbrera directamente— se calcula el área."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La misma idea, en un techo con la punta plana",
+      "_notasInternas": [
+        "Notacion formal aparece aqui por primera vez.",
+        "Trapecio: offset5, lado13, baseMenor8, baseMayor18, altura12 (verificado 13²-5²=169-25=144=12²), area156 (verificado (18+8)/2*12=13*12=156).",
+        "Seleccion: a=156(correcta) b=312(error-7, (18+8)*12 sin promediar) c=169(error-10, usa lado13 como altura: (18+8)/2*13=169) d=108(ad-hoc, usa solo baseMayor con formula de triangulo: 18*12/2=108)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que descubriste se escribe así: si conoces la mitad del ancho de un techo (**s**) y la cumbrera (**c**), la altura real (**h**) cumple **s² + h² = c²**. Una vez que tienes h, el área del techo es **(ancho × h) ÷ 2**, usando el ancho completo.\n\nEsta misma idea —Pitágoras para la medida que falta, y recién después la fórmula que corresponda— sirve para cualquier figura con un lado inclinado, no solo para triángulos."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Algunos techos no terminan en punta: quedan con la parte de arriba plana, formando un **trapecio** en vez de un triángulo. Es el mismo caso: falta la altura real, y hay que encontrarla con Pitágoras antes de calcular el área."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Trapecio que representa un techo con la parte superior plana: la base mayor (el ancho del muro, abajo) etiquetada '18 m', la base menor (la parte plana de arriba) etiquetada '8 m', los dos lados inclinados etiquetados '13 m' cada uno, y la altura, marcada con una línea punteada vertical, etiquetada con un signo de interrogación.",
+          "datos": {
+            "figura": "trapecio",
+            "baseMayor": 18,
+            "baseMenor": 8,
+            "altura": 12,
+            "etiquetaBaseMayor": "18 m",
+            "etiquetaBaseMenor": "8 m",
+            "etiquetaLadoIzquierdo": "13 m",
+            "etiquetaLadoDerecho": "13 m"
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La diferencia entre las dos bases (18 − 8 = 10 m) se reparte en dos mitades iguales, una a cada lado (5 m cada una). Esa mitad (5 m) y el lado inclinado (13 m) forman un triángulo rectángulo con la altura real como el otro cateto: 5² + altura² = 13², así que la altura real mide 12 m.\n\nCon esa altura, el área del trapecio es ((base mayor + base menor) ÷ 2) × altura = ((18 + 8) ÷ 2) × 12 = 13 × 12 = 156 m²."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El mismo trapecio, ahora con la altura ya calculada y etiquetada: 12 m.",
+          "datos": {
+            "figura": "trapecio",
+            "baseMayor": 18,
+            "baseMenor": 8,
+            "altura": 12,
+            "etiquetaBaseMayor": "18 m",
+            "etiquetaBaseMenor": "8 m",
+            "etiquetaAltura": "12 m"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para comprobar que este techo trapezoidal (base mayor 18 m, base menor 8 m, altura real 12 m) tiene área 156 m², ¿cuál cálculo es correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "(18 + 8) ÷ 2 = 13. 13 × 12 = 156 m².",
+              "esCorrecta": true,
+              "feedback": "Correcto. Primero se promedian las dos bases, y ese promedio se multiplica por la altura real."
+            },
+            {
+              "id": "b",
+              "texto": "(18 + 8) × 12 = 312 m², sin promediar las bases.",
+              "esCorrecta": false,
+              "feedback": "312 m² sale de multiplicar la SUMA de las bases por la altura, sin promediarlas antes. Como el trapecio no es un rectángulo completo, hay que promediar las dos bases, no solo sumarlas.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "(18 + 8) ÷ 2 = 13. 13 × 13 = 169 m², usando el lado inclinado (13 m) como si fuera la altura.",
+              "esCorrecta": false,
+              "feedback": "169 m² sale de usar el lado inclinado (13 m) directamente como si fuera la altura. Pero el lado inclinado y la altura real (12 m) no miden lo mismo: la altura real se obtiene con Pitágoras, restando primero la mitad de la diferencia de bases.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "d",
+              "texto": "18 × 12 ÷ 2 = 108 m², usando solo la base mayor con la fórmula del triángulo.",
+              "esCorrecta": false,
+              "feedback": "Usaste solo la base mayor y la fórmula de un triángulo, como si la base menor no existiera. El trapecio tiene DOS bases distintas y hay que promediarlas antes de multiplicar por la altura."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El patrón se repite en las cuatro figuras de este módulo: cuando falta una medida lineal —una altura, un lado inclinado, un radio— y lo que sí tienes forma un triángulo rectángulo con esa medida, Pitágoras la encuentra. Recién con esa medida real —nunca con el lado inclinado directamente— se aplica la fórmula de área o perímetro que corresponda: triángulo, trapecio, paralelogramo o círculo.\n\nCon esta idea en mente, las próximas dos partes de la lección —práctica y aplicación— combinan estas figuras en problemas de invernaderos, incluyendo uno donde el techo y el muro forman una sola figura compuesta."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres ejercicios, y una figura compuesta a la vista",
+      "_notasInternas": [
+        "Seleccion triangulo: semiancho20 cumbrera29 altura21 (verificado 20²+21²=400+441=841=29²), ancho40, area420. a=correcta b=580(error-10,40*29/2) c=840(error-7,40*21) d=ad-hoc('20 m²', repite semiancho).",
+        "VerdaderoFalso trapecio: offset7 lado25 baseMenor12 baseMayor26 altura24 (verificado 25²-7²=625-49=576=24²), perimetro88 (26+12+50). Afirmacion falsa 86 (26+12+48, usa altura24 como si fuera lado, mecanismo error-8, no se etiqueta ID porque los bloques verdaderoFalso no tienen campo errorCatalogado en el schema, igual que en L1/L2).",
+        "Circulo: radio25 (exacto en punto flotante), circunferencia157. Distractor error-9: 1962.5 (area en vez de circunferencia). Distractor ad-hoc: 50 (2*25, olvida pi)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El techo triangular de una nave industrial mide 40 metros de ancho, y cada cumbrera mide 29 metros (la altura real ya se calculó: 21 metros). ¿Cuántos metros cuadrados de lona cubren este techo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "420 m²",
+              "esCorrecta": true,
+              "feedback": "Correcto. (40 × 21) ÷ 2 = 840 ÷ 2 = 420 m²."
+            },
+            {
+              "id": "b",
+              "texto": "580 m²",
+              "esCorrecta": false,
+              "feedback": "580 sale de usar la cumbrera (29 m) directamente como si fuera la altura: (40 × 29) ÷ 2. La altura real de este techo, calculada con Pitágoras, es 21 m, no 29 m.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "id": "c",
+              "texto": "840 m²",
+              "esCorrecta": false,
+              "feedback": "840 m² es ancho × altura (40 × 21) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "d",
+              "texto": "20 m²",
+              "esCorrecta": false,
+              "feedback": "20 m² repite la mitad del ancho del techo, un dato intermedio del cálculo de la altura, no el área del techo completo."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Un techo trapezoidal tiene base mayor 26 m, base menor 12 m, y cada lado inclinado mide 25 m (la altura real, calculada con Pitágoras, es 24 m). ¿Es cierto que su perímetro es 86 metros?",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad no es cierto. 86 m saldría de usar la altura (24 m) como si fuera el lado inclinado: 26 + 12 + 2 × 24. Pero el lado inclinado real, dado en el enunciado, mide 25 m: el perímetro real es 26 + 12 + 2 × 25 = 88 m.",
+          "feedbackFalso": "Correcto, no es cierto. El perímetro usa los lados inclinados reales (25 m cada uno), no la altura (24 m): 26 + 12 + 2 × 25 = 88 m, no 86 m."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Una última figura aparece en los invernaderos: las ventanas circulares de ventilación (**óculos**). También tienen un borde que medir: su circunferencia, 2 × π × radio, con π ≈ 3,14."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Círculo que representa un óculo de ventilación de un invernadero, con el radio marcado desde el centro hasta el borde, etiquetado '25 cm', y el borde completo etiquetado con un signo de interrogación.",
+          "datos": {
+            "figura": "circulo",
+            "radio": 25,
+            "etiquetaRadio": "25 cm",
+            "etiquetaCircunferencia": "?"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ese óculo de ventilación tiene un radio de 25 cm. ¿Cuántos centímetros de marco hay que instalar en todo su borde (su circunferencia)? Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "circunferenciaOculoCm",
+              "etiqueta": "Circunferencia del óculo",
+              "respuestaCorrecta": 157,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "circunferenciaOculoCm",
+              "valorObtenido": 1962.5,
+              "mensaje": "1.962,5 es el resultado de usar la fórmula del ÁREA (π × radio² = 3,14 × 25²), no la de la circunferencia. La circunferencia —el borde— se calcula como 2 × π × radio.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "circunferenciaOculoCm",
+              "valorObtenido": 50,
+              "mensaje": "50 es 2 × 25, el diámetro del óculo, sin multiplicar por π. La circunferencia es 2 × π × radio, no solo 2 × radio."
+            }
+          ],
+          "feedbackPorDefecto": "Usa la fórmula 2 × π × radio, con π ≈ 3,14 y radio = 25 cm."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El invernadero completo: dos piezas, un solo borde exterior",
+      "_notasInternas": [
+        "Invernadero: semiancho12 cumbrera37 Hw6 (verificado 37²-12²=1369-144=1225=35²). W=24, alturaTecho35, areaTecho420 (24*35/2). PerimetroCorrecto=W+2*Hw+2*cumbrera=24+12+74=110. CandidatoB(error-11)=3*W+2*Hw+2*cumbrera=72+12+74=158.",
+        "Numerica bloque1 (Pitagoras+area techo): alturaTechoM error-1(37-12=25) error-2(37²-12²=1225). areaTechoM error-7(24*35=840) error-10(24*37/2=444).",
+        "Numerica bloque2 (perimetro compuesto): perimetroMarcoM error-11(158, cuenta el ancho W dos veces de mas) y un ad-hoc(24+6+37=67, olvida duplicar Hw y cumbrera, sin ID)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un invernadero tiene un muro rectangular de 24 metros de ancho por 6 metros de alto, y encima un techo triangular con una cumbrera de 37 metros a cada lado. Hay que calcular dos cosas: cuánto plástico cubre el techo, y cuánto marco metálico rodea todo el invernadero por fuera."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Triángulo rectángulo que representa la mitad del techo del invernadero: el cateto horizontal, la mitad del ancho, mide 12 m; la hipotenusa, la cumbrera, mide 37 m; el cateto vertical, la altura real del techo, está etiquetado con un signo de interrogación.",
+          "datos": {
+            "figura": "trianguloPitagoras",
+            "catetoA": 12,
+            "catetoB": 35,
+            "etiquetaCatetoA": "12 m",
+            "etiquetaCatetoB": "?",
+            "etiquetaHipotenusa": "37 m"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Primero encuentra la altura real del techo con Pitágoras (la mitad del ancho es 12 m, la cumbrera es 37 m). Luego, con el ancho completo (24 m) y esa altura, calcula cuántos metros cuadrados de plástico cubren el techo.",
+          "campos": [
+            {
+              "id": "alturaTechoM",
+              "etiqueta": "Altura real del techo",
+              "respuestaCorrecta": 35,
+              "unidad": "m"
+            },
+            {
+              "id": "areaTechoM",
+              "etiqueta": "Área del techo",
+              "respuestaCorrecta": 420,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaTechoM",
+              "valorObtenido": 25,
+              "mensaje": "25 es la resta directa entre la cumbrera y la mitad del ancho (37 − 12), sin pasar por los cuadrados ni la raíz cuadrada.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "alturaTechoM",
+              "valorObtenido": 1225,
+              "mensaje": "1.225 es 37² − 12² (1369 − 144), un paso intermedio correcto. Pero ese número es el cuadrado de la altura, no la altura misma: falta la raíz cuadrada.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "areaTechoM",
+              "valorObtenido": 840,
+              "mensaje": "840 m² es ancho × altura (24 × 35) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "areaTechoM",
+              "valorObtenido": 444,
+              "mensaje": "444 sale de usar la cumbrera (37 m) directamente como si fuera la altura: (24 × 37) ÷ 2. La altura real, calculada con Pitágoras, es 35 m, no 37 m.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Primero encuentra la altura con Pitágoras: 12² + altura² = 37². Luego usa esa altura en (ancho × altura) ÷ 2, con ancho = 24 m."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ahora el marco metálico exterior. El muro es un rectángulo de 24 m de ancho por 6 m de alto, y el techo es el triángulo que ya calculaste. Pero el invernadero completo NO tiene el perímetro del muro más el perímetro del techo sumados por separado: la parte de arriba del muro y la base del techo son el MISMO borde, uno interior, que no queda expuesto por fuera."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El muro rectangular del invernadero, con la base horizontal etiquetada '24 m' y la altura vertical etiquetada '6 m'.",
+          "datos": {
+            "figura": "paralelogramo",
+            "base": 24,
+            "altura": 6,
+            "desplazamiento": 0,
+            "etiquetaBase": "24 m",
+            "etiquetaAltura": "6 m",
+            "etiquetaLado": "6 m"
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El techo triangular completo del invernadero, con la base horizontal etiquetada '24 m' y la altura real, ya calculada, etiquetada '35 m'.",
+          "datos": {
+            "figura": "triangulo",
+            "base": 24,
+            "altura": 35,
+            "etiquetaBase": "24 m",
+            "etiquetaAltura": "35 m"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El marco metálico rodea solo el borde EXTERIOR de todo el invernadero (el muro y el techo juntos, como una sola figura): las dos paredes laterales del muro, las dos cumbreras del techo, y la base del muro. NO incluye la unión entre el muro y el techo, porque ese borde queda por dentro.\n\n¿Cuántos metros de marco metálico se necesitan en total?",
+          "campos": [
+            {
+              "id": "perimetroMarcoM",
+              "etiqueta": "Marco metálico total",
+              "respuestaCorrecta": 110,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "perimetroMarcoM",
+              "valorObtenido": 158,
+              "mensaje": "158 sale de sumar el perímetro del muro (2 × (24 + 6) = 60) y el perímetro del techo (24 + 2 × 37 = 98) por separado: 60 + 98 = 158. Pero eso cuenta el ancho (24 m) DOS VECES —una como techo del muro, otra como base del techo— cuando ese borde es interior y no queda expuesto por fuera.",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "campoId": "perimetroMarcoM",
+              "valorObtenido": 67,
+              "mensaje": "67 solo suma cada medida una vez (24 + 6 + 37), sin contar que el invernadero tiene DOS paredes laterales (6 m cada una) y DOS cumbreras (37 m cada una), no una de cada."
+            }
+          ],
+          "feedbackPorDefecto": "El borde exterior completo es: base del muro (24 m) + dos paredes laterales (6 m cada una) + dos cumbreras (37 m cada una). No sumes el ancho una segunda vez por el techo: esa unión es interior."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escribe, con tus propios números, por qué el marco metálico del invernadero NO es la suma del perímetro del muro (como rectángulo) más el perímetro del techo (como triángulo), sino un número menor que esa suma.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Perímetro del muro solo: 2 × (24 + 6) = 60 m. Perímetro del techo solo: 24 + 2 × 37 = 98 m. Sumados: 60 + 98 = 158 m. Pero el borde real del invernadero completo es 24 + 2 × 6 + 2 × 37 = 110 m. La diferencia (158 − 110 = 48 m, que es el doble del ancho, 2 × 24) es exactamente el ancho contado dos veces: una vez como 'techo' del rectángulo del muro, y otra vez como 'base' del triángulo del techo. Ese borde es interior —donde el muro y el techo se unen— y no forma parte del contorno exterior real."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Dos trampas nuevas",
+      "_notasInternas": [
+        "Metacognicion sobre error-10 y error-11, sin mostrar los IDs, mismo criterio que L1/L2. Nombra tambien los errores 1,2,7,8,9 reutilizados, en lenguaje llano."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué el lado inclinado de una figura (como la cumbrera de un techo) nunca puede usarse directamente como su altura? Y en el caso de una figura compuesta por dos piezas, como el invernadero, ¿por qué el perímetro completo es MENOR que la suma de los perímetros de cada pieza por separado?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que mencione que el lado inclinado y la altura son catetos e hipotenusa de un triángulo rectángulo distinto (la hipotenusa siempre es más larga), y que el borde donde dos piezas se unen es interior y no se cuenta en el contorno exterior, indica que entendió el principio."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al combinar Pitágoras con área y perímetro —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Sumar o restar lados directamente en vez de aplicar Pitágoras**, u olvidar la raíz cuadrada final: los mismos errores clásicos de Pitágoras, ahora escondidos dentro de un problema de área o perímetro.\n2. **Olvidar el ÷2 en el área de un triángulo o un trapecio**, o confundir la circunferencia con el área de un círculo: los errores clásicos de fórmulas, sin cambios.\n3. **Usar el lado inclinado directamente como si fuera la altura** (o al revés, usar la altura como si fuera el lado inclinado): la trampa más común cuando un problema mezcla ambas ideas.\n4. **En una figura compuesta por dos piezas, contar el borde interior donde se unen** como si fuera parte del contorno exterior.\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Sintesis + puente al CIERRE del modulo (esta es la ultima leccion), no a una leccion siguiente. El cierre no se construye en esta tarea."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Cuando falta una medida lineal —una altura, un lado inclinado, un radio— para calcular un área o un perímetro, primero busca si esa medida forma un triángulo rectángulo con datos que sí tienes. Si es así, Pitágoras la encuentra.\n- El lado inclinado de una figura (como una cumbrera) y su altura real NUNCA son la misma medida: una es la hipotenusa, la otra un cateto, de un triángulo rectángulo escondido.\n- En una figura compuesta por dos piezas —como un muro con un techo encima—, el perímetro exterior NO es la suma de los perímetros de cada pieza por separado: el borde donde se unen es interior y no se cuenta.\n- Todo esto usa exactamente las mismas herramientas de las dos lecciones anteriores de este módulo: Pitágoras, y las fórmulas de área y perímetro de triángulos, trapecios, paralelogramos y círculos. No hay fórmulas nuevas en esta lección, solo la forma de combinarlas.\n\nÉsta es la última lección del módulo de figuras geométricas. Lo que sigue es el cierre: ítems formato PAES que integran las tres lecciones —Pitágoras, área y perímetro de las cuatro figuras, y estos problemas de dos pasos— para revisar todo el módulo junto.\n\nAhora, tres ítems formato PAES para cerrar esta lección."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "El techo triangular de una bodega mide 14 metros de ancho, y cada cumbrera mide 25 metros. ¿Cuántos metros cuadrados de lona cubren el techo completo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "168 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. La mitad del ancho (7 m) y la cumbrera (25 m) forman un triángulo rectángulo: la altura real es √(25² − 7²) = √576 = 24 m. El área es (14 × 24) ÷ 2 = 168 m²."
+        },
+        {
+          "clave": "B",
+          "texto": "175 m²",
+          "esCorrecta": false,
+          "feedback": "175 sale de usar la cumbrera (25 m) directamente como si fuera la altura: (14 × 25) ÷ 2. La altura real, calculada con Pitágoras, es 24 m, no 25 m.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "C",
+          "texto": "336 m²",
+          "esCorrecta": false,
+          "feedback": "336 m² es ancho × altura (14 × 24) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "14 m²",
+          "esCorrecta": false,
+          "feedback": "14 m² repite el ancho del techo dado en el enunciado, no el área calculada."
+        }
+      ],
+      "solucion": "Mitad del ancho: 7 m. Altura real: √(25² − 7²) = √(625 − 49) = √576 = 24 m. Área: (14 × 24) ÷ 2 = 336 ÷ 2 = 168 m². Comprobación: 7² + 24² = 49 + 576 = 625 = 25². ✓"
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "El techo trapezoidal de un galpón tiene una base mayor (el ancho del muro) de 27 metros, una base menor (la parte plana de arriba) de 11 metros, y cada lado inclinado mide 17 metros. ¿Cuántos metros de cinta de sellado se necesitan para todo el contorno del techo (su perímetro)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "72 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. El perímetro es la suma de las cuatro medidas dadas: 27 + 11 + 17 + 17 = 72 m. Los lados inclinados ya están dados directamente, no hace falta Pitágoras para el perímetro."
+        },
+        {
+          "clave": "B",
+          "texto": "68 m",
+          "esCorrecta": false,
+          "feedback": "68 m sale de usar la altura real del techo (15 m, la que se necesitaría para el ÁREA) como si fuera la medida de los lados inclinados: 27 + 11 + 2 × 15. Pero el enunciado ya da los lados inclinados directamente (17 m): no hay que reemplazarlos por la altura.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "84 m",
+          "esCorrecta": false,
+          "feedback": "84 m sale de calcular un lado inclinado 'a mano' como la suma directa de la mitad de la diferencia de bases y la altura (8 + 15 = 23), en vez de usar el lado inclinado que el enunciado ya entrega (17 m).",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "38 m",
+          "esCorrecta": false,
+          "feedback": "38 m es solo la suma de las dos bases (27 + 11), sin contar los dos lados inclinados del techo."
+        }
+      ],
+      "solucion": "El perímetro de un trapecio es la suma de sus cuatro lados: base mayor + base menor + 2 × lado inclinado = 27 + 11 + 2 × 17 = 27 + 11 + 34 = 72 m. (La altura real, 15 m, solo se necesitaría si el problema pidiera el área: ((27+11)÷2)×15 = 285 m², pero aquí se pide el perímetro, que usa los lados inclinados directamente.)"
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un invernadero tiene un muro rectangular de 42 metros de ancho por 4 metros de alto, y un techo triangular con una cumbrera de 75 metros a cada lado. Un estudiante calcula el perímetro total del marco metálico sumando el perímetro del muro (2 × (42 + 4) = 92 m) y el perímetro del techo (42 + 2 × 75 = 192 m), y obtiene 92 + 192 = 284 metros. ¿Es correcto este cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: sumó el perímetro de cada pieza por separado, contando el ancho del invernadero (42 m) dos veces —una como techo del muro, otra como base del techo—, cuando ese borde es interior. El marco real es 42 + 2 × 4 + 2 × 75 = 200 m.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El muro y el techo comparten un borde (el ancho, 42 m) que queda por dentro del invernadero, no expuesto por fuera. Sumar los dos perímetros por separado cuenta ese borde dos veces. El marco real es 42 + 2 × 4 + 2 × 75 = 200 m."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: 284 metros es el marco total del invernadero.",
+          "esCorrecta": false,
+          "feedback": "284 m cuenta el ancho del invernadero (42 m) dos veces: una vez como parte del perímetro del muro, y otra vez como parte del perímetro del techo. Pero ese borde —donde el muro y el techo se unen— es interior, no forma parte del contorno exterior. El marco real es 200 m.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: el marco real es 194 metros, usando la altura del techo (72 m) en vez de la cumbrera (75 m) para los dos lados inclinados.",
+          "esCorrecta": false,
+          "feedback": "194 m sale de usar la altura real del techo (72 m, la que serviría para calcular su ÁREA) en vez de la cumbrera (75 m) para los lados inclinados del contorno. El perímetro usa la cumbrera dada, no la altura.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: el marco real es 75 metros, la medida de la cumbrera.",
+          "esCorrecta": false,
+          "feedback": "75 m es la medida de una sola cumbrera dada en el enunciado, no el perímetro completo del marco del invernadero."
+        }
+      ],
+      "solucion": "El contorno exterior real del invernadero es: base del muro (42 m) + dos paredes laterales (4 m cada una) + dos cumbreras (75 m cada una) = 42 + 8 + 150 = 200 m. El cálculo del estudiante (92 + 192 = 284 m) suma el ancho (42 m) dos veces —una dentro del perímetro del muro (2 × (42+4) = 92), otra dentro del perímetro del techo (42 + 2×75 = 192)— porque ese borde compartido es interior. La diferencia, 284 − 200 = 84, es exactamente el ancho contado de más: 2 × 42 = 84. Respuesta: A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: aplicaciones de perímetro y área en contexto), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (techos e invernaderos: casetas, bodegas, galpones, naves industriales) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio (techo/invernadero) declarada por Benjamín Gutiérrez como ya confirmada al inicio de esta tarea ('dominio ya confirmado sin colisión, no lo vuelvas a verificar'). A diferencia de L1 y L2 de este mismo módulo, en el hilo que redactó este archivo NO se corrió scripts/consultar-fuentes.mjs ni se pegó salida cruda de esa verificación — ocurrió fuera de esta sesión, por instrucción explícita de Benjamín. Auditoría matemática y de originalidad AÚN PENDIENTES (regla de CLAUDE.md: hilos separados del que redactó): este archivo es un borrador para revisión de Benjamín. error-10 y error-11 fueron propuestos por CC y aprobados por Benjamín en el chat de esta sesión (texto sin cambios, con los números de cada uso mostrados antes de asignar el ID); catalogoErrores nace en este archivo para esos dos IDs, y embebe error-1, error-2 (desde L1) y error-7, error-8, error-9 (desde L2) copiados carácter a carácter.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
