@@ -416,6 +416,9 @@ const MODULO_POR_LECCION = {
   'cuadratica-punto-mas-alto': 'funcion-cuadratica',
   'cuadratica-donde-toca-el-eje': 'funcion-cuadratica',
   'cierre-funcion-cuadratica': 'funcion-cuadratica',
+  'figuras-triangulo-no-se-rompe': 'figuras-geometricas',
+  'figuras-borde-y-superficie': 'figuras-geometricas',
+  'figuras-problemas-con-forma': 'figuras-geometricas',
 };
 
 /**

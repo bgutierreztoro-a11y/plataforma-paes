@@ -75,7 +75,10 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-9 completos · 7 sin contenido · 27 de 48 lecciones escritas.
+9 completos · 7 sin contenido · 31 de 48 lecciones escritas (verificado el
+2026-08-25 con `ls content/lecciones | grep -v l0-demo | wc -l`). `figuras-geometricas`
+tiene sus 3 lecciones escritas pero no cuenta como módulo completo: falta su
+cierre, ver nota en la sección GEOMETRÍA de abajo.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
@@ -211,9 +214,23 @@ Cierre: `cierre-funcion-cuadratica`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `figuras-triangulo-no-se-rompe` | Teorema de Pitágoras | no |
+| `figuras-triangulo-no-se-rompe` | Teorema de Pitágoras | sí |
 | `figuras-borde-y-superficie` | Perímetro y área de triángulos, paralelogramos, trapecios y círculos | sí |
-| `figuras-problemas-con-forma` | Aplicaciones de perímetro y área en contexto | no |
+| `figuras-problemas-con-forma` | Aplicaciones de perímetro y área en contexto | sí |
+
+Las 3 lecciones de este módulo ya tienen archivo (verificado el 2026-08-25 con `ls`
+sobre `content/lecciones`; la fila de `figuras-triangulo-no-se-rompe` decía "no"
+desde antes de esa fecha pese a que el archivo existía desde el commit
+`2f5f66f` — dato del mapa desactualizado, corregido acá, no un hecho nuevo).
+**El módulo NO está completo**: falta `content/cierres/cierre-figuras-geometricas.json`
+y su `cierreId` en `lib/modulos.ts` (Fase 6/7, fuera del alcance de la tarea que
+escribió `figuras-problemas-con-forma`). Ojo: `lib/estadoModulo.ts` calcula
+`EstadoModulo` contando solo lecciones (`resueltas.length === declaradas`), sin
+mirar si existe cierre — con las 3 lecciones ya en disco, el código va a
+calcular `"completo"` para este módulo aunque no tenga cierre, contradiciendo la
+definición en prosa de "Completo" de este mismo documento (que sí exige cierre
+conectado). Revisar antes de dar por seguro cómo se ve `/camino` con este módulo
+sin cierre.
 
 ### 11. Cuerpos geométricos — `cuerpos-geometricos`
 
