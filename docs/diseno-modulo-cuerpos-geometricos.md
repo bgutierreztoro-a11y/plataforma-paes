@@ -2,7 +2,23 @@
 
 **Id de tema:** `cuerpos-geometricos`. Eje: Geometría (módulo #11 de `docs/mapa-modulos-m1.md`).
 
-**Verificación de colisión: NO ejecutada todavía.** Los candidatos de dominio de la sección correspondiente son propuestas para que Benja corra `node scripts/consultar-fuentes.mjs` fuera de sesión (mecanismo (2) de CLAUDE.md). Ningún JSON se escribe antes de ese veredicto.
+**Verificación de colisión: completa (2026-08-27).** Benja corrió `consultar-fuentes.mjs` (mecanismo (2) de CLAUDE.md) en dos tandas.
+
+Tanda 1, contra `MA-22_Cuerpos_Geometricos.md`:
+- **`piscina` → COLISIÓN.** Aparece como cuerpo geométrico (prisma rectangular y prisma trapezoidal) con fórmula de volumen explícita en 2 ítems DEMRE. Descartado como dominio de L2.
+- **`arena` → LIMPIO.**
+
+Tanda 2, las 18 keywords restantes de la PARADA 1 — **todas LIMPIO (NO), sin hits:** `farol de papel`, `farol`, `papel de seda`, `parlante`, `tela acustica`, `forrar`, `bloque de hormigon`, `hormigon`, `serigrafia`, `acuario`, `pecera`, `silo`, `granos`, `arenero`, `termo`, `aislante`, `aislacion`, `camara de frio`.
+
+**Dominios finales firmados (2026-08-27)** — ver "Estado de las firmas":
+
+| lección | núcleo (`descubrimiento`) | aplicación |
+|---|---|---|
+| L1 `cuerpos-desarmar-la-caja` | farol de papel cilíndrico | parlante cúbico con tela acústica |
+| L2 `cuerpos-cuanto-cabe-adentro` | arenero techado | acuario de laboratorio |
+| L3 `cuerpos-problemas-en-contexto` | termo cilíndrico | cámara de frío |
+
+Fase 2b cerrada. Fase 3 desbloqueada para las tres lecciones.
 
 **Este documento no asigna ids de `catalogoErrores`.** Los errores van numerados `P1`…`P12` («propuesta»), deliberadamente en otro namespace que `error-N`, y requieren firma aparte antes de convertirse en catálogo real (SKILL.md §1 regla 4).
 
@@ -164,38 +180,49 @@ Casos base usados en la columna de verificación: **caja 6×3×4** (S = 108, V =
 
 ## Candidatos de dominio por lección
 
-**No verificados.** Cada bloque trae la frase compuesta **y** las palabras sueltas más distintivas, porque buscar solo la frase no basta (SKILL.md §2c). Ordenados por prioridad dentro de cada lección; los de reserva están para reemplazar sin volver a parar si alguno da SI.
+**Estado 2026-08-27: verificación completa. Todas las keywords consultadas volvieron LIMPIO salvo `piscina` (COLISIÓN).** Cada bloque trae la frase compuesta **y** las palabras sueltas más distintivas, porque buscar solo la frase no basta (SKILL.md §2c). Ordenados por prioridad dentro de cada lección; los de reserva están para reemplazar sin volver a parar si alguno da SI.
 
-### L1 — superficie
+### L1 — superficie · **dominios confirmados**
 
-1. **Farol de papel cilíndrico para una fiesta de barrio** — `farol`, `farolito`, `papel de seda`, `armazón`
-2. **Forrar un parlante cúbico con tela acústica** — `parlante`, `tela acústica`, `forrar`
-3. **Pintar los bloques de hormigón de una plaza** — `bloque de hormigón`, `hormigón`, `plaza`
-4. *(reserva)* **Serigrafía sobre la cara de un banco de plaza** — `serigrafía`, `banco`
+1. ✅ **Farol de papel cilíndrico para una fiesta de barrio** — `farol`, `farolito`, `papel de seda`, `armazón` → LIMPIO. **Núcleo de L1** (paso `descubrimiento`, la red desplegada).
+2. ✅ **Forrar un parlante cúbico con tela acústica** — `parlante`, `tela acústica`, `forrar` → LIMPIO. **Aplicación de L1.**
+3. ~~Pintar los bloques de hormigón de una plaza~~ — LIMPIO pero **descartado (decisión de Benja 2026-08-27: `plaza` sobreexpuesta).** Disponible como reserva sin volver a consultar.
+4. ~~*(reserva)* Serigrafía sobre la cara de un banco de plaza~~ — descartado junto con el ítem 3 (`plaza`). `serigrafía` LIMPIO, disponible como reserva.
 
-### L2 — volumen
+### L2 — volumen · **dominios confirmados (aplicación con nota)**
 
-1. **Llenar una piscina inflable del patio de un jardín infantil** — `piscina inflable`, `piscina`, `inflable`
-2. **Acuario del laboratorio de biología** — `acuario`, `pecera`, `laboratorio de biología`
-3. **Silo cilíndrico de granos** — `silo`, `granos`, `acopio` ⚠️ ver advertencia de proporciones abajo
-4. *(reserva)* **Cuánta arena entra en un arenero techado** — `arenero`, `arena`
+1. ~~Llenar una piscina inflable del patio de un jardín infantil~~ — **descartado: `piscina` → COLISIÓN** (`MA-22_Cuerpos_Geometricos.md`, 2 ítems DEMRE con fórmula de volumen). `inflable` además fuera de alcance por decisión de Benja.
+2. ✅ **Acuario del laboratorio de biología** — `acuario`, `pecera`, `laboratorio de biología` → LIMPIO. **Aplicación de L2.**
+3. ✅ **Silo cilíndrico de granos** — `silo`, `granos`, `acopio` → LIMPIO. **Reserva de L2** ⚠️ solo con proporciones achaparradas (`r=5, h=20`) o en ítems sin figura — ver advertencia de proporciones abajo.
+4. ✅ **Cuánta arena entra en un arenero techado** — `arenero`, `arena` → ambos LIMPIO. **Núcleo de L2** (paso `descubrimiento`, la tabla de capas).
 
-### L3 — problemas en contexto
+### L3 — problemas en contexto · **dominios confirmados**
 
-1. **Termo cilíndrico: cuánto líquido lleva y cuánto aislante lo recubre** — `termo`, `aislante`, `aislación` — *es el mejor candidato del módulo:* un mismo objeto que admite las dos preguntas, que es literalmente el contenido de L3
-2. **Bodega de un camión de mudanza** — `bodega`, `mudanza`, `camión`
-3. **Estanque de agua de un techo** — ⛔ **descartado de antemano**, sin necesidad de consultar: «bidón/estanque de agua» ya figura en la lista de dominios usados de `docs/diseno-modulo-funcion-cuadratica.md`
-4. *(reserva)* **Cámara de frío de un local de helados** — `cámara de frío`, `helados`
+1. ✅ **Termo cilíndrico: cuánto líquido lleva y cuánto aislante lo recubre** — `termo`, `aislante`, `aislación` → LIMPIO. **Núcleo de L3.** Mejor candidato del módulo: un mismo objeto que admite las dos preguntas.
+2. ~~Bodega de un camión de mudanza~~ — **fuera de alcance (decisión de Benja 2026-08-27).** No consultado.
+3. **Estanque de agua de un techo** — ⛔ descartado de antemano: «bidón/estanque de agua» ya figura en dominios usados de `docs/diseno-modulo-funcion-cuadratica.md`.
+4. ✅ **Cámara de frío de un local de helados** — `cámara de frío` → LIMPIO (`helados` descartado como motivo del contexto, se conserva la cámara). **Aplicación de L3 (firmada 2026-08-27):** segunda escena distinta del termo, encaja con capacidad + conversión m³↔litros + problema de dos pasos.
 
 ### Dominios prohibidos por reutilización interna (no hace falta consultarlos, ya están ocupados)
 
 Del propio eje Geometría: velas y náutica (`vela mayor`, `trinquete`, `pujamen`, `pena`, `ollao`), techo de caseta, invernadero, patio rectangular, cancha, diagonal del patio. De otros módulos: caja de cartón para manualidades y cajas apiladas (⚠️ **especialmente peligroso acá**, porque este módulo trata sobre cajas — hay que evitar el *contexto* «caja de cartón» aunque el cuerpo geométrico sea un paralelepípedo), taller de esmaltes, auditorio y butacas, patio con baldosas, microscopio y perilla graduada, medicamento y dosis, barcazas y contenedores, feria del libro, entradas a evento, boletería, buceo, termómetro y refugio de montaña, huerto escolar, letrero-arco de gimnasio, dron de reparto, llaveros, campeonato de tenis de mesa, carteles, murales y tarros de pintura (⚠️ **`tarros` también es peligroso**: «cuánta pintura» es un contexto natural de superficie), bolsas de bolitas, jaulas de gatos.
 
-### Comando propuesto para la PARADA 1
+### Comando de la PARADA 1 — corrido y cerrado (2026-08-27)
+
+Dos tandas, ambas por Benja fuera de sesión:
 
 ```
-node scripts/consultar-fuentes.mjs "farol de papel" "farol" "papel de seda" "parlante" "tela acustica" "forrar" "bloque de hormigon" "hormigon" "serigrafia" "piscina inflable" "piscina" "acuario" "pecera" "silo" "granos" "arenero" "termo" "aislante" "aislacion" "bodega" "mudanza" "camara de frio" "helados"
+# Tanda 1
+node scripts/consultar-fuentes.mjs "piscina inflable" "piscina" "arena"
+#   → piscina / piscina inflable: COLISIÓN (MA-22_Cuerpos_Geometricos.md)
+#   → arena: LIMPIO
+
+# Tanda 2 — 18 keywords
+node scripts/consultar-fuentes.mjs "farol de papel" "farol" "papel de seda" "parlante" "tela acustica" "forrar" "bloque de hormigon" "hormigon" "serigrafia" "acuario" "pecera" "silo" "granos" "arenero" "termo" "aislante" "aislacion" "camara de frio"
+#   → las 18: LIMPIO (NO), sin hits
 ```
+
+`bodega` / `mudanza` / `helados` no se consultaron: fuera de alcance por decisión de Benja.
 
 ---
 
@@ -251,9 +278,9 @@ Pero es demasiado buen material pedagógico para descartarlo sin pensar: es la d
 
 ### Reparto de escenas (sin repetir entre lecciones ni con el cierre)
 
-- **L1** — núcleo: el candidato 1 de L1 desplegado (la red). Aplicación: candidato 2 o 3. Cifras: ternas del barrido con `a ≤ 8`, cubo de arista 4 o 5, cilindro `r=5, h=20`.
-- **L2** — núcleo: candidato 1 de L2. Aplicación: candidato 2. **Aristas y radios distintos de los de L1**, para no arrastrar `P3`/`P11` a una colisión.
-- **L3** — núcleo: el termo (los dos sentidos sobre el mismo objeto). Aplicación: candidato 2. Suma la conversión m³ ↔ litros, que es donde vive `P12`.
+- **L1** — núcleo: **farol de papel** desplegado (la red). Aplicación: **parlante cúbico** (o plaza/hormigón de reserva). Cifras: ternas del barrido con `a ≤ 8`, cubo de arista 4 o 5, cilindro `r=5, h=20`.
+- **L2** — núcleo: **arenero techado** (candidato 1 original `piscina`, descartado por colisión). Aplicación: **acuario**; silo de reserva solo achaparrado o sin figura. **Aristas y radios distintos de los de L1**, para no arrastrar `P3`/`P11` a una colisión.
+- **L3** — núcleo: el **termo** (los dos sentidos sobre el mismo objeto). Aplicación: **cámara de frío** (firmada 2026-08-27) — escena distinta del termo, con capacidad + conversión m³ ↔ litros, que es donde vive `P12`, y un problema de dos pasos.
 - **Cierre** — reutiliza las escenas ya verificadas con cifras nuevas por ítem, más el candidato de reserva que haya quedado libre. La matriz de 8 ítems × 4 habilidades se define en Fase 6, no acá.
 
 ---
@@ -274,9 +301,9 @@ No se agrega. Fue eliminado del contrato el 2026-08-12 (CLAUDE.md regla 5). El g
 
 ---
 
-## Candidatas para L1 — pendiente de confirmar dominio
+## Candidatas para L1 — dominio confirmado (farol + parlante, 2026-08-27)
 
-Las medidas son **independientes del dominio**: una caja mide 6 × 3 × 4 sea un farol, un parlante o un bloque. Lo que el dominio decide es la *unidad* (cm, m) y la plausibilidad del objeto. Por eso esta selección se puede dejar hecha antes del veredicto de fuentes; lo que no se puede es escribir el JSON.
+Las medidas son **independientes del dominio**: una caja mide 6 × 3 × 4 sea un farol, un parlante o un bloque. Lo que el dominio decide es la *unidad* (cm, m) y la plausibilidad del objeto. Con `farol` y `parlante` LIMPIO, la selección de ternas de abajo queda firme y el JSON de L1 se puede escribir.
 
 Filtro aplicado a las 168 ternas dibujables: además de la banda de dibujo, se exige que **ningún valor producido por un mecanismo de error iguale a un valor correcto del mismo archivo** (`docs/reglas-modulo.md` regla 3b, que es 🔴). Se verificó con `motivoRechazoParalelepipedo` y `motivoRechazoCilindro` reales, no a ojo.
 
@@ -341,6 +368,14 @@ Unidad de cada medida (cm o m), que depende del dominio; qué caja va en `practi
 
 Firmado el 2026-08-26: el reparto de las 12 celdas con las 3 de `volumen × desarrollo` sin usar; el renombre de L3, ya aplicado; los 12 errores como propuesta `P1`…`P12` con `P3` y `P9` marcados de riesgo y sin resolver; y el uso deliberado del cubo de arista 6 vía `auditoria.colisionesPermitidas`.
 
-**Pendiente y bloqueante para la Fase 3:** la corrida de `consultar-fuentes.mjs` con el comando de la PARADA 1. Ningún JSON se escribe antes de ese veredicto.
+**Fase 2b — cerrada y firmada (2026-08-27).** Verificación de colisión completa (dos tandas, Benja fuera de sesión). Único hit: `piscina` → COLISIÓN (`MA-22_Cuerpos_Geometricos.md`, 2 ítems DEMRE), descartada. Todo el resto LIMPIO. **Dominios finales firmados:**
+
+- **L1** — núcleo `farol de papel` (cilindro), aplicación `parlante cúbico con tela acústica`. Reserva limpia: `plaza`/bloques de hormigón, `serigrafía`.
+- **L2** — núcleo `arenero techado` (`arena` + `arenero` ambos LIMPIO; reemplaza a `piscina`), aplicación `acuario`. Reserva: `silo` (solo achaparrado o sin figura).
+- **L3** — núcleo `termo`, aplicación `cámara de frío` (opción 2 firmada por Benja: escena distinta del termo, con capacidad + conversión m³↔litros + problema de dos pasos). La opción 1 —termo cubriendo las dos escenas— queda descartada.
+
+Decisiones de alcance de Benja registradas: `plaza` y `helados` descartados como dominios (keywords quedaron LIMPIO, disponibles de reserva); `piscina inflable`, `bodega`, `camión` / `mudanza` fuera de alcance (no consultados).
+
+**Fase 3 desbloqueada para las tres lecciones.** Ningún dominio queda pendiente de verificación.
 
 **Pendiente y no bloqueante:** convertir `P1`…`P12` en `error-1`…`error-12` (SKILL.md §1 regla 4). Se hace al escribir L1, con la numeración correlativa definitiva.
