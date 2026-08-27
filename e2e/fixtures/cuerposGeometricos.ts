@@ -189,8 +189,25 @@ export const CUERPOS_DESARROLLO: { titulo: string; bloque: BloqueVisualizacion }
 ];
 
 /**
- * Casos que el type guard DEBE rechazar. Se muestran en la vista previa para
- * comprobar a ojo que degradan al `<figure>` de texto en vez de reventar.
+ * ⚠️ ESTOS CUATRO CASOS ESTÁN MAL A PROPÓSITO. NO LOS "ARREGLES".
+ *
+ * Cada uno viola exactamente una guarda de `esDatosCuerpoGeometrico`, y existen
+ * para comprobar que el bloque **degrada al `<figure>` de texto** en vez de
+ * reventar la página o dibujarse ilegible:
+ *
+ * - razón 10          → falla la banda de razón y la de píxeles de la caja
+ * - cilindro h/r = 20 → falla `RAZON_CILINDRO_MAX`
+ * - sin `enfasis`     → falta un campo obligatorio
+ * - `vista` con typo  → un literal que no es "solido" ni "desarrollo"
+ *
+ * `e2e/cuerpos-geometricos.spec.ts` afirma sobre ellos que no aparece ningún
+ * `<svg>`, que sí aparece su `descripcion`, y que la página no lanza
+ * (`pageerror`). Corregir las medidas o completar los campos que faltan
+ * vaciaría ese test sin que ninguna aserción se ponga roja: el spec seguiría
+ * pasando contra cuatro casos que ya no prueban nada.
+ *
+ * Si alguna guarda cambia y uno de estos deja de ser rechazado, lo correcto es
+ * empujarlo más lejos de la banda nueva, no moverlo a `CUERPOS_SOLIDO`.
  */
 export const CUERPOS_FUERA_DE_BANDA: { titulo: string; bloque: BloqueVisualizacion }[] = [
   {

@@ -1,5 +1,40 @@
 # Pendientes técnicos
 
+## 🔴 `CATALOGO` de descripciones va 6 lecciones atrás: las de Cuadrática y Geometría se anuncian como "funciones lineales" (abierta 2026-08-26, al preparar la infraestructura de `cuerpos-geometricos`)
+
+`lib/descripcionesLecciones.tsx` tiene 25 entradas y hay 31 lecciones con
+archivo en `content/lecciones/` (30 del temario más `l0-demo`). Las 6 que
+faltan son las 3 de `funcion-cuadratica` y las 3 de `figuras-geometricas`:
+
+```
+cuadratica-sube-y-baja, cuadratica-punto-mas-alto, cuadratica-donde-toca-el-eje,
+figuras-triangulo-no-se-rompe, figuras-borde-y-superficie, figuras-problemas-con-forma
+```
+
+**No es solo un test rojo, es copy equivocado en producción.**
+`presentacionDeLeccion()` cae a `RESPALDO`, que dice *"Una lección interactiva
+de funciones lineales, paso a paso."* con `IlustracionPlano`. Eso se muestra en
+`/tema/{id}` vía `CaminoLecciones.tsx:56`. O sea: hoy la lección del teorema de
+Pitágoras se le presenta al estudiante como una lección de funciones lineales,
+con un plano cartesiano al lado. El comentario del propio archivo lo anticipa
+—"cae en `RESPALDO` en silencio"— y el test existe justamente para que no pase.
+
+**Cómo se detecta:** `npm run test:unit` falla con 2 hallazgos en
+`lib/__tests__/descripcionesLecciones.test.ts` — uno lista los 6 ids sin entrada
+y otro ancla el conteo (`actual 31, expected 25`). Están rojos desde antes del
+2026-08-26 y no los introdujo el trabajo de cuerpos-geométricos, que dejó
+`npm run auditar` byte a byte idéntico a su baseline.
+
+**Va a empeorar de forma predecible.** Cuando entren las 3 lecciones de
+`cuerpos-geometricos` la brecha pasa de 6 a 9, y el ancla del conteo de 31 a 34.
+El cierre no cuenta: `CATALOGO` mapea `LeccionId`, no cierres.
+
+**Cerrarlo son dos cosas, en este orden:** escribir las 6 (pronto 9) entradas de
+copy con su `Ilustracion` — hay ilustraciones de eje temático ya disponibles en
+`components/ilustraciones/ejes/`, `IlustracionEjeGeometria` entre ellas — y
+recién ahí actualizar el número anclado en el test. Actualizar el ancla sin
+escribir el copy convierte el test en un sello de goma y deja el bug vivo.
+
 ## 🔴 El guard `catalogo-divergente` no cubre los cierres: nada compara su catálogo con el de sus lecciones (abierta 2026-08-14, al cerrar el módulo Expresiones algebraicas)
 
 Desde la regla 5 de `docs/reglas-modulo.md` corregida el 2026-08-14, el catálogo
