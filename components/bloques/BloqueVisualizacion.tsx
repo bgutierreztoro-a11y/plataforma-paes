@@ -12,7 +12,18 @@ import {
   type DatosTriangulo,
   type DatosTrianguloPitagoras,
 } from "@/components/ilustraciones/IlustracionFiguraGeometrica";
+import {
+  CUERPOS_GEOMETRICOS_VALIDOS,
+  ENFASIS_VALIDOS,
+  IlustracionCuerpoGeometrico,
+  type DatosCilindro,
+  type DatosCubo,
+  type DatosCuerpoGeometrico,
+  type DatosParalelepipedo,
+  type EnfasisCuerpo,
+} from "@/components/ilustraciones/IlustracionCuerpoGeometrico";
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
+import { motivoRechazoCilindro, motivoRechazoParalelepipedo } from "@/lib/cuerposGeometricos";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
@@ -191,6 +202,72 @@ function esDatosFiguraGeometrica(datos: unknown): datos is DatosFiguraGeometrica
   }
 }
 
+/* Mismo viewBox que usa IlustracionCuerpoGeometrico. La guarda de legibilidad
+   mide píxeles, así que necesita saber contra qué lienzo se va a dibujar. */
+const VIEW_BOX_CUERPOS = { ancho: 240, alto: 200, margen: 28 };
+
+function esEnfasisValido(v: unknown): v is EnfasisCuerpo {
+  return ENFASIS_VALIDOS.includes(v as EnfasisCuerpo);
+}
+
+/**
+ * Calcado de `esDatosFiguraGeometrica`, con una diferencia de fondo: además de
+ * la forma del JSON verifica que el cuerpo sea DIBUJABLE, delegando en
+ * `motivoRechazo*` de `lib/cuerposGeometricos`. Una caja de 100×100×10 tiene
+ * los tres campos bien tipados y aun así colapsa a 7 px en pantalla.
+ *
+ * Devolver `false` en ese caso —en vez de dejar que el componente lance— hace
+ * que el bloque caiga al `<figure>` de texto de más abajo, que sigue siendo
+ * contenido legible para el estudiante.
+ */
+function esDatosCuerpoGeometrico(datos: unknown): datos is DatosCuerpoGeometrico {
+  const d = datos as { cuerpo?: unknown; enfasis?: unknown } | null;
+  if (typeof d !== "object" || d === null) return false;
+  if (!CUERPOS_GEOMETRICOS_VALIDOS.includes(d.cuerpo as (typeof CUERPOS_GEOMETRICOS_VALIDOS)[number])) {
+    return false;
+  }
+  // `enfasis` es obligatorio y explícito: a diferencia del triángulo —donde la
+  // presencia de `etiquetaAltura` distingue modo área de modo perímetro—, acá
+  // superficie y volumen piden exactamente las mismas cotas, así que no hay
+  // ningún campo cuya presencia pueda desambiguarlos.
+  if (!esEnfasisValido(d.enfasis)) return false;
+
+  switch (d.cuerpo) {
+    case "paralelepipedo": {
+      const p = d as Partial<DatosParalelepipedo>;
+      if (typeof p.largo !== "number" || typeof p.ancho !== "number" || typeof p.alto !== "number") {
+        return false;
+      }
+      // Sin mezcla parcial: las tres cotas van siempre, o el bloque no se dibuja.
+      if (
+        typeof p.etiquetaLargo !== "string" ||
+        typeof p.etiquetaAncho !== "string" ||
+        typeof p.etiquetaAlto !== "string"
+      ) {
+        return false;
+      }
+      return motivoRechazoParalelepipedo(p.largo, p.ancho, p.alto, VIEW_BOX_CUERPOS) === null;
+    }
+    case "cubo": {
+      const c = d as Partial<DatosCubo> & Record<string, unknown>;
+      if (typeof c.arista !== "number" || typeof c.etiquetaArista !== "string") return false;
+      // Un cubo que además trae largo/ancho/alto es ambiguo: no se adivina cuál
+      // gana. Es el análogo del `baseMayor > baseMenor` del trapecio — coherencia
+      // del tipo, no solo presencia de campos.
+      if ("largo" in c || "ancho" in c || "alto" in c) return false;
+      return motivoRechazoParalelepipedo(c.arista, c.arista, c.arista, VIEW_BOX_CUERPOS) === null;
+    }
+    case "cilindro": {
+      const c = d as Partial<DatosCilindro>;
+      if (typeof c.radio !== "number" || typeof c.altura !== "number") return false;
+      if (typeof c.etiquetaRadio !== "string" || typeof c.etiquetaAltura !== "string") return false;
+      return motivoRechazoCilindro(c.radio, c.altura) === null;
+    }
+    default:
+      return false;
+  }
+}
+
 function esDatosBandas(datos: unknown): datos is DatosBandas {
   const bandas = (datos as DatosBandas | null)?.bandas;
   return (
@@ -320,6 +397,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
       <figure className="rounded-panel border border-border bg-surface p-4">
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionFiguraGeometrica {...bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosCuerpoGeometrico(bloque.datos)) {
+    return (
+      <figure className="rounded-panel border border-border bg-surface p-4">
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionCuerpoGeometrico {...bloque.datos} />
       </figure>
     );
   }

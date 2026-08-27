@@ -104,6 +104,24 @@ Hay un segundo efecto que no era obvio y que cierra la puerta a la versión ante
 
 ---
 
+## 6. Un cuerpo en perspectiva no está a escala: las cotas son la única fuente de verdad
+
+En un bloque de visualización de cuerpo geométrico (`paralelepipedo`, `cubo`, `cilindro`), **ningún ítem puede pedir comparar longitudes de aristas leyéndolas del dibujo**. Ni "¿cuál arista es más larga?", ni "estima cuántas veces cabe una en otra", ni un distractor que solo se descarte mirando la figura. Las tres cotas rotuladas son la única fuente de verdad sobre las medidas.
+
+Como contrapartida, **las tres aristas acotadas van SIEMPRE rotuladas** en vista `solido`: una por dimensión, y las tres visibles. No existe un modo sin cotas. Si un enunciado necesita que una medida no se sepa, esa medida es la incógnita del problema y se dice en el texto, no se oculta borrando su etiqueta.
+
+**Origen:** Benja, 2026-08-26, al aprobar la infraestructura visual de `cuerpos-geometricos` (enmienda 1 al plan). Es una restricción derivada de una decisión de dibujo, no una preferencia.
+
+**Por qué es técnico, no de gusto:** el módulo usa proyección caballera con factor de escorzo `k = 0.5` (`FACTOR_PROFUNDIDAD` en `lib/cuerposGeometricos.ts`). La arista de profundidad se dibuja **a la mitad de su largo real**. Un cubo de arista 10 se ve con dos aristas de 10 y una de 5. Un ítem que pida comparar aristas a ojo estaría midiendo el escorzo, no la geometría, y su respuesta "correcta" sería falsa.
+
+La caballera se eligió sobre la isométrica a propósito y esa elección no se revierte para levantar esta regla: en caballera la cara frontal queda sin deformar, así que el estudiante lee `a · b` sobre un rectángulo de verdad. En isométrica las tres caras son rombos y ninguna se lee como "el rectángulo cuya área es a · b" — se pierde justo lo que el módulo enseña, a cambio de una escala que igual no sería fiel en las tres direcciones.
+
+**Mecanizada como:** parcialmente. Lo que el código sí garantiza es el lado de las cotas — `esDatosCuerpoGeometrico` en `components/bloques/BloqueVisualizacion.tsx` rechaza un bloque al que le falte cualquiera de las tres etiquetas (sin mezcla parcial, mismo criterio que el trapecio), y `ARISTAS_ACOTADAS` en `lib/cuerposGeometricos.ts` está testeado para que ninguna cota caiga sobre una arista oculta. Lo que NO se puede mecanizar es el lado del enunciado: que un ítem no pida comparar aristas a ojo lo revisa `auditor-matematico`, como el resto de la regla 3.
+
+**Además, hay cuerpos que directamente no se dibujan.** Las bandas de legibilidad viven en `lib/cuerposGeometricos.ts` con su medición: razón entre aristas ≤ 4 y arista más corta ≥ 14 px para cajas, y 0.25 ≤ altura/radio ≤ 8 para cilindros. Un bloque fuera de banda no revienta la página: cae al `<figure>` de texto y se muestra su `descripcion`. Si al escribir contenido un cuerpo no aparece dibujado, es esto, y la respuesta es cambiar las medidas del enunciado, no forzar el componente.
+
+---
+
 ## Cómo se verifica todo esto
 
 | Herramienta | Qué cubre | Qué no |
