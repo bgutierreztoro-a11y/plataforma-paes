@@ -421,7 +421,7 @@ const MODULO_POR_LECCION = {
   'figuras-problemas-con-forma': 'figuras-geometricas',
   'cuerpos-desarmar-la-caja': 'cuerpos-geometricos',
   'cuerpos-cuanto-cabe-adentro': 'cuerpos-geometricos',
-  'cuerpos-hoja-al-cilindro': 'cuerpos-geometricos',
+  'cuerpos-problemas-en-contexto': 'cuerpos-geometricos',
 };
 
 /**

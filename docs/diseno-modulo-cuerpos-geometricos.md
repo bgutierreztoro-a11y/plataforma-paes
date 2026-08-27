@@ -64,7 +64,7 @@ El cilindro no es un segundo descubrimiento: es la prueba más convincente del p
 
 **L2 `cuerpos-cuanto-cabe-adentro` — confirmado.** «Cuánto cabe adentro» es volumen dicho en lenguaje de estudiante, y es además la pregunta abierta con que cierra L1. El id y la progresión se refuerzan.
 
-**L3 `cuerpos-hoja-al-cilindro` — propongo renombrar a `cuerpos-problemas-en-contexto`.**
+**L3 `cuerpos-hoja-al-cilindro` → `cuerpos-problemas-en-contexto` — renombrado (firmado 2026-08-26, aplicado en `lib/modulos.ts`, `docs/mapa-modulos-m1.md` y `scripts/auditar-leccion.mjs`).**
 
 El motivo «hoja → cilindro» (una hoja rectangular que se enrolla y se convierte en el manto) **es el descubrimiento de L1**, no el de L3: es justamente cómo se llega a `2πrh`. Un id de L3 que aluda a un motivo que estructura la L1 queda mintiendo sobre qué enseña esa lección, y además le roba el nombre a la parte más memorable de la primera.
 
@@ -72,9 +72,9 @@ Es exactamente el caso que `docs/mapa-modulos-m1.md` describe como el único don
 
 > La excepción es un id que todavía no tiene archivo y cuyo slug alude a un motivo ya usado por otra lección: ahí sí conviene renombrarlo antes de escribir el JSON, porque no hay nada que romper.
 
-`cuerpos-hoja-al-cilindro` no tiene archivo. Y el nombre propuesto sigue la convención que el propio corpus ya usa para este mismo descriptor del temario: `enteros-problemas-en-contexto`, `potencias-problemas-en-contexto`. Precedente de renombre idéntico: `potencias-exponente-racional` → `potencias-problemas-en-contexto`, 2026-08-15, por esta misma razón.
+`cuerpos-hoja-al-cilindro` no tenía archivo. Y el nombre propuesto sigue la convención que el propio corpus ya usa para este mismo descriptor del temario: `enteros-problemas-en-contexto`, `potencias-problemas-en-contexto`. Precedente de renombre idéntico: `potencias-exponente-racional` → `potencias-problemas-en-contexto`, 2026-08-15, por esta misma razón.
 
-**Requiere tu firma** y toca `lib/modulos.ts` (`IDS_LECCION` línea 85 y el tema línea 353), `docs/mapa-modulos-m1.md` y `scripts/auditar-leccion.mjs` (`MODULO_POR_LECCION`, que ya lo registré con el nombre viejo en `15b6253`). Si prefieres conservarlo, se conserva y no pasa nada grave: el costo es un slug que apunta al descubrimiento de otra lección.
+Aplicado en los tres lugares donde vivía el id: `lib/modulos.ts` (`IDS_LECCION` y el tema), `docs/mapa-modulos-m1.md` (con la nota del renombre y el título alineado al descriptor literal del temario) y `scripts/auditar-leccion.mjs` (`MODULO_POR_LECCION`, donde había entrado con el nombre viejo en `15b6253`). No había archivo de contenido ni ruta publicada que romper.
 
 ---
 
@@ -274,10 +274,73 @@ No se agrega. Fue eliminado del contrato el 2026-08-12 (CLAUDE.md regla 5). El g
 
 ---
 
-## Lo que necesita tu firma antes de la Fase 3
+## Candidatas para L1 — pendiente de confirmar dominio
 
-1. **El reparto de las 12 celdas** y, en particular, que las 3 de `volumen × desarrollo` queden sin usar.
-2. **El renombre de L3** `cuerpos-hoja-al-cilindro` → `cuerpos-problemas-en-contexto`, o su rechazo.
-3. **Los 12 errores propuestos**, para convertirlos en `error-1`…`error-12` (SKILL.md §1 regla 4).
-4. **El cubo de arista 6** con colisión declarada, o su reemplazo.
-5. **La corrida de `consultar-fuentes.mjs`** con el comando de la PARADA 1.
+Las medidas son **independientes del dominio**: una caja mide 6 × 3 × 4 sea un farol, un parlante o un bloque. Lo que el dominio decide es la *unidad* (cm, m) y la plausibilidad del objeto. Por eso esta selección se puede dejar hecha antes del veredicto de fuentes; lo que no se puede es escribir el JSON.
+
+Filtro aplicado a las 168 ternas dibujables: además de la banda de dibujo, se exige que **ningún valor producido por un mecanismo de error iguale a un valor correcto del mismo archivo** (`docs/reglas-modulo.md` regla 3b, que es 🔴). Se verificó con `motivoRechazoParalelepipedo` y `motivoRechazoCilindro` reales, no a ojo.
+
+### Las 6 celdas de L1
+
+| celda | paso previsto | medidas | superficie | por qué esta |
+|---|---|---|---|---|
+| pp · sup · sólido + desarrollo | `descubrimiento` | **6 × 3 × 4** | **108** | Caras de 18, 24 y 12: se suman de cabeza y se ve que el total dobla. Razón 2, holgadamente dibujable. |
+| cubo · sup · sólido + desarrollo | `generalizacion` | **arista 5** | **150** | 6 × 25 hecho de memoria. Se llega a `6a²` contando, no sustituyendo. |
+| cil · sup · sólido + desarrollo | `practica` / `aplicacion` | **r = 10, h = 20** | **1884** | Único candidato donde las cinco cifras clave son **enteras** con π ≈ 3,14: tapas 628, manto 1256, total 1884. Sin eso el descubrimiento se pierde detrás de la aritmética. |
+
+Caja adicional para el otro de `practica`/`aplicacion`: **5 × 3 × 4** (S = 94) o **3 × 5 × 7** (S = 142). Se elige al escribir, según cuál calce con el contexto.
+
+Cierre de L1 — la pregunta abierta que resuelve L2: **cubo de arista 6**, `S = 216` y `V = 216`. Va en un bloque de texto o predicción, sin ítem PAES asociado, con `auditoria.colisionesPermitidas` declarando el 216 y su motivo.
+
+### Cilindros descartados y por qué
+
+```
+r=10 h=10   tapas = manto = 628          colisión interna
+r=10 h= 5   P4 = tapas = 628             colisión interna
+r= 2 h= 5   P6 = manto = 62,8            colisión interna
+r= 5 h=10   solo 2 de 5 cifras libres, y P4 = 392,5 (decimal feo)
+r= 2 h=30   h/r = 15                     NO DIBUJABLE
+```
+
+Segundo mejor si `r = 10, h = 20` choca con el dominio: **r = 10, h = 15** (tapas 628, manto 942, S 1570, todas enteras).
+
+### Cubos: qué no usar
+
+- **arista 4 — no usar en este módulo.** `P3` (contar solo 4 caras) da 64, que es el volumen de ese mismo cubo. Es el riesgo que ya estaba marcado en `P3`, y se evita simplemente no eligiendo el 4.
+- **arista 6 — reservada** para la pregunta abierta de cierre de L1. No reutilizar en otro paso.
+- **L2 no puede repetir la arista 5 de L1** si calcula su volumen: entrarían 125 y 150 en archivos distintos, lo que es solo 🟡, pero conviene separarlas igual. Candidatas libres para L2: 3, 8, 10.
+
+### ⚠️ Hallazgo nuevo: `P5` no es utilizable en L1
+
+`P5` (calcular solo el manto y olvidar las dos tapas) produce **exactamente el valor del manto**. No es una coincidencia numérica que se arregle cambiando las medidas: es una identidad. El mecanismo del error *es* quedarse con el manto.
+
+Con el cilindro elegido:
+
+```
+valores CORRECTOS que L1 tiene que mostrar:
+  tapas 2πr² = 628 | manto 2πrh = 1256 | superficie total = 1884
+valores que producen los mecanismos de error:
+  P4 (una sola tapa) = 1570
+  P5 (sin tapas)     = 1256   <-- IDÉNTICO al manto correcto
+  P6 (manto = πr²h)  = 6280
+```
+
+Y L1 **tiene** que mostrar el manto por separado: desenrollarlo es el descubrimiento. O sea que un distractor de `P5` valdría lo mismo que una respuesta correcta del mismo archivo y `colision-distractor-correcta` lo marcaría 🔴, con razón.
+
+**Propuesta:** `P5` no nace en L1. Nace en **L3**, donde el cilindro aparece como objeto terminado y el manto no se expone como paso intermedio. En L1 el error de "olvidar las tapas" se cubre con `P4` (olvidar **una** tapa), que sí produce un valor propio (1570) y es además el error más frecuente de verdad.
+
+Esto no invalida `P5`; le cambia el domicilio. Lo anoto acá porque afecta la numeración correlativa del catálogo cuando se conviertan los `P` en `error-N`, y porque es exactamente el tipo de defecto que el SKILL §2a manda detectar **antes** de escribir el distractor y no después.
+
+### Lo que queda por decidir al escribir (no acá)
+
+Unidad de cada medida (cm o m), que depende del dominio; qué caja va en `practica` y cuál en `aplicacion`; y las cifras de los 2–3 `itemsPAES`, que tienen que ser distintas de las de los pasos y verificarse con `node -e` una por una.
+
+---
+
+## Estado de las firmas
+
+Firmado el 2026-08-26: el reparto de las 12 celdas con las 3 de `volumen × desarrollo` sin usar; el renombre de L3, ya aplicado; los 12 errores como propuesta `P1`…`P12` con `P3` y `P9` marcados de riesgo y sin resolver; y el uso deliberado del cubo de arista 6 vía `auditoria.colisionesPermitidas`.
+
+**Pendiente y bloqueante para la Fase 3:** la corrida de `consultar-fuentes.mjs` con el comando de la PARADA 1. Ningún JSON se escribe antes de ese veredicto.
+
+**Pendiente y no bloqueante:** convertir `P1`…`P12` en `error-1`…`error-12` (SKILL.md §1 regla 4). Se hace al escribir L1, con la numeración correlativa definitiva.

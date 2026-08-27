@@ -245,7 +245,19 @@ contradiciendo la definición en prosa de «Completo» de este mismo documento.
 |---|---|---|
 | `cuerpos-desarmar-la-caja` | Área de superficie de paralelepípedos, cubos y cilindros | no |
 | `cuerpos-cuanto-cabe-adentro` | Volumen de paralelepípedos, cubos y cilindros | no |
-| `cuerpos-hoja-al-cilindro` | Problemas de área y volumen en contexto | no |
+| `cuerpos-problemas-en-contexto` | Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos | no |
+
+`cuerpos-hoja-al-cilindro` se renombró a `cuerpos-problemas-en-contexto` el
+2026-08-26, antes de escribir su JSON. El motivo «hoja → cilindro» —una hoja
+rectangular que se enrolla y resulta ser el manto— **es el descubrimiento de
+L1**: es exactamente cómo se llega a `2πrh`. Un id de L3 aludiendo a él quedaba
+mintiendo sobre qué enseña esa lección y le robaba el nombre a la parte más
+memorable de la primera. Es el caso que este mismo documento describe más
+arriba como el único donde conviene renombrar: id sin archivo cuyo slug alude a
+un motivo ya usado por otra lección. Mismo criterio y mismo desenlace que
+`potencias-exponente-racional` → `potencias-problemas-en-contexto` (2026-08-15).
+El título también se alineó con el descriptor literal del temario
+(`docs/temario-demre-m1-2027.md:99`).
 
 ### 12. Transformaciones isométricas — `transformaciones-isometricas`
 

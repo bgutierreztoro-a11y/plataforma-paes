@@ -82,7 +82,7 @@ export const IDS_LECCION = [
   "figuras-problemas-con-forma",
   "cuerpos-desarmar-la-caja",
   "cuerpos-cuanto-cabe-adentro",
-  "cuerpos-hoja-al-cilindro",
+  "cuerpos-problemas-en-contexto",
   "isometrias-mover-sin-deformar",
   "isometrias-girar-reflejar-trasladar",
   "isometrias-figura-y-su-imagen",
@@ -350,7 +350,7 @@ export const EJES = [
         lecciones: [
           "cuerpos-desarmar-la-caja",
           "cuerpos-cuanto-cabe-adentro",
-          "cuerpos-hoja-al-cilindro",
+          "cuerpos-problemas-en-contexto",
         ],
       },
       {
