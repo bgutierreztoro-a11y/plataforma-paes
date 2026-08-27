@@ -4,6 +4,7 @@ import { escalarPuntosAViewBox, type Punto } from "./figurasGeometricas.ts";
 import {
   ARISTA_MINIMA_PX,
   ARISTAS_ACOTADAS,
+  ARISTAS_OCULTAS,
   CARAS_VISIBLES,
   FACTOR_PROFUNDIDAD,
   RAZON_CILINDRO_MAX,
@@ -126,12 +127,36 @@ test("los 8 vértices caen dentro del área útil del viewBox", () => {
   }
 });
 
-test("las 3 aristas acotadas son una por dimensión y concurren en el mismo vértice", () => {
+test("las 3 aristas acotadas son una por dimensión, visibles y perpendiculares entre sí", () => {
   assert.deepEqual(
     ARISTAS_ACOTADAS.map((a) => a.dimension),
     ["largo", "alto", "ancho"],
   );
-  assert.ok(ARISTAS_ACOTADAS.every((a) => a.desde === 0));
+
+  // Ninguna puede ser una arista oculta: una cota sobre una arista punteada le
+  // pide al estudiante que mida algo que el dibujo declara que no se ve.
+  const ocultas = new Set(ARISTAS_OCULTAS.map(([a, b]) => [a, b].sort().join("-")));
+  for (const { desde, hasta } of ARISTAS_ACOTADAS) {
+    assert.ok(
+      !ocultas.has([desde, hasta].sort().join("-")),
+      `la arista ${desde}-${hasta} está en ARISTAS_OCULTAS y no puede llevar cota`,
+    );
+  }
+
+  // Y los tres vértices que tocan tienen que estar en la silueta, no adentro.
+  const enSilueta = new Set<number>(SILUETA);
+  for (const { desde, hasta } of ARISTAS_ACOTADAS) {
+    assert.ok(enSilueta.has(desde) && enSilueta.has(hasta), `${desde}-${hasta} toca un vértice interior`);
+  }
+
+  // Una por dimensión: sin escalar al viewBox, sus largos proyectados son
+  // exactamente largo, alto y k·ancho — la tercera escorzada, que es justo lo
+  // que hace que el dibujo no esté a escala en profundidad.
+  const v = verticesParalelepipedo(8, 5, 6);
+  assert.deepEqual(
+    ARISTAS_ACOTADAS.map(({ desde, hasta }) => Number(largo(v[desde], v[hasta]).toFixed(9))),
+    [8, 6, FACTOR_PROFUNDIDAD * 5],
+  );
 });
 
 // ---------- aristaMasCortaEnPantalla y las guardas de legibilidad ----------

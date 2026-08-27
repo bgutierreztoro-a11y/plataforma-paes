@@ -109,14 +109,25 @@ export const ARISTAS_OCULTAS = [
 ] as const;
 
 /**
- * Las 3 aristas que concurren en el vértice frontal-inferior-izquierdo
- * (índice 0). Son las que SIEMPRE van rotuladas en vista "solido", una por
- * dimensión: largo (0→1), alto (0→3) y ancho/profundidad (0→4).
+ * Las 3 aristas que llevan cota, una por dimensión. SIEMPRE van rotuladas en
+ * vista "solido": no hay modo sin cotas (`docs/reglas-modulo.md` regla 6).
+ *
+ * Forman el camino 3→0→1→5, o sea el "codo" que baja por la izquierda de la
+ * cara frontal, cruza su base y sigue hacia el fondo. Son mutuamente
+ * perpendiculares en el espacio y —esto es lo que las eligió— las tres son
+ * VISIBLES.
+ *
+ * La tentación es tomar las tres que concurren en el vértice frontal-inferior-
+ * izquierdo (0→1, 0→3, 0→4), pero 0→4 es una de las aristas ocultas: el vértice
+ * 4 cae dentro de la silueta y esa arista se dibuja punteada. Poner una cota
+ * sobre una arista punteada le pide al estudiante que mida algo que el dibujo
+ * está declarando que no se ve. Se usa 1→5 en su lugar, que es la misma
+ * dirección y el mismo largo, sobre la arista visible del borde inferior derecho.
  */
 export const ARISTAS_ACOTADAS = [
   { desde: 0, hasta: 1, dimension: "largo" },
-  { desde: 0, hasta: 3, dimension: "alto" },
-  { desde: 0, hasta: 4, dimension: "ancho" },
+  { desde: 3, hasta: 0, dimension: "alto" },
+  { desde: 1, hasta: 5, dimension: "ancho" },
 ] as const;
 
 /** Razón entre la arista mayor y la menor. Vale 1 en un cubo. */
