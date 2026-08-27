@@ -419,6 +419,9 @@ const MODULO_POR_LECCION = {
   'figuras-triangulo-no-se-rompe': 'figuras-geometricas',
   'figuras-borde-y-superficie': 'figuras-geometricas',
   'figuras-problemas-con-forma': 'figuras-geometricas',
+  'cuerpos-desarmar-la-caja': 'cuerpos-geometricos',
+  'cuerpos-cuanto-cabe-adentro': 'cuerpos-geometricos',
+  'cuerpos-hoja-al-cilindro': 'cuerpos-geometricos',
 };
 
 /**
