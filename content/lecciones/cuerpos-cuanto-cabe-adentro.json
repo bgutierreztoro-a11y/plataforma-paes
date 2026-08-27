@@ -1,0 +1,802 @@
+{
+  "tipo": "leccion",
+  "id": "cuerpos-cuanto-cabe-adentro",
+  "titulo": "Volumen de paralelepípedos, cubos y cilindros",
+  "objetivo": "Calcular el volumen de paralelepípedos, cubos y cilindros entendiéndolo como el área de la base repetida a lo alto (área de la base × altura), y reconociendo que a·b·c, a³ y π·r²·h no son reglas que memorizar, sino la misma idea —cuántas capas iguales llenan el cuerpo— aplicada a tres bases distintas.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Área de superficie de paralelepípedos, cubos y cilindros, y que se mide en unidades cuadradas (Lección 1 de este módulo)",
+    "Área de un rectángulo (base × altura) y área de un círculo (π × radio², con π ≈ 3,14)",
+    "Multiplicación de números decimales"
+  ],
+  "conceptos": [
+    "el volumen de un cuerpo es el área de su base repetida a lo alto: cuántas capas iguales caben dentro de él",
+    "volumen de un paralelepípedo: área de la base (largo × ancho) multiplicada por la altura, a × b × c",
+    "volumen de un cubo: el caso en que la base es un cuadrado y la altura es igual a la arista, a² × a = a³",
+    "volumen de un cilindro: el área del círculo de la base (π × radio²) multiplicada por la altura, π × radio² × altura",
+    "el volumen se mide en unidades cúbicas (dm³, cm³, m³), a diferencia de la superficie, que se mide en unidades cuadradas; 1 dm³ equivale a 1 litro"
+  ],
+  "_notasInternas": [
+    "L2 del módulo cuerpos-geometricos (eje Geometría, módulo #11). Descriptor DEMRE / docs/mapa-modulos-m1.md: 'Volumen de paralelepípedos, cubos y cilindros'. Descubrimiento fijado por docs/diseno-modulo-cuerpos-geometricos.md: el volumen es una capa (el área de la base) repetida a lo alto (la altura). Un descubrimiento, tres casos: base rectángulo → a·b·c; base cuadrado → a³; base círculo → π·r²·h.",
+    "catalogoErrores de L2: error-7, error-8, error-9, error-10. TODOS nacen en este archivo. Ningún id de L1 se embebe: los seis ids de L1 (error-1..error-6) son mecanismos de área de superficie (contar caras, 2(a+b+c), 4a², una tapa, πr²·h en el manto, radio/diámetro en fórmulas de superficie) y ningún distractor de L2 usa un mecanismo de superficie. Por regla 5 de docs/reglas-modulo.md se embebe solo el subconjunto que los propios distractores usan; ese subconjunto no incluye ningún id de L1.",
+    "Mapeo desde la propuesta P1..P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): error-7 ← P8 (sumar las tres dimensiones en vez de multiplicarlas); error-8 ← P9 (en el cubo, arista × 3 en vez de arista³); error-9 ← P10 (en el cilindro, circunferencia 2πr como si fuera el área de la base al calcular el volumen). error-10 NO viene de P1..P12: es un mecanismo nuevo detectado al redactar (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por Benjamín en el chat de esta sesión antes de escribir ningún distractor (SKILL §1 regla 4). Se cataloga porque aparece en ~12 distractores del archivo; dejarlo como feedback artesanal repetido sería peor. P11 (magnitud equivocada) y P12 (conversión m³↔litros) son de L3 y no se catalogan acá.",
+    "error-9 es el espejo de error-5 de L1: error-5 usa πr²·h donde va 2πr·h (el manto, superficie); error-9 usa 2πr·h donde va πr²·h (la base, volumen). Dirección opuesta, contexto opuesto, ids distintos.",
+    "Identidad evitada: el distractor de error-9 (2πrh) iguala la respuesta correcta (πr²h) cuando r = 2. Todos los cilindros del archivo tienen radio ≥ 3, así que 2πrh ≠ πr²h en todos los casos (verificado node -e).",
+    "error-7 y error-8 producen el mismo número en un cubo (a+b+c = 3a). error-7 se usa solo en distractores de caja/paralelepípedo; error-8 solo en distractores de cubo. Nunca los dos en el mismo ítem. El cubo del ejemplo de generalizacion se fijó en arista 2 (no 3) para que error-8 (2×3=6), error-10 (2×2=4) y la respuesta (2³=8) sean tres números distintos.",
+    "Unidad: decímetros (dm) en toda la lección. 1 dm³ = 1 litro, lo que prepara la conversión de unidades de L3 sin hacerla acá. Las medidas son independientes del dominio (un cuerpo mide 5 × 4 × 3 sea un arenero o un acuario); el dominio fija la unidad y la plausibilidad del objeto.",
+    "Cuerpos y cifras por paso (todo dm, verificado con node -e, π = 3,14 exacto): pensar/pistas/descubrimiento caja-arenero 5×4×3 (fondo 20, 3 capas, V 60); generalizacion caja-arenero 5×4×3 (V 60) + cubo-caja de arena 2×2×2 (V 8) + cilindro-acuario r=3 h=5 (base π·9 = 28,26, V 141,3) + ejercicio caja 5×2×4 (V 40); practica caja-arenero 6×2×3 (fondo 12, 3 capas, V 36) → cilindro-acuario r=3 h=10 (V 282,6) → cilindro-acuario r=5 h=4 (base sin dar, 78,5; V 314); aplicacion acuario rectangular 4×3×2 (V 24) + acuario cilíndrico r=4 h=5 (base 50,24, V 251,2). itemsPAES: caja 6×3×5 (V 90, resolver); cilindro r=5 h=8 (modelar, alternativas son expresiones); cubo 11×11×11 (V 1331, argumentar, afirmación 11×3 = 33).",
+    "Barrido regla 3b (docs/reglas-modulo.md, 🔴 intra-archivo) con node -e sobre todos los respuestaCorrecta de campos numéricos y alternativas esCorrecta del archivo: sin colisiones distractor/correcta. Las áreas de base intermedias que sí se citan en prosa (28,26 y 50,24) no son respuestaCorrecta; el distractor de error-10 igual al área de la base es la trampa intencional del mecanismo, no una contradicción. El valor 12 aparece como distractor tres veces con mecanismos distintos: error-7 en el arenero de descubrimiento (5+4+3), error-10 en el arenero de practica ex1 (6×2) y error-10 en el acuario rectangular de aplicacion (4×3); ítems y pasos distintos. El valor 11 aparece dos veces: error-7 en el ejercicio de generalizacion (5+2+4) y error-7 en practica ex1 (6+2+3).",
+    "El mecanismo 'calculó la superficie completa en vez del volumen' (P11, que L3 cataloga) aparece en 2 distractores (item-2 alternativa D y item-3 alternativa D) con feedback artesanal y SIN errorCatalogado, por debajo del umbral de 3 que obligaría a proponer id. Se nombra en reflexion en lenguaje llano, sin id.",
+    "Sin interactivoSlider (docs/reglas-modulo.md regla 1: no hay magnitud continua que mover; el descubrimiento es una tabla de capas). Sin auditoria.constante declarada: L2 no tiene una única constante numérica cuya circulación previa haya que vigilar — el volumen del arenero (60) y el área de su fondo (20) no aparecen en ningún paso anterior a descubrimiento, y la notación formal ((a×b)×c, a³, π·r²·h) aparece por primera vez en generalizacion. auditoria.colisionesPermitidas vacío: ninguna colisión distractor/correcta deliberada.",
+    "Solo vista: 'solido' en todas las visualizaciones (docs/diseno-modulo-cuerpos-geometricos.md: una red no dice nada sobre cuánto cabe adentro; las 3 celdas volumen × desarrollo no se usan). Las 3 cotas siempre rotuladas (regla 6). Ningún ítem pide comparar aristas a ojo.",
+    "Dominios firmados 2026-08-27 (docs/diseno-modulo-cuerpos-geometricos.md, 'Estado de las firmas'): núcleo 'arenero techado' (reemplaza a 'piscina', que dio COLISIÓN en MA-22_Cuerpos_Geometricos.md), aplicación 'acuario de laboratorio'. Colisión verificada por Benjamín fuera de sesión: 'arenero', 'arena', 'acuario', 'pecera', 'laboratorio de biología' → LIMPIO. La caja cúbica de arena de repuesto y los acuarios cúbico y cilíndrico son variantes de forma dentro de esos dos dominios, mismo criterio que L1 (farol de caja/cubo/cilindro)."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-7",
+      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "En el cubo, calcular el volumen multiplicando la arista por 3 (la cantidad de dimensiones), arista × 3, en lugar de multiplicar la arista por sí misma tres veces, arista × arista × arista."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: se menciona el cubo de la lección anterior donde superficie y volumen coincidían en 216, sin recalcularlo; sin medidas del arenero",
+    "problema: arenero techado con forma de caja, sin medidas (solo elección de método)",
+    "pensar/pistas: arenero techado de 5 dm × 4 dm × 3 dm, volumen 60 dm³ (fondo de 5 × 4 = 20, tres capas)",
+    "descubrimiento: mismo arenero 5 × 4 × 3, volumen 60 dm³ (ejemplo nuclear, la tabla de capas)",
+    "generalizacion: fórmula (a × b) × c sobre el 5 × 4 × 3 (60); caja cúbica de arena de 2 dm de arista, volumen 8 dm³; acuario cilíndrico de 3 dm de radio y 5 dm de altura, área de base 28,26 dm², volumen 141,3 dm³; ejercicio: arenero de 5 dm × 2 dm × 4 dm, volumen 40 dm³",
+    "practica: arenero de 6 dm × 2 dm × 3 dm, volumen 36 dm³; acuario cilíndrico de 3 dm de radio y 10 dm de altura, volumen 282,6 dm³; acuario cilíndrico de 5 dm de radio y 4 dm de altura, área de base 78,5 dm², volumen 314 dm³",
+    "aplicacion: acuario rectangular de 4 dm × 3 dm × 2 dm, volumen 24 dm³ (24 litros); acuario cilíndrico de 4 dm de radio y 5 dm de altura, área de base 50,24 dm², volumen 251,2 dm³",
+    "reflexion: sin cifras nuevas (metacognición sobre unidades; se remite al 216 de la lección anterior sin recalcularlo)",
+    "itemsPAES: acuario rectangular de 6 dm × 3 dm × 5 dm, volumen 90 dm³ / 90 litros (resolver); acuario cilíndrico de 5 dm de radio y 8 dm de altura, expresión (π × 5²) × 8 (modelar, sin cálculo numérico); acuario cúbico de 11 dm de arista, volumen 1331 dm³ / 1331 litros, frente a la afirmación 11 × 3 = 33 (argumentar)"
+  ],
+  "auditoria": {
+    "colisionesPermitidas": []
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Envolver y llenar",
+      "_notasInternas": [
+        "Sin fórmula y sin ningún volumen calculado. Se retoma el cierre de L1 (el cubo donde superficie y volumen daban 216) para plantear que son magnitudes distintas. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "En la lección anterior viste un cubo donde la superficie —el material que lo cubre— y lo que cabe adentro daban el mismo número, 216. ¿Por qué crees que coincidieron?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Porque son dos nombres para la misma medida",
+            "Fue por ese tamaño en particular; con otra arista dan números distintos",
+            "No estoy seguro todavía"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Cubrir un cuerpo y llenarlo son dos preguntas distintas.\n\n**Cubrir** es la superficie: cuánto material lo envuelve por fuera, en unidades cuadradas (dm², cm²) — eso fue la lección anterior.\n\n**Llenar** es el **volumen**: cuánto espacio cabe adentro, en unidades cúbicas (dm³, cm³).\n\nEn aquel cubo los dos números coincidieron por el tamaño exacto que tenía; con casi cualquier otra medida se separan. Esta lección responde la segunda pregunta: **cuánto cabe adentro**."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El arenero techado",
+      "_notasInternas": [
+        "Siembra el arenero sin resolverlo. La opción correcta describe el método (una capa que cubre el fondo, repetida hasta el borde). No se calcula ningún volumen. La opción (c) 'sumar las tres medidas' lleva feedback conceptual sin errorCatalogado: todavía no se ha visto la fórmula, mismo criterio que el paso 'problema' de L1. El verdaderoFalso muestra que el método no depende del tamaño."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El jardín infantil tiene un arenero techado con forma de caja: un cajón rectangular que se llena de arena hasta el borde. Para saber cuántos decímetros cúbicos de arena caben, ¿cuál de estos caminos es el correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Cubrir el fondo con una capa de arena de 1 dm de alto, contar cuántos cubitos de arena tiene esa capa, y multiplicar por cuántas capas iguales caben hasta el borde.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El fondo es un rectángulo: la cantidad de cubitos de 1 dm que lo cubren es el área de esa capa. Como todas las capas son iguales, el total es esa cantidad multiplicada por cuántas capas de alto caben."
+            },
+            {
+              "id": "b",
+              "texto": "Medir el contorno del borde superior del arenero y multiplicarlo por la altura.",
+              "esCorrecta": false,
+              "feedback": "El contorno del borde es una longitud, en dm. Multiplicarlo por la altura da un área (dm²), que describe una pared del arenero, no la arena que cabe adentro."
+            },
+            {
+              "id": "c",
+              "texto": "Sumar el largo, el ancho y la altura del arenero.",
+              "esCorrecta": false,
+              "feedback": "Sumar las tres medidas da un número en dm, una longitud. La arena llena un espacio en tres direcciones a la vez: eso se multiplica, no se suma."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Este mismo método —una capa que cubre el fondo, repetida hasta el borde— ¿serviría igual si el arenero fuera el doble de grande en todas sus medidas?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El método no depende del tamaño: siempre es el área del fondo multiplicada por cuántas capas de alto caben. Con un arenero más grande los números crecen, pero el procedimiento es el mismo.",
+          "feedbackFalso": "En realidad sí serviría. Cubrir el fondo con una capa y repetirla hasta el borde funciona para cualquier tamaño; lo único que cambia con un arenero más grande son los números, no la forma de calcularlo."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Prueba con el arenero",
+      "_notasInternas": [
+        "Arenero-caja 5×4×3, V = (5×4)×3 = 60 (verificado node -e). Distractor error-7: 5+4+3 = 12. Distractor error-10: 5×4 = 20 (el fondo, una capa). vista 'solido' con las tres cotas (regla 6). Campo con id neutro sin cifra (regla 4). El 60 y el 20 no se entregan como texto: son la respuesta que el estudiante intenta alcanzar."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El arenero techado dibujado en perspectiva, como una caja rectangular, con sus tres medidas acotadas: el largo '5 dm', el ancho '4 dm' y la altura '3 dm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "largo": 5,
+            "ancho": 4,
+            "alto": 3,
+            "etiquetaLargo": "5 dm",
+            "etiquetaAncho": "4 dm",
+            "etiquetaAlto": "3 dm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El arenero mide 5 dm de largo, 4 dm de ancho y 3 dm de alto. Antes de pedir pistas, intenta calcular cuántos decímetros cúbicos de arena caben adentro cuando se llena hasta el borde.",
+          "campos": [
+            {
+              "id": "volumenDelArenero",
+              "etiqueta": "Arena que cabe",
+              "respuestaCorrecta": 60,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenDelArenero",
+              "valorObtenido": 12,
+              "mensaje": "12 es 5 + 4 + 3: sumaste las tres medidas. La arena llena el arenero en tres direcciones a la vez, y eso se multiplica. Empieza por el fondo: 5 × 4.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "volumenDelArenero",
+              "valorObtenido": 20,
+              "mensaje": "20 es 5 × 4, el área del fondo: una sola capa de arena de 1 dm de alto. Faltan las demás capas: el arenero tiene 3 dm de altura, así que caben 3 capas iguales.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "El fondo del arenero es un rectángulo de 5 × 4. Sobre él caben capas de arena de 1 dm de alto, todas iguales. ¿Cuántas capas, y cuánto suman en total?"
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el arenero",
+      "_notasInternas": [
+        "Mismo arenero 5×4×3. Nivel 3 NO entrega el 60 (regla 2): nombra las tres capas de 20 y deja que el estudiante sume o multiplique."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El volumen es cuánta arena cabe adentro. Piénsalo por capas: primero cuánta arena cubre el fondo en una capa de 1 dm de alto, y después cuántas capas iguales caben hasta el borde."
+            },
+            {
+              "nivel": 2,
+              "texto": "El fondo es un rectángulo de 5 dm por 4 dm. Una capa de arena de 1 dm de alto que lo cubre entero contiene 5 × 4 cubitos de arena de 1 dm de lado. El arenero tiene 3 dm de altura."
+            },
+            {
+              "nivel": 3,
+              "texto": "Cada capa contiene 5 × 4 = 20 cubitos. Como el arenero tiene 3 dm de alto, caben 3 capas iguales: suma 20 + 20 + 20, o multiplica 20 × 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El volumen es una capa repetida",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Mismo arenero 5×4×3, V = 60 (verificado node -e). seleccion y pregunta comparten el set: 60 (correcta), 12 (error-7), 20 (error-10, una capa). La pregunta agrega un cuarto distractor, 23 = 5×4 + 3 (calculó el fondo pero sumó la altura en vez de multiplicarla). La notación formal (a×b)×c NO aparece aquí: se deja para generalizacion. Una sola visualizacion (solido); el módulo no usa 'desarrollo' para volumen. verdaderoFalso metacognitivo = el check '¿tiene sentido?' del SKILL."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Vuelve al arenero: 5 dm de largo, 4 dm de ancho, 3 dm de alto.\n\nCubre el fondo con una capa de arena de 1 dm de alto. El fondo es un rectángulo de 5 × 4, así que esa capa contiene **5 × 4 = 20** cubitos de arena de 1 dm de lado.\n\nEsa capa se repite hacia arriba. El arenero tiene 3 dm de altura, así que caben **3 capas iguales** de 20 cubitos:\n\n20 + 20 + 20 = 60,  o directamente  **20 × 3 = 60**.\n\nCaben **60 dm³** de arena. Y como 1 dm³ es 1 litro, son 60 litros."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El arenero visto en perspectiva, con líneas horizontales que marcan tres capas de arena apiladas de abajo hacia arriba, y las tres medidas acotadas: '5 dm', '4 dm', '3 dm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "largo": 5,
+            "ancho": 4,
+            "alto": 3,
+            "etiquetaLargo": "5 dm",
+            "etiquetaAncho": "4 dm",
+            "etiquetaAlto": "3 dm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El fondo del arenero contiene 20 cubitos de arena por capa, y caben 3 capas iguales de alto. ¿Cuántos decímetros cúbicos de arena caben en total?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "60 dm³",
+              "esCorrecta": true,
+              "feedback": "Correcto. 20 por capa × 3 capas = 60. También 20 + 20 + 20 = 60."
+            },
+            {
+              "id": "b",
+              "texto": "12 dm³",
+              "esCorrecta": false,
+              "feedback": "12 es 5 + 4 + 3: la suma de las tres medidas, que es una longitud. La arena llena un espacio: el fondo (5 × 4 = 20) repetido por las 3 capas de alto.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "20 dm³",
+              "esCorrecta": false,
+              "feedback": "20 es una sola capa: la que cubre el fondo. El arenero tiene 3 dm de altura, así que hay 3 capas iguales. Falta multiplicar por 3.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un arenero techado con forma de caja mide 5 dm de largo, 4 dm de ancho y 3 dm de alto. ¿Cuántos decímetros cúbicos de arena caben cuando se llena hasta el borde?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "60 dm³",
+              "esCorrecta": true,
+              "feedback": "Correcto. El fondo mide 5 × 4 = 20; caben 3 capas de alto: 20 × 3 = 60 dm³."
+            },
+            {
+              "clave": "B",
+              "texto": "12 dm³",
+              "esCorrecta": false,
+              "feedback": "12 dm³ es 5 + 4 + 3, la suma de las medidas. El volumen se obtiene multiplicando: el área del fondo (20) por la altura (3).",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "clave": "C",
+              "texto": "20 dm³",
+              "esCorrecta": false,
+              "feedback": "20 dm³ es el área del fondo, una sola capa de arena. El arenero tiene 3 dm de alto: caben 3 capas iguales, 20 × 3 = 60.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "clave": "D",
+              "texto": "23 dm³",
+              "esCorrecta": false,
+              "feedback": "23 es 5 × 4 + 3: calculaste bien el fondo (20) pero después le sumaste la altura en vez de multiplicarla. Cada dm de altura agrega una capa entera de 20, no una unidad."
+            }
+          ],
+          "notaVerificacionMatematica": "Fondo: 5×4 = 20. Volumen = 20 × 3 = 60. Distractores: 5+4+3 = 12 (error-7); 5×4 = 20 (error-10, una capa); 5×4 + 3 = 23 (ad-hoc, sumó la altura). Verificado con node -e."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que el volumen del arenero (60 dm³) sea exactamente 3 veces lo que cubre su fondo (20)?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. Cada dm de altura es una capa completa igual al fondo: 20 cubitos. Como el arenero tiene 3 dm de altura, son 3 capas iguales, y el total es 3 × 20 = 60.",
+          "feedbackFalso": "En realidad sí tiene sentido. El fondo cubierto por una capa de 1 dm son 20 cubitos; esa capa se repite una vez por cada dm de altura. Con 3 dm de altura hay 3 capas: 3 × 20 = 60."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que hiciste es todo el método: **el área de la base, repetida tantas veces como diga la altura.** No memorizaste una fórmula — contaste capas. En el próximo paso vas a escribir esa cuenta como una fórmula, y a ver qué pasa cuando la base no es un rectángulo sino un cuadrado o un círculo."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, y los otros dos cuerpos",
+      "_notasInternas": [
+        "PRIMERA aparición de la notación formal V = área de la base × altura, y sus tres casos: (a×b)×c, a³, (π×r²)×h. Ejemplo caja sobre el arenero 5×4×3 (V 60, ya conocido). Cubo: caja de arena de repuesto de arista 2, V = 2² × 2 = 8. Distractor error-8: 2 × 3 = 6. Distractor error-10: 2 × 2 = 4. Cilindro: acuario cilíndrico r=3, h=5; base π×3² = 28,26; V = 28,26 × 5 = 141,3 (verificado node -e, π = 3,14). Distractor error-9: 2×π×3×5 = 94,2. Distractor error-10: 28,26. Ejercicio numérico: caja 5×2×4, V = 40; feedbackPorError 11 (error-7), 10 (error-10, 5×2). Arista 2 del cubo: 3a=6 ≠ a²=4 ≠ a³=8; aristas 4-10 evitadas (usadas/reservadas por L1 o riesgo P3)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La cuenta que hiciste con el arenero se escribe así, para cualquier caja de largo **a**, ancho **b** y alto **c**:\n\n**V = (a × b) × c**\n\nEl **a × b** es el área de la base —una capa—, y el **c** es cuántas capas de alto caben. Con el arenero de 5 × 4 × 3:\n\nV = (5 × 4) × 3 = 20 × 3 = **60 dm³**.\n\nComo multiplicar da lo mismo en cualquier orden, también se escribe a · b · c. Lo que no da lo mismo es **sumar** en vez de multiplicar."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La idea de fondo —**área de la base × altura**— no es solo de las cajas. Sirve para cualquier cuerpo que sea una base repetida a lo alto sin cambiar de forma: lo único que cambia es **cómo se calcula el área de esa base**."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un **cubo** es una caja con las tres medidas iguales. Su base es un cuadrado de lado a, con área **a × a = a²**, y su altura también es a. Entonces:\n\n**V = a² × a = a³**\n\nNo es una fórmula nueva: es la de la caja con a = b = c."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Una caja cúbica de arena de repuesto, en perspectiva, con sus tres aristas acotadas, todas de '2 dm'.",
+          "datos": {
+            "cuerpo": "cubo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "arista": 2,
+            "etiquetaArista": "2 dm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Sobra arena guardada en una caja cúbica de 2 dm de arista. Usando V = a³, ¿cuántos decímetros cúbicos de arena contiene?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "8 dm³",
+              "esCorrecta": true,
+              "feedback": "Correcto. La base es 2 × 2 = 4, y hay 2 capas de alto: 4 × 2 = 8. Es lo mismo que 2 × 2 × 2 = 2³."
+            },
+            {
+              "id": "b",
+              "texto": "6 dm³",
+              "esCorrecta": false,
+              "feedback": "6 es 2 × 3: multiplicaste la arista por 3, la cantidad de dimensiones. Pero cada dimensión aporta un factor 2, no un sumando: hay que multiplicar 2 × 2 × 2.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "id": "c",
+              "texto": "4 dm³",
+              "esCorrecta": false,
+              "feedback": "4 es 2 × 2, el área de la base: una sola capa. El cubo tiene 2 dm de altura, así que hay 2 capas: 4 × 2 = 8.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un **cilindro** es una base circular repetida a lo alto. El área de esa base es la del círculo, **π × radio²** (con π ≈ 3,14), y la altura dice cuántas veces se repite:\n\n**V = (π × radio²) × altura**"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Un acuario cilíndrico visto en perspectiva, con el radio de la base marcado, '3 dm', y la altura acotada, '5 dm'.",
+          "datos": {
+            "cuerpo": "cilindro",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "radio": 3,
+            "altura": 5,
+            "etiquetaRadio": "3 dm",
+            "etiquetaAltura": "5 dm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El laboratorio tiene un acuario cilíndrico de 3 dm de radio y 5 dm de altura. El área de su base es π × 3² = 28,26 dm². Con π ≈ 3,14, ¿cuántos decímetros cúbicos de agua caben?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "141,3 dm³",
+              "esCorrecta": true,
+              "feedback": "Correcto. La base tiene 28,26 dm², y se repite a lo largo de los 5 dm de altura: 28,26 × 5 = 141,3 dm³."
+            },
+            {
+              "id": "b",
+              "texto": "94,2 dm³",
+              "esCorrecta": false,
+              "feedback": "94,2 es 2 × π × 3 × 5: usaste la circunferencia de la base (2 × π × radio = 18,84) en vez de su área (π × radio² = 28,26). La circunferencia es el contorno del círculo, una longitud; el agua se apoya sobre el área.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "id": "c",
+              "texto": "28,26 dm³",
+              "esCorrecta": false,
+              "feedback": "28,26 es el área de la base: una sola capa de agua de 1 dm de alto. Falta repetirla por los 5 dm de altura del acuario: 28,26 × 5.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Otro arenero, más chico, mide 5 dm de largo, 2 dm de ancho y 4 dm de alto. ¿Cuántos decímetros cúbicos de arena caben?",
+          "campos": [
+            {
+              "id": "volumenAreneroChico",
+              "etiqueta": "Arena que cabe",
+              "respuestaCorrecta": 40,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenAreneroChico",
+              "valorObtenido": 11,
+              "mensaje": "11 es 5 + 2 + 4: sumaste las tres medidas. El volumen las multiplica: (5 × 2) × 4.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "volumenAreneroChico",
+              "valorObtenido": 10,
+              "mensaje": "10 es 5 × 2, el área del fondo: una capa. El arenero tiene 4 dm de alto, así que son 4 capas: 10 × 4 = 40.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "La base es 5 × 2 = 10. Caben 4 capas de alto: 10 × 4."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres para practicar",
+      "_notasInternas": [
+        "Dificultad creciente baja → media → media/alta (docs/calibracion §5). ex1 caja-arenero 6×2×3, fondo 6×2 = 12, 3 capas, V = 36; feedbackPorError 11 (error-7, 6+2+3) y 12 (error-10, 6×2). ex2 acuario cilíndrico r=3 h=10 con el área de base dada, V = 28,26 × 10 = 282,6; feedbackPorError 188,4 (error-9), 28,26 (error-10). ex3 acuario cilíndrico r=5 h=4 SIN el área de base dada (el estudiante calcula π×5²=78,5), V = 78,5 × 4 = 314; feedbackPorError 125,6 (error-9), 78,5 (error-10). Todo verificado node -e con π = 3,14. El distractor 12 de ex1 coincide en valor con el distractor error-7 del arenero de descubrimiento (5+4+3) y con el error-10 del acuario rectangular de aplicacion (4×3); mecanismos e ítems distintos, ninguno es respuestaCorrecta."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Tres ejercicios, de menos a más. Recuerda: **área de la base × altura**, y la base se calcula según la forma."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Un arenero con forma de caja rectangular, en perspectiva, con sus tres medidas acotadas: el largo '6 dm', el ancho '2 dm' y la altura '3 dm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "largo": 6,
+            "ancho": 2,
+            "alto": 3,
+            "etiquetaLargo": "6 dm",
+            "etiquetaAncho": "2 dm",
+            "etiquetaAlto": "3 dm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un arenero de 6 dm de largo, 2 dm de ancho y 3 dm de alto. ¿Cuántos dm³ de arena caben?",
+          "campos": [
+            {
+              "id": "volumenPracticaUno",
+              "etiqueta": "Arena",
+              "respuestaCorrecta": 36,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenPracticaUno",
+              "valorObtenido": 11,
+              "mensaje": "11 es 6 + 2 + 3: sumaste las tres medidas. El volumen las multiplica: (6 × 2) × 3.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "volumenPracticaUno",
+              "valorObtenido": 12,
+              "mensaje": "12 es 6 × 2, el área del fondo: una sola capa. Multiplícala por los 3 dm de altura: 12 × 3 = 36.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Base: 6 × 2 = 12. Altura: 3 capas. Volumen: 12 × 3."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un acuario cilíndrico de 3 dm de radio y 10 dm de altura. El área de la base es π × 3² = 28,26 dm². Con π ≈ 3,14, ¿cuántos dm³ de agua caben?",
+          "campos": [
+            {
+              "id": "volumenPracticaDos",
+              "etiqueta": "Agua",
+              "respuestaCorrecta": 282.6,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenPracticaDos",
+              "valorObtenido": 188.4,
+              "mensaje": "188,4 es 2 × π × 3 × 10: usaste la circunferencia de la base en vez de su área. El agua se apoya sobre el área del círculo (π × 3² = 28,26), no sobre su contorno.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "volumenPracticaDos",
+              "valorObtenido": 28.26,
+              "mensaje": "28,26 es solo el área de la base: una capa de agua de 1 dm. El acuario tiene 10 dm de altura, así que son 10 capas: 28,26 × 10.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Base: π × 3² = 28,26 dm². Altura: 10 dm. Volumen: 28,26 × 10."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un acuario cilíndrico de exhibición mide 5 dm de radio y 4 dm de altura. Calcula tú el área de la base y luego el volumen. Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "volumenPracticaTres",
+              "etiqueta": "Agua",
+              "respuestaCorrecta": 314,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenPracticaTres",
+              "valorObtenido": 125.6,
+              "mensaje": "125,6 es 2 × π × 5 × 4: la circunferencia de la base por la altura. La base del agua es el área del círculo, π × 5² = 78,5, no su contorno.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "volumenPracticaTres",
+              "valorObtenido": 78.5,
+              "mensaje": "78,5 es π × 5², el área de la base: una capa de agua. Falta multiplicarla por los 4 dm de altura: 78,5 × 4 = 314.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Área de la base: π × 5² = 3,14 × 25 = 78,5 dm². Volumen: 78,5 × 4 = 314 dm³."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El acuario del laboratorio",
+      "_notasInternas": [
+        "Dominio de aplicación firmado: acuario del laboratorio de biología. Escena nueva, distinta del arenero del descubrimiento. Acuario rectangular 4×3×2 (base 4×3 = 12, altura 2), V = 24; feedbackPorError 9 (error-7, 4+3+2) y 12 (error-10, 4×3). Acuario cilíndrico r=4 h=5, base π×4² = 50,24, V = 50,24 × 5 = 251,2; feedbackPorError 125,6 (error-9, 2×π×4×5) y 50,24 (error-10). Cierra con abierta de síntesis de las tres fórmulas. Verificado node -e, π = 3,14."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En el laboratorio de biología hay dos acuarios que hay que llenar de agua. Uno es una **caja de vidrio rectangular**; el otro, un **cilindro**. Los dos se calculan igual: área de la base × altura. Lo único que cambia es la base."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El acuario rectangular del laboratorio, en perspectiva, con sus tres medidas acotadas: el largo '4 dm', el ancho '3 dm' y la altura '2 dm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "largo": 4,
+            "ancho": 3,
+            "alto": 2,
+            "etiquetaLargo": "4 dm",
+            "etiquetaAncho": "3 dm",
+            "etiquetaAlto": "2 dm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El acuario rectangular mide 4 dm de largo, 3 dm de ancho y 2 dm de alto. ¿Cuántos dm³ de agua caben cuando se llena hasta el borde?",
+          "campos": [
+            {
+              "id": "volumenAcuarioRectangular",
+              "etiqueta": "Agua",
+              "respuestaCorrecta": 24,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenAcuarioRectangular",
+              "valorObtenido": 9,
+              "mensaje": "9 es 4 + 3 + 2: sumaste las tres medidas. El agua llena un espacio en tres direcciones: (4 × 3) × 2.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "volumenAcuarioRectangular",
+              "valorObtenido": 12,
+              "mensaje": "12 es 4 × 3, el área del fondo del acuario: una capa de agua de 1 dm. Falta repetirla por los 2 dm de altura: 12 × 2 = 24.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Base: 4 × 3 = 12. Altura: 2. Volumen: 12 × 2 = 24 dm³, o 24 litros."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El acuario cilíndrico del laboratorio, en perspectiva, con el radio '4 dm' y la altura '5 dm' acotados.",
+          "datos": {
+            "cuerpo": "cilindro",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "radio": 4,
+            "altura": 5,
+            "etiquetaRadio": "4 dm",
+            "etiquetaAltura": "5 dm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El acuario cilíndrico mide 4 dm de radio y 5 dm de altura. ¿Cuántos dm³ de agua caben? Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "volumenAcuarioCilindrico",
+              "etiqueta": "Agua",
+              "respuestaCorrecta": 251.2,
+              "unidad": "dm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "volumenAcuarioCilindrico",
+              "valorObtenido": 125.6,
+              "mensaje": "125,6 es 2 × π × 4 × 5: la circunferencia de la base por la altura. La base es el área del círculo, π × 4² = 50,24; su contorno (la circunferencia) no sostiene el agua.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "volumenAcuarioCilindrico",
+              "valorObtenido": 50.24,
+              "mensaje": "50,24 es π × 4², el área de la base: una capa de agua. El acuario tiene 5 dm de altura: 50,24 × 5 = 251,2.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Área de la base: π × 4² = 50,24 dm². Volumen: 50,24 × 5 = 251,2 dm³."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escribe, con tus propios números, las tres fórmulas de volumen que usaste en esta lección: la de la caja, la del cubo y la del cilindro. Al lado de cada una, explica en una frase por qué las tres son 'área de la base × altura'.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Caja: V = (a × b) × c. La base es el rectángulo a × b (una capa), y c es cuántas capas de alto. Ej.: (4 × 3) × 2 = 24 dm³.\nCubo: V = a² × a = a³. Es la caja con las tres medidas iguales: base cuadrada a², altura a. Ej.: 2² × 2 = 8 dm³.\nCilindro: V = (π × radio²) × altura. La base es el círculo de área π × radio² (una capa), y la altura dice cuántas veces se repite. Ej.: (π × 4²) × 5 = 50,24 × 5 = 251,2 dm³.\nEn las tres, el primer factor es el área de una capa que cubre la base y el segundo es cuántas capas de esas llenan el cuerpo."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Llenar no es cubrir",
+      "_notasInternas": [
+        "Metacognición sobre la magnitud: volumen en unidades cúbicas, superficie en cuadradas; en el cubo de arista 6 de L1 coincidían por el tamaño, no porque midan lo mismo. Luego el PUENTE A L3: hasta aquí el título de la lección decía si calcular superficie o volumen; en L3 el enunciado no lo va a decir. Se nombran los cuatro errores de volumen en lenguaje llano, sin ids, mismo criterio que L1. Sin ítem PAES."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué el volumen se mide en decímetros cúbicos (dm³) y no en decímetros a secas? ¿Y por qué en el cubo de la lección pasada la superficie y el volumen daban el mismo número, si no miden lo mismo?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda anonimizada para el piloto. Una respuesta que diga que el volumen se mide en dm³ porque se llena en tres direcciones a la vez —una capa, que ya es un área, repetida a lo alto— y que en el cubo de arista 6 el 216 coincidía solo por esa medida exacta (con otra arista se separan), indica que el estudiante separó las dos magnitudes."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al calcular volumen —y con los que la PAES arma las alternativas incorrectas— son:\n\n1. **Sumar las tres medidas** en vez de multiplicarlas: a + b + c mide una longitud, no un espacio.\n2. **Quedarse en una capa**: calcular el área de la base y no multiplicarla por la altura. El resultado es una superficie, no un volumen.\n3. **En el cubo, multiplicar la arista por 3** en vez de por sí misma tres veces: 3a en lugar de a³.\n4. **En el cilindro, usar la circunferencia de la base** (2 × π × radio) donde va su área (π × radio²).\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Una cosa más, para la próxima lección. Hasta aquí, el título te decía qué calcular: 'área de superficie' o 'volumen'. En los problemas reales el enunciado **no lo dice**: habla de pintar, forrar, llenar, envasar, y tú tienes que decidir si te piden el borde o el interior. Eso es lo que viene."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + puente explícito a L3 (cuerpos-problemas-en-contexto: decidir superficie o volumen cuando el enunciado no lo nombra). Cierra anunciando los tres ítems PAES."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- El **volumen** de un cuerpo es **el área de su base repetida a lo alto**: una capa que cubre la base, multiplicada por cuántas capas de altura caben.\n- **Caja:** V = (a × b) × c — base rectangular por la altura.\n- **Cubo:** V = a³ — la caja con las tres medidas iguales.\n- **Cilindro:** V = (π × radio²) × altura — base circular (con π ≈ 3,14) por la altura.\n- El volumen se mide en **unidades cúbicas** (dm³, cm³, m³). 1 dm³ = 1 litro.\n\nDónde se conecta: la próxima lección junta esta fórmula con la de superficie de la lección anterior, y el trabajo pasa a ser **decidir cuál de las dos pide un problema que no lo dice**.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Un acuario rectangular del laboratorio mide 6 dm de largo, 3 dm de ancho y 5 dm de alto. ¿Cuántos litros de agua caben cuando se llena hasta el borde? (1 dm³ = 1 litro.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "90 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto. La base mide 6 × 3 = 18 dm²; caben 5 capas de altura: 18 × 5 = 90 dm³ = 90 litros."
+        },
+        {
+          "clave": "B",
+          "texto": "14 litros",
+          "esCorrecta": false,
+          "feedback": "14 es 6 + 3 + 5, la suma de las tres medidas. El volumen las multiplica: el área de la base (18) por la altura (5).",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "C",
+          "texto": "18 litros",
+          "esCorrecta": false,
+          "feedback": "18 es 6 × 3, el área del fondo del acuario: una sola capa de agua. Falta multiplicarla por los 5 dm de altura: 18 × 5 = 90.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "15 litros",
+          "esCorrecta": false,
+          "feedback": "15 es 3 × 5, una de las caras laterales del acuario. El volumen se apoya en el fondo completo (6 × 3 = 18), repetido por las 5 capas de altura."
+        }
+      ],
+      "solucion": "Volumen de un paralelepípedo = (largo × ancho) × alto. Con 6, 3 y 5: (6 × 3) × 5 = 18 × 5 = 90 dm³. Como 1 dm³ = 1 litro, son 90 litros. Distractores: 6 + 3 + 5 = 14 (error-7); 6 × 3 = 18, solo la base (error-10); 3 × 5 = 15, una cara lateral. Verificado con node -e."
+    },
+    {
+      "id": "l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un acuario cilíndrico tiene 5 dm de radio y 8 dm de altura. ¿Cuál de estas expresiones da el volumen de agua que cabe? No hace falta calcularla; π ≈ 3,14.",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(π × 5²) × 8",
+          "esCorrecta": true,
+          "feedback": "Correcto. π × 5² es el área de la base circular —una capa de agua— y × 8 la repite por los 8 dm de altura. Es 'área de la base × altura'."
+        },
+        {
+          "clave": "B",
+          "texto": "(2 × π × 5) × 8",
+          "esCorrecta": false,
+          "feedback": "2 × π × 5 es la circunferencia de la base (su contorno), no su área. Multiplicarla por la altura da la superficie lateral del cilindro, no el agua que cabe.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "π × 5²",
+          "esCorrecta": false,
+          "feedback": "π × 5² es solo el área de la base: una capa de agua de 1 dm de alto. Falta multiplicarla por los 8 dm de altura.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "2 × (π × 5²) + (2 × π × 5) × 8",
+          "esCorrecta": false,
+          "feedback": "Esa es la fórmula de la superficie del cilindro: las dos tapas más el manto. Responde cuánto vidrio forma el acuario, no cuánta agua cabe adentro."
+        }
+      ],
+      "solucion": "El volumen de un cilindro es el área de la base por la altura: (π × radio²) × altura = (π × 5²) × 8. La alternativa B usa la circunferencia (2πr) en vez del área (πr²) — error-9. La C se queda en el área de la base sin multiplicar por la altura — error-10. La D es la superficie total del cilindro (2πr² + 2πrh), otra magnitud. La expresión correcta es A."
+    },
+    {
+      "id": "l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Para saber cuántos litros caben en un acuario con forma de cubo de 11 dm de arista, un estudiante calcula 11 × 3 = 33 y responde 33 litros. ¿Es correcto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: multiplicó la arista por 3. El volumen de un cubo es la arista multiplicada por sí misma tres veces: 11 × 11 × 11 = 1331 litros.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 11 × 3 = 33 multiplica la arista por la cantidad de dimensiones; no acumula el espacio. El volumen es 11³ = 1331 dm³ = 1331 litros."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: 33 litros.",
+          "esCorrecta": false,
+          "feedback": "11 × 3 = 33 trata las tres dimensiones como un sumando repetido. Cada dimensión aporta un factor 11: 11 × 11 × 11 = 1331.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: es 11 × 11 = 121 litros, la arista al cuadrado.",
+          "esCorrecta": false,
+          "feedback": "121 es el área de una cara del cubo —la base, una capa—. Falta la tercera dimensión: multiplicar por los 11 dm de altura, 121 × 11 = 1331.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: es 6 × 11² = 726 litros.",
+          "esCorrecta": false,
+          "feedback": "6 × 11² = 726 es la superficie del cubo: sus seis caras. Eso mide cuánto vidrio lo forma, no cuánta agua cabe. El volumen es 11³ = 1331."
+        }
+      ],
+      "solucion": "El volumen de un cubo es a³. Con a = 11: 11 × 11 × 11 = 1331 dm³ = 1331 litros. El cálculo del estudiante, 11 × 3 = 33, multiplica la arista por 3 (la cantidad de dimensiones) en vez de elevarla al cubo — error-8. La alternativa C (121 = 11²) se queda en el área de la base — error-10. La D (726 = 6 × 11²) es la superficie del cubo, otra magnitud. La respuesta es A. Verificado con node -e."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: volumen de paralelepípedos, cubos y cilindros), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (arenero techado de un jardín infantil, en sus formas de caja y cubo; acuario del laboratorio de biología, en sus formas rectangular, cúbica y cilíndrica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'arenero', 'arena', 'acuario', 'pecera', 'laboratorio de biología', 'silo', 'granos' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md, dos ítems DEMRE con fórmula de volumen) y 'piscina' quedó descartada como dominio de esta lección, reemplazada por 'arenero techado'. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. El catálogo de errores (error-7, error-8, error-9, error-10) nace en este archivo: error-7, error-8 y error-9 provienen de la propuesta P8, P9 y P10 firmada el 2026-08-26; error-10 es un mecanismo nuevo, no incluido en la propuesta P1..P12 original (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por el autor en el chat de la sesión de redacción antes de escribir los distractores. Ningún id de L1 (error-1 a error-6, todos de área de superficie) se embebe, porque ningún distractor de esta lección usa un mecanismo de superficie. Auditoría matemática (Ronda 1) y de originalidad (Ronda 2): pendientes, se corren en hilos separados del de redacción.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
