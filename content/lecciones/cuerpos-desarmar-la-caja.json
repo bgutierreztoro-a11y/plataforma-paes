@@ -1,0 +1,752 @@
+{
+  "tipo": "leccion",
+  "id": "cuerpos-desarmar-la-caja",
+  "titulo": "Área de superficie de paralelepípedos, cubos y cilindros",
+  "objetivo": "Calcular el área de superficie de paralelepípedos, cubos y cilindros entendiéndola como la suma de las caras que aparecen al desplegar el cuerpo, y reconociendo que 2(ab+bc+ac), 6a² y 2πr²+2πrh no son reglas que memorizar, sino la cuenta de caras que se pueden ver y contar en la red desplegada.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Circunferencia (2 × π × radio) y área (π × radio²) de un círculo, con π ≈ 3,14 (Lección 2 del módulo de Geometría plana)",
+    "Área de un rectángulo como base × altura",
+    "Multiplicación de números decimales"
+  ],
+  "conceptos": [
+    "la superficie de un cuerpo es el área de su red o desarrollo: lo que queda plano al cortarlo por las aristas y desplegarlo",
+    "área de superficie de un paralelepípedo: 2 × (ab + bc + ac), la suma de tres pares de caras iguales",
+    "área de superficie de un cubo: 6 × a², el caso en que las seis caras son iguales",
+    "área de superficie de un cilindro: dos tapas (2 × π × radio²) más el manto (2 × π × radio × altura)",
+    "el manto de un cilindro, desenrollado, es un rectángulo de base 2 × π × radio y altura igual a la del cilindro",
+    "la superficie se mide en unidades cuadradas, a diferencia de cuánto cabe adentro"
+  ],
+  "_notasInternas": [
+    "L1 del módulo cuerpos-geometricos (eje Geometría, módulo #11). Descriptor DEMRE / docs/mapa-modulos-m1.md:246: 'Área de superficie de paralelepípedos, cubos y cilindros'.",
+    "catalogoErrores NACE en este archivo. Mapeo desde la propuesta P1…P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): error-1←P1, error-2←P2, error-3←P3, error-4←P4, error-5←P6, error-6←P7. P5 ('solo el manto, sin las dos tapas') NO entra en L1: produce exactamente el valor del manto (2πrh), que este archivo muestra como resultado correcto al desenrollar el cilindro en 'practica' — usarlo como distractor sería colisión distractor/correcta. P5 se traslada a L3, donde el cilindro no expone el manto como paso intermedio. P8…P12 son mecanismos de volumen (L2/L3).",
+    "error-2 y error-5 se usan SOLO en bloques 'seleccion' (mecanismo conceptual). Sus valores numéricos quedan fuera de banda de magnitud como distractor numérico (docs/reglas-modulo.md regla 3.2): 26 vs 108 para error-2, 6280 vs 1256 para error-5. No aparecen como alternativa de itemsPAES; error-5 aparece como feedbackPorError en 'practica' (valorObtenido 6908) solo porque se dispara únicamente si el estudiante teclea ese valor por su cuenta.",
+    "Reconciliación de dos secciones del doc de diseño que no calzaban: 'Reparto de escenas' decía núcleo = farol (cilindro); la tabla 'Las 6 celdas de L1' ponía paralelepípedo 6×3×4 en el paso 'descubrimiento'. Manda la lógica pedagógica: el descubrimiento 'superficie = área de la red → seis rectángulos → 2(ab+bc+ac)' necesita una caja, no un cilindro. Se resolvió sin cambiar dominios firmados: el farol de papel de la fiesta de barrio se fabrica de caja, cúbico y cilíndrico — mismo contexto, tres cuerpos. 'aplicacion' usa el segundo dominio firmado (parlante cúbico con tela acústica).",
+    "Todas las cifras verificadas con node -e antes de escribir (π = 3,14 exacto, no Math.PI). Cuerpos por paso: 'descubrimiento' caja 6×3×4 (caras 18/12/24, S 108); 'generalizacion' cubo arista 5 (S 150) + refuerzo cubo arista 7 (S 294); 'practica' cilindro r=10 h=20 (tapas 628, manto 1256, S 1884); 'aplicacion' parlante cubo arista 8 (S 384) + caja 5×3×4 (S 94); 'reflexion' cubo arista 6 (S = V = 216, pregunta abierta, sin ítem PAES). itemsPAES: caja 4×2×5 (S 76), cilindro r=10 h=20 (representar, sin cifras nuevas), cubo arista 10 (argumentar, afirmación 4a²=400 vs 6a²=600).",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b, 🔴 intra-archivo) corrido sobre todos los respuestaCorrecta + alternativas esCorrecta del archivo: sin colisiones. El refuerzo del cubo en 'generalizacion' usa arista 7 tras descartar la 3 (S 54), que colisionaba con el distractor error-1 de la caja 6×3×4. Cubo arista 4 evitado en todo el archivo (4a² = 64 = su propio volumen, riesgo P3). Cubo arista 6 reservado para la pregunta abierta de cierre.",
+    "Colisión declarada en auditoria.colisionesPermitidas: 216 (cubo de arista 6, S = V). No hay ítem PAES ni campo numérico con ese valor; es un bloque de texto + predicción que planta la pregunta de L2 ('¿superficie y volumen miden lo mismo?').",
+    "π ≈ 3,14 escrito explícito en cada enunciado del cilindro: BloqueNumerica.tsx compara el input parseado contra el literal guardado con igualdad estricta (numero === respuestaCorrecta), sin tolerancia. Todos los valores del cilindro con r=10 son enteros exactos con 3,14 (628, 1256, 1884, 1570, 785).",
+    "Sin interactivoSlider (docs/reglas-modulo.md regla 1: el concepto no lo exige, no hay ninguna magnitud continua que mover). Sin auditoria.constante: L1 no tiene una constante numérica única cuya circulación previa haya que vigilar; la notación formal 2(ab+bc+ac) aparece por primera vez en 'generalizacion', y ningún total de superficie se entrega antes del paso 'descubrimiento'."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Trasladar la estructura del perímetro a un cuerpo: sumar las tres dimensiones y multiplicar por dos, 2(a+b+c), como si la superficie se midiera sumando longitudes de aristas en vez de áreas de caras."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "En un cuerpo con tapa y base, contar solo las caras laterales y olvidar las dos que lo cierran arriba y abajo: en el cubo, calcular 4a² (las cuatro caras laterales) en vez de 6a²."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "En el cilindro, sumar el manto y una sola tapa, πr² + 2πrh, olvidando que el cuerpo tiene dos tapas iguales (una arriba y otra abajo) y no una."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "En el cilindro, calcular el manto con el área del círculo en lugar de su contorno: usar πr² · h (área de la base por la altura) donde corresponde 2πr · h (circunferencia por la altura)."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Confundir el radio con el diámetro del cilindro y usar uno donde va el otro dentro de cualquiera de sus fórmulas (tapas o manto), duplicando o partiendo a la mitad la medida que entra al cálculo."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: farol de papel para una fiesta de barrio, sin medidas (solo la idea de aplanar la red)",
+    "problema: farol de papel cilíndrico, sin resolver (solo elección de método)",
+    "pensar/pistas: farol de papel con forma de caja, 6 cm × 3 cm × 4 cm, superficie 108 cm² (caras de 18, 12 y 24 cm²)",
+    "descubrimiento: mismo farol-caja 6 × 3 × 4, superficie 108 cm² (ejemplo nuclear, armado y desplegado)",
+    "generalizacion: fórmula 2(ab+bc+ac) sobre el 6×3×4 (108); farol-cubo de arista 5 cm, superficie 150 cm²; refuerzo: farol-cubo de arista 7 cm, superficie 294 cm²",
+    "practica: farol de papel cilíndrico, radio 10 cm y altura 20 cm, con π ≈ 3,14: tapas 628 cm², manto 1256 cm², superficie total 1884 cm²",
+    "aplicacion: parlante cúbico de arista 8 cm forrado con tela acústica, superficie 384 cm²; farol-caja adicional de 5 cm × 3 cm × 4 cm, superficie 94 cm²",
+    "reflexion: farol-cubo de arista 6 cm, superficie 216 cm² (pregunta abierta; se menciona que su volumen daría el mismo número, sin calcularlo ni resolverlo)",
+    "itemsPAES: farol-caja de 4 cm × 2 cm × 5 cm (superficie 76 cm²); farol cilíndrico radio 10 cm, altura 20 cm (ítem de representación, sin cifras nuevas); farol-cubo de arista 10 cm (ítem de argumentación: afirmación 4×10²=400 cm² frente a 6×10²=600 cm²)"
+  ],
+  "auditoria": {
+    "colisionesPermitidas": [
+      {
+        "valor": 216,
+        "motivo": "Cubo de arista 6 en la pregunta abierta de cierre (paso 'reflexion'): su superficie es 6 × 6² = 216 y su volumen sería 6³ = 216, el mismo número a propósito, para plantear que superficie y volumen son magnitudes distintas aunque el resultado coincida. No hay ítem PAES asociado ni campo numérico cuyo respuestaCorrecta o distractor sea 216; aparece solo en un bloque de texto y en una predicción sin corrección."
+      }
+    ]
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Desarmar para medir",
+      "_notasInternas": [
+        "Sin fórmula y sin ningún total de superficie: solo se estrena el vocabulario (cara, arista, vértice, red/desarrollo) y la idea de que un cuerpo se puede aplanar sin cambiar la cantidad de papel. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "Para una fiesta de barrio armaron faroles de papel. Si tomas uno, lo cortas con cuidado por todas sus aristas y lo aplanas sobre la mesa hasta dejarlo hecho una sola pieza plana: ¿la cantidad de papel que tienes en la mano es mayor, menor o exactamente la misma que cuando el farol estaba armado?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Mayor: al desplegarlo ocupa más",
+            "Exactamente la misma: solo cambió de forma",
+            "Menor: armado se ve más grande"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un **cuerpo** como un farol de papel tiene **caras** (las superficies planas que lo limitan), **aristas** (las líneas donde se juntan dos caras) y **vértices** (las esquinas donde se juntan las aristas).\n\nSi lo cortas por las aristas y lo aplanas, obtienes su **red** o **desarrollo**: todas sus caras, una al lado de otra, sin encimarse. El papel es el mismo — solo dejó de estar doblado.\n\nEsa es la idea de toda esta lección: **la superficie de un cuerpo —cuánto material lo cubre— es el área de su red desplegada.** Un problema de tres dimensiones se vuelve uno de dos, y para el plano ya tienes herramientas."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El farol cilíndrico",
+      "_notasInternas": [
+        "Siembra el cilindro sin resolverlo. La opción correcta describe el método (manto + dos tapas); la opción (c) 'solo el círculo de la base' lleva feedback conceptual sin errorCatalogado (todavía no se ha visto la fórmula). El verdaderoFalso ilustra que el método no depende del tamaño, sin calcular ningún área."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Uno de los faroles es un cilindro de papel: un tubo con una tapa circular arriba y otra abajo. Para saber cuánto papel lleva en total, ¿cuál de estos caminos es el correcto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Desenrollar la parte curva (el manto) para verla como un rectángulo, calcular su área, y sumarle el área de las dos tapas circulares.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El cilindro se desarma en tres piezas planas: el manto, que desenrollado es un rectángulo, y las dos tapas, que son círculos iguales. La superficie total es la suma de las tres."
+            },
+            {
+              "id": "b",
+              "texto": "Medir el farol con una huincha por fuera y estimar el papel a ojo.",
+              "esCorrecta": false,
+              "feedback": "Estimar a ojo da una idea aproximada, pero no la medida exacta. El cilindro tiene una red bien definida —un rectángulo y dos círculos— y esa red se puede calcular sin adivinar."
+            },
+            {
+              "id": "c",
+              "texto": "Calcular el área de un solo círculo del tamaño de la tapa: ese es el papel del farol.",
+              "esCorrecta": false,
+              "feedback": "Un solo círculo es apenas una de las dos tapas. Falta la otra tapa y, sobre todo, falta el manto: la parte curva que envuelve todo el tubo, que es la que más papel usa."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Este mismo método —desenrollar el manto y sumarle las dos tapas— ¿serviría igual si el farol cilíndrico fuera enorme, del tamaño de un tambor?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. El método no depende de que el farol sea chico o grande: siempre se desarma en un rectángulo (el manto) y dos círculos (las tapas). Con un farol enorme los números son más grandes, pero el procedimiento es el mismo.",
+          "feedbackFalso": "En realidad sí serviría igual. Desarmar el cilindro en su manto y sus dos tapas funciona para cualquier tamaño: lo único que cambia con un farol más grande son los números, no la forma de la red."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Prueba con el farol de caja",
+      "_notasInternas": [
+        "Farol-caja 6×3×4, S = 2(18+12+24) = 108 (verificado node -e). Distractor error-1: 18+12+24 = 54 (mitad, tres caras). Distractor error-2: 2(6+3+4) = 26. vista 'desarrollo' con las tres cotas rotuladas (docs/reglas-modulo.md regla 6). Campo con id neutro sin cifra (regla 4)."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "La red desplegada de un farol con forma de caja rectangular: las seis caras abiertas sobre el plano formando una cruz, con las tres medidas rotuladas — el largo '6 cm', el ancho '3 cm' y el alto '4 cm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "desarrollo",
+            "enfasis": "superficie",
+            "largo": 6,
+            "ancho": 3,
+            "alto": 4,
+            "etiquetaLargo": "6 cm",
+            "etiquetaAncho": "3 cm",
+            "etiquetaAlto": "4 cm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Este farol tiene forma de caja: 6 cm de largo, 3 cm de ancho y 4 cm de alto. Mirando su red desplegada, intenta calcular cuántos centímetros cuadrados de papel se necesitaron para cubrirlo por completo, antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "areaDelFarol",
+              "etiqueta": "Papel del farol",
+              "respuestaCorrecta": 108,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDelFarol",
+              "valorObtenido": 54,
+              "mensaje": "54 suma solo tres caras: una de 18, una de 12 y una de 24. Pero la caja tiene seis caras, en tres pares iguales: cada una de esas tres se repite en el lado opuesto. La superficie real es el doble.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "areaDelFarol",
+              "valorObtenido": 26,
+              "mensaje": "26 es 2 × (6 + 3 + 4): sumaste las tres medidas y las duplicaste, como si midieras un borde. La superficie no suma longitudes de aristas, suma áreas de caras: cada cara es el producto de dos medidas, no su suma.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "La caja tiene seis caras, en tres pares iguales: una de 6 × 3, una de 3 × 4 y una de 6 × 4, cada una repetida dos veces. Calcula el área de cada par y súmalas."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el farol de caja",
+      "_notasInternas": [
+        "Mismo farol-caja 6×3×4. Nivel 3 NO entrega el 108 servido (docs/reglas-modulo.md regla 2): nombra los tres pares de caras y deja que el estudiante sume."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La superficie es el área de la red: todas las caras, sumadas. Empieza por identificar cuántas caras tiene la caja y cuáles son iguales entre sí."
+            },
+            {
+              "nivel": 2,
+              "texto": "Una caja rectangular tiene seis caras, que van en tres pares iguales: el frente y el fondo, la tapa y la base, y los dos lados. Cada par se calcula multiplicando dos de las tres medidas (6, 3 y 4)."
+            },
+            {
+              "nivel": 3,
+              "texto": "Los tres pares miden: 6 × 3 = 18 cada una, 3 × 4 = 12 cada una, y 6 × 4 = 24 cada una. Como cada cara se repite dos veces, suma 18 + 18 + 12 + 12 + 24 + 24."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La superficie es la red",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Mismo farol-caja 6×3×4, S = 108 (verificado). seleccion y pregunta comparten el set: 108 (correcta), 54 (error-1), 26 (error-2), 84 (ad-hoc: olvidó el par de caras de 12; 108 − 2×12 = 84). La notación formal 2(ab+bc+ac) NO aparece aquí: se deja para 'generalizacion' (requisito pedagógico). Dos visualizaciones: armado (solido) y desplegado (desarrollo), lado a lado. verdaderoFalso metacognitivo = el check '¿tiene sentido?' que pide el SKILL."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Vuelve al farol con forma de caja: 6 cm de largo, 3 cm de ancho, 4 cm de alto. Armado es un cuerpo; cortado por las aristas y aplanado es su red: seis rectángulos.\n\nSi cuentas el papel de esos seis rectángulos, tienes el papel del farol. No hay nada más que sumar, y nada que se pierda al desplegar."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El farol con forma de caja rectangular dibujado en perspectiva, armado, con sus tres aristas acotadas: largo '6 cm', ancho '3 cm', alto '4 cm'.",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "superficie",
+            "largo": 6,
+            "ancho": 3,
+            "alto": 4,
+            "etiquetaLargo": "6 cm",
+            "etiquetaAncho": "3 cm",
+            "etiquetaAlto": "4 cm"
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El mismo farol, ahora desplegado: su red sobre el plano, las seis caras abiertas en forma de cruz, con las mismas tres medidas rotuladas (6 cm, 3 cm, 4 cm) y las áreas de los tres pares de caras visibles: 18, 12 y 24 cm².",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "desarrollo",
+            "enfasis": "superficie",
+            "largo": 6,
+            "ancho": 3,
+            "alto": 4,
+            "etiquetaLargo": "6 cm",
+            "etiquetaAncho": "3 cm",
+            "etiquetaAlto": "4 cm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "En la red del farol hay tres pares de caras iguales: dos de 18 cm², dos de 12 cm² y dos de 24 cm². ¿Cuántos centímetros cuadrados de papel se usaron en total?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "108 cm²",
+              "esCorrecta": true,
+              "feedback": "Correcto. 18 + 18 + 12 + 12 + 24 + 24 = 108. También se puede pensar como 2 × (18 + 12 + 24) = 2 × 54 = 108."
+            },
+            {
+              "id": "b",
+              "texto": "54 cm²",
+              "esCorrecta": false,
+              "feedback": "54 es 18 + 12 + 24: una sola cara de cada par. Cada una de esas caras tiene una gemela en el lado opuesto del farol, así que hay que sumar seis caras, no tres. El total es el doble.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "26 cm²",
+              "esCorrecta": false,
+              "feedback": "26 es 2 × (6 + 3 + 4): sumaste las tres medidas del farol y las duplicaste. Eso mide longitudes, no superficie. Cada cara es un rectángulo, y su área es el producto de dos medidas, no la suma.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "84 cm²",
+              "esCorrecta": false,
+              "feedback": "84 es 108 menos las dos caras de 12 cm²: te quedaron cuatro caras en vez de seis. El farol tiene tres pares completos; falta sumar el par de 3 × 4."
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un farol de papel con forma de caja mide 6 cm de largo, 3 cm de ancho y 4 cm de alto. ¿Cuántos centímetros cuadrados de papel se necesitan para cubrirlo por completo?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "108 cm²",
+              "esCorrecta": true,
+              "feedback": "Correcto. Las tres caras distintas miden 6 × 3 = 18, 3 × 4 = 12 y 6 × 4 = 24; cada una se repite dos veces: 2 × (18 + 12 + 24) = 108 cm²."
+            },
+            {
+              "clave": "B",
+              "texto": "54 cm²",
+              "esCorrecta": false,
+              "feedback": "54 cm² suma solo una cara de cada par (18 + 12 + 24). El farol tiene seis caras, no tres: cada cara tiene su opuesta idéntica, así que la superficie real es el doble.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "C",
+              "texto": "26 cm²",
+              "esCorrecta": false,
+              "feedback": "26 cm² es 2 × (6 + 3 + 4): la suma de las tres aristas, duplicada. Esa cuenta mide un contorno, no una superficie. El área de cada cara multiplica dos medidas.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "D",
+              "texto": "72 cm²",
+              "esCorrecta": false,
+              "feedback": "72 es 6 × 3 × 4, el producto de las tres medidas. Ese número no cuenta caras: multiplicar las tres dimensiones mide otra cosa, no el papel que cubre el farol."
+            }
+          ],
+          "notaVerificacionMatematica": "Caras: 6×3=18, 3×4=12, 6×4=24. Superficie = 2×(18+12+24) = 2×54 = 108. Distractores: 18+12+24=54 (error-1); 2×(6+3+4)=26 (error-2); 6×3×4=72 (ad-hoc). Verificado con node -e."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que la superficie del farol (108 cm²) sea exactamente el doble de 54, que es lo que suman sus tres caras distintas?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. Toda caja rectangular tiene sus caras en tres pares iguales: por cada cara hay otra idéntica en el lado opuesto. Por eso la superficie es siempre el doble de lo que suman las tres caras distintas.",
+          "feedbackFalso": "En realidad sí tiene sentido. En una caja rectangular cada cara tiene una gemela en el lado opuesto: son tres pares iguales. Sumar las tres caras distintas da la mitad; el total es el doble, 108 cm²."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de hacer es todo el método: **desplegar el cuerpo y sumar el área de sus caras.** No memorizaste ninguna fórmula — contaste seis rectángulos. En el próximo paso vas a escribir esa cuenta como una fórmula, y a ver qué pasa cuando el cuerpo es un cubo o un cilindro."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, y el caso del cubo",
+      "_notasInternas": [
+        "PRIMERA aparición de la notación formal S = 2(ab + bc + ac), con ejemplo sobre el 6×3×4 (108). Cubo arista 5: S = 6×25 = 150. Distractor error-3: 4×25 = 100 (solo las 4 caras laterales). Distractor error-2 adaptado: 6×5 = 30 (solo seleccion). Refuerzo numérico: cubo arista 7, S = 6×49 = 294; feedbackPorError 196 (error-3, 4×49) y 147 (error-1, 3×49, la mitad de las caras). Arista 5 y 7 elegidas: 4 prohibida (4a²=64=V), 6 reservada al cierre, 3 colisiona (S 54)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La cuenta que hiciste con el farol-caja se escribe así, para cualquier caja de largo **a**, ancho **b** y alto **c**:\n\n**S = 2 × (a·b + b·c + a·c)**\n\nSon los tres pares de caras: una de a·b, una de b·c, una de a·c, cada una repetida dos veces. Con el farol de 6 × 3 × 4:\n\nS = 2 × (6·3 + 3·4 + 6·4) = 2 × (18 + 12 + 24) = 2 × 54 = **108 cm²**."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un **cubo** es una caja donde las tres medidas son iguales: a = b = c. Entonces las tres caras distintas —a·b, b·c, a·c— son todas a·a = a², y hay seis en total:\n\n**S = 6 × a²**\n\nNo es una fórmula nueva: es la de la caja, con las tres medidas iguales."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Un farol con forma de cubo, dibujado en perspectiva, con sus tres aristas acotadas, todas de '5 cm'.",
+          "datos": {
+            "cuerpo": "cubo",
+            "vista": "solido",
+            "enfasis": "superficie",
+            "arista": 5,
+            "etiquetaArista": "5 cm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Otro farol es un cubo de 5 cm de arista. Usando S = 6 × a², ¿cuánto papel lleva?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "150 cm²",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cada cara mide 5 × 5 = 25 cm², y el cubo tiene seis caras iguales: 6 × 25 = 150 cm²."
+            },
+            {
+              "id": "b",
+              "texto": "100 cm²",
+              "esCorrecta": false,
+              "feedback": "100 es 4 × 25: contaste solo las cuatro caras de los lados y olvidaste la tapa y la base. Un cubo tiene seis caras, no cuatro.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "c",
+              "texto": "30 cm²",
+              "esCorrecta": false,
+              "feedback": "30 es 6 × 5: multiplicaste el número de caras por la arista, no por el área de una cara. Cada cara es un cuadrado de 5 × 5 = 25 cm², no de 5.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "25 cm²",
+              "esCorrecta": false,
+              "feedback": "25 cm² es el área de una sola cara (5 × 5). Falta multiplicar por las seis caras que tiene el cubo."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Un farol cúbico más grande mide 7 cm de arista. ¿Cuántos centímetros cuadrados de papel lleva?",
+          "campos": [
+            {
+              "id": "areaDelFarolCubico",
+              "etiqueta": "Papel del farol cúbico",
+              "respuestaCorrecta": 294,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDelFarolCubico",
+              "valorObtenido": 196,
+              "mensaje": "196 es 4 × 7²: solo las cuatro caras laterales. Falta la tapa y la base. El cubo tiene seis caras iguales: 6 × 49.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "areaDelFarolCubico",
+              "valorObtenido": 147,
+              "mensaje": "147 es 3 × 49: la mitad de las caras. Un cubo tiene seis caras iguales, no tres; cada cara vale 7 × 7 = 49 cm².",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Cada cara del cubo mide 7 × 7 = 49 cm². El cubo tiene seis caras iguales: multiplica 49 por 6."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "El farol cilíndrico, desenrollado",
+      "_notasInternas": [
+        "Cilindro r=10, h=20, π=3,14. tapas = 2×3,14×100 = 628; manto = 2×3,14×10×20 = 1256; S = 1884 (todos enteros exactos, verificado node -e). El manto desenrollado ES un rectángulo de 2πr × h: la 'prueba más convincente del descubrimiento' (doc de diseño). seleccion conceptual usa error-5 (manto = πr²h). numerica: feedbackPorError 1570 (error-4, πr² + 2πrh = 314 + 1256), 785 (error-6, radio 10 leído como diámetro -> r=5: 2×3,14×25 + 2×3,14×5×20 = 157 + 628), 6908 (error-5, 2πr² + πr²h = 628 + 6280; solo se dispara si el estudiante teclea ese valor). Prerrequisito 2πr y πr² ya cubierto por figuras-borde-y-superficie (módulo #10 L2). π escrito explícito por la comparación estricta de BloqueNumerica."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El farol cilíndrico se desarma en tres piezas: dos **tapas** circulares iguales y el **manto**, la parte curva que envuelve el tubo.\n\nLo sorprendente es el manto: si lo cortas a lo largo y lo desenrollas, queda un **rectángulo**. Su altura es la del cilindro. Su base es todo el contorno de la tapa, es decir la circunferencia: **2 × π × radio**.\n\nPara las tapas usas el área del círculo, **π × radio²**, y para el manto el rectángulo **(2 × π × radio) × altura**. Aquí, π ≈ 3,14."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "La red desplegada de un farol cilíndrico: en el centro un rectángulo (el manto desenrollado) rotulado con su altura '20 cm', y arriba y abajo dos círculos iguales (las tapas) con el radio marcado, '10 cm'.",
+          "datos": {
+            "cuerpo": "cilindro",
+            "vista": "desarrollo",
+            "enfasis": "superficie",
+            "radio": 10,
+            "altura": 20,
+            "etiquetaRadio": "10 cm",
+            "etiquetaAltura": "20 cm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El manto del farol, desenrollado, es un rectángulo. Su altura es la del cilindro, 20 cm. ¿A qué es igual su base?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Al contorno de la tapa, es decir a la circunferencia 2 × π × radio: es lo que rodea el manto.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El borde de arriba del manto está pegado a toda la circunferencia de la tapa, así que al desenrollarlo esa circunferencia se estira y se vuelve la base del rectángulo: 2 × π × radio."
+            },
+            {
+              "id": "b",
+              "texto": "Al área de la tapa, π × radio²: la superficie del círculo.",
+              "esCorrecta": false,
+              "feedback": "El área de la tapa (π × radio²) mide una superficie, en cm². La base del rectángulo es una longitud, en cm: es el contorno de la tapa, la circunferencia 2 × π × radio, no su área.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "A la mitad del contorno de la tapa, π × radio.",
+              "esCorrecta": false,
+              "feedback": "π × radio es media circunferencia. El manto rodea la tapa completa, no la mitad: su base es la circunferencia entera, 2 × π × radio."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El farol cilíndrico tiene 10 cm de radio y 20 cm de altura. ¿Cuántos centímetros cuadrados de papel lleva en total, sumando el manto y las dos tapas? Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "areaDelFarolCilindrico",
+              "etiqueta": "Papel del farol cilíndrico",
+              "respuestaCorrecta": 1884,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDelFarolCilindrico",
+              "valorObtenido": 1570,
+              "mensaje": "1570 es el manto (1256) más una sola tapa (314). El cilindro tiene dos tapas iguales, arriba y abajo: falta sumar la segunda, otros 314 cm².",
+              "errorCatalogado": "error-4"
+            },
+            {
+              "campoId": "areaDelFarolCilindrico",
+              "valorObtenido": 785,
+              "mensaje": "785 sale de usar 10 como si fuera el diámetro, con radio 5. El enunciado da el radio, 10 cm, no el diámetro: con radio 10 las tapas suman 628 y el manto 1256.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "areaDelFarolCilindrico",
+              "valorObtenido": 6908,
+              "mensaje": "6908 usa π × radio² × altura para el manto (3,14 × 100 × 20 = 6280). Esa es el área de la tapa multiplicada por la altura, no el manto. El manto es la circunferencia por la altura: 2 × π × radio × altura = 1256.",
+              "errorCatalogado": "error-5"
+            }
+          ],
+          "feedbackPorDefecto": "Tapas: 2 × (π × 10²) = 2 × 314 = 628. Manto: (2 × π × 10) × 20 = 62,8 × 20 = 1256. Total: 628 + 1256."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El parlante y una caja más",
+      "_notasInternas": [
+        "Dominio nuevo (firmado): parlante cúbico con tela acústica, arista 8. S = 6×64 = 384. Distractor error-3: 4×64 = 256. Distractor error-1: 3×64 = 192 (mitad de las caras). Segundo ejercicio: farol-caja 5×3×4, S = 2(15+12+20) = 94; feedbackPorError 47 (error-1, mitad). Arista 8 del parlante: distinta de la 5 y la 7 de 'generalizacion', y de la 6 del cierre. Cierra con abierta de síntesis de las tres fórmulas."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Terminada la fiesta, sobra tela acústica y alguien quiere forrar un **parlante con forma de cubo**, de 8 cm de arista, por sus seis caras. Es el mismo problema del farol cúbico: superficie de un cubo."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Un parlante con forma de cubo, dibujado en perspectiva, con sus tres aristas acotadas, todas de '8 cm'.",
+          "datos": {
+            "cuerpo": "cubo",
+            "vista": "solido",
+            "enfasis": "superficie",
+            "arista": 8,
+            "etiquetaArista": "8 cm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuántos centímetros cuadrados de tela acústica se necesitan para forrar las seis caras del parlante cúbico de 8 cm de arista?",
+          "campos": [
+            {
+              "id": "areaDelParlante",
+              "etiqueta": "Tela para el parlante",
+              "respuestaCorrecta": 384,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDelParlante",
+              "valorObtenido": 256,
+              "mensaje": "256 es 4 × 8²: las cuatro caras de los lados, sin la de arriba ni la de abajo. Forrar el parlante completo son seis caras: 6 × 64.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "areaDelParlante",
+              "valorObtenido": 192,
+              "mensaje": "192 es 3 × 64: la mitad de las caras. El cubo tiene seis caras iguales de 8 × 8 = 64 cm², no tres.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Cada cara del parlante mide 8 × 8 = 64 cm². Son seis caras iguales: 6 × 64."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Quedó también un farol con forma de caja de 5 cm de largo, 3 cm de ancho y 4 cm de alto. ¿Cuántos centímetros cuadrados de papel lleva?",
+          "campos": [
+            {
+              "id": "areaDeLaCajaFinal",
+              "etiqueta": "Papel del farol-caja",
+              "respuestaCorrecta": 94,
+              "unidad": "cm²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDeLaCajaFinal",
+              "valorObtenido": 47,
+              "mensaje": "47 suma una sola cara de cada par: 15 + 12 + 20. Cada una tiene su gemela opuesta, así que la superficie es el doble: 2 × 47.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Las tres caras distintas miden 5 × 3 = 15, 3 × 4 = 12 y 5 × 4 = 20. Cada una se repite: S = 2 × (15 + 12 + 20)."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Escribe, con tus propios números, las tres fórmulas de área de superficie que usaste en esta lección: la de la caja, la del cubo y la del cilindro. Al lado de cada una, anota en una frase qué representa cada término.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Caja: S = 2 × (a·b + b·c + a·c). Los tres términos son las tres caras distintas; el 2 las duplica porque cada una tiene su opuesta. Ej.: 2 × (15 + 12 + 20) = 94 cm².\nCubo: S = 6 × a². Es la caja con las tres medidas iguales: seis caras cuadradas iguales. Ej.: 6 × 8² = 384 cm².\nCilindro: S = 2 × π × radio² + 2 × π × radio × altura. El primer término son las dos tapas circulares; el segundo es el manto, un rectángulo de base 2 × π × radio (la circunferencia) y altura la del cilindro. Ej.: 628 + 1256 = 1884 cm²."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Envolver no es llenar",
+      "_notasInternas": [
+        "Metacognición sobre la magnitud (superficie en unidades cuadradas, invariante al desplegar), no sobre un cálculo puntual. Luego el PUENTE A L2: cubo de arista 6, S = 6×36 = 216, y se MENCIONA que su volumen daría el mismo número (216) sin calcularlo ni resolver nada — es la pregunta abierta firmada que resuelve L2. Sin ítem PAES. El 216 está declarado en auditoria.colisionesPermitidas. El texto de cierre nombra los cuatro errores en lenguaje llano, sin IDs, mismo criterio que figuras-borde-y-superficie."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: si aplanas un farol y después lo vuelves a armar, ¿cambia la cantidad de papel? ¿Y por qué la superficie se mide en centímetros cuadrados y no en centímetros a secas?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que diga que el papel no cambia porque desplegar solo reordena las mismas caras, y que la superficie se mide en cm² porque cada cara es un área (producto de dos longitudes), no una longitud, indica que entendió que la superficie es una propiedad de la red, invariante a cómo esté doblada."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un último farol, cúbico, de 6 cm de arista. Su superficie es 6 × 6² = 6 × 36 = **216 cm²**.\n\nAquí hay algo curioso que vas a resolver en la próxima lección: si en vez de preguntar cuánto papel lo cubre preguntaras **cuánto cabe adentro**, para este cubo en particular te daría también **216**. El mismo número.\n\n¿Es casualidad? ¿Miden lo mismo la superficie y lo que cabe adentro, o son cosas distintas que aquí coinciden por el tamaño elegido?"
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Antes de la próxima lección: ¿crees que la superficie de un cuerpo y la cantidad de espacio que cabe adentro son la misma medida con otro nombre, o dos cosas distintas que en el cubo de arista 6 dan el mismo número por coincidencia?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Son la misma medida",
+            "Son dos cosas distintas que aquí coinciden",
+            "No estoy seguro todavía"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al calcular área de superficie —y que la PAES usa para armar las alternativas incorrectas— son:\n\n1. **Contar solo las caras que se ven** en el dibujo (tres de seis): da la mitad de la superficie real.\n2. **Sumar las aristas en vez de las caras**: 2 × (a + b + c) mide un contorno, no una superficie.\n3. **Olvidar la tapa y la base**: contar solo las caras laterales del cubo (4a²) o sumar una sola tapa del cilindro.\n4. **Confundir el radio con el diámetro** del cilindro, o usar el área del círculo (π·r²) donde va su contorno (2·π·r).\n\nYa los viste por dentro en esta lección. Cuando aparezcan disfrazados de alternativa, los vas a reconocer."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + puente explícito a L2 (cuerpos-cuanto-cabe-adentro: Volumen de paralelepípedos, cubos y cilindros), sin comprometer detalles de L2. Cierra anunciando los tres ítems PAES."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- La **superficie** de un cuerpo es el área de su **red desplegada**: se calcula sumando el área de todas sus caras, no memorizando una fórmula suelta.\n- **Caja:** S = 2 × (a·b + b·c + a·c) — tres pares de caras iguales.\n- **Cubo:** S = 6 × a² — la caja con las tres medidas iguales.\n- **Cilindro:** S = 2 × π × radio² + 2 × π × radio × altura — dos tapas circulares más el manto, que desenrollado es un rectángulo de base 2 × π × radio (la circunferencia) y altura la del cilindro. Con π ≈ 3,14.\n- La superficie se mide en **unidades cuadradas** (cm², m²).\n\nDónde se conecta: la próxima lección responde la pregunta que quedó abierta —cuánto cabe adentro de un cuerpo, su volumen— y vas a ver por qué, aunque en el cubo de arista 6 los dos números coincidan, superficie y volumen no miden lo mismo.\n\nAhora, tres ítems formato PAES para cerrar."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un farol de papel con forma de caja mide 4 cm de largo, 2 cm de ancho y 5 cm de alto. ¿Cuántos centímetros cuadrados de papel se necesitan para cubrirlo por completo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "76 cm²",
+          "esCorrecta": true,
+          "feedback": "Correcto. Las tres caras distintas miden 4 × 2 = 8, 2 × 5 = 10 y 4 × 5 = 20; cada una se repite: 2 × (8 + 10 + 20) = 2 × 38 = 76 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "38 cm²",
+          "esCorrecta": false,
+          "feedback": "38 cm² suma una sola cara de cada par (8 + 10 + 20). La caja tiene seis caras: cada una tiene su opuesta idéntica, así que la superficie real es el doble.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "60 cm²",
+          "esCorrecta": false,
+          "feedback": "60 cm² deja fuera el par de caras de 4 × 2 = 8 cm²: sumaste solo dos de los tres pares. Faltan las dos caras de 8 cm²."
+        },
+        {
+          "clave": "D",
+          "texto": "40 cm²",
+          "esCorrecta": false,
+          "feedback": "40 es 4 × 2 × 5, el producto de las tres medidas. Multiplicar las tres dimensiones no cuenta caras: no es la superficie del farol."
+        }
+      ],
+      "solucion": "Área de superficie de un paralelepípedo = 2 × (a·b + b·c + a·c). Con a = 4, b = 2, c = 5: 2 × (4·2 + 2·5 + 4·5) = 2 × (8 + 10 + 20) = 2 × 38 = 76 cm². Comprobación: las seis caras son 8, 8, 10, 10, 20, 20; su suma es 76. ✓"
+    },
+    {
+      "id": "l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Un farol cilíndrico se corta y se aplana para ver su red completa. ¿Cuál de estas descripciones corresponde a la red que da el área total de papel del farol?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Dos círculos iguales (las dos tapas) más un rectángulo cuya base es la circunferencia de la tapa y cuya altura es la del cilindro.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Las dos tapas son círculos de área π × radio² cada uno; el manto, desenrollado, es un rectángulo de base 2 × π × radio (la circunferencia) y altura igual a la del cilindro."
+        },
+        {
+          "clave": "B",
+          "texto": "Un solo círculo más un rectángulo cuya base es la circunferencia de la tapa: se suma una tapa en vez de dos.",
+          "esCorrecta": false,
+          "feedback": "El cilindro tiene dos tapas iguales, una arriba y otra abajo. Con una sola tapa falta sumar la otra: la red completa lleva dos círculos, no uno.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "Solo un rectángulo cuya base es la circunferencia de la tapa, sin ningún círculo.",
+          "esCorrecta": false,
+          "feedback": "Ese rectángulo es solo el manto. Deja fuera las dos tapas circulares que cierran el cilindro por arriba y por abajo."
+        },
+        {
+          "clave": "D",
+          "texto": "Dos círculos más un rectángulo, pero tomando como base del rectángulo el área de la tapa (π × radio²) en lugar de su contorno.",
+          "esCorrecta": false,
+          "feedback": "La base del manto desenrollado es el contorno de la tapa, la circunferencia 2 × π × radio, que es una longitud. El área de la tapa (π × radio²) es una superficie: no puede ser la base de un rectángulo.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "La red del cilindro tiene tres piezas: dos círculos iguales, cada uno de área π × radio² (las tapas), y el manto. El manto, desenrollado, es un rectángulo de altura igual a la del cilindro y base igual a la circunferencia de la tapa, 2 × π × radio. El área total es 2 × (π × radio²) + (2 × π × radio) × altura. La descripción que corresponde a esa red es la A."
+    },
+    {
+      "id": "l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Para forrar un farol con forma de cubo de 10 cm de arista, un estudiante calcula la tela como 4 × 10² y obtiene 400 cm². ¿Es correcto este cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: contó solo las cuatro caras de los lados. El cubo tiene seis caras iguales, así que la superficie es 6 × 10² = 600 cm².",
+          "esCorrecta": true,
+          "feedback": "Correcto. 4 × 10² son las cuatro caras laterales; faltan la tapa y la base. Un cubo tiene seis caras iguales de 100 cm²: 6 × 100 = 600 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: 400 cm² es la superficie del cubo.",
+          "esCorrecta": false,
+          "feedback": "400 cm² son solo cuatro caras (4 × 10²). El cubo tiene seis caras iguales: falta sumar la de arriba y la de abajo. La superficie real es 600 cm².",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: la superficie real es 300 cm², porque el cubo tiene tres pares de caras y basta sumar una de cada par.",
+          "esCorrecta": false,
+          "feedback": "300 es 3 × 10²: una sola cara de cada par. En un cubo las seis caras son iguales y todas cuentan; no se suma solo la mitad. La superficie es 6 × 100 = 600 cm².",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: la superficie real es 1000 cm², porque hay que elevar la arista al cubo.",
+          "esCorrecta": false,
+          "feedback": "1000 es 10³. Elevar la arista al cubo mide cuánto cabe adentro, no cuánta tela lo cubre. La superficie suma áreas de caras: 6 × 10² = 600 cm²."
+        }
+      ],
+      "solucion": "El cálculo del estudiante, 4 × 10² = 400, cuenta solo las cuatro caras laterales del cubo y omite la tapa y la base. La superficie de un cubo es 6 × a² = 6 × 10² = 6 × 100 = 600 cm². El cálculo no es correcto y la respuesta es A. (El distractor D, 10³ = 1000, corresponde al volumen, que se ve en la lección siguiente.)"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: área de superficie de paralelepípedos, cubos y cilindros), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (faroles de papel para una fiesta de barrio, en sus formas de caja, cubo y cilindro; parlante cúbico forrado con tela acústica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, en dos tandas sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'farol de papel', 'farol', 'papel de seda', 'parlante', 'tela acustica', 'forrar', 'bloque de hormigon', 'hormigon', 'serigrafia', 'acuario', 'pecera', 'silo', 'granos', 'arenero', 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md) y 'arena' LIMPIO; 'piscina' es dominio de la Lección 2, no de esta, y quedó descartada allá. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. Auditoría matemática (Ronda 1) y de originalidad (Ronda 2): pendientes, se corren en hilos separados del de redacción.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
