@@ -243,8 +243,8 @@ contradiciendo la definición en prosa de «Completo» de este mismo documento.
 
 | id | Título | Archivo |
 |---|---|---|
-| `cuerpos-desarmar-la-caja` | Área de superficie de paralelepípedos, cubos y cilindros | no |
-| `cuerpos-cuanto-cabe-adentro` | Volumen de paralelepípedos, cubos y cilindros | no |
+| `cuerpos-desarmar-la-caja` | Área de superficie de paralelepípedos, cubos y cilindros | sí |
+| `cuerpos-cuanto-cabe-adentro` | Volumen de paralelepípedos, cubos y cilindros | sí |
 | `cuerpos-problemas-en-contexto` | Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos | no |
 
 `cuerpos-hoja-al-cilindro` se renombró a `cuerpos-problemas-en-contexto` el
