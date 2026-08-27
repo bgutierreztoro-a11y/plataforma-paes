@@ -63,7 +63,11 @@ Estos son bugs y confusiones reales que ocurrieron produciendo el módulo sistem
 - Corre la verificación de entorno de la sección 0.
 - Lee `docs/mapa-modulos-m1.md` para el orden topológico y estado de módulos.
 - Lee el switch de tipos de bloque soportados (componente `Bloque.tsx`) — lista los tipos reales disponibles hoy.
-- Elige el primer módulo/lección pendiente en orden topológico que se pueda construir al 100% con los tipos de bloque YA existentes, sin componentes React nuevos ni campos de schema nuevos. Si requiere algo nuevo (gráficos de parábola, figuras geométricas, etc.), sáltalo y documenta por qué.
+- Elige el primer módulo/lección pendiente en orden topológico. Si se puede construir al 100% con los tipos de bloque YA existentes, sin componentes React nuevos ni campos de schema nuevos, arranca directo en la Fase 1.
+- **Si requiere infraestructura nueva** (un componente React de ilustración, un tipo de bloque, un campo de schema): no lo saltes — la infra va en una **fase previa**, con commits de propósito único, mergeada y testeada **antes de la Fase 3**. Recién con la infra en verde se empieza a escribir JSON de lección.
+  - La regla vieja decía "sáltalo y documenta por qué". Se reescribió el 2026-08-26 porque estaba mal dirigida: su intención era **no dejar contenido bloqueado detrás de infra indefinida**, no prohibir infra. Como estaba, ningún módulo de Geometría, Probabilidad ni Estadística habría podido construirse jamás, y de hecho ya se había incumplido —`270cc37` creó `IlustracionFiguraGeometrica.tsx` para `figuras-geometricas`, que es justo el ejemplo que la regla mandaba saltar—. Una regla que la práctica incumple sin discutirla no gobierna nada.
+  - Lo que la regla sí sigue prohibiendo: escribir contenido contra infra que todavía no existe o no está testeada. El JSON no se redacta "esperando" que después alguien dibuje el componente. Orden verificable en git para el módulo #10: `270cc37` (infra) antes de `2f5f66f` (L1).
+  - La fase previa se reporta como cualquier otra: archivos, commits, y verificación en verde (`npm run test:unit`, `npm run lint`) antes de pasar a la Fase 1.
 - Verifica si hay algún módulo marcado como "en progreso por otra sesión" (archivos en disco no reflejados en el mapa) — si lo hay, NO lo toques salvo instrucción explícita.
 - Reporta: módulo/lección elegido, IDs de lección según el mapa, tipos de bloque a usar.
 
