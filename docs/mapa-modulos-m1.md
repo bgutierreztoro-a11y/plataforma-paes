@@ -67,7 +67,7 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 7 | Álgebra y funciones | Sistemas de ecuaciones lineales (2x2) | `sistemas-2x2` | **completo** |
 | 8 | Álgebra y funciones | Función lineal y afín | `funcion-lineal-y-afin` | **completo** |
 | 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | **completo** |
-| 10 | Geometría | Figuras geométricas | `figuras-geometricas` | sin contenido |
+| 10 | Geometría | Figuras geométricas | `figuras-geometricas` | **completo** |
 | 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | sin contenido |
 | 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | sin contenido |
 | 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | sin contenido |
@@ -75,10 +75,14 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-9 completos · 7 sin contenido · 31 de 48 lecciones escritas (verificado el
-2026-08-25 con `ls content/lecciones | grep -v l0-demo | wc -l`). `figuras-geometricas`
-tiene sus 3 lecciones escritas pero no cuenta como módulo completo: falta su
-cierre, ver nota en la sección GEOMETRÍA de abajo.
+10 completos · 6 sin contenido · 30 de 48 lecciones escritas (verificado el
+2026-08-26 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
+
+El conteo decía 31 hasta el 2026-08-26. El comando que citaba
+(`ls content/lecciones | grep -v l0-demo | wc -l`) contaba también
+`_esqueleto.json`, que es plantilla y no lección — los archivos que empiezan con
+`_` no se validan (CLAUDE.md, "Convenciones técnicas"). El comando de arriba los
+excluye.
 
 «Completo» = las 3 lecciones tienen archivo y el módulo tiene su cierre conectado
 en `lib/modulos.ts`. No implica que no tenga deuda: `porcentaje` y
@@ -218,19 +222,22 @@ Cierre: `cierre-funcion-cuadratica`.
 | `figuras-borde-y-superficie` | Perímetro y área de triángulos, paralelogramos, trapecios y círculos | sí |
 | `figuras-problemas-con-forma` | Aplicaciones de perímetro y área en contexto | sí |
 
-Las 3 lecciones de este módulo ya tienen archivo (verificado el 2026-08-25 con `ls`
-sobre `content/lecciones`; la fila de `figuras-triangulo-no-se-rompe` decía "no"
-desde antes de esa fecha pese a que el archivo existía desde el commit
-`2f5f66f` — dato del mapa desactualizado, corregido acá, no un hecho nuevo).
-**El módulo NO está completo**: falta `content/cierres/cierre-figuras-geometricas.json`
-y su `cierreId` en `lib/modulos.ts` (Fase 6/7, fuera del alcance de la tarea que
-escribió `figuras-problemas-con-forma`). Ojo: `lib/estadoModulo.ts` calcula
-`EstadoModulo` contando solo lecciones (`resueltas.length === declaradas`), sin
-mirar si existe cierre — con las 3 lecciones ya en disco, el código va a
-calcular `"completo"` para este módulo aunque no tenga cierre, contradiciendo la
-definición en prosa de "Completo" de este mismo documento (que sí exige cierre
-conectado). Revisar antes de dar por seguro cómo se ve `/camino` con este módulo
-sin cierre.
+Módulo completo desde el 2026-08-26 (commit `25e9adc`): sus 3 lecciones tienen
+archivo y `content/cierres/cierre-figuras-geometricas.json` está conectado como
+`cierreId` en `lib/modulos.ts`. Ronda 1 (matemática) y Ronda 2 (originalidad)
+aprobadas en hilos aislados.
+
+Hasta el 2026-08-26 esta nota decía «**El módulo NO está completo**: falta
+`cierre-figuras-geometricas.json` y su `cierreId`», y la fila 10 de la tabla de
+arriba decía «sin contenido». Las dos cosas quedaron desactualizadas cuando
+`25e9adc` agregó el cierre y no tocó este documento.
+
+Sigue en pie la observación de fondo que traía esa nota, porque no dependía del
+cierre: `lib/estadoModulo.ts` calcula `EstadoModulo` contando solo lecciones
+(`resueltas.length === declaradas`), sin mirar si existe cierre. Para este módulo
+ya no hay discrepancia —tiene ambos—, pero el próximo módulo que llegue a 3
+lecciones sin cierre se va a mostrar como `"completo"` en `/camino`
+contradiciendo la definición en prosa de «Completo» de este mismo documento.
 
 ### 11. Cuerpos geométricos — `cuerpos-geometricos`
 
