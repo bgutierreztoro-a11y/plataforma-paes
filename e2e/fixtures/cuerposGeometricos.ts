@@ -100,6 +100,95 @@ export const CUERPOS_SOLIDO: { titulo: string; bloque: BloqueVisualizacion }[] =
 ];
 
 /**
+ * Los mismos tres cuerpos y los mismos números, desplegados.
+ *
+ * Son deliberadamente las mismas medidas que `CUERPOS_SOLIDO`: la vista previa
+ * sirve entre otras cosas para comprobar a ojo que el sólido y su red hablan
+ * del mismo cuerpo, que es justo lo que un componente único garantiza y dos
+ * componentes separados dejarían divergir.
+ */
+export const CUERPOS_DESARROLLO: { titulo: string; bloque: BloqueVisualizacion }[] = [
+  {
+    titulo: "Paralelepípedo desplegado · superficie",
+    bloque: bloque(
+      "Red del paralelepípedo en cruz: seis rectángulos, con las tres parejas de caras opuestas compartiendo relleno.",
+      {
+        cuerpo: "paralelepipedo",
+        largo: 12,
+        ancho: 6,
+        alto: 8,
+        etiquetaLargo: "12",
+        etiquetaAncho: "6",
+        etiquetaAlto: "8",
+        enfasis: "superficie",
+        vista: "desarrollo",
+      },
+    ),
+  },
+  {
+    titulo: "Paralelepípedo desplegado · volumen",
+    bloque: bloque("La misma red, con relleno uniforme.", {
+      cuerpo: "paralelepipedo",
+      largo: 12,
+      ancho: 6,
+      alto: 8,
+      etiquetaLargo: "12",
+      etiquetaAncho: "6",
+      etiquetaAlto: "8",
+      enfasis: "volumen",
+      vista: "desarrollo",
+    }),
+  },
+  {
+    titulo: "Cubo desplegado · superficie",
+    bloque: bloque("Red del cubo en cruz: seis cuadrados iguales.", {
+      cuerpo: "cubo",
+      arista: 10,
+      etiquetaArista: "10",
+      enfasis: "superficie",
+      vista: "desarrollo",
+    }),
+  },
+  {
+    titulo: "Cubo desplegado · volumen",
+    bloque: bloque("La misma red del cubo, con relleno uniforme.", {
+      cuerpo: "cubo",
+      arista: 10,
+      etiquetaArista: "10",
+      enfasis: "volumen",
+      vista: "desarrollo",
+    }),
+  },
+  {
+    titulo: "Cilindro desplegado · superficie",
+    bloque: bloque(
+      "Red del cilindro: el manto desenrollado como rectángulo de ancho 2πr, más las dos tapas circulares.",
+      {
+        cuerpo: "cilindro",
+        radio: 5,
+        altura: 14,
+        etiquetaRadio: "5",
+        etiquetaAltura: "14",
+        enfasis: "superficie",
+        vista: "desarrollo",
+      },
+    ),
+  },
+  {
+    titulo: "Cilindro desplegado · volumen",
+    bloque: bloque("La misma red del cilindro, con relleno uniforme.", {
+      cuerpo: "cilindro",
+      radio: 5,
+      altura: 14,
+      etiquetaRadio: "5",
+      etiquetaAltura: "14",
+      enfasis: "volumen",
+      vista: "desarrollo",
+    }),
+  },
+];
+
+/**
  * Casos que el type guard DEBE rechazar. Se muestran en la vista previa para
  * comprobar a ojo que degradan al `<figure>` de texto en vez de reventar.
  */
@@ -139,5 +228,18 @@ export const CUERPOS_FUERA_DE_BANDA: { titulo: string; bloque: BloqueVisualizaci
       etiquetaAncho: "6",
       etiquetaAlto: "8",
     }),
+  },
+  {
+    titulo: "Rechazado · vista con typo",
+    bloque: bloque(
+      "Cubo sano con vista: 'desplegado', que no es uno de los dos literales válidos.",
+      {
+        cuerpo: "cubo",
+        arista: 10,
+        etiquetaArista: "10",
+        enfasis: "superficie",
+        vista: "desplegado",
+      },
+    ),
   },
 ];

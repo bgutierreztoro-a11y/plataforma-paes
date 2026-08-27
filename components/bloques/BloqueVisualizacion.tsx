@@ -15,12 +15,14 @@ import {
 import {
   CUERPOS_GEOMETRICOS_VALIDOS,
   ENFASIS_VALIDOS,
+  VISTAS_VALIDAS,
   IlustracionCuerpoGeometrico,
   type DatosCilindro,
   type DatosCubo,
   type DatosCuerpoGeometrico,
   type DatosParalelepipedo,
   type EnfasisCuerpo,
+  type VistaCuerpo,
 } from "@/components/ilustraciones/IlustracionCuerpoGeometrico";
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
 import { motivoRechazoCilindro, motivoRechazoParalelepipedo } from "@/lib/cuerposGeometricos";
@@ -221,7 +223,7 @@ function esEnfasisValido(v: unknown): v is EnfasisCuerpo {
  * contenido legible para el estudiante.
  */
 function esDatosCuerpoGeometrico(datos: unknown): datos is DatosCuerpoGeometrico {
-  const d = datos as { cuerpo?: unknown; enfasis?: unknown } | null;
+  const d = datos as { cuerpo?: unknown; enfasis?: unknown; vista?: unknown } | null;
   if (typeof d !== "object" || d === null) return false;
   if (!CUERPOS_GEOMETRICOS_VALIDOS.includes(d.cuerpo as (typeof CUERPOS_GEOMETRICOS_VALIDOS)[number])) {
     return false;
@@ -231,6 +233,10 @@ function esDatosCuerpoGeometrico(datos: unknown): datos is DatosCuerpoGeometrico
   // superficie y volumen piden exactamente las mismas cotas, así que no hay
   // ningún campo cuya presencia pueda desambiguarlos.
   if (!esEnfasisValido(d.enfasis)) return false;
+  // `vista` sí es opcional: sin declararla el cuerpo se dibuja armado. Pero si
+  // viene, tiene que ser uno de los dos literales — un "desplegado" o un typo
+  // no puede caer en silencio a la vista sólido.
+  if (d.vista !== undefined && !VISTAS_VALIDAS.includes(d.vista as VistaCuerpo)) return false;
 
   switch (d.cuerpo) {
     case "paralelepipedo": {

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { BloqueVisualizacion } from "@/components/bloques/BloqueVisualizacion";
-import { CUERPOS_FUERA_DE_BANDA, CUERPOS_SOLIDO } from "@/e2e/fixtures/cuerposGeometricos";
+import {
+  CUERPOS_DESARROLLO,
+  CUERPOS_FUERA_DE_BANDA,
+  CUERPOS_SOLIDO,
+} from "@/e2e/fixtures/cuerposGeometricos";
 
 export const metadata: Metadata = {
   title: "Vista previa — cuerpos geométricos",
@@ -29,6 +33,16 @@ export default function VistaPreviaCuerposGeometricos() {
       <h2 className="mb-3 text-sm font-medium text-ink-tenue">Vista sólido</h2>
       <div className="mb-10 grid gap-5 sm:grid-cols-2">
         {CUERPOS_SOLIDO.map(({ titulo, bloque }) => (
+          <section key={titulo} data-caso={titulo}>
+            <h3 className="mb-1.5 text-sm text-ink-suave">{titulo}</h3>
+            <BloqueVisualizacion bloque={bloque} />
+          </section>
+        ))}
+      </div>
+
+      <h2 className="mb-3 text-sm font-medium text-ink-tenue">Vista desarrollo</h2>
+      <div className="mb-10 grid gap-5 sm:grid-cols-2">
+        {CUERPOS_DESARROLLO.map(({ titulo, bloque }) => (
           <section key={titulo} data-caso={titulo}>
             <h3 className="mb-1.5 text-sm text-ink-suave">{titulo}</h3>
             <BloqueVisualizacion bloque={bloque} />
