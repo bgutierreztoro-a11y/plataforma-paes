@@ -1,0 +1,710 @@
+{
+  "tipo": "leccion",
+  "id": "cuerpos-problemas-en-contexto",
+  "titulo": "Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos",
+  "objetivo": "Decidir, ante un problema que no nombra la magnitud, si lo que se pide vive en el borde del cuerpo (pintar, forrar, recubrir, etiquetar → área de superficie) o en su interior (llenar, caber, contener, vaciar → volumen), y recién entonces calcular; y convertir volúmenes entre metros cúbicos y litros sabiendo que 1 m³ = 1.000 litros, sin arrastrar el factor de las unidades cuadradas.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Área de superficie de paralelepípedos, cubos y cilindros: 2 × (ab + bc + ac), 6 × a² y las dos tapas más el manto (Lección 1 de este módulo)",
+    "Volumen de paralelepípedos, cubos y cilindros como área de la base × altura: a·b·c, a³ y π·radio²·altura, con π ≈ 3,14 (Lección 2 de este módulo)",
+    "La equivalencia 1 dm³ = 1 litro, y la idea de decidir entre dos magnitudes según lo que pide un problema (área o perímetro), del módulo de figuras planas"
+  ],
+  "conceptos": [
+    "ante un problema en contexto, la primera decisión no es qué fórmula usar sino qué magnitud se pide: lo que ocurre en el borde del cuerpo es superficie; lo que ocurre en su interior es volumen",
+    "pintar, forrar, recubrir, envolver y etiquetar son preguntas de borde → área de superficie, en unidades cuadradas",
+    "llenar, caber, contener, vaciar y «cuánto le entra» son preguntas de interior → volumen, en unidades cúbicas",
+    "un problema de dos pasos puede dar una magnitud como dato para deducir otra: por ejemplo, conocer el volumen y dos dimensiones para despejar la tercera",
+    "1 metro cúbico equivale a 1.000 litros, no a 100: un cubo de 1 m de lado son 1.000 dm³ y cada dm³ es 1 litro. El factor entre unidades cúbicas es 1.000, no el 100 de las unidades cuadradas"
+  ],
+  "_notasInternas": [
+    "L3 del módulo cuerpos-geometricos (eje Geometría, módulo #11). Descriptor DEMRE / docs/mapa-modulos-m1.md:248: «Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos». Descubrimiento fijado por docs/diseno-modulo-cuerpos-geometricos.md: la pregunta a hacerse es si lo pedido vive en el BORDE (pintar, forrar, recubrir, etiquetar → superficie) o en el INTERIOR (llenar, caber, contener, vaciar → volumen). L3 NO estrena ninguna fórmula: es una lección de traducción y decisión. El único contenido formal nuevo de generalizacion es la conversión m³ ↔ litros (1 m³ = 1.000 L).",
+    "catalogoErrores de L3: subconjunto embebido {error-1, error-7, error-9, error-10} copiado carácter a carácter desde L1 (error-1) y L2 (error-7, error-9, error-10), más error-11 y error-12 que NACEN en este archivo. Aprobado por Benjamín (hilo de redacción, opción (a)): L3 sigue el patrón de L2 —embeber solo el subconjunto que usan sus propios distractores— en vez de referenciar ids colgando; sin catálogo embebido lib/sanitizar.ts no resuelve la Capa 2 ni el paso de autoexplicación. chequearDivergenciaDeCatalogo (npm run auditar) verifica que error-1/7/9/10 calcen con L1/L2. NO se toca L1: meter ahí error-11/error-12 dispararía catalogo-sin-usar 🔴 porque ningún distractor de L1 los referencia.",
+    "error-11 (magnitud equivocada) es el mecanismo de distractor principal del núcleo (termo → volumen): se ofrece la fórmula de superficie —correctamente aplicada— donde se pide cuánto cabe. Mapea a la propuesta P11 de docs/diseno-modulo-cuerpos-geometricos.md, que L2 ya había usado 2 veces sin id (l2-item-2.D, l2-item-3.D, bajo el umbral de 3). En L3 aparece en ≥3 distractores (paso descubrimiento seleccion y pregunta, paso practica ex1 feedbackPorError, itemsPAES 2 y 3) → se cataloga. Texto firmado por Benjamín sin cambios.",
+    "error-12 (conversión ×100 en vez de ×1.000) es el mecanismo de la aplicación (cámara de frío) y el eje declarado de la lección. Mapea a P12. Aparece en generalizacion (seleccion + ejercicio), practica ex2 y ex3, aplicacion (ambos campos) e itemsPAES 1 y 3 → se cataloga. Texto firmado por Benjamín sin cambios.",
+    "P5 (en el cilindro, solo el manto sin las dos tapas) NO se cataloga acá: se descartó el sub-problema de superficie del termo (ya cubierto por L1, error-4 y error-5). El contraste borde/interior sobre el mismo objeto se hace como distractor de error-11 (ofrecer la fórmula de superficie completa cuando se pide volumen), no como mecanismo aparte.",
+    "Unidades. Continúa la lógica de L2: el termo del núcleo va en centímetros (cm³), y se menciona en prosa que 1 litro son 1.000 cm³ —mismo factor 1.000 que 1 dm³ = 1 litro, un piso más abajo— sin hacerlo como paso de cálculo. La conversión aritmética real es m³ ↔ litros (1 m³ = 1.000 L), que vive en la cámara de frío (generalizacion en adelante). Las medidas son independientes del dominio; el dominio fija la unidad y la plausibilidad.",
+    "Cuerpos y cifras por paso (verificado con node -e, π = 3,14 exacto). Núcleo — termo cilíndrico r = 4 cm, h = 16 cm: base π·16 = 50,24; V = π·16·16 = 803,84 cm³; manto 2π·4·16 = 401,92 (distractor error-9); superficie total 2·50,24 + 401,92 = 502,4 cm² (distractor error-11); área de base 50,24 (distractor error-10). generalizacion — cámara-caja 3×2×2 m, V = 12 m³ → 12.000 L (ejemplo trabajado); seleccion 15 m³ → 15.000 L (distractores 1.500 error-12, 15 sin convertir); ejercicio cámara-cubo 3×3×3 m, V = 27 m³ → 27.000 L (feedbackPorError 2.700 error-12, 9.000 error-10). practica — ex1 cámara-caja 5×2×2 m FORRAR POR FUERA → superficie 2·(10+4+10) = 48 m² (feedbackPorError 20 = volumen, error-11; 24 = mitad de las caras, error-1); ex2 conversión 2,5 m³ → 2.500 L (feedbackPorError 250, error-12); ex3 dos pasos: 42.000 L en una caja de 3 m × 2 m → altura 42/(3·2) = 7 m (feedbackPorError 70, error-12 al dividir por 100). aplicacion — cámara de frío 4×2×2 m, V = 16 m³ → 16.000 L (feedbackPorError 1.600, error-12); dos pasos: para 20.000 L con base 4 m × 2 m, altura 20/8 = 2,5 m (feedbackPorError 25, error-12). itemsPAES: cámara 5×4×4 m → 80 m³ = 80.000 L (resolver); termo r = 5 cm, h = 18 cm, expresión (π × 5²) × 18 (modelar, sin cálculo); cámara 2,5×2×2 m = 10 m³, afirmación 10 × 100 = 1.000 litros (argumentar).",
+    "Barrido regla 3b (docs/reglas-modulo.md, 🔴 intra-archivo) con node -e sobre todos los respuestaCorrecta de campos numéricos y alternativas esCorrecta del archivo frente a todos los distractores (alternativas y feedbackPorError.valorObtenido): SIN colisiones. Correctas: 803,84; 15.000; 27.000; 48; 2.500; 7; 16.000; 2,5; 80.000; 10.000. Ningún distractor coincide con ninguna. El valor 20.000 aparece solo en el enunciado en prosa del segundo campo de aplicacion (el objetivo de litros), no como respuestaCorrecta ni como distractor.",
+    "Sin interactivoSlider (docs/reglas-modulo.md regla 1: nada continuo que mover; el descubrimiento es una decisión binaria borde/interior). Sin auditoria.constante: L3 no tiene una única cifra oculta cuya circulación previa haya que vigilar —la conversión (factor 1.000) es una relación, no un número de resultado, y ninguna capacidad en litros se entrega antes de descubrimiento—. auditoria.colisionesPermitidas vacío.",
+    "Dominios firmados 2026-08-27 (docs/diseno-modulo-cuerpos-geometricos.md, «Estado de las firmas»): núcleo «termo cilíndrico», aplicación «cámara de frío» (segunda escena, distinta del termo). Colisión verificada por Benjamín fuera de sesión: «termo», «aislante», «aislacion», «camara de frio» → LIMPIO. El kiosco y el local de comida son el motivo de contexto, no un cuerpo geométrico nuevo.",
+    "Vistas: cilindro y paralelepípedo en vista «solido», las tres cotas siempre rotuladas (regla 6). enfasis «volumen» en casi todo; enfasis «superficie» solo en la visualización de practica ex1, que es la única pregunta de borde con figura. Ningún ítem pide comparar aristas a ojo. Ids de campo numérico neutros, sin cifra (regla 4); todos con unidad (cm³, L, m², m)."
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Aplicar correctamente una fórmula pero la que no corresponde a lo que pide el problema: entregar el área de superficie cuando se pregunta cuánto cabe o se llena (interior → volumen), o entregar el volumen cuando se pregunta cuánto material lo cubre, forra o recubre (borde → superficie)."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Al convertir un volumen de metros cúbicos a litros (o a decímetros cúbicos), multiplicar por 100 en lugar de por 1.000, arrastrando el factor de las unidades cuadradas: tratar 1 m³ como 100 L cuando 1 m³ = 1.000 L."
+    }
+  ],
+  "contextosNumericos": [
+    "curiosidad: se retoma el cierre de L2 (el título ya no dice qué calcular); sin medidas",
+    "problema: termo cilíndrico de un kiosco, sin medidas (solo elección de borde o interior como método)",
+    "pensar/pistas: termo cilíndrico de 4 cm de radio y 16 cm de altura, volumen 803,84 cm³ (base π × 4² = 50,24 cm²)",
+    "descubrimiento: mismo termo 4 cm × 16 cm, volumen 803,84 cm³; distractores 502,4 cm² (superficie total, error-11), 401,92 cm³ (circunferencia por altura, error-9), 50,24 cm³ (solo la base, error-10)",
+    "generalizacion: cámara de frío con forma de caja de 3 m × 2 m × 2 m, volumen 12 m³ = 12.000 litros (ejemplo trabajado); cámara de 15 m³ = 15.000 litros (distractores 1.500 y 15); ejercicio: cámara con forma de cubo de 3 m de arista, volumen 27 m³ = 27.000 litros",
+    "practica: cámara de frío de 5 m × 2 m × 2 m que se forra por fuera, superficie 48 m² (distractores 20 = volumen, 24 = mitad de las caras); conversión de 2,5 m³ a 2.500 litros; cámara con 42.000 litros y base de 3 m × 2 m, altura 7 m",
+    "aplicacion: cámara de frío de un local de 4 m × 2 m × 2 m, volumen 16 m³ = 16.000 litros; para alcanzar 20.000 litros con la misma base de 4 m × 2 m, altura 2,5 m",
+    "reflexion: sin cifras nuevas (metacognición sobre borde/interior y sobre el factor 1.000)",
+    "itemsPAES: cámara de frío de 5 m × 4 m × 4 m, volumen 80 m³ = 80.000 litros (resolver); termo cilíndrico de 5 cm de radio y 18 cm de altura, expresión (π × 5²) × 18 (modelar, sin cálculo numérico); cámara de frío de 2,5 m × 2 m × 2 m, volumen 10 m³, frente a la afirmación 10 × 100 = 1.000 litros (argumentar)"
+  ],
+  "auditoria": {
+    "colisionesPermitidas": []
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "El enunciado ya no lo dice",
+      "_notasInternas": [
+        "Sin fórmula y sin ningún cálculo. Retoma el cierre de L2: hasta ahora el título de la lección decía si calcular superficie o volumen; en los problemas reales no. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "En las dos lecciones anteriores, el título te decía qué calcular: «área de superficie» o «volumen». Ahora te van a preguntar cuánta pintura, cuánto cabe, cuánto cartón, cuánta agua — sin nombrar ninguna de las dos. ¿Qué crees que hay que decidir primero?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Qué fórmula aplicar, y probar con los números a ver cuál da un resultado razonable",
+            "Si lo que se pide está en la parte de afuera del cuerpo o en lo que cabe adentro",
+            "No estoy seguro todavía"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Las dos fórmulas ya las tienes. La superficie es la suma de las caras; el volumen es el área de la base repetida a lo alto. Esta lección no agrega ninguna fórmula nueva.\n\nLo que agrega es la **decisión de antes**: cuando el problema habla de **pintar, forrar, recubrir o etiquetar**, te está preguntando por el **borde** del cuerpo → superficie. Cuando habla de **llenar, caber, contener o vaciar**, te pregunta por el **interior** → volumen.\n\nEs la misma decisión que ya hiciste con figuras planas —¿me piden el área o el perímetro?—, ahora con un cuerpo en vez de una figura."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El termo del kiosco",
+      "_notasInternas": [
+        "Siembra el termo sin resolverlo. La opción correcta describe el método de interior (área de la base × altura). La opción (b) 'superficie' lleva feedback conceptual SIN errorCatalogado: todavía no se ha decidido nada formalmente, mismo criterio que el paso 'problema' de L1 y L2. El verdaderoFalso muestra que la decisión borde/interior no depende de la forma del cuerpo."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El kiosco tiene un termo cilíndrico para el café. La dueña quiere saber **cuántos mililitros de café le caben** cuando lo llena hasta el borde. ¿Cuál de estos caminos responde esa pregunta?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Calcular el área del círculo de la base del termo y multiplicarla por la altura: cuántas capas de café de 1 cm caben adentro.",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Cuánto le cabe» es una pregunta de interior: es volumen. Y el volumen de un cilindro es el área de la base circular repetida a lo largo de la altura."
+            },
+            {
+              "id": "b",
+              "texto": "Calcular cuánto acero inoxidable forma el termo: las dos tapas más la parte curva que lo envuelve.",
+              "esCorrecta": false,
+              "feedback": "Eso es la superficie del termo: el material que lo forma por fuera. Responde «cuánto acero», no «cuánto café». La pregunta es cuánto cabe adentro, que es el volumen."
+            },
+            {
+              "id": "c",
+              "texto": "Medir el contorno de la tapa con una huincha y multiplicarlo por la altura del termo.",
+              "esCorrecta": false,
+              "feedback": "El contorno de la tapa es una longitud, en cm. Multiplicarlo por la altura da un área (cm²), que describe la parte curva del termo, no el café que cabe adentro."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si en vez de un termo cilíndrico la dueña usara una jarra con forma de caja, ¿seguiría siendo una pregunta de volumen saber cuánto café le cabe?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. «Cuánto le cabe» es interior sea cual sea la forma: siempre es volumen. Lo que cambia con la forma es cómo se calcula el área de la base, no qué magnitud se pide.",
+          "feedbackFalso": "En realidad sí. La forma del cuerpo no cambia la pregunta: «cuánto cabe» es interior, y eso es volumen, sea una caja, un cubo o un cilindro. Solo cambia la fórmula del área de la base."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Prueba con el termo",
+      "_notasInternas": [
+        "Termo cilíndrico r = 4 cm, h = 16 cm. Base π × 4² = 50,24; V = 50,24 × 16 = 803,84 cm³ (verificado node -e). Distractor error-9: 2 × π × 4 × 16 = 401,92. Distractor error-10: 50,24 (solo la base). Distractor error-11: 2 × 50,24 + 401,92 = 502,4 cm² (superficie total, el acero del termo). vista 'solido' con las dos cotas (regla 6). Campo con id neutro sin cifra y con unidad (regla 4). El 803,84 no se entrega como texto: es la respuesta que el estudiante intenta alcanzar."
+      ],
+      "bloques": [
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El termo cilíndrico dibujado en perspectiva, de pie, con el radio de la base marcado, «4 cm», y la altura acotada, «16 cm».",
+          "datos": {
+            "cuerpo": "cilindro",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "radio": 4,
+            "altura": 16,
+            "etiquetaRadio": "4 cm",
+            "etiquetaAltura": "16 cm"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El termo mide 4 cm de radio y 16 cm de altura. El área de su base circular es π × 4² = 50,24 cm². Antes de pedir pistas, intenta calcular cuántos centímetros cúbicos de café caben adentro cuando se llena hasta el borde. Usa π ≈ 3,14.",
+          "campos": [
+            {
+              "id": "cafeQueCabe",
+              "etiqueta": "Café que cabe",
+              "respuestaCorrecta": 803.84,
+              "unidad": "cm³"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cafeQueCabe",
+              "valorObtenido": 502.4,
+              "mensaje": "502,4 cm² es la superficie del termo: las dos tapas más la parte curva, el acero que lo forma. Eso responde «cuánto material», no «cuánto café». La pregunta es de interior: área de la base (50,24) por la altura (16).",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "campoId": "cafeQueCabe",
+              "valorObtenido": 401.92,
+              "mensaje": "401,92 usa el contorno de la base (2 × π × 4 = 25,12) en vez de su área (π × 4² = 50,24). El café se apoya sobre el área del círculo, no sobre su contorno. Multiplica 50,24 por la altura.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "cafeQueCabe",
+              "valorObtenido": 50.24,
+              "mensaje": "50,24 es solo el área de la base: una capa de café de 1 cm de alto. El termo tiene 16 cm de altura, así que caben 16 capas iguales: 50,24 × 16.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "«Cuánto cabe» es volumen. La base del café es el círculo de área 50,24 cm². Sobre ella caben capas de 1 cm de alto, una por cada centímetro de altura del termo. ¿Cuántas capas, y cuánto suman?"
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el termo",
+      "_notasInternas": [
+        "Mismo termo r = 4, h = 16. Nivel 1 fija la decisión borde/interior. Nivel 3 NO entrega el 803,84 (regla 2): nombra la base (50,24) y las 16 capas y deja que el estudiante multiplique."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Primero decide qué te piden. «Cuánto café cabe» es lo que hay adentro, no lo que lo cubre: es interior, o sea volumen. Descarta cualquier cuenta de superficie."
+            },
+            {
+              "nivel": 2,
+              "texto": "El volumen de un cilindro es el área de la base circular repetida a lo alto. El área de la base ya te la dan: π × 4² = 50,24 cm². El termo tiene 16 cm de altura."
+            },
+            {
+              "nivel": 3,
+              "texto": "Cada capa de café de 1 cm de alto contiene 50,24 cm³ (el área de la base). El termo tiene 16 cm de altura, así que hay 16 capas iguales: multiplica 50,24 × 16."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Borde o interior",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Mismo termo r = 4, h = 16, V = 803,84 (verificado node -e). El descubrimiento NO es una fórmula (ya están las dos): es la decisión borde/interior. seleccion y pregunta comparten el set: 803,84 (correcta, interior), 502,4 cm² (error-11, la superficie del termo), 401,92 (error-9, contorno por altura), 50,24 (error-10, una capa). La pregunta agrega el rótulo de unidad como pista visible: cm² frente a cm³. verdaderoFalso metacognitivo = el check «¿tiene sentido?» del SKILL. Cierra anunciando que en generalizacion se junta esto con la conversión de unidades."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Vuelve al termo: 4 cm de radio, 16 cm de altura, base de 50,24 cm².\n\nLa pregunta era **cuánto café cabe**. Café adentro = **interior** = **volumen**. Entonces la cuenta es el área de la base repetida por la altura:\n\n**V = 50,24 × 16 = 803,84 cm³.**\n\nComo un litro son 1.000 cm³, en el termo caben unos **0,8 litros** de café. (No hizo falta convertir para responder: 803,84 cm³ ya es la respuesta; los litros son solo para hacerse una idea.)"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "El mismo termo cilíndrico en perspectiva, con líneas horizontales que marcan capas de café apiladas de abajo hacia arriba, y las dos medidas acotadas: «4 cm» el radio y «16 cm» la altura.",
+          "datos": {
+            "cuerpo": "cilindro",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "radio": 4,
+            "altura": 16,
+            "etiquetaRadio": "4 cm",
+            "etiquetaAltura": "16 cm"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para responder «cuánto café le cabe al termo», ¿qué cuenta corresponde?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "π × radio² × altura: el área del círculo de la base, repetida por los 16 cm de altura.",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Cuánto cabe» es interior → volumen. Y el volumen del cilindro es el área de la base (π × radio²) repetida por la altura."
+            },
+            {
+              "id": "b",
+              "texto": "2 × π × radio² + 2 × π × radio × altura: las dos tapas más la parte curva.",
+              "esCorrecta": false,
+              "feedback": "Esa fórmula está bien aplicada, pero responde otra pregunta: cuánta lámina forma el termo (su superficie). El café que cabe es el interior, y eso es volumen.",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "id": "c",
+              "texto": "π × radio²: el área de la base.",
+              "esCorrecta": false,
+              "feedback": "π × radio² es una sola capa de café de 1 cm de alto. Falta repetirla por los 16 cm de altura del termo.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un termo cilíndrico mide 4 cm de radio y 16 cm de altura. El área de su base circular es 50,24 cm². ¿Cuánto café le cabe cuando se llena hasta el borde? Usa π ≈ 3,14.",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "803,84 cm³",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Cuánto cabe» es volumen: área de la base (50,24 cm²) por la altura (16 cm), 50,24 × 16 = 803,84 cm³."
+            },
+            {
+              "clave": "B",
+              "texto": "502,4 cm²",
+              "esCorrecta": false,
+              "feedback": "502,4 cm² es la superficie del termo (dos tapas más la parte curva): el acero que lo forma. Está en cm², no en cm³ — no puede ser un volumen. Lo que cabe adentro es 50,24 × 16.",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "clave": "C",
+              "texto": "401,92 cm³",
+              "esCorrecta": false,
+              "feedback": "401,92 usa el contorno de la base (2 × π × radio) en lugar de su área (π × radio²). El café se apoya sobre el área del círculo, 50,24 cm², no sobre su contorno.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "clave": "D",
+              "texto": "50,24 cm³",
+              "esCorrecta": false,
+              "feedback": "50,24 es el área de la base: una sola capa de café de 1 cm de alto. El termo tiene 16 cm de altura, así que son 16 capas: 50,24 × 16 = 803,84.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "notaVerificacionMatematica": "Base: π × 4² = 3,14 × 16 = 50,24. Volumen = 50,24 × 16 = 803,84 cm³. Distractores: superficie total 2 × 50,24 + 2 × 3,14 × 4 × 16 = 100,48 + 401,92 = 502,4 cm² (error-11); 2 × π × 4 × 16 = 401,92 (error-9); 50,24 sola (error-10). Verificado con node -e, π = 3,14."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido descartar de entrada la alternativa que está en cm² cuando la pregunta es «cuánto café cabe»?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí. «Cuánto cabe» es volumen, y el volumen se mide en unidades cúbicas (cm³). Una respuesta en cm² mide una superficie: no puede ser lo que cabe adentro, sin necesidad de calcular nada.",
+          "feedbackFalso": "En realidad sí conviene descartarla. El volumen va en cm³; una alternativa en cm² es una superficie. El rótulo de la unidad ya te dice que esa opción responde otra pregunta."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ese es el paso nuevo: **antes de calcular, decidir si te piden el borde o el interior.** Borde (pintar, forrar, recubrir, etiquetar) → superficie. Interior (llenar, caber, contener, vaciar) → volumen.\n\nEn el próximo paso vas a juntar esa decisión con algo que la PAES usa mucho en estos problemas: pasar un volumen de **metros cúbicos a litros**."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Las dos preguntas, y los litros",
+      "_notasInternas": [
+        "L3 NO estrena fórmula (docs/diseno-modulo-cuerpos-geometricos.md). Este paso resume la decisión borde/interior con las dos fórmulas ya vistas y estrena el ÚNICO contenido formal nuevo: la conversión m³ ↔ litros, 1 m³ = 1.000 L. Ejemplo trabajado: cámara-caja 3×2×2 m, V = 12 m³ → 12.000 L (verificado node -e). seleccion: 15 m³ → 15.000 L; distractor error-12: 15 × 100 = 1.500; distractor sin convertir: 15. Ejercicio numérico: cámara-cubo 3×3×3 m, V = 27 m³ → 27.000 L; feedbackPorError 2.700 (error-12) y 9.000 (error-10, 3×3 = 9 como si fuera el volumen, luego ×1.000). Cifras 12, 15, 27 m³ distintas de las aristas/volúmenes de L1 y L2."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Todo problema de estos empieza con la misma pregunta: **¿borde o interior?**\n\n| Lo que pide el problema | Magnitud | Fórmula |\n|---|---|---|\n| pintar, forrar, recubrir, envolver, etiquetar | superficie (borde) | caja 2 × (ab + bc + ac) · cubo 6 × a² · cilindro 2 × π × r² + 2 × π × r × h |\n| llenar, caber, contener, vaciar, «cuánto le entra» | volumen (interior) | caja a × b × c · cubo a³ · cilindro π × r² × h |\n\nLas fórmulas ya las sabes. Lo nuevo es elegir la fila."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Cuando el volumen sale en **metros cúbicos** y el problema pide **litros**, hay que convertir. La equivalencia es:\n\n**1 m³ = 1.000 litros**\n\nPor qué 1.000: un cubo de 1 m de lado mide 10 dm × 10 dm × 10 dm = 1.000 dm³, y cada dm³ es 1 litro (eso ya lo viste). Ojo: el factor entre unidades **cúbicas** es 1.000, no el 100 de las unidades cuadradas.\n\nEjemplo: una cámara de frío con forma de caja de 3 m × 2 m × 2 m tiene un volumen de 3 × 2 × 2 = **12 m³**. En litros: 12 × 1.000 = **12.000 litros**."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Otra cámara de frío tiene un volumen de 15 m³. ¿Cuántos litros de aire frío contiene?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "15.000 litros",
+              "esCorrecta": true,
+              "feedback": "Correcto. 1 m³ son 1.000 litros, así que 15 m³ × 1.000 = 15.000 litros."
+            },
+            {
+              "id": "b",
+              "texto": "1.500 litros",
+              "esCorrecta": false,
+              "feedback": "1.500 es 15 × 100. Ese es el factor de las unidades cuadradas (1 m² = 100 dm²). Entre unidades cúbicas el factor es 1.000: 1 m³ = 1.000 litros.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "c",
+              "texto": "15 litros",
+              "esCorrecta": false,
+              "feedback": "15 es el volumen en m³ sin convertir. Un metro cúbico es mucho más que un litro: son 1.000. Hay que multiplicar por 1.000."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Una cámara de frío con forma de cubo mide 3 m de arista. ¿Cuántos litros contiene? (1 m³ = 1.000 litros.)",
+          "campos": [
+            {
+              "id": "litrosDelCubo",
+              "etiqueta": "Aire frío que contiene",
+              "respuestaCorrecta": 27000,
+              "unidad": "L"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "litrosDelCubo",
+              "valorObtenido": 2700,
+              "mensaje": "2.700 es 27 × 100: usaste el factor de las unidades cuadradas. El volumen es 3³ = 27 m³, y 1 m³ = 1.000 litros, así que son 27 × 1.000 = 27.000.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "campoId": "litrosDelCubo",
+              "valorObtenido": 9000,
+              "mensaje": "9.000 sale de 3 × 3 = 9 (una cara del cubo) por 1.000. El volumen de un cubo es la arista tres veces: 3 × 3 × 3 = 27 m³. Después conviertes: 27 × 1.000.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "feedbackPorDefecto": "Primero el volumen: cubo de arista 3 m → 3 × 3 × 3 = 27 m³. Después a litros: 27 × 1.000 = 27.000."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres para practicar",
+      "_notasInternas": [
+        "Dificultad creciente (docs/calibracion §5). ex1: decisión borde (FORRAR POR FUERA) + cálculo de superficie. Cámara-caja 5×2×2 m, superficie 2 × (10 + 4 + 10) = 48 m² (verificado node -e). feedbackPorError 20 (error-11, entregó el volumen 5×2×2) y 24 (error-1, mitad de las caras 10+4+10). ex2: conversión pura, 2,5 m³ → 2.500 L; feedbackPorError 250 (error-12). ex3: dos pasos, 42.000 L en caja de base 3 m × 2 m → altura 42.000 ÷ 1.000 ÷ (3 × 2) = 7 m; feedbackPorError 70 (error-12, dividió por 100 en vez de por 1.000). Todo verificado node -e. Ninguno de 48, 2.500, 7 colisiona con otro respuestaCorrecta o distractor del archivo."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Tres ejercicios, de menos a más. En cada uno, decide primero **borde o interior**, y recién después calcula. Cuidado con las unidades."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Una cámara de frío con forma de caja rectangular, en perspectiva, con sus tres medidas acotadas: el largo «5 m», el ancho «2 m» y la altura «2 m».",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "superficie",
+            "largo": 5,
+            "ancho": 2,
+            "alto": 2,
+            "etiquetaLargo": "5 m",
+            "etiquetaAncho": "2 m",
+            "etiquetaAlto": "2 m"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una cámara de frío con forma de caja mide 5 m de largo, 2 m de ancho y 2 m de alto. Se va a **forrar por fuera** con planchas aislantes, por sus seis caras. ¿Cuántos metros cuadrados de plancha se necesitan?",
+          "campos": [
+            {
+              "id": "planchaAislante",
+              "etiqueta": "Plancha aislante",
+              "respuestaCorrecta": 48,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "planchaAislante",
+              "valorObtenido": 20,
+              "mensaje": "20 es 5 × 2 × 2, el volumen: cuánto aire cabe adentro. «Forrar por fuera» es una pregunta de borde → superficie. Suma las seis caras: 2 × (5·2 + 2·2 + 5·2).",
+              "errorCatalogado": "error-11"
+            },
+            {
+              "campoId": "planchaAislante",
+              "valorObtenido": 24,
+              "mensaje": "24 suma una sola cara de cada par: 10 + 4 + 10. La caja tiene seis caras, en tres pares iguales: cada una tiene su opuesta. La superficie real es el doble, 2 × 24.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "«Forrar por fuera» es borde → superficie. Las tres caras distintas miden 5 × 2 = 10, 2 × 2 = 4 y 5 × 2 = 10. Cada una se repite: 2 × (10 + 4 + 10)."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una cámara de frío tiene un volumen de 2,5 m³. ¿Cuántos litros de aire frío contiene? (1 m³ = 1.000 litros.)",
+          "campos": [
+            {
+              "id": "litrosDeLaCamaraChica",
+              "etiqueta": "Aire frío que contiene",
+              "respuestaCorrecta": 2500,
+              "unidad": "L"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "litrosDeLaCamaraChica",
+              "valorObtenido": 250,
+              "mensaje": "250 es 2,5 × 100: el factor de las unidades cuadradas. Entre unidades cúbicas el factor es 1.000: 2,5 × 1.000 = 2.500.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "1 m³ son 1.000 litros. Multiplica 2,5 × 1.000."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una cámara de frío con forma de caja tiene que contener 42.000 litros de aire. Su base mide 3 m de largo y 2 m de ancho. ¿Qué altura, en metros, necesita? (1 m³ = 1.000 litros.)",
+          "campos": [
+            {
+              "id": "alturaDeLaCamara",
+              "etiqueta": "Altura necesaria",
+              "respuestaCorrecta": 7,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaDeLaCamara",
+              "valorObtenido": 70,
+              "mensaje": "70 sale de pasar 42.000 litros a 420 m³ dividiendo por 100. El factor es 1.000: 42.000 ÷ 1.000 = 42 m³. Y 42 ÷ (3 × 2) = 7.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Primero los litros a m³: 42.000 ÷ 1.000 = 42 m³. El volumen es base × altura, así que altura = 42 ÷ (3 × 2) = 42 ÷ 6."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La cámara de frío",
+      "_notasInternas": [
+        "Dominio de aplicación firmado: cámara de frío de un local. Escena nueva, distinta del termo del descubrimiento. Cámara-caja 4×2×2 m, V = 16 m³ → 16.000 L (verificado node -e); feedbackPorError 1.600 (error-12). Segundo campo, dos pasos: para 20.000 L con la misma base de 4 m × 2 m, altura = 20.000 ÷ 1.000 ÷ (4 × 2) = 20 ÷ 8 = 2,5 m; feedbackPorError 25 (error-12, dividió 20.000 por 100 → 200, luego ÷ 8). Cierra con abierta de síntesis: cómo se decide borde/interior y por qué el factor es 1.000."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un local de comida instala una **cámara de frío** con forma de caja: 4 m de largo, 2 m de ancho y 2 m de alto. Hay que responder dos cosas sobre ella."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "La cámara de frío con forma de caja rectangular, en perspectiva, con sus tres medidas acotadas: el largo «4 m», el ancho «2 m» y la altura «2 m».",
+          "datos": {
+            "cuerpo": "paralelepipedo",
+            "vista": "solido",
+            "enfasis": "volumen",
+            "largo": 4,
+            "ancho": 2,
+            "alto": 2,
+            "etiquetaLargo": "4 m",
+            "etiquetaAncho": "2 m",
+            "etiquetaAlto": "2 m"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuántos litros de aire frío contiene la cámara cuando está vacía de mercadería? Mide 4 m × 2 m × 2 m. (1 m³ = 1.000 litros.)",
+          "campos": [
+            {
+              "id": "litrosDeLaCamara",
+              "etiqueta": "Aire frío que contiene",
+              "respuestaCorrecta": 16000,
+              "unidad": "L"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "litrosDeLaCamara",
+              "valorObtenido": 1600,
+              "mensaje": "1.600 es 16 × 100. El volumen es 4 × 2 × 2 = 16 m³, y 1 m³ = 1.000 litros, así que son 16 × 1.000 = 16.000.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "«Cuánto contiene» es interior → volumen: 4 × 2 × 2 = 16 m³. Después a litros: 16 × 1.000."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El local quiere una cámara que contenga 20.000 litros, manteniendo la misma base de 4 m de largo y 2 m de ancho. ¿Qué altura, en metros, tendría que tener? (1 m³ = 1.000 litros.)",
+          "campos": [
+            {
+              "id": "alturaParaElObjetivo",
+              "etiqueta": "Altura necesaria",
+              "respuestaCorrecta": 2.5,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaParaElObjetivo",
+              "valorObtenido": 25,
+              "mensaje": "25 sale de pasar 20.000 litros a 200 m³ dividiendo por 100. El factor es 1.000: 20.000 ÷ 1.000 = 20 m³. Y 20 ÷ (4 × 2) = 2,5.",
+              "errorCatalogado": "error-12"
+            }
+          ],
+          "feedbackPorDefecto": "Primero los litros a m³: 20.000 ÷ 1.000 = 20 m³. El volumen es base × altura, así que altura = 20 ÷ (4 × 2) = 20 ÷ 8."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Con tus palabras: ¿cómo decides si un problema te pide superficie o volumen cuando no lo dice? Y explica por qué 1 m³ son 1.000 litros y no 100.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Miro qué acción nombra el problema. Si es pintar, forrar, recubrir, envolver o etiquetar, la pregunta es sobre el borde del cuerpo → área de superficie (unidades cuadradas). Si es llenar, caber, contener o vaciar, es sobre el interior → volumen (unidades cúbicas). Recién después elijo la fórmula según la forma del cuerpo.\nUn metro cúbico es un cubo de 1 m de lado, o sea de 10 dm de lado: 10 × 10 × 10 = 1.000 dm³. Cada dm³ es 1 litro, así que 1 m³ = 1.000 litros. El 100 es el factor de las áreas (1 m² = 100 dm²), no el de los volúmenes."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Cuál te estaban pidiendo",
+      "_notasInternas": [
+        "Metacognición: el estudiante compara su intento del paso 3 (pensar) con lo que sabe ahora. Se nombran en lenguaje llano los dos errores nuevos (magnitud equivocada, factor 100 en vez de 1.000) sin ids, mismo criterio que L1 y L2. Se nombra figuras-borde-y-superficie como la misma decisión un nivel abajo (docs/diseno-modulo-cuerpos-geometricos.md:133). Sin ítem PAES."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Vuelve a tu respuesta del termo, unos pasos atrás. ¿Decidiste desde el principio que «cuánto café cabe» era volumen, o probaste una fórmula y ajustaste? ¿Qué te habría hecho dudar entre superficie y volumen?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda anonimizada para el piloto. Una respuesta que reconozca la decisión borde/interior como el primer paso —y que use el rótulo de la unidad (cm² vs cm³) como control de sentido— indica que el estudiante interiorizó el criterio, no solo las fórmulas."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los dos errores que la PAES más usa para armar alternativas en estos problemas:\n\n1. **Calcular la magnitud equivocada.** Aplicar bien la fórmula de superficie cuando pedían volumen, o al revés. Se detecta a tiempo mirando la unidad: si te pidieron cuánto cabe y tu resultado está en m², algo se cruzó.\n2. **Convertir con el factor de las áreas.** Pasar m³ a litros multiplicando por 100 en vez de por 1.000. Entre unidades cúbicas el salto es de 1.000.\n\nY el criterio de fondo no es nuevo: ya lo usaste con figuras planas, cuando había que decidir entre el área y el perímetro. Aquí es lo mismo, con un cuerpo: **borde o interior.**"
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis del módulo completo: L1 (superficie = la red), L2 (volumen = la base repetida), L3 (borde o interior decide). Cierra anunciando los tres ítems PAES y que el cierre del módulo integra las tres lecciones."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Ante un problema en contexto, **decide primero la magnitud**: borde (pintar, forrar, recubrir, etiquetar) → **superficie**; interior (llenar, caber, contener, vaciar) → **volumen**.\n- Las fórmulas ya las tienes de las dos lecciones anteriores. L3 no agrega ninguna: agrega la decisión.\n- **1 m³ = 1.000 litros.** El factor entre unidades cúbicas es 1.000, no el 100 de las cuadradas.\n- En un problema de **dos pasos**, una magnitud puede ser el dato para deducir otra: por ejemplo, del volumen y dos dimensiones se despeja la tercera.\n- Control de sentido: si te pidieron cuánto cabe y el resultado quedó en unidades cuadradas, elegiste la fórmula equivocada.\n\nAhora, tres ítems formato PAES para cerrar. El cierre del módulo junta las tres lecciones."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Una cámara de frío con forma de caja mide 5 m de largo, 4 m de ancho y 4 m de alto. ¿Cuántos litros de aire frío contiene cuando está vacía? (1 m³ = 1.000 litros.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "80.000 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto. «Cuánto contiene» es volumen: 5 × 4 × 4 = 80 m³. Y 1 m³ = 1.000 litros, así que 80 × 1.000 = 80.000 litros."
+        },
+        {
+          "clave": "B",
+          "texto": "8.000 litros",
+          "esCorrecta": false,
+          "feedback": "8.000 es 80 × 100. Ese es el factor de las unidades cuadradas. Entre unidades cúbicas 1 m³ = 1.000 litros: 80 × 1.000 = 80.000.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "13.000 litros",
+          "esCorrecta": false,
+          "feedback": "13 es 5 + 4 + 4, la suma de las tres medidas. El volumen las multiplica: 5 × 4 × 4 = 80 m³, y después × 1.000.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "112 m²",
+          "esCorrecta": false,
+          "feedback": "112 m² es la superficie de la cámara (sus seis caras): cuánta plancha la forma. La pregunta es cuánto aire contiene, que es volumen, y va en litros.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "«Cuánto contiene» es interior → volumen. Volumen de la caja = 5 × 4 × 4 = 80 m³. Conversión: 1 m³ = 1.000 litros, así que 80 × 1.000 = 80.000 litros. Distractores: 80 × 100 = 8.000 (error-12, factor de las áreas); 5 + 4 + 4 = 13, luego × 1.000 (error-7, suma en vez de producto); 2 × (5·4 + 4·4 + 5·4) = 112 m², la superficie (error-11, magnitud equivocada). La respuesta es A. Verificado con node -e."
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un termo cilíndrico mide 5 cm de radio y 18 cm de altura. ¿Cuál de estas expresiones da la cantidad de café que le cabe? No hace falta calcularla; π ≈ 3,14.",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(π × 5²) × 18",
+          "esCorrecta": true,
+          "feedback": "Correcto. «Cuánto le cabe» es volumen: el área de la base circular (π × 5²) repetida por los 18 cm de altura."
+        },
+        {
+          "clave": "B",
+          "texto": "2 × (π × 5²) + (2 × π × 5) × 18",
+          "esCorrecta": false,
+          "feedback": "Esa es la superficie del termo: las dos tapas más la parte curva. Responde cuánta lámina lo forma, no cuánto café le cabe.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "C",
+          "texto": "(2 × π × 5) × 18",
+          "esCorrecta": false,
+          "feedback": "2 × π × 5 es la circunferencia de la base (su contorno), no su área. Multiplicada por la altura da la parte curva del termo, no el café que cabe adentro.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "D",
+          "texto": "π × 5²",
+          "esCorrecta": false,
+          "feedback": "π × 5² es solo el área de la base: una capa de café de 1 cm de alto. Falta repetirla por los 18 cm de altura.",
+          "errorCatalogado": "error-10"
+        }
+      ],
+      "solucion": "«Cuánto le cabe» es volumen, y el volumen del cilindro es el área de la base por la altura: (π × radio²) × altura = (π × 5²) × 18. La alternativa B es la superficie total del cilindro, 2πr² + 2πrh — otra magnitud (error-11). La C usa la circunferencia 2πr en vez del área πr² (error-9). La D se queda en la base sin multiplicar por la altura (error-10). La expresión correcta es A."
+    },
+    {
+      "id": "l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Para saber cuántos litros de aire contiene una cámara de frío con forma de caja de 2,5 m × 2 m × 2 m, un estudiante calcula 2,5 × 2 × 2 = 10 y luego 10 × 100 = 1.000, y responde 1.000 litros. ¿Es correcto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: 1 m³ son 1.000 litros, no 100. El volumen es 10 m³, así que son 10 × 1.000 = 10.000 litros.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El volumen está bien (10 m³), pero la conversión usa el factor de las áreas. Entre unidades cúbicas 1 m³ = 1.000 litros: 10 × 1.000 = 10.000."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí es correcto: son 1.000 litros.",
+          "esCorrecta": false,
+          "feedback": "El paso del volumen está bien, pero 10 × 100 usa el factor de las unidades cuadradas (1 m² = 100 dm²). Un metro cúbico son 1.000 litros: la respuesta es 10.000.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: son 10 litros, porque 10 m³ ya está en litros.",
+          "esCorrecta": false,
+          "feedback": "Un metro cúbico no es un litro: es 1.000 litros. 10 m³ hay que multiplicarlos por 1.000, no dejarlos como están. La respuesta es 10.000 litros."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: primero hay que calcular la superficie de la cámara, que es 28 m².",
+          "esCorrecta": false,
+          "feedback": "28 m² es la superficie: cuánta plancha forma la cámara. La pregunta es cuánto aire contiene, que es volumen. El volumen (10 m³) estaba bien; lo que falla es la conversión a litros.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "«Cuánto contiene» es volumen: 2,5 × 2 × 2 = 10 m³, correcto. El error está en la conversión: 10 × 100 usa el factor de las unidades cuadradas. La equivalencia entre unidades cúbicas es 1 m³ = 1.000 litros, así que son 10 × 1.000 = 10.000 litros. El cálculo no es correcto y la respuesta es A. La alternativa B repite el error del factor 100 (error-12); la C no convierte (1 m³ ≠ 1 litro); la D cambia la magnitud a superficie, 2 × (2,5·2 + 2·2 + 2,5·2) = 28 m² (error-11). Verificado con node -e."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (termo cilíndrico de un kiosco; cámara de frío de un local de comida) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, sobre las palabras clave del núcleo y la aplicación de esta lección: 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una segunda tanda el 2026-08-27, durante la Ronda 2, se verificaron ocho términos adicionales que el archivo usa y que la primera tanda no cubría —la sustancia del núcleo, los escenarios y la pieza de material—: 'cafe', 'kiosco', 'local de comida', 'plancha', 'plancha aislante', 'jarra', 'aire frio', 'termo cilindrico' — las ocho LIMPIO (sin coincidencias). Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. El catálogo de errores de este archivo embebe el subconjunto que usan sus propios distractores: error-1 copiado carácter a carácter desde cuerpos-desarmar-la-caja.json (L1), y error-7, error-9 y error-10 desde cuerpos-cuanto-cabe-adentro.json (L2). error-11 (calcular la magnitud equivocada: superficie donde va volumen o al revés, con la fórmula bien aplicada) y error-12 (convertir m³ a litros multiplicando por 100 en vez de por 1.000) NACEN en este archivo: corresponden a las propuestas P11 y P12 de docs/diseno-modulo-cuerpos-geometricos.md y fueron propuestos con su texto exacto y firmados por Benjamín Gutiérrez en el chat de la sesión de redacción antes de escribir ningún distractor. No se toca el catálogo de L1: agregar ahí error-11 o error-12 dispararía catalogo-sin-usar en npm run auditar, porque ningún distractor de L1 los referencia. Auditoría matemática (Ronda 1): APROBADA el 2026-08-27 en hilo aislado abierto con /clear. Se recalculó desde cero toda la aritmética con node -e (π = 3,14 exacto): base y volumen del termo (50,24 / 803,84 cm³), manto y superficie total (401,92 / 502,4 cm²), conversiones m³ ↔ litros de todas las cámaras (12.000 / 15.000 / 27.000 / 2.500 / 16.000 / 80.000 / 10.000 L; volúmenes 12 y 27 m³), los dos despejes de altura (42.000 L → 7 m; 20.000 L → 2,5 m) y las superficies de forrado (48, 112 y 28 m²). Cada distractor es alcanzable por el error que declara (error-1 mitad de las caras; error-7 suma de dimensiones; error-9 circunferencia por altura; error-10 solo la base; error-11 magnitud equivocada con la fórmula bien aplicada; error-12 factor ×100 de las unidades cuadradas) y su errorCatalogado corresponde. Unidades y factores correctos en cada paso (1 m³ = 1.000 L, 1 dm³ = 1 L, 1 litro = 1.000 cm³, 1 m² = 100 dm²). Sin hallazgos. Auditoría de originalidad (Ronda 2): APROBADA el 2026-08-27 en hilo aislado abierto con /clear, distinto del de redacción. Checklist MOS §7.3 completo y cerrado: (1) similitud sustancial de enunciado o ejercicio — sin hallazgos: ningún ítem de cierre ni escenario es reproducción cercana de un ítem oficial, verificado contra las otras lecciones de content/ y con la colisión de dominio ahora certificable tras la segunda tanda de consultar-fuentes.mjs (ocho términos adicionales LIMPIO, ver arriba); el único choque de dominio conocido del módulo ('piscina' → MA-22_Cuerpos_Geometricos.md) no aplica acá; (2) diagramas/visualizaciones — sin hallazgos: vista 'solido' estándar del módulo (cilindro y paralelepípedo con las tres cotas rotuladas, regla 6), sin composición protegible; las tablas de los bloques texto son resúmenes didácticos genéricos; (3) secuencia interna — sin hallazgos: el arco de 10 pasos es la arquitectura propia del proyecto y la progresión interna no sigue la estructura expresiva de ninguna guía externa; (4) proveniencia — registrada y actualizada a este estado. Marcas (MOS §7.4): 'PAES' y 'DEMRE' solo en uso descriptivo, en metadatos e itemsPAES. PII (MOS §7.5): cero en enunciados y metadatos, salvo el nombre del autor documentando su propio proceso (observación sistémica del repo, no bloqueo). Sin placeholders; npm run validar en verde y npm run auditar sin bloqueantes (solo advertencias de cifras redondas compartidas en contextosNumericos con lecciones de otros ejes, de distinta magnitud y dominio).",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
