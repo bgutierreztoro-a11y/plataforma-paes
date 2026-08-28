@@ -385,7 +385,7 @@
               "id": "c",
               "texto": "30 cm²",
               "esCorrecta": false,
-              "feedback": "30 es 6 × 5: multiplicaste el número de caras por la arista, no por el área de una cara. Cada cara es un cuadrado de 5 × 5 = 25 cm², no de 5.",
+              "feedback": "30 sale de 2 × (5 + 5 + 5): esa es una fórmula de perímetro de aristas, mide largo, no superficie. El resultado quedaría en centímetros lineales, no en cm². La superficie suma áreas de caras: 6 × (5 × 5) = 150 cm².",
               "errorCatalogado": "error-2"
             },
             {
@@ -746,7 +746,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: área de superficie de paralelepípedos, cubos y cilindros), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (faroles de papel para una fiesta de barrio, en sus formas de caja, cubo y cilindro; parlante cúbico forrado con tela acústica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, en dos tandas sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'farol de papel', 'farol', 'papel de seda', 'parlante', 'tela acustica', 'forrar', 'bloque de hormigon', 'hormigon', 'serigrafia', 'acuario', 'pecera', 'silo', 'granos', 'arenero', 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md) y 'arena' LIMPIO; 'piscina' es dominio de la Lección 2, no de esta, y quedó descartada allá. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. Auditoría matemática (Ronda 1) y de originalidad (Ronda 2): pendientes, se corren en hilos separados del de redacción.",
+    "declaracionOriginalidad": "Enunciados, contextos (faroles de papel para una fiesta de barrio, en sus formas de caja, cubo y cilindro; parlante cúbico forrado con tela acústica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, en dos tandas sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'farol de papel', 'farol', 'papel de seda', 'parlante', 'tela acustica', 'forrar', 'bloque de hormigon', 'hormigon', 'serigrafia', 'acuario', 'pecera', 'silo', 'granos', 'arenero', 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md) y 'arena' LIMPIO; 'piscina' es dominio de la Lección 2, no de esta, y quedó descartada allá. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. Auditoría matemática (Ronda 1): corrida el 2026-08-27, sin hallazgos que bloqueen (1 corrección aplicada en generalizacion/seleccion, error-2). Auditoría de originalidad (Ronda 2): corrida el 2026-08-27 contra MA-22_Cuerpos_Geometricos.md y el ensayo PSU (5/6__EN2_Matema_tica_M1) — sin coincidencias ALTA, ningún ítem es reformulación cercana de un ítem DEMRE/PSU existente.",
     "autor": "Benjamín Gutiérrez"
   }
 }
