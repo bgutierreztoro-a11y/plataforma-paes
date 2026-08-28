@@ -385,7 +385,7 @@
               "id": "c",
               "texto": "30 cm²",
               "esCorrecta": false,
-              "feedback": "30 sale de 2 × (5 + 5 + 5): esa es una fórmula de perímetro de aristas, mide largo, no superficie. El resultado quedaría en centímetros lineales, no en cm². La superficie suma áreas de caras: 6 × (5 × 5) = 150 cm².",
+              "feedback": "30 sale de 2 × (5 + 5 + 5): esa es la suma de tres aristas duplicada (no corresponde al perímetro real del cubo), mide largo, no superficie. El resultado quedaría en centímetros lineales, no en cm². La superficie suma áreas de caras: 6 × (5 × 5) = 150 cm².",
               "errorCatalogado": "error-2"
             },
             {
