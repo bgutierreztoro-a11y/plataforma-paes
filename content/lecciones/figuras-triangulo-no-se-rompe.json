@@ -20,7 +20,8 @@
     "Dominio único confirmado por Benja vía scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md): diagonal de una cancha/patio rectangular (recorrido por catetos vs. hipotenusa). Los otros dos candidatos propuestos en el plan de arquitectura (escalera apoyada en pared, volantín con hilo y sombra) NO fueron confirmados y no se usan en esta lección — todos los contextos numéricos de este archivo son variaciones del mismo dominio confirmado (distintos tamaños de patio/cancha rectangular).",
     "Un solo descubrimiento nuclear: a² + b² = c² para encontrar CUALQUIER lado desconocido de un triángulo rectángulo (hipotenusa o cateto). El caso 'cateto desconocido' en generalización es la misma relación despejada de otra forma, no un segundo descubrimiento — se evita deliberadamente introducir el recíproco del teorema (verificar si un triángulo cualquiera es rectángulo a partir de sus tres lados), que sí sería una idea distinta, para no sobrecargar la lección con dos descubrimientos.",
     "Bloque visualizacion con datos.figura: 'trianguloPitagoras' (componente IlustracionFiguraGeometrica construido en la Fase 2 de esta sesión) en los pasos 'descubrimiento' y 'generalizacion' — no interactivoSlider, porque el concepto no involucra manipular un parámetro con slider, sino calcular un lado de una figura dada.",
-    "Todos los valores numéricos (triples pitagóricas y distractores) verificados con node -e antes de escribir el JSON. Verificación completa: 3-4-5, 9-40-41 (contexto de 'problema', no resuelto en ese paso), 6-8-10, 5-12-13, 8-15-17 (ilustrativo en 'generalizacion'), 12-35-37, 7-24-25, 33-56-65, 16-30-34, 9-40-41 (reutilizado en 'generalizacion' para el caso inverso: hipotenusa 41, cateto 9, cateto buscado 40), 18-24-30, 11-60-61, 9-12-15. Todo distractor numérico calculado con node -e (suma directa, suma de cuadrados sin raíz, cuadrado calculado como el doble) y verificado contra el set completo de respuestas correctas del archivo para descartar colisión (regla 3 de docs/reglas-modulo.md): ningún distractor coincide con ninguna respuesta correcta de ningún otro bloque o ítem de este archivo. Salida cruda de la verificación pegada en el reporte de esta sesión, no repetida acá."
+    "Todos los valores numéricos verificados con node -e. Verificación completa tras la redistribución de Fase 1 (2026-08-29): 3-4-5 (paso 0, trío base), 15-16-√481 IRRACIONAL (paso 1, contexto de 'problema', NO resuelto), 6-8-10 (pasos 2 y 3, escalado ×2 de 3-4-5), 5-12-13 (paso 4, trío base), 8-15-17 (paso 5 verificación, trío base), 9-40-41 (paso 5 caso inverso, primitiva no-base: hipotenusa 41, cateto 9, cateto buscado 40), 7-24-25 (paso 6 selección, trío base), 6-9-√117 IRRACIONAL (paso 6 verdaderoFalso, afirmación falsa de 11 m), 24-45-51 (paso 6 numérica, escalado ×3 de 8-15-17), 16-30-34 (paso 7, escalado ×2 de 8-15-17), 18-24-30 (l1-item-1, escalado ×6 de 3-4-5), 11-60-61 (l1-item-2, primitiva no-base), 5-11-√146 IRRACIONAL (l1-item-3, argumentación: catetos 5 y 11; el alumno fuerza 5-12-13 y responde 13; se pasó de 9×12 a 5×11: irracional, cercano al 5-12-13 y sin colisión de cifras en el archivo ni con otros módulos). Reparto por rol sobre las 14 ocurrencias: 4 trío base (una por trío), 5 escaladas, 3 irracionales, 2 primitivas no-base. Todo distractor recalculado con node -e y verificado contra el set completo de respuestas correctas (regla 3b de docs/reglas-modulo.md): ninguna colisión distractor↔correcta (verificado con npm run auditar, chequeo colision-distractor-correcta). El número 13 es respuesta correcta en el paso 4 (patio 5×12) y es el valor que el alumno fuerza —mal— en l1-item-3 opción B (catetos 5 y 11, no 5 y 12; error-12): no es colisión de regla 3b porque la opción B es una frase de argumentación, no una cantidad-respuesta, y su feedback explica por qué 13 no aplica ahí.",
+    "Fase 1 (2026-08-29): redistribución de ternas para que los cuatro tríos base sean un atajo de reconocimiento y no la norma. Se introdujeron 3 casos irracionales (paso 1, paso 6 V/F, l1-item-3) donde el atajo no aplica; las primitivas no-base bajaron de 5 a 2. Dos bloques nuevos hacen del reconocimiento una decisión visible del alumno: una selección de clasificación al inicio del paso 6 y una predicción '¿aplica el atajo?' al inicio del paso 7. Nuevo errorCatalogado error-12 ('forzar un trío conocido donde los números no calzan'), definido solo en L1 —única definición del módulo por ahora; propagarlo a L2/L3/cierre queda como deuda (docs/deuda-catalogo-errores-crossfile.md)— y referenciado desde l1-item-3 opción B y desde la selección de clasificación del paso 6. Los pasos 5 (generalización) y el caso inverso 9-40-41 no se tocaron: ahí el teorema se demuestra, el trío no entra."
   ],
   "catalogoErrores": [
     {
@@ -46,17 +47,21 @@
     {
       "id": "error-6",
       "descripcion": "Suma los catetos antes de elevar al cuadrado: calcula (a+b)² en vez de a²+b², confundiendo la propiedad distributiva del cuadrado de una suma con el teorema de Pitágoras."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Ver dos catetos parecidos a un trío pitagórico conocido —o a un múltiplo de uno— y dar por hecho que la hipotenusa es la de ese trío, sin comprobar que ambos catetos coincidan exactamente: por ejemplo, tratar un triángulo de catetos 8 y 16 como si fuera el trío 8-15-17 y responder 17. Incluye suponer que la hipotenusa siempre da un número entero. Cuando los catetos no calzan con ningún trío, la relación a² + b² = c² sigue valiendo, pero su resultado puede ser irracional."
     }
   ],
   "contextosNumericos": [
     "curiosidad: patio rectangular de 3 m × 4 m, diagonal 5 m; contraste bordear (3+4=7 m) vs. cruzar (5 m), ahorro 2 m",
-    "problema: cancha de 9 m × 40 m, NO resuelta en este paso (solo elección de método); ilustrativo sin resolver: 187 m × 340 m, no registrado como ejercicio nuevo",
+    "problema: cancha de 15 m × 16 m, NO resuelta en este paso (solo elección de método); su diagonal √481 ≈ 21,9 m es irracional a propósito; ilustrativo sin resolver: 187 m × 340 m",
     "pensar/pistas: patio de 6 m × 8 m, diagonal 10 m",
     "descubrimiento: patio de 5 m × 12 m, diagonal 13 m (ejemplo nuclear de la lección)",
     "generalizacion: ejemplo ilustrativo de verificación 8 m × 15 m, diagonal 17 m; caso inverso: patio con diagonal 41 m y un cateto de 9 m, cateto buscado 40 m",
-    "practica: cancha de 7 m × 24 m (diagonal 25 m, bloque selección); patio de 12 m × 35 m (diagonal 37 m, bloque verdaderoFalso); cancha de 33 m × 56 m (diagonal 65 m, bloque numérica)",
-    "aplicacion: patio de 16 m × 30 m, diagonal 34 m, ahorro de 12 m cruzando en diagonal",
-    "itemsPAES: patio de 18 m × 24 m (diagonal 30 m); patio con diagonal 61 m y un cateto de 11 m (cateto buscado 60 m); patio de 9 m × 12 m (diagonal 15 m, ítem de argumentación sobre una afirmación errónea de 21 m)"
+    "practica: bloque de clasificación previo (7 y 24 / 6 y 9 / 24 y 45); cancha de 7 m × 24 m (diagonal 25 m, bloque selección); patio de 6 m × 9 m (diagonal √117 ≈ 10,8 m, irracional; bloque verdaderoFalso, afirmación falsa de 11 m); cancha de 24 m × 45 m (diagonal 51 m, ×3 de 8-15-17, bloque numérica)",
+    "aplicacion: predicción previa '¿aplica el atajo?'; patio de 16 m × 30 m, diagonal 34 m (×2 de 8-15-17), ahorro de 12 m cruzando en diagonal",
+    "itemsPAES: patio de 18 m × 24 m (diagonal 30 m); terreno con diagonal 61 m y un cateto de 11 m (cateto buscado 60 m); patio de 5 m × 11 m (diagonal √146 ≈ 12,1 m, irracional; ítem de argumentación: un estudiante fuerza el trío 5-12-13 y responde 13 m)"
   ],
   "pasos": [
     {
@@ -82,32 +87,32 @@
       "tipo": "problema",
       "titulo": "Un patio donde adivinar ya no sirve",
       "_notasInternas": [
-        "Cancha 9x40, diagonal 41 (verificado: 9^2+40^2=1681=41^2), pero NO se resuelve en este paso — solo se elige el método que garantiza la respuesta, mismo patrón que cuadratica-sube-y-baja.json paso 'problema'.",
-        "verdaderoFalso usa 187 x 340 como número puramente ilustrativo de 'grande y feo', sin resolverlo ni registrarlo como ejercicio nuevo — mismo patrón que 15.180 en cuadratica-sube-y-baja.json."
+        "Cancha 15x16 (Fase 1): 15^2+16^2 = 225+256 = 481; raiz(481) ~ 21,93, IRRACIONAL a proposito. NO se resuelve en este paso — solo se elige el metodo que garantiza la respuesta exacta. Que la diagonal no sea un numero entero refuerza que el metodo no depende de numeros 'amables' ni de reconocer un trio.",
+        "verdaderoFalso usa 187 x 340 como número puramente ilustrativo de 'grande y feo', sin resolverlo ni registrarlo como ejercicio nuevo."
       ],
       "bloques": [
         {
           "tipo": "seleccion",
-          "enunciado": "Ahora piensa en una cancha rectangular de **9 metros por 40 metros**. A simple vista, adivinar la medida exacta de la diagonal ya no es realista. De estas tres formas de encararlo, ¿cuál te **garantiza** la respuesta exacta, sin importar qué tan grandes fueran los lados?",
+          "enunciado": "Ahora piensa en una cancha rectangular de **15 metros por 16 metros**. Adivinar la medida exacta de la diagonal a ojo no es realista. De estas tres formas de encararlo, ¿cuál te **garantiza** la respuesta exacta, sin importar qué medidas tuviera la cancha?",
           "opciones": [
             {
               "id": "a",
-              "texto": "Sumar los dos lados: 9 + 40.",
+              "texto": "Sumar los dos lados: 15 + 16.",
               "esCorrecta": false,
-              "feedback": "Sumar los lados da la distancia que recorrerías bordeando el patio por dos de sus lados, no la distancia en línea recta de esquina a esquina. Son dos trayectos distintos, con dos medidas distintas.",
+              "feedback": "Sumar los lados da la distancia que recorrerías bordeando la cancha por dos de sus lados, no la distancia en línea recta de esquina a esquina. Son dos trayectos distintos, con dos medidas distintas.",
               "errorCatalogado": "error-1"
             },
             {
               "id": "b",
               "texto": "Elevar cada lado al cuadrado, sumar esos dos cuadrados, y sacar la raíz cuadrada del resultado.",
               "esCorrecta": true,
-              "feedback": "Correcto. Ese procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— te da la medida exacta de la diagonal sin importar si los lados fueran 9 y 40, o números mucho más grandes."
+              "feedback": "Correcto. Ese procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— te da la medida exacta de la diagonal sin importar si los lados son 15 y 16 o números mucho más grandes, y sin depender de que el resultado sea un número redondo."
             },
             {
               "id": "c",
               "texto": "Medir con una huincha imaginaria y estimar a ojo.",
               "esCorrecta": false,
-              "feedback": "Estimar a ojo puede funcionar para tener una idea aproximada, pero no te da la medida exacta, y con lados grandes el margen de error crece. Existe un procedimiento que te da la respuesta exacta, sin adivinar."
+              "feedback": "Estimar a ojo sirve para una idea aproximada, pero no te da la medida exacta —y en este caso ni siquiera cae en un número redondo—. Existe un procedimiento que da la respuesta exacta, sin adivinar."
             }
           ]
         },
@@ -115,7 +120,7 @@
           "tipo": "verdaderoFalso",
           "enunciado": "El procedimiento de elevar los catetos al cuadrado, sumarlos y sacar la raíz cuadrada, ¿sigue funcionando igual si el patio fuera muchísimo más grande, como uno de **187 metros por 340 metros**?",
           "respuestaCorrecta": true,
-          "feedbackVerdadero": "Sí. El procedimiento no depende de que los números sean amables o chicos: funciona exactamente igual con 9 y 40 que con 187 y 340. Lo único que cambia es que calcular a mano se vuelve más largo, no que el método deje de servir.",
+          "feedbackVerdadero": "Sí. El procedimiento no depende de que los números sean amables o chicos: funciona exactamente igual con 15 y 16 que con 187 y 340. Lo único que cambia es que calcular a mano se vuelve más largo, no que el método deje de servir.",
           "feedbackFalso": "En realidad sí seguiría funcionando igual. El procedimiento —cuadrado, cuadrado, suma, raíz cuadrada— no depende de que los lados sean números redondos ni chicos."
         }
       ]
@@ -438,11 +443,37 @@
       "tipo": "practica",
       "titulo": "Tres ejercicios con el mismo procedimiento",
       "_notasInternas": [
-        "Seleccion con 7,24,25 (verificado: 7^2+24^2=625=25^2). a=25(correcta) b=31(error-1,7+24) c=625(error-2,7^2+24^2 sin raiz) d=24(sin id, repite un lado dado).",
-        "VerdaderoFalso con 12,35,37 (verificado: 12^2+35^2=1369=37^2), sin campo numerico a calcular.",
-        "Numerica con 33,56,65 (verificado: 33^2+56^2=4225=65^2). Distractor error-1: 89 (33+56). Distractor error-2: 4225 (sin raiz)."
+        "Bloque 0 (Fase 1, 2026-08-29): seleccion de clasificacion previa. El alumno decide en cuales de los tres pares (7 y 24, 6 y 9, 24 y 45) aplica el atajo del trio. Opcion b codifica error-12 (forzar 6-9 al 6-8-10).",
+        "Bloque 1: seleccion con 7,24,25 (verificado: 7^2+24^2=625=25^2). a=25(correcta) b=31(error-1,7+24) c=625(error-2,7^2+24^2 sin raiz) d=24(sin id, repite un lado dado). Sin cambio en Fase 1.",
+        "Bloque 2 (Fase 1): verdaderoFalso con 6,9. 6^2+9^2 = 36+81 = 117; raiz(117) ~ 10,82, IRRACIONAL. La afirmacion de 11 m exactos es FALSA. Sin campo numerico. El error de forzar un trio cercano se nombra en prosa (verdaderoFalso no admite errorCatalogado en el schema).",
+        "Bloque 3 (Fase 1): numerica con 24,45. 24^2+45^2 = 576+2025 = 2601 = 51^2. Escalado x3 de 8-15-17. Distractor error-1: 69 (24+45). Distractor error-2: 2601 (sin raiz)."
       ],
       "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "En los tres ejercicios que siguen, los pares de lados son: **7 y 24**, después **6 y 9**, y después **24 y 45**. Antes de calcular nada, míralos: ¿en cuáles puedes usar el atajo de reconocer un trío pitagórico conocido (o un múltiplo de uno)?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En 7 y 24 (es el trío 7-24-25) y en 24 y 45 (es 8-15-17 multiplicado por 3). En 6 y 9 no: ahí hay que calcular con el teorema.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cuando los dos catetos calzan exactamente con un trío conocido o con un múltiplo entero, puedes ir directo a la hipotenusa. 6 y 9 no calza con ninguno: el 6-8-10 usa 6 y 8, no 6 y 9."
+            },
+            {
+              "id": "b",
+              "texto": "En los tres. 7 y 24 es 7-24-25, 24 y 45 es 8-15-17 al triple, y 6 y 9 es prácticamente el 6-8-10.",
+              "esCorrecta": false,
+              "feedback": "6 y 9 NO es el 6-8-10: forzar un trío porque un cateto se parece te da una hipotenusa equivocada. Con 6 y 9, la relación a² + b² = c² da √117 ≈ 10,8, que no es un número entero. Ese par hay que calcularlo.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "c",
+              "texto": "En ninguno. Reconocer un trío es una coincidencia; siempre hay que aplicar el teorema completo para estar seguro.",
+              "esCorrecta": false,
+              "feedback": "Te pasaste de cauteloso. 7-24-25 y su familia de múltiplos son relaciones fijas, no coincidencias: si los catetos son 7 y 24 (o 24 y 45, que es 8·3 y 15·3), la hipotenusa está garantizada. El atajo sí sirve cuando los números calzan exacto."
+            }
+          ]
+        },
         {
           "tipo": "seleccion",
           "enunciado": "Una cancha rectangular mide 7 metros por 24 metros. ¿Cuánto mide su diagonal?",
@@ -477,37 +508,37 @@
         },
         {
           "tipo": "verdaderoFalso",
-          "enunciado": "¿Es cierto que un patio rectangular de 12 metros por 35 metros tiene una diagonal de exactamente 37 metros?",
-          "respuestaCorrecta": true,
-          "feedbackVerdadero": "Sí. 12² + 35² = 144 + 1225 = 1369, y √1369 = 37. Se cumple exactamente.",
-          "feedbackFalso": "En realidad sí es exacto: 12² + 35² = 144 + 1225 = 1369, y √1369 = 37."
+          "enunciado": "Un patio rectangular mide 6 metros por 9 metros. ¿Es cierto que su diagonal mide exactamente 11 metros?",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "Es falso, aunque se parezca al 6-8-10 de hace un rato. Cambiar el 8 por un 9 rompe el trío: 6² + 9² = 36 + 81 = 117, y √117 ≈ 10,8 — no 11 exacto. Que dos lados estén 'cerca' de un trío conocido no hace que la diagonal sea un número entero.",
+          "feedbackFalso": "Correcto: es falso. 6 y 9 no forman un trío pitagórico ni el múltiplo de uno (el 6-8-10 usa 6 y 8). Calculando: 6² + 9² = 36 + 81 = 117, y √117 ≈ 10,8. La diagonal existe y el teorema la da, pero no mide un número redondo de metros."
         },
         {
           "tipo": "numerica",
-          "enunciado": "**Ejercicio.** Una cancha rectangular mide 33 metros por 56 metros. ¿Cuánto mide su diagonal?",
+          "enunciado": "**Ejercicio.** Una cancha rectangular mide 24 metros por 45 metros. ¿Cuánto mide su diagonal?",
           "campos": [
             {
               "id": "diagonalCanchaM",
               "etiqueta": "Diagonal de la cancha",
-              "respuestaCorrecta": 65,
+              "respuestaCorrecta": 51,
               "unidad": "m"
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "diagonalCanchaM",
-              "valorObtenido": 89,
-              "mensaje": "89 es la suma directa de los dos lados (33 + 56), no la diagonal en línea recta.",
+              "valorObtenido": 69,
+              "mensaje": "69 es la suma directa de los dos lados (24 + 45), no la diagonal en línea recta.",
               "errorCatalogado": "error-1"
             },
             {
               "campoId": "diagonalCanchaM",
-              "valorObtenido": 4225,
-              "mensaje": "4225 es la suma de los cuadrados (33² + 56²), un paso intermedio. Falta sacarle la raíz cuadrada para obtener la diagonal real.",
+              "valorObtenido": 2601,
+              "mensaje": "2601 es la suma de los cuadrados (24² + 45²), un paso intermedio. Falta sacarle la raíz cuadrada para obtener la diagonal real.",
               "errorCatalogado": "error-2"
             }
           ],
-          "feedbackPorDefecto": "Eleva cada lado al cuadrado, suma los resultados, y saca raíz cuadrada de esa suma."
+          "feedbackPorDefecto": "Eleva cada lado al cuadrado, suma los resultados, y saca raíz cuadrada de esa suma. Si notaste que 24 y 45 son 8·3 y 15·3, estás ante el 8-15-17 escalado por 3, y la hipotenusa escala igual."
         }
       ]
     },
@@ -515,10 +546,21 @@
       "tipo": "aplicacion",
       "titulo": "Cuánto se ahorra cruzando en diagonal",
       "_notasInternas": [
-        "Transferencia con patio 16x30, diagonal 34 (verificado: 16^2+30^2=1156=34^2). Ahorro: 16+30-34=12.",
+        "Bloque 0 (Fase 1, 2026-08-29): prediccion '¿aplica el atajo?' (seleccionSimple, sin correccion). Planta la decision de reconocer el trio/multiplo antes de calcular. Respuesta esperada: multiplo de 8-15-17.",
+        "Transferencia con patio 16x30, diagonal 34 (verificado: 16^2+30^2=1156=34^2). Ahorro: 16+30-34=12. Escalado x2 de 8-15-17. Sin cambio de terna en Fase 1.",
         "Estructura numerica-primero-abierta-despues, mismo criterio que cuadratica-sube-y-baja.json paso 'aplicacion'."
       ],
       "bloques": [
+        {
+          "tipo": "prediccion",
+          "enunciado": "El patio de un colegio mide **16 metros por 30 metros**. Míralos antes de hacer ninguna cuenta: ¿qué reconoces en esos dos lados?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Es un trío pitagórico conocido tal cual: puedo dar la diagonal de memoria",
+            "Es un múltiplo de un trío conocido (8-15-17 al doble): puedo usar el atajo y verificar con el teorema",
+            "No es ningún trío ni múltiplo: tengo que calcularlo entero con el teorema"
+          ]
+        },
         {
           "tipo": "numerica",
           "enunciado": "El patio de un colegio es rectangular, de **16 metros por 30 metros**. Un grupo de estudiantes quiere saber cuántos metros se ahorran cruzando el patio en diagonal, en vez de bordearlo caminando por dos de sus lados.\n\nPrimero: ¿cuántos metros mide la diagonal del patio?",
@@ -662,44 +704,44 @@
       "id": "l1-item-3",
       "habilidad": "argumentar",
       "dificultad": "alta",
-      "enunciado": "Un patio rectangular mide 9 metros por 12 metros. Un estudiante afirma que la diagonal mide 21 metros, \"porque basta sumar los dos lados: 9 + 12 = 21\". ¿Es correcta esta afirmación?",
+      "enunciado": "Un patio rectangular mide 5 metros por 11 metros. Un estudiante afirma que su diagonal mide exactamente 13 metros, \"porque 5, 12 y 13 es un trío pitagórico conocido, y 11 está muy cerca de 12\". ¿Es correcta esta afirmación?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "No es correcta: hay que elevar los catetos al cuadrado, sumarlos y sacar raíz cuadrada. √(9² + 12²) = √225 = 15, no 21.",
+          "texto": "No es correcta. 5 y 11 no forman un trío pitagórico. Aplicando el teorema: √(5² + 11²) = √(25 + 121) = √146 ≈ 12,1 m, un valor que no es entero.",
           "esCorrecta": true,
-          "feedback": "Correcto. El Teorema de Pitágoras relaciona los CUADRADOS de los lados, no los lados directamente: 9² + 12² = 81 + 144 = 225, y √225 = 15. La diagonal mide 15 m, no 21 m."
+          "feedback": "Correcto. Que 11 esté 'cerca' de 12 no sirve: cambiar un cateto cambia la hipotenusa, pero no en la misma proporción. √146 ≈ 12,08 m, algo menos que 13 y sin ser un número redondo."
         },
         {
           "clave": "B",
-          "texto": "Sí es correcta: sumar los dos catetos da directamente la medida de la diagonal.",
+          "texto": "Sí es correcta: como 5, 12, 13 es un trío conocido y 11 está a un paso de 12, la diagonal es 13 m.",
           "esCorrecta": false,
-          "feedback": "Sumar los catetos directamente (9 + 12 = 21) da la distancia bordeando el patio por dos de sus lados, no la diagonal en línea recta. La diagonal real, aplicando el teorema, es 15 m.",
-          "errorCatalogado": "error-1"
+          "feedback": "Forzaste un trío conocido sobre números que no calzan. El 5-12-13 exige catetos 5 y 12 exactos; con 5 y 11, la relación a² + b² = c² da √146 ≈ 12,1 m, no 13. La hipotenusa tampoco tiene por qué ser un número entero.",
+          "errorCatalogado": "error-12"
         },
         {
           "clave": "C",
-          "texto": "No es correcta: la diagonal real es 225 metros, resultado de sumar los cuadrados de los catetos.",
+          "texto": "No es correcta: la diagonal mide 5 + 11 = 16 metros.",
           "esCorrecta": false,
-          "feedback": "225 es la suma de los cuadrados (9² + 12²), un paso intermedio correcto. Pero ese número es el cuadrado de la diagonal, no la diagonal misma: falta sacarle la raíz cuadrada, que da 15.",
-          "errorCatalogado": "error-2"
+          "feedback": "Sumar los catetos directamente (5 + 11 = 16) da el recorrido bordeando el patio por dos de sus lados, no la diagonal en línea recta. El teorema relaciona los cuadrados de los lados, no los lados.",
+          "errorCatalogado": "error-1"
         },
         {
           "clave": "D",
-          "texto": "No es correcta: la diagonal real es 441 metros.",
+          "texto": "No es correcta: la diagonal mide 5² + 11² = 146 metros.",
           "esCorrecta": false,
-          "feedback": "441 sería el resultado de elevar al cuadrado la suma de los catetos, (9+12)²=441 — pero el teorema pide elevar cada cateto al cuadrado por separado y sumar esos cuadrados, no sumar primero y elevar después. El mismo error aparece marcado antes en esta lección con el ejemplo 8 y 15.",
-          "errorCatalogado": "error-6"
+          "feedback": "146 es la suma de los cuadrados (25 + 121), un paso intermedio. Es el cuadrado de la diagonal, no la diagonal: falta sacar la raíz cuadrada, √146 ≈ 12,1 m.",
+          "errorCatalogado": "error-2"
         }
       ],
-      "solucion": "El Teorema de Pitágoras dice a² + b² = c², donde c es la hipotenusa. Con catetos 9 y 12: 9² + 12² = 81 + 144 = 225. La diagonal es √225 = 15 m, no 9 + 12 = 21 m. Sumar los catetos directamente ignora que la relación es entre los CUADRADOS de los lados, no entre los lados mismos. Comprobación: 9² + 12² = 81 + 144 = 225 = 15². ✓ Respuesta: A."
+      "solucion": "El Teorema de Pitágoras relaciona los CUADRADOS de los lados: √(5² + 11²) = √(25 + 121) = √146 ≈ 12,08 m. Los catetos 5 y 11 no forman un trío pitagórico —ni el 5-12-13 ni un múltiplo de ningún trío conocido—, así que leer la hipotenusa de memoria no aplica: 'está cerca de 12' no vale, porque al cambiar un cateto la hipotenusa no cambia de forma proporcional. La diagonal no es un número entero. Comprobación: 12,08² ≈ 145,9 ≈ 5² + 11². ✓ Respuesta: A."
     }
   ],
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: Teorema de Pitágoras), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (patio/cancha rectangular, distintas medidas) y la secuencia didáctica creados desde cero por el autor del proyecto. Auditoría matemática completa (recálculo desde cero de toda la aritmética; feedback de cada distractor verificado contra su errorCatalogado). Auditoría de originalidad completa al 2026-08-24: (a) colisión de dominio contra el corpus de fuentes aisladas verificada con node scripts/consultar-fuentes.mjs sobre frases y keywords reales del archivo (los 10 pasos + los 3 itemsPAES) — sin colisión de enunciado ni de mecanismo; las únicas coincidencias fueron vocabulario genérico de geometría ('catetos', 'hipotenusa'). Nota de proceso: un primer intento corrió esta misma consulta directamente en el hilo de auditoría (mecanismo 3 de CLAUDE.md, invocado por error). Ese intento quedó superado el mismo día por la corrida válida: mecanismo 2, ejecución manual por Benja fuera de esta sesión, con las mismas 30 consultas y resultado idéntico (mismos 2 SI de vocabulario genérico, cero colisiones reales). Es esta corrida por mecanismo 2 la que queda como registro válido de la auditoría. (b) Checklist MOS §7.3 revisado el 2026-08-24: sin PII de estudiantes ni RUT, sin marcadores de trabajo pendiente ni texto de relleno genérico sin terminar, uso de 'PAES'/'DEMRE' descriptivo en todas sus apariciones, sin implicar afiliación ni respaldo oficial.",
+    "declaracionOriginalidad": "Enunciados, contextos (patio/cancha rectangular, distintas medidas) y la secuencia didáctica creados desde cero por el autor del proyecto. Auditoría matemática completa (recálculo desde cero de toda la aritmética; feedback de cada distractor verificado contra su errorCatalogado). Auditoría de originalidad completa al 2026-08-24: (a) colisión de dominio contra el corpus de fuentes aisladas verificada con node scripts/consultar-fuentes.mjs sobre frases y keywords reales del archivo (los 10 pasos + los 3 itemsPAES) — sin colisión de enunciado ni de mecanismo; las únicas coincidencias fueron vocabulario genérico de geometría ('catetos', 'hipotenusa'). Nota de proceso: un primer intento corrió esta misma consulta directamente en el hilo de auditoría (mecanismo 3 de CLAUDE.md, invocado por error). Ese intento quedó superado el mismo día por la corrida válida: mecanismo 2, ejecución manual por Benja fuera de esta sesión, con las mismas 30 consultas y resultado idéntico (mismos 2 SI de vocabulario genérico, cero colisiones reales). Es esta corrida por mecanismo 2 la que queda como registro válido de la auditoría. (b) Checklist MOS §7.3 revisado el 2026-08-24: sin PII de estudiantes ni RUT, sin marcadores de trabajo pendiente ni texto de relleno genérico sin terminar, uso de 'PAES'/'DEMRE' descriptivo en todas sus apariciones, sin implicar afiliación ni respaldo oficial. Fase 1 (2026-08-29): redistribución de las 14 ocurrencias de terna pitagórica para que los cuatro tríos base (3-4-5, 5-12-13, 8-15-17, 7-24-25) queden como atajo de reconocimiento y no como norma —una ocurrencia por trío—, acompañados de 5 escaladas, 3 casos de hipotenusa irracional (paso 1 cancha 15×16 sin resolver; paso 6 verdaderoFalso patio 6×9 con afirmación falsa de 11 m; l1-item-3 patio 5×11) y 2 primitivas no-base. Los contextos no cambian (patio/cancha/terreno rectangular, dominio ya confirmado): solo cambian las magnitudes, así que no se corre consultar-fuentes.mjs de nuevo. Se agregaron dos bloques para volver visible la decisión de si el atajo del trío aplica: una selección de clasificación al inicio del paso 6 y una predicción al inicio del paso 7. Nuevo errorCatalogado error-12 ('forzar un trío conocido donde los números no calzan'), única definición del módulo en este archivo, referenciado desde l1-item-3 opción B y desde la selección del paso 6; propagarlo a L2, L3 y el cierre queda anotado como deuda en docs/deuda-catalogo-errores-crossfile.md. l1-item-3 pasó de 9×12 (afirmación 'sumar da 21', error-6) a 5×11 (afirmación 'es 13 porque 5-12-13 y 11≈12', error-12). Ronda 1 (auditoría matemática) y Ronda 2 (auditoría de originalidad) se corrieron en hilos aislados abiertos con /clear el 2026-08-29 y cerraron sin hallazgos bloqueantes, incluida la verificación posterior del cambio de l1-item-3 (9×12 → 5×11).",
     "autor": "Benjamín Gutiérrez"
   }
 }
