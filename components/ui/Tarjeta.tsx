@@ -32,7 +32,13 @@ const CLASES_NIVEL: Record<Nivel, string> = {
   flotante: "shadow-e2",
 };
 
-const CLASES_BASE = "rounded-md border border-border bg-surface";
+/* `rounded-panel` y no `rounded-md`, y no es un cambio de aspecto: los dos valen
+   0.875rem. La dirección Línea reescribe `--radius-md` a 4px, y este era el
+   único call site de `rounded-md` en todo el repo; el alias legado
+   `--radius-panel` quedó fijado en 0.875rem justamente para sostener las
+   pantallas sin migrar. Sin esta línea la tarjeta se aplanaba de 14px a 4px en
+   una fase que no toca ninguna pantalla. */
+const CLASES_BASE = "rounded-panel border border-border bg-surface";
 
 export function Tarjeta({
   nivel = "elevado",

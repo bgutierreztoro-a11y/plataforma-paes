@@ -1,7 +1,131 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   DIRECCIÓN "LÍNEA" — tokens canónicos
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Los nombres de acá son los del sistema de diseño, tal cual. Viven en `:root`
+   y no dentro de `@theme` por una razón concreta: en Tailwind v4 `--text-*` es
+   el namespace de **tamaños de fuente**. Un `--text-primary: #16181D` dentro de
+   `@theme` generaría una utilidad `text-primary` de tipo `font-size` con un
+   color adentro — rota, y sin que el build lo avise.
+
+   Así que el reparto es: `:root` guarda el vocabulario del sistema de diseño y
+   `@theme` (más abajo) lo republica bajo `--color-*` para que Tailwind genere
+   `bg-paper`, `text-primary`, `border-hairline`, `bg-line-01`… Las dos formas
+   apuntan al mismo valor; en CSS suelto se puede escribir cualquiera.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Superficies: papel, pantalla, tarjeta, hundido. */
+  --surface-paper: #f0f0ee;
+  --surface-screen: #f7f7f5;
+  --surface-card: #ffffff;
+  --surface-sunken: #ededea;
+
+  /* Texto. */
+  --text-primary: #16181d;
+  --text-secondary: #71747a;
+  --text-muted: #a9abaf;
+  --text-inverse: #f7f7f5;
+  /* El gris secundario **sobre fondo oscuro**. El sistema lo especifica en un
+     solo lugar —el detalle de TarjetaError— pero es una pieza de la escala de
+     texto, no un valor de ese componente: se nombra acá en vez de quedar como
+     un hex suelto dentro de un className. */
+  --text-muted-inverse: #b0b2b8;
+
+  /* Bordes: 1px hairline en reposo, 1.5px cuando el elemento está activo o
+     seleccionado. `border-strong` es la misma tinta que el texto principal. */
+  --border-hairline: #d8d9d4;
+  --border-strong: #16181d;
+
+  /* Las cuatro líneas de la red. Cada una identifica un eje temático y se
+     mantiene constante en todas las pantallas dentro de ese eje.
+       01 Números · 02 Álgebra y funciones · 03 Geometría · 04 Probabilidad y datos */
+  --line-01: #e4002b;
+  --line-02: #ffb600;
+  --line-03: #00843d;
+  --line-04: #0057b8;
+  --line-03-tint: #eaf5ee;
+  /* Aclarado para texto sobre fondo oscuro (la clave de TarjetaError).
+     TODO: faltan los equivalentes de line-01, line-02 y line-04; no se
+     inventan, salen del archivo de Figma. Hasta entonces esas tres líneas
+     caen al default de `--linea-clara`. */
+  --line-03-clara: #7bd6a2;
+
+  /* ── El color de eje, como variable heredada ─────────────────────────────
+     La regla de color del sistema es "el color de línea identifica el eje y se
+     mantiene constante dentro de ese eje; fuera de un eje se usa text-primary".
+     Eso es exactamente una custom property que se setea una vez arriba y
+     heredan todos los descendientes. El default ES la segunda mitad de la
+     regla.
+
+     Se resuelve así y no con un mapa de clases (`bg-line-01`, `bg-line-02`, …)
+     porque Tailwind no compila clases armadas en runtime: `bg-line-${id}` no
+     genera nada. Ver components/ui/linea/colores.ts.
+
+     Las tres variables satélite son las derivadas del color de línea. Sus
+     defaults son los que corresponden **fuera** de un eje, así que un
+     componente que se monte sin línea sigue siendo legible.
+
+     - `--linea-contraste`: qué color va de texto ENCIMA del color de línea.
+       No es una preferencia, es contraste medido contra `--text-inverse`
+       (#F7F7F5): línea 01 → 4.5:1, línea 03 → 4.5:1, línea 04 → 6.4:1, todas
+       AA. La 02 (#FFB600) da **1.6:1** y ahí el texto tiene que ser
+       `--text-primary`, que sobre ese amarillo da 10.1:1. Es la razón por la
+       que esto existe como variable y no como una clase fija.
+     - `--linea-tinte`: el fondo pálido del color de línea (la alternativa
+       correcta). Solo está especificado el de la línea 03.
+     - `--linea-clara`: el color de línea aclarado para leerse sobre fondo
+       oscuro (la clave de TarjetaError). Solo está especificado el de la 03. */
+  --linea: var(--text-primary);
+  --linea-contraste: var(--text-inverse);
+  --linea-tinte: var(--surface-card);
+  --linea-clara: var(--text-inverse);
+
+  /* ── Radio y forma ──────────────────────────────────────────────────────
+     Botones y tarjetas: radius-sm. Estaciones, píldoras y barras de línea:
+     radius-full. Sin sombras. */
+  --radius-none: 0;
+  --radius-full: 999px;
+  /* radius-sm (2px) y radius-md (4px) se declaran en `@theme`: Tailwind ya
+     tiene ese namespace y ahí generan `rounded-sm` / `rounded-md`. */
+}
+
 @theme {
-  /* ── Primitivos: índigo (acción) ───────────────────────── */
+  /* ═════════════════════════════════════════════════════════════════════════
+     LÍNEA — exposición a Tailwind
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* Colores. El alias corto es a propósito: con el nombre completo del token
+     las clases quedarían `text-text-primary` y `border-border-hairline`. */
+  --color-paper: var(--surface-paper);
+  --color-screen: var(--surface-screen);
+  --color-card: var(--surface-card);
+  --color-sunken: var(--surface-sunken);
+
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-inverse: var(--text-inverse);
+  --color-muted-inverse: var(--text-muted-inverse);
+
+  --color-hairline: var(--border-hairline);
+  --color-strong: var(--border-strong);
+
+  --color-line-01: var(--line-01);
+  --color-line-02: var(--line-02);
+  --color-line-03: var(--line-03);
+  --color-line-04: var(--line-04);
+  --color-line-03-tint: var(--line-03-tint);
+  --color-line-03-clara: var(--line-03-clara);
+
+  /* ── Primitivos: índigo (acción) ─── OBSOLETO ───────────────────────────
+     La dirección Línea retira el índigo (#4A4FE0) y el azul tinta (#1e4fd8).
+     El bloque sigue acá porque 15 componentes de las pantallas actuales lo
+     referencian, y en Tailwind v4 un token que desaparece del `@theme` deja de
+     generar su utilidad **en silencio**: `lint` y `build` pasan en verde y el
+     elemento se queda sin color. Se borra en la fase que migre las pantallas.
+     Ningún componente nuevo lo usa. */
   --indigo-50: #eef0fe;
   --indigo-100: #dfe2fd;
   --indigo-200: #c2c7fb;
@@ -73,61 +197,122 @@
 
   /* ── Tipografía ────────────────────────────────────────────────────────
    *
-   * Instrument Sans para los títulos, Inter para leer.
+   * **Archivo, y nada más.** Una sola familia para todo el producto: títulos,
+   * lectura, etiquetas y navegación. Instrument Sans e Inter salieron con la
+   * dirección Antigravity.
    *
-   * Inter se eligió (2026-08-06) sobre dos diferencias verificables en los
-   * metadatos de next/font, y las dos siguen vigentes:
+   * Se piden los cuatro pesos del sistema (400, 500, 600, 700) y las dos caras
+   * (`normal`, `italic`) en `app/layout.tsx`. La cursiva no es opcional: el
+   * contenido de las lecciones usa énfasis pedagógico todo el tiempo
+   * (`*incógnita*`, `*sola*`) y `lib/markdownSimple.tsx` lo renderiza como
+   * <em>. Sin una cara cursiva real, cada uno de esos sale como oblicua
+   * sintética —la redonda inclinada a la fuerza por el navegador—, un defecto
+   * tipográfico en el texto que el estudiante lee durante media hora. Archivo
+   * la tiene: verificado en el manifiesto de next/font
+   * (`next/dist/compiled/@next/font/dist/google/font-data.json` → `Archivo`,
+   * `styles: ["normal","italic"]`).
    *
-   * 1. **Tiene cursiva real** (`styles: ["normal","italic"]`). El contenido de
-   *    las lecciones usa énfasis pedagógico constantemente (`*incógnita*`,
-   *    `*sola*`, `*una bolsa cerrada*`) y `lib/markdownSimple.tsx` lo renderiza
-   *    como <em>. Con una fuente sin cursiva, cada uno de esos sale como
-   *    oblicua sintética —la redonda inclinada a la fuerza por el navegador—,
-   *    un defecto tipográfico real en el texto que el estudiante lee durante
-   *    media hora. Por eso `app/layout.tsx` pide `style` explícito y por eso no
-   *    se le pasa `weight`: fijar pesos la vuelve estática y tira la cursiva.
-   * 2. **Tiene eje óptico** (`opsz` 14→32), que corrige tracking y aperturas
-   *    según el tamaño.
+   * `--font-display` se conserva apuntando a la misma familia: lo usa la regla
+   * de h1/h2/h3 del `@layer base` de más abajo. Ya no distingue nada, y se
+   * retira junto con esa regla cuando las pantallas migren.
    *
-   * `--font-mono` es la pila monoespaciada del sistema, no una webfont. Los ~20
-   * usos de `font-mono` que había eran casi todos para números y tiempos, y eso
-   * lo resuelve `.num` (`tabular-nums`) sin cambiar de familia: descargar una
-   * tercera cara para alinear dígitos no se paga sola.
-   *
-   * Pero quedan tres sitios donde "monoespaciado" sí significa algo —el <pre>
-   * del stack trace en app/error.tsx y los <code> en línea de RunnerLeccion y
-   * markdownSimple—, y ahí una proporcional es sencillamente incorrecta. La
-   * pila del sistema los cubre sin costo de red. Es la misma que usa el
-   * preflight de Tailwind, así que <code> y <pre> se ven igual con la clase y
-   * sin ella. */
-  --font-display: var(--font-instrument-sans);
-  --font-sans: var(--font-inter);
+   * `--font-mono` es la pila monoespaciada **del sistema**, no una webfont: no
+   * se descarga nada, así que no contradice "una sola familia". Cubre los tres
+   * sitios donde monoespaciado significa algo —el <pre> del stack trace de
+   * app/error.tsx y los <code> en línea de markdownSimple—, donde una
+   * proporcional sería sencillamente incorrecta. */
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-archivo);
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
-  /* Escala propia; no sobrescribe los text-sm/base/lg de Tailwind.
-     Los ~159 usos de la escala numérica de Tailwind vuelven a sus valores
-     por defecto en esta fase; la migración a estos nombres es trabajo de la
-     fase de componentes. */
-  --text-display-l: 2rem;
-  --text-display-l--line-height: 2.25rem;
-  --text-display-m: 1.625rem;
-  --text-display-m--line-height: 2rem;
-  --text-titulo: 1.25rem;
-  --text-titulo--line-height: 1.75rem;
-  --text-cuerpo-l: 1.0625rem;
-  --text-cuerpo-l--line-height: 1.75rem;
-  --text-etiqueta: 0.8125rem;
-  --text-etiqueta--line-height: 1.125rem;
+  /* ── Escala tipográfica ────────────────────────────────────────────────
+   *
+   * Diez pasos: tamaño / interlineado / peso / tracking. Los valores del
+   * sistema vienen en px; acá van en rem (÷16) para que respeten el tamaño de
+   * fuente del navegador — el px original queda anotado en cada línea.
+   *
+   * El tracking del sistema viene en porcentaje del tamaño, que es justo lo
+   * que significa `em`: -3.5% → -0.035em.
+   *
+   * `etiqueta` y `nav` van en mayúsculas, pero eso NO puede vivir en el token:
+   * el namespace `--text-*` de Tailwind admite line-height, font-weight y
+   * letter-spacing, no text-transform. Los componentes escriben
+   * `text-etiqueta uppercase`.
+   *
+   * No sobrescribe los `text-sm`/`text-base`/`text-lg` de Tailwind, que siguen
+   * en sus valores por defecto para las pantallas todavía sin migrar. */
+  --text-display-l: 2.75rem; /* 44px */
+  --text-display-l--line-height: 2.75rem; /* 44px */
+  --text-display-l--font-weight: 700;
+  --text-display-l--letter-spacing: -0.035em;
+
+  --text-display-m: 1.625rem; /* 26px */
+  --text-display-m--line-height: 1.625rem; /* 26px */
+  --text-display-m--font-weight: 700;
+  --text-display-m--letter-spacing: -0.032em;
+
+  --text-titulo-l: 1.4375rem; /* 23px */
+  --text-titulo-l--line-height: 1.5625rem; /* 25px */
+  --text-titulo-l--font-weight: 700;
+  --text-titulo-l--letter-spacing: -0.03em;
+
+  --text-titulo-m: 1rem; /* 16px */
+  --text-titulo-m--line-height: 1.1875rem; /* 19px */
+  --text-titulo-m--font-weight: 600;
+  --text-titulo-m--letter-spacing: -0.018em;
+
+  --text-titulo-s: 0.9375rem; /* 15px */
+  --text-titulo-s--line-height: 1.125rem; /* 18px */
+  --text-titulo-s--font-weight: 600;
+  --text-titulo-s--letter-spacing: -0.015em;
+
+  --text-cuerpo-m: 0.875rem; /* 14px */
+  --text-cuerpo-m--line-height: 1.25rem; /* 20px */
+  --text-cuerpo-m--font-weight: 400;
+  --text-cuerpo-m--letter-spacing: 0;
+
+  --text-cuerpo-s: 0.78125rem; /* 12.5px */
+  --text-cuerpo-s--line-height: 1.125rem; /* 18px */
+  --text-cuerpo-s--font-weight: 400;
+  --text-cuerpo-s--letter-spacing: 0;
+
+  --text-cuerpo-xs: 0.6875rem; /* 11px */
+  --text-cuerpo-xs--line-height: 0.9375rem; /* 15px */
+  --text-cuerpo-xs--font-weight: 400;
+  --text-cuerpo-xs--letter-spacing: 0;
+
+  --text-etiqueta: 0.625rem; /* 10px */
+  --text-etiqueta--line-height: 0.75rem; /* 12px */
+  --text-etiqueta--font-weight: 600;
+  --text-etiqueta--letter-spacing: 0.12em;
+
+  --text-nav: 0.5625rem; /* 9px */
+  --text-nav--line-height: 0.6875rem; /* 11px */
+  --text-nav--font-weight: 600;
+  --text-nav--letter-spacing: 0.08em;
+
+  /* OBSOLETO. No está en la escala Línea, pero lo usan 14 call sites de las
+     pantallas actuales. Se congela en su valor y muere con ellas. */
   --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1rem;
 
-  /* ── Radios ────────────────────────────────────────────── */
-  --radius-xs: 0.375rem; /* chips */
-  --radius-sm: 0.625rem; /* inputs, opciones */
-  --radius-md: 0.875rem; /* cards */
-  --radius-lg: 1.25rem; /* hojas, contenedores grandes */
+  /* ── Radios ──────────────────────────────────────────────────────────────
+     Línea: none 0 · sm 2 · md 4 · full 999. Botones y tarjetas usan sm;
+     estaciones, píldoras y barras de línea usan full.
 
-  /* ── Elevación ─────────────────────────────────────────── */
+     En px y no en rem: un radio de 2px es un hecho geométrico del dibujo, no
+     una medida que deba crecer con el cuerpo de texto.
+
+     `rounded-none` y `rounded-full` ya vienen en Tailwind con esos valores; los
+     equivalentes `--radius-none` / `--radius-full` están en el `:root` de
+     arriba para poder escribirlos en CSS suelto. */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* ── Elevación ─────────────── OBSOLETO ──────────────────
+     La dirección Línea no tiene sombras: la jerarquía la dan el borde y el
+     color. Se conservan porque 15 componentes sin migrar las referencian
+     (ver el bloque índigo). */
   --shadow-e1: 0 1px 2px rgb(22 20 43 / 0.04), 0 3px 12px rgb(22 20 43 / 0.05);
   --shadow-e2: 0 2px 6px rgb(22 20 43 / 0.06), 0 12px 32px rgb(22 20 43 / 0.1);
 
@@ -162,13 +347,21 @@
   --color-interactive-fuerte: var(--color-interactivo-fuerte);
   --color-interactive-suave: var(--color-interactivo-suave);
 
-  /* La jerarquía de encierro de a6fb4c0 se conserva mapeando cada paso viejo
-     a su equivalente nuevo: control→xs (chips), tarjeta→sm (botones y
-     alternativas), panel→md (tarjetas), escena→lg (el interactivo). */
-  --radius-control: var(--radius-xs);
-  --radius-tarjeta: var(--radius-sm);
-  --radius-panel: var(--radius-md);
-  --radius-escena: var(--radius-lg);
+  /* La jerarquía de encierro de a6fb4c0 (control→chips, tarjeta→botones y
+     alternativas, panel→tarjetas, escena→el interactivo).
+
+     **Fijados a su valor literal.** Hasta esta fase eran `var(--radius-xs/sm/
+     md/lg)`, y la dirección Línea reescribe esos primitivos a 2px y 4px: si
+     siguieran enganchados, los 42 call sites de `rounded-control/tarjeta/panel/
+     escena` de las pantallas actuales se aplanarían de golpe. Desengancharlos
+     es lo que deja cambiar los primitivos sin tocar una sola pantalla.
+
+     Los valores son exactamente los que tenían xs/sm/md/lg antes del cambio.
+     Se borran, junto con sus call sites, en la fase de migración. */
+  --radius-control: 0.375rem;
+  --radius-tarjeta: 0.625rem;
+  --radius-panel: 0.875rem;
+  --radius-escena: 1.25rem;
 
   /* Cuatro niveles de elevación colapsan a dos: reposo y levantado. */
   --shadow-nivel-1: var(--shadow-e1);
@@ -187,19 +380,15 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
 
-    /* Deja que Inter use su eje óptico (`opsz`): el navegador lo ajusta solo
-       según el tamaño de cada texto. Es el valor por defecto de la propiedad,
-       pero se escribe explícito porque es la mitad del motivo por el que se
-       eligió esta fuente y no debería apagarse por descuido. */
-    font-optical-sizing: auto;
+    /* Se retiró `font-optical-sizing: auto`: era por el eje `opsz` de Inter,
+       que Archivo no tiene (sus ejes son `wdth` y `wght`). Dejarlo habría sido
+       una declaración que ya no actúa sobre nada.
 
-    /* Nota para el futuro: NO agregar `font-feature-settings` con las variantes
-       de carácter de Inter (`cv05` cola en la ele, `cv08` remates en la I).
-       Se probó y el corte que sirve Google Fonts no las trae: medido en el
-       navegador, el ancho del glifo es idéntico con y sin la variante. Quedaba
-       como una declaración que prometía desambiguar l/I/1 sin hacerlo.
-       Traerlas exigiría alojar el .woff2 de Inter propio, y eso no se paga
-       para este piloto. */
+       `--color-bg` sigue siendo el fondo de Antigravity, no `surface-screen`.
+       Esta fase cambia la familia tipográfica —eso sí alcanza a todas las
+       pantallas, es lo que significa "una sola familia"— pero no el color de
+       fondo del producto: eso es trabajo de la fase que migre las pantallas.
+       La galería de /_design pinta su propio `bg-screen`. */
   }
 
   /* Evita que un párrafo termine en una palabra sola colgando en la última
@@ -218,9 +407,14 @@
     text-wrap: balance;
   }
 
-  /* Los títulos son la única voz de Instrument Sans. El tracking negativo vive
-     acá y no en cada clase: antes había que acordarse de escribir
-     `tracking-tight` —y de acertarle al mismo valor— en cada encabezado. */
+  /* OBSOLETO. Con una sola familia, `--font-display` ya no distingue nada, y el
+     peso y el tracking de un título los fija su paso de la escala
+     (`text-titulo-l` trae 700 y -3%). Las utilidades ganan sobre `@layer base`,
+     así que un encabezado de la dirección Línea no queda atado a estos valores.
+
+     Sobrevive porque las pantallas sin migrar sí dependen de esta regla: sus
+     h1/h2/h3 no llevan clase de tamaño y perderían el tracking negativo. Se
+     borra con ellas. */
   h1,
   h2,
   h3 {
