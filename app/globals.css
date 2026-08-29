@@ -45,12 +45,22 @@
   --line-02: #ffb600;
   --line-03: #00843d;
   --line-04: #0057b8;
+
+  /* Dos derivados por línea, uno para cada fondo:
+     - `tint`: el pálido sobre papel (el fondo de la alternativa correcta).
+     - `clara`: el color de línea subido de luminosidad para leerse sobre la
+       tinta oscura (la clave de TarjetaError). Los cuatro de línea están
+       calibrados contra papel y sobre fondo oscuro se apagan; de ahí que exista
+       esta segunda serie y no se reutilice la primera. */
+  --line-01-tint: #fbe6ea;
+  --line-02-tint: #fff6e0;
   --line-03-tint: #eaf5ee;
-  /* Aclarado para texto sobre fondo oscuro (la clave de TarjetaError).
-     TODO: faltan los equivalentes de line-01, line-02 y line-04; no se
-     inventan, salen del archivo de Figma. Hasta entonces esas tres líneas
-     caen al default de `--linea-clara`. */
+  --line-04-tint: #e6edf8;
+
+  --line-01-clara: #ff8a9e;
+  --line-02-clara: #ffd466;
   --line-03-clara: #7bd6a2;
+  --line-04-clara: #7fa8e8;
 
   /* ── El color de eje, como variable heredada ─────────────────────────────
      La regla de color del sistema es "el color de línea identifica el eje y se
@@ -74,9 +84,12 @@
        `--text-primary`, que sobre ese amarillo da 10.1:1. Es la razón por la
        que esto existe como variable y no como una clase fija.
      - `--linea-tinte`: el fondo pálido del color de línea (la alternativa
-       correcta). Solo está especificado el de la línea 03.
+       correcta).
      - `--linea-clara`: el color de línea aclarado para leerse sobre fondo
-       oscuro (la clave de TarjetaError). Solo está especificado el de la 03. */
+       oscuro (la clave de TarjetaError).
+
+     Los defaults son los que corresponden fuera de un eje, donde no hay color
+     de línea del que derivar: superficie de tarjeta y texto inverso. */
   --linea: var(--text-primary);
   --linea-contraste: var(--text-inverse);
   --linea-tinte: var(--surface-card);
@@ -116,8 +129,16 @@
   --color-line-02: var(--line-02);
   --color-line-03: var(--line-03);
   --color-line-04: var(--line-04);
+
+  --color-line-01-tint: var(--line-01-tint);
+  --color-line-02-tint: var(--line-02-tint);
   --color-line-03-tint: var(--line-03-tint);
+  --color-line-04-tint: var(--line-04-tint);
+
+  --color-line-01-clara: var(--line-01-clara);
+  --color-line-02-clara: var(--line-02-clara);
   --color-line-03-clara: var(--line-03-clara);
+  --color-line-04-clara: var(--line-04-clara);
 
   /* ── Primitivos: índigo (acción) ─── OBSOLETO ───────────────────────────
      La dirección Línea retira el índigo (#4A4FE0) y el azul tinta (#1e4fd8).

@@ -62,8 +62,14 @@ const MUESTRAS_DE_COLOR: { clase: string; nombre: string; hex: string }[] = [
   { clase: "bg-line-02", nombre: "line-02", hex: "#FFB600" },
   { clase: "bg-line-03", nombre: "line-03", hex: "#00843D" },
   { clase: "bg-line-04", nombre: "line-04", hex: "#0057B8" },
+  { clase: "bg-line-01-tint", nombre: "line-01-tint", hex: "#FBE6EA" },
+  { clase: "bg-line-02-tint", nombre: "line-02-tint", hex: "#FFF6E0" },
   { clase: "bg-line-03-tint", nombre: "line-03-tint", hex: "#EAF5EE" },
+  { clase: "bg-line-04-tint", nombre: "line-04-tint", hex: "#E6EDF8" },
+  { clase: "bg-line-01-clara", nombre: "line-01-clara", hex: "#FF8A9E" },
+  { clase: "bg-line-02-clara", nombre: "line-02-clara", hex: "#FFD466" },
   { clase: "bg-line-03-clara", nombre: "line-03-clara", hex: "#7BD6A2" },
+  { clase: "bg-line-04-clara", nombre: "line-04-clara", hex: "#7FA8E8" },
 ];
 
 const ESTADOS_DE_ESTACION = [
@@ -254,7 +260,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Tarjeta de error"
-          nota="La única superficie oscura del sistema. Hoy solo la línea 03 tiene su color aclarado definido; las otras tres caen a texto inverso, y se ve acá."
+          nota="La única superficie oscura del sistema. La clave va en el color de la línea aclarado, no en el color de línea: los cuatro están calibrados contra papel y sobre tinta se apagan."
         >
           <PorLinea>
             {() => (

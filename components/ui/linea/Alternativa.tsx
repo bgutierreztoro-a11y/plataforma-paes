@@ -25,9 +25,9 @@ interface AlternativaProps {
  * `ring`: acá la fila no se re-selecciona después de revelada, así que el
  * píxel de reflow que el anillo evitaba no llega a ocurrir.
  *
- * `--linea-tinte` cae a la superficie de tarjeta en las líneas que todavía no
- * tienen tinte definido (ver ./colores.ts); en esas, la alternativa correcta se
- * distingue por el borde y el chip, que ya son del color del eje.
+ * `--linea-tinte` es el pálido de la línea. Fuera de un eje cae a la superficie
+ * de tarjeta, y ahí la correcta se distingue por el borde y el chip, que toman
+ * el default de `--linea` (tinta).
  */
 const CLASES_ESTADO: Record<Estado, string> = {
   neutra: "border-hairline bg-card",

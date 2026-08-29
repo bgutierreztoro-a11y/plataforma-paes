@@ -18,9 +18,7 @@ interface TarjetaErrorProps {
  *
  * La clave va en el color del eje **aclarado** (`--linea-clara`), no en el color
  * de línea: los cuatro colores de línea están calibrados contra papel, y sobre
- * la tinta oscura el rojo y el azul se apagan. Solo la línea 03 tiene su
- * aclarado definido hoy; las otras tres caen a `--text-inverse` (ver
- * ./colores.ts).
+ * la tinta oscura el rojo y el azul se apagan.
  */
 export function TarjetaError({
   clave,

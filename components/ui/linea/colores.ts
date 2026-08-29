@@ -51,30 +51,35 @@ const CONTRASTE_POR_LINEA: Record<LineaId, string> = {
 };
 
 /**
- * Derivados del color de línea que el sistema define **solo para la línea 03**:
- * el tinte pálido (fondo de la alternativa correcta) y el aclarado para leerse
- * sobre fondo oscuro (la clave de TarjetaError).
+ * Los dos derivados del color de línea, uno por cada fondo: el tinte pálido
+ * sobre papel (fondo de la alternativa correcta) y el aclarado sobre tinta
+ * oscura (la clave de TarjetaError).
  *
- * Las otras tres no tienen valor asignado y no se inventa uno: caen al default
- * de `app/globals.css` (`--linea-tinte` → superficie de tarjeta, `--linea-clara`
- * → texto inverso), que es legible aunque no sea lo definitivo.
- *
- * TODO: traer de Figma los tintes y aclarados de las líneas 01, 02 y 04.
+ * Son series propias y no un `color-mix()` calculado sobre el color de línea:
+ * los cuatro colores están calibrados a mano contra su fondo, y una mezcla
+ * uniforme daría un amarillo aclarado casi blanco y un azul aclarado que sigue
+ * apagado. Vienen del sistema de diseño.
  */
-const TINTE_POR_LINEA: Partial<Record<LineaId, string>> = {
+const TINTE_POR_LINEA: Record<LineaId, string> = {
+  "01": "var(--line-01-tint)",
+  "02": "var(--line-02-tint)",
   "03": "var(--line-03-tint)",
+  "04": "var(--line-04-tint)",
 };
 
-const CLARA_POR_LINEA: Partial<Record<LineaId, string>> = {
+const CLARA_POR_LINEA: Record<LineaId, string> = {
+  "01": "var(--line-01-clara)",
+  "02": "var(--line-02-clara)",
   "03": "var(--line-03-clara)",
+  "04": "var(--line-04-clara)",
 };
 
 /** `style` es `CSSProperties`, que no admite custom properties; esto sí. */
 export interface EstiloDeLinea extends CSSProperties {
   "--linea": string;
   "--linea-contraste": string;
-  "--linea-tinte"?: string;
-  "--linea-clara"?: string;
+  "--linea-tinte": string;
+  "--linea-clara": string;
 }
 
 /**
@@ -84,13 +89,10 @@ export interface EstiloDeLinea extends CSSProperties {
  * de la lección— y todo lo de adentro toma el color sin recibir props.
  */
 export function estiloDeLinea(linea: LineaId): EstiloDeLinea {
-  const tinte = TINTE_POR_LINEA[linea];
-  const clara = CLARA_POR_LINEA[linea];
-
   return {
     "--linea": `var(--line-${linea})`,
     "--linea-contraste": CONTRASTE_POR_LINEA[linea],
-    ...(tinte ? { "--linea-tinte": tinte } : {}),
-    ...(clara ? { "--linea-clara": clara } : {}),
+    "--linea-tinte": TINTE_POR_LINEA[linea],
+    "--linea-clara": CLARA_POR_LINEA[linea],
   };
 }
