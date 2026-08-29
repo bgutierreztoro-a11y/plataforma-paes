@@ -17,6 +17,14 @@ import type { CSSProperties } from "react";
  *    —en la placa de la línea, o en el layout del eje— y todo lo que cuelga
  *    debajo la hereda. El default de `--linea` en app/globals.css es
  *    `var(--text-primary)`, que es la segunda mitad de la regla.
+ *
+ * `--linea` es el color del eje **como forma**: barras, estaciones, rieles,
+ * bordes, el disco de la placa. Cuando ese mismo color pasa a ser fondo de un
+ * texto o texto él mismo, el tono tiene que moverse en los extremos de la
+ * paleta para llegar a contraste, y esos dos roles son `--linea-fondo` y
+ * `--linea-nav`. Están abajo con sus números. La alternativa —un condicional
+ * por línea dentro de cada componente— repartiría la misma tabla de contraste
+ * en tantos sitios como componentes haya.
  */
 export const LINEAS = ["01", "02", "03", "04"] as const;
 
@@ -36,12 +44,14 @@ export const NOMBRE_DE_LINEA: Record<LineaId, string> = {
    pantalla los use. Ese puente se construye en la fase de migración. */
 
 /**
- * El texto que va ENCIMA del color de línea.
+ * El texto que va ENCIMA del color de línea, es decir, encima de
+ * `--linea-fondo`.
  *
  * No es una decisión de gusto: es contraste medido contra `--text-inverse`
- * (#F7F7F5). Línea 01 → 4.5:1, línea 03 → 4.5:1, línea 04 → 6.4:1; las tres
- * pasan AA. La línea 02 (#FFB600) da **1.6:1**, que no es legible, y con
- * `--text-primary` sube a 10.1:1. Por eso la 02 es la excepción.
+ * (#F7F7F5). Línea 01 → 4,52:1, línea 03 → 5,81:1 (ya con el verde oscurecido
+ * de `FONDO_POR_LINEA`; con el #00843D de la línea daba 4,48:1 y no pasaba),
+ * línea 04 → 6,41:1. La línea 02 (#FFB600) da **1,64:1**, que no es legible, y
+ * con `--text-primary` sube a 10,10:1. Por eso la 02 es la excepción.
  */
 const CONTRASTE_POR_LINEA: Record<LineaId, string> = {
   "01": "var(--text-inverse)",
@@ -74,12 +84,59 @@ const CLARA_POR_LINEA: Record<LineaId, string> = {
   "04": "var(--line-04-clara)",
 };
 
+/**
+ * El color de línea cuando es **fondo de un texto**: el botón de variante
+ * `linea` y el chip de la alternativa correcta.
+ *
+ * Tres de las cuatro son el color de línea tal cual. La 03 no: #00843D con
+ * texto claro (#F7F7F5) da **4,48:1**, dos centésimas bajo el 4,5:1 de AA, y el
+ * `titulo-s` del botón (15px/600) no llega a texto grande. `--line-03-oscura`
+ * (#007034) sube ese par a 5,81:1.
+ *
+ * Las otras tres no lo necesitan: 01 → 4,52:1, 04 → 6,41:1, y la 02 lleva texto
+ * en tinta (10,10:1). Por eso el mapa apunta al color de línea y no a una serie
+ * "oscura" completa que habría que mantener sin que arreglara nada.
+ *
+ * Esto NO alcanza al disco de PlacaLinea, que también lleva un dígito encima:
+ * ver el comentario en ese componente.
+ */
+const FONDO_POR_LINEA: Record<LineaId, string> = {
+  "01": "var(--line-01)",
+  "02": "var(--line-02)",
+  "03": "var(--line-03-oscura)",
+  "04": "var(--line-04)",
+};
+
+/**
+ * El color de línea cuando es **texto sobre superficie clara**: hoy, la etiqueta
+ * del ítem activo de NavInferior sobre `surface-card`.
+ *
+ * La excepción es la 02, por el motivo inverso al de `CONTRASTE_POR_LINEA`: ahí
+ * el amarillo es el fondo y funciona; acá es el texto y sobre blanco da
+ * **1,76:1** en un cuerpo de 9px. Cae a `--text-primary` (17,76:1). El aclarado
+ * tampoco serviría: `--line-02-clara` está calibrado contra tinta oscura y sobre
+ * blanco es peor todavía.
+ *
+ * Las otras tres pasan AA sobre blanco: 01 → 4,85:1, 03 → 4,81:1, 04 → 6,87:1.
+ *
+ * La 02 pierde el color en la etiqueta, no en la pantalla: la placa, las
+ * estaciones y la barra de progreso siguen identificando la línea.
+ */
+const NAV_POR_LINEA: Record<LineaId, string> = {
+  "01": "var(--linea)",
+  "02": "var(--text-primary)",
+  "03": "var(--linea)",
+  "04": "var(--linea)",
+};
+
 /** `style` es `CSSProperties`, que no admite custom properties; esto sí. */
 export interface EstiloDeLinea extends CSSProperties {
   "--linea": string;
   "--linea-contraste": string;
   "--linea-tinte": string;
   "--linea-clara": string;
+  "--linea-fondo": string;
+  "--linea-nav": string;
 }
 
 /**
@@ -94,5 +151,7 @@ export function estiloDeLinea(linea: LineaId): EstiloDeLinea {
     "--linea-contraste": CONTRASTE_POR_LINEA[linea],
     "--linea-tinte": TINTE_POR_LINEA[linea],
     "--linea-clara": CLARA_POR_LINEA[linea],
+    "--linea-fondo": FONDO_POR_LINEA[linea],
+    "--linea-nav": NAV_POR_LINEA[linea],
   };
 }

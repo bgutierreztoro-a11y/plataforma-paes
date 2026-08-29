@@ -62,6 +62,20 @@
   --line-03-clara: #7bd6a2;
   --line-04-clara: #7fa8e8;
 
+  /* Un tercer derivado, y sólo para la 03: el verde **oscurecido** para cuando
+     el color de línea es el fondo de un texto.
+
+     El #00843D con texto claro (#F7F7F5) da 4,48:1 — 0,02 bajo el 4,5:1 que
+     pide AA para texto normal, y el titulo-s del botón (15px/600) no califica
+     como texto grande. #007034 sube ese par a 5,81:1.
+
+     No hay serie completa porque las otras tres no la necesitan: 01 da 4,52:1,
+     04 da 6,41:1, y la 02 no usa texto claro (su contraste sale de
+     `--text-primary`, 10,10:1). Un token por línea "por simetría" sería un tono
+     que mantener sin que arregle nada. Si alguna vez se busca un colchón
+     uniforme de ≥5:1, la 01 necesitaría algo como #D50028 (5,07:1). */
+  --line-03-oscura: #007034;
+
   /* ── El color de eje, como variable heredada ─────────────────────────────
      La regla de color del sistema es "el color de línea identifica el eje y se
      mantiene constante dentro de ese eje; fuera de un eje se usa text-primary".
@@ -87,13 +101,38 @@
        correcta).
      - `--linea-clara`: el color de línea aclarado para leerse sobre fondo
        oscuro (la clave de TarjetaError).
+     - `--linea-fondo`: el color de línea cuando es **fondo de un texto**
+       (el botón de variante `linea`, el chip de la alternativa correcta).
+       Coincide con `--linea` en tres de las cuatro; la 03 baja a
+       `--line-03-oscura` para llegar a AA. Ver ese token más arriba.
+     - `--linea-nav`: el color de línea cuando es **texto sobre superficie
+       clara** (la etiqueta activa de NavInferior, sobre `surface-card`).
+       Coincide con `--linea` en tres de las cuatro; la 02 (#FFB600) da 1,76:1
+       sobre blanco y cae a `--text-primary` (17,76:1). El aclarado no la
+       salva: `--line-02-clara` está calibrado contra tinta oscura y sobre
+       blanco es todavía peor.
+
+     La división es de rol, no de componente: `--linea` es **forma** (barras,
+     estaciones, rieles, bordes, el disco de la placa), `--linea-fondo` es
+     **fondo de texto** y `--linea-nav` es **texto**. Los tres roles piden
+     tonos distintos en los extremos de la paleta, y tenerlos separados es lo
+     que evita un condicional por línea dentro de cada componente.
 
      Los defaults son los que corresponden fuera de un eje, donde no hay color
-     de línea del que derivar: superficie de tarjeta y texto inverso. */
+     de línea del que derivar: superficie de tarjeta y texto inverso.
+
+     Ojo con los dos que se definen como `var(--linea)`: eso NO es un alias
+     vivo. Una custom property que referencia a otra se sustituye al calcular
+     su valor —acá, en `:root`— y los descendientes heredan el resultado ya
+     resuelto, así que un subárbol que redefina `--linea` no arrastra a estos
+     dos. Por eso `estiloDeLinea()` los emite siempre, para las cuatro líneas;
+     estos defaults valen sólo fuera de un eje. */
   --linea: var(--text-primary);
   --linea-contraste: var(--text-inverse);
   --linea-tinte: var(--surface-card);
   --linea-clara: var(--text-inverse);
+  --linea-fondo: var(--linea);
+  --linea-nav: var(--linea);
 
   /* ── Radio y forma ──────────────────────────────────────────────────────
      Botones y tarjetas: radius-sm. Estaciones, píldoras y barras de línea:
@@ -139,6 +178,9 @@
   --color-line-02-clara: var(--line-02-clara);
   --color-line-03-clara: var(--line-03-clara);
   --color-line-04-clara: var(--line-04-clara);
+
+  /* Sin hermanas 01/02/04: la serie oscura existe sólo donde hace falta. */
+  --color-line-03-oscura: var(--line-03-oscura);
 
   /* ── Primitivos: índigo (acción) ─── OBSOLETO ───────────────────────────
      La dirección Línea retira el índigo (#4A4FE0) y el azul tinta (#1e4fd8).

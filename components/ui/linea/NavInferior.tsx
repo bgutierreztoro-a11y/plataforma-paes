@@ -22,9 +22,15 @@ const DESTINOS: { id: DestinoNav; etiqueta: string; Icono: typeof IconoRed }[] =
 /**
  * La barra de cuatro destinos.
  *
- * El ítem activo toma el color del eje en el que estás (`--linea`), así que la
- * barra dice a la vez dónde estás y en qué línea. Fuera de un eje, el default de
- * `--linea` es `text-primary` y el activo se lee igual, en tinta.
+ * El ítem activo toma el color del eje en el que estás, así que la barra dice a
+ * la vez dónde estás y en qué línea. Fuera de un eje cae a `text-primary` y el
+ * activo se lee igual, en tinta.
+ *
+ * El color sale de `--linea-nav` y no de `--linea` porque acá el color de línea
+ * es **texto sobre `bg-card`**: la 02 (#FFB600) daría 1,76:1 en un cuerpo de
+ * 9px y `--linea-nav` la baja a tinta. Ver ./colores.ts. La 02 no queda sin
+ * identificar por eso: la placa, las estaciones y la barra de progreso siguen
+ * en amarillo en la misma pantalla.
  *
  * `min-h-11` por ítem es el objetivo táctil de 44px, que se sostiene aunque el
  * dibujo —icono de 16px y etiqueta de 9px— sea mucho más chico que la celda.
@@ -47,7 +53,7 @@ export function NavInferior({ activo, enlaces, className = "" }: NavInferiorProp
         );
 
         const clases = `flex min-h-11 flex-1 flex-col items-center justify-center gap-1 px-2 py-2 ${
-          esActivo ? "text-[var(--linea)]" : "text-muted"
+          esActivo ? "text-[var(--linea-nav)]" : "text-muted"
         }`;
 
         return href ? (

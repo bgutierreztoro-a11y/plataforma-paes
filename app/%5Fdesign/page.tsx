@@ -70,6 +70,7 @@ const MUESTRAS_DE_COLOR: { clase: string; nombre: string; hex: string }[] = [
   { clase: "bg-line-02-clara", nombre: "line-02-clara", hex: "#FFD466" },
   { clase: "bg-line-03-clara", nombre: "line-03-clara", hex: "#7BD6A2" },
   { clase: "bg-line-04-clara", nombre: "line-04-clara", hex: "#7FA8E8" },
+  { clase: "bg-line-03-oscura", nombre: "line-03-oscura", hex: "#007034" },
 ];
 
 const ESTADOS_DE_ESTACION = [
@@ -217,7 +218,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Botones"
-          nota="Ancho completo, 14px de padding vertical, radio de 2px, titulo-s centrado. La variante «línea» toma el color del eje; sobre la línea 02 el texto va en tinta porque el claro da 1,6:1 de contraste."
+          nota="Ancho completo, 14px de padding vertical, radio de 2px, titulo-s centrado. La variante «línea» toma el color del eje como fondo de texto: sobre la línea 02 el texto va en tinta porque el claro da 1,64:1, y la línea 03 usa su verde oscurecido (#007034) porque el de la línea daba 4,48:1, bajo AA."
         >
           <div className="flex flex-col gap-6">
             <PorLinea>
@@ -293,7 +294,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Navegación inferior"
-          nota="El ítem activo toma el color del eje, así que la barra dice a la vez dónde estás y en qué línea. Los destinos todavía no existen como rutas."
+          nota="El ítem activo toma el color del eje, así que la barra dice a la vez dónde estás y en qué línea. La línea 02 es la excepción: acá el color de línea es texto sobre blanco y el amarillo da 1,76:1 en un cuerpo de 9px, así que su etiqueta activa va en tinta. La línea se sigue leyendo en la placa, las estaciones y la barra. Los destinos todavía no existen como rutas."
         >
           <div className="flex flex-col gap-4">
             {LINEAS.map((linea) => (

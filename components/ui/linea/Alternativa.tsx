@@ -28,6 +28,12 @@ interface AlternativaProps {
  * `--linea-tinte` es el pálido de la línea. Fuera de un eje cae a la superficie
  * de tarjeta, y ahí la correcta se distingue por el borde y el chip, que toman
  * el default de `--linea` (tinta).
+ *
+ * El chip de la correcta se rellena con `--linea-fondo` y no con `--linea`: es
+ * fondo de un texto —la letra— y en la línea 03 el color de línea daba 4,48:1,
+ * bajo AA. El borde del chip y el de la fila sí van en `--linea`, que es donde
+ * el color es forma. Que difieran apenas no se nota: son dos verdes contiguos
+ * en un anillo de 1,5px. Ver ./colores.ts.
  */
 const CLASES_ESTADO: Record<Estado, string> = {
   neutra: "border-hairline bg-card",
@@ -37,7 +43,8 @@ const CLASES_ESTADO: Record<Estado, string> = {
 
 const CLASES_CHIP: Record<Estado, string> = {
   neutra: "border border-hairline text-secondary",
-  correcta: "border-[1.5px] border-[var(--linea)] bg-[var(--linea)] text-[var(--linea-contraste)]",
+  correcta:
+    "border-[1.5px] border-[var(--linea)] bg-[var(--linea-fondo)] text-[var(--linea-contraste)]",
   incorrecta: "border-[1.5px] border-strong bg-strong text-inverse",
 };
 

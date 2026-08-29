@@ -19,6 +19,16 @@ interface PlacaLineaProps {
  * El disco muestra el dígito y no "01": el cero a la izquierda pertenece al
  * nombre del token, no a la señalética.
  *
+ * **El disco se pinta con `--linea` y no con `--linea-fondo`**, aunque lleve un
+ * dígito encima. Acá el color no es fondo de texto sino identidad de línea, y
+ * tiene que ser el color exacto del eje: si se oscureciera, el disco dejaría de
+ * coincidir con las barras y las estaciones de la misma pantalla, que es
+ * justamente lo que la placa viene a declarar. El dígito no lo pide tampoco —va
+ * `aria-hidden` y es redundante con el subtítulo, que dice "Línea 03" al lado—,
+ * y el disco vive sobre la barra de tinta, no sobre superficie clara. El caso
+ * inverso, donde el color sí es fondo de texto, es Boton y el chip de
+ * Alternativa; ver ./colores.ts.
+ *
  * Valor sin especificar en el sistema: el diámetro del disco. 36px es lo que lo
  * deja leer a la par de un título de 23px; confirmar contra Figma cuando el
  * archivo esté disponible.

@@ -25,12 +25,14 @@ interface BotonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * que se ve apagado y sigue respondiendo al clic es peor que cualquiera de las
  * dos cosas por separado.
  *
- * El texto sobre el color de línea sale de `--linea-contraste` y no de una clase
- * fija. Sobre la línea 02 (#FFB600) el texto claro da 1.6:1 y es ilegible; ver
- * el cálculo completo en ./colores.ts.
+ * El fondo sale de `--linea-fondo` y el texto de `--linea-contraste`, ninguno de
+ * una clase fija: los dos son contraste medido. Sobre la línea 02 (#FFB600) el
+ * texto claro da 1,64:1 y va en tinta; el verde de la 03 (#00843D) daba 4,48:1
+ * con texto claro —dos centésimas bajo AA— y `--linea-fondo` lo oscurece a
+ * #007034, que da 5,81:1. Ver el cálculo completo en ./colores.ts.
  */
 const CLASES_VARIANTE: Record<Variante, string> = {
-  linea: "bg-[var(--linea)] text-[var(--linea-contraste)]",
+  linea: "bg-[var(--linea-fondo)] text-[var(--linea-contraste)]",
   neutro: "bg-primary text-inverse",
   secundario: "bg-card text-primary border border-hairline hover:border-strong",
   deshabilitado: "bg-sunken text-muted cursor-not-allowed",
