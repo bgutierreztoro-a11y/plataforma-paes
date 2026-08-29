@@ -38,10 +38,33 @@ export const NOMBRE_DE_LINEA: Record<LineaId, string> = {
   "04": "Probabilidad y datos",
 };
 
-/* El mapa línea → eje del temario NO vive acá a propósito: `lib/modulos.ts` es
-   la taxonomía del contenido y esta fase es solo la capa visual. Atarlas ahora
-   obligaría a esta carpeta a conocer los ids de eje antes de que ninguna
-   pantalla los use. Ese puente se construye en la fase de migración. */
+/**
+ * El puente eje del temario → línea de la red.
+ *
+ * Se dejó fuera de este archivo mientras ninguna pantalla lo usaba. La Fase 2
+ * —migrar /camino, /tema/[id] y /leccion/[id] a esta capa— lo trae acá porque
+ * las tres pantallas y la galería `/_design` necesitan resolver "¿de qué línea
+ * es este eje?", y `colores.ts` es el único punto que todas alcanzan sin
+ * importar desde `lib/` (que es server-only).
+ *
+ * El orden es el de `EJES` en `lib/modulos.ts` —y por lo tanto el de
+ * `ejesDelCamino()` en `lib/camino.ts`—: la posición en ese array **es** la
+ * línea. El mapa se escribe por id y no por índice para que un reordenamiento de
+ * `EJES` falle ruidoso acá en vez de renumerar las líneas en silencio.
+ *
+ * Un id que no esté en el mapa devuelve `undefined`: el llamador cae al color
+ * fuera de eje (tinta), nunca revienta.
+ */
+const LINEA_POR_EJE: Record<string, LineaId> = {
+  numeros: "01",
+  "algebra-y-funciones": "02",
+  geometria: "03",
+  "probabilidad-y-estadistica": "04",
+};
+
+export function lineaDeEje(ejeId: string): LineaId | undefined {
+  return LINEA_POR_EJE[ejeId];
+}
 
 /**
  * El texto que va ENCIMA del color de línea, es decir, encima de

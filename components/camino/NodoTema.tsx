@@ -174,7 +174,7 @@ export function PuntoNodo({
      padre. */
   const base = `flex ${tamano} shrink-0 items-center justify-center rounded-full motion-safe:transition-[background-color,box-shadow,transform] motion-safe:duration-[360ms] motion-reduce:transition-none${
     meta ? " outline outline-2 outline-offset-4 outline-border-fuerte" : ""
-  }${destacado ? " border-b-[3px] border-b-accent-fuerte" : ""}`;
+  }${destacado ? " border-b-[3px] border-b-[var(--linea)]" : ""}`;
 
   /* El glifo escala con el disco: en la meta todo mide 1,4×, y un trazo del
      tamaño de siempre dentro de un disco más grande se lee como un error de
@@ -196,13 +196,19 @@ export function PuntoNodo({
      disco que sigue siendo `bg-surface` con un aro no gana la pantalla por sí
      solo — necesita leer la tarjeta para confirmarlo, que es justo lo que el
      objetivo pide evitar. El color no cambia de familia, solo de tratamiento:
-     el ámbar de "por repasar" sigue siendo ámbar, el índigo de "en curso"
-     sigue siendo índigo. */
+     el ámbar de "por repasar" sigue siendo ámbar, el color de línea de "en
+     curso" sigue siendo el de la línea.
+
+     El relleno va en `--linea-fondo`, no en `--linea`: acá el color es fondo de
+     un glifo, y ese es el rol que `--linea-fondo` cubre —oscurece la 03 a
+     #007034 para llegar a AA, igual que el botón de variante `linea`—. El glifo
+     encima toma `--linea-contraste` (claro en 01/03/04, tinta en la 02, que con
+     glifo claro daría 1,6:1). */
   const colorDestacado: Record<EstadoNodo, string> = {
     completado: "bg-success",
     porRepasar: "bg-attention-fuerte",
-    enCurso: "bg-accent",
-    disponible: "bg-accent",
+    enCurso: "bg-[var(--linea-fondo)]",
+    disponible: "bg-[var(--linea-fondo)]",
     /* No se usa: quien llama excluye este caso (ver el comentario de la prop
        `destacado` más arriba). Declarado igual para que el `Record` sea
        exhaustivo y un estado nuevo no pueda faltar acá en silencio. */
@@ -260,8 +266,8 @@ export function PuntoNodo({
         <span
           className={
             destacado
-              ? `${base} ${colorDestacado.enCurso} text-white shadow-tarjeta-hover ring-2 ring-accent ring-offset-2 ring-offset-bg`
-              : `${base} bg-surface text-accent shadow-tarjeta ring-2 ring-accent ring-offset-2 ring-offset-bg`
+              ? `${base} ${colorDestacado.enCurso} text-[var(--linea-contraste)] shadow-tarjeta-hover ring-2 ring-[var(--linea)] ring-offset-2 ring-offset-bg`
+              : `${base} bg-surface text-[var(--linea-nav)] shadow-tarjeta ring-2 ring-[var(--linea)] ring-offset-2 ring-offset-bg`
           }
         >
           {contenido}
@@ -274,7 +280,7 @@ export function PuntoNodo({
          relleno y por la tarjeta, nunca solo por el movimiento. */
       return (
         <span
-          className={`${base} respiracion-nodo bg-accent text-white shadow-tarjeta-hover ring-2 ring-accent ring-offset-2 ring-offset-bg`}
+          className={`${base} respiracion-nodo bg-[var(--linea-fondo)] text-[var(--linea-contraste)] shadow-tarjeta-hover ring-2 ring-[var(--linea)] ring-offset-2 ring-offset-bg`}
         >
           {contenido}
         </span>

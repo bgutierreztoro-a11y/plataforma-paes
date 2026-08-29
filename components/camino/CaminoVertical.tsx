@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Boton, EnlaceBoton } from "@/components/ui/Boton";
+import { Boton, EnlaceBoton } from "@/components/ui/linea/Boton";
+import { estiloDeLinea, type LineaId } from "@/components/ui/linea/colores";
 import { Tarjeta } from "@/components/ui/Tarjeta";
 import { PuntoNodo } from "@/components/camino/NodoTema";
 import { EncabezadoEje } from "@/components/camino/EncabezadoEje";
@@ -65,6 +66,11 @@ export interface NodoCamino {
  */
 export interface SeccionCamino {
   id: string;
+  /** La línea de la red de este tramo. En /camino es la del eje; en /tema/[id]
+   *  es la del eje del tema. Ausente = fuera de un eje, y el tramo cae al color
+   *  neutro (tinta) sin romperse. Quien arma los tramos la resuelve con
+   *  `lineaDeEje` — este componente es genérico y no conoce los ids de eje. */
+  linea?: LineaId;
   /** Ausente = tramo sin banda. La geometría no suma nada por él. */
   titulo?: string;
   /** Solo en tramos plegables: "4 unidades en construcción". Ya formateado. */
@@ -204,6 +210,14 @@ export function CaminoVertical({
   const itemActivo = indice >= 0 ? items[indice] : undefined;
   const activo = itemActivo?.clase === "nodo" ? itemActivo.nodo : undefined;
 
+  /* La línea del tramo al que pertenece el nodo activo. La tarjeta flotante
+     cuelga del viewport, fuera de todas las `<section>`, así que no hereda el
+     `--linea` de ninguna: hay que instalárselo aparte. Sin tramo con línea, cae
+     al neutro. */
+  const lineaActiva = activo
+    ? secciones.find((s) => s.nodos.some((n) => n.id === activo.id))?.linea
+    : undefined;
+
   /* En escritorio la tarjeta cuelga hacia abajo y tapa lo que venga: eso es lo
      que hace un panel flotante, y tapar títulos de nodos es aceptable porque
      basta tocar otro nodo para moverla. Hay dos casos donde no lo es, y en los
@@ -262,7 +276,10 @@ export function CaminoVertical({
       {secciones.map((seccion) => {
         const desplegada = !seccion.plegable || expandidas.has(seccion.id);
         return (
-          <section key={seccion.id}>
+          <section
+            key={seccion.id}
+            style={seccion.linea ? estiloDeLinea(seccion.linea) : undefined}
+          >
             {seccion.titulo !== undefined && (
               <EncabezadoEje
                 nombre={seccion.titulo}
@@ -335,6 +352,10 @@ export function CaminoVertical({
           }`}
           style={
             {
+              /* La línea del nodo activo, para el chip "Demostración" y el CTA:
+                 esta tarjeta vive fuera de las `<section>`. Sin línea, hereda el
+                 default (tinta). */
+              ...(lineaActiva ? estiloDeLinea(lineaActiva) : {}),
               /* Colgando hacia abajo, el ancla es el borde inferior de la fila
                  activa. Volteada (`voltear`), el ancla pasa a ser su borde
                  superior, y `-translate-y-full` sube la tarjeta por su propio
@@ -482,28 +503,27 @@ function FilaCamino({
         type="button"
         onClick={onSeleccionar}
         aria-current={seleccionado ? "true" : undefined}
-        className={`absolute inset-0 z-10 flex items-center rounded-tarjeta text-left motion-safe:transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
-          seleccionado && nodo.estado !== "enConstruccion" ? "bg-accent-suave" : ""
+        className={`absolute inset-0 z-10 flex items-center rounded-tarjeta text-left motion-safe:transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong ${
+          seleccionado && nodo.estado !== "enConstruccion" ? "bg-[var(--linea-tinte)]" : ""
         }`}
       >
         {/* La marca de fila activa (2026-08-01). Antes solo el título cambiaba de
-            color (`text-accent-fuerte`): con 5 a 16 filas visibles no bastaba
-            para ubicar cuál estaba seleccionada de un vistazo.
+            color: con 5 a 16 filas visibles no bastaba para ubicar cuál estaba
+            seleccionada de un vistazo.
 
             El fondo se omite en un nodo `enConstruccion`: su título ya va en
             `text-ink-tenue` (2,99:1 contra el fondo, deuda preexistente fuera de
-            este cambio) y `bg-accent-suave` lo bajaría a 2,72:1 — justo en la
-            fila que más necesita leerse, porque es la que explica el bloqueo. La
-            barra lateral, en cambio, no es texto y no depende de ese contraste:
-            queda como única marca en ese caso.
+            este cambio) y un tinte encima lo bajaría más — justo en la fila que
+            más necesita leerse, porque es la que explica el bloqueo. La barra
+            lateral, en cambio, no es texto y no depende de ese contraste: queda
+            como única marca en ese caso.
 
-            Vocabulario reutilizado, no inventado: mismo `bg-accent-suave` /
-            `border-accent` que ya usan el chip "Demostración" de `TarjetaActivo`
-            y la alternativa marcada en `BloquePregunta.tsx`. */}
+            Vocabulario reutilizado, no inventado: mismo `--linea-tinte` que usa
+            el chip "Demostración" de `TarjetaActivo`. */}
         {seleccionado && (
           <span
             aria-hidden="true"
-            className="absolute inset-y-2 left-0 w-1 rounded-full bg-accent"
+            className="absolute inset-y-2 left-0 w-1 rounded-full bg-[var(--linea)]"
           />
         )}
         <span
@@ -535,7 +555,7 @@ function FilaCamino({
           className={`line-clamp-2 min-w-0 flex-1 pr-2 text-base leading-snug motion-safe:transition-colors ${
             nodo.estado === "enConstruccion"
               ? "font-medium text-ink-tenue"
-              : `font-semibold ${seleccionado ? "text-accent-fuerte" : "text-ink"}`
+              : `font-semibold ${seleccionado ? "text-[var(--linea-nav)]" : "text-ink"}`
           }`}
           style={{ marginLeft: ANCHO_CANALETA }}
         >
@@ -638,23 +658,29 @@ function TarjetaActivo({ nodo }: { nodo: NodoCamino }) {
                Fase 2, cuando se estrenó en HeaderLeccion.tsx. `rounded-full`
                reemplaza el radio implícito de `px-2.5 py-0.5` — mismo aspecto,
                token explícito. */
-            <span className="rounded-full bg-accent-suave px-2.5 py-0.5 text-eyebrow uppercase tracking-wide text-accent-fuerte">
+            <span className="rounded-full bg-[var(--linea-tinte)] px-2.5 py-0.5 text-eyebrow uppercase tracking-wide text-[var(--linea-nav)]">
               Demostración
             </span>
           )}
         </div>
       )}
-      {/* Full-width: la tarjeta es angosta y un botón a media línea deja al lado
-          un hueco que no es nada. Ocupando el ancho, el objetivo táctil es todo
-          el borde inferior de la tarjeta. */}
+      {/* Ancho completo: la tarjeta es angosta y un botón a media línea deja al
+          lado un hueco que no es nada. Los botones de `ui/linea` ya son
+          `block w-full`, así que el objetivo táctil es todo el borde inferior de
+          la tarjeta sin pedirlo. */}
       {bloqueado ? (
-        <Boton disabled className="mt-2.5 w-full">
+        <Boton variante="deshabilitado" className="mt-2.5">
           Aún no disponible
         </Boton>
       ) : (
         nodo.href &&
         nodo.accion && (
-          <EnlaceBoton href={nodo.href} onClick={nodo.onAbrir} className="mt-2.5 w-full">
+          <EnlaceBoton
+            variante="linea"
+            href={nodo.href}
+            onClick={nodo.onAbrir}
+            className="mt-2.5"
+          >
             {nodo.accion}
           </EnlaceBoton>
         )

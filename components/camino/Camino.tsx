@@ -11,6 +11,7 @@ import {
   ContadorDePantalla,
   TituloDePantalla,
 } from "@/components/navegacion/EncabezadoPantalla";
+import { lineaDeEje } from "@/components/ui/linea/colores";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema, estadoDeNodo, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
@@ -129,6 +130,10 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
 
   const secciones: SeccionCamino[] = ejes.map((eje) => ({
     id: eje.id,
+    /* El color de la línea de este eje. `lineaDeEje` mapea por id; el orden es
+       el de `EJES` en lib/modulos.ts. Un eje que no esté en el mapa cae al color
+       neutro sin romper. */
+    linea: lineaDeEje(eje.id),
     titulo: eje.nombre,
     plegable: eje.colapsado,
     /* Sin fecha y sin "próximamente": no prometemos plazos que no

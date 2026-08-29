@@ -80,7 +80,7 @@ export function EncabezadoEje({
           type="button"
           onClick={onAlternar}
           aria-expanded={expandido}
-          className="flex h-full w-full items-center gap-3 px-3 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent sm:px-4"
+          className="flex h-full w-full items-center gap-3 px-3 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong sm:px-4"
         >
           {nombreEje}
           {/* Sin fecha y sin "próximamente": no prometemos plazos que no
