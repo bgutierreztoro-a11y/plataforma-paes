@@ -6,6 +6,7 @@ import {
   ContadorDePantalla,
   TituloDePantalla,
 } from "@/components/navegacion/EncabezadoPantalla";
+import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { avanceDeTema } from "@/lib/estadoNodo";
@@ -27,8 +28,28 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
   const montado = useMontado();
   const avance = montado ? avanceDeTema(tema, leer()) : { hechas: 0, total: tema.lecciones.length };
 
+  /* La línea del eje al que pertenece este tema. Mismo puente que usa /camino
+     (`Camino.tsx`), que mapea por id de eje: la pantalla del tema tiene que
+     estar en el mismo color que el tramo del que se entró. */
+  const linea = lineaDeEje(tema.ejeId);
+
   return (
-    <div className="min-h-full flex-1">
+    /* La línea se instala **una sola vez, acá**, y no en el tramo que arma
+       `CaminoLecciones` —que sería el espejo exacto de `Camino.tsx`—, porque el
+       color lo necesitan tres cosas y solo una cuelga de `CaminoVertical`: el
+       enlace de volver del encabezado fijo, las `<section>` de los nodos y la
+       tarjeta flotante del nodo activo. Las dos últimas ya heredan: sin `linea`
+       en el tramo, `CaminoVertical` no les pone `style` propio y la variable
+       baja desde acá. La tarjeta es `position: fixed`, pero las custom
+       properties heredan por árbol DOM y no por contexto de posicionamiento.
+
+       Un eje fuera del mapa devuelve `undefined` y no se pone `style`: el
+       fallback es el default de `:root` en app/globals.css —`--linea:
+       var(--text-primary)` y sus cinco derivados en tinta neutra—, que es
+       literalmente la segunda mitad de la regla ("fuera de un eje se usa
+       text-primary", ver `colores.ts`). Escribir los seis tokens a mano acá
+       duplicaría esa tabla en un segundo lugar. */
+    <div className="min-h-full flex-1" style={linea ? estiloDeLinea(linea) : undefined}>
       {/* El tope sale de `--tope-nav`: 0 en móvil, donde la barra de navegación
           va abajo, y el alto real de la barra en escritorio, donde se pega
           arriba y la franja tiene que quedar justo debajo en vez de tapada. El
@@ -47,7 +68,13 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
           <Link
             href="/camino"
             aria-label="Volver al camino"
-            className="-ml-2 flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta text-lg text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:bg-accent-suave hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+            /* El hover pasa al color del eje: `--linea-tinte` de fondo y
+               `--linea-nav` de texto. `--linea-nav` y no `--linea` porque acá el
+               color es texto sobre superficie clara, y ese es justo el rol donde
+               la 02 (#FFB600) da 1,76:1 y cae a tinta. El foco va a
+               `outline-strong` —tinta— y no al color de línea: el anillo de foco
+               tiene que leerse igual en las cuatro. */
+            className="-ml-2 flex min-h-11 min-w-11 items-center justify-center rounded-tarjeta text-lg text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:bg-[var(--linea-tinte)] hover:text-[var(--linea-nav)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong"
           >
             ←
           </Link>
