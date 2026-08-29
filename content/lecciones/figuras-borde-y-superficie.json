@@ -21,8 +21,9 @@
     "Dominio 'velas de embarcación' confirmado por Benja vía scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md): sin colisiones de dominio reales sobre los 4 candidatos aprobados (vela mayor/triángulo/área, vela de trinquete-cangreja/trapecio/área, paño con lado inclinado/paralelogramo/perímetro, ollao/círculo/perímetro+área). Único hit: 'bies' (1 coincidencia genérica, no relacionada al tema) — evitado como término distintivo en todo el archivo; se usa 'paño con lado inclinado' o 'corte inclinado' en su lugar.",
     "A diferencia de L1 (un solo descubrimiento nuclear), esta lección es un LEVANTAMIENTO de 4 figuras/modos por diseño del módulo (así lo indica el título DEMRE de la propia lección). El 'descubrimiento nuclear' es conceptual y único: 'cada figura tiene su propia fórmula de área/perímetro, derivada de cómo se arma respecto a un rectángulo o triángulo conocido'; los 4 candidatos aprobados por Benja se despliegan en orden (triángulo área → trapecio área en generalización → círculo perímetro en práctica → paralelogramo perímetro + círculo área combinados en aplicación) en vez de tener cada uno su propio ciclo pensar/pistas/descubrimiento completo, que el formato fijo de 10 pasos no permite para 4 sub-temas. Zona de riesgo pedagógico que Benja debería revisar: la introducción del círculo (perímetro) en 'práctica' y del paralelogramo (perímetro) en 'aplicación' tienen menos andamiaje (sin pensar/pistas propios) que el triángulo. Ver además nota siguiente sobre candidato 4.",
     "Candidato 4 (círculo) pedido explícitamente 'en pasos distintos, como cierre que combina ambos modos': perímetro (circunferencia) introducido en 'práctica' con radio 15 cm, y área de un SEGUNDO ollao (radio 10 cm, otra esquina de la misma vela) calculada en 'aplicación'. Interpretación de 'pasos distintos' = dos paso.tipo distintos (práctica y aplicación), no dos bloques dentro de un mismo paso. Si Benja quería algo distinto (p. ej. ambos modos dentro del mismo paso), avisar antes de tocar catalogoErrores. CAMBIO 2026-08-25 (auditoría mecánica): el diseño original usaba el MISMO radio (15 cm) en ambos pasos por continuidad narrativa, pero eso hace que la 'fórmula equivocada' de un paso (distractor error-9) sea siempre, exactamente, la respuesta correcta del otro paso — un choque estructural que el chequeo de colisión distractor/correcta detecta como bloqueante. Se resolvió cambiando el radio de 'aplicación' a 10 cm (segundo ollao, ya no 'el mismo'). Ver notas del paso 'aplicacion' para el detalle numérico.",
-    "catalogoErrores embebido: SOLO error-1 y error-2, copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1), reutilizados en el sub-cálculo de Pitágoras del lado inclinado del paralelogramo (aplicación, ítem l2-item-2). error-5 y error-6 de L1 NO se reutilizan: ningún distractor de este archivo tiene el mecanismo exacto de 'a²=2a' ni de '(a+b)² en vez de a²+b²' — no se fuerza su uso (regla 2b de la skill).",
-    "error-7, error-8 y error-9 APROBADOS por Benja en el chat (texto tal cual lo propuesto, sin cambios) y agregados a catalogoErrores de este archivo — nace acá, no se duplica desde L1. Referenciados en 13 distractores en total: error-7 (8 usos: pensar numerica, descubrimiento seleccion+pregunta, generalizacion seleccion triángulo y seleccion trapecio, ejercicio numérico trapecio, práctica seleccion, itemsPAES l2-item-1 opción B), error-8 (2 usos: aplicación numérica perimetroM, itemsPAES l2-item-2 opción B), error-9 (3 usos: práctica numérica círculo, aplicación numérica círculo, itemsPAES l2-item-3 opción B).",
+    "catalogoErrores embebido: error-1, error-2 y error-12 copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1). error-1 y error-2 se usan en el sub-cálculo de Pitágoras del lado inclinado del paralelogramo (aplicación, numérica; y error-1 en l2-item-2). error-12 se usa en el bloque de selección de clasificación '¿aplica el atajo del trío?' que abre la parte de Pitágoras de 'aplicación' (opción incorrecta que fuerza el 5-12-13 sobre catetos 5 y 13). error-5 y error-6 de L1 NO se reutilizan: ningún distractor de este archivo tiene el mecanismo exacto de 'a²=2a' ni de '(a+b)² en vez de a²+b²' — no se fuerza su uso (regla 2b de la skill). error-12 debe quedar byte-idéntico al de L1 (guard catalogo-divergente de npm run auditar).",
+    "Fase 1 (2026-08-29): se extiende a L2 el enfoque del rediseño de L1 (commit 84a3bbb) — los tríos pitagóricos base son un atajo de reconocimiento, no la norma. Pitágoras en L2 solo aparece en el lado inclinado del paralelogramo (perímetro): dos cálculos visibles (aplicación numérica y l2-item-2) más el eco visual 4-3 de 'curiosidad', que no invoca terna y no se toca (ver nota del paso 'curiosidad'). Cambio de terna en la numérica de 'aplicación': de 7-24-25 (trío base) a base 15 / altura 24 / desplazamiento 10, lado 26, perímetro 82 (×2 de 5-12-13, escalada) — así el único ejemplo que el estudiante practica en el cuerpo de la lección ya no es un trío base. l2-item-2 mantiene 20-21-29 (primitiva no-base), ya alineado. Bloque nuevo de selección al inicio de la parte de Pitágoras de 'aplicación': clasifica tres pares (altura, desplazamiento) — (7, 24) y (10, 24) admiten el atajo (7-24-25 y 5-12-13 al doble); (5, 13) no, √194 ≈ 13,9 es irracional (el 5-12-13 usa catetos 5 y 12). Se eligió (5, 13) y no (8, 16) porque (8, 16) calcaría el ejemplo literal del texto de error-12. Reparto sobre las ocurrencias reales de L2: 0 base, 1 escalada, 1 irracional (par 5-13, dentro del bloque de clasificación, no resuelto como número), 1 primitiva no-base — down-scaling del 4/5/3/2 de L1. Los contextos no cambian (velas de embarcación, dominio ya confirmado por Benja): solo cambian magnitudes, así que NO se corre consultar-fuentes.mjs. Todos los valores nuevos verificados con node -e: lado 26 = √(24²+10²) = √676; perímetro 82 = 2·(15+26); distractores lado 34 (24+10, error-1), 676 (24²+10² sin raíz, error-2); distractores perímetro 78 (2·(15+24), error-8), 41 (15+26 sin ×2, ad-hoc); √194 ≈ 13,9 para el par (5, 13). Sin colisión distractor↔respuesta correcta del archivo (regla 3b).",
+    "error-7, error-8 y error-9 APROBADOS por Benja en el chat (texto tal cual lo propuesto, sin cambios) y agregados a catalogoErrores de este archivo — nace acá, no se duplica desde L1. Referenciados en 13 distractores en total: error-7 (8 usos: pensar numerica, descubrimiento seleccion+pregunta, generalizacion seleccion triángulo y seleccion trapecio, ejercicio numérico trapecio, práctica seleccion, itemsPAES l2-item-1 opción B), error-8 (2 usos: aplicación numérica perimetroM, itemsPAES l2-item-2 opción B), error-9 (3 usos: práctica numérica círculo, aplicación numérica círculo, itemsPAES l2-item-3 opción B). error-12 (1 uso, agregado en Fase 1 2026-08-29: aplicación, bloque de selección de clasificación '¿aplica el atajo del trío?', opción incorrecta que fuerza el 5-12-13).",
     "Todos los valores numéricos (respuestas correctas y distractores) verificados con node -e antes de escribir este JSON, incluyendo los decimales de π≈3,14 (94.2, 314, 62.8, 1256, 200.96, 50.24, 25.12). CORRECCIÓN (Ronda 1, 2026-08-26): de esos siete, seis son exactos en cálculo crudo, pero 62.8 no lo es — 2×3,14×10 da 62.800000000000004, no 62.8. Esto NO es un riesgo de scoring: BloqueNumerica.tsx compara el input parseado del estudiante contra el literal guardado (numero === respuestaCorrecta / valorObtenido === valor), nunca un cálculo hecho en runtime contra ese literal, así que ambos lados de la comparación son siempre el mismo 62.8 parseado desde texto. La frase 'todos verificados como exactos, sin decimales adicionales' de la redacción original no se sostiene tal cual para este valor y queda corregida acá; no se cambió ningún número ni distractor del archivo. Salida cruda de la verificación original pegada en el reporte de esa sesión, no repetida acá.",
     "Auditoría mecánica del 2026-08-25 (scripts/auditar-leccion.mjs): 5 colisiones distractor/correcta corregidas cambiando números de entrada (el paralelogramo de 'aplicación' pasó de base 12/altura 8/desplazamiento 6/lado 10/perímetro 44 a base 13/altura 24/desplazamiento 7/lado 25/perímetro 76; el segundo ollao de 'aplicación' pasó de radio 15 a radio 10, área 706,5→314; el paralelogramo de l2-item-2 pasó de base 20/altura 5/desplazamiento 12/lado 13/perímetro 66 a base 19/altura 20/desplazamiento 21/lado 29/perímetro 96, lo que de paso quitó la colisión del distractor 'D' de ese ítem con areaTriangulo=20 de 'pensar'), 3 ids de campo renombrados sin cifra (areaTrianguloM2→areaTriangulo, areaTrapecioM2→areaTrapecio, areaOllaoCm2→areaOllao) y el orden de dificultad de itemsPAES corregido a baja/media/alta (l2-item-1 media→baja, l2-item-2 alta→media). Recalculado todo con node -e, ver reporte de esta sesión. ALCANCE ACLARADO (Ronda 1, 2026-08-26): esta auditoría mecánica comparó distractores contra respuestas correctas DENTRO del mismo campoId/bloque, no de forma cruzada contra todos los campos del archivo — así detectó y corrigió las 5 colisiones listadas arriba, pero no una coincidencia que queda fuera de su alcance por diseño: el distractor 'olvida π' de la circunferencia del ollao en 'práctica' (2×15 = 30 cm) coincide en valor bruto con la respuesta correcta del área del trapecio en 'generalización' (30 m²). Registrada como NO bloqueante: son campos distintos (circunferenciaOllaoCm vs areaTrapecio), bloques distintos, sin ningún camino de UI donde ambos números aparezcan juntos como opciones comparables — BloqueNumerica.tsx solo compara dentro del campo activo. No se corrige el número.",
     "π se usa siempre como 3,14 (aproximación exacta, no Math.PI), instruido explícitamente en cada enunciado que lo requiere, porque BloqueNumerica.tsx compara con igualdad estricta (numero === respuestaCorrecta), sin tolerancia — ver components/bloques/BloqueNumerica.tsx líneas 41-42."
@@ -47,6 +48,10 @@
     {
       "id": "error-9",
       "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Ver dos catetos parecidos a un trío pitagórico conocido —o a un múltiplo de uno— y dar por hecho que la hipotenusa es la de ese trío, sin comprobar que ambos catetos coincidan exactamente: por ejemplo, tratar un triángulo de catetos 8 y 16 como si fuera el trío 8-15-17 y responder 17. Incluye suponer que la hipotenusa siempre da un número entero. Cuando los catetos no calzan con ningún trío, la relación a² + b² = c² sigue valiendo, pero su resultado puede ser irracional."
     }
   ],
   "contextosNumericos": [
@@ -56,7 +61,7 @@
     "descubrimiento: vela mayor 10 m base × 7 m altura, área 35 m² (ejemplo nuclear)",
     "generalizacion: triángulo de verificación 9 m × 4 m, área 18 m²; trapecio (vela de trinquete) pujamen 8 m, pena 4 m, altura 5 m, área 30 m²; ejercicio trapecio pujamen 10 m, pena 6 m, altura 7 m, área 56 m²",
     "practica: paño triangular 9 m × 6 m, área 27 m²; trapecio pujamen 14 m, pena 10 m, altura 6 m (afirmación falsa de 68 m², real 72 m²); ollao circular radio 15 cm, circunferencia 94,2 cm",
-    "aplicacion: paño paralelogramo base 13 m, altura 24 m, desplazamiento 7 m, lado inclinado 25 m (Pitágoras), perímetro 76 m; segundo ollao circular (otra esquina) radio 10 cm, área 314 cm²",
+    "aplicacion: bloque de clasificación previo '¿aplica el atajo del trío?' con tres pares (altura, desplazamiento): (7, 24) → 25, (10, 24) → 26, (5, 13) → √194 ≈ 13,9 irracional; paño paralelogramo base 15 m, altura 24 m, desplazamiento 10 m, lado inclinado 26 m (Pitágoras, ×2 de 5-12-13), perímetro 82 m; segundo ollao circular (otra esquina) radio 10 cm, área 314 cm²",
     "itemsPAES: paño triangular 11 m × 6 m (área 33 m²); paño paralelogramo base 19 m, altura 20 m, desplazamiento 21 m, lado 29 m, perímetro 96 m; ollao circular radio 8 cm (área 200,96 cm², afirmación errónea de 50,24 cm²)"
   ],
   "pasos": [
@@ -64,7 +69,8 @@
       "tipo": "curiosidad",
       "titulo": "Cubrir o bordear",
       "_notasInternas": [
-        "Vela 4x3, área 6 (4*3/2=6, verificado). Perímetro deliberadamente NO calculado (lado inclinado desconocido): siembra la idea de que área y perímetro piden datos distintos."
+        "Vela 4x3, área 6 (4*3/2=6, verificado). Perímetro deliberadamente NO calculado (lado inclinado desconocido): siembra la idea de que área y perímetro piden datos distintos.",
+        "Fase 1 (2026-08-29): esta vela 4x3 NO se toca al extender a L2 el enfoque 'tríos base = atajo' (commit 84a3bbb en L1). Aunque 4 y 3 sean las patas del 3-4-5, aquí son base y altura de un triángulo que no se declara rectángulo, así que el tercer lado es genuinamente indeterminado y el perímetro queda sin calcular a propósito: no invoca ninguna terna. El eco visual del 3-4-5 es débil y neutralizarlo obligaría a recalcular el área 6 y propagarla por _notasInternas y contextosNumericos sin beneficio proporcional. Registrado acá para que no se lea como omisión en una auditoría posterior; queda como cambio aparte si se decide neutralizar el eco (p. ej. base 7 / altura 4 → área 14)."
       ],
       "bloques": [
         {
@@ -522,11 +528,37 @@
       "tipo": "aplicacion",
       "titulo": "Reforzando la vela: dos bordes más",
       "_notasInternas": [
-        "Candidato 3 (paralelogramo, perimetro): base 13, altura 24, desplazamiento 7, lado oblicuo 25 (verificado sqrt(24^2+7^2)=25). Reutiliza error-1 (31, suma lineal 24+7) y error-2 (625, 24^2+7^2 sin raiz) de L1 para el sub-calculo del lado. Perimetro correcto 2*(13+25)=76. Distractor error-8: 2*(13+24)=74 (usa altura como si fuera el lado). Distractor ad-hoc: 13+25=38 (olvida multiplicar por 2). Cifras cambiadas en la auditoría mecánica del 2026-08-25: la terna 8-6-10 original hacía que el lado oblicuo (10) colisionara como respuesta correcta contra el distractor 'd' del paso 5 (descubrimiento), que también vale 10 (repite la base del triángulo 10×7 de ese paso). Nueva terna sin colisión con ningún otro valor del archivo (correctas ni distractores).",
+        "Candidato 3 (paralelogramo, perimetro): base 15, altura 24, desplazamiento 10, lado oblicuo 26 (verificado sqrt(24^2+10^2)=sqrt(676)=26, ×2 de 5-12-13). Reutiliza error-1 (34, suma lineal 24+10) y error-2 (676, 24^2+10^2 sin raiz) de L1 para el sub-calculo del lado. Perimetro correcto 2*(15+26)=82. Distractor error-8: 2*(15+24)=78 (usa altura como si fuera el lado). Distractor ad-hoc: 15+26=41 (olvida multiplicar por 2). Historia de la terna: (a) auditoría mecánica del 2026-08-25 pasó de 8-6-10 a 7-24-25 porque el lado oblicuo 10 colisionaba con el distractor 'd' del paso 5 (descubrimiento). (b) Fase 1 (2026-08-29): de 7-24-25 (trío base) a base 15 / altura 24 / desplazamiento 10, lado 26 (escalada ×2 de 5-12-13) — para que el único ejemplo de Pitágoras que el estudiante practica en el cuerpo de la lección deje de ser un trío base, en línea con el rediseño de L1 (commit 84a3bbb). Terna nueva verificada con node -e y sin colisión distractor↔respuesta correcta del archivo (regla 3b): correctas tras el cambio {6,18,20,26,27,29,30,33,35,56,82,94.2,96,200.96,314}, distractores nuevos {34,676,78,41}. El 78 coincide con el distractor error-8 de l2-item-2 opción B, pero es distractor↔distractor y del mismo mecanismo — ninguna regla lo prohíbe.",
+        "Fase 1 (2026-08-29): bloque de selección de clasificación agregado como PRIMER bloque del paso (antes del texto 'Para terminar de coser la vela'), a imagen del bloque nuevo del paso 6 de L1. Clasifica tres pares (altura, desplazamiento): (7, 24) → sqrt(625)=25, trío base 7-24-25, aplica el atajo; (10, 24) → sqrt(676)=26, ×2 de 5-12-13, aplica; (5, 13) → sqrt(194)≈13,9, IRRACIONAL, NO aplica (el 5-12-13 usa catetos 5 y 12, no 5 y 13). Opción correcta: los dos primeros sí, el tercero no. Opción incorrecta 1 (errorCatalogado error-12): 'en los tres, 5 y 13 es prácticamente el 5-12-13'. Opción incorrecta 2 (sin errorCatalogado): 'en ninguno, reconocer un trío es coincidencia'. Se eligió el par (5, 13) y no (8, 16) porque (8, 16)/8-15-17 calcaría el ejemplo literal del texto de error-12 (redundante, y Ronda 2 de originalidad podría marcarlo); (5, 13) además queda en la misma familia 5-12-13 que la terna de la numérica de este paso. Este bloque es el único uso de error-12 en L2, lo que satisface el guard catalogo-sin-usar de npm run auditar.",
         "Candidato 4, segunda mitad (circulo, area): radio DISTINTO al del paso 'practica' (10 cm en vez de 15 cm) — cambiado en la misma auditoría del 2026-08-25. Con el mismo radio 15 cm de 'practica', el área correcta de este paso (3.14*225=706.5) colisionaba como respuesta correcta contra el distractor error-9 del paso 'practica' (que vale 706.5, la trampa 'usó área en vez de perímetro'), y a la inversa la circunferencia correcta de 'practica' (94.2) colisionaba contra el distractor error-9 de este paso (que con radio 15 también daba 94.2). Es un choque estructural: con el MISMO radio en ambos pasos, la 'fórmula equivocada' de un paso siempre da exactamente la respuesta correcta del otro. Se rompe cambiando el radio de este paso a 10 cm — ya no es 'el mismo ollao', es un segundo ollao más chico en otra esquina de la vela. Area correcta 3.14*100=314. Distractor error-9: 2*3.14*10=62.8 (formula de perimetro en vez de area). Distractor ad-hoc: 3.14*20^2=1256 (usa diametro en vez de radio).",
         "Bloque abierta final sintetiza AMBOS sub-temas (paralelogramo + circulo), mismo criterio que 'aplicacion' de L1 (numerica primero, abierta despues) pero con dos numericas en vez de una por la naturaleza de 'cierre que combina ambos modos' pedida para el candidato 4."
       ],
       "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para encontrar la longitud real de un lado inclinado se usa el teorema de Pitágoras sobre la altura vertical y el desplazamiento horizontal del corte, igual que con una hipotenusa. Mira estos tres cortes posibles, dados como (altura, desplazamiento): **(7, 24)**, **(10, 24)** y **(5, 13)**. Antes de calcular nada: ¿en cuáles puedes reconocer un trío pitagórico conocido —o un múltiplo de uno— y saltarte el cálculo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En (7, 24) y en (10, 24): la primera es el trío 7-24-25 y la segunda es 5-12-13 multiplicado por 2, así que el lado inclinado sale de reconocer el trío. En (5, 13) no: ahí hay que calcular con el teorema.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El atajo sirve solo cuando los dos catetos calzan exactamente con un trío conocido o con un múltiplo entero. El 5-12-13 usa catetos 5 y 12, no 5 y 13: con 5 y 13 la relación da √(5² + 13²) = √194 ≈ 13,9, que no es un número entero."
+            },
+            {
+              "id": "b",
+              "texto": "En los tres. (7, 24) es 7-24-25, (10, 24) es 5-12-13 al doble, y (5, 13) es prácticamente el 5-12-13.",
+              "esCorrecta": false,
+              "feedback": "(5, 13) NO es el 5-12-13: forzar un trío porque un cateto se parece te da un lado inclinado equivocado. El 5-12-13 exige catetos 5 y 12 exactos; con 5 y 13, la relación a² + b² = c² da √194 ≈ 13,9, no 13. La hipotenusa tampoco tiene por qué ser un número entero.",
+              "errorCatalogado": "error-12"
+            },
+            {
+              "id": "c",
+              "texto": "En ninguno. Reconocer un trío es una coincidencia; para estar seguro siempre hay que aplicar el teorema completo, aunque los números calcen.",
+              "esCorrecta": false,
+              "feedback": "Te pasaste de cauteloso. El 7-24-25 y su familia de múltiplos son relaciones fijas, no coincidencias: si los catetos son 7 y 24 (o 10 y 24, que es 5·2 y 12·2), el lado inclinado está garantizado sin recalcular. El atajo sí sirve cuando los números calzan exacto."
+            }
+          ]
+        },
         {
           "tipo": "texto",
           "contenido": "Para terminar de coser la vela hacen falta dos refuerzos más. Primero, el borde de un paño cortado con forma de paralelogramo (un lado inclinado, no recto). Segundo, un ollao circular más pequeño, cosido en otra esquina de la misma vela: hay que calcular cuánta tela extra lleva el parche que lo refuerza por dentro."
@@ -534,60 +566,60 @@
         {
           "tipo": "visualizacion",
           "variante": "diagrama",
-          "descripcion": "Paralelogramo que representa un paño de vela cortado al sesgo: la base horizontal abajo etiquetada '13 m', una línea punteada vertical marcando la altura etiquetada '24 m', y el lado inclinado etiquetado con un signo de interrogación: es la medida que hay que encontrar primero.",
+          "descripcion": "Paralelogramo que representa un paño de vela cortado al sesgo: la base horizontal abajo etiquetada '15 m', una línea punteada vertical marcando la altura etiquetada '24 m', y el lado inclinado etiquetado con un signo de interrogación: es la medida que hay que encontrar primero.",
           "datos": {
             "figura": "paralelogramo",
-            "base": 13,
+            "base": 15,
             "altura": 24,
-            "desplazamiento": 7,
-            "etiquetaBase": "13 m",
+            "desplazamiento": 10,
+            "etiquetaBase": "15 m",
             "etiquetaAltura": "24 m",
             "etiquetaLado": "?"
           }
         },
         {
           "tipo": "numerica",
-          "enunciado": "Un paño de vela con forma de paralelogramo mide 13 m de base, con una altura vertical de 24 m y un desplazamiento horizontal (la inclinación del corte) de 7 m.\n\nPrimero encuentra la longitud real del lado inclinado, usando el teorema de Pitágoras sobre la altura y el desplazamiento. Luego, con esa longitud, calcula el perímetro completo del paño.",
+          "enunciado": "Un paño de vela con forma de paralelogramo mide 15 m de base, con una altura vertical de 24 m y un desplazamiento horizontal (la inclinación del corte) de 10 m.\n\nPrimero encuentra la longitud real del lado inclinado, usando el teorema de Pitágoras sobre la altura y el desplazamiento. Luego, con esa longitud, calcula el perímetro completo del paño.",
           "campos": [
             {
               "id": "ladoOblicuoM",
               "etiqueta": "Lado inclinado",
-              "respuestaCorrecta": 25,
+              "respuestaCorrecta": 26,
               "unidad": "m"
             },
             {
               "id": "perimetroM",
               "etiqueta": "Perímetro del paño",
-              "respuestaCorrecta": 76,
+              "respuestaCorrecta": 82,
               "unidad": "m"
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "ladoOblicuoM",
-              "valorObtenido": 31,
-              "mensaje": "31 es la suma directa de la altura y el desplazamiento (24 + 7), sin elevarlos al cuadrado. El lado inclinado se encuentra igual que una hipotenusa: cuadrado, cuadrado, suma, raíz cuadrada.",
+              "valorObtenido": 34,
+              "mensaje": "34 es la suma directa de la altura y el desplazamiento (24 + 10), sin elevarlos al cuadrado. El lado inclinado se encuentra igual que una hipotenusa: cuadrado, cuadrado, suma, raíz cuadrada.",
               "errorCatalogado": "error-1"
             },
             {
               "campoId": "ladoOblicuoM",
-              "valorObtenido": 625,
-              "mensaje": "625 es 24² + 7² (576 + 49), un paso intermedio correcto. Pero ese número es el CUADRADO del lado inclinado, no el lado mismo: falta sacarle la raíz cuadrada.",
+              "valorObtenido": 676,
+              "mensaje": "676 es 24² + 10² (576 + 100), un paso intermedio correcto. Pero ese número es el CUADRADO del lado inclinado, no el lado mismo: falta sacarle la raíz cuadrada.",
               "errorCatalogado": "error-2"
             },
             {
               "campoId": "perimetroM",
-              "valorObtenido": 74,
-              "mensaje": "74 sale de usar la altura vertical (24 m) como si fuera la medida del lado inclinado: 2 × (13 + 24). Pero la altura y el lado inclinado NO miden lo mismo en un paralelogramo cortado al sesgo: el lado real, calculado con Pitágoras, mide 25 m.",
+              "valorObtenido": 78,
+              "mensaje": "78 sale de usar la altura vertical (24 m) como si fuera la medida del lado inclinado: 2 × (15 + 24). Pero la altura y el lado inclinado NO miden lo mismo en un paralelogramo cortado al sesgo: el lado real, calculado con Pitágoras, mide 26 m.",
               "errorCatalogado": "error-8"
             },
             {
               "campoId": "perimetroM",
-              "valorObtenido": 38,
-              "mensaje": "38 es solo la suma de un lado de cada tipo (13 + 25), sin multiplicar por 2. Un paralelogramo tiene DOS lados de cada medida: dos de 13 m y dos de 25 m."
+              "valorObtenido": 41,
+              "mensaje": "41 es solo la suma de un lado de cada tipo (15 + 26), sin multiplicar por 2. Un paralelogramo tiene DOS lados de cada medida: dos de 15 m y dos de 26 m."
             }
           ],
-          "feedbackPorDefecto": "Primero encuentra el lado inclinado con Pitágoras: √(24² + 7²). Luego, el perímetro es 2 × (base + lado inclinado)."
+          "feedbackPorDefecto": "Primero encuentra el lado inclinado con Pitágoras: √(24² + 10²). Luego, el perímetro es 2 × (base + lado inclinado). Si notaste que 24 y 10 son 12·2 y 5·2, es el 5-12-13 escalado por 2, y la hipotenusa escala igual: 13·2 = 26."
         },
         {
           "tipo": "texto",
@@ -633,7 +665,7 @@
           "tipo": "abierta",
           "enunciado": "Escribe, con tus propios números, las dos fórmulas completas que usaste en este paso: la del perímetro del paño de vela (incluyendo el paso de Pitágoras para encontrar el lado inclinado) y la del área del parche circular. ¿Por qué la altura del paralelogramo NO sirve como medida de su lado inclinado?",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "Lado inclinado: √(24² + 7²) = √(576 + 49) = √625 = 25 m. Perímetro: 2 × (13 + 25) = 76 m. Área del parche: 3,14 × 10² = 3,14 × 100 = 314 cm². La altura (24 m) no sirve como lado inclinado porque mide la distancia VERTICAL entre las dos bases, mientras que el lado inclinado recorre esa misma distancia vertical MÁS el desplazamiento horizontal (7 m): por eso el lado real (25 m) es más largo que la altura (24 m), y solo Pitágoras conecta ambas medidas."
+          "respuestaModelo": "Lado inclinado: √(24² + 10²) = √(576 + 100) = √676 = 26 m. Perímetro: 2 × (15 + 26) = 82 m. Área del parche: 3,14 × 10² = 3,14 × 100 = 314 cm². La altura (24 m) no sirve como lado inclinado porque mide la distancia VERTICAL entre las dos bases, mientras que el lado inclinado recorre esa misma distancia vertical MÁS el desplazamiento horizontal (10 m): por eso el lado real (26 m) es más largo que la altura (24 m), y solo Pitágoras conecta ambas medidas."
         }
       ]
     },
@@ -779,7 +811,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: perímetro y área de triángulos, paralelogramos, trapecios y círculos), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (velas de embarcación: vela mayor, vela de trinquete/cangreja, paño de vela con lado inclinado, ollao de refuerzo circular) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de esta sesión, sobre la frase compuesta y las palabras clave sueltas de cada candidato de dominio (vela mayor, vela de trinquete, vela cangreja, paño con lado inclinado / al bies, cinta de refuerzo, ollao, puño de la vela, trapecio vela, paralelogramo vela, círculo vela, cabo de refuerzo, grátil, pujamen, pena) — sin colisiones de dominio reales; el único hit fue 'bies' (1 coincidencia genérica en archivos no relacionados al tema), por lo que ese término se evitó como palabra distintiva en todo el contenido, reemplazado por 'paño con lado inclinado' o 'corte inclinado'. Auditoría matemática (Ronda 1) y de originalidad (Ronda 2) completadas el 2026-08-26. Ronda 1: recálculo con node -e de las 21 cantidades del archivo (áreas, perímetros y el lado oblicuo vía Pitágoras) y verificación de las 16 asignaciones de errorCatalogado (error-1 ×2, error-2 ×1, error-7 ×8, error-8 ×2, error-9 ×3) contra la descripción de cada error del catálogo — sin discrepancias. Se sumó además una comparación con igualdad estricta (===, como usa BloqueNumerica.tsx) de los 7 valores numéricos que involucran π, incluyendo circunferenciaOllaoCm=94,2 y areaOllao=314: 6 de 7 exactos; 62,8 (2×3,14×10) no lo es en cálculo crudo, pero no afecta el scoring porque BloqueNumerica.tsx compara contra el literal parseado, no contra el cálculo. Sin hallazgos bloqueantes; no se corrigió ningún valor ni nota interna. Ronda 2: checklist MOS §7.3 completo (enunciado vs. fuente conocida, composición de los 5 diagramas, secuencia interna de los 10 pasos, proveniencia registrada) sin hallazgos nuevos; la colisión de dominio (velas de embarcación) no se repitió por ya estar corrida y documentada arriba. Aislamiento real de la Ronda 2: la auditoría de originalidad se completó en un hilo separado, con el checklist MOS §7.3 revisado y sin hallazgos de contenido bloqueantes — el único hallazgo fue el punto 1, la frase sobre los valores de π, ya corregida más arriba en esta misma declaración. error-7, error-8 y error-9 fueron propuestos por CC y aprobados por Benjamín en el chat de la sesión original de redacción (texto sin cambios); catalogoErrores nace en este archivo, no se duplica desde L1 (ver _notasInternas del nivel superior).",
+    "declaracionOriginalidad": "Enunciados, contextos (velas de embarcación: vela mayor, vela de trinquete/cangreja, paño de vela con lado inclinado, ollao de refuerzo circular) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de esta sesión, sobre la frase compuesta y las palabras clave sueltas de cada candidato de dominio (vela mayor, vela de trinquete, vela cangreja, paño con lado inclinado / al bies, cinta de refuerzo, ollao, puño de la vela, trapecio vela, paralelogramo vela, círculo vela, cabo de refuerzo, grátil, pujamen, pena) — sin colisiones de dominio reales; el único hit fue 'bies' (1 coincidencia genérica en archivos no relacionados al tema), por lo que ese término se evitó como palabra distintiva en todo el contenido, reemplazado por 'paño con lado inclinado' o 'corte inclinado'. Auditoría matemática (Ronda 1) y de originalidad (Ronda 2) completadas el 2026-08-26. Ronda 1: recálculo con node -e de las 21 cantidades del archivo (áreas, perímetros y el lado oblicuo vía Pitágoras) y verificación de las 16 asignaciones de errorCatalogado (error-1 ×2, error-2 ×1, error-7 ×8, error-8 ×2, error-9 ×3) contra la descripción de cada error del catálogo — sin discrepancias. Se sumó además una comparación con igualdad estricta (===, como usa BloqueNumerica.tsx) de los 7 valores numéricos que involucran π, incluyendo circunferenciaOllaoCm=94,2 y areaOllao=314: 6 de 7 exactos; 62,8 (2×3,14×10) no lo es en cálculo crudo, pero no afecta el scoring porque BloqueNumerica.tsx compara contra el literal parseado, no contra el cálculo. Sin hallazgos bloqueantes; no se corrigió ningún valor ni nota interna. Ronda 2: checklist MOS §7.3 completo (enunciado vs. fuente conocida, composición de los 5 diagramas, secuencia interna de los 10 pasos, proveniencia registrada) sin hallazgos nuevos; la colisión de dominio (velas de embarcación) no se repitió por ya estar corrida y documentada arriba. Aislamiento real de la Ronda 2: la auditoría de originalidad se completó en un hilo separado, con el checklist MOS §7.3 revisado y sin hallazgos de contenido bloqueantes — el único hallazgo fue el punto 1, la frase sobre los valores de π, ya corregida más arriba en esta misma declaración. error-7, error-8 y error-9 fueron propuestos por CC y aprobados por Benjamín en el chat de la sesión original de redacción (texto sin cambios); catalogoErrores nace en este archivo, no se duplica desde L1 (ver _notasInternas del nivel superior). Fase 1 (2026-08-29): se extiende a L2 el enfoque del rediseño de L1 (commit 84a3bbb) — los cuatro tríos pitagóricos base (3-4-5, 5-12-13, 8-15-17, 7-24-25) como atajo de reconocimiento y no como norma. Pitágoras en L2 solo entra en el lado inclinado del paralelogramo (perímetro): la numérica de 'aplicación' pasó de 7-24-25 (trío base) a base 15 / altura 24 / desplazamiento 10 → lado 26, perímetro 82 (escalada ×2 de 5-12-13), y l2-item-2 mantiene 20-21-29 (primitiva no-base, ya alineada). Se agregó al inicio de la parte de Pitágoras de 'aplicación' un bloque de selección de clasificación '¿aplica el atajo del trío?' con tres pares (altura, desplazamiento): (7, 24) y (10, 24) admiten el atajo, (5, 13) no (√194 ≈ 13,9, irracional). Reparto sobre las ocurrencias reales de L2: 0 base, 1 escalada, 1 irracional (par 5-13 dentro del bloque de clasificación, no resuelto como número), 1 primitiva no-base. Nuevo errorCatalogado error-12 ('forzar un trío conocido donde los catetos no calzan'), copiado carácter a carácter desde L1 —única definición del módulo por ahora, ya existía byte-idéntico en L1— y referenciado desde la opción incorrecta 1 de ese bloque de selección. Esta propagación no es un caso de la deuda de docs/deuda-catalogo-errores-crossfile.md (que rastrea archivos que NO embeben su catálogo y por eso pierden la Capa 2): L2 sí lo embebe byte-idéntico y el guard catalogo-divergente de npm run auditar lo cubre. La propagación quedó registrada en ese doc el 2026-08-29, en 'Registro de propagaciones manuales', junto con el pendiente de llevar error-12 a L3 (figuras-problemas-con-forma.json) y a cierre-figuras-geometricas.json si alguno llega a referenciarlo. Los contextos no cambian (velas de embarcación, dominio ya confirmado por Benjamín vía consultar-fuentes.mjs): solo cambian magnitudes, así que NO se corre consultar-fuentes.mjs de nuevo. La vela 4×3 de 'curiosidad' no se toca (no invoca terna; ver nota de ese paso). Todos los valores nuevos verificados con node -e (lado 26 = √676, perímetro 82, distractores 34/676/78/41, √194 ≈ 13,9); sin colisión distractor↔respuesta correcta del archivo (regla 3b). Ronda 1 (auditoría matemática) y Ronda 2 (auditoría de originalidad) de esta fase se corren en hilos aislados abiertos con /clear.",
     "autor": "Benjamín Gutiérrez"
   }
 }
