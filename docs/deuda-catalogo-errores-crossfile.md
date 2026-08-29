@@ -58,6 +58,10 @@ Resolver en runtime a qué módulo pertenece la lección/cierre (vía `lib/modul
 - A favor: una sola fuente de verdad por módulo, sin duplicación de texto.
 - En contra: acopla `lib/sanitizar.ts` (hoy agnóstico de la posición de un archivo en el árbol de módulos) a `lib/modulos.ts`, y requiere resolver "cuál es la L1 de este módulo" de forma confiable para lecciones y para cierres — hoy `lib/modulos.ts` no expone esa función. También reabre la razón por la que la resolución se hizo local en primer lugar (`lib/sanitizar.ts:94-97`): los ids de `content/errores/` sí llevan namespace de unidad y los cierres mezclan ítems de más de una unidad; habría que confirmar que ningún cierre afectado combina ítems de dos módulos distintos antes de asumir "la L1 del módulo" como fuente única.
 
+## Registro de propagaciones manuales (patrón (a), mientras no haya fix de arquitectura)
+
+- **2026-08-29 — `figuras-geometricas`, `error-12`:** propagado desde L1 (`figuras-triangulo-no-se-rompe.json`, donde nació en el commit `84a3bbb`) a L2 (`figuras-borde-y-superficie.json`), copiado byte a byte (guard `catalogo-divergente` en verde). Único uso en L2: la opción incorrecta del bloque de selección de clasificación "¿aplica el atajo del trío?" del paso `aplicacion`. **Pendiente:** propagar `error-12` a L3 (`figuras-problemas-con-forma.json`) y a `cierre-figuras-geometricas.json` si alguno de esos archivos llega a referenciarlo.
+
 ## Qué no cubre este documento
 
 Elegir entre (a) y (b), o una tercera opción, es una decisión de arquitectura pendiente — no se toma acá. Este documento solo registra el mecanismo y el alcance verificado para que esa decisión se tome con datos exactos.
