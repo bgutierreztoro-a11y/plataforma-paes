@@ -6,6 +6,12 @@ import { PanelFeedback } from "@/components/ui/PanelFeedback";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloquePrediccion as BloquePrediccionTipo } from "@/lib/tipos";
 
+/* iOS no ofrece tecla de menos en el teclado de `inputMode="decimal"`, así que
+   el signo se cambia con un botón. Opera sobre el string crudo del input. */
+function alternarSigno(valor: string): string {
+  return valor.startsWith("-") ? valor.slice(1) : "-" + valor;
+}
+
 export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
   const [respuesta, setRespuesta] = useState("");
   const [enviado, setEnviado] = useState(false);
@@ -35,15 +41,28 @@ export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
           ))}
         </fieldset>
       ) : (
-        <input
-          type="text"
-          inputMode={bloque.tipoRespuesta === "numero" ? "decimal" : undefined}
-          disabled={enviado}
-          value={respuesta}
-          onChange={(e) => setRespuesta(e.target.value)}
-          aria-label="Tu predicción"
-          className="h-11 w-full max-w-xs rounded-tarjeta border border-border px-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-        />
+        <div className="flex items-center gap-2 w-full max-w-xs">
+          <input
+            type="text"
+            inputMode={bloque.tipoRespuesta === "numero" ? "decimal" : undefined}
+            disabled={enviado}
+            value={respuesta}
+            onChange={(e) => setRespuesta(e.target.value)}
+            aria-label="Tu predicción"
+            className="h-11 flex-1 rounded-tarjeta border border-border px-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          />
+          {bloque.tipoRespuesta === "numero" && (
+            <button
+              type="button"
+              aria-label="Cambiar signo"
+              disabled={enviado}
+              onClick={() => setRespuesta((r) => alternarSigno(r))}
+              className="h-11 w-11 shrink-0 rounded-tarjeta border border-border text-ink num focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:text-ink-tenue"
+            >
+              <span aria-hidden="true">±</span>
+            </button>
+          )}
+        </div>
       )}
       {!enviado && (
         <Boton onClick={() => setEnviado(true)} disabled={!respuesta.trim()}>

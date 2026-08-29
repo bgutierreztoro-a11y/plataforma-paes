@@ -11,6 +11,13 @@ function aNumero(valor: string): number {
   return Number(valor.trim().replace(",", "."));
 }
 
+/* iOS no ofrece tecla de menos en el teclado de `inputMode="decimal"`, así que
+   el signo se cambia con un botón. Opera sobre el string crudo del input —nunca
+   sobre el Number— para no tocar el manejo de coma decimal chilena de aNumero(). */
+function alternarSigno(valor: string): string {
+  return valor.startsWith("-") ? valor.slice(1) : "-" + valor;
+}
+
 function mensajeParaCampo(bloque: BloqueNumericaTipo, campoId: string, valor: number): string {
   const campo = bloque.campos.find((c) => c.id === campoId)!;
   if (valor === campo.respuestaCorrecta) return "¡Correcto!";
@@ -46,21 +53,34 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
                 {campo.etiqueta}
                 {campo.unidad ? ` (${campo.unidad})` : ""}
               </label>
-              <input
-                id={campo.id}
-                type="text"
-                inputMode="decimal"
-                disabled={revelado}
-                value={valores[campo.id] ?? ""}
-                onChange={(e) => setValores((v) => ({ ...v, [campo.id]: e.target.value }))}
-                /* Al acertar, el verde se ancla al campo que el estudiante
-                   llenó y no solo al recuadro de feedback de abajo: con varios
-                   campos, el panel por sí solo no dice cuál de ellos quedó
-                   bien. Solo el acierto. */
-                className={`h-11 w-40 rounded-tarjeta border px-3 num focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
-                  esCorrecto ? "border-success bg-success-suave" : "border-border"
-                }`}
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  id={campo.id}
+                  type="text"
+                  inputMode="decimal"
+                  disabled={revelado}
+                  value={valores[campo.id] ?? ""}
+                  onChange={(e) => setValores((v) => ({ ...v, [campo.id]: e.target.value }))}
+                  /* Al acertar, el verde se ancla al campo que el estudiante
+                     llenó y no solo al recuadro de feedback de abajo: con varios
+                     campos, el panel por sí solo no dice cuál de ellos quedó
+                     bien. Solo el acierto. */
+                  className={`h-11 w-40 rounded-tarjeta border px-3 num focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
+                    esCorrecto ? "border-success bg-success-suave" : "border-border"
+                  }`}
+                />
+                <button
+                  type="button"
+                  aria-label="Cambiar signo"
+                  disabled={revelado}
+                  onClick={() =>
+                    setValores((v) => ({ ...v, [campo.id]: alternarSigno(v[campo.id] ?? "") }))
+                  }
+                  className="h-11 w-11 shrink-0 rounded-tarjeta border border-border text-ink num focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:text-ink-tenue"
+                >
+                  <span aria-hidden="true">±</span>
+                </button>
+              </div>
               {revelado &&
                 anclar(
                   <PanelFeedback
