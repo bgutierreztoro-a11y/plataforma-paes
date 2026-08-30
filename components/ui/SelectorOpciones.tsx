@@ -61,7 +61,10 @@ export function SelectorOpciones({
             name={nombre}
             checked={seleccionado === op.id}
             onChange={() => onSeleccionar(op.id)}
-            className="h-5 w-5 accent-accent"
+            /* `accent-color` del radio nativo, al color del eje: la fila que lo
+               rodea ya lo toma desde `ALTERNATIVA_REPOSO`, y dejarlo en índigo
+               ponía dos colores distintos dentro del mismo control. */
+            className="h-5 w-5 accent-[var(--linea)]"
           />
           <span className="text-sm text-ink">{op.texto}</span>
         </label>

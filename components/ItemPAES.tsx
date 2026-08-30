@@ -202,7 +202,11 @@ export function ItemPAES({
               onChange={() => setSeleccion(alt.clave)}
               className="peer sr-only"
             />
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
+            {/* Mismo chip que BloquePregunta.tsx, y por los mismos números: el
+                fondo va en `--linea-fondo` (la 03 no pasa AA con el color de
+                línea crudo) y la letra en `--linea-contraste` (la 02 amarilla
+                la lleva en tinta). Ver components/ui/linea/colores.ts. */}
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]">
               {alt.clave}
             </span>
             <span>{alt.texto}</span>

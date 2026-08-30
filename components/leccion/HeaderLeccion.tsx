@@ -47,7 +47,7 @@ export function HeaderLeccion({ pasoActual, total, tipo }: HeaderLeccionProps) {
         <Link
           href="/camino"
           aria-label="Salir al camino"
-          className="-ml-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="-ml-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
         >
           <IconoSalir />
         </Link>
@@ -72,8 +72,12 @@ export function HeaderLeccion({ pasoActual, total, tipo }: HeaderLeccionProps) {
         aria-label={`Paso ${pasoActual + 1} de ${total}`}
         className="absolute inset-x-0 bottom-0 h-[3px] bg-border"
       >
+        {/* El relleno toma `--linea`, que baja heredada desde la raíz de
+            RunnerLeccion: esta franja de 3px es el indicador de eje más visible
+            de la pantalla, y en índigo delataba que el runner no había migrado.
+            Fuera de un eje cae al default de `:root` (tinta). */}
         <div
-          className="h-full bg-accent motion-safe:transition-[width] motion-safe:duration-300 motion-reduce:transition-none"
+          className="h-full bg-[var(--linea)] motion-safe:transition-[width] motion-safe:duration-300 motion-reduce:transition-none"
           style={{ width: `${completado}%` }}
         />
       </div>
