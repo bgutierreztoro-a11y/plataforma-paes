@@ -111,7 +111,7 @@ Igual que L2: embebe su propio subconjunto de `catalogoErrores` — copiado car�
 
 ### Fase 8 — Validación y commits
 - `npm run validar` y `npm run auditar` hasta verde. Pega salida cruda completa de la última corrida.
-- Verifica a mano con `node -e`, salida cruda: (a) `catalogoErrores` vive solo en L1; (b) todo `errorCatalogado` en L2/L3/cierre resuelve a un ID existente; (c) clave `itemsPAES` en lecciones, `items` en cierre; (d) ningún archivo tiene campo `estado`.
+- Verifica a mano con `node -e`, salida cruda: (a) cada archivo embebe exactamente el subconjunto de `catalogoErrores` que sus propios distractores referencian —ni de más (🔴 `catalogo-sin-usar`) ni de menos (🔴 `catalogo-colgando`)—, copiado carácter a carácter desde donde la entrada nació; (b) todo `errorCatalogado` resuelve contra el catálogo del **propio** archivo; (c) clave `itemsPAES` en lecciones, `items` en cierre; (d) ningún archivo tiene campo `estado`.
 - Commits de propósito único, en orden: arquitectura → L1 → L2 → L3 → cierre → registro.
 - Reporte final: archivos creados con ruta, hashes de commits nuevos, total de commits ahead de origin, decisiones propias que Benja debería revisar.
 
