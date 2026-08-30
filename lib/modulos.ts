@@ -121,6 +121,7 @@ export const IDS_CIERRE = [
   "cierre-potencias-y-raices",
   "cierre-funcion-cuadratica",
   "cierre-figuras-geometricas",
+  "cierre-cuerpos-geometricos",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -352,6 +353,7 @@ export const EJES = [
           "cuerpos-cuanto-cabe-adentro",
           "cuerpos-problemas-en-contexto",
         ],
+        cierreId: "cierre-cuerpos-geometricos",
       },
       {
         id: "transformaciones-isometricas",
