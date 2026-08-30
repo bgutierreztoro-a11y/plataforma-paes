@@ -95,15 +95,22 @@ export function BloquePregunta({
                al recuadro de feedback de abajo: es el objeto que el estudiante
                estaba mirando al comprobar. Solo el acierto — el caso incorrecto
                se resuelve en el panel, donde la explicación puede llegar antes
-               que el veredicto. */
-            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+               que el veredicto.
+
+               **Deuda conocida:** estas clases son casi las de
+               `components/ui/alternativa.ts` (`ALTERNATIVA_BASE` +
+               `ALTERNATIVA_REPOSO` + `ALTERNATIVA_INTERACTIVA`), escritas otra
+               vez acá. Los tokens de línea se migraron en los dos lados a la
+               vez para que no se separen; unificarlos es un cambio de
+               estructura y va en su propia tanda. */
+            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${
               revelado && seleccion === alt.clave && alt.esCorrecta
                 ? "border-success bg-success-suave"
-                : "border-border has-[:checked]:border-accent has-[:checked]:bg-accent-suave"
+                : "border-border has-[:checked]:border-[var(--linea)] has-[:checked]:bg-[var(--linea-tinte)]"
             } ${
               revelado || !montado
                 ? "cursor-not-allowed"
-                : "cursor-pointer hover:border-border-fuerte hover:bg-accent-suave/40"
+                : "cursor-pointer hover:border-border-fuerte hover:bg-sunken"
             }`}
           >
             <input
@@ -114,7 +121,13 @@ export function BloquePregunta({
               onChange={() => setSeleccion(alt.clave)}
               className="peer sr-only"
             />
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white">
+            {/* El chip relleno lleva la letra encima, así que el fondo es
+                `--linea-fondo` y no `--linea` —en la 03 el color de línea da
+                4,48:1 con texto claro— y la letra es `--linea-contraste`, que
+                en la 02 amarilla es tinta y no blanco. El borde sí va en
+                `--linea`, que es donde el color es forma. Ver
+                components/ui/linea/colores.ts. */}
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]">
               {alt.clave}
             </span>
             <span>{alt.texto}</span>

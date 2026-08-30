@@ -127,17 +127,24 @@ export function FeedbackEnCapas({
                 key={opcion}
                 type="button"
                 onClick={() => responderAutoexplicacion(opcion)}
-                className="flex w-full cursor-pointer items-start gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 text-left text-sm leading-relaxed text-ink hover:border-border-fuerte hover:bg-accent-suave/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="flex w-full cursor-pointer items-start gap-3 rounded-tarjeta border border-border bg-surface px-4 py-3 text-left text-sm leading-relaxed text-ink hover:border-border-fuerte hover:bg-sunken focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
               >
                 {opcion}
               </button>
             ))}
           </div>
-          {/* Saltable con un toque, para que no se vuelva un peaje. */}
+          {/* Saltable con un toque, para que no se vuelva un peaje.
+
+              `--linea-nav` y no `--linea`: acá el color de la línea es texto
+              sobre superficie clara, que es justo el rol donde la 02 (#FFB600)
+              da 1,76:1 y cae a tinta. El hover oscurece a `text-primary` en vez
+              de ir a un tono más fuerte del mismo color —esa escala no existe
+              en la paleta de línea, y en la 02 `--linea-nav` ya *es*
+              `--text-primary`, así que un hover al mismo valor no diría nada. */}
           <button
             type="button"
             onClick={() => responderAutoexplicacion(null)}
-            className="inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="inline-flex text-sm font-medium text-[var(--linea-nav)] underline underline-offset-4 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
           >
             Prefiero ver la explicación
           </button>

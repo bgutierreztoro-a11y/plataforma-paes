@@ -7,6 +7,7 @@ import { registrarEvento } from "@/lib/eventos";
 import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
+import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 import { Boton } from "@/components/ui/Boton";
 import { CascaronAnclado } from "@/components/ui/ZonaAnclada";
 import { esPasoSimple } from "@/lib/feedbackDelPaso";
@@ -45,6 +46,20 @@ export function RunnerLeccion({
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
   const indiceEnTema = tema.lecciones.findIndex((l) => l.id === leccion.id);
+
+  /* La línea del eje al que pertenece esta lección. Mismo puente que /camino y
+     /tema/[id] (`DetalleTema.tsx`), que mapea por id de eje: entrar a una
+     lección no cambia de color respecto del tramo del que se entró. El id ya
+     viaja dentro de `tema`, así que no hace falta ninguna prop nueva.
+
+     Un eje fuera del mapa devuelve `undefined` y no se pone `style`: el
+     fallback es el default de `:root` en app/globals.css:130-135 —`--linea:
+     var(--text-primary)` y sus cinco derivados en tinta neutra—, que es
+     literalmente la segunda mitad de la regla ("fuera de un eje se usa
+     text-primary", ver `components/ui/linea/colores.ts`). Escribir los seis
+     tokens a mano acá duplicaría esa tabla en un segundo lugar. */
+  const linea = lineaDeEje(tema.ejeId);
+  const estiloLinea = linea ? estiloDeLinea(linea) : undefined;
 
   /* Los dos `ref` de abajo son el mismo guardia que CelebracionTema.tsx y
      ItemsPAESFinal.tsx ya usan: React vuelve a invocar los efectos en modo
@@ -131,7 +146,7 @@ export function RunnerLeccion({
 
   if (fase === "anuncio") {
     return (
-      <div className="flex min-h-full flex-col">
+      <div className="flex min-h-full flex-col" style={estiloLinea}>
         <AnuncioPrevioItems
           variante="leccion"
           cantidad={leccion.itemsPAES.length}
@@ -143,29 +158,36 @@ export function RunnerLeccion({
 
   if (fase === "itemsPAES") {
     return (
-      /* Sin el `<div>` envolvente de antes y con el banner adentro: el cascarón
-         mide 100dvh, así que cualquier cosa apilada por fuera lo empuja y la
-         zona anclada deja de tocar el fondo. */
-      <EjecutorSetItems
-        anclarAcciones
-        items={leccion.itemsPAES}
-        mostrarFeedback={true}
-        contexto="leccion"
-        contextoId={leccion.id}
-        renderFinal={(respuestas) => (
-          <ItemsPAESFinal
-            respuestas={respuestas}
-            leccionId={leccion.id}
-            temaNombre={tema.nombre}
-            ordinalLeccion={indiceEnTema + 1}
-            totalLeccionesTema={tema.lecciones.length}
-            onRepasar={repasar}
-            onRepetirCierre={repetirCierre}
-            onContinuar={terminar}
-            siguienteLeccionId={siguienteLeccionId}
-          />
-        )}
-      />
+      /* `contents` y no un `<div>` normal: el cascarón que arma
+         `EjecutorSetItems` mide 100dvh, así que cualquier cosa apilada por
+         fuera lo empuja y la zona anclada deja de tocar el fondo —por eso el
+         banner de antes se movió adentro—. Un elemento con `display: contents`
+         no genera caja y no puede empujar nada, pero las custom properties
+         igual heredan: la herencia es por árbol DOM y no por contexto de
+         formato, el mismo argumento que en DetalleTema.tsx deja que la tarjeta
+         `position: fixed` tome el color. */
+      <div className="contents" style={estiloLinea}>
+        <EjecutorSetItems
+          anclarAcciones
+          items={leccion.itemsPAES}
+          mostrarFeedback={true}
+          contexto="leccion"
+          contextoId={leccion.id}
+          renderFinal={(respuestas) => (
+            <ItemsPAESFinal
+              respuestas={respuestas}
+              leccionId={leccion.id}
+              temaNombre={tema.nombre}
+              ordinalLeccion={indiceEnTema + 1}
+              totalLeccionesTema={tema.lecciones.length}
+              onRepasar={repasar}
+              onRepetirCierre={repetirCierre}
+              onContinuar={terminar}
+              siguienteLeccionId={siguienteLeccionId}
+            />
+          )}
+        />
+      </div>
     );
   }
 
@@ -230,60 +252,70 @@ export function RunnerLeccion({
   );
 
   return (
-    <CascaronAnclado
-      acciones={accionesDelPaso}
-      /* Solo los pasos con un único panel de veredicto anclan feedback: con dos
-         ejercicios en pantalla el panel anclado no podría decir a cuál de los
-         dos corresponde. 87 de los 100 pasos del corpus califican; los 13
-         restantes son los `practica` y `pensar`, que dejan su feedback inline
-         junto a cada pregunta. Ver `lib/feedbackDelPaso.ts`. */
-      anclarFeedback={esPasoSimple(paso.bloques)}
-      modoFoco
-    >
-      {/* Fuera del contenedor con padding: el header y su borde inferior llegan
-          a los dos bordes del viewport. Modo foco — acá adentro no hay barra de
-          navegación persistente (Navegacion.tsx no se monta en /leccion/[id]),
-          así que este es el único chrome de la pantalla. */}
-      <HeaderLeccion
-        pasoActual={estado.pasoActual}
-        total={totalPasos}
-        tipo={paso.tipo}
-      />
-      {/* 600px de medida de lectura y 20px de margen lateral. El caso con visual
-          conserva el ancho grande: ahí el tope de línea lo pone la columna
-          izquierda del grid, no el contenedor, y capar acá mataría las dos
-          columnas de escritorio.
-
-          El título de la lección ya no se pinta: lo dice `generateMetadata` en
-          app/leccion/[id]/page.tsx, y en pantalla se repetía en cada uno de los
-          diez pasos. El único h1 es el título del paso, que vive en
-          PasoLeccion.tsx y sí cambia. */}
-      <div
-        className={`mx-auto w-full flex-1 px-5 py-8 sm:px-6 ${
-          pasoConVisual ? "max-w-[37.5rem] lg:max-w-5xl" : "max-w-[37.5rem]"
-        }`}
+    /* Mismo `contents` que la fase de ítems, y por el mismo motivo: el cascarón
+       mide 100dvh y cancela el `pb-14` del body con un margen negativo, así que
+       una caja envolvente de verdad se metería en ese cálculo. `display:
+       contents` no genera caja y la variable igual baja por el árbol DOM. */
+    <div className="contents" style={estiloLinea}>
+      <CascaronAnclado
+        acciones={accionesDelPaso}
+        /* Solo los pasos con un único panel de veredicto anclan feedback: con dos
+           ejercicios en pantalla el panel anclado no podría decir a cuál de los
+           dos corresponde. 87 de los 100 pasos del corpus califican; los 13
+           restantes son los `practica` y `pensar`, que dejan su feedback inline
+           junto a cada pregunta. Ver `lib/feedbackDelPaso.ts`. */
+        anclarFeedback={esPasoSimple(paso.bloques)}
+        modoFoco
       >
-        <PasoLeccion
-          key={estado.pasoActual}
-          paso={leccion.pasos[estado.pasoActual]}
-          leccionId={leccion.id}
-          numeroPaso={estado.pasoActual + 1}
-          onExploracionCompleta={() => {
-            setExploracionCumplida(true);
-            setMostrarAvisoExploracion(false);
-          }}
+        {/* Fuera del contenedor con padding: el header y su borde inferior llegan
+            a los dos bordes del viewport. Modo foco — acá adentro no hay barra de
+            navegación persistente (Navegacion.tsx no se monta en /leccion/[id]),
+            así que este es el único chrome de la pantalla. */}
+        <HeaderLeccion
+          pasoActual={estado.pasoActual}
+          total={totalPasos}
+          tipo={paso.tipo}
         />
-        {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
-            en el guion: el botón no se deshabilita sin explicación. */}
-        {mostrarAvisoExploracion && avanceBloqueado && (
-          <p
-            role="status"
-            className="mt-4 rounded-tarjeta bg-accent-suave px-4 py-3 text-sm text-ink"
-          >
-            {bloqueConGate.feedbackExploracionInsuficiente}
-          </p>
-        )}
-      </div>
-    </CascaronAnclado>
+        {/* 600px de medida de lectura y 20px de margen lateral. El caso con visual
+            conserva el ancho grande: ahí el tope de línea lo pone la columna
+            izquierda del grid, no el contenedor, y capar acá mataría las dos
+            columnas de escritorio.
+
+            El título de la lección ya no se pinta: lo dice `generateMetadata` en
+            app/leccion/[id]/page.tsx, y en pantalla se repetía en cada uno de los
+            diez pasos. El único h1 es el título del paso, que vive en
+            PasoLeccion.tsx y sí cambia. */}
+        <div
+          className={`mx-auto w-full flex-1 px-5 py-8 sm:px-6 ${
+            pasoConVisual ? "max-w-[37.5rem] lg:max-w-5xl" : "max-w-[37.5rem]"
+          }`}
+        >
+          <PasoLeccion
+            key={estado.pasoActual}
+            paso={leccion.pasos[estado.pasoActual]}
+            leccionId={leccion.id}
+            numeroPaso={estado.pasoActual + 1}
+            onExploracionCompleta={() => {
+              setExploracionCumplida(true);
+              setMostrarAvisoExploracion(false);
+            }}
+          />
+          {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
+              en el guion: el botón no se deshabilita sin explicación.
+
+              `bg-sunken` y no el tinte de la línea: es un aviso, no identidad de
+              eje, y fuera de un eje `--linea-tinte` cae a la superficie de
+              tarjeta —blanco sobre blanco— y el recuadro desaparecería. */}
+          {mostrarAvisoExploracion && avanceBloqueado && (
+            <p
+              role="status"
+              className="mt-4 rounded-tarjeta bg-sunken px-4 py-3 text-sm text-ink"
+            >
+              {bloqueConGate.feedbackExploracionInsuficiente}
+            </p>
+          )}
+        </div>
+      </CascaronAnclado>
+    </div>
   );
 }

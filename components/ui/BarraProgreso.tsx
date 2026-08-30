@@ -40,15 +40,22 @@ export function BarraProgreso({
         {Array.from({ length: total }, (_, i) => (
           <div
             key={i}
-            /* El segmento actual va más alto y en el tono fuerte: la barra pasa
-               de decir "cuánto llevas" a decir además "dónde estás parado", que
-               es la pregunta que el estudiante se hace mirándola. Sube 2px, no
-               cambia de caja: el contenedor mantiene su alto y nada se corre. */
+            /* El segmento actual va más alto: la barra pasa de decir "cuánto
+               llevas" a decir además "dónde estás parado", que es la pregunta
+               que el estudiante se hace mirándola. Sube 2px, no cambia de caja:
+               el contenedor mantiene su alto y nada se corre.
+
+               **La altura es toda la señal.** Antes el actual además iba en un
+               tono más fuerte que los ya hechos (`accent-fuerte` sobre
+               `accent`); con el color del eje ese par no existe —la línea es un
+               color, no una escala— y los dos comparten `--linea`. Se aceptó la
+               pérdida en vez de inventar un `color-mix()` sobre la variable, que
+               no tiene precedente en el sistema. */
             className={`flex-1 rounded-full motion-safe:transition-[background-color,height] motion-safe:duration-300 motion-reduce:transition-none ${
               i === pasoActual
-                ? "h-2 bg-accent-fuerte"
+                ? "h-2 bg-[var(--linea)]"
                 : i < pasoActual
-                  ? "h-1.5 bg-accent"
+                  ? "h-1.5 bg-[var(--linea)]"
                   : "h-1.5 bg-border"
             }`}
           />
