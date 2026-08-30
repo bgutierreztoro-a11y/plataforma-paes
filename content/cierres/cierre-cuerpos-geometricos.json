@@ -1,0 +1,377 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-cuerpos-geometricos",
+  "titulo": "Cierre del módulo: Cuerpos geométricos",
+  "_notasInternas": [
+    "Cierre del módulo 'Cuerpos geométricos', construido después de que las 3 lecciones (cuerpos-desarmar-la-caja, cuerpos-cuanto-cabe-adentro, cuerpos-problemas-en-contexto) pasaran npm run validar.",
+    "Cobertura por lección: L1 (cuerpos-desarmar-la-caja, superficie) = ítems 1, 2, 3. L2 (cuerpos-cuanto-cabe-adentro, volumen) = ítems 4, 5. L3 (cuerpos-problemas-en-contexto, decidir superficie vs. volumen y conversión m³↔litros) = ítems 6, 7, 8. Cobertura por habilidad: resolver = ítems 1, 4. modelar = ítems 5, 6. representar = ítems 2, 7. argumentar = ítems 3, 8 (2 de cada una de las 4). Dificultad: baja = ítems 1, 4; media = ítems 2, 5, 6, 7; alta = ítems 3, 8. Misma proporción que cierre-figuras-geometricas.json.",
+    "Contextos reutilizados de las tres lecciones del módulo: parlante cúbico (ítem 1, arista 9 cm; la lección usó arista 8; escena anclada a la del paso 'aplicacion' de L1 —'terminada la fiesta de barrio sobra tela acústica' y se forra el parlante por sus seis caras—, no a una ubicación inventada), farol de papel cilíndrico y cúbico (ítems 2 y 3, radio 6 / altura 25 y arista 12; la lección usó paralelepípedo 6×3×4, cubos de arista 5 y 7, y cilindro de radio 10 / altura 20), arenero cúbico de repuesto (ítem 4, arista 5 dm; la lección usó arista 2 dm), acuario de laboratorio cilíndrico (ítem 5, radio 4 / fondo 6 dm; la lección usó cilindros de radio 3 altura 5, radio 3 altura 10, radio 5 altura 4 y radio 4 altura 5), termo cilíndrico (ítem 7, radio 5 / altura 20 cm; la lección usó radio 4 / altura 16 y radio 5 / altura 18), cámara de frío (ítems 6 y 8, cajas de 5×3×3 m y 7×5×3 m; la lección usó 3×2×2, 5×2×2, 4×2×2 y 5×4×4). No se introdujo ningún dominio nuevo, así que no hubo que correr scripts/consultar-fuentes.mjs.",
+    "Cotejo de cifras (Ronda 2, corregido): las ternas de dimensiones y los resultados de superficie y volumen de los 8 ítems se compararon contra las CUATRO fuentes del módulo —los contextosNumericos de L1 (cuerpos-desarmar-la-caja), L2 (cuerpos-cuanto-cabe-adentro) y L3 (cuerpos-problemas-en-contexto), y los demás ítems de este mismo cierre—, no solo contra la lección de origen de cada dominio. Correcciones aplicadas en esta pasada: (a) ítem 6 pasó de caja 4×3×2 m (24 m³ / 24.000 L) —que repetía la terna y el 24 del acuario rectangular 4×3×2 dm de L2— a caja 5×3×3 m → V 45 m³ → 45.000 L; distractores 4.500 (error-12, ×100), 11.000 (error-7, suma 5+3+3 ×1.000) y 45 (ad-hoc, sin convertir); {45, 45.000, 4.500, 11.000} no aparecen en ninguna de las cuatro fuentes. (b) ítem 8 pasó de caja 6×4×3 m (superficie 108 m², volumen 72 m³) —que chocaba con el farol-caja 6×3×4 / S 108 de L1 y con su distractor ad-hoc 72— a caja 7×5×3 m → superficie 142 m² (2×(35+15+21)=2×71), volumen 105 m³ → 105.000 L, conversión errónea del estudiante 105×100 = 10.500; {142, 71, 105, 10.500, 105.000} no aparecen en ninguna de las cuatro fuentes. (c) ítem 1: escena movida a la de L1 (post-fiesta), sin tocar cifras. Cuatro magnitudes intermedias siguen circulando por uso forzoso y se dejan documentadas en vez de forzar cambios que arriesgarían nuevas colisiones: arista 5 (ítem 4, cubo en dm para volumen; L1 tiene cubo de arista 5 en cm para superficie — distinta unidad y rol), área de base 78,5 (ítem 7, cilindro en cm; L2 la usa en dm — distinta unidad) y el valor 1.570 (ítem 7, volumen en cm³; en L1 es un distractor oculto de superficie en cm², no un contextoNumerico — distinto rol). Caso aparte: el área de base 50,24 del ítem 5 NO se diferencia de L2 por unidad —ambos cilindros están en dm y la base sale en dm²—, es una coincidencia idéntica de valor (mismo radio 4, misma unidad); se mantiene porque la altura (6 dm frente a 5 dm en L2) y el resultado final en litros (301,44) son distintos, de modo que el 50,24 es la base intermedia de un problema completo diferente, no una respuesta repetida. La nota previa que atribuía a este ítem el diferenciador «cm frente a dm» era incorrecta: ese diferenciador aplica solo al ítem 7.",
+    "Coincidencia intencional de distractor (Ronda 2, repetición): el distractor D del ítem 4 (150 litros) tiene el mismo valor que la respuesta correcta de L1 (cuerpos-desarmar-la-caja) para el cubo de arista 5 —6 × 5² = 150 cm² de superficie—. No es un descuido: es la trampa a propósito. Un estudiante que memorizó «cubo de arista 5 → 150» en L1 y traslada ese número al volumen del ítem 4 comete el error-11 (confundir superficie con volumen) y cae exactamente en D, cuyo feedback ya lo explica. La coincidencia se conserva por diseño; no se toca la cifra.",
+    "El ítem 8 es el integrador: obliga a usar los tres sub-temas en una sola respuesta —superficie de una caja (L1), volumen de una caja (L2) y conversión de m³ a litros (L3)— juzgando DOS resultados del estudiante a la vez (la plancha y los litros). Mismo rol que el ítem 8 de cierre-figuras-geometricas.json, cierre-sistemas-2x2.json y cierre-funcion-cuadratica.json.",
+    "catalogoErrores: este cierre embebe los 13 ids que sus distractores referencian vía errorCatalogado (error-1 a error-13), conjunto exacto sin huérfanos ni faltantes. error-13 es el único id nuevo, creado para este cierre (área del círculo como π×radio sin elevar al cuadrado). Los otros 12 (error-1 a error-6 desde cuerpos-desarmar-la-caja.json, error-7 a error-10 desde cuerpos-cuanto-cabe-adentro.json, error-11 y error-12 desde cuerpos-problemas-en-contexto.json) se copiaron byte a byte desde las lecciones de origen, siguiendo el patrón (a) de docs/deuda-catalogo-errores-crossfile.md — mismo criterio que error-12 en cierre-figuras-geometricas.json. npm run validar no cruza errorCatalogado contra ningún catálogo para cierres; la igualdad se verificó a mano.",
+    "Cobertura de los 13 errores del módulo: error-1 (1B, 3C, 8D), error-2 (1C, 3D), error-3 (1D, 3B), error-4 (2B), error-5 (2C), error-6 (2D), error-7 (6C), error-8 (4B), error-9 (5B, 7B), error-10 (4C, 5C, 7C), error-11 (4D, 7D, 8C), error-12 (6B, 8B), error-13 (5D). Distractor ad-hoc sin errorCatalogado (número plausible sin mecanismo catalogado, con feedback artesanal igual): 6D (volumen sin convertir a litros).",
+    "Toda la aritmética de los 8 ítems y sus 24 alternativas fue recalculada desde cero a partir de los números propios de cada ítem, nunca por ingeniería inversa desde una alternativa deseada.",
+    "Estado: Ronda 1 matemática APROBADA. Ronda 2 de originalidad detectó tres hallazgos —colisión de terna/cifra del ítem 6 con el acuario 4×3×2 de L2, colisión del ítem 8 con el ejemplo nuclear 6×3×4 / S 108 de L1, y escena sin anclar del ítem 1— y quedan corregidos en esta pasada (ver nota 'Cotejo de cifras (Ronda 2, corregido)'). Falta el cierre formal de Ronda 2 en su hilo aislado abierto con /clear, distinto del de redacción, antes de registrar el cierre en lib/modulos.ts y docs/mapa-modulos-m1.md."
+  ],
+  "items": [
+    {
+      "id": "cierre-cuerpos-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Terminada la fiesta de barrio sobra tela acústica, y alguien quiere forrar con ella un parlante con forma de cubo de 9 cm de arista. ¿Cuántos centímetros cuadrados de tela se necesitan para cubrir las seis caras?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "486 cm²",
+          "esCorrecta": true,
+          "feedback": "Correcto. El cubo tiene seis caras cuadradas iguales, cada una de 9 × 9 = 81 cm², así que la superficie es 6 × 81 = 486 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "243 cm²",
+          "esCorrecta": false,
+          "feedback": "243 son solo tres caras (3 × 81), las que se ven en el dibujo. Cada una de esas tres tiene una cara opuesta idéntica que no estás contando: la superficie real es el doble, 486 cm².",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "54 cm²",
+          "esCorrecta": false,
+          "feedback": "54 es 2 × (9 + 9 + 9), como si midieras el borde de la caja sumando aristas. La superficie no suma longitudes: suma áreas de caras, y cada cara es 9 × 9, no 9 + 9.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "324 cm²",
+          "esCorrecta": false,
+          "feedback": "324 son cuatro caras (4 × 81): contaste las de los costados y olvidaste la tapa y la base. Un cubo tiene seis caras, no cuatro, así que van 6 × 81 = 486 cm².",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "Un cubo tiene seis caras cuadradas del mismo tamaño. Cada una mide 9 × 9 = 81 cm², y en total son 6 × 81 = 486 cm² de tela. Comprobación: 81 + 81 + 81 + 81 + 81 + 81 = 486. ✓"
+    },
+    {
+      "id": "cierre-cuerpos-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El farol de papel de la fiesta de barrio es un cilindro de 12 cm de diámetro y 25 cm de alto. Se forra completo: la parte curva y las dos tapas. ¿Qué expresión da los centímetros cuadrados de papel que se usan? (π = 3,14.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2 × π × 6² + 2 × π × 6 × 25",
+          "esCorrecta": true,
+          "feedback": "Correcto. Las dos tapas son 2 × π × 6² y la parte curva es la circunferencia de la base por la altura, 2 × π × 6 × 25. El diámetro es 12 cm, así que el radio es 6 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "π × 6² + 2 × π × 6 × 25",
+          "esCorrecta": false,
+          "feedback": "Esa expresión suma una sola tapa. El cilindro se cierra arriba y abajo con dos tapas iguales, así que el término de las tapas es 2 × π × 6², no π × 6².",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "2 × π × 6² + π × 6² × 25",
+          "esCorrecta": false,
+          "feedback": "El segundo término, π × 6² × 25, usa el área de la base por la altura. La parte curva se calcula con el contorno de la base por la altura: 2 × π × 6 × 25, no π × 6² × 25.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "2 × π × 12² + 2 × π × 12 × 25",
+          "esCorrecta": false,
+          "feedback": "Esa expresión mete 12 donde va el radio, pero 12 cm es el diámetro. El radio es la mitad, 6 cm, y es el que entra tanto en las tapas como en la parte curva.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "La superficie de un cilindro son las dos tapas más la parte curva. Cada tapa es un círculo de área π × radio², y la parte curva, desenrollada, es un rectángulo de base 2 × π × radio (el contorno de la tapa) y altura 25 cm. Con radio 6 cm: 2 × π × 6² + 2 × π × 6 × 25 = 226,08 + 942 = 1.168,08 cm²."
+    },
+    {
+      "id": "cierre-cuerpos-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Para un farol con forma de cubo de 12 cm de arista, un estudiante calcula el papel necesario como 4 × 12², \"porque el farol tiene cuatro lados\". ¿Está bien planteado su cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: contó las cuatro caras de los costados y dejó fuera la de arriba y la de abajo. El cubo tiene seis caras iguales, así que van 6 × 12² = 864 cm².",
+          "esCorrecta": true,
+          "feedback": "Correcto. El error es contar cuatro caras en lugar de seis. Con las seis, 6 × 144 = 864 cm². El cálculo del estudiante, 576 cm², se queda en dos tercios de la superficie real."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: el farol se apoya en el suelo y se mira por los cuatro costados, así que con 4 × 12² alcanza.",
+          "esCorrecta": false,
+          "feedback": "Ese es justo el error. Que una cara quede apoyada y otra arriba no significa que no existan: el papel también las cubre. Son seis caras, 6 × 12² = 864 cm².",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "No, y además se pasó: en el dibujo solo se ven tres caras, así que va 3 × 12².",
+          "esCorrecta": false,
+          "feedback": "3 × 12² da 432 cm², la mitad de la superficie real. Las tres caras que no se ven en el dibujo son idénticas a las tres visibles y también llevan papel: en total son seis, 6 × 144 = 864 cm².",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "Casi: solo falta sumarle el contorno de una cara, 4 × 12, para cerrar los bordes.",
+          "esCorrecta": false,
+          "feedback": "Los bordes no se cuentan aparte: 4 × 12 es una longitud en centímetros, no un área en centímetros cuadrados, y no se puede sumar a una superficie. La superficie completa son las seis caras, 6 × 12².",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Un cubo tiene seis caras cuadradas iguales, no cuatro. La superficie es 6 × 12² = 6 × 144 = 864 cm². El método del estudiante, 4 × 144 = 576 cm², deja fuera la tapa y la base, y por eso entrega exactamente dos tercios de la superficie. Comprobación: 864 × 2 ÷ 3 = 576. ✓"
+    },
+    {
+      "id": "cierre-cuerpos-4",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "El arenero cúbico de repuesto del jardín infantil tiene aristas de 5 dm. ¿Cuántos litros de arena caben adentro? (1 dm³ equivale a 1 litro.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "125 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto. El volumen de un cubo es arista × arista × arista = 5 × 5 × 5 = 125 dm³, y cada dm³ es 1 litro."
+        },
+        {
+          "clave": "B",
+          "texto": "15 litros",
+          "esCorrecta": false,
+          "feedback": "15 es 5 × 3, la arista por la cantidad de dimensiones. El volumen no multiplica por 3: multiplica la arista por sí misma tres veces, 5 × 5 × 5 = 125.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "25 litros",
+          "esCorrecta": false,
+          "feedback": "25 es 5 × 5, el área del fondo del arenero: una sola capa de arena de 1 dm de alto. El arenero tiene 5 dm de altura, así que caben 5 capas iguales, 25 × 5 = 125.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "150 litros",
+          "esCorrecta": false,
+          "feedback": "150 es 6 × 5², la superficie del cubo: cuánto material lo forra por fuera. La pregunta es cuánta arena entra adentro, que es volumen: 5 × 5 × 5 = 125.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "El volumen de un cubo es la arista al cubo: 5 × 5 × 5 = 125 dm³. Como 1 dm³ es 1 litro, caben 125 litros. Comprobación: el fondo son 5 × 5 = 25 dm², y sobre él se apilan 5 capas de 1 dm de alto, 25 × 5 = 125. ✓"
+    },
+    {
+      "id": "cierre-cuerpos-5",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "El acuario cilíndrico del laboratorio de biología mide 8 dm de diámetro y 6 dm de fondo. ¿Cuántos litros de agua le caben? (π = 3,14; 1 dm³ equivale a 1 litro.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "301,44 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto. El radio es 4 dm (la mitad del diámetro). El área de la base es π × 4² = 50,24 dm², y por el fondo de 6 dm da 50,24 × 6 = 301,44 litros."
+        },
+        {
+          "clave": "B",
+          "texto": "150,72 litros",
+          "esCorrecta": false,
+          "feedback": "150,72 usa 2 × π × 4 = 25,12, que es el contorno de la base, multiplicado por 6. El agua se apoya sobre el área del círculo, π × 4² = 50,24, no sobre su contorno.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "50,24 litros",
+          "esCorrecta": false,
+          "feedback": "50,24 es solo el área de la base: una capa de agua de 1 dm de alto. Falta multiplicar por el fondo de 6 dm, 50,24 × 6 = 301,44.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "75,36 litros",
+          "esCorrecta": false,
+          "feedback": "75,36 es π × 4 × 6, con el radio sin elevar al cuadrado. En el área de la base el radio va al cuadrado: π × 4² = π × 16, no π × 4.",
+          "errorCatalogado": "error-13"
+        }
+      ],
+      "solucion": "El diámetro es 8 dm, así que el radio es 4 dm. La base es un círculo de área π × 4² = 3,14 × 16 = 50,24 dm². El volumen es esa base por el fondo: 50,24 × 6 = 301,44 dm³, es decir 301,44 litros."
+    },
+    {
+      "id": "cierre-cuerpos-6",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "La cámara de frío de un local de comida es una caja de 5 m de largo, 3 m de ancho y 3 m de alto. ¿Cuántos litros de aire hay adentro? (1 m³ equivale a 1.000 litros.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "45.000 litros",
+          "esCorrecta": true,
+          "feedback": "Correcto. El volumen es 5 × 3 × 3 = 45 m³, y cada metro cúbico son 1.000 litros, así que 45 × 1.000 = 45.000."
+        },
+        {
+          "clave": "B",
+          "texto": "4.500 litros",
+          "esCorrecta": false,
+          "feedback": "4.500 multiplica por 100. Ese es el factor de las superficies (1 m² son 100 dm²), no el de los volúmenes: 1 m³ son 1.000 litros, así que 45 × 1.000 = 45.000.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "11.000 litros",
+          "esCorrecta": false,
+          "feedback": "11 sale de sumar 5 + 3 + 3. El aire llena la cámara en las tres direcciones a la vez, y eso se multiplica: 5 × 3 × 3 = 45 m³, y después 45 × 1.000.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "D",
+          "texto": "45 litros",
+          "esCorrecta": false,
+          "feedback": "45 es el volumen en metros cúbicos. Falta el paso de convertir a litros: cada metro cúbico son 1.000 litros, así que 45 × 1.000 = 45.000."
+        }
+      ],
+      "solucion": "Primero el volumen: 5 × 3 × 3 = 45 m³. Después la conversión: 1 m³ son 1.000 litros, porque un cubo de 1 m de lado mide 10 × 10 × 10 = 1.000 dm³ y cada dm³ es 1 litro. Entonces 45 × 1.000 = 45.000 litros."
+    },
+    {
+      "id": "cierre-cuerpos-7",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El termo del kiosco es un cilindro de 5 cm de radio y 20 cm de alto. Para saber cuántos centímetros cúbicos de café le caben, ¿qué cálculo corresponde? (π = 3,14.)",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(π × 5²) × 20",
+          "esCorrecta": true,
+          "feedback": "Correcto. El café se apoya sobre el área de la base, π × 5², y esa capa se repite a lo alto del termo, 20 cm: (π × 5²) × 20."
+        },
+        {
+          "clave": "B",
+          "texto": "(2 × π × 5) × 20",
+          "esCorrecta": false,
+          "feedback": "2 × π × 5 es el contorno de la base, una longitud. El café no se apoya sobre el contorno sino sobre el área del círculo, π × 5², y eso es lo que se multiplica por la altura.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "C",
+          "texto": "π × 5²",
+          "esCorrecta": false,
+          "feedback": "π × 5² es solo el área de la base: una capa de café de 1 cm de alto. El termo tiene 20 cm, así que esa capa se repite 20 veces, (π × 5²) × 20.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "2 × π × 5² + 2 × π × 5 × 20",
+          "esCorrecta": false,
+          "feedback": "Esa expresión es la superficie del termo: las dos tapas más la parte curva, o sea el acero que lo forma. La pregunta es cuánto café entra adentro, que es volumen.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Lo que cabe adentro es volumen: el área de la base por la altura. La base es un círculo de área π × 5² = 3,14 × 25 = 78,5 cm², y el termo tiene 20 cm de alto, así que caben 78,5 × 20 = 1.570 cm³ (algo más de un litro y medio)."
+    },
+    {
+      "id": "cierre-cuerpos-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Una cámara de frío tiene forma de caja de 7 m de largo, 5 m de ancho y 3 m de alto. Un estudiante entrega dos resultados: que para forrarla por fuera necesita 142 m² de plancha (2 × (7 × 5 + 5 × 3 + 7 × 3)) y que adentro caben 10.500 litros de aire (7 × 5 × 3 = 105, y después 105 × 100). ¿Cuál de los dos resultados está bien?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La plancha está bien: 142 m² son las seis caras. Los litros no: 105 m³ son 105.000 litros, no 10.500.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La superficie está bien calculada. En la conversión, el estudiante multiplicó por 100 en vez de por 1.000: 1 m³ son 1.000 litros, así que 105 × 1.000 = 105.000."
+        },
+        {
+          "clave": "B",
+          "texto": "Los dos están bien.",
+          "esCorrecta": false,
+          "feedback": "La plancha sí, pero los litros no. Multiplicar por 100 es el factor de las superficies (1 m² son 100 dm²). Para volúmenes, 1 m³ son 1.000 litros: 105 × 1.000 = 105.000.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "Los litros están bien; la plancha está mal, porque la plancha también sale de multiplicar las tres medidas: 7 × 5 × 3.",
+          "esCorrecta": false,
+          "feedback": "Al revés: la plancha forra el exterior y se calcula sumando el área de las seis caras, que es lo que el estudiante hizo bien (142 m²). Multiplicar las tres medidas da el volumen, no el material.",
+          "errorCatalogado": "error-11"
+        },
+        {
+          "clave": "D",
+          "texto": "Ninguno de los dos: la plancha son 71 m² y adentro caben 105.000 litros.",
+          "esCorrecta": false,
+          "feedback": "Los litros de D están bien, pero la plancha no: 71 m² es una cara de cada par (7 × 5 + 5 × 3 + 7 × 3). Cada una tiene su opuesta idéntica, así que la superficie es el doble, 142 m².",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Plancha (superficie): 2 × (7 × 5 + 5 × 3 + 7 × 3) = 2 × (35 + 15 + 21) = 2 × 71 = 142 m². Está bien. Litros (volumen y conversión): 7 × 5 × 3 = 105 m³, y 1 m³ son 1.000 litros, así que 105 × 1.000 = 105.000 litros. El estudiante multiplicó por 100, el factor que sirve para pasar m² a dm², no m³ a litros. Comprobación: 105.000 ÷ 1.000 = 105 = 7 × 5 × 3. ✓"
+    }
+  ],
+  "catalogoErrores": [
+    {
+      "id": "error-1",
+      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
+    },
+    {
+      "id": "error-2",
+      "descripcion": "Trasladar la estructura del perímetro a un cuerpo: sumar las tres dimensiones y multiplicar por dos, 2(a+b+c), como si la superficie se midiera sumando longitudes de aristas en vez de áreas de caras."
+    },
+    {
+      "id": "error-3",
+      "descripcion": "En un cuerpo con tapa y base, contar solo las caras laterales y olvidar las dos que lo cierran arriba y abajo: en el cubo, calcular 4a² (las cuatro caras laterales) en vez de 6a²."
+    },
+    {
+      "id": "error-4",
+      "descripcion": "En el cilindro, sumar el manto y una sola tapa, πr² + 2πrh, olvidando que el cuerpo tiene dos tapas iguales (una arriba y otra abajo) y no una."
+    },
+    {
+      "id": "error-5",
+      "descripcion": "En el cilindro, calcular el manto con el área del círculo en lugar de su contorno: usar πr² · h (área de la base por la altura) donde corresponde 2πr · h (circunferencia por la altura)."
+    },
+    {
+      "id": "error-6",
+      "descripcion": "Confundir el radio con el diámetro del cilindro y usar uno donde va el otro dentro de cualquiera de sus fórmulas (tapas o manto), duplicando o partiendo a la mitad la medida que entra al cálculo."
+    },
+    {
+      "id": "error-7",
+      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
+    },
+    {
+      "id": "error-8",
+      "descripcion": "En el cubo, calcular el volumen multiplicando la arista por 3 (la cantidad de dimensiones), arista × 3, en lugar de multiplicar la arista por sí misma tres veces, arista × arista × arista."
+    },
+    {
+      "id": "error-9",
+      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
+    },
+    {
+      "id": "error-10",
+      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
+    },
+    {
+      "id": "error-11",
+      "descripcion": "Aplicar correctamente una fórmula pero la que no corresponde a lo que pide el problema: entregar el área de superficie cuando se pregunta cuánto cabe o se llena (interior → volumen), o entregar el volumen cuando se pregunta cuánto material lo cubre, forra o recubre (borde → superficie)."
+    },
+    {
+      "id": "error-12",
+      "descripcion": "Al convertir un volumen de metros cúbicos a litros (o a decímetros cúbicos), multiplicar por 100 en lugar de por 1.000, arrastrando el factor de las unidades cuadradas: tratar 1 m³ como 100 L cuando 1 m³ = 1.000 L."
+    },
+    {
+      "id": "error-13",
+      "descripcion": "Calcular el área del círculo como π × radio en lugar de π × radio²: se usa la fórmula correcta pero se omite elevar el radio al cuadrado. El resultado queda un factor igual al radio por debajo del área real (para radio 4, un cuarto del área real). Distinto de error-9: ahí se reemplaza el área por el contorno 2 × π × radio (confusión perímetro/área); aquí la intención es el área y solo falta el exponente."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-cuerpos-1 (parlante cúbico tras la fiesta de barrio, resolver): cubo de arista 9 cm → superficie 486 cm²",
+    "cierre-cuerpos-2 (farol de papel cilíndrico, representar): diámetro 12 cm (radio 6 cm), altura 25 cm, π = 3,14 → superficie 1.168,08 cm² (expresión 2 × π × 6² + 2 × π × 6 × 25)",
+    "cierre-cuerpos-3 (farol de papel cúbico, argumentar): cubo de arista 12 cm → superficie 864 cm² (método erróneo del estudiante 4 × 12² = 576 cm², dos tercios del total)",
+    "cierre-cuerpos-4 (arenero cúbico de repuesto, resolver): cubo de arista 5 dm → volumen 125 dm³ = 125 litros",
+    "cierre-cuerpos-5 (acuario de laboratorio cilíndrico, modelar): diámetro 8 dm (radio 4 dm), fondo 6 dm, π = 3,14 → área de base 50,24 dm², volumen 301,44 litros",
+    "cierre-cuerpos-6 (cámara de frío, modelar): caja de 5 m × 3 m × 3 m → volumen 45 m³ = 45.000 litros (1 m³ = 1.000 L)",
+    "cierre-cuerpos-7 (termo cilíndrico, representar): radio 5 cm, altura 20 cm, π = 3,14 → área de base 78,5 cm², volumen 1.570 cm³ (expresión (π × 5²) × 20)",
+    "cierre-cuerpos-8 (cámara de frío — integrador L1+L2+L3, argumentar): caja de 7 m × 5 m × 3 m → superficie 142 m², volumen 105 m³ = 105.000 litros (conversión errónea del estudiante 105 × 100 = 10.500)"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, módulo 'Cuerpos geométricos' — alcance y formato de ítems (ver docs/mapa-modulos-m1.md y docs/temario-demre-m1-2027.md)."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, reutilizando los contextos ya presentes en las tres lecciones del módulo (parlante cúbico, farol de papel, arenero cúbico de repuesto, acuario de laboratorio, termo cilíndrico y cámara de frío). No se introdujo ningún dominio nuevo. Las ternas de dimensiones y los resultados de superficie y volumen de cada ítem se eligieron para no coincidir con los contextosNumericos de L1 (cuerpos-desarmar-la-caja), L2 (cuerpos-cuanto-cabe-adentro) ni L3 (cuerpos-problemas-en-contexto), ni con los de los demás ítems de este cierre. Subsisten, por uso forzoso, cuatro magnitudes intermedias que ya circulaban en el módulo: la arista 5 del cubo del ítem 4, las áreas de base 50,24 (ítem 5) y 78,5 (ítem 7) y el valor 1.570 (ítem 7). Tres de ellas se diferencian de su aparición previa por unidad o por rol: la arista 5 reaparece como cubo en dm para volumen (L1 la usa en cm para superficie), el área de base 78,5 del ítem 7 está en cm² (L2 la usa en dm²) y el 1.570 pasa de distractor oculto de superficie en L1 a resultado de volumen en cm³. El área de base 50,24 del ítem 5, en cambio, es una coincidencia idéntica de valor con L2 —mismo radio 4 y misma unidad dm²—: se mantiene por uso forzoso porque la altura del cilindro (6 dm frente a 5 dm en L2) y el resultado final en litros (301,44) son distintos, de modo que el 50,24 es solo la base intermedia de un problema completo diferente, no una respuesta repetida. Todo queda detallado en _notasInternas. Además, el distractor D del ítem 4 (150 litros) coincide en valor con la respuesta correcta de L1 (cuerpos-desarmar-la-caja) para el cubo de arista 5 —6 × 5² = 150 cm² de superficie—: la coincidencia es diseño intencional del distractor, no un descuido. Un estudiante que memorizó «cubo de arista 5 → 150» en L1 y confunde superficie con volumen (error-11) cae exactamente en esa alternativa. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. Ronda 1 (matemática) aprobada. Ronda 2 (originalidad) detectó en una primera pasada dos colisiones de cifras (ítems 6 y 8) y una escena sin anclar (ítem 1), corregidas en esta versión; una segunda pasada de repetición corrigió esta declaración y las _notasInternas, que afirmaban erróneamente que el 50,24 del ítem 5 se diferenciaba de L2 por unidad (ambos están en dm²) y no documentaban la coincidencia intencional del distractor D del ítem 4 con el 150 de L1. La verificación final de Ronda 2 se cierra en su hilo aislado antes de conectar el cierre en lib/modulos.ts.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
