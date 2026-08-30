@@ -68,15 +68,15 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 8 | Álgebra y funciones | Función lineal y afín | `funcion-lineal-y-afin` | **completo** |
 | 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | **completo** |
 | 10 | Geometría | Figuras geométricas | `figuras-geometricas` | **completo** |
-| 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | sin contenido |
+| 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | **completo** |
 | 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | sin contenido |
 | 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | sin contenido |
 | 14 | Probabilidad y estadística | Representación de datos a través de tablas y gráficos | `tablas-y-graficos` | sin contenido |
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-10 completos · 6 sin contenido · 30 de 48 lecciones escritas (verificado el
-2026-08-26 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
+11 completos · 5 sin contenido · 33 de 48 lecciones escritas (verificado el
+2026-08-28 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
 
 El conteo decía 31 hasta el 2026-08-26. El comando que citaba
 (`ls content/lecciones | grep -v l0-demo | wc -l`) contaba también
@@ -245,7 +245,12 @@ contradiciendo la definición en prosa de «Completo» de este mismo documento.
 |---|---|---|
 | `cuerpos-desarmar-la-caja` | Área de superficie de paralelepípedos, cubos y cilindros | sí |
 | `cuerpos-cuanto-cabe-adentro` | Volumen de paralelepípedos, cubos y cilindros | sí |
-| `cuerpos-problemas-en-contexto` | Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos | no |
+| `cuerpos-problemas-en-contexto` | Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos | sí |
+
+Módulo completo desde el 2026-08-28: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-cuerpos-geometricos.json` está conectado como `cierreId`
+en `lib/modulos.ts`. Ronda 1 (matemática) y Ronda 2 (originalidad) aprobadas en
+hilos aislados.
 
 `cuerpos-hoja-al-cilindro` se renombró a `cuerpos-problemas-en-contexto` el
 2026-08-26, antes de escribir su JSON. El motivo «hoja → cilindro» —una hoja
