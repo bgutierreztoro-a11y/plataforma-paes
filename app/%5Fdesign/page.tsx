@@ -7,6 +7,7 @@ import { Estacion } from "@/components/ui/linea/Estacion";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { NavInferior } from "@/components/ui/linea/NavInferior";
 import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
+import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEstaciones";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
@@ -85,6 +86,36 @@ const ESTADOS_DE_ESTACION = [
   "cerrada",
   "combinacion",
 ] as const;
+
+/* Paradas de muestra para el riel. Datos ficticios y explícitamente marcados
+   como tales: esta galería no lee el temario, muestra la pieza. */
+const PARADAS_DE_MUESTRA: ParadaDelRiel[] = [
+  { id: "a", estado: "pasada", titulo: "Primera estación", subtitulo: "Pasada · 3 lecciones" },
+  { id: "b", estado: "pasada", titulo: "Segunda estación", subtitulo: "Pasada · 3 lecciones" },
+  {
+    id: "c",
+    estado: "actual",
+    titulo: "Tercera estación",
+    subtitulo: "Lección 2 de 3 · 4 min",
+    tarjeta: (
+      <div className="mt-[9px] rounded-sm border-[1.5px] border-[var(--linea)] bg-card px-[13px] py-3">
+        <p className="text-titulo-s text-primary">Nombre de la lección en curso</p>
+        <BarraProgreso valor={3} total={7} className="mt-[9px]" etiqueta="Avance de la lección" />
+        <p className="mt-[7px] text-cuerpo-xs text-secondary">
+          Paso <span className="num">3</span> de <span className="num">7</span>
+        </p>
+      </div>
+    ),
+  },
+  { id: "d", estado: "proxima", titulo: "Cuarta estación", subtitulo: "3 lecciones" },
+  { id: "e", estado: "cerrada", titulo: "Quinta estación", subtitulo: "En preparación" },
+  {
+    id: "f",
+    estado: "combinacion",
+    titulo: "Combinación · cierre de línea",
+    subtitulo: "Sin fuente real todavía: acá va solo de catálogo",
+  },
+];
 
 function Seccion({
   titulo,
@@ -216,6 +247,35 @@ export default function PaginaDiseno() {
                     <span className="text-cuerpo-xs text-secondary">{estado}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Riel de estaciones"
+          nota="El trazo de una línea con sus paradas: riel de 6px en el color del eje, disco por parada y la tarjeta de la lección en curso colgando de la actual. El riel se dibuja por tramo, así que el primero arranca en su disco y el último termina en el suyo aunque la última parada mida el triple. La parada «combinación» aparece acá de catálogo: en /linea/[ejeId] no se pinta, porque no existe todavía un cierre a nivel de eje del que sacar su título, su conteo y su destino."
+        >
+          <div className="flex flex-col gap-6">
+            <div style={estiloDeLinea("03")} className="max-w-sm">
+              <Rotulo>Línea 03 · los seis casos</Rotulo>
+              <div className="rounded-sm border border-hairline bg-screen px-4 py-2">
+                <RielEstaciones paradas={PARADAS_DE_MUESTRA} />
+              </div>
+            </div>
+
+            <PorLinea>
+              {() => (
+                <div className="rounded-sm border border-hairline bg-screen px-4 py-2">
+                  <RielEstaciones paradas={PARADAS_DE_MUESTRA.slice(0, 4)} />
+                </div>
+              )}
+            </PorLinea>
+
+            <div style={estiloDeLinea("01")} className="max-w-sm">
+              <Rotulo>Una sola parada: sin tramo de riel que dibujar</Rotulo>
+              <div className="rounded-sm border border-hairline bg-screen px-4 py-2">
+                <RielEstaciones paradas={PARADAS_DE_MUESTRA.slice(4, 5)} />
               </div>
             </div>
           </div>
