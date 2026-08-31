@@ -65,8 +65,8 @@ export function EjecutorSetItems({
         contexto={contexto}
         contextoId={contextoId}
         etiquetaSiguiente={esUltimo ? "Ver resultado" : "Siguiente pregunta"}
-        onSiguiente={(correcta, tiempoMs) => {
-          dispatch({ type: "REGISTRAR", itemId: item.id, correcta, tiempoMs });
+        onSiguiente={(correcta, tiempoMs, claveElegida) => {
+          dispatch({ type: "REGISTRAR", itemId: item.id, correcta, tiempoMs, claveElegida });
           dispatch({ type: "SIGUIENTE" });
         }}
       />

@@ -41,5 +41,11 @@ export default async function PaginaCierre({
      módulo no apunte a la última lección de otro módulo. */
   const ultimaLeccionId = tema.lecciones.at(-1)?.id;
 
-  return <Cierre cierre={sanitizarCierre(cierre)} ultimaLeccionId={ultimaLeccionId} />;
+  return (
+    <Cierre
+      cierre={sanitizarCierre(cierre)}
+      ejeId={tema.ejeId}
+      ultimaLeccionId={ultimaLeccionId}
+    />
+  );
 }

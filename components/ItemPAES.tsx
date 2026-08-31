@@ -21,11 +21,17 @@ import { mezclarAlternativas } from "@/lib/mezclar";
 import { visualDeItem } from "@/lib/visualesItems";
 import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
 import type { ItemCliente } from "@/lib/sanitizar";
+import type { ClaveAlternativa } from "@/lib/tipos";
 
 interface ItemPAESProps {
   item: ItemCliente;
   mostrarFeedback: boolean;
-  onSiguiente: (correcta: boolean, tiempoMs: number) => void;
+  /* `claveElegida` va como tercer argumento y no reemplaza a `correcta`: los
+     llamadores que solo declaran dos parámetros siguen compilando, y `correcta`
+     es lo que casi todos necesitan. Lo agrega la pantalla de resultado del
+     cierre, que sí necesita saber CUÁL distractor se marcó para leer su
+     `errorCatalogado`. */
+  onSiguiente: (correcta: boolean, tiempoMs: number, claveElegida: ClaveAlternativa) => void;
   /* Dónde se está respondiendo. Requeridas y sin valor por defecto a propósito:
      un default silencioso de "leccion" atribuiría al camino las respuestas del
      diagnóstico y arruinaría el delta pre/post del MOS §6 sin que nada falle.
@@ -110,7 +116,9 @@ export function ItemPAES({
       </p>
       <Boton
         anchoCompleto
-        onClick={() => onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs)}
+        onClick={() =>
+          onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs, alternativaElegida.clave)
+        }
       >
         {etiquetaSiguiente}
       </Boton>

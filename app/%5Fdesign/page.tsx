@@ -4,9 +4,12 @@ import { Alternativa } from "@/components/ui/linea/Alternativa";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { Boton } from "@/components/ui/linea/Boton";
 import { Estacion } from "@/components/ui/linea/Estacion";
+import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { NavInferior } from "@/components/ui/linea/NavInferior";
 import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
+import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
+import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import {
   LINEAS,
   NOMBRE_DE_LINEA,
@@ -313,6 +316,72 @@ export default function PaginaDiseno() {
                 <NavInferior activo="tu" />
               </div>
             </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Puntaje"
+          nota="El denominador va apagado porque no es la noticia. Va en text-secondary (4,69:1) y no en text-muted, el ink3 de la escala, que mide 2,30:1 contra la tarjeta y no alcanza AA ni con el umbral de texto grande. La jerarquía la sostiene la diferencia contra el numerador (17,76:1), no el valor absoluto. No depende del color del eje: la cifra es tinta en las cuatro líneas."
+        >
+          <div className="flex flex-wrap gap-10">
+            <Puntaje rotulo="Cierre" aciertos={6} total={8} pie="después del módulo" />
+            <Puntaje rotulo="Diagnóstico" aciertos={2} total={5} pie="tu punto de partida" />
+            <Puntaje rotulo="Sin fallos" aciertos={8} total={8} />
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Franja de ítems"
+          nota="Barras de 28px, radio 2px, 5px de separación. Sin semáforo: lo acertado toma el color del eje y lo fallado se hunde con borde de tinta de 1,5px. La señal del fallo es la forma, no el color — por eso la 02 funciona igual, aunque su amarillo mida 1,76:1 contra la tarjeta y como relleno no marcaría nada por sí solo."
+        >
+          <div className="flex flex-col gap-6">
+            <PorLinea>
+              {() => (
+                <div className="flex flex-col gap-3">
+                  <FranjaDeItems
+                    resultados={[
+                      "correcto",
+                      "correcto",
+                      "incorrecto",
+                      "correcto",
+                      "correcto",
+                      "incorrecto",
+                      "correcto",
+                      "correcto",
+                    ]}
+                  />
+                  <FranjaDeItems resultados={["correcto", "correcto", "correcto", "correcto"]} />
+                  <FranjaDeItems
+                    resultados={["incorrecto", "incorrecto", "incorrecto", "incorrecto"]}
+                  />
+                </div>
+              )}
+            </PorLinea>
+            <div>
+              <Rotulo>Fuera de un eje (cae a text-primary)</Rotulo>
+              <FranjaDeItems
+                resultados={["correcto", "incorrecto", "correcto", "correcto", "incorrecto"]}
+              />
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Lo que falló"
+          nota="Agrupa por mecanismo y no por pregunta: dos ítems bajo el mismo id son un patrón, y ése es el dato que sirve para estudiar. Superficie clara y chip en tinta, a diferencia de la tarjeta de error, que gasta la excepción de la superficie oscura en un error solo. El segundo grupo muestra el caso real de 5 de los 11 cierres: el id existe y el texto no, porque el archivo no trae catalogoErrores propio. Sin grupos la tarjeta no se renderiza."
+        >
+          <div className="max-w-lg" style={estiloDeLinea("03")}>
+            <TarjetaLoQueFallo
+              grupos={[
+                {
+                  id: "error-5",
+                  descripcion:
+                    "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de la raíz al leerla desde el factor.",
+                  numerosDeItem: [2, 6],
+                },
+                { id: "error-9", numerosDeItem: [4] },
+              ]}
+            />
           </div>
         </Seccion>
       </div>

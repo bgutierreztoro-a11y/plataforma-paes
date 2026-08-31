@@ -5,8 +5,13 @@ import { useRouter } from "next/navigation";
 import { Boton } from "@/components/ui/Boton";
 import { Tarjeta } from "@/components/ui/Tarjeta";
 import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre";
+import { Puntaje } from "@/components/ui/linea/Puntaje";
+import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
+import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { registrarEvento } from "@/lib/eventos";
+import { agruparErroresDelCierre } from "@/lib/erroresDelCierre";
 import { obtenerResultadoDiagnostico } from "@/lib/progresoSesion";
+import type { ItemCliente } from "@/lib/sanitizar";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
@@ -19,9 +24,15 @@ function formatoTiempo(ms: number): string {
 }
 
 export function CierreFinal({
+  items,
   respuestas,
   ultimaLeccionId,
 }: {
+  /* Los ítems tal como los mandó el servidor. Hacen falta acá y no antes porque
+     `respuestas` guarda la clave elegida, no la alternativa: el `errorCatalogado`
+     y su `descripcionError` cuelgan de la alternativa (lib/sanitizar.ts:54-55) y
+     hay que volver a buscarlos en el ítem. */
+  items: ItemCliente[];
   respuestas: RespuestaRegistrada[];
   /* Última lección abierta del camino (la calcula app/cierre/page.tsx). Puede
      venir indefinida si no hay ninguna publicable. */
@@ -34,6 +45,7 @@ export function CierreFinal({
     respuestas.length > 0
       ? respuestas.reduce((suma, r) => suma + r.tiempoMs, 0) / respuestas.length
       : 0;
+  const grupos = agruparErroresDelCierre(items, respuestas);
 
   function solicitarSiguienteLeccion() {
     /* Sin lecciones abiertas no hay id honesto que mandar: se prefiere perder
@@ -60,30 +72,20 @@ export function CierreFinal({
         {diagnostico ? (
           <>
             <div className="grid grid-cols-2 divide-x divide-border">
-              {/* Etiqueta en eyebrow arriba, cifra abajo (Fase 6). Antes la
-                  etiqueta era `text-sm text-ink-suave`: texto corriente del
-                  mismo peso que el pie de abajo, así que la tarjeta se leía como
-                  tres líneas sueltas en vez de como una métrica. */}
-              <div className="pr-6">
-                <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
-                  Diagnóstico
-                </p>
-                <p className="mt-1 text-3xl font-medium num text-ink">
-                  {diagnostico.aciertos}
-                  <span className="text-lg text-ink-tenue"> / {diagnostico.total}</span>
-                </p>
-                <p className="mt-1 text-sm text-ink-tenue">tu punto de partida</p>
-              </div>
-              <div className="pl-6">
-                <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
-                  Cierre
-                </p>
-                <p className="mt-1 text-3xl font-medium num text-accent-fuerte">
-                  {aciertos}
-                  <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
-                </p>
-                <p className="mt-1 text-sm text-ink-tenue">después del módulo</p>
-              </div>
+              <Puntaje
+                className="pr-6"
+                rotulo="Diagnóstico"
+                aciertos={diagnostico.aciertos}
+                total={diagnostico.total}
+                pie="tu punto de partida"
+              />
+              <Puntaje
+                className="pl-6"
+                rotulo="Cierre"
+                aciertos={aciertos}
+                total={respuestas.length}
+                pie="después del módulo"
+              />
             </div>
             <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-ink-suave">
               Son sets de preguntas distintos, así que no se comparan uno a uno: lo que importa es
@@ -92,19 +94,18 @@ export function CierreFinal({
           </>
         ) : (
           <>
-            <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
-              Cierre
-            </p>
-            <p className="mt-1 text-3xl font-medium num text-ink">
-              {aciertos}
-              <span className="text-lg text-ink-tenue"> / {respuestas.length}</span>
-            </p>
+            <Puntaje rotulo="Cierre" aciertos={aciertos} total={respuestas.length} />
             <p className="mt-3 text-sm leading-relaxed text-ink-suave">
               No rendiste el diagnóstico en esta sesión, así que no hay con qué comparar. Se
               rinde antes de las lecciones: está en{" "}
               <Link
                 href="/diagnostico"
-                className="font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                /* El enlace pasa al color del eje, mismo criterio que
+                   DetalleTema.tsx:77: `--linea-nav` y no `--linea` porque acá es
+                   texto sobre superficie clara, el rol donde la 02 cae a tinta.
+                   El foco va a `outline-strong` para que el anillo se lea igual
+                   en las cuatro líneas. */
+                className="font-medium text-[var(--linea-nav)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
               >
                 el diagnóstico
               </Link>
@@ -112,12 +113,25 @@ export function CierreFinal({
             </p>
           </>
         )}
+
+        {/* La franja va después de la cifra y antes del ritmo: contesta "¿en
+            cuáles?" justo cuando la cifra acaba de contestar "¿cuántas?".
+            Se arma con `respuestas`, no con `items`: si alguna vez se pudiera
+            abandonar el cierre a mitad, la franja tiene que mostrar lo rendido y
+            no ocho casillas de las cuales tres nunca se contestaron. */}
+        <FranjaDeItems
+          className="mt-5"
+          resultados={respuestas.map((r) => (r.correcta ? "correcto" : "incorrecto"))}
+        />
+
         <p className="mt-3 text-sm text-ink-suave">
           Ritmo promedio:{" "}
           <span className="num">{formatoTiempo(promedioMs)}</span> por pregunta
           · en la PAES M1 el tiempo da para ~2:00.
         </p>
       </Tarjeta>
+
+      <TarjetaLoQueFallo grupos={grupos} className="w-full max-w-lg text-left" />
 
       <div className="w-full max-w-lg">
         <Boton anchoCompleto onClick={solicitarSiguienteLeccion}>
