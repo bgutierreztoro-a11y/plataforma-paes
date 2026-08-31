@@ -12,6 +12,22 @@ interface NavInferiorProps {
   className?: string;
 }
 
+/**
+ * Los destinos que ya son rutas, declarados una sola vez para que las tres
+ * pantallas que montan la barra no repitan el mapa.
+ *
+ * **Sin `ensayo` a propósito.** No existe producto de ensayo todavía: sin
+ * `href`, el tab se dibuja igual pero no es interactivo (ver abajo), que es más
+ * honesto que un enlace a ninguna parte. Las candidatas cercanas no lo son:
+ * /diagnostico es la medición de entrada y /cierre es el cierre de una
+ * estación; un ensayo completo M1 no está construido.
+ */
+export const ENLACES_NAV: Partial<Record<DestinoNav, string>> = {
+  red: "/camino",
+  errores: "/errores",
+  tu: "/tu",
+};
+
 const DESTINOS: { id: DestinoNav; etiqueta: string; Icono: typeof IconoRed }[] = [
   { id: "red", etiqueta: "Red", Icono: IconoRed },
   { id: "ensayo", etiqueta: "Ensayo", Icono: IconoEnsayo },
