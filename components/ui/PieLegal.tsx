@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
  *
  * No se monta dentro de /leccion/[id]. No es que ahí no aplique —aplica en todo
  * el producto—, es que el runner es modo foco: no lleva barra de navegación
- * (Navegacion.tsx:44-46 usa esta misma regla) y un pie legal al final de cada
+ * (ninguna pantalla del runner monta NavInferior) y un pie legal al final de cada
  * paso es andamiaje que el estudiante ya leyó en la portada y volverá a ver al
  * salir al camino. Sigue apareciendo en portada, /camino, /tema, /cierre,
  * /diagnostico y el resto.

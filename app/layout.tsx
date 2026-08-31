@@ -3,7 +3,6 @@ import type { ClerkAppearanceTheme } from "@clerk/shared/types";
 import { Archivo } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
-import { Navegacion } from "@/components/navegacion/Navegacion";
 import { PieLegal } from "@/components/ui/PieLegal";
 import "./globals.css";
 
@@ -193,7 +192,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-CL" className={`${archivo.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans text-ink pb-14 sm:pb-0">
+      {/* Sin `pb-14`: mientras la navegación se montaba acá y era `fixed`, el
+          <body> tenía que reservarle su alto en móvil para que no tapara el
+          contenido. Ya no se monta acá —cada pantalla de navegación cuelga su
+          propia `NavInferior`, que ocupa espacio en el flujo— así que ese
+          padding no reserva nada y solo dejaba una banda muerta al pie de las
+          18 rutas. */}
+      <body className="min-h-full flex flex-col font-sans text-ink">
         {/* ClerkProvider no protege ni redirige nada por sí solo: solo publica
             el estado de sesión por contexto. Sin la prop `dynamic` no llama a
             auth() en el servidor, así que las lecciones se siguen
@@ -219,16 +224,21 @@ export default function RootLayout({
           localization={localizacion}
           appearance={apariencia}
         >
-          {/* Navegacion se oculta a sí misma (retorna null) dentro de
-              /leccion/[id] — modo foco. pb-14 en <body> reserva el alto de la
-              barra fija inferior en móvil para que no tape contenido; en
-              /leccion/ ese padding queda sin uso (Navegacion no se monta ahí),
-              costo cosmético menor y aceptado frente a taparlo. */}
-          <Navegacion />
+          {/* Acá no va ninguna navegación. La barra de la dirección "Línea"
+              (components/ui/linea/NavInferior) la monta explícitamente cada
+              pantalla que la lleva —/camino, /errores y /tu— porque en el HTML
+              de referencia solo las pantallas 02, 10 y 11 la traen. Montarla
+              global obligaba a la barra a saber de rutas para esconderse, que
+              es lo que hacía la Navegacion anterior con su `startsWith`.
+
+              Consecuencia aceptada: las rutas que no son ninguna de esas tres
+              quedan sin navegación hasta que migren. Están listadas en
+              docs/deuda-navegacion.md. */}
           <PostHogProvider>{children}</PostHogProvider>
         </ClerkProvider>
-        {/* Se oculta a sí mismo dentro de /leccion/[id], igual que Navegacion.
-            El texto vive en un solo archivo: ver components/ui/PieLegal.tsx. */}
+        {/* Se oculta a sí mismo dentro de /leccion/[id] — modo foco, el mismo
+            criterio que aplicaba la Navegacion que vivía acá. El texto vive en
+            un solo archivo: ver components/ui/PieLegal.tsx. */}
         <PieLegal />
       </body>
     </html>

@@ -32,9 +32,11 @@ export const metadata: Metadata = {
  * carpeta que empieza con `_` es privada y no se rutea; `%5F` es la forma
  * codificada del guion bajo, y la URL resultante es `/_design`.
  *
- * Aviso al mirar: la `Navegacion` y el `PieLegal` del sistema anterior se montan
- * igual desde el root layout, así que arriba y abajo de esta página se ve cromo
- * de Antigravity. Es esperable en esta fase, que no toca ninguna pantalla.
+ * Aviso al mirar: el `PieLegal` se monta igual desde el root layout, así que al
+ * pie de esta página se ve cromo que no es parte de la galería. La `Navegacion`
+ * del sistema anterior ya no aparece: se borró al adoptar `NavInferior` como
+ * barra de la app, y esta página la sigue mostrando como pieza de catálogo, en
+ * sus cuatro estados.
  */
 
 const PASOS_DE_ESCALA: { clase: string; nombre: string; specs: string }[] = [

@@ -253,9 +253,9 @@ export function RunnerLeccion({
 
   return (
     /* Mismo `contents` que la fase de ítems, y por el mismo motivo: el cascarón
-       mide 100dvh y cancela el `pb-14` del body con un margen negativo, así que
-       una caja envolvente de verdad se metería en ese cálculo. `display:
-       contents` no genera caja y la variable igual baja por el árbol DOM. */
+       mide 100dvh, así que una caja envolvente de verdad se metería en ese
+       cálculo. `display: contents` no genera caja y la variable igual baja por
+       el árbol DOM. */
     <div className="contents" style={estiloLinea}>
       <CascaronAnclado
         acciones={accionesDelPaso}
@@ -265,11 +265,10 @@ export function RunnerLeccion({
            restantes son los `practica` y `pensar`, que dejan su feedback inline
            junto a cada pregunta. Ver `lib/feedbackDelPaso.ts`. */
         anclarFeedback={esPasoSimple(paso.bloques)}
-        modoFoco
       >
         {/* Fuera del contenedor con padding: el header y su borde inferior llegan
             a los dos bordes del viewport. Modo foco — acá adentro no hay barra de
-            navegación persistente (Navegacion.tsx no se monta en /leccion/[id]),
+            navegación persistente (ninguna pantalla del runner monta NavInferior),
             así que este es el único chrome de la pantalla. */}
         <HeaderLeccion
           pasoActual={estado.pasoActual}

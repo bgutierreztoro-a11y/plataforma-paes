@@ -67,17 +67,11 @@ export function CascaronAnclado({
      `lib/feedbackDelPaso.ts`. Con dos ejercicios en pantalla, un panel anclado
      tendría que elegir a cuál de los dos representa. */
   anclarFeedback = false,
-  /* La pantalla ocupa el viewport entero, sin la barra de navegación inferior
-     de móvil. Cierto en /leccion/[id] (Navegacion.tsx retorna null ahí) y
-     falso en cualquier otra ruta: /diagnostico y /cierre la montan, y ahí el
-     `pb-14` de <body> es espacio legítimo que no hay que devolver. */
-  modoFoco = false,
   className = "",
 }: {
   children: React.ReactNode;
   acciones: React.ReactNode;
   anclarFeedback?: boolean;
-  modoFoco?: boolean;
   className?: string;
 }) {
   /* Callback ref y no `useRef`: el portal necesita el nodo durante el render de
@@ -90,15 +84,18 @@ export function CascaronAnclado({
        tamaño: la zona anclada es simplemente el último hijo de un flex que no
        encoge.
 
-       `-mb-14 sm:mb-0` cancela el `pb-14` que <body> reserva en móvil para la
-       barra de navegación. Solo vale donde esa barra NO se monta —o sea, el
-       modo foco de /leccion/[id]—; por eso el cascarón exige que quien lo usa
-       lo declare y no lo asume. Medido en /diagnostico, que sí monta la barra:
-       cancelar el padding ahí dejaba la zona anclada 37px por debajo del borde
-       del viewport, tapada por la barra fija. */
-    <div
-      className={`flex h-[100dvh] flex-col ${modoFoco ? "-mb-14 sm:mb-0" : ""} ${className}`}
-    >
+       Ya no hay margen negativo que compensar. Mientras la navegación se
+       montaba global y era `fixed`, <body> le reservaba el alto con `pb-14` y
+       este cascarón lo devolvía con `-mb-14` vía una prop `modoFoco`. Eran un
+       par y se fueron juntos: la barra ya no se monta en el layout, así que el
+       <body> no reserva nada y no queda nada que cancelar.
+
+       El par nunca estuvo mal aplicado, aunque lo parezca: `EjecutorSetItems`
+       pasaba `modoFoco` siempre, pero corta antes con `anclarAcciones` (que
+       solo pasa RunnerLeccion), así que este cascarón únicamente se montaba en
+       /leccion/[id] — donde la barra no estaba y cancelar era lo correcto.
+       Medido a 390×844 tras el cambio: top 0, bottom 844, sin scroll de más. */
+    <div className={`flex h-[100dvh] flex-col ${className}`}>
       {/* `relative` no es decorativo y no se puede sacar: los `sr-only` de
           Tailwind y el `.solo-lector` propio son `position: absolute`, y sin un
           ancestro posicionado acá adentro resuelven contra el viewport. Ahí

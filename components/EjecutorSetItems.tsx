@@ -81,7 +81,7 @@ export function EjecutorSetItems({
      pie después—, por eso `acciones` va vacío acá: son estados distintos del
      mismo control y decidirlos afuera obligaría a levantar `revelado`. */
   return (
-    <CascaronAnclado acciones={null} anclarFeedback modoFoco>
+    <CascaronAnclado acciones={null} anclarFeedback>
       {contenido}
     </CascaronAnclado>
   );
