@@ -22,6 +22,12 @@ export interface LeccionDelTema {
   /** Denominador de "Aciertos X/Y". Sale del contenido, no se guarda en el
    *  progreso: el agregado se deriva del detalle, nunca se duplica. */
   totalItemsPAES: number;
+  /** Denominador de "Paso N de M". Sale de `pasos.length` del contenido, por la
+   *  misma razón que `totalItemsPAES` sale de `itemsPAES.length`: el agregado se
+   *  deriva del detalle. No se escribe 10 a mano aunque las lecciones en disco
+   *  tengan diez pasos por regla de contenido — sería una segunda fuente de
+   *  verdad para un número que ya vive en el archivo. */
+  totalPasos: number;
 }
 
 export interface TemaDelCamino {
@@ -53,6 +59,7 @@ function leccionesDelTema(tema: Tema, validas: Set<string>): LeccionDelTema[] {
       titulo: leccion.titulo,
       minutos: leccion.tiempoEstimadoMin,
       totalItemsPAES: leccion.itemsPAES?.length ?? 0,
+      totalPasos: leccion.pasos.length,
     });
   }
   return salida;
