@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PuertaDeEdad } from "@/components/cuenta/PuertaDeEdad";
+import { EnlaceCuenta } from "@/components/cuenta/EnlaceCuenta";
 import { EnlaceBoton } from "@/components/ui/Boton";
 
 export const metadata: Metadata = {
@@ -24,6 +25,9 @@ export default function Registrarse() {
         <EnlaceBoton href="/" variante="secundario" className="w-full sm:w-auto">
           Seguir sin cuenta
         </EnlaceBoton>
+        {/* Solo aparece con sesión iniciada: es la salida para quien llegó acá
+            estando ya adentro. Ver components/cuenta/EnlaceCuenta.tsx. */}
+        <EnlaceCuenta />
       </div>
     </main>
   );

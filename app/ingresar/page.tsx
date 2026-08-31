@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SignIn } from "@clerk/nextjs";
+import { EnlaceCuenta } from "@/components/cuenta/EnlaceCuenta";
 import { EnlaceBoton } from "@/components/ui/Boton";
 
 export const metadata: Metadata = {
@@ -29,6 +30,9 @@ export default function Ingresar() {
         <EnlaceBoton href="/" variante="secundario" className="w-full sm:w-auto">
           Seguir sin cuenta
         </EnlaceBoton>
+        {/* Solo aparece con sesión iniciada: es la salida para quien llegó acá
+            estando ya adentro. Ver components/cuenta/EnlaceCuenta.tsx. */}
+        <EnlaceCuenta />
       </div>
     </main>
   );
