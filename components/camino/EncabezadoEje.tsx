@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ALTO_ENCABEZADO_EJE } from "@/lib/geometriaCamino";
 
 /**
@@ -23,15 +24,33 @@ import { ALTO_ENCABEZADO_EJE } from "@/lib/geometriaCamino";
  * estadística" más su contador no caben en una línea a 360px, y dejar que
  * envuelva rompería el alto fijo. El nombre completo no se pierde — el eje es
  * también el rótulo de la tarjeta de cada nodo.
+ *
+ * **Con `href`, la banda entra a la línea del eje** (pantalla 03). En un eje
+ * que no se pliega el enlace es la banda entera; en uno plegable comparte los
+ * 44px con el botón que despliega, que se queda con el borde derecho y el
+ * contador. Los dos conservan sus 44px de alto táctil.
+ *
+ * El enlace **no** convierte la banda en un `control` para
+ * `tapariaUnaBanda`. La tarjeta del nodo activo arranca en `--canaleta`
+ * (104px) y la columna mide 560, así que aun tapada le quedan 104px de enlace
+ * clicables: nunca lo deshabilita, que es lo que ese volteo existe para
+ * evitar. Contar todas las bandas como controles ya se probó y volteaba la
+ * tarjeta en el primer nodo de la columna, donde termina bajo la barra de
+ * navegación (ver `CaminoVertical`). El botón de plegado, en cambio, sí es un
+ * control y por eso sigue marcándose como tal.
  */
 export function EncabezadoEje({
   nombre,
+  href,
   contador,
   expandido,
   onAlternar,
   desplazamientoSticky = 0,
 }: {
   nombre: string;
+  /** Destino de la banda: la pantalla de la línea de este eje. Ausente = la
+   *  banda es solo un rótulo. */
+  href?: string;
   /** Cuántos píxeles hay entre la barra de navegación y donde esta banda debe
    *  pegarse. En /camino es el alto de la franja fija; en el segundo nivel no
    *  hay bandas, así que no se usa. */
@@ -62,6 +81,41 @@ export function EncabezadoEje({
     </span>
   );
 
+  /* La zona del nombre: enlace a la línea si hay destino, texto si no. En un eje
+     plegable no ocupa la banda entera —el botón se queda con el borde derecho—,
+     así que el ancho lo reparte `flex-1`.
+
+     El nombre accesible incluye el texto visible, que es lo que pide WCAG 2.5.3:
+     "Números" solo diría de qué eje se trata, no que la banda lleva a alguna
+     parte. */
+  const nombreEnlazado = href ? (
+    <Link
+      href={href}
+      aria-label={`Ver la línea completa: ${nombre}`}
+      className={`flex h-full min-w-0 items-center gap-3 pl-3 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong sm:pl-4 ${
+        onAlternar === undefined ? "w-full pr-3 sm:pr-4" : "flex-1"
+      }`}
+    >
+      {nombreEje}
+      {/* La flecha solo cuando la banda no comparte los 44px con el botón de
+          plegado. Con los dos, a 390px "Probabilidad y estadística" se recorta a
+          "PROBAB…" —medido en el navegador—: el glifo se come el ancho justo del
+          único texto que identifica el tramo, y ahí el ± ya dice que la banda
+          responde. */}
+      {onAlternar === undefined && (
+        <span aria-hidden="true" className="shrink-0 text-ink-suave">
+          →
+        </span>
+      )}
+    </Link>
+  ) : null;
+
+  const enlace =
+    nombreEnlazado ??
+    (onAlternar === undefined ? (
+      <span className="flex w-full items-center px-3 sm:px-4">{nombreEje}</span>
+    ) : null);
+
   return (
     <h2
       className="sticky z-20 -mx-3 flex items-center border-b border-border bg-surface/90 backdrop-blur-md sm:-mx-4"
@@ -70,19 +124,23 @@ export function EncabezadoEje({
         top: `calc(var(--tope-nav) + ${desplazamientoSticky}px)`,
       }}
     >
-      {onAlternar === undefined ? (
-        <span className="flex w-full items-center px-3 sm:px-4">{nombreEje}</span>
-      ) : (
-        /* El botón ocupa la banda entera: su área táctil es los 44px de alto
-           que pide MASTER.md §5, sin agregar padding propio —que rompería el
-           alto fijo del que depende el ancla. */
+      {enlace}
+      {onAlternar !== undefined && (
+        /* El botón conserva los 44px de alto táctil que pide MASTER.md §5 sin
+           agregar padding propio —que rompería el alto fijo del que depende el
+           ancla—. Con enlace deja de ocupar la banda entera y se queda con el
+           borde derecho: el nombre pasa a ser el enlace, y por eso el botón
+           necesita nombre accesible propio. */
         <button
           type="button"
           onClick={onAlternar}
           aria-expanded={expandido}
-          className="flex h-full w-full items-center gap-3 px-3 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong sm:px-4"
+          aria-label={href ? `${expandido ? "Plegar" : "Desplegar"} ${nombre}` : undefined}
+          className={`flex h-full items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-strong ${
+            href ? "shrink-0 pl-3 pr-3 sm:pr-4" : "w-full px-3 sm:px-4"
+          }`}
         >
-          {nombreEje}
+          {href ? null : nombreEje}
           {/* Sin fecha y sin "próximamente": no prometemos plazos que no
               controlamos. */}
           {contador && (

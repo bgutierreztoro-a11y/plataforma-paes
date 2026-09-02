@@ -135,6 +135,11 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
        neutro sin romper. */
     linea: lineaDeEje(eje.id),
     titulo: eje.nombre,
+    /* La banda del eje entra a su línea (pantalla 03), que es el nivel que
+       faltaba: /camino muestra los 16 temas de los cuatro ejes juntos y
+       /tema/[id] las lecciones de uno solo. Sin esto la ruta no tenía ningún
+       enlace entrante. */
+    href: `/linea/${eje.id}`,
     plegable: eje.colapsado,
     /* Sin fecha y sin "próximamente": no prometemos plazos que no
        controlamos. */

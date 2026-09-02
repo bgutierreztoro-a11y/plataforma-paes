@@ -73,6 +73,9 @@ export interface SeccionCamino {
   linea?: LineaId;
   /** Ausente = tramo sin banda. La geometría no suma nada por él. */
   titulo?: string;
+  /** Destino de la banda: la pantalla de la línea del eje. Solo lo usa /camino;
+   *  en /tema/[id] no hay bandas. */
+  href?: string;
   /** Solo en tramos plegables: "4 unidades en construcción". Ya formateado. */
   contador?: string;
   /** Arranca plegado y su banda es un botón que lo despliega. */
@@ -283,6 +286,7 @@ export function CaminoVertical({
             {seccion.titulo !== undefined && (
               <EncabezadoEje
                 nombre={seccion.titulo}
+                href={seccion.href}
                 contador={seccion.contador}
                 desplazamientoSticky={desplazamientoSticky}
                 expandido={seccion.plegable ? desplegada : undefined}
