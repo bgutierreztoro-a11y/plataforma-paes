@@ -1,14 +1,16 @@
 # Pendientes técnicos
 
-## 🔴 `CATALOGO` de descripciones va 6 lecciones atrás: las de Cuadrática y Geometría se anuncian como "funciones lineales" (abierta 2026-08-26, al preparar la infraestructura de `cuerpos-geometricos`)
+## 🔴 `CATALOGO` de descripciones va 9 lecciones atrás: las de Cuadrática y Geometría se anuncian como "funciones lineales" (abierta 2026-08-26, al preparar la infraestructura de `cuerpos-geometricos`)
 
-`lib/descripcionesLecciones.tsx` tiene 25 entradas y hay 31 lecciones con
-archivo en `content/lecciones/` (30 del temario más `l0-demo`). Las 6 que
-faltan son las 3 de `funcion-cuadratica` y las 3 de `figuras-geometricas`:
+`lib/descripcionesLecciones.tsx` tiene 25 entradas y hay 34 lecciones con
+archivo en `content/lecciones/` (33 del temario más `l0-demo`). Las 9 que
+faltan son las 3 de `funcion-cuadratica`, las 3 de `figuras-geometricas` y las 3
+de `cuerpos-geometricos`:
 
 ```
 cuadratica-sube-y-baja, cuadratica-punto-mas-alto, cuadratica-donde-toca-el-eje,
-figuras-triangulo-no-se-rompe, figuras-borde-y-superficie, figuras-problemas-con-forma
+figuras-triangulo-no-se-rompe, figuras-borde-y-superficie, figuras-problemas-con-forma,
+cuerpos-desarmar-la-caja, cuerpos-cuanto-cabe-adentro, cuerpos-problemas-en-contexto
 ```
 
 **No es solo un test rojo, es copy equivocado en producción.**
@@ -20,16 +22,18 @@ con un plano cartesiano al lado. El comentario del propio archivo lo anticipa
 —"cae en `RESPALDO` en silencio"— y el test existe justamente para que no pase.
 
 **Cómo se detecta:** `npm run test:unit` falla con 2 hallazgos en
-`lib/__tests__/descripcionesLecciones.test.ts` — uno lista los 6 ids sin entrada
-y otro ancla el conteo (`actual 31, expected 25`). Están rojos desde antes del
+`lib/__tests__/descripcionesLecciones.test.ts` — uno lista los 9 ids sin entrada
+y otro ancla el conteo (`actual 34, expected 25`). Están rojos desde antes del
 2026-08-26 y no los introdujo el trabajo de cuerpos-geométricos, que dejó
 `npm run auditar` byte a byte idéntico a su baseline.
 
-**Va a empeorar de forma predecible.** Cuando entren las 3 lecciones de
-`cuerpos-geometricos` la brecha pasa de 6 a 9, y el ancla del conteo de 31 a 34.
-El cierre no cuenta: `CATALOGO` mapea `LeccionId`, no cierres.
+**Empeoró como estaba previsto (medido el 2026-08-30).** Las 3 lecciones de
+`cuerpos-geometricos` ya están en disco: la brecha pasó de 6 a 9 y el ancla del
+conteo de 31 a 34, exactamente como anticipaba este párrafo. Los números de
+arriba están actualizados a esa medición. El cierre no cuenta: `CATALOGO` mapea
+`LeccionId`, no cierres.
 
-**Cerrarlo son dos cosas, en este orden:** escribir las 6 (pronto 9) entradas de
+**Cerrarlo son dos cosas, en este orden:** escribir las 9 entradas de
 copy con su `Ilustracion` — hay ilustraciones de eje temático ya disponibles en
 `components/ilustraciones/ejes/`, `IlustracionEjeGeometria` entre ellas — y
 recién ahí actualizar el número anclado en el test. Actualizar el ancla sin
