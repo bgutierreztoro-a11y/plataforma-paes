@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ejesDelCamino } from "@/lib/camino";
+import { LineaDelEje } from "@/components/camino/LineaDelEje";
+import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 
 export async function generateStaticParams() {
@@ -21,22 +23,23 @@ export async function generateMetadata({
 
 /**
  * Pantalla 03 del HTML de referencia: una línea con sus estaciones.
- * **Andamiaje: solo el título.**
  *
- * Las estaciones con su riel, su estado y la tarjeta de la lección en curso
- * llegan después. No se pinta un riel de muestra: el dibujo del recorrido es
- * justamente lo que esta pantalla tiene que decir bien.
+ * Server component: cruza la taxonomía con los archivos en disco y le entrega a
+ * la isla de cliente (`LineaDelEje`) solo lo que necesita para pintar el riel.
+ * El estado de cada estación lo resuelve el cliente, porque depende del
+ * progreso guardado en el dispositivo. Mismo reparto que /camino.
  *
  * **No lleva `NavInferior`.** En el HTML solo las pantallas 02, 10 y 11 traen
  * barra; la 03 es una pantalla de profundidad dentro de la red, no un destino
  * de la barra.
  *
- * `estiloDeLinea()` va acá, en la raíz de la pantalla, y no en una sección
- * interna: es lo que instala el color del eje sobre todo el subárbol para que
- * lo que venga después lo tome sin recibir props. Un `ejeId` fuera del mapa
- * devuelve `undefined` en `lineaDeEje` y la pantalla cae a tinta sin reventar
- * —aunque con `dynamicParams = false` solo se construyen los cuatro ejes
- * reales, así que en la práctica el fallback no se alcanza desde la web.
+ * `estiloDeLinea()` va acá, en la raíz de la pantalla, y no solo en la placa
+ * —que también lo instala en su propio nodo—: es lo que hace que el riel, la
+ * tarjeta de la lección en curso y el CTA tomen el color sin recibir props. Un
+ * `ejeId` fuera del mapa devuelve `undefined` en `lineaDeEje` y la pantalla cae
+ * a tinta sin reventar —aunque con `dynamicParams = false` solo se construyen
+ * los cuatro ejes reales, así que en la práctica el fallback no se alcanza
+ * desde la web.
  */
 export default async function PaginaLinea({
   params,
@@ -48,13 +51,30 @@ export default async function PaginaLinea({
   if (!eje) notFound();
 
   const linea = lineaDeEje(ejeId);
+  const estaciones = eje.temas.length;
 
   return (
     <main
       style={linea ? estiloDeLinea(linea) : undefined}
-      className="mx-auto w-full max-w-2xl px-4 py-8"
+      className="flex min-h-full flex-1 flex-col"
     >
-      <h1 className="text-3xl font-semibold text-ink">{eje.nombre}</h1>
+      {/* La placa va a sangre, sin la columna de contenido: es una banda de
+          señalética y con aire a los lados dejaría de leerse como banda. Fuera
+          del mapa de líneas no hay placa que pintar —el número y el disco son
+          justamente lo que no existe— y queda el título a secas. */}
+      {linea ? (
+        <PlacaLinea
+          linea={linea}
+          titulo={eje.nombre}
+          subtitulo={`Línea ${linea} · ${estaciones} ${
+            estaciones === 1 ? "estación" : "estaciones"
+          }`}
+        />
+      ) : (
+        <h1 className="bg-primary px-4 py-3.5 text-titulo-l text-inverse">{eje.nombre}</h1>
+      )}
+
+      <LineaDelEje eje={eje} />
     </main>
   );
 }
