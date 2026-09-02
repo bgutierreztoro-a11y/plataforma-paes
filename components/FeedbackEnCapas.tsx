@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
+import { TarjetaError } from "@/components/ui/linea/TarjetaError";
 import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 
 /**
@@ -18,6 +19,10 @@ import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
  *   objeto del problema. Nunca "Incorrecto" a secas.
  * - Capa 2, tras pedirla: el mecanismo del error, no el ejercicio. Sale del
  *   `catalogoErrores` del módulo, resuelto en el servidor (ver lib/sanitizar.ts).
+ *   Se muestra en el banner en tinta de `ui/linea/TarjetaError.tsx` — la única
+ *   superficie oscura del sistema. **Sigue detrás del gate:** el banner cambia
+ *   cómo se lee la capa, no cuándo aparece. Que la explicación se pida y no se
+ *   imponga es la decisión pedagógica de este archivo y no la toca el rediseño.
  * - Capa 3, opcional: qué hacer la próxima vez que aparezca.
  *
  * **Al fallar no hay color de alarma ni ✗.** El veredicto visual no puede
@@ -46,6 +51,7 @@ export function FeedbackEnCapas({
   capa1,
   capa2,
   capa3,
+  rotuloError,
   opcionesAutoexplicacion,
   onVerPorQue,
   onAutoexplicacion,
@@ -58,6 +64,16 @@ export function FeedbackEnCapas({
   /** Ausente cuando el módulo no tiene `catalogoErrores` (hoy, los cierres). */
   capa2?: string;
   capa3?: string;
+  /**
+   * Las versalitas del banner, ya compuestas por quien llama: la referencia del
+   * error y, desde la segunda vez, cuántas van en la sesión. Ver
+   * `rotuloDeError` en lib/progresoSesion.ts.
+   *
+   * Se recibe compuesto y no como `(id, conteo)` porque el conteo se registra al
+   * comprobar la respuesta, no al pintar: contarlo acá lo sumaría de nuevo en
+   * cada re-render del panel.
+   */
+  rotuloError?: string;
   /** Tres descripciones del catálogo del módulo, o ausente para omitir el paso. */
   opcionesAutoexplicacion?: string[];
   /** Se dispara al abrir la Capa 2, una sola vez. Para instrumentación. */
@@ -161,13 +177,35 @@ export function FeedbackEnCapas({
         </Boton>
       )}
       {!esCorrecta && capa2 && porQueAbierto && (
-        <div className="transicion-paso space-y-2 rounded-tarjeta border border-border bg-surface px-4 py-3">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
-            Qué pasó por dentro
-          </p>
-          <p className="text-sm leading-relaxed text-ink">{capa2}</p>
-          {capa3 && <p className="text-sm leading-relaxed text-ink-suave">{capa3}</p>}
-        </div>
+        rotuloError ? (
+          /* El banner en tinta: la única superficie oscura del sistema, y la
+             excepción se gasta acá porque un error catalogado no es un aviso
+             más — es una pieza que el estudiante va a volver a ver. `--linea`
+             y sus derivados ya cuelgan del contenedor de la lección o del
+             cierre, así que el rótulo toma el color del eje sin recibir props.
+
+             `detalle` no se pasa: el desarrollo numérico no existe como campo
+             de contenido (docs/deuda-banner-error-desarrollo.md). */
+          <TarjetaError
+            className="transicion-paso"
+            clave={rotuloError}
+            diagnostico={capa2}
+            detalle={capa3}
+          />
+        ) : (
+          /* Sin id de catálogo no hay rótulo que poner en las versalitas, y un
+             banner con la fila de arriba vacía se lee como un error de render.
+             Cae al panel claro, que no la necesita. Hoy no ocurre —quien
+             resuelve `capa2` es el mismo `errorCatalogado` que da el rótulo—,
+             pero es una prop y quien llame mañana puede olvidarla. */
+          <div className="transicion-paso space-y-2 rounded-tarjeta border border-border bg-surface px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
+              Qué pasó por dentro
+            </p>
+            <p className="text-sm leading-relaxed text-ink">{capa2}</p>
+            {capa3 && <p className="text-sm leading-relaxed text-ink-suave">{capa3}</p>}
+          </div>
+        )
       )}
 
       {extra}

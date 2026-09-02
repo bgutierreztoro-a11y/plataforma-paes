@@ -326,15 +326,25 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Tarjeta de error"
-          nota="La única superficie oscura del sistema. La clave va en el color de la línea aclarado, no en el color de línea: los cuatro están calibrados contra papel y sobre tinta se apagan."
+          nota="La única superficie oscura del sistema. La clave va en el color de la línea aclarado, no en el color de línea: los cuatro están calibrados contra papel y sobre tinta se apagan. Las dos primeras son las formas que salen HOY del flujo real: dos párrafos, porque el desarrollo numérico no existe como campo de contenido (docs/deuda-banner-error-desarrollo.md), y el conteo solo desde la segunda vez que se cae en el mismo error dentro de la sesión. La tercera es la forma completa, para cuando ese campo exista."
         >
           <PorLinea>
             {() => (
-              <TarjetaError
-                clave="E-042 · SIGNO"
-                diagnostico="Restaste el paréntesis sin repartir el signo"
-                detalle="Al sacar un paréntesis precedido de un menos, cambian de signo todos los términos de adentro, no solo el primero."
-              />
+              <div className="space-y-3">
+                <TarjetaError
+                  clave="Error 07"
+                  diagnostico="Restaste el paréntesis sin repartir el signo"
+                />
+                <TarjetaError
+                  clave="Error 07 · te ha pasado 3 veces"
+                  diagnostico="Restaste el paréntesis sin repartir el signo"
+                />
+                <TarjetaError
+                  clave="Error 07 · te ha pasado 3 veces"
+                  diagnostico="Restaste el paréntesis sin repartir el signo"
+                  detalle="Al sacar un paréntesis precedido de un menos, cambian de signo todos los términos de adentro, no solo el primero."
+                />
+              </div>
             )}
           </PorLinea>
         </Seccion>

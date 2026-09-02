@@ -4,8 +4,13 @@ interface TarjetaErrorProps {
   clave: string;
   /* Qué se hizo mal, en una línea. */
   diagnostico: string;
-  /* Por qué pasa y cómo se ve la próxima vez. */
-  detalle: string;
+  /* Por qué pasa y cómo se ve la próxima vez.
+     **Opcional, y hoy nadie se lo pasa desde el flujo real.** El desarrollo
+     numérico que corrige el error no existe como campo de contenido: el schema
+     define `catalogoErrores` como `{id, descripcion}` y cerrado. Ver
+     `docs/deuda-banner-error-desarrollo.md`. La tarjeta sale con dos párrafos
+     mientras tanto, que es una unidad completa por sí sola — no un hueco. */
+  detalle?: string;
   className?: string;
 }
 
@@ -30,7 +35,7 @@ export function TarjetaError({
     <div className={`rounded-sm bg-primary p-4 ${className}`.trim()}>
       <p className="text-etiqueta uppercase text-[var(--linea-clara)]">{clave}</p>
       <p className="mt-2 text-titulo-s text-inverse">{diagnostico}</p>
-      <p className="mt-1.5 text-cuerpo-s text-muted-inverse">{detalle}</p>
+      {detalle && <p className="mt-1.5 text-cuerpo-s text-muted-inverse">{detalle}</p>}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
 import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
+import { registrarOcurrenciaDeError, rotuloDeError } from "@/lib/progresoSesion";
 import { registrarEvento } from "@/lib/eventos";
 import { registrarRespuesta, type RespuestaLocal } from "@/lib/progresoLocal";
 import type { AlternativaCliente } from "@/lib/sanitizar";
@@ -27,6 +28,9 @@ export function BloquePregunta({
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
   const [intento, setIntento] = useState(0);
+  /* Ver la nota en ItemPAES.tsx: se congela al comprobar porque contarlo al
+     renderizar sumaría una ocurrencia por re-render. */
+  const [rotuloError, setRotuloError] = useState<string | undefined>(undefined);
   const inicio = useRef(0);
   // Orden inicial = original (idéntico servidor/cliente); la mezcla real
   // ocurre en el efecto de abajo, solo en el cliente tras hidratar (ver
@@ -73,12 +77,22 @@ export function BloquePregunta({
       intento: nuevoIntento,
       tiempoMs,
     });
+    /* Mismo punto y mismo criterio que ItemPAES.tsx. Reintentar y volver a caer
+       en el mismo distractor sí suma: es el mismo error otra vez, que es
+       exactamente lo que el conteo dice. */
+    const descripcion = alternativaElegida.descripcionError;
+    if (!alternativaElegida.esCorrecta && descripcion && alternativaElegida.errorCatalogado) {
+      setRotuloError(
+        rotuloDeError(alternativaElegida.errorCatalogado, registrarOcurrenciaDeError(descripcion)),
+      );
+    }
     setRevelado(true);
   }
 
   function intentarDeNuevo() {
     setSeleccion(null);
     setRevelado(false);
+    setRotuloError(undefined);
   }
 
   return (
@@ -144,6 +158,7 @@ export function BloquePregunta({
           esCorrecta={alternativaElegida.esCorrecta}
           capa1={capaUno(alternativaElegida, alternativas)}
           capa2={capaDos(alternativaElegida)}
+          rotuloError={rotuloError}
           opcionesAutoexplicacion={alternativaElegida.opcionesAutoexplicacion}
           onAutoexplicacion={(elegida) =>
             registrarAutoexplicacion(itemId, elegida, alternativaElegida.descripcionError)

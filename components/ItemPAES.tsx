@@ -14,6 +14,7 @@ import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
 import { usePanelAnclado } from "@/components/ui/ZonaAnclada";
 import { capaUno, capaDos, registrarAutoexplicacion } from "@/lib/capasFeedback";
+import { registrarOcurrenciaDeError, rotuloDeError } from "@/lib/progresoSesion";
 import { registrarEvento } from "@/lib/eventos";
 import { useMontado } from "@/lib/useMontado";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
@@ -62,6 +63,10 @@ export function ItemPAES({
   const [intento, setIntento] = useState(0);
   const [transcurridoMs, setTranscurridoMs] = useState(0);
   const [tiempoFinalMs, setTiempoFinalMs] = useState(0);
+  /* Las versalitas del banner de error, congeladas al comprobar. Se calculan
+     acá y no al renderizar porque `registrarOcurrenciaDeError` tiene efecto:
+     recalcularlo en cada pasada sumaría una ocurrencia por re-render. */
+  const [rotuloError, setRotuloError] = useState<string | undefined>(undefined);
   const inicio = useRef(0);
   const anclar = usePanelAnclado();
   // El orden inicial es el original (idéntico en servidor y cliente, sin
@@ -153,6 +158,17 @@ export function ItemPAES({
       intento: nuevoIntento,
       tiempoMs,
     });
+
+    /* El error se cuenta en el mismo punto donde ya se instrumenta y se persiste
+       la respuesta: son el mismo hecho. Solo cuando el catálogo del archivo
+       resolvió una descripción — sin ella no hay error que nombrar ni banner que
+       mostrar (los cierres sin catálogo propio y /diagnostico caen acá). */
+    const descripcion = alternativaElegida.descripcionError;
+    if (!alternativaElegida.esCorrecta && descripcion && alternativaElegida.errorCatalogado) {
+      setRotuloError(
+        rotuloDeError(alternativaElegida.errorCatalogado, registrarOcurrenciaDeError(descripcion)),
+      );
+    }
     setRevelado(true);
   }
 
@@ -237,6 +253,7 @@ export function ItemPAES({
               esCorrecta={alternativaElegida.esCorrecta}
               capa1={capaUno(alternativaElegida, alternativas)}
               capa2={capaDos(alternativaElegida)}
+              rotuloError={rotuloError}
               opcionesAutoexplicacion={alternativaElegida.opcionesAutoexplicacion}
               onAutoexplicacion={(elegida) =>
                 registrarAutoexplicacion(item.id, elegida, alternativaElegida.descripcionError)
