@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   registrarOcurrenciaDeError,
   reiniciarOcurrenciasDeError,
+  ocurrenciasDeErrorDeSesion,
   rotuloDeError,
 } from "./progresoSesion.ts";
 
@@ -44,6 +45,22 @@ test("el conteo empieza de cero en cada sesión", () => {
   registrarOcurrenciaDeError(OLVIDA_MITAD);
   reiniciarOcurrenciasDeError();
   assert.equal(registrarOcurrenciaDeError(OLVIDA_MITAD), 1);
+});
+
+/* El getter que alimenta la pantalla 10: cada error con su conteo, en el orden
+   en que aparecieron por primera vez, y vacío tras reiniciar —el estado en que
+   queda la sesión después de un reload. */
+test("el getter de sesión devuelve cada error con su conteo y se vacía al reiniciar", () => {
+  reiniciarOcurrenciasDeError();
+  registrarOcurrenciaDeError(OLVIDA_MITAD);
+  registrarOcurrenciaDeError(SUMA_LADOS);
+  registrarOcurrenciaDeError(OLVIDA_MITAD);
+  assert.deepEqual(ocurrenciasDeErrorDeSesion(), [
+    { descripcion: OLVIDA_MITAD, veces: 2 },
+    { descripcion: SUMA_LADOS, veces: 1 },
+  ]);
+  reiniciarOcurrenciasDeError();
+  assert.deepEqual(ocurrenciasDeErrorDeSesion(), []);
 });
 
 // ---------- el rótulo que se muestra ----------

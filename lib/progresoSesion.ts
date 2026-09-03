@@ -69,6 +69,20 @@ export function reiniciarOcurrenciasDeError() {
 }
 
 /**
+ * Instantánea de los errores de ESTA sesión: `{ descripcion, veces }` por cada
+ * error catalogado en el que se cayó, en el orden en que aparecieron por primera
+ * vez. Solo lectura — no expone el `Map`.
+ *
+ * La usa la pantalla 10 (`/errores`) para armar la lista de "errores vivos".
+ * Devuelve `[]` tras un reload, y eso es lo correcto: el conteo vive en memoria
+ * de módulo y no sobrevive (ver la nota de `ocurrenciasPorError`). La pantalla
+ * pinta ese vacío como estado honesto, no lo rellena.
+ */
+export function ocurrenciasDeErrorDeSesion(): { descripcion: string; veces: number }[] {
+  return [...ocurrenciasPorError].map(([descripcion, veces]) => ({ descripcion, veces }));
+}
+
+/**
  * El rótulo en versalitas del banner de error: `error-7` + 3 → `Error 07 · te ha
  * pasado 3 veces`. Va en minúsculas; el `uppercase` lo pone `TarjetaError`.
  *

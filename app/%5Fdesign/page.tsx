@@ -11,6 +11,7 @@ import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEs
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
+import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import {
   LINEAS,
   NOMBRE_DE_LINEA,
@@ -454,6 +455,29 @@ export default function PaginaDiseno() {
                 { id: "error-9", numerosDeItem: [4] },
               ]}
             />
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Errores vivos"
+          nota="Pantalla 10. Los errores catalogados de la sesión, del más repetido al menos, con su conteo. Sin chip de id ni línea: el conteo de sesión se cuña por descripción y no guarda ni el id (local al archivo) ni el eje — docs/deuda-errores-vivos.md. Sin filas, el estado vacío honesto reemplaza el titular y no monta ni la lista ni el CTA."
+        >
+          <div className="grid gap-8 sm:grid-cols-2">
+            <div>
+              <Rotulo>Con errores</Rotulo>
+              <ListaErroresVivos
+                filas={[
+                  { titulo: "Olvidar el factor 1/2 en el área de triángulo y trapecio", veces: 3 },
+                  { titulo: "Confundir el perímetro del círculo con su área", veces: 2 },
+                  { titulo: "Invertir el signo de la desigualdad al dividir por un negativo", veces: 2 },
+                  { titulo: "Contar el borde interior en figuras compuestas", veces: 1 },
+                ]}
+              />
+            </div>
+            <div>
+              <Rotulo>Sin errores</Rotulo>
+              <ListaErroresVivos filas={[]} />
+            </div>
           </div>
         </Seccion>
       </div>
