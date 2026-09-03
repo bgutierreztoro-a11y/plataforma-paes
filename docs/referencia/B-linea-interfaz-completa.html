@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Línea — interfaz completa M1</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F0F0EE;--card:#FFFFFF;--surf:#F7F7F5;--ink:#16181D;--ink2:#71747A;--ink3:#A9ABAF;
+  --hair:#D8D9D4;--e1:#E4002B;--e2:#FFB600;--e3:#00843D;--e4:#0057B8;--acc:#00843D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;font-size:14px;line-height:1.5}
+.wrap{max-width:1050px;margin:0 auto;padding:52px 24px 96px}
+.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)}
+h1{font-weight:700;font-size:clamp(34px,5vw,52px);line-height:.98;letter-spacing:-.035em;margin-top:12px;max-width:18ch}
+.lead{font-size:15.5px;color:#575852;max-width:58ch;margin-top:16px}
+.rule{height:2px;background:var(--ink);margin:44px 0 24px}
+h2{font-weight:700;font-size:21px;letter-spacing:-.025em}
+
+.comps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px;margin-top:22px}
+.comp{background:var(--card);border:1px solid var(--hair);padding:14px;border-radius:2px}
+.comp p.k{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
+.stack>*+*{margin-top:8px}
+
+.btn{display:block;width:100%;background:var(--acc);color:#fff;text-align:center;font-weight:600;font-size:13.5px;padding:14px;border-radius:2px}
+.btn.dark{background:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.off{background:#EDEDEA;color:var(--ink3)}
+.dot{width:15px;height:15px;border-radius:50%;border:3px solid var(--acc);background:var(--card);display:block}
+.dot.done{background:var(--acc)}
+.dot.now{width:21px;height:21px;border-width:5px}
+.dot.tr{border-radius:3px;transform:rotate(45deg);border-color:var(--ink)}
+.dot.lock{border-color:var(--ink3)}
+.opt{background:var(--card);border:1px solid var(--hair);border-radius:2px;padding:12px 13px;display:flex;gap:11px;align-items:center;font-size:14px}
+.opt b{font-weight:600;font-size:12px;width:20px;height:20px;flex:none;border-radius:50%;background:#EDEDEA;color:var(--ink2);display:flex;align-items:center;justify-content:center}
+.opt.pick{border-color:var(--ink);border-width:1.5px}
+.opt.ok{border-color:var(--acc);border-width:1.5px;background:#EAF5EE}
+.opt.ok b{background:var(--acc);color:#fff}
+.opt.no{border-color:var(--ink);border-width:1.5px;background:#EDEDEA}
+.opt.no b{background:var(--ink);color:#fff}
+.prog{height:6px;background:#E4E5E1;border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.pill{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--acc);color:#fff}
+.pill.o{background:transparent;color:var(--ink2);border:1px solid var(--hair)}
+.pill.k{background:var(--ink);color:#fff}
+
+.grid{display:flex;flex-wrap:wrap;gap:24px;margin-top:26px}
+.slot{width:300px}
+.cap{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.cap b{color:var(--ink)}
+.ph{width:300px;height:626px;background:var(--surf);border:1px solid var(--hair);border-radius:4px;display:flex;flex-direction:column;overflow:hidden}
+.st{display:flex;justify-content:space-between;padding:9px 14px 0;font-size:9.5px;color:var(--ink3)}
+.bd{flex:1;padding:12px 15px 0;display:flex;flex-direction:column;overflow:hidden}
+.plate{background:var(--ink);color:var(--surf);padding:12px 15px;display:flex;align-items:center;gap:11px}
+.plate .num{font-weight:700;font-size:14px;background:var(--acc);color:#fff;width:29px;height:29px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.plate .tx{font-weight:600;font-size:16.5px;letter-spacing:-.02em;line-height:1.1}
+.plate .tx small{display:block;font-weight:400;font-size:10px;letter-spacing:.11em;text-transform:uppercase;opacity:.6;margin-top:3px}
+.nav{display:flex;background:var(--card);border-top:1px solid var(--hair);margin-top:auto}
+.nav div{flex:1;text-align:center;padding:9px 0 10px;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.nav div.on{color:var(--acc)}
+.nav b{display:block;width:16px;height:16px;border:2px solid currentColor;border-radius:50%;margin:0 auto 5px}
+.nav b.s{border-radius:2px}
+.nav b.d{border-radius:2px;transform:rotate(45deg)}
+.h3{font-weight:700;font-size:26px;letter-spacing:-.032em;line-height:1}
+.h4{font-weight:600;font-size:15px;letter-spacing:-.015em;line-height:1.18}
+.sub{font-size:12.5px;color:var(--ink2);margin-top:7px;line-height:1.45}
+.lbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.q{font-weight:600;font-size:18px;line-height:1.28;letter-spacing:-.018em}
+.card{background:var(--card);border:1px solid var(--hair);border-radius:2px;padding:12px 13px}
+.card.now{border-color:var(--acc);border-width:1.5px}
+.kpi{display:flex;background:var(--card);border:1px solid var(--hair);border-radius:2px}
+.kpi div{flex:1;padding:10px;border-right:1px solid var(--hair)}
+.kpi div:last-child{border-right:0}
+.kpi b{display:block;font-weight:700;font-size:23px;letter-spacing:-.035em;line-height:1}
+.kpi span{font-size:8.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);display:block;margin-top:4px}
+.track{position:relative;padding-left:29px}
+.track:before{content:"";position:absolute;left:9px;top:14px;bottom:16px;width:6px;border-radius:3px;background:var(--acc)}
+.stn{position:relative;padding:12px 0}
+.stn:after{content:"";position:absolute;left:-26px;top:16px;width:15px;height:15px;border-radius:50%;background:var(--surf);border:3px solid var(--acc)}
+.stn.done:after{background:var(--acc)}
+.stn.now:after{width:21px;height:21px;left:-29px;top:13px;border-width:5px}
+.stn.tr:after{border-radius:3px;transform:rotate(45deg);border-color:var(--ink)}
+.stn.lock:after{border-color:var(--ink3)}
+.stn .t{font-weight:600;font-size:15px;letter-spacing:-.015em;line-height:1.2}
+.stn .s{font-size:11px;color:var(--ink2);margin-top:3px}
+.stn.lock .t,.stn.lock .s{color:var(--ink3)}
+.line{display:flex;align-items:center;gap:11px;padding:10px 0}
+.bar{width:6px;border-radius:3px;flex:none}
+.dots{display:flex;gap:4px;margin-top:6px}
+.dots i{width:9px;height:9px;border-radius:50%;display:block;border:1.5px solid currentColor}
+.row{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--hair)}
+.row:last-child{border-bottom:0}
+.bnr{background:var(--ink);color:var(--surf);padding:13px;border-radius:2px}
+.bnr .k{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7BD6A2}
+.bnr .v{font-weight:600;font-size:15px;line-height:1.25;margin-top:6px}
+.bnr p{font-size:12.5px;color:#B0B2B8;margin-top:6px;line-height:1.45}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="eyebrow">Dirección B · Línea · interfaz completa</p>
+<h1>Cuatro líneas, dieciséis estaciones, una combinación por eje.</h1>
+<p class="lead">Once pantallas en el sistema de señalética. El color no decora: identifica el eje y se mantiene igual en cada pantalla dentro de él. Una sola familia tipográfica, Archivo, para todo.</p>
+
+<div class="rule"></div>
+<h2>Componentes</h2>
+<div class="comps">
+  <div class="comp">
+    <p class="k">Botones</p>
+    <div class="stack">
+      <span class="btn">Acción de la línea</span>
+      <span class="btn dark">Acción neutra</span>
+      <span class="btn ghost">Secundaria</span>
+      <span class="btn off">Deshabilitada</span>
+    </div>
+  </div>
+  <div class="comp">
+    <p class="k">Estaciones</p>
+    <div style="display:flex;gap:18px;align-items:center;padding:10px 0">
+      <i class="dot done"></i><i class="dot now"></i><i class="dot"></i><i class="dot lock"></i><i class="dot tr"></i>
+    </div>
+    <p style="font-size:10px;color:var(--ink2);margin-top:8px;letter-spacing:.05em">Pasada · aquí · próxima · cerrada · combinación</p>
+  </div>
+  <div class="comp">
+    <p class="k">Alternativas</p>
+    <div class="stack">
+      <span class="opt ok"><b>A</b> Correcta</span>
+      <span class="opt no"><b>B</b> Tu respuesta</span>
+      <span class="opt"><b>C</b> Sin marcar</span>
+    </div>
+  </div>
+  <div class="comp">
+    <p class="k">Colores de línea</p>
+    <div class="stack" style="margin-top:2px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:6px;border-radius:3px;background:var(--e1)"></span><span style="font-size:12.5px">01 Números</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:6px;border-radius:3px;background:var(--e2)"></span><span style="font-size:12.5px">02 Álgebra y funciones</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:6px;border-radius:3px;background:var(--e3)"></span><span style="font-size:12.5px">03 Geometría</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:6px;border-radius:3px;background:var(--e4)"></span><span style="font-size:12.5px">04 Probabilidad y datos</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+<h2>Pantallas</h2>
+
+<div class="grid">
+
+<!-- 01 -->
+<div class="slot"><p class="cap"><b>01</b> · Entrada</p>
+<div class="ph">
+  <div class="st"><span>21:50</span><span>M1</span></div>
+  <div class="bd">
+    <p class="lbl">Competencia matemática 1</p>
+    <p class="h3" style="font-size:31px;margin-top:10px;line-height:1">Antes de partir,<br>una medición.</p>
+    <p class="sub">Doce preguntas, ocho minutos. No es nota: sirve para saber en qué línea conviene que te subas.</p>
+    <div class="kpi" style="margin-top:18px"><div><b>16</b><span>Estaciones</span></div><div><b>48</b><span>Lecciones</span></div><div><b>4</b><span>Líneas</span></div></div>
+    <div style="margin-top:auto;padding-bottom:15px">
+      <span class="btn dark">Hacer la medición</span>
+      <span class="btn ghost" style="margin-top:9px">Prefiero elegir yo la línea</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- 02 -->
+<div class="slot"><p class="cap"><b>02</b> · La red</p>
+<div class="ph">
+  <div class="st"><span>21:54</span><span>M1</span></div>
+  <div class="bd">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><p class="lbl">Tu red</p><p class="h3" style="margin-top:5px">Vas en la 8</p></div>
+      <div style="text-align:right"><p class="lbl">Racha</p><b style="font-weight:700;font-size:24px;letter-spacing:-.035em;display:block;line-height:1">7</b></div>
+    </div>
+    <p class="sub">16 estaciones repartidas en 4 líneas.</p>
+    <div style="margin-top:12px">
+      <div class="line"><span class="bar" style="background:var(--e1);height:34px"></span><div style="flex:1">
+        <p class="h4">Números</p><p style="font-size:11px;color:var(--ink2);margin-top:2px">4 de 4 estaciones</p>
+        <div class="dots" style="color:var(--e1)"><i style="background:var(--e1)"></i><i style="background:var(--e1)"></i><i style="background:var(--e1)"></i><i style="background:var(--e1)"></i></div></div></div>
+      <div class="line"><span class="bar" style="background:var(--e2);height:34px"></span><div style="flex:1">
+        <p class="h4">Álgebra y funciones</p><p style="font-size:11px;color:var(--ink2);margin-top:2px">5 de 5 estaciones</p>
+        <div class="dots" style="color:var(--e2)"><i style="background:var(--e2)"></i><i style="background:var(--e2)"></i><i style="background:var(--e2)"></i><i style="background:var(--e2)"></i><i style="background:var(--e2)"></i></div></div></div>
+      <div class="line"><span class="bar" style="background:var(--e3);height:42px"></span><div style="flex:1">
+        <p class="h4">Geometría</p><p style="font-size:11px;color:var(--e3);font-weight:600;margin-top:2px">Vas aquí · estación 3</p>
+        <div class="dots" style="color:var(--e3)"><i style="background:var(--e3)"></i><i style="background:var(--e3)"></i><i></i><i></i></div></div></div>
+      <div class="line"><span class="bar" style="background:var(--e4);height:34px"></span><div style="flex:1">
+        <p class="h4">Probabilidad y datos</p><p style="font-size:11px;color:var(--ink2);margin-top:2px">0 de 3 estaciones</p>
+        <div class="dots" style="color:var(--e4)"><i></i><i></i><i></i></div></div></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn">Ir a mi estación</span></div>
+  </div>
+  <div class="nav"><div class="on"><b class="s"></b>Red</div><div><b></b>Ensayo</div><div><b class="d"></b>Errores</div><div><b></b>Tú</div></div>
+</div></div>
+
+<!-- 03 -->
+<div class="slot"><p class="cap"><b>03</b> · Línea 03</p>
+<div class="ph">
+  <div class="st"><span>21:55</span><span>M1</span></div>
+  <div class="plate"><span class="num">3</span><span class="tx">Geometría<small>Línea 03 · 4 estaciones</small></span></div>
+  <div class="bd">
+    <div class="track">
+      <div class="stn done"><p class="t">Figuras geométricas</p><p class="s">Pasada · 3 lecciones</p></div>
+      <div class="stn done"><p class="t">Cuerpos geométricos</p><p class="s">Pasada · 3 lecciones</p></div>
+      <div class="stn now"><p class="t">Transformaciones isométricas</p><p class="s">Lección 2 de 3 · 4 min</p>
+        <div class="card now" style="margin-top:9px">
+          <p style="font-weight:600;font-size:13.5px;letter-spacing:-.01em">Girar en torno a un punto</p>
+          <div class="prog" style="margin-top:9px"><i style="width:43%"></i></div>
+          <p style="font-size:11px;color:var(--ink2);margin-top:7px">Paso 3 de 7</p>
+        </div></div>
+      <div class="stn lock"><p class="t">Semejanza y proporcionalidad</p><p class="s">4 lecciones</p></div>
+      <div class="stn tr lock"><p class="t">Combinación · cierre de línea</p><p class="s">12 ítems PAES</p></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn">Continuar</span></div>
+  </div>
+</div></div>
+
+<!-- 04 -->
+<div class="slot"><p class="cap"><b>04</b> · Estación</p>
+<div class="ph">
+  <div class="st"><span>21:56</span><span>M1</span></div>
+  <div class="bd">
+    <p class="lbl" style="color:var(--e3)">← Línea 03 · Geometría</p>
+    <p class="h3" style="margin-top:7px;font-size:23px;line-height:1.04">Transformaciones isométricas</p>
+    <p class="sub">Traslación, rotación y reflexión en el plano. Lo que se mueve y lo que se conserva.</p>
+    <div class="kpi" style="margin-top:13px"><div><b>3</b><span>Lecciones</span></div><div><b>8</b><span>Ítems</span></div><div><b>12</b><span>Min</span></div></div>
+    <div class="track" style="margin-top:14px">
+      <div class="stn done" style="padding:11px 0"><p class="t">Mover sin deformar</p><p class="s">Lección 01 · completa</p></div>
+      <div class="stn now" style="padding:11px 0"><p class="t">Girar en torno a un punto</p><p class="s">Lección 02 · paso 3 de 7</p></div>
+      <div class="stn lock" style="padding:11px 0"><p class="t">Reflejar sobre un eje</p><p class="s">Lección 03</p></div>
+      <div class="stn tr lock" style="padding:11px 0"><p class="t">Cierre PAES</p><p class="s">8 ítems tipo prueba</p></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn">Continuar lección 02</span></div>
+  </div>
+</div></div>
+
+<!-- 05 -->
+<div class="slot"><p class="cap"><b>05</b> · Lección, descubrimiento</p>
+<div class="ph">
+  <div class="st"><span>21:57</span><span>M1</span></div>
+  <div class="bd">
+    <div style="display:flex;gap:10px;align-items:center"><span class="lbl">Salir</span><span class="prog" style="flex:1"><i style="width:29%"></i></span><span class="lbl">2/7</span></div>
+    <p class="q" style="margin-top:14px">Arrastra el vértice y mira qué pasa con la distancia a O.</p>
+    <div class="card" style="margin-top:12px;padding:8px">
+      <svg viewBox="0 0 250 148" style="width:100%;display:block">
+        <defs><pattern id="gg" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0v20" fill="none" stroke="#16181D" stroke-opacity=".08"/></pattern></defs>
+        <rect x="0" y="0" width="250" height="148" fill="url(#gg)"/>
+        <path d="M0 74H250M125 0V148" stroke="#16181D" stroke-width="1" stroke-opacity=".35"/>
+        <polygon points="125,74 180,74 180,38" fill="#16181D" fill-opacity=".06" stroke="#16181D" stroke-width="1.2" stroke-opacity=".4"/>
+        <polygon points="125,74 125,19 89,19" fill="#EAF5EE" stroke="#00843D" stroke-width="2.5"/>
+        <circle cx="125" cy="74" r="4" fill="#16181D"/>
+        <circle cx="89" cy="19" r="7" fill="#00843D" stroke="#fff" stroke-width="2"/>
+        <path d="M162 62A42 42 0 0 0 139 39" fill="none" stroke="#00843D" stroke-width="1.4" stroke-dasharray="3 3"/>
+        <text x="130" y="88" font-family="Archivo" font-size="10" font-weight="600" fill="#16181D">O</text>
+        <text x="141" y="57" font-family="Archivo" font-size="9" font-weight="600" fill="#00843D">90°</text>
+      </svg>
+    </div>
+    <div class="card" style="margin-top:11px;background:#EAF5EE;border-color:var(--e3)">
+      <p class="lbl" style="color:var(--e3)">Lo que estás viendo</p>
+      <p style="font-size:13px;margin-top:6px;line-height:1.45">La figura cambia de lugar y de orientación, pero cada vértice sigue a la misma distancia de O.</p>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn">Ya lo vi</span></div>
+  </div>
+</div></div>
+
+<!-- 06 -->
+<div class="slot"><p class="cap"><b>06</b> · Lección, acierto</p>
+<div class="ph">
+  <div class="st"><span>21:58</span><span>M1</span></div>
+  <div class="bd">
+    <div style="display:flex;gap:10px;align-items:center"><span class="lbl">Salir</span><span class="prog" style="flex:1"><i style="width:43%"></i></span><span class="lbl">3/7</span></div>
+    <p class="q" style="margin-top:14px">La baldosa gira 90° en torno a O. ¿Qué medida no cambia?</p>
+    <div style="margin-top:14px">
+      <div class="opt ok"><b>A</b> La distancia de cada vértice a O</div>
+      <div class="opt" style="margin-top:8px"><b>B</b> Las coordenadas de los vértices</div>
+      <div class="opt" style="margin-top:8px"><b>C</b> La orientación de los lados</div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <p class="lbl" style="color:var(--e3)">Correcto</p>
+      <p style="font-size:13px;margin-top:6px;line-height:1.45">Rotar es girar manteniendo el radio. Por eso una rotación es una isometría: conserva distancias.</p>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px">
+      <p style="font-size:11px;color:var(--ink2);text-align:center;margin-bottom:9px;letter-spacing:.04em">¿Te hizo sentido?</p>
+      <div style="display:flex;gap:9px"><span class="btn ghost">Sí</span><span class="btn ghost">Todavía no</span></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- 07 -->
+<div class="slot"><p class="cap"><b>07</b> · Lección, error catalogado</p>
+<div class="ph">
+  <div class="st"><span>22:01</span><span>M1</span></div>
+  <div class="bd">
+    <div style="display:flex;gap:10px;align-items:center"><span class="lbl">Salir</span><span class="prog" style="flex:1"><i style="width:71%"></i></span><span class="lbl">5/7</span></div>
+    <p class="q" style="margin-top:14px">Un trapecio tiene bases 8 y 12 cm y altura 5 cm. ¿Cuál es su área?</p>
+    <div style="margin-top:14px">
+      <div class="opt no"><b>A</b> 100 cm²</div>
+      <div class="opt ok" style="margin-top:8px"><b>B</b> 50 cm²</div>
+      <div class="opt" style="margin-top:8px"><b>C</b> 60 cm²</div>
+    </div>
+    <div class="bnr" style="margin-top:14px">
+      <p class="k">Error 07 · te ha pasado 3 veces</p>
+      <p class="v">Sumaste las bases y multiplicaste por la altura, pero olvidaste dividir por 2.</p>
+      <p>(8 + 12) × 5 = 100 → ese es el rectángulo completo. El trapecio es la mitad: 100 ÷ 2 = 50.</p>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn">Siguiente</span></div>
+  </div>
+</div></div>
+
+<!-- 08 -->
+<div class="slot"><p class="cap"><b>08</b> · Cierre PAES</p>
+<div class="ph">
+  <div class="st"><span>22:06</span><span>M1</span></div>
+  <div class="bd">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="pill">Cierre PAES</span><span class="lbl">Ítem 4 de 8</span>
+    </div>
+    <div class="prog" style="margin-top:11px"><i style="width:50%"></i></div>
+    <p class="q" style="margin-top:15px;font-size:16px">Un triángulo de vértices A(1,2), B(4,2) y C(4,6) se rota 180° en torno al origen. ¿Cuáles son las coordenadas de B'?</p>
+    <div style="margin-top:14px">
+      <div class="opt"><b>A</b> (−4, −2)</div>
+      <div class="opt" style="margin-top:7px"><b>B</b> (−4, 2)</div>
+      <div class="opt" style="margin-top:7px"><b>C</b> (4, −2)</div>
+      <div class="opt" style="margin-top:7px"><b>D</b> (2, 4)</div>
+      <div class="opt" style="margin-top:7px"><b>E</b> (−2, −4)</div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px">
+      <span class="btn ghost">Marcar y seguir</span>
+      <span class="btn" style="margin-top:9px">Responder</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- 09 -->
+<div class="slot"><p class="cap"><b>09</b> · Resultado</p>
+<div class="ph">
+  <div class="st"><span>22:14</span><span>M1</span></div>
+  <div class="bd">
+    <p class="lbl" style="color:var(--e3)">Cierre · Transformaciones isométricas</p>
+    <p class="h3" style="font-size:44px;margin-top:12px;line-height:.92">6<span style="color:var(--ink3)">/8</span></p>
+    <p class="sub">Estación aprobada. Dos ítems se fueron por lo mismo, así que ya están en tu repaso.</p>
+    <div style="display:flex;gap:5px;margin-top:16px">
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:#EDEDEA;border:1.5px solid var(--ink)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:#EDEDEA;border:1.5px solid var(--ink)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+      <span style="flex:1;height:28px;border-radius:2px;background:var(--e3)"></span>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <p class="lbl">Lo que falló</p>
+      <div style="display:flex;gap:11px;margin-top:10px"><span class="pill k">08</span>
+        <div><p class="h4" style="font-size:14px">Usar la altura vertical como lado inclinado</p><p style="font-size:11px;color:var(--ink2);margin-top:3px">Ítems 3 y 6</p></div></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px">
+      <span class="btn">Repasar ese error · 3 min</span>
+      <span class="btn ghost" style="margin-top:9px">Ir a la siguiente estación</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- 10 -->
+<div class="slot"><p class="cap"><b>10</b> · Errores</p>
+<div class="ph">
+  <div class="st"><span>22:16</span><span>M1</span></div>
+  <div class="bd">
+    <p class="lbl">Repaso dirigido</p>
+    <p class="h3" style="margin-top:6px">4 errores vivos</p>
+    <p class="sub">No son preguntas falladas: son las confusiones detrás. Se apagan al resolverlas bien dos veces seguidas.</p>
+    <div style="margin-top:14px">
+      <div class="row"><span class="pill k">07</span><div><p class="h4" style="font-size:14px">Olvidar el ÷2 en área de triángulo y trapecio</p><p style="font-size:11px;color:var(--ink2);margin-top:3px">3 veces · <span style="color:var(--e3);font-weight:600">línea 03</span></p></div></div>
+      <div class="row"><span class="pill k">09</span><div><p class="h4" style="font-size:14px">Confundir 2πr con πr²</p><p style="font-size:11px;color:var(--ink2);margin-top:3px">2 veces · <span style="color:var(--e3);font-weight:600">línea 03</span></p></div></div>
+      <div class="row"><span class="pill k">02</span><div><p class="h4" style="font-size:14px">Invertir el signo al despejar</p><p style="font-size:11px;color:var(--ink2);margin-top:3px">2 veces · <span style="color:#B08000;font-weight:600">línea 02</span></p></div></div>
+      <div class="row"><span class="pill k">11</span><div><p class="h4" style="font-size:14px">Contar el borde interior en figuras compuestas</p><p style="font-size:11px;color:var(--ink2);margin-top:3px">1 vez · <span style="color:var(--e3);font-weight:600">línea 03</span></p></div></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn dark">Repasar los 4 · 6 min</span></div>
+  </div>
+  <div class="nav"><div><b class="s"></b>Red</div><div><b></b>Ensayo</div><div class="on"><b class="d"></b>Errores</div><div><b></b>Tú</div></div>
+</div></div>
+
+<!-- 11 -->
+<div class="slot"><p class="cap"><b>11</b> · Tú</p>
+<div class="ph">
+  <div class="st"><span>22:18</span><span>M1</span></div>
+  <div class="bd">
+    <p class="lbl">Tu avance</p>
+    <p class="h3" style="margin-top:6px">Benjamín</p>
+    <div class="kpi" style="margin-top:13px"><div><b>7</b><span>Racha</span></div><div><b>9</b><span>Estaciones</span></div><div><b>112</b><span>Ítems</span></div></div>
+    <p class="lbl" style="margin-top:17px">Por línea</p>
+    <div style="margin-top:10px">
+      <div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Números</span><span style="font-size:11px;color:var(--ink2)">4/4</span></div><div class="prog" style="margin-top:5px"><i style="width:100%;background:var(--e1)"></i></div></div>
+      <div style="margin-top:11px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Álgebra y funciones</span><span style="font-size:11px;color:var(--ink2)">5/5</span></div><div class="prog" style="margin-top:5px"><i style="width:100%;background:var(--e2)"></i></div></div>
+      <div style="margin-top:11px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Geometría</span><span style="font-size:11px;color:var(--ink2)">2/4</span></div><div class="prog" style="margin-top:5px"><i style="width:50%;background:var(--e3)"></i></div></div>
+      <div style="margin-top:11px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Probabilidad y datos</span><span style="font-size:11px;color:var(--ink2)">0/3</span></div><div class="prog" style="margin-top:5px"><i style="width:0;background:var(--e4)"></i></div></div>
+    </div>
+    <div style="margin-top:auto;padding-bottom:15px"><span class="btn ghost">Enviar reporte al apoderado</span></div>
+  </div>
+  <div class="nav"><div><b class="s"></b>Red</div><div><b></b>Ensayo</div><div><b class="d"></b>Errores</div><div class="on"><b></b>Tú</div></div>
+</div></div>
+
+</div>
+</div>
+</body>
+</html>
