@@ -10,6 +10,7 @@ import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
 import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEstaciones";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
+import { SIN_DATO, TiraKPI } from "@/components/ui/linea/TiraKPI";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import {
@@ -364,6 +365,54 @@ export default function PaginaDiseno() {
             <div>
               <Rotulo>Fuera de un eje (cae a text-primary)</Rotulo>
               <BarraProgreso valor={2} total={5} etiqueta="2 de 5" />
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Tira de KPIs"
+          nota="Tres cifras con divisores hairline sobre superficie de tarjeta. La cifra va en titulo-l con tabular-nums para que las columnas se alineen; el rótulo en versalitas, en sans. No depende del color del eje: es tinta en las cuatro líneas, igual que Puntaje. La celda sin fuente de datos se pinta con un guion y no con un 0 — un 0 afirmaría «llevas cero» sobre algo que nadie midió."
+        >
+          <div className="flex flex-col gap-6">
+            <div>
+              <Rotulo>Pantalla 11 · como se monta hoy en /tu</Rotulo>
+              <TiraKPI
+                celdas={[
+                  { cifra: SIN_DATO, rotulo: "Racha", descripcion: "sin dato" },
+                  { cifra: 7, rotulo: "Lecciones", descripcion: "7 lecciones completadas" },
+                  { cifra: SIN_DATO, rotulo: "Ítems", descripcion: "sin dato" },
+                ]}
+              />
+            </div>
+            <div>
+              <Rotulo>Pantalla 01 · Entrada (todavía sin migrar)</Rotulo>
+              <TiraKPI
+                celdas={[
+                  { cifra: 16, rotulo: "Estaciones" },
+                  { cifra: 48, rotulo: "Lecciones" },
+                  { cifra: 4, rotulo: "Líneas" },
+                ]}
+              />
+            </div>
+            <div>
+              <Rotulo>Pantalla 04 · Estación (todavía sin migrar)</Rotulo>
+              <TiraKPI
+                celdas={[
+                  { cifra: 3, rotulo: "Lecciones" },
+                  { cifra: 8, rotulo: "Ítems" },
+                  { cifra: 12, rotulo: "Min" },
+                ]}
+              />
+            </div>
+            <div>
+              <Rotulo>Cifras largas y rótulo que no cabe</Rotulo>
+              <TiraKPI
+                celdas={[
+                  { cifra: 128, rotulo: "Ítems respondidos" },
+                  { cifra: 1024, rotulo: "Minutos" },
+                  { cifra: SIN_DATO, rotulo: "Racha", descripcion: "sin dato" },
+                ]}
+              />
             </div>
           </div>
         </Seccion>
