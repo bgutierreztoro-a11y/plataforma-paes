@@ -49,15 +49,32 @@ export function resumirRespuestas(progreso: ProgresoLocal | null): ResumenRespue
   return { aciertos, itemsRespondidos };
 }
 
+/**
+ * Las lecciones que el estudiante cerró, por id.
+ *
+ * Es la única lectura de progreso que **no** toca el balde de ítems respondidos:
+ * mira `ProgresoLocal.lecciones[].completada` y nada más. Por eso la usan las
+ * pantallas que necesitan avance real sin quedar expuestas al bug del
+ * `contextoId` único del cierre (`docs/deuda-avance-por-linea.md` §3).
+ *
+ * Vive acá y no en cada pantalla para que el detalle —qué lecciones— y el
+ * agregado —`avanceDeTema`— no puedan discrepar: son la misma lista leída una
+ * sola vez. Mismo argumento que da `AvancePersonal.tsx` para sumar
+ * `avanceDeTema` en vez de reimplementar el filtro.
+ */
+export function leccionesCompletadas(progreso: ProgresoLocal | null): Set<string> {
+  return new Set(
+    (progreso?.lecciones ?? []).filter((l) => l.completada).map((l) => l.leccionId),
+  );
+}
+
 /** Cuántas de las lecciones **declaradas** del tema quedaron completadas, y
  *  cuántas hay en total. Es el avance que se muestra en el nodo. */
 export function avanceDeTema(
   tema: TemaDelCamino,
   progreso: ProgresoLocal | null,
 ): { hechas: number; total: number } {
-  const completadas = new Set(
-    (progreso?.lecciones ?? []).filter((l) => l.completada).map((l) => l.leccionId),
-  );
+  const completadas = leccionesCompletadas(progreso);
   return {
     hechas: tema.lecciones.filter((l) => completadas.has(l.id)).length,
     total: tema.lecciones.length,
