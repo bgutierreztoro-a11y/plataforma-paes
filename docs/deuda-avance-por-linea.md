@@ -91,9 +91,30 @@ La corrección tiene dos mitades y ninguna es local a esta fase: pasar el
 `"cierre"` en los dispositivos que la tengan.
 
 → **Por eso la pantalla 11 no cuenta estaciones.** Cuenta **lecciones
-completadas**, con `avanceDeTema()` (`lib/estadoNodo.ts:54`), que solo mira
+completadas**, con `avanceDeTema()`, que solo mira
 `ProgresoLocal.lecciones[].completada` y no toca el balde contaminado. El rótulo
 dice "lecciones" y no "estaciones" precisamente porque es lo que el número mide.
+
+### Qué pantallas esquivan el balde, y cómo (para quien lo arregle)
+
+Al migrar la pantalla 04 (fase 3G) se repitió la maniobra, así que conviene
+tenerlo junto en un solo lugar. Lo contaminado es **la clave literal `"cierre"`**,
+que solo leen dos funciones: `estadoDeNodo()` y `estadoDelCierre()`. Todo lo
+demás en `lib/estadoNodo.ts` es seguro — `estadoDeLeccion()` incluido, que lee
+`aciertos` e `itemsRespondidos` **por id de lección**, nunca por `"cierre"`.
+
+- **Pantalla 11 (`/tu`)**: usa `avanceDeTema()`.
+- **Pantalla 04 (`/tema/[id]`)**: usa `leccionesCompletadas()` —extraída de
+  `avanceDeTema()` en la fase 3G para que el detalle y el agregado no puedan
+  discrepar—, y `estadoDeLeccion()` solo para el prop del evento
+  `nodo_leccion_abierto`. Su nodo de cierre **no afirma estado de rendido**: el
+  rombo de la maqueta es fijo, así que no hay marcador ni cifra que el bug pueda
+  ensuciar. Si algún día esa pantalla quiere decir "cierre rendido", el bug entra
+  ahí y hay que arreglarlo antes.
+
+Al migrar el progreso guardado bajo la clave `"cierre"` hay que revisar las dos
+pantallas: hoy ninguna depende de esa clave, así que la migración no puede
+romperles nada, pero tampoco van a corregirse solas si el fix se hace mal.
 
 ## 4 · `estadoModulo` no mide avance del estudiante
 
