@@ -1,45 +1,49 @@
-import { CaminoFantasma } from "@/components/camino/CaminoFantasma";
+import type { Metadata } from "next";
 import { PuntoDePartida } from "@/components/PuntoDePartida";
-import { temasConNodo } from "@/lib/camino";
+import { ejesDelCamino, temasConNodo } from "@/lib/camino";
+
+export const metadata: Metadata = {
+  title: "Competencia matemática 1",
+  description:
+    "El punto de partida de Matemática M1: una medición corta para saber en qué línea subirte, o el camino completo si prefieres elegir tú.",
+};
 
 /**
- * La entrada al producto: el camino de fondo y una sola decisión encima.
+ * La entrada al producto: la pantalla 01 ("Entrada") del HTML de referencia.
  *
- * Antes había dos entradas casi iguales que además se contradecían — `/` era un
- * hero de texto que mandaba a la primera lección, `/inicio` era el punto de
- * partida que mandaba al diagnóstico. Dos pantallas para la misma pregunta, con
- * dos respuestas distintas. Ahora es una sola y `/inicio` redirige acá.
+ * Antes había dos entradas casi iguales que se contradecían — `/` era un hero de
+ * texto que mandaba a la primera lección, `/inicio` era el punto de partida que
+ * mandaba al diagnóstico. Ahora es una sola pantalla y `/inicio` redirige acá.
  *
- * El fondo no es decoración: es el mapa del curso, y se entiende antes de leer
- * nada. Va desenfocado, a baja opacidad y sin eventos de puntero, porque su
- * trabajo es explicar de qué se trata esto, no ofrecer una segunda navegación
- * que compita con el botón.
+ * Ya no hay camino dibujado de fondo: la 01 del HTML es una tarjeta con rótulo,
+ * titular, una tira de tres cifras y dos acciones. El fondo de camino desenfocado
+ * (`CaminoFantasma`) se retiró con él.
  *
- * Server component: cruza taxonomía con disco y le pasa a la isla solo lo que
- * necesita para decidir el CTA. El estado del estudiante lo resuelve el cliente,
- * porque vive en el dispositivo.
+ * Server component: cruza taxonomía con disco y le pasa a la isla lo que necesita
+ * —las tres cifras y los temas para decidir la rama del CTA—. El estado del
+ * estudiante lo resuelve el cliente, porque vive en el dispositivo.
  */
 export default function Portada() {
   const temas = temasConNodo();
 
-  return (
-    <div className="flex min-h-full flex-1 flex-col">
-      <section className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-24 lg:py-32">
-        <CaminoFantasma nodos={temas.length} />
+  /* Las tres cifras salen de lo que hay escrito y validado en disco, no de la
+     taxonomía completa de `lib/modulos.ts` (que declara 16 · 48 · 4). Hoy dan
+     11 · 33 · 4 y suben solas cuando se escribe contenido. El porqué, en
+     docs/deuda-entrada.md §2. */
+  const kpi = {
+    estaciones: temas.length,
+    lecciones: temas.reduce((total, tema) => total + tema.lecciones.length, 0),
+    lineas: ejesDelCamino().length,
+  };
 
-        <div className="relative w-full">
-          {/* El rótulo de la portada vive acá y no dentro de `PuntoDePartida`:
-              es de la pantalla, no de la rama, y por eso no cambia cuando la
-              rama cambia. Usa el token `text-eyebrow`, igual que el resto de los
-              rótulos desde la Fase 6. */}
-          <p className="text-center text-eyebrow font-medium uppercase tracking-wide text-ink-suave">
-            Matemática M1 · Piloto privado
-          </p>
-          <div className="mt-4">
-            <PuntoDePartida temas={temas} />
-          </div>
-        </div>
-      </section>
-    </div>
+  return (
+    <main className="mx-auto flex min-h-full w-full max-w-md flex-1 flex-col justify-center px-4 py-12">
+      {/* El rótulo vive acá y no dentro de `PuntoDePartida`: es de la pantalla,
+          no de la rama, así que no cambia cuando la rama cambia. */}
+      <p className="text-etiqueta uppercase text-secondary">Competencia matemática 1</p>
+      <div className="mt-2.5">
+        <PuntoDePartida temas={temas} kpi={kpi} />
+      </div>
+    </main>
   );
 }

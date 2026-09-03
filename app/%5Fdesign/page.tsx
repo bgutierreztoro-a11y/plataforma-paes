@@ -385,11 +385,11 @@ export default function PaginaDiseno() {
               />
             </div>
             <div>
-              <Rotulo>Pantalla 01 · Entrada (todavía sin migrar)</Rotulo>
+              <Rotulo>Pantalla 01 · Entrada (en la portada) — cifras de ejemplo</Rotulo>
               <TiraKPI
                 celdas={[
-                  { cifra: 16, rotulo: "Estaciones" },
-                  { cifra: 48, rotulo: "Lecciones" },
+                  { cifra: 11, rotulo: "Estaciones" },
+                  { cifra: 33, rotulo: "Lecciones" },
                   { cifra: 4, rotulo: "Líneas" },
                 ]}
               />

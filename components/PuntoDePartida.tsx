@@ -1,9 +1,9 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect } from "react";
-import Link from "next/link";
-import { EnlaceBoton } from "@/components/ui/Boton";
-import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
+import { EnlaceBoton } from "@/components/ui/linea/Boton";
+import { TiraKPI } from "@/components/ui/linea/TiraKPI";
 import { useMontado } from "@/lib/useMontado";
 import { leer } from "@/lib/progresoLocal";
 import { estadoDeLeccion, resumirRespuestas, type EstadoNodo } from "@/lib/estadoNodo";
@@ -32,13 +32,23 @@ function abiertasEnOrden(
 }
 
 /**
- * Punto de partida de la portada: una sola decisión, "¿qué hago ahora?",
- * resuelta con lo que ya existe.
+ * Punto de partida de la portada: la pantalla 01 ("Entrada") del HTML de
+ * referencia, con una sola decisión —"¿qué hago ahora?"— resuelta con lo que ya
+ * existe.
  *
- * Va encima del camino dibujado de fondo, así que se presenta sin tarjeta y con
- * un único botón. Cualquier segundo elemento con peso compite con el fondo y con
- * la decisión — que es exactamente lo que MASTER.md §6 llama densidad de
- * dashboard.
+ * Es la isla de la pantalla 01: pinta el titular, el subtítulo, la tira de tres
+ * cifras (`TiraKPI`) y los CTA. El rótulo "Competencia matemática 1" lo pinta
+ * `app/page.tsx`, porque es de la pantalla y no de la rama. Las tres cifras
+ * llegan ya calculadas desde el servidor (`kpi`): esta isla es "use client" y no
+ * puede leer disco.
+ *
+ * De las cuatro ramas, solo la de arranque sigue el HTML al pie —titular a dos
+ * líneas, "Hacer la medición" y el CTA secundario "Prefiero elegir yo la
+ * línea"—. Las otras tres cambian titular y CTA por el que corresponde a un
+ * estudiante que ya empezó: a ese no se le ofrece medirse de nuevo como acción
+ * principal, y no lleva CTA secundario. El desfase entre el HTML (que promete
+ * una medición de doce preguntas) y el diagnóstico real está en
+ * `docs/deuda-entrada.md`.
  *
  * El progreso vive en lib/progresoLocal.ts, o sea en el dispositivo, bajo la
  * clave versionada que autoriza MOS §7.5. Sobrevive al reload, pero **no** al
@@ -55,7 +65,21 @@ function abiertasEnOrden(
  * antes de eso renderiza la rama 1 —mismo HTML en servidor y en el primer
  * render, sin mismatch— y recién después se corrige a la rama que corresponda.
  */
-export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
+/** Las tres cifras de la tira, ya calculadas en el servidor a partir de lo que
+ *  hay escrito en disco (no de la taxonomía completa). Ver `app/page.tsx`. */
+export interface CifrasEntrada {
+  estaciones: number;
+  lecciones: number;
+  lineas: number;
+}
+
+export function PuntoDePartida({
+  temas,
+  kpi,
+}: {
+  temas: TemaDelCamino[];
+  kpi: CifrasEntrada;
+}) {
   const montado = useMontado();
   /* "Falta contenido por venir" = algún módulo declara más lecciones de las
      que tienen archivo escrito. Es el mismo criterio que `estadoDelModulo`, y
@@ -139,14 +163,12 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   // punto de partida dice la verdad en vez de ofrecer un enlace roto.
   if (!primera) {
     return (
-      <Marco
+      <Entrada
+        kpi={kpi}
         titulo="El camino todavía no abre"
         subtitulo="Ninguna lección pasó todavía la revisión matemática y de originalidad. Es lo único que falta para abrirlas."
-      >
-        <EnlaceBoton href="/diagnostico" anchoCompleto className="mt-8" variante="secundario">
-          Hacer el diagnóstico
-        </EnlaceBoton>
-      </Marco>
+        cta={{ href: "/diagnostico", etiqueta: "Hacer la medición" }}
+      />
     );
   }
 
@@ -167,7 +189,8 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      ya viene en ese orden desde `lib/camino.ts`. */
   if (!pendiente && porRepasar) {
     return (
-      <Marco
+      <Entrada
+        kpi={kpi}
         titulo="Te conviene repasar una lección"
         /* El umbral sale de lib/umbrales.ts y no escrito a mano: es
            exactamente el número que ese módulo existe para que no aparezca
@@ -175,20 +198,17 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
         subtitulo={
           <>
             Terminaste todo lo abierto.{" "}
-            <strong className="font-semibold text-ink">
+            <strong className="font-semibold text-primary">
               {porRepasar.temaNombre} · {porRepasar.titulo}
             </strong>{" "}
             quedó bajo el {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer
             intento.
           </>
         }
-      >
-        {/* Mismo criterio que la rama 2: el nombre vive en el subtítulo y el
-            botón dice la acción. */}
-        <EnlaceBoton href={`/leccion/${porRepasar.id}`} anchoCompleto className="mt-8">
-          Repasar la lección
-        </EnlaceBoton>
-      </Marco>
+        /* Mismo criterio que la rama 2: el nombre vive en el subtítulo y el
+           botón dice la acción. */
+        cta={{ href: `/leccion/${porRepasar.id}`, etiqueta: "Repasar la lección" }}
+      />
     );
   }
 
@@ -196,18 +216,16 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
   // las lecciones abiertas existen, todas están completadas: `hayAvance` sobra.
   if (!pendiente) {
     return (
-      <Marco
+      <Entrada
+        kpi={kpi}
         titulo="Hiciste todo lo que está abierto"
         subtitulo={
           enPreparacion
             ? "Las lecciones que siguen están en preparación: se abren a medida que se terminan de escribir. Mientras tanto, las que ya hiciste se pueden repasar enteras."
             : "Las lecciones que ya hiciste se pueden repasar enteras."
         }
-      >
-        <EnlaceBoton href="/camino" anchoCompleto className="mt-8">
-          Ver el camino
-        </EnlaceBoton>
-      </Marco>
+        cta={{ href: "/camino", etiqueta: "Ver el camino" }}
+      />
     );
   }
 
@@ -220,90 +238,100 @@ export function PuntoDePartida({ temas }: { temas: TemaDelCamino[] }) {
      línea que existe para dar contexto. */
   if (hayAvance) {
     return (
-      <Marco
+      <Entrada
+        kpi={kpi}
         titulo="Te queda una lección del camino"
         subtitulo={
           <>
-            <strong className="font-semibold text-ink">
+            <strong className="font-semibold text-primary">
               {pendiente.temaNombre} · {pendiente.titulo}
             </strong>
             . Unos {pendiente.minutos} minutos, con preguntas formato PAES al final.
           </>
         }
-      >
-        <EnlaceBoton href={`/leccion/${pendiente.id}`} anchoCompleto className="mt-8">
-          Continuar la lección
-        </EnlaceBoton>
-      </Marco>
+        cta={{ href: `/leccion/${pendiente.id}`, etiqueta: "Continuar la lección" }}
+      />
     );
   }
 
-  /* Rama 1 — arranque, y lo que se ve antes de hidratar. El destino es la
-     primera lección abierta, no el diagnóstico: `content/diagnostico.json` se
-     declara a sí mismo demostración técnica que no pasa a publicable, así que
-     mandar ahí el primer clic del producto abre con el cartel "DEMOSTRACIÓN —
-     contenido no revisado". Decisión del 2026-07-25 en docs/pendientes.md, que
-     hasta ahora solo cumplía `/` mientras esta pantalla hacía lo contrario. El
-     diagnóstico sigue accesible, abajo y nombrando lo que es. */
+  /* Rama 1 — arranque, y lo que se ve antes de hidratar. Es la única rama que
+     sigue el HTML al pie: titular a dos líneas, "Hacer la medición" hacia el
+     diagnóstico y el CTA secundario hacia el camino.
+
+     Que el primer clic vaya al diagnóstico contradice la decisión del
+     2026-07-25 (docs/pendientes.md) de no abrir el producto con el cartel
+     "DEMOSTRACIÓN — contenido no revisado". Se resolvió a favor del HTML solo
+     acá, y el subtítulo dice cuántas preguntas son de verdad —cinco, no doce—.
+     El desfase completo está en docs/deuda-entrada.md §3. */
   return (
-    <Marco
-      titulo="Empieza por acá"
-      subtitulo={
+    <Entrada
+      kpi={kpi}
+      titulo={
         <>
-          El camino abre en{" "}
-          <strong className="font-semibold text-ink">
-            {primera.temaNombre} · {primera.titulo}
-          </strong>
-          . Unos {primera.minutos} minutos, con preguntas formato PAES al final. No
-          necesitas cuenta para nada de esto.
+          Antes de partir,
+          <br />
+          una medición.
         </>
       }
-    >
-      {/* Las cuatro ramas dicen la acción y nada más; el nombre de la lección
-          vive arriba, en el subtítulo. Antes esta era la única corta y las otras
-          dos metían tema y lección adentro del botón. */}
-      <EnlaceBoton href={`/leccion/${primera.id}`} anchoCompleto className="mt-8">
-        Empezar la primera lección
-      </EnlaceBoton>
-      <p className="mt-6 text-sm leading-6 text-ink-suave">
-        ¿Prefieres medir tu punto de partida antes? El diagnóstico son 5 preguntas y
-        hoy es una versión de demostración.{" "}
-        <Link
-          href="/diagnostico"
-          className="font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          Hacer el diagnóstico
-        </Link>
-      </p>
-    </Marco>
+      subtitulo="Cinco preguntas, unos cinco minutos. No es nota: sirve para saber en qué línea conviene que te subas."
+      cta={{ href: "/diagnostico", etiqueta: "Hacer la medición" }}
+      secundario={{ href: "/camino", etiqueta: "Prefiero elegir yo la línea" }}
+    />
   );
 }
 
-/** Contenedor común a las cuatro ramas: mismo lugar del título, del subtítulo y
- *  del CTA, para que pasar de una rama a otra no mueva la página.
+interface EnlaceEntrada {
+  href: string;
+  etiqueta: string;
+}
+
+/** El marco de la pantalla 01, común a las cuatro ramas: titular, subtítulo,
+ *  tira de cifras y CTA en el mismo sitio, para que pasar de una rama a otra no
+ *  mueva la página.
  *
- *  Sin tarjeta y sin borde: esto va sobre el camino dibujado de fondo, y una
- *  superficie opaca encima lo taparía justo donde tiene que verse. */
-function Marco({
+ *  Traduce el `.bd` del HTML de referencia
+ *  (`docs/referencia/B-linea-interfaz-completa.html:157-165`) a los tokens de la
+ *  dirección "Línea": alineado a la izquierda, sin tarjeta —ya no hay camino de
+ *  fondo que tapar—, titular en `text-display-m` como las pantallas 10 y 11, y
+ *  la fila de cifras con `TiraKPI`. El CTA secundario solo aparece en la rama de
+ *  arranque; las otras tres ya llevan el CTA contextual como acción principal. */
+function Entrada({
   titulo,
   subtitulo,
-  children,
+  cta,
+  secundario,
+  kpi,
 }: {
-  titulo: string;
-  subtitulo: React.ReactNode;
-  children: React.ReactNode;
+  titulo: ReactNode;
+  subtitulo: ReactNode;
+  cta: EnlaceEntrada;
+  secundario?: EnlaceEntrada;
+  kpi: CifrasEntrada;
 }) {
   return (
-    <section className="mx-auto max-w-xl text-center">
-      {/* El rótulo no se pasa acá: lo pinta `app/page.tsx` sobre el camino de
-          fondo, y duplicarlo pondría dos en la misma pantalla.
-
-          Pasa a `h1` (Fase 6): esta era la única pantalla del producto sin
-          ninguno. */}
-      <EncabezadoDeEntrada titulo={titulo} escala="portada">
-        {subtitulo}
-      </EncabezadoDeEntrada>
-      <div className="mt-5 flex flex-col items-center">{children}</div>
+    <section>
+      {/* El rótulo "Competencia matemática 1" no se pinta acá: lo pone
+          `app/page.tsx`, porque es de la pantalla y no de la rama. */}
+      <h1 className="text-display-m text-primary">{titulo}</h1>
+      <p className="mt-2.5 text-cuerpo-m text-secondary">{subtitulo}</p>
+      <TiraKPI
+        className="mt-4"
+        celdas={[
+          { cifra: kpi.estaciones, rotulo: "Estaciones" },
+          { cifra: kpi.lecciones, rotulo: "Lecciones" },
+          { cifra: kpi.lineas, rotulo: "Líneas" },
+        ]}
+      />
+      <div className="mt-6 flex flex-col gap-2.5">
+        <EnlaceBoton href={cta.href} variante="neutro">
+          {cta.etiqueta}
+        </EnlaceBoton>
+        {secundario && (
+          <EnlaceBoton href={secundario.href} variante="secundario">
+            {secundario.etiqueta}
+          </EnlaceBoton>
+        )}
+      </div>
     </section>
   );
 }

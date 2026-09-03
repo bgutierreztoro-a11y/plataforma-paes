@@ -370,9 +370,9 @@ describe("alturaSeguraArriba", () => {
 
 describe("desplazamientoDeNodo", () => {
   /**
-   * No cambia en esta fase, y hay que dejarlo afirmado: `CaminoFantasma` —el
-   * fondo de la portada— importa esta función para *ser* el camino y no un
-   * dibujo parecido. Si el zigzag se moviera acá, la portada se movería con él.
+   * `CaminoVertical` —el camino de /camino— importa esta función para colocar
+   * cada nodo: el zigzag de la interfaz *es* esta serie, no un dibujo parecido.
+   * Si se moviera acá, el camino se movería con él.
    */
   test("el zigzag alterna y la meta va centrada", () => {
     assert.equal(desplazamientoDeNodo(0), 38);
