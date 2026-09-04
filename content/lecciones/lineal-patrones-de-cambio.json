@@ -41,10 +41,6 @@
     {
       "id": "error-6",
       "descripcion": "Multiplicar el valor inicial junto con la tasa por el número de pasos, en vez de multiplicar solo la tasa (p. ej. (24+18)×5 en vez de 24+18×5) — el valor inicial se suma una sola vez, nunca se multiplica por los pasos."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo a partir de un enunciado: usar el valor inicial como coeficiente de la variable y la tasa como término constante (p. ej. escribir d = 9 + 30t cuando el móvil parte de 30 m y avanza 9 m por segundo). Distinto de error-1, donde el valor inicial no aparece en absoluto; acá los dos números están presentes, pero en la posición equivocada."
     }
   ],
   "pasos": [
