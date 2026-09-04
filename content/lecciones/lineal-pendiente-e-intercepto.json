@@ -44,6 +44,9 @@
       "descripcion": "Olvida el término independiente / coeficiente de posición (cree que una función sin coeficiente de posición visible no lo tiene, o lo omite en el modelo)."
     }
   ],
+  "auditoria": {
+    "sliderJustificado": "Esta lección (L2 de Función lineal y afín) lleva la interacción insignia con sliders: el concepto mismo (qué controla la pendiente y qué controla el coeficiente de posición) exige manipular ambos por separado para verse."
+  },
   "pasos": [
     {
       "tipo": "curiosidad",
