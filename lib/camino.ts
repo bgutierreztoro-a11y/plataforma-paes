@@ -157,3 +157,26 @@ export function ejesDelCamino(): EjeDelCamino[] {
 export function temaDelCaminoPorId(id: string): TemaDelCamino | undefined {
   return temasDelCamino().find((t) => t.id === id);
 }
+
+/**
+ * El tema que sigue a `id` en orden de temario, o `undefined` si es el último
+ * con contenido. Lo usa la pantalla de resultado del cierre para ofrecer "la
+ * siguiente estación".
+ *
+ * Se resuelve sobre `temasConNodo()` y no sobre `temasDelCamino()`: un tema en
+ * `sin-contenido` no tiene página —queda fuera del `generateStaticParams` de
+ * `/tema/[id]` y, con `dynamicParams = false`, cae en el 404—, así que
+ * ofrecerlo como destino sería un enlace roto.
+ *
+ * Esa lista cruza los cuatro ejes en orden DEMRE, así que la estación siguiente
+ * a la última de una línea es la primera de la línea que sigue. Es como se
+ * recorre la red y es el mismo orden que ya usa la portada.
+ *
+ * Un `id` que no está en la lista devuelve `undefined` y no la primera:
+ * "siguiente" no significa nada si no se sabe desde dónde.
+ */
+export function siguienteTemaConNodo(id: string): TemaDelCamino | undefined {
+  const temas = temasConNodo();
+  const i = temas.findIndex((t) => t.id === id);
+  return i === -1 ? undefined : temas[i + 1];
+}

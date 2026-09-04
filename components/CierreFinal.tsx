@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Boton } from "@/components/ui/Boton";
 import { Tarjeta } from "@/components/ui/Tarjeta";
 import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre";
+import { Boton, EnlaceBoton } from "@/components/ui/linea/Boton";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
@@ -27,6 +26,7 @@ export function CierreFinal({
   items,
   respuestas,
   ultimaLeccionId,
+  siguienteTemaId,
 }: {
   /* Los ítems tal como los mandó el servidor. Hacen falta acá y no antes porque
      `respuestas` guarda la clave elegida, no la alternativa: el `errorCatalogado`
@@ -37,8 +37,10 @@ export function CierreFinal({
   /* Última lección abierta del camino (la calcula app/cierre/page.tsx). Puede
      venir indefinida si no hay ninguna publicable. */
   ultimaLeccionId?: string;
+  /* Tema que sigue en el temario (`siguienteTemaConNodo`, resuelto en la ruta).
+     Indefinido cuando éste es el último con contenido. */
+  siguienteTemaId?: string;
 }) {
-  const router = useRouter();
   const aciertos = respuestas.filter((r) => r.correcta).length;
   const diagnostico = obtenerResultadoDiagnostico();
   const promedioMs =
@@ -47,16 +49,21 @@ export function CierreFinal({
       : 0;
   const grupos = agruparErroresDelCierre(items, respuestas);
 
-  function solicitarSiguienteLeccion() {
-    /* Sin lecciones abiertas no hay id honesto que mandar: se prefiere perder
-       el evento antes que atribuir la solicitud a una lección inventada. */
+  /* `solicitud_siguiente_leccion` conserva su significado original: "no queda
+     nada abierto y quiero más". Por eso solo se emite en la rama SIN siguiente
+     estación. Cuando hay una de verdad, el estudiante navega a ella y no está
+     pidiendo contenido que no existe — contarlo ahí convertiría una señal de
+     demanda en un contador de navegación.
+
+     Sin lecciones abiertas no hay id honesto que mandar: se prefiere perder el
+     evento antes que atribuir la solicitud a una lección inventada. */
+  function registrarSolicitudDeContenido() {
     if (ultimaLeccionId) {
       registrarEvento({
         nombre: "solicitud_siguiente_leccion",
         props: { leccion_id: ultimaLeccionId },
       });
     }
-    router.push("/");
   }
 
   return (
@@ -133,10 +140,39 @@ export function CierreFinal({
 
       <TarjetaLoQueFallo grupos={grupos} className="w-full max-w-lg text-left" />
 
-      <div className="w-full max-w-lg">
-        <Boton anchoCompleto onClick={solicitarSiguienteLeccion}>
-          Quiero la próxima lección
-        </Boton>
+      {/* El par de acciones de la pantalla 09
+          (`docs/referencia/B-linea-interfaz-completa.html:359-362`): el repaso
+          del error arriba y la salida hacia adelante abajo. */}
+      <div className="flex w-full max-w-lg flex-col gap-2.5">
+        {/* Solo con grupos: sin error catalogado, "ese error" no nombra nada y
+            la tarjeta de arriba tampoco se dibujó.
+
+            Deshabilitado por el mismo motivo y con el mismo control que el
+            "Repasar" de /errores (`ListaErroresVivos.tsx:64`): no existe ruta
+            de repaso dirigido (`docs/deuda-errores-vivos.md`). Sin el "· 3 min"
+            de la maqueta, que no tiene fuente. */}
+        {grupos.length > 0 && (
+          <Boton type="button" variante="deshabilitado">
+            Repasar ese error
+          </Boton>
+        )}
+
+        {siguienteTemaId ? (
+          <EnlaceBoton variante="secundario" href={`/tema/${siguienteTemaId}`}>
+            Ir a la siguiente estación
+          </EnlaceBoton>
+        ) : (
+          /* Último tema con contenido: no hay estación siguiente que ofrecer, y
+             prometerla sería un enlace roto. La red es el destino honesto, y es
+             el punto donde el estudiante sí está pidiendo más contenido. */
+          <EnlaceBoton
+            variante="secundario"
+            href="/camino"
+            onClick={registrarSolicitudDeContenido}
+          >
+            Volver a la red
+          </EnlaceBoton>
+        )}
       </div>
     </PantallaCentrada>
   );

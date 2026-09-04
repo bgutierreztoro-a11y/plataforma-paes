@@ -11,6 +11,7 @@ export function Cierre({
   cierre,
   ejeId,
   ultimaLeccionId,
+  siguienteTemaId,
 }: {
   cierre: CierreCliente;
   /* Eje del tema al que pertenece este cierre, resuelto en servidor
@@ -21,6 +22,10 @@ export function Cierre({
   /* Id de la última lección abierta del camino, calculado en servidor. Solo lo
      usa el evento de "quiero la próxima lección". */
   ultimaLeccionId?: string;
+  /* Id del tema que sigue en el temario, calculado en servidor
+     (`siguienteTemaConNodo`). Lo usa el CTA secundario del resultado. Sin él,
+     éste es el último tema con contenido. */
+  siguienteTemaId?: string;
 }) {
   const [fase, setFase] = useState<"anuncio" | "items">("anuncio");
 
@@ -63,6 +68,7 @@ export function Cierre({
               items={cierre.items}
               respuestas={respuestas}
               ultimaLeccionId={ultimaLeccionId}
+              siguienteTemaId={siguienteTemaId}
             />
           )}
         />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { obtenerCierre } from "@/lib/contenido";
-import { temaDelCaminoPorId, temasDelCamino } from "@/lib/camino";
+import { siguienteTemaConNodo, temaDelCaminoPorId, temasDelCamino } from "@/lib/camino";
 import { sanitizarCierre } from "@/lib/sanitizar";
 import { Cierre } from "@/components/Cierre";
 
@@ -40,12 +40,18 @@ export default async function PaginaCierre({
      pide "la próxima". Scoped al tema y no al camino completo, para que un
      módulo no apunte a la última lección de otro módulo. */
   const ultimaLeccionId = tema.lecciones.at(-1)?.id;
+  /* La estación que sigue en el temario, para el CTA secundario del resultado.
+     Se resuelve acá y no en la isla porque `lib/camino.ts` lee disco. Puede no
+     haber ninguna —éste es el último tema con contenido— y entonces el
+     resultado ofrece volver a la red. */
+  const siguienteTemaId = siguienteTemaConNodo(temaId)?.id;
 
   return (
     <Cierre
       cierre={sanitizarCierre(cierre)}
       ejeId={tema.ejeId}
       ultimaLeccionId={ultimaLeccionId}
+      siguienteTemaId={siguienteTemaId}
     />
   );
 }
