@@ -124,16 +124,16 @@
           "tipo": "numerica",
           "enunciado": "Usando y = 2x + 3, ¿cuántos centímetros medirá la planta el día 10?",
           "campos": [
-            { "id": "altura10", "etiqueta": "Altura", "respuestaCorrecta": 23, "unidad": "cm" }
+            { "id": "altura", "etiqueta": "Altura", "respuestaCorrecta": 23, "unidad": "cm" }
           ],
           "feedbackPorError": [
             {
-              "campoId": "altura10",
+              "campoId": "altura",
               "valorObtenido": 20,
               "mensaje": "Calculaste 2×10 pero olvidaste sumar los 3 cm iniciales (el intercepto). Altura = 2×10 + 3."
             },
             {
-              "campoId": "altura10",
+              "campoId": "altura",
               "valorObtenido": 25,
               "mensaje": "Contaste un salto de más. Del día 0 al día 10 hay 10 saltos de 2 cm, no 11: 3 + 2×10."
             }

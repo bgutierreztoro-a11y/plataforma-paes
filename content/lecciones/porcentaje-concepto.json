@@ -193,7 +193,7 @@
           "enunciado": "Comprobemos que el patrón funciona fuera de la tabla, con un número que nunca apareció.\n\n¿Por qué número hay que multiplicar 350 para obtener su 30%?\n\n(Te pedimos el multiplicador, no el resultado.)",
           "campos": [
             {
-              "id": "factorDel30",
+              "id": "factorMultiplicador",
               "etiqueta": "Número por el que hay que multiplicar",
               "respuestaCorrecta": 0.3,
               "unidad": ""
@@ -201,19 +201,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "factorDel30",
+              "campoId": "factorMultiplicador",
               "valorObtenido": 30,
               "mensaje": "Multiplicar por 30 agranda el número 30 veces: 350 × 30 = 10.500. Pero el 30% de 350 tiene que ser una PARTE de 350, así que el multiplicador tiene que ser menor que 1. Mira la tercera columna de la tabla otra vez.",
               "errorCatalogado": "error-3"
             },
             {
-              "campoId": "factorDel30",
+              "campoId": "factorMultiplicador",
               "valorObtenido": 3,
               "mensaje": "Casi: tienes los dígitos correctos, pero la coma corrida. Multiplicar por 3 triplica el número. El valor que se repetía en la tabla no era 3, era 0,30.",
               "errorCatalogado": "error-3"
             },
             {
-              "campoId": "factorDel30",
+              "campoId": "factorMultiplicador",
               "valorObtenido": 105,
               "mensaje": "105 es el resultado —y está bien calculado—, pero la pregunta es por el multiplicador: el número que, aplicado a 350, produce 105. Ese es el que aparecía fijo en la tercera columna.",
               "errorCatalogado": "error-8"
@@ -241,7 +241,7 @@
           "enunciado": "Aplica la regla con un porcentaje que no habías usado.\n\nEn una encuesta a 80 estudiantes de un nivel, el 45% respondió que participa en algún taller extraprogramático.\n\n¿Cuántos estudiantes participan?",
           "campos": [
             {
-              "id": "participan45de80",
+              "id": "estudiantesParticipantes",
               "etiqueta": "Estudiantes que participan",
               "respuestaCorrecta": 36,
               "unidad": "estudiantes"
@@ -249,19 +249,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "participan45de80",
+              "campoId": "estudiantesParticipantes",
               "valorObtenido": 3600,
               "mensaje": "Multiplicaste por 45 en vez de por 0,45. Te faltó el paso de convertir: 45% = 45/100 = 0,45. Sin esa división por 100, el resultado se dispara.",
               "errorCatalogado": "error-3"
             },
             {
-              "campoId": "participan45de80",
+              "campoId": "estudiantesParticipantes",
               "valorObtenido": 3.6,
               "mensaje": "Corriste la coma tres lugares en vez de dos: usaste 0,045. Para convertir un porcentaje se divide por 100, no por 1.000. 45% = 0,45.",
               "errorCatalogado": "error-3"
             },
             {
-              "campoId": "participan45de80",
+              "campoId": "estudiantesParticipantes",
               "valorObtenido": 44,
               "mensaje": "Calculaste el 55%, que es la parte que NO participa. La pregunta pide el 45%: 80 × 0,45.",
               "errorCatalogado": "error-1"
@@ -286,7 +286,7 @@
           "enunciado": "En un curso de 64 estudiantes, el 25% se inscribió en la salida a terreno.\n\n¿Cuántos se inscribieron?",
           "campos": [
             {
-              "id": "inscritos25de64",
+              "id": "estudiantesInscritos",
               "etiqueta": "Estudiantes inscritos",
               "respuestaCorrecta": 16,
               "unidad": "estudiantes"
@@ -294,13 +294,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "inscritos25de64",
+              "campoId": "estudiantesInscritos",
               "valorObtenido": 1600,
               "mensaje": "Faltó convertir el porcentaje: 25% es 0,25, no 25. Con 0,25 el resultado es una parte de 64; con 25 es 25 veces 64.",
               "errorCatalogado": "error-3"
             },
             {
-              "campoId": "inscritos25de64",
+              "campoId": "estudiantesInscritos",
               "valorObtenido": 39,
               "mensaje": "Restaste 25 como si fuera una cantidad de estudiantes. El 25% no son 25 personas: es una parte del curso, y hay que multiplicar por 0,25 para obtenerla.",
               "errorCatalogado": "error-2"

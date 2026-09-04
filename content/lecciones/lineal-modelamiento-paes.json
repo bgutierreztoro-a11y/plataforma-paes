@@ -117,13 +117,13 @@
           "enunciado": "Sin usar ninguna de las dos ecuaciones de la pizarra, razona directamente del enunciado:\n\n> Al empezar el registro, el dron ya estaba a 30 metros del punto de despegue, y desde ahí se aleja 9 metros por segundo.\n\n¿A qué distancia del punto de despegue está el dron a los 4 segundos de registro? ¿Y a los 10?",
           "campos": [
             {
-              "id": "distancia4s",
+              "id": "distanciaTemprana",
               "etiqueta": "Distancia a los 4 segundos",
               "respuestaCorrecta": 66,
               "unidad": "m"
             },
             {
-              "id": "distancia10s",
+              "id": "distanciaTardia",
               "etiqueta": "Distancia a los 10 segundos",
               "respuestaCorrecta": 120,
               "unidad": "m"
@@ -131,37 +131,37 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "distancia4s",
+              "campoId": "distanciaTemprana",
               "valorObtenido": 36,
               "mensaje": "Eso es solo lo que el dron avanzó durante el registro (9×4 = 36). Pero no arrancó en el punto de despegue: ya estaba a 30 metros cuando la medición empezó.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "distancia4s",
+              "campoId": "distanciaTemprana",
               "valorObtenido": 39,
               "mensaje": "Sumaste los 9 metros una sola vez. Fueron 4 segundos, y en cada uno avanza 9: hay que sumar 9 cuatro veces, o sea 9×4.",
               "errorCatalogado": "error-5"
             },
             {
-              "campoId": "distancia4s",
+              "campoId": "distanciaTemprana",
               "valorObtenido": 156,
               "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×4. Los 30 metros ya estaban recorridos antes de empezar, así que se suman una vez y no se multiplican por nada.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "distancia10s",
+              "campoId": "distanciaTardia",
               "valorObtenido": 90,
               "mensaje": "Eso es solo lo que avanzó durante el registro (9×10 = 90). Faltan los 30 metros que el dron ya llevaba cuando la medición empezó.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "distancia10s",
+              "campoId": "distanciaTardia",
               "valorObtenido": 111,
               "mensaje": "Contaste 9 segundos en vez de 10: 30 + 9×9 = 111. A los 10 segundos el dron avanzó 9 metros diez veces, no nueve.",
               "errorCatalogado": "error-2"
             },
             {
-              "campoId": "distancia10s",
+              "campoId": "distanciaTardia",
               "valorObtenido": 390,
               "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×10. Solo el ritmo de 9 metros por segundo se multiplica por el tiempo; los 30 se suman una sola vez.",
               "errorCatalogado": "error-6"

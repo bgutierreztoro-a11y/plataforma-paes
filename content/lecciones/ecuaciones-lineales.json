@@ -394,7 +394,7 @@
           "enunciado": "**Ejercicio.** Resuelve:\n\n**4x − 8 = 20**",
           "campos": [
             {
-              "id": "valorXp1",
+              "id": "valorX",
               "etiqueta": "x",
               "respuestaCorrecta": 7,
               "unidad": ""
@@ -402,13 +402,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "valorXp1",
+              "campoId": "valorX",
               "valorObtenido": 3,
               "mensaje": "Restaste el 8 cuando había que sumarlo. Aquí el término es −8, así que para eliminarlo se suma 8 en ambos lados: 4x = 20 + 8 = 28. Revisa esa dirección.",
               "errorCatalogado": "error-2"
             },
             {
-              "campoId": "valorXp1",
+              "campoId": "valorX",
               "valorObtenido": 28,
               "mensaje": "Llegaste bien a 4x = 28, pero eso es el peso de las 4 equis juntas. Falta repartir: divide ambos lados por 4.",
               "errorCatalogado": "error-4"

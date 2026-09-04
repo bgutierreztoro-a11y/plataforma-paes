@@ -117,13 +117,13 @@
           "enunciado": "Ahora tú. Completa la tabla del ahorro de Camila:\n\n| Semana | Total ahorrado |\n|--------|----------------|\n| 0 | $5.000 |\n| 1 | $7.000 |\n| 2 | $9.000 |\n| 3 | ? |\n| 8 | ? |",
           "campos": [
             {
-              "id": "semana3",
+              "id": "ahorroSemanaTemprana",
               "etiqueta": "Total ahorrado (semana 3)",
               "respuestaCorrecta": 11000,
               "unidad": "$"
             },
             {
-              "id": "semana8",
+              "id": "ahorroSemanaTardia",
               "etiqueta": "Total ahorrado (semana 8)",
               "respuestaCorrecta": 21000,
               "unidad": "$"
@@ -131,37 +131,37 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "semana3",
+              "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 6000,
               "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "semana3",
+              "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 9000,
               "mensaje": "Ese es el total de la semana 2, no de la 3. Cuenta de nuevo: de la semana 0 a la semana 3 hay 3 saltos de $2.000.",
               "errorCatalogado": "error-2"
             },
             {
-              "campoId": "semana3",
+              "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 13000,
               "mensaje": "Te pasaste por un salto. De la semana 0 a la 3 hay exactamente 3 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 3 × 2.000?",
               "errorCatalogado": "error-2"
             },
             {
-              "campoId": "semana8",
+              "campoId": "ahorroSemanaTardia",
               "valorObtenido": 16000,
               "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "semana8",
+              "campoId": "ahorroSemanaTardia",
               "valorObtenido": 19000,
               "mensaje": "Estás cerca. Cuenta con cuidado: de la semana 0 a la semana 8 hay 8 saltos de $2.000, no 7. Un truco: semana 1 tiene 1 salto, semana 2 tiene 2 saltos... semana 8 tiene 8.",
               "errorCatalogado": "error-2"
             },
             {
-              "campoId": "semana8",
+              "campoId": "ahorroSemanaTardia",
               "valorObtenido": 23000,
               "mensaje": "Te pasaste por un salto. De la semana 0 a la 8 hay exactamente 8 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 8 × 2.000?",
               "errorCatalogado": "error-2"
@@ -282,7 +282,7 @@
           "enunciado": "La tabla muestra el costo total de una impresión según el número de páginas:\n\n| Páginas | Costo |\n|---------|-------|\n| 0 | $12 |\n| 1 | $19 |\n| 2 | $26 |\n| 3 | $33 |\n\nNota: el costo en 0 páginas es el cargo fijo por usar la máquina. Si el patrón continúa, ¿cuál es el costo de imprimir 6 páginas?",
           "campos": [
             {
-              "id": "costoImpresion6paginas",
+              "id": "costoImpresionPaginas",
               "etiqueta": "Costo de imprimir 6 páginas",
               "respuestaCorrecta": 54,
               "unidad": "$"
@@ -290,13 +290,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "costoImpresion6paginas",
+              "campoId": "costoImpresionPaginas",
               "valorObtenido": 42,
               "mensaje": "Calculaste bien el costo de las páginas ($42), pero la tabla parte en $12 con cero páginas: ese cargo fijo se paga siempre. Súmalo.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "costoImpresion6paginas",
+              "campoId": "costoImpresionPaginas",
               "valorObtenido": 47,
               "mensaje": "Contaste un salto de menos. De 0 a 6 páginas hay 6 aumentos de $7.",
               "errorCatalogado": "error-2"
@@ -357,7 +357,7 @@
           "enunciado": "Parte 2: después de 6 semanas, ¿cuántas estampillas tiene en total?",
           "campos": [
             {
-              "id": "estampillasMartina6semanas",
+              "id": "estampillasMartinaTotal",
               "etiqueta": "Total de estampillas",
               "respuestaCorrecta": 48,
               "unidad": ""
@@ -365,13 +365,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "estampillasMartina6semanas",
+              "campoId": "estampillasMartinaTotal",
               "valorObtenido": 30,
               "mensaje": "Eso es solo lo que consiguió en las 6 semanas (5×6=30). Pero Martina no partió de cero: ya tenía 18 estampillas antes de empezar a coleccionar en serio.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "estampillasMartina6semanas",
+              "campoId": "estampillasMartinaTotal",
               "valorObtenido": 43,
               "mensaje": "Contaste una semana de menos. Fueron 6 semanas completas: 18 + 5×6, no 18 + 5×5.",
               "errorCatalogado": "error-2"

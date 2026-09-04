@@ -114,7 +114,7 @@
           "enunciado": "Para otro evento, con el mismo 20% de recargo por compra online, el total pagado fue de **$18.000**.\n\n¿Cuánto valía la entrada antes del recargo?",
           "campos": [
             {
-              "id": "entrada18000",
+              "id": "entradaSinRecargo",
               "etiqueta": "Valor de la entrada sin recargo",
               "respuestaCorrecta": 15000,
               "unidad": "pesos"
@@ -122,19 +122,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "entrada18000",
+              "campoId": "entradaSinRecargo",
               "valorObtenido": 14400,
               "mensaje": "Le quitaste el 20% al total. Compruébalo hacia adelante: $14.400 más su 20% da $17.280, no $18.000. Quitar el mismo porcentaje no deshace lo que se sumó, porque el 20% del total es más grande que el 20% de la entrada.",
               "errorCatalogado": "error-7"
             },
             {
-              "campoId": "entrada18000",
+              "campoId": "entradaSinRecargo",
               "valorObtenido": 3600,
               "mensaje": "Calculaste el 20% del total pagado. Ojo: eso ni siquiera es el recargo — el recargo real fue de $3.000, porque se calculó sobre la entrada y no sobre el total. Y en todo caso la pregunta pide el precio de partida, no lo que se sumó encima.",
               "errorCatalogado": "error-1"
             },
             {
-              "campoId": "entrada18000",
+              "campoId": "entradaSinRecargo",
               "valorObtenido": 22500,
               "mensaje": "Dividir es el camino correcto, pero no por ese número. Fíjate en el tamaño del resultado: te dio más que los $18.000 pagados, y la entrada tiene que costar MENOS que el total con recargo. Estás dividiendo por 0,80 cuando el factor que se aplicó fue otro.",
               "errorCatalogado": "error-7"

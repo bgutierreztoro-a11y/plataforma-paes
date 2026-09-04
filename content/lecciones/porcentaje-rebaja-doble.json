@@ -115,7 +115,7 @@
           "enunciado": "Otro libro del mismo stand cuesta $7.500.\n\nSe le aplica el 20% del cartel y, después, el 10% adicional de socio sobre el precio ya rebajado.\n\n¿Cuánto pagas por este libro?",
           "campos": [
             {
-              "id": "precioFinal7500",
+              "id": "precioFinalLibroDirecto",
               "etiqueta": "Precio final del libro",
               "respuestaCorrecta": 5400,
               "unidad": "pesos"
@@ -123,19 +123,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "precioFinal7500",
+              "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 5250,
               "mensaje": "Sumaste los dos porcentajes y aplicaste un 30% de una vez (7.500 × 0,70 = 5.250). Pero el segundo descuento no se aplica sobre los $7.500: se aplica sobre lo que quedó después del primero. Prueba haciendo los dos pasos por separado.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "precioFinal7500",
+              "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 6000,
               "mensaje": "Ese es el precio después del primer descuento, y está bien calculado: 7.500 × 0,80 = 6.000. Te falta el segundo paso — sobre esos $6.000 todavía hay que aplicar el 10% de socio.",
               "errorCatalogado": "error-5"
             },
             {
-              "campoId": "precioFinal7500",
+              "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 2100,
               "mensaje": "Calculaste cuánto te DESCUENTAN en total, no cuánto PAGAS. La pregunta pide el precio final, que es lo que queda después de restar el descuento.",
               "errorCatalogado": "error-1"
@@ -243,7 +243,7 @@
           "enunciado": "Aplica la regla con cifras nuevas.\n\nUna enciclopedia cuesta $32.000. El stand le hace un 10% de descuento y, sobre el precio ya rebajado, otro 10% por pago en efectivo.\n\n¿Cuánto se paga finalmente?",
           "campos": [
             {
-              "id": "precioFinal32000",
+              "id": "precioFinalEnciclopedia",
               "etiqueta": "Precio final de la enciclopedia",
               "respuestaCorrecta": 25920,
               "unidad": "pesos"
@@ -251,19 +251,19 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "precioFinal32000",
+              "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 25600,
               "mensaje": "Sumaste 10% + 10% y aplicaste un 20% de una vez (32.000 × 0,80 = 25.600). Con la regla: 0,90 × 0,90 = 0,81, no 0,80. Dos descuentos del 10% equivalen a uno del 19%, no del 20%.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "precioFinal32000",
+              "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 28800,
               "mensaje": "Ese es el precio después del primer 10%, bien calculado. Falta aplicarle el segundo 10% a esos $28.800.",
               "errorCatalogado": "error-5"
             },
             {
-              "campoId": "precioFinal32000",
+              "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 6080,
               "mensaje": "Calculaste el descuento total (el 19% de $32.000), no el precio final. Lo que se paga es lo que queda: el 81%.",
               "errorCatalogado": "error-1"
@@ -289,7 +289,7 @@
           "enunciado": "Un libro de $9.000 tiene las mismas dos rebajas de la feria, pero aplicadas **al revés**: primero el 10% de socio, y después el 20% del stand sobre el precio ya rebajado.\n\n¿Cuánto se paga?",
           "campos": [
             {
-              "id": "precioFinal9000",
+              "id": "precioFinalLibroInvertido",
               "etiqueta": "Precio final del libro",
               "respuestaCorrecta": 6480,
               "unidad": "pesos"
@@ -297,13 +297,13 @@
           ],
           "feedbackPorError": [
             {
-              "campoId": "precioFinal9000",
+              "campoId": "precioFinalLibroInvertido",
               "valorObtenido": 6300,
               "mensaje": "Volviste a sumar los porcentajes (9.000 × 0,70). Los factores son 0,90 y 0,80, y hay que multiplicarlos: 0,90 × 0,80 = 0,72.",
               "errorCatalogado": "error-6"
             },
             {
-              "campoId": "precioFinal9000",
+              "campoId": "precioFinalLibroInvertido",
               "valorObtenido": 8100,
               "mensaje": "Ese es el precio después del 10%, correcto. Falta aplicarle el 20% a esos $8.100.",
               "errorCatalogado": "error-5"
