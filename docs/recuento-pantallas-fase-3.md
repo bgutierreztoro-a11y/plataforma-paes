@@ -1,50 +1,90 @@
 # Recuento: las 11 pantallas del HTML de referencia y qué las implementa
 
 Fuente: `docs/referencia/B-linea-interfaz-completa.html` (once bloques `<!-- 01 -->`
-… `<!-- 11 -->`). Estado al cierre de la fase 3I (2026-09-03).
+… `<!-- 11 -->`). Estado al cierre de la fase 3J (2026-09-04).
 
 "Completa" = la ruta existe y sigue la maqueta con los tokens de la dirección
-"Línea". "Parcial" = la ruta existe y funciona, pero la migración a "Línea" está a
-medias — en los dos casos que quedan, eso significa que tiene el color de eje de
-la fase 2 y no el marco de la maqueta.
+"Línea".
 
-**Este recuento se rehizo midiendo contra el código, no contra la versión
-anterior de este mismo archivo.** La edición del cierre de la 3H daba las once
-por completas; dos no lo estaban. El criterio de "completa" nunca cambió: lo que
-faltaba era pasar cada ruta por él.
+**Once de once, medido contra el código.** La 3J cerró las dos que quedaban
+parciales —la 02 y la 08—, que tenían el color de eje de la fase 2 pero no el
+marco de la maqueta. Este recuento se rehace midiendo el código, no editando la
+versión anterior de este archivo: la edición del cierre de la 3H ya había dado
+las once por completas cuando dos no lo estaban. El criterio de "completa" nunca
+cambió; lo que faltaba era pasar cada ruta por él.
+
+"Completa" no quiere decir "idéntica a la maqueta". Cada desvío deliberado está
+en la nota de su pantalla, con el motivo.
 
 | # | Pantalla (HTML) | Ruta / componente | Estado |
 |---|---|---|---|
 | 01 | Entrada | `app/page.tsx` → `components/PuntoDePartida.tsx` (marco `Entrada` + `TiraKPI` + `EnlaceBoton` de `ui/linea/`) | **Completa** — fase 3F |
-| 02 | La red | `app/camino/page.tsx` → `components/camino/Camino.tsx` / `CaminoVertical.tsx` + `ui/linea/NavInferior` | **Parcial** (ver nota 1) |
+| 02 | La red | `app/camino/page.tsx` → `components/camino/Camino.tsx` + `ui/linea/PuntosDeLinea` + `ui/linea/Boton` + `ui/linea/NavInferior` | **Completa** — fase 3J (ver nota 1) |
 | 03 | Línea | `app/linea/[ejeId]/page.tsx` → `components/camino/LineaDelEje.tsx` + `ui/linea/PlacaLinea` + `ui/linea/RielEstaciones` | **Completa** — fase 3B (ver nota 2) |
 | 04 | Estación | `app/tema/[id]/page.tsx` → `components/camino/DetalleTema.tsx` + `ui/linea/TiraKPI` + `ui/linea/RielEstaciones` | **Completa** — fase 3G (ver nota 3) |
 | 05 | Lección, descubrimiento | `app/leccion/[id]/page.tsx` → `components/RunnerLeccion.tsx` + `components/leccion/HeaderLeccion.tsx` + `components/bloques/*` | **Completa** — fase 3H (ver nota 4) |
 | 06 | Lección, acierto | `components/RunnerLeccion.tsx` → `components/FeedbackEnCapas.tsx` + `components/ui/PanelFeedback.tsx` | **Completa** — fase 3H (ver nota 4) |
 | 07 | Lección, error catalogado | `components/FeedbackEnCapas.tsx` + `components/ui/linea/TarjetaError.tsx` (disparado desde `ItemPAES` / `bloques/BloquePregunta`) | **Completa** — fase 3C (ver nota 5) |
-| 08 | Cierre PAES | `app/cierre/[temaId]/page.tsx` → `components/Cierre.tsx` → `EjecutorSetItems` → `ItemPAES` | **Parcial** (ver nota 6) |
+| 08 | Cierre PAES | `app/cierre/[temaId]/page.tsx` → `components/Cierre.tsx` → `EjecutorSetItems` (+ `ui/linea/BarraProgreso`) → `ItemPAES` (+ `ui/linea/Boton`) | **Completa** — fase 3J (ver nota 6) |
 | 09 | Resultado | `components/CierreFinal.tsx` (`ui/linea/Puntaje` + `ui/linea/FranjaDeItems` + `ui/linea/TarjetaLoQueFallo` + `ui/linea/Boton`) | **Completa** — fase 3I (ver nota 7) |
 | 10 | Errores | `app/errores/page.tsx` → `components/errores/ErroresVivos.tsx` / `ListaErroresVivos.tsx` + `ui/linea/NavInferior` | **Completa** — fase 3D (ver nota 8) |
 | 11 | Tú | `app/tu/page.tsx` → `components/tu/AvancePersonal.tsx` + `ui/linea/TiraKPI` + `ui/linea/NavInferior` | **Completa** — fase 3E (ver nota 9) |
 
 ## Notas
 
-**1 · Pantalla 02 (La red) — parcial.** Tiene el color de eje por sección (fase
-2C, `lineaDeEje` en `Camino.tsx:139-142`) y la `NavInferior` de la fase 3A. Lo
-que falta es el marco entero: `Camino.tsx` sigue montando la franja fija con
-`TituloDePantalla` ("Tu camino") y `ContadorDePantalla`, y debajo la columna de
-nodos de `CaminoVertical` dentro de un `rounded-panel`.
+**1 · Pantalla 02 (La red) — completa desde la fase 3J (2026-09-04).** Sigue la
+maqueta de arriba a abajo: eyebrow "Tu red", titular "Vas en la N", subtítulo
+"16 estaciones repartidas en 4 líneas", **cuatro filas** —una por línea, con la
+barra de color, el nombre, el estado y la fila de puntos— y el CTA "Ir a mi
+estación" al pie. Salió el marco anterior (franja fija con `TituloDePantalla` y
+`ContadorDePantalla`, y la columna de 16 nodos de `CaminoVertical` dentro de un
+`rounded-panel`), y con él `CaminoVertical`, `EncabezadoEje` y
+`navegacion/EncabezadoPantalla`, que quedaron sin consumidor y se borraron.
+`NodoTema` se queda: `CelebracionTema.tsx:6` monta su `PuntoNodo`.
 
-La maqueta es otra cosa: titular "Tu red / Vas en la N" con la racha a la
-derecha, subtítulo "16 estaciones repartidas en 4 líneas", y **cuatro filas
-compactas** —una por línea, con barra de color a la izquierda, nombre, "N de M
-estaciones" y una fila de puntos— más el CTA "Ir a mi estación". Es decir: la
-maqueta resume por línea y la implementación lista los 16 temas.
+El cambio de fondo es que la pantalla **dejó de listar las 16 estaciones y pasó a
+resumir por línea**. Ese detalle ya lo da /linea/[ejeId] (pantalla 03), que es a
+donde entra cada fila —el mismo destino que antes tenía la banda de eje—, así que
+la 02 estaba duplicando un nivel.
 
-Dos de esos datos no tienen fuente hoy y habría que resolverlos antes de armar la
-pantalla: la **racha** (mismo hueco que en /tu, `docs/deuda-avance-por-linea.md`
-punto 1) y el conteo por **estaciones** en vez de lecciones, que pasa por el
-balde único del `contextoId` (ver "Lo que queda abierto", punto 1).
+Cuatro decisiones que conviene no re-discutir a ciegas:
+
+- **Las estaciones se cuentan con `estadoDeNodo`**, la misma función con la que
+  esta pantalla ya alimentaba su contador. No es un número nuevo y
+  `docs/deuda-avance-por-linea.md:84-85` ya nombraba "el contador de /camino"
+  entre lo alcanzado por el balde único del `contextoId` (punto 1 de "Lo que
+  queda abierto"). Esquivarlo definiendo "pasada" como
+  `avanceDeTema().hechas === total` habría creado una **segunda** definición de
+  estación completa, discrepante con `estadoDeNodo` en el resto del producto:
+  peor que el bug conocido. /tu resolvió distinto porque ahí la celda era una
+  cifra agregada y "Lecciones" era un rótulo verdadero para lo que sí podía
+  medir; acá la unidad de la fila **es** la estación, y "un punto por estación,
+  relleno = pasada" no tiene equivalente por lección que signifique eso.
+- **La racha no se dibuja.** No tiene fuente (`deuda-avance-por-linea.md` §1) y
+  acá no hay `TiraKPI` que sostenga un `SIN_DATO` con su rótulo, como sí la hay
+  en /tu: el bloque no existe. No se derivó ninguna racha nueva para llenar el
+  hueco de la maqueta.
+- **"Vas aquí · estación K" va en `--linea-nav`, no en `--linea`.** Es texto
+  sobre superficie clara y la 02 (#FFB600) da 1,76:1 ahí; misma razón ya
+  documentada en `colores.ts` para `NavInferior`. La barra y los puntos, que son
+  forma, sí van en `--linea`. `estiloDeLinea()` se instala **por fila** y no en
+  la raíz: la pantalla cruza los cuatro ejes y no hay línea activa arriba.
+- **`PuntosDeLinea` es nuevo y no reusa `<Estacion>`.** La estación mide 15px,
+  tiene cinco estados y su geometría es la del riel; darle un segundo tamaño
+  pediría una tabla de 2×5 con ocho celdas que nadie monta. El punto de la 02 es
+  un resumen, no una parada.
+
+Dos cosas que la migración dejó anotadas:
+
+- **Sin estación activa** —todo lo que tiene contenido cerrado o por repasar— el
+  CTA no se dibuja, porque apuntaría a una estación ya recorrida, y la N del
+  titular pasa a la última estación con contenido: es hasta dónde llegó el
+  recorrido, que es lo que la frase afirma. Los dos casos apuntan a una estación
+  real; no se inventa un número.
+- **El `<title>` de la ruta sigue diciendo "Tu camino"** aunque el titular de la
+  pantalla ahora diga "Tu red". El plan de la 3J acotaba `app/camino/page.tsx` al
+  comentario del reparto de ancho, y cambiar copy de metadatos no estaba en ese
+  alcance. Es un desvío de una línea, no una deuda de producto.
 
 **2 · Pantalla 03 (Línea).** Completa, con una omisión declarada: no se pinta la
 estación de combinación que cierra la línea en la maqueta ("Combinación · cierre
@@ -125,28 +165,65 @@ Dos hechos que la migración deja anotados, sin actuar sobre ellos:
 cálculo paso a paso) tiene deuda propia en `docs/deuda-banner-error-desarrollo.md`
 y `docs/deuda-catalogo-errores-crossfile.md`.
 
-**6 · Pantalla 08 (Cierre PAES) — parcial.** La cadena que la dibuja
-—`EjecutorSetItems` → `ItemPAES`— **no importa nada de `ui/linea/`**: usa
-`components/ui/BarraProgreso`, `components/ui/Boton` y los tokens de
-`components/ui/alternativa.ts`. Lo único de la dirección que llegó ahí es el
-color de eje en el chip de la alternativa marcada (`ItemPAES.tsx:233`, fase 2D).
+**6 · Pantalla 08 (Cierre PAES) — completa desde la fase 3J (2026-09-04).** La
+cadena que la dibuja —`Cierre` → `EjecutorSetItems` → `ItemPAES`— **no importaba
+nada de `ui/linea/`** salvo el chip de la alternativa marcada: usaba
+`components/ui/BarraProgreso` (segmentada), `components/ui/Boton` (índigo con
+canto) y las constantes viejas de `components/ui/alternativa.ts`. Ahora tiene la
+fila superior de la maqueta —pill "Cierre PAES" a la izquierda, "Ítem N de 8" a
+la derecha—, la barra continua de `ui/linea/BarraProgreso` debajo, las
+alternativas con el tratamiento revelado de la 3H y los dos botones en
+`ui/linea/Boton`.
 
-Contra la maqueta faltan: la pill "Cierre PAES" y el rótulo "Ítem N de M" en la
-fila superior, la barra fina debajo, y las alternativas del kit (`ui/linea/
-Alternativa`, hoy instanciado solo en `/_design`). En su lugar hay "Habilidad: X"
-a la izquierda, el cronómetro a la derecha y el CTA "Revisar respuesta".
+**El marco se migró en `EjecutorSetItems`, o sea para sus tres llamadores**
+(`Cierre.tsx`, `Diagnostico.tsx` y la fase `itemsPAES` de `RunnerLeccion.tsx`), no
+solo para el cierre. La pill va detrás de `rotulo?`, que solo pasa `Cierre`: sin
+ella no se dibuja y /diagnostico no se anuncia como un cierre que no es.
+`sustantivo?` (default `"Pregunta"`) deja a las otras dos con su copy. Sostener la
+barra segmentada vieja al lado de la nueva habría pedido una prop `variante` cuyo
+único propósito sería conservar el look anterior — la abstracción "por si acaso"
+que `CLAUDE.md` prohíbe. Con eso `components/ui/BarraProgreso.tsx` quedó sin
+consumidor y se borró. También salió la prop `encabezado`: cero llamadores.
 
-Dos cosas a decidir antes de migrarla, y por eso no se hizo de paso:
+`components/ui/alternativa.ts` absorbió el tratamiento revelado que la 3H ya había
+resuelto y que `BloquePregunta.tsx:143-163` tenía escrito a mano, declarándolo
+como deuda ("unificarlos va en su propia tanda"). Ésta fue esa tanda:
+`ALTERNATIVA_CORRECTA` sube el borde a 1,5px; `ALTERNATIVA_ELEGIDA_REVELADA` pasa
+a `border-strong` sobre `bg-sunken` —el `.opt.no` de la maqueta— cuando antes era
+`--linea` + `--linea-tinte`, o sea **idéntica a estar simplemente elegida**; y
+`CHIP_*` son nuevas.
 
-- El cronómetro visible y "Habilidad: X" no están en la maqueta pero son
-  decisiones pedagógicas anteriores (entrenar el ritmo de ~2 min por pregunta).
-  Sacarlos es una decisión de producto, no de estilo.
-- La maqueta ofrece "Marcar y seguir" además de "Responder". Eso es saltar un
-  ítem y volver, que el reducer de `lib/estadoSetItems.ts` no soporta: hoy avanza
-  y no retrocede. Es funcionalidad nueva, no marco.
+Eso arregló un defecto real: el chip emitía `peer-checked:` **siempre**, así que
+tras revelar seguía relleno en `--linea-fondo` y tapaba el estado revelado —un
+disco del color del eje dentro de una fila ya verde o ya en tinta—, exactamente
+lo que advierte `BloquePregunta.tsx:126-129`.
 
-`ItemPAES` lo comparten /diagnostico, el cierre y la fase de ítems de una
-lección, así que cualquier cambio ahí toca las tres.
+Tres desvíos deliberados de la maqueta, cada uno con su motivo:
+
+- **Se quedan "Habilidad: X" y el cronómetro visible.** El cronómetro no es
+  decoración: `tiempoFinalMs` alimenta el evento `item_respuesta`,
+  `registrarRespuesta()` en `localStorage` y el "Ritmo promedio" de
+  `CierreFinal`. "Habilidad: X" no viaja a ningún dato —su otro consumidor,
+  `lib/intercalar.ts`, la usa antes del render—, pero sacarla es la misma
+  decisión de producto que el cronómetro, no una de estilo.
+- **"Marcar y seguir" no se hace.** `lib/estadoSetItems.ts` solo tiene
+  `REGISTRAR` y `SIGUIENTE`: no hay marcar, ni retroceder, ni saltar. Es
+  funcionalidad nueva, no marco.
+- **Cuatro alternativas y no cinco**, y el CTA sigue diciendo "Revisar
+  respuesta" y no "Responder". `ClaveAlternativa` es `"A"|"B"|"C"|"D"` y la regla
+  2 de `CLAUDE.md` fija cuatro: ahí la maqueta se aparta del producto, no al
+  revés. El botón revela feedback, no envía nada.
+
+Un efecto colateral visible, anotado: al bajar el ancho del borde de
+`ALTERNATIVA_BASE` a cada estado —`border` y `border-[1.5px]` son la misma
+propiedad y con las dos puestas gana el orden de emisión de Tailwind—,
+`ALTERNATIVA_DESCARTADA` pasó de un borde en `currentColor` (que heredaba del
+`border` sin color de la base, y era tinta al 60%) a `border-border` explícito,
+que es el neutro que ya usan los demás estados.
+
+`contextoId="cierre"` **no se tocó**: es la deuda de `docs/deuda-cierre.md` §2 y
+arreglarla exige decidir qué pasa con el progreso ya guardado en los
+dispositivos. Tampoco `nombreModulo` (§1 del mismo documento).
 
 **7 · Pantalla 09 (Resultado) — completa desde la fase 3I (2026-09-03).** La
 franja de ocho celdas y la tarjeta "Lo que falló" ya estaban desde la 2E
@@ -199,14 +276,17 @@ de lecciones) no tienen fuente que los sostenga; detalle en
 
 ## Lo que queda deliberadamente abierto
 
-Nada de esta lista se tocó en la 3I. Está acá para que se decida a propósito y no
+Nada de esta lista se tocó en la 3J. Está acá para que se decida a propósito y no
 por descuido.
 
-1. **El bug del `contextoId`.** `Cierre.tsx:56` escribe `contextoId="cierre"`
+1. **El bug del `contextoId`.** `Cierre.tsx:67` escribe `contextoId="cierre"`
    para los once cierres, y `estadoDeNodo` lee ese balde único
-   (`lib/estadoNodo.ts:118`), así que rendir un cierre marca completos temas
-   ajenos. Es lo que obliga a /tu a contar lecciones en vez de estaciones y lo
-   que bloquea el "N de M estaciones" de la pantalla 02. Detalle en
+   (`lib/estadoNodo.ts:136`), así que rendir un cierre marca completos temas
+   ajenos — exige las lecciones hechas, pero deja de filtrar por el cierre
+   propio. Es lo que obliga a /tu a contar lecciones en vez de estaciones.
+   La pantalla 02 **sí** cuenta estaciones y por lo tanto queda expuesta: fue
+   decisión explícita de la 3J (ver nota 1), porque la alternativa creaba una
+   segunda definición de "estación completa". Detalle en
    `docs/deuda-avance-por-linea.md` §3.
 2. **Ensayo sin ruta.** `ENLACES_NAV` (`ui/linea/NavInferior.tsx:25-29`) no
    declara `ensayo`: el tab se dibuja pero no es interactivo. No hay producto de
@@ -215,13 +295,25 @@ por descuido.
    estilo: "Repasar" en /errores (no hay repaso dirigido), "Enviar reporte al
    apoderado" en /tu (sin destinatario ni decisión de consentimiento sobre un
    menor) y "Repasar ese error" en la 09 (mismo motivo que el primero).
-4. **`e2e/capturas.spec.ts` está roja y no se tocó.** Medido en la 3G: 22 fallos,
-   46 en verde, 4 saltados, y el mismo resultado corriendo la suite contra
-   `15b7626` (cierre de la 3F). Once de esos fallos ni siquiera abren
-   `/tema/[id]`. Desglose por test en `docs/deuda-e2e-capturas.md`.
-5. **Las pantallas 02 y 08 siguen parciales.** Notas 1 y 6; ninguna de las dos es
-   solo marco.
-6. **`lib/descripcionesLecciones.tsx` es código muerto.** `presentacionDeLeccion`
+4. **`e2e/capturas.spec.ts` está roja y no se tocó.** Medido en la 3J:
+   **24 fallos, 44 en verde, 4 saltados**, contra **22 / 46 / 4** en el commit
+   anterior (`9b0edd1`), corriendo la misma suite. La 3J agregó **exactamente
+   dos**, los dos en `[movil]` y los dos sobre la columna de nodos que la
+   pantalla 02 dejó de tener: `caben 5 nodos sin scroll en /camino a 360px` y
+   `a 390px la tarjeta no cuelga de un nodo, va fija al pie`. Los otros 22 no se
+   movieron y ninguno dejó de fallar. Desglose y atribución en
+   `docs/deuda-e2e-capturas.md`.
+5. **`lib/geometriaCamino.ts` quedó sin consumidor de producto.** Desde la 3J lo
+   usan solo `RESERVA_TARJETA` en `e2e/capturas.spec.ts:2` y su propio
+   `lib/geometriaCamino.test.ts`, que aporta parte de los 195 unit tests. Mismo
+   estatus que `lib/descripcionesLecciones.tsx` (punto 7): borrarlo es decisión
+   aparte y no se arrastra dentro de un commit de diseño. Está atado a la
+   reescritura de la suite e2e, que es donde se decide si esos tests siguen
+   existiendo.
+6. **El `<title>` de /camino sigue diciendo "Tu camino"** mientras la pantalla se
+   titula "Tu red". Ver el final de la nota 1: fue alcance del plan, no
+   descuido.
+7. **`lib/descripcionesLecciones.tsx` es código muerto.** `presentacionDeLeccion`
    no tiene consumidor de runtime desde la 3G, cuando se borró `CaminoLecciones`.
    El 2026-09-03 su test dejó de exigir cobertura total —pedir copy de interfaz
    para un módulo que nadie monta es un contrato que nadie cumple— y hoy solo

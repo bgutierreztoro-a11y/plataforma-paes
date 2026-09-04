@@ -74,3 +74,49 @@ roto. La suite se trata entera en su propia unidad de trabajo, y ahí se decide 
 - Qué debería afirmar cada test reescrito.
 - Si `npm run capturas` tiene que pasar a ser un gate de commit. Hoy no lo es, y
   esa es la razón de que la suite pudiera quedarse roja sin que nadie se enterara.
+
+---
+
+## Corrida de la fase 3J (2026-09-04) — dos fallos nuevos, medidos contra el commit anterior
+
+`npm run capturas` sobre `249bbed` (cierre de la 3J), y la **misma suite corrida
+contra `9b0edd1`** —el commit anterior, con el plan ya escrito y ningún código
+tocado— para separar lo que rompió la 3J de lo que ya venía roto:
+
+```
+9b0edd1 (baseline)   22 failed · 4 skipped · 46 passed (5.6m)
+249bbed (fase 3J)    24 failed · 4 skipped · 44 passed (6.5m)
+```
+
+**Dos fallos nuevos, los dos en `[movil]` y los dos por lo mismo:**
+
+| Test | En `9b0edd1` | En `249bbed` |
+|---|---|---|
+| `caben 5 nodos sin scroll en /camino a 360px` (:374) | pasa (895ms) | falla (timeout 30s) |
+| `a 390px la tarjeta no cuelga de un nodo, va fija al pie` (:524) | pasa (606ms) | falla (timeout 30s) |
+
+Los dos afirman sobre la **columna de nodos** de /camino: cuántos discos entran
+sin scroll y dónde se posa la tarjeta flotante del nodo activo. La 3J reemplazó
+esa columna por cuatro filas resumen —una por línea—, así que `CaminoVertical`,
+`NodoTema` como disco de /camino y la tarjeta flotante ya no existen en esa ruta.
+No es un selector desactualizado: **no hay nodos que contar ni tarjeta que
+posicionar.** Reescribirlos es decidir de nuevo qué tiene que afirmar cada uno.
+
+**Los otros 22 fallos no se movieron, y ninguno de los que sí pasaban dejó de
+pasar por otra causa:** el conjunto de fallos de `249bbed` es exactamente el de
+`9b0edd1` más esos dos. Cero tests dejaron de fallar, cero cambiaron de motivo.
+
+Vale la pena decirlo porque el plan de la 3J anticipaba que romperían **nueve**
+tests de /camino —"camino", "camino con la lección a medias", "el camino muestra
+las 16 unidades…", "un nodo bloqueado dice por qué…", los dos de la tarjeta
+activa y los dos de celebración—. Medido: siete de esos nueve **ya fallaban en el
+baseline** por las premisas vencidas que documenta la sección anterior, y los dos
+de celebración pasan en las dos corridas. La 3J solo alcanzó a los dos que
+todavía estaban en verde.
+
+## Qué sigue sin cubrir este documento (sin cambios)
+
+Lo de la sección anterior, más: qué debería afirmar `/camino` ahora que la
+pantalla resume por línea en vez de listar los 16 temas. Los dos tests nuevos que
+fallan entran en la misma unidad de trabajo que los otros 22 — no se arreglan por
+partes, por el motivo que ya fijó la 3G.
