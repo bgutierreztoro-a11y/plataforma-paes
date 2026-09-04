@@ -18,12 +18,18 @@ export function BloquePregunta({
   itemId,
   contexto,
   contextoId,
+  onAcierto,
 }: {
   bloque: BloquePreguntaTipo;
   itemId: string;
   /* Requeridas, sin default: ver la nota en ItemPAES.tsx. */
   contexto: RespuestaLocal["contexto"];
   contextoId: string;
+  /* Avisa al runner que la pregunta del paso se respondió bien, para que pueda
+     ofrecer "¿Te hizo sentido?" al pie. Opcional: fuera de una lección
+     (`ItemPAES` no monta este bloque, pero el contrato es el mismo) nadie
+     escucha. Se enhebra igual que `onExploracionCompleta`. */
+  onAcierto?: () => void;
 }) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
@@ -86,6 +92,7 @@ export function BloquePregunta({
         rotuloDeError(alternativaElegida.errorCatalogado, registrarOcurrenciaDeError(descripcion)),
       );
     }
+    if (alternativaElegida.esCorrecta) onAcierto?.();
     setRevelado(true);
   }
 

@@ -1127,15 +1127,17 @@ se tocó en ningún commit.
   ningún campo de contenido la alimenta y no se inventó desde código. Nunca se
   muestra hoy.
 
-## 🟡 Los eventos de autoexplicación no están declarados en CLAUDE.md (abierta 2026-08-04)
+## ✅ Los eventos de autoexplicación no están declarados en CLAUDE.md (abierta 2026-08-04, cerrada 2026-09-03)
 
 `lib/eventos.ts` suma `autoexplicacion_elegida` (item_id, acerto_su_error) y
 `autoexplicacion_saltada` (item_id). CLAUDE.md §Convenciones dice que la lista
 de eventos se modifica "primero aquí", y esta sesión tenía prohibido tocar ese
 archivo, así que la unión de tipos y la documentación quedaron desincronizadas.
 
-**Gatillo:** la próxima sesión que pueda editar CLAUDE.md. Es una entrada de
-dos líneas en la lista de eventos; no hay decisión de diseño pendiente.
+**Cerrada en la fase 3H**, en la misma edición que agregó `sentido_reportado`:
+dejar la lista a medias mientras se la estaba editando habría sido peor que el
+alcance extra. La lista dice además dónde viven los diez eventos de navegación
+del rediseño del camino, que tampoco estaban ahí.
 
 ## 🟡 No existe el campo que dice la ESTRATEGIA de resolución de un ítem (abierta 2026-08-04)
 

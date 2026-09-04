@@ -42,6 +42,12 @@ export function RunnerLeccion({
      gráfico, que es justo lo único que el paso enseña. */
   const [exploracionCumplida, setExploracionCumplida] = useState(false);
   const [mostrarAvisoExploracion, setMostrarAvisoExploracion] = useState(false);
+  /* "¿Te hizo sentido?": aparece al acertar la pregunta del paso y se retira al
+     responderla. Los dos son estado del paso, no del runner, así que se
+     reinician en `irA()` junto con el gate de exploración — nunca en el reducer,
+     que no cambia en esta fase. */
+  const [acertoEnPaso, setAcertoEnPaso] = useState(false);
+  const [sentidoRespondido, setSentidoRespondido] = useState(false);
   const router = useRouter();
   const totalPasos = leccion.pasos.length;
   const esUltimoPaso = estado.pasoActual === totalPasos - 1;
@@ -211,6 +217,8 @@ export function RunnerLeccion({
     dispatch({ type: accion });
     setExploracionCumplida(false);
     setMostrarAvisoExploracion(false);
+    setAcertoEnPaso(false);
+    setSentidoRespondido(false);
   }
 
   function avanzar() {
@@ -254,21 +262,62 @@ export function RunnerLeccion({
      `flex-1` sobre el primario y `anchoAuto` en el ghost: el primario se queda
      con todo el ancho sobrante en vez de repartirlo mitad y mitad. En el paso 1
      no hay ghost y el CTA ocupa la fila entera. */
+  /* Se ofrece una sola vez por paso, después de acertar, y solo si el paso puede
+     avanzar: dos pasos del corpus mezclan el gate de exploración con una
+     pregunta (cuadratica-donde-toca-el-eje y cuadratica-punto-mas-alto, paso 5),
+     y ahí ofrecer una respuesta que no avanza sería una promesa falsa. Con el
+     gate cumplido la pregunta aparece igual. */
+  const mostrarSentido = acertoEnPaso && !sentidoRespondido && !avanceBloqueado;
+
+  function responderSentido(hizoSentido: boolean) {
+    registrarEvento({
+      nombre: "sentido_reportado",
+      props: {
+        leccion_id: leccion.id,
+        paso: estado.pasoActual + 1,
+        hizo_sentido: hizoSentido,
+      },
+    });
+    setSentidoRespondido(true);
+    /* Las dos respuestas avanzan igual, por el mismo camino que el CTA: la
+       pregunta mide, no ramifica. Un "todavía no" que abriera una rama sería una
+       decisión pedagógica distinta —y de contenido, no de marco. */
+    if (esUltimoPaso) terminarPasos();
+    else avanzar();
+  }
+
   const accionesDelPaso = (
-    <div className="flex items-center gap-2">
-      {estado.pasoActual > 0 && (
-        <Boton variante="secundario" anchoAuto onClick={() => irA("IR_ANTERIOR")}>
-          Paso anterior
-        </Boton>
+    <>
+      {mostrarSentido && (
+        <div className="entra-panel-anclado">
+          <p className="mb-2 text-center text-cuerpo-xs tracking-[0.04em] text-secondary">
+            ¿Te hizo sentido?
+          </p>
+          <div className="flex gap-2">
+            <Boton variante="secundario" className="flex-1" onClick={() => responderSentido(true)}>
+              Sí
+            </Boton>
+            <Boton variante="secundario" className="flex-1" onClick={() => responderSentido(false)}>
+              Todavía no
+            </Boton>
+          </div>
+        </div>
       )}
-      <Boton
-        variante="linea"
-        className="flex-1"
-        onClick={esUltimoPaso ? terminarPasos : avanzar}
-      >
-        {copyCTA}
-      </Boton>
-    </div>
+      <div className="flex items-center gap-2">
+        {estado.pasoActual > 0 && (
+          <Boton variante="secundario" anchoAuto onClick={() => irA("IR_ANTERIOR")}>
+            Paso anterior
+          </Boton>
+        )}
+        <Boton
+          variante="linea"
+          className="flex-1"
+          onClick={esUltimoPaso ? terminarPasos : avanzar}
+        >
+          {copyCTA}
+        </Boton>
+      </div>
+    </>
   );
 
   return (
@@ -318,6 +367,7 @@ export function RunnerLeccion({
               setExploracionCumplida(true);
               setMostrarAvisoExploracion(false);
             }}
+            onAcierto={() => setAcertoEnPaso(true)}
           />
           {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
               en el guion: el botón no se deshabilita sin explicación.

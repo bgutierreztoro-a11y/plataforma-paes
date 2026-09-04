@@ -49,13 +49,25 @@ export type Evento =
      DISTINTA de haber cometido el error: mide si lo RECONOCE, que es lo que
      predice si va a poder evitarlo. Sin penalización y sin efecto en el
      resultado del ítem — es diagnóstico, no evaluación.
-     Deuda: falta declarar estos dos eventos en la lista de CLAUDE.md
-     (docs/pendientes.md). */
+     Los dos entraron a la lista de CLAUDE.md en la fase 3H, junto con
+     `sentido_reportado`. */
   | {
       nombre: "autoexplicacion_elegida";
       props: { item_id: string; acerto_su_error: boolean };
     }
-  | { nombre: "autoexplicacion_saltada"; props: { item_id: string } };
+  | { nombre: "autoexplicacion_saltada"; props: { item_id: string } }
+  /* ---------- marco de la lección (2026-09-03) ---------- */
+  /* "¿Te hizo sentido?" al pie del paso, después de acertar una pregunta
+     (pantalla 06 de la maqueta). Es una señal distinta de haber acertado: mide
+     si el estudiante **cree** haber entendido, y el par acierto + "todavía no"
+     es justamente lo que delata una lección que se responde bien sin entenderse.
+
+     No bloquea, no ramifica y no cambia el flujo: las dos respuestas avanzan
+     igual. `paso` es 1-based, como en `paso_inicio`. */
+  | {
+      nombre: "sentido_reportado";
+      props: { leccion_id: string; paso: number; hizo_sentido: boolean };
+    };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en

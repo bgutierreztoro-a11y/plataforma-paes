@@ -33,6 +33,7 @@ interface PasoLeccionProps {
   leccionId: string;
   numeroPaso: number;
   onExploracionCompleta?: () => void;
+  onAcierto?: () => void;
 }
 
 const TIPOS_VISUALES: BloqueTipo["tipo"][] = ["interactivoSlider", "visualizacion"];
@@ -42,6 +43,7 @@ export function PasoLeccion({
   leccionId,
   numeroPaso,
   onExploracionCompleta,
+  onAcierto,
 }: PasoLeccionProps) {
   /* Los bloques visuales (gráfico interactivo, tablas/diagramas) van al
      costado en desktop, con posición de grid fija (col-start/row-start) que
@@ -88,6 +90,7 @@ export function PasoLeccion({
         paso={numeroPaso}
         indiceBloque={i}
         onExploracionCompleta={onExploracionCompleta}
+        onAcierto={onAcierto}
       />
     );
 
@@ -105,11 +108,11 @@ export function PasoLeccion({
 
   return (
     <section className="transicion-paso">
-      {/* El único h1 de la pantalla. Antes era h2, bajo el título de la lección
-          que RunnerLeccion pintaba arriba del header; ese salió y el nombre de
-          la lección lo da ahora `document.title`. El que cambia en cada paso
-          —y por lo tanto el que nombra lo que se está mirando— es este. */}
-      {/* La tipografía `.q` de la maqueta
+      {/* El único h1 de la pantalla: el nombre de la lección lo da
+          `document.title`, y el que cambia en cada paso —y por lo tanto el que
+          nombra lo que se está mirando— es este.
+
+          Lleva la tipografía `.q` de la maqueta
           (`docs/referencia/B-linea-interfaz-completa.html:72`): 18px, 600, altura
           de línea 1,28 y tracking -1,8%. `text-lg` ya es 1.125rem; los otros dos
           valores no están en la escala de diez pasos del sistema y van escritos

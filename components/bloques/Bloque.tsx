@@ -18,6 +18,9 @@ interface BloqueProps {
   /* Solo lo usa interactivoSlider con exploracionMinima: avisa al runner que
      el estudiante ya exploró lo suficiente y puede avanzar de paso. */
   onExploracionCompleta?: () => void;
+  /* Solo lo usa el bloque `pregunta`: avisa al runner que se respondió bien,
+     para el "¿Te hizo sentido?" del pie. */
+  onAcierto?: () => void;
 }
 
 export function Bloque({
@@ -26,6 +29,7 @@ export function Bloque({
   paso,
   indiceBloque,
   onExploracionCompleta,
+  onAcierto,
 }: BloqueProps) {
   const itemId = `${leccionId}-p${paso}-b${indiceBloque}`;
 
@@ -51,6 +55,7 @@ export function Bloque({
           itemId={itemId}
           contexto="leccion"
           contextoId={leccionId}
+          onAcierto={onAcierto}
         />
       );
     case "interactivoSlider":
