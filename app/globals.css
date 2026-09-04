@@ -76,6 +76,18 @@
      uniforme de ≥5:1, la 01 necesitaría algo como #D50028 (5,07:1). */
   --line-03-oscura: #007034;
 
+  /* La hermana de la 01, y por un motivo distinto: acá el fondo no es el color
+     de línea sino su **tinte**, y el rojo #E4002B sobre #FBE6EA da 4,06:1 — bajo
+     AA para el rótulo de 10px de la tarjeta teñida. #CC0026 sube ese par a
+     4,90:1 (y a 5,84:1 sobre blanco). Se prefirió a #D50028, el tono que
+     anticipaba el comentario de arriba: sobre el tinte deja 4,56:1, seis
+     centésimas de colchón.
+
+     Sigue sin haber serie completa. La 03 sobre su tinte se resuelve con
+     `--line-03-oscura` (5,58:1), la 04 pasa con el color de línea crudo (5,84:1)
+     y la 02 va en tinta. Los cuatro pares están en `--linea-sobre-tinte`. */
+  --line-01-oscura: #cc0026;
+
   /* ── El color de eje, como variable heredada ─────────────────────────────
      La regla de color del sistema es "el color de línea identifica el eje y se
      mantiene constante dentro de ese eje; fuera de un eje se usa text-primary".
@@ -111,6 +123,15 @@
        sobre blanco y cae a `--text-primary` (17,76:1). El aclarado no la
        salva: `--line-02-clara` está calibrado contra tinta oscura y sobre
        blanco es todavía peor.
+     - `--linea-sobre-tinte`: el color de línea cuando es texto **sobre
+       `--linea-tinte`**, no sobre blanco. Es un rol propio y no una variante de
+       `--linea-nav` porque el tinte es más oscuro que la tarjeta y ahí dos de
+       las cuatro pierden AA: 01 cae de 4,85 a 4,06 y 03 de 4,81 a 4,30. Sus
+       valores: 01 `--line-01-oscura` (4,90), 02 `--text-primary` (16,50), 03
+       `--line-03-oscura` (5,58), 04 el color de línea (5,84). Hoy lo usa el
+       rótulo "Lo que estás viendo" de la tarjeta teñida del paso, y nada más.
+       `--linea-nav` queda intacto y **no se usa sobre superficies teñidas**;
+       ver docs/deuda-contraste-etiquetas.md.
 
      La división es de rol, no de componente: `--linea` es **forma** (barras,
      estaciones, rieles, bordes, el disco de la placa), `--linea-fondo` es
@@ -133,6 +154,9 @@
   --linea-clara: var(--text-inverse);
   --linea-fondo: var(--linea);
   --linea-nav: var(--linea);
+  /* Fuera de un eje el tinte cae a la superficie de tarjeta, así que el rótulo
+     va en tinta: 17,76:1 sobre blanco. */
+  --linea-sobre-tinte: var(--text-primary);
 
   /* ── Radio y forma ──────────────────────────────────────────────────────
      Botones y tarjetas: radius-sm. Estaciones, píldoras y barras de línea:

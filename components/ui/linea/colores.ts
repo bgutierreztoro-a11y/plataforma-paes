@@ -21,8 +21,9 @@ import type { CSSProperties } from "react";
  * `--linea` es el color del eje **como forma**: barras, estaciones, rieles,
  * bordes, el disco de la placa. Cuando ese mismo color pasa a ser fondo de un
  * texto o texto él mismo, el tono tiene que moverse en los extremos de la
- * paleta para llegar a contraste, y esos dos roles son `--linea-fondo` y
- * `--linea-nav`. Están abajo con sus números. La alternativa —un condicional
+ * paleta para llegar a contraste, y esos roles son `--linea-fondo` (fondo de un
+ * texto), `--linea-nav` (texto sobre blanco) y `--linea-sobre-tinte` (texto
+ * sobre el tinte de la línea). Están abajo con sus números. La alternativa —un condicional
  * por línea dentro de cada componente— repartiría la misma tabla de contraste
  * en tantos sitios como componentes haya.
  */
@@ -152,6 +153,37 @@ const NAV_POR_LINEA: Record<LineaId, string> = {
   "04": "var(--linea)",
 };
 
+/**
+ * El color de línea cuando es texto sobre **el tinte de su propia línea**
+ * (`--linea-tinte`): hoy, el rótulo "Lo que estás viendo" de la tarjeta teñida
+ * del paso, y nada más.
+ *
+ * Es un mapa propio y no una segunda lectura de `NAV_POR_LINEA` porque el tinte
+ * es más oscuro que la tarjeta y ahí se pierden dos pares. Medido:
+ *
+ * | | sobre #FFFFFF | sobre `--linea-tinte` |
+ * |---|---|---|
+ * | 01 #E4002B | 4,85 | **4,06** |
+ * | 03 #00843D | 4,81 | **4,30** |
+ * | 04 #0057B8 | 6,87 | 5,84 |
+ *
+ * Así que la 01 baja a `--line-01-oscura` (#CC0026 → 4,90) y la 03 al
+ * `--line-03-oscura` que ya existía por el botón (#007034 → 5,58). La 04 pasa
+ * con el color de línea crudo y la 02 va en tinta, igual que en el mapa de nav
+ * y por el mismo motivo: el amarillo sobre su tinte da 1,63:1.
+ *
+ * `--linea-nav` no se tocó a propósito: está bien calibrado sobre blanco, que es
+ * donde lo usan NavInferior y el botón de variante `texto`. Mezclar los dos roles
+ * en un token arrastraría este ajuste a pantallas que no lo necesitan. Ver
+ * docs/deuda-contraste-etiquetas.md.
+ */
+const SOBRE_TINTE_POR_LINEA: Record<LineaId, string> = {
+  "01": "var(--line-01-oscura)",
+  "02": "var(--text-primary)",
+  "03": "var(--line-03-oscura)",
+  "04": "var(--linea)",
+};
+
 /** `style` es `CSSProperties`, que no admite custom properties; esto sí. */
 export interface EstiloDeLinea extends CSSProperties {
   "--linea": string;
@@ -160,6 +192,7 @@ export interface EstiloDeLinea extends CSSProperties {
   "--linea-clara": string;
   "--linea-fondo": string;
   "--linea-nav": string;
+  "--linea-sobre-tinte": string;
 }
 
 /**
@@ -176,5 +209,6 @@ export function estiloDeLinea(linea: LineaId): EstiloDeLinea {
     "--linea-clara": CLARA_POR_LINEA[linea],
     "--linea-fondo": FONDO_POR_LINEA[linea],
     "--linea-nav": NAV_POR_LINEA[linea],
+    "--linea-sobre-tinte": SOBRE_TINTE_POR_LINEA[linea],
   };
 }
