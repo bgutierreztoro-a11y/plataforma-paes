@@ -130,21 +130,31 @@ export function BloquePregunta({
           const elegida = seleccion === alt.clave;
           const estado = !revelado || !elegida ? "abierta" : alt.esCorrecta ? "correcta" : "fallada";
 
+          /* El ancho del borde va en cada estado y no en la clase base: `border`
+             (1px) y `border-[1.5px]` son la misma propiedad, y con las dos
+             puestas el ganador lo decide el orden en que Tailwind las emite en
+             la hoja, no el orden en el atributo. El sistema pide 1,5px en lo
+             revelado.
+
+             Ojo al verificarlo: a devicePixelRatio 1 Chrome redondea cualquier
+             borde de 1,5px a 1px, y `getComputedStyle` devuelve ese valor usado
+             —también con `style.borderWidth = "1.5px"` inline, comprobado—. La
+             diferencia se ve en pantallas 2x, no midiendo con el inspector. */
           const clasesFila = {
             abierta:
-              "border-border has-[:checked]:border-[var(--linea)] has-[:checked]:bg-[var(--linea-tinte)]",
+              "border border-border has-[:checked]:border-[var(--linea)] has-[:checked]:bg-[var(--linea-tinte)]",
             correcta: "border-[1.5px] border-success bg-success-suave",
             fallada: "border-[1.5px] border-strong bg-sunken",
           }[estado];
 
           const clasesChip = {
             abierta:
-              "border-border-fuerte text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]",
+              "border border-border-fuerte text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]",
             /* El disco también en verde, no en el color del eje: un chip rojo
                dentro de una fila verde es justamente la contradicción que la
                decisión evita. `text-inverse` sobre #0E7C57 da 4,85:1. */
-            correcta: "border-success bg-success text-inverse",
-            fallada: "border-strong bg-strong text-inverse",
+            correcta: "border border-success bg-success text-inverse",
+            fallada: "border border-strong bg-strong text-inverse",
           }[estado];
 
           return (
@@ -156,7 +166,7 @@ export function BloquePregunta({
                  vez acá. Los tokens de línea se migraron en los dos lados a la
                  vez para que no se separen; unificarlos es un cambio de
                  estructura y va en su propia tanda. */
-              className={`flex min-h-11 items-center gap-3 rounded-sm border bg-card px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${clasesFila} ${
+              className={`flex min-h-11 items-center gap-3 rounded-sm bg-card px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${clasesFila} ${
                 revelado || !montado
                   ? "cursor-not-allowed"
                   : "cursor-pointer hover:border-border-fuerte hover:bg-sunken"
@@ -177,7 +187,7 @@ export function BloquePregunta({
                   blanco. El borde sí va en `--linea`, que es donde el color es
                   forma. Ver components/ui/linea/colores.ts. */}
               <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-sm ${clasesChip}`}
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm ${clasesChip}`}
               >
                 {alt.clave}
               </span>
