@@ -14,15 +14,27 @@ interface PresentacionLeccion {
 
 /**
  * `Partial<Record<LeccionId, ...>>` desde que el registro declara las 48
- * lecciones del temario teniendo 9 escritas: un `Record` total exigiría copy
- * de interfaz para 39 lecciones que todavía no existen, y esa copy se
- * escribiría a ciegas.
+ * lecciones del temario: un `Record` total exigiría copy de interfaz para las
+ * 15 que todavía no tienen archivo, y esa copy se escribiría a ciegas.
+ * Medido el 2026-09-03: 48 declaradas en `lib/modulos.ts`, 34 archivos en
+ * `content/lecciones/` (`l0-demo` entre ellos, que no está declarado), 25
+ * entradas acá.
  *
- * La garantía que antes daba el `Record` total —un id renombrado o agregado
- * sin actualizar este mapa cae en `RESPALDO` en silencio— la sostiene ahora
- * `__tests__/descripcionesLecciones.test.ts`, que exige entrada propia para
- * toda lección **con archivo en disco**. Es el mismo contrato donde importa,
- * medido contra la realidad en vez de contra el plan.
+ * **El mapa está incompleto y el test ya no lo persigue.** Hasta la fase 3H,
+ * `__tests__/descripcionesLecciones.test.ts` exigía entrada propia para toda
+ * lección con archivo en disco. Esa dirección se retiró el 2026-09-03 porque
+ * `presentacionDeLeccion` no tiene consumidor de runtime desde la 3G —se borró
+ * `CaminoLecciones`, su único llamador, y el marco nuevo de la pantalla 04 no
+ * muestra descripción por lección—: pedir cobertura total de un módulo que el
+ * producto no monta obligaba a escribir copy para pantallas inexistentes.
+ *
+ * Lo que el test **sí** sostiene es la dirección contraria, que sigue siendo un
+ * defecto real con o sin consumidor: ninguna clave de acá puede apuntar a una
+ * lección sin archivo. Un id renombrado o borrado se detecta igual.
+ *
+ * Qué hacer con este módulo —darle consumidor y volver a exigir cobertura, o
+ * borrarlo por muerto— es decisión de contenido y está anotada en
+ * `docs/recuento-pantallas-fase-3.md`.
  */
 const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
   "l0-demo": {
@@ -162,9 +174,11 @@ const RESPALDO: PresentacionLeccion = {
  * compilador. El cast acá adentro es el único lugar donde se relaja el tipo;
  * las claves de `CATALOGO` siguen acotadas a `LeccionId` por su anotación.
  *
- * `RESPALDO` es la salida legítima para las 39 lecciones planeadas que aún no
- * tienen archivo. Para las que sí existen, el test de cobertura garantiza que
- * nunca se llegue acá.
+ * `RESPALDO` es la salida legítima para las 15 lecciones planeadas que aún no
+ * tienen archivo — y también, desde el 2026-09-03, para 9 que sí lo tienen: el
+ * test dejó de exigir cobertura total y nada garantiza ya que no se llegue acá
+ * con una lección escrita. Ver la nota de `CATALOGO`, arriba. Hoy da lo mismo en
+ * la práctica, porque esta función no la llama nadie en runtime.
  */
 export function presentacionDeLeccion(id: string): PresentacionLeccion {
   return (CATALOGO as Record<string, PresentacionLeccion | undefined>)[id] ?? RESPALDO;
