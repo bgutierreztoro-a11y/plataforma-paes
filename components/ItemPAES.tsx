@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Boton } from "@/components/ui/Boton";
+import { Boton } from "@/components/ui/linea/Boton";
 import {
   ALTERNATIVA_BASE,
   ALTERNATIVA_CORRECTA,
@@ -9,6 +9,10 @@ import {
   ALTERNATIVA_ELEGIDA_REVELADA,
   ALTERNATIVA_INTERACTIVA,
   ALTERNATIVA_REPOSO,
+  CHIP_BASE,
+  CHIP_CORRECTA,
+  CHIP_ELEGIDA_REVELADA,
+  CHIP_REPOSO,
 } from "@/components/ui/alternativa";
 import { FeedbackEnCapas } from "@/components/FeedbackEnCapas";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
@@ -119,8 +123,13 @@ export function ItemPAES({
         <span className="num">{formatoTiempo(tiempoFinalMs)}</span> · en la
         PAES M1 tendrás alrededor de 2 minutos por pregunta.
       </p>
+      {/* `variante="linea"` toma el color del eje desde `--linea-fondo`, que la
+          pantalla instaló arriba. Fuera de un eje —/diagnostico— ese token cae
+          a tinta por el default de `:root` y el botón queda sólido en negro,
+          que es la misma jerarquía. No lleva `anchoCompleto`: el botón del kit
+          ya es `block w-full`. */}
       <Boton
-        anchoCompleto
+        variante="linea"
         onClick={() =>
           onSiguiente(alternativaElegida.esCorrecta, tiempoFinalMs, alternativaElegida.clave)
         }
@@ -172,22 +181,70 @@ export function ItemPAES({
     setRevelado(true);
   }
 
+  /**
+   * Cómo se trata una fila. Son los tres estados de `BloquePregunta`
+   * —abierta, correcta, elegida-revelada— más el apagado de las que no se
+   * eligieron, que es propio de esta pantalla: acá hay cuatro alternativas y
+   * una explicación debajo, y bajar las dos que no importan es lo que deja
+   * leer las que sí.
+   *
+   * Al fallar, la elegida queda marcada como elegida y nada más: el rojo que
+   * llevaba antes contestaba "¿la tuve bien?" desde el costado, antes de que se
+   * leyera la Capa 1, que es donde está lo que enseña. El acierto sí se marca —
+   * es información, no reproche.
+   */
+  function tratamiento(
+    alt: (typeof alternativas)[number],
+  ): "abierta" | "correcta" | "elegidaRevelada" | "descartada" {
+    if (!revelado) return "abierta";
+    if (seleccion !== alt.clave) return "descartada";
+    /* En /diagnostico (`mostrarFeedback` en false) ni la acertada se marca en
+       verde: esa pantalla registra la respuesta sin decir si estuvo bien, y un
+       borde verde lo diría. Cae al tratamiento neutro, que afirma "esto
+       elegiste" y nada más. */
+    return alt.esCorrecta && mostrarFeedback ? "correcta" : "elegidaRevelada";
+  }
+
   function clasesOpcion(alt: (typeof alternativas)[number]): string {
-    const base = ALTERNATIVA_BASE;
-    if (revelado && seleccion === alt.clave) {
-      /* Al fallar, la alternativa elegida queda marcada como elegida y nada
-         más: el rojo que llevaba antes contestaba "¿la tuve bien?" desde el
-         costado, antes de que se leyera la Capa 1, que es donde está lo que
-         enseña. El acierto sí se marca — es información, no reproche. */
-      return `${base} ${
-        alt.esCorrecta && mostrarFeedback
-          ? ALTERNATIVA_CORRECTA
-          : ALTERNATIVA_ELEGIDA_REVELADA
+    const estado = tratamiento(alt);
+    if (estado === "abierta") {
+      return `${ALTERNATIVA_BASE} ${ALTERNATIVA_REPOSO} ${
+        montado ? ALTERNATIVA_INTERACTIVA : "cursor-not-allowed"
       }`;
     }
-    if (revelado) return `${base} ${ALTERNATIVA_DESCARTADA}`;
-    if (!montado) return `${base} ${ALTERNATIVA_REPOSO} cursor-not-allowed`;
-    return `${base} ${ALTERNATIVA_REPOSO} ${ALTERNATIVA_INTERACTIVA}`;
+    return `${ALTERNATIVA_BASE} ${
+      {
+        correcta: ALTERNATIVA_CORRECTA,
+        elegidaRevelada: ALTERNATIVA_ELEGIDA_REVELADA,
+        descartada: ALTERNATIVA_DESCARTADA,
+      }[estado]
+    }`;
+  }
+
+  /**
+   * El disco de la letra, en el tono de la fila que lo contiene.
+   *
+   * Lo que arregla: hasta la 3J el chip emitía `peer-checked:` **siempre**, así
+   * que tras revelar seguía relleno en `--linea-fondo` y tapaba el estado
+   * revelado —un disco del color del eje dentro de una fila ya verde o ya en
+   * tinta—. Es exactamente lo que advierte `BloquePregunta.tsx:126-129`. Ahora
+   * esas variantes viven solo en `CHIP_REPOSO`, que es el único estado que se
+   * usa antes de revelar.
+   *
+   * `descartada` también toma `CHIP_REPOSO` y no una constante propia: su input
+   * está por definición sin marcar —es la rama de "no la elegiste"—, así que los
+   * `peer-checked:` no llegan a aplicar y el disco queda en el neutro. Una
+   * cuarta constante que renderiza igual sería una diferencia sin diferencia.
+   */
+  function clasesChip(alt: (typeof alternativas)[number]): string {
+    return `${CHIP_BASE} ${
+      {
+        abierta: CHIP_REPOSO,
+        correcta: CHIP_CORRECTA,
+        elegidaRevelada: CHIP_ELEGIDA_REVELADA,
+        descartada: CHIP_REPOSO,
+      }[tratamiento(alt)]
+    }`;
   }
 
   return (
@@ -226,13 +283,11 @@ export function ItemPAES({
               onChange={() => setSeleccion(alt.clave)}
               className="peer sr-only"
             />
-            {/* Mismo chip que BloquePregunta.tsx, y por los mismos números: el
-                fondo va en `--linea-fondo` (la 03 no pasa AA con el color de
-                línea crudo) y la letra en `--linea-contraste` (la 02 amarilla
-                la lleva en tinta). Ver components/ui/linea/colores.ts. */}
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]">
-              {alt.clave}
-            </span>
+            {/* Mismo chip que BloquePregunta.tsx y por los mismos números, pero
+                ahora compartido de verdad: las clases salen de
+                components/ui/alternativa.ts en vez de estar escritas otra vez
+                acá. Ver `clasesChip` arriba para el estado revelado. */}
+            <span className={clasesChip(alt)}>{alt.clave}</span>
             <span>{alt.texto}</span>
           </label>
         ))}
@@ -240,9 +295,19 @@ export function ItemPAES({
       {/* El CTA del ítem va anclado igual que el feedback que lo reemplaza: son
           el mismo lugar de la pantalla en dos momentos, y dejar el botón en el
           flujo haría que el control saltara al fondo recién al comprobar. */}
+      {/* Sin alternativa marcada el botón va en la variante `deshabilitado` del
+          kit y no en `linea` con `disabled`: la variante `linea` no tiene
+          tratamiento apagado —el `ui/Boton` anterior sí lo traía en `primario`—,
+          así que un botón deshabilitado se vería idéntico a uno activo. La
+          variante `deshabilitado` además pone el atributo `disabled` sola
+          (`ui/linea/Boton.tsx:87`), que es lo que impide un control que se ve
+          apagado y sigue respondiendo al clic. */}
       {!revelado &&
         anclar(
-          <Boton anchoCompleto onClick={revisar} disabled={!seleccion || !montado}>
+          <Boton
+            variante={seleccion && montado ? "linea" : "deshabilitado"}
+            onClick={revisar}
+          >
             Revisar respuesta
           </Boton>,
         )}

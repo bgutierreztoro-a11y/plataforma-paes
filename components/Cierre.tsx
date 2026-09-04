@@ -57,6 +57,12 @@ export function Cierre({
         <EjecutorSetItems
           items={cierre.items}
           mostrarFeedback={true}
+          /* La pill y el sustantivo de la maqueta. `contextoId="cierre"` NO se
+             toca: es el balde único de docs/deuda-cierre.md §2 y arreglarlo
+             exige decidir qué pasa con el progreso ya guardado en los
+             dispositivos, que no es una decisión de marco. */
+          rotulo="Cierre PAES"
+          sustantivo="Ítem"
           contexto="cierre"
           contextoId="cierre"
           renderFinal={(respuestas) => (

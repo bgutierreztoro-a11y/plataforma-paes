@@ -2,7 +2,7 @@
 
 import { useReducer, type ReactNode } from "react";
 import { ItemPAES } from "@/components/ItemPAES";
-import { BarraProgreso } from "@/components/ui/BarraProgreso";
+import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { CascaronAnclado } from "@/components/ui/ZonaAnclada";
 import { estadoInicialSetItems, reducerSetItems, type RespuestaRegistrada } from "@/lib/estadoSetItems";
 import type { RespuestaLocal } from "@/lib/progresoLocal";
@@ -25,9 +25,15 @@ interface EjecutorSetItemsProps {
      medido. Esas dos rutas se quedan con el layout de siempre hasta que
      alguien las mida y las migre a propósito. */
   anclarAcciones?: boolean;
-  /* Va dentro de la región que scrollea, no encima del cascarón: cualquier
-     cosa apilada por fuera le suma alto a los 100dvh y rompe el anclaje. */
-  encabezado?: ReactNode;
+  /* El texto de la pill de la fila superior. **Opcional a propósito**: solo el
+     cierre se anuncia como tal ("Cierre PAES"). Sin ella la pill no se dibuja,
+     así que /diagnostico y la fase de ítems de una lección no se presentan como
+     un cierre que no son. */
+  rotulo?: string;
+  /* La unidad que se cuenta a la derecha: "Pregunta 3 de 8". El cierre dice
+     "Ítem", que es como lo nombra la maqueta y como se llaman en el contenido;
+     las otras dos rutas conservan su copy de siempre. */
+  sustantivo?: string;
 }
 
 export function EjecutorSetItems({
@@ -37,7 +43,8 @@ export function EjecutorSetItems({
   contextoId,
   renderFinal,
   anclarAcciones = false,
-  encabezado,
+  rotulo,
+  sustantivo = "Pregunta",
 }: EjecutorSetItemsProps) {
   const [estado, dispatch] = useReducer(reducerSetItems, estadoInicialSetItems);
 
@@ -50,12 +57,40 @@ export function EjecutorSetItems({
 
   const contenido = (
     <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6">
-      {encabezado}
+      {/* La fila superior de la maqueta
+          (`docs/referencia/B-linea-interfaz-completa.html:317-321`): la pill a
+          la izquierda y el conteo a la derecha, y debajo la barra fina.
+
+          La pill usa los mismos dos tokens medidos que `Boton variante="linea"`
+          —`--linea-fondo` de fondo y `--linea-contraste` de texto— y no
+          `--linea` crudo: la 03 (#00843D) con texto claro da 4,48:1 y la 02
+          (#FFB600) pide la letra en tinta. Ver ui/linea/colores.ts. Fuera de un
+          eje los dos caen a tinta por el default de `:root`. */}
+      <div className="mb-3 flex items-center justify-between gap-3">
+        {rotulo ? (
+          <span className="rounded-full bg-[var(--linea-fondo)] px-2.5 py-1 text-etiqueta uppercase text-[var(--linea-contraste)]">
+            {rotulo}
+          </span>
+        ) : (
+          /* Sin pill la celda igual ocupa su lado del `justify-between`, para
+             que el conteo no se corra a la izquierda entre una ruta y otra. */
+          <span />
+        )}
+        <span className="num shrink-0 text-etiqueta uppercase text-secondary">
+          {sustantivo} {estado.indiceActual + 1} de {items.length}
+        </span>
+      </div>
       <div className="mb-8">
+        {/* La barra continua del kit reemplaza a la segmentada de
+            `ui/BarraProgreso`, que quedó sin ningún consumidor y se borró. La
+            segmentada respondía "¿en cuál voy?", que es justo lo que ahora dice
+            el texto de arriba con todas sus letras; la barra responde "¿cuánto
+            llevo". `valor` es el índice y no el ordinal: al abrir el primer ítem
+            no hay nada recorrido todavía. */}
         <BarraProgreso
-          pasoActual={estado.indiceActual}
+          valor={estado.indiceActual}
           total={items.length}
-          sustantivo="Pregunta"
+          etiqueta={`${sustantivo} ${estado.indiceActual + 1} de ${items.length}`}
         />
       </div>
       <ItemPAES
