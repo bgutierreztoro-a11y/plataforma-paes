@@ -1526,3 +1526,74 @@ rojo, no solo que la ambigüedad existe en prosa.
 resuelven juntas. Mientras tanto, `npm run auditar` sin argumentos **no está
 en verde** por un motivo estructural preexistente al módulo Proporcionalidad;
 no confundir con una regresión de esta sesión.
+
+## 🔴 `catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido: 5 entradas que no son borrables (abierta 2026-09-04, al ejecutar el triage mecánico de `npm run auditar`)
+
+`error-4`, `error-6`, `error-7` y `error-8` de `catalogoErrores` en
+`enteros-operar-y-ordenar.json`, y `error-7` en
+`lineal-patrones-de-cambio.json`, estaban clasificados como parte del lote
+"mecánico, sin ambigüedad" de un triage previo (63 bloqueantes → 22
+mecánicos + 41 de decisión) porque `npm run auditar` los marca
+`catalogo-sin-usar`: ningún `errorCatalogado` del propio archivo los
+referencia.
+
+**Por qué el borrado rompe `npm run validar`.** `content/errores/enteros-racionales.json`
+y `content/errores/funcion-lineal-afin.json` son catálogos de módulo
+compartidos (ver `_notasInternas` de `enteros-operar-y-ordenar.json`, línea
+20: "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo...
+para mantener ids consistentes entre los tres archivos del módulo"). El
+validador (`validarCatalogoErrores` en `scripts/validar-contenido.mjs`)
+exige que cada entrada del catálogo de módulo exista también en el
+`catalogoErrores` embebido del archivo de lección que lo migró — aunque esa
+lección no la use todavía. Las 5 entradas están reservadas para una lección
+de fracciones del eje Números que aún no existe.
+
+**Se probó en esta sesión:** borrar las 5 (commit `79503a4`) hizo pasar
+`npm run auditar` de 63 a 46, pero `npm run validar` falló con:
+```
+FALLA  content/errores/enteros-racionales.json
+   - "enteros-racionales/error-4" no existe en catalogoErrores de enteros-operar-y-ordenar.json
+   - "enteros-racionales/error-6" no existe en catalogoErrores de enteros-operar-y-ordenar.json
+   - "enteros-racionales/error-7" no existe en catalogoErrores de enteros-operar-y-ordenar.json
+   - "enteros-racionales/error-8" no existe en catalogoErrores de enteros-operar-y-ordenar.json
+FALLA  content/errores/funcion-lineal-afin.json
+   - "funcion-lineal-afin/error-7" no existe en catalogoErrores de lineal-patrones-de-cambio.json
+```
+Se revirtió (commit `99d191c`) en la misma sesión, antes de hacer push.
+
+**Estas 5 entradas pasan del lote mecánico al de decisión.** El conteo de
+`npm run auditar` correcto tras el resto del triage mecánico (renombre de
+ids con cifra + `auditoria.sliderJustificado`) es **46 bloqueantes**: los 41
+de decisión ya identificados más estas 5, que requieren la misma clase de
+decisión de contenido que las entradas ya abiertas sobre
+`content/errores/` ("es una copia, no la fuente") y sobre el catálogo sin
+fusionar de `funcion-lineal-afin` — no namespacing mecánico, sino decidir
+qué hacer con un catálogo de módulo que declara errores por adelantado para
+contenido que todavía no existe.
+
+**Gatillo para el auditor:** `chequearCatalogoErrores` en
+`scripts/auditar-leccion.mjs` debería excluir del chequeo `catalogo-sin-usar`
+cualquier id que exista en `content/errores/<unidad correspondiente>.json`
+(vía `MAPEO_LECCION_UNIDAD`/`MODULO_POR_LECCION`, que ya existen en el
+propio repo) antes de marcarlo huérfano. Mientras eso no se implemente,
+cualquier triage futuro que use `catalogo-sin-usar` como señal de "borrado
+seguro" debe cruzarlo primero contra `content/errores/` a mano.
+
+## 🟢 `auditoria.sliderJustificado` es una declaración única a nivel raíz del archivo, no una por paso (anotada 2026-09-04)
+
+Un brief de triage asumió que la excepción del slider (Regla 1 de
+`docs/reglas-modulo.md`, línea 25) debía declararse una vez por cada paso
+con bloque `interactivoSlider` — en `lineal-pendiente-e-intercepto.json`,
+pasos 4 (pistas) y 5 (descubrimiento). No es así: `chequearSlider` en
+`scripts/auditar-leccion.mjs` lee `data?.auditoria?.sliderJustificado` una
+sola vez, a nivel raíz del archivo (`data`, no `paso`), y esa misma
+justificación cubre cualquier cantidad de bloques `interactivoSlider` que
+el archivo tenga.
+
+Se declaró correctamente en `lineal-pendiente-e-intercepto.json` (commit
+`0596d40`) como una única clave `auditoria.sliderJustificado` a nivel raíz,
+junto a `catalogoErrores`, antes de `pasos`. No corregir este supuesto
+llevaría a declarar la justificación anidada dentro de cada paso, donde el
+chequeo nunca la vería (`data.auditoria` en la raíz, no
+`data.pasos[i].auditoria`), y el hallazgo `slider-no-justificado` seguiría
+en rojo pese a la declaración.
