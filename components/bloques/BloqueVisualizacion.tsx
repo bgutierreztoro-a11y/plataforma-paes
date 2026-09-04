@@ -1,4 +1,5 @@
 import type { BloqueVisualizacion as BloqueVisualizacionTipo } from "@/lib/tipos";
+import { TARJETA_LINEA, TARJETA_VISUAL } from "@/components/ui/linea/tarjetas";
 import { IlustracionBandas } from "@/components/ilustraciones/IlustracionBandas";
 import { IlustracionEjeVertical } from "@/components/ilustraciones/IlustracionEjeVertical";
 import { IlustracionParticion } from "@/components/ilustraciones/IlustracionParticion";
@@ -292,7 +293,9 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
   if (bloque.variante === "tabla" && esDatosTabla(bloque.datos)) {
     const { columnas, filas } = bloque.datos;
     return (
-      <div className="overflow-x-auto rounded-panel border border-border">
+      /* Sin el padding de `TARJETA_VISUAL`: una tabla llena su tarjeta hasta el
+         borde, y 8px de aire alrededor la desprenderían de la caja. */
+      <div className={`overflow-x-auto ${TARJETA_LINEA}`}>
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
@@ -329,14 +332,17 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (bloque.variante === "diagrama" && esDatosPasos(bloque.datos)) {
     return (
-      <figure className="space-y-3">
+      <figure className={`space-y-3 ${TARJETA_VISUAL}`}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         {bloque.datos.pasos.map((paso, i) => (
           <div key={i} className="space-y-2">
             {i > 0 && paso.accion && (
               <p className="px-1 text-center text-sm text-ink-suave">↓ {paso.accion}</p>
             )}
-            <div className="flex items-stretch gap-2 rounded-tarjeta border border-border bg-surface p-3">
+            {/* Sin borde propio: la etapa vive dentro de la tarjeta del bloque, y
+                dos bordes anidados a 1px se leen como un error de render. La
+                separación la da la superficie hundida. */}
+            <div className="flex items-stretch gap-2 rounded-sm bg-sunken p-3">
               <p className="flex flex-1 items-center justify-center rounded-tarjeta bg-accent-suave px-3 py-3 text-center text-sm text-ink">
                 {paso.izquierda}
               </p>
@@ -361,7 +367,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosParticion(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionParticion {...bloque.datos} />
       </figure>
@@ -370,7 +376,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosEjeVertical(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionEjeVertical
           puntos={bloque.datos.puntos}
@@ -382,7 +388,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosReglaSignos(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <TablaReglaSigno filas={bloque.datos.signos} />
       </figure>
@@ -391,7 +397,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosBandas(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionBandas bandas={bloque.datos.bandas} />
       </figure>
@@ -400,7 +406,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosFiguraGeometrica(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionFiguraGeometrica {...bloque.datos} />
       </figure>
@@ -409,7 +415,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
 
   if (esDatosCuerpoGeometrico(bloque.datos)) {
     return (
-      <figure className="rounded-panel border border-border bg-surface p-4">
+      <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionCuerpoGeometrico {...bloque.datos} />
       </figure>
@@ -420,7 +426,7 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
   // (y el texto alternativo de la figura). Se presenta como figura descrita,
   // no como recuadro punteado de "falta algo".
   return (
-    <figure className="rounded-panel border border-border bg-surface p-4">
+    <figure className={TARJETA_VISUAL}>
       <figcaption className="mb-1.5 text-sm font-medium text-ink-tenue">Figura</figcaption>
       <p className="text-sm leading-relaxed text-ink-suave">{bloque.descripcion}</p>
     </figure>

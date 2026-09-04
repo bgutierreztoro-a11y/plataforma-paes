@@ -1,7 +1,7 @@
 # Recuento: las 11 pantallas del HTML de referencia y qué las implementa
 
 Fuente: `docs/referencia/B-linea-interfaz-completa.html` (once bloques `<!-- 01 -->`
-… `<!-- 11 -->`). Estado al cierre de la fase 3F (2026-09-02).
+… `<!-- 11 -->`). Estado al cierre de la fase 3H (2026-09-03).
 
 "Completa" = la ruta existe y sigue la maqueta con los tokens de la dirección
 "Línea". "Parcial" = la ruta existe y funciona, pero la migración a "Línea" está a
@@ -14,8 +14,8 @@ rehacer).
 | 02 | La red | `app/camino/page.tsx` → `components/camino/Camino.tsx` / `CaminoVertical.tsx` + `ui/linea/NavInferior` | **Completa** — fase 2 + 3A |
 | 03 | Línea | `app/linea/[ejeId]/page.tsx` → `components/camino/LineaDelEje.tsx` + `ui/linea/PlacaLinea` + `ui/linea/RielEstaciones` | **Completa** — fase 3B |
 | 04 | Estación | `app/tema/[id]/page.tsx` → `components/camino/DetalleTema.tsx` + `ui/linea/TiraKPI` + `ui/linea/RielEstaciones` | **Completa** — fase 3G (ver nota 1) |
-| 05 | Lección, descubrimiento | `app/leccion/[id]/page.tsx` → `components/RunnerLeccion.tsx` + `components/bloques/*` | **Parcial** (ver nota 2) |
-| 06 | Lección, acierto | `components/RunnerLeccion.tsx` → `components/FeedbackEnCapas.tsx` | **Parcial** (ver nota 2) |
+| 05 | Lección, descubrimiento | `app/leccion/[id]/page.tsx` → `components/RunnerLeccion.tsx` + `components/leccion/HeaderLeccion.tsx` + `components/bloques/*` | **Completa** — fase 3H (ver nota 2) |
+| 06 | Lección, acierto | `components/RunnerLeccion.tsx` → `components/FeedbackEnCapas.tsx` + `components/ui/PanelFeedback.tsx` | **Completa** — fase 3H (ver nota 2) |
 | 07 | Lección, error catalogado | `components/FeedbackEnCapas.tsx` + `components/ui/linea/TarjetaError.tsx` (disparado desde `ItemPAES` / `bloques/BloquePregunta`) | **Completa** — fase 3C (ver nota 3) |
 | 08 | Cierre PAES | `app/cierre/[temaId]/page.tsx` → `components/Cierre.tsx` | **Completa** — fase 2E |
 | 09 | Resultado | `components/CierreFinal.tsx` (`ui/linea/Puntaje` + `ui/linea/FranjaDeItems` + `ui/linea/TarjetaLoQueFallo`) | **Completa** — fase 2E |
@@ -56,13 +56,53 @@ Dos hechos que la migración deja anotados, sin actuar sobre ellos:
   muestra descripción por lección: la maqueta de la 04 no la trae.
 - **La suite de Playwright está roja, y lo estaba antes de la 3G.** Ver nota 6.
 
-**2 · Pantallas 05 y 06 (Lección) — parciales.** El runner funciona y toma el
-color de eje desde la fase 2D (`estiloDeLinea` en `RunnerLeccion`), y el feedback
-en capas de la pantalla 06 existe (`FeedbackEnCapas`). Lo que no se hizo es
-rehacer el cromo de cada paso contra la maqueta pieza por pieza (barra de
-progreso "2/7" con "Salir", tarjeta "Lo que estás viendo", el par "¿Te hizo
-sentido? Sí / Todavía no"). No hay una deuda escrita para esto: es alcance de una
-fase de migración del runner que todavía no se abrió.
+**2 · Pantallas 05 y 06 (Lección) — completas desde la fase 3H (2026-09-03).**
+Hasta la 3G estaban parciales: el runner tomaba el color de eje desde la 2D pero el
+cromo del paso no seguía la maqueta. Ahora sí: barra `[Salir] [progreso] [n/N]` en
+lugar del ícono de salida y el eyebrow "Paso N · tipo", enunciado con la tipografía
+`.q`, tarjeta blanca para todo bloque visual, tarjeta teñida "Lo que estás viendo",
+tarjeta "Correcto" en el acierto y el par "¿Te hizo sentido? Sí / Todavía no".
+
+**La salida va a `/tema/[id]`, no a `/camino`.** El destino se resuelve por dato
+—el tema ya baja desde el servidor a `RunnerLeccion`—, no con `history.back()`,
+que devolvería a donde venga el navegador: una recarga o un enlace pegado no
+tienen historia que deshacer.
+
+Cinco desvíos deliberados de la maqueta, cada uno con su motivo:
+
+- **El acierto se queda en el verde de `success`, no en el color del eje.** La
+  maqueta pinta "Correcto" y la alternativa correcta con `--acc`, que en su
+  pantalla de ejemplo es el verde de la línea 03. Copiarlo literal pintaría de
+  rojo (línea 01) o de amarillo (línea 02) una respuesta correcta, y eso no
+  significa "correcto" en ninguna convención. El color del eje dice *dónde* estás;
+  el veredicto es otra cosa. La elegida incorrecta sí toma el `.opt.no` de la
+  maqueta —tinta, fondo hundido, disco en negativo—, que antes quedaba teñida con
+  el color del eje, o sea idéntica a estar simplemente elegida.
+- **El rótulo de la tarjeta teñida no va en `var(--linea)` crudo.** Medido: sobre
+  el tinte de su propia línea da 4,06 (01), 1,63 (02) y 4,30 (03) — bajo AA para
+  10px. Va en `--linea-sobre-tinte`, un token nuevo de la 3H. La maqueta falla ahí
+  (su rótulo verde sobre `#EAF5EE` da 4,30) y "AA o no se usa".
+- **"Salir" y el contador van en `--text-primary`,** no en el `--ink2` de `.lbl`:
+  sobre el fondo de página ese gris da 4,42. Ver `docs/deuda-contraste-etiquetas.md`.
+- **La tarjeta teñida solo envuelve el texto que va después del primer bloque
+  visual.** Medido sobre el corpus: de los 38 pasos que mezclan visual con texto,
+  27 tienen texto después del visual y 11 lo tienen solo antes. Esos 11 quedan sin
+  tarjeta: ahí el texto es el planteo y rotularlo "Lo que estás viendo" sería falso.
+- **"Ya lo vi" no alcanza al último paso.** Son 44 pasos (de 340) los que no abren
+  ningún panel de feedback sin ser el último del archivo. El último conserva
+  "Terminar lección": es otra acción, y en 27 de las 34 lecciones tampoco tiene
+  pregunta, así que la regla se habría comido ese copy casi siempre.
+
+Dos hechos que la migración deja anotados, sin actuar sobre ellos:
+
+- **Los controles *dentro* de los bloques siguen en índigo** ("Revisar respuesta",
+  "¿Por qué?", "Intentar de nuevo"), igual que el `bg-accent-suave` de tablas y
+  diagramas. La 3H migró el marco del paso, no la paleta de los bloques.
+- **El panel de acierto con rótulo "Correcto" llega a `pregunta` y a los
+  `itemsPAES`** (los dos pasan por `FeedbackEnCapas`). Los bloques `seleccion`,
+  `numerica` y `verdaderoFalso` conservan su panel teñido de antes: son 192 pasos
+  con veredicto contra los 20 que tienen bloque `pregunta`, y unificarlos es
+  decidir qué pasa con el ícono y el fondo verde en todos ellos a la vez.
 
 **3 · Pantalla 07.** El tercer párrafo del banner de error (el que rehace el
 cálculo paso a paso) tiene deuda propia en `docs/deuda-banner-error-desarrollo.md`

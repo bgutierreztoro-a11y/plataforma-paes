@@ -102,51 +102,82 @@ export function BloquePregunta({
       </div>
       <fieldset className="space-y-2" disabled={revelado || !montado}>
         <legend className="sr-only">Alternativas</legend>
-        {alternativas.map((alt) => (
-          <label
-            key={alt.clave}
-            /* Al acertar, el verde se ancla a la alternativa elegida y no solo
-               al recuadro de feedback de abajo: es el objeto que el estudiante
-               estaba mirando al comprobar. Solo el acierto — el caso incorrecto
-               se resuelve en el panel, donde la explicación puede llegar antes
-               que el veredicto.
+        {alternativas.map((alt) => {
+          /* Tres estados, y solo el revelado depende de la respuesta.
 
-               **Deuda conocida:** estas clases son casi las de
-               `components/ui/alternativa.ts` (`ALTERNATIVA_BASE` +
-               `ALTERNATIVA_REPOSO` + `ALTERNATIVA_INTERACTIVA`), escritas otra
-               vez acá. Los tokens de línea se migraron en los dos lados a la
-               vez para que no se separen; unificarlos es un cambio de
-               estructura y va en su propia tanda. */
-            className={`flex min-h-11 items-center gap-3 rounded-tarjeta border bg-surface px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${
-              revelado && seleccion === alt.clave && alt.esCorrecta
-                ? "border-success bg-success-suave"
-                : "border-border has-[:checked]:border-[var(--linea)] has-[:checked]:bg-[var(--linea-tinte)]"
-            } ${
-              revelado || !montado
-                ? "cursor-not-allowed"
-                : "cursor-pointer hover:border-border-fuerte hover:bg-sunken"
-            }`}
-          >
-            <input
-              type="radio"
-              name={`pregunta-${itemId}`}
-              value={alt.clave}
-              checked={seleccion === alt.clave}
-              onChange={() => setSeleccion(alt.clave)}
-              className="peer sr-only"
-            />
-            {/* El chip relleno lleva la letra encima, así que el fondo es
-                `--linea-fondo` y no `--linea` —en la 03 el color de línea da
-                4,48:1 con texto claro— y la letra es `--linea-contraste`, que
-                en la 02 amarilla es tinta y no blanco. El borde sí va en
-                `--linea`, que es donde el color es forma. Ver
-                components/ui/linea/colores.ts. */}
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-fuerte text-sm text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]">
-              {alt.clave}
-            </span>
-            <span>{alt.texto}</span>
-          </label>
-        ))}
+             El acierto se queda en el verde de `success` (decisión de la fase 3H,
+             ver PanelFeedback.tsx): en las líneas 01 y 02 el color del eje sobre
+             una respuesta correcta sería rojo o amarillo, y eso no significa
+             "correcto" en ningún lado.
+
+             La elegida incorrecta pasa a tinta —borde `strong`, fondo hundido y
+             el disco de la letra en negativo—, que es el `.opt.no` de la maqueta
+             (`docs/referencia/B-linea-interfaz-completa.html:43-44`) y lo que ya
+             tenía escrito `components/ui/linea/Alternativa.tsx:41,48`. Antes
+             quedaba teñida con el color del eje, o sea igual que estar
+             simplemente elegida: el estado revelado no se distinguía del previo.
+
+             Los `peer-checked:` solo se emiten mientras no hay revelación: como
+             variante tienen más especificidad que las clases base, y si
+             quedaran puestos se comerían el estado revelado. */
+          const elegida = seleccion === alt.clave;
+          const estado = !revelado || !elegida ? "abierta" : alt.esCorrecta ? "correcta" : "fallada";
+
+          const clasesFila = {
+            abierta:
+              "border-border has-[:checked]:border-[var(--linea)] has-[:checked]:bg-[var(--linea-tinte)]",
+            correcta: "border-[1.5px] border-success bg-success-suave",
+            fallada: "border-[1.5px] border-strong bg-sunken",
+          }[estado];
+
+          const clasesChip = {
+            abierta:
+              "border-border-fuerte text-ink-suave peer-checked:border-[var(--linea)] peer-checked:bg-[var(--linea-fondo)] peer-checked:text-[var(--linea-contraste)]",
+            /* El disco también en verde, no en el color del eje: un chip rojo
+               dentro de una fila verde es justamente la contradicción que la
+               decisión evita. `text-inverse` sobre #0E7C57 da 4,85:1. */
+            correcta: "border-success bg-success text-inverse",
+            fallada: "border-strong bg-strong text-inverse",
+          }[estado];
+
+          return (
+            <label
+              key={alt.clave}
+              /* **Deuda conocida:** estas clases son casi las de
+                 `components/ui/alternativa.ts` (`ALTERNATIVA_BASE` +
+                 `ALTERNATIVA_REPOSO` + `ALTERNATIVA_INTERACTIVA`), escritas otra
+                 vez acá. Los tokens de línea se migraron en los dos lados a la
+                 vez para que no se separen; unificarlos es un cambio de
+                 estructura y va en su propia tanda. */
+              className={`flex min-h-11 items-center gap-3 rounded-sm border bg-card px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${clasesFila} ${
+                revelado || !montado
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer hover:border-border-fuerte hover:bg-sunken"
+              }`}
+            >
+              <input
+                type="radio"
+                name={`pregunta-${itemId}`}
+                value={alt.clave}
+                checked={seleccion === alt.clave}
+                onChange={() => setSeleccion(alt.clave)}
+                className="peer sr-only"
+              />
+              {/* Mientras se elige, el chip relleno lleva la letra encima, así
+                  que el fondo es `--linea-fondo` y no `--linea` —en la 03 el
+                  color de línea da 4,48:1 con texto claro— y la letra es
+                  `--linea-contraste`, que en la 02 amarilla es tinta y no
+                  blanco. El borde sí va en `--linea`, que es donde el color es
+                  forma. Ver components/ui/linea/colores.ts. */}
+              <span
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-sm ${clasesChip}`}
+              >
+                {alt.clave}
+              </span>
+              <span>{alt.texto}</span>
+            </label>
+          );
+        })}
       </fieldset>
       {!revelado && (
         <Boton onClick={revisar} disabled={!seleccion || !montado}>

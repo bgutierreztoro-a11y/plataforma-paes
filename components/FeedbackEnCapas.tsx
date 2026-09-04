@@ -126,7 +126,16 @@ export function FeedbackEnCapas({
           unificación de tonos — ver PanelFeedback.tsx. */}
       {anclar(
         <div className="entra-panel-anclado space-y-3">
-          <PanelFeedback tono={esCorrecta ? "acierto" : "neutro"}>{capa1}</PanelFeedback>
+          {/* El rótulo solo en el acierto: la maqueta lo escribe ahí (pantalla
+              06) y el caso incorrecto sigue sin veredicto visual, que es la
+              excepción documentada de este archivo — un rótulo "Incorrecto"
+              contestaría "¿la tuve bien?" antes de la Capa 1. */}
+          <PanelFeedback
+            tono={esCorrecta ? "acierto" : "neutro"}
+            rotulo={esCorrecta ? "Correcto" : undefined}
+          >
+            {capa1}
+          </PanelFeedback>
           {pie}
         </div>,
       )}

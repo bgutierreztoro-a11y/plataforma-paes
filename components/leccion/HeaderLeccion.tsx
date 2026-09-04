@@ -1,85 +1,68 @@
 import Link from "next/link";
-import { IconoSalir } from "@/components/ui/Icono";
+import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 
 interface HeaderLeccionProps {
   pasoActual: number;
   total: number;
-  /* Tipo del paso ("descubrimiento", "practica"…). Va tal cual: el uppercase lo
-     pone el CSS, no el dato. */
-  tipo: string;
+  /* El tema al que pertenece la lección. Es el destino de "Salir": se resuelve
+     por dato desde el servidor (app/leccion/[id]/page.tsx → RunnerLeccion), no
+     con history.back(), que devuelve a donde el navegador venga —una recarga, un
+     enlace pegado— y no a la estación de la lección. */
+  temaId: string;
 }
 
 /**
- * El único chrome del runner. Tres zonas de 56px de alto y una línea de progreso
- * pegada al borde inferior.
+ * El único chrome del runner, ahora la barra de la maqueta:
+ * `[Salir] [barra de progreso] [n/N]`, en una sola fila de 44px
+ * (`docs/referencia/B-linea-interfaz-completa.html:244`).
  *
- * Antes esto eran cuatro cosas apiladas —título de la lección, enlace de salida
- * azul subrayado, fila "Paso N de M / tipo" y una barra de diez segmentos—
- * dentro de una franja blanca. En 390px el andamiaje llegaba antes que la
- * pregunta.
+ * Reemplaza a la franja anterior —ícono de salida, "Paso N · tipo" y una línea
+ * de progreso de 3px pegada al borde inferior—. Tres cosas cambian y valen el
+ * comentario:
  *
- * Tres decisiones que valen el comentario:
+ * 1. **La salida vuelve a ser una palabra.** El ícono solo decía "salir" a quien
+ *    lo buscaba, y el destino vivía en el `aria-label`. La maqueta lo escribe, y
+ *    escrito no necesita que nadie lo interprete. Conserva el objetivo táctil de
+ *    44px aunque el texto mida 10px.
+ * 2. **Se va "Paso N · tipo".** El contador `n/N` dice la posición, y el tipo del
+ *    paso ("descubrimiento", "practica") es vocabulario de quien escribe el
+ *    contenido, no del estudiante. La maqueta no lo trae.
+ * 3. **La barra es la del sistema** (`ui/linea/BarraProgreso`), la misma que /tu
+ *    y las bandas de eje: 6px, pista hundida y relleno en `--linea`. La franja de
+ *    3px propia de este archivo desaparece; no había motivo para que el runner
+ *    tuviera su propio dibujo de progreso.
  *
- * 1. **El fondo es `bg-bg`, no `bg-surface`.** Blanco sobre el papel ink-50 se
- *    lee como una tarjeta flotando encima del contenido: un marco dentro de
- *    otro. Con el fondo de la página, el header no es un objeto, es el borde
- *    superior de la pantalla. El `border-b` de 1px es todo lo que lo separa.
- * 2. **La salida no dice a dónde va.** Un "← Salir al camino" en azul subrayado
- *    y a tamaño de cuerpo compite con el CTA de avanzar, que es la acción que la
- *    pantalla sí quiere. El ícono en `ink-suave` se ve cuando se lo busca y
- *    desaparece cuando no; el destino lo da el `aria-label`, que es donde un
- *    lector de pantalla lo necesita.
- * 3. **El progreso es una línea continua, no diez segmentos.** Diez piezas con
- *    separación se leen como diez cosas que hacer; una línea que crece se lee
- *    como una sola que avanza. Esta no comparte nada con
- *    `components/ui/BarraProgreso`, que sigue sirviendo a los sets de ítems: ahí
- *    las preguntas son 2 a 8 unidades discretas y contarlas es justamente el
- *    punto.
+ * Los dos rótulos van en `--text-primary` y no en el `--ink2` de la maqueta:
+ * sobre el fondo de página ese gris da 4,42:1 y no llega a AA. Ver
+ * docs/deuda-contraste-etiquetas.md.
  */
-export function HeaderLeccion({ pasoActual, total, tipo }: HeaderLeccionProps) {
-  const completado = ((pasoActual + 1) / total) * 100;
-
+export function HeaderLeccion({ pasoActual, total, temaId }: HeaderLeccionProps) {
   return (
-    <header className="sticky top-0 z-10 border-b border-border bg-bg">
-      <div className="relative mx-auto flex h-14 max-w-5xl items-center justify-between px-3">
-        {/* `-ml-1` compensa el aire interno del área táctil: sin eso el ícono
-            queda ópticamente más adentro que el texto que empieza abajo. */}
+    <header className="sticky top-0 z-10 border-b border-hairline bg-bg">
+      {/* h-11 exacto: es el alto que `PasoLeccion` usa para calcular su offset
+          de `sticky` en escritorio. Si cambia acá, cambia allá. */}
+      <div className="mx-auto flex h-11 max-w-5xl items-center gap-2.5 px-3">
+        {/* `-ml-1` compensa el aire interno del área táctil, para que el texto
+            arranque ópticamente alineado con el contenido de abajo. */}
         <Link
-          href="/camino"
-          aria-label="Salir al camino"
-          className="-ml-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-ink-suave motion-safe:transition-colors motion-reduce:transition-none hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
+          href={`/tema/${temaId}`}
+          className="-ml-1 inline-flex min-h-11 shrink-0 items-center px-1 text-etiqueta uppercase text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
         >
-          <IconoSalir />
+          Salir
         </Link>
 
-        <p className="text-eyebrow uppercase tracking-wide text-ink-tenue">
-          Paso <span className="num">{pasoActual + 1}</span> · {tipo}
-        </p>
-
-        {/* Zona derecha vacía, con el ancho del objetivo táctil de la izquierda:
-            es lo que deja el centro centrado de verdad y no corrido hacia la
-            derecha. Cuando entre algo acá, ocupa este hueco. */}
-        <div className="min-w-11" aria-hidden="true" />
-      </div>
-
-      {/* Fuera del contenedor con `max-w`: la línea recorre el ancho completo del
-          viewport, igual que el borde que la sostiene. */}
-      <div
-        role="progressbar"
-        aria-valuenow={pasoActual + 1}
-        aria-valuemin={1}
-        aria-valuemax={total}
-        aria-label={`Paso ${pasoActual + 1} de ${total}`}
-        className="absolute inset-x-0 bottom-0 h-[3px] bg-border"
-      >
-        {/* El relleno toma `--linea`, que baja heredada desde la raíz de
-            RunnerLeccion: esta franja de 3px es el indicador de eje más visible
-            de la pantalla, y en índigo delataba que el runner no había migrado.
-            Fuera de un eje cae al default de `:root` (tinta). */}
-        <div
-          className="h-full bg-[var(--linea)] motion-safe:transition-[width] motion-safe:duration-300 motion-reduce:transition-none"
-          style={{ width: `${completado}%` }}
+        <BarraProgreso
+          className="flex-1"
+          valor={pasoActual + 1}
+          total={total}
+          etiqueta={`Paso ${pasoActual + 1} de ${total}`}
         />
+
+        {/* `aria-hidden` porque la barra de al lado ya anuncia "Paso N de M": sin
+            esto, un lector de pantalla lee el mismo dato dos veces seguidas. */}
+        <span aria-hidden="true" className="num shrink-0 text-etiqueta text-primary">
+          {pasoActual + 1}/{total}
+        </span>
       </div>
     </header>
   );

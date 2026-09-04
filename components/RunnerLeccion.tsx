@@ -8,9 +8,9 @@ import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
-import { Boton } from "@/components/ui/Boton";
+import { Boton } from "@/components/ui/linea/Boton";
 import { CascaronAnclado } from "@/components/ui/ZonaAnclada";
-import { esPasoSimple } from "@/lib/feedbackDelPaso";
+import { esPasoSimple, puntosDeFeedback } from "@/lib/feedbackDelPaso";
 import { HeaderLeccion } from "@/components/leccion/HeaderLeccion";
 import { PasoLeccion } from "@/components/PasoLeccion";
 import { AnuncioPrevioItems } from "@/components/AnuncioPrevioItems";
@@ -221,33 +221,53 @@ export function RunnerLeccion({
     irA("IR_SIGUIENTE");
   }
 
-  /* Las acciones del paso, ahora ancladas al fondo del viewport (Fase 5).
+  /* El copy del CTA dice lo que el paso pide de verdad: un paso que no abre
+     ningún panel de feedback no tiene nada que responder, así que "Siguiente
+     paso" describe el mecanismo y "Ya lo vi" describe el acto
+     (`docs/referencia/B-linea-interfaz-completa.html:264`).
 
-     El primario domina y el "Paso anterior" baja a variante `texto`: eran dos
-     botones del mismo peso decidiendo entre volver y avanzar, y avanzar es lo
-     que el paso pide el 90% de las veces. El texto no pierde objetivo táctil
-     —Boton mantiene min-h-11 y min-w-11 en todas las variantes—, solo caja.
+     `puntosDeFeedback` y no una lista de tipos escrita acá: esa función ya sabe
+     qué bloque abre panel y cuál no —incluido que `numerica` abre uno por campo—
+     y es la misma que decide si el feedback se ancla. Medido sobre el corpus el
+     2026-09-03: 71 de los 340 pasos no abren ningún panel, y 44 de esos no son
+     el último del archivo.
 
-     `flex-1` sobre el primario y ancho automático en el secundario: el primario
-     se queda con todo el ancho sobrante en vez de repartirlo mitad y mitad. */
+     El último paso conserva "Terminar lección" aunque no tenga pregunta: es otra
+     acción —cierra la lección, no avanza dentro de ella— y en 27 de las 34
+     lecciones el último paso tampoco abre panel, así que la regla se habría
+     comido ese copy casi siempre. */
+  const pasoSinRespuesta = puntosDeFeedback(paso.bloques).length === 0;
+  const copyCTA = esUltimoPaso
+    ? "Terminar lección"
+    : pasoSinRespuesta
+      ? "Ya lo vi"
+      : "Siguiente paso";
+
+  /* Las acciones del paso, ancladas al fondo del viewport (Fase 5).
+
+     El primario domina y "Paso anterior" es un ghost angosto (`.btn.ghost` de la
+     maqueta, pantalla 05): eran dos botones del mismo peso decidiendo entre
+     volver y avanzar, y avanzar es lo que el paso pide el 90% de las veces. El
+     ghost no pierde objetivo táctil —la caja del sistema mide 14px de padding
+     vertical sobre 18px de línea—, solo ancho.
+
+     `flex-1` sobre el primario y `anchoAuto` en el ghost: el primario se queda
+     con todo el ancho sobrante en vez de repartirlo mitad y mitad. En el paso 1
+     no hay ghost y el CTA ocupa la fila entera. */
   const accionesDelPaso = (
     <div className="flex items-center gap-2">
-      <Boton
-        variante="texto"
-        onClick={() => irA("IR_ANTERIOR")}
-        disabled={estado.pasoActual === 0}
-      >
-        Paso anterior
-      </Boton>
-      {esUltimoPaso ? (
-        <Boton className="flex-1" onClick={terminarPasos}>
-          Terminar lección
-        </Boton>
-      ) : (
-        <Boton className="flex-1" onClick={avanzar}>
-          Siguiente paso
+      {estado.pasoActual > 0 && (
+        <Boton variante="secundario" anchoAuto onClick={() => irA("IR_ANTERIOR")}>
+          Paso anterior
         </Boton>
       )}
+      <Boton
+        variante="linea"
+        className="flex-1"
+        onClick={esUltimoPaso ? terminarPasos : avanzar}
+      >
+        {copyCTA}
+      </Boton>
     </div>
   );
 
@@ -273,7 +293,7 @@ export function RunnerLeccion({
         <HeaderLeccion
           pasoActual={estado.pasoActual}
           total={totalPasos}
-          tipo={paso.tipo}
+          temaId={tema.id}
         />
         {/* 600px de medida de lectura y 20px de margen lateral. El caso con visual
             conserva el ancho grande: ahí el tope de línea lo pone la columna

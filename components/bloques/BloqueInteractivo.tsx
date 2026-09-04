@@ -1,3 +1,4 @@
+import { TARJETA_VISUAL } from "@/components/ui/linea/tarjetas";
 import { GraficoParabola } from "@/components/grafico/GraficoParabola";
 import { GraficoPendiente } from "@/components/grafico/GraficoPendiente";
 import type { BloqueInteractivoSlider, VariableSlider } from "@/lib/tipos";
@@ -42,12 +43,14 @@ export function BloqueInteractivo({
     bloque.variante === "unaVariable" ? bloque.exploracionMinima : undefined;
 
   return (
-    /* Contenedor propio: el interactivo es el héroe de la lección (MASTER.md
-       §3.3 y UI_GUIDELINES §15) y necesita separarse del texto para decir "acá
-       se juega". El radio más grande de la escala y la única sombra teñida de
-       aurora son suyos y de nada más — es lo que lo distingue de una tarjeta
-       cualquiera sin agregarle adornos. */
-    <div className="rounded-escena border border-border bg-surface p-4 shadow-interactivo sm:p-6">
+    /* La misma tarjeta que cualquier otro bloque visual
+       (`docs/referencia/B-linea-interfaz-completa.html:246`). Hasta la fase 3H el
+       interactivo tenía contenedor propio —el radio más grande de la escala y la
+       única sombra teñida del sistema— para decir "acá se juega". La dirección
+       Línea no tiene sombras y su jerarquía la dan el borde y el color, así que
+       ese distintivo ya no existe como recurso; lo que separa al interactivo del
+       resto es que se puede tocar. */
+    <div className={TARJETA_VISUAL}>
       {esParabola ? (
         <GraficoParabola
           instruccion={bloque.instruccion}

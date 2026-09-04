@@ -10,6 +10,9 @@ interface BotonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
      Si se omite, hereda el `--linea` que haya puesto la pantalla más arriba, que
      es el caso normal dentro de un eje. */
   linea?: LineaId;
+  /* La caja se ajusta a su contenido en vez de ocupar el ancho completo. Ver la
+     nota de `variantes()`. */
+  anchoAuto?: boolean;
 }
 
 /**
@@ -41,27 +44,39 @@ interface BotonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * los toma —es un enlace de interfaz, no una caja— y por eso vive fuera de
  * `CLASES_BASE`.
  */
-const CLASES_CAJA = "block w-full rounded-sm px-4 py-3.5 text-center text-titulo-s";
+const CAJA = "rounded-sm px-4 py-3.5 text-center text-titulo-s";
 
-const CLASES_VARIANTE: Record<Variante, string> = {
-  linea: `${CLASES_CAJA} bg-[var(--linea-fondo)] text-[var(--linea-contraste)]`,
-  neutro: `${CLASES_CAJA} bg-primary text-inverse`,
-  secundario: `${CLASES_CAJA} bg-card text-primary border border-hairline hover:border-strong`,
-  deshabilitado: `${CLASES_CAJA} bg-sunken text-muted cursor-not-allowed`,
-  texto:
-    "text-titulo-s text-[var(--linea-nav)] underline-offset-4 hover:underline disabled:text-muted disabled:no-underline disabled:cursor-not-allowed",
-};
+/* `anchoAuto` existe para la fila de acciones del paso, donde el secundario es un
+   ghost angosto y el primario se queda con el resto del ancho: un botón `w-full`
+   dentro de un flex sin `flex-1` reclama el 100% del contenedor y no encoge. Al
+   primario no le hace falta —`flex-1` fija la base en 0 y gana sobre `width`—,
+   pero al ghost sí. `texto` no toma caja y no lo usa. */
+function variantes(caja: string): Record<Variante, string> {
+  return {
+    linea: `${caja} bg-[var(--linea-fondo)] text-[var(--linea-contraste)]`,
+    neutro: `${caja} bg-primary text-inverse`,
+    secundario: `${caja} bg-card text-primary border border-hairline hover:border-strong`,
+    deshabilitado: `${caja} bg-sunken text-muted cursor-not-allowed`,
+    texto:
+      "text-titulo-s text-[var(--linea-nav)] underline-offset-4 hover:underline disabled:text-muted disabled:no-underline disabled:cursor-not-allowed",
+  };
+}
+
+const CLASES_VARIANTE = variantes(`block w-full ${CAJA}`);
+const CLASES_VARIANTE_AUTO = variantes(`inline-block w-auto ${CAJA}`);
 
 const CLASES_BASE =
   "select-none motion-safe:transition-colors motion-safe:duration-[120ms] motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong";
 
-function clases(variante: Variante, className: string) {
-  return [CLASES_BASE, CLASES_VARIANTE[variante], className].filter(Boolean).join(" ");
+function clases(variante: Variante, anchoAuto: boolean, className: string) {
+  const tabla = anchoAuto ? CLASES_VARIANTE_AUTO : CLASES_VARIANTE;
+  return [CLASES_BASE, tabla[variante], className].filter(Boolean).join(" ");
 }
 
 export function Boton({
   variante = "neutro",
   linea,
+  anchoAuto = false,
   className = "",
   style,
   disabled,
@@ -71,7 +86,7 @@ export function Boton({
     <button
       disabled={disabled ?? variante === "deshabilitado"}
       style={linea ? { ...estiloDeLinea(linea), ...style } : style}
-      className={clases(variante, className)}
+      className={clases(variante, anchoAuto, className)}
       {...props}
     />
   );
@@ -107,7 +122,7 @@ export function EnlaceBoton({
       href={href}
       onClick={onClick}
       style={linea ? { ...estiloDeLinea(linea), ...style } : style}
-      className={clases(variante, className)}
+      className={clases(variante, false, className)}
     >
       {children}
     </Link>
