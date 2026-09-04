@@ -77,7 +77,10 @@ roto. La suite se trata entera en su propia unidad de trabajo, y ahí se decide 
 
 ---
 
-## Corrida de la fase 3J (2026-09-04) — dos fallos nuevos, medidos contra el commit anterior
+## Corrida de la fase 3J (2026-09-04) — el total pasa a 24 fallos, dos de ellos nuevos
+
+**Hoy la suite tiene 24 fallos, 44 en verde y 4 saltados.** De esos 24, **22 ya
+estaban** y **2 los agregó la 3J**.
 
 `npm run capturas` sobre `249bbed` (cierre de la 3J), y la **misma suite corrida
 contra `9b0edd1`** —el commit anterior, con el plan ya escrito y ningún código
@@ -95,12 +98,18 @@ tocado— para separar lo que rompió la 3J de lo que ya venía roto:
 | `caben 5 nodos sin scroll en /camino a 360px` (:374) | pasa (895ms) | falla (timeout 30s) |
 | `a 390px la tarjeta no cuelga de un nodo, va fija al pie` (:524) | pasa (606ms) | falla (timeout 30s) |
 
-Los dos afirman sobre la **columna de nodos** de /camino: cuántos discos entran
-sin scroll y dónde se posa la tarjeta flotante del nodo activo. La 3J reemplazó
-esa columna por cuatro filas resumen —una por línea—, así que `CaminoVertical`,
-`NodoTema` como disco de /camino y la tarjeta flotante ya no existen en esa ruta.
-No es un selector desactualizado: **no hay nodos que contar ni tarjeta que
-posicionar.** Reescribirlos es decidir de nuevo qué tiene que afirmar cada uno.
+**Ninguno de los dos es una regresión.** Los dos afirman sobre la **columna de
+nodos** de /camino: cuántos discos entran sin scroll a 360px, y dónde se posa la
+tarjeta flotante del nodo activo a 390px. La 3J reemplazó esa columna por cuatro
+filas resumen —una por línea—, así que `CaminoVertical`, el disco de `NodoTema` en
+/camino y la tarjeta flotante **ya no existen en esa ruta**.
+
+O sea: son tests de una pantalla que dejó de existir, no un defecto que la 3J
+haya introducido. La pantalla 02 funciona —verificada a mano en `npm run dev`—;
+lo que caducó es lo que los tests daban por supuesto. Tampoco es un selector
+desactualizado que se arregle cambiando un locator: **no hay nodos que contar ni
+tarjeta que posicionar.** Reescribirlos es decidir de nuevo qué tiene que afirmar
+cada uno, igual que con los otros 22.
 
 **Los otros 22 fallos no se movieron, y ninguno de los que sí pasaban dejó de
 pasar por otra causa:** el conjunto de fallos de `249bbed` es exactamente el de

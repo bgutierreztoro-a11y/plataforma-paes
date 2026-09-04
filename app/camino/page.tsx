@@ -4,10 +4,10 @@ import { ENLACES_NAV, NavInferior } from "@/components/ui/linea/NavInferior";
 import { ejesDelCamino } from "@/lib/camino";
 
 export const metadata: Metadata = {
-  /* El plan de la 3J acota esta ruta al comentario del reparto de ancho, así que
-     el copy de la pestaña se queda como estaba aunque el titular de la pantalla
-     ahora diga "Tu red". El desvío queda anotado en el recuento. */
-  title: "Tu camino",
+  /* La pestaña dice lo mismo que el titular de la pantalla. El id de la ruta
+     sigue siendo `/camino` a propósito: esto es copy, no routing, y renombrar la
+     URL rompería los enlaces guardados sin arreglar nada que se lea. */
+  title: "Tu red",
   description: "El temario de Matemática M1 por unidades, y en qué va cada una.",
 };
 

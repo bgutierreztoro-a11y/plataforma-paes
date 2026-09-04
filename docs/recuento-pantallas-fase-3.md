@@ -74,18 +74,13 @@ Cuatro decisiones que conviene no re-discutir a ciegas:
   pediría una tabla de 2×5 con ocho celdas que nadie monta. El punto de la 02 es
   un resumen, no una parada.
 
-Dos cosas que la migración dejó anotadas:
+Una cosa que la migración dejó anotada:
 
 - **Sin estación activa** —todo lo que tiene contenido cerrado o por repasar— el
   CTA no se dibuja, porque apuntaría a una estación ya recorrida, y la N del
   titular pasa a la última estación con contenido: es hasta dónde llegó el
   recorrido, que es lo que la frase afirma. Los dos casos apuntan a una estación
   real; no se inventa un número.
-- **El `<title>` de la ruta sigue diciendo "Tu camino"** aunque el titular de la
-  pantalla ahora diga "Tu red". El plan de la 3J acotaba `app/camino/page.tsx` al
-  comentario del reparto de ancho, y cambiar copy de metadatos no estaba en ese
-  alcance. Es un desvío de una línea, no una deuda de producto.
-
 **2 · Pantalla 03 (Línea).** Completa, con una omisión declarada: no se pinta la
 estación de combinación que cierra la línea en la maqueta ("Combinación · cierre
 de línea · 12 ítems PAES"). `lib/modulos.ts` declara `cierreId` por **tema**,
@@ -310,9 +305,35 @@ por descuido.
    aparte y no se arrastra dentro de un commit de diseño. Está atado a la
    reescritura de la suite e2e, que es donde se decide si esos tests siguen
    existiendo.
-6. **El `<title>` de /camino sigue diciendo "Tu camino"** mientras la pantalla se
-   titula "Tu red". Ver el final de la nota 1: fue alcance del plan, no
-   descuido.
+6. **"Camino" sigue siendo copy visible en ocho sitios.** El `<title>` de /camino
+   se alineó a "Tu red" (2026-09-04). El grep de copy visible —sin comentarios,
+   sin identificadores y sin ids de ruta— deja estos ocho:
+
+   | Sitio | Copy | Pantalla |
+   |---|---|---|
+   | `app/page.tsx:8` | `description`: "…o el **camino** completo si prefieres elegir tú" | 01 |
+   | `PuntoDePartida.tsx:168` | "El **camino** todavía no abre" | 01 |
+   | `PuntoDePartida.tsx:227` | CTA "Ver el **camino**" | 01 |
+   | `PuntoDePartida.tsx:243` | "Te queda una lección del **camino**" | 01 |
+   | `ItemsPAESFinal.tsx:89` | botón "Seguir al **camino**" | 05/06 |
+   | `ItemsPAESFinal.tsx:185` | "…y el **camino** te espera igual" | 05/06 |
+   | `Diagnostico.tsx:51` | CTA "Ver el **camino**" | fuera de las 11 |
+   | `CelebracionTema.tsx:174` | CTA "Volver al **camino**" | fuera de las 11 |
+
+   El cambio ya empezó sin declararse: `CierreFinal.tsx:173` dice **"Volver a la
+   red"** desde la 3I, con el motivo escrito al lado ("La red es el destino
+   honesto"). Son dos botones que van al mismo sitio y lo nombran distinto.
+
+   **No es un descuido: no se tocaron a propósito.** Barrer "camino" →
+   "red"/"estación" es una decisión de producto sobre tres pantallas más dos
+   rutas de fuera, no un ajuste de cierre — los títulos de `PuntoDePartida` son
+   copy que la 3F escribió deliberadamente, y "camino" como metáfora de recorrido
+   puede seguir siendo válida aunque el destino de la barra se llame "Red". Va en
+   su propia pasada de vocabulario, que además tendría que decidir qué hace el
+   `description` de /camino, que sigue diciendo "por unidades" donde la pantalla
+   ahora dice estaciones y líneas. **Los ids de ruta (`/camino`) no entran**: eso
+   es routing.
+
 7. **`lib/descripcionesLecciones.tsx` es código muerto.** `presentacionDeLeccion`
    no tiene consumidor de runtime desde la 3G, cuando se borró `CaminoLecciones`.
    El 2026-09-03 su test dejó de exigir cobertura total —pedir copy de interfaz
