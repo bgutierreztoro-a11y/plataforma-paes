@@ -397,9 +397,14 @@
   --radius-md: 4px;
 
   /* ── Elevación ─────────────── OBSOLETO ──────────────────
-     La dirección Línea no tiene sombras: la jerarquía la dan el borde y el
-     color. Se conservan porque 15 componentes sin migrar las referencian
-     (ver el bloque índigo). */
+     La dirección Línea no tiene sombras **de reposo**: la jerarquía en una
+     pantalla quieta la dan el borde y el color, nunca la altura. Se conservan
+     porque 15 componentes sin migrar las referencian (ver el bloque índigo).
+
+     La regla es de jerarquía, no de propiedad CSS: el canto de `.canto` (más
+     abajo) también es un `box-shadow` y no la contradice. Ese canto no dice
+     "esto importa más", dice "esto se hunde cuando lo tocas" — es respuesta al
+     toque, y en móvil es la única que hay, porque `hover:` no existe ahí. */
   --shadow-e1: 0 1px 2px rgb(22 20 43 / 0.04), 0 3px 12px rgb(22 20 43 / 0.05);
   --shadow-e2: 0 2px 6px rgb(22 20 43 / 0.06), 0 12px 32px rgb(22 20 43 / 0.1);
 
@@ -408,6 +413,40 @@
   --dur-base: 200ms;
   --dur-entrada: 320ms;
   --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Tacto (Fase A). Cuatro duraciones y una curva para lo que responde al
+     dedo. Van acá y no como números sueltos en las clases por el mismo motivo
+     que las de arriba: la próxima vez que haya que retemplar el sistema, se
+     retempla en un lugar.
+
+     `--dur-tacto` gobierna el press completo —canto, desplazamiento y color—
+     con un solo valor. La asimetría del press no está en las duraciones sino
+     en qué regla aplica: entrar en `:active` toma este token, salir toma el
+     0ms de la regla base. Bajar se ve; volver es instantáneo, como un botón
+     físico que se suelta. */
+  --dur-tacto: 90ms;
+  --dur-relleno: 140ms;
+  --dur-bandeja: 300ms;
+  --dur-avance: 400ms;
+  --ease-bandeja: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* El canto: el alto del borde inferior sólido y los dos tonos de tinta que
+     puede tomar, uno por fondo.
+
+     2px y no 3: a devicePixelRatio 1 un canto de 3px se lee como borde de caja
+     y no como volumen. Es también la distancia que baja el elemento al
+     presionarlo, así que la cara superior termina exactamente donde estaba la
+     base.
+
+     Tinta neutra y no color de línea. Un canto por eje exigiría un rol nuevo
+     en `estiloDeLinea()` (components/ui/linea/colores.ts) —una entrada más en
+     `EstiloDeLinea` y un mapa de cuatro—, que es un cambio de contrato del
+     sistema de color y no un token. Y con `--linea-fondo` crudo tampoco
+     serviría: en tres de las cuatro líneas es idéntico a `--linea`, así que el
+     canto no se vería. */
+  --canto-alto: 2px;
+  --canto-tinta: rgb(22 24 29 / 0.3);
+  --canto-papel: rgb(22 24 29 / 0.14);
 
   /* ── Alias legados ───────────────────────────────────────────────────────
      Mapean los nombres de token que el código usa hoy a la paleta nueva.
@@ -667,15 +706,24 @@
    aparece sin que nada se vaya. Compartir la clase habría atado dos duraciones
    que no tienen por qué moverse juntas.
 
-   Usa los tokens de motion de la Fase 1 y no números sueltos: `--dur-entrada`
-   (320ms) y `--ease-salida`, la curva que frena al final, para que el panel
-   se asiente en vez de golpear. Sube 8px y no 4 como el paso: viene del borde
-   de la pantalla, así que necesita algo más de recorrido para leerse como
-   "entró desde abajo". */
+   Usa tokens de motion y no números sueltos: `--dur-bandeja` (300ms) y
+   `--ease-bandeja`, una curva que arranca rápido y frena largo al final, para
+   que el panel se asiente en vez de golpear.
+
+   **Sube 24px y no 8 (Fase A).** El recorrido corto se leía como un fundido
+   con desplazamiento; 24px lo leen como una bandeja que sube desde el borde
+   inferior, que es lo que es.
+
+   **Por qué 24px y no el 100% de su alto.** El destino del portal es un
+   contenedor con `max-h-[40vh] overflow-y-auto` (ver ZonaAnclada.tsx), que
+   recorta y scrollea, y la barra anclada es `shrink-0` dentro de un flex de
+   100dvh: su alto crece de golpe en cuanto el panel se monta. Deslizar al hijo
+   el 100% no elimina ese salto, solo lo disfraza — y para eliminarlo de verdad
+   habría que animar la barra entera, que es otro cambio. */
 @keyframes entra-panel-anclado {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -684,7 +732,7 @@
 }
 
 .entra-panel-anclado {
-  animation: entra-panel-anclado var(--dur-entrada) var(--ease-salida);
+  animation: entra-panel-anclado var(--dur-bandeja) var(--ease-bandeja);
 }
 
 /* El desvanecido del contenido bajo la zona anclada: comunica "hay más abajo"
@@ -703,6 +751,69 @@
 @media (prefers-reduced-motion: reduce) {
   .entra-panel-anclado {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   El canto que se hunde (Fase A).
+
+   El problema que resuelve: en móvil no hay `hover:`, así que un control que
+   solo transiciona color no acusa recibo del toque. El canto le da cuerpo —en
+   reposo se ve el borde inferior sólido; al presionar el canto desaparece y el
+   elemento baja los mismos 2px, así que la cara superior termina donde estaba
+   la base. Es la distancia que recorre un botón físico, y por eso se siente
+   como uno.
+
+   `box-shadow` y no `border-bottom`: el borde ocupa caja y correrle 2px a cada
+   control obligaría a recalcular el padding vertical de todo el sistema. La
+   sombra se pinta afuera y no mueve el layout ni un píxel.
+
+   `--canto-color` lo pone la clase, no quien la usa: `.canto` sola asume fondo
+   claro y `.canto-relleno` la pisa para los rellenos de color o de tinta.
+   Ambas tienen la misma especificidad, así que el orden de acá abajo es el que
+   decide y no se puede invertir.
+
+   `:not(:disabled)` porque un control apagado que igual se hunde promete una
+   acción que no va a ocurrir. En `<a>` y `<label>` el selector no descarta
+   nada: ahí `:disabled` nunca aplica.
+
+   Esta clase se lleva también la transición de color del elemento que la
+   lleva. No es un capricho: va escrita fuera de `@layer`, así que gana sobre
+   la utilidad `motion-safe:transition-*` de Tailwind que traen los mismos
+   elementos, y si listara solo box-shadow y transform le apagaría el fundido
+   de color al control. Los elementos sin `.canto` conservan su utilidad
+   intacta.
+   --------------------------------------------------------------------------- */
+.canto {
+  --canto-color: var(--canto-papel);
+  box-shadow: 0 var(--canto-alto) 0 0 var(--canto-color);
+}
+
+.canto-relleno {
+  --canto-color: var(--canto-tinta);
+}
+
+/* El estado hundido va FUERA del guard de movimiento a propósito: con
+   `prefers-reduced-motion` el canto igual desaparece y el elemento igual baja.
+   Es el estado final, que no cambia; lo único que se salta es el recorrido. */
+.canto:active:not(:disabled) {
+  box-shadow: 0 0 0 0 var(--canto-color);
+  transform: translateY(var(--canto-alto));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Entrada 90ms, salida instantánea. La asimetría no está en las duraciones
+     —hay un solo token— sino en qué regla gobierna cada camino: al ENTRAR en
+     `:active` aplica la regla de abajo (90ms) y al SALIR aplica ésta (0ms),
+     porque una transición usa siempre las propiedades del estado al que
+     llega. */
+  .canto {
+    transition-property: box-shadow, transform, background-color, border-color, color;
+    transition-duration: 0ms;
+  }
+
+  .canto:active:not(:disabled) {
+    transition-duration: var(--dur-tacto);
   }
 }
 
