@@ -13,7 +13,15 @@
    viewBox y el keyframe vive en `globals.css`. Si alguno de los dos se mueve,
    hay que mover el otro — el comentario del CSS dice lo mismo desde su lado. */
 const CENTRO_Y = 12;
-const ANCHO = 168;
+/* 288 y no 168. A 168 la pieza medía menos de un tercio de la fila de tarjetas
+   (576px con su gap) y en la pantalla real se leía como un ícono separador entre
+   el título y las cifras, no como el momento de la pantalla — verificado en
+   /leccion/[id], que es donde único se puede ver: en /_design la pieza está
+   aislada y no compite con nada.
+
+   La mitad exacta de la fila. No más: el sello no lleva ningún dato y ganarle
+   ancho a las dos tarjetas que sí lo llevan sería invertir la jerarquía. */
+const ANCHO = 288;
 const ALTO = 24;
 const X_ESTACION = 12;
 const X_SIGUIENTE = ANCHO - 12;
@@ -117,14 +125,25 @@ export function SelloDeEstacion({
     >
       {/* El tramo que todavía no es tuyo. Está desde el primer frame en los dos
           estados, y en el que no avanza es lo único que queda: la línea sigue
-          hasta la estación siguiente, pero no con vos. */}
+          hasta la estación siguiente, pero no con vos.
+
+          **`--text-muted` y no `--border-hairline`.** Iba en hairline (#D8D9D4,
+          1,34:1 contra el fondo) y en la pantalla real era casi invisible: el
+          estado sin sello se leía como dos puntos negros sueltos, sin ninguna
+          línea que sugiriera que el recorrido sigue. Sin eso el anillo hueco no
+          queda esperando, queda cerrado — y ahí la pieza deja de decir "todavía
+          no" para no decir nada.
+
+          `--text-muted` (#A9ABAF, 2,17:1) es el gris apagado que el sistema ya
+          usa para esto mismo: es el del estado `cerrada` de `Estacion.tsx`. No
+          se recalibra ningún primitivo; se elige el token del rol correcto. */}
       <rect
         x={X_ESTACION}
         y={CENTRO_Y - ALTO_RIEL / 2}
         width={X_SIGUIENTE - X_ESTACION}
         height={ALTO_RIEL}
         rx={ALTO_RIEL / 2}
-        fill="var(--border-hairline)"
+        fill="var(--text-muted)"
       />
 
       {/* El tramo ganado, encima del anterior y creciendo desde la estación de

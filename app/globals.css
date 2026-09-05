@@ -1158,7 +1158,7 @@
    el estado bueno termina más lejos de donde empezó, el malo termina donde
    empezó—, y por eso no son dos animaciones distintas sino una incompleta.
 
-     con sello   anillo 0→220 · núcleo 140→360 · tramo 180→580   (580ms nominal)
+     con sello   anillo 0→220 · núcleo 140→360 · tramo 180→700   (700ms nominal)
      sin sello   anillo 0→220                                     (220ms)
 
    **El nominal no es lo que se ve, y los dos números importan.** `--ease-salida`
@@ -1246,7 +1246,18 @@
   }
 }
 
+/* La duración se declara acá y no se toma de `--dur-avance` a secas: es ese
+   token **para esta instancia**. 400ms sobre el recorrido de esta pieza cerraban
+   a ojo cerca de los 370ms, y en la pantalla real eso no alcanzaba para registrar
+   que el tramo *creció* — se veía que el estado había cambiado, que es otra cosa.
+   Este momento no compite con nada (es lo único que se mueve en la pantalla), así
+   que tiene margen para durar.
+
+   El token global no se toca: gobierna el avance de la barra de progreso, que sí
+   compite —el estudiante está esperando el paso siguiente— y donde 400ms está
+   bien. Un token, un rol; esto es una calibración de instancia. */
 .sello-tramo {
+  --dur-avance: 520ms;
   transform-origin: 12px 12px;
   animation: sello-tramo var(--dur-avance) var(--ease-salida) 180ms backwards;
 }
