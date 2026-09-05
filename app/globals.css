@@ -456,6 +456,14 @@
   --dur-avance: 400ms;
   --ease-bandeja: cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* El estampado del sello de estación (Fase C2). Un gesto, un token.
+     No sale de los de arriba: `--dur-tacto` (90ms) es demasiado corto para
+     leerse como algo que se apoya y queda, y `--dur-relleno` (140ms) describe
+     el relleno de un disco que ya estaba, no una llegada. El resto del guion
+     del sello sí reusa lo que hay —`--dur-avance` para el tramo que crece, y
+     la curva de sobregiro que `.entra-numero` ya usa. */
+  --dur-sello: 220ms;
+
   /* El canto: el alto del borde inferior sólido y los dos tonos de tinta que
      puede tomar, uno por fondo.
 
@@ -1135,5 +1143,111 @@
   .trazo-destacado {
     background-image: none;
     font-weight: 700;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL SELLO DE ESTACIÓN (Fase C2)
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El momento del cierre de lección. Lo dibuja
+   `components/ui/linea/SelloDeEstacion.tsx`; acá van los tres escalones.
+
+   La pieza tiene dos estados y **el guion es el mismo en los dos**: lo que
+   cambia es cuántos escalones corren. Eso es lo que carga el significado —
+   el estado bueno termina más lejos de donde empezó, el malo termina donde
+   empezó—, y por eso no son dos animaciones distintas sino una incompleta.
+
+     con sello   anillo 100→320 · núcleo 240→460 · tramo 280→680   (680ms)
+     sin sello   anillo 100→320                                     (320ms)
+
+   Nada de esto envuelve a la pantalla: los tres escalones caen sobre nodos
+   del SVG, que es hermano del encabezado y de las tarjetas. Los CTA se pintan
+   y se tocan desde el primer frame.
+
+   **Ninguna de las tres se anida dentro de otra.** El SVG contenedor no lleva
+   entrada propia a propósito: apilarle un fundido encima atenuaría el sello
+   justo mientras cae, que es el defecto de `docs/deuda-entradas-apiladas.md`.
+
+   **El origen va en coordenadas del viewBox y no con `transform-box: fill-box`.**
+   Un `transform-origin: center` a secas se resuelve contra el viewport del SVG
+   —ahí `transform-box` vale `view-box` por defecto—, así que el disco escalaría
+   desde el medio del cuadro y entraría volando desde un costado. `fill-box` lo
+   arreglaría, pero es Baseline recién desde 2023 en Safari y no existe en
+   WebViews de Android viejos, que es parte del público real: donde no está, la
+   declaración se ignora en silencio y vuelve el mismo defecto.
+
+   Con el origen escrito en unidades del viewBox no hace falta ninguna de las
+   dos: `12px 12px` es a la vez el centro de las dos estaciones y el borde
+   izquierdo del tramo, y se resuelve en el sistema de coordenadas del SVG, así
+   que sigue siendo correcto aunque la pieza se escale por CSS. Es el mismo
+   número que `X_ESTACION` y `CENTRO_Y` en el componente; si alguno se mueve,
+   estos tienen que moverse con él.
+
+   Los retrasos van escritos acá y no inline con `--retraso` como en las tres
+   pantallas de la Fase C: aquellos son el guion de una pantalla, que compone
+   quien la arma; éste es el guion interno de **una** pieza, y no hay un
+   segundo call site que lo quiera distinto.
+   --------------------------------------------------------------------------- */
+
+/* 1. El anillo se asienta. Sin sobregiro: llegar a la estación es un hecho,
+      no un logro. Es el único escalón que corre en los dos estados. */
+@keyframes sello-anillo {
+  from {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+.sello-anillo {
+  transform-origin: 12px 12px;
+  animation: sello-anillo var(--dur-sello) var(--ease-salida) 100ms backwards;
+}
+
+/* 2. El núcleo se estampa dentro del anillo. Acá sí va el sobregiro —la misma
+      curva de `.entra-numero`—: es lo que hace que se lea como algo que se
+      apoya con fuerza y rebota, y no como un color que aparece. */
+@keyframes sello-nucleo {
+  from {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+.sello-nucleo {
+  transform-origin: 12px 12px;
+  animation: sello-nucleo var(--dur-sello) cubic-bezier(0.34, 1.56, 0.64, 1) 240ms backwards;
+}
+
+/* 3. El tramo crece hacia la estación siguiente.
+
+      Arranca a 280ms, 180ms antes de que el núcleo termine de asentarse. El
+      solape es deliberado: encadenados se leen como dos cosas en fila, y
+      solapados se leen como el sello empujando la línea, que es la relación
+      real entre los dos.
+
+      `scaleX` y no `width`: el ancho dispara layout en cada frame. */
+@keyframes sello-tramo {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.sello-tramo {
+  transform-origin: 12px 12px;
+  animation: sello-tramo var(--dur-avance) var(--ease-salida) 280ms backwards;
+}
+
+/* Sin movimiento: los tres llegan puestos, sin recorrido y **sin retardo**. El
+   retardo importa tanto como el recorrido — un escalonamiento apagado a medias
+   deja la pieza invisible 280ms sobre una pantalla que ya está completa. Mismo
+   criterio que `.entra-nodo` y `.entra-en-secuencia`. */
+@media (prefers-reduced-motion: reduce) {
+  .sello-anillo,
+  .sello-nucleo,
+  .sello-tramo {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

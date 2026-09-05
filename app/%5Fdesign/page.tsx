@@ -9,6 +9,7 @@ import { NavInferior } from "@/components/ui/linea/NavInferior";
 import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
 import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEstaciones";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
+import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
 import { SIN_DATO, TiraKPI } from "@/components/ui/linea/TiraKPI";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
@@ -261,6 +262,40 @@ export default function PaginaDiseno() {
                     <span className="text-cuerpo-xs text-secondary">{estado}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Sello de estación"
+          nota="El momento del cierre de lección, en sus dos estados. Con aciertos suficientes el sello se estampa y el tramo crece hacia la estación siguiente (680ms); sin ellos el anillo se asienta igual —llegaste— pero queda hueco y el tramo no se mueve (320ms). El estado bueno termina más lejos de donde empezó; el malo termina donde empezó, y esa asimetría es lo que dice la pieza. La silueta va en --linea-nav y no en --linea: el amarillo de la 02 sobre el fondo da 1,66:1 y el sello quedaría invisible justo en el eje del módulo v1. El color del eje vive en el relleno, que es masa dentro de un anillo que ya carga la legibilidad. Va aria-hidden: es decoración, los datos están en las dos tarjetas y en el título."
+        >
+          <div className="flex flex-col gap-6">
+            <PorLinea>
+              {() => (
+                <div className="flex flex-col gap-4 rounded-sm border border-hairline bg-screen px-4 py-4">
+                  <div>
+                    <Rotulo>Con sello</Rotulo>
+                    <SelloDeEstacion estampado />
+                  </div>
+                  <div>
+                    <Rotulo>Sin sello</Rotulo>
+                    <SelloDeEstacion estampado={false} />
+                  </div>
+                </div>
+              )}
+            </PorLinea>
+
+            {/* El momento corre una sola vez por cierre, así que en la galería
+                hay que poder mirar el estado final quieto sin recargar la
+                página. Es el mismo render que ve quien vuelve a una lección ya
+                completada, y el mismo que deja `prefers-reduced-motion`. */}
+            <div style={estiloDeLinea("02")} className="max-w-sm">
+              <Rotulo>Estado final, sin animar (línea 02, la del módulo v1)</Rotulo>
+              <div className="flex flex-col gap-4 rounded-sm border border-hairline bg-card px-4 py-4">
+                <SelloDeEstacion estampado animar={false} />
+                <SelloDeEstacion estampado={false} animar={false} />
               </div>
             </div>
           </div>
