@@ -17,8 +17,16 @@ interface BotonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 /**
  * El botón de la dirección "Línea": ancho completo, 14px de padding vertical,
- * radio de 2px y el texto en `titulo-s` centrado. Sin sombra y sin canto: la
+ * radio de 2px y el texto en `titulo-s` centrado. Sin sombra de reposo: la
  * jerarquía la da el color de la caja, no el volumen.
+ *
+ * **Sí lleva canto (Fase A).** Un canto inferior de 2px que desaparece al
+ * presionar mientras el botón baja esos mismos 2px. No contradice la frase de
+ * arriba: la jerarquía —cuál es la acción principal de la pantalla— la sigue
+ * dando el color, y el canto no se ve hasta que hay un dedo encima. Existe
+ * porque en móvil no hay `hover:`, así que sin él el botón no acusa recibo del
+ * toque. Va como `box-shadow` y no como `border-bottom` para no mover el
+ * layout; la mecánica completa está en `.canto`, en app/globals.css.
  *
  * - `linea`: la acción principal dentro de un eje. Toma el color de la línea.
  * - `neutro`: la acción principal fuera de un eje. Tinta sólida.
@@ -51,11 +59,16 @@ const CAJA = "rounded-sm px-4 py-3.5 text-center text-titulo-s";
    dentro de un flex sin `flex-1` reclama el 100% del contenedor y no encoge. Al
    primario no le hace falta —`flex-1` fija la base en 0 y gana sobre `width`—,
    pero al ghost sí. `texto` no toma caja y no lo usa. */
+/* El canto va en tres de las cinco variantes. `canto-relleno` en las dos que
+   son una caja de color sólido —ahí el canto es tinta sobre el propio color— y
+   `canto` a secas en `secundario`, que vive sobre papel y necesita el tono
+   pálido. `deshabilitado` no lo lleva porque un control apagado no promete
+   tacto, y `texto` no lo lleva porque no tiene caja que hundir. */
 function variantes(caja: string): Record<Variante, string> {
   return {
-    linea: `${caja} bg-[var(--linea-fondo)] text-[var(--linea-contraste)]`,
-    neutro: `${caja} bg-primary text-inverse`,
-    secundario: `${caja} bg-card text-primary border border-hairline hover:border-strong`,
+    linea: `${caja} canto canto-relleno bg-[var(--linea-fondo)] text-[var(--linea-contraste)]`,
+    neutro: `${caja} canto canto-relleno bg-primary text-inverse`,
+    secundario: `${caja} canto bg-card text-primary border border-hairline hover:border-strong`,
     deshabilitado: `${caja} bg-sunken text-muted cursor-not-allowed`,
     texto:
       "text-titulo-s text-[var(--linea-nav)] underline-offset-4 hover:underline disabled:text-muted disabled:no-underline disabled:cursor-not-allowed",
