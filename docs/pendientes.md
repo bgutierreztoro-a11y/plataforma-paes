@@ -1597,3 +1597,22 @@ llevaría a declarar la justificación anidada dentro de cada paso, donde el
 chequeo nunca la vería (`data.auditoria` en la raíz, no
 `data.pasos[i].auditoria`), y el hallazgo `slider-no-justificado` seguiría
 en rojo pese a la declaración.
+
+## 🟡 P2 — decisiones abiertas (2026-09-05)
+
+Tres puntos que la auditoría P2 (`docs/auditoria-p2-consolidacion.md`) deja
+sin resolver. No se resuelven aquí; se anotan para decidir.
+
+- **¿El feedback condicional cuenta como consolidación contrastiva?** 62 de
+  los 68 casos que hoy "cumplen" dependen de esta lectura. Si la respuesta
+  es *no*, la tasa real de cumplimiento baja a 6/96.
+
+- **¿La clase `BloqueNumerica` / `feedbackPorError` entra al alcance de
+  P2?** Son 117 bloques que hoy quedan sin veredicto porque no está
+  definido si la regla de contraste posterior les aplica.
+
+- **`prediccion` y `verdaderoFalso` no admiten `errorCatalogado` en el
+  esquema.** Mientras eso no cambie, P2 no puede exigirse sobre el bloque
+  de descubrimiento de P1. ¿La solución es cambio de schema (permitir
+  `errorCatalogado` en esos tipos) o cambio de doctrina (P2 no aplica a
+  ese bloque)?
