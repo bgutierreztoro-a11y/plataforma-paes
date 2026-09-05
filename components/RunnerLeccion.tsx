@@ -4,7 +4,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { estadoInicialRunner, reducerRunner } from "@/lib/estadoRunner";
 import { registrarEvento } from "@/lib/eventos";
-import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
+import { esLeccionCompletada, leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
@@ -89,6 +89,27 @@ export function RunnerLeccion({
      entera, y de acá baja como prop hasta los bloques que pintan prosa. */
   const corpus = corpusDeLeccion(leccion);
 
+  /* El sello del cierre (Fase C2) corre una sola vez y nunca dos.
+     Dos vectores reales, y el refresh no es ninguno de los dos: este runner
+     arranca siempre en `estadoInicialRunner`, así que recargar `/leccion/[id]`
+     devuelve al paso 1 y el cierre no se alcanza sin volver a responder.
+
+     1. Dentro de esta misma sesión de lección: "Repasar" y "Repetir solo las
+        preguntas" desmontan y remontan `ItemsPAESFinal` sin recargar. El `ref`
+        sobrevive porque el que no se desmonta es este componente.
+     2. Volviendo desde el camino a una lección ya cerrada: lo resuelve
+        `esLeccionCompletada`, que ya persiste `marcarCompletada()` en
+        `terminar()`. No hace falta un campo nuevo en `ProgresoLocal` —que además
+        es tipo compartido con el servidor— para un dato que ya está guardado.
+
+     El valor se fija en el efecto de `leccion_inicio` y se apaga en los dos
+     handlers que devuelven al cierre, nunca durante un render. Dos motivos: en
+     render, `esLeccionCompletada` leería `localStorage` —que en servidor no
+     existe— y daría un valor distinto en cada lado de la hidratación; y mutar el
+     `ref` mientras se renderiza haría que el doble render del modo estricto se
+     comiera el sello en desarrollo, que es justo donde hay que poder mirarlo. */
+  const selloYaVisto = useRef(false);
+
   /* Los dos `ref` de abajo son el mismo guardia que CelebracionTema.tsx y
      ItemsPAESFinal.tsx ya usan: React vuelve a invocar los efectos en modo
      estricto de desarrollo (mount → cleanup → mount) para detectar
@@ -100,6 +121,10 @@ export function RunnerLeccion({
     if (yaInicio.current) return;
     yaInicio.current = true;
     registrarEvento({ nombre: "leccion_inicio", props: { leccion_id: leccion.id } });
+    /* Acá y no en render: es el primer punto donde `localStorage` existe con
+       seguridad. Falta muchísimo para que el cierre se pueda alcanzar —hay que
+       recorrer los diez pasos y responder los ítems—, así que llega puesto. */
+    if (esLeccionCompletada(leccion.id)) selloYaVisto.current = true;
     // Solo al montar: leccion_inicio se dispara una vez por sesión de lección.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -152,11 +177,17 @@ export function RunnerLeccion({
      volver a montarse (fase "itemsPAES") arranca limpio, sin arrastrar
      respuestas de la vuelta anterior. */
   function repetirCierre() {
+    /* Estas dos son las únicas formas de volver al cierre sin recargar, así que
+       son el punto exacto donde el sello deja de ser nuevo. Marcarlo acá —en un
+       handler de click— y no en un efecto de la pantalla de cierre evita que el
+       doble montaje del modo estricto lo consuma antes de que se vea. */
+    selloYaVisto.current = true;
     setFase("anuncio");
     window.scrollTo({ top: 0 });
   }
 
   function repasar() {
+    selloYaVisto.current = true;
     dispatch({ type: "REINICIAR" });
     setFase("pasos");
     setExploracionCumplida(false);
@@ -215,6 +246,7 @@ export function RunnerLeccion({
               onRepetirCierre={repetirCierre}
               onContinuar={terminar}
               siguienteLeccionId={siguienteLeccionId}
+              animarSello={!selloYaVisto.current}
             />
           )}
         />

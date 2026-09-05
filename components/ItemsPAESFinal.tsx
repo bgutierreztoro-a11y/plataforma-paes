@@ -8,6 +8,7 @@ import { alcanzaDominio } from "@/lib/umbrales";
 import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
+import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
 import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 /* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
@@ -67,6 +68,7 @@ export function ItemsPAESFinal({
   onRepetirCierre,
   onContinuar,
   siguienteLeccionId,
+  animarSello = false,
   cierreEnDemostracion = false,
 }: {
   respuestas: RespuestaRegistrada[];
@@ -81,6 +83,11 @@ export function ItemsPAESFinal({
   /* Presente solo si hay una siguiente lección publicable en el camino
      completo — decide el copy del botón/enlace de avance. */
   siguienteLeccionId?: string;
+  /* Si el momento del sello se reproduce. Lo decide `RunnerLeccion`, que es
+     quien sabe si éste es el primer cierre de esta lección; acá el default es
+     `false` porque el estado final quieto es el render seguro — una pantalla que
+     nunca anima es correcta, una que anima de más es una promesa repetida. */
+  animarSello?: boolean;
   /* Solo aplica cuando el destino de "Continuar" es /cierre. */
   cierreEnDemostracion?: boolean;
 }) {
@@ -136,6 +143,21 @@ export function ItemsPAESFinal({
           titulo={conDominio ? "Lección terminada" : "Lección terminada, y hay algo que afinar"}
         />
 
+        {/* El momento (Fase C2). Va acá, entre el título y las cifras, porque es
+            lo que el título afirma dicho en señalética — y antes de los números,
+            que son el detalle.
+
+            Hermano y no envoltorio: los tres CTA de abajo se pintan y se tocan
+            desde el primer frame, y ninguna de las tres animaciones del sello
+            cae sobre un elemento que ya esté entrando por otra cosa. Esta
+            pantalla no tiene entrada escalonada propia —a diferencia del cierre
+            de módulo, del paso y de la celebración—, así que el sello es lo
+            único que se mueve y no hay apilado que agregar a
+            `docs/deuda-entradas-apiladas.md`.
+
+            `conDominio` y no un umbral propio: el sello repite lo que el `h1` de
+            arriba ya dice. Ver `lib/umbrales.ts`. */}
+        <SelloDeEstacion className="mt-6" estampado={conDominio} animar={animarSello} />
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TarjetaDato

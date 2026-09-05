@@ -73,10 +73,20 @@ Los porqués de cada número están en el comentario que acompaña a cada bloque
 
 ### Dos cosas que conviene saber antes de tocar el trazo
 
-1. **`--trazo-eje` no reusa `--linea-tinte`.** La pantalla de lección no instala
-   `estiloDeLinea()`, así que ahí ese token cae a blanco; e instalarlo entero
-   recolorearía la selección de alternativas en las 34 lecciones, porque
-   `BloquePregunta` la pinta desde `--linea` y `--linea-tinte`.
+1. **`--trazo-eje` no reusa `--linea-tinte`,** y se emite como variable suelta con
+   un rol solo.
+
+   > **Corrección, 2026-09-05 (Fase C2).** Esta entrada decía que "la pantalla de
+   > lección no instala `estiloDeLinea()`". **Es falsa.** `RunnerLeccion.tsx:83-85`
+   > arma `estiloLinea` como `estiloDeLinea(linea)` **más** `--trazo-eje`, y lo
+   > monta en las tres fases (`:209`, `:229`, `:394`): en `/leccion/[id]`,
+   > `--linea` y sus seis derivados **sí** están disponibles. El sello de la Fase
+   > C2 no recibe ninguna prop de color justamente por eso.
+   >
+   > La corrección alcanza también al comentario de `RunnerLeccion.tsx:76-78`,
+   > que dice lo mismo sobre `--linea-tinte`. Qué queda entonces sosteniendo la
+   > separación de `--trazo-eje` es una pregunta abierta, y no se responde acá:
+   > está anotada en [deuda-trazo-eje-razon-stale.md](deuda-trazo-eje-razon-stale.md).
 2. **`--trazo-alfa` tiene un gate.** `lib/contrasteTrazo.test.ts` lee los tokens
    del CSS y verifica que el texto sobre el trazo pase AA en las cuatro líneas y
    sobre los dos fondos. Es el único gate automático de contraste del repo. El
