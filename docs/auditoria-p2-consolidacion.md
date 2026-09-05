@@ -7,8 +7,7 @@ no propone texto nuevo ni correcciones.
 
 ## Qué se audita
 
-P2 de la doctrina de aprendizaje (`doctrina-aprendizaje-fobos.md`, línea 75 — el
-archivo vive **en la raíz del repo y está sin trackear**, no en `docs/`):
+P2 de la doctrina de aprendizaje (`docs/doctrina-aprendizaje-fobos.md`, línea 75):
 
 > Regla de auditoría nueva: todo `BloquePrediccion` / `BloqueSeleccion` con
 > distractores catalogados debe tener, en el mismo `paso` o el siguiente, un
