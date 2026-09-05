@@ -43,7 +43,7 @@ export function SliderControl({
       <div className="flex items-baseline justify-between">
         <span className="text-sm text-ink-suave">
           {etiqueta}
-          {!editable && " · fijo"}
+          {!editable && " (fijo)"}
         </span>
         <span className="text-base num text-ink">
           {valor.toLocaleString("es-CL", { maximumFractionDigits: 1 })}

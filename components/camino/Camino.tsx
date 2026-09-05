@@ -150,7 +150,7 @@ export function Camino({ ejes }: { ejes: EjeDelCamino[] }) {
  * `undefined` si la activa no es de acá.
  *
  * Es la posición dentro de la línea y no dentro de la red: la frase es "Vas
- * aquí · estación K" leída dentro de la fila de su propia línea, así que K tiene
+ * aquí, estación K" leída dentro de la fila de su propia línea, así que K tiene
  * que contar desde el principio de esa línea. La posición global es la del
  * titular.
  */
@@ -175,7 +175,7 @@ function posicionEnEje(eje: EjeDelCamino, activo?: TemaDelCamino): number | unde
  * (`B-linea-interfaz-completa.html:186`) y no se le suma ningún otro realce —el
  * texto de abajo ya cambia de frase y de color.
  *
- * **"Vas aquí · estación K" va en `--linea-nav`, no en `--linea`.** Acá el color
+ * **"Vas aquí, estación K" va en `--linea-nav`, no en `--linea`.** Acá el color
  * de la línea es texto sobre superficie clara, y la 02 (#FFB600) da 1,76:1 ahí.
  * Es la misma razón que ya documenta `colores.ts` para `NavInferior`. La barra y
  * los puntos, que son forma, sí van en `--linea`.
@@ -211,7 +211,7 @@ function FilaDeLinea({ linea }: { linea: LineaDelCamino }) {
           <span className="mt-0.5 block text-cuerpo-xs text-muted">Pronto</span>
         ) : esActual ? (
           <span className="mt-0.5 block text-cuerpo-xs font-semibold text-[var(--linea-nav)]">
-            Vas aquí · estación {linea.estacionActual}
+            Vas aquí, estación {linea.estacionActual}
           </span>
         ) : (
           <span className="mt-0.5 block text-cuerpo-xs text-secondary">

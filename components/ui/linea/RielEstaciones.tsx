@@ -13,8 +13,8 @@ export interface ParadaDelRiel {
   id: string;
   estado: EstadoDeParada;
   titulo: string;
-  /** Ya formateado. El riel no sabe qué se cuenta: "Pasada · 3 lecciones",
-   *  "Lección 2 de 3 · 4 min", "En preparación". Mismo contrato que `contador`
+  /** Ya formateado. El riel no sabe qué se cuenta: "Pasada, 3 lecciones",
+   *  "Lección 2 de 3, 4 min", "En preparación". Mismo contrato que `contador`
    *  en `NodoCamino`. */
   subtitulo: string;
   /** Ausente = la parada no lleva a ninguna parte y se rinde como texto. */

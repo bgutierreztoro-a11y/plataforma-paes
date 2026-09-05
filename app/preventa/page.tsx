@@ -26,7 +26,7 @@ export default function Preventa() {
   return (
     <PantallaCentrada className="gap-6 text-center">
       <EncabezadoDeEntrada
-        rotulo="Cohorte fundadora · Cupos limitados"
+        rotulo="Cohorte fundadora, cupos limitados"
         titulo="Curso intensivo de Funciones para la PAES M1"
         escala="portada"
       >
@@ -34,9 +34,10 @@ export default function Preventa() {
         más se repite en la prueba. Diagnóstico, lecciones interactivas y práctica con
         preguntas formato PAES.
       </EncabezadoDeEntrada>
+      {/* Dos hechos, dos frases. El punto medio que los separaba era un
+          separador tipográfico haciendo el trabajo de un punto seguido. */}
       <p className="max-w-md text-lg leading-8 text-ink-suave">
-        <span className="num text-2xl font-semibold text-ink">$9.990</span>
-        <span className="mx-2 text-ink-suave">·</span>
+        <span className="num text-2xl font-semibold text-ink">$9.990</span>.{" "}
         Parte el {FECHA_INICIO}
       </p>
       <iframe

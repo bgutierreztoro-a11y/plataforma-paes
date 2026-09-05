@@ -83,7 +83,7 @@ export function ocurrenciasDeErrorDeSesion(): { descripcion: string; veces: numb
 }
 
 /**
- * El rótulo en versalitas del banner de error: `error-7` + 3 → `Error 07 · te ha
+ * El rótulo en versalitas del banner de error: `error-7` + 3 → `Error 07, te ha
  * pasado 3 veces`. Va en minúsculas; el `uppercase` lo pone `TarjetaError`.
  *
  * **El conteo solo se nombra a partir de la segunda vez.** Con una sola
@@ -104,5 +104,5 @@ export function ocurrenciasDeErrorDeSesion(): { descripcion: string; veces: numb
 export function rotuloDeError(errorCatalogado: string, ocurrencias: number): string {
   const numero = /^error-(\d+)$/.exec(errorCatalogado);
   const referencia = numero ? `Error ${numero[1].padStart(2, "0")}` : errorCatalogado;
-  return ocurrencias >= 2 ? `${referencia} · te ha pasado ${ocurrencias} veces` : referencia;
+  return ocurrencias >= 2 ? `${referencia}, te ha pasado ${ocurrencias} veces` : referencia;
 }

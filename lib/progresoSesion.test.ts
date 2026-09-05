@@ -73,8 +73,8 @@ test("la primera vez el rótulo no nombra ningún conteo", () => {
 });
 
 test("desde la segunda vez el rótulo nombra el conteo", () => {
-  assert.equal(rotuloDeError("error-7", 2), "Error 07 · te ha pasado 2 veces");
-  assert.equal(rotuloDeError("error-12", 5), "Error 12 · te ha pasado 5 veces");
+  assert.equal(rotuloDeError("error-7", 2), "Error 07, te ha pasado 2 veces");
+  assert.equal(rotuloDeError("error-12", 5), "Error 12, te ha pasado 5 veces");
 });
 
 test("el id se rellena a dos dígitos y conserva los de tres", () => {
@@ -88,6 +88,6 @@ test("el id se rellena a dos dígitos y conserva los de tres", () => {
 test("un id que no es `error-N` se muestra sin transformar", () => {
   assert.equal(
     rotuloDeError("ecuaciones-inecuaciones/error-4", 3),
-    "ecuaciones-inecuaciones/error-4 · te ha pasado 3 veces",
+    "ecuaciones-inecuaciones/error-4, te ha pasado 3 veces",
   );
 });

@@ -119,8 +119,7 @@ export function ItemPAES({
   const pieDelItem = alternativaElegida ? (
     <>
       <p className="text-sm text-ink-suave">
-        Resuelta en{" "}
-        <span className="num">{formatoTiempo(tiempoFinalMs)}</span> · en la
+        Resuelta en <span className="num">{formatoTiempo(tiempoFinalMs)}</span>. En la
         PAES M1 tendrás alrededor de 2 minutos por pregunta.
       </p>
       {/* `variante="linea"` toma el color del eje desde `--linea-fondo`, que la

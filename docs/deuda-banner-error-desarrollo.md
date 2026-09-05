@@ -13,7 +13,7 @@ define el banner (`.bnr`) con **tres** párrafos:
 
 | Parte del HTML | Clase | Qué dice en el mock | Dato en el repo |
 |---|---|---|---|
-| Versalitas verdes | `.bnr .k` | `Error 07 · te ha pasado 3 veces` | el id sí (`errorCatalogado`); el conteo, ver abajo |
+| Versalitas verdes | `.bnr .k` | `Error 07, te ha pasado 3 veces` | el id sí (`errorCatalogado`); el conteo, ver abajo |
 | Frase 15px | `.bnr .v` | `Sumaste las bases y multiplicaste por la altura, pero olvidaste dividir por 2.` | `descripcionError` (Capa 2) |
 | Párrafo gris | `.bnr p` | `(8 + 12) × 5 = 100 → ese es el rectángulo completo. El trapecio es la mitad: 100 ÷ 2 = 50.` | **no existe** |
 

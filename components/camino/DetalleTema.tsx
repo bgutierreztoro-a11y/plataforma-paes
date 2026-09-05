@@ -32,7 +32,7 @@ function ordinal(indice: number): string {
  * era el motivo de que la 04 figurara como parcial en el recuento de la fase 3.
  *
  * **La salida de esta pantalla es hacia la línea, no hacia /camino.** Lo dice la
- * maqueta: el único enlace de vuelta es la propia etiqueta ("← Línea 03 ·
+ * maqueta: el único enlace de vuelta es la propia etiqueta ("← Línea 03,
  * Geometría"). El botón de volver de la franja fija desaparece con ella.
  *
  * Isla de cliente porque el estado de cada estación sale del progreso guardado
@@ -104,7 +104,7 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
       id: leccion.id,
       estado,
       titulo: leccion.titulo,
-      subtitulo: `Lección ${ordinal(i)}${estado === "pasada" ? " · completa" : ""}`,
+      subtitulo: `Lección ${ordinal(i)}${estado === "pasada" ? ", completa" : ""}`,
       href: `/leccion/${leccion.id}`,
       onAbrir: () =>
         registrarEvento({
@@ -164,7 +164,7 @@ export function DetalleTema({ tema }: { tema: TemaDelCamino }) {
           href={`/linea/${tema.ejeId}`}
           className="inline-flex min-h-11 items-center self-start text-etiqueta uppercase text-[var(--linea)] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
         >
-          ← {linea ? `Línea ${linea} · ` : ""}
+          ← {linea ? `Línea ${linea}, ` : ""}
           {tema.ejeNombre}
         </Link>
 

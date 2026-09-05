@@ -132,9 +132,8 @@ export function CierreFinal({
         />
 
         <p className="mt-3 text-sm text-ink-suave">
-          Ritmo promedio:{" "}
-          <span className="num">{formatoTiempo(promedioMs)}</span> por pregunta
-          · en la PAES M1 el tiempo da para ~2:00.
+          Ritmo promedio: <span className="num">{formatoTiempo(promedioMs)}</span> por
+          pregunta. En la PAES M1 el tiempo da para ~2:00.
         </p>
       </Tarjeta>
 
@@ -149,7 +148,7 @@ export function CierreFinal({
 
             Deshabilitado por el mismo motivo y con el mismo control que el
             "Repasar" de /errores (`ListaErroresVivos.tsx:64`): no existe ruta
-            de repaso dirigido (`docs/deuda-errores-vivos.md`). Sin el "· 3 min"
+            de repaso dirigido (`docs/deuda-errores-vivos.md`). Sin el "3 min"
             de la maqueta, que no tiene fuente. */}
         {grupos.length > 0 && (
           <Boton type="button" variante="deshabilitado">

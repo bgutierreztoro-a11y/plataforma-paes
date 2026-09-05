@@ -32,7 +32,7 @@ function plural(n: number, singular: string, plural: string) {
  * "porRepasar" en cuanto **una** lección queda bajo umbral, aunque las otras dos
  * no se hayan abierto: es correcto para el nodo de /camino, donde la tarjeta
  * dice aparte "1 de 3 lecciones", pero acá pintaría la estación como pasada y el
- * subtítulo diría "Pasada · 3 lecciones" con una sola hecha. Verificado en el
+ * subtítulo diría "Pasada, 3 lecciones" con una sola hecha. Verificado en el
  * navegador con progreso sembrado, no deducido.
  *
  * Que la deuda de repaso no se distinga de un recorrido limpio es deliberado: la
@@ -126,9 +126,9 @@ export function LineaDelEje({ eje }: { eje: EjeDelCamino }) {
       parada === "cerrada"
         ? "En preparación"
         : parada === "pasada"
-          ? `Pasada · ${plural(avance.total, "lección", "lecciones")}`
+          ? `Pasada, ${plural(avance.total, "lección", "lecciones")}`
           : enCurso
-            ? `Lección ${enCurso.indice + 1} de ${avance.total} · ${enCurso.leccion.minutos} min`
+            ? `Lección ${enCurso.indice + 1} de ${avance.total}, ${enCurso.leccion.minutos} min`
             : avance.hechas > 0
               ? `${avance.hechas} de ${plural(avance.total, "lección", "lecciones")}`
               : plural(avance.total, "lección", "lecciones");

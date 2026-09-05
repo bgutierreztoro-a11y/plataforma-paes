@@ -199,7 +199,7 @@ export function PuntoDePartida({
           <>
             Terminaste todo lo abierto.{" "}
             <strong className="font-semibold text-primary">
-              {porRepasar.temaNombre} · {porRepasar.titulo}
+              {porRepasar.temaNombre}: {porRepasar.titulo}
             </strong>{" "}
             quedó bajo el {Math.round(UMBRAL_DOMINIO * 100)}% de aciertos al primer
             intento.
@@ -232,7 +232,7 @@ export function PuntoDePartida({
   /* Rama 2 — quedó algo sin terminar.
      El tema y la lección se nombran, porque es lo que le permite al estudiante
      reconocer dónde iba sin abrirla. Lo que cambió (Fase 6) es **dónde**: van en
-     el subtítulo y no dentro del botón. Medido a 390px, "Continuar: {tema} ·
+     el subtítulo y no dentro del botón. Medido a 390px, "Continuar: {tema}:
      {lección}" ocupaba 2 líneas (71px con line-height de 24), y un botón que
      envuelve pierde la forma de botón. El dato no se recortó, se movió a la
      línea que existe para dar contexto. */
@@ -244,7 +244,7 @@ export function PuntoDePartida({
         subtitulo={
           <>
             <strong className="font-semibold text-primary">
-              {pendiente.temaNombre} · {pendiente.titulo}
+              {pendiente.temaNombre}: {pendiente.titulo}
             </strong>
             . Unos {pendiente.minutos} minutos, con preguntas formato PAES al final.
           </>
