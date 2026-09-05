@@ -123,6 +123,34 @@ baseline** por las premisas vencidas que documenta la sección anterior, y los d
 de celebración pasan en las dos corridas. La 3J solo alcanzó a los dos que
 todavía estaban en verde.
 
+## Hallazgo de la fase E (2026-09-05) — un assert que afirma un copy borrado en la fase 6
+
+`e2e/capturas.spec.ts:723`, dentro de `terminada bajo el umbral`:
+
+```ts
+await expect(page.getByRole("link", { name: /^Repasar: .+ · .+/ })).toBeVisible();
+```
+
+**Ningún componente emite ya `Repasar: …`.** `grep -r "Repasar:"` sobre `app/` y
+`components/` no devuelve nada: los únicos hits del repo son ese assert y dos
+identificadores que no son copy (`NodoTema.tsx:209` `porRepasar:` como clave de
+un record de clases, `ItemsPAESFinal.tsx:76` `onRepasar:` como nombre de prop).
+
+El copy que el assert busca murió en la Fase 6, y el propio código lo documenta
+en `components/PuntoDePartida.tsx:235-241`: `"Continuar: {tema} · {lección}"`
+medía dos líneas a 390px dentro del botón, así que el par tema/lección se movió
+al **subtítulo** (`PuntoDePartida.tsx:202,247`) y el CTA quedó en
+`Repasar la lección` (`:210`), sin nombre y sin punto medio.
+
+O sea: es la misma clase de fallo que los 24 anteriores —una premisa vencida, no
+un bug de producto— y **ya estaba roto antes de la fase E**. Se anota acá y no se
+arregla: vale la decisión que fijó la 3G, la suite se trata entera en su propia
+unidad de trabajo.
+
+Nota para quien la reescriba: la fase E además saca el punto medio de los dos
+subtítulos de `PuntoDePartida` (pasan a `{tema}: {lección}`), así que el assert
+reescrito tampoco puede buscar `·` ahí.
+
 ## Qué sigue sin cubrir este documento (sin cambios)
 
 Lo de la sección anterior, más: qué debería afirmar `/camino` ahora que la
