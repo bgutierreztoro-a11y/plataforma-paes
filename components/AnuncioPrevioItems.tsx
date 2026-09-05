@@ -88,6 +88,9 @@ export function AnuncioPrevioItems({
   const sustantivo = singular ? "pregunta" : "preguntas";
   const titulo = variante === "leccion" ? "Repaso rápido" : "Cierre del módulo";
   const alcance = variante === "leccion" ? "de esta lección" : `de ${nombreModulo}`;
+  /* El botón nombra lo mismo que el título de arriba. Decía "Empezar" a secas,
+     que servía para las dos variantes justamente porque no decía cuál. */
+  const copyEmpezar = variante === "leccion" ? "Empezar el repaso" : "Empezar el cierre";
 
   return (
     <PantallaCentrada className="transicion-paso mx-auto w-full gap-7 text-center">
@@ -112,7 +115,7 @@ export function AnuncioPrevioItems({
         className="group motion-safe:transition-transform motion-reduce:transition-none motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.97]"
       >
         <span className="inline-flex items-center gap-2">
-          Empezar
+          {copyEmpezar}
           <svg
             viewBox="0 0 16 16"
             className="h-4 w-4 motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:translate-x-1"

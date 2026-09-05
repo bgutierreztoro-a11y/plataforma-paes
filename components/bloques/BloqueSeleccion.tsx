@@ -43,7 +43,7 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
       />
       {!revelado && (
         <Boton onClick={() => setRevelado(true)} disabled={!seleccion}>
-          Revisar respuesta
+          Comprobar
         </Boton>
       )}
       {revelado &&

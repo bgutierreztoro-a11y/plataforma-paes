@@ -96,7 +96,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
       </div>
       {!revelado && (
         <Boton onClick={() => setRevelado(true)} disabled={!listo}>
-          Revisar respuesta
+          Comprobar
         </Boton>
       )}
     </div>

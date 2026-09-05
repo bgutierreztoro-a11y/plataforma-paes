@@ -43,7 +43,8 @@ interface ItemPAESProps {
      Preferimos el error de compilación. */
   contexto: RespuestaLocal["contexto"];
   contextoId: string;
-  /* Texto del botón que avanza tras responder ("Siguiente pregunta", "Ver resultado"...). */
+  /* Texto del botón que avanza tras responder ("Siguiente pregunta", "Terminar
+     el cierre"...). */
   etiquetaSiguiente?: string;
 }
 
@@ -103,7 +104,7 @@ export function ItemPAES({
   const alternativaElegida = alternativas.find((a) => a.clave === seleccion);
   /* Respuesta tentativa: lo que el estudiante tiene marcado y todavía NO
      comprobó. El gráfico se redibuja con ese valor para que el aprendizaje
-     ocurra al manipular, no al presionar "Revisar respuesta" — comprobar solo
+     ocurra al manipular, no al presionar "Comprobar" — comprobar solo
      confirma lo que ya vio. Es reversible sin costo (cambiar de alternativa
      redibuja), no cuesta ninguna llamada al servidor, y deja de aplicarse al
      revelar: desde ahí el gráfico vuelve a mostrar la recta real del
@@ -294,6 +295,13 @@ export function ItemPAES({
       {/* El CTA del ítem va anclado igual que el feedback que lo reemplaza: son
           el mismo lugar de la pantalla en dos momentos, y dejar el botón en el
           flujo haría que el control saltara al fondo recién al comprobar. */}
+      {/* El verbo lo decide `mostrarFeedback`, que es exactamente lo que separa
+          los dos contratos de este componente. Con feedback se comprueba y la
+          pantalla contesta. Sin feedback —/diagnostico— no se comprueba nada:
+          la entrada promete "no te vamos a decir cuáles tuviste buenas ni
+          malas" (`Diagnostico.tsx:76-78`) y el panel que sigue dice "Respuesta
+          registrada". Un botón que dijera "Revisar respuesta" ahí prometía una
+          revisión que esa pantalla tiene prohibido hacer. */}
       {/* Sin alternativa marcada el botón va en la variante `deshabilitado` del
           kit y no en `linea` con `disabled`: la variante `linea` no tiene
           tratamiento apagado —el `ui/Boton` anterior sí lo traía en `primario`—,
@@ -307,7 +315,7 @@ export function ItemPAES({
             variante={seleccion && montado ? "linea" : "deshabilitado"}
             onClick={revisar}
           >
-            Revisar respuesta
+            {mostrarFeedback ? "Comprobar" : "Registrar respuesta"}
           </Boton>,
         )}
       {revelado && alternativaElegida && (

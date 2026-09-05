@@ -34,6 +34,14 @@ interface EjecutorSetItemsProps {
      "Ítem", que es como lo nombra la maqueta y como se llaman en el contenido;
      las otras dos rutas conservan su copy de siempre. */
   sustantivo?: string;
+  /* El botón del último ítem. **Requerida y sin default a propósito**: decía
+     "Ver resultado" para las tres rutas, y lo que abre no es un resultado
+     genérico sino la pantalla que cierra ese set — "Lección terminada",
+     "Terminaste el módulo", "Diagnóstico terminado". El verbo del botón tiene
+     que ser el mismo que el de la pantalla que aparece, y ese verbo solo lo
+     sabe quien monta el ejecutor. Un default silencioso lo volvería a
+     desalinear en el próximo llamador. */
+  etiquetaFinal: string;
 }
 
 export function EjecutorSetItems({
@@ -45,6 +53,7 @@ export function EjecutorSetItems({
   anclarAcciones = false,
   rotulo,
   sustantivo = "Pregunta",
+  etiquetaFinal,
 }: EjecutorSetItemsProps) {
   const [estado, dispatch] = useReducer(reducerSetItems, estadoInicialSetItems);
 
@@ -99,7 +108,7 @@ export function EjecutorSetItems({
         mostrarFeedback={mostrarFeedback}
         contexto={contexto}
         contextoId={contextoId}
-        etiquetaSiguiente={esUltimo ? "Ver resultado" : "Siguiente pregunta"}
+        etiquetaSiguiente={esUltimo ? etiquetaFinal : "Siguiente pregunta"}
         onSiguiente={(correcta, tiempoMs, claveElegida) => {
           dispatch({ type: "REGISTRAR", itemId: item.id, correcta, tiempoMs, claveElegida });
           dispatch({ type: "SIGUIENTE" });
@@ -112,8 +121,8 @@ export function EjecutorSetItems({
 
   /* Un ítem por pantalla: `EjecutorSetItems` monta uno solo a la vez, así que
      nunca hay dos veredictos compitiendo y siempre puede anclar. Las acciones
-     las aporta el propio ItemPAES —"Revisar respuesta" antes de comprobar, el
-     pie después—, por eso `acciones` va vacío acá: son estados distintos del
+     las aporta el propio ItemPAES —"Comprobar" antes de comprobar, el pie
+     después—, por eso `acciones` va vacío acá: son estados distintos del
      mismo control y decidirlos afuera obligaría a levantar `revelado`. */
   return (
     <CascaronAnclado acciones={null} anclarFeedback>

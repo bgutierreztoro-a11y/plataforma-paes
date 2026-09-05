@@ -23,9 +23,14 @@ export function BloqueAbierta({ bloque }: { bloque: BloqueAbiertaTipo }) {
         aria-label="Tu respuesta"
         className="w-full rounded-tarjeta border border-border p-3 text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
       />
+      {/* `Registrar respuesta` y no `Comprobar`: acá no se corrige nada. El
+          verbo del botón tiene que ser el mismo que el del acuse de abajo
+          ("Respuesta registrada"), que es el par que `BloquePrediccion` ya
+          tenía bien. Decía `Enviar respuesta`, un tercer verbo que prometía un
+          envío a alguna parte. */}
       {!enviado && (
         <Boton onClick={() => setEnviado(true)} disabled={!respuesta.trim()}>
-          Enviar respuesta
+          Registrar respuesta
         </Boton>
       )}
       {/* Acuse de recibo, no veredicto: se queda inline por el mismo motivo que

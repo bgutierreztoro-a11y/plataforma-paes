@@ -179,6 +179,9 @@ export function RunnerLeccion({
           mostrarFeedback={true}
           contexto="leccion"
           contextoId={leccion.id}
+          /* Lo que abre es `ItemsPAESFinal`, cuyo título dice "Lección
+             terminada". Mismo verbo en el botón y en la pantalla. */
+          etiquetaFinal="Terminar el repaso"
           renderFinal={(respuestas) => (
             <ItemsPAESFinal
               respuestas={respuestas}
@@ -240,13 +243,21 @@ export function RunnerLeccion({
      2026-09-03: 71 de los 340 pasos no abren ningún panel, y 44 de esos no son
      el último del archivo.
 
-     El último paso conserva "Terminar lección" aunque no tenga pregunta: es otra
-     acción —cierra la lección, no avanza dentro de ella— y en 27 de las 34
+     El último paso conserva su copy propio aunque no tenga pregunta: es otra
+     acción —cierra los pasos, no avanza dentro de ellos— y en 27 de las 34
      lecciones el último paso tampoco abre panel, así que la regla se habría
-     comido ese copy casi siempre. */
+     comido ese copy casi siempre.
+
+     Y ese copy dice lo que `terminarPasos()` hace de verdad. Con `itemsPAES`
+     el botón no termina nada: manda a `AnuncioPrevioItems`, una pantalla
+     titulada "Repaso rápido" con más preguntas. "Terminar lección" ahí era una
+     promesa falsa. Solo termina cuando no hay ítems, que es la rama donde
+     `terminarPasos()` llama a `terminar()`. */
   const pasoSinRespuesta = puntosDeFeedback(paso.bloques).length === 0;
+  const copyUltimoPaso =
+    leccion.itemsPAES.length > 0 ? "Ir al repaso" : "Terminar lección";
   const copyCTA = esUltimoPaso
-    ? "Terminar lección"
+    ? copyUltimoPaso
     : pasoSinRespuesta
       ? "Ya lo vi"
       : "Siguiente paso";

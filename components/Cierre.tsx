@@ -63,6 +63,9 @@ export function Cierre({
              dispositivos, que no es una decisión de marco. */
           rotulo="Cierre PAES"
           sustantivo="Ítem"
+          /* Lo que abre es `CierreFinal`, cuyo título dice "Terminaste el
+             módulo". Mismo verbo en el botón y en la pantalla. */
+          etiquetaFinal="Terminar el cierre"
           contexto="cierre"
           contextoId="cierre"
           renderFinal={(respuestas) => (

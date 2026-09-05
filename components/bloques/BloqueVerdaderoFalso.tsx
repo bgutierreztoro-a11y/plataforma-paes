@@ -51,7 +51,7 @@ export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
       </div>
       {!revelado && (
         <Boton onClick={() => setRevelado(true)} disabled={respuesta === null}>
-          Revisar respuesta
+          Comprobar
         </Boton>
       )}
       {revelado &&

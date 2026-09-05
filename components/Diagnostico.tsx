@@ -30,8 +30,12 @@ function FinalDiagnostico({
 
   return (
     <PantallaCentrada className="gap-4 text-center">
+      {/* El eco del botón que trajo hasta acá ("Terminar el diagnóstico"): el
+          verbo del acto y el del resultado son el mismo. Decía "Listo, ya
+          tenemos tu punto de partida", que era buen copy pero no repetía
+          ninguna palabra de lo que se acababa de presionar. */}
       <h1 className="text-3xl font-semibold text-ink">
-        Listo, ya tenemos tu punto de partida
+        Diagnóstico terminado: este es tu punto de partida
       </h1>
       {/* El detalle de cada respuesta sí queda en el dispositivo
           (lib/progresoLocal.ts); lo que muere al recargar es el resumen en
@@ -98,6 +102,9 @@ export function Diagnostico({
         mostrarFeedback={false}
         contexto="diagnostico"
         contextoId="diagnostico"
+        /* Lo que abre es `FinalDiagnostico`, cuyo h1 dice "Diagnóstico
+           terminado". Mismo verbo en el botón y en la pantalla. */
+        etiquetaFinal="Terminar el diagnóstico"
         renderFinal={(respuestas) => (
           <FinalDiagnostico respuestas={respuestas} primeraLeccionId={primeraLeccionId} />
         )}

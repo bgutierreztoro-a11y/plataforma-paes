@@ -204,7 +204,7 @@ export function BloquePregunta({
       </fieldset>
       {!revelado && (
         <Boton onClick={revisar} disabled={!seleccion || !montado}>
-          Revisar respuesta
+          Comprobar
         </Boton>
       )}
       {revelado && alternativaElegida && (
