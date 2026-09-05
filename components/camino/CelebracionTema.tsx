@@ -18,12 +18,25 @@ import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
  *
  * El trazo tarda 900ms (`.trazo-camino` en globals.css) y todo lo demás entra
  * después: primero se completa el camino, recién entonces se dice qué pasó.
+ *
+ * **`datos` se partió en dos (Fase C).** Era un solo escalón que entraba tres
+ * cosas a la vez: la ilustración, el párrafo de capacidad y el contador. La
+ * ilustración es decorativa y la capacidad es lo único que el estudiante se
+ * lleva —qué ya puede hacer—, así que entrar juntas es exactamente el
+ * aplanamiento que esta pantalla ya evitaba en todo lo demás. El contador se
+ * queda con la capacidad: los dos contestan "cuánto llevo", uno en palabras y el
+ * otro en cifras, y separarlos convertiría un dato en dos gestos.
+ *
+ * Cierra a 2160ms (`boton` + los 360ms de `.entra-en-secuencia`) en vez de 2060.
+ * Cien milisegundos más en una pantalla que se ve una vez por tema, y a cambio
+ * la frase que importa entra sola.
  */
 const RETRASO = {
   nodo: 900,
   titulo: 1100,
-  datos: 1400,
-  boton: 1700,
+  ilustracion: 1350,
+  capacidad: 1550,
+  boton: 1800,
 } as const;
 
 /**
@@ -148,14 +161,21 @@ export function CelebracionTema({
           </h1>
         </div>
 
+        {/* La ilustración va en su propio envoltorio y no dentro del de abajo:
+            son escalones distintos, y anidarlos apilaría dos entradas sobre el
+            mismo elemento (`docs/deuda-entradas-apiladas.md`). */}
+        <div
+          aria-hidden="true"
+          className="entra-en-secuencia mx-auto mt-10 w-full max-w-xs sm:max-w-sm"
+          style={{ ["--retraso" as string]: `${RETRASO.ilustracion}ms` }}
+        >
+          <IlustracionTema temaId={tema.id} />
+        </div>
+
         <div
           className="entra-en-secuencia"
-          style={{ ["--retraso" as string]: `${RETRASO.datos}ms` }}
+          style={{ ["--retraso" as string]: `${RETRASO.capacidad}ms` }}
         >
-          <div aria-hidden="true" className="mx-auto mt-10 w-full max-w-xs sm:max-w-sm">
-            <IlustracionTema temaId={tema.id} />
-          </div>
-
           {/* La capacidad, no el puntaje: lo que el estudiante ya puede hacer. */}
           <p className="mx-auto mt-8 max-w-lg text-xl leading-9 text-ink-suave">
             {tema.capacidad}
