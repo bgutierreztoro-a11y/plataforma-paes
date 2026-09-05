@@ -38,6 +38,23 @@ interface PasoLeccionProps {
 
 const TIPOS_VISUALES: BloqueTipo["tipo"][] = ["interactivoSlider", "visualizacion"];
 
+/**
+ * Lo que el cuerpo del paso espera después del título (Fase C). Dos partes, no
+ * tres: el título dice qué estás mirando y todo lo demás es el paso.
+ *
+ * No es un token de motion y no debe serlo: un token es cuánto dura un gesto, y
+ * esto es el guion de este momento. Los otros dos momentos de la fase usan
+ * escalones distintos justamente porque pesan distinto — el cierre de módulo
+ * 150ms, éste 70. Un escalón compartido sería el aplanamiento que la fase
+ * combate.
+ *
+ * Los 70ms suman 70ms al tiempo percibido por paso, y solo sobre el cuerpo: el
+ * paso termina de asentarse a 70 + 250 = 320ms en vez de 250. Es un retraso
+ * sobre contenido que todavía no se puede usar —hay que leer el título antes de
+ * que el cuerpo sirva de algo—, no sobre ninguna decisión del estudiante.
+ */
+const RETRASO_CUERPO = 70;
+
 export function PasoLeccion({
   paso,
   leccionId,
@@ -107,7 +124,27 @@ export function PasoLeccion({
   }
 
   return (
-    <section className="transicion-paso">
+    /* `.transicion-paso` **se movió** del `<section>` a sus dos hijos (Fase C).
+       No se agregó: dejarla en los tres habría puesto una entrada dentro de otra
+       —opacidades multiplicadas y los dos translateY sumados—, que es el apilado
+       de `docs/deuda-entradas-apiladas.md`.
+
+       El escalón es de 70ms, un tercio del cierre de módulo y a propósito. Este
+       momento se ve unas diez veces por lección y no puede ser ceremonia: a
+       200ms se percibiría "el cuerpo tardó", a 70 se percibe "el título llegó
+       primero", que es lo único que hay que decir.
+
+       Y no retrasa la interacción. El título entra exactamente cuando entraba
+       antes, así que el instante en que la pantalla acusa recibo del click no se
+       mueve ni un frame; el CTA y "Paso anterior" viven en `CascaronAnclado`,
+       fuera de este componente, y no se remontan al cambiar de paso
+       (RunnerLeccion.tsx:340-348). Los bloques del cuerpo sí entran, pero
+       `opacity` y `transform` no bloquean `pointer-events`: son tocables
+       mientras entran.
+
+       El remontaje por paso ya estaba resuelto sin JS: `key={estado.pasoActual}`
+       en RunnerLeccion.tsx:373 reinicia las animaciones. */
+    <section>
       {/* El único h1 de la pantalla: el nombre de la lección lo da
           `document.title`, y el que cambia en cada paso —y por lo tanto el que
           nombra lo que se está mirando— es este.
@@ -117,11 +154,14 @@ export function PasoLeccion({
           de línea 1,28 y tracking -1,8%. `text-lg` ya es 1.125rem; los otros dos
           valores no están en la escala de diez pasos del sistema y van escritos
           acá en vez de agregar un paso once que hoy usaría un solo call site. */}
-      <h1 className="text-lg font-semibold leading-[1.28] tracking-[-0.018em] text-primary">
+      <h1 className="transicion-paso text-lg font-semibold leading-[1.28] tracking-[-0.018em] text-primary">
         {paso.titulo}
       </h1>
       {visuales.length > 0 && lectura.length > 0 ? (
-        <div className="mt-6 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-10">
+        <div
+          className="transicion-paso mt-6 flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start lg:gap-10"
+          style={{ ["--retraso" as string]: `${RETRASO_CUERPO}ms` }}
+        >
           <div
             // top-17 (68px) = los 44px del header de HeaderLeccion.tsx (`h-11`)
             // más 24 de aire, para que no se pisen al hacer scroll en desktop.
@@ -142,7 +182,10 @@ export function PasoLeccion({
           </div>
         </div>
       ) : (
-        <div className="mx-auto mt-6 max-w-2xl space-y-8">
+        <div
+          className="transicion-paso mx-auto mt-6 max-w-2xl space-y-8"
+          style={{ ["--retraso" as string]: `${RETRASO_CUERPO}ms` }}
+        >
           {paso.bloques.map((bloque, i) => pintar({ bloque, i }))}
         </div>
       )}

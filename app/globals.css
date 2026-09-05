@@ -692,8 +692,21 @@
   }
 }
 
+/* El retraso lo declara quien la usa, con `--retraso`, igual que
+   `.entra-en-secuencia` más abajo. Es lo que deja escalonar el avance de paso
+   —el título primero, el cuerpo 70ms después— sin una segunda clase que
+   duplicaría el mismo gesto (Fase C).
+
+   El default `0ms` es lo que mantiene intactos los call sites que no escalonan
+   (AnuncioPrevioItems, los tres `.transicion-paso` sueltos de FeedbackEnCapas):
+   sin retraso declarado se comportan exactamente como antes.
+
+   `backwards` mantiene el elemento invisible **durante** su retraso; sin él
+   aparecería de golpe y recién después se animaría. Mismo motivo que
+   `.entra-nodo`. Con retraso 0 no cambia nada. */
 .transicion-paso {
-  animation: fade-in-paso 0.25s ease-out;
+  animation: fade-in-paso 0.25s ease-out backwards;
+  animation-delay: var(--retraso, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
