@@ -66,9 +66,16 @@ export const ALTERNATIVA_REPOSO =
  * identidad de eje, y fuera de un eje el tinte cae a la superficie de tarjeta
  * —blanco sobre el blanco de la fila— y el hover se perdería entero en
  * /diagnostico y /cierre. `sunken` es neutro y funciona en las cinco rutas.
+ *
+ * **`canto` reemplaza a `hover:shadow-nivel-1` (Fase A).** No es una
+ * preferencia: las dos son la misma propiedad `box-shadow` y una borraba a la
+ * otra. Se fue la sombra y no el canto porque la sombra era hover —o sea,
+ * nada en móvil, que es donde se responden estas preguntas— y además
+ * `--shadow-nivel-1` está declarado obsoleto en app/globals.css. El canto sí
+ * responde al dedo. Ver `.canto` allá para la mecánica.
  */
 export const ALTERNATIVA_INTERACTIVA =
-  "cursor-pointer hover:border-border-fuerte hover:bg-sunken hover:shadow-nivel-1";
+  "cursor-pointer canto hover:border-border-fuerte hover:bg-sunken";
 
 /**
  * Correcta, ya revelada. Sí se marca: acertar es información, no reproche.
@@ -109,10 +116,16 @@ export const ALTERNATIVA_DESCARTADA = "cursor-default border border-border opaci
  * clases de la fila: es la pieza que la 3H ya había resuelto en
  * `BloquePregunta.tsx:155-163` y que estaba por duplicarse.
  *
- * `CHIP_BASE` es solo geometría; el color lo pone el estado.
+ * `CHIP_BASE` es geometría y la transición del relleno; el color lo pone el
+ * estado.
+ *
+ * La transición es del relleno y nada más (Fase A): el disco pasa de contorno
+ * a sólido en `--dur-relleno` en vez de saltar. 140ms es más lento que el
+ * press del canto a propósito — el canto acusa el toque y tiene que ser
+ * inmediato; esto confirma la elección y puede darse el lujo de que se vea.
  */
 export const CHIP_BASE =
-  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm";
+  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm motion-safe:transition-[background-color,border-color,color] motion-safe:duration-[var(--dur-relleno)] motion-reduce:transition-none";
 
 /**
  * Sin revelar: neutro, y relleno con el color del eje cuando está marcado.

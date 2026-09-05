@@ -169,7 +169,13 @@ export function BloquePregunta({
               className={`flex min-h-11 items-center gap-3 rounded-sm bg-card px-4 py-3 motion-safe:transition-colors motion-reduce:transition-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-strong ${clasesFila} ${
                 revelado || !montado
                   ? "cursor-not-allowed"
-                  : "cursor-pointer hover:border-border-fuerte hover:bg-sunken"
+                  : /* `canto` solo mientras la fila se puede tocar: una fila ya
+                       revelada que se hunde al presionarla promete un cambio de
+                       respuesta que no va a ocurrir. La mecánica está en
+                       `.canto`, en app/globals.css; acá va la misma clase que
+                       `ALTERNATIVA_INTERACTIVA`, que es lo que corresponde
+                       mientras estos dos archivos sigan duplicados. */
+                    "cursor-pointer canto hover:border-border-fuerte hover:bg-sunken"
               }`}
             >
               <input
@@ -187,7 +193,7 @@ export function BloquePregunta({
                   blanco. El borde sí va en `--linea`, que es donde el color es
                   forma. Ver components/ui/linea/colores.ts. */}
               <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm ${clasesChip}`}
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm motion-safe:transition-[background-color,border-color,color] motion-safe:duration-[var(--dur-relleno)] motion-reduce:transition-none ${clasesChip}`}
               >
                 {alt.clave}
               </span>
