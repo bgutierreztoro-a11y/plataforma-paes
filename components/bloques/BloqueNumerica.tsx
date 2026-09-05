@@ -27,7 +27,15 @@ function mensajeParaCampo(bloque: BloqueNumericaTipo, campoId: string, valor: nu
   return especifico?.mensaje ?? bloque.feedbackPorDefecto;
 }
 
-export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
+export function BloqueNumerica({
+  bloque,
+  corpus,
+}: {
+  bloque: BloqueNumericaTipo;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
+}) {
   const [valores, setValores] = useState<Record<string, string>>({});
   const [revelado, setRevelado] = useState(false);
   /* Con varios campos este bloque abre un panel por campo, así que el paso
@@ -41,7 +49,7 @@ export function BloqueNumerica({ bloque }: { bloque: BloqueNumericaTipo }) {
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       <div className="space-y-3">
         {bloque.campos.map((campo) => {

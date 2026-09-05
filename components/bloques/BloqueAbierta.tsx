@@ -6,14 +6,22 @@ import { PanelFeedback } from "@/components/ui/PanelFeedback";
 import { TextoEnriquecido } from "@/lib/markdownSimple";
 import type { BloqueAbierta as BloqueAbiertaTipo } from "@/lib/tipos";
 
-export function BloqueAbierta({ bloque }: { bloque: BloqueAbiertaTipo }) {
+export function BloqueAbierta({
+  bloque,
+  corpus,
+}: {
+  bloque: BloqueAbiertaTipo;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
+}) {
   const [respuesta, setRespuesta] = useState("");
   const [enviado, setEnviado] = useState(false);
 
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       <textarea
         disabled={enviado}

@@ -8,6 +8,7 @@ import { leer, marcarCompletada, registrarPaso } from "@/lib/progresoLocal";
 import { estadoDeNodo, resumirRespuestas } from "@/lib/estadoNodo";
 import type { TemaDelCamino } from "@/lib/camino";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
+import { corpusDeLeccion } from "@/lib/trazoDestacado";
 import { Boton } from "@/components/ui/linea/Boton";
 import { CascaronAnclado } from "@/components/ui/ZonaAnclada";
 import { esPasoSimple, puntosDeFeedback } from "@/lib/feedbackDelPaso";
@@ -65,7 +66,28 @@ export function RunnerLeccion({
      text-primary", ver `components/ui/linea/colores.ts`). Escribir los seis
      tokens a mano acá duplicaría esa tabla en un segundo lugar. */
   const linea = lineaDeEje(tema.ejeId);
-  const estiloLinea = linea ? estiloDeLinea(linea) : undefined;
+
+  /* El trazo de destacador (Fase D) lleva el color del eje, pero **no** puede
+     salir de `estiloDeLinea()`.
+
+     Instalar el estilo de línea completo acá recolorearía la selección de
+     alternativas en las 34 lecciones: `--linea` y `--linea-tinte` los consume
+     BloquePregunta.tsx para el borde y el fondo de la alternativa marcada. Y
+     leer `--linea-tinte` tampoco serviría, porque la pantalla de lección no
+     instala el estilo de línea y ahí ese token cae a `--surface-card` —blanco—,
+     que dejaría el trazo invisible.
+
+     Así que va una variable sola, con un rol solo: `--trazo-eje`, que únicamente
+     lee `.trazo-destacado`. Fuera de un eje no se emite y cae al default de
+     `:root`, que es la tinta del texto. */
+  const estiloLinea = linea
+    ? { ...estiloDeLinea(linea), "--trazo-eje": `var(--line-${linea})` }
+    : undefined;
+
+  /* El corpus de la lección para el criterio de repetición del trazo: se arma
+     una vez acá porque este es el único punto del árbol que tiene la lección
+     entera, y de acá baja como prop hasta los bloques que pintan prosa. */
+  const corpus = corpusDeLeccion(leccion);
 
   /* Los dos `ref` de abajo son el mismo guardia que CelebracionTema.tsx y
      ItemsPAESFinal.tsx ya usan: React vuelve a invocar los efectos en modo
@@ -379,6 +401,7 @@ export function RunnerLeccion({
               setMostrarAvisoExploracion(false);
             }}
             onAcierto={() => setAcertoEnPaso(true)}
+            corpus={corpus}
           />
           {/* El aviso aparece recién cuando el estudiante intenta avanzar, como
               en el guion: el botón no se deshabilita sin explicación.

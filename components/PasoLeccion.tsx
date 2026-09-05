@@ -34,6 +34,11 @@ interface PasoLeccionProps {
   numeroPaso: number;
   onExploracionCompleta?: () => void;
   onAcierto?: () => void;
+  /* El texto completo de la lección, no el de este paso: el trazo de destacador
+     solo marca un término si se repite en la lección entera, y un paso suelto
+     no alcanza para saberlo. Lo arma `RunnerLeccion`, que es quien tiene la
+     lección. Ver lib/trazoDestacado.ts. */
+  corpus?: string;
 }
 
 const TIPOS_VISUALES: BloqueTipo["tipo"][] = ["interactivoSlider", "visualizacion"];
@@ -61,6 +66,7 @@ export function PasoLeccion({
   numeroPaso,
   onExploracionCompleta,
   onAcierto,
+  corpus,
 }: PasoLeccionProps) {
   /* Los bloques visuales (gráfico interactivo, tablas/diagramas) van al
      costado en desktop, con posición de grid fija (col-start/row-start) que
@@ -108,6 +114,7 @@ export function PasoLeccion({
         indiceBloque={i}
         onExploracionCompleta={onExploracionCompleta}
         onAcierto={onAcierto}
+        corpus={corpus}
       />
     );
 

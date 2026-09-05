@@ -15,7 +15,15 @@ import type { BloqueVerdaderoFalso as BloqueVFTipo } from "@/lib/tipos";
 const CLASE_ACIERTO =
   "border border-success bg-success-suave text-ink disabled:border-success disabled:bg-success-suave disabled:text-ink";
 
-export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
+export function BloqueVerdaderoFalso({
+  bloque,
+  corpus,
+}: {
+  bloque: BloqueVFTipo;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
+}) {
   const [respuesta, setRespuesta] = useState<boolean | null>(null);
   const [revelado, setRevelado] = useState(false);
   const anclar = usePanelAnclado();
@@ -25,7 +33,7 @@ export function BloqueVerdaderoFalso({ bloque }: { bloque: BloqueVFTipo }) {
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       {/* Al acertar, el verde se ancla al botón que el estudiante eligió y no
           solo al recuadro de feedback: `disabled` deja los dos botones

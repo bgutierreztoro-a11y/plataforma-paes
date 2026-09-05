@@ -12,14 +12,22 @@ function alternarSigno(valor: string): string {
   return valor.startsWith("-") ? valor.slice(1) : "-" + valor;
 }
 
-export function BloquePrediccion({ bloque }: { bloque: BloquePrediccionTipo }) {
+export function BloquePrediccion({
+  bloque,
+  corpus,
+}: {
+  bloque: BloquePrediccionTipo;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
+}) {
   const [respuesta, setRespuesta] = useState("");
   const [enviado, setEnviado] = useState(false);
 
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       {bloque.tipoRespuesta === "seleccionSimple" && bloque.opciones ? (
         <fieldset className="space-y-2" disabled={enviado}>

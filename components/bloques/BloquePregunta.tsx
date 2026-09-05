@@ -19,6 +19,7 @@ export function BloquePregunta({
   contexto,
   contextoId,
   onAcierto,
+  corpus,
 }: {
   bloque: BloquePreguntaTipo;
   itemId: string;
@@ -30,6 +31,9 @@ export function BloquePregunta({
      (`ItemPAES` no monta este bloque, pero el contrato es el mismo) nadie
      escucha. Se enhebra igual que `onExploracionCompleta`. */
   onAcierto?: () => void;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
 }) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
@@ -105,7 +109,7 @@ export function BloquePregunta({
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       <fieldset className="space-y-2" disabled={revelado || !montado}>
         <legend className="sr-only">Alternativas</legend>

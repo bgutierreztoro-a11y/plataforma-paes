@@ -9,7 +9,15 @@ import { TextoEnriquecido } from "@/lib/markdownSimple";
 import { mezclarArray } from "@/lib/mezclar";
 import type { BloqueSeleccion as BloqueSeleccionTipo } from "@/lib/tipos";
 
-export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
+export function BloqueSeleccion({
+  bloque,
+  corpus,
+}: {
+  bloque: BloqueSeleccionTipo;
+  /* El texto completo de la lección, para el trazo de destacador. Ver
+     lib/trazoDestacado.ts. */
+  corpus?: string;
+}) {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
   const anclar = usePanelAnclado();
@@ -30,7 +38,7 @@ export function BloqueSeleccion({ bloque }: { bloque: BloqueSeleccionTipo }) {
   return (
     <div className="space-y-3">
       <div className="text-base font-medium text-ink">
-        <TextoEnriquecido contenido={bloque.enunciado} />
+        <TextoEnriquecido contenido={bloque.enunciado} corpus={corpus} />
       </div>
       <SelectorOpciones
         opciones={opciones.map((op) => ({ id: op.id, texto: op.texto }))}

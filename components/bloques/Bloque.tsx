@@ -21,6 +21,12 @@ interface BloqueProps {
   /* Solo lo usa el bloque `pregunta`: avisa al runner que se respondió bien,
      para el "¿Te hizo sentido?" del pie. */
   onAcierto?: () => void;
+  /* El texto completo de la lección. Solo lo usa el trazo de destacador, para
+     el criterio de repetición: ver lib/trazoDestacado.ts. No lo reciben los
+     bloques que no pintan prosa (`interactivoSlider`, `pistas`), ni
+     `visualizacion`, que solo llama a `conEnfasis` para celdas de tabla — y una
+     tabla nunca lleva trazo. */
+  corpus?: string;
 }
 
 export function Bloque({
@@ -30,22 +36,23 @@ export function Bloque({
   indiceBloque,
   onExploracionCompleta,
   onAcierto,
+  corpus,
 }: BloqueProps) {
   const itemId = `${leccionId}-p${paso}-b${indiceBloque}`;
 
   switch (bloque.tipo) {
     case "texto":
-      return <BloqueTexto bloque={bloque} />;
+      return <BloqueTexto bloque={bloque} corpus={corpus} />;
     case "prediccion":
-      return <BloquePrediccion bloque={bloque} />;
+      return <BloquePrediccion bloque={bloque} corpus={corpus} />;
     case "seleccion":
-      return <BloqueSeleccion bloque={bloque} />;
+      return <BloqueSeleccion bloque={bloque} corpus={corpus} />;
     case "numerica":
-      return <BloqueNumerica bloque={bloque} />;
+      return <BloqueNumerica bloque={bloque} corpus={corpus} />;
     case "verdaderoFalso":
-      return <BloqueVerdaderoFalso bloque={bloque} />;
+      return <BloqueVerdaderoFalso bloque={bloque} corpus={corpus} />;
     case "abierta":
-      return <BloqueAbierta bloque={bloque} />;
+      return <BloqueAbierta bloque={bloque} corpus={corpus} />;
     case "pregunta":
       /* Un bloque `pregunta` siempre vive dentro de una lección: el contexto
          no puede ser otro y sale del id que este componente ya recibe. */
@@ -56,6 +63,7 @@ export function Bloque({
           contexto="leccion"
           contextoId={leccionId}
           onAcierto={onAcierto}
+          corpus={corpus}
         />
       );
     case "interactivoSlider":
