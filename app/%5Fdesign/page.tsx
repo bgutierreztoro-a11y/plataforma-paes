@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Alternativa } from "@/components/ui/linea/Alternativa";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { Boton } from "@/components/ui/linea/Boton";
@@ -139,6 +139,18 @@ function Seccion({
 
 function Rotulo({ children }: { children: ReactNode }) {
   return <p className="mb-2 text-cuerpo-xs text-muted">{children}</p>;
+}
+
+/**
+ * `--trazo-eje` para la muestra del trazo de destacador.
+ *
+ * Es su propio rol y no sale de `estiloDeLinea()`, por lo mismo que en
+ * RunnerLeccion.tsx: `--linea-tinte` cae a blanco fuera de un eje instalado, y
+ * meter el estilo de línea completo arrastraría el color a todo lo que cuelga.
+ * Acá se emite sola, igual que en el producto.
+ */
+function trazoDeLinea(linea: LineaId): CSSProperties {
+  return { "--trazo-eje": `var(--line-${linea})` } as CSSProperties;
 }
 
 /** Una columna por línea, ya con `--linea` instalado en el contenedor. */
@@ -526,6 +538,50 @@ export default function PaginaDiseno() {
             <div>
               <Rotulo>Sin errores</Rotulo>
               <ListaErroresVivos filas={[]} />
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Trazo de destacador"
+          nota="Fase D. El único gesto de mano del sistema: bordes que no son paralelos, extremos que no cierran y trazo que desborda el texto. Sin imagen y sin librería — banda de gradiente, ocho radios distintos y una máscara de seis capas. Quién decide dónde va es lib/trazoDestacado.ts; la clase no se escribe a mano en ningún componente del producto."
+        >
+          <div className="flex flex-col gap-7">
+            <div>
+              <Rotulo>Uno por eje: el trazo toma el color de su línea</Rotulo>
+              <PorLinea>
+                {(linea) => (
+                  <p className="text-cuerpo-m text-primary" style={trazoDeLinea(linea)}>
+                    El <strong className="trazo-destacado">vértice</strong> es el punto más
+                    alto de la parábola.
+                  </p>
+                )}
+              </PorLinea>
+            </div>
+
+            <div>
+              {/* El caso que decide si `box-decoration-break: clone` está haciendo
+                  su trabajo. La medida angosta fuerza el corte: si el término se
+                  ve como una banda continua entre las dos líneas, en vez de dos
+                  trazos con sus propios extremos irregulares, `clone` no llegó.
+                  Es también donde se mira si la máscara sobrevive a un inline
+                  fragmentado; si no sobrevive, se cae la capa 3 y quedan la
+                  banda y los radios. Ver el comentario en app/globals.css. */}
+              <Rotulo>Partido en dos líneas: dos trazos, no una banda estirada</Rotulo>
+              <p className="max-w-[13rem] text-cuerpo-m text-primary" style={trazoDeLinea("03")}>
+                Buscamos la{" "}
+                <strong className="trazo-destacado">ecuación de segundo grado</strong> que
+                describe la curva.
+              </p>
+            </div>
+
+            <div>
+              <Rotulo>Fuera de un eje cae a tinta, y convive con la negrita normal</Rotulo>
+              <p className="max-w-prose text-cuerpo-m text-primary">
+                El <strong className="trazo-destacado">discriminante</strong> decide cuántos{" "}
+                <strong>ceros reales</strong> tiene: la segunda negrita no lleva trazo porque
+                el trazo es uno por bloque.
+              </p>
             </div>
           </div>
         </Seccion>

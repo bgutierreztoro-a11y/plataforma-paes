@@ -158,6 +158,29 @@
      va en tinta: 17,76:1 sobre blanco. */
   --linea-sobre-tinte: var(--text-primary);
 
+  /* ── El trazo de destacador (Fase D) ────────────────────────────────────
+     El único gesto de mano del sistema: la marca que deja un destacador sobre
+     un término dentro de un texto. Todo lo demás está trazado a regla.
+
+     `--trazo-eje` es un rol propio y NO reusa `--linea` ni `--linea-tinte`. El
+     motivo es concreto: la pantalla de lección no instala `estiloDeLinea()`
+     (app/leccion/[id]/page.tsx), así que ahí `--linea-tinte` cae a
+     `--surface-card` —blanco— y el trazo sería invisible. Y no se instala
+     `estiloDeLinea()` completo porque `--linea` y `--linea-tinte` los consume
+     BloquePregunta.tsx:145 para el borde y el fondo de la alternativa marcada:
+     hacerlo recolorearía la selección de alternativas en las 34 lecciones. Una
+     variable sola, que solo lee `.trazo-destacado`, no arrastra nada.
+     RunnerLeccion.tsx la emite junto a `estiloLinea`.
+
+     `--trazo-alfa` en 0,22 es la opacidad del color de eje sobre el fondo. No
+     es gusto: es el número que deja el peor par (línea 01 sobre `--color-bg`)
+     en 11,42:1, y el margen hasta romper AA está en alfa 0,73 —tres veces
+     esto—. La tabla completa vive en lib/contrasteTrazo.test.ts, que la vigila.
+
+     El default fuera de un eje es la tinta del texto, igual que `--linea`. */
+  --trazo-eje: var(--text-primary);
+  --trazo-alfa: 0.22;
+
   /* ── Radio y forma ──────────────────────────────────────────────────────
      Botones y tarjetas: radius-sm. Estaciones, píldoras y barras de línea:
      radius-full. Sin sombras. */
@@ -969,5 +992,112 @@
     animation: none;
     stroke-dashoffset: 0;
     opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL TRAZO DE DESTACADOR (Fase D)
+   ═══════════════════════════════════════════════════════════════════════════
+
+   El único gesto de mano de la interfaz. Marca un término dentro de un texto
+   corrido, y tiene que parecer hecho con un destacador, no impreso: bordes que
+   no son paralelos, extremos que no cierran, y desbordado respecto del texto.
+
+   Quién la pone: lib/markdownSimple.tsx, sobre el <strong> que pasa los cinco
+   criterios de término (ver el comentario de ese archivo). Nunca sobre
+   notación, nunca en una celda de tabla, nunca en una cita, y como máximo uno
+   por bloque de prosa. La clase no se escribe a mano en ningún componente.
+
+   Tres capas, de la más robusta a la más frágil, y en ese orden a propósito:
+
+   1. LA BANDA. Un `linear-gradient` plano, no un `background-color`: así el
+      alto lo fija `background-size` y no el alto de la línea. Cubre la palabra
+      entera y sobra por abajo, por donde pasa un destacador de verdad.
+
+   2. LOS EXTREMOS. Ocho radios distintos y padding/margin asimétricos. Esta
+      capa funciona en todo navegador y ya da extremos que no cierran cuadrado
+      y un trazo que se sale del texto por los costados.
+
+   3. LOS CANTOS. `mask-image` de seis capas compuestas con
+      `mask-composite: intersect`: dos cortes rectos con inclinaciones
+      distintas —que es lo que hace que el canto de arriba y el de abajo no
+      sean paralelos—, dos mordidas someras y dos diagonales en las puntas.
+      `mask-image` no es técnica nueva acá: ya la usa
+      `.desvanece-bajo-anclado` más arriba.
+
+      Si `mask-composite` no está, las capas caen al `add` por defecto —unión
+      en vez de intersección— y se ve la banda casi entera. Se degrada a 1+2,
+      que siguen cumpliendo "extremos que no cierran" y "desbordado". El
+      contraste no cambia en ninguno de los dos casos: la capa 3 solo quita
+      pintura, nunca agrega.
+
+   AL PARTIRSE EN DOS LÍNEAS: `box-decoration-break: clone`. Cada fragmento se
+   lleva su propio fondo, sus propios radios y su propia máscara, así que un
+   término partido queda como dos trazos completos con sus dos pares de
+   extremos irregulares — que es lo que hace una mano al llegar al final del
+   renglón y volver a apoyar el destacador. Sin `clone` el fondo se estiraría
+   continuo y el segundo fragmento saldría sin puntas.
+
+   ACCESIBILIDAD: es decoración. El elemento sigue siendo <strong>, así que el
+   lector de pantalla no cambia. El contraste lo vigila
+   lib/contrasteTrazo.test.ts sobre las cuatro líneas y los dos fondos. */
+.trazo-destacado {
+  /* El color compuesto. `color-mix` y no un rgba a mano: `--trazo-eje` llega
+     como var y no se puede desarmar en canales. */
+  --trazo-tinta: color-mix(in srgb, var(--trazo-eje) calc(var(--trazo-alfa) * 100%), transparent);
+
+  background-image: linear-gradient(var(--trazo-tinta), var(--trazo-tinta));
+  background-repeat: no-repeat;
+  /* La banda cubre la palabra entera y sobra por abajo. Los números importan:
+     con una banda baja y angosta el resultado se lee como **tachado**, no como
+     destacador — se probó en /_design con 0.68em a 0.22em del tope y era
+     exactamente eso. 1.12em de alto arrancando en el tope cubre desde sobre la
+     altura de las mayúsculas hasta pasada la línea base, que es por dónde pasa
+     un destacador de verdad. */
+  background-position: 0 -0.02em;
+  background-size: 100% 1.12em;
+
+  /* Desborda el texto: más por la derecha que por la izquierda, como una mano
+     que arrastra el destacador y se pasa al soltar. */
+  padding-inline: 0.18em 0.24em;
+  margin-inline: -0.12em -0.16em;
+  border-radius: 0.55em 0.2em 0.5em 0.25em / 0.3em 0.65em 0.25em 0.6em;
+
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+
+  /* Las seis capas, y por qué cada una es así de tímida.
+     Con `intersect` un pixel sobrevive solo si TODAS las capas lo dejan pasar,
+     así que las mordidas se acumulan: la primera versión usaba cuatro elipses
+     de 60% de alto y entre las cuatro se comían 4px arriba y 4px abajo de una
+     caja de 15px. Lo que quedaba era una banda central de 7px — un tachado, no
+     un destacador. Se verificó en /_design y se rehizo.
+     - 1 y 2: los dos cantos, cada uno un corte recto pero inclinado, y con
+       inclinaciones distintas (2° y 3°): eso es lo que hace que el borde de
+       arriba y el de abajo no sean paralelos.
+     - 3 y 4: dos mordidas someras, en posiciones distintas y de profundidad
+       distinta, para que el canto no sea una recta perfecta.
+     - 5 y 6: los extremos, cortados en diagonal y en sentidos opuestos, para
+       que las puntas no cierren cuadradas. */
+  --trazo-mascara:
+    linear-gradient(178deg, transparent 0 5%, #000 8%),
+    linear-gradient(3deg, transparent 0 4%, #000 7%),
+    radial-gradient(38% 26% at 26% -4%, transparent 0 62%, #000 66%),
+    radial-gradient(30% 20% at 71% 104%, transparent 0 58%, #000 62%),
+    linear-gradient(104deg, transparent 0 1.5%, #000 4%),
+    linear-gradient(256deg, transparent 0 1%, #000 3.5%);
+  -webkit-mask-image: var(--trazo-mascara);
+  mask-image: var(--trazo-mascara);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* En alto contraste forzado el navegador descarta fondos y máscaras. Sin esto
+   el término quedaría indistinguible del resto del párrafo, así que el peso
+   vuelve a hacer el trabajo: es el estado previo a la Fase D, que servía. */
+@media (forced-colors: active) {
+  .trazo-destacado {
+    background-image: none;
+    font-weight: 700;
   }
 }
