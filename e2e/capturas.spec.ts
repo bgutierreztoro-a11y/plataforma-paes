@@ -677,6 +677,68 @@ test("sin movimiento cuando el sistema lo pide", async ({ browser }) => {
 });
 
 /**
+ * Las dos clases de entrada que la Fase C (momento) usa para escalonar, en las
+ * dos pantallas donde escalonan de verdad. El test de arriba cubre `/tema/[id]`,
+ * donde ninguna de las dos se monta.
+ *
+ * Lo que hay que probar acá no es que no se mueva: es que **no espere**. Un
+ * escalonamiento apagado a medias —`animation: none` sin quitar el retraso, o al
+ * revés— deja al estudiante mirando un hueco de 450ms sin ninguna razón que lo
+ * explique. Con `animation: none` el `animation-delay` deja de aplicar, así que
+ * afirmar `animationName` cubre las dos cosas; `opacity` y `transform` son la
+ * otra mitad: el estado final llega entero, no a medias (MASTER.md §2.6 y §5).
+ *
+ * ATENCIÓN — **este test nunca se ha corrido.** Se escribió en la Fase C, que
+ * verificaba con `tsc`, `lint`, `validar` y `test:unit`, ninguno de los cuales
+ * mira movimiento, y Playwright quedó fuera de esa lista a propósito. La suite
+ * completa además lleva tiempo roja por premisas vencidas
+ * (`docs/deuda-e2e-capturas.md`). No tratarlo como verde hasta que alguien lo
+ * corra: es una afirmación pendiente de ejecución, no una red probada.
+ */
+test("el escalonamiento tampoco espera cuando el sistema pide sin movimiento", async ({
+  browser,
+}) => {
+  const contexto = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await contexto.newPage();
+
+  /* `.entra-en-secuencia`: la celebración de tema. Sin progreso, para que
+     `marcarTemaCelebrado` la deje pasar — mismo motivo que el test de la
+     captura. */
+  await limpiar(page);
+  await page.goto(`/tema/${TEMA}/completado`);
+  await expect(page.getByText("Tema completado")).toBeVisible();
+
+  const secuencia = await page.evaluate(() => {
+    const el = document.querySelector(".entra-en-secuencia");
+    if (!el) return null;
+    const cs = getComputedStyle(el);
+    return { animacion: cs.animationName, opacidad: cs.opacity, transform: cs.transform };
+  });
+
+  expect(secuencia?.animacion).toBe("none");
+  expect(secuencia?.opacidad).toBe("1");
+  expect(secuencia?.transform).toBe("none");
+
+  /* `.transicion-paso`: un paso de lección. Es la que más veces se ve —unas diez
+     por lección— y por lo tanto la que peor se lleva con un retardo que no se
+     apaga. */
+  await page.goto(`/leccion/${LECCION}`);
+  await expect(page.locator("h1")).toBeVisible();
+
+  const paso = await page.evaluate(() => {
+    const el = document.querySelector(".transicion-paso");
+    if (!el) return null;
+    const cs = getComputedStyle(el);
+    return { animacion: cs.animationName, opacidad: cs.opacity, transform: cs.transform };
+  });
+
+  expect(paso?.animacion).toBe("none");
+  expect(paso?.opacidad).toBe("1");
+
+  await contexto.close();
+});
+
+/**
  * Los dos casos que docs/pendientes.md dejó abiertos el 2026-07-27, cada uno
  * recorriendo **las cuatro superficies** que hablan del mismo estado: portada,
  * nodo de tema, nodo de lección y encabezado de tema.
