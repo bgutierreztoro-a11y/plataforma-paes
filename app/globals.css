@@ -1158,8 +1158,21 @@
    el estado bueno termina más lejos de donde empezó, el malo termina donde
    empezó—, y por eso no son dos animaciones distintas sino una incompleta.
 
-     con sello   anillo 100→320 · núcleo 240→460 · tramo 280→680   (680ms)
-     sin sello   anillo 100→320                                     (320ms)
+     con sello   anillo 0→220 · núcleo 140→360 · tramo 180→580   (580ms nominal)
+     sin sello   anillo 0→220                                     (220ms)
+
+   **El nominal no es lo que se ve, y los dos números importan.** `--ease-salida`
+   frena larguísimo al final: medido en /_design con la Web Animations API, el
+   tramo llega al 94% de su recorrido a mitad de camino y los últimos 120ms lo
+   mueven un 1%. O sea que la pieza cierra a ojo cerca de los **370ms** y el
+   resto es cola imperceptible. Se documenta el nominal porque es lo que hay que
+   sumar si algo llegara a encadenarse detrás, pero calibrar la sensación contra
+   580 sería calibrar contra un número que nadie percibe.
+
+   **El anillo arranca en 0 y no en 100ms.** Tenía un compás de entrada, y en una
+   pantalla escalonada habría estado bien: acá la pantalla llega de golpe, así
+   que esos 100ms eran las tarjetas y los botones ya puestos con un hueco al
+   medio donde va el sello. Un agujero, no un compás.
 
    Nada de esto envuelve a la pantalla: los tres escalones caen sobre nodos
    del SVG, que es hermano del encabezado y de las tarjetas. Los CTA se pintan
@@ -1201,7 +1214,7 @@
 
 .sello-anillo {
   transform-origin: 12px 12px;
-  animation: sello-anillo var(--dur-sello) var(--ease-salida) 100ms backwards;
+  animation: sello-anillo var(--dur-sello) var(--ease-salida) 0ms backwards;
 }
 
 /* 2. El núcleo se estampa dentro del anillo. Acá sí va el sobregiro —la misma
@@ -1216,7 +1229,7 @@
 
 .sello-nucleo {
   transform-origin: 12px 12px;
-  animation: sello-nucleo var(--dur-sello) cubic-bezier(0.34, 1.56, 0.64, 1) 240ms backwards;
+  animation: sello-nucleo var(--dur-sello) cubic-bezier(0.34, 1.56, 0.64, 1) 140ms backwards;
 }
 
 /* 3. El tramo crece hacia la estación siguiente.
@@ -1235,7 +1248,7 @@
 
 .sello-tramo {
   transform-origin: 12px 12px;
-  animation: sello-tramo var(--dur-avance) var(--ease-salida) 280ms backwards;
+  animation: sello-tramo var(--dur-avance) var(--ease-salida) 180ms backwards;
 }
 
 /* Sin movimiento: los tres llegan puestos, sin recorrido y **sin retardo**. El

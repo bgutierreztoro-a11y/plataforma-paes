@@ -19,11 +19,22 @@ const X_ESTACION = 12;
 const X_SIGUIENTE = ANCHO - 12;
 const ALTO_RIEL = 6;
 
-/* El núcleo del sello: el disco de color que cae dentro del anillo. No llena el
-   hueco entero —el anillo mide 11px por dentro y el núcleo 11px de diámetro
-   dejaría los dos bordes tocándose—, así que queda un respiro de medio píxel a
-   cada lado y se lee como tinta apoyada adentro, no como un aro relleno. */
-const R_NUCLEO = 5;
+/* El núcleo del sello: el disco de color que cae dentro del anillo.
+
+   **Llena el hueco y se mete medio píxel bajo el trazo.** El anillo tiene radio
+   interior 5,5 (r 8 menos la mitad de sus 5px de trazo); un núcleo de 5 dejaba
+   un hilo de fondo entre los dos, y en las tres líneas donde el anillo y el
+   núcleo son del mismo color —01, 03 y 04, donde `--linea-nav` ES `--linea`—
+   ese hilo era lo único que se veía: el disco se leía como una diana, no como
+   una estación estampada, y la diferencia con el estado sin sello quedaba
+   reducida a un arito. Verificado en /_design a 3×, no deducido.
+
+   Con 6 el solape tapa también el antialiasing del trazo, que a radio exacto
+   deja un hilo de subpíxel. En 01/03/04 el resultado es un disco sólido —o sea
+   la estación `pasada` de `Estacion.tsx`, "el recorrido hecho es tinta, no
+   contorno", que es justo lo que la pieza quiere decir— y en la 02 el amarillo
+   pierde medio píxel bajo la tinta del anillo, imperceptible. */
+const R_NUCLEO = 6;
 
 /**
  * El sello de estación: el momento del cierre de una lección.
