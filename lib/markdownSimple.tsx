@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { marcaDelBloque, type MarcaDeBloque } from "./trazoDestacado";
 
 /**
  * Subconjunto mínimo de Markdown usado por el contenido (párrafos, negrita,
@@ -22,15 +23,25 @@ export function esNumeroPuro(valor: string | number): boolean {
   return /^[-−+]?\d+([.,]\d+)?$/.test(valor.trim());
 }
 
-export function conEnfasis(linea: string): ReactNode[] {
+export function conEnfasis(linea: string, marca?: MarcaDeBloque): ReactNode[] {
   // La negrita va primero en la alternancia: si no, "**x**" se partiría como
   // cursiva y dejaría asteriscos sueltos en pantalla.
   const partes = linea.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g).filter((p) => p !== "");
   return partes.map((parte, i) => {
     const negrita = /^\*\*([^*]+)\*\*$/.exec(parte);
-    if (negrita) return <strong key={i}>{conEnfasis(negrita[1])}</strong>;
+    if (negrita) {
+      // El trazo se gasta en la primera negrita que coincide con el término
+      // elegido para el bloque; las demás siguen siendo negrita pelada.
+      const esLaMarca = marca !== undefined && !marca.usado && negrita[1].trim() === marca.termino;
+      if (esLaMarca) marca.usado = true;
+      return (
+        <strong key={i} className={esLaMarca ? "trazo-destacado" : undefined}>
+          {conEnfasis(negrita[1], marca)}
+        </strong>
+      );
+    }
     const cursiva = /^\*([^*]+)\*$/.exec(parte);
-    if (cursiva) return <em key={i}>{conEnfasis(cursiva[1])}</em>;
+    if (cursiva) return <em key={i}>{conEnfasis(cursiva[1], marca)}</em>;
     // Símbolos y expresiones sueltas: en mono, como el resto de la notación.
     // No recurre: dentro de código las marcas son texto literal.
     const codigo = /^`([^`]+)`$/.exec(parte);
@@ -94,7 +105,19 @@ function renderTabla(lineas: string[], key: number): ReactNode {
   );
 }
 
-export function TextoEnriquecido({ contenido }: { contenido: string }) {
+/**
+ * `corpus` es el texto completo de la lección, y solo sirve para el criterio de
+ * repetición del trazo de destacador (ver `marcaDelBloque`). Es opcional: sin
+ * él el texto se renderiza igual que antes de la Fase D, con toda la negrita
+ * como negrita. Lo pasa `PasoLeccion`, que es quien tiene la lección entera.
+ */
+export function TextoEnriquecido({
+  contenido,
+  corpus,
+}: {
+  contenido: string;
+  corpus?: string;
+}) {
   const bloques = contenido.split(/\n\n+/);
   return (
     <>
@@ -103,17 +126,26 @@ export function TextoEnriquecido({ contenido }: { contenido: string }) {
         if (lineas.length > 0 && lineas.every((l) => l.trim().startsWith("|"))) {
           return renderTabla(lineas, i);
         }
+        // Una marca por bloque, compartida por todas sus líneas: el objeto se
+        // crea acá y `conEnfasis` la marca como usada en cuanto la gasta.
+        const termino = marcaDelBloque(bloque, corpus);
+        const marca: MarcaDeBloque | undefined = termino
+          ? { termino, usado: false }
+          : undefined;
         if (lineas.length > 0 && lineas.every((l) => l.trim().startsWith("- "))) {
           return (
             <ul key={i} className="my-3 list-disc space-y-1.5 pl-5 leading-relaxed">
               {lineas.map((l, j) => (
-                <li key={j}>{conEnfasis(l.trim().slice(2))}</li>
+                <li key={j}>{conEnfasis(l.trim().slice(2), marca)}</li>
               ))}
             </ul>
           );
         }
         // Cita: la idea clave del paso. Se destaca con filete de acento en vez
         // de más negrita, que a esta altura del texto ya no jerarquiza nada.
+        // Y por lo mismo tampoco lleva trazo: el bloque entero ya es el
+        // destaque, y marcar una palabra adentro duplicaría el gesto sobre la
+        // misma frase. Por eso esta rama no pasa `marca`.
         if (lineas.length > 0 && lineas.every((l) => l.trim().startsWith(">"))) {
           return (
             <blockquote
@@ -132,7 +164,7 @@ export function TextoEnriquecido({ contenido }: { contenido: string }) {
           <p key={i} className="my-3 leading-relaxed">
             {lineas.map((l, j) => (
               <span key={j}>
-                {conEnfasis(l)}
+                {conEnfasis(l, marca)}
                 {j < lineas.length - 1 && <br />}
               </span>
             ))}
