@@ -69,7 +69,11 @@ export function SecuenciaMicropreguntas({
 
   return (
     <div className="rounded-tarjeta border border-border bg-surface p-4">
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
+      {/* `text-etiqueta uppercase` (Fase E): antes era `text-xs` + peso +
+          tracking escritos a mano, una cuarta receta de versalitas que no
+          medía igual que ninguna de las otras tres. El gris pasa AA porque
+          esto va dentro de la tarjeta blanca de arriba. */}
+      <p className="text-etiqueta uppercase text-secondary">
         Predicción {indice + 1} de {micropreguntas.length}
       </p>
       <p className="mt-1 text-base font-medium text-ink">{actual.enunciado}</p>

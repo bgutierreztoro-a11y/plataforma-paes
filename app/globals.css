@@ -378,10 +378,13 @@
   --text-nav--font-weight: 600;
   --text-nav--letter-spacing: 0.08em;
 
-  /* OBSOLETO. No está en la escala Línea, pero lo usan 14 call sites de las
-     pantallas actuales. Se congela en su valor y muere con ellas. */
-  --text-eyebrow: 0.75rem;
-  --text-eyebrow--line-height: 1rem;
+  /* `--text-eyebrow` (12px) murió en la Fase E. Era la tercera de cuatro
+     recetas distintas para el mismo gesto —versalitas de rótulo— y ya se
+     declaraba OBSOLETO acá mismo: fuera de la escala Línea, sin más razón de
+     existir que sus call sites. Hoy los rótulos son uno solo,
+     `text-etiqueta uppercase`, y la navegación inferior es `text-nav
+     uppercase`. Si vuelve a hacer falta un tamaño intermedio, sale de la
+     escala; no se reabre este token. */
 
   /* ── Radios ──────────────────────────────────────────────────────────────
      Línea: none 0 · sm 2 · md 4 · full 999. Botones y tarjetas usan sm;

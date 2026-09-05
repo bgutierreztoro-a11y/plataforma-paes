@@ -34,12 +34,13 @@ function TarjetaDato({
   return (
     <Tarjeta className="p-5 text-left">
       {/* El orden ya era el correcto —etiqueta arriba, cifra abajo—; lo que
-          cambió en la Fase 6 es que usa el token `text-eyebrow` en vez de
-          `text-xs` a mano, que es lo que hacía que este rótulo y el de las otras
-          pantallas no midieran igual. */}
-      <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
-        {etiqueta}
-      </p>
+          cambió en la Fase 6 fue dejar de escribir el tamaño a mano, y en la
+          Fase E, quedar en la receta única `text-etiqueta uppercase`.
+
+          Acá sí va el gris de rótulo: la tarjeta trae fondo propio (`bg-surface`,
+          #FFFFFF), donde `--text-secondary` da 4,69:1 y pasa AA — es el caso que
+          `docs/deuda-contraste-etiquetas.md` §1 separa del fondo de página. */}
+      <p className="text-etiqueta uppercase text-secondary">{etiqueta}</p>
       {/* Cifras tabulares: el número no cambia de ancho entre lecciones. */}
       <p className="mt-1 text-3xl font-semibold text-ink">{valor}</p>
       <p className="mt-1 text-sm leading-6 text-ink-suave">{detalle}</p>

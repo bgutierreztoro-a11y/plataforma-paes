@@ -208,9 +208,10 @@ export function FeedbackEnCapas({
              resuelve `capa2` es el mismo `errorCatalogado` que da el rótulo—,
              pero es una prop y quien llame mañana puede olvidarla. */
           <div className="transicion-paso space-y-2 rounded-tarjeta border border-border bg-surface px-4 py-3">
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-tenue">
-              Qué pasó por dentro
-            </p>
+            {/* Misma receta de versalitas que el resto desde la Fase E
+                (`text-etiqueta uppercase`), y el gris de rótulo porque esto va
+                dentro de la tarjeta blanca. */}
+            <p className="text-etiqueta uppercase text-secondary">Qué pasó por dentro</p>
             <p className="text-sm leading-relaxed text-ink">{capa2}</p>
             {capa3 && <p className="text-sm leading-relaxed text-ink-suave">{capa3}</p>}
           </div>

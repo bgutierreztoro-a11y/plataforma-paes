@@ -17,9 +17,16 @@ import type { ReactNode } from "react";
  * el título es lo que la pantalla es. Compartirlos habría obligado a uno de los
  * dos a ceder el tamaño, que es justo lo que los distingue.
  *
- * El rótulo usa el token `text-eyebrow` de la Fase 1. Hasta ahora el token
- * existía y casi nadie lo usaba: ocho pantallas escribían el rótulo a mano y
- * entre ellas no coincidían ni en el tamaño.
+ * El rótulo va en `text-etiqueta uppercase`, la única receta de versalitas del
+ * sistema desde la Fase E. Antes usaba `text-eyebrow`, que era una de cuatro
+ * recetas distintas para el mismo gesto y ya se declaraba obsoleto en
+ * globals.css.
+ *
+ * **El color es `text-primary` y no `text-secondary`.** Este encabezado se monta
+ * sobre el fondo de página —`PantallaCentrada`, no una tarjeta—, y ahí el gris
+ * de rótulo da 4,42:1 y no llega a AA (`docs/deuda-contraste-etiquetas.md` §1).
+ * Es el mismo par que ya eligió `leccion/HeaderLeccion.tsx:35-37` por el mismo
+ * motivo. Ningún token se recalibra para esto.
  */
 /**
  * `portada` sube un escalón de la escala. Es para el primer título que ve alguien
@@ -59,7 +66,7 @@ export function EncabezadoDeEntrada({
   return (
     <div className={`space-y-2 ${className}`}>
       {rotulo && (
-        <p className="text-eyebrow font-medium uppercase tracking-wide text-ink-tenue">
+        <p className="text-etiqueta uppercase text-primary">
           {rotulo}
         </p>
       )}
