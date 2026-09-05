@@ -1101,3 +1101,39 @@
     font-weight: 700;
   }
 }
+
+/* Sin `color-mix`, el trazo se apaga. No es una precaución teórica: es un fallo
+   real que se encontró leyendo el CSS compilado.
+
+   Lightning CSS —el minificador de Tailwind v4— parte la declaración de
+   `--trazo-tinta` en dos y **genera un fallback propio**, que nadie escribió:
+
+     .trazo-destacado { --trazo-tinta: var(--trazo-eje) }
+     @supports (color: color-mix(in lab, red, red)) { …el color-mix real… }
+
+   O sea que en un navegador sin `color-mix` la tinta no queda al 22%: queda en
+   el **color de eje sólido**. Con el texto de cuerpo (#16142B) encima, eso da
+   3,71:1 en la línea 01, 3,74:1 en la 03 y 2,61:1 en la 04 — tres de los cuatro
+   ejes bajo el 4,5:1 de AA, contra los 11,42:1 del peor par con el alfa puesto.
+   El destacado pasaría a tapar el texto que destaca, que es exactamente lo que
+   la fase prohíbe.
+
+   `lib/contrasteTrazo.test.ts` no lo habría atrapado nunca: ese gate compone el
+   alfa a mano, así que mide la rama buena. Por eso el mismo archivo tiene ahora
+   un test que exige que este bloque siga existiendo.
+
+   La degradación es la misma que la de `forced-colors`, y por el mismo motivo:
+   sin trazo, la negrita vuelve a jerarquizar y el contraste queda intacto. No se
+   pierde información, se pierde el gesto.
+
+   Va después de la regla base a propósito: misma especificidad, gana el orden.
+
+   `color-mix` es Baseline desde 2023 (Chrome 111, Safari 16.2, Firefox 113), así
+   que esto alcanza sobre todo a WebViews de Android viejos — pocos, pero el
+   público son escolares con teléfonos heredados. */
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .trazo-destacado {
+    background-image: none;
+    font-weight: 700;
+  }
+}

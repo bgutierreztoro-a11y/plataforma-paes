@@ -131,6 +131,31 @@ describe("El trazo de destacador no baja de AA en ninguna línea", () => {
     }
   });
 
+  /* Los dos casos donde el trazo tiene que apagarse en vez de pintarse.
+     El de `forced-colors` es obvio; el de `color-mix` no, y por eso está acá:
+     Lightning CSS genera solo un fallback que deja `--trazo-tinta` en el color
+     de eje SÓLIDO, y con el texto encima eso da 2,61:1 en la línea 04. Este
+     test no mide contraste —mide que la salida de emergencia siga existiendo—,
+     porque el resto del archivo compone el alfa a mano y por definición nunca
+     va a ver esa rama. Si alguien borra uno de los dos bloques, se cae acá. */
+  test("sin color-mix el trazo se apaga en vez de tapar el texto", () => {
+    const bloque = /@supports not \(color: color-mix\([^)]*\)\)\s*\{\s*\.trazo-destacado\s*\{([^}]*)\}/.exec(
+      CSS,
+    );
+    assert.ok(bloque, "Falta el bloque `@supports not (color: color-mix(...))` del trazo");
+    assert.match(bloque[1], /background-image:\s*none/, "El bloque no apaga el fondo");
+    assert.match(bloque[1], /font-weight:\s*700/, "El bloque no devuelve la negrita");
+  });
+
+  test("en alto contraste forzado el trazo también se apaga", () => {
+    const bloque = /@media \(forced-colors: active\)\s*\{\s*\.trazo-destacado\s*\{([^}]*)\}/.exec(
+      CSS,
+    );
+    assert.ok(bloque, "Falta el bloque `@media (forced-colors: active)` del trazo");
+    assert.match(bloque[1], /background-image:\s*none/);
+    assert.match(bloque[1], /font-weight:\s*700/);
+  });
+
   test("fuera de un eje el trazo cae a la tinta del texto", () => {
     // Es la segunda mitad de la regla de color del sistema, y lo que hace que
     // el trazo siga siendo legible en una pantalla sin eje instalado.
