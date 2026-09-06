@@ -60,7 +60,10 @@ function TrazoCompletandose() {
       <svg viewBox="0 0 100 60" aria-hidden="true" className="h-full w-full" fill="none">
         <path
           d="M8 4 V52 H94"
-          stroke="var(--color-border-fuerte)"
+          /* El hairline de Línea (#d8d9d4) y no `--color-border-fuerte`
+             (`--ink-300`, de la paleta previa): los ejes de esta recta son la
+             misma línea de 1px que separa las tarjetas de todo el producto. */
+          stroke="var(--color-hairline)"
           strokeWidth="1"
           vectorEffect="non-scaling-stroke"
         />
