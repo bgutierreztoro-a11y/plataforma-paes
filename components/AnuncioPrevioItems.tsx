@@ -45,6 +45,27 @@ const RETRASO = {
 } as const;
 
 /**
+ * El CTA nombra lo que empieza, y lo nombra igual que el título de arriba.
+ *
+ * Un mapa por variante y no un ternario en el JSX: las dos etiquetas son la
+ * misma decisión —qué se está por rendir— y separarlas del `titulo` que ya se
+ * deriva acá arriba es lo que dejó que se perdieran una vez.
+ *
+ * Porque se perdieron: `ad43ebb` ("un verbo por flujo") cambió "Empezar" a secas
+ * por estas dos, y `601521b` —el commit que rehizo esta pantalla entera para la
+ * dirección Línea— las borró al reescribir el JSX y devolvió el "Empezar". No
+ * fue una decisión: fue una reescritura que no miró el copy. Si esta pantalla se
+ * vuelve a rehacer, esto es lo que hay que traer.
+ *
+ * Sin versalitas, sin punto medio, sin guion ni raya de conector: el CTA es una
+ * frase corta, no una etiqueta compuesta.
+ */
+const ETIQUETA_EMPEZAR: Record<AnuncioPrevioItemsProps["variante"], string> = {
+  leccion: "Empezar el repaso",
+  modulo: "Empezar el cierre",
+};
+
+/**
  * Lo que hay antes de las preguntas: cuántas son y en qué forma van a aparecer.
  *
  * La pantalla se rehizo entera en la conversión a Línea. Antes traía un trazo
@@ -157,7 +178,7 @@ export function AnuncioPrevioItems({
               2px de la Fase A. Último escalón, y eso no lo hace inalcanzable:
               `opacity` y `transform` no bloquean `pointer-events`. */}
           <Boton variante="linea" type="button" onClick={onEmpezar}>
-            Empezar
+            {ETIQUETA_EMPEZAR[variante]}
           </Boton>
         </div>
       </PantallaCentrada>
