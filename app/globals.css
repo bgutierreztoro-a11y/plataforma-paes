@@ -1150,16 +1150,24 @@
    EL SELLO DE ESTACIÓN (Fase C2)
    ═══════════════════════════════════════════════════════════════════════════
 
-   El momento del cierre de lección. Lo dibuja
-   `components/ui/linea/SelloDeEstacion.tsx`; acá van los tres escalones.
+   El momento del cierre de lección y del de módulo. Lo dibuja
+   `components/ui/linea/SelloDeEstacion.tsx`; acá van los cuatro escalones.
 
    La pieza tiene dos estados y **el guion es el mismo en los dos**: lo que
    cambia es cuántos escalones corren. Eso es lo que carga el significado —
    el estado bueno termina más lejos de donde empezó, el malo termina donde
    empezó—, y por eso no son dos animaciones distintas sino una incompleta.
 
-     con sello   anillo 0→220 · núcleo 140→360 · tramo 180→700   (700ms nominal)
+     con sello   anillo 0→220 · núcleo 140→360 · visto 300→500 · tramo 180→700
+                                                             (700ms nominal)
      sin sello   anillo 0→220                                     (220ms)
+
+   **El visto se solapa 60ms con el final del núcleo, y es a propósito.** El
+   núcleo cierra a 360 y el visto arranca a 300, cuando el disco ya bajó de su
+   sobregiro y está asentándose. Encadenados se leerían como dos gestos en fila
+   —primero aparece un disco, después alguien le dibuja algo encima—; solapados
+   se leen como un solo acto de estampar. El total no se mueve: el tramo sigue
+   siendo el que cierra la pieza, a 700.
 
    **El nominal no es lo que se ve, y los dos números importan.** `--ease-salida`
    frena larguísimo al final: medido en /_design con la Web Animations API, el
@@ -1174,13 +1182,15 @@
    que esos 100ms eran las tarjetas y los botones ya puestos con un hueco al
    medio donde va el sello. Un agujero, no un compás.
 
-   Nada de esto envuelve a la pantalla: los tres escalones caen sobre nodos
+   Nada de esto envuelve a la pantalla: los cuatro escalones caen sobre nodos
    del SVG, que es hermano del encabezado y de las tarjetas. Los CTA se pintan
    y se tocan desde el primer frame.
 
-   **Ninguna de las tres se anida dentro de otra.** El SVG contenedor no lleva
+   **Ninguna de las cuatro se anida dentro de otra.** El SVG contenedor no lleva
    entrada propia a propósito: apilarle un fundido encima atenuaría el sello
    justo mientras cae, que es el defecto de `docs/deuda-entradas-apiladas.md`.
+   El visto es hermano del núcleo en el JSX y no un hijo suyo, por lo mismo: si
+   colgara del disco heredaría su `scale` y se estiraría mientras se traza.
 
    **El origen va en coordenadas del viewBox y no con `transform-box: fill-box`.**
    Un `transform-origin: center` a secas se resuelve contra el viewport del SVG
@@ -1191,11 +1201,13 @@
    declaración se ignora en silencio y vuelve el mismo defecto.
 
    Con el origen escrito en unidades del viewBox no hace falta ninguna de las
-   dos: `12px 12px` es a la vez el centro de las dos estaciones y el borde
-   izquierdo del tramo, y se resuelve en el sistema de coordenadas del SVG, así
-   que sigue siendo correcto aunque la pieza se escale por CSS. Es el mismo
-   número que `X_ESTACION` y `CENTRO_Y` en el componente; si alguno se mueve,
-   estos tienen que moverse con él.
+   dos: `14px 14px` es a la vez el centro de la estación de este cierre y el
+   borde izquierdo del tramo, y se resuelve en el sistema de coordenadas del
+   SVG, así que sigue siendo correcto aunque la pieza se escale por CSS. Es el
+   mismo número que `X_ESTACION` y `CENTRO_Y` en el componente; si alguno se
+   mueve, estos tienen que moverse con él. (Era 12 hasta que el anillo creció de
+   r 8 a r 11 para darle hueco al visto: la nota de escala está en el
+   componente.)
 
    Los retrasos van escritos acá y no inline con `--retraso` como en las tres
    pantallas de la Fase C: aquellos son el guion de una pantalla, que compone
@@ -1213,7 +1225,7 @@
 }
 
 .sello-anillo {
-  transform-origin: 12px 12px;
+  transform-origin: 14px 14px;
   animation: sello-anillo var(--dur-sello) var(--ease-salida) 0ms backwards;
 }
 
@@ -1228,11 +1240,37 @@
 }
 
 .sello-nucleo {
-  transform-origin: 12px 12px;
+  transform-origin: 14px 14px;
   animation: sello-nucleo var(--dur-sello) cubic-bezier(0.34, 1.56, 0.64, 1) 140ms backwards;
 }
 
-/* 3. El tramo crece hacia la estación siguiente.
+/* 3. El visto se traza sobre el núcleo, de un extremo al otro.
+
+      **Sin `transform` y sin `opacity`: se dibuja.** Un fundido diría que el
+      visto estaba y se reveló; el trazado dice que alguien lo hizo ahora, que es
+      la afirmación de la pieza. Por eso tampoco lleva sobregiro — un tic que
+      rebota se lee como decoración, y este es el dato.
+
+      `--largo-visto` es la longitud del path (≈14,45 unidades del viewBox, los
+      dos segmentos de `VISTO` en el componente) redondeada hacia arriba: de
+      menos, el visto arrancaría con un pedazo ya pintado. Si el path cambia,
+      este número cambia con él.
+
+      200ms y no `--dur-sello`: los 220 del token son para algo que cae, y esto
+      recorre. Es una calibración de instancia, como los 520 del tramo. */
+@keyframes sello-visto {
+  from {
+    stroke-dashoffset: var(--largo-visto);
+  }
+}
+
+.sello-visto {
+  --largo-visto: 15;
+  stroke-dasharray: var(--largo-visto);
+  animation: sello-visto 200ms var(--ease-salida) 300ms backwards;
+}
+
+/* 4. El tramo crece hacia la estación siguiente.
 
       Arranca a 280ms, 180ms antes de que el núcleo termine de asentarse. El
       solape es deliberado: encadenados se leen como dos cosas en fila, y
@@ -1258,20 +1296,26 @@
    bien. Un token, un rol; esto es una calibración de instancia. */
 .sello-tramo {
   --dur-avance: 520ms;
-  transform-origin: 12px 12px;
+  transform-origin: 14px 14px;
   animation: sello-tramo var(--dur-avance) var(--ease-salida) 180ms backwards;
 }
 
-/* Sin movimiento: los tres llegan puestos, sin recorrido y **sin retardo**. El
+/* Sin movimiento: los cuatro llegan puestos, sin recorrido y **sin retardo**. El
    retardo importa tanto como el recorrido — un escalonamiento apagado a medias
    deja la pieza invisible 280ms sobre una pantalla que ya está completa. Mismo
-   criterio que `.entra-nodo` y `.entra-en-secuencia`. */
+   criterio que `.entra-nodo` y `.entra-en-secuencia`.
+
+   El `stroke-dashoffset: 0` es para el visto y no hace nada en los otros tres:
+   sin él, `animation: none` deja el path con el `stroke-dasharray` de su clase y
+   el offset que hubiera quedado. Explícito antes que dependiendo del default. */
 @media (prefers-reduced-motion: reduce) {
   .sello-anillo,
   .sello-nucleo,
+  .sello-visto,
   .sello-tramo {
     animation: none;
     opacity: 1;
     transform: none;
+    stroke-dashoffset: 0;
   }
 }
