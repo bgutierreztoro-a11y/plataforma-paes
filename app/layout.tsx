@@ -94,16 +94,25 @@ const localizacion = {
  * Los nombres de variable son los de Clerk v7 (varios cambiaron respecto a v6),
  * verificados contra @clerk/shared/types.
  *
- * De la fase visual de "Línea" acá solo cambian las dos entradas de tipografía:
- * `var(--font-inter)` dejó de existir y sin ese cambio /ingresar y /registrarse
- * caerían a la fuente por defecto de Clerk. Los colores siguen siendo los de
- * Antigravity a propósito — cambiarlos es rediseñar esas dos pantallas, que es
- * trabajo de la fase de migración y no de esta.
+ * De la fase visual de "Línea" salieron primero las dos entradas de tipografía
+ * (`var(--font-inter)` dejó de existir y sin ese cambio /ingresar y /registrarse
+ * caerían a la fuente por defecto de Clerk) y después el color de acción y el
+ * radio.
+ *
+ * **`colorPrimary` es tinta y no un color de eje.** /ingresar y /registrarse no
+ * pertenecen a ninguna línea: son la puerta, no una estación. Es exactamente el
+ * caso que `ui/linea/Boton.tsx` llama `neutro` — "la acción principal fuera de
+ * un eje, tinta sólida"—, así que el CTA de Clerk toma `--text-primary`.
+ *
+ * **Lo que sigue en la paleta previa.** `colorForeground`, `colorMutedForeground`
+ * y `colorBorder` todavía apuntan a la rampa `--ink-*` de Antigravity. Quedaron
+ * fuera del alcance firmado de esta conversión; cambiarlos es tocar el contraste
+ * de dos pantallas de formulario, que merece su propia medición.
  */
 const apariencia: ClerkAppearanceTheme = {
   variables: {
-    colorPrimary: "#4a4fe0", // --color-accent (indigo-600)
-    colorPrimaryForeground: "#ffffff", // texto sobre accent (Boton: text-white)
+    colorPrimary: "#16181d", // --text-primary: la acción neutra de Línea
+    colorPrimaryForeground: "#f7f7f5", // --text-inverse, igual que Boton variante "neutro"
     colorForeground: "#16142b", // --color-ink (ink-900)
     colorMutedForeground: "#45435c", // --color-ink-suave (ink-600)
     colorBackground: "#ffffff", // --color-surface
@@ -113,11 +122,11 @@ const apariencia: ClerkAppearanceTheme = {
     colorNeutral: "#16142b", // --color-ink: base de bordes/sombras/estados neutros
     colorDanger: "#b3261e", // --color-error
     colorSuccess: "#0e7c57", // --color-success
-    colorRing: "#4a4fe0", // --color-accent: anillo de foco, igual que Boton (outline-accent)
+    colorRing: "#16181d", // --border-strong: el anillo de foco de Línea (outline-strong)
     fontFamily: "var(--font-archivo)", // --font-sans
     fontFamilyButtons: "var(--font-archivo)", // --font-sans
     fontSize: "1rem", // text-base, la escala de texto de la plataforma (Boton, labels)
-    borderRadius: "0.625rem", // --radius-tarjeta → --radius-sm; literal para que Clerk derive sm/lg/xl
+    borderRadius: "0.125rem", // 2px, el radio de Línea; literal para que Clerk derive sm/lg/xl
   },
   elements: {
     // El botón primario del formulario ("Continuar") debe leerse como un CTA
