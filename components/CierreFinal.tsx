@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { Tarjeta } from "@/components/ui/Tarjeta";
-import { IlustracionCierre } from "@/components/ilustraciones/IlustracionCierre";
+import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
 import { Boton, EnlaceBoton } from "@/components/ui/linea/Boton";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { registrarEvento } from "@/lib/eventos";
 import { agruparErroresDelCierre } from "@/lib/erroresDelCierre";
+import { alcanzaDominio } from "@/lib/umbrales";
 import { obtenerResultadoDiagnostico } from "@/lib/progresoSesion";
 import type { ItemCliente } from "@/lib/sanitizar";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
@@ -106,15 +107,19 @@ export function CierreFinal({
           ellos el ancho (`w-full max-w-lg`), porque dentro del `items-center` de
           `PantallaCentrada` un div sin ancho colapsa al contenido.
 
-          La ilustración y el encabezado comparten escalón: la ilustración sin su
-          título no dice nada, y el `gap-6` se conserva repitiéndolo adentro. */}
+          El sello y el encabezado comparten el escalón 0 pero no el envoltorio:
+          el sello trae su guion interno propio (`.sello-anillo`, `.sello-nucleo`,
+          `.sello-tramo`), y meterlo dentro de un `.entra-en-secuencia` sería
+          apilar una entrada sobre otra — el caso 2 de
+          `docs/deuda-entradas-apiladas.md`, con la opacidad multiplicándose.
+          Hermanos y no anidados, entonces, igual que en `ItemsPAESFinal.tsx:150`.
+          El `gap-6` lo pone `PantallaCentrada` para los dos. */}
+      <SelloDeEstacion estampado={alcanzaDominio(aciertos, respuestas.length)} />
+
       <div
-        className="entra-en-secuencia flex w-full flex-col items-center gap-6"
+        className="entra-en-secuencia"
         style={{ ["--retraso" as string]: `${RETRASO.encabezado}ms` }}
       >
-        <div className="w-full max-w-56">
-          <IlustracionCierre />
-        </div>
         <EncabezadoDeEntrada rotulo="Cierre del módulo" titulo="Terminaste el módulo">
           Llegaste al final del recorrido. Esto fue lo que mostró el cierre:
         </EncabezadoDeEntrada>

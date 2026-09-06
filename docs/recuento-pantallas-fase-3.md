@@ -256,7 +256,9 @@ Dos decisiones que conviene no re-discutir a ciegas:
   hablaría de errores que no ocurrieron en este cierre.
 
 Queda sin migrar el **marco superior** de la pantalla: `PantallaCentrada` con
-`IlustracionCierre` y el encabezado "Cierre del módulo / Terminaste el módulo".
+el encabezado "Cierre del módulo / Terminaste el módulo". (Actualización: la
+ilustración de ese marco ya no es `IlustracionCierre`; el cierre de módulo pinta
+`SelloDeEstacion`, el mismo momento del cierre de lección.)
 La maqueta abre con la etiqueta de línea "Cierre · {estación}" y la cifra grande
 sola. Además ese copy quedó viejo: desde la Enmienda 2 la ruta cierra **una
 estación**, no el módulo, y hay once cierres. No estaba en el alcance de la 3I.

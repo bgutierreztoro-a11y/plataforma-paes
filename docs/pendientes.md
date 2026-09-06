@@ -1616,3 +1616,15 @@ sin resolver. No se resuelven aquí; se anotan para decidir.
   de descubrimiento de P1. ¿La solución es cambio de schema (permitir
   `errorCatalogado` en esos tipos) o cambio de doctrina (P2 no aplica a
   ese bloque)?
+
+## 🟡 El título del cierre de módulo no se ramifica y el sello sí (2026-09-05)
+
+En `CierreFinal.tsx` el sello se estampa según `alcanzaDominio(aciertos,
+respuestas.length)`, pero el `h1` dice "Terminaste el módulo" sin condición.
+En el cierre de lección los dos salen del mismo `conDominio`
+(`ItemsPAESFinal.tsx:143` y `:160`), y ahí el sello es señalética de lo que el
+título ya afirma. Acá no: con el umbral debajo, el título celebra y el sello
+queda hueco. Ninguno de los dos miente por separado, pero juntos dicen cosas
+distintas. Falta decidir si el título del cierre de módulo se ramifica también,
+o si a nivel de módulo terminar es el hecho y el desempeño se lee solo en el
+puntaje. No se resuelve aquí; se anota para decidir.

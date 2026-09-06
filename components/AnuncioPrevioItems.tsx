@@ -17,8 +17,8 @@ const Y_TRAZO = 28;
 /* El mismo lenguaje visual que IlustracionPatrones/IlustracionPendiente
    (recta + puntos, trazo del acento), pero acá cada punto es literalmente una
    de las preguntas que vienen — no es decoración, es la cuenta. En "modulo"
-   el último punto se dibuja como el punto de llegada de IlustracionCierre
-   (círculos concéntricos): es el mismo camino, y esta vez sí se termina. */
+   el último punto se dibuja como punto de llegada, con círculos concéntricos
+   alrededor: es el mismo camino, y esta vez sí se termina. */
 function TrazoPreguntas({
   cantidad,
   variante,
