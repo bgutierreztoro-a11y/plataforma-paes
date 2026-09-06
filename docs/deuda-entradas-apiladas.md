@@ -1,6 +1,6 @@
 # Deuda: dos entradas corriendo a la vez sobre el mismo elemento
 
-Estado: **registrado, sin corregir.** No rompe nada visible hoy —las dos
+Estado: **caso 1 corregido el 2026-09-05; caso 2 abierto.** No rompe nada visible hoy —las dos
 animaciones son fundidos cortos y el resultado se lee como una entrada algo más
 lenta, no como un defecto—, pero es el mismo apilado que la Fase C prohíbe
 explícitamente para los momentos que sí construye, y conviene que quede escrito
@@ -19,7 +19,18 @@ de las dos duraciones por separado, y ninguna de las dos es la culpable.
 
 ## Los dos casos
 
-### 1. `components/AnuncioPrevioItems.tsx` — tres entradas simultáneas
+### 1. `components/AnuncioPrevioItems.tsx` — tres entradas simultáneas · CORREGIDO
+
+> **Cerrado el 2026-09-05, en la conversión de esta pantalla a Línea.** No se
+> eligió cuál de las tres entradas se quedaba: la pantalla se rehizo entera y
+> ninguna de las tres sobrevive. El trazo con `.entra-nodo` desapareció junto con
+> el SVG que lo llevaba, y `.transicion-paso` y `.entra-numero` se
+> reemplazaron por cuatro `.entra-en-secuencia` hermanos —encabezado, cifra,
+> franja, acciones, con escalón de 150ms—, ninguno dentro de otro. Es el mismo
+> patrón de `CierreFinal.tsx`, que es la pantalla con la que ésta hace pareja.
+>
+> Lo de abajo queda como registro de lo que había.
+
 
 | Línea | Clase | Duración |
 |---|---|---|
