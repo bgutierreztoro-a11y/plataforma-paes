@@ -9,6 +9,7 @@ import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
+import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 /* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
@@ -158,6 +159,23 @@ export function ItemsPAESFinal({
             `conDominio` y no un umbral propio: el sello repite lo que el `h1` de
             arriba ya dice. Ver `lib/umbrales.ts`. */}
         <SelloDeEstacion className="mt-6" estampado={conDominio} animar={animarSello} />
+
+        {/* La contraparte de la franja hueca del anuncio previo
+            (`AnuncioPrevioItems.tsx`): la misma fila, ahora llena. Esa es toda
+            su razón de estar acá — el estudiante vio ocho casillas vacías antes
+            de empezar y ve las mismas ocho resueltas al terminar.
+
+            Hermana del sello y no envuelta en él ni en nada que anime: el sello
+            trae su guion interno propio y esta pantalla no tiene entrada
+            escalonada, así que no hay entrada que apilar
+            (`docs/deuda-entradas-apiladas.md`).
+
+            Se arma con `respuestas` y no con un total, igual que en
+            `CierreFinal.tsx:183`: la franja muestra lo rendido. */}
+        <FranjaDeItems
+          className="mt-6"
+          resultados={respuestas.map((r) => (r.correcta ? "correcto" : "incorrecto"))}
+        />
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TarjetaDato
