@@ -1,4 +1,5 @@
 import { Boton } from "@/components/ui/linea/Boton";
+import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
@@ -8,6 +9,16 @@ interface AnuncioPrevioItemsProps {
   cantidad: number;
   /* Solo se usa (y en la práctica es obligatorio) cuando variante === "modulo". */
   nombreModulo?: string;
+  /* El eje al que pertenece lo que se está por rendir. Es el destino del
+     retorno, y por eso es **obligatorio y sin default**: mismo criterio que
+     `etiquetaFinal` en EjecutorSetItems.tsx: 37-44. Un default silencioso no
+     dejaría la pantalla sin salida —eso se vería—, la dejaría con una salida a
+     la línea equivocada, que es peor porque parece que funciona.
+
+     Los dos llamadores ya lo tienen resuelto en servidor y ninguno necesita una
+     prop nueva más arriba: `RunnerLeccion` lo saca de `tema.ejeId` (:68) y
+     `Cierre` lo recibe de app/cierre/[temaId]/page.tsx: 52. */
+  ejeId: string;
   onEmpezar: () => void;
 }
 
@@ -22,6 +33,11 @@ interface AnuncioPrevioItemsProps {
  * y curvas sí salen de `:root`, vía `.entra-en-secuencia`.
  */
 const RETRASO = {
+  /* El retorno comparte escalón con el encabezado y no abre uno propio: los dos
+     dicen dónde estás, y darle al retorno un escalón anterior alargaría la
+     escalera entera 150ms para adelantar una salida que nadie está buscando
+     todavía. Entran juntos porque son la misma frase. */
+  retorno: 0,
   encabezado: 0,
   cifra: 150,
   franja: 300,
@@ -60,6 +76,7 @@ export function AnuncioPrevioItems({
   variante,
   cantidad,
   nombreModulo,
+  ejeId,
   onEmpezar,
 }: AnuncioPrevioItemsProps) {
   const sustantivo = cantidad === 1 ? "pregunta" : "preguntas";
@@ -67,65 +84,83 @@ export function AnuncioPrevioItems({
   const alcance = variante === "leccion" ? "de esta lección" : `de ${nombreModulo}`;
 
   return (
-    <PantallaCentrada className="gap-6 text-center">
-      {/* El rótulo dice el momento y no el alcance: el alcance ya lo dice la
-          línea bajo la cifra ("preguntas de esta lección"), y repetirlo arriba
-          haría que la pantalla se presentara dos veces antes de dar el dato. */}
-      <div
-        className="entra-en-secuencia"
-        style={{ ["--retraso" as string]: `${RETRASO.encabezado}ms` }}
-      >
-        <EncabezadoDeEntrada rotulo="Antes de empezar" titulo={titulo} />
+    <div className="flex min-h-full flex-1 flex-col">
+      {/* El retorno va **fuera** de `PantallaCentrada` y no adentro:
+          `PantallaCentrada` centra su contenido en los dos ejes
+          (`items-center justify-center`, :36), así que una fila alineada a la
+          izquierda metida ahí no queda a la izquierda ni queda arriba.
+
+          Es la misma anatomía que /linea/[ejeId] —retorno arriba, contenido
+          debajo—, con el tono cambiado: acá no hay placa de tinta que lo
+          sostenga, la fila cae directo sobre el fondo de página. */}
+      <div className="entra-en-secuencia" style={{ ["--retraso" as string]: `${RETRASO.retorno}ms` }}>
+        <BotonVolver
+          tono="sobre-papel"
+          destino={`/linea/${ejeId}`}
+          etiqueta="Volver a la línea"
+        />
       </div>
 
-      {/* La cifra en `display-l` (44px/700), el escalón más grande de la escala:
-          es el único dato de la pantalla. Va en `--linea-nav` y no en `--linea`
-          porque es texto sobre papel, el rol donde la 02 (#FFB600) cae a tinta;
-          mismo par que el enlace de `CierreFinal.tsx:169`. `.num` deja las
-          cifras tabulares, igual que en el resto del producto. */}
-      <div
-        className="entra-en-secuencia"
-        style={{ ["--retraso" as string]: `${RETRASO.cifra}ms` }}
-      >
-        <p className="num text-display-l text-[var(--linea-nav)]">{cantidad}</p>
-        <p className="mt-2 text-base leading-relaxed text-ink-suave">
-          {sustantivo} {alcance}
-        </p>
-      </div>
+      <PantallaCentrada className="gap-6 text-center">
+        {/* El rótulo dice el momento y no el alcance: el alcance ya lo dice la
+            línea bajo la cifra ("preguntas de esta lección"), y repetirlo arriba
+            haría que la pantalla se presentara dos veces antes de dar el dato. */}
+        <div
+          className="entra-en-secuencia"
+          style={{ ["--retraso" as string]: `${RETRASO.encabezado}ms` }}
+        >
+          <EncabezadoDeEntrada rotulo="Antes de empezar" titulo={titulo} />
+        </div>
 
-      {/* Las casillas vacías. `w-full max-w-lg` acá y no en `PantallaCentrada`:
-          dentro de su `items-center` un hijo sin ancho colapsa al contenido,
-          igual que en `CierreFinal.tsx:129`. */}
-      <div
-        className="entra-en-secuencia w-full max-w-lg"
-        style={{ ["--retraso" as string]: `${RETRASO.franja}ms` }}
-      >
-        <FranjaDeItems resultados={Array<"pendiente">(cantidad).fill("pendiente")} />
-        {/* Dato, no advertencia: sin caja, sin ícono y sin verbo de aviso. Lo
-            que cambia respecto de los pasos de la lección es que acá no hay
-            pistas, y eso se dice y se sigue.
+        {/* La cifra en `display-l` (44px/700), el escalón más grande de la escala:
+            es el único dato de la pantalla. Va en `--linea-nav` y no en `--linea`
+            porque es texto sobre papel, el rol donde la 02 (#FFB600) cae a tinta;
+            mismo par que el enlace de `CierreFinal.tsx:169`. `.num` deja las
+            cifras tabulares, igual que en el resto del producto. */}
+        <div
+          className="entra-en-secuencia"
+          style={{ ["--retraso" as string]: `${RETRASO.cifra}ms` }}
+        >
+          <p className="num text-display-l text-[var(--linea-nav)]">{cantidad}</p>
+          <p className="mt-2 text-base leading-relaxed text-ink-suave">
+            {sustantivo} {alcance}
+          </p>
+        </div>
 
-            `text-primary` y no el gris de rótulo: esto se monta sobre el fondo
-            de página, donde `--text-secondary` da 4,42:1 y no llega a AA
-            (`docs/deuda-contraste-etiquetas.md` §1). Mismo par que eligió
-            `EncabezadoDeEntrada`. */}
-        <p className="mt-3 text-etiqueta uppercase text-primary">
-          En esta parte no hay pistas
-        </p>
-      </div>
+        {/* Las casillas vacías. `w-full max-w-lg` acá y no en `PantallaCentrada`:
+            dentro de su `items-center` un hijo sin ancho colapsa al contenido,
+            igual que en `CierreFinal.tsx:129`. */}
+        <div
+          className="entra-en-secuencia w-full max-w-lg"
+          style={{ ["--retraso" as string]: `${RETRASO.franja}ms` }}
+        >
+          <FranjaDeItems resultados={Array<"pendiente">(cantidad).fill("pendiente")} />
+          {/* Dato, no advertencia: sin caja, sin ícono y sin verbo de aviso. Lo
+              que cambia respecto de los pasos de la lección es que acá no hay
+              pistas, y eso se dice y se sigue.
 
-      <div
-        className="entra-en-secuencia w-full max-w-lg"
-        style={{ ["--retraso" as string]: `${RETRASO.acciones}ms` }}
-      >
-        {/* `variante="linea"` toma el color del eje que instalan los dos call
-            sites (`RunnerLeccion.tsx:208`, `Cierre.tsx:48`) y trae el canto de
-            2px de la Fase A. Último escalón, y eso no lo hace inalcanzable:
-            `opacity` y `transform` no bloquean `pointer-events`. */}
-        <Boton variante="linea" type="button" onClick={onEmpezar}>
-          Empezar
-        </Boton>
-      </div>
-    </PantallaCentrada>
+              `text-primary` y no el gris de rótulo: esto se monta sobre el fondo
+              de página, donde `--text-secondary` da 4,42:1 y no llega a AA
+              (`docs/deuda-contraste-etiquetas.md` §1). Mismo par que eligió
+              `EncabezadoDeEntrada`. */}
+          <p className="mt-3 text-etiqueta uppercase text-primary">
+            En esta parte no hay pistas
+          </p>
+        </div>
+
+        <div
+          className="entra-en-secuencia w-full max-w-lg"
+          style={{ ["--retraso" as string]: `${RETRASO.acciones}ms` }}
+        >
+          {/* `variante="linea"` toma el color del eje que instalan los dos call
+              sites (`RunnerLeccion.tsx:208`, `Cierre.tsx:48`) y trae el canto de
+              2px de la Fase A. Último escalón, y eso no lo hace inalcanzable:
+              `opacity` y `transform` no bloquean `pointer-events`. */}
+          <Boton variante="linea" type="button" onClick={onEmpezar}>
+            Empezar
+          </Boton>
+        </div>
+      </PantallaCentrada>
+    </div>
   );
 }

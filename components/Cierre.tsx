@@ -51,6 +51,12 @@ export function Cierre({
           variante="modulo"
           cantidad={cierre.items.length}
           nombreModulo="Función lineal y afín"
+          /* El mismo `ejeId` que instala la línea en :48. `nombreModulo` de al
+             lado sigue siendo un literal que miente en 10 de los 11 cierres
+             (`docs/deuda-cierre.md` §1): pasa por esta misma prop y no se
+             arregla acá a propósito, porque es texto que el estudiante lee y ese
+             doc pide su propio commit y su propia verificación en las 11 rutas. */
+          ejeId={ejeId}
           onEmpezar={() => setFase("items")}
         />
       ) : (

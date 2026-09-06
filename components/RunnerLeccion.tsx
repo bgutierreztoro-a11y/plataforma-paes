@@ -209,6 +209,10 @@ export function RunnerLeccion({
         <AnuncioPrevioItems
           variante="leccion"
           cantidad={leccion.itemsPAES.length}
+          /* El mismo `tema.ejeId` del que sale `linea` en :68, sin prop nueva
+             que subir: la salida de esta pantalla es la línea de la que se
+             entró, no el camino entero. */
+          ejeId={tema.ejeId}
           onEmpezar={() => setFase("itemsPAES")}
         />
       </div>
