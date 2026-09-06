@@ -9,15 +9,48 @@ import { registrarEvento } from "@/lib/eventos";
 import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
+import { GlifoRepetir } from "@/components/ui/linea/GlifoRepetir";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { EncabezadoDeEntrada } from "@/components/ui/EncabezadoDeEntrada";
 
 /* Mismo estilo que el enlace "← Salir al camino" de RunnerLeccion.tsx: la
    opción discreta de esta pantalla no es un tercer botón del mismo peso que
    los otros dos, es un enlace de texto. No es <Link> porque no navega directo
-   — dispara analítica y un handler antes. */
+   — dispara analítica y un handler antes.
+
+   El subrayado se mudó de acá al `<span>` de la etiqueta (ver `EnlaceDiscreto`).
+   Puesto en el contenedor alcanzaba también al glifo de "repetir", y una flecha
+   circular con una raya debajo no se lee como un icono sino como parte del
+   texto. Los dos enlaces sin glifo se rinden exactamente igual que antes: un
+   `inline-flex` con un solo hijo subrayado ocupa lo mismo que el subrayado en el
+   contenedor. */
 const CLASE_ENLACE_DISCRETO =
-  "mt-4 inline-flex text-sm font-medium text-accent underline underline-offset-4 hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
+/**
+ * Uno de los enlaces discretos del pie. Con `glifo`, antepone la flecha circular
+ * de "volver a pasar por esto".
+ *
+ * Existe para que los cuatro call sites no repitan el `<span>` del subrayado, y
+ * para que la regla del glifo quede en un solo lugar: lo llevan las dos
+ * apariciones de "Repetir solo las preguntas" y ninguna otra.
+ */
+function EnlaceDiscreto({
+  glifo = false,
+  onClick,
+  children,
+}: {
+  glifo?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button type="button" onClick={onClick} className={CLASE_ENLACE_DISCRETO}>
+      {glifo && <GlifoRepetir />}
+      <span className="underline underline-offset-4">{children}</span>
+    </button>
+  );
+}
 
 /** Una de las dos tarjetas del cierre. Exactamente dos: el número que importa y
  *  dónde queda dentro del tema. Nada de XP, puntos ni monedas — lista negra del
@@ -209,12 +242,14 @@ export function ItemsPAESFinal({
               {copyAvanzar}
             </Boton>
             <div className="flex flex-col items-center">
-              <button type="button" onClick={repasar} className={CLASE_ENLACE_DISCRETO}>
-                Repasar esta lección
-              </button>
-              <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
+              <EnlaceDiscreto onClick={repasar}>Repasar esta lección</EnlaceDiscreto>
+              {/* El glifo va acá y no en el de arriba: los dos enlaces decían lo
+                  mismo con distintas palabras y había que separar uno de los
+                  dos. Se marca el más angosto —repetir solo el set— porque es
+                  el que se confunde con el otro, y no al revés. */}
+              <EnlaceDiscreto glifo onClick={repetirCierre}>
                 Repetir solo las preguntas
-              </button>
+              </EnlaceDiscreto>
             </div>
           </>
         ) : (
@@ -231,12 +266,13 @@ export function ItemsPAESFinal({
               Repasar esta lección
             </Boton>
             <div className="flex flex-col items-center">
-              <button type="button" onClick={repetirCierre} className={CLASE_ENLACE_DISCRETO}>
+              {/* Misma regla que en la otra rama: el glifo marca "repetir el
+                  set" siempre que aparece, tenga al lado a "Repasar esta
+                  lección" o al avance. */}
+              <EnlaceDiscreto glifo onClick={repetirCierre}>
                 Repetir solo las preguntas
-              </button>
-              <button type="button" onClick={continuar} className={CLASE_ENLACE_DISCRETO}>
-                {copyAvanzar}
-              </button>
+              </EnlaceDiscreto>
+              <EnlaceDiscreto onClick={continuar}>{copyAvanzar}</EnlaceDiscreto>
             </div>
           </>
         )}

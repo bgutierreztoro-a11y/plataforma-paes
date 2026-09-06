@@ -6,6 +6,7 @@ import { Boton } from "@/components/ui/linea/Boton";
 import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { Estacion } from "@/components/ui/linea/Estacion";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
+import { GlifoRepetir } from "@/components/ui/linea/GlifoRepetir";
 import { NavInferior } from "@/components/ui/linea/NavInferior";
 import { PlacaLinea, subtituloDePlaca } from "@/components/ui/linea/PlacaLinea";
 import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEstaciones";
@@ -651,6 +652,90 @@ export default function PaginaDiseno() {
                 El <strong className="trazo-destacado">discriminante</strong> decide cuántos{" "}
                 <strong>ceros reales</strong> tiene: la segunda negrita no lleva trazo porque
                 el trazo es uno por bloque.
+              </p>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Glifo de repetir"
+          nota="El arco de ~300° que marca 'volver a pasar por esto'. No es un dibujo nuevo: es el mismo de camino/NodoTema.tsx (GlifoRepasar, viewBox 24) y de ui/Icono.tsx (IconoIncorrecto, viewBox 20), reescalado al contrato de la familia de 16px de IconosNav (viewBox 16, trazo 2, extremos redondos, currentColor, aria-hidden). Su único consumidor es el cierre de lección, donde separa 'Repetir solo las preguntas' de 'Repasar esta lección'. Estático: la única reacción es el fundido de color que el enlace ya tiene."
+        >
+          <div className="flex flex-col gap-7">
+            <div>
+              {/* Lo que el producto monta hoy. Va primero porque es el caso
+                  real; lo de abajo es lo que pasaría si el glifo se moviera. */}
+              <Rotulo>
+                Como se usa hoy: reposo y hover, en el índigo de accent
+              </Rotulo>
+              <div className="flex flex-col items-start gap-3">
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                  <GlifoRepetir />
+                  <span className="underline underline-offset-4">
+                    Repetir solo las preguntas
+                  </span>
+                </span>
+                {/* El hover se pinta con la clase del estado y no se espera del
+                    puntero: en una galería impresa o capturada el estado tiene
+                    que verse igual. El de abajo sí reacciona de verdad. */}
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-fuerte">
+                  <GlifoRepetir />
+                  <span className="underline underline-offset-4">
+                    Repetir solo las preguntas
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-fuerte focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  <GlifoRepetir />
+                  <span className="underline underline-offset-4">
+                    Pásale el puntero: el glifo vira con el texto
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              {/* El par que el glifo vino a separar. Es la razón de que exista,
+                  así que se mira junto y no suelto. */}
+              <Rotulo>El par que separa, tal como cae en el cierre de lección</Rotulo>
+              <div className="flex flex-col items-start">
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                  <span className="underline underline-offset-4">Repasar esta lección</span>
+                </span>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                  <GlifoRepetir />
+                  <span className="underline underline-offset-4">
+                    Repetir solo las preguntas
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <Rotulo>
+                Hereda por currentColor: los cuatro ejes en --linea-nav
+              </Rotulo>
+              <PorLinea>
+                {() => (
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--linea-nav)]">
+                    <GlifoRepetir />
+                    <span className="underline underline-offset-4">Repetir</span>
+                  </span>
+                )}
+              </PorLinea>
+              {/* Medido con el script de contraste, no calculado de memoria, y
+                  reproduce los números que ui/linea/colores.ts ya registraba
+                  sobre blanco. El producto NO monta el glifo en estos colores
+                  hoy: la fila está para que, si alguna vez se mueve, el número
+                  ya esté escrito. */}
+              <p className="mt-4 max-w-prose text-cuerpo-xs text-secondary">
+                Sobre el fondo de página (#F7F7F5) las cuatro pasan el 3:1 que
+                pide un gráfico: 01 → 4,52, 02 → 16,56 (cae a tinta), 03 → 4,48,
+                04 → 6,41. La 03 no llegaría al 4,5:1 de texto AA sobre ese mismo
+                fondo, que es el caso que ya cubre
+                docs/deuda-contraste-etiquetas.md y no se toca acá.
               </p>
             </div>
           </div>
