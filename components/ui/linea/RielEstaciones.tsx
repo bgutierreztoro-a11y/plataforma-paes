@@ -38,6 +38,12 @@ const CENTRO_DEL_DISCO = 21;
 const EJE_DEL_RIEL = 12;
 const CANALETA = 29;
 
+/* El escalón de la entrada en secuencia. Un solo paso para todo el riel: la
+   secuencia tiene que leerse como un recorrido de arriba abajo y no como cinco
+   animaciones que coinciden. 70ms es lo que separa dos paradas sin que la
+   última se haga esperar —con seis estaciones el riel completo entra en 420ms—. */
+const PASO_ESCALON = 70;
+
 /**
  * El trazo vertical de una línea con sus paradas: la pantalla 03 del sistema de
  * señalética.
@@ -63,9 +69,16 @@ const CANALETA = 29;
  */
 export function RielEstaciones({
   paradas,
+  escalonarDesde,
   className = "",
 }: {
   paradas: ParadaDelRiel[];
+  /** Retraso en ms de la primera parada. Con la prop puesta, cada parada entra
+   *  `PASO_ESCALON` ms después de la anterior, con `.entra-en-secuencia`.
+   *  Ausente = el riel se pinta ya puesto, que es lo que quieren `DetalleTema` y
+   *  la galería: ahí el riel no es la llegada a una pantalla sino una pieza
+   *  dentro de una que ya está. */
+  escalonarDesde?: number;
   className?: string;
 }) {
   return (
@@ -74,6 +87,12 @@ export function RielEstaciones({
         const primera = i === 0;
         const ultima = i === paradas.length - 1;
         const apagada = parada.estado === "cerrada";
+        /* `undefined` deja el `<li>` sin la clase y sin la variable: React omite
+           la propiedad y no queda un `--retraso` colgando en el DOM. */
+        const retraso =
+          escalonarDesde === undefined
+            ? undefined
+            : `${escalonarDesde + i * PASO_ESCALON}ms`;
 
         const contenido = (
           <>
@@ -89,7 +108,15 @@ export function RielEstaciones({
         );
 
         return (
-          <li key={parada.id} className="relative py-3" style={{ paddingLeft: CANALETA }}>
+          /* La entrada va en el `<li>` y no en el texto: el disco y el tramo de
+             riel son hijos absolutos suyos, así que entran con su parada. El
+             `relative` ya estaba, de modo que el `transform` del keyframe no
+             cambia de bloque contenedor a nadie. */
+          <li
+            key={parada.id}
+            className={`relative py-3${retraso ? " entra-en-secuencia" : ""}`}
+            style={{ paddingLeft: CANALETA, ["--retraso" as string]: retraso }}
+          >
             {/* El tramo de riel de esta parada. El primero baja desde su propio
                 disco, el último termina en el suyo, y los del medio cruzan la
                 fila entera para empalmar con el de arriba y el de abajo. Con una

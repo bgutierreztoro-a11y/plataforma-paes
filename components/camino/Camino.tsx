@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { EnlaceBoton } from "@/components/ui/linea/Boton";
 import { PuntosDeLinea } from "@/components/ui/linea/PuntosDeLinea";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
@@ -160,6 +161,35 @@ function posicionEnEje(eje: EjeDelCamino, activo?: TemaDelCamino): number | unde
   return i < 0 ? undefined : i + 1;
 }
 
+/* Cuánto esperar entre el toque en una fila y la navegación, en ms. `0` = irse
+   ya, sin hundimiento.
+
+   El número vive en `--dur-salida` (app/globals.css) y se lee de ahí en vez de
+   duplicarse acá: el mismo valor gobierna la transición del canto sostenido, y
+   dos copias del 140 se desincronizan la primera vez que alguien retemple el
+   sistema. Se cachea porque el token no cambia en caliente.
+
+   `prefers-reduced-motion`, en cambio, se consulta en cada clic y no una vez: la
+   preferencia se puede cambiar con la pestaña abierta. Con ella puesta no hay
+   espera ni hundimiento —la navegación es inmediata, que es el estado final de
+   todos modos—.
+
+   Sin token (nadie cargó el CSS) devuelve 0 y se navega directo. Un fallback con
+   el número escrito acá sería la tercera copia del 140. */
+let esperaCacheada: number | null = null;
+
+function esperaDeSalida(): number {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 0;
+  if (esperaCacheada === null) {
+    const crudo = getComputedStyle(document.documentElement)
+      .getPropertyValue("--dur-salida")
+      .trim();
+    const n = Number.parseFloat(crudo);
+    esperaCacheada = Number.isFinite(n) ? (crudo.endsWith("ms") ? n : n * 1000) : 0;
+  }
+  return esperaCacheada;
+}
+
 /**
  * Una línea: barra de color a la izquierda, nombre, el estado en una línea y la
  * fila de puntos debajo. La fila entera entra a `/linea/[ejeId]`.
@@ -180,6 +210,16 @@ function posicionEnEje(eje: EjeDelCamino, activo?: TemaDelCamino): number | unde
  * Es la misma razón que ya documenta `colores.ts` para `NavInferior`. La barra y
  * los puntos, que son forma, sí van en `--linea`.
  *
+ * **La fila acusa el toque y recién después se va.** Lleva `.canto` —el mismo
+ * volumen de 2px que los botones— y difiere la navegación lo que dure
+ * `--dur-salida`, porque sin esa pausa la pantalla cambia en el mismo frame y el
+ * hundimiento no alcanza a verse. Sigue siendo un `<Link>` con `href` real: el
+ * `onClick` es un adorno encima y con JS caído la fila navega igual.
+ *
+ * `min-h-11` es piso explícito y no un cambio de tamaño: la fila ya medía unos
+ * 66px con sus tres renglones. Está escrito para que el objetivo táctil no
+ * dependa de que el copy siga teniendo tres.
+ *
  * Un eje sin contenido dice "Pronto" en vez de "0 de N estaciones": "0 de 4" se
  * lee como "no hiciste nada" cuando lo que pasa es que no hay nada que hacer, y
  * le atribuiría al estudiante una deuda que es nuestra. Mismo criterio que
@@ -191,12 +231,42 @@ function FilaDeLinea({ linea }: { linea: LineaDelCamino }) {
   const hechas = linea.pasadas.filter(Boolean).length;
   const total = linea.pasadas.length;
   const esActual = linea.estacionActual !== undefined;
+  const router = useRouter();
+  const [saliendo, setSaliendo] = useState(false);
+  const temporizador = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const destino = `/linea/${linea.ejeId}`;
+
+  /* Al desmontar: se cancela la navegación pendiente y se suelta el hundimiento.
+     Lo segundo es cinturón sobre tirantes —una fila que se desmonta vuelve
+     montada con el estado en `false`— pero deja la pieza sin ningún camino por
+     el que quedarse hundida, que es el estado que no puede persistir. */
+  useEffect(
+    () => () => {
+      if (temporizador.current) clearTimeout(temporizador.current);
+      setSaliendo(false);
+    },
+    [],
+  );
+
+  /* Los modificadores y los botones que no son el principal se dejan pasar sin
+     tocar nada: abrir en pestaña nueva es del navegador, y secuestrarlo con
+     `preventDefault` rompería un gesto que el usuario ya conoce. */
+  function alTocar(e: MouseEvent<HTMLAnchorElement>) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    const espera = esperaDeSalida();
+    if (espera <= 0) return;
+    e.preventDefault();
+    setSaliendo(true);
+    temporizador.current = setTimeout(() => router.push(destino), espera);
+  }
 
   return (
     <Link
-      href={`/linea/${linea.ejeId}`}
+      href={destino}
+      onClick={alTocar}
+      data-saliendo={saliendo ? "true" : undefined}
       style={id ? estiloDeLinea(id) : undefined}
-      className="flex items-center gap-[11px] rounded-sm py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
+      className="canto flex min-h-11 items-center gap-[11px] rounded-sm py-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
     >
       {/* El alto va por `style` y no por clase: son dos valores de la maqueta y
           no dos pasos de una escala del sistema. */}

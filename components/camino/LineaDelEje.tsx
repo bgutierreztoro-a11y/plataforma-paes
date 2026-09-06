@@ -23,6 +23,15 @@ function plural(n: number, singular: string, plural: string) {
   return `${n} ${n === 1 ? singular : plural}`;
 }
 
+/* La llegada a la pantalla, en el mismo orden en que se lee: la placa primero,
+   después las estaciones de arriba abajo y el CTA al final. Un solo paso —el
+   mismo que usa el riel— y ninguna duración nueva: es `.entra-en-secuencia` con
+   retrasos distintos, no una animación propia.
+
+   La placa entra a 0ms y no la controla este archivo: es del server component,
+   un nivel más arriba (`app/linea/[ejeId]/page.tsx`). */
+const PASO_DE_ENTRADA = 70;
+
 /**
  * Una estación está **pasada** cuando todas sus lecciones se recorrieron, sea
  * con dominio (`completado`) o con deuda (`porRepasar`).
@@ -178,11 +187,17 @@ export function LineaDelEje({ eje }: { eje: EjeDelCamino }) {
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <div className="mx-auto w-full max-w-2xl flex-1 px-4 pt-2 sm:px-6">
-        <RielEstaciones paradas={paradas} />
+        <RielEstaciones paradas={paradas} escalonarDesde={PASO_DE_ENTRADA} />
       </div>
       {/* El CTA al pie, con el ancho de la columna: una sola acción principal
-          por vista y es lo último que se lee (MASTER.md §3.1). */}
-      <div className="mx-auto w-full max-w-2xl px-4 pb-6 pt-4 sm:px-6">
+          por vista y es lo último que se lee (MASTER.md §3.1).
+
+          Entra después de la última estación, siempre: pedir una decisión sobre
+          una pantalla que todavía no terminó de llegar es apurar al que lee. */}
+      <div
+        className="entra-en-secuencia mx-auto w-full max-w-2xl px-4 pb-6 pt-4 sm:px-6"
+        style={{ ["--retraso" as string]: `${PASO_DE_ENTRADA * (paradas.length + 1)}ms` }}
+      >
         {destino ? (
           <EnlaceBoton variante="linea" href={`/tema/${destino.tema.id}`}>
             {actual ? "Continuar" : "Repasar la línea"}

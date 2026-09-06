@@ -454,6 +454,18 @@
   --dur-relleno: 140ms;
   --dur-bandeja: 300ms;
   --dur-avance: 400ms;
+
+  /* La espera entre el toque en una fila de la red y la navegación. El canto se
+     hunde y recién entonces la pantalla cambia: sin esa pausa el hundimiento no
+     alcanza a verse y la fila no acusa nada.
+
+     Coincide en valor con `--dur-relleno` y no se reusa: aquel describe cuánto
+     tarda en rellenarse un disco que ya estaba, éste cuánto se sostiene un press
+     antes de irse. Un token por gesto.
+
+     Lo lee también el JS que dispara la navegación (`camino/Camino.tsx`), con
+     `getComputedStyle`, para que el número viva en un solo lugar. */
+  --dur-salida: 140ms;
   --ease-bandeja: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* El estampado del sello de estación (Fase C2). Un gesto, un token.
@@ -481,6 +493,15 @@
   --canto-alto: 2px;
   --canto-tinta: rgb(22 24 29 / 0.3);
   --canto-papel: rgb(22 24 29 / 0.14);
+
+  /* El gris del retorno: la flecha de «volver» en reposo, sobre la placa de
+     tinta. Da 10,9:1 contra #16181D.
+
+     No es `--text-muted-inverse` (#B0B2B8) aunque los dos vivan sobre fondo
+     oscuro: aquel es el gris de un dato secundario que se lee, éste el reposo de
+     un control que al tocarse sube a blanco. El rol es distinto y el rango de
+     recorrido también. */
+  --retorno-tinta: #c9cbcf;
 
   /* ── Alias legados ───────────────────────────────────────────────────────
      Mapean los nombres de token que el código usa hoy a la paleta nueva.
@@ -848,6 +869,20 @@
   transform: translateY(var(--canto-alto));
 }
 
+/* El press sostenido mientras la pantalla se va. `:active` no sirve acá: el
+   clic ocurre al soltar, así que el dedo ya se levantó y el elemento subiría
+   justo cuando la navegación todavía no pasó. `data-saliendo` mantiene el
+   estado hundido durante la espera.
+
+   Mismo estado final que `:active` y por el mismo motivo va fuera del guard de
+   movimiento: con `prefers-reduced-motion` no hay espera que sostener —el clic
+   navega de inmediato y este selector nunca se activa—, pero si algún día lo
+   hiciera, el estado tiene que quedar puesto igual. */
+.canto[data-saliendo="true"] {
+  box-shadow: 0 0 0 0 var(--canto-color);
+  transform: translateY(var(--canto-alto));
+}
+
 @media (prefers-reduced-motion: no-preference) {
   /* Entrada 90ms, salida instantánea. La asimetría no está en las duraciones
      —hay un solo token— sino en qué regla gobierna cada camino: al ENTRAR en
@@ -861,6 +896,13 @@
 
   .canto:active:not(:disabled) {
     transition-duration: var(--dur-tacto);
+  }
+
+  /* React marca el atributo un frame o dos después de que `:active` se soltó,
+     así que en ese hueco el elemento alcanza a subir. Esta transición es la que
+     lo baja de vuelta sin salto, y toma el mismo token que gobierna la espera. */
+  .canto[data-saliendo="true"] {
+    transition-duration: var(--dur-salida);
   }
 }
 

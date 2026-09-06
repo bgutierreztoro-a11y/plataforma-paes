@@ -6,7 +6,7 @@ import { Boton } from "@/components/ui/linea/Boton";
 import { Estacion } from "@/components/ui/linea/Estacion";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { NavInferior } from "@/components/ui/linea/NavInferior";
-import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
+import { PlacaLinea, subtituloDePlaca } from "@/components/ui/linea/PlacaLinea";
 import { RielEstaciones, type ParadaDelRiel } from "@/components/ui/linea/RielEstaciones";
 import { Puntaje } from "@/components/ui/linea/Puntaje";
 import { SelloDeEstacion } from "@/components/ui/linea/SelloDeEstacion";
@@ -230,7 +230,7 @@ export default function PaginaDiseno() {
                 key={linea}
                 linea={linea}
                 titulo={NOMBRE_DE_LINEA[linea]}
-                subtitulo={`Línea ${linea} · 4 estaciones`}
+                subtitulo={subtituloDePlaca(linea, 4)}
               />
             ))}
           </div>

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ejesDelCamino } from "@/lib/camino";
 import { LineaDelEje } from "@/components/camino/LineaDelEje";
-import { PlacaLinea } from "@/components/ui/linea/PlacaLinea";
+import { PlacaLinea, subtituloDePlaca } from "@/components/ui/linea/PlacaLinea";
+import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 
 export async function generateStaticParams() {
@@ -31,7 +32,9 @@ export async function generateMetadata({
  *
  * **No lleva `NavInferior`.** En el HTML solo las pantallas 02, 10 y 11 traen
  * barra; la 03 es una pantalla de profundidad dentro de la red, no un destino
- * de la barra.
+ * de la barra. El retorno lo da la flecha de la placa (`BotonVolver`), que es
+ * una salida y no un mapa de destinos: montar la barra acá convertiría una
+ * pantalla de profundidad en un cuarto destino y borraría esa distinción.
  *
  * `estiloDeLinea()` va acá, en la raíz de la pantalla, y no solo en la placa
  * —que también lo instala en su propio nodo—: es lo que hace que el riel, la
@@ -66,9 +69,12 @@ export default async function PaginaLinea({
         <PlacaLinea
           linea={linea}
           titulo={eje.nombre}
-          subtitulo={`Línea ${linea} · ${estaciones} ${
-            estaciones === 1 ? "estación" : "estaciones"
-          }`}
+          subtitulo={subtituloDePlaca(linea, estaciones)}
+          volver={<BotonVolver destino="/camino" etiqueta="Volver a la red" />}
+          /* Primera de la secuencia de entrada, sin retraso: la cabecera es lo
+             que dice dónde estás y llega antes que nada. Los escalones que
+             siguen —estaciones y CTA— los pone `LineaDelEje`. */
+          className="entra-en-secuencia"
         />
       ) : (
         <h1 className="bg-primary px-4 py-3.5 text-titulo-l text-inverse">{eje.nombre}</h1>
