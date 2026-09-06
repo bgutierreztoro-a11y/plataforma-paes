@@ -1,5 +1,13 @@
+<!-- El favicon en la paleta de Línea: papel #f0f0ee, radio de 2px, ejes en el
+     hairline #d8d9d4 y el trazo en el azul de la línea 04 (#0057b8). Antes
+     estaba en la paleta previa —papel frío #f6f8fc y azul tinta #1e4fd8—, que
+     ya no aparece en ninguna pantalla del producto.
+
+     Los valores van literales y no como `var()`: un favicon se rinde fuera del
+     documento, sin acceso a los tokens de globals.css. Si la paleta cambia, este
+     archivo se cambia a mano. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#f6f8fc"/>
-  <path d="M8 4 V28 M4 24 H28" stroke="#4b5c78" stroke-width="2" stroke-linecap="round"/>
-  <line x1="7" y1="25" x2="26" y2="8" stroke="#1e4fd8" stroke-width="3" stroke-linecap="round"/>
+  <rect width="32" height="32" rx="2" fill="#f0f0ee"/>
+  <path d="M8 4 V28 M4 24 H28" stroke="#d8d9d4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="7" y1="25" x2="26" y2="8" stroke="#0057b8" stroke-width="3" stroke-linecap="round"/>
 </svg>
