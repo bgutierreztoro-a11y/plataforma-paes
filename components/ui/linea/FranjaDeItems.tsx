@@ -1,4 +1,4 @@
-export type ResultadoDeItem = "correcto" | "incorrecto";
+export type ResultadoDeItem = "correcto" | "incorrecto" | "pendiente";
 
 interface FranjaDeItemsProps {
   /* Un elemento por ítem, en el orden en que se rindieron. */
@@ -18,7 +18,21 @@ interface FranjaDeItemsProps {
  *
  * Cada barra es un `<li>` con su texto para lector de pantalla: la franja
  * completa como una sola imagen obligaría a leer ocho veredictos en una frase.
+ *
+ * **`pendiente` se pinta igual que `incorrecto`, y es a propósito.** La casilla
+ * hueca es el estado en que nace la franja: así se ve entera en el anuncio
+ * previo, antes de responder nada, y así se queda la que se falló. Lo que se
+ * llena es el acierto. Las dos pantallas no conviven —el anuncio es todo
+ * `pendiente` y el resultado no tiene ninguno—, así que dentro de una misma
+ * franja el hueco nunca es ambiguo. Para el lector de pantalla sí se distinguen,
+ * que es donde la distinción importa.
  */
+const TEXTO: Record<ResultadoDeItem, string> = {
+  correcto: "correcta",
+  incorrecto: "incorrecta",
+  pendiente: "sin responder",
+};
+
 export function FranjaDeItems({ resultados, className = "" }: FranjaDeItemsProps) {
   return (
     <ol className={`flex gap-[5px] ${className}`.trim()}>
@@ -32,7 +46,7 @@ export function FranjaDeItems({ resultados, className = "" }: FranjaDeItemsProps
           }`}
         >
           <span className="sr-only">
-            Pregunta {i + 1}: {resultado === "correcto" ? "correcta" : "incorrecta"}
+            Pregunta {i + 1}: {TEXTO[resultado]}
           </span>
         </li>
       ))}
