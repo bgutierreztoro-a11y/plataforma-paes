@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { Alternativa } from "@/components/ui/linea/Alternativa";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { Boton } from "@/components/ui/linea/Boton";
+import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { Estacion } from "@/components/ui/linea/Estacion";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { NavInferior } from "@/components/ui/linea/NavInferior";
@@ -18,8 +19,10 @@ import {
   LINEAS,
   NOMBRE_DE_LINEA,
   estiloDeLinea,
+  lineaDeEje,
   type LineaId,
 } from "@/components/ui/linea/colores";
+import { ejesDelCamino } from "@/lib/camino";
 
 export const metadata: Metadata = {
   title: "Dirección Línea — capa visual base",
@@ -231,8 +234,40 @@ export default function PaginaDiseno() {
                 linea={linea}
                 titulo={NOMBRE_DE_LINEA[linea]}
                 subtitulo={subtituloDePlaca(linea, 4)}
+                volver={<BotonVolver destino="/camino" etiqueta="Volver a la red" />}
               />
             ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Retorno sobre papel"
+          nota="El otro tono de la misma tira: 44px y --linea-nav. El tono sobre placa se ve arriba, en situ. El parche pinta --color-bg #F8F8FB a propósito: es el fondo real de las pantallas que la montan, y no el #F7F7F5 de esta galería, que daría otro número al medir el contraste."
+        >
+          {/* Se itera sobre los ejes y no sobre `LINEAS` para que el `destino`
+              de la muestra sea una ruta real: `/linea/[ejeId]` toma el id del
+              eje ("numeros"), no el de la línea ("01"), y con
+              `dynamicParams = false` un id inventado da 404. Una galería con un
+              enlace roto enseña algo que no existe. */}
+          <div className="flex flex-col gap-5">
+            {ejesDelCamino().map((eje) => {
+              const linea = lineaDeEje(eje.id);
+              if (!linea) return null;
+              return (
+                <div key={eje.id} style={estiloDeLinea(linea)}>
+                  <Rotulo>
+                    Línea {linea} · {NOMBRE_DE_LINEA[linea]}
+                  </Rotulo>
+                  <div className="bg-[var(--color-bg)] py-2">
+                    <BotonVolver
+                      tono="sobre-papel"
+                      destino={`/linea/${eje.id}`}
+                      etiqueta="Volver a la línea"
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </Seccion>
 
