@@ -30,7 +30,19 @@ Si el usuario lo pide, recuérdale el gate correspondiente antes de escribir una
 1. Cada lección sigue los 10 pasos en este orden exacto: `curiosidad, problema, pensar, pistas, descubrimiento, generalizacion, practica, aplicacion, reflexion, consolidacion`.
 2. Cada lección cierra con 2–3 ítems originales formato PAES M1: selección múltiple, respuesta única, 4 alternativas (A–D), habilidad etiquetada (`resolver`, `modelar`, `representar` o `argumentar`).
 3. Cada alternativa incorrecta lleva feedback escrito a mano que explica el error específico que la produce. Nunca feedback generado en vivo.
-4. Prohibido copiar, parafrasear o "inspirarse de cerca" en ítems DEMRE o material de terceros. DEMRE se usa solo para calibrar temario y formato. Si se analizó material externo, se aplicó clean-room (MOS §7.2): solo capa abstracta, nunca texto, ejemplos ni diagramas. Mecanismo de aislamiento: ver "Aislamiento de fuentes externas" más abajo.
+4. Fobos gratis: prohibido copiar, parafrasear o "inspirarse de cerca"
+   en ítems DEMRE o material de terceros. DEMRE se usa solo para
+   calibrar temario y formato.
+   Fobos Advance (content/advance/): el material DEMRE liberado
+   (formas de aplicaciones anteriores) puede usarse como base directa
+   de ítems, con `proveniencia.fuenteOrigen` declarando forma y año
+   (MOS §7.1). Sigue prohibido sin excepción el material de
+   preuniversitarios y otros privados.
+   En ambos casos, si se analizó material privado, se aplicó
+   clean-room (MOS §7.2): solo capa abstracta, nunca texto, ejemplos
+   ni diagramas. El aislamiento de fuentes privadas (hook
+   check-fuentes-aisladas.mjs) no aplica a material DEMRE liberado,
+   que puede consultarse directamente para Advance.
 5. Todo archivo de contenido lleva `proveniencia` (fuentes de análisis + declaración de originalidad). **No hay campo `estado` ni pipeline de madurez** (eliminado el 2026-08-12): un archivo que existe en `content/` y pasa `npm run validar` es contenido terminado, y el validador exige el contrato completo siempre. Antes de commitear contenido nuevo se corren dos auditorías, **cada una en un hilo propio abierto con `/clear` y nunca en el hilo que redactó el contenido**: (a) auditoría matemática — recalcular toda la aritmética desde cero, verificar que cada distractor sea alcanzable por el error que dice representar y que su `errorCatalogado` corresponda; (b) auditoría de originalidad — checklist MOS §7.3, uso descriptivo de "PAES"/"DEMRE", cero PII, sin placeholders. Las dos las ejecuta Claude Code. El aislamiento entre redacción y auditoría es el punto: el mismo hilo que escribió no puede juzgar lo que escribió. Ante duda razonable: se descarta y se crea de nuevo.
 6. "PAES" y "DEMRE" solo en uso descriptivo; nunca en el nombre del producto ni sugiriendo afiliación.
 7. Los usuarios son menores de edad: nada de nombres reales completos, RUT ni otra PII en código, contenido, eventos ni logs. Analítica anónima, sin autocapture ni session recording, y sin `identify()` con datos personales — si se identifica, es solo con el user id opaco de Clerk (MOS §7.5). Sí se persiste progreso pedagógico: id de lección, paso, respuestas por item id, corrección, intento, tiempo y timestamps, en `localStorage` cuando no hay cuenta y en la base de datos cuando la hay. La frontera es exacta: **desempeño sí, identidad no.** Email y nombre viven solo en la tabla `usuarios`, poblada por el webhook de Clerk, y jamás aparecen en `localStorage`, en eventos de analítica ni en logs.
