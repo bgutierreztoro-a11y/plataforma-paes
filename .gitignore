@@ -61,6 +61,7 @@ instrumentation-client.ts
 # esto solo protege contra que se copien por error dentro del repo)
 Material/
 fuentes-analisis-aisladas/
+fuentes-demre-liberadas/
 pendiente-clasificar/
 
 # clerk configuration (can include secrets)
