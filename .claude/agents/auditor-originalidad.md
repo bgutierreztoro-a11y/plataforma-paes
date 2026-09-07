@@ -29,7 +29,7 @@ Cambiar palabras o números **no basta**. Lo que comparas es la estructura del e
 
 Procedimiento:
 - Extrae los términos que definen el dominio de la lección y córrelos por `consultar-fuentes.mjs`.
-- **No te quedes en los sustantivos del contexto.** El hueco real que apareció auditando L1 fue ese: el hilo redactor verificó «pigmento» y «esmalte» y nunca probó «colorante», «mezcla» ni «color», y en `demre/paes-m1-2026-forma113.md` había un ítem de gotas de colorante en litros de agua — la misma familia abstracta. Prueba también los sinónimos, la sustancia genérica, el verbo de la acción y el adjetivo del resultado.
+- **No te quedes en los sustantivos del contexto.** El hueco real que apareció auditando L1 fue ese: el hilo redactor verificó «pigmento» y «esmalte» y nunca probó «colorante», «mezcla» ni «color», y en `fuentes-demre-liberadas/paes-m1-2026-forma113.md` había un ítem de gotas de colorante en litros de agua — la misma familia abstracta. Prueba también los sinónimos, la sustancia genérica, el verbo de la acción y el adjetivo del resultado.
 - Donde haya SI, **abre el archivo y compara enunciado contra enunciado**. Es lo que solo tú puedes hacer.
 - Adyacencia de escenario no es lo mismo que copia. La ley chilena (17.336) protege la expresión, no las ideas ni los métodos. Pero la regla operativa del MOS es más estrecha que la ley: **ante duda razonable, se descarta y se crea de nuevo**.
 

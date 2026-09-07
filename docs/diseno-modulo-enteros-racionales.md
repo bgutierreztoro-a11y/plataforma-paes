@@ -186,7 +186,7 @@ de señal, no colisión real. Escenario aprobado tal cual se propuso: −12 m, �
 **L2 — recetas con tazas, contra `618-JMA-M1-01-2024.md`.** Veredicto: **LIMPIO CON UNA
 CORRECCIÓN OBLIGATORIA.** Limpio: "3 tazas" (NO), "3/4 de taza" (NO), "tres cuartos" (NO),
 "panqueques" (NO), "3/5" (NO), "3 tazas de harina" (NO), "cuántas porciones" (NO). Colisión
-real detectada: "galletas" pega en `demre/paes-m1-2026-forma113.md` y
+real detectada: "galletas" pega en `fuentes-demre-liberadas/paes-m1-2026-forma113.md` y
 `Material/PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md` — el examen DEMRE real. Acción
 requerida antes de escribir el JSON de L2: reemplazar "galletas" por otro producto en el ítem
 de comparación de fracciones (2/3 vs 3/5 de taza de azúcar), y verificar el reemplazo antes de
