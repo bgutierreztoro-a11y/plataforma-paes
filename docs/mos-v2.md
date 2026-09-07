@@ -93,8 +93,28 @@ Ninguna funcionalidad nueva entra al backlog sin responder: qué incertidumbre e
 Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, documentado y revisado por un profesional. Este protocolo no es asesoría legal; es la preparación para que la revisión legal sea corta y barata.
 
 **7.1 Fuentes de contenido.**
-- Fuente canónica: temario oficial de la PAES publicado por DEMRE más las formas liberadas de aplicaciones anteriores. Definen qué se evalúa, con qué formato y a qué profundidad. Son públicas pero no de dominio público: sirven para análisis y calibración, y ningún ítem, enunciado o gráfico de DEMRE se copia al producto.
-- Guías de terceros (Pedro de Valdivia u otras): quedan degradadas a opcionales. El temario DEMRE ya entrega el mapa de contenidos sin zona gris. Si aun así se analizan, se aplica el proceso clean-room de 7.2.
+- Fuente canónica: temario oficial de la PAES publicado por DEMRE más
+  las formas liberadas de aplicaciones anteriores. Definen qué se
+  evalúa, con qué formato y a qué profundidad.
+- Uso permitido: el material DEMRE liberado (temario y formas de
+  aplicaciones anteriores) puede usarse como base directa de ítems
+  del producto pago Fobos Advance, incluidos enunciado y datos, con
+  atribución de forma y año en `proveniencia.fuenteOrigen`. Criterio
+  legal entregado por el abogado del proyecto el <FECHA>: es material
+  de acceso público liberado por DEMRE, distinto del material de
+  privados. Este bullet reemplaza la restricción anterior, que trataba
+  todo ítem DEMRE como intocable.
+- En Fobos gratis, DEMRE sigue usándose solo para calibrar temario y
+  formato, sin copiar ítems: la capa gratis se sostiene en pedagogía
+  de descubrimiento, no en ítems de examen.
+- Uso prohibido, sin excepciones: material de preuniversitarios y
+  otros privados (Pedro de Valdivia, Cpech, SimplePAES, editoriales).
+  No se copia, no se adapta, no se "retoca". Si se analiza, se aplica
+  el clean-room de 7.2 y se crea de nuevo.
+- Un ítem DEMRE liberado usado en Fobos Advance entra como enunciado
+  base, nunca como pieza terminada: el mapeo de cada distractor contra
+  `catalogoErrores`, el `feedbackDescarte` y el `tiempoReferenciaSeg`
+  son creación propia y obligatoria.
 
 **7.2 Proceso clean-room en dos fases.**
 - Fase de análisis: de cualquier material de terceros se extrae solo la capa abstracta a un schema estructurado: conceptos, prerrequisitos, secuencia, habilidades, errores frecuentes, nivel de dificultad. Nunca texto, enunciados, ejemplos numéricos, diagramas ni soluciones.
@@ -103,7 +123,13 @@ Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, docu
 - La ley chilena de propiedad intelectual (17.336) protege la expresión, no las ideas, los métodos ni las secuencias pedagógicas. Aun así, sus excepciones son más estrechas que el fair use estadounidense, por eso la regla operativa es la del documento original: ante duda razonable, se descarta y se crea de nuevo.
 
 **7.3 Checklist de originalidad por lección, antes de publicar.**
-1. ¿Algún enunciado o ejercicio es sustancialmente similar a una fuente conocida, aunque cambien palabras o números?
+1. ¿Algún enunciado o ejercicio es sustancialmente similar a una
+   fuente **privada** (preuniversitario, editorial, competidor),
+   aunque cambien palabras o números? El material DEMRE liberado
+   usado en Fobos Advance queda fuera de esta pregunta cuando su
+   origen está declarado en `proveniencia.fuenteOrigen` (ver §7.1);
+   no se audita como riesgo de originalidad, solo se verifica que la
+   atribución exista.
 2. ¿Algún diagrama o visualización replica la composición de uno existente?
 3. ¿La secuencia interna copia la estructura expresiva de una guía específica, más allá del orden lógico natural del contenido?
 4. ¿Queda registrada la proveniencia?
