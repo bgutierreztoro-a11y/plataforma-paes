@@ -151,6 +151,26 @@ Nota para quien la reescriba: la fase E además saca el punto medio de los dos
 subtítulos de `PuntoDePartida` (pasan a `{tema}: {lección}`), así que el assert
 reescrito tampoco puede buscar `·` ahí.
 
+## Corrida del 2026-09-06 (`52e23f3`): sigue en 24 fallos, ahora sobre 74 tests
+
+`npm run capturas` sobre `52e23f3` (HEAD al medir), con el árbol limpio:
+
+```
+24 failed · 4 skipped · 46 passed (6.4m)
+```
+
+Son **74 tests**, no los 72 de la corrida de la 3J: entre `249bbed` y `52e23f3`
+se agregaron dos, los dos en verde. Los 24 fallos son el mismo conjunto que
+documenta la sección de la 3J (los 22 de premisa vencida más los dos de la
+columna de nodos de `/camino`), ninguno nuevo y ninguno resuelto. Las líneas del
+spec citadas arriba se corrieron porque el archivo creció, no porque cambiaran
+los tests.
+
+Se fija acá como baseline: es el número contra el que se verificó que el glifo de
+"repetir" del cierre de lección (`29c0239`, `29fdf37`) no introduce regresiones.
+La corrida posterior a ese cambio da el mismo 24/4/46 con idéntico conjunto de
+fallos.
+
 ## Qué sigue sin cubrir este documento (sin cambios)
 
 Lo de la sección anterior, más: qué debería afirmar `/camino` ahora que la
