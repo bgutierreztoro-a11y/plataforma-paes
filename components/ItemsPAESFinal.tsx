@@ -34,6 +34,10 @@ const CLASE_ENLACE_DISCRETO =
  * Existe para que los cuatro call sites no repitan el `<span>` del subrayado, y
  * para que la regla del glifo quede en un solo lugar: lo llevan las dos
  * apariciones de "Repetir solo las preguntas" y ninguna otra.
+ *
+ * `.gesto-repetir` va **solo** cuando hay glifo: es el gancho que `app/globals.css`
+ * usa para disparar el trazo al tocar o enfocar el control, y en un botón sin
+ * glifo no tendría a qué aplicarse.
  */
 function EnlaceDiscreto({
   glifo = false,
@@ -45,7 +49,11 @@ function EnlaceDiscreto({
   children: React.ReactNode;
 }) {
   return (
-    <button type="button" onClick={onClick} className={CLASE_ENLACE_DISCRETO}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`${glifo ? "gesto-repetir " : ""}${CLASE_ENLACE_DISCRETO}`}
+    >
       {glifo && <GlifoRepetir />}
       <span className="underline underline-offset-4">{children}</span>
     </button>

@@ -41,12 +41,20 @@ interface GlifoProps {
  * palabra de al lado ya dice qué hace, y anunciarlo dos veces es ruido para el
  * lector de pantalla.
  *
- * **Sin animación propia y sin `.canto`.** El glifo es estático. La única
- * reacción a la interacción es el fundido de color que el enlace ya tiene
- * (`hover:text-accent-fuerte`), que el glifo hereda por `currentColor` sin pedir
- * nada nuevo. `.canto` no entra acá: pinta un `box-shadow: 0 2px 0` bajo el
- * elemento (`app/globals.css:855-858`) y bajo un enlace subrayado eso se lee
- * como un segundo subrayado, no como un canto que se hunde.
+ * **El gesto vive en el CSS, no acá.** El componente solo pone los dos ganchos
+ * —`.glifo-repetir` en el `<svg>` y `.glifo-repetir-trazo` en el `<path>`— y el
+ * `pathLength`. Quién lo dispara y cuánto dura se declara en `app/globals.css`,
+ * junto a `.canto` y por el mismo motivo: el movimiento del sistema se retempla
+ * en un lugar. Para que ocurra, el control que lo contiene tiene que llevar
+ * `.gesto-repetir`.
+ *
+ * En reposo el glifo no lleva `stroke-dasharray` de ninguna clase: el dash se
+ * declara solo dentro de la regla del gesto, así que sin interacción el render
+ * es idéntico al de la versión estática.
+ *
+ * **Sin `.canto`.** Pinta un `box-shadow: 0 2px 0` bajo el elemento
+ * (`app/globals.css:855-858`), y bajo un enlace subrayado eso se lee como un
+ * segundo subrayado, no como un canto que se hunde.
  */
 export function GlifoRepetir({ className = "" }: GlifoProps) {
   return (
@@ -54,11 +62,19 @@ export function GlifoRepetir({ className = "" }: GlifoProps) {
       viewBox="0 0 16 16"
       fill="none"
       aria-hidden="true"
-      className={`h-4 w-4 shrink-0 ${className}`.trim()}
+      className={`glifo-repetir h-4 w-4 shrink-0 ${className}`.trim()}
     >
       {/* Arco de ~300°, hueco arriba a la izquierda, con la punta de flecha en el
-          extremo superior apuntando en el sentido del giro. */}
+          extremo superior apuntando en el sentido del giro.
+
+          `pathLength="1"` normaliza el largo del trazo a 1 para que el dash del
+          gesto se escriba sin medir el arco a mano. Sin él habría que dejar el
+          largo real (~26,75 unidades) escrito en el CSS, y ese número se rompe
+          en silencio la primera vez que alguien retoque la `d`. No cambia nada
+          del render: solo la unidad en que se cuenta el trazo. */}
       <path
+        className="glifo-repetir-trazo"
+        pathLength="1"
         d="M8 3.67A4.33 4.33 0 1 1 4.27 5.83M6.4 2.4L8 3.67 6.4 4.93"
         stroke="currentColor"
         strokeWidth="2"

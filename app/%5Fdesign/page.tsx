@@ -659,7 +659,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Glifo de repetir"
-          nota="El arco de ~300° que marca 'volver a pasar por esto'. No es un dibujo nuevo: es el mismo de camino/NodoTema.tsx (GlifoRepasar, viewBox 24) y de ui/Icono.tsx (IconoIncorrecto, viewBox 20), reescalado al contrato de la familia de 16px de IconosNav (viewBox 16, trazo 2, extremos redondos, currentColor, aria-hidden). Su único consumidor es el cierre de lección, donde separa 'Repetir solo las preguntas' de 'Repasar esta lección'. Estático: la única reacción es el fundido de color que el enlace ya tiene."
+          nota="El arco de ~300° que marca 'volver a pasar por esto'. No es un dibujo nuevo: es el mismo de camino/NodoTema.tsx (GlifoRepasar, viewBox 24) y de ui/Icono.tsx (IconoIncorrecto, viewBox 20), reescalado al contrato de la familia de 16px de IconosNav (viewBox 16, trazo 2, extremos redondos, currentColor, aria-hidden). Su único consumidor es el cierre de lección, donde separa 'Repetir solo las preguntas' de 'Repasar esta lección'. El gesto es CSS puro, sin librería y sin JS: stroke-dasharray sobre pathLength=1 más un giro corto, los dos en --dur-relleno. Lo dispara :active y :focus-visible, no hover, porque a 390px el estudiante toca; el hover se suma solo en punteros finos. Una pasada por activación, nunca en loop."
         >
           <div className="flex flex-col gap-7">
             <div>
@@ -714,6 +714,39 @@ export default function PaginaDiseno() {
             </div>
 
             <div>
+              {/* El gesto no se puede forzar desde CSS estático: `:active` y
+                  `:focus-visible` los produce la persona, no la galería. Por eso
+                  acá van botones de verdad y no muestras pintadas, y por eso el
+                  rótulo dice cómo dispararlos. */}
+              <Rotulo>
+                El gesto, en los cuatro ejes. Tócalos, o tabula hasta ellos: el
+                arco se vuelve a trazar y entra girando, una sola pasada por
+                activación
+              </Rotulo>
+              <PorLinea>
+                {() => (
+                  <button
+                    type="button"
+                    className="gesto-repetir inline-flex items-center gap-1.5 text-sm font-medium text-[var(--linea-nav)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
+                  >
+                    <GlifoRepetir />
+                    <span className="underline underline-offset-4">Repetir</span>
+                  </button>
+                )}
+              </PorLinea>
+              <p className="mt-4 max-w-prose text-cuerpo-xs text-secondary">
+                Tres estados en un mismo control: en reposo el glifo no lleva
+                dash de ninguna clase, al enfocarlo con teclado el gesto corre
+                entero porque el foco se sostiene, y al presionarlo corre
+                mientras el dedo o el botón siguen abajo. En un puntero fino el
+                hover lo dispara además, como extra. Los dos modos de movimiento
+                se miran cambiando la preferencia del sistema y recargando: con
+                movimiento reducido las reglas del gesto no existen y el glifo
+                queda exactamente como el de arriba.
+              </p>
+            </div>
+
+            <div>
               <Rotulo>
                 Hereda por currentColor: los cuatro ejes en --linea-nav
               </Rotulo>
@@ -730,12 +763,19 @@ export default function PaginaDiseno() {
                   sobre blanco. El producto NO monta el glifo en estos colores
                   hoy: la fila está para que, si alguna vez se mueve, el número
                   ya esté escrito. */}
+              {/* Mismo cuidado que la nota de la tira de retorno más arriba: la
+                  galería se pinta sobre bg-screen #F7F7F5 y el producto sobre
+                  --color-bg #F8F8FB, así que medir acá y creerle da otro número.
+                  Los dos van escritos para que nadie tenga que adivinar cuál
+                  miró. */}
               <p className="mt-4 max-w-prose text-cuerpo-xs text-secondary">
-                Sobre el fondo de página (#F7F7F5) las cuatro pasan el 3:1 que
-                pide un gráfico: 01 → 4,52, 02 → 16,56 (cae a tinta), 03 → 4,48,
-                04 → 6,41. La 03 no llegaría al 4,5:1 de texto AA sobre ese mismo
-                fondo, que es el caso que ya cubre
-                docs/deuda-contraste-etiquetas.md y no se toca acá.
+                Medido, no calculado. Sobre el fondo real del producto (#F8F8FB)
+                las cuatro pasan AA aun como texto chico: 01 → 4,57, 02 → 16,75
+                (cae a tinta), 03 → 4,54, 04 → 6,48. Sobre el #F7F7F5 de esta
+                galería la 03 baja a 4,48 y quedaría bajo AA de texto, pero
+                ninguna ruta del producto monta ese fondo. Como gráfico, que es
+                lo que el glifo es, el piso son 3:1 y sobra en las dos
+                superficies.
               </p>
             </div>
           </div>

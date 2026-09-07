@@ -906,6 +906,131 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   El gesto de "repetir": el arco se vuelve a trazar y entra girando.
+
+   Qué acusa: que el control recién tocado es el que vuelve a poner las
+   preguntas. El glifo ya dibuja lo que el botón hace, así que hacerlo *ocurrir*
+   al tocarlo dice la acción antes de que la pantalla cambie. Es el mismo
+   criterio que `.canto`: en móvil el acuse de recibo no puede depender de un
+   estado que el dedo no produce.
+
+   **El disparo NO es hover.** A 390px el estudiante toca, y `hover:` no existe
+   ahí. El gesto cuelga de `:active` y de `:focus-visible`, que son los dos
+   estados que sí ocurren con dedo y con teclado. El hover se suma **solo** donde
+   hay un puntero fino de verdad y siempre como extra: nunca es el único camino
+   hacia el gesto.
+
+   **Una sola pasada por activación, nunca en loop.** No se declara `infinite` en
+   ninguna parte y el default de `animation-iteration-count` es 1. Un glifo que
+   gira solo es decoración pidiendo atención, que es lo que MASTER.md §2.6
+   prohíbe.
+
+   **Una duración para todo el gesto, no una por propiedad.** El giro y el trazo
+   comparten `--dur-relleno` y la misma curva: son un solo movimiento visto en
+   dos propiedades.
+
+   `--dur-relleno` (140ms) y **no un token nuevo**: ese token describe "cuánto
+   tarda en rellenarse un disco que ya estaba", y esto es cuánto tarda en
+   redibujarse un arco que ya estaba. Es el mismo gesto con otra forma. La
+   tentación era pedir los 300-600ms del spin de un icono de librería; a 16px, al
+   lado de un enlace de texto, eso es el adorno que esta dirección no tiene. Los
+   otros candidatos no servían: `--dur-tacto` (90ms) no alcanza a leerse como un
+   trazo que se dibuja, y `--dur-base`, `--dur-entrada` y `--dur-press` están
+   declarados pero no los consume nadie — son restos de la era índigo y
+   resucitarlos para una pieza de Línea sería peor que agregar un token.
+
+   `stroke-dasharray` se declara SOLO acá adentro y nunca en el componente: en
+   reposo el glifo no lleva dash de ninguna clase, así que sin interacción se
+   rinde exactamente igual que antes de que esta regla existiera.
+
+   El `pathLength="1"` del `<path>` (ver components/ui/linea/GlifoRepetir.tsx)
+   es lo que deja escribir el dash en 0..1 sin medir el arco a mano ni dejar un
+   número mágico que se rompe si alguien retoca el dibujo. Acá sí funciona, y se
+   verificó en el navegador: `stroke-dasharray` computa `1px` y el offset recorre
+   1 → 0.
+
+   Que en `.trazo-camino` (más abajo) `pathLength` NO haya servido no contradice
+   esto, y la diferencia importa para el próximo que lo intente: aquel path lleva
+   `vector-effect="non-scaling-stroke"`, y ese modo resuelve todas las
+   propiedades de trazo —el dash incluido— en píxeles de pantalla, así que la
+   normalización del viewBox deja de aplicar y hubo que escribir un largo con
+   holgura (1000). Este glifo no usa `non-scaling-stroke`: escala con su viewBox
+   y por eso `pathLength` sí lo normaliza.
+
+   **`linear` y no `--ease-salida`, y esto se midió antes de decidirlo.** Con
+   `--ease-salida` el gesto se declaraba en 140ms y a ojo duraba 70: muestreado
+   en la galería cada 10ms, el arco llegaba al 46% dibujado a los 10ms, al 75% a
+   los 20 y al 99,9% a los 70. Es la misma trampa que el bloque del sello ya
+   documenta más abajo ("el nominal no es lo que se ve"), y acá pega más fuerte,
+   porque un trazo que se dibuja **es** su recorrido: adelantarlo todo al primer
+   frame lo convierte en un destello y deja de decir "esto se vuelve a trazar".
+   `linear` no es una preferencia sino lo correcto para una pluma que avanza —la
+   velocidad constante es lo que hace legible el dibujo— y no pide token nuevo,
+   porque no es una curva del sistema sino la ausencia de una.
+
+   Las dos curvas del sistema quedaron descartadas por lo mismo: `--ease-salida`
+   (0.22, 1, 0.36, 1) y `--ease-bandeja` (0.16, 1, 0.3, 1) son las dos
+   desaceleraciones fuertes de cosas que **caen y se asientan**. Este gesto no
+   cae: recorre.
+   --------------------------------------------------------------------------- */
+@keyframes glifo-repetir-trazo {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes glifo-repetir-giro {
+  from {
+    transform: rotate(-40deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Todo el gesto vive dentro del guard de movimiento, así que con
+   `prefers-reduced-motion: reduce` no hay `animation` ni `stroke-dasharray` que
+   apagar: las reglas directamente no existen y el glifo queda idéntico al
+   estático. Es más fuerte que un `animation: none` de rescate, que dependería de
+   acordarse de escribirlo. */
+@media (prefers-reduced-motion: no-preference) {
+  /* El giro va en el `<svg>`, que es una caja normal del flujo HTML y por lo
+     tanto rota desde su centro. Se declara igual: el default de
+     `transform-origin` en un elemento SVG anidado NO es 50% 50%, y dejarlo
+     implícito invita a que el día que esto se mueva adentro del SVG gire desde
+     la esquina. */
+  .gesto-repetir:active .glifo-repetir,
+  .gesto-repetir:focus-visible .glifo-repetir {
+    transform-origin: 50% 50%;
+    animation: glifo-repetir-giro var(--dur-relleno) linear;
+  }
+
+  .gesto-repetir:active .glifo-repetir-trazo,
+  .gesto-repetir:focus-visible .glifo-repetir-trazo {
+    stroke-dasharray: 1;
+    animation: glifo-repetir-trazo var(--dur-relleno) linear;
+  }
+
+  /* El extra de puntero fino. En un touchscreen `(hover: hover)` es falso y esta
+     regla no llega a existir, así que no hay forma de que el gesto quede
+     colgando de un estado que el dedo no produce. */
+  @media (hover: hover) and (pointer: fine) {
+    .gesto-repetir:hover .glifo-repetir {
+      transform-origin: 50% 50%;
+      animation: glifo-repetir-giro var(--dur-relleno) linear;
+    }
+
+    .gesto-repetir:hover .glifo-repetir-trazo {
+      stroke-dasharray: 1;
+      animation: glifo-repetir-trazo var(--dur-relleno) linear;
+    }
+  }
+}
+
 /* Entrada del número grande en AnuncioPrevioItems: un "pop" con leve
    sobregiro para que el conteo de preguntas se sienta como una revelación y
    no como texto que ya estaba ahí al cargar. */
