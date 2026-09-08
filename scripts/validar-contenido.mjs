@@ -150,7 +150,56 @@ function validarCatalogoLocal(data, campoItems, errores) {
   }
 }
 
-export function validarDatos(data) {
+/**
+ * Chequeo inverso: todo `errorCatalogado` que el archivo referencia, en
+ * cualquier profundidad, tiene que RESOLVER — estar en el catálogo canónico de
+ * su módulo (`content/errores/<moduloId>.json`) o en el `catalogoErrores`
+ * embebido del propio archivo.
+ *
+ * Es la misma unión que hace `catalogoDe()` en `lib/sanitizar.ts` desde la
+ * migración a canónico único: verifica exactamente lo que esa resolución
+ * garantiza, así que un id que pasa acá es un id que el estudiante va a ver
+ * resuelto en la Capa 2.
+ *
+ * Reemplaza al espejo `validarCatalogoErrores` (canónico → embebido de la L1)
+ * como red de cobertura, y es más ancho: recorre TODOS los portadores
+ * —`bloque.alternativas`, `feedbackPorError`, `feedbackPorPrediccion`, el campo
+ * `items` de los cierres— y no solo los distractores con catálogo local. El
+ * espejo sigue activo hasta que se retiren los catálogos embebidos; mientras
+ * tanto los dos corren y no hay ventana sin cobertura.
+ *
+ * `erroresCatalogados` es el mapa `"<unidad>/error-N" → unidad` de
+ * `cargarErroresCatalogados`. Sin él (la llamada de runtime desde
+ * `lib/contenido.ts`) el chequeo se omite: en runtime un id sin resolver ya se
+ * degrada sin romper nada, el gate es `npm run validar`.
+ */
+function validarReferenciasResuelven(data, erroresCatalogados, errores) {
+  const referenciados = new Set();
+  (function recorrer(nodo) {
+    if (Array.isArray(nodo)) return void nodo.forEach(recorrer);
+    if (!nodo || typeof nodo !== 'object') return;
+    if (esTexto(nodo.errorCatalogado)) referenciados.add(nodo.errorCatalogado);
+    for (const v of Object.values(nodo)) recorrer(v);
+  })(data);
+  if (referenciados.size === 0) return;
+
+  const moduloId = data?.moduloId;
+  const embebidos = new Set(
+    (data?.catalogoErrores ?? []).map((e) => e?.id).filter((id) => esTexto(id)),
+  );
+
+  for (const id of referenciados) {
+    const enCanonico = esTexto(moduloId) && erroresCatalogados.has(`${moduloId}/${id}`);
+    if (enCanonico || embebidos.has(id)) continue;
+    errores.push(
+      esTexto(moduloId)
+        ? `errorCatalogado "${id}" no resuelve: no está en content/errores/${moduloId}.json ni en el catalogoErrores embebido`
+        : `errorCatalogado "${id}" no resuelve: el archivo no declara moduloId y no tiene catalogoErrores embebido`,
+    );
+  }
+}
+
+export function validarDatos(data, erroresCatalogados) {
   const errores = [];
 
   const tipo = data?.tipo;
@@ -217,6 +266,10 @@ export function validarDatos(data) {
     validarCatalogoLocal(data, campoItems, errores);
   }
 
+  if ((tipo === 'leccion' || tipo === 'cierre') && erroresCatalogados) {
+    validarReferenciasResuelven(data, erroresCatalogados, errores);
+  }
+
   const prov = data?.proveniencia;
   if (!prov || !Array.isArray(prov.fuentesAnalisis) || typeof prov.declaracionOriginalidad !== 'string') {
     errores.push('falta proveniencia { fuentesAnalisis[], declaracionOriginalidad } (MOS §7.2)');
@@ -231,14 +284,14 @@ export function validarDatos(data) {
   return errores;
 }
 
-export function validarArchivo(ruta) {
+export function validarArchivo(ruta, erroresCatalogados) {
   let data;
   try {
     data = JSON.parse(readFileSync(ruta, 'utf8'));
   } catch (e) {
     return [`JSON inválido: ${e.message}`];
   }
-  return validarDatos(data);
+  return validarDatos(data, erroresCatalogados);
 }
 
 /**
@@ -781,7 +834,7 @@ if (arg === '--hook') {
     const porRuta = validarBancoDiagnostico(raizContentDe(filePath));
     errores = porRuta.get(resolve(filePath)) ?? [];
   } else {
-    errores = validarArchivo(filePath);
+    errores = validarArchivo(filePath, cargarErroresCatalogados(raizContentDe(filePath)));
     esLeccion = true;
   }
 
@@ -811,7 +864,7 @@ if (arg) {
     const porRuta = validarBancoDiagnostico(raizContentDe(ruta));
     errores = porRuta.get(ruta) ?? [];
   } else {
-    errores = validarArchivo(ruta);
+    errores = validarArchivo(ruta, cargarErroresCatalogados(raizContentDe(ruta)));
   }
   process.exit(reportar(ruta, errores) ? 0 : 1);
 }
@@ -823,9 +876,10 @@ if (!existsSync(raiz)) {
 }
 let ok = true;
 let n = 0;
+const erroresCatalogados = cargarErroresCatalogados(raiz);
 for (const ruta of archivosDeContenido(raiz)) {
   n++;
-  if (!reportar(ruta, validarArchivo(ruta))) ok = false;
+  if (!reportar(ruta, validarArchivo(ruta, erroresCatalogados))) ok = false;
 }
 const dirLecciones = join(raiz, 'lecciones');
 for (const ruta of archivosDeCatalogoErrores(raiz)) {
