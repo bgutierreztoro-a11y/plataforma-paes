@@ -20,7 +20,8 @@
     "EXCEPCIÓN de dominio en Ítem 10.2 (l2-item-2): el guion trae un contexto de ESTACIONAMIENTO ($1.500 fijo + $600/hora). Se reemplazó por un dominio nuevo aprobado —huerta escolar, plantines por sembrar que decrecen por cantero sembrado (función afín DECRECIENTE)— por decisión de producto (contexto no comercial, MOS §7.1), no por colisión detectada en el estacionamiento. Números nuevos (160 inicial, 25 por cantero) verificados sin repetición contra Lección 1, Paso 8 de esta lección ni los otros ítems del cierre. Dominio verificado sin colisión léxica vía subagente consulta-fuentes (huerta/plantines/canteros/sembrar = NO); se evitó la palabra 'cultivo' (colisión) y 'curso' (colisión genérica). NO se usó 'cultivo' en ningún campo. Verificación de originalidad profunda sobre el texto redactado queda PENDIENTE de /revision-originalidad.",
     "Los otros dos ítems del cierre (10.1 tabla→ecuación y 10.3 argumentar rectas paralelas) y los 9 pasos previos se migran fieles al guion, con sus mismos números.",
     "AUDITORÍA DE SOLAPAMIENTO TEMÁTICO 2026-07-22: el Paso 8 exigía el mismo procedimiento algebraico que l3-item-1 (reunir incógnitas de ambos lados, después las constantes, después dividir), y lo exigía sin haberlo enseñado nunca, una lección antes de que la Lección 3 lo introduzca. Se reescribió para evaluar lectura e interpretación de m y n, que es lo que esta lección sí enseña. Ver la nota del Paso 8 para el detalle y la verificación matemática. La Lección 3 no se tocó.",
-    "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios."
+    "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios.",
+    "F0.2 (ficha 45): l2-item-1 se reescribió de representar (tabla → ecuación) a resolver (evaluar y = 12 − 5x en x = 4), para cubrir la habilidad 'resolver' que §3.5 exige y que el auditor marcaba como faltante; con eso el set queda resolver + modelar + argumentar. La nota de arriba sobre '10.1 tabla→ecuación' queda como registro histórico de la migración. Distractores mapeados a error-9 (signo de la pendiente), error-12 (olvida el coeficiente de posición) y error-8 (confunde pendiente con coeficiente de posición), los tres del catálogo local. Recuento del guard de catálogo tras el cambio: error-8 pasa de 11 a 10 usos, error-9 de 3 a 4, error-12 se mantiene en 2; ningún id del catálogo queda sin uso."
   ],
   "catalogoErrores": [
     {
@@ -336,39 +337,39 @@
   "itemsPAES": [
     {
       "id": "l2-item-1",
-      "habilidad": "representar",
+      "habilidad": "resolver",
       "dificultad": "media",
-      "enunciado": "La siguiente tabla muestra una función afín. ¿Cuál es su ecuación?\n\n| x | 0 | 1 | 2 | 3 |\n|---|---|---|----|----|\n| y | 5 | 8 | 11 | 14 |",
+      "enunciado": "Para la función afín y = 12 − 5x, ¿cuál es el valor de y cuando x = 4?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "y = 3x + 5",
+          "texto": "−8",
           "esCorrecta": true,
-          "feedback": "Correcto. Las diferencias de y son +3 constantes (pendiente 3) y en x = 0 vale 5 (coeficiente de posición). Entonces y = 3x + 5."
+          "feedback": "Correcto. Se reemplaza x por 4: y = 12 − 5·4 = 12 − 20 = −8."
         },
         {
           "clave": "B",
-          "texto": "y = 5x + 3",
+          "texto": "32",
           "esCorrecta": false,
-          "feedback": "Revisa cuál número es la pendiente y cuál el coeficiente de posición. La pendiente es cuánto AUMENTA y cada vez que x sube de a 1. El coeficiente de posición es el valor de y cuando x = 0. ¿Cuál es cuál en tu tabla?",
-          "errorCatalogado": "error-1"
+          "feedback": "Ese valor sale de sumar en vez de restar: 12 + 5·4 = 32. La pendiente es −5, con signo negativo, así que el término 5x se resta. En y = 12 − 5x la recta baja a medida que x crece.",
+          "errorCatalogado": "error-9"
         },
         {
           "clave": "C",
-          "texto": "y = 3x",
+          "texto": "−20",
           "esCorrecta": false,
-          "feedback": "Tu pendiente está bien, pero mira la tabla cuando x = 0: y no vale 0, vale otra cosa. Esa es la parte que te falta agregar.",
-          "errorCatalogado": "error-5"
+          "feedback": "Ese valor es solo −5·4 = −20: se calculó el término de la pendiente pero se dejó fuera el coeficiente de posición 12, que es el valor de y cuando x = 0. Hay que sumarlo: 12 + (−20) = −8.",
+          "errorCatalogado": "error-12"
         },
         {
           "clave": "D",
-          "texto": "y = 8x + 5",
+          "texto": "43",
           "esCorrecta": false,
-          "feedback": "El 8 es un valor de y, no el ritmo al que y crece. ¿Cuánto sube y cada vez que x avanza de a 1?",
-          "errorCatalogado": "error-1"
+          "feedback": "Ese valor intercambia los papeles de los dos números: toma el 12 como pendiente y el 5 como coeficiente de posición, calculando 12·4 − 5 = 43. En y = 12 − 5x el número que multiplica a x es −5 (la pendiente) y el 12 es el término independiente.",
+          "errorCatalogado": "error-8"
         }
       ],
-      "solucion": "Diferencias de y consecutivas: 8−5=3, 11−8=3, 14−11=3 → pendiente 3. En x=0, y=5 → coeficiente de posición 5. Ecuación: y = 3x + 5. Comprobación x=2: 3·2+5 = 11. ✓"
+      "solucion": "Se evalúa la función en x = 4 reemplazando directamente: y = 12 − 5·(4) = 12 − 20 = −8. Comprobación leyendo los parámetros: el coeficiente de posición es 12 (valor de y en x = 0) y la pendiente es −5 (y baja 5 por cada unidad que sube x); desde (0, 12), al avanzar 4 unidades en x se baja 5·4 = 20, y 12 − 20 = −8. Descarte de los distractores: 12 + 20 = 32 usa la pendiente con signo positivo; −20 olvida el coeficiente de posición; 12·4 − 5 = 43 confunde cuál número es la pendiente. Respuesta: −8."
     },
     {
       "id": "l2-item-2",
