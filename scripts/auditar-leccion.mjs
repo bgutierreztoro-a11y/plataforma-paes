@@ -154,33 +154,46 @@ const bloquesDe = (data) => (data?.pasos ?? []).flatMap((paso, i) =>
 
 // ---------------------------------------------------------------- chequeos
 
-/** 1. Referencias colgando del catálogo, e ids catalogados que nadie usa. */
+/**
+ * Recorre el objeto entero y devuelve `[id, ruta]` de cada `errorCatalogado`,
+ * a cualquier profundidad. Igual que `idsReferenciados` de lib/sanitizar.ts y
+ * que el chequeo inverso de scripts/validar-contenido.mjs: una sola forma de
+ * enumerar portadores en vez de tres rutas a mano.
+ */
+function* portadoresDeError(nodo, ruta = '') {
+  if (Array.isArray(nodo)) {
+    for (let i = 0; i < nodo.length; i++) yield* portadoresDeError(nodo[i], `${ruta}[${i}]`);
+    return;
+  }
+  if (!nodo || typeof nodo !== 'object') return;
+  if (typeof nodo.errorCatalogado === 'string') yield [nodo.errorCatalogado, ruta || 'raíz'];
+  for (const [k, v] of Object.entries(nodo)) yield* portadoresDeError(v, ruta ? `${ruta}.${k}` : k);
+}
+
+/**
+ * 1. Referencia colgando: un `errorCatalogado` que no está en el
+ * `catalogoErrores` embebido del propio archivo.
+ *
+ * Recorre TODOS los portadores del árbol —`bloque.alternativas`,
+ * `feedbackPorPrediccion` y demás formas que las tres rutas a mano no veían—,
+ * no solo `opciones`, `feedbackPorError` e `itemsPAES`.
+ *
+ * `catalogo-sin-usar` se retiró (2026-09-08): tenía 5 disparos y 5 falsos
+ * positivos en los 11 módulos —un id que la L1 embebe para uso de otra pieza
+ * del módulo no es un id muerto—. La cobertura real de "todo id referenciado
+ * resuelve" la da ahora el chequeo inverso de scripts/validar-contenido.mjs
+ * (`validarReferenciasResuelven`), que cruza contra el catálogo canónico y no
+ * contra la copia local. Ver docs/deuda-catalogo-errores-crossfile.md.
+ */
 function chequearCatalogoErrores(data, add) {
   const catalogo = data?.catalogoErrores;
-  if (!Array.isArray(catalogo)) return; // unidad sin catálogo embebido: nada que cruzar
+  if (!Array.isArray(catalogo)) return; // sin catálogo embebido: nada local que cruzar
   const ids = new Set(catalogo.map((e) => e?.id).filter(Boolean));
-  const usados = new Map(); // id → [donde]
 
-  const registrar = (id, donde) => {
-    if (!id) return;
-    usados.set(id, [...(usados.get(id) ?? []), donde]);
-    if (!ids.has(id)) add('🔴', 'catalogo-colgando', `errorCatalogado "${id}" no existe en catalogoErrores (${donde})`);
-  };
-
-  for (const { bloque, donde } of bloquesDe(data)) {
-    for (const o of bloque?.opciones ?? []) {
-      if (o && typeof o === 'object' && o.esCorrecta !== true) registrar(o.errorCatalogado, `${donde}, opción ${o.id}`);
+  for (const [id, donde] of portadoresDeError(data)) {
+    if (!ids.has(id)) {
+      add('🔴', 'catalogo-colgando', `errorCatalogado "${id}" no existe en catalogoErrores (${donde})`);
     }
-    for (const f of bloque?.feedbackPorError ?? []) registrar(f?.errorCatalogado, `${donde}, valor ${f?.valorObtenido}`);
-  }
-  for (const it of data?.itemsPAES ?? []) {
-    for (const a of it?.alternativas ?? []) {
-      if (a?.esCorrecta !== true) registrar(a?.errorCatalogado, `${it.id}, alternativa ${a?.clave}`);
-    }
-  }
-
-  for (const id of ids) {
-    if (!usados.has(id)) add('🔴', 'catalogo-sin-usar', `"${id}" está en catalogoErrores pero ningún distractor lo usa`);
   }
 }
 
@@ -382,17 +395,12 @@ function chequearItemsPAES(data, add) {
  * de módulos distintos daría puro ruido, porque los ids son locales al módulo
  * ("error-1" significa cosas distintas en Enteros y en Proporcionalidad).
  *
- * OJO con las entradas de cierre: hoy NO cubren nada. Este auditor solo mira
- * `content/lecciones/` por los dos lados —`archivosDeLeccion()` lee ese único
- * directorio, así que la corrida por defecto nunca ve un cierre y pasarle uno a
- * mano corta en el chequeo de `tipo`; y el bucle del guard de abajo itera sobre
- * esa misma función, así que un cierre tampoco entra jamás como el "otro"
- * archivo con el que comparar—. O sea que un cierre con catálogo embebido puede
- * divergir de las lecciones de su módulo sin que nada lo reporte, y ya pasa:
- * `cierre-proporcionalidad.json` lleva 11 entradas y ninguna se compara contra
- * las de sus tres lecciones. `cierre-expresiones-algebraicas` está registrado
- * por adelantado para cuando eso se cierre, que es ensanchar el auditor a
- * cierres, no agregar entradas a esta tabla. Anotado en docs/pendientes.md.
+ * El guard antidivergencia SÍ mira `content/cierres/` como archivo "otro" con
+ * el que comparar (2026-09-08): un cierre con catálogo embebido que diverja de
+ * las lecciones de su módulo ahora se reporta. Lo que sigue lección-only es la
+ * corrida principal —`archivosDeLeccion()` alimenta el bucle de `auditar()` y
+ * el chequeo de `tipo` corta un cierre pasado a mano—, así que un cierre nunca
+ * es el archivo audit*ado*, solo el comparado.
  */
 const MODULO_POR_LECCION = {
   'ecuaciones-lineales': 'ecuaciones-inecuaciones',
@@ -442,21 +450,24 @@ const MODULO_POR_LECCION = {
  * Un id reciclado con otro significado dentro del mismo módulo cae acá también,
  * y es el mismo defecto visto desde el otro lado: los ids son únicos por módulo.
  */
+/** Módulo de un archivo: `moduloId` (declarado desde 2026-09-08) y, si falta, la tabla vieja. */
+const moduloDe = (obj) => obj?.moduloId ?? MODULO_POR_LECCION[obj?.id];
+
 function chequearDivergenciaDeCatalogo(data, rutaPropia, raizContent, add) {
   const propio = data?.catalogoErrores;
   if (!Array.isArray(propio) || propio.length === 0) return;
 
-  const modulo = MODULO_POR_LECCION[data?.id];
+  const modulo = moduloDe(data);
   if (!modulo) {
     add('🟡', 'catalogo-modulo-no-declarado',
-      `"${data?.id}" tiene catalogoErrores pero no está en MODULO_POR_LECCION: guard antidivergencia OMITIDO`);
+      `"${data?.id}" tiene catalogoErrores pero no declara moduloId ni está en MODULO_POR_LECCION: guard antidivergencia OMITIDO`);
     return;
   }
 
   const mios = new Map();
   for (const e of propio) if (e?.id) mios.set(e.id, e.descripcion);
 
-  for (const ruta of archivosDeLeccion(raizContent)) {
+  for (const ruta of archivosConCatalogoPosible(raizContent)) {
     if (resolve(ruta) === resolve(rutaPropia)) continue;
     let otro;
     try {
@@ -464,7 +475,7 @@ function chequearDivergenciaDeCatalogo(data, rutaPropia, raizContent, add) {
     } catch {
       continue; // ese JSON roto ya lo reporta `npm run validar`
     }
-    if (MODULO_POR_LECCION[otro?.id] !== modulo) continue;
+    if (moduloDe(otro) !== modulo) continue;
     if (!Array.isArray(otro?.catalogoErrores)) continue;
 
     for (const e of otro.catalogoErrores) {
@@ -515,6 +526,22 @@ function chequearColisionEntreArchivos(data, rutaPropia, raizContent, add) {
 
 function* archivosDeLeccion(raizContent) {
   const dir = join(raizContent, 'lecciones');
+  if (!existsSync(dir)) return;
+  for (const ent of readdirSync(dir, { withFileTypes: true })) {
+    if (ent.isDirectory() || !ent.name.endsWith('.json') || ent.name.startsWith('_')) continue;
+    yield join(dir, ent.name);
+  }
+}
+
+/**
+ * Lecciones y cierres: los dos sitios donde puede vivir un `catalogoErrores`
+ * embebido. Solo lo usa el guard antidivergencia para tener al cierre como
+ * archivo comparado; la corrida principal de `auditar()` sigue siendo
+ * lección-only, sobre `archivosDeLeccion`.
+ */
+function* archivosConCatalogoPosible(raizContent) {
+  yield* archivosDeLeccion(raizContent);
+  const dir = join(raizContent, 'cierres');
   if (!existsSync(dir)) return;
   for (const ent of readdirSync(dir, { withFileTypes: true })) {
     if (ent.isDirectory() || !ent.name.endsWith('.json') || ent.name.startsWith('_')) continue;

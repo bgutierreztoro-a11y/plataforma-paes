@@ -107,24 +107,17 @@ function validarBloqueInteractivoSlider(bloque, donde, errores) {
 }
 
 /**
- * Regla local de catálogo de errores, la misma que `chequearCatalogoErrores` de
- * `scripts/auditar-leccion.mjs` aplica a las lecciones — acá extendida al cierre,
- * que ningún gate cruzaba (ver docs/deuda-catalogo-errores-crossfile.md).
+ * Regla local de catálogo de errores para el cierre: todo id del `catalogoErrores`
+ * embebido tiene que estar referenciado por algún distractor del mismo archivo
+ * ("sin tag" al revés). Sin array `catalogoErrores` no hay nada que cruzar y el
+ * chequeo se omite.
  *
- * En un archivo con `catalogoErrores` propio, el conjunto de ids declarados debe
- * ser IGUAL al conjunto de `errorCatalogado` que referencian sus distractores
- * (`esCorrecta !== true`). Local al archivo: no se hereda del catálogo de otra
- * lección del módulo. Sin array `catalogoErrores` no hay nada que cruzar y el
- * chequeo se omite —mismo criterio que el auditor (`return` seco)—, así que un
- * cierre que solo referencia ids sin declarar catálogo local queda fuera de esta
- * regla, no en falla.
- *
- * Nomenclatura (la del encargo; queda cruzada respecto a las etiquetas internas
- * del auditor `catalogo-colgando` / `catalogo-sin-usar`):
- *   - "sin tag"  = id referenciado por un distractor que no está en catalogoErrores
- *                  (equivale a `catalogo-colgando` del auditor).
- *   - "colgando" = id en catalogoErrores que ningún distractor referencia
- *                  (equivale a `catalogo-sin-usar` del auditor).
+ * La rama contraria —"un id en catalogoErrores que ningún distractor referencia"—
+ * se retiró (2026-09-08), igual que su gemelo `catalogo-sin-usar` del auditor:
+ * cero verdaderos positivos en los 11 módulos, porque un catálogo de módulo
+ * embebido en una pieza declara errores que otras piezas del módulo usan. La
+ * cobertura de "todo id referenciado resuelve" la da ahora `validarReferenciasResuelven`
+ * contra el canónico. Ver docs/deuda-catalogo-errores-crossfile.md.
  */
 function validarCatalogoLocal(data, campoItems, errores) {
   const catalogo = data?.catalogoErrores;
@@ -141,11 +134,6 @@ function validarCatalogoLocal(data, campoItems, errores) {
   for (const id of usados) {
     if (!definidos.has(id)) {
       errores.push(`errorCatalogado "${id}" lo referencia un distractor pero no está en catalogoErrores local (sin tag)`);
-    }
-  }
-  for (const id of definidos) {
-    if (!usados.has(id)) {
-      errores.push(`"${id}" está en catalogoErrores pero ningún distractor lo referencia (colgando)`);
     }
   }
 }
