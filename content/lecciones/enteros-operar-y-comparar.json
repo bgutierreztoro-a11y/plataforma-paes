@@ -17,7 +17,7 @@
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (bizcocho, receta con tazas) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
     "Verificación de colisión de la escena concreta contra Material/618-JMA-M1-01-2024.md ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO CON UNA CORRECCIÓN OBLIGATORIA — 'galletas' colisionaba con el examen DEMRE real (fuentes-demre-liberadas/paes-m1-2026-forma113.md y Material/PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md) y fue reemplazado por 'bizcocho' en toda la lección. 'harina' y 'azúcar' pegaron solo en pdv-terceros (MA-10, MA-32) con frases completas en NO: se tratan como vocabulario genérico de ingredientes (mismo criterio que 'tazas' en la decisión original), no como colisión de escena. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md.",
-    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí. Este archivo solo referencia sus ids (error-1 a error-8) vía errorCatalogado en los distractores. Esta lección usa activamente error-4, error-6, error-7 y error-8 (los cuatro específicos de operatoria y comparación con fracciones positivas). error-8 se agregó después de la primera redacción: reemplaza usos de error-7 que en realidad eran inversión del orden de la división (divisor ÷ dividendo), no la creencia de que 'dividir siempre achica'. error-1, error-2, error-3 y error-5 son específicos de enteros negativos (Lección 1, buceo) y no se usan en esta lección.",
+    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) y en content/errores/enteros-racionales.json — no se duplica aquí. Este archivo solo referencia sus ids (error-1 a error-8) vía errorCatalogado. Tras la reescritura de l2-item-3 (F0.2, fichas 43+34) los usos quedan así: error-4 (itemsPAES l2-item-3 alternativa D: comparar fracciones solo por el numerador; también sin tag en el paso 'reflexion', bloque verdaderoFalso), error-6 (feedbackPorError del paso 'pensar'), error-7 (pasos 'curiosidad', 'practica', 'aplicacion' e itemsPAES l2-item-1, l2-item-2, l2-item-3), error-8 (paso 'practica' e itemsPAES l2-item-1, l2-item-2, l2-item-3). error-1, error-2, error-3 y error-5 son específicos de enteros negativos (Lección 1, buceo) y no se usan en esta lección.",
     "Insight fijado del Paso 5 (descubrimiento): 3 ÷ 3/4 = 4. Dividir por una fracción menor que 1 agranda el resultado, lo que choca con la intuición de que 'dividir siempre achica' (error-7). Ese choque es el motor de la lección.",
     "Paso 1 (curiosidad) usa un bloque 'pregunta' formato PAES para instalar la intuición ANTES de enseñar el método, pero preguntando solo la DIRECCIÓN del resultado (mayor/menor/igual que 3), no el valor exacto — el número exacto (4) se reserva para el Paso 5, que es donde vive el insight fijado. Diferenciación estructural respecto a Lección 1, que usa 'pregunta' recién en el Paso 10.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
@@ -371,39 +371,39 @@
     },
     {
       "id": "l2-item-3",
-      "habilidad": "resolver",
-      "dificultad": "media",
-      "enunciado": "Una receta de bizcocho lleva 2/5 de taza de harina integral y 3/10 de taza de harina blanca. ¿Cuánta harina en total lleva la receta, en tazas?",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Cuatro estudiantes hacen afirmaciones sobre resultados vistos en esta lección. Solo una es correcta. ¿Cuál?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "7/10",
+          "texto": "Repartir 3 tazas de harina en porciones de 3/4 de taza rinde 4 bizcochos, y ese 4 supera a 3 porque cada porción es menor que una taza entera, así que en 3 tazas caben más de 3 porciones.",
           "esCorrecta": true,
-          "feedback": "Correcto. Llevando ambas fracciones a décimos: 2/5 = 4/10, y 4/10 + 3/10 = 7/10."
+          "feedback": "Correcto. 3 ÷ 3/4 = 3 × 4/3 = 12/3 = 4, y la explicación es válida: al dividir por una fracción menor que 1 el recíproco (4/3) es mayor que 1, por eso el resultado agranda. La afirmación es la única correcta."
         },
         {
           "clave": "B",
-          "texto": "5/15",
+          "texto": "El resultado 3 ÷ 3/4 = 4 del Paso 5 está mal, porque toda división entrega un número menor que el dividendo y 4 es mayor que 3.",
           "esCorrecta": false,
-          "feedback": "Ese resultado sale de sumar los denominadores: (2+3)/(5+10) = 5/15. Al sumar fracciones el denominador NO se suma; primero hay que llevar ambas fracciones al mismo denominador (décimos) y ahí sí sumar solo los numeradores.",
-          "errorCatalogado": "error-6"
+          "feedback": "Falsa. 'Dividir siempre achica' solo vale al dividir por un número mayor que 1. Al dividir por 3/4, que es menor que 1, el resultado sí supera al dividendo: 3 ÷ 3/4 = 4 está bien calculado.",
+          "errorCatalogado": "error-7"
         },
         {
           "clave": "C",
-          "texto": "5/10",
+          "texto": "Para dividir 3 entre 3/4 hay que calcular 3/4 ÷ 3 = 1/4, así que en realidad cada bizcocho usa 1/4 de taza y el resultado del Paso 5 debería ser 1/4.",
           "esCorrecta": false,
-          "feedback": "Ese resultado suma los numeradores (2+3=5) pero deja el denominador de una sola de las fracciones (10), sin convertir realmente 2/5 a décimos primero. Antes de sumar numeradores, cada fracción tiene que estar expresada en el mismo denominador.",
-          "errorCatalogado": "error-6"
+          "feedback": "Falsa. Se invirtió el orden de la división: la operación es 3 ÷ 3/4 (tres tazas repartidas en porciones de 3/4), no 3/4 ÷ 3. Con el orden correcto, 3 ÷ 3/4 = 3 × 4/3 = 4.",
+          "errorCatalogado": "error-8"
         },
         {
           "clave": "D",
-          "texto": "1/10",
+          "texto": "Entre una receta con 2/3 de taza de azúcar y otra con 3/5 de taza, la de 3/5 usa más azúcar, porque su numerador (3) es mayor que el numerador de 2/3 (que es 2).",
           "esCorrecta": false,
-          "feedback": "Ese resultado sale de sumar los numeradores (2+3=5) y multiplicar los denominadores (5×10=50) para después simplificar mal. Ni sumar denominadores ni multiplicarlos da el total correcto: hay que convertir cada fracción al mismo denominador y sumar solo los numeradores.",
-          "errorCatalogado": "error-6"
+          "feedback": "Falsa. Comparar solo los numeradores ignora los denominadores. Llevando a quinceavos: 2/3 = 10/15 y 3/5 = 9/15, así que 2/3 usa MÁS azúcar que 3/5, no menos.",
+          "errorCatalogado": "error-4"
         }
       ],
-      "solucion": "2/5 = 4/10 (amplificando por 2). 4/10 + 3/10 = 7/10 de taza en total. Comprobación: 7/10 = 0,7, y 2/5 + 3/10 = 0,4 + 0,3 = 0,7 en decimales, coincide. ✓"
+      "solucion": "A es la correcta: 3 ÷ 3/4 = 3 × 4/3 = 12/3 = 4, y la justificación (porciones menores que la unidad ⇒ más porciones que tazas) es válida. B es falsa: 'dividir siempre achica' solo se cumple al dividir por un número mayor que 1; dividir por 3/4 (< 1) da un resultado mayor que el dividendo. C es falsa: invierte el orden de la división (3/4 ÷ 3 en vez de 3 ÷ 3/4); el cálculo correcto da 4, no 1/4. D es falsa: compara 2/3 y 3/5 mirando solo los numeradores; con común denominador 2/3 = 10/15 > 9/15 = 3/5, de modo que 2/3 es la mayor. Respuesta: A."
     }
   ],
   "contextosNumericos": [
@@ -416,7 +416,7 @@
     "reflexion (Paso 9): comparación 2/3 de taza de azúcar vs 3/5 de taza de azúcar",
     "itemsPAES l2-item-1 (resolver): 4 ÷ 2/3 = 6",
     "itemsPAES l2-item-2 (modelar): 6 ÷ 3/8 = 16 (modela la operación, no solo calcula)",
-    "itemsPAES l2-item-3 (resolver): 2/5 + 3/10 = 7/10"
+    "itemsPAES l2-item-3 (argumentar): evalúa cuatro afirmaciones sobre resultados ya vistos (3 ÷ 3/4 = 4 del Paso 5, regla del recíproco del Paso 6, comparación 2/3 vs 3/5 del Paso 9). No introduce números ni cálculo nuevos; el 1/4 aparece solo como resultado erróneo en un distractor."
   ],
   "proveniencia": {
     "fuentesAnalisis": [
