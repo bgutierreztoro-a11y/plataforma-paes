@@ -39,40 +39,6 @@
       }
     ]
   },
-  "catalogoErrores": [
-    {
-      "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
-    },
-    {
-      "id": "error-14",
-      "descripcion": "Interpreta mal la constante de una proporción inversa: la lee como «lo que le corresponde a una unidad» —que es la lectura de la proporción directa— en vez de como el total que se reparte entre las dos cantidades."
-    },
-    {
-      "id": "error-15",
-      "descripcion": "Representa mal el comportamiento de una proporción inversa en un gráfico: dibuja o elige una recta de bajada uniforme que corta los ejes, o una curva que cruza al lado negativo de un eje, en vez de una curva que decrece cada vez más despacio y se acerca a los dos ejes sin llegar a tocarlos ni cruzarlos."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: auditorio de un centro cultural que se reordena para cada evento. Magnitudes del núcleo: butacas por hilera y número de hileras. El producto butacas por hilera × hileras es el total de butacas del auditorio, que no cambia nunca.",
     "Constantes usadas en el archivo, todas distintas entre sí: 900 (auditorio, núcleo de los pasos 1 a 5 y del paso 7 P2), 624 (auditorio chico, ejemplo trabajado del paso 6), 336 (auditorio municipal, ejercicio del paso 6), 780 (auditorio del liceo, práctica P1), 864 cm (ancho del patio, paso 8), 798 (auditorio de un instituto, ítem 1), 576 (auditorio del ítem 2). La del paso 8 es la única que no es un conteo de butacas: es una longitud.",

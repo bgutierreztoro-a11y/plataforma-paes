@@ -313,52 +313,6 @@
       "solucion": "El cociente gramos÷horas cambia en cada fila (73, 68,5, 67), así que no es directamente proporcional. El producto también cambia (657, 2.466, ...), así que tampoco es inversamente proporcional. La relación es afín: masa = 27 + 64·horas, verificado fila por fila (27+64×3=219, 27+64×6=411, 27+64×9=603). Su gráfico es una recta con pendiente constante 64 que no pasa por el origen, porque parte de 27 g cuando horas=0. La descripción correcta es la A."
     }
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Usa diferencia constante en vez de cociente constante: ve que las dos columnas suben y asume proporcionalidad sumándole a una lo mismo que le sumó a la otra (si a 3 g le corresponden 120 mL, cree que a 12 g le corresponden 129 porque el pigmento subió 9)."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Escala una sola de las dos cantidades: multiplica el valor completo de una fila por la cantidad nueva, en vez de multiplicar la cantidad nueva por la constante, y rompe la razón que quería conservar."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Nombra mal la constante al interpretarla: intercambia las dos magnitudes en la unidad, o la lee como un total en vez de como la cantidad que le corresponde a una unidad."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
-    },
-    {
-      "id": "error-14",
-      "descripcion": "Interpreta mal la constante de una proporción inversa: la lee como «lo que le corresponde a una unidad» —que es la lectura de la proporción directa— en vez de como el total que se reparte entre las dos cantidades."
-    }
-  ],
   "contextosNumericos": [
     "cierre-proporcionalidad-1 (esmaltes, resolver, baja): verde musgo k=40 (núcleo de L1/L3), fila publicada más cercana 15/600, pedido nuevo 16→640; distractores 601 (aditivo), 40 (constante) y 9.600 (escaló la fila completa). Cifras 640, 601 y 9.600 verificadas sin colisión contra el resto de content/.",
     "cierre-proporcionalidad-2 (auditorio, modelar, media): abstracto, reutiliza 900 (núcleo de L2/L3) sin cifra nueva; expresión h=900÷b, distractores h=900×b, h=b÷900, h=900.",

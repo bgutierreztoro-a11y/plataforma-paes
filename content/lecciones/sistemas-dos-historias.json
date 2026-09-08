@@ -19,28 +19,6 @@
       "catalogoErrores incluye el catálogo del módulo 'Sistemas de ecuaciones lineales (2x2)' (error-1, error-3 a error-6). Los cinco se usan activamente dentro de esta misma lección (ver pasos 2, 7, 8 e itemsPAES), para que la auditoría mecánica (npm run auditar) no reporte ningún id como sin uso. error-2 (sustitución circular, misma ecuación de la que se despejó) se eliminó del catálogo el 2026-08-20: por definición produce una identidad (40=40), no un valor numérico, así que no existe un distractor de opción múltiple genuinamente derivable de ese mecanismo; el único punto que lo usaba (l1-item-1.C) quedó con errorCatalogado null y feedback artesanal propio (auditoría matemática Ronda 1).",
     "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido) además del arreglo itemsPAES, con números propios distintos del resto de la lección."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Al despejar una incógnita o distribuir una multiplicación sobre una suma/resta, aplicar la operación solo a una parte de la expresión en vez de a todos sus términos, rompiendo la igualdad."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Al sumar o restar las dos ecuaciones del sistema (o al distribuir un signo negativo), no aplicar el signo correctamente a todos los términos de una de ellas, invirtiendo el resultado de la eliminación."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Encontrar el valor de una incógnita y no sustituir de vuelta en el sistema para encontrar el valor de la otra, entregando una solución incompleta."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Invertir los valores de las dos incógnitas al reportar el par solución final, aunque ambos se hayan calculado correctamente."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Al traducir un problema a ecuaciones, igualar una cantidad con el total equivocado (usa el total de dinero donde correspondía el total de unidades/personas, o viceversa), armando un sistema que no representa el problema."
-    }
-  ],
   "pasos": [
     {
       "tipo": "curiosidad",

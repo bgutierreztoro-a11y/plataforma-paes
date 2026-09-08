@@ -36,52 +36,6 @@
       }
     ]
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Usa diferencia constante en vez de cociente constante: ve que las dos columnas suben y asume proporcionalidad sumándole a una lo mismo que le sumó a la otra (si a 3 g le corresponden 120 mL, cree que a 12 g le corresponden 129 porque el pigmento subió 9)."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Invierte el cociente: divide la cantidad por el resultado en lugar del resultado por la cantidad, y obtiene el inverso de la constante en vez de la constante."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Escala una sola de las dos cantidades: multiplica el valor completo de una fila por la cantidad nueva, en vez de multiplicar la cantidad nueva por la constante, y rompe la razón que quería conservar."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Suma la constante en vez de multiplicarla al ampliar: para una cantidad mayor le agrega la constante una sola vez en lugar de multiplicarla por la cantidad."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Nombra mal la constante al interpretarla: intercambia las dos magnitudes en la unidad, o la lee como un total en vez de como la cantidad que le corresponde a una unidad."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Redondea la constante antes de terminar el cálculo y arrastra el error al escalar a cantidades grandes, donde la diferencia ya deja de ser despreciable."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: taller de esmaltes. Magnitudes del núcleo: gramos de pigmento y mililitros de base. La razón base ÷ pigmento fija determina el tono.",
     "Constantes usadas en el archivo, todas distintas entre sí: 40 (verde musgo, núcleo pasos 1-5), 35 (azul cobalto, ejemplo trabajado paso 6), 28 (ocre, ejercicio paso 6), 12,5 (gris perla, práctica P1), 18 (esmalte por pieza, paso 8), 22 (terracota, ítem 1), 23 (constante genérica, ítem 2).",

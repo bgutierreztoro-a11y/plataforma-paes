@@ -43,32 +43,6 @@
       "fraccionTrasBajarDosEscalones": "El campo pide una fracción del aumento anterior, que sigue siendo una razón sin unidad, igual que los demás campos de aumento de este archivo."
     }
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: cuando es un número natural dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; para usarla, las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo están."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que acá la base sí es la misma: lo que falló no es cuál base, sino cuál regla."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Leer el exponente negativo como si el signo pasara al resultado: calcular 2⁻³ como −8 en vez de 1/8. Con base positiva, bajar escalones nunca cambia de signo, solo divide: el signo menos del exponente dice «dividir», no «negativo»."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Dar a⁰ = 0, leyendo el exponente cero como «no queda nada». Con cualquier base distinta de 0, bajar un escalón divide por la base: desde 5¹ = 5, bajar uno da 5 ÷ 5 = 1. El escalón cero vale 1, no 0. Se distingue de error-4, que es sobre el signo de los escalones de más abajo."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "En una potencia o raíz de base fraccionaria, operar solo una parte de la fracción: al elevar, dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador); al sacar raíz, dar √(9/25) = 3/25 (solo el numerador) o = 9/5 (solo el denominador). La base o el radicando es la fracción completa: el exponente o la raíz se aplica arriba y abajo."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: perilla graduada en escalones de un microscopio escolar. Cada escalón hacia arriba multiplica por 4 lo que se ve; el escalón 0 es verlo tal cual, sin aumentar nada. Magnitud: el aumento, una razón adimensional (veces más grande), sin objetos físicos que medir más allá de eso.",
     "curiosidad (Paso 1): tabla de escalones 0 a 3 (aumentos 1, 4, 16, 64). Predicción libre sobre el escalón 5 (sin corrección).",

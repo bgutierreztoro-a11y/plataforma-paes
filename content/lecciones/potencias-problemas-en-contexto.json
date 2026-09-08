@@ -35,36 +35,6 @@
       "fraccionPorIntervalo": "La fracción r que representa cuánto de la dosis queda tras cada intervalo es una razón (cuántas veces más chica queda la dosis), no una magnitud física con unidad propia asociada a este número."
     }
   },
-  "catalogoErrores": [
-    {
-      "id": "error-2",
-      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; para usarla, las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo están."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que acá la base sí es la misma: lo que falló no es cuál base, sino cuál regla."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Cambiar de lugar el índice y el exponente al pasar entre raíz y potencia: leer a^(m/n) como ᵐ√(aⁿ) en vez de ⁿ√(aᵐ). El denominador del exponente es el índice de la raíz y el numerador es el exponente del radicando; invertirlos da otro número: con una base positiva distinta de 1, las dos lecturas solo coinciden cuando m = n."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Repartir la raíz sobre una suma o una resta: dar √(a + b) = √a + √b. Las propiedades heredadas de las potencias reparten sobre productos y cocientes, no sobre sumas: primero se resuelve lo que está dentro de la raíz y después se saca la raíz."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Sumar radicales que no son el mismo, como si fueran términos semejantes: dar 2√3 + 3√2 = 5√5. Solo se pueden juntar los que, ya descompuestos, quedan con el mismo índice y el mismo radicando; √3 y √2 no se pueden descomponer más y son dos números distintos, igual que x e y en álgebra."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Confundir sacar la raíz con dividir por el índice: dar √36 = 18 o ³√27 = 9. La raíz busca un número que, usado como factor tantas veces como dice el índice, dé el radicando —6 · 6 = 36, 3 · 3 · 3 = 27—; dividir no responde esa pregunta."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Calcular bien y responder otra magnitud: entregar el área cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el enunciado."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: un medicamento en el organismo de un paciente que, cada intervalo de tiempo, se reduce porque el organismo elimina una fracción fija del que queda, conservando cada vez una fracción fija r de la dosis del intervalo anterior. Magnitud: la dosis, en miligramos (a diferencia de L1 y L2, este módulo sí mide algo real). r mismo es una razón adimensional. Modelo simplificado y declarado como tal: r es un dato del enunciado, nunca se deduce de una fórmula de vida media ni de un decaimiento exponencial continuo.",
     "curiosidad (Paso 1): medicamento con dosis inicial de 1024 mg, r = 1/4 conocido (dado en el enunciado). Tabla de intervalos 0 a 3 (dosis 1024, 256, 64, 16 mg). Predicción libre sobre el intervalo 4 (sin corrección).",

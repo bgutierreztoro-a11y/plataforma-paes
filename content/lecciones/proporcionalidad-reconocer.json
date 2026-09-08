@@ -35,48 +35,6 @@
   "auditoria": {
     "_nota": "Sin auditoria.constante declarada, deliberado: esta lección no tiene una sola constante que proteger con el mecanismo escalar. Tiene dos callbacks ya públicos (40, 900) y tres instancias de una relación afín (paso 5, P3 del paso 7, ítem 3), cada una con su propio valor inicial y tasa, verificadas a mano contra filtración. Ver _notasInternas."
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Usa diferencia constante en vez de cociente constante: ve que las dos columnas suben y asume proporcionalidad sumándole a una lo mismo que le sumó a la otra (si a 3 g le corresponden 120 mL, cree que a 12 g le corresponden 129 porque el pigmento subió 9)."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Calcula la constante con un solo par de valores y no verifica los demás, así que da por proporcional (o por inversamente proporcional) una tabla donde el cociente o el producto en realidad cambia de fila en fila."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Confunde la constante con un valor de la tabla: entrega el resultado de una fila, o la constante misma, cuando lo que se pide es el valor correspondiente a otra cantidad."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Escala una sola de las dos cantidades: multiplica el valor completo de una fila por la cantidad nueva, en vez de multiplicar la cantidad nueva por la constante, y rompe la razón que quería conservar."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Opera en el sentido equivocado al ir del total a la cantidad: cuando le dan el resultado y le piden la cantidad que lo produjo, multiplica por la constante o se la suma, en lugar de dividir por ella (por ejemplo: si conoce el total y una de las partes, multiplica en vez de dividir para encontrar la otra, o le suma la parte conocida al total)."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Decide si hay proporcionalidad por un criterio irrelevante: acepta o descarta la relación porque los números le parecen redondos, feos o desordenados, en vez de comprobar si el cociente (o el producto, en una proporción inversa) se repite en todas las filas (rechaza una tabla por tener cantidades decimales, cuando el gris perla tiene constante 12,5 y es perfectamente proporcional)."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Compensa con una resta lo que debería compensar con una división: al aumentar una cantidad, le quita a la otra la misma cifra que le sumó a la primera, o traslada a un tramo la caída que observó en el tramo anterior. Conserva la diferencia entre las dos columnas cuando lo que se conserva es el producto. También aparece en su forma más simple: suma o resta directamente dos valores que debían combinarse multiplicando o dividiendo (por ejemplo, suma las dos columnas de una configuración en vez de dividirlas, o suma/resta el valor conocido al total en vez de acomodarlo en él)."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Aplica el modelo de la proporción directa a una relación inversa: multiplica por el cociente de una fila, o razona «si una se duplica, la otra se duplica», sin notar que acá una cantidad crece exactamente cuando la otra decrece."
-    },
-    {
-      "id": "error-16",
-      "descripcion": "Aplica una sola de las dos pruebas — solo cociente, o solo producto — y concluye a partir de ese resultado sin probar la que falta: descarta proporcionalidad al fallar el cociente sin probar el producto, o la da por directa al pasar el cociente sin comprobar si el producto también se mantiene."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO GENERAL: mismo taller de esmaltes de L1 y mismo auditorio de un centro cultural de L2 (vocabulario ya verificado limpio en ambos), más un dominio nuevo aún no aprobado para el caso trampa.",
     "curiosidad (Paso 1): sin tabla ni cifras. Meta-hook sobre no tener el título de la lección como pista.",
