@@ -43,36 +43,6 @@
       }
     ]
   },
-  "catalogoErrores": [
-    {
-      "id": "error-6",
-      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Escribe la diferencia de dos cuadrados como un cuadrado de binomio: factoriza a² − b² como (a − b)², confundiendo la forma que produce dos factores distintos con la que produce un factor repetido. Es el reverso exacto del error-9: allá se perdía el término del medio al desarrollar, acá se inventa un término del medio que la expresión no tiene."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Aplica la forma de la diferencia de cuadrados a una suma: factoriza a² + b² como (a + b)(a − b), sin notar que ese producto devuelve una resta. Basta multiplicar los dos factores propuestos para ver que no reconstruyen la expresión de partida."
-    },
-    {
-      "id": "error-14",
-      "descripcion": "Aplica la forma sin comprobar que se cumplan sus condiciones: trata como diferencia de cuadrados una expresión cuyo segundo término no es un cuadrado, o usa el atajo del producto simétrico con dos factores que no se apartan lo mismo del número central."
-    },
-    {
-      "id": "error-15",
-      "descripcion": "Al calcular un producto simétrico, suma el cuadrado del desvío en vez de restarlo, y entrega un resultado mayor que el cuadrado del número central cuando siempre tiene que ser menor."
-    },
-    {
-      "id": "error-16",
-      "descripcion": "Entrega el cuadrado del número central sin descontar nada, olvidando que los dos factores se apartan de él y que ese apartamiento cuesta exactamente el cuadrado del desvío."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: el mismo club de cálculo mental de expresiones-rectangulo, ahora con un desafío distinto — multiplicar dos números diferentes que están a la misma distancia de uno redondo. Magnitudes: números puros, sin unidades.",
     "CONTINUIDAD DELIBERADA CON L2: el núcleo se apoya en el cuadrado de 70, que el club ya había calculado allá para resolver el cuadrado de 73. No se introduce un número nuevo, se le da un uso nuevo a uno conocido.",

@@ -36,16 +36,6 @@
     ],
     "sliderJustificado": "El concepto central de este paso es que una parábola puede tener dos, uno o ningún cero real según el discriminante; el slider deja mover c y ver en vivo cómo los puntos marcados sobre el eje X pasan de dos a uno a ninguno, algo que ningún ejemplo estático puede mostrar igual de bien."
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: letrero luminoso en forma de arco, h(x) = −x² + 4 (metros, x medido desde el centro); toca el suelo en x=2 y x=−2, ancho total 4 m, altura máxima 4 m",
     "problema: segundo letrero, no centrado: h(x) = −x² + 2x + 8; toca el suelo en x=−2 y x=4, ancho 6 m",

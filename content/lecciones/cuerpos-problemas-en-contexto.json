@@ -30,32 +30,6 @@
     "Dominios firmados 2026-08-27 (docs/diseno-modulo-cuerpos-geometricos.md, «Estado de las firmas»): núcleo «termo cilíndrico», aplicación «cámara de frío» (segunda escena, distinta del termo). Colisión verificada por Benjamín fuera de sesión: «termo», «aislante», «aislacion», «camara de frio» → LIMPIO. El kiosco y el local de comida son el motivo de contexto, no un cuerpo geométrico nuevo.",
     "Vistas: cilindro y paralelepípedo en vista «solido», las tres cotas siempre rotuladas (regla 6). enfasis «volumen» en casi todo; enfasis «superficie» solo en la visualización de practica ex1, que es la única pregunta de borde con figura. Ningún ítem pide comparar aristas a ojo. Ids de campo numérico neutros, sin cifra (regla 4); todos con unidad (cm³, L, m², m)."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Aplicar correctamente una fórmula pero la que no corresponde a lo que pide el problema: entregar el área de superficie cuando se pregunta cuánto cabe o se llena (interior → volumen), o entregar el volumen cuando se pregunta cuánto material lo cubre, forra o recubre (borde → superficie)."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Al convertir un volumen de metros cúbicos a litros (o a decímetros cúbicos), multiplicar por 100 en lugar de por 1.000, arrastrando el factor de las unidades cuadradas: tratar 1 m³ como 100 L cuando 1 m³ = 1.000 L."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: se retoma el cierre de L2 (el título ya no dice qué calcular); sin medidas",
     "problema: termo cilíndrico de un kiosco, sin medidas (solo elección de borde o interior como método)",

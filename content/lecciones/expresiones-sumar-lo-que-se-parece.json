@@ -40,40 +40,6 @@
       }
     ]
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Junta términos de distinta parte literal sumando sus coeficientes y entregando un solo término: cuenta cuántos objetos hay en total sin notar que los de una clase y los de la otra no valen lo mismo."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Multiplica las letras al sumar: convierte una suma de términos con partes literales distintas en un único término que las lleva a todas pegadas (de 4r + 7s pasa a 11rs)."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Separa el coeficiente de su letra y los trata como dos sumandos sueltos, de modo que 4r se convierte en 4 + r y la expresión pierde la multiplicación que la define."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Pierde el signo al reducir: trata un término que se está restando como si se sumara, y el coeficiente del resultado sale mayor en vez de menor."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Cambia la parte literal al operar los coeficientes: al sumar términos semejantes multiplica también las letras y agrega un exponente que nadie pidió (de 4r + 5r pasa a 9r²)."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Reduce términos que comparten la letra pero tienen distinto exponente, como si x y x² fueran de la misma clase, y suma coeficientes que no se pueden sumar."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Cruza los coeficientes entre las partes literales: hace bien las dos cuentas pero le entrega a una letra el resultado que le correspondía a la otra."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: barcazas de carga en un puerto fluvial. Magnitudes del núcleo: número de contenedores de cada clase (refrigerados y secos) y masa por contenedor, que el manifiesto nunca trae. La masa por clase es lo desconocido que da origen a la letra.",
     "Este módulo NO tiene constante numérica de descubrimiento: el objeto del paso 5 es una estructura. Por eso no se declara auditoria.constante y el chequeo de filtración de npm run auditar se reporta como omitido, pero solo con AUDITAR_VERBOSE=1: la corrida por defecto oculta los hallazgos verdes y dice «sin hallazgos».",

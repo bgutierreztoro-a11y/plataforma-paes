@@ -36,32 +36,6 @@
       "comprobacionConValor": "El campo pide el valor de un desarrollo algebraico evaluado en t = 5. Es el resultado de una expresión con letras, y ni la letra ni el resultado representan una magnitud: en este módulo la letra es una cantidad genérica sin unidad asociada."
     }
   },
-  "catalogoErrores": [
-    {
-      "id": "error-5",
-      "descripcion": "Cambia la parte literal al operar los coeficientes: al sumar términos semejantes multiplica también las letras y agrega un exponente que nadie pidió (de 4r + 5r pasa a 9r²)."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Reduce términos que comparten la letra pero tienen distinto exponente, como si x y x² fueran de la misma clase, y suma coeficientes que no se pueden sumar."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Encuentra el término del medio pero lo cuenta una sola vez: escribe (a+b)² como a² + ab + b² en vez de a² + 2ab + b², sin notar que el cruce ocurre dos veces."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Desarrolla el cuadrado de una suma y abandona el último término: escribe (a+b)² como a² + 2ab, perdiendo el cuadrado del segundo sumando."
-    }
-  ],
   "contextosNumericos": [
     "DOMINIO: club de cálculo mental de un colegio, que compite calculando cuadrados de dos cifras de cabeza apoyándose en el número redondo más cercano. Magnitudes: números puros, sin unidades. Es un dominio deliberadamente sin objetos físicos, porque el contenido no los necesita y el modelo de área quedó descartado.",
     "curiosidad (Paso 1): el desafío es 73 al cuadrado. Sin operación: la pregunta es si sirve calcular 70 al cuadrado y 3 al cuadrado y sumarlos.",

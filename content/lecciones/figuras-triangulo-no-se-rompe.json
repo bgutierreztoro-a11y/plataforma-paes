@@ -24,36 +24,6 @@
     "Todos los valores numéricos verificados con node -e. Verificación completa tras la redistribución de Fase 1 (2026-08-29): 3-4-5 (paso 0, trío base), 15-16-√481 IRRACIONAL (paso 1, contexto de 'problema', NO resuelto), 6-8-10 (pasos 2 y 3, escalado ×2 de 3-4-5), 5-12-13 (paso 4, trío base), 8-15-17 (paso 5 verificación, trío base), 9-40-41 (paso 5 caso inverso, primitiva no-base: hipotenusa 41, cateto 9, cateto buscado 40), 7-24-25 (paso 6 selección, trío base), 6-9-√117 IRRACIONAL (paso 6 verdaderoFalso, afirmación falsa de 11 m), 24-45-51 (paso 6 numérica, escalado ×3 de 8-15-17), 16-30-34 (paso 7, escalado ×2 de 8-15-17), 18-24-30 (l1-item-1, escalado ×6 de 3-4-5), 11-60-61 (l1-item-2, primitiva no-base), 5-11-√146 IRRACIONAL (l1-item-3, argumentación: catetos 5 y 11; el alumno fuerza 5-12-13 y responde 13; se pasó de 9×12 a 5×11: irracional, cercano al 5-12-13 y sin colisión de cifras en el archivo ni con otros módulos). Reparto por rol sobre las 14 ocurrencias: 4 trío base (una por trío), 5 escaladas, 3 irracionales, 2 primitivas no-base. Todo distractor recalculado con node -e y verificado contra el set completo de respuestas correctas (regla 3b de docs/reglas-modulo.md): ninguna colisión distractor↔correcta (verificado con npm run auditar, chequeo colision-distractor-correcta). El número 13 es respuesta correcta en el paso 4 (patio 5×12) y es el valor que el alumno fuerza —mal— en l1-item-3 opción B (catetos 5 y 11, no 5 y 12; error-12): no es colisión de regla 3b porque la opción B es una frase de argumentación, no una cantidad-respuesta, y su feedback explica por qué 13 no aplica ahí.",
     "Fase 1 (2026-08-29): redistribución de ternas para que los cuatro tríos base sean un atajo de reconocimiento y no la norma. Se introdujeron 3 casos irracionales (paso 1, paso 6 V/F, l1-item-3) donde el atajo no aplica; las primitivas no-base bajaron de 5 a 2. Dos bloques nuevos hacen del reconocimiento una decisión visible del alumno: una selección de clasificación al inicio del paso 6 y una predicción '¿aplica el atajo?' al inicio del paso 7. Nuevo errorCatalogado error-12 ('forzar un trío conocido donde los números no calzan'), definido solo en L1 —única definición del módulo por ahora; propagarlo a L2/L3/cierre queda como deuda (docs/deuda-catalogo-errores-crossfile.md)— y referenciado desde l1-item-3 opción B y desde la selección de clasificación del paso 6. Los pasos 5 (generalización) y el caso inverso 9-40-41 no se tocaron: ahí el teorema se demuestra, el trío no entra."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Al buscar un cateto desconocido conociendo la hipotenusa y el otro cateto, sumar los cuadrados de ambos valores dados (hipotenusa² + cateto²) en vez de restarlos, aplicando el mismo patrón de 'sumar cuadrados' del caso de buscar la hipotenusa, sin notar que aquí el valor desconocido ya no es la hipotenusa."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Al buscar un cateto desconocido, tratar el cateto ya conocido como si fuera la hipotenusa —despejando con ese valor en el lugar de c— en vez de identificar que la hipotenusa es siempre el lado más largo, opuesto al ángulo recto."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Error aritmético al elevar un número al cuadrado: calcular a² como 2 × a (el doble del número) en vez de a × a, subestimando sistemáticamente el resultado."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Suma los catetos antes de elevar al cuadrado: calcula (a+b)² en vez de a²+b², confundiendo la propiedad distributiva del cuadrado de una suma con el teorema de Pitágoras."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Ver dos catetos parecidos a un trío pitagórico conocido —o a un múltiplo de uno— y dar por hecho que la hipotenusa es la de ese trío, sin comprobar que ambos catetos coincidan exactamente: por ejemplo, tratar un triángulo de catetos 8 y 16 como si fuera el trío 8-15-17 y responder 17. Incluye suponer que la hipotenusa siempre da un número entero. Cuando los catetos no calzan con ningún trío, la relación a² + b² = c² sigue valiendo, pero su resultado puede ser irracional."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: patio rectangular de 3 m × 4 m, diagonal 5 m; contraste bordear (3+4=7 m) vs. cruzar (5 m), ahorro 2 m",
     "problema: cancha de 15 m × 16 m, NO resuelta en este paso (solo elección de método); su diagonal √481 ≈ 21,9 m es irracional a propósito; ilustrativo sin resolver: 187 m × 340 m",

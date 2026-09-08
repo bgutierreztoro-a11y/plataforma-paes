@@ -34,28 +34,6 @@
       }
     ]
   },
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Al traducir el enunciado a una ecuación, plantear la suma de las dos cantidades igualada al valor dado en vez de su producto (o viceversa), obteniendo una ecuación lineal que no representa la relación cuadrática del problema."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Al expandir un producto de binomios o un cuadrado de binomio, distribuir la operación solo sobre uno de los términos en vez de todos, rompiendo la igualdad antes de resolver."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de las raíces reportadas — dar p y q en vez de −p y −q —, confundiendo el signo dentro del factor con el signo de la raíz."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: dos números pares positivos consecutivos, producto 48 (6 y 8)",
     "problema: mismo tipo, producto 168 (12 y 14); ilustrativo sin resolver: producto 15.180, solo para mostrar que el método no depende de números amables (no registrado como ejercicio nuevo)",

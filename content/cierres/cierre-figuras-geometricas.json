@@ -299,48 +299,6 @@
       "solucion": "Marco: el contorno visible del invernadero es la base del muro (64 m), sus dos costados (2 × 7 = 14 m) y las dos cumbreras (2 × 40 = 80 m), es decir 64 + 14 + 80 = 158 m. La línea donde el techo se apoya sobre el muro mide 64 m pero es un borde interior: el cálculo del estudiante la cuenta dos veces, y por eso su 286 m se pasa exactamente en 2 × 64 = 128 m. Lona: la altura del techo sale de Pitágoras con la mitad del ancho, 64 ÷ 2 = 32 m, y la cumbrera como hipotenusa: h = √(40² − 32²) = √(1.600 − 1.024) = √576 = 24 m. El área del techo es 64 × 24 ÷ 2 = 768 m². Comprobación: 32² + 24² = 1.024 + 576 = 1.600 = 40². ✓"
     }
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Al buscar un cateto desconocido conociendo la hipotenusa y el otro cateto, sumar los cuadrados de ambos valores dados (hipotenusa² + cateto²) en vez de restarlos, aplicando el mismo patrón de 'sumar cuadrados' del caso de buscar la hipotenusa, sin notar que aquí el valor desconocido ya no es la hipotenusa."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Error aritmético al elevar un número al cuadrado: calcular a² como 2 × a (el doble del número) en vez de a × a, subestimando sistemáticamente el resultado."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Olvida el factor 1/2 (o la división por 2) en una fórmula de área que lo incluye: calcula el área de un triángulo como base×altura, en vez de base×altura÷2, o el área de un trapecio como (baseMayor+baseMenor)×altura, en vez de dividir esa suma por 2 antes de multiplicar por la altura — tratando la figura como si fuera un paralelogramo completo en vez de la mitad de uno."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Calcula el perímetro de una figura con al menos un lado inclinado (como un paralelogramo cortado con un desplazamiento horizontal) usando la altura vertical como si fuera la medida de ese lado inclinado, en vez de calcular su longitud real aplicando el teorema de Pitágoras sobre la altura y el desplazamiento."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Usa el lado inclinado de la figura (por ejemplo, la cumbrera de un techo o un lado dado como hipotenusa) directamente como si fuera la altura al aplicar una fórmula de área o perímetro, en vez de calcular primero la altura real mediante el teorema de Pitágoras. Es el error inverso al de error-8: ahí se usaba la altura como si fuera el lado inclinado; aquí se usa el lado inclinado como si fuera la altura."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Al calcular el perímetro (o el material de borde) de una figura compuesta por dos piezas —como un muro rectangular con un techo triangular encima—, suma el contorno de cada pieza por separado incluyendo el borde donde ambas piezas se unen, en vez de contar solo el borde exterior visible de la figura completa (esa unión no es un borde real de la figura compuesta)."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Ver dos catetos parecidos a un trío pitagórico conocido —o a un múltiplo de uno— y dar por hecho que la hipotenusa es la de ese trío, sin comprobar que ambos catetos coincidan exactamente: por ejemplo, tratar un triángulo de catetos 8 y 16 como si fuera el trío 8-15-17 y responder 17. Incluye suponer que la hipotenusa siempre da un número entero. Cuando los catetos no calzan con ningún trío, la relación a² + b² = c² sigue valiendo, pero su resultado puede ser irracional."
-    }
-  ],
   "contextosNumericos": [
     "cierre-figuras-1 (cancha rectangular, resolver): 20 m × 50 m → diagonal √2.900 ≈ 53,9 m (IRRACIONAL: el atajo del trío no aplica; 20 y 50 son un near-miss de 20-48-52 = 5-12-13 ×4, que da el distractor de error-12)",
     "cierre-figuras-2 (terreno rectangular, modelar): diagonal 89 m, lado 39 m → otro lado 80 m",

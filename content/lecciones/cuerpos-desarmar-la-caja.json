@@ -29,32 +29,6 @@
     "π ≈ 3,14 escrito explícito en cada enunciado del cilindro: BloqueNumerica.tsx compara el input parseado contra el literal guardado con igualdad estricta (numero === respuestaCorrecta), sin tolerancia. Todos los valores del cilindro con r=10 son enteros exactos con 3,14 (628, 1256, 1884, 1570, 785).",
     "Sin interactivoSlider (docs/reglas-modulo.md regla 1: el concepto no lo exige, no hay ninguna magnitud continua que mover). Sin auditoria.constante: L1 no tiene una constante numérica única cuya circulación previa haya que vigilar; la notación formal 2(ab+bc+ac) aparece por primera vez en 'generalizacion', y ningún total de superficie se entrega antes del paso 'descubrimiento'."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Trasladar la estructura del perímetro a un cuerpo: sumar las tres dimensiones y multiplicar por dos, 2(a+b+c), como si la superficie se midiera sumando longitudes de aristas en vez de áreas de caras."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "En un cuerpo con tapa y base, contar solo las caras laterales y olvidar las dos que lo cierran arriba y abajo: en el cubo, calcular 4a² (las cuatro caras laterales) en vez de 6a²."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "En el cilindro, sumar el manto y una sola tapa, πr² + 2πrh, olvidando que el cuerpo tiene dos tapas iguales (una arriba y otra abajo) y no una."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "En el cilindro, calcular el manto con el área del círculo en lugar de su contorno: usar πr² · h (área de la base por la altura) donde corresponde 2πr · h (circunferencia por la altura)."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Confundir el radio con el diámetro del cilindro y usar uno donde va el otro dentro de cualquiera de sus fórmulas (tapas o manto), duplicando o partiendo a la mitad la medida que entra al cálculo."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: farol de papel para una fiesta de barrio, sin medidas (solo la idea de aplanar la red)",
     "problema: farol de papel cilíndrico, sin resolver (solo elección de método)",

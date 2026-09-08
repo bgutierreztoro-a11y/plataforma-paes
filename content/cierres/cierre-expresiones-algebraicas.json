@@ -298,56 +298,6 @@
       "solucion": "Por el camino de desarrollar y reducir: (x + 5)² = x² + 10x + 25 y (x − 5)² = x² − 10x + 25. Al restar la segunda de la primera hay que cambiar el signo de todos sus términos: x² + 10x + 25 − x² + 10x − 25. Los x² se cancelan, los términos independientes también, y quedan 10x + 10x = 20x. Por el camino de factorizar: la expresión es una diferencia de cuadrados con a = x + 5 y b = x − 5, así que equivale a (a + b)(a − b) = [(x + 5) + (x − 5)] · [(x + 5) − (x − 5)] = (2x)(10) = 20x. Las dos vías coinciden. Verificación numérica con x = 3: (8)² − (−2)² = 64 − 4 = 60, y 20 · 3 = 60 ✓."
     }
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-2",
-      "descripcion": "Multiplica las letras al sumar: convierte una suma de términos con partes literales distintas en un único término que las lleva a todas pegadas (de 4r + 7s pasa a 11rs)."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Pierde el signo al reducir: trata un término que se está restando como si se sumara, y el coeficiente del resultado sale mayor en vez de menor."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Le asigna a la letra un valor particular por su cuenta —normalmente 1— y cierra el resultado en un número, en vez de dejar la expresión indicada como la respuesta que es."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "Cruza los coeficientes entre las partes literales: hace bien las dos cuentas pero le entrega a una letra el resultado que le correspondía a la otra."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Desarrolla el cuadrado de una suma repartiéndolo entre los dos términos: escribe (a+b)² como a² + b², sin el término del medio. Es el error central del tema y el que sostiene la lección: quien lo comete no está sumando mal, está aplicando a una suma una propiedad que solo vale para un producto."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Encuentra el término del medio pero lo cuenta una sola vez: escribe (a+b)² como a² + ab + b² en vez de a² + 2ab + b², sin notar que el cruce ocurre dos veces."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Desarrolla el cuadrado de una suma y abandona el último término: escribe (a+b)² como a² + 2ab, perdiendo el cuadrado del segundo sumando."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Escribe la diferencia de dos cuadrados como un cuadrado de binomio: factoriza a² − b² como (a − b)², confundiendo la forma que produce dos factores distintos con la que produce un factor repetido. Es el reverso exacto del error-9: allá se perdía el término del medio al desarrollar, acá se inventa un término del medio que la expresión no tiene."
-    },
-    {
-      "id": "error-13",
-      "descripcion": "Aplica la forma de la diferencia de cuadrados a una suma: factoriza a² + b² como (a + b)(a − b), sin notar que ese producto devuelve una resta. Basta multiplicar los dos factores propuestos para ver que no reconstruyen la expresión de partida."
-    },
-    {
-      "id": "error-14",
-      "descripcion": "Aplica la forma sin comprobar que se cumplan sus condiciones: trata como diferencia de cuadrados una expresión cuyo segundo término no es un cuadrado, o usa el atajo del producto simétrico con dos factores que no se apartan lo mismo del número central."
-    },
-    {
-      "id": "error-15",
-      "descripcion": "Al calcular un producto simétrico, suma el cuadrado del desvío en vez de restarlo, y entrega un resultado mayor que el cuadrado del número central cuando siempre tiene que ser menor."
-    },
-    {
-      "id": "error-16",
-      "descripcion": "Entrega el cuadrado del número central sin descontar nada, olvidando que los dos factores se apartan de él y que ese apartamiento cuesta exactamente el cuadrado del desvío."
-    }
-  ],
   "contextosNumericos": [
     "COBERTURA: ocho ítems repartidos entre los tres focos del módulo. Los ítems 1 y 4 evalúan operatoria con términos semejantes (L1); el 2 y el 5, el cuadrado de un binomio (L2); el 3 y el 6, la factorización por diferencia de cuadrados (L3); el 7 contrasta las dos formas de L2 y L3; el 8 integra los tres.",
     "cierre-expresiones-1 (barcazas, resolver, baja): reducción de una expresión con dos partes literales y un término que se resta; distractores por signo perdido, por fundir las dos clases y por cruzar los coeficientes. Reutiliza el dominio de L1 sin repetir ninguna de sus expresiones.",

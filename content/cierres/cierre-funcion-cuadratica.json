@@ -282,24 +282,6 @@
       "solucion": "h(x)=−x²+8x−12. Ceros: −x²+8x−12=0 → x²−8x+12=0 → (x−2)(x−6)=0 → x=2 o x=6. Vértice: x_v=−8/(2×−1)=4, h(4)=−16+32−12=4. El punto medio entre los ceros es (2+6)/2=4, que coincide con x_v. Esto no es casualidad: toda parábola es simétrica respecto de la recta vertical x=x_v, así que si tiene dos ceros reales, estos son equidistantes del vértice y su punto medio es siempre x_v. Respuesta: A."
     }
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Al resolver la ecuación cuadrática completa (dos raíces reales), reportar como solución válida la raíz que no cumple la restricción del contexto (valor negativo cuando el enunciado exige una cantidad positiva: ancho, número de jugadores, número par), sin descartarla."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Al aplicar la propiedad del producto nulo — (x−p)(x−q)=0 ⟹ x=p ∨ x=q —, calcular y reportar solo una de las dos soluciones de la ecuación, omitiendo la segunda."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Al traducir el enunciado a una ecuación, plantear la suma de las dos cantidades igualada al valor dado en vez de su producto (o viceversa), obteniendo una ecuación lineal que no representa la relación cuadrática del problema."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de las raíces reportadas — dar p y q en vez de −p y −q —, confundiendo el signo dentro del factor con el signo de la raíz."
-    }
-  ],
   "contextosNumericos": [
     "cierre-cuadratica-1 (números pares consecutivos, resolver): producto 960 → (30, 32)",
     "cierre-cuadratica-2 (caja de cartón, representar): largo = ancho+5, área 150 (plantear ecuación)",

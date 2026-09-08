@@ -32,24 +32,6 @@
     "Solo vista: 'solido' en todas las visualizaciones (docs/diseno-modulo-cuerpos-geometricos.md: una red no dice nada sobre cuánto cabe adentro; las 3 celdas volumen × desarrollo no se usan). Las 3 cotas siempre rotuladas (regla 6). Ningún ítem pide comparar aristas a ojo.",
     "Dominios firmados 2026-08-27 (docs/diseno-modulo-cuerpos-geometricos.md, 'Estado de las firmas'): núcleo 'arenero techado' (reemplaza a 'piscina', que dio COLISIÓN en MA-22_Cuerpos_Geometricos.md), aplicación 'acuario de laboratorio'. Colisión verificada por Benjamín fuera de sesión: 'arenero', 'arena', 'acuario', 'pecera', 'laboratorio de biología' → LIMPIO. La caja cúbica de arena de repuesto y los acuarios cúbico y cilíndrico son variantes de forma dentro de esos dos dominios, mismo criterio que L1 (farol de caja/cubo/cilindro)."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-7",
-      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
-    },
-    {
-      "id": "error-8",
-      "descripcion": "En el cubo, calcular el volumen multiplicando la arista por 3 (la cantidad de dimensiones), arista × 3, en lugar de multiplicar la arista por sí misma tres veces, arista × arista × arista."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
-    }
-  ],
   "contextosNumericos": [
     "curiosidad: se menciona el cubo de la lección anterior donde superficie y volumen coincidían en 216, sin recalcularlo; sin medidas del arenero",
     "problema: arenero techado con forma de caja, sin medidas (solo elección de método)",
