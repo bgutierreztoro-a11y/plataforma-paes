@@ -58,15 +58,28 @@ test("el catálogo NO viaja al cliente, solo la descripción del distractor", ()
   assert.equal(serializado.includes("Este pertenece a otro ítem"), false);
 });
 
-test("con catálogo de 3+, el distractor trae exactamente 3 opciones, una de ellas la real", () => {
-  const catalogo = [
-    { id: "error-1", descripcion: "d1" },
-    { id: "error-2", descripcion: "d2" },
-    { id: "error-3", descripcion: "d3" },
-    { id: "error-4", descripcion: "d4" },
-    { id: "error-5", descripcion: "d5" },
-  ];
-  const limpia = sanitizarLeccion(leccionCon(catalogo));
+/* Igual que `leccionCon`, pero los tres distractores referencian tres errores
+   distintos. Es el mínimo para que el paso de autoexplicación exista: los
+   señuelos salen de los ids que el archivo referencia, no del catálogo. */
+function leccionConTresIds(catalogoErrores: { id: string; descripcion: string }[]): Leccion {
+  const leccion = leccionCon(catalogoErrores);
+  const [, b, c, d] = leccion.itemsPAES[0].alternativas;
+  b.errorCatalogado = "error-1";
+  c.errorCatalogado = "error-2";
+  d.errorCatalogado = "error-3";
+  return leccion;
+}
+
+const CATALOGO_5 = [
+  { id: "error-1", descripcion: "d1" },
+  { id: "error-2", descripcion: "d2" },
+  { id: "error-3", descripcion: "d3" },
+  { id: "error-4", descripcion: "d4" },
+  { id: "error-5", descripcion: "d5" },
+];
+
+test("con 3+ ids referenciados en el archivo, el distractor trae exactamente 3 opciones, una de ellas la real", () => {
+  const limpia = sanitizarLeccion(leccionConTresIds(CATALOGO_5));
   const [a, b] = limpia.itemsPAES[0].alternativas;
 
   assert.equal(b.opcionesAutoexplicacion?.length, 3);
@@ -76,13 +89,39 @@ test("con catálogo de 3+, el distractor trae exactamente 3 opciones, una de ell
   assert.equal(a.opcionesAutoexplicacion, undefined);
 });
 
-test("con menos de 3 errores en el catálogo, el ítem omite el paso de autoexplicación", () => {
-  const limpia = sanitizarLeccion(
-    leccionCon([
-      { id: "error-1", descripcion: "d1" },
-      { id: "error-2", descripcion: "d2" },
-    ]),
+test("los señuelos salen de los ids del archivo, no del catálogo del módulo", () => {
+  /* La propiedad que separa esta implementación de la anterior. El catálogo trae
+     cinco entradas y el archivo referencia tres: las opciones tienen que ser esas
+     tres y ninguna más. Si los señuelos salieran del catálogo, aparecerían d4 o
+     d5, que son errores que esta lección no ejercita. */
+  const limpia = sanitizarLeccion(leccionConTresIds(CATALOGO_5));
+  const [, b] = limpia.itemsPAES[0].alternativas;
+
+  assert.deepEqual(new Set(b.opcionesAutoexplicacion), new Set(["d1", "d2", "d3"]));
+  assert.equal(b.opcionesAutoexplicacion!.includes("d4"), false);
+  assert.equal(b.opcionesAutoexplicacion!.includes("d5"), false);
+});
+
+test("crecer el catálogo del módulo no mueve los señuelos de un archivo", () => {
+  /* El corolario operativo: la migración a catálogo canónico agranda el catálogo
+     que ve cada archivo, y eso no puede cambiar lo que el estudiante ve. */
+  const catalogoGrande = [
+    ...CATALOGO_5,
+    ...Array.from({ length: 11 }, (_, i) => ({ id: `error-${i + 6}`, descripcion: `d${i + 6}` })),
+  ];
+  const chico = sanitizarLeccion(leccionConTresIds(CATALOGO_5));
+  const grande = sanitizarLeccion(leccionConTresIds(catalogoGrande));
+
+  assert.deepEqual(
+    grande.itemsPAES[0].alternativas[1].opcionesAutoexplicacion,
+    chico.itemsPAES[0].alternativas[1].opcionesAutoexplicacion,
   );
+});
+
+test("con menos de 3 ids referenciados en el archivo, el ítem omite el paso de autoexplicación", () => {
+  /* El catálogo tiene cinco entradas y alcanzaría de sobra; lo que no alcanza es
+     lo que el archivo ejercita: `leccionCon` solo referencia error-1 y error-99. */
+  const limpia = sanitizarLeccion(leccionCon(CATALOGO_5));
   const [, b] = limpia.itemsPAES[0].alternativas;
   assert.equal(b.descripcionError, "d1", "la Capa 2 sí sigue disponible");
   assert.equal(b.opcionesAutoexplicacion, undefined);
@@ -90,20 +129,17 @@ test("con menos de 3 errores en el catálogo, el ítem omite el paso de autoexpl
 
 test("la posición de la opción real no es siempre la misma", () => {
   /* Si la verdadera cayera siempre primera, el patrón se aprende en dos ítems
-     y la pregunta deja de medir nada. */
-  const catalogo = Array.from({ length: 6 }, (_, i) => ({
-    id: `error-${i + 1}`,
-    descripcion: `d${i + 1}`,
-  }));
+     y la pregunta deja de medir nada. Se miran los tres distractores del mismo
+     ítem: cada uno tiene su error real en una posición distinta de la lista. */
+  const limpia = sanitizarLeccion(leccionConTresIds(CATALOGO_5));
+  const [, ...distractores] = limpia.itemsPAES[0].alternativas;
+
   const posiciones = new Set<number>();
-  for (const id of ["error-1", "error-2", "error-3"]) {
-    const leccion = leccionCon(catalogo);
-    leccion.itemsPAES[0].alternativas[1].errorCatalogado = id;
-    const [, b] = sanitizarLeccion(leccion).itemsPAES[0].alternativas;
-    const real = catalogo.find((e) => e.id === id)!.descripcion;
-    posiciones.add(b.opcionesAutoexplicacion!.indexOf(real));
+  for (const alt of distractores) {
+    const real = CATALOGO_5.find((e) => e.id === alt.errorCatalogado)!.descripcion;
+    posiciones.add(alt.opcionesAutoexplicacion!.indexOf(real));
   }
-  assert.ok(posiciones.size > 1, "la real cae en distintas posiciones según el ítem");
+  assert.ok(posiciones.size > 1, "la real cae en distintas posiciones según el distractor");
 });
 
 test("un id sin entrada en el catálogo se deja sin descripción, no se adivina", () => {

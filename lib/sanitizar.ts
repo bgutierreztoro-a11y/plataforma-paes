@@ -99,37 +99,88 @@ export type CierreCliente = Omit<CierreContenido, ClaveInterna | "items"> & {
  * Un id sin entrada se deja sin descripción en vez de adivinar.
  */
 /**
- * Las tres opciones del paso de autoexplicación para un error dado: la real y
- * dos señuelos, tomados del mismo catálogo recorriéndolo en círculo desde la
- * entrada real.
+ * Los ids que este archivo referencia con `errorCatalogado`, en cualquier
+ * profundidad, ordenados por número de id.
  *
- * Determinista, sin `Math.random`: el orden se rota según la posición del error
- * real en el catálogo, así la respuesta verdadera no cae siempre en el mismo
- * lugar —se aprendería el patrón en dos ítems— pero servidor y cliente
- * coinciden y no hay mismatch de hidratación.
+ * Es la fuente de los señuelos de autoexplicación, y por eso no se deriva del
+ * catálogo: el catálogo de un módulo es más grande que lo que cada archivo
+ * ejercita, así que sacar los señuelos de ahí le pediría al estudiante
+ * distinguir su error de errores que pertenecen a lecciones que todavía no hizo.
+ * Además ataría la pantalla al tamaño del catálogo: cada vez que el catálogo del
+ * módulo creciera se moverían los señuelos de todas las lecciones, sin que nadie
+ * lo hubiera pedido.
  */
-function opcionesDeAutoexplicacion(idReal: string, catalogo: Map<string, string>): string[] | undefined {
-  if (catalogo.size < 3) return undefined;
-  const ids = [...catalogo.keys()];
-  const i = ids.indexOf(idReal);
-  if (i === -1) return undefined;
+function idsReferenciados(valor: unknown, acumulado = new Set<string>()): Set<string> {
+  if (Array.isArray(valor)) {
+    for (const v of valor) idsReferenciados(v, acumulado);
+    return acumulado;
+  }
+  if (valor === null || typeof valor !== "object") return acumulado;
 
-  const tres = [0, 1, 2].map((k) => catalogo.get(ids[(i + k) % ids.length])!);
-  const giro = i % 3;
-  return [...tres.slice(giro), ...tres.slice(0, giro)];
+  const objeto = valor as Record<string, unknown>;
+  if (typeof objeto.errorCatalogado === "string") acumulado.add(objeto.errorCatalogado);
+  for (const anidado of Object.values(objeto)) idsReferenciados(anidado, acumulado);
+  return acumulado;
 }
 
-function resolverDescripcionesDeError(valor: unknown, catalogo: Map<string, string>): unknown {
+/** Orden estable por número de id ("error-2" antes que "error-10"), no alfabético. */
+function ordenarIds(ids: Iterable<string>): string[] {
+  const numero = (id: string) => {
+    const m = /error-(\d+)/.exec(id);
+    return m ? Number(m[1]) : Number.MAX_SAFE_INTEGER;
+  };
+  return [...ids].sort((a, b) => numero(a) - numero(b) || a.localeCompare(b));
+}
+
+/**
+ * Las tres opciones del paso de autoexplicación para un error dado: la real y
+ * dos señuelos, tomados de los ids que el propio archivo referencia,
+ * recorriéndolos en círculo desde la entrada real.
+ *
+ * Determinista, sin `Math.random`: el orden se rota según la posición del error
+ * real en la lista, así la respuesta verdadera no cae siempre en el mismo
+ * lugar —se aprendería el patrón en dos ítems— pero servidor y cliente
+ * coinciden y no hay mismatch de hidratación.
+ *
+ * Un archivo que referencia menos de tres errores distintos no tiene con qué
+ * armar la pregunta y omite el paso entero.
+ */
+function opcionesDeAutoexplicacion(
+  idReal: string,
+  catalogo: Map<string, string>,
+  idsDelArchivo: readonly string[],
+): string[] | undefined {
+  if (idsDelArchivo.length < 3) return undefined;
+  const i = idsDelArchivo.indexOf(idReal);
+  if (i === -1) return undefined;
+
+  const tres = [0, 1, 2].map((k) => catalogo.get(idsDelArchivo[(i + k) % idsDelArchivo.length]));
+  /* Un señuelo sin descripción dejaría un `undefined` en el payload del
+     cliente. Desde que la lista de señuelos dejó de derivarse del catálogo, eso
+     es posible en principio, así que el paso se omite en vez de mandar un
+     hueco. */
+  if (tres.some((d) => d === undefined)) return undefined;
+
+  const giro = i % 3;
+  const completas = tres as string[];
+  return [...completas.slice(giro), ...completas.slice(0, giro)];
+}
+
+function resolverDescripcionesDeError(
+  valor: unknown,
+  catalogo: Map<string, string>,
+  idsDelArchivo: readonly string[],
+): unknown {
   if (catalogo.size === 0) return valor;
   if (Array.isArray(valor)) {
-    return valor.map((v) => resolverDescripcionesDeError(v, catalogo));
+    return valor.map((v) => resolverDescripcionesDeError(v, catalogo, idsDelArchivo));
   }
   if (valor === null || typeof valor !== "object") return valor;
 
   const objeto = valor as Record<string, unknown>;
   const resuelto: Record<string, unknown> = {};
   for (const [clave, anidado] of Object.entries(objeto)) {
-    resuelto[clave] = resolverDescripcionesDeError(anidado, catalogo);
+    resuelto[clave] = resolverDescripcionesDeError(anidado, catalogo, idsDelArchivo);
   }
 
   const id = objeto.errorCatalogado;
@@ -137,7 +188,7 @@ function resolverDescripcionesDeError(valor: unknown, catalogo: Map<string, stri
     const descripcion = catalogo.get(id);
     if (descripcion) {
       resuelto.descripcionError = descripcion;
-      const opciones = opcionesDeAutoexplicacion(id, catalogo);
+      const opciones = opcionesDeAutoexplicacion(id, catalogo, idsDelArchivo);
       if (opciones) resuelto.opcionesAutoexplicacion = opciones;
     }
   }
@@ -152,7 +203,11 @@ function prepararParaCliente<T>(contenido: {
   catalogoErrores?: { id: string; descripcion: string }[];
 }): T {
   return quitarClavesInternas(
-    resolverDescripcionesDeError(contenido, catalogoDe(contenido)),
+    resolverDescripcionesDeError(
+      contenido,
+      catalogoDe(contenido),
+      ordenarIds(idsReferenciados(contenido)),
+    ),
   ) as T;
 }
 
