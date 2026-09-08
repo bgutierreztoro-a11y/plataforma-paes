@@ -1,6 +1,46 @@
 # Deuda técnica: resolución cross-file de `errorCatalogado`
 
-Estado: **registrado, sin corregir.** No bloquea ningún módulo — el patrón ya está en producción en varios de ellos y sistemas-2x2 no está peor que el resto. Se documenta acá para decidir la corrección aparte, con su propio alcance y prioridad.
+Estado: **RESUELTA — migración a canónico único completada el 2026-09-08.**
+
+`content/errores/<moduloId>.json` es ahora la fuente única del catálogo de
+errores de cada módulo. Ya no hay `catalogoErrores` embebido en ningún archivo de
+`content/`, y `lib/sanitizar.ts:catalogoDe()` resuelve `errorCatalogado`
+únicamente contra ese artefacto, vía el nuevo campo `moduloId` que todo archivo
+de lección y cierre declara (obligatorio en el validador desde este mismo día).
+
+La migración fue la sesión de Fobos Advance F0, commits `9ec800b..3958991`:
+
+- `9ec800b` — `moduloId` en los 44 archivos de contenido + el schema.
+- `56b895b` — crea los 7 `content/errores/` que faltaban, desde la unión de los
+  embebidos (cero divergencias de texto, medido).
+- `5ea6b31` — los señuelos de autoexplicación pasan a salir de los ids que el
+  archivo referencia, no del catálogo, para desacoplarlos del cambio de fuente.
+- `aed1648` — `catalogoDe()` resuelve contra el canónico, con unión transitoria
+  al embebido. Enciende la Capa 2 en los 266 portadores que estaban mudos (el
+  30,8%), módulo Porcentaje completo entre ellos.
+- `0d95abc` — `validarReferenciasResuelven`: chequeo inverso, todo id
+  referenciado tiene que resolver contra el canónico. Recorre los 864 portadores
+  de lecciones **y** cierres.
+- `1b80281` — retira `catalogo-sin-usar` (5 falsos positivos, 0 verdaderos) y
+  ensancha `catalogo-colgando` al árbol entero.
+- `fc162b5`, `dd4207b`, `43b5321`, `8a2e828` — retiran los 28 `catalogoErrores`
+  embebidos, por módulos, midiendo 864/864 portadores resueltos tras cada uno.
+- `643998d` — retira el respaldo al embebido, el espejo `validarCatalogoErrores`,
+  `MAPEO_LECCION_UNIDAD`, `MODULO_POR_LECCION` y `chequearDivergenciaDeCatalogo`:
+  con fuente única, un id no puede tener dos descripciones.
+- `3958991` — `moduloId` obligatorio en el validador, `catalogoErrores` fuera del
+  schema.
+
+**Qué se decidió y por qué**, contra las dos opciones que este documento
+planteaba: se tomó **(b) canónico único**, no (a) copia embebida por pieza. (a)
+habría parchado un módulo y dejado diez, y habría fabricado la divergencia que el
+guard existía para detectar. El paso extra de (b) —borrar la copia embebida y
+cablear la resolución contra el artefacto— es lo que se ejecutó.
+
+Lo que sigue es el registro histórico del mecanismo y el alcance, tal como se
+midió antes de decidir. Se conserva sin reescribir.
+
+---
 
 Descubierto: 2026-08-20, durante la auditoría matemática (Ronda 1) del módulo "Sistemas de ecuaciones lineales (2x2)".
 

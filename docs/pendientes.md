@@ -1,5 +1,44 @@
 # Pendientes técnicos
 
+## ✅ Migración del catálogo de errores a canónico único — completada (2026-09-08)
+
+Sesión de Fobos Advance F0, commits `9ec800b..3958991`.
+`content/errores/<moduloId>.json` es la fuente única; no queda ningún
+`catalogoErrores` embebido en `content/`. Detalle y decisión (opción b) en
+`docs/deuda-catalogo-errores-crossfile.md`. Entradas de este documento que cierra:
+
+- **"El guard `catalogo-divergente` no cubre los cierres"** (🔴, más abajo) —
+  sin objeto: sin copias embebidas no hay divergencia posible. El guard
+  `chequearDivergenciaDeCatalogo` se retiró (`643998d`). Antes de retirarlo se
+  ensanchó a `content/cierres/` (`1b80281`) y no encontró ninguna divergencia.
+- **"El espejo `MAPEO_LECCION_UNIDAD` genera `catalogo-sin-usar`…"** (🟡) —
+  resuelta. `catalogo-sin-usar` se retiró (5 falsos positivos, 0 verdaderos en
+  11 módulos); `MAPEO_LECCION_UNIDAD` y el espejo `validarCatalogoErrores` se
+  retiraron. Ninguna entrada de catálogo se borró.
+- **"`content/errores/` es una copia, no la fuente"** (🟡) — resuelta. Pasa a ser
+  LA fuente. `lib/sanitizar.ts` resuelve contra ella; el mapeo lección→unidad,
+  que este documento pedía "mantener a mano al día", desapareció.
+- **"Capa 2 sin catálogo embebido en Porcentaje"** (🟡) — resuelta. Los 109
+  portadores del módulo resuelven; verificado en pantalla a 390×844.
+- **"Ningún cierre tiene `catalogoErrores`"** (🟡) — resuelta. Los cierres
+  resuelven contra el canónico de su `moduloId`, igual que las lecciones. Los 4
+  cierres que estaban mudos (`ecuaciones`, `enteros`, `porcentaje`, `sistemas`)
+  se encendieron sin tocar su contenido.
+- **"`catalogo-sin-usar` da falso positivo… pendiente de ejecución"** (🟡, más
+  abajo) — ejecutada. El chequeo se retiró en `1b80281`.
+
+Lo que **NO** cierra esta migración, y sigue abierto:
+
+- `cierre-v0.json` sigue con 0 distractores mapeados. Ahora declara
+  `moduloId: funcion-lineal-afin` y podría resolver, pero no hay ids que
+  resolver. Mapear sus 24 distractores es trabajo de contenido.
+- La cobertura de `errorCatalogado` en distractores (68,3% global) no se tocó:
+  es deuda de contenido de otra naturaleza. F0 encendió la Capa 2 en los
+  portadores que YA tenían tag.
+- `l0-demo.json` recibió `moduloId: funcion-lineal-afin` para pasar el contrato
+  nuevo. Es andamiaje con 0 portadores; la etiqueta es inerte. **A confirmar por
+  Benja**: la alternativa era un caso especial por id en el validador.
+
 ## 🔴 `CATALOGO` de descripciones va 9 lecciones atrás: las de Cuadrática y Geometría se anuncian como "funciones lineales" (abierta 2026-08-26, al preparar la infraestructura de `cuerpos-geometricos`)
 
 `lib/descripcionesLecciones.tsx` tiene 25 entradas y hay 34 lecciones con
