@@ -223,7 +223,21 @@ export interface ErrorCatalogado {
 interface ContenidoBase {
   id: string;
   titulo: string;
+  /**
+   * Unidad del DAG (`content/diagnostico/dag-m1.json`) a la que pertenece el
+   * archivo. Es el declarador único de módulo: de acá sale el catálogo canónico
+   * de `content/errores/<moduloId>.json` que resuelve la Capa 2 del feedback.
+   *
+   * Opcional mientras la migración a canónico único avanza. `l0-demo` no lo
+   * lleva a propósito, porque no pertenece a ningún módulo.
+   */
+  moduloId?: string;
   proveniencia: Proveniencia;
+  /**
+   * Copia embebida del subconjunto del catálogo del módulo. Legado: es el
+   * respaldo que `lib/sanitizar.ts` usa mientras quede algún archivo sin migrar,
+   * y desaparece al final de la migración. La fuente es `moduloId`.
+   */
   catalogoErrores?: ErrorCatalogado[];
   contextosNumericos?: string[];
 }

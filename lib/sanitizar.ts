@@ -1,3 +1,8 @@
+/* Relativo y con extensión, no con el alias `@/`: este import es de VALOR, y
+   `node --test` (npm run test:unit) resuelve el TS sin los alias de tsconfig.
+   Los `import type` de este archivo sí pueden usar el alias porque TypeScript
+   los borra antes de que Node los vea. */
+import { catalogoDelModulo } from "./catalogoErrores.ts";
 import type {
   Alternativa,
   CierreContenido,
@@ -5,6 +10,23 @@ import type {
   Item,
   Leccion,
 } from "@/lib/tipos";
+
+/**
+ * FRONTERA DE CLIENTE. Este módulo pasó a importar `lib/catalogoErrores`, que lee
+ * disco con `node:fs`, así que ya no es puro y no puede entrar al bundle del
+ * navegador.
+ *
+ * Hoy no entra: los diez archivos de `components/` y `lib/` que lo referencian lo
+ * hacen con `import type` (`AlternativaCliente`, `ItemCliente`, `LeccionCliente`,
+ * `CierreCliente`, `DiagnosticoCliente`), y TypeScript borra esos imports al
+ * compilar. Los únicos imports de valor están en los tres server components de
+ * `app/`. Verificado con `npm run build`.
+ *
+ * Si alguna vez hace falta un import de VALOR desde el cliente, no se cambia acá:
+ * se mueve el tipo a `lib/tipos.ts` o se recibe el catálogo por parámetro.
+ * Convertir un `import type` de éstos en import normal rompe el build del
+ * cliente.
+ */
 
 /**
  * Claves que existen en content/*.json para el proceso editorial (proveniencia,
@@ -195,11 +217,40 @@ function resolverDescripcionesDeError(
   return resuelto;
 }
 
-function catalogoDe(contenido: { catalogoErrores?: { id: string; descripcion: string }[] }) {
-  return new Map((contenido.catalogoErrores ?? []).map((e) => [e.id, e.descripcion]));
+/**
+ * El catálogo contra el que se resuelve este archivo: la UNIÓN del embebido y el
+ * canónico del módulo (`content/errores/<moduloId>.json`), con el canónico
+ * ganando cuando un id está en los dos.
+ *
+ * Unión y no "el canónico si existe, si no el embebido". Esa versión introducía
+ * una regresión medida: `lineal-pendiente-e-intercepto` referencia `error-8` a
+ * `error-12`, que viven en su array embebido y todavía no en el canónico de
+ * `funcion-lineal-afin` —ese módulo tiene dos L1 y solo una está migrada—, así
+ * que un canónico no vacío pero incompleto dejaba mudos 18 portadores que antes
+ * resolvían. Con la unión, ningún portador pierde resolución en ningún punto de
+ * la migración.
+ *
+ * Que el canónico gane los empates es seguro y no cosmético: se verificó con
+ * `node -e` que los 32 pares de catálogos con ids comunes del repo coinciden
+ * carácter a carácter, canónico contra embebido incluido, así que en la
+ * transición las descripciones que ve el estudiante no cambian.
+ *
+ * La rama del embebido es de transición y se retira cuando no quede ningún
+ * `catalogoErrores` en `content/`. Ahí la unión degenera en el canónico solo.
+ */
+function catalogoDe(contenido: {
+  moduloId?: string;
+  catalogoErrores?: { id: string; descripcion: string }[];
+}) {
+  const catalogo = new Map((contenido.catalogoErrores ?? []).map((e) => [e.id, e.descripcion]));
+  for (const [id, descripcion] of catalogoDelModulo(contenido.moduloId)) {
+    catalogo.set(id, descripcion);
+  }
+  return catalogo;
 }
 
 function prepararParaCliente<T>(contenido: {
+  moduloId?: string;
   catalogoErrores?: { id: string; descripcion: string }[];
 }): T {
   return quitarClavesInternas(

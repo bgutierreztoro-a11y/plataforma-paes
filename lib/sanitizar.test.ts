@@ -159,6 +159,37 @@ test("sin catalogoErrores (caso de todos los cierres) no se resuelve nada", () =
   }
 });
 
+/* Los dos que siguen tocan content/errores/porcentaje.json de verdad, a
+   propósito: la unión de catálogos es el punto donde la migración puede dejar
+   contenido mudo, y probarla contra un stub no diría si la ruta y el prefijo de
+   ids están bien resueltos. */
+test("con moduloId, el distractor resuelve contra el catálogo canónico del módulo", () => {
+  const leccion = leccionCon(undefined);
+  leccion.moduloId = "porcentaje";
+  const limpia = sanitizarLeccion(leccion);
+  const [, b] = limpia.itemsPAES[0].alternativas;
+
+  /* error-1 no está en ningún catálogo embebido de esta lección de prueba: si
+     resuelve, salió de content/errores/porcentaje.json, y el prefijo de unidad
+     ("porcentaje/error-1") se quitó al construir el Map. */
+  assert.ok(b.descripcionError, "la Capa 2 sale del canónico sin catálogo embebido");
+  assert.match(b.descripcionError!, /porcentaje del CAMBIO/);
+});
+
+test("el canónico no tapa un id que solo vive en el catálogo embebido", () => {
+  /* La regresión que esto fija: preferir el canónico cuando existe, en vez de
+     unir los dos, dejaba mudos los 18 portadores de lineal-pendiente-e-intercepto
+     que referencian error-8 a error-12, porque el canónico de funcion-lineal-afin
+     está incompleto mientras ese módulo tenga dos L1 y solo una migrada. */
+  const leccion = leccionCon([{ id: "error-99", descripcion: "solo en el embebido" }]);
+  leccion.moduloId = "porcentaje";
+  const limpia = sanitizarLeccion(leccion);
+  const [, b, c] = limpia.itemsPAES[0].alternativas;
+
+  assert.match(b.descripcionError!, /porcentaje del CAMBIO/, "error-1 sale del canónico");
+  assert.equal(c.descripcionError, "solo en el embebido", "error-99 sigue saliendo del embebido");
+});
+
 test("los ids locales NO se resuelven entre archivos: un cierre sin catálogo queda sin Capa 2", () => {
   /* "error-4" en un cierre que mezcla dos unidades es ambiguo por diseño del
      contenido actual. Resolverlo contra cualquier catálogo ajeno mostraría la
