@@ -96,6 +96,13 @@ Caso medido hoy, `node scripts/auditar-leccion.mjs content/lecciones/enteros-ope
 usan `enteros-operar-y-comparar.json` (L2) y `enteros-problemas-en-contexto.json`
 (L3); `error-4` lo usa `cierre-enteros-racionales.json` (ítem `cierre-enteros-5`,
 alternativa B). Los cuatro son 🔴 falsos en la corrida del auditor sobre la L1.
+
+**Corrección de conteo (2026-09-08, `node -e`):** `error-4` tiene **dos**
+consumidores, no uno. Además del cierre, lo usa `enteros-operar-y-comparar.json`
+en `l2-item-3` alternativa D. Y `error-6` no lo usa el cierre: sus tres
+consumidores están en L2 (`feedbackPorError` valor 0.75 del paso 3) y en L3
+(opción c del paso 8, y `l3-item-3` alternativa C). El desglose completo de los
+cinco ids está en la entrada de `catalogo-sin-usar` más abajo.
 `npm run validar` no lo marca: `validarCatalogoLocal` de `scripts/validar-contenido.mjs`
 corre solo para `tipo: "cierre"`, no para lecciones. O sea que no bloquea el build,
 pero ensucia toda corrida del auditor de Ronda 1 con cuatro 🔴 que no lo son.
@@ -139,6 +146,14 @@ preexistentes (`1.5`, `180`, `280`). Los borradores vivieron en `scratchpad/`
 
 **Lote B sigue diferido** a una sesión de Fobos Advance full (no era parte de
 este cierre).
+
+**✅ Lote B cerrado el 2026-09-08**, en la sesión de Fobos Advance F0 que lo
+esperaba. No se resolvió migrando `MAPEO_LECCION_UNIDAD` como se había planeado:
+se midieron los consumidores reales de los 5 ids en lecciones y cierres, y los
+cinco tienen consumidor. El chequeo `catalogo-sin-usar` es el defectuoso, no el
+contenido, así que ninguna entrada de catálogo se borra. Ver la entrada
+"`catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido"
+más abajo para la medición y la decisión.
 
 ## 🟡 Namespace de ids de unidad: el DAG y el registro usan nombres distintos (abierta 2026-08-14)
 
@@ -298,7 +313,25 @@ punto de integración — y ahí se pierde exactamente la garantía que el
 validador ya construyó: que "aislante" sea un hecho calculado del DAG, nunca
 una afirmación de quien escribe el ítem.
 
-## 🔴 `funcion-lineal-afin`: catálogo de errores sin fusionar, bloquea sus ítems de diagnóstico (abierta 2026-08-02)
+## ✅ `funcion-lineal-afin`: catálogo de errores sin fusionar, bloquea sus ítems de diagnóstico (abierta 2026-08-02) — el gatillo duro se cayó (2026-09-08)
+
+**La colisión que hacía de esto una decisión de contenido ya no existe.** El
+commit `e33b262` (F0.2) renumeró `lineal-pendiente-e-intercepto.json` a `error-8`
+a `error-12`, así que los dos catálogos embebidos del módulo ya no reciclan
+ningún id con significado distinto. Verificado con `node -e` el 2026-09-08:
+intersección vacía entre los dos conjuntos de ids.
+
+Consecuencia: **fusionar el catálogo del módulo pasó de decisión de contenido a
+tarea mecánica.** Sumar `error-8` a `error-12` a
+`content/errores/funcion-lineal-afin.json` ya no exige criterio humano sobre qué
+error es cuál, porque no hay dos candidatos para el mismo id. El gatillo duro
+sobre los ítems de diagnóstico de esta unidad queda levantado.
+
+**Corrección de conteo:** el párrafo de abajo dice "los 6 errores migrados".
+`content/errores/funcion-lineal-afin.json` tiene **7** entradas,
+`funcion-lineal-afin/error-1` a `funcion-lineal-afin/error-7`, espejo exacto de
+las 7 de `lineal-patrones-de-cambio.json`. Faltan las 5 de
+`lineal-pendiente-e-intercepto.json`: el canónico cubre 7 de las 12 del módulo.
 
 Los 6 errores migrados a `content/errores/funcion-lineal-afin.json` vienen de
 un solo L1 (`lineal-patrones-de-cambio.json`). El otro L1 de la misma unidad,
@@ -373,6 +406,14 @@ compara y falla si divergen — pero el validador solo corre cuando alguien toca
 uno de los dos archivos o corre `npm run validar`. Nada impide que las dos
 copias existan un rato desincronizadas entre una edición y la siguiente
 corrida del validador.
+
+**✅ Colisión resuelta el 2026-09-08 (commit `e33b262`, F0.2).** Los dos
+catálogos embebidos siguen existiendo, pero ya no reciclan ids:
+`lineal-patrones-de-cambio.json` usa `error-1` a `error-7` y
+`lineal-pendiente-e-intercepto.json` usa `error-8` a `error-12`. Intersección
+vacía, verificada con `node -e`. Lo que sigue vigente de este párrafo es que el
+canónico cubre 7 de las 12 entradas del módulo, no que haya ambigüedad de
+significado. El párrafo original queda abajo como registro.
 
 **Colisión sin resolver: `funcion-lineal-afin` tiene dos L1 con catálogo
 embebido.** `lineal-patrones-de-cambio.json` (6 errores) y
@@ -1550,7 +1591,24 @@ si `content/errores/` deja de ser fuente única en general (ver "`content/errore
 es una copia, no la fuente" más arriba) — ahí se resuelven las dos deudas
 juntas en vez de una por módulo.
 
-## 🟡 Desajuste del slider en `porcentaje-concepto.json`: sin `auditoria.sliderJustificado` (abierta 2026-08-14, confirmada con `npm run auditar`)
+## ✅ Desajuste del slider en `porcentaje-concepto.json`: sin `auditoria.sliderJustificado` (abierta 2026-08-14, confirmada con `npm run auditar`) — sin objeto (2026-09-08)
+
+**El bloque `interactivoSlider` ya no está en el archivo**, así que no hay nada
+que justificar. Medido con `node -e` sobre las tres lecciones del módulo el
+2026-09-08:
+
+```
+porcentaje-concepto:     interactivoSlider: NINGUNO   ids de campo con cifra: ninguno
+porcentaje-rebaja-doble: interactivoSlider: NINGUNO   ids de campo con cifra: ninguno
+porcentaje-volver-atras: interactivoSlider: NINGUNO   ids de campo con cifra: ninguno
+```
+
+Los otros hallazgos que este párrafo nombra como preexistentes también se
+cerraron: los tres `id-con-cifra` no existen (los ids de campo no llevan cifra en
+ninguno de los tres archivos) y el `campo-sin-unidad` se resolvió declarando
+`factorMultiplicador` en `auditoria.camposAdimensionales` (commit `747b8c4`).
+`npm run auditar` mide hoy cero en las tres categorías. Lo que sigue queda como
+registro.
 
 `content/lecciones/porcentaje-concepto.json` usa un bloque `interactivoSlider`
 (paso 5, descubrimiento) sin declarar `auditoria.sliderJustificado` (≥20
@@ -1571,7 +1629,22 @@ decidir si `npm run auditar` (sin argumentos) debe correr en CI — hoy solo se
 corre a mano por archivo, así que este hallazgo lleva abierto sin bloquear
 nada desde antes del 2026-08-14.
 
-## 🔴 Guard `catalogo-divergente`: 10 hallazgos reales entre `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` (abierta 2026-08-14, backlog de otro módulo — confirmada, no introducida por Proporcionalidad)
+## ✅ Guard `catalogo-divergente`: 10 hallazgos reales entre `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` (abierta 2026-08-14, backlog de otro módulo — confirmada, no introducida por Proporcionalidad) — resuelta (2026-09-08)
+
+**Resuelta por la renumeración del commit `e33b262` (F0.2).**
+`lineal-pendiente-e-intercepto.json` pasó a numerar `error-8` a `error-12`, así
+que ya no comparte ni un id con `lineal-patrones-de-cambio.json` (`error-1` a
+`error-7`) y el guard no tiene qué comparar. Medido con `node -e` el 2026-09-08:
+
+```
+ids de patrones-de-cambio    : error-1, error-2, error-3, error-4, error-5, error-6, error-7
+ids de pendiente-e-intercepto: error-8, error-9, error-10, error-11, error-12
+INTERSECCION: VACIA -> ninguna colision posible
+```
+
+`npm run auditar` sobre los 34 archivos de `content/lecciones/` mide hoy **cero**
+hallazgos `catalogo-divergente`. Lo que sigue queda como registro de qué estaba
+mal.
 
 `npm run auditar` (sin argumentos, que audita todo `content/lecciones/`) sale
 en rojo hoy por un motivo ajeno a Proporcionalidad: los catálogos embebidos de
@@ -1601,7 +1674,49 @@ resuelven juntas. Mientras tanto, `npm run auditar` sin argumentos **no está
 en verde** por un motivo estructural preexistente al módulo Proporcionalidad;
 no confundir con una regresión de esta sesión.
 
-## 🔴 `catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido: 5 entradas que no son borrables (abierta 2026-09-04, al ejecutar el triage mecánico de `npm run auditar`)
+## 🟡 `catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido: 5 entradas que no son borrables (abierta 2026-09-04) — diagnóstico cerrado, corrección decidida y pendiente de ejecución (2026-09-08)
+
+**Cierra el Lote B de F0.2, y no por la vía que se había planeado.** El Lote B
+quedaba diferido a una sesión de Fobos Advance esperando la migración de
+`MAPEO_LECCION_UNIDAD`. Se cierra antes y más barato: **el chequeo es el que está
+mal, no el contenido.**
+
+**Medición del 2026-09-08, con `node -e`, sobre los 11 módulos.** Se cruzó cada id
+de catálogo embebido contra todos sus consumidores en `content/lecciones/` **y**
+`content/cierres/` del mismo módulo. Resultado: `ids definidos SIN NINGUN uso en
+todo el modulo: ninguno`, en los once. `catalogo-sin-usar` tiene **5 disparos y 5
+falsos positivos: cero verdaderos positivos en todo el repo.**
+
+Los cinco, con sus consumidores reales:
+
+| id | archivo que lo embebe | consumidores |
+|---|---|---|
+| `error-4` | `enteros-operar-y-ordenar` | 2: `enteros-operar-y-comparar` `l2-item-3` alt D, y `cierre-enteros-racionales` `cierre-enteros-5` alt B |
+| `error-6` | `enteros-operar-y-ordenar` | 3, todos en lecciones: `enteros-operar-y-comparar` paso3/bloque1 `feedbackPorError` valor 0.75, `enteros-problemas-en-contexto` paso8/bloque1 opción c, `enteros-problemas-en-contexto` `l3-item-3` alt C |
+| `error-7` | `enteros-operar-y-ordenar` | 10: 7 en `enteros-operar-y-comparar`, 3 en `cierre-enteros-racionales` |
+| `error-8` | `enteros-operar-y-ordenar` | 6: 4 en `enteros-operar-y-comparar`, 2 en `cierre-enteros-racionales` |
+| `error-7` | `lineal-patrones-de-cambio` | 5, todos en `lineal-modelamiento-paes` |
+
+**Corrección al conteo de este documento.** El párrafo de abajo, y la entrada del
+2026-09-07 más arriba, registran para `error-4` un único consumidor, el del
+cierre. Son **dos**: también lo usa `enteros-operar-y-comparar` en `l2-item-3`
+alternativa D. Y `error-6` no pasa por el cierre en absoluto, sus tres
+consumidores están en L2 y L3.
+
+**Decisión firmada el 2026-09-08.** No se borra ni una entrada de ningún catálogo,
+embebido o canónico. Los 5 🔴 se cierran tocando el auditor. Un chequeo con cero
+verdaderos positivos en once módulos no se calibra, se retira o se reescribe:
+un catálogo canónico de módulo no tiene por qué estar consumido al 100% por las
+lecciones publicadas hoy. La forma exacta (retirar el chequeo, o reescribirlo
+como 🟡 que escanee lecciones y cierres juntos) se decide en el plan de migración
+a canónico único.
+
+**Pendiente de ejecución:** el cambio en `scripts/auditar-leccion.mjs` todavía no
+está hecho. Mientras no lo esté, los 5 🔴 siguen apareciendo en cada corrida.
+Ojo con el gemelo: `validarCatalogoLocal`
+(`scripts/validar-contenido.mjs:129`, llamado solo para `tipo: "cierre"` en la
+línea 217) implementa la misma regla "colgando" y arrastra el mismo defecto para
+los cierres que sí tienen catálogo embebido. Los dos se tratan juntos.
 
 `error-4`, `error-6`, `error-7` y `error-8` de `catalogoErrores` en
 `enteros-operar-y-ordenar.json`, y `error-7` en
