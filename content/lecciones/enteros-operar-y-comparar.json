@@ -426,5 +426,13 @@
     "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
+  },
+  "auditoria": {
+    "colisionesPermitidas": [
+      {
+        "valor": 1.5,
+        "motivo": "El 1,5 es la respuesta correcta de harinaTotal en el paso 3 (2 bizcochos x 3/4 de taza = 6/4 = 1,5 tazas). Reaparece como alternativa incorrecta b del paso 7, donde el problema es otro -3 tazas repartidas en porciones de 1/2 taza- y el 1,5 representa multiplicar en vez de dividir (error-7). El orden es favorable: el estudiante confirma el 1,5 en el paso 3 antes de verlo como alternativa errada de un problema distinto en el paso 7, y ese feedback explica su propio error sin contradecir el paso 3. Ver docs/reglas-modulo.md seccion 3b."
+      }
+    ]
   }
 }
