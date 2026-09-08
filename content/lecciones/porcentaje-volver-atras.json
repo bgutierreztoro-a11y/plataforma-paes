@@ -568,5 +568,10 @@
     "declaracionOriginalidad": "Enunciados, contextos numéricos y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se corrió fuera de esta sesión mediante el mecanismo 2 de CLAUDE.md y devolvió NO en los siete términos consultados, incluida una keyword dedicada a medir la adyacencia con el framing de backward-solve que §6 prohíbe (ver _notasInternas). ADVERTENCIA: esta declaración cubre el proceso de redacción y la verificación de dominio registrada, NO una auditoría de originalidad completa — esa sigue pendiente, igual que la revisión matemática independiente.",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
     "fecha": "2026-08-12"
+  },
+  "auditoria": {
+    "camposAdimensionales": {
+      "divisorRecargo": "Pide el divisor que revierte un recargo del 20% (1,20): es la razon total / entrada, adimensional por ser cociente de dos montos en pesos. El enunciado pide el divisor, no un precio."
+    }
   }
 }

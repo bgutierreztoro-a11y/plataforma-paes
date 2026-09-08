@@ -67,6 +67,25 @@ Resolver en runtime a qué módulo pertenece la lección/cierre (vía `lib/modul
 
 - **2026-08-30 — nota de conteo, `cuerpos-geometricos` L3:** el mensaje del commit `53ecf20` dice «27 referencias errorCatalogado». El conteo real de claves `errorCatalogado` es **25**, idéntico en `9a4b34c`, `53ecf20` y `2715d4f` — el anexo de ese commit no agregó ninguna. El 27 salió de contar ocurrencias del literal en el texto del archivo (25 claves + 2 menciones en prosa, en `pasos[1]._notasInternas[0]` y en la propia declaración de originalidad), no claves, y quedó auto-invalidado al escribirlo, porque subió el literal de 27 a 28. La convención de este documento es **claves reales**: la entrada anterior («de 27 a 29» para `figuras-problemas-con-forma.json`) sí corresponde a claves — hoy son 29, verificado. Rondas 1 y 2 sobre el párrafo anexado: **OK / NO BLOQUEA**, sin hallazgos. El commit ya está pusheado y no se reescribe. La cifra dentro de `proveniencia.declaracionOriginalidad` se corrigió en `52d2b13` (25); el mensaje del commit `53ecf20` queda como está, sin reescribir.
 
+## 2026-09-07 — `enteros-racionales`: descripciones que solo viven legibles en el catálogo embebido de la L1
+
+Registrado en la segunda pasada de F0.2. No es una propagación manual: es la foto previa a una limpieza propuesta, para que esa limpieza no borre texto sin respaldo.
+
+**La limpieza propuesta.** `enteros-operar-y-ordenar.json` (L1 del módulo `enteros-racionales`) embebe el catálogo completo del módulo (`error-1` a `error-8`), pero sus propios distractores solo usan `error-1`, `error-2`, `error-3`, `error-5`. Por eso `node scripts/auditar-leccion.mjs content/lecciones/enteros-operar-y-ordenar.json` marca 🔴 `catalogo-sin-usar` en `error-4`, `error-6`, `error-7` y `error-8` en toda corrida. La idea que gatilla esta nota es sacar el catálogo embebido de la L1 y dejar como única fuente `content/errores/enteros-racionales.json` (ver la entrada de `docs/pendientes.md` del 2026-09-07). Antes de borrar el array embebido hay que fijar qué texto se pierde de vista.
+
+**Dónde vive hoy cada descripción.** Las ocho entradas están **por duplicado**: en el `catalogoErrores` embebido de `enteros-operar-y-ordenar.json` y, con el prefijo `enteros-racionales/`, en `content/errores/enteros-racionales.json` (igualdad verificada carácter a carácter). El array embebido de la L1 es el que `lib/sanitizar.ts` resuelve y el que el auditor cruza; el artefacto `content/errores/` existe pero "es una copia, no la fuente" (ver más abajo en este documento). Si se borra el array embebido sin re-cablear `lib/sanitizar.ts`, la Capa 2 de estos ids deja de resolver aunque el texto siga en el artefacto.
+
+**Las cuatro descripciones, literales** (de `enteros-operar-y-ordenar.json`, `catalogoErrores`):
+
+- `error-4`: `"Comparar dos fracciones fijándose solo en el numerador (cree que 3/4 > 2/3 porque 3 > 2, ignorando el denominador)."`
+- `error-6`: `"Sumar denominadores al sumar o restar fracciones (calcula a/b + c/d como (a+c)/(b+d))."`
+- `error-7`: `"Creer que dividir siempre achica (al ver un resultado de división mayor que el dividendo, rechaza el resultado o busca dónde 'se perdió' un paso)."`
+- `error-8`: `"invertir el orden de la división de fracciones (calcular el divisor entre el dividendo, p. ej. resolver 3/4 ÷ 3 en vez de 3 ÷ 3/4)."`
+
+**Corrección al encargo de F0.2.** El encargo pedía registrar solo `error-6`, `error-7` y `error-8`, y aclarar que `error-4` "no lo usa nadie y puede eliminarse sin pérdida". Verificado contra el repo: **`error-4` sí se usa.** `content/cierres/cierre-enteros-racionales.json`, ítem `cierre-enteros-5`, alternativa B (`"La de naranja (7/18), porque 7 es mayor que 5 (los numeradores)."`) lo referencia por `errorCatalogado`. Borrar `error-4` dejaría ese distractor apuntando a un id inexistente. Por eso queda registrado junto con los otros tres. Que ningún distractor de la **L1** lo use es cierto, y es exactamente la causa del 🔴 `catalogo-sin-usar`: el error es de comparación de fracciones (contenido de L2 y del cierre), no de enteros negativos (contenido de L1).
+
+**Cobertura pedagógica sin tag.** `error-4` además se trabaja en el paso `reflexion` de `enteros-operar-y-comparar.json`, pero ese bloque es `verdaderoFalso` y el schema (`content/schema/leccion.schema.json`) no admite `errorCatalogado` en ese tipo de bloque. O sea que el módulo aborda el error, pero no puede etiquetarlo ahí. Cualquier migración a canónico-único debería conservar `error-4`.
+
 ## Qué no cubre este documento
 
-Elegir entre (a) y (b), o una tercera opción, es una decisión de arquitectura pendiente — no se toma acá. Este documento solo registra el mecanismo y el alcance verificado para que esa decisión se tome con datos exactos.
+Elegir entre (a) y (b), o una tercera opción, es una decisión de arquitectura pendiente, no se toma acá. Este documento solo registra el mecanismo y el alcance verificado para que esa decisión se tome con datos exactos.

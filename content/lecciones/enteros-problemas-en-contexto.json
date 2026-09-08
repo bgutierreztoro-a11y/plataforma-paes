@@ -372,42 +372,6 @@
       "solucion": "La base (−1,6 °C) es la temperatura mayor; el refugio (−3,1 °C) es la menor. Cuántos grados más fría está el refugio = (−1,6) − (−3,1) = −1,6 + 3,1 = 1,5 °C. ✓"
     },
     {
-      "id": "l3-item-2",
-      "habilidad": "argumentar",
-      "dificultad": "alta",
-      "enunciado": "Un estudiante afirma: 'Como 5,4 es mayor que 2,9, entonces −5,4 °C es una temperatura mayor que −2,9 °C.' ¿Es correcta esta afirmación?",
-      "alternativas": [
-        {
-          "clave": "A",
-          "texto": "Sí, porque el número 'sin signo' más grande es siempre el mayor, tenga o no signo negativo.",
-          "esCorrecta": false,
-          "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −5,4 y −2,9, el de mayor valor absoluto (5,4) es en realidad el MENOR.",
-          "errorCatalogado": "error-5"
-        },
-        {
-          "clave": "B",
-          "texto": "No: −5,4 °C es menor que −2,9 °C, porque en la recta numérica −5,4 está más a la izquierda (más lejos de 0 hacia los negativos) que −2,9.",
-          "esCorrecta": true,
-          "feedback": "Correcto. −5,4 < −2,9, así que la afirmación del estudiante es falsa."
-        },
-        {
-          "clave": "C",
-          "texto": "Sí, porque −5,4 representa una temperatura más baja, y 'más baja' siempre significa 'matemáticamente mayor'.",
-          "esCorrecta": false,
-          "feedback": "'Más baja' (más fría) y 'matemáticamente mayor' no son lo mismo con negativos: son preguntas opuestas. −5,4 es efectivamente la más fría, pero eso la hace la MENOR como número, no la mayor.",
-          "errorCatalogado": "error-5"
-        },
-        {
-          "clave": "D",
-          "texto": "Sí, porque en un termómetro, mientras más lejos esté la aguja del cero, mayor es el número que marca, sin importar hacia qué lado apunte.",
-          "esCorrecta": false,
-          "feedback": "Esa regla ignora el signo: la aguja puede estar lejos de 0 hacia la izquierda (negativo) o hacia la derecha (positivo), y eso cambia todo. Lejos de 0 hacia la izquierda es un número MENOR, no mayor.",
-          "errorCatalogado": "error-5"
-        }
-      ],
-      "solucion": "En la recta numérica, −5,4 está más a la izquierda que −2,9, así que −5,4 < −2,9. La afirmación del estudiante compara los valores absolutos (5,4 y 2,9) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es B. ✓"
-    },
-    {
       "id": "l3-item-3",
       "habilidad": "resolver",
       "dificultad": "media",
@@ -442,6 +406,42 @@
         }
       ],
       "solucion": "Aumento total = 2 × 3/4 = 6/4 = 1,5 °C. Temperatura final = −5,2 + 1,5 = −3,7 °C. Comprobación: como el aumento (1,5) es menor que la distancia a 0 (5,2), la temperatura final sigue siendo negativa. ✓"
+    },
+    {
+      "id": "l3-item-2",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma: 'Como 5,4 es mayor que 2,9, entonces −5,4 °C es una temperatura mayor que −2,9 °C.' ¿Es correcta esta afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque el número 'sin signo' más grande es siempre el mayor, tenga o no signo negativo.",
+          "esCorrecta": false,
+          "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −5,4 y −2,9, el de mayor valor absoluto (5,4) es en realidad el MENOR.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "B",
+          "texto": "No: −5,4 °C es menor que −2,9 °C, porque en la recta numérica −5,4 está más a la izquierda (más lejos de 0 hacia los negativos) que −2,9.",
+          "esCorrecta": true,
+          "feedback": "Correcto. −5,4 < −2,9, así que la afirmación del estudiante es falsa."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí, porque −5,4 representa una temperatura más baja, y 'más baja' siempre significa 'matemáticamente mayor'.",
+          "esCorrecta": false,
+          "feedback": "'Más baja' (más fría) y 'matemáticamente mayor' no son lo mismo con negativos: son preguntas opuestas. −5,4 es efectivamente la más fría, pero eso la hace la MENOR como número, no la mayor.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, porque en un termómetro, mientras más lejos esté la aguja del cero, mayor es el número que marca, sin importar hacia qué lado apunte.",
+          "esCorrecta": false,
+          "feedback": "Esa regla ignora el signo: la aguja puede estar lejos de 0 hacia la izquierda (negativo) o hacia la derecha (positivo), y eso cambia todo. Lejos de 0 hacia la izquierda es un número MENOR, no mayor.",
+          "errorCatalogado": "error-5"
+        }
+      ],
+      "solucion": "En la recta numérica, −5,4 está más a la izquierda que −2,9, así que −5,4 < −2,9. La afirmación del estudiante compara los valores absolutos (5,4 y 2,9) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es B. ✓"
     }
   ],
   "contextosNumericos": [

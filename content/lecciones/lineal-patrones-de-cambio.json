@@ -360,7 +360,7 @@
               "id": "estampillasMartinaTotal",
               "etiqueta": "Total de estampillas",
               "respuestaCorrecta": 48,
-              "unidad": ""
+              "unidad": "estampillas"
             }
           ],
           "feedbackPorError": [

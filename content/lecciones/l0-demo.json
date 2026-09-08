@@ -286,6 +286,9 @@
       "solucion": "Diferencias consecutivas: 1.400−1.000=400, 1.800−1.400=400 (pendiente constante). El valor en x=0 es 1.000 (intercepto). Ecuación: y = 400x + 1.000."
     }
   ],
+  "auditoria": {
+    "sliderJustificado": "Andamiaje tecnico: l0-demo prueba la cascara de la plataforma de punta a punta, y este paso ejercita el propio componente interactivoSlider. Los conceptos declarados (pendiente, intercepto, ecuacion de la recta y = mx + b) exigen la recta, igual que en L2 del modulo funcion lineal y afin. Este archivo no es contenido pedagogico real y sera reemplazado por el pipeline /nueva-leccion."
+  },
   "proveniencia": {
     "fuentesAnalisis": [],
     "declaracionOriginalidad": "Contenido de demostración técnica creado desde cero para probar la cáscara del MVP de punta a punta (checkpoints del PROMPT 1 de docs/prompt-mvp.md). No es contenido pedagógico real, nunca pasará a estado publicable, y será reemplazado por el pipeline /nueva-leccion.",

@@ -549,5 +549,10 @@
     "declaracionOriginalidad": "Enunciados, contextos numéricos y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ADVERTENCIA: esta declaración cubre el proceso de redacción, NO una auditoría de colisión — la verificación contra fuentes-analisis-aisladas/ está pendiente y debe correrla el autor fuera de esta sesión (ver _notasInternas de nivel raíz).",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
     "fecha": "2026-08-11"
+  },
+  "auditoria": {
+    "camposAdimensionales": {
+      "factorMultiplicador": "Pide el factor por el que se multiplica para obtener el 30% (0,30): una razon pura entre dos cantidades de la misma especie. El enunciado pide explicitamente el multiplicador, no el resultado en personas; no hay magnitud que declarar."
+    }
   }
 }

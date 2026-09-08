@@ -588,5 +588,10 @@
     "declaracionOriginalidad": "Enunciados, contextos numéricos y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se corrió fuera de esta sesión mediante el mecanismo 2 de CLAUDE.md y devolvió NO en los seis términos consultados (ver _notasInternas). ADVERTENCIA: esta declaración cubre el proceso de redacción y la verificación de dominio registrada, NO una auditoría de originalidad completa — esa sigue pendiente, igual que la revisión matemática independiente.",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; pendiente de revisión matemática y de originalidad humanas",
     "fecha": "2026-08-12"
+  },
+  "auditoria": {
+    "camposAdimensionales": {
+      "factorUnico": "Pide el factor unico equivalente a dos descuentos encadenados (0,72): es el cociente precio final / precio de lista, razon adimensional entre dos montos en la misma moneda. El enunciado pide el multiplicador, no un precio."
+    }
   }
 }
