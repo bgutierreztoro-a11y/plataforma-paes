@@ -22,13 +22,10 @@
  * ninguno cubre al otro.
  *
  * SEVERIDADES. 🔴 falla la corrida (exit 1). 🟡 se reporta y no falla, y hoy lo
- * usan dos chequeos. El de colisión numérica entre archivos, que tiene falsos
+ * usa un solo chequeo: el de colisión numérica entre archivos, que tiene falsos
  * positivos conocidos y documentados: un dígito suelto reaparece de manera
  * legítima con otro significado y otras unidades (el 40 de esta unidad es «40 %»
- * en el módulo Porcentaje). Y el guard antidivergencia de catálogos, cuando la
- * lección no declara módulo en MODULO_POR_LECCION: ahí el chequeo se omite y lo
- * dice, en vez de comparar a ciegas contra catálogos de otro módulo. Con
- * --estricto los 🟡 también fallan.
+ * en el módulo Porcentaje). Con --estricto los 🟡 también fallan.
  *
  * PARAMETRIZACIÓN. Opcionalmente la lección declara un bloque raíz `auditoria`:
  *
@@ -381,112 +378,14 @@ function chequearItemsPAES(data, add) {
 }
 
 /**
- * Mapeo manual lección → módulo, para el guard antidivergencia de abajo.
- *
- * El contrato de lección no declara a qué módulo pertenece —igual que pasa en
- * scripts/validar-contenido.mjs con MAPEO_LECCION_UNIDAD, y por la misma
- * razón—, así que la correspondencia vive acá a mano. No se deriva del id ni
- * del nombre de archivo a propósito: `lineal-patrones-de-cambio` y
- * `lineal-pendiente-e-intercepto` comparten módulo sin compartir prefijo
- * completo, y `ecuaciones-lineales` no lleva ninguno.
- *
- * Manténlo al día: una lección con catalogoErrores que no esté acá se reporta
- * como chequeo omitido (🟡) en vez de compararse a ciegas. Comparar catálogos
- * de módulos distintos daría puro ruido, porque los ids son locales al módulo
- * ("error-1" significa cosas distintas en Enteros y en Proporcionalidad).
- *
- * El guard antidivergencia SÍ mira `content/cierres/` como archivo "otro" con
- * el que comparar (2026-09-08): un cierre con catálogo embebido que diverja de
- * las lecciones de su módulo ahora se reporta. Lo que sigue lección-only es la
- * corrida principal —`archivosDeLeccion()` alimenta el bucle de `auditar()` y
- * el chequeo de `tipo` corta un cierre pasado a mano—, así que un cierre nunca
- * es el archivo audit*ado*, solo el comparado.
+ * El guard antidivergencia entre catálogos embebidos del mismo módulo
+ * (`catalogo-divergente`) y su tabla `MODULO_POR_LECCION` se retiraron
+ * (2026-09-08) junto con el último `catalogoErrores` embebido de `content/`: con
+ * una sola fuente canónica por módulo, un id no puede tener dos descripciones,
+ * así que no hay divergencia posible. La cobertura de "todo id referenciado
+ * resuelve" la da `validarReferenciasResuelven` de scripts/validar-contenido.mjs
+ * contra el canónico. Ver docs/deuda-catalogo-errores-crossfile.md.
  */
-const MODULO_POR_LECCION = {
-  'ecuaciones-lineales': 'ecuaciones-inecuaciones',
-  'enteros-operar-y-ordenar': 'enteros-racionales',
-  'expresiones-sumar-lo-que-se-parece': 'expresiones-algebraicas',
-  'expresiones-rectangulo': 'expresiones-algebraicas',
-  'expresiones-deshacer-producto': 'expresiones-algebraicas',
-  'cierre-expresiones-algebraicas': 'expresiones-algebraicas',
-  'lineal-patrones-de-cambio': 'funcion-lineal-afin',
-  'lineal-pendiente-e-intercepto': 'funcion-lineal-afin',
-  'proporcionalidad-directa': 'proporcionalidad',
-  'proporcionalidad-inversa': 'proporcionalidad',
-  'proporcionalidad-reconocer': 'proporcionalidad',
-  'potencias-multiplicar-corto': 'potencias-raices',
-  'potencias-raiz-escondida': 'potencias-raices',
-  'potencias-problemas-en-contexto': 'potencias-raices',
-  'sistemas-dos-historias': 'sistemas-2x2',
-  'sistemas-rectas-no-se-cruzan': 'sistemas-2x2',
-  'sistemas-plantear-antes-resolver': 'sistemas-2x2',
-  'cuadratica-sube-y-baja': 'funcion-cuadratica',
-  'cuadratica-punto-mas-alto': 'funcion-cuadratica',
-  'cuadratica-donde-toca-el-eje': 'funcion-cuadratica',
-  'cierre-funcion-cuadratica': 'funcion-cuadratica',
-  'figuras-triangulo-no-se-rompe': 'figuras-geometricas',
-  'figuras-borde-y-superficie': 'figuras-geometricas',
-  'figuras-problemas-con-forma': 'figuras-geometricas',
-  'cuerpos-desarmar-la-caja': 'cuerpos-geometricos',
-  'cuerpos-cuanto-cabe-adentro': 'cuerpos-geometricos',
-  'cuerpos-problemas-en-contexto': 'cuerpos-geometricos',
-};
-
-/**
- * 8b. Guard antidivergencia entre catálogos embebidos del MISMO módulo.
- *
- * Desde la decisión de arquitectura del 2026-08-14 (docs/reglas-modulo.md §5),
- * cada lección embebe el subconjunto del catálogo de su módulo que realmente
- * usa, copiado literalmente. Eso es lo único que hace funcionar la Capa 2 del
- * feedback, porque lib/sanitizar.ts resuelve `errorCatalogado` estrictamente
- * contra el catálogo del mismo archivo — pero crea una fuente doble sin dueño.
- *
- * Este chequeo es el precio de esa decisión: si dos lecciones del mismo módulo
- * declaran el mismo id, la descripción tiene que coincidir carácter a carácter.
- * Que diverjan en silencio sería tener dos versiones del mismo error catalogado
- * sin que nadie se entere, y el estudiante vería una u otra según por qué
- * lección haya entrado. Divergencia = 🔴, no advertencia.
- *
- * Un id reciclado con otro significado dentro del mismo módulo cae acá también,
- * y es el mismo defecto visto desde el otro lado: los ids son únicos por módulo.
- */
-/** Módulo de un archivo: `moduloId` (declarado desde 2026-09-08) y, si falta, la tabla vieja. */
-const moduloDe = (obj) => obj?.moduloId ?? MODULO_POR_LECCION[obj?.id];
-
-function chequearDivergenciaDeCatalogo(data, rutaPropia, raizContent, add) {
-  const propio = data?.catalogoErrores;
-  if (!Array.isArray(propio) || propio.length === 0) return;
-
-  const modulo = moduloDe(data);
-  if (!modulo) {
-    add('🟡', 'catalogo-modulo-no-declarado',
-      `"${data?.id}" tiene catalogoErrores pero no declara moduloId ni está en MODULO_POR_LECCION: guard antidivergencia OMITIDO`);
-    return;
-  }
-
-  const mios = new Map();
-  for (const e of propio) if (e?.id) mios.set(e.id, e.descripcion);
-
-  for (const ruta of archivosConCatalogoPosible(raizContent)) {
-    if (resolve(ruta) === resolve(rutaPropia)) continue;
-    let otro;
-    try {
-      otro = JSON.parse(readFileSync(ruta, 'utf8'));
-    } catch {
-      continue; // ese JSON roto ya lo reporta `npm run validar`
-    }
-    if (moduloDe(otro) !== modulo) continue;
-    if (!Array.isArray(otro?.catalogoErrores)) continue;
-
-    for (const e of otro.catalogoErrores) {
-      if (!e?.id || !mios.has(e.id)) continue;
-      if (mios.get(e.id) !== e.descripcion) {
-        add('🔴', 'catalogo-divergente',
-          `"${e.id}" tiene una descripción distinta en ${basename(ruta)} (mismo módulo "${modulo}"): las copias embebidas se copian literalmente y los ids no se reciclan con otro significado`);
-      }
-    }
-  }
-}
 
 /**
  * 8. Colisión de cifras distintivas contra los contextosNumericos de las demás
@@ -533,22 +432,6 @@ function* archivosDeLeccion(raizContent) {
   }
 }
 
-/**
- * Lecciones y cierres: los dos sitios donde puede vivir un `catalogoErrores`
- * embebido. Solo lo usa el guard antidivergencia para tener al cierre como
- * archivo comparado; la corrida principal de `auditar()` sigue siendo
- * lección-only, sobre `archivosDeLeccion`.
- */
-function* archivosConCatalogoPosible(raizContent) {
-  yield* archivosDeLeccion(raizContent);
-  const dir = join(raizContent, 'cierres');
-  if (!existsSync(dir)) return;
-  for (const ent of readdirSync(dir, { withFileTypes: true })) {
-    if (ent.isDirectory() || !ent.name.endsWith('.json') || ent.name.startsWith('_')) continue;
-    yield join(dir, ent.name);
-  }
-}
-
 function auditar(ruta, opciones, raizContent) {
   const hallazgos = [];
   const add = (severidad, chequeo, detalle) => hallazgos.push({ severidad, chequeo, detalle });
@@ -574,7 +457,6 @@ function auditar(ruta, opciones, raizContent) {
   chequearCamposNumericos(data, add);
   chequearSlider(data, opciones.permitirSlider, add);
   chequearItemsPAES(data, add);
-  chequearDivergenciaDeCatalogo(data, ruta, raizContent, add);
   chequearColisionEntreArchivos(data, ruta, raizContent, add);
 
   return hallazgos;

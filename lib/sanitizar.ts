@@ -218,41 +218,20 @@ function resolverDescripcionesDeError(
 }
 
 /**
- * El catálogo contra el que se resuelve este archivo: la UNIÓN del embebido y el
- * canónico del módulo (`content/errores/<moduloId>.json`), con el canónico
- * ganando cuando un id está en los dos.
+ * El catálogo contra el que se resuelve este archivo: el canónico de su módulo,
+ * `content/errores/<moduloId>.json`, única fuente desde que se retiraron todos
+ * los `catalogoErrores` embebidos de `content/`.
  *
- * Unión y no "el canónico si existe, si no el embebido". Esa versión introducía
- * una regresión medida: `lineal-pendiente-e-intercepto` referencia `error-8` a
- * `error-12`, que viven en su array embebido y todavía no en el canónico de
- * `funcion-lineal-afin` —ese módulo tiene dos L1 y solo una está migrada—, así
- * que un canónico no vacío pero incompleto dejaba mudos 18 portadores que antes
- * resolvían. Con la unión, ningún portador pierde resolución en ningún punto de
- * la migración.
- *
- * Que el canónico gane los empates es seguro y no cosmético: se verificó con
- * `node -e` que los 32 pares de catálogos con ids comunes del repo coinciden
- * carácter a carácter, canónico contra embebido incluido, así que en la
- * transición las descripciones que ve el estudiante no cambian.
- *
- * La rama del embebido es de transición y se retira cuando no quede ningún
- * `catalogoErrores` en `content/`. Ahí la unión degenera en el canónico solo.
+ * Durante la migración esto era la unión del canónico y el array embebido; el
+ * respaldo se retiró en el commit que sacó el último embebido. Un archivo sin
+ * `moduloId` (hoy solo `l0-demo`, sin portadores) devuelve un Map vacío y
+ * `resolverDescripcionesDeError` no toca nada.
  */
-function catalogoDe(contenido: {
-  moduloId?: string;
-  catalogoErrores?: { id: string; descripcion: string }[];
-}) {
-  const catalogo = new Map((contenido.catalogoErrores ?? []).map((e) => [e.id, e.descripcion]));
-  for (const [id, descripcion] of catalogoDelModulo(contenido.moduloId)) {
-    catalogo.set(id, descripcion);
-  }
-  return catalogo;
+function catalogoDe(contenido: { moduloId?: string }) {
+  return catalogoDelModulo(contenido.moduloId);
 }
 
-function prepararParaCliente<T>(contenido: {
-  moduloId?: string;
-  catalogoErrores?: { id: string; descripcion: string }[];
-}): T {
+function prepararParaCliente<T>(contenido: { moduloId?: string }): T {
   return quitarClavesInternas(
     resolverDescripcionesDeError(
       contenido,

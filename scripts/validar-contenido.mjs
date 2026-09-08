@@ -140,21 +140,16 @@ function validarCatalogoLocal(data, campoItems, errores) {
 
 /**
  * Chequeo inverso: todo `errorCatalogado` que el archivo referencia, en
- * cualquier profundidad, tiene que RESOLVER — estar en el catálogo canónico de
- * su módulo (`content/errores/<moduloId>.json`) o en el `catalogoErrores`
- * embebido del propio archivo.
+ * cualquier profundidad, tiene que RESOLVER contra el catálogo canónico de su
+ * módulo (`content/errores/<moduloId>.json`). Verifica exactamente lo que
+ * `catalogoDe()` de `lib/sanitizar.ts` garantiza, así que un id que pasa acá es
+ * un id que el estudiante va a ver resuelto en la Capa 2.
  *
- * Es la misma unión que hace `catalogoDe()` en `lib/sanitizar.ts` desde la
- * migración a canónico único: verifica exactamente lo que esa resolución
- * garantiza, así que un id que pasa acá es un id que el estudiante va a ver
- * resuelto en la Capa 2.
- *
- * Reemplaza al espejo `validarCatalogoErrores` (canónico → embebido de la L1)
- * como red de cobertura, y es más ancho: recorre TODOS los portadores
- * —`bloque.alternativas`, `feedbackPorError`, `feedbackPorPrediccion`, el campo
- * `items` de los cierres— y no solo los distractores con catálogo local. El
- * espejo sigue activo hasta que se retiren los catálogos embebidos; mientras
- * tanto los dos corren y no hay ventana sin cobertura.
+ * Es la red de cobertura que dejó el espejo canónico ↔ embebido de la L1 al
+ * retirarse (ver docs/deuda-catalogo-errores-crossfile.md), y más ancha:
+ * recorre TODOS los portadores —`bloque.alternativas`, `feedbackPorError`,
+ * `feedbackPorPrediccion`, el campo `items` de los cierres— y no solo los
+ * distractores.
  *
  * `erroresCatalogados` es el mapa `"<unidad>/error-N" → unidad` de
  * `cargarErroresCatalogados`. Sin él (la llamada de runtime desde
@@ -172,17 +167,13 @@ function validarReferenciasResuelven(data, erroresCatalogados, errores) {
   if (referenciados.size === 0) return;
 
   const moduloId = data?.moduloId;
-  const embebidos = new Set(
-    (data?.catalogoErrores ?? []).map((e) => e?.id).filter((id) => esTexto(id)),
-  );
 
   for (const id of referenciados) {
-    const enCanonico = esTexto(moduloId) && erroresCatalogados.has(`${moduloId}/${id}`);
-    if (enCanonico || embebidos.has(id)) continue;
+    if (esTexto(moduloId) && erroresCatalogados.has(`${moduloId}/${id}`)) continue;
     errores.push(
       esTexto(moduloId)
-        ? `errorCatalogado "${id}" no resuelve: no está en content/errores/${moduloId}.json ni en el catalogoErrores embebido`
-        : `errorCatalogado "${id}" no resuelve: el archivo no declara moduloId y no tiene catalogoErrores embebido`,
+        ? `errorCatalogado "${id}" no resuelve: no está en content/errores/${moduloId}.json`
+        : `errorCatalogado "${id}" no resuelve: el archivo no declara moduloId`,
     );
   }
 }
@@ -350,58 +341,6 @@ function* archivosDeContenido(dir) {
   }
 }
 
-/**
- * Mapeo manual lección → unidad del DAG.
- *
- * El contrato de lección no declara a qué unidad pertenece: esa
- * correspondencia hoy solo existe en prosa, en docs/pendientes.md y
- * docs/calibracion-lecciones-e-items.md. Sin esta tabla, la regla de abajo no
- * tendría con qué comparar un content/errores/<unidad>.json contra el
- * catálogo embebido de su L1.
- *
- * Mantenla a mano al día: si se agrega un L1 nuevo con catalogoErrores y su
- * content/errores/<unidad>.json correspondiente, hay que sumar la entrada
- * acá. Sin ella, una divergencia entre ambos catálogos pasa desapercibida —
- * justo lo que esta regla existe para evitar.
- */
-const MAPEO_LECCION_UNIDAD = {
-  'enteros-operar-y-ordenar': 'enteros-racionales',
-  // 'ecuaciones-lineales': 'ecuaciones-inecuaciones',  ← excluida a propósito (2026-08-03)
-  //
-  // Es la primera unidad donde content/errores/<unidad>.json pasa a ser la
-  // ÚNICA fuente, que es lo que el commit 195bea7 decía querer ("catalogo de
-  // errores como artefacto propio") pero no llegó a implementar: el espejo de
-  // abajo dejó a los dos archivos acoplados como co-fuentes, no como canónico
-  // + legado.
-  //
-  // El acople se volvió un bloqueo real cuando la unidad creció más allá de su
-  // L1: las lecciones de inecuaciones aportaron error-6..error-10, que son
-  // errores de desigualdades y NO tienen nada que hacer dentro del
-  // catalogoErrores embebido de ecuaciones-lineales.json (una lección que no
-  // enseña inecuaciones). Con la entrada activa, el espejo exigía copiarlos
-  // ahí para que `npm run validar` pasara.
-  //
-  // Efecto de excluirla: el catalogoErrores embebido de ecuaciones-lineales.json
-  // queda congelado como legado —se conserva, no se toca, y nadie lo compara
-  // contra nada—, mientras content/errores/ecuaciones-inecuaciones.json crece
-  // solo. Se pierde el guard antidivergencia para ESTA unidad; es el precio de
-  // que el artefacto canónico pueda existir de verdad.
-  //
-  // Las otras dos unidades siguen con el espejo ACTIVO y no cambian de
-  // comportamiento: enteros-racionales (vía enteros-operar-y-ordenar) y
-  // funcion-lineal-afin (vía lineal-patrones-de-cambio). Cuando se migren —o
-  // sea, cuando se les borre el catalogoErrores embebido a sus L1 y el
-  // artefacto quede como única fuente— sus entradas salen de acá también y
-  // este mapeo desaparece completo, junto con la regla de espejo.
-  'lineal-patrones-de-cambio': 'funcion-lineal-afin',
-};
-
-function leccionesDe(unidad) {
-  return Object.entries(MAPEO_LECCION_UNIDAD)
-    .filter(([, u]) => u === unidad)
-    .map(([leccionId]) => leccionId);
-}
-
 function esCatalogoErrores(ruta) {
   const partes = resolve(ruta).split(sep);
   return (
@@ -421,7 +360,7 @@ function* archivosDeCatalogoErrores(dirContent) {
   }
 }
 
-/** La raíz `content/` que contiene a `ruta`, para ubicar `content/lecciones/` desde ahí. */
+/** La raíz `content/` que contiene a `ruta`. */
 function raizContentDe(ruta) {
   const partes = resolve(ruta).split(sep);
   const i = partes.lastIndexOf('content');
@@ -429,16 +368,17 @@ function raizContentDe(ruta) {
 }
 
 /**
- * Valida un `content/errores/<unidad>.json`.
+ * Contrato de forma de un `content/errores/<unidad>.json`: tiene `unidad`, tiene
+ * `errores[]` no vacío, y cada entrada lleva `id` con el prefijo `<unidad>/`,
+ * `descripcion`, y sin ids locales duplicados.
  *
- * Regla dura (2026-08-02): si la unidad también tiene catálogo embebido en su
- * L1 (`MAPEO_LECCION_UNIDAD`), los ids locales (sin el prefijo "<unidad>/") y
- * las descripciones deben coincidir exactamente entre ambos archivos. Es la
- * única fuente doble que existe hoy para el mismo error catalogado; que
- * diverjan en silencio sería tener dos versiones del mismo error sin que
- * nadie se entere. Divergencia = error, no warning.
+ * El espejo canónico ↔ catálogo embebido de la L1 (`MAPEO_LECCION_UNIDAD`) se
+ * retiró junto con el último `catalogoErrores` embebido de `content/`: sin fuente
+ * doble no hay divergencia posible. La cobertura de "todo id referenciado
+ * resuelve" la da `validarReferenciasResuelven` sobre lecciones y cierres,
+ * contra este mismo artefacto.
  */
-export function validarCatalogoErrores(ruta, dirLecciones) {
+export function validarCatalogoErrores(ruta) {
   let data;
   try {
     data = JSON.parse(readFileSync(ruta, 'utf8'));
@@ -453,7 +393,7 @@ export function validarCatalogoErrores(ruta, dirLecciones) {
   const lista = data?.errores;
   if (!Array.isArray(lista) || lista.length === 0) return ['falta "errores"[] con al menos un error'];
 
-  const idsLocales = new Map(); // id local (sin prefijo) → descripción
+  const idsLocales = new Set();
   const prefijo = `${unidad}/`;
   lista.forEach((e, i) => {
     const p = `errores[${i}]`;
@@ -462,38 +402,8 @@ export function validarCatalogoErrores(ruta, dirLecciones) {
     if (!e.id.startsWith(prefijo)) return errores.push(`${p}: id "${e.id}" debe empezar con "${prefijo}"`);
     const local = e.id.slice(prefijo.length);
     if (idsLocales.has(local)) errores.push(`${p}: id local "${local}" duplicado`);
-    idsLocales.set(local, e.descripcion);
+    idsLocales.add(local);
   });
-  if (errores.length > 0) return errores;
-
-  for (const leccionId of leccionesDe(unidad)) {
-    const rutaLeccion = join(dirLecciones, `${leccionId}.json`);
-    if (!existsSync(rutaLeccion)) continue;
-    let leccion;
-    try {
-      leccion = JSON.parse(readFileSync(rutaLeccion, 'utf8'));
-    } catch {
-      continue; // el validador de lecciones ya reporta ese JSON roto por su cuenta
-    }
-    const embebido = leccion?.catalogoErrores;
-    if (!Array.isArray(embebido)) continue;
-
-    const idsEmbebidos = new Map();
-    for (const e of embebido) if (esTexto(e?.id)) idsEmbebidos.set(e.id, e.descripcion);
-
-    for (const [local, descripcion] of idsLocales) {
-      if (!idsEmbebidos.has(local)) {
-        errores.push(`"${unidad}/${local}" no existe en catalogoErrores de ${leccionId}.json`);
-      } else if (idsEmbebidos.get(local) !== descripcion) {
-        errores.push(`"${unidad}/${local}" diverge de catalogoErrores de ${leccionId}.json (la descripción no coincide)`);
-      }
-    }
-    for (const local of idsEmbebidos.keys()) {
-      if (!idsLocales.has(local)) {
-        errores.push(`catalogoErrores de ${leccionId}.json tiene "${local}", ausente en content/errores/${unidad}.json`);
-      }
-    }
-  }
 
   return errores;
 }
@@ -815,7 +725,7 @@ if (arg === '--hook') {
   let errores;
   let esLeccion = false;
   if (esErrores) {
-    errores = validarCatalogoErrores(filePath, join(raizContentDe(filePath), 'lecciones'));
+    errores = validarCatalogoErrores(filePath);
   } else if (esDag) {
     errores = validarDagM1Archivo(filePath);
   } else if (esItem) {
@@ -845,7 +755,7 @@ if (arg) {
   }
   let errores;
   if (esCatalogoErrores(ruta)) {
-    errores = validarCatalogoErrores(ruta, join(raizContentDe(ruta), 'lecciones'));
+    errores = validarCatalogoErrores(ruta);
   } else if (esDagM1(ruta)) {
     errores = validarDagM1Archivo(ruta);
   } else if (esItemDiagnostico(ruta)) {
@@ -869,10 +779,9 @@ for (const ruta of archivosDeContenido(raiz)) {
   n++;
   if (!reportar(ruta, validarArchivo(ruta, erroresCatalogados))) ok = false;
 }
-const dirLecciones = join(raiz, 'lecciones');
 for (const ruta of archivosDeCatalogoErrores(raiz)) {
   n++;
-  if (!reportar(ruta, validarCatalogoErrores(ruta, dirLecciones))) ok = false;
+  if (!reportar(ruta, validarCatalogoErrores(ruta))) ok = false;
 }
 
 const rutaDagM1 = join(raiz, 'diagnostico', 'dag-m1.json');
