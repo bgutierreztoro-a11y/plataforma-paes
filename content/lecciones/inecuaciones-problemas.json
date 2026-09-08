@@ -19,7 +19,7 @@
   "_notasInternas": [
     "Convertida desde docs/guion-inecuaciones-2-problemas.md. Tercera lección del módulo 'Ecuaciones e inecuaciones de primer grado'; sucede a inecuaciones-resolucion.json y cierra el módulo. Asume que esa lección ya se hizo: el paso 3 y el paso 7 dan por sabido resolver y el criterio de borde.",
     "DÓNDE ESTÁ LA DIFICULTAD, Y POR QUÉ LA LECCIÓN SE ESTRUCTURA ASÍ. Acá la matemática es MÁS FÁCIL que en la lección anterior: casi todas las inecuaciones se resuelven en dos pasos y sin inversión de sentido. El error no está en resolver, está en los dos extremos. (1) Entrada: el castellano codifica DOS decisiones independientes en una sola frase y las esconde — la dirección (¿techo o piso?) y el borde (¿el número mencionado pertenece?). 'A lo más 30' y 'menos de 30' apuntan igual y difieren en el borde; 'al menos 30' y 'a lo más 30' comparten borde y difieren en dirección. Quien trata la traducción como una sola decisión acierta la mitad de las veces por azar. Por eso el paso 5 separa explícitamente las dos decisiones en una tabla de dos entradas, y el estudiante la construye antes de recibirla. (2) Salida: el conjunto solución es continuo, pero el contexto casi siempre exige un entero, y la dirección del redondeo la decide el contexto, no la matemática.",
-    "EL 12,5 DEL PASO 8 ES DELIBERADO — NO CAMBIAR SIN CONSERVAR LA PROPIEDAD. Los números 150 y 12 se eligieron para que 150 ÷ 12 dé exactamente 12,5, o sea un decimal justo en el medio. Con 12,3 o 12,8 el estudiante puede acertar por instinto de 'redondeo al entero más cercano' sin haber entendido nada; con 12,5 el redondeo escolar es ambiguo y la ÚNICA forma de decidir es releer qué se está contando. Las dos partes del paso salen de esa misma división y redondean para lados opuestos (13 tarros hacia arriba, 12 murales hacia abajo), que es la demostración más dura posible de que ninguna regla mecánica de redondeo sobrevive. Si en revisión se cambian los números, CONSERVAR que el decimal sea 0,5 exacto o el paso pierde su filo.",
+    "EL 10,5 DEL PASO 8 ES DELIBERADO — NO CAMBIAR SIN CONSERVAR LA PROPIEDAD. Los números 126 y 12 se eligieron para que 126 ÷ 12 dé exactamente 10,5, o sea un decimal justo en el medio. Con 10,3 o 10,8 el estudiante puede acertar por instinto de 'redondeo al entero más cercano' sin haber entendido nada; con 10,5 el redondeo escolar es ambiguo y la ÚNICA forma de decidir es releer qué se está contando. Las dos partes del paso salen de esa misma división y redondean para lados opuestos (11 tarros hacia arriba, 10 murales hacia abajo), que es la demostración más dura posible de que ninguna regla mecánica de redondeo sobrevive. Si en revisión se cambian los números, CONSERVAR que el decimal sea 0,5 exacto o el paso pierde su filo.",
     "ERRORES USADOS Y EL CRITERIO PARA ASIGNARLOS. error-9 (traducir mal: inclusión del extremo o dirección) es el error propio de esta lección y el más frecuente: cubre todos los distractores donde el estudiante lee mal una frase. error-10 (no devolver la solución al contexto) cubre los de redondeo y decimal. error-3 y error-4 se usan SOLO donde calzan con su descripción canónica literal en content/errores/ecuaciones-inecuaciones.json: error-4 en el distractor 56 del paso 3 (se queda en '7d ≥ 56' y entrega 56, que es exactamente 'quedarse en a·x = c y entregar c'), y error-3 en el distractor 13 del mismo paso (divide 90 ÷ 7 sin haber quitado antes los 34, que es exactamente 'dividir por el coeficiente antes de haber quitado la constante'). error-2 en el distractor 372 del paso 7 (suma los 72 kg cuando corresponde restarlos). error-11 (omitir la cantidad inicial al modelar) en los tres distractores que lo encarnan; ver la nota siguiente.",
     "ERROR-11, RESUELTO (2026-08-03). Tres distractores —paso 2 opción d, paso 7 distractor 300 e ítem PAES 1 alternativa D— son todos la misma cosa: OMITIR LA CANTIDAD INICIAL AL MODELAR (escribir '7d ≥ 90' en vez de '34 + 7d ≥ 90'). Nacieron sin id porque no calzaban con error-3: en error-3 la constante ESTÁ en la inecuación y se ignora al dividir —es un error de procedimiento—, mientras que acá la constante nunca llega a escribirse —es un error de modelado—. En vez de forzar error-3 se creó error-11 en el artefacto canónico, y los tres quedan etiquetados con él.",
     "DISTRACTORES QUE SIGUEN SIN errorCatalogado, Y POR QUÉ. Cuatro quedan deliberadamente sin id, mismo criterio que en inecuaciones-resolucion.json: etiquetar con un error que no describe lo que el estudiante hizo le daría señal falsa al motor de diagnóstico. (1) Ítem PAES 2 alternativa D (estimar con 50 g en vez de 45) es un atajo aritmético de estimación, no un error de redondeo ni de contexto: no calza con error-10 ni con ningún otro. (2) Ítem PAES 3 alternativa C atribuye el error a la aritmética cuando la aritmética está bien; quien la elige no comete ese error, lo diagnostica mal. (3) Paso 3 distractor 7: no proviene de ningún error catalogado —56 ÷ 7 da 8 exacto, no hay redondeo de por medio— sino de no haber comprobado que 34 + 49 = 83 no llega a 90; es una falla de verificación. (4) Paso 3 distractor 56 del campo puntajeFinal: responder el aporte de los desafíos (7 × 8) en vez del puntaje total; es leer mal qué pide la pregunta, no un error de método.",
@@ -221,7 +221,7 @@
         },
         {
           "tipo": "texto",
-          "contenido": "Hay algo que la inecuación no sabe y tú sí: **qué estás contando.**\n\nResuelves y te queda, digamos, **t ≥ 12,5**. Matemáticamente, 12,5 y 12,7 y 13,2 son todas soluciones válidas: el conjunto es continuo. Pero si t son **tarros de pintura**, no existe medio tarro que puedas comprar. La respuesta tiene que ser entera.\n\n¿Y hacia dónde se redondea? **No hay regla.** Depende de qué se está contando:\n\n- Si necesitas **cubrir** una exigencia (`≥`), quedarte corto no sirve: se redondea **hacia arriba**. 12,5 tarros → **13 tarros**.\n- Si estás **limitado** por un recurso (`≤`), pasarse no está permitido: se redondea **hacia abajo**. 12,5 murales posibles → **12 murales**.\n\nFíjate en lo incómodo del asunto: **el mismo número, 12,5, se redondea para lados distintos.** Lo que decide no es el decimal, es la pregunta. Más adelante lo vas a ver con los mismos números, en el mismo escenario, en dos preguntas seguidas."
+          "contenido": "Hay algo que la inecuación no sabe y tú sí: **qué estás contando.**\n\nResuelves y te queda, digamos, **t ≥ 10,5**. Matemáticamente, 10,5 y 10,7 y 11,2 son todas soluciones válidas: el conjunto es continuo. Pero si t son **tarros de pintura**, no existe medio tarro que puedas comprar. La respuesta tiene que ser entera.\n\n¿Y hacia dónde se redondea? **No hay regla.** Depende de qué se está contando:\n\n- Si necesitas **cubrir** una exigencia (`≥`), quedarte corto no sirve: se redondea **hacia arriba**. 10,5 tarros → **11 tarros**.\n- Si estás **limitado** por un recurso (`≤`), pasarse no está permitido: se redondea **hacia abajo**. 10,5 murales posibles → **10 murales**.\n\nFíjate en lo incómodo del asunto: **el mismo número, 10,5, se redondea para lados distintos.** Lo que decide no es el decimal, es la pregunta. Más adelante lo vas a ver con los mismos números, en el mismo escenario, en dos preguntas seguidas."
         }
       ]
     },
@@ -318,58 +318,58 @@
     },
     {
       "tipo": "aplicacion",
-      "titulo": "El mural, y el mismo 12,5 para dos lados",
+      "titulo": "El mural, y el mismo 10,5 para dos lados",
       "bloques": [
         {
           "tipo": "numerica",
-          "enunciado": "Un grupo de vecinos va a pintar un **mural comunitario** de **150 m²**. Cada tarro de pintura alcanza para cubrir **12 m²**.\n\n**Parte 1.** ¿Cuántos tarros como **mínimo** tienen que comprar para poder pintar el mural completo?\n\n**Parte 2.** Otra pregunta, con los mismos datos: si ya tienen pintura suficiente para **150 m²** en total, ¿cuántos murales **completos** de 12 m² cada uno podrían pintar con ella?",
+          "enunciado": "Un grupo de vecinos va a pintar un **mural comunitario** de **126 m²**. Cada tarro de pintura alcanza para cubrir **12 m²**.\n\n**Parte 1.** ¿Cuántos tarros como **mínimo** tienen que comprar para poder pintar el mural completo?\n\n**Parte 2.** Otra pregunta, con los mismos datos: si ya tienen pintura suficiente para **126 m²** en total, ¿cuántos murales **completos** de 12 m² cada uno podrían pintar con ella?",
           "campos": [
             {
               "id": "tarrosMinimos",
               "etiqueta": "Tarros que hay que comprar",
-              "respuestaCorrecta": 13,
+              "respuestaCorrecta": 11,
               "unidad": "tarros"
             },
             {
               "id": "muralesCompletos",
               "etiqueta": "Murales completos que se pueden pintar",
-              "respuestaCorrecta": 12,
+              "respuestaCorrecta": 10,
               "unidad": "murales"
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "tarrosMinimos",
-              "valorObtenido": 12,
-              "mensaje": "Con 12 tarros cubres 12 × 12 = 144 m², y el mural tiene 150. Te quedan 6 m² sin pintar. Cuando el resultado da 12,5 y lo que necesitas es **cubrir**, quedarse en 12 deja el trabajo a medias.",
+              "valorObtenido": 10,
+              "mensaje": "Con 10 tarros cubres 10 × 12 = 120 m², y el mural tiene 126. Te quedan 6 m² sin pintar. Cuando el resultado da 10,5 y lo que necesitas es **cubrir**, quedarse en 10 deja el trabajo a medias.",
               "errorCatalogado": "error-10"
             },
             {
               "campoId": "tarrosMinimos",
-              "valorObtenido": 12.5,
-              "mensaje": "Matemáticamente 12,5 es correcto, pero la pregunta es cuántos tarros **comprar**, y no venden medio tarro. Falta el último paso: decidir hacia qué lado se redondea, y para eso hay que mirar qué pasa si te quedas corto.",
+              "valorObtenido": 10.5,
+              "mensaje": "Matemáticamente 10,5 es correcto, pero la pregunta es cuántos tarros **comprar**, y no venden medio tarro. Falta el último paso: decidir hacia qué lado se redondea, y para eso hay que mirar qué pasa si te quedas corto.",
               "errorCatalogado": "error-10"
             },
             {
               "campoId": "muralesCompletos",
-              "valorObtenido": 13,
-              "mensaje": "Ojo: acá la respuesta va para el otro lado. Con pintura para 150 m², trece murales necesitarían 13 × 12 = 156 m², y no tienes tanta. El decimotercero quedaría incompleto, y la pregunta pide murales **completos**.",
+              "valorObtenido": 11,
+              "mensaje": "Ojo: acá la respuesta va para el otro lado. Con pintura para 126 m², once murales necesitarían 11 × 12 = 132 m², y no tienes tanta. El undécimo quedaría incompleto, y la pregunta pide murales **completos**.",
               "errorCatalogado": "error-10"
             },
             {
               "campoId": "muralesCompletos",
-              "valorObtenido": 12.5,
+              "valorObtenido": 10.5,
               "mensaje": "Mismo dato que en la Parte 1, misma división, pero acá tampoco puede quedar en decimal: no existe medio mural completo. Piensa qué significa el 0,5 sobrante en esta pregunta y si te sirve de algo.",
               "errorCatalogado": "error-10"
             }
           ],
-          "feedbackPorDefecto": "Las dos partes salen de la misma división: 150 ÷ 12. Pero una pregunta cuántos tarros hacen falta para CUBRIR el mural, y la otra cuántos murales ALCANZAN con la pintura que hay. Arma la inecuación de cada una (una lleva `≥`, la otra `≤`) y fíjate qué le pasa al decimal en cada caso."
+          "feedbackPorDefecto": "Las dos partes salen de la misma división: 126 ÷ 12. Pero una pregunta cuántos tarros hacen falta para CUBRIR el mural, y la otra cuántos murales ALCANZAN con la pintura que hay. Arma la inecuación de cada una (una lleva `≥`, la otra `≤`) y fíjate qué le pasa al decimal en cada caso."
         },
         {
           "tipo": "abierta",
-          "enunciado": "Las dos partes salieron de la **misma** división: 150 ÷ 12 = 12,5. Y sin embargo una se redondeó a 13 y la otra a 12.\n\nEn tus palabras: ¿qué fue lo que decidió la dirección del redondeo? No fue el 0,5.",
+          "enunciado": "Las dos partes salieron de la **misma** división: 126 ÷ 12 = 10,5. Y sin embargo una se redondeó a 11 y la otra a 10.\n\nEn tus palabras: ¿qué fue lo que decidió la dirección del redondeo? No fue el 0,5.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "Lo decidió qué se está contando. En la Parte 1 los tarros tienen que CUBRIR una exigencia de 150 m² (12t ≥ 150), y 12 tarros se quedan cortos con 144 m², así que hay que subir a 13. En la Parte 2 los murales están LIMITADOS por la pintura disponible (12m ≤ 150), y 13 murales necesitarían 156 m² que no existen, así que hay que bajar a 12. Cuando la inecuación es `≥` se redondea hacia arriba; cuando es `≤`, hacia abajo."
+          "respuestaModelo": "Lo decidió qué se está contando. En la Parte 1 los tarros tienen que CUBRIR una exigencia de 126 m² (12t ≥ 126), y 10 tarros se quedan cortos con 120 m², así que hay que subir a 11. En la Parte 2 los murales están LIMITADOS por la pintura disponible (12m ≤ 126), y 11 murales necesitarían 132 m² que no existen, así que hay que bajar a 10. Cuando la inecuación es `≥` se redondea hacia arriba; cuando es `≤`, hacia abajo."
         }
       ]
     },
@@ -512,9 +512,9 @@
     "paso 1 (curiosidad, ascensor de carga + torneo): dos carteles con el número 450 (kg y puntos), sin operación; ambos incluyen el 450",
     "paso 2 y 3 (problema y pensar, torneo escolar de robótica): 34 + 7d ≥ 90 → d ≥ 8; puntaje en el borde = 90",
     "paso 5 (descubrimiento, cuatro carteles): número 30 en cupo máximo, al menos firmas, más de votos, menos de integrantes; sin operación",
-    "paso 6 (generalizacion): se anticipa el 12,5 del paso 8 como ejemplo, sin resolverlo",
+    "paso 6 (generalizacion): se anticipa el 10,5 del paso 8 como ejemplo, sin resolverlo",
     "paso 7 (practica, bote de remos y ascensor de carga): p ≤ 8; y 72 + c ≤ 300 → c ≤ 228, con la variante 72 + c < 300 → c ≤ 227",
-    "paso 8 (aplicacion, mural comunitario): 12t ≥ 150 → t ≥ 12,5 → 13 tarros; y 12m ≤ 150 → m ≤ 12,5 → 12 murales. Misma división, redondeos opuestos",
+    "paso 8 (aplicacion, mural comunitario): 12t ≥ 126 → t ≥ 10,5 → 11 tarros; y 12m ≤ 126 → m ≤ 10,5 → 10 murales. Misma división, redondeos opuestos",
     "itemsPAES 1 (modelar, ascensor de carga): 120 + 25c ≤ 450 → c ≤ 13,2 → 13 cajas",
     "itemsPAES 2 (resolver, impresora 3D del taller): 45p ≤ 700 → p ≤ 15,55… → 15 piezas",
     "itemsPAES 3 (argumentar, torneo de robótica): 58 + 6d ≥ 100 → d ≥ 7; puntaje en el borde = 100",
@@ -528,5 +528,25 @@
     "declaracionOriginalidad": "Enunciados, contextos y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los escenarios se eligieron deliberadamente fuera de la familia 'cargo fijo + tarifa variable' —saturada en el material de referencia— y fuera de los dominios ya usados en este módulo y en el de funciones lineales; el torneo de robótica usa puntos y no dinero justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en esa familia. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
+  },
+  "auditoria": {
+    "colisionesPermitidas": [
+      {
+        "valor": 228,
+        "motivo": "El 228 es respuesta correcta de cargaMaxCerrado (paso 7, \"no puede superar 300\") y distractor de cargaMaxAbierto (paso 7, \"menor que 300\") en el mismo bloque. El contraste no-estricto vs estricto es el proposito del ejercicio y el feedback lo nombra (\"las dos partes no pueden dar lo mismo: en eso consiste el ejercicio\"); no hay contradiccion entre pasos. Ver docs/reglas-modulo.md seccion 3b."
+      },
+      {
+        "valor": 227,
+        "motivo": "El 227 es respuesta correcta de cargaMaxAbierto (paso 7, condicion estricta) y distractor de cargaMaxCerrado (paso 7, condicion no estricta) en el mismo bloque; contraste deliberado que el feedback explicita (\"te sobro cautela... puede llegar a 228\"). Ver docs/reglas-modulo.md seccion 3b."
+      },
+      {
+        "valor": 11,
+        "motivo": "El 11 es respuesta correcta de tarrosMinimos (paso 8, Parte 1) y distractor de muralesCompletos (paso 8, Parte 2) en el mismo bloque: la misma division 126 / 12 = 10,5 se redondea hacia arriba cuando hay que cubrir el mural y hacia abajo cuando la pintura disponible limita, y la reflexion abierta del paso lo explicita. Ver docs/reglas-modulo.md seccion 3b."
+      },
+      {
+        "valor": 10,
+        "motivo": "El 10 es respuesta correcta de muralesCompletos (paso 8, Parte 2) y distractor de tarrosMinimos (paso 8, Parte 1) en el mismo bloque: la misma division 126 / 12 = 10,5 se redondea hacia arriba cuando la condicion es 'cubrir' y hacia abajo cuando es 'alcanza', y la reflexion abierta del paso lo explicita. Ver docs/reglas-modulo.md seccion 3b."
+      }
+    ]
   }
 }
