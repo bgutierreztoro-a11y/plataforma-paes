@@ -8,7 +8,7 @@
   "properties": {
     "tipo": { "enum": ["leccion", "diagnostico", "cierre"] },
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, p. ej. l2-pendiente-intercepto" },
-    "moduloId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "unidad del DAG (content/diagnostico/dag-m1.json) a la que pertenece este archivo. Es el declarador único de módulo: de acá sale el catálogo canónico en content/errores/<moduloId>.json que lib/sanitizar.ts resuelve para la Capa 2. Todavía no está en required; pasa a obligatorio cuando termine la migración a canónico único" },
+    "moduloId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "unidad del DAG (content/diagnostico/dag-m1.json) a la que pertenece este archivo. Declarador único de módulo: de acá sale el catálogo canónico en content/errores/<moduloId>.json que lib/sanitizar.ts resuelve para la Capa 2. OBLIGATORIO en lección y cierre desde 2026-09-08 (lo exige scripts/validar-contenido.mjs); 'diagnostico' no lo lleva" },
     "titulo": { "type": "string", "minLength": 1 },
     "objetivo": { "type": "string", "description": "Qué será capaz de hacer el estudiante al terminar (solo lecciones)" },
     "tiempoEstimadoMin": { "type": "number", "exclusiveMinimum": 0 },
@@ -32,19 +32,6 @@
       "type": "array",
       "description": "Ítems del set: 5 para diagnostico, 8 para cierre",
       "items": { "$ref": "#/definitions/item" }
-    },
-    "catalogoErrores": {
-      "type": "array",
-      "description": "Errores frecuentes documentados para esta lección. Todo distractor de itemsPAES y todo feedbackPorError debe referenciar un id de aquí (MOS: 'no se inventan errores nuevos en el cierre').",
-      "items": {
-        "type": "object",
-        "required": ["id", "descripcion"],
-        "properties": {
-          "id": { "type": "string", "description": "p. ej. 'error-1', referenciado desde errorCatalogado en bloques e items" },
-          "descripcion": { "type": "string", "minLength": 1 }
-        },
-        "additionalProperties": false
-      }
     },
     "contextosNumericos": {
       "type": "array",
@@ -138,7 +125,7 @@
               "texto": { "type": "string", "minLength": 1 },
               "esCorrecta": { "type": "boolean" },
               "feedback": { "type": "string", "minLength": 1, "description": "Obligatorio en todas las opciones, incluida la correcta (refuerza el porqué)." },
-              "errorCatalogado": { "type": "string", "description": "id de catalogoErrores, si la opción codifica un error específico." }
+              "errorCatalogado": { "type": "string", "description": "id del catálogo canónico del módulo (content/errores/<moduloId>.json), si la opción codifica un error específico." }
             },
             "additionalProperties": false
           }
@@ -179,7 +166,7 @@
               "campoId": { "type": "string", "description": "A qué campo corresponde este valor esperado de error." },
               "valorObtenido": { "type": "number" },
               "mensaje": { "type": "string", "minLength": 1 },
-              "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+              "errorCatalogado": { "type": "string", "description": "id del catálogo canónico del módulo (content/errores/<moduloId>.json)" }
             },
             "additionalProperties": false
           }
@@ -289,7 +276,7 @@
                   "properties": {
                     "prediccion": { "type": "string", "description": "Qué predicción del estudiante dispara este mensaje." },
                     "mensaje": { "type": "string", "minLength": 1 },
-                    "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+                    "errorCatalogado": { "type": "string", "description": "id del catálogo canónico del módulo (content/errores/<moduloId>.json)" }
                   },
                   "additionalProperties": false
                 }
@@ -383,7 +370,7 @@
             "type": "string",
             "description": "OBLIGATORIO en distractores: feedback artesanal que nombra el error específico que produce esa alternativa y reorienta sin regalar la respuesta (MOS §4). Opcional en la correcta (refuerzo breve)."
           },
-          "errorCatalogado": { "type": "string", "description": "id de catalogoErrores" }
+          "errorCatalogado": { "type": "string", "description": "id del catálogo canónico del módulo (content/errores/<moduloId>.json)" }
         },
         "additionalProperties": false
       }

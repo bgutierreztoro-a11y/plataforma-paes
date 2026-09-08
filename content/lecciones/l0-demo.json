@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "l0-demo",
+  "moduloId": "funcion-lineal-afin",
   "titulo": "Lección de demostración",
   "objetivo": "Andamiaje técnico para probar la cáscara de la plataforma de punta a punta. No es contenido pedagógico real: será reemplazado por el pipeline /nueva-leccion.",
   "tiempoEstimadoMin": 15,

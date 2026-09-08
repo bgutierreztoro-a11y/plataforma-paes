@@ -227,6 +227,13 @@ export function validarDatos(data, erroresCatalogados) {
   if (!esTexto(data?.id)) errores.push('falta id');
   if (!esTexto(data?.titulo)) errores.push('falta titulo');
 
+  // moduloId: obligatorio en lección y cierre desde el cierre de la migración a
+  // canónico único (2026-09-08). Es el declarador de módulo del que sale el
+  // catálogo de errores. `diagnostico` no lo lleva: no es contenido de un módulo.
+  if ((tipo === 'leccion' || tipo === 'cierre') && !esTexto(data?.moduloId)) {
+    errores.push('falta moduloId (unidad del DAG a la que pertenece; ver content/errores/<moduloId>.json)');
+  }
+
   if (tipo === 'leccion') {
     if (data.pasos === undefined) errores.push('faltan los 10 pasos');
     if (!esTexto(data?.objetivo)) errores.push('falta objetivo');
