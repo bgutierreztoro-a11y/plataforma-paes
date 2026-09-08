@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "proporcionalidad-inversa",
+  "moduloId": "proporcionalidad",
   "titulo": "Proporción inversa",
   "objetivo": "Reconocer una proporción inversa comprobando que el producto entre las dos cantidades se mantiene constante, interpretar esa constante como el total que hay que acomodar entre las dos, y usarla para obtener cualquier par de valores de la relación.",
   "tiempoEstimadoMin": 26,

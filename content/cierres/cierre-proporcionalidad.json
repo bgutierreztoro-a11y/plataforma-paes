@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-proporcionalidad",
+  "moduloId": "proporcionalidad",
   "titulo": "Cierre del módulo: Proporcionalidad",
   "_notasInternas": [
     "Cierre del tema 'Proporcionalidad' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: proporcionalidad-directa.json (L1), proporcionalidad-inversa.json (L2) y proporcionalidad-reconocer.json (L3).",

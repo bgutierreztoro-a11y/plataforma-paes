@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "expresiones-sumar-lo-que-se-parece",
+  "moduloId": "expresiones-algebraicas",
   "titulo": "Operatoria con expresiones algebraicas",
   "objetivo": "Reducir una expresión algebraica agrupando los términos que comparten la misma parte literal, reconocer que esa reducción vale sea cual sea el valor de la letra, y distinguir cuándo una expresión ya no se puede reducir más.",
   "tiempoEstimadoMin": 24,

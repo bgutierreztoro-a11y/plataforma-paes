@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "porcentaje-rebaja-doble",
+  "moduloId": "porcentaje",
   "titulo": "Dos descuentos seguidos no se suman",
   "objetivo": "Calcular el resultado de dos cambios porcentuales aplicados uno tras otro multiplicando sus factores, explicar por qué sumar los porcentajes da un resultado distinto del correcto, y reconocer que el orden en que se aplican no altera el precio final.",
   "tiempoEstimadoMin": 24,

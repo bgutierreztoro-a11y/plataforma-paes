@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-sistemas-2x2",
+  "moduloId": "sistemas-2x2",
   "titulo": "Cierre del módulo: Sistemas de ecuaciones lineales (2x2)",
   "_notasInternas": [
     "Cierre del módulo 'Sistemas de ecuaciones lineales (2x2)' (docs/diseno-modulo-sistemas-2x2.md), construido después de que las 3 lecciones (sistemas-dos-historias, sistemas-rectas-no-se-cruzan, sistemas-plantear-antes-resolver) pasaran npm run validar y npm run auditar en verde.",

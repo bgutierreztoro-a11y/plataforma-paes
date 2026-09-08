@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "expresiones-deshacer-producto",
+  "moduloId": "expresiones-algebraicas",
   "titulo": "Factorización de expresiones algebraicas",
   "objetivo": "Reconocer una diferencia de cuadrados y escribirla como el producto de la suma por la diferencia de sus raíces, comprobando que los términos cruzados se cancelan, y distinguir los casos en que esa forma no se puede aplicar.",
   "tiempoEstimadoMin": 26,

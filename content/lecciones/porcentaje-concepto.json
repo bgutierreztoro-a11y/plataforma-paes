@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "porcentaje-concepto",
+  "moduloId": "porcentaje",
   "titulo": "Concepto y cálculo de porcentaje",
   "objetivo": "Calcular el porcentaje de una cantidad multiplicándola por el factor decimal correspondiente, explicar por qué un mismo porcentaje aplicado a cantidades distintas da resultados distintos, y distinguir un aumento o una baja «de un p%» de un cambio «a un p%».",
   "tiempoEstimadoMin": 22,

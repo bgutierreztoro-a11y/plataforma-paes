@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "enteros-operar-y-comparar",
+  "moduloId": "enteros-racionales",
   "titulo": "Operatoria y comparación de números racionales",
   "objetivo": "Dividir una cantidad entre una fracción, entendiendo que el resultado puede ser mayor que la cantidad original ('dividir puede agrandar'), y comparar dos fracciones con distinto denominador sin quedarse solo con el numerador.",
   "tiempoEstimadoMin": 22,

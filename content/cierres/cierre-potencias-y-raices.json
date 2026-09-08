@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-potencias-y-raices",
+  "moduloId": "potencias-raices",
   "titulo": "Cierre del módulo: Potencias y raíces enésimas",
   "_notasInternas": [
     "Cierre del módulo 'Potencias y raíces enésimas' (docs/diseno-modulo-potencias-y-raices.md), construido después de que las 3 lecciones (potencias-multiplicar-corto, potencias-raiz-escondida, potencias-problemas-en-contexto) pasaran npm run validar y npm run auditar en verde (0 bloqueantes).",

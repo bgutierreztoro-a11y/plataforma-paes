@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuadratica-sube-y-baja",
+  "moduloId": "funcion-cuadratica",
   "titulo": "Ecuaciones de segundo grado",
   "objetivo": "Resolver ecuaciones de segundo grado que surgen de relacionar dos cantidades por un producto (no una suma), factorizando y aplicando la propiedad del producto nulo; reconocer que una ecuación así puede tener dos soluciones matemáticas, y filtrar la que corresponde al contexto del problema.",
   "tiempoEstimadoMin": 25,

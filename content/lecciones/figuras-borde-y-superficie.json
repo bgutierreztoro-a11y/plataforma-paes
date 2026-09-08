@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "figuras-borde-y-superficie",
+  "moduloId": "figuras-geometricas",
   "titulo": "Perímetro y área de triángulos, paralelogramos, trapecios y círculos",
   "objetivo": "Calcular el área y el perímetro de triángulos, trapecios, paralelogramos y círculos, aplicando la fórmula correcta según la figura y según si se pide superficie (área) o borde (perímetro), incluyendo el uso del teorema de Pitágoras para encontrar la longitud real de un lado inclinado cuando no se entrega directamente.",
   "tiempoEstimadoMin": 30,

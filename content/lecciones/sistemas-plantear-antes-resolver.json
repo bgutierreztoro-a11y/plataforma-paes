@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "sistemas-plantear-antes-resolver",
+  "moduloId": "sistemas-2x2",
   "titulo": "Problemas con sistemas de ecuaciones 2x2",
   "objetivo": "Traducir un problema en palabras a un sistema de dos ecuaciones lineales con dos incógnitas —identificando qué va en cada ecuación, incluyendo condiciones con desplazamiento temporal ('hace n años', 'dentro de n años')— y resolverlo con el método ya dominado.",
   "tiempoEstimadoMin": 25,

@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "sistemas-rectas-no-se-cruzan",
+  "moduloId": "sistemas-2x2",
   "titulo": "Sistemas sin solución o con infinitas soluciones",
   "objetivo": "Reconocer, a partir de los coeficientes de un sistema 2x2, cuándo no tiene solución (mismo 'ritmo de cambio', distinto punto de partida) o tiene infinitas soluciones (la misma recta escrita de dos formas), distinguiendo ambos casos del caso con solución única visto en la lección anterior.",
   "tiempoEstimadoMin": 22,

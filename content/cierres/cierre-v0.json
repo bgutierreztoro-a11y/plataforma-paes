@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-v0",
+  "moduloId": "funcion-lineal-afin",
   "titulo": "Cierre del módulo",
   "items": [
     {

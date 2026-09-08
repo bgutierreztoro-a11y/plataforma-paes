@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "lineal-pendiente-e-intercepto",
+  "moduloId": "funcion-lineal-afin",
   "titulo": "Tablas y gráficos de función lineal y afín",
   "objetivo": "Entender qué controla la forma de una recta —la pendiente cambia la inclinación, el coeficiente de posición cambia dónde cruza el eje Y— para leer, escribir y comparar funciones lineales y afines con seguridad en los ítems de la PAES M1.",
   "tiempoEstimadoMin": 24,

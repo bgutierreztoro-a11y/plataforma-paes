@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-expresiones-algebraicas",
+  "moduloId": "expresiones-algebraicas",
   "titulo": "Cierre del módulo",
   "_notasInternas": [
     "Cierre del módulo Expresiones algebraicas. Ocho ítems formato PAES que recorren los tres focos del módulo: operatoria con términos semejantes (L1), cuadrado de un binomio (L2) y factorización por diferencia de cuadrados (L3).",

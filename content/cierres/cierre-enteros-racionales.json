@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-enteros-racionales",
+  "moduloId": "enteros-racionales",
   "titulo": "Cierre del módulo: Enteros y racionales",
   "_notasInternas": [
     "Cierre del módulo 'Enteros y racionales' (docs/diseno-modulo-enteros-racionales.md), construido después de que las 3 lecciones (enteros-operar-y-ordenar, enteros-operar-y-comparar, enteros-problemas-en-contexto) quedaran en estado 'borrador' con npm run validar en verde.",

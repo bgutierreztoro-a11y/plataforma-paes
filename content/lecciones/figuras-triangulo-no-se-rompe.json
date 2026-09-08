@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "figuras-triangulo-no-se-rompe",
+  "moduloId": "figuras-geometricas",
   "titulo": "Teorema de Pitágoras",
   "objetivo": "Aplicar el teorema de Pitágoras para encontrar un lado desconocido (la hipotenusa o un cateto) de un triángulo rectángulo en contextos de distancia en línea recta versus recorrido por el borde, verificando que el resultado tenga sentido comparado con los otros dos lados.",
   "tiempoEstimadoMin": 25,

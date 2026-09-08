@@ -8,6 +8,7 @@
   "properties": {
     "tipo": { "enum": ["leccion", "diagnostico", "cierre"] },
     "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "kebab-case, p. ej. l2-pendiente-intercepto" },
+    "moduloId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "unidad del DAG (content/diagnostico/dag-m1.json) a la que pertenece este archivo. Es el declarador único de módulo: de acá sale el catálogo canónico en content/errores/<moduloId>.json que lib/sanitizar.ts resuelve para la Capa 2. Todavía no está en required; pasa a obligatorio cuando termine la migración a canónico único" },
     "titulo": { "type": "string", "minLength": 1 },
     "objetivo": { "type": "string", "description": "Qué será capaz de hacer el estudiante al terminar (solo lecciones)" },
     "tiempoEstimadoMin": { "type": "number", "exclusiveMinimum": 0 },

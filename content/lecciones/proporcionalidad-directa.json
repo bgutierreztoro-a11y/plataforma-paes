@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "proporcionalidad-directa",
+  "moduloId": "proporcionalidad",
   "titulo": "Proporción directa",
   "objetivo": "Reconocer una proporción directa comprobando que el cociente entre las dos cantidades se mantiene constante, interpretar esa constante como lo que le corresponde a una unidad, y usarla para obtener cualquier par de valores de la relación.",
   "tiempoEstimadoMin": 24,

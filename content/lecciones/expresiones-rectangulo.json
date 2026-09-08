@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "expresiones-rectangulo",
+  "moduloId": "expresiones-algebraicas",
   "titulo": "Productos notables",
   "objetivo": "Desarrollar el cuadrado de un binomio reconociendo que tiene tres términos y que el del medio vale exactamente el doble del producto de los dos sumandos, y aplicar esa forma tanto a números como a expresiones con letras.",
   "tiempoEstimadoMin": 26,

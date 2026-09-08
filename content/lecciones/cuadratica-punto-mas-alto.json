@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuadratica-punto-mas-alto",
+  "moduloId": "funcion-cuadratica",
   "titulo": "Vértice y parámetros de la función cuadrática",
   "objetivo": "Identificar el vértice de una función cuadrática como su punto extremo (máximo si a < 0, mínimo si a > 0), calcularlo mediante x = −b/(2a), y reconocer cómo los parámetros a, b y c modifican la forma y la posición de la parábola.",
   "tiempoEstimadoMin": 26,

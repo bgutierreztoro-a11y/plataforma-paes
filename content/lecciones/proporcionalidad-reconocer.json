@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "proporcionalidad-reconocer",
+  "moduloId": "proporcionalidad",
   "titulo": "¿Directa, inversa, o ninguna?",
   "objetivo": "Discriminar si una tabla de dos cantidades es directamente proporcional, inversamente proporcional o ninguna de las dos, aplicando el cociente constante y el producto constante a todas las filas antes de concluir.",
   "tiempoEstimadoMin": 26,

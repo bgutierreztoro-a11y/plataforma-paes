@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "porcentaje-volver-atras",
+  "moduloId": "porcentaje",
   "titulo": "Volver al precio original",
   "objetivo": "Recuperar el valor anterior a un cambio porcentual dividiendo por su factor, explicar por qué aplicar el mismo porcentaje en sentido contrario no devuelve el valor de partida, y reconocer en un enunciado cuándo el dato entregado es el valor final y no el inicial.",
   "tiempoEstimadoMin": 25,

@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "figuras-problemas-con-forma",
+  "moduloId": "figuras-geometricas",
   "titulo": "Aplicaciones de perímetro y área en contexto",
   "objetivo": "Resolver problemas de perímetro y área de triángulos, trapecios, paralelogramos y círculos en contexto (techos e invernaderos), reconociendo cuándo falta una medida lineal que debe obtenerse primero con el teorema de Pitágoras antes de aplicar la fórmula correspondiente, incluyendo figuras compuestas por dos piezas.",
   "tiempoEstimadoMin": 35,

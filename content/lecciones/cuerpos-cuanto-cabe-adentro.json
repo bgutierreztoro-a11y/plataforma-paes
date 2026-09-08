@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuerpos-cuanto-cabe-adentro",
+  "moduloId": "cuerpos-geometricos",
   "titulo": "Volumen de paralelepípedos, cubos y cilindros",
   "objetivo": "Calcular el volumen de paralelepípedos, cubos y cilindros entendiéndolo como el área de la base repetida a lo alto (área de la base × altura), y reconociendo que a·b·c, a³ y π·r²·h no son reglas que memorizar, sino la misma idea —cuántas capas iguales llenan el cuerpo— aplicada a tres bases distintas.",
   "tiempoEstimadoMin": 30,

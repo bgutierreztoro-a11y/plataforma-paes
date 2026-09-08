@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuerpos-problemas-en-contexto",
+  "moduloId": "cuerpos-geometricos",
   "titulo": "Problemas que involucren área y volumen de paralelepípedos, cubos y cilindros en diversos contextos",
   "objetivo": "Decidir, ante un problema que no nombra la magnitud, si lo que se pide vive en el borde del cuerpo (pintar, forrar, recubrir, etiquetar → área de superficie) o en su interior (llenar, caber, contener, vaciar → volumen), y recién entonces calcular; y convertir volúmenes entre metros cúbicos y litros sabiendo que 1 m³ = 1.000 litros, sin arrastrar el factor de las unidades cuadradas.",
   "tiempoEstimadoMin": 30,

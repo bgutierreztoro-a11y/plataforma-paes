@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuadratica-donde-toca-el-eje",
+  "moduloId": "funcion-cuadratica",
   "titulo": "Ceros e intersección con los ejes",
   "objetivo": "Encontrar los ceros de una función cuadrática por factorización y producto nulo, leerlos como los puntos donde la parábola cruza el eje X; reconocer que puede haber dos, uno o ningún cero real según el discriminante; y obtener la intersección con el eje Y directamente como (0, c), sin necesidad de resolver nada.",
   "tiempoEstimadoMin": 27,

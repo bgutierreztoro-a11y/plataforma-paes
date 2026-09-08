@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-ecuaciones-lineales",
+  "moduloId": "ecuaciones-inecuaciones",
   "titulo": "Cierre del módulo: Ecuaciones e inecuaciones de primer grado",
   "_notasInternas": [
     "Cierre del tema 'Ecuaciones e inecuaciones de primer grado' (eje Álgebra y funciones). Cubre las tres lecciones del módulo: ecuaciones-lineales.json, inecuaciones-resolucion.json e inecuaciones-problemas.json.",

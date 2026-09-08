@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-funcion-cuadratica",
+  "moduloId": "funcion-cuadratica",
   "titulo": "Cierre del módulo: Función cuadrática",
   "_notasInternas": [
     "Cierre del módulo 'Función cuadrática' (docs/diseno-modulo-funcion-cuadratica.md), construido después de que las 3 lecciones (cuadratica-sube-y-baja, cuadratica-punto-mas-alto, cuadratica-donde-toca-el-eje) pasaran npm run validar.",

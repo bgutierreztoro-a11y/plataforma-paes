@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "cuerpos-desarmar-la-caja",
+  "moduloId": "cuerpos-geometricos",
   "titulo": "Área de superficie de paralelepípedos, cubos y cilindros",
   "objetivo": "Calcular el área de superficie de paralelepípedos, cubos y cilindros entendiéndola como la suma de las caras que aparecen al desplegar el cuerpo, y reconociendo que 2(ab+bc+ac), 6a² y 2πr²+2πrh no son reglas que memorizar, sino la cuenta de caras que se pueden ver y contar en la red desplegada.",
   "tiempoEstimadoMin": 30,

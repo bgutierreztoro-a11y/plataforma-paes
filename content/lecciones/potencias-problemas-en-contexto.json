@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "potencias-problemas-en-contexto",
+  "moduloId": "potencias-raices",
   "titulo": "Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos",
   "objetivo": "Decidir, a partir de lo que entrega un enunciado, si corresponde aplicar una potencia o una raíz enésima para resolverlo, y aplicar esa decisión en situaciones de multiplicación repetida por un factor fijo: calcular el resultado cuando el factor y la cantidad de repeticiones son conocidos, y encontrar el factor desconocido cuando lo que se conoce es el resultado final y la cantidad de repeticiones.",
   "tiempoEstimadoMin": 26,

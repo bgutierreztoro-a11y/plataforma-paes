@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-porcentaje",
+  "moduloId": "porcentaje",
   "titulo": "Cierre del módulo: Porcentaje",
   "_notasInternas": [
     "Cierre del tema 'Porcentaje' (eje Números). Cubre las tres lecciones del módulo: porcentaje-concepto.json, porcentaje-rebaja-doble.json y porcentaje-volver-atras.json.",

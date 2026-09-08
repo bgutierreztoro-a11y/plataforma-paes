@@ -1,6 +1,7 @@
 {
   "tipo": "leccion",
   "id": "sistemas-dos-historias",
+  "moduloId": "sistemas-2x2",
   "titulo": "Resolución de sistemas de ecuaciones 2x2",
   "objetivo": "Resolver un sistema de dos ecuaciones lineales con dos incógnitas mediante el método de sustitución, entendiendo el par solución como el único valor que cumple las dos condiciones (historias) a la vez, sin invertir las dos incógnitas al responder.",
   "tiempoEstimadoMin": 24,

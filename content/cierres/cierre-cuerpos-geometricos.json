@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-cuerpos-geometricos",
+  "moduloId": "cuerpos-geometricos",
   "titulo": "Cierre del módulo: Cuerpos geométricos",
   "_notasInternas": [
     "Cierre del módulo 'Cuerpos geométricos', construido después de que las 3 lecciones (cuerpos-desarmar-la-caja, cuerpos-cuanto-cabe-adentro, cuerpos-problemas-en-contexto) pasaran npm run validar.",

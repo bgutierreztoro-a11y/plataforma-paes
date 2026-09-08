@@ -1,6 +1,7 @@
 {
   "tipo": "cierre",
   "id": "cierre-figuras-geometricas",
+  "moduloId": "figuras-geometricas",
   "titulo": "Cierre del módulo: Figuras geométricas",
   "_notasInternas": [
     "Cierre del módulo 'Figuras geométricas', construido después de que las 3 lecciones (figuras-triangulo-no-se-rompe, figuras-borde-y-superficie, figuras-problemas-con-forma) pasaran npm run validar.",
