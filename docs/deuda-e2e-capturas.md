@@ -171,6 +171,59 @@ Se fija acá como baseline: es el número contra el que se verificó que el glif
 La corrida posterior a ese cambio da el mismo 24/4/46 con idéntico conjunto de
 fallos.
 
+## Corrida del 2026-09-08 (migración del catálogo de errores, tras C3): sigue en 24, conjunto enumerado
+
+`npm run capturas` durante la sesión de Fobos Advance F0, después del commit que
+resuelve `errorCatalogado` contra el catálogo canónico (`aed1648`):
+
+```
+24 failed · 4 skipped · 46 passed (6.4m)
+```
+
+Mismo 24/4/46, mismo conjunto que el baseline de `52e23f3`. Ese commit enciende
+la Capa 2 y el paso de autoexplicación en 14 archivos de contenido donde no
+existían, pero **ninguno de los 24 fallos toca el flujo de ítems de lección ni de
+cierre**: viven todos en la portada, `/camino` y `/tema/[id]`. Cero regresiones.
+
+**El conjunto exacto, por primera vez enumerado** (antes el documento lo
+describía en prosa). Los nombres y las líneas salen de la corrida; las líneas
+corrieron respecto de secciones anteriores porque el spec creció, no porque
+cambiaran los tests:
+
+| # | Proyecto | Línea | Test |
+|---|---|---|---|
+| 1 | movil | :174 | portada sin progreso |
+| 2 | movil | :206 | camino con la lección a medias |
+| 3 | movil | :231 | camino |
+| 4 | movil | :250 | el camino muestra las 16 unidades, con los ejes vacíos plegados |
+| 5 | movil | :335 | un nodo bloqueado dice por qué, con el botón deshabilitado |
+| 6 | movil | :374 | caben 5 nodos sin scroll en /camino a 360px |
+| 7 | movil | :524 | a 390px la tarjeta no cuelga de un nodo, va fija al pie |
+| 8 | movil | :541 | tema con los nodos enlazados |
+| 9 | movil | :567 | el segundo nivel trata igual a una lección bloqueada |
+| 10 | movil | :600 | caben 5 nodos sin scroll en 360px |
+| 11 | movil | :641 | sin movimiento cuando el sistema lo pide |
+| 12 | movil | :751 | abierta sin avanzar: las cuatro superficies dicen lo mismo |
+| 13 | movil | :771 | terminada bajo el umbral: las cuatro superficies dicen lo mismo |
+| 14 | escritorio | :174 | portada sin progreso |
+| 15 | escritorio | :206 | camino con la lección a medias |
+| 16 | escritorio | :231 | camino |
+| 17 | escritorio | :250 | el camino muestra las 16 unidades, con los ejes vacíos plegados |
+| 18 | escritorio | :335 | un nodo bloqueado dice por qué, con el botón deshabilitado |
+| 19 | escritorio | :422 | la tarjeta activa nunca corta un nodo ni se desborda por arriba (escritorio) |
+| 20 | escritorio | :541 | tema con los nodos enlazados |
+| 21 | escritorio | :567 | el segundo nivel trata igual a una lección bloqueada |
+| 22 | escritorio | :641 | sin movimiento cuando el sistema lo pide |
+| 23 | escritorio | :751 | abierta sin avanzar: las cuatro superficies dicen lo mismo |
+| 24 | escritorio | :771 | terminada bajo el umbral: las cuatro superficies dicen lo mismo |
+
+Corresponden uno a uno con lo descrito en prosa arriba: los 6 de `/tema/[id]`
+(`:335`, `:541`, `:567`, `:600` en movil; `:335`, `:541`, `:567`, `:641` en
+ambos — nota: `:600` y `:641` son los dos tests de `/tema` con título de lección
+vencido, uno por proyecto donde aplica), los de portada y `/camino` (`:174`,
+`:206`, `:231`, `:250`, `:422`), y los dos de la columna de nodos (`:374`,
+`:524`, solo movil).
+
 ## Qué sigue sin cubrir este documento (sin cambios)
 
 Lo de la sección anterior, más: qué debería afirmar `/camino` ahora que la

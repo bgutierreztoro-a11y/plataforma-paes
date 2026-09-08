@@ -42,6 +42,12 @@ tentación de sumar `nombre` "ya que estamos" es real — pero es texto que el e
 token de color. Cambiarlo dentro de un commit titulado "instalar la línea del eje" lo esconde de la
 revisión y del changelog. Va en su propio commit, con su propia verificación en las 11 rutas.
 
+**Re-confirmado el 2026-09-08** (sesión de Fobos Advance F0). Visto de nuevo en el navegador a
+390×844 al verificar la migración del catálogo de errores: `/cierre/porcentaje` sigue anunciando
+"8 preguntas de Función lineal y afín" antes de mostrar ocho ítems de porcentaje. Nada cambió;
+se anota la fecha para dejar constancia de que sigue vivo y que un tercer flujo de trabajo lo
+cruzó sin poder tocarlo por la misma razón que la Fase 2E.
+
 ---
 
 ## 2. Los 11 cierres comparten un bucket de progreso: rendir uno marca los once
