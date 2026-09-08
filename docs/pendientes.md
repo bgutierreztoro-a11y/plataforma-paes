@@ -66,6 +66,80 @@ pero es inerte: registrar el id no sirve de nada mientras el auditor no recorra
 la carpeta. **Cerrarlo es ensanchar el auditor a `content/cierres/`**, no agregar
 entradas a esa tabla.
 
+## 🟡 Deuda de arquitectura: el espejo `MAPEO_LECCION_UNIDAD` genera `catalogo-sin-usar` cuando una L2/L3 referencia un error que su L1 no usa (abierta 2026-09-07, segunda pasada F0.2, fichas 38-42)
+
+Espejo `MAPEO_LECCION_UNIDAD` genera `catalogo-sin-usar` cuando L2/L3 referencia un
+error que su L1 no usa (fichas 38-42 de F0.2). Evaluar migración a canónico-único
+(sacar catálogo embebido de la L1, sacarla de `MAPEO_LECCION_UNIDAD`) antes de que
+Fobos Advance dependa de este catálogo.
+
+**El mecanismo, verificado.** Desde `docs/reglas-modulo.md §5`, el catálogo de un
+módulo vive embebido en su L1 y las demás piezas del módulo (L2, L3, cierre)
+referencian esos ids por `errorCatalogado` sin copiar la entrada. Para que las
+referencias de L2/L3 tengan a qué apuntar, la L1 embebe el catálogo **completo**
+del módulo, no solo los ids que ella misma usa. `chequearCatalogoErrores` de
+`scripts/auditar-leccion.mjs` cruza el catálogo de cada archivo contra los
+`errorCatalogado` de **ese mismo archivo**, así que marca 🔴 `catalogo-sin-usar`
+cada id que la L1 embebe para uso de otra pieza.
+
+Caso medido hoy, `node scripts/auditar-leccion.mjs content/lecciones/enteros-operar-y-ordenar.json`:
+
+```
+🔴 [catalogo-sin-usar] "error-4" está en catalogoErrores pero ningún distractor lo usa
+🔴 [catalogo-sin-usar] "error-6" está en catalogoErrores pero ningún distractor lo usa
+🔴 [catalogo-sin-usar] "error-7" está en catalogoErrores pero ningún distractor lo usa
+🔴 [catalogo-sin-usar] "error-8" está en catalogoErrores pero ningún distractor lo usa
+```
+
+`enteros-operar-y-ordenar.json` (L1, buceo con enteros) solo usa `error-1`, `error-2`,
+`error-3`, `error-5` en sus propios distractores. `error-6`, `error-7`, `error-8` los
+usan `enteros-operar-y-comparar.json` (L2) y `enteros-problemas-en-contexto.json`
+(L3); `error-4` lo usa `cierre-enteros-racionales.json` (ítem `cierre-enteros-5`,
+alternativa B). Los cuatro son 🔴 falsos en la corrida del auditor sobre la L1.
+`npm run validar` no lo marca: `validarCatalogoLocal` de `scripts/validar-contenido.mjs`
+corre solo para `tipo: "cierre"`, no para lecciones. O sea que no bloquea el build,
+pero ensucia toda corrida del auditor de Ronda 1 con cuatro 🔴 que no lo son.
+
+**Migración a canónico-único.** Sacar el catálogo embebido de la L1 y dejar como
+única fuente `content/errores/<unidad>.json` (hoy "una copia, no la fuente",
+ver más abajo), sacar la unidad de `MAPEO_LECCION_UNIDAD`, y resolver
+`errorCatalogado` contra ese artefacto en `lib/sanitizar.ts`. Es la opción (b) de
+`docs/deuda-catalogo-errores-crossfile.md`, con el paso extra de eliminar la copia
+embebida. Antes de tocarlo hay que registrar las descripciones que solo viven
+legibles en el catálogo embebido de la L1: eso está hecho en la sección
+"2026-09-07" de `docs/deuda-catalogo-errores-crossfile.md`.
+
+**Gatillo.** Antes de que Fobos Advance (`content/advance/`) dependa de este
+catálogo. Un consumidor nuevo sobre una fuente doble sin dueño hereda la deuda
+completa.
+
+## 🟢 F0.2 Lote C: bloqueantes `[habilidades]`/`[dificultad]` de §3.5 en tres cierres — resuelto (2026-09-08)
+
+Segunda pasada de F0.2 (Fobos Advance), Lote C (fichas 43+34, 44+37, 45). Tres
+lecciones tenían `node scripts/auditar-leccion.mjs` en 🔴 por no cumplir la
+distribución de habilidades y la terna de dificultad que `docs/calibracion-lecciones-e-items.md`
+§3.5 prescribe para 3 ítems:
+
+- `enteros-operar-y-comparar.json` — `l2-item-3` pasó de `resolver`/`media` a
+  `argumentar`/`alta`, reescrito al patrón "4 afirmaciones, 3 falsas por razones
+  distintas y catalogadas" (`error-7`, `error-8`, `error-4` de
+  `content/errores/enteros-racionales.json`). Commit `aea0c76`.
+- `lineal-pendiente-e-intercepto.json` — `l2-item-1` pasó de `representar`/`media`
+  a `resolver`/`media` (evaluar `y = 12 − 5x` en `x = 4`). Commit `f776960`.
+- `lineal-modelamiento-paes.json` — `item-3` pasó de `representar`/`media` a
+  `resolver`/`media` (versión "hacia adelante": `N = 16 + 4t` en `t = 12`) y el
+  arreglo `itemsPAES` se reordenó a `[item-1, item-3, item-2]`. Cierra además la
+  desviación de §3.5 que la lección declaraba en `_notasInternas`. Commit `7269a77`.
+
+Ronda 1 (matemática) y Ronda 2 (originalidad) aprobadas en hilos `/clear`
+aislados antes de integrar. `npm run validar` y `npx tsc --noEmit` en verde;
+`npm run auditar` sobre los tres deja solo 🟡 `colision-entre-archivos`
+preexistentes (`1.5`, `180`, `280`). Los borradores vivieron en `scratchpad/`
+(gitignored).
+
+**Lote B sigue diferido** a una sesión de Fobos Advance full (no era parte de
+este cierre).
+
 ## 🟡 Namespace de ids de unidad: el DAG y el registro usan nombres distintos (abierta 2026-08-14)
 
 `content/diagnostico/dag-m1.json` y `lib/modulos.ts` nombran las mismas unidades
