@@ -24,23 +24,23 @@
   ],
   "catalogoErrores": [
     {
-      "id": "error-1",
+      "id": "error-8",
       "descripcion": "Confunde pendiente con coeficiente de posición (toma el término que multiplica a x como el punto de cruce con el eje Y, o viceversa)."
     },
     {
-      "id": "error-2",
+      "id": "error-9",
       "descripcion": "Error de signo en la pendiente (no distingue si la recta sube o baja al mover el control a valores negativos)."
     },
     {
-      "id": "error-3",
+      "id": "error-10",
       "descripcion": "Confunde el eje X con el eje Y al leer el coeficiente de posición (lee el cruce en el eje equivocado)."
     },
     {
-      "id": "error-4",
+      "id": "error-11",
       "descripcion": "Interpreta mal qué significa el punto donde dos rectas se cruzan: sabe que ahí ambas valen lo mismo, pero se equivoca en cuál conviene antes y cuál después, o le atribuye al cruce un significado que no tiene en el contexto. No es un error de cálculo de dónde ocurre el cruce, sino de lectura de qué dice."
     },
     {
-      "id": "error-5",
+      "id": "error-12",
       "descripcion": "Olvida el término independiente / coeficiente de posición (cree que una función sin coeficiente de posición visible no lo tiene, o lo omite en el modelo)."
     }
   ],
@@ -162,7 +162,7 @@
                 {
                   "prediccion": "El control de la pendiente",
                   "mensaje": "Compruébalo tú: mueve solo el control de pendiente. ¿Se mueve el punto donde la recta cruza el eje Y, o se queda clavado ahí?",
-                  "errorCatalogado": "error-1"
+                  "errorCatalogado": "error-8"
                 }
               ],
               "mensajeCorrecto": "Exacto. El coeficiente de posición es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
@@ -174,7 +174,7 @@
                 {
                   "prediccion": "El control del coeficiente de posición",
                   "mensaje": "Prueba mover solo el control de coeficiente de posición. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
-                  "errorCatalogado": "error-1"
+                  "errorCatalogado": "error-8"
                 }
               ],
               "mensajeCorrecto": "Eso es. La pendiente controla la inclinación: más pendiente, recta más empinada."
@@ -186,7 +186,7 @@
                 {
                   "prediccion": "Verdadero",
                   "mensaje": "Una recta no se acorta. Lleva la pendiente a negativo y observa la dirección: ¿sube de izquierda a derecha, o baja? Una pendiente negativa hace que la recta BAJE, no que se acorte.",
-                  "errorCatalogado": "error-2"
+                  "errorCatalogado": "error-9"
                 }
               ],
               "mensajeCorrecto": "Correcto. Una recta no se acorta: con pendiente negativa cambia de dirección y baja de izquierda a derecha. El signo de la pendiente dice si sube o baja."
@@ -236,21 +236,21 @@
               "texto": "(0, 4)",
               "esCorrecta": false,
               "feedback": "El 4 es lo que inclina la recta, no dónde cruza el eje Y. ¿Qué número en y = mx + n te dice el cruce con el eje Y?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "error-8"
             },
             {
               "id": "c",
               "texto": "(−2, 0)",
               "esCorrecta": false,
               "feedback": "Ojo con los ejes: el coeficiente de posición que buscamos es el cruce con el eje Y, así que la primera coordenada del punto debe ser 0. Revisa cuál eje estás mirando.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "error-10"
             },
             {
               "id": "d",
               "texto": "(0, 2)",
               "esCorrecta": false,
               "feedback": "Casi. Revisa el signo del término sin x en la ecuación. ¿La ecuación dice +2 o −2?",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "error-9"
             }
           ]
         }
@@ -284,21 +284,21 @@
               "texto": "El Plan B cobra el cargo fijo más bajo, porque cobra solo $300 por cada giga.",
               "esCorrecta": false,
               "feedback": "Estás leyendo el número que acompaña a la x como si fuera el cargo fijo. En y = mx + n, el 300 es lo que se paga por cada giga; el cargo fijo es lo que se paga aunque uses 0 gigas. ¿Qué queda de cada ecuación cuando x = 0?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "error-8"
             },
             {
               "id": "c",
               "texto": "El Plan B sube más rápido por cada giga, porque su costo empieza en un número más alto.",
               "esCorrecta": false,
               "feedback": "Empezar más arriba y subir más rápido son dos cosas distintas, y las controla un número distinto cada una. El Plan B efectivamente empieza más arriba, pero eso no dice nada sobre su ritmo. ¿Cuál de los dos números de la ecuación te dice cuánto sube el costo por cada giga?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "error-8"
             },
             {
               "id": "d",
               "texto": "El punto donde las dos rectas se cruzan marca el consumo a partir del cual el Plan A pasa a ser el más barato.",
               "esCorrecta": false,
               "feedback": "Tienes bien qué es el cruce, pero al revés la dirección. Fíjate en el ritmo: el Plan A sube $900 por giga y el Plan B sube $300. Después del cruce, ¿cuál de los dos se dispara y cuál se queda atrás?",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "error-11"
             }
           ]
         }
@@ -387,21 +387,21 @@
           "texto": "y = 25 − 160x",
           "esCorrecta": false,
           "feedback": "Invertiste los papeles. ¿Cuál número es la cantidad con la que se PARTE (se cuenta una sola vez) y cuál se repite POR cada cantero? El que se repite por cantero va con la x.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "error-8"
         },
         {
           "clave": "C",
           "texto": "y = −25x",
           "esCorrecta": false,
           "feedback": "El ritmo al que bajan los plantines está bien (25 por cantero), pero olvidaste de cuántos se parte. Con 0 canteros sembrados, ¿cuántos plantines quedan por sembrar todavía?",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "error-12"
         },
         {
           "clave": "D",
           "texto": "y = 160 + 25x",
           "esCorrecta": false,
           "feedback": "Fíjate en la dirección: los plantines que quedan por sembrar ¿aumentan o disminuyen a medida que se siembran más canteros? Si disminuyen, el 25 se resta, no se suma.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "error-9"
         }
       ],
       "solucion": "Cantidad inicial (coeficiente de posición) = 160 plantines por sembrar. Por cada cantero se siembran 25, así que los que quedan bajan 25 por cantero (pendiente −25). Modelo: y = 160 − 25x. Comprobación x=4: 160 − 25·4 = 160 − 100 = 60 plantines quedan; sembrados 100, total 160. ✓ Resultado entero para todo x entero."
@@ -417,7 +417,7 @@
           "texto": "Sí, la pendiente determina completamente la recta.",
           "esCorrecta": false,
           "feedback": "La pendiente fija la inclinación, pero no todo. Piensa en dos rectas igual de empinadas que cruzan el eje Y en puntos distintos: ¿son la misma recta?",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "error-8"
         },
         {
           "clave": "B",
@@ -430,14 +430,14 @@
           "texto": "Sí, siempre que ambas sean funciones afines.",
           "esCorrecta": false,
           "feedback": "Ser afín no cambia el problema. Dos funciones afines pueden tener el mismo m y distinto n. ¿Qué serían entonces geométricamente?",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "error-8"
         },
         {
           "clave": "D",
           "texto": "No, porque dos rectas nunca pueden tener la misma pendiente.",
           "esCorrecta": false,
           "feedback": "Al revés: sí pueden tener la misma pendiente. De hecho, eso es justo lo que define a las rectas paralelas.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "error-8"
         }
       ],
       "solucion": "Dos rectas con igual m y distinto n son paralelas y distintas (por ejemplo y = 2x + 1 e y = 2x + 5 nunca se cruzan y no coinciden). La afirmación es falsa; la justificación correcta es B."
