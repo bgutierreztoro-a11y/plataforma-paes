@@ -47,8 +47,8 @@
     "curiosidad: 1 bolsa + 3 bolitas = 10 bolitas (x=7)",
     "problema/pensar/pistas/descubrimiento: 3 bolsas + 6 bolitas = 21 bolitas (x=5)",
     "generalizacion: ejemplo trabajado 2x + 10 = 4 (x=-3); ejercicio 2x + 7 = -1 (x=-4) — corregido 2026-07-20 para no repetir la ecuación del ejemplo",
-    "practica: 4x - 8 = 20 (x=7); 2x + 3 = 11; equivalencia +5 a ambos lados",
-    "aplicacion: 6 jaulas iguales + 3 gatos en enfermería = 27 gatos (x=4)",
+    "practica: 4x - 8 = 16 (x=6); 2x + 3 = 11; equivalencia +5 a ambos lados",
+    "aplicacion: 6 jaulas iguales + 3 gatos en enfermería = 63 gatos (x=10)",
     "itemsPAES: 5x + 8 = x - 4 (x=-3); 4 salas iguales + 8 cuentos de reserva = 40 (x=8); 3x + 5 = 20 (equivalencia)"
   ],
   "pasos": [
@@ -351,7 +351,7 @@
       "tipo": "practica",
       "titulo": "Tres ejercicios, un solo principio",
       "_notasInternas": [
-        "P1 (numérica): 4x − 8 = 20 → 4x = 28 → x = 7. Comprobación: 4·7 − 8 = 20. ✓ Distractores: 3 = restó 8 en vez de sumarlo, (20−8)/4 (error-2). 28 = llegó a 4x = 28 y no dividió (error-4).",
+        "P1 (numérica): 4x − 8 = 16 → 4x = 24 → x = 6. Comprobación: 4·6 − 8 = 16. ✓ Distractores: 2 = restó 8 en vez de sumarlo, (16−8)/4 (error-2). 24 = llegó a 4x = 24 y no dividió (error-4).",
         "P2 (verdadero/falso): sumar el mismo número a ambos lados NO cambia la solución → la afirmación 'sí la cambia' es Falsa.",
         "P3 (selección): en 2x + 3 = 11, el paso que NO conserva el equilibrio es restar 3 a un solo lado (error-1).",
         "REESCRITURA 2026-07-27 (palanca — rampa ascendente + ángulo procedimiento-no-dato, aprobada por el autor): se reordenaron los 3 bloques de seleccion→verdaderoFalso→numerica (antes: numerica→verdaderoFalso→seleccion), terminando en el cálculo abierto más exigente en vez de empezar por él — L1 mantiene el mismo orden plano en su Paso 7 equivalente. Además, el feedback del bloque verdaderoFalso ahora nombra explícitamente que la afirmación es sobre el PROCEDIMIENTO en general, no sobre un dato de un ejercicio puntual — matiz que antes quedaba implícito. No cambian los ejercicios ni las cifras, solo el orden y ese matiz de feedback."
@@ -391,30 +391,30 @@
         },
         {
           "tipo": "numerica",
-          "enunciado": "**Ejercicio.** Resuelve:\n\n**4x − 8 = 20**",
+          "enunciado": "**Ejercicio.** Resuelve:\n\n**4x − 8 = 16**",
           "campos": [
             {
               "id": "valorX",
               "etiqueta": "x",
-              "respuestaCorrecta": 7,
+              "respuestaCorrecta": 6,
               "unidad": ""
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "valorX",
-              "valorObtenido": 3,
-              "mensaje": "Restaste el 8 cuando había que sumarlo. Aquí el término es −8, así que para eliminarlo se suma 8 en ambos lados: 4x = 20 + 8 = 28. Revisa esa dirección.",
+              "valorObtenido": 2,
+              "mensaje": "Restaste el 8 cuando había que sumarlo. Aquí el término es −8, así que para eliminarlo se suma 8 en ambos lados: 4x = 16 + 8 = 24. Revisa esa dirección.",
               "errorCatalogado": "error-2"
             },
             {
               "campoId": "valorX",
-              "valorObtenido": 28,
-              "mensaje": "Llegaste bien a 4x = 28, pero eso es el peso de las 4 equis juntas. Falta repartir: divide ambos lados por 4.",
+              "valorObtenido": 24,
+              "mensaje": "Llegaste bien a 4x = 24, pero eso es el peso de las 4 equis juntas. Falta repartir: divide ambos lados por 4.",
               "errorCatalogado": "error-4"
             }
           ],
-          "feedbackPorDefecto": "Primero suma 8 en ambos lados (porque el término es −8), llegando a 4x = 28. Después divide ambos lados por 4."
+          "feedbackPorDefecto": "Primero suma 8 en ambos lados (porque el término es −8), llegando a 4x = 24. Después divide ambos lados por 4."
         }
       ]
     },
@@ -423,43 +423,43 @@
       "titulo": "Los gatos del refugio",
       "_notasInternas": [
         "Contexto NO transaccional (sin dinero, sin tarifa): reparto en partes iguales. Distinto del contexto del descubrimiento (bolsas/bolitas).",
-        "Ecuación de la situación: 6x + 3 = 27 → x = 4. Comprobación: 6·4 + 3 = 27. ✓",
-        "Verificación de distractores (6x + 3 = 27, x = 4): 24 = llegó a 6x = 24 y no dividió por 6 (error-4). 5 = sumó los 3 en vez de restarlos: (27+3)/6 (error-2).",
+        "Ecuación de la situación: 6x + 3 = 63 → x = 10. Comprobación: 6·10 + 3 = 63. ✓",
+        "Verificación de distractores (6x + 3 = 63, x = 10): 60 = llegó a 6x = 60 y no dividió por 6 (error-4). 11 = sumó los 3 en vez de restarlos: (63+3)/6 (error-2).",
         "REESCRITURA 2026-07-27 (palanca A — actuar antes de nombrar, aprobada por el autor): se invirtió el orden de los dos bloques. Antes: abierta (formalizar la ecuación) → numerica (resolverla) — formalización PROSPECTIVA. Ahora: numerica (resolver el caso usando el método de la balanza ya interiorizado, sin que se le pida escribir nada simbólico todavía) → abierta (recién ahí, formalizar en retrospectiva: 'escribe el método que usaste'). Aplica el mismo principio que ya usan Paso 1 y Paso 5 de esta lección ('actuar antes de nombrar'), que L1 no usa en su Paso 8 equivalente (estampillas de Martina), donde la receta se pide siempre antes de calcular. No cambian los números ni el contexto (gatos/jaulas), solo el orden y el enunciado de cada bloque."
       ],
       "bloques": [
         {
           "tipo": "numerica",
-          "enunciado": "Un refugio de animales tiene el **mismo número de gatos en cada una de sus 6 jaulas**, y además **3 gatos en la enfermería** (fuera de las jaulas). En total hay **27 gatos**.\n\n¿Cuántos gatos hay en cada jaula? Resuélvelo con el mismo método de la balanza, aunque aquí no haya ni bolsas ni bolitas.",
+          "enunciado": "Un refugio de animales tiene el **mismo número de gatos en cada una de sus 6 jaulas**, y además **3 gatos en la enfermería** (fuera de las jaulas). En total hay **63 gatos**.\n\n¿Cuántos gatos hay en cada jaula? Resuélvelo con el mismo método de la balanza, aunque aquí no haya ni bolsas ni bolitas.",
           "campos": [
             {
               "id": "gatosPorJaula",
               "etiqueta": "Gatos por jaula",
-              "respuestaCorrecta": 4,
+              "respuestaCorrecta": 10,
               "unidad": "gatos"
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "gatosPorJaula",
-              "valorObtenido": 24,
-              "mensaje": "Quitaste bien los 3 de enfermería de ambos lados y llegaste a 6x = 24. Pero 24 es el total de gatos que están en jaulas, no los de UNA jaula. Falta repartir entre las 6 jaulas: 24 ÷ 6.",
+              "valorObtenido": 60,
+              "mensaje": "Quitaste bien los 3 de enfermería de ambos lados y llegaste a 6x = 60. Pero 60 es el total de gatos que están en jaulas, no los de UNA jaula. Falta repartir entre las 6 jaulas: 60 ÷ 6.",
               "errorCatalogado": "error-4"
             },
             {
               "campoId": "gatosPorJaula",
-              "valorObtenido": 5,
-              "mensaje": "Sumaste los 3 de enfermería en vez de restarlos: usaste (27 + 3) ÷ 6 = 5. Pero esos 3 gatos ya están contados dentro de los 27, así que para aislar las jaulas hay que restarlos: 27 − 3.",
+              "valorObtenido": 11,
+              "mensaje": "Sumaste los 3 de enfermería en vez de restarlos: usaste (63 + 3) ÷ 6 = 11. Pero esos 3 gatos ya están contados dentro de los 63, así que para aislar las jaulas hay que restarlos: 63 − 3.",
               "errorCatalogado": "error-2"
             }
           ],
-          "feedbackPorDefecto": "Piensa en la balanza: 6 grupos iguales (las jaulas) más 3 sueltos (los de enfermería) equilibran 27. Primero resta los 3 sueltos de ambos lados, y después reparte entre las 6 jaulas."
+          "feedbackPorDefecto": "Piensa en la balanza: 6 grupos iguales (las jaulas) más 3 sueltos (los de enfermería) equilibran 63. Primero resta los 3 sueltos de ambos lados, y después reparte entre las 6 jaulas."
         },
         {
           "tipo": "abierta",
           "enunciado": "Ya resolviste el problema de los gatos usando el método de la balanza, aunque no hayas escrito ningún símbolo todavía.\n\nAhora hazlo explícito: llama x al número de gatos por jaula y escribe la ecuación que representa la situación — la misma que resolviste, pero en símbolos.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "6x + 3 = 27  (los 6 grupos iguales de x gatos, más los 3 de enfermería, suman 27)"
+          "respuestaModelo": "6x + 3 = 63  (los 6 grupos iguales de x gatos, más los 3 de enfermería, suman 63)"
         }
       ]
     },
@@ -614,5 +614,20 @@
     "declaracionOriginalidad": "Borrador. Enunciados, contextos (balanza con bolsas de bolitas, gatos por jaula, cuentos por sala) y la secuencia didáctica creados desde cero por el autor del proyecto, deliberadamente en dominios NO transaccionales para evitar la familia 'cargo fijo + tarifa variable'. Aún NO auditado: pendiente /revision-originalidad (verificar ausencia de colisión con fuentes del corpus) y /revision-matematica (recalcular todo desde cero) antes de subir de 'borrador'.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-07-20"
+  },
+  "auditoria": {
+    "colisionesPermitidas": [
+      {
+        "valor": 5,
+        "motivo": "El 5 es la respuesta correcta de bolitasPorBolsa en el paso 3 (Parte 1 de la balanza: 3 bolsas + 6 sueltas = 21, o sea 5 por bolsa). Reaparece como valorObtenido de la comprobacion en el mismo bloque, donde el feedback lo nombra literalmente (\"eso es lo que escribiste en la Parte 1, no el resultado de comprobar\"). El orden es favorable: el 5 se confirma correcto en la Parte 1 antes de reaparecer en la comprobacion del mismo bloque, asi que el estudiante no vive la contradiccion que la regla 3b evita. Ver docs/reglas-modulo.md seccion 3b."
+      },
+      {
+        "valor": 10,
+        "motivo": "El 10 es la respuesta correcta de gatosPorJaula en el paso 8 (aplicacion: 6 jaulas iguales con el mismo numero de gatos + 3 en enfermeria = 63, o sea 10 por jaula). Reaparece como distractor de la alternativa B del item PAES l3-item-2 (repartir los 40 cuentos entre las 4 salas sin descontar antes los 8 apartados: 40 / 4 = 10, error-3). El orden es favorable: el 10 se confirma correcto en el paso 8 antes de reaparecer como distractor en los itemsPAES, que van despues de los diez pasos, asi que el estudiante no vive la contradiccion que la regla 3b evita. Ver docs/reglas-modulo.md seccion 3b."
+      }
+    ],
+    "camposAdimensionales": {
+      "valorX": "Los campos valorX de los pasos 6 y 7 piden el valor de x en ecuaciones abstractas (2x + 7 = -1 y 4x - 8 = 16), ejercicios de manipulacion simbolica sin contexto de dominio: x es un numero puro, sin magnitud que declarar."
+    }
   }
 }
