@@ -440,7 +440,7 @@
     {
       "id": "inecuaciones-problemas-item-2",
       "habilidad": "resolver",
-      "dificultad": "alta",
+      "dificultad": "media",
       "enunciado": "En el taller de un colegio quedan 700 gramos de filamento para la impresora 3D. Cada pieza que imprimen consume 45 gramos. ¿Cuántas piezas completas alcanzan a imprimir con el filamento disponible?",
       "alternativas": [
         {

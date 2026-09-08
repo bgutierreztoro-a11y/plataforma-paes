@@ -501,7 +501,7 @@
     {
       "id": "l3-item-1",
       "habilidad": "resolver",
-      "dificultad": "alta",
+      "dificultad": "media",
       "enunciado": "¿Cuál es el valor de x en la ecuación 5x + 8 = x − 4?",
       "alternativas": [
         {
