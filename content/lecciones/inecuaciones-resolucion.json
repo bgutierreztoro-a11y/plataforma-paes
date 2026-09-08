@@ -363,47 +363,47 @@
       "bloques": [
         {
           "tipo": "numerica",
-          "enunciado": "Un refugio de montaña tiene **45 cm de nieve acumulada** en su ladera de práctica. Con el deshielo, la capa pierde **6 cm cada día**. La ladera solo puede usarse mientras queden **al menos 15 cm** de nieve.\n\n¿Cuántos días completos, contando desde hoy, se puede seguir usando la ladera?",
+          "enunciado": "Un refugio de montaña tiene **42 cm de nieve acumulada** en su ladera de práctica. Con el deshielo, la capa pierde **3 cm cada día**. La ladera solo puede usarse mientras queden **al menos 15 cm** de nieve.\n\n¿Cuántos días completos, contando desde hoy, se puede seguir usando la ladera?",
           "campos": [
             {
               "id": "diasUtiles",
               "etiqueta": "Días que se puede usar la ladera",
-              "respuestaCorrecta": 5,
+              "respuestaCorrecta": 9,
               "unidad": "días"
             }
           ],
           "feedbackPorError": [
             {
               "campoId": "diasUtiles",
-              "valorObtenido": 6,
-              "mensaje": "Estás a un día de distancia. Revisa el borde: al día 6 quedan 45 − 36 = 9 cm, y 9 no alcanza los 15 que se piden. Al día 5 quedan exactamente 15, y como el enunciado dice 'al menos 15', ese día todavía sirve.",
+              "valorObtenido": 10,
+              "mensaje": "Estás a un día de distancia. Revisa el borde: al día 10 quedan 42 − 30 = 12 cm, y 12 no alcanza los 15 que se piden. Al día 9 quedan exactamente 15, y como el enunciado dice 'al menos 15', ese día todavía sirve.",
               "errorCatalogado": "error-7"
             },
             {
               "campoId": "diasUtiles",
-              "valorObtenido": 4,
-              "mensaje": "Te quedaste corto por el borde. Al día 5 quedan exactamente 15 cm. 'Al menos 15' incluye el 15 justo, así que el día 5 todavía cuenta.",
+              "valorObtenido": 8,
+              "mensaje": "Te quedaste corto por el borde. Al día 9 quedan exactamente 15 cm. 'Al menos 15' incluye el 15 justo, así que el día 9 todavía cuenta.",
               "errorCatalogado": "error-7"
             },
             {
               "campoId": "diasUtiles",
-              "valorObtenido": 30,
-              "mensaje": "Ese es el resultado de 45 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 30 cm entre los 6 cm que se pierden cada día.",
+              "valorObtenido": 27,
+              "mensaje": "Ese es el resultado de 42 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 27 cm entre los 3 cm que se pierden cada día.",
               "errorCatalogado": "error-4"
             },
             {
               "campoId": "diasUtiles",
-              "valorObtenido": 10,
-              "mensaje": "Parece que calculaste en cuántos días se acaba toda la nieve, pero la ladera deja de servir mucho antes: no se necesita que la nieve llegue a cero, se necesita que no baje de 15 cm. Vuelve a armar la inecuación con ese 15 adentro."
+              "valorObtenido": 14,
+              "mensaje": "Parece que calculaste en cuántos días se acaba toda la nieve (42 ÷ 3 = 14), pero la ladera deja de servir mucho antes: no se necesita que la nieve llegue a cero, se necesita que no baje de 15 cm. Vuelve a armar la inecuación con ese 15 adentro."
             }
           ],
-          "feedbackPorDefecto": "Llama d a los días transcurridos. La nieve que queda es 45 − 6d, y la condición es que sea al menos 15. Arma esa inecuación y resuélvela. Ojo con el borde: 'al menos 15' incluye el 15 exacto."
+          "feedbackPorDefecto": "Llama d a los días transcurridos. La nieve que queda es 42 − 3d, y la condición es que sea al menos 15. Arma esa inecuación y resuélvela. Ojo con el borde: 'al menos 15' incluye el 15 exacto."
         },
         {
           "tipo": "abierta",
           "enunciado": "Escríbelo en símbolos. Llama **d** al número de días transcurridos y arma la inecuación que representa la condición 'quedan al menos 15 cm'.",
           "mostrarRespuestaModelo": true,
-          "respuestaModelo": "45 − 6d ≥ 15\n\nY fíjate en algo útil: hay dos caminos para resolverla, y los dos llegan a d ≤ 5. Camino 1 (con inversión): resto 45 a ambos lados → −6d ≥ −30; divido por −6, que es negativo, así que invierto → d ≤ 5. Camino 2 (sin inversión): sumo 6d a ambos lados → 45 ≥ 15 + 6d; resto 15 → 30 ≥ 6d; divido por 6, positivo → 5 ≥ d, o sea d ≤ 5. Si te incomoda dividir por un negativo, el camino 2 te lo evita por completo."
+          "respuestaModelo": "42 − 3d ≥ 15\n\nY fíjate en algo útil: hay dos caminos para resolverla, y los dos llegan a d ≤ 9. Camino 1 (con inversión): resto 42 a ambos lados → −3d ≥ −27; divido por −3, que es negativo, así que invierto → d ≤ 9. Camino 2 (sin inversión): sumo 3d a ambos lados → 42 ≥ 15 + 3d; resto 15 → 27 ≥ 3d; divido por 3, positivo → 9 ≥ d, o sea d ≤ 9. Si te incomoda dividir por un negativo, el camino 2 te lo evita por completo."
         }
       ]
     },
@@ -548,11 +548,30 @@
     "paso 5 (descubrimiento, abstracto): −5 < 3 sometida a +4, −4, ×2, ×(−2); solo la última se rompe (10 < −6 es falsa; lo cierto es 10 > −6)",
     "paso 6 (generalizacion, abstracto): −2x + 1 ≥ 9 → x ≤ −4; y −5x > 20 → x < −4, mayor entero −5",
     "paso 7 (practica, abstracto): 7x + 2 < 30 → x < 4; 2 < 6 restando 9 → −7 < −3; 4x + 3 ≤ 19 → x ≤ 4 (mayor entero 4) y 4x + 3 < 19 → x < 4 (mayor entero 3)",
-    "paso 8 (aplicacion, nieve en refugio de montaña): 45 − 6d ≥ 15 → d ≤ 5 días",
+    "paso 8 (aplicacion, nieve en refugio de montaña): 42 − 3d ≥ 15 → d ≤ 9 días",
     "itemsPAES 1 (resolver, abstracto): 6x + 5 < 2x + 29 → x < 6",
     "itemsPAES 2 (representar, abstracto): conjunto x ≥ −2 en la recta numérica, borde cerrado hacia la derecha",
     "itemsPAES 3 (argumentar, abstracto): −3x + 2 > 14 → x < −4"
   ],
+  "auditoria": {
+    "colisionesPermitidas": [
+      {
+        "valor": 4,
+        "motivo": "El 4 es respuesta correcta de mayorEntero (paso 3) y de mayorEnteroCerrado (paso 7, Parte 1 con condicion no estricta). Aparece como distractor de mayorEnteroAbierto (paso 7, Parte 2 con condicion estricta): los dos roles conviven por diseno en el mismo bloque -el contraste entre el borde cerrado y el abierto ES el ejercicio- y el feedback lo nombra (\"las dos partes no pueden dar lo mismo\"). Ver docs/reglas-modulo.md seccion 3b."
+      },
+      {
+        "valor": 3,
+        "motivo": "El 3 es respuesta correcta de mayorEnteroAbierto (paso 7, Parte 2 con condicion estricta) y distractor de mayorEnteroCerrado (paso 7, Parte 1 con condicion no estricta) en el mismo bloque. El contraste estricto / no estricto es el contenido del ejercicio y el feedback lo explicita (\"te pasaste de cauteloso... el 4 si cumple\"); no hay contradiccion entre pasos. Ver docs/reglas-modulo.md seccion 3b."
+      }
+    ],
+    "camposAdimensionales": {
+      "mayorEntero": "Pide el mayor entero que satisface la inecuacion abstracta 3x - 4 < 11; sin contexto de dominio es un numero puro, no una cantidad medible.",
+      "comprobacion": "Pide el valor numerico de la expresion 3x - 4 evaluada en el entero siguiente; numero puro de una comprobacion simbolica, sin magnitud.",
+      "mayorEnteroNegativo": "Pide el mayor entero que cumple la inecuacion abstracta -5x > 20; numero puro, sin contexto real.",
+      "mayorEnteroCerrado": "Pide el mayor entero que cumple 4x + 3 con borde cerrado (menor o igual que 19); numero puro, inecuacion sin dominio.",
+      "mayorEnteroAbierto": "Pide el mayor entero que cumple 4x + 3 con borde abierto (estrictamente menor que 19); numero puro, gemela estricta del campo anterior."
+    }
+  },
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE), eje Álgebra y funciones, tema 'Ecuaciones e inecuaciones de primer grado' — solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos.",
