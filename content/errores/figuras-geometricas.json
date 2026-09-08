@@ -1,0 +1,53 @@
+{
+  "unidad": "figuras-geometricas",
+  "errores": [
+    {
+      "id": "figuras-geometricas/error-1",
+      "descripcion": "Tratar el teorema de Pitágoras como una operación lineal entre los lados —sumarlos o restarlos directamente— en vez de elevarlos al cuadrado, combinarlos, y recién ahí aplicar la raíz cuadrada. Incluye tanto calcular la hipotenusa como cateto + cateto, como calcular un cateto como hipotenusa − cateto, como usar la suma o resta directa de los lados para verificar si la relación se cumple."
+    },
+    {
+      "id": "figuras-geometricas/error-2",
+      "descripcion": "Elevar al cuadrado y sumar o restar correctamente según corresponda, pero omitir la raíz cuadrada final, entregando la suma o resta de los cuadrados como si fuera la medida del lado buscado (por ejemplo, a² + b² en vez de √(a² + b²), o c² − a² en vez de √(c² − a²))."
+    },
+    {
+      "id": "figuras-geometricas/error-3",
+      "descripcion": "Al buscar un cateto desconocido conociendo la hipotenusa y el otro cateto, sumar los cuadrados de ambos valores dados (hipotenusa² + cateto²) en vez de restarlos, aplicando el mismo patrón de 'sumar cuadrados' del caso de buscar la hipotenusa, sin notar que aquí el valor desconocido ya no es la hipotenusa."
+    },
+    {
+      "id": "figuras-geometricas/error-4",
+      "descripcion": "Al buscar un cateto desconocido, tratar el cateto ya conocido como si fuera la hipotenusa —despejando con ese valor en el lugar de c— en vez de identificar que la hipotenusa es siempre el lado más largo, opuesto al ángulo recto."
+    },
+    {
+      "id": "figuras-geometricas/error-5",
+      "descripcion": "Error aritmético al elevar un número al cuadrado: calcular a² como 2 × a (el doble del número) en vez de a × a, subestimando sistemáticamente el resultado."
+    },
+    {
+      "id": "figuras-geometricas/error-6",
+      "descripcion": "Suma los catetos antes de elevar al cuadrado: calcula (a+b)² en vez de a²+b², confundiendo la propiedad distributiva del cuadrado de una suma con el teorema de Pitágoras."
+    },
+    {
+      "id": "figuras-geometricas/error-7",
+      "descripcion": "Olvida el factor 1/2 (o la división por 2) en una fórmula de área que lo incluye: calcula el área de un triángulo como base×altura, en vez de base×altura÷2, o el área de un trapecio como (baseMayor+baseMenor)×altura, en vez de dividir esa suma por 2 antes de multiplicar por la altura — tratando la figura como si fuera un paralelogramo completo en vez de la mitad de uno."
+    },
+    {
+      "id": "figuras-geometricas/error-8",
+      "descripcion": "Calcula el perímetro de una figura con al menos un lado inclinado (como un paralelogramo cortado con un desplazamiento horizontal) usando la altura vertical como si fuera la medida de ese lado inclinado, en vez de calcular su longitud real aplicando el teorema de Pitágoras sobre la altura y el desplazamiento."
+    },
+    {
+      "id": "figuras-geometricas/error-9",
+      "descripcion": "Confunde la fórmula de la circunferencia de un círculo (su perímetro, 2×π×radio) con la fórmula de su área (π×radio²), aplicando una en el lugar de la otra sin notar que una mide un borde (una longitud) y la otra una superficie."
+    },
+    {
+      "id": "figuras-geometricas/error-10",
+      "descripcion": "Usa el lado inclinado de la figura (por ejemplo, la cumbrera de un techo o un lado dado como hipotenusa) directamente como si fuera la altura al aplicar una fórmula de área o perímetro, en vez de calcular primero la altura real mediante el teorema de Pitágoras. Es el error inverso al de error-8: ahí se usaba la altura como si fuera el lado inclinado; aquí se usa el lado inclinado como si fuera la altura."
+    },
+    {
+      "id": "figuras-geometricas/error-11",
+      "descripcion": "Al calcular el perímetro (o el material de borde) de una figura compuesta por dos piezas —como un muro rectangular con un techo triangular encima—, suma el contorno de cada pieza por separado incluyendo el borde donde ambas piezas se unen, en vez de contar solo el borde exterior visible de la figura completa (esa unión no es un borde real de la figura compuesta)."
+    },
+    {
+      "id": "figuras-geometricas/error-12",
+      "descripcion": "Ver dos catetos parecidos a un trío pitagórico conocido —o a un múltiplo de uno— y dar por hecho que la hipotenusa es la de ese trío, sin comprobar que ambos catetos coincidan exactamente: por ejemplo, tratar un triángulo de catetos 8 y 16 como si fuera el trío 8-15-17 y responder 17. Incluye suponer que la hipotenusa siempre da un número entero. Cuando los catetos no calzan con ningún trío, la relación a² + b² = c² sigue valiendo, pero su resultado puede ser irracional."
+    }
+  ]
+}

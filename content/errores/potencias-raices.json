@@ -1,0 +1,57 @@
+{
+  "unidad": "potencias-raices",
+  "errores": [
+    {
+      "id": "potencias-raices/error-1",
+      "descripcion": "Leer la potencia como una multiplicación entre la base y el exponente: calcular 2⁵ como 2 · 5 = 10, o 3⁴ como 12. El exponente no es un factor: cuando es un número natural dice cuántas veces aparece la base multiplicándose, no por cuánto se multiplica."
+    },
+    {
+      "id": "potencias-raices/error-2",
+      "descripcion": "Sumar los exponentes cuando las bases no son la misma: tratar 2³ · 3⁴ como si fuera una sola potencia de exponente 7. La regla de sumar exponentes describe qué pasa cuando se repite el mismo factor; para usarla, las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo están."
+    },
+    {
+      "id": "potencias-raices/error-3",
+      "descripcion": "Aplicar a la operación equivocada la regla que corresponde a la otra: el mecanismo es uno solo, no saber cuál operación entre potencias se traduce en cuál operación entre exponentes. Aparece igual en las dos direcciones —convertir aᵐ · aⁿ en a^(m·n) o convertir (aᵐ)ⁿ en a^(m+n)— y la señal es siempre la misma: se eligió la operación de exponentes antes de mirar qué se estaba haciendo con las potencias. Se distingue de error-2 en que acá la base sí es la misma: lo que falló no es cuál base, sino cuál regla."
+    },
+    {
+      "id": "potencias-raices/error-4",
+      "descripcion": "Leer el exponente negativo como si el signo pasara al resultado: calcular 2⁻³ como −8 en vez de 1/8. Con base positiva, bajar escalones nunca cambia de signo, solo divide: el signo menos del exponente dice «dividir», no «negativo»."
+    },
+    {
+      "id": "potencias-raices/error-5",
+      "descripcion": "Dar a⁰ = 0, leyendo el exponente cero como «no queda nada». Con cualquier base distinta de 0, bajar un escalón divide por la base: desde 5¹ = 5, bajar uno da 5 ÷ 5 = 1. El escalón cero vale 1, no 0. Se distingue de error-4, que es sobre el signo de los escalones de más abajo."
+    },
+    {
+      "id": "potencias-raices/error-6",
+      "descripcion": "En una potencia o raíz de base fraccionaria, operar solo una parte de la fracción: al elevar, dar (2/3)³ = 8/3 (solo el numerador) o = 2/27 (solo el denominador); al sacar raíz, dar √(9/25) = 3/25 (solo el numerador) o = 9/5 (solo el denominador). La base o el radicando es la fracción completa: el exponente o la raíz se aplica arriba y abajo."
+    },
+    {
+      "id": "potencias-raices/error-7",
+      "descripcion": "Cambiar de lugar el índice y el exponente al pasar entre raíz y potencia: leer a^(m/n) como ᵐ√(aⁿ) en vez de ⁿ√(aᵐ). El denominador del exponente es el índice de la raíz y el numerador es el exponente del radicando; invertirlos da otro número: con una base positiva distinta de 1, las dos lecturas solo coinciden cuando m = n."
+    },
+    {
+      "id": "potencias-raices/error-8",
+      "descripcion": "Repartir la raíz sobre una suma o una resta: dar √(a + b) = √a + √b. Las propiedades heredadas de las potencias reparten sobre productos y cocientes, no sobre sumas: primero se resuelve lo que está dentro de la raíz y después se saca la raíz."
+    },
+    {
+      "id": "potencias-raices/error-9",
+      "descripcion": "Descomponer a medias: extraer un factor con raíz exacta que no es el mayor posible y quedarse ahí, como dar √72 = 2√18 sin notar que 18 todavía tiene un factor cuadrado. La extracción está bien hecha; lo que falta es seguir hasta que el radicando ya no tenga ningún factor mayor que 1 cuya raíz de ese mismo índice sea exacta. Se distingue de error-10, donde el paso mal hecho es la extracción misma."
+    },
+    {
+      "id": "potencias-raices/error-10",
+      "descripcion": "Sacar el factor de la raíz sin sacarle la raíz: pasar de √(36 · 2) a 36√2 en vez de 6√2. Lo que sale afuera es la raíz del factor, no el factor."
+    },
+    {
+      "id": "potencias-raices/error-11",
+      "descripcion": "Sumar radicales que no son el mismo, como si fueran términos semejantes: dar 2√3 + 3√2 = 5√5. Solo se pueden juntar los que, ya descompuestos, quedan con el mismo índice y el mismo radicando; √3 y √2 no se pueden descomponer más y son dos números distintos, igual que x e y en álgebra."
+    },
+    {
+      "id": "potencias-raices/error-12",
+      "descripcion": "Confundir sacar la raíz con dividir por el índice: dar √36 = 18 o ³√27 = 9. La raíz busca un número que, usado como factor tantas veces como dice el índice, dé el radicando —6 · 6 = 36, 3 · 3 · 3 = 27—; dividir no responde esa pregunta."
+    },
+    {
+      "id": "potencias-raices/error-13",
+      "descripcion": "Calcular bien y responder otra magnitud: entregar el área cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el enunciado."
+    }
+  ]
+}

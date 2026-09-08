@@ -1,0 +1,57 @@
+{
+  "unidad": "cuerpos-geometricos",
+  "errores": [
+    {
+      "id": "cuerpos-geometricos/error-1",
+      "descripcion": "Calcular la superficie contando solo las caras que se ven en el dibujo en perspectiva (tres de las seis) y sumando sus áreas sin duplicarlas por las caras opuestas, con lo que se obtiene exactamente la mitad de la superficie real del cuerpo."
+    },
+    {
+      "id": "cuerpos-geometricos/error-2",
+      "descripcion": "Trasladar la estructura del perímetro a un cuerpo: sumar las tres dimensiones y multiplicar por dos, 2(a+b+c), como si la superficie se midiera sumando longitudes de aristas en vez de áreas de caras."
+    },
+    {
+      "id": "cuerpos-geometricos/error-3",
+      "descripcion": "En un cuerpo con tapa y base, contar solo las caras laterales y olvidar las dos que lo cierran arriba y abajo: en el cubo, calcular 4a² (las cuatro caras laterales) en vez de 6a²."
+    },
+    {
+      "id": "cuerpos-geometricos/error-4",
+      "descripcion": "En el cilindro, sumar el manto y una sola tapa, πr² + 2πrh, olvidando que el cuerpo tiene dos tapas iguales (una arriba y otra abajo) y no una."
+    },
+    {
+      "id": "cuerpos-geometricos/error-5",
+      "descripcion": "En el cilindro, calcular el manto con el área del círculo en lugar de su contorno: usar πr² · h (área de la base por la altura) donde corresponde 2πr · h (circunferencia por la altura)."
+    },
+    {
+      "id": "cuerpos-geometricos/error-6",
+      "descripcion": "Confundir el radio con el diámetro del cilindro y usar uno donde va el otro dentro de cualquiera de sus fórmulas (tapas o manto), duplicando o partiendo a la mitad la medida que entra al cálculo."
+    },
+    {
+      "id": "cuerpos-geometricos/error-7",
+      "descripcion": "Calcular el volumen como la suma de las tres dimensiones del cuerpo, largo + ancho + alto, en lugar de su producto largo × ancho × alto."
+    },
+    {
+      "id": "cuerpos-geometricos/error-8",
+      "descripcion": "En el cubo, calcular el volumen multiplicando la arista por 3 (la cantidad de dimensiones), arista × 3, en lugar de multiplicar la arista por sí misma tres veces, arista × arista × arista."
+    },
+    {
+      "id": "cuerpos-geometricos/error-9",
+      "descripcion": "En el cilindro, usar la circunferencia de la base (2 × π × radio) en lugar del área de la base (π × radio²) al multiplicar por la altura para obtener el volumen: (2 × π × radio) × altura en vez de (π × radio²) × altura."
+    },
+    {
+      "id": "cuerpos-geometricos/error-10",
+      "descripcion": "Entregar como volumen solo el área de la base del cuerpo, sin multiplicarla por la altura: quedarse en una sola capa en lugar de repetirla a lo alto para llenar todo el cuerpo, que se mide en unidades cúbicas."
+    },
+    {
+      "id": "cuerpos-geometricos/error-11",
+      "descripcion": "Aplicar correctamente una fórmula pero la que no corresponde a lo que pide el problema: entregar el área de superficie cuando se pregunta cuánto cabe o se llena (interior → volumen), o entregar el volumen cuando se pregunta cuánto material lo cubre, forra o recubre (borde → superficie)."
+    },
+    {
+      "id": "cuerpos-geometricos/error-12",
+      "descripcion": "Al convertir un volumen de metros cúbicos a litros (o a decímetros cúbicos), multiplicar por 100 en lugar de por 1.000, arrastrando el factor de las unidades cuadradas: tratar 1 m³ como 100 L cuando 1 m³ = 1.000 L."
+    },
+    {
+      "id": "cuerpos-geometricos/error-13",
+      "descripcion": "Calcular el área del círculo como π × radio en lugar de π × radio²: se usa la fórmula correcta pero se omite elevar el radio al cuadrado. El resultado queda un factor igual al radio por debajo del área real (para radio 4, un cuarto del área real). Distinto de error-9: ahí se reemplaza el área por el contorno 2 × π × radio (confusión perímetro/área); aquí la intención es el área y solo falta el exponente."
+    }
+  ]
+}

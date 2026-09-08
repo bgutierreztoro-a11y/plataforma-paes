@@ -1,0 +1,25 @@
+{
+  "unidad": "sistemas-2x2",
+  "errores": [
+    {
+      "id": "sistemas-2x2/error-1",
+      "descripcion": "Al despejar una incógnita o distribuir una multiplicación sobre una suma/resta, aplicar la operación solo a una parte de la expresión en vez de a todos sus términos, rompiendo la igualdad."
+    },
+    {
+      "id": "sistemas-2x2/error-3",
+      "descripcion": "Al sumar o restar las dos ecuaciones del sistema (o al distribuir un signo negativo), no aplicar el signo correctamente a todos los términos de una de ellas, invirtiendo el resultado de la eliminación."
+    },
+    {
+      "id": "sistemas-2x2/error-4",
+      "descripcion": "Encontrar el valor de una incógnita y no sustituir de vuelta en el sistema para encontrar el valor de la otra, entregando una solución incompleta."
+    },
+    {
+      "id": "sistemas-2x2/error-5",
+      "descripcion": "Invertir los valores de las dos incógnitas al reportar el par solución final, aunque ambos se hayan calculado correctamente."
+    },
+    {
+      "id": "sistemas-2x2/error-6",
+      "descripcion": "Al traducir un problema a ecuaciones, igualar una cantidad con el total equivocado (usa el total de dinero donde correspondía el total de unidades/personas, o viceversa), armando un sistema que no representa el problema."
+    }
+  ]
+}
