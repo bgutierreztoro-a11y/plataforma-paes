@@ -18,36 +18,6 @@
     "'conceptos' (esta lista de 4) y 'tiempoEstimadoMin: 22' son adiciones editoriales sin equivalente literal en leccion-1-guion.md: el guion da un rango de duración de 20 a 25 minutos (se fijó 22 dentro de ese rango) y no enumera 'conceptos' como lista. Ninguno de los dos es campo requerido por leccion.schema.json (el 'required' a nivel de lección es solo tipo/id/titulo/estado/proveniencia). Se declaran aquí como decisión editorial de la migración del 2026-07-08, no como omisión — hallazgo de la auditoría de fidelidad, corregido el 2026-07-08.",
     "Corrección de procedencia (2026-07-09, sin re-verificación matemática ni de originalidad — solo lenguaje): docs/pendientes.md confirmó que /revision-matematica y /revision-originalidad, en este entorno, no lanzan un subagente en sesión aislada real (el Agent tool no expone auditor-originalidad ni revisor-matematico como subagent_type invocable); corren en la sesión compartida del hilo principal. Por lo tanto, `revisionMatematica.aprobada: true` y `checklistOriginalidad` (más abajo) reflejan revisión en sesión compartida, pendiente de re-verificación aislada según el protocolo de docs/protocolo-revision-aislada.md — no una revisión independiente confirmada en el sentido que describe leccion.schema.json ('Revisión independiente: recalcular todo desde cero'). Mismo matiz aplica a la nota de la pantalla 'aplicacion' más abajo, que atribuía la verificación a que el subagente 'confirmó por su cuenta' los tres bloqueos previos."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-1",
-      "descripcion": "Olvidar el valor inicial (p. ej. el bidón partía con 4 litros; Camila, con $5.000)."
-    },
-    {
-      "id": "error-2",
-      "descripcion": "Contar mal los saltos (p. ej. de la semana 0 a la 8 hay 8 saltos, no 7 ni 9)."
-    },
-    {
-      "id": "error-3",
-      "descripcion": "Confundir la dirección de la operación al despejar un valor desconocido (sumar en vez de restar, o viceversa) — distinto de olvidar el valor inicial o de contar mal los saltos."
-    },
-    {
-      "id": "error-4",
-      "descripcion": "Confundir el signo de una tasa de cambio en un cálculo hacia adelante (sumar en vez de restar, o viceversa), sin estar despejando un valor desconocido — distinto de error-3, que es específicamente sobre despeje inverso."
-    },
-    {
-      "id": "error-5",
-      "descripcion": "Aplicar el cambio una sola vez en vez de multiplicarlo por el número de pasos (p. ej. restar o sumar el cambio de un solo paso —6, en vez de 6×6— cuando la situación tiene varios pasos) — distinto de error-2, que es contar mal CUÁNTOS pasos hay; aquí directamente no se multiplica por los pasos."
-    },
-    {
-      "id": "error-6",
-      "descripcion": "Multiplicar el valor inicial junto con la tasa por el número de pasos, en vez de multiplicar solo la tasa (p. ej. (24+18)×5 en vez de 24+18×5) — el valor inicial se suma una sola vez, nunca se multiplica por los pasos."
-    },
-    {
-      "id": "error-7",
-      "descripcion": "Intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo a partir de un enunciado: usar el valor inicial como coeficiente de la variable y la tasa como término constante (p. ej. escribir d = 9 + 30t cuando el móvil parte de 30 m y avanza 9 m por segundo). Distinto de error-1, donde el valor inicial no aparece en absoluto; acá los dos números están presentes, pero en la posición equivocada."
-    }
-  ],
   "pasos": [
     {
       "tipo": "curiosidad",

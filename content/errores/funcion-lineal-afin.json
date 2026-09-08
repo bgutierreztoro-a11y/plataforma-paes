@@ -28,6 +28,26 @@
     {
       "id": "funcion-lineal-afin/error-7",
       "descripcion": "Intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo a partir de un enunciado: usar el valor inicial como coeficiente de la variable y la tasa como término constante (p. ej. escribir d = 9 + 30t cuando el móvil parte de 30 m y avanza 9 m por segundo). Distinto de error-1, donde el valor inicial no aparece en absoluto; acá los dos números están presentes, pero en la posición equivocada."
+    },
+    {
+      "id": "funcion-lineal-afin/error-8",
+      "descripcion": "Confunde pendiente con coeficiente de posición (toma el término que multiplica a x como el punto de cruce con el eje Y, o viceversa)."
+    },
+    {
+      "id": "funcion-lineal-afin/error-9",
+      "descripcion": "Error de signo en la pendiente (no distingue si la recta sube o baja al mover el control a valores negativos)."
+    },
+    {
+      "id": "funcion-lineal-afin/error-10",
+      "descripcion": "Confunde el eje X con el eje Y al leer el coeficiente de posición (lee el cruce en el eje equivocado)."
+    },
+    {
+      "id": "funcion-lineal-afin/error-11",
+      "descripcion": "Interpreta mal qué significa el punto donde dos rectas se cruzan: sabe que ahí ambas valen lo mismo, pero se equivoca en cuál conviene antes y cuál después, o le atribuye al cruce un significado que no tiene en el contexto. No es un error de cálculo de dónde ocurre el cruce, sino de lectura de qué dice."
+    },
+    {
+      "id": "funcion-lineal-afin/error-12",
+      "descripcion": "Olvida el término independiente / coeficiente de posición (cree que una función sin coeficiente de posición visible no lo tiene, o lo omite en el modelo)."
     }
   ]
 }

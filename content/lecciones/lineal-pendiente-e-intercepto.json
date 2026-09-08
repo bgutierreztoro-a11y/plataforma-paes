@@ -24,28 +24,6 @@
     "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios.",
     "F0.2 (ficha 45): l2-item-1 se reescribió de representar (tabla → ecuación) a resolver (evaluar y = 12 − 5x en x = 4), para cubrir la habilidad 'resolver' que §3.5 exige y que el auditor marcaba como faltante; con eso el set queda resolver + modelar + argumentar. La nota de arriba sobre '10.1 tabla→ecuación' queda como registro histórico de la migración. Distractores mapeados a error-9 (signo de la pendiente), error-12 (olvida el coeficiente de posición) y error-8 (confunde pendiente con coeficiente de posición), los tres del catálogo local. Recuento del guard de catálogo tras el cambio: error-8 pasa de 11 a 10 usos, error-9 de 3 a 4, error-12 se mantiene en 2; ningún id del catálogo queda sin uso."
   ],
-  "catalogoErrores": [
-    {
-      "id": "error-8",
-      "descripcion": "Confunde pendiente con coeficiente de posición (toma el término que multiplica a x como el punto de cruce con el eje Y, o viceversa)."
-    },
-    {
-      "id": "error-9",
-      "descripcion": "Error de signo en la pendiente (no distingue si la recta sube o baja al mover el control a valores negativos)."
-    },
-    {
-      "id": "error-10",
-      "descripcion": "Confunde el eje X con el eje Y al leer el coeficiente de posición (lee el cruce en el eje equivocado)."
-    },
-    {
-      "id": "error-11",
-      "descripcion": "Interpreta mal qué significa el punto donde dos rectas se cruzan: sabe que ahí ambas valen lo mismo, pero se equivoca en cuál conviene antes y cuál después, o le atribuye al cruce un significado que no tiene en el contexto. No es un error de cálculo de dónde ocurre el cruce, sino de lectura de qué dice."
-    },
-    {
-      "id": "error-12",
-      "descripcion": "Olvida el término independiente / coeficiente de posición (cree que una función sin coeficiente de posición visible no lo tiene, o lo omite en el modelo)."
-    }
-  ],
   "auditoria": {
     "sliderJustificado": "Esta lección (L2 de Función lineal y afín) lleva la interacción insignia con sliders: el concepto mismo (qué controla la pendiente y qué controla el coeficiente de posición) exige manipular ambos por separado para verse."
   },
