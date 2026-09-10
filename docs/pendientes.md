@@ -78,86 +78,37 @@ copy con su `Ilustracion` — hay ilustraciones de eje temático ya disponibles 
 recién ahí actualizar el número anclado en el test. Actualizar el ancla sin
 escribir el copy convierte el test en un sello de goma y deja el bug vivo.
 
-## 🔴 El guard `catalogo-divergente` no cubre los cierres: nada compara su catálogo con el de sus lecciones (abierta 2026-08-14, al cerrar el módulo Expresiones algebraicas)
+## ✅ El guard `catalogo-divergente` no cubre los cierres (abierta 2026-08-14) — cerrada (2026-09-08, sin objeto)
 
-Desde la regla 5 de `docs/reglas-modulo.md` corregida el 2026-08-14, el catálogo
-de errores va embebido en **cada** archivo del módulo, cierre incluido, con las
-descripciones copiadas carácter a carácter. El guard `catalogo-divergente` de
-`scripts/auditar-leccion.mjs` existe justamente para impedir que esas copias
-deriven.
+El guard existía para impedir que las copias carácter a carácter del catálogo
+embebido en cada archivo del módulo (regla 5 de `docs/reglas-modulo.md`)
+derivaran, y no recorría `content/cierres/` por ninguno de los dos lados
+(`archivosDeLeccion()` solo lee `content/lecciones/`; el chequeo de `tipo` solo
+acepta `leccion`).
 
-**No mira los cierres, y por los dos lados.** `archivosDeLeccion()` lee
-únicamente `content/lecciones/`, así que la corrida por defecto nunca ve un
-cierre; pasarle uno a mano corta antes, en el chequeo de `tipo`, que solo acepta
-`leccion`. Y el bucle del guard itera sobre esa misma función, de modo que un
-cierre tampoco entra jamás como el "otro" archivo con el que comparar.
+Quedó sin objeto con la migración a fuente canónica única
+(`content/errores/<moduloId>.json`, commits `9ec800b..3958991`): sin copias
+embebidas, un id no puede tener dos descripciones. Antes de retirar
+`chequearDivergenciaDeCatalogo` se ensanchó a `content/cierres/` (`1b80281`) y no
+encontró ninguna divergencia; luego se retiró junto con `MODULO_POR_LECCION` en
+`643998d`. Ver el bloque ✅ de cabecera y `docs/deuda-catalogo-errores-crossfile.md`.
 
-**Consecuencia:** un cierre con catálogo embebido puede divergir de las
-lecciones de su módulo sin que nada lo reporte. `cierre-expresiones-algebraicas.json`
-lleva 12 entradas copiadas de sus tres lecciones y su coherencia se verificó **a
-mano** al escribirlo (15 pares comparados, 0 divergentes); no hay ninguna
-herramienta que la vuelva a verificar cuando alguien toque una descripción en
-cualquiera de los cuatro archivos. `cierre-proporcionalidad.json` está en la
-misma situación con sus 11 entradas.
+## ✅ Deuda de arquitectura: el espejo `MAPEO_LECCION_UNIDAD` (fichas 38-42) — cerrada (2026-09-08)
 
-La entrada de `cierre-expresiones-algebraicas` ya está en `MODULO_POR_LECCION`,
-pero es inerte: registrar el id no sirve de nada mientras el auditor no recorra
-la carpeta. **Cerrarlo es ensanchar el auditor a `content/cierres/`**, no agregar
-entradas a esa tabla.
+Abierta el 2026-09-07 en la segunda pasada de F0.2: `chequearCatalogoErrores` de
+`scripts/auditar-leccion.mjs` marcaba 🔴 `catalogo-sin-usar` cada id que una L1
+embebía para uso de su L2/L3 o su cierre, porque cruzaba el catálogo de cada
+archivo solo contra los `errorCatalogado` de ese mismo archivo. El plan era
+migrar a canónico-único sacando el catálogo embebido de la L1 y retirándola de
+`MAPEO_LECCION_UNIDAD`.
 
-## 🟡 Deuda de arquitectura: el espejo `MAPEO_LECCION_UNIDAD` genera `catalogo-sin-usar` cuando una L2/L3 referencia un error que su L1 no usa (abierta 2026-09-07, segunda pasada F0.2, fichas 38-42)
-
-Espejo `MAPEO_LECCION_UNIDAD` genera `catalogo-sin-usar` cuando L2/L3 referencia un
-error que su L1 no usa (fichas 38-42 de F0.2). Evaluar migración a canónico-único
-(sacar catálogo embebido de la L1, sacarla de `MAPEO_LECCION_UNIDAD`) antes de que
-Fobos Advance dependa de este catálogo.
-
-**El mecanismo, verificado.** Desde `docs/reglas-modulo.md §5`, el catálogo de un
-módulo vive embebido en su L1 y las demás piezas del módulo (L2, L3, cierre)
-referencian esos ids por `errorCatalogado` sin copiar la entrada. Para que las
-referencias de L2/L3 tengan a qué apuntar, la L1 embebe el catálogo **completo**
-del módulo, no solo los ids que ella misma usa. `chequearCatalogoErrores` de
-`scripts/auditar-leccion.mjs` cruza el catálogo de cada archivo contra los
-`errorCatalogado` de **ese mismo archivo**, así que marca 🔴 `catalogo-sin-usar`
-cada id que la L1 embebe para uso de otra pieza.
-
-Caso medido hoy, `node scripts/auditar-leccion.mjs content/lecciones/enteros-operar-y-ordenar.json`:
-
-```
-🔴 [catalogo-sin-usar] "error-4" está en catalogoErrores pero ningún distractor lo usa
-🔴 [catalogo-sin-usar] "error-6" está en catalogoErrores pero ningún distractor lo usa
-🔴 [catalogo-sin-usar] "error-7" está en catalogoErrores pero ningún distractor lo usa
-🔴 [catalogo-sin-usar] "error-8" está en catalogoErrores pero ningún distractor lo usa
-```
-
-`enteros-operar-y-ordenar.json` (L1, buceo con enteros) solo usa `error-1`, `error-2`,
-`error-3`, `error-5` en sus propios distractores. `error-6`, `error-7`, `error-8` los
-usan `enteros-operar-y-comparar.json` (L2) y `enteros-problemas-en-contexto.json`
-(L3); `error-4` lo usa `cierre-enteros-racionales.json` (ítem `cierre-enteros-5`,
-alternativa B). Los cuatro son 🔴 falsos en la corrida del auditor sobre la L1.
-
-**Corrección de conteo (2026-09-08, `node -e`):** `error-4` tiene **dos**
-consumidores, no uno. Además del cierre, lo usa `enteros-operar-y-comparar.json`
-en `l2-item-3` alternativa D. Y `error-6` no lo usa el cierre: sus tres
-consumidores están en L2 (`feedbackPorError` valor 0.75 del paso 3) y en L3
-(opción c del paso 8, y `l3-item-3` alternativa C). El desglose completo de los
-cinco ids está en la entrada de `catalogo-sin-usar` más abajo.
-`npm run validar` no lo marca: `validarCatalogoLocal` de `scripts/validar-contenido.mjs`
-corre solo para `tipo: "cierre"`, no para lecciones. O sea que no bloquea el build,
-pero ensucia toda corrida del auditor de Ronda 1 con cuatro 🔴 que no lo son.
-
-**Migración a canónico-único.** Sacar el catálogo embebido de la L1 y dejar como
-única fuente `content/errores/<unidad>.json` (hoy "una copia, no la fuente",
-ver más abajo), sacar la unidad de `MAPEO_LECCION_UNIDAD`, y resolver
-`errorCatalogado` contra ese artefacto en `lib/sanitizar.ts`. Es la opción (b) de
-`docs/deuda-catalogo-errores-crossfile.md`, con el paso extra de eliminar la copia
-embebida. Antes de tocarlo hay que registrar las descripciones que solo viven
-legibles en el catálogo embebido de la L1: eso está hecho en la sección
-"2026-09-07" de `docs/deuda-catalogo-errores-crossfile.md`.
-
-**Gatillo.** Antes de que Fobos Advance (`content/advance/`) dependa de este
-catálogo. Un consumidor nuevo sobre una fuente doble sin dueño hereda la deuda
-completa.
+Se cerró como parte de la migración completa del catálogo a fuente canónica
+única (`content/errores/<moduloId>.json`), no migrando el espejo pieza por
+pieza. `MAPEO_LECCION_UNIDAD`, `MODULO_POR_LECCION`, `chequearDivergenciaDeCatalogo`
+y el espejo `validarCatalogoErrores` se retiraron en `643998d`; el chequeo
+`catalogo-sin-usar` se retiró en `1b80281`. Ninguna entrada de catálogo se borró.
+Detalle en `docs/deuda-catalogo-errores-crossfile.md` y en el bloque ✅ de
+cabecera de este documento.
 
 ## 🟢 F0.2 Lote C: bloqueantes `[habilidades]`/`[dificultad]` de §3.5 en tres cierres — resuelto (2026-09-08)
 
@@ -1713,22 +1664,22 @@ resuelven juntas. Mientras tanto, `npm run auditar` sin argumentos **no está
 en verde** por un motivo estructural preexistente al módulo Proporcionalidad;
 no confundir con una regresión de esta sesión.
 
-## 🟡 `catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido: 5 entradas que no son borrables (abierta 2026-09-04) — diagnóstico cerrado, corrección decidida y pendiente de ejecución (2026-09-08)
+## ✅ `catalogo-sin-usar` da falso positivo contra el catálogo de módulo compartido: 5 entradas que no eran borrables (abierta 2026-09-04) — cerrada (2026-09-08, chequeo retirado en `1b80281`)
 
-**Cierra el Lote B de F0.2, y no por la vía que se había planeado.** El Lote B
+**Cerró el Lote B de F0.2, y no por la vía que se había planeado.** El Lote B
 quedaba diferido a una sesión de Fobos Advance esperando la migración de
-`MAPEO_LECCION_UNIDAD`. Se cierra antes y más barato: **el chequeo es el que está
-mal, no el contenido.**
+`MAPEO_LECCION_UNIDAD`. Se cerró antes y más barato: **el chequeo era el que
+estaba mal, no el contenido.**
 
 **Medición del 2026-09-08, con `node -e`, sobre los 11 módulos.** Se cruzó cada id
 de catálogo embebido contra todos sus consumidores en `content/lecciones/` **y**
 `content/cierres/` del mismo módulo. Resultado: `ids definidos SIN NINGUN uso en
-todo el modulo: ninguno`, en los once. `catalogo-sin-usar` tiene **5 disparos y 5
+todo el modulo: ninguno`, en los once. `catalogo-sin-usar` tenía **5 disparos y 5
 falsos positivos: cero verdaderos positivos en todo el repo.**
 
 Los cinco, con sus consumidores reales:
 
-| id | archivo que lo embebe | consumidores |
+| id | archivo que lo embebía | consumidores |
 |---|---|---|
 | `error-4` | `enteros-operar-y-ordenar` | 2: `enteros-operar-y-comparar` `l2-item-3` alt D, y `cierre-enteros-racionales` `cierre-enteros-5` alt B |
 | `error-6` | `enteros-operar-y-ordenar` | 3, todos en lecciones: `enteros-operar-y-comparar` paso3/bloque1 `feedbackPorError` valor 0.75, `enteros-problemas-en-contexto` paso8/bloque1 opción c, `enteros-problemas-en-contexto` `l3-item-3` alt C |
@@ -1736,76 +1687,18 @@ Los cinco, con sus consumidores reales:
 | `error-8` | `enteros-operar-y-ordenar` | 6: 4 en `enteros-operar-y-comparar`, 2 en `cierre-enteros-racionales` |
 | `error-7` | `lineal-patrones-de-cambio` | 5, todos en `lineal-modelamiento-paes` |
 
-**Corrección al conteo de este documento.** El párrafo de abajo, y la entrada del
-2026-09-07 más arriba, registran para `error-4` un único consumidor, el del
-cierre. Son **dos**: también lo usa `enteros-operar-y-comparar` en `l2-item-3`
-alternativa D. Y `error-6` no pasa por el cierre en absoluto, sus tres
-consumidores están en L2 y L3.
+Corrección al conteo previo de este documento: la entrada del 2026-09-07
+registraba para `error-4` un único consumidor (el del cierre). Son **dos**:
+también lo usa `enteros-operar-y-comparar` en `l2-item-3` alt D. Y `error-6` no
+pasa por el cierre; sus tres consumidores están en L2 y L3.
 
-**Decisión firmada el 2026-09-08.** No se borra ni una entrada de ningún catálogo,
-embebido o canónico. Los 5 🔴 se cierran tocando el auditor. Un chequeo con cero
-verdaderos positivos en once módulos no se calibra, se retira o se reescribe:
-un catálogo canónico de módulo no tiene por qué estar consumido al 100% por las
-lecciones publicadas hoy. La forma exacta (retirar el chequeo, o reescribirlo
-como 🟡 que escanee lecciones y cierres juntos) se decide en el plan de migración
-a canónico único.
-
-**Pendiente de ejecución:** el cambio en `scripts/auditar-leccion.mjs` todavía no
-está hecho. Mientras no lo esté, los 5 🔴 siguen apareciendo en cada corrida.
-Ojo con el gemelo: `validarCatalogoLocal`
-(`scripts/validar-contenido.mjs:129`, llamado solo para `tipo: "cierre"` en la
-línea 217) implementa la misma regla "colgando" y arrastra el mismo defecto para
-los cierres que sí tienen catálogo embebido. Los dos se tratan juntos.
-
-`error-4`, `error-6`, `error-7` y `error-8` de `catalogoErrores` en
-`enteros-operar-y-ordenar.json`, y `error-7` en
-`lineal-patrones-de-cambio.json`, estaban clasificados como parte del lote
-"mecánico, sin ambigüedad" de un triage previo (63 bloqueantes → 22
-mecánicos + 41 de decisión) porque `npm run auditar` los marca
-`catalogo-sin-usar`: ningún `errorCatalogado` del propio archivo los
-referencia.
-
-**Por qué el borrado rompe `npm run validar`.** `content/errores/enteros-racionales.json`
-y `content/errores/funcion-lineal-afin.json` son catálogos de módulo
-compartidos (ver `_notasInternas` de `enteros-operar-y-ordenar.json`, línea
-20: "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo...
-para mantener ids consistentes entre los tres archivos del módulo"). El
-validador (`validarCatalogoErrores` en `scripts/validar-contenido.mjs`)
-exige que cada entrada del catálogo de módulo exista también en el
-`catalogoErrores` embebido del archivo de lección que lo migró — aunque esa
-lección no la use todavía. Las 5 entradas están reservadas para una lección
-de fracciones del eje Números que aún no existe.
-
-**Se probó en esta sesión:** borrar las 5 (commit `79503a4`) hizo pasar
-`npm run auditar` de 63 a 46, pero `npm run validar` falló con:
-```
-FALLA  content/errores/enteros-racionales.json
-   - "enteros-racionales/error-4" no existe en catalogoErrores de enteros-operar-y-ordenar.json
-   - "enteros-racionales/error-6" no existe en catalogoErrores de enteros-operar-y-ordenar.json
-   - "enteros-racionales/error-7" no existe en catalogoErrores de enteros-operar-y-ordenar.json
-   - "enteros-racionales/error-8" no existe en catalogoErrores de enteros-operar-y-ordenar.json
-FALLA  content/errores/funcion-lineal-afin.json
-   - "funcion-lineal-afin/error-7" no existe en catalogoErrores de lineal-patrones-de-cambio.json
-```
-Se revirtió (commit `99d191c`) en la misma sesión, antes de hacer push.
-
-**Estas 5 entradas pasan del lote mecánico al de decisión.** El conteo de
-`npm run auditar` correcto tras el resto del triage mecánico (renombre de
-ids con cifra + `auditoria.sliderJustificado`) es **46 bloqueantes**: los 41
-de decisión ya identificados más estas 5, que requieren la misma clase de
-decisión de contenido que las entradas ya abiertas sobre
-`content/errores/` ("es una copia, no la fuente") y sobre el catálogo sin
-fusionar de `funcion-lineal-afin` — no namespacing mecánico, sino decidir
-qué hacer con un catálogo de módulo que declara errores por adelantado para
-contenido que todavía no existe.
-
-**Gatillo para el auditor:** `chequearCatalogoErrores` en
-`scripts/auditar-leccion.mjs` debería excluir del chequeo `catalogo-sin-usar`
-cualquier id que exista en `content/errores/<unidad correspondiente>.json`
-(vía `MAPEO_LECCION_UNIDAD`/`MODULO_POR_LECCION`, que ya existen en el
-propio repo) antes de marcarlo huérfano. Mientras eso no se implemente,
-cualquier triage futuro que use `catalogo-sin-usar` como señal de "borrado
-seguro" debe cruzarlo primero contra `content/errores/` a mano.
+**Ejecución.** No se borró ninguna entrada de catálogo, embebido o canónico. Un
+chequeo con cero verdaderos positivos en once módulos no se calibra: se retiró.
+`catalogo-sin-usar` salió de `scripts/auditar-leccion.mjs` en `1b80281`; su
+gemelo `validarCatalogoLocal` de `scripts/validar-contenido.mjs` quedó sin objeto
+al retirarse el último `catalogoErrores` embebido (migración a canónico único,
+commits `9ec800b..3958991`). Ver el bloque ✅ de cabecera y
+`docs/deuda-catalogo-errores-crossfile.md`.
 
 ## 🟢 `auditoria.sliderJustificado` es una declaración única a nivel raíz del archivo, no una por paso (anotada 2026-09-04)
 
