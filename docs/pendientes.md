@@ -405,24 +405,19 @@ vacía, verificada con `node -e`. Lo que sigue vigente de este párrafo es que e
 canónico cubre 7 de las 12 entradas del módulo, no que haya ambigüedad de
 significado. El párrafo original queda abajo como registro.
 
-**Colisión sin resolver: `funcion-lineal-afin` tiene dos L1 con catálogo
-embebido.** `lineal-patrones-de-cambio.json` (6 errores) y
-`lineal-pendiente-e-intercepto.json` (5 errores) numeran cada uno desde
-`error-1` de forma independiente, con descripciones distintas para el mismo
-id local. Se migró solo `lineal-patrones-de-cambio` a
-`content/errores/funcion-lineal-afin.json`; los 5 errores de
-`lineal-pendiente-e-intercepto` **no están en ningún catálogo unificado**.
-Antes de que el L1 lea del catálogo en vez de tener el suyo, hay que decidir
-el esquema de id para unidades con más de una lección con catálogo propio —
-namespacing por lección, fusión con renumeración, u otra cosa. Es una decisión
-de esquema, no mecánica: no se toma sin firma.
+**✅ Colisión resuelta el 2026-09-08 (commit `fc162b5`, no `56b895b`).**
+`content/errores/funcion-lineal-afin.json` pasó de 7 a 12 entradas: `error-8` a
+`error-12` se copiaron desde el embebido de `lineal-pendiente-e-intercepto.json`
+(sin colisión de ids desde `e33b262`), y los dos catálogos embebidos se
+retiraron de ambos L1. `56b895b` explícitamente no tocó este módulo (lo dice su
+propio mensaje de commit); la fusión real es `fc162b5`, seis commits después.
+Verificado el 2026-09-10: `content/errores/funcion-lineal-afin.json` tiene 12
+entradas sin duplicados, y ni `lineal-patrones-de-cambio.json` ni
+`lineal-pendiente-e-intercepto.json` declaran ya `catalogoErrores`.
 
-**Mapeo lección→unidad, hoy solo en código.** `MAPEO_LECCION_UNIDAD` en
-`scripts/validar-contenido.mjs` es la única fuente que declara qué L1
-corresponde a qué unidad del DAG — el contrato de lección no tiene ese campo.
-Si se agrega un L1 nuevo con `catalogoErrores` y su
-`content/errores/<unidad>.json`, hay que sumar la entrada a mano en esa
-constante o la regla de coherencia no tiene con qué comparar.
+**Mapeo lección→unidad: retirado.** `MAPEO_LECCION_UNIDAD` ya no existe —
+retirado en `643998d` junto con el resto del espejo (ver "✅ Deuda de
+arquitectura: el espejo `MAPEO_LECCION_UNIDAD`" arriba).
 
 ## ✅ Discrepancia de l3 (abierta 2026-07-22) — resuelta por Enmienda 2 (2026-07-28)
 
@@ -1272,50 +1267,19 @@ estrategia hoy. `cierre-ecuaciones-lineales.json` y
 las habilidades ya bastante alternadas. El que sí cicla habilidad de forma
 predecible es `cierre-v0.json` (estado `revision`).
 
-## 🟡 Ningún cierre tiene `catalogoErrores`: sin Capa 2 ni autoexplicación, y el botón "¿Por qué?" no aparece (abierta 2026-08-04, confirmada contra contenido real)
+## ✅ Ningún cierre tiene `catalogoErrores` (abierta 2026-08-04) — resuelta en la migración a canónico único (2026-09-08)
 
-La Capa 2 del feedback (el mecanismo del error) y el paso de autoexplicación se
-alimentan del `catalogoErrores` del módulo, resuelto en el servidor
-(`lib/sanitizar.ts`). Hoy lo tienen cuatro lecciones —`ecuaciones-lineales`,
-`lineal-pendiente-e-intercepto`, `lineal-patrones-de-cambio`,
-`enteros-operar-y-ordenar`— y **ningún cierre**, así que los 24 ítems de cierre
-muestran Capa 1 y nada más, aunque 38 de sus 72 distractores sí declaran
-`errorCatalogado`.
+Cerrada como parte de la migración del catálogo a `content/errores/<moduloId>.json`
+(ver bloque ✅ de cabecera). `capaDos()` (`lib/capasFeedback.ts`) ya no depende
+de que el archivo tenga `catalogoErrores` embebido: lee `descripcionError`,
+resuelto en el servidor contra el canónico vía `moduloId`
+(`lib/sanitizar.ts` → `catalogoDelModulo`, misma ruta para lección y cierre).
 
-**No es un bug de cableado.** `Cierre.tsx` y `RunnerLeccion.tsx` llegan al
-mismo `ItemPAES.tsx` por el mismo camino (`EjecutorSetItems`), con el mismo
-`FeedbackEnCapas` — no hay ninguna rama que trate al cierre distinto. El botón
-"¿Por qué?" solo se pinta cuando `capaDos()` devuelve algo, y `capaDos()`
-depende exclusivamente de que el archivo de origen tenga `catalogoErrores` en
-su raíz, sin importar si el distractor tiene `errorCatalogado` poblado.
-
-Reproducido ejecutando `sanitizarLeccion`/`sanitizarCierre` contra los JSON
-reales del repo (no simulado):
-
-```
-LECCIÓN (ecuaciones-lineales.json, l3-item-1, distractor B, errorCatalogado: error-4)
-  → descripcionError: "Olvidar dividir por el número de bolsas (el coeficiente):
-    quedarse en 'a·x = c' y entregar c como respuesta sin repartir entre las
-    a bolsas."
-  → capaDos existe → el botón "¿Por qué?" SÍ aparece.
-
-CIERRE (cierre-ecuaciones-lineales.json, cierre-ecuaciones-1, distractor B,
-        errorCatalogado: error-1 — tan poblado como en la lección)
-  → descripcionError: undefined
-  → capaDos undefined → el botón NO aparece.
-```
-
-No se resuelve copiando el catálogo: los ids son locales (`"error-4"`) y
-`cierre-ecuaciones-lineales.json` mezcla ítems de dos unidades, así que
-`"error-4"` es ambiguo dentro del mismo archivo. Resolverlo contra un catálogo
-ajeno mostraría la descripción equivocada, que es peor que no mostrar ninguna —
-por eso `resolverDescripcionesDeError` es estrictamente local al archivo y hay
-un test que fija ese comportamiento.
-
-**Gatillo:** cuando se decida namespacear los `errorCatalogado` de los cierres
-(🔴, toca JSON de contenido). Se conecta con la deuda ya abierta de
-`content/errores/` como fuente única y con la exclusión explícita de
-`ecuaciones-lineales` en `scripts/validar-contenido.mjs`.
+Verificado el 2026-09-10 simulando la resolución real para los 11 cierres: los
+10 con distractores marcados resuelven el 100% de sus `errorCatalogado`
+(`cierre-v0.json` sigue en 0/0 por diseño, deuda de contenido ya reconocida en
+el bloque de cabecera). El botón "¿Por qué?" y la autoexplicación ya aparecen
+en cierre igual que en lección.
 
 ## 🟡 La Capa 3 del feedback no tiene fuente (abierta 2026-08-04)
 
