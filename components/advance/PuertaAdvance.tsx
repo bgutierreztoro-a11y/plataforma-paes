@@ -20,8 +20,8 @@ export function PuertaAdvance({ ejeId }: { ejeId?: string }) {
       <div className="w-full max-w-md space-y-3">
         <h1 className="text-titulo-l text-primary">{puerta.titulo}</h1>
         <p className="text-titulo-m text-primary">{puerta.tesis}</p>
-        <p className="text-cuerpo-m text-secondary">{puerta.queEs}</p>
-        <p className="text-cuerpo-m text-secondary">{puerta.queNoEs}</p>
+        <p className="text-cuerpo-m text-primary">{puerta.queEs}</p>
+        <p className="text-cuerpo-m text-primary">{puerta.queNoEs}</p>
       </div>
       <p className="w-full max-w-md text-cuerpo-s text-secondary">
         {puerta.disclaimer}

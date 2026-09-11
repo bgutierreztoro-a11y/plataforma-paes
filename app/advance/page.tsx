@@ -56,7 +56,7 @@ export default async function PaginaAdvance({
         <div className="w-full max-w-md space-y-3">
           <h1 className="text-titulo-l text-primary">{portada.titulo}</h1>
           <p className="text-titulo-m text-primary">{portada.vacio}</p>
-          <p className="text-cuerpo-m text-secondary">{portada.detalle}</p>
+          <p className="text-cuerpo-m text-primary">{portada.detalle}</p>
         </div>
         <div className="w-full max-w-md">
           {ejeId ? (
