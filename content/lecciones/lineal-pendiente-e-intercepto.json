@@ -394,33 +394,33 @@
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Sí, la pendiente determina completamente la recta.",
-          "esCorrecta": false,
-          "feedback": "La pendiente fija la inclinación, pero no todo. Piensa en dos rectas igual de empinadas que cruzan el eje Y en puntos distintos: ¿son la misma recta?",
-          "errorCatalogado": "error-8"
-        },
-        {
-          "clave": "B",
-          "texto": "No: pueden tener el mismo m pero distinto n, y ser rectas paralelas diferentes.",
+          "texto": "No: pueden tener el mismo m y distinto n; son rectas paralelas distintas, como y = 2x + 1 e y = 2x + 3.",
           "esCorrecta": true,
           "feedback": "Correcto. Igual pendiente y distinto coeficiente de posición = rectas paralelas distintas, que nunca se cruzan. La pendiente sola no determina la recta."
         },
         {
-          "clave": "C",
-          "texto": "Sí, siempre que ambas sean funciones afines.",
+          "clave": "B",
+          "texto": "Sí: la pendiente dice cuánto cambia y por cada unidad de x desde el origen, así que dos rectas con la misma m pasan por los mismos puntos.",
           "esCorrecta": false,
-          "feedback": "Ser afín no cambia el problema. Dos funciones afines pueden tener el mismo m y distinto n. ¿Qué serían entonces geométricamente?",
-          "errorCatalogado": "error-8"
+          "feedback": "Estás asumiendo que las dos rectas parten del mismo punto en el eje Y (n=0), pero el coeficiente de posición no tiene por qué ser igual solo porque la pendiente lo es: y = 2x + 1 e y = 2x + 3 tienen la misma m y jamás se cruzan.",
+          "errorCatalogado": "error-12"
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: si tienen la misma m cortan el eje X en el mismo punto, y con ese punto y la inclinación la recta queda fija.",
+          "esCorrecta": false,
+          "feedback": "Ese punto fijo no existe en el eje X: y = 2x + 1 lo corta en x = −0,5, e y = 2x + 3 lo corta en x = −1,5. Son puntos distintos aunque compartan la misma m; el que sí comparten dos rectas con igual m es solo la inclinación, no un cruce con ningún eje.",
+          "errorCatalogado": "error-10"
         },
         {
           "clave": "D",
-          "texto": "No, porque dos rectas nunca pueden tener la misma pendiente.",
+          "texto": "No, pero por otra razón: las dos cortan el eje Y en (0, m), y lo que puede diferir es la inclinación, que la da n.",
           "esCorrecta": false,
-          "feedback": "Al revés: sí pueden tener la misma pendiente. De hecho, eso es justo lo que define a las rectas paralelas.",
+          "feedback": "Invertiste los papeles: el corte con el eje Y es (0, n), no (0, m), y la inclinación la da m, no n. Con m y n cambiados de lugar, la explicación describe algo que no es cierto para ninguna de las dos rectas del ejemplo.",
           "errorCatalogado": "error-8"
         }
       ],
-      "solucion": "Dos rectas con igual m y distinto n son paralelas y distintas (por ejemplo y = 2x + 1 e y = 2x + 5 nunca se cruzan y no coinciden). La afirmación es falsa; la justificación correcta es B."
+      "solucion": "Dos rectas con igual m y distinto n son paralelas y distintas (por ejemplo y = 2x + 1 e y = 2x + 3 nunca se cruzan y no coinciden). La afirmación es falsa; la justificación correcta es A."
     }
   ],
   "proveniencia": {
