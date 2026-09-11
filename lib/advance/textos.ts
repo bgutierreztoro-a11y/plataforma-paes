@@ -34,6 +34,9 @@ export const TEXTOS_ADVANCE = {
     titulo: "Fobos Advance",
     vacio: "Todavía no hay entrenamientos disponibles.",
     detalle: "Cuando los haya, van a aparecer acá.",
+    /* Con al menos un banco: una sesión de descarte por unidad. */
+    conBancos: "Entrenamiento de descarte, cinco ítems por sesión.",
+    sesion: (unidad: string) => `Descarte: ${unidad}`,
   },
 
   /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al

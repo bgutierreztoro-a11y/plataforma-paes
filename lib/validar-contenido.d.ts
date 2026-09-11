@@ -13,4 +13,17 @@ declare module "../scripts/validar-contenido.mjs" {
     ruta: string,
     erroresCatalogados?: Map<string, string>,
   ): string[];
+  /**
+   * Contrato completo de un banco Advance (content/advance/<unidadId>/banco.json).
+   * `unidadDelDirectorio` y `dirContent` habilitan las reglas que dependen del
+   * disco (unidadId = directorio, catálogo del módulo existe); sin
+   * `erroresCatalogados` no se cruzan las referencias, igual que en
+   * `validarDatos`.
+   */
+  export function validarDatosBancoAdvance(
+    data: unknown,
+    unidadDelDirectorio?: string,
+    dirContent?: string,
+    erroresCatalogados?: Map<string, string>,
+  ): string[];
 }

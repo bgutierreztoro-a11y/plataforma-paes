@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
+import { EnlaceBoton } from "@/components/ui/linea/Boton";
 import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 import {
@@ -8,6 +9,7 @@ import {
   estadoAdvance,
   type EstadoAdvance,
 } from "@/lib/advance/acceso";
+import { unidadesConBanco } from "@/lib/advance/banco";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
 
 export const metadata: Metadata = {
@@ -19,8 +21,8 @@ export const metadata: Metadata = {
  * /advance: la portada, "qué hacer ahora" (docs/fobos-advance.md §1.2).
  *
  * Sin acceso, redirige a la puerta conservando el eje de origen. Con acceso,
- * en F1 no hay nada que hacer todavía y la pantalla lo dice tal cual, sin
- * prometer fecha. Los entrenamientos llegan en F2.
+ * enlaza a una sesión de descarte por cada unidad con banco en disco (F2); sin
+ * ningún banco, lo dice tal cual, sin prometer fecha.
  */
 export default async function PaginaAdvance({
   searchParams,
@@ -47,6 +49,7 @@ export default async function PaginaAdvance({
   }
 
   const { portada, puerta } = TEXTOS_ADVANCE;
+  const unidades = unidadesConBanco();
   return (
     <main
       style={linea ? estiloDeLinea(linea) : undefined}
@@ -55,9 +58,31 @@ export default async function PaginaAdvance({
       <PantallaCentrada className="gap-5 text-center">
         <div className="w-full max-w-md space-y-3">
           <h1 className="text-titulo-l text-primary">{portada.titulo}</h1>
-          <p className="text-titulo-m text-primary">{portada.vacio}</p>
-          <p className="text-cuerpo-m text-primary">{portada.detalle}</p>
+          {unidades.length === 0 ? (
+            <>
+              <p className="text-titulo-m text-primary">{portada.vacio}</p>
+              <p className="text-cuerpo-m text-primary">{portada.detalle}</p>
+            </>
+          ) : (
+            <p className="text-cuerpo-m text-primary">{portada.conBancos}</p>
+          )}
         </div>
+        {unidades.length > 0 && (
+          <ul className="w-full max-w-md space-y-2.5" data-sesiones>
+            {unidades.map((unidadId) => (
+              <li key={unidadId}>
+                <EnlaceBoton
+                  variante="linea"
+                  href={
+                    ejeId ? `/advance/descarte/${unidadId}?eje=${ejeId}` : `/advance/descarte/${unidadId}`
+                  }
+                >
+                  {portada.sesion(unidadId)}
+                </EnlaceBoton>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="w-full max-w-md">
           {ejeId ? (
             <BotonVolver
