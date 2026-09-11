@@ -197,16 +197,28 @@ export function LineaDelEje({
     <div className="flex min-h-full flex-1 flex-col">
       <div className="mx-auto w-full max-w-2xl flex-1 px-4 pt-2 sm:px-6">
         <RielEstaciones paradas={paradas} escalonarDesde={PASO_DE_ENTRADA} />
-        {despuesDelRiel}
+        {/* Lo que sigue al riel es una parada más de la secuencia: entra en el
+            escalón siguiente a la última estación, y el CTA corre uno. Sin nada
+            que montar no hay envoltorio, y el DOM es el de siempre. */}
+        {despuesDelRiel && (
+          <div
+            className="entra-en-secuencia"
+            style={{ ["--retraso" as string]: `${PASO_DE_ENTRADA * (paradas.length + 1)}ms` }}
+          >
+            {despuesDelRiel}
+          </div>
+        )}
       </div>
       {/* El CTA al pie, con el ancho de la columna: una sola acción principal
           por vista y es lo último que se lee (MASTER.md §3.1).
 
-          Entra después de la última estación, siempre: pedir una decisión sobre
+          Entra después de la última parada, siempre: pedir una decisión sobre
           una pantalla que todavía no terminó de llegar es apurar al que lee. */}
       <div
         className="entra-en-secuencia mx-auto w-full max-w-2xl px-4 pb-6 pt-4 sm:px-6"
-        style={{ ["--retraso" as string]: `${PASO_DE_ENTRADA * (paradas.length + 1)}ms` }}
+        style={{
+          ["--retraso" as string]: `${PASO_DE_ENTRADA * (paradas.length + (despuesDelRiel ? 2 : 1))}ms`,
+        }}
       >
         {destino ? (
           <EnlaceBoton variante="linea" href={`/tema/${destino.tema.id}`}>
