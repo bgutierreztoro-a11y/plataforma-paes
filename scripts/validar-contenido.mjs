@@ -702,6 +702,72 @@ function reportar(ruta, errores) {
   return false;
 }
 
+/**
+ * F0.4 (docs/fobos-advance.md §4): errorCatalogado en los distractores de
+ * itemsPAES/items sube de opcional a ADVERTENCIA no bloqueante, con cobertura
+ * por módulo. Sube a obligatorio solo cuando la cobertura llegue a 100% —
+ * antes de eso rompería los 11 módulos publicados.
+ *
+ * Deliberadamente separada de `validarDatos`/`validarArchivo`: esas dos
+ * funciones se exportan y `lib/contenido.ts` las llama en RUNTIME esperando
+ * `string[]` de errores (ver `lib/validar-contenido.d.ts`); cambiar su firma
+ * para devolver advertencias además de errores rompería esa ruta en
+ * producción. Esta función solo la usa la sección de CLI, más abajo.
+ *
+ * Mide `alternativas[]` (`clave` A–D + `esCorrecta`, el contrato
+ * `alternativasABCD` del schema) dondequiera que aparezca con esa forma: en
+ * itemsPAES/items, y en `bloquePregunta` embebido dentro de `pasos[].bloques`
+ * (paso 7/8 de una lección), que el propio schema describe como "ítem
+ * formato PAES (A-D) EMBEBIDO... reutiliza la misma estructura de
+ * alternativas que 'item'" — es el mismo distractor, solo que dentro de un
+ * paso en vez del cierre. No cuenta `bloqueSeleccion.opciones[]`
+ * (explícitamente "NO formato PAES" en el schema, usa `id` no `clave`) ni
+ * `feedbackPorError[]`/`feedbackPorPrediccion[]`, que no son distractores
+ * A–D. Ampliar el alcance a esos tres es una decisión aparte: cambiaría el
+ * denominador de la cobertura ya reportada.
+ */
+function analizarCoberturaErrorCatalogado(data) {
+  const advertencias = [];
+  let total = 0;
+  let mapeados = 0;
+
+  const medirAlternativas = (alternativas, etiqueta) => {
+    for (const a of Array.isArray(alternativas) ? alternativas : []) {
+      if (a?.esCorrecta === true) continue;
+      total++;
+      if (esTexto(a?.errorCatalogado)) {
+        mapeados++;
+      } else {
+        advertencias.push(
+          `${etiqueta}.${a?.clave ?? '?'}: distractor sin errorCatalogado (F0.4, advertencia no bloqueante)`,
+        );
+      }
+    }
+  };
+
+  const campoItems = data?.tipo === 'leccion' ? 'itemsPAES' : 'items';
+  for (const it of Array.isArray(data?.[campoItems]) ? data[campoItems] : []) {
+    medirAlternativas(it?.alternativas, it?.id ?? '?');
+  }
+
+  if (data?.tipo === 'leccion') {
+    (data?.pasos ?? []).forEach((paso, i) => {
+      (paso?.bloques ?? []).forEach((bloque, j) => {
+        if (bloque?.tipo === 'pregunta') {
+          medirAlternativas(bloque?.alternativas, `pasos[${i}].bloques[${j}] (bloquePregunta)`);
+        }
+      });
+    });
+  }
+
+  const moduloId =
+    (data?.tipo === 'leccion' || data?.tipo === 'cierre') && esTexto(data?.moduloId)
+      ? data.moduloId
+      : null;
+
+  return { moduloId, total, mapeados, advertencias };
+}
+
 // ---------- entrada (solo si se ejecuta directamente, no al importar) ----------
 const esEjecutadoDirectamente =
   process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
@@ -751,6 +817,11 @@ if (arg === '--hook') {
     }
     process.exit(2); // Claude Code recibe este error como feedback y corrige
   }
+  if (esLeccion) {
+    const data = JSON.parse(readFileSync(filePath, 'utf8'));
+    const { advertencias } = analizarCoberturaErrorCatalogado(data);
+    for (const a of advertencias) console.warn(`   ⚠ ${a}`);
+  }
   process.exit(0);
 }
 
@@ -761,6 +832,7 @@ if (arg) {
     process.exit(1);
   }
   let errores;
+  let esLeccion = false;
   if (esCatalogoErrores(ruta)) {
     errores = validarCatalogoErrores(ruta);
   } else if (esDagM1(ruta)) {
@@ -770,8 +842,14 @@ if (arg) {
     errores = porRuta.get(ruta) ?? [];
   } else {
     errores = validarArchivo(ruta, cargarErroresCatalogados(raizContentDe(ruta)));
+    esLeccion = true;
   }
-  process.exit(reportar(ruta, errores) ? 0 : 1);
+  const paso = reportar(ruta, errores);
+  if (esLeccion && errores.length === 0) {
+    const { advertencias } = analizarCoberturaErrorCatalogado(JSON.parse(readFileSync(ruta, 'utf8')));
+    for (const a of advertencias) console.warn(`   ⚠ ${a}`);
+  }
+  process.exit(paso ? 0 : 1);
 }
 
 const raiz = resolve(PROJECT_ROOT, 'content');
@@ -782,10 +860,40 @@ if (!existsSync(raiz)) {
 let ok = true;
 let n = 0;
 const erroresCatalogados = cargarErroresCatalogados(raiz);
+const coberturaPorModulo = new Map(); // moduloId -> { total, mapeados }
 for (const ruta of archivosDeContenido(raiz)) {
   n++;
   if (!reportar(ruta, validarArchivo(ruta, erroresCatalogados))) ok = false;
+  try {
+    const data = JSON.parse(readFileSync(ruta, 'utf8'));
+    const { moduloId, total, mapeados, advertencias } = analizarCoberturaErrorCatalogado(data);
+    for (const a of advertencias) console.warn(`   ⚠ ${a}`);
+    if (moduloId) {
+      const acc = coberturaPorModulo.get(moduloId) ?? { total: 0, mapeados: 0 };
+      acc.total += total;
+      acc.mapeados += mapeados;
+      coberturaPorModulo.set(moduloId, acc);
+    }
+  } catch {
+    /* JSON inválido: validarArchivo ya lo reportó arriba como FALLA */
+  }
 }
+
+if (coberturaPorModulo.size > 0) {
+  console.log('\nCobertura de errorCatalogado por módulo (F0.4, advertencia no bloqueante):');
+  let granTotal = 0;
+  let granMapeados = 0;
+  const filas = [...coberturaPorModulo.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  for (const [moduloId, { total, mapeados }] of filas) {
+    granTotal += total;
+    granMapeados += mapeados;
+    const pct = total ? `${((100 * mapeados) / total).toFixed(1)}%` : 'n/a';
+    console.log(`   ${moduloId}: ${mapeados}/${total} (${pct})`);
+  }
+  const pctGlobal = granTotal ? `${((100 * granMapeados) / granTotal).toFixed(1)}%` : 'n/a';
+  console.log(`   TOTAL: ${granMapeados}/${granTotal} (${pctGlobal})`);
+}
+
 for (const ruta of archivosDeCatalogoErrores(raiz)) {
   n++;
   if (!reportar(ruta, validarCatalogoErrores(ruta))) ok = false;
