@@ -336,6 +336,7 @@ function esContenido(ruta) {
     !partes.some((p) => CARPETAS_SIN_CONTRATO.has(p)) &&
     !esDagM1(ruta) &&
     !esItemDiagnostico(ruta) &&
+    !esBancoAdvance(ruta) &&
     !basename(ruta).startsWith('_')
   );
 }
@@ -413,6 +414,290 @@ export function validarCatalogoErrores(ruta) {
   });
 
   return errores;
+}
+
+// ---------- bancos Fobos Advance: content/advance/<unidadId>/banco.json ----------
+//
+// Contrato: content/advance/schema/item-advance.schema.json. Igual que con
+// leccion.schema.json, el schema no se lee: este bloque lo implementa a mano,
+// campo por campo, más las reglas (1) a (5) y (7) de su $comment. La (6),
+// colisión de valores contra content/lecciones/ y el resto de content/advance/,
+// es del auditor (scripts/auditar-leccion.mjs), no de este gate.
+//
+// Sin esta rama, `esContenido` tomaría el banco como lección y `validarDatos`
+// lo rechazaría con '"tipo" debe ser leccion, diagnostico o cierre', o sea el
+// hook PostToolUse bloquearía cada edición del banco.
+
+const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const ID_ITEM_ADVANCE = /^adv-[a-z0-9]+(-[a-z0-9]+)*$/;
+const ERROR_LOCAL = /^error-[0-9]+$/;
+const FUENTES_ORIGEN = ['propia', 'demre-liberada', 'temario-demre'];
+const TIEMPO_REFERENCIA_SEG = [20, 600];
+// §5.4: volumen mínimo para que el descarte tenga sentido en una unidad.
+// Advertencia y no error, para no bloquear la escritura incremental del banco.
+const MIN_ITEMS_BANCO_ADVANCE = 20;
+const MIN_ERRORES_DISTINTOS_ADVANCE = 12;
+
+const CLAVES_BANCO = ['tipo', 'unidadId', 'moduloId', 'titulo', 'items', 'contextosNumericos', 'auditoria', 'proveniencia'];
+const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'proveniencia'];
+const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'feedbackDescarte', 'feedback'];
+const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
+const CLAVES_PROVENIENCIA_ITEM = ['fuenteOrigen', 'referencia', 'notaAdaptacion', 'autor', 'fecha'];
+const CLAVES_PROVENIENCIA_BANCO = ['fuentesAnalisis', 'declaracionOriginalidad', 'autor', 'fecha'];
+
+/** `content/advance/<unidadId>/banco.json`, exactamente esa forma. Nada bajo `_` ni `schema/`. */
+function esBancoAdvance(ruta) {
+  const partes = resolve(ruta).split(sep);
+  const i = partes.lastIndexOf('content');
+  return (
+    i >= 0 &&
+    partes.length === i + 4 &&
+    partes[i + 1] === 'advance' &&
+    partes[i + 2] !== 'schema' &&
+    !partes[i + 2].startsWith('_') &&
+    partes[i + 3] === 'banco.json'
+  );
+}
+
+function* archivosDeBancoAdvance(dirContent) {
+  const dir = join(dirContent, 'advance');
+  if (!existsSync(dir)) return;
+  for (const ent of readdirSync(dir, { withFileTypes: true })) {
+    if (!ent.isDirectory()) continue;
+    const ruta = join(dir, ent.name, 'banco.json');
+    if (existsSync(ruta) && esBancoAdvance(ruta)) yield ruta;
+  }
+}
+
+/** `additionalProperties: false` del schema, expresado como error por clave sobrante. */
+function clavesSobrantes(objeto, permitidas, donde, errores) {
+  for (const clave of Object.keys(objeto ?? {})) {
+    if (!permitidas.includes(clave)) errores.push(`${donde}: clave "${clave}" no admitida por el schema`);
+  }
+}
+
+function validarProvenienciaItem(prov, donde, errores) {
+  if (!prov || typeof prov !== 'object' || Array.isArray(prov)) {
+    return errores.push(`${donde}: falta proveniencia { fuenteOrigen }`);
+  }
+  clavesSobrantes(prov, CLAVES_PROVENIENCIA_ITEM, `${donde}.proveniencia`, errores);
+  if (!FUENTES_ORIGEN.includes(prov.fuenteOrigen)) {
+    errores.push(`${donde}.proveniencia.fuenteOrigen: debe ser una de: ${FUENTES_ORIGEN.join(', ')} (recibido: ${JSON.stringify(prov.fuenteOrigen)})`);
+  }
+  if (prov.fuenteOrigen === 'demre-liberada') {
+    if (!esTexto(prov.referencia)) errores.push(`${donde}.proveniencia: con fuenteOrigen "demre-liberada" es obligatoria referencia (año, forma y número de pregunta)`);
+    if (!esTexto(prov.notaAdaptacion)) errores.push(`${donde}.proveniencia: con fuenteOrigen "demre-liberada" es obligatoria notaAdaptacion (qué se cambió respecto del original)`);
+  }
+  for (const campo of ['referencia', 'notaAdaptacion', 'autor', 'fecha']) {
+    if (prov[campo] !== undefined && !esTexto(prov[campo])) errores.push(`${donde}.proveniencia.${campo}: si está, es texto no vacío`);
+  }
+}
+
+function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, errores) {
+  if (!Array.isArray(alts) || alts.length !== 4) {
+    return errores.push(`${donde}: debe tener exactamente 4 alternativas A–D (formato PAES M1)`);
+  }
+
+  // Regla (2): las cuatro claves presentes y sin repetir.
+  const claves = alts.map((a) => a?.clave);
+  for (const c of CLAVES) {
+    const veces = claves.filter((k) => k === c).length;
+    if (veces === 0) errores.push(`${donde}: falta la alternativa ${c}`);
+    if (veces > 1) errores.push(`${donde}: la clave ${c} está repetida`);
+  }
+
+  // Regla (1): exactamente una correcta y tres distractores.
+  const correctas = alts.filter((a) => a?.esCorrecta === true);
+  if (correctas.length !== 1) errores.push(`${donde}: debe haber exactamente una alternativa correcta (hay ${correctas.length})`);
+
+  for (const a of alts) {
+    const q = `${donde}.${a?.clave ?? '?'}`;
+    if (!a || typeof a !== 'object') {
+      errores.push(`${q}: la alternativa debe ser un objeto`);
+      continue;
+    }
+    if (!CLAVES.includes(a.clave)) errores.push(`${q}: clave debe ser A, B, C o D (recibido: ${JSON.stringify(a.clave)})`);
+    if (!esTexto(a.texto)) errores.push(`${q}: falta texto`);
+    if (typeof a.esCorrecta !== 'boolean') {
+      errores.push(`${q}: esCorrecta debe ser true o false`);
+      continue;
+    }
+
+    if (a.esCorrecta) {
+      clavesSobrantes(a, CLAVES_CORRECTA, q, errores);
+      if (!esTexto(a.feedbackDescarteIncorrecto)) {
+        errores.push(`${q}: la correcta lleva feedbackDescarteIncorrecto (lo que se muestra cuando el estudiante la descarta por error)`);
+      } else if (a.feedbackDescarteIncorrecto.trim().length < MIN_FEEDBACK_PUBLICABLE) {
+        errores.push(`${q}: feedbackDescarteIncorrecto demasiado corto (<${MIN_FEEDBACK_PUBLICABLE} caracteres)`);
+      }
+      if (a.feedback !== undefined && !esTexto(a.feedback)) errores.push(`${q}: feedback, si está, es texto no vacío`);
+    } else {
+      clavesSobrantes(a, CLAVES_DISTRACTOR, q, errores);
+      if (!esTexto(a.errorCatalogado)) {
+        errores.push(`${q}: distractor sin errorCatalogado; en Advance es obligatorio en los tres (sin él el modo descarte no funciona)`);
+      } else if (!ERROR_LOCAL.test(a.errorCatalogado)) {
+        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no tiene la forma error-N`);
+      } else if (erroresCatalogados && esTexto(banco?.moduloId) && !erroresCatalogados.has(`${banco.moduloId}/${a.errorCatalogado}`)) {
+        // Regla (3): todo errorCatalogado existe en el catálogo canónico del módulo.
+        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no está en content/errores/${banco.moduloId}.json`);
+      }
+      if (!esTexto(a.feedbackDescarte)) {
+        errores.push(`${q}: distractor sin feedbackDescarte (lo que se muestra al descartarlo correctamente)`);
+      } else if (a.feedbackDescarte.trim().length < MIN_FEEDBACK_PUBLICABLE) {
+        errores.push(`${q}: feedbackDescarte demasiado corto (<${MIN_FEEDBACK_PUBLICABLE} caracteres)`);
+      }
+      if (a.feedback !== undefined && (!esTexto(a.feedback) || a.feedback.trim().length < MIN_FEEDBACK_PUBLICABLE)) {
+        errores.push(`${q}: feedback, si está, tiene al menos ${MIN_FEEDBACK_PUBLICABLE} caracteres (mismo umbral que en lecciones)`);
+      }
+    }
+  }
+}
+
+function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {
+  const p = `items[${i}]`;
+  if (!item || typeof item !== 'object' || Array.isArray(item)) return errores.push(`${p}: el ítem debe ser un objeto`);
+  clavesSobrantes(item, CLAVES_ITEM_ADVANCE, p, errores);
+
+  if (!esTexto(item.id)) errores.push(`${p}: falta id`);
+  else if (!ID_ITEM_ADVANCE.test(item.id)) errores.push(`${p}: id "${item.id}" debe ser kebab-case con prefijo adv- (p. ej. adv-porcentaje-001)`);
+
+  // Regla (4): unidadId y moduloId del ítem coinciden con los del banco.
+  for (const campo of ['unidadId', 'moduloId']) {
+    if (!esTexto(item[campo]) || !KEBAB.test(item[campo])) errores.push(`${p}: falta ${campo} en kebab-case`);
+    else if (esTexto(banco?.[campo]) && item[campo] !== banco[campo]) {
+      errores.push(`${p}: ${campo} "${item[campo]}" no coincide con el del banco ("${banco[campo]}")`);
+    }
+  }
+
+  if (!HABILIDADES.includes(item.habilidad)) errores.push(`${p}: habilidad debe ser una de: ${HABILIDADES.join(', ')}`);
+  if (!DIFICULTADES.includes(item.dificultad)) errores.push(`${p}: dificultad debe ser una de: ${DIFICULTADES.join(', ')}`);
+
+  const t = item.tiempoReferenciaSeg;
+  const [tMin, tMax] = TIEMPO_REFERENCIA_SEG;
+  if (!Number.isInteger(t) || t < tMin || t > tMax) {
+    errores.push(`${p}: tiempoReferenciaSeg debe ser un entero entre ${tMin} y ${tMax} (recibido: ${JSON.stringify(t)})`);
+  }
+
+  if (!esTexto(item.enunciado)) errores.push(`${p}: falta enunciado`);
+  if (!esTexto(item.solucion)) errores.push(`${p}: falta la solución paso a paso`);
+
+  validarAlternativasDescarte(item.alternativas, p, banco, erroresCatalogados, errores);
+  validarProvenienciaItem(item.proveniencia, p, errores);
+}
+
+function validarAuditoriaBanco(auditoria, errores) {
+  if (auditoria === undefined) return;
+  if (!auditoria || typeof auditoria !== 'object' || Array.isArray(auditoria)) return errores.push('auditoria: debe ser un objeto');
+  clavesSobrantes(auditoria, ['colisionesPermitidas'], 'auditoria', errores);
+  const lista = auditoria.colisionesPermitidas;
+  if (lista === undefined) return;
+  if (!Array.isArray(lista)) return errores.push('auditoria.colisionesPermitidas: debe ser un array');
+  lista.forEach((c, i) => {
+    const q = `auditoria.colisionesPermitidas[${i}]`;
+    if (!c || typeof c !== 'object' || Array.isArray(c)) return errores.push(`${q}: debe ser { valor, motivo }`);
+    clavesSobrantes(c, ['valor', 'motivo'], q, errores);
+    if (typeof c.valor !== 'number' || !Number.isFinite(c.valor)) errores.push(`${q}.valor: debe ser un número`);
+    if (!esTexto(c.motivo)) errores.push(`${q}.motivo: falta el motivo`);
+  });
+}
+
+/**
+ * Contrato completo de un banco Advance. `erroresCatalogados` es el mismo mapa
+ * `"<unidad>/error-N" → unidad` que usa `validarReferenciasResuelven`.
+ */
+export function validarDatosBancoAdvance(data, unidadDelDirectorio, dirContent, erroresCatalogados) {
+  const errores = [];
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return ['el banco debe ser un objeto JSON'];
+
+  if (data.tipo !== 'banco-advance') {
+    return [`"tipo" debe ser "banco-advance" (recibido: ${JSON.stringify(data.tipo)})`];
+  }
+  clavesSobrantes(data, CLAVES_BANCO, 'raíz', errores);
+
+  if (!esTexto(data.unidadId) || !KEBAB.test(data.unidadId)) errores.push('falta unidadId en kebab-case');
+  else if (unidadDelDirectorio && data.unidadId !== unidadDelDirectorio) {
+    errores.push(`unidadId "${data.unidadId}" no coincide con el directorio content/advance/${unidadDelDirectorio}/`);
+  }
+
+  if (!esTexto(data.moduloId) || !KEBAB.test(data.moduloId)) errores.push('falta moduloId en kebab-case');
+  else if (dirContent && !existsSync(join(dirContent, 'errores', `${data.moduloId}.json`))) {
+    errores.push(`moduloId "${data.moduloId}" no tiene catálogo canónico en content/errores/${data.moduloId}.json`);
+  }
+
+  if (data.titulo !== undefined && !esTexto(data.titulo)) errores.push('titulo, si está, es texto no vacío');
+
+  if (data.contextosNumericos !== undefined) {
+    if (!Array.isArray(data.contextosNumericos)) errores.push('contextosNumericos: debe ser un array de textos');
+    else data.contextosNumericos.forEach((c, i) => { if (!esTexto(c)) errores.push(`contextosNumericos[${i}]: texto no vacío`); });
+  }
+
+  validarAuditoriaBanco(data.auditoria, errores);
+
+  const items = data.items;
+  if (!Array.isArray(items) || items.length === 0) {
+    errores.push('items: se espera al menos un ítem');
+  } else {
+    items.forEach((it, i) => validarItemAdvance(it, i, data, erroresCatalogados, errores));
+    // Regla (7): ningún id de ítem se repite dentro del banco.
+    const vistos = new Set();
+    items.forEach((it, i) => {
+      if (!esTexto(it?.id)) return;
+      if (vistos.has(it.id)) errores.push(`items[${i}]: id "${it.id}" repetido dentro del banco`);
+      vistos.add(it.id);
+    });
+  }
+
+  const prov = data.proveniencia;
+  if (!prov || typeof prov !== 'object' || Array.isArray(prov)) {
+    errores.push('falta proveniencia { fuentesAnalisis[], declaracionOriginalidad }');
+  } else {
+    clavesSobrantes(prov, CLAVES_PROVENIENCIA_BANCO, 'proveniencia', errores);
+    if (!Array.isArray(prov.fuentesAnalisis)) errores.push('proveniencia.fuentesAnalisis: debe ser un array de textos');
+    else prov.fuentesAnalisis.forEach((f, i) => { if (!esTexto(f)) errores.push(`proveniencia.fuentesAnalisis[${i}]: texto no vacío`); });
+    if (!esTexto(prov.declaracionOriginalidad)) errores.push('proveniencia.declaracionOriginalidad: falta');
+    else if (prov.declaracionOriginalidad.trim().length < 30) {
+      errores.push('proveniencia requiere una declaración de originalidad real (≥30 caracteres, mismo umbral que lecciones y cierres)');
+    }
+    for (const campo of ['autor', 'fecha']) {
+      if (prov[campo] !== undefined && !esTexto(prov[campo])) errores.push(`proveniencia.${campo}: si está, es texto no vacío`);
+    }
+  }
+
+  if (PLACEHOLDERS.test(JSON.stringify(data))) {
+    errores.push('no se admiten marcadores de trabajo pendiente (TODO, FIXME, [PENDIENTE], XXX, lorem ipsum)');
+  }
+
+  return errores;
+}
+
+export function validarBancoAdvance(ruta, erroresCatalogados) {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(ruta, 'utf8'));
+  } catch (e) {
+    return [`JSON inválido: ${e.message}`];
+  }
+  const unidadDelDirectorio = basename(dirname(resolve(ruta)));
+  return validarDatosBancoAdvance(data, unidadDelDirectorio, raizContentDe(ruta), erroresCatalogados);
+}
+
+/** Regla (5), §5.4: 20 ítems y al menos 12 errores distintos. Advertencia, no error. */
+function advertenciasBancoAdvance(data) {
+  const advertencias = [];
+  const items = Array.isArray(data?.items) ? data.items : [];
+  if (items.length < MIN_ITEMS_BANCO_ADVANCE) {
+    advertencias.push(`banco con ${items.length} ítems; el mínimo por unidad es ${MIN_ITEMS_BANCO_ADVANCE} (§5.4, advertencia no bloqueante)`);
+  }
+  const distintos = new Set();
+  for (const it of items) {
+    for (const a of Array.isArray(it?.alternativas) ? it.alternativas : []) {
+      if (a?.esCorrecta !== true && esTexto(a?.errorCatalogado)) distintos.add(a.errorCatalogado);
+    }
+  }
+  if (distintos.size < MIN_ERRORES_DISTINTOS_ADVANCE) {
+    advertencias.push(`banco cubre ${distintos.size} errores distintos; el mínimo por unidad es ${MIN_ERRORES_DISTINTOS_ADVANCE} (§5.4, advertencia no bloqueante)`);
+  }
+  return advertencias;
 }
 
 function* archivosDeItemDiagnostico(dirContent) {
@@ -792,7 +1077,8 @@ if (arg === '--hook') {
   const esErrores = esCatalogoErrores(filePath);
   const esDag = esDagM1(filePath);
   const esItem = esItemDiagnostico(filePath);
-  const requiereValidacion = esContenido(filePath) || esErrores || esDag || esItem;
+  const esBanco = esBancoAdvance(filePath);
+  const requiereValidacion = esContenido(filePath) || esErrores || esDag || esItem || esBanco;
   if (!filePath || !existsSync(filePath) || !requiereValidacion) process.exit(0);
 
   let errores;
@@ -804,6 +1090,8 @@ if (arg === '--hook') {
   } else if (esItem) {
     const porRuta = validarBancoDiagnostico(raizContentDe(filePath));
     errores = porRuta.get(resolve(filePath)) ?? [];
+  } else if (esBanco) {
+    errores = validarBancoAdvance(filePath, cargarErroresCatalogados(raizContentDe(filePath)));
   } else {
     errores = validarArchivo(filePath, cargarErroresCatalogados(raizContentDe(filePath)));
     esLeccion = true;
@@ -815,12 +1103,18 @@ if (arg === '--hook') {
     if (esLeccion) {
       console.error('Corrige estos puntos antes de continuar (contrato: content/schema/leccion.schema.json).');
     }
+    if (esBanco) {
+      console.error('Corrige estos puntos antes de continuar (contrato: content/advance/schema/item-advance.schema.json).');
+    }
     process.exit(2); // Claude Code recibe este error como feedback y corrige
   }
   if (esLeccion) {
     const data = JSON.parse(readFileSync(filePath, 'utf8'));
     const { advertencias } = analizarCoberturaErrorCatalogado(data);
     for (const a of advertencias) console.warn(`   ⚠ ${a}`);
+  }
+  if (esBanco) {
+    for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(filePath, 'utf8')))) console.warn(`   ⚠ ${a}`);
   }
   process.exit(0);
 }
@@ -833,6 +1127,7 @@ if (arg) {
   }
   let errores;
   let esLeccion = false;
+  let esBanco = false;
   if (esCatalogoErrores(ruta)) {
     errores = validarCatalogoErrores(ruta);
   } else if (esDagM1(ruta)) {
@@ -840,6 +1135,9 @@ if (arg) {
   } else if (esItemDiagnostico(ruta)) {
     const porRuta = validarBancoDiagnostico(raizContentDe(ruta));
     errores = porRuta.get(ruta) ?? [];
+  } else if (esBancoAdvance(ruta)) {
+    errores = validarBancoAdvance(ruta, cargarErroresCatalogados(raizContentDe(ruta)));
+    esBanco = true;
   } else {
     errores = validarArchivo(ruta, cargarErroresCatalogados(raizContentDe(ruta)));
     esLeccion = true;
@@ -848,6 +1146,9 @@ if (arg) {
   if (esLeccion && errores.length === 0) {
     const { advertencias } = analizarCoberturaErrorCatalogado(JSON.parse(readFileSync(ruta, 'utf8')));
     for (const a of advertencias) console.warn(`   ⚠ ${a}`);
+  }
+  if (esBanco && errores.length === 0) {
+    for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(ruta, 'utf8')))) console.warn(`   ⚠ ${a}`);
   }
   process.exit(paso ? 0 : 1);
 }
@@ -909,6 +1210,13 @@ const porRutaItems = validarBancoDiagnostico(raiz);
 for (const ruta of archivosDeItemDiagnostico(raiz)) {
   n++;
   if (!reportar(ruta, porRutaItems.get(ruta) ?? [])) ok = false;
+}
+
+for (const ruta of archivosDeBancoAdvance(raiz)) {
+  n++;
+  const errores = validarBancoAdvance(ruta, erroresCatalogados);
+  if (!reportar(ruta, errores)) ok = false;
+  else for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(ruta, 'utf8')))) console.warn(`   ⚠ ${a}`);
 }
 
 if (n === 0) console.log('Sin archivos de contenido que validar (los que empiezan con "_" son plantillas y se omiten).');
