@@ -1,0 +1,424 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "porcentaje",
+  "moduloId": "porcentaje",
+  "titulo": "Porcentaje",
+  "items": [
+    {
+      "id": "adv-porcentaje-001",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una cantidad bajó un 48% y quedó en 650. ¿Cuál era la cantidad antes de la baja?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "962",
+          "esCorrecta": false,
+          "errorCatalogado": "error-7",
+          "feedbackDescarte": "Esa sale de 650 × 1,48: le suma el 48% al valor final. Bajar un 48% no se deshace subiendo un 48%; hay que dividir por 0,52."
+        },
+        {
+          "clave": "B",
+          "texto": "1.250",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 1.250 × 0,52 = 650. Comprobar hacia adelante con el factor 0,52 la confirma."
+        },
+        {
+          "clave": "C",
+          "texto": "312",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa es 650 × 0,48: el 48% del valor final, bien calculado, pero no es lo que se pregunta. Se pide el valor original."
+        },
+        {
+          "clave": "D",
+          "texto": "698",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa es 650 + 48: trata el 48% como 48 unidades. El porcentaje es una parte del total, no una cantidad fija."
+        }
+      ],
+      "solucion": "Bajar un 48% deja el 52%: si la cantidad original es X, entonces X × 0,52 = 650. Luego X = 650 ÷ 0,52 = 1.250. Comprobación: 1.250 × 0,48 = 600 y 1.250 − 600 = 650.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-002",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un apicultor produjo 3.500 kg de miel en un año. Al año siguiente la producción subió un 85% y al otro año subió un 76% respecto del año anterior. ¿Cuántos kilos produjo el tercer año?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9.135 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "error-6",
+          "feedbackDescarte": "Esa sale de sumar 85% y 76% como si fuera un único 161%: 3.500 × 2,61. El segundo aumento se aplica sobre la producción ya aumentada, no sobre la inicial."
+        },
+        {
+          "clave": "B",
+          "texto": "7.896 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa es 11.396 − 3.500: cuánto aumentó la producción en total. Está bien calculado, pero se pide la producción del tercer año, no el aumento."
+        },
+        {
+          "clave": "C",
+          "texto": "11.396 kg",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3.500 × 1,85 = 6.475 y 6.475 × 1,76 = 11.396. Dos aumentos seguidos se componen multiplicando los factores."
+        },
+        {
+          "clave": "D",
+          "texto": "2.261 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "error-4",
+          "feedbackDescarte": "Esa es 3.500 × 0,85 × 0,76: lee «subió un 85%» como «bajó al 85%». Subir un 85% multiplica por 1,85, no por 0,85."
+        }
+      ],
+      "solucion": "Subir un 85% multiplica por 1,85 y subir un 76% multiplica por 1,76. Segundo año: 3.500 × 1,85 = 6.475 kg. Tercer año: 6.475 × 1,76 = 11.396 kg. El factor único equivalente es 1,85 × 1,76 = 3,256, no 2,61.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-003",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "La suscripción mensual a una app de música cuesta M pesos y va a subir un 22%. ¿Cuál de las siguientes expresiones representa el nuevo precio mensual?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "M + 22",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa suma 22 pesos, como si el 22% fuera una cantidad fija. El aumento depende de M: es el 22% de M, no 22."
+        },
+        {
+          "clave": "B",
+          "texto": "M × 0,22",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa expresión da solo el aumento, el 22% de M. Falta sumarle el precio que ya había para llegar al nuevo precio."
+        },
+        {
+          "clave": "C",
+          "texto": "M × 1,022",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "Esa convierte 22% en 0,022, corriendo la coma un lugar de más. 22% es 22 ÷ 100 = 0,22, así que el factor es 1,22."
+        },
+        {
+          "clave": "D",
+          "texto": "M × 1,22",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el precio anterior (M × 1) más el aumento (M × 0,22) da M × 1,22. Subir un 22% es multiplicar por 1,22."
+        }
+      ],
+      "solucion": "El nuevo precio es el precio anterior más el 22% de ese precio: M + M × 0,22 = M × (1 + 0,22) = M × 1,22. Con un ejemplo: si M fuera 6.500, el nuevo precio sería 7.930.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-004",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "De 1.450 postulantes a una beca, el 6% no completó la postulación. ¿Cuántos postulantes no la completaron?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.363",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Esa es 1.450 × 0,94: los que sí completaron la postulación. Se pide la parte que no la completó, el 6%, no su complemento."
+        },
+        {
+          "clave": "B",
+          "texto": "6",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa trata el 6% como 6 personas. Un porcentaje es una parte del total: el 6% de 1.450 no son 6, son 1.450 × 0,06."
+        },
+        {
+          "clave": "C",
+          "texto": "87",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 1.450 × 0,06 = 87. El 6% de 1.450 es una parte pequeña del total, y 87 es del tamaño esperado."
+        },
+        {
+          "clave": "D",
+          "texto": "8.700",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "Esa es 1.450 × 6, sin dividir el porcentaje por 100. Una parte de 1.450 no puede ser mayor que 1.450."
+        }
+      ],
+      "solucion": "6% = 6 ÷ 100 = 0,06. El 6% de 1.450 es 1.450 × 0,06 = 87 postulantes. Control rápido: el 10% de 1.450 es 145, así que el 6% tiene que ser menor que 145.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-005",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En un kiosco, una empanada costaba $1.900 y ahora cuesta $2.204. ¿Cuál de las siguientes afirmaciones sobre el alza es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El precio subió un 13,8%, porque 304 ÷ 2.204 ≈ 0,138.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Esa divide el alza por el precio nuevo. La base de un cambio porcentual es el valor inicial: 304 ÷ 1.900, no 304 ÷ 2.204."
+        },
+        {
+          "clave": "B",
+          "texto": "El precio subió un 16%, porque 304 ÷ 1.900 = 0,16.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el alza es 2.204 − 1.900 = 304 pesos, y 304 sobre el precio inicial de 1.900 da 0,16, o sea un 16%."
+        },
+        {
+          "clave": "C",
+          "texto": "El precio subió un 116%, porque 2.204 ÷ 1.900 = 1,16.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "1,16 es el precio nuevo como fracción del viejo, bien calculado, pero el 116% incluye el precio completo. El alza es solo la parte que excede al 100%: 16%."
+        },
+        {
+          "clave": "D",
+          "texto": "El precio subió un 0,16%, porque 304 ÷ 1.900 = 0,16.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 0,16 está bien, pero entregarlo como 0,16% salta el paso de multiplicar por 100. 0,16 equivale a un 16%."
+        }
+      ],
+      "solucion": "El alza en pesos es 2.204 − 1.900 = 304. El cambio porcentual se calcula sobre el precio inicial: 304 ÷ 1.900 = 0,16, o sea un 16%. Comprobación: 1.900 × 1,16 = 2.204.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-006",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Unos audífonos tenían un 18% de descuento y se pagaron $73.800 por ellos. ¿Cuál era el precio sin descuento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$410.000",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Esa es 73.800 ÷ 0,18: lee «18% de descuento» como «se pagó el 18%». Con un 18% de descuento se paga el 82%, así que se divide por 0,82."
+        },
+        {
+          "clave": "B",
+          "texto": "$13.284",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa es 73.800 × 0,18: el 18% del precio pagado, bien calculado, pero no es lo que se pregunta. Se pide el precio sin descuento."
+        },
+        {
+          "clave": "C",
+          "texto": "$87.084",
+          "esCorrecta": false,
+          "errorCatalogado": "error-7",
+          "feedbackDescarte": "Esa es 73.800 × 1,18: le suma el 18% al precio pagado. Un descuento del 18% no se deshace sumando un 18%; hay que dividir por 0,82."
+        },
+        {
+          "clave": "D",
+          "texto": "$90.000",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 90.000 × 0,82 = 73.800. Un precio de 90.000 con 18% de descuento da exactamente lo pagado."
+        }
+      ],
+      "solucion": "Con un 18% de descuento se paga el 82% del precio: P × 0,82 = 73.800. Entonces P = 73.800 ÷ 0,82 = 90.000. Comprobación: el 18% de 90.000 es 16.200 y 90.000 − 16.200 = 73.800.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-007",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "La cuota mensual de un gimnasio es de A pesos. En enero sube un 9% y en julio sube un 28% respecto de la cuota ya subida en enero. ¿Cuál de las siguientes expresiones representa la cuota después de julio?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "A × 1,09 × 1,28",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el alza de enero multiplica por 1,09 y la de julio, sobre esa cuota, multiplica por 1,28. Dos aumentos seguidos se componen multiplicando."
+        },
+        {
+          "clave": "B",
+          "texto": "A × 1,37",
+          "esCorrecta": false,
+          "errorCatalogado": "error-6",
+          "feedbackDescarte": "Esa suma 9% y 28% como si fuera un único 37%. El 28% de julio se aplica sobre la cuota ya subida, así que el factor total es 1,09 × 1,28, mayor que 1,37."
+        },
+        {
+          "clave": "C",
+          "texto": "A × 0,09 × 0,28",
+          "esCorrecta": false,
+          "errorCatalogado": "error-4",
+          "feedbackDescarte": "Esa lee «sube un 9%» como «queda en un 9%». Subir un 9% multiplica por 1,09, no por 0,09; lo mismo con el 28%."
+        },
+        {
+          "clave": "D",
+          "texto": "A × 1,09 × 1,28 − A",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa expresión da cuánto subió la cuota en total, no la cuota final. Al restar A queda solo el aumento acumulado."
+        }
+      ],
+      "solucion": "Enero: la cuota pasa a A × 1,09. Julio: sobre esa cuota se aplica otro aumento, A × 1,09 × 1,28. El factor único equivalente es 1,09 × 1,28 = 1,3952, es decir, un alza total de 39,52%, no de 37%.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-008",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un pendrive tiene 5.200 MB de capacidad y le quedan 2.184 MB libres. ¿Cuál de los siguientes pares representa correctamente su estado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Libre: 58% · Ocupado: 42%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Ese par tiene los porcentajes invertidos: 2.184 ÷ 5.200 = 0,42 es lo libre, no lo ocupado. El complemento, 58%, es lo ocupado."
+        },
+        {
+          "clave": "B",
+          "texto": "Libre: 42% · Ocupado: 58%",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Este par sí podía ser: 2.184 ÷ 5.200 = 0,42, o sea un 42% libre, y lo ocupado es el resto, 58%."
+        },
+        {
+          "clave": "C",
+          "texto": "Libre: 4,2% · Ocupado: 95,8%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 2.184 ÷ 5.200 = 0,42 está bien, pero pasado a porcentaje es 42%, no 4,2%. Falta multiplicar por 100 sin correr la coma."
+        },
+        {
+          "clave": "D",
+          "texto": "Libre: 238% · Ocupado: 172%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Ese par divide la capacidad por cada parte (5.200 ÷ 2.184 y 5.200 ÷ 3.016). La base es la capacidad total: se divide cada parte por 5.200."
+        }
+      ],
+      "solucion": "Libre: 2.184 ÷ 5.200 = 0,42, es decir, 42%. Ocupado: 5.200 − 2.184 = 3.016 MB, y 3.016 ÷ 5.200 = 0,58, es decir, 58%. Los dos porcentajes suman 100%.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-009",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una cantidad pasó de 4.100 a 4.551. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Aumentó un 11%, porque 451 ÷ 4.100 = 0,11.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la diferencia es 4.551 − 4.100 = 451, y 451 sobre el valor inicial de 4.100 da 0,11, o sea un 11%."
+        },
+        {
+          "clave": "B",
+          "texto": "Aumentó un 9,9%, porque 451 ÷ 4.551 ≈ 0,099.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Esa divide la diferencia por el valor final. La base de un cambio porcentual es el valor inicial, 4.100."
+        },
+        {
+          "clave": "C",
+          "texto": "Aumentó un 111%, porque 4.551 ÷ 4.100 = 1,11.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "1,11 es el valor final como fracción del inicial, bien calculado, pero el 111% incluye el 100% de partida. El aumento es solo el 11% que sobra."
+        },
+        {
+          "clave": "D",
+          "texto": "Aumentó un 0,11%, porque 451 ÷ 4.100 = 0,11.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 0,11 está bien, pero entregarlo como 0,11% salta el paso de multiplicar por 100. 0,11 equivale a un 11%."
+        }
+      ],
+      "solucion": "La diferencia es 4.551 − 4.100 = 451. Se compara con el valor inicial: 451 ÷ 4.100 = 0,11, o sea un aumento de 11%. Comprobación: 4.100 × 1,11 = 4.551.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    },
+    {
+      "id": "adv-porcentaje-010",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un parlante cuesta $38.000. Su precio sube un 24% y después baja un 5% respecto del precio ya subido. ¿Cuál es el precio final?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$45.220",
+          "esCorrecta": false,
+          "errorCatalogado": "error-6",
+          "feedbackDescarte": "Esa resta 5% de 24% como si el cambio total fuera un 19%: 38.000 × 1,19. La baja del 5% se aplica sobre el precio ya subido, no sobre el original."
+        },
+        {
+          "clave": "B",
+          "texto": "$8.664",
+          "esCorrecta": false,
+          "errorCatalogado": "error-4",
+          "feedbackDescarte": "Esa es 38.000 × 0,24 × 0,95: lee «sube un 24%» como «queda en un 24%». Subir un 24% multiplica por 1,24."
+        },
+        {
+          "clave": "C",
+          "texto": "$6.764",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa es 44.764 − 38.000: cuánto subió el precio en total. Está bien calculado, pero se pide el precio final, no el aumento."
+        },
+        {
+          "clave": "D",
+          "texto": "$44.764",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 38.000 × 1,24 = 47.120 tras el alza, y 47.120 × 0,95 = 44.764 tras la baja del 5%."
+        }
+      ],
+      "solucion": "Alza del 24%: 38.000 × 1,24 = 47.120. Baja del 5% sobre ese precio: 47.120 × 0,95 = 44.764. El factor único equivalente es 1,24 × 0,95 = 1,178, o sea un alza neta de 17,8%, no de 19%.",
+      "proveniencia": { "fuenteOrigen": "propia" }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-porcentaje-001: abstracto, volver al original desde una baja; 650, 48%, 1.250, 0,52, 962, 1,48, 312, 0,48, 698",
+    "adv-porcentaje-002: producción de miel de un apicultor, kg, dos alzas sucesivas; 3.500, 85%, 76%, 11.396, 1,85, 1,76, 6.475, 9.135, 161, 2,61, 7.896, 2.261, 0,85, 0,76, 3,256",
+    "adv-porcentaje-003: suscripción mensual a una app de música, expresión del alza; M, 22%, 1,22, 0,22, 1,022, 0,022, ejemplo 6.500 → 7.930",
+    "adv-porcentaje-004: postulantes a una beca, parte pedida; 1.450, 6%, 87, 0,06, 1.363, 0,94, 8.700, control 145",
+    "adv-porcentaje-005: precio de una empanada en un kiosco, variación porcentual; 1.900, 2.204, 304, 16%, 0,16, 13,8, 0,138, 116, 1,16",
+    "adv-porcentaje-006: audífonos con descuento, volver al original; 18%, 73.800, 90.000, 0,82, 87.084, 1,18, 13.284, 0,18, 410.000, 16.200",
+    "adv-porcentaje-007: cuota mensual de un gimnasio, expresión de dos alzas; A, 9%, 28%, 1,09, 1,28, 1,37, 0,09, 0,28, 1,3952, 39,52",
+    "adv-porcentaje-008: memoria de un pendrive, MB, parte y complemento; 5.200, 2.184, 3.016, 42%, 58%, 0,42, 0,58, 4,2, 95,8, 238, 2,38, 172, 1,72",
+    "adv-porcentaje-009: abstracto, variación porcentual; 4.100, 4.551, 451, 11%, 0,11, 9,9, 0,099, 111, 1,11",
+    "adv-porcentaje-010: parlante, alza y baja sucesivas; 38.000, 24%, 5%, 44.764, 1,24, 0,95, 47.120, 45.220, 19, 1,19, 8.664, 0,24, 6.764, 1,178, 17,8"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": ["temario DEMRE M1"],
+    "declaracionOriginalidad": "AÚN PENDIENTE. Se completa al cerrar Ronda 1 y Ronda 2."
+  }
+}
