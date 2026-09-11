@@ -87,6 +87,8 @@ Si Advance necesita algo de un componente de la capa gratis, primero se extrae a
 
 Los tres archivos excluidos de siempre siguen excluidos: `docs/mapa-modulos-m1.md`, `lib/modulos.ts`, `content/cierres/cierre-cuerpos-geometricos.json`.
 
+Excepción puntual de F0, registrada al cierre de F1 (2026-09-11): `9ec800b` (declarar `moduloId` en los 44 archivos de contenido) y `43b5321` (retirar catálogos embebidos, lote 1) tocaron `content/cierres/cierre-cuerpos-geometricos.json`. Fue parte de la migración masiva al catálogo canónico, que por definición aplicaba a todo `content/`, y el resultado es obligatorio para pasar `npm run validar` (`moduloId` exigido desde 3958991). Se acepta tal cual y no se repite: ningún commit posterior toca ese archivo.
+
 ---
 
 ## 2. Arquitectura de separación
