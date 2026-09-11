@@ -11,7 +11,7 @@
     },
     {
       "id": "porcentaje/error-3",
-      "descripcion": "Convertir mal el porcentaje a decimal: multiplicar por el número del porcentaje sin dividir por 100 (×30 en vez de ×0,30), o correr la coma de más (40% como 0,04 en vez de 0,40; 30% como 3 en vez de 0,3)."
+      "descripcion": "Convertir mal el porcentaje a decimal: multiplicar por el número del porcentaje sin dividir por 100 (×30 en vez de ×0,30), o correr la coma de más (40% como 0,04 en vez de 0,40; 30% como 3 en vez de 0,3). Incluye la dirección contraria, del cociente al porcentaje: entregar la razón ya calculada como si fuera el porcentaje (0,23 leído como 0,23% en vez de 23%) o correr la coma al pasar a porcentaje (0,91 como 9,1% en vez de 91%)."
     },
     {
       "id": "porcentaje/error-4",
