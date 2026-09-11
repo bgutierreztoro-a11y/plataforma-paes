@@ -71,7 +71,7 @@ export default async function PaginaAdvance({
         </div>
         {unidades.length > 0 && (
           <ul className="w-full max-w-md space-y-2.5" data-sesiones>
-            {unidades.map((unidadId) => (
+            {unidades.map(({ unidadId, titulo }) => (
               <li key={unidadId}>
                 <EnlaceBoton
                   variante="linea"
@@ -79,7 +79,7 @@ export default async function PaginaAdvance({
                     ejeId ? `/advance/descarte/${unidadId}?eje=${ejeId}` : `/advance/descarte/${unidadId}`
                   }
                 >
-                  {portada.sesion(unidadId)}
+                  {portada.sesion(titulo)}
                 </EnlaceBoton>
               </li>
             ))}

@@ -8,10 +8,16 @@ import { seleccionarSesion } from "@/lib/advance/seleccion";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
 import { catalogoDelModulo } from "@/lib/catalogoErrores";
 
-export const metadata: Metadata = {
-  title: `${TEXTOS_ADVANCE.descarte.pill} · ${TEXTOS_ADVANCE.nombre}`,
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ unidadId: string }>;
+}): Promise<Metadata> {
+  const { unidadId } = await params;
+  const banco = advanceVisible() ? obtenerBanco(unidadId) : null;
+  const partes = [TEXTOS_ADVANCE.descarte.pill, banco?.titulo, TEXTOS_ADVANCE.nombre].filter(Boolean);
+  return { title: partes.join(" · "), robots: { index: false, follow: false } };
+}
 
 /* Cada petición arma una sesión distinta (cinco ítems al azar). Sin esto, un
    segmento dinámico sin `generateStaticParams` ni APIs dinámicas puede quedar
@@ -67,7 +73,13 @@ export default async function PaginaDescarte({
       style={linea ? estiloDeLinea(linea) : undefined}
       className="flex min-h-full flex-1 flex-col"
     >
-      <SesionDescarte items={items} unidadId={unidadId} catalogo={catalogo} ruta={ruta} />
+      <SesionDescarte
+        items={items}
+        unidadId={unidadId}
+        titulo={banco.titulo}
+        catalogo={catalogo}
+        ruta={ruta}
+      />
     </main>
   );
 }

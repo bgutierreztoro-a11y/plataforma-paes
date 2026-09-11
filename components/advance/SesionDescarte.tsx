@@ -8,6 +8,8 @@ import { registrarEvento } from "@/lib/eventos";
 interface SesionDescarteProps {
   items: ItemAdvance[];
   unidadId: string;
+  /* Nombre técnico DEMRE de la unidad, lo único que ve el estudiante. */
+  titulo: string;
   /* Id local del catálogo → descripción, resuelto en el servidor. */
   catalogo: Record<string, string>;
   /* La ruta de esta misma sesión, para "Otra sesión". */
@@ -24,11 +26,12 @@ interface SesionDescarteProps {
  * (docs/fobos-advance.md §8): el ejecutor solo entrega payloads, y la galería
  * lo monta sin callbacks, así que /_design nunca emite analítica.
  */
-export function SesionDescarte({ items, unidadId, catalogo, ruta }: SesionDescarteProps) {
+export function SesionDescarte({ items, unidadId, titulo, catalogo, ruta }: SesionDescarteProps) {
   return (
     <EjecutorDescarte
       items={items}
       unidadId={unidadId}
+      titulo={titulo}
       alIniciar={(props) => registrarEvento({ nombre: "advance_descarte_inicio", props })}
       alDescartar={(props) => registrarEvento({ nombre: "advance_descarte_alternativa", props })}
       alFatal={(props) => registrarEvento({ nombre: "advance_descarte_fatal", props })}

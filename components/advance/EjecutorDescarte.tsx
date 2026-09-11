@@ -31,6 +31,9 @@ import type { ClaveAlternativa } from "@/lib/tipos";
 interface EjecutorDescarteProps {
   items: ItemAdvance[];
   unidadId: string;
+  /* Título de la unidad (nombre técnico DEMRE), encabezado de la sesión.
+     Opcional solo para la galería, que monta la muestra sin banco. */
+  titulo?: string;
   renderFinal: (registros: RegistroItem[]) => ReactNode;
   /* Analítica. Todas opcionales y ninguna se llama desde adentro con
      `registrarEvento`: los payloads salen de lib/advance/descarte.ts y quien
@@ -59,6 +62,7 @@ interface EjecutorDescarteProps {
 export function EjecutorDescarte({
   items,
   unidadId,
+  titulo,
   renderFinal,
   alIniciar,
   alDescartar,
@@ -124,6 +128,11 @@ export function EjecutorDescarte({
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6">
+      {titulo && (
+        <h1 className="mb-3 text-titulo-m text-primary" data-titulo-unidad>
+          {titulo}
+        </h1>
+      )}
       <div className="mb-3 flex items-center justify-between gap-3">
         <span className="rounded-full bg-[var(--linea-fondo)] px-2.5 py-1 text-etiqueta uppercase text-[var(--linea-contraste)]">
           {descarte.pill}

@@ -40,7 +40,9 @@ interface ItemEnDisco {
 export interface Banco {
   unidadId: string;
   moduloId: string;
-  titulo?: string;
+  /* Nombre técnico DEMRE de la unidad: lo que ve el estudiante. El unidadId
+     es solo ruta y clave, nunca sale a producto. */
+  titulo: string;
   /* Ya en forma cliente: sin `proveniencia`, `auditoria` ni `contextosNumericos`,
      con `claveOriginal` igual a `clave` (todavía sin mezclar). */
   items: ItemAdvance[];
@@ -50,22 +52,23 @@ function dirAdvance(): string {
   return path.join(process.cwd(), "content", "advance");
 }
 
-/** Unidades con `banco.json` en disco y válido, en orden alfabético. */
-export function unidadesConBanco(): string[] {
+/** Unidades con `banco.json` en disco y válido, con su título, en orden alfabético de unidadId. */
+export function unidadesConBanco(): { unidadId: string; titulo: string }[] {
   const dir = dirAdvance();
   if (!existsSync(dir)) return [];
   return readdirSync(dir, { withFileTypes: true })
     .filter((ent) => ent.isDirectory() && ent.name !== "schema" && !ent.name.startsWith("_"))
     .map((ent) => ent.name)
-    .filter((unidadId) => {
+    .sort()
+    .flatMap((unidadId) => {
       try {
-        return obtenerBanco(unidadId) !== null;
+        const banco = obtenerBanco(unidadId);
+        return banco ? [{ unidadId, titulo: banco.titulo }] : [];
       } catch (e) {
         console.warn(`unidadesConBanco: se excluye "${unidadId}": ${(e as Error).message}`);
-        return false;
+        return [];
       }
-    })
-    .sort();
+    });
 }
 
 /**
@@ -92,7 +95,7 @@ export function obtenerBanco(unidadId: string): Banco | null {
     );
   }
 
-  const banco = data as { unidadId: string; moduloId: string; titulo?: string; items: ItemEnDisco[] };
+  const banco = data as { unidadId: string; moduloId: string; titulo: string; items: ItemEnDisco[] };
   return {
     unidadId: banco.unidadId,
     moduloId: banco.moduloId,

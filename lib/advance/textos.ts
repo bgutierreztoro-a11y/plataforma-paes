@@ -36,7 +36,8 @@ export const TEXTOS_ADVANCE = {
     detalle: "Cuando los haya, van a aparecer acá.",
     /* Con al menos un banco: una sesión de descarte por unidad. */
     conBancos: "Entrenamiento de descarte, cinco ítems por sesión.",
-    sesion: (unidad: string) => `Descarte: ${unidad}`,
+    /* Recibe el `titulo` del banco (nombre técnico DEMRE), nunca el unidadId. */
+    sesion: (titulo: string) => `Descarte: ${titulo}`,
   },
 
   /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al
