@@ -50,7 +50,8 @@ export function TramoAdvance({
 }) {
   const activo = tieneAcceso(estado);
   const { tramo } = TEXTOS_ADVANCE;
-  const href = activo ? `/advance?eje=${ejeId}` : `/advance/puerta?eje=${ejeId}`;
+  /* `origen=tramo` alimenta advance_puerta_vista (§8); la ruta lo valida. */
+  const href = activo ? `/advance?eje=${ejeId}` : `/advance/puerta?eje=${ejeId}&origen=tramo`;
 
   return (
     <div className="relative" style={{ paddingLeft: CANALETA }}>

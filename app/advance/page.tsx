@@ -39,7 +39,9 @@ export default async function PaginaAdvance({
   switch (estado) {
     case "sin-acceso":
     case "temporada-terminada":
-      redirect(ejeId ? `/advance/puerta?eje=${ejeId}` : "/advance/puerta");
+      redirect(
+        ejeId ? `/advance/puerta?eje=${ejeId}&origen=portada` : "/advance/puerta?origen=portada",
+      );
     case "activo":
       break;
     default: {
