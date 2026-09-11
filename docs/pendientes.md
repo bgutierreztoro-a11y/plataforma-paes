@@ -1,5 +1,18 @@
 # Pendientes técnicos
 
+## Rediseño de distractores tipo veredicto — cerrado 2026-09-11, retomar aquí
+
+Hecho y commiteado (Ronda 1 + Ronda 2 aprobadas, en git local, sin push):
+- f096041 — regla nueva: errorCatalogado marca solo el error que decide el veredicto final
+- d9576dc, 87debb2, 6697ea4, e605021 — 9 ítems reescritos (enteros x3, proporcionalidad x4, lineal x1, ecuaciones x1)
+- c469500 — enteros-racionales/error-9 nuevo + remapeo distractor C en 2 ítems
+- a5d8a21 — Ronda 2 (originalidad) registrada en los 7 ítems restantes
+
+Pendiente, en docs/rediseno-distractores-veredicto.md:
+- 3 PARADAs de consultar-fuentes.mjs sin correr (las corre Benja manualmente): ítem 2.2 (cuerpos, cajita 4cm), 5.2 y 5.4 (cuadrática, ambos con y=x²-6x+5 y g(x)).
+- Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
+- Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
+
 ## ✅ Migración del catálogo de errores a canónico único — completada (2026-09-08)
 
 Sesión de Fobos Advance F0, commits `9ec800b..3958991`.
