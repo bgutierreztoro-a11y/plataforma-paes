@@ -511,35 +511,37 @@
       "id": "inecuaciones-resolucion-item-3",
       "habilidad": "argumentar",
       "dificultad": "alta",
-      "enunciado": "Un estudiante resuelve la inecuación −3x + 2 > 14 de esta forma:\n\nPaso 1: resta 2 a ambos lados → −3x > 12\nPaso 2: divide ambos lados por −3 → x > −4\n\n¿Es correcto su desarrollo?",
+      "enunciado": "Un estudiante resuelve la inecuación −3x + 2 > 14 de esta forma:\n\nPaso 1: resta 2 a ambos lados → −3x > 12\nPaso 2: divide ambos lados por −3 → x > −4\n\n¿Cuál es la solución correcta?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "No: al dividir por −3, que es negativo, hay que invertir el sentido. El resultado correcto es x < −4.",
+          "texto": "x < −4: el Paso 1 está bien; al dividir por −3 se invierte el sentido.",
           "esCorrecta": true,
           "feedback": "Correcto. El Paso 1 está bien: restar 2 a ambos lados desliza la recta y no invierte nada. El Paso 2 es el que falla: dividir por −3 refleja la recta, así que el `>` tiene que convertirse en `<`."
         },
         {
           "clave": "B",
-          "texto": "Sí: los dos pasos aplican la misma operación a ambos lados, así que el desarrollo es válido.",
+          "texto": "x > −4: los dos pasos aplican la misma operación a ambos lados, el desarrollo del estudiante es válido.",
           "esCorrecta": false,
-          "feedback": "Es cierto que aplicó la misma operación a ambos lados, y esa parte del método está bien. Pero eso alcanzaba para las ecuaciones; para las inecuaciones falta la segunda mitad de la regla. Comprueba con un número: x = 0 cumple x > −4. Reemplaza x = 0 en la inecuación original: −3·0 + 2 = 2. ¿Es 2 > 14?",
+          "feedback": "Es cierto que aplicó la misma operación a ambos lados, y esa parte del método está bien. Pero eso alcanza para las ecuaciones; para las inecuaciones falta la segunda mitad de la regla. Comprueba con un número: x = 0 cumple x > −4. Reemplaza x = 0 en la inecuación original: −3·0 + 2 = 2. ¿Es 2 > 14?",
           "errorCatalogado": "error-6"
         },
         {
           "clave": "C",
-          "texto": "No: el error está en el Paso 1, donde debió sumar 2 en vez de restarlo.",
+          "texto": "x < −16/3: en el Paso 1 se suma 2, −3x > 16, y después se invierte el sentido.",
           "esCorrecta": false,
-          "feedback": "El Paso 1 está correcto: el término es +2, así que para eliminarlo se resta 2 en ambos lados, y 14 − 2 = 12. Ahí no hubo error. Mira de nuevo el Paso 2 y qué tipo de número es el −3."
+          "feedback": "El +2 se elimina RESTANDO 2 en ambos lados, no sumando: 14 − 2 = 12, no 14 + 2 = 16. Sumar en vez de restar resuelve una inecuación distinta a la del enunciado.",
+          "errorCatalogado": "error-2"
         },
         {
           "clave": "D",
-          "texto": "No: al dividir por −3 hay que invertir el sentido y cambiar el signo del resultado, quedando x < 4.",
+          "texto": "x > 12: de −3x > 12 se pasa a x > 12 sin dividir por el coeficiente.",
           "esCorrecta": false,
-          "feedback": "Acertaste que hay que invertir el sentido, pero le cambiaste el signo dos veces al mismo número. El 12 dividido por −3 ya da −4; ese signo negativo salió de la división. Invertir el sentido es dar vuelta el símbolo `>`, no volver a tocar el número."
+          "feedback": "Falta el paso final: −3x > 12 no es lo mismo que x > 12, hay que dividir ambos lados por −3 (y por ser negativo, invertir el sentido) para dejar la x sola. Sin ese paso el coeficiente −3 queda pegado a la incógnita.",
+          "errorCatalogado": "error-4"
         }
       ],
-      "solucion": "−3x + 2 > 14. Paso 1 (correcto): restar 2 a ambos lados → −3x > 12. Paso 2: dividir por −3, que es negativo, obliga a invertir el sentido → x < 12 ÷ (−3) = −4, es decir x < −4. Comprobación del conjunto correcto: x = −5 → −3·(−5) + 2 = 15 + 2 = 17, y 17 > 14 ✓ pertenece, y en efecto −5 < −4. x = 0 → −3·0 + 2 = 2, y 2 > 14 es falso ✓ no pertenece — esto refuta directamente la alternativa B, porque bajo x > −4 el 0 debería pertenecer, y también refuta la alternativa D, porque bajo x < 4 el 0 también debería pertenecer. Comprobación del borde: x = −4 → 12 + 2 = 14, y 14 > 14 es falso ✓, correctamente excluido por el borde abierto. Respuesta: A."
+      "solucion": "−3x + 2 > 14. Paso 1 (correcto): restar 2 a ambos lados → −3x > 12. Paso 2: dividir por −3, que es negativo, obliga a invertir el sentido → x < 12 ÷ (−3) = −4, es decir x < −4. Comprobación del conjunto correcto: x = −5 → −3·(−5) + 2 = 15 + 2 = 17, y 17 > 14 ✓ pertenece, y en efecto −5 < −4. x = 0 → −3·0 + 2 = 2, y 2 > 14 es falso ✓ no pertenece — esto refuta directamente x > −4, porque bajo esa solución el 0 debería pertenecer. Comprobación del borde: x = −4 → 12 + 2 = 14, y 14 > 14 es falso ✓, correctamente excluido por el borde abierto. Respuesta: A."
     }
   ],
   "contextosNumericos": [
