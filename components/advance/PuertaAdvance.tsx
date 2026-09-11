@@ -6,6 +6,9 @@ import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
  * La pantalla de qué es Fobos Advance: el estado "sin acceso" hecho página
  * (docs/fobos-advance.md §1.4 y §7).
  *
+ * El disclaimer de §7.3 no va acá: el layout ya lo pinta al pie de todas las
+ * pantallas, y repetirlo era decirlo dos veces en la misma vista.
+ *
  * Componente puro: recibe el eje desde el que se llegó (ya validado por la
  * ruta) y no consulta `lib/advance/acceso.ts`. Así la galería puede rendirla
  * sin flags y F3 puede montarla con el estado que sea.
@@ -23,9 +26,6 @@ export function PuertaAdvance({ ejeId }: { ejeId?: string }) {
         <p className="text-cuerpo-m text-primary">{puerta.queEs}</p>
         <p className="text-cuerpo-m text-primary">{puerta.queNoEs}</p>
       </div>
-      <p className="w-full max-w-md text-cuerpo-s text-secondary">
-        {puerta.disclaimer}
-      </p>
       <div className="w-full max-w-md">
         {ejeId ? (
           <BotonVolver

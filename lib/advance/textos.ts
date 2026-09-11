@@ -26,8 +26,6 @@ export const TEXTOS_ADVANCE = {
       "Es una capa de entrenamiento posterior al aprendizaje. Cada alternativa incorrecta de una pregunta corresponde a un error concreto: Advance te muestra cuál cometiste y cómo dejar de cometerlo.",
     queNoEs:
       "No es más contenido ni un curso paralelo. No es un tutor de inteligencia artificial. No tiene puntos, rachas ni ranking.",
-    disclaimer:
-      "Fobos es un producto independiente, sin vínculo con DEMRE, la Universidad de Chile ni ningún preuniversitario. PAES y DEMRE se mencionan solo de forma descriptiva.",
     volverAlEje: "Volver a la línea",
     volverALaRed: "Volver a la red",
   },
