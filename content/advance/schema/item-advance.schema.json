@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "item-advance.schema.json",
+  "title": "Banco de ítems Fobos Advance",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: errorCatalogado y feedbackDescarte son obligatorios en los tres distractores, feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. Sin errorCatalogado en los tres distractores el modo descarte no puede funcionar, por eso el validador rechaza el archivo en vez de advertir. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/.",
+  "type": "object",
+  "required": ["tipo", "unidadId", "moduloId", "items", "proveniencia"],
+  "properties": {
+    "tipo": {
+      "const": "banco-advance",
+      "description": "Discrimina este archivo de los de la capa gratis. El validador enruta por este campo."
+    },
+    "unidadId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case. Coincide con el nombre del directorio, p. ej. 'porcentaje' en content/advance/porcentaje/banco.json"
+    },
+    "moduloId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Módulo M1 al que pertenece la unidad. Resuelve el catálogo canónico de errores en content/errores/<moduloId>.json. Campo requerido, no lookup table."
+    },
+    "titulo": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Nombre técnico DEMRE de la unidad. No título lúdico."
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ítems del banco. El mínimo de 20 por unidad es regla del validador, no del schema, para no bloquear la escritura incremental del banco.",
+      "items": { "$ref": "#/definitions/itemAdvance" }
+    },
+    "contextosNumericos": {
+      "type": "array",
+      "description": "Registro de contextos y números usados en este banco, para que ninguna lección ni otro banco los repita.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "auditoria": {
+      "type": "object",
+      "$comment": "Misma forma que lee scripts/auditar-leccion.mjs (data.auditoria.colisionesPermitidas, cada entrada con valor y motivo). content/schema/leccion.schema.json no la declara: en la capa gratis entra porque la raíz no cierra additionalProperties. Acá se declara explícita y cerrada.",
+      "properties": {
+        "colisionesPermitidas": {
+          "type": "array",
+          "description": "Colisiones de valor con otro archivo que se aceptan a propósito, con su justificación. Todo lo que no esté aquí y colisione es hallazgo del auditor.",
+          "items": {
+            "type": "object",
+            "required": ["valor", "motivo"],
+            "properties": {
+              "valor": { "type": "number" },
+              "motivo": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "proveniencia": { "$ref": "#/definitions/provenienciaBanco" }
+  },
+  "additionalProperties": false,
+
+  "definitions": {
+
+    "itemAdvance": {
+      "type": "object",
+      "required": [
+        "id",
+        "unidadId",
+        "moduloId",
+        "habilidad",
+        "dificultad",
+        "tiempoReferenciaSeg",
+        "enunciado",
+        "alternativas",
+        "solucion",
+        "proveniencia"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^adv-[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Prefijo 'adv-' obligatorio para que ningún id de Advance colisione con uno de la capa gratis. P. ej. adv-porcentaje-001"
+        },
+        "unidadId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Debe coincidir con el unidadId del banco. Se repite en el ítem para que el ítem sea autodescriptivo al viajar solo en una sesión de entrenamiento."
+        },
+        "moduloId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Debe coincidir con el moduloId del banco. Es lo que resuelve errorCatalogado contra el catálogo canónico."
+        },
+        "habilidad": {
+          "enum": ["resolver", "modelar", "representar", "argumentar"],
+          "description": "Las 4 habilidades evaluadas por la PAES de Competencia Matemática."
+        },
+        "dificultad": { "enum": ["baja", "media", "alta"] },
+        "tiempoReferenciaSeg": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 600,
+          "description": "Segundos de referencia para el panel 2x2. Valores por defecto según dificultad: baja 80, media 120, alta 160. Base: 140 minutos para 65 preguntas dan 129 segundos promedio. Se recalibra con datos reales cuando exista F3."
+        },
+        "enunciado": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Material propio, temario oficial DEMRE o forma liberada de DEMRE. Material de preuniversitarios y otros privados está prohibido sin excepción y sin retoques."
+        },
+        "alternativas": { "$ref": "#/definitions/alternativasDescarte" },
+        "solucion": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Resolución paso a paso, recalculada desde cero. Se muestra al cerrar el ítem por descarte fatal."
+        },
+        "proveniencia": { "$ref": "#/definitions/provenienciaItem" }
+      },
+      "additionalProperties": false
+    },
+
+    "alternativasDescarte": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Formato PAES M1: exactamente 4 alternativas A-D, una correcta y tres distractores. Cada distractor codifica un error catalogado distinto.",
+      "contains": { "$ref": "#/definitions/alternativaCorrecta" },
+      "items": {
+        "oneOf": [
+          { "$ref": "#/definitions/alternativaDistractor" },
+          { "$ref": "#/definitions/alternativaCorrecta" }
+        ]
+      }
+    },
+
+    "alternativaDistractor": {
+      "type": "object",
+      "description": "Alternativa incorrecta. En Advance el mapeo al catálogo es obligatorio: es la pieza que hace posible el diagnóstico por distractor.",
+      "required": ["clave", "texto", "esCorrecta", "errorCatalogado", "feedbackDescarte"],
+      "properties": {
+        "clave": { "enum": ["A", "B", "C", "D"] },
+        "texto": { "type": "string", "minLength": 1 },
+        "esCorrecta": { "const": false },
+        "errorCatalogado": {
+          "type": "string",
+          "pattern": "^error-[0-9]+$",
+          "description": "Id del catálogo canónico del módulo, content/errores/<moduloId>.json. Obligatorio en los tres distractores. Si el ítem necesita un error que no existe, CC se detiene y propone el texto a Benja antes de asignarle id."
+        },
+        "feedbackDescarte": {
+          "type": "string",
+          "minLength": 40,
+          "description": "Texto que aparece cuando el estudiante descarta CORRECTAMENTE esta alternativa. No es el feedback de haberla elegido: se escribe aparte. Una o dos líneas, nombra el error concreto, sin celebración. Mínimo 40 caracteres, el mismo umbral que scripts/validar-contenido.mjs exige al feedback de distractores en lecciones (MIN_FEEDBACK_PUBLICABLE)."
+        },
+        "feedback": {
+          "type": "string",
+          "minLength": 40,
+          "description": "Opcional. Feedback de modo clásico, para cuando el ítem se sirve en una sesión de entrenamiento dirigido en vez de descarte. Si está, mismo mínimo de 40 caracteres que el feedback de distractores en lecciones."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "alternativaCorrecta": {
+      "type": "object",
+      "description": "Alternativa correcta. Lleva feedbackDescarteIncorrecto porque el descarte fatal es el único error real de la mecánica.",
+      "required": ["clave", "texto", "esCorrecta", "feedbackDescarteIncorrecto"],
+      "properties": {
+        "clave": { "enum": ["A", "B", "C", "D"] },
+        "texto": { "type": "string", "minLength": 1 },
+        "esCorrecta": { "const": true },
+        "feedbackDescarteIncorrecto": {
+          "type": "string",
+          "minLength": 40,
+          "description": "Aparece cuando el estudiante descarta la correcta y el ítem se cierra. Sin dramatismo: informa por qué esa sí podía ser, no castiga. Mínimo 40 caracteres, mismo umbral que el feedback de distractores en lecciones."
+        },
+        "feedback": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opcional. Refuerzo breve para modo clásico."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "provenienciaItem": {
+      "type": "object",
+      "description": "Origen del ítem. Obligatorio por ítem porque en Advance conviven material propio y material liberado de DEMRE, y la distinción es legal, no editorial.",
+      "required": ["fuenteOrigen"],
+      "properties": {
+        "fuenteOrigen": {
+          "enum": ["propia", "demre-liberada", "temario-demre"],
+          "description": "propia: creado desde cero. demre-liberada: basado en un ítem de una forma liberada de DEMRE. temario-demre: derivado del temario oficial, no de un ítem. No existe valor para material de preuniversitarios ni de terceros privados: ese material está prohibido y por eso no es representable."
+        },
+        "referencia": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Obligatoria si fuenteOrigen es demre-liberada. Año, forma y número de pregunta de la forma liberada."
+        },
+        "notaAdaptacion": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Obligatoria si fuenteOrigen es demre-liberada. Qué se cambió respecto del original: contexto, números, alternativas."
+        },
+        "autor": { "type": "string", "minLength": 1 },
+        "fecha": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": { "fuenteOrigen": { "const": "demre-liberada" } },
+        "required": ["fuenteOrigen"]
+      },
+      "then": { "required": ["referencia", "notaAdaptacion"] }
+    },
+
+    "provenienciaBanco": {
+      "type": "object",
+      "description": "Proveniencia a nivel de archivo. El resultado de Ronda 1 (matemática) y Ronda 2 (originalidad) se escribe aquí de inmediato al cerrar cada auditoría. Si queda solo en el chat, el campo miente.",
+      "required": ["fuentesAnalisis", "declaracionOriginalidad"],
+      "properties": {
+        "fuentesAnalisis": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Fuentes usadas solo para análisis y calibración, p. ej. 'temario DEMRE M1'."
+        },
+        "declaracionOriginalidad": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Estado real de las dos rondas de auditoría sobre este banco. Ningún conteo se escribe aquí sin verificarlo antes con node -e."
+        },
+        "autor": { "type": "string", "minLength": 1 },
+        "fecha": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

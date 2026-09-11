@@ -1,0 +1,55 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "plantilla-unidad",
+  "moduloId": "plantilla-modulo",
+  "titulo": "PLANTILLA. Nombre técnico DEMRE de la unidad",
+  "items": [
+    {
+      "id": "adv-plantilla-001",
+      "unidadId": "plantilla-unidad",
+      "moduloId": "plantilla-modulo",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "PLANTILLA. Enunciado formato PAES M1.",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "PLANTILLA. Valor que produce el error-N.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "PLANTILLA. Por qué esa alternativa no podía ser, nombrando el error concreto."
+        },
+        {
+          "clave": "B",
+          "texto": "PLANTILLA. Valor correcto.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "PLANTILLA. Por qué esa sí podía ser, sin dramatismo."
+        },
+        {
+          "clave": "C",
+          "texto": "PLANTILLA. Valor que produce otro error del catálogo.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "PLANTILLA. Texto del descarte acertado, nombra el error."
+        },
+        {
+          "clave": "D",
+          "texto": "PLANTILLA. Valor que produce un tercer error del catálogo.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "PLANTILLA. Texto del descarte acertado, nombra el error."
+        }
+      ],
+      "solucion": "PLANTILLA. Resolución paso a paso, recalculada desde cero.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [],
+  "proveniencia": {
+    "fuentesAnalisis": ["temario DEMRE M1"],
+    "declaracionOriginalidad": "AÚN PENDIENTE. Se completa al cerrar Ronda 1 y Ronda 2."
+  }
+}
