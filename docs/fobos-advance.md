@@ -98,6 +98,7 @@ Advance es producto pago. La separación tiene que ser estructural, no una condi
 ```
 app/advance/                     ruta raíz propia, nunca anidada en /linea o /camino
   page.tsx                       portada: qué hacer ahora
+  puerta/page.tsx                qué es Advance, para quien no tiene acceso
   descarte/[unidadId]/page.tsx   sesión de descarte
   errores/page.tsx               ciclo de vida de los errores
   entrenar/[sesionId]/page.tsx   sesión de entrenamiento
@@ -137,10 +138,14 @@ No se reutiliza `EjecutorSetItems` tal cual. El descarte tiene una máquina de e
 export type EstadoAdvance = "activo" | "sin-acceso" | "temporada-terminada";
 
 export async function estadoAdvance(): Promise<EstadoAdvance>
+
+export function advanceVisible(): boolean
 ```
 
-Fase 1: lee una variable de entorno (`NEXT_PUBLIC_ADVANCE_DEMO`) para poder construir y probar sin cuentas.
+Fase 1: `estadoAdvance` lee una variable de entorno (`NEXT_PUBLIC_ADVANCE_DEMO`) para poder construir y probar sin cuentas.
 Fase 3 en adelante: lee Clerk y la base de datos.
+
+`advanceVisible` es independiente del estado: dice si Advance existe en la interfaz. Lee `NEXT_PUBLIC_ADVANCE_VISIBLE`; sin ella, el tramo no se monta en el riel y toda ruta bajo `/advance` responde 404, así que producción queda idéntica a antes de F1 hasta que se decida mostrarlo. Se puede ver el tramo sin tener acceso, que es justamente el estado `sin-acceso`.
 
 La firma de la función no cambia entre fases. Eso es deliberado: cuando llegue Clerk, no hay que tocar ninguna pantalla.
 
@@ -222,7 +227,7 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
 
 ---
 
-### F1 — Esqueleto de Advance (código, sin contenido nuevo)
+### F1 — Esqueleto de Advance (código, sin contenido nuevo) — CERRADA 2026-09-11
 
 **1.1** `lib/advance/acceso.ts` con la firma final y implementación por variable de entorno.
 
@@ -235,6 +240,18 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
 **1.5** Sección en `app/_design/page.tsx` con el tramo en sus dos estados, sobre las cuatro líneas, para medir contraste.
 
 **Criterio de salida:** con `NEXT_PUBLIC_ADVANCE_DEMO=1` se llega a `/advance` desde el riel; sin la variable, se llega a la puerta. Contraste AA medido en las cuatro líneas. Capturas e2e sin regresión respecto del baseline de `docs/deuda-e2e-capturas.md`.
+
+**Registro de cierre F1, 2026-09-11.**
+
+Criterio de salida cumplido, con clic real a 390×844 sobre `next dev`, reiniciando el servidor por combinación porque `NEXT_PUBLIC_` se inlinea. Sin flags, `/linea/numeros` no monta el tramo y `/advance` responde 404. Con `NEXT_PUBLIC_ADVANCE_VISIBLE=1`, el clic en el tramo atenuado lleva a `/advance/puerta?eje=numeros`, el retorno vuelve a `/linea/numeros`, `/advance?eje=numeros` redirige a `/advance/puerta?eje=numeros`, y `/advance/puerta?eje=basura` ignora el eje y vuelve a `/camino`. Con `VISIBLE=1` y `DEMO=1`, el clic en el tramo activo lleva a `/advance?eje=numeros` con el estado vacío y el retorno vuelve a la línea. En el build de producción sin flags (`npm run build` y `next start`), `/advance` y `/advance/puerta` dan 404 y el HTML de `/linea/numeros` es byte a byte el de antes de F1, salvo el `buildId` y el hash del chunk de `LineaDelEje`. `npm run capturas` sin flags dio 24 fallos, 4 omitidos y 46 pasados, y `comm` contra la lista de `docs/deuda-e2e-capturas.md` devolvió cero líneas: el conjunto exacto del baseline, sin regresión. `prefers-reduced-motion` emulado en riel, puerta y portada: `document.getAnimations()` en cero, contra cinco animaciones sin la preferencia.
+
+Contraste medido en render sobre `/_design` (colores computados en el navegador, fondo `#f7f7f5`), por línea y estado. Título y subtítulo del tramo, en `text-primary`: 16,56 en las cuatro líneas y los dos estados, umbral 4,5. Glifo en `--linea-nav`, umbral 3: mínimo 4,48 en la línea 03, luego 4,52 en la 01, 6,41 en la 04 y 16,56 en la 02, que cae a tinta. Segmento en `--linea`, umbral 3: 4,48 en la 03, 4,52 en la 01, 6,41 en la 04 y 1,64 en la 02. Ese 1,64 se acepta como decorativo: el segmento es continuidad del riel, que ya usa ese mismo color, y el estado lo dicen el glifo y el subtítulo en palabras, nunca el segmento solo. Área táctil del enlace del tramo, 60 px de alto, medida.
+
+Desvíos respecto de lo planificado. Se agregó `advanceVisible()` con `NEXT_PUBLIC_ADVANCE_VISIBLE`, de modo que Advance queda invisible en producción hasta que se decida activarlo, y `/advance/*` responde 404 sin el flag. Existe la ruta `/advance/puerta`, que no estaba en el árbol de §2.1. El orden de ejecución fue 1.1, 1.4, 1.2, 1.5 y 1.3, distinto de la numeración, porque la portada redirige a la puerta y el tramo se mide en la galería antes de montarse. El montaje en el riel no fue directo en `RielEstaciones` ni en `page.tsx`, porque el riel vive dentro de la isla de cliente `components/camino/LineaDelEje.tsx`: esa isla ganó una prop opcional `despuesDelRiel` que se rinde justo después del riel, envuelta en la secuencia de entrada con el escalón siguiente a la última estación y con el CTA corrido un escalón, solo cuando hay algo montado (commits `abd75c8` y `461e99f`); `RielEstaciones.tsx` quedó sin diff. La galería vive en `app/%5Fdesign/page.tsx`, no en `app/_design/`, y los tokens reales son `--line-01` a `--line-04` con los roles `--linea` y `--linea-nav`, no `--e1` a `--e4` como decía este manual. Todo texto de Advance que cae sobre el fondo de página va en `text-primary`, porque `text-secondary` da 4,42 sobre el `body` y no llega a AA (`docs/deuda-contraste-etiquetas.md` §1); la jerarquía la dan tamaño y peso. El disclaimer de §7.3 lo cubre el pie del layout en todas las pantallas, así que la puerta no lo repite y la clave salió de `textos.ts`. Las constantes de geometría del riel (`CANALETA`, `EJE_DEL_RIEL`, `CENTRO_DEL_DISCO`) están duplicadas en `TramoAdvance.tsx` con referencia al origen, para no exportarlas desde la capa gratis. El ítem de `NavInferior` de §3.2 queda fuera de F1: no hay nada que entrenar todavía.
+
+Pendientes que F1 deja abiertos. El texto de precio y el CTA de pago de la puerta (§7.1, §11.2, respuesta pendiente sobre la Ley 21.719): hoy la puerta no tiene ningún texto de precio ni marcador. El estado `temporada-terminada` existe en el tipo y se rinde como `sin-acceso` en el tramo y en la portada, sin interfaz propia. `npm run auditar` no imprime resumen por categoría; el criterio de F0 se verificó igual sobre la salida cruda, con cero 🔴 y 128 🟡 de `colision-entre-archivos`.
+
+Commits de F1: `5b0422b`, `85151e1`, `290a738`, `87cf755`, `abd75c8`, `3375687`, `b72c0cc`, `461e99f`.
 
 ---
 
