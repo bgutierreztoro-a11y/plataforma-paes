@@ -521,8 +521,8 @@
           "clave": "A",
           "texto": "La ocupación subió un 21%, porque 51 − 30 = 21.",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
-          "feedbackDescarte": "Esa resta los números de los porcentajes directamente. 21 son puntos porcentuales, no el cambio relativo: el cambio se mide sobre el 30% inicial."
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa entrega 21, la diferencia en puntos porcentuales entre 51% y 30%. El cálculo está bien hecho, pero es otra magnitud: la pregunta pide el cambio relativo, que se obtiene dividiendo esa diferencia por el valor inicial, no la resta sola."
         },
         {
           "clave": "B",
@@ -871,6 +871,6 @@
     "fuentesAnalisis": [
       "temario DEMRE M1"
     ],
-    "declaracionOriginalidad": "AÚN PENDIENTE. Se completa al cerrar Ronda 1 y Ronda 2."
+    "declaracionOriginalidad": "Ronda 1 (matemática): APROBADO. 19/20 ítems verificados directos; adv-porcentaje-013 alternativa A quedó mal mapeada (error-2 en vez de error-8, con cierre-porcentaje-5 B como precedente aparente) y se corrigió en este mismo commit, con feedbackDescarte reescrito y confirmado por node -e (20/20 ítems, 60 distractores, 9 errores distintos, sin ítem con menos de 3 errores distintos). El JSON reportado como inválido en adv-porcentaje-009 y adv-porcentaje-013 durante la auditoría externa fue corrupción de copiado al pegar el archivo en ese hilo, no un defecto del contenido: verificado con node -e y JSON.parse contra el archivo real en HEAD antes de esta corrección, que parseó sin error con ambos ítems bien formados. Ronda 2 (originalidad): APROBADO, sin hallazgos de colisión con material privado. Observación registrada en docs/fobos-advance.md, sin cambio de contenido por ese motivo: adv-porcentaje-013 A y cierre-porcentaje-5 B comparten la forma de distractor \"resta directa de dos porcentajes-magnitud\", patrón genérico de error también documentado en material de terceros, no copia de enunciado ni de cifras. Proveniencia por fuente: 20 propia, 0 temario-demre, 0 demre-liberada."
   }
 }
