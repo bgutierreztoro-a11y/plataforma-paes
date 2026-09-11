@@ -32,6 +32,10 @@
     {
       "id": "porcentaje/error-8",
       "descripcion": "Entregar una magnitud distinta de la pedida, habiendo calculado bien: responder el resultado (350 × 0,3 = 105) cuando la pregunta pide el factor (0,3), o aplicar el p% al valor final cuando se pide el valor original (P × 0,20 en vez de P ÷ 0,80). La operación ejecutada es correcta y no hay error de conversión, de composición ni de inversión: lo que falla es la lectura de qué objeto se está preguntando. Distinto de error-5, donde el procedimiento quedó incompleto y falta un paso para recomponer el total: acá el procedimiento está completo y bien hecho, pero responde otra pregunta."
+    },
+    {
+      "id": "porcentaje/error-9",
+      "descripcion": "Elegir mal cuál cantidad es la base (el cien por ciento) al calcular un porcentaje: al preguntar en qué porcentaje varió una cantidad, dividir la diferencia por el valor final en vez del inicial (de 40 a 46: 6 ÷ 46 ≈ 13% en vez de 6 ÷ 40 = 15%); o al preguntar qué porcentaje del total es una parte, dividir el total por la parte (9 de 60: 60 ÷ 9 en vez de 9 ÷ 60 = 0,15, o sea 15%). La diferencia, la parte y la conversión están bien; falla qué cantidad se toma como referencia. Distinto de error-8, que responde otra magnitud bien calculada: acá se responde la magnitud pedida, mal calculada por la base."
     }
   ]
 }
