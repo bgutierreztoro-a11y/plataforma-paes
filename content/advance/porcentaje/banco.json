@@ -42,7 +42,9 @@
         }
       ],
       "solucion": "Bajar un 48% deja el 52%: si la cantidad original es X, entonces X × 0,52 = 650. Luego X = 650 ÷ 0,52 = 1.250. Comprobación: 1.250 × 0,48 = 600 y 1.250 − 600 = 650.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-002",
@@ -82,7 +84,9 @@
         }
       ],
       "solucion": "Subir un 85% multiplica por 1,85 y subir un 76% multiplica por 1,76. Segundo año: 3.500 × 1,85 = 6.475 kg. Tercer año: 6.475 × 1,76 = 11.396 kg. El factor único equivalente es 1,85 × 1,76 = 3,256, no 2,61.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-003",
@@ -122,7 +126,9 @@
         }
       ],
       "solucion": "El nuevo precio es el precio anterior más el 22% de ese precio: M + M × 0,22 = M × (1 + 0,22) = M × 1,22. Con un ejemplo: si M fuera 6.500, el nuevo precio sería 7.930.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-004",
@@ -162,7 +168,9 @@
         }
       ],
       "solucion": "6% = 6 ÷ 100 = 0,06. El 6% de 1.450 es 1.450 × 0,06 = 87 postulantes. Control rápido: el 10% de 1.450 es 145, así que el 6% tiene que ser menor que 145.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-005",
@@ -202,7 +210,9 @@
         }
       ],
       "solucion": "El alza en pesos es 2.204 − 1.900 = 304. El cambio porcentual se calcula sobre el precio inicial: 304 ÷ 1.900 = 0,16, o sea un 16%. Comprobación: 1.900 × 1,16 = 2.204.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-006",
@@ -242,7 +252,9 @@
         }
       ],
       "solucion": "Con un 18% de descuento se paga el 82% del precio: P × 0,82 = 73.800. Entonces P = 73.800 ÷ 0,82 = 90.000. Comprobación: el 18% de 90.000 es 16.200 y 90.000 − 16.200 = 73.800.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-007",
@@ -282,7 +294,9 @@
         }
       ],
       "solucion": "Enero: la cuota pasa a A × 1,09. Julio: sobre esa cuota se aplica otro aumento, A × 1,09 × 1,28. El factor único equivalente es 1,09 × 1,28 = 1,3952, es decir, un alza total de 39,52%, no de 37%.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-008",
@@ -322,7 +336,9 @@
         }
       ],
       "solucion": "Libre: 2.184 ÷ 5.200 = 0,42, es decir, 42%. Ocupado: 5.200 − 2.184 = 3.016 MB, y 3.016 ÷ 5.200 = 0,58, es decir, 58%. Los dos porcentajes suman 100%.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-009",
@@ -362,7 +378,9 @@
         }
       ],
       "solucion": "La diferencia es 4.551 − 4.100 = 451. Se compara con el valor inicial: 451 ÷ 4.100 = 0,11, o sea un aumento de 11%. Comprobación: 4.100 × 1,11 = 4.551.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     },
     {
       "id": "adv-porcentaje-010",
@@ -402,7 +420,429 @@
         }
       ],
       "solucion": "Alza del 24%: 38.000 × 1,24 = 47.120. Baja del 5% sobre ese precio: 47.120 × 0,95 = 44.764. El factor único equivalente es 1,24 × 0,95 = 1,178, o sea un alza neta de 17,8%, no de 19%.",
-      "proveniencia": { "fuenteOrigen": "propia" }
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-011",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una galería de arte se registraron las obras expuestas según su técnica:\n\n| Técnica | Cantidad de obras |\n|---|---|\n| Fotografía | 455 |\n| Pintura | 805 |\n| Escultura | 490 |\n\n¿Qué porcentaje del total de obras corresponde a fotografía?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "74%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Ese es el complemento: 100% − 26%, o sea las obras que NO son fotografía. Se pide la parte que sí lo es."
+        },
+        {
+          "clave": "B",
+          "texto": "26%",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el total es 455 + 805 + 490 = 1.750 obras, y 455 ÷ 1.750 = 0,26, o sea un 26%."
+        },
+        {
+          "clave": "C",
+          "texto": "385%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Ese sale de 1.750 ÷ 455 ≈ 3,85: divide el total por la parte. La base es el total: 455 ÷ 1.750."
+        },
+        {
+          "clave": "D",
+          "texto": "2,6%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 455 ÷ 1.750 = 0,26 está bien, pero pasado a porcentaje es 26%, no 2,6%. Falta multiplicar por 100 sin correr la coma."
+        }
+      ],
+      "solucion": "Total de obras: 455 + 805 + 490 = 1.750. La fotografía representa 455 ÷ 1.750 = 0,26, es decir, un 26% del total. Control: 455 es un poco más que la cuarta parte de 1.750 (437,5), así que el porcentaje tiene que estar apenas sobre 25%.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-012",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra las visitas diarias a un sitio web:\n\n| Día | Visitas |\n|---|---|\n| Lunes | 3.302 |\n| Martes | 2.600 |\n\n¿Cuál de las siguientes expresiones representa la baja porcentual de las visitas del lunes al martes?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(3.302 − 2.600) ÷ 3.302 × 100",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la baja son 702 visitas, y se compara con el valor inicial, el lunes, 3.302. El cociente por 100 da el porcentaje, cerca de 21,3%."
+        },
+        {
+          "clave": "B",
+          "texto": "(3.302 − 2.600) ÷ 2.600 × 100",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Esa divide la baja por las visitas del martes, el valor final. La base de un cambio porcentual es el valor inicial: 3.302."
+        },
+        {
+          "clave": "C",
+          "texto": "3.302 − 2.600",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa expresión da 702, la baja en cantidad de visitas. Está bien calculada, pero se pide la baja porcentual, no la diferencia."
+        },
+        {
+          "clave": "D",
+          "texto": "2.600 ÷ 3.302 × 100",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Esa expresión da cerca de 78,7%: lo que quedó del lunes, no lo que bajó. Se pide el porcentaje del cambio, no el del resto."
+        }
+      ],
+      "solucion": "La diferencia es 3.302 − 2.600 = 702 visitas. La baja porcentual se calcula sobre el valor inicial, el lunes: 702 ÷ 3.302 ≈ 0,213, es decir, cerca de un 21,3%. La expresión que lo representa es (3.302 − 2.600) ÷ 3.302 × 100.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-013",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "La ocupación de un camping pasó del 30% al 51% de sus sitios. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La ocupación subió un 21%, porque 51 − 30 = 21.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa resta los números de los porcentajes directamente. 21 son puntos porcentuales, no el cambio relativo: el cambio se mide sobre el 30% inicial."
+        },
+        {
+          "clave": "B",
+          "texto": "La ocupación subió un 41,2%, porque 21 ÷ 51 ≈ 0,412.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Esa divide el aumento por la ocupación final. La base de un cambio porcentual es el valor inicial: 21 ÷ 30."
+        },
+        {
+          "clave": "C",
+          "texto": "La ocupación subió un 70%, porque 21 ÷ 30 = 0,7.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la ocupación subió 21 puntos sobre los 30 que había, y 21 ÷ 30 = 0,7, o sea un 70% más que antes."
+        },
+        {
+          "clave": "D",
+          "texto": "La ocupación subió un 0,7%, porque 21 ÷ 30 = 0,7.",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 0,7 está bien, pero entregarlo como 0,7% salta el paso de multiplicar por 100. 0,7 equivale a un 70%."
+        }
+      ],
+      "solucion": "La ocupación pasó de 30% a 51%: subió 21 puntos porcentuales. El cambio relativo se mide sobre el valor inicial: 21 ÷ 30 = 0,7, es decir, un 70%. Comprobación: el 70% de 30 puntos son 21 puntos, y 30% + 21 puntos = 51%.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-014",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una planta medía H cm. En primavera creció un 38% y luego aumentó un 3% respecto de la altura alcanzada. Ahora mide 78 cm. ¿Cuál de las siguientes expresiones permite calcular H?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "78 × 0,62 × 0,97",
+          "esCorrecta": false,
+          "errorCatalogado": "error-7",
+          "feedbackDescarte": "Esa deshace los aumentos restando los porcentajes: baja un 38% y un 3%. Para volver atrás no se multiplica por 0,62 y 0,97; se divide por 1,38 y 1,03."
+        },
+        {
+          "clave": "B",
+          "texto": "78 ÷ 1,41",
+          "esCorrecta": false,
+          "errorCatalogado": "error-6",
+          "feedbackDescarte": "Esa suma 38% y 3% como un único 41%. El 3% se aplicó sobre la altura ya crecida, así que el factor total es 1,38 × 1,03, no 1,41."
+        },
+        {
+          "clave": "C",
+          "texto": "78 ÷ (1,38 × 1,03)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: H × 1,38 × 1,03 = 78, así que H se recupera dividiendo 78 por el producto de los dos factores."
+        },
+        {
+          "clave": "D",
+          "texto": "78 ÷ (0,38 × 0,03)",
+          "esCorrecta": false,
+          "errorCatalogado": "error-4",
+          "feedbackDescarte": "Esa lee «creció un 38%» como «quedó en un 38%». Crecer un 38% multiplica por 1,38, no por 0,38; lo mismo con el 3%."
+        }
+      ],
+      "solucion": "Crecer un 38% multiplica por 1,38; aumentar un 3% sobre esa altura multiplica por 1,03. Entonces H × 1,38 × 1,03 = 78, y H = 78 ÷ (1,38 × 1,03) = 78 ÷ 1,4214 ≈ 54,9 cm. La expresión pedida es 78 ÷ (1,38 × 1,03).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-015",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una fábrica de helados compró 825 litros de leche y usó el 44% durante la semana. ¿Cuántos litros de leche quedan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "363 litros",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa es 825 × 0,44: los litros usados. El cálculo está bien, pero falta el paso de restarlos a los 825 para llegar a lo que queda."
+        },
+        {
+          "clave": "B",
+          "texto": "781 litros",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa es 825 − 44: resta 44 litros como si el 44% fuera una cantidad fija. El 44% de 825 no son 44 litros."
+        },
+        {
+          "clave": "C",
+          "texto": "462 litros",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: si se usó el 44%, queda el 56%, y 825 × 0,56 = 462 litros."
+        },
+        {
+          "clave": "D",
+          "texto": "36.300 litros",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "Esa es 825 × 44, sin dividir el porcentaje por 100. Lo que queda no puede ser mayor que los 825 litros comprados."
+        }
+      ],
+      "solucion": "Si se usó el 44%, queda el 100% − 44% = 56%. Entonces quedan 825 × 0,56 = 462 litros. Otra vía: lo usado es 825 × 0,44 = 363 litros y 825 − 363 = 462.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-016",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una polera tenía un 32% de descuento y se pagaron C pesos por ella. ¿Cuál de las siguientes expresiones representa el precio sin descuento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "C × 1,32",
+          "esCorrecta": false,
+          "errorCatalogado": "error-7",
+          "feedbackDescarte": "Esa le suma el 32% al precio pagado. Un descuento del 32% no se deshace sumando un 32%: hay que dividir por 0,68."
+        },
+        {
+          "clave": "B",
+          "texto": "C ÷ 0,32",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Esa lee «32% de descuento» como «se pagó el 32%». Con un 32% de descuento se paga el 68%, así que se divide por 0,68."
+        },
+        {
+          "clave": "C",
+          "texto": "C × 0,32",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa expresión da el 32% del precio pagado, bien calculado, pero no es lo que se pregunta. Se pide el precio sin descuento."
+        },
+        {
+          "clave": "D",
+          "texto": "C ÷ 0,68",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con un 32% de descuento se paga el 68% del precio, P × 0,68 = C, así que P = C ÷ 0,68."
+        }
+      ],
+      "solucion": "Con un 32% de descuento se paga el 68% del precio original P: P × 0,68 = C. Despejando, P = C ÷ 0,68. Con un ejemplo: si C fuera 3.740, el precio original sería 3.740 ÷ 0,68 = 5.500, y 5.500 × 0,68 = 3.740.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-017",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Qué porcentaje de 850 es 748?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "88%",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 748 ÷ 850 = 0,88, o sea un 88%. Como 748 es un poco menos que 850, el porcentaje tiene que estar cerca de 100% y por debajo."
+        },
+        {
+          "clave": "B",
+          "texto": "114%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-9",
+          "feedbackDescarte": "Ese sale de 850 ÷ 748 ≈ 1,14: divide el total por la parte. Como 748 es menor que 850, el porcentaje no puede pasar de 100%."
+        },
+        {
+          "clave": "C",
+          "texto": "8,8%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "El cociente 748 ÷ 850 = 0,88 está bien, pero pasado a porcentaje es 88%, no 8,8%. Falta multiplicar por 100 sin correr la coma."
+        },
+        {
+          "clave": "D",
+          "texto": "12%",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Ese es el complemento: 850 − 748 = 102, y 102 ÷ 850 = 0,12. Es el porcentaje que falta para llegar a 850, no el que representa 748."
+        }
+      ],
+      "solucion": "Para saber qué porcentaje de 850 es 748 se divide la parte por el total: 748 ÷ 850 = 0,88, es decir, un 88%. Comprobación: 850 × 0,88 = 748.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-018",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El pasaje de un bus interurbano costaba $3.300 y subió un 7%. ¿Cuál es el nuevo precio del pasaje?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$3.307",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa es 3.300 + 7: suma 7 pesos como si el 7% fuera una cantidad fija. El aumento es el 7% de 3.300, o sea 231 pesos."
+        },
+        {
+          "clave": "B",
+          "texto": "$231",
+          "esCorrecta": false,
+          "errorCatalogado": "error-5",
+          "feedbackDescarte": "Esa es 3.300 × 0,07: cuánto subió el pasaje. El cálculo está bien, pero se pide el nuevo precio, así que falta sumarle los 3.300."
+        },
+        {
+          "clave": "C",
+          "texto": "$3.531",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3.300 × 1,07 = 3.531. Subir un 7% es multiplicar por 1,07, o sumar 231 a 3.300."
+        },
+        {
+          "clave": "D",
+          "texto": "$26.400",
+          "esCorrecta": false,
+          "errorCatalogado": "error-3",
+          "feedbackDescarte": "Esa es 3.300 + 3.300 × 7: multiplica por 7 sin dividir el porcentaje por 100. Un alza del 7% no puede multiplicar el precio por ocho."
+        }
+      ],
+      "solucion": "Subir un 7% multiplica por 1,07: 3.300 × 1,07 = 3.531. Otra vía: el aumento es 3.300 × 0,07 = 231, y 3.300 + 231 = 3.531.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-019",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un plan de datos móviles subió un 34% y ahora cuesta $23.450 al mes. ¿Cuánto costaba antes del alza?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "$15.477",
+          "esCorrecta": false,
+          "errorCatalogado": "error-7",
+          "feedbackDescarte": "Esa es 23.450 × 0,66: le quita el 34% al precio actual. Un alza del 34% no se deshace bajando un 34%; hay que dividir por 1,34."
+        },
+        {
+          "clave": "B",
+          "texto": "$7.973",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Esa es 23.450 × 0,34: el 34% del precio actual, bien calculado, pero no es lo que se pregunta. Se pide el precio anterior."
+        },
+        {
+          "clave": "C",
+          "texto": "$17.500",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 17.500 × 1,34 = 23.450. Un precio de 17.500 subido un 34% da exactamente el precio actual."
+        },
+        {
+          "clave": "D",
+          "texto": "$23.416",
+          "esCorrecta": false,
+          "errorCatalogado": "error-2",
+          "feedbackDescarte": "Esa es 23.450 − 34: resta 34 pesos como si el 34% fuera una cantidad fija. El alza fue el 34% del precio anterior."
+        }
+      ],
+      "solucion": "Subir un 34% multiplica por 1,34: P × 1,34 = 23.450. Entonces P = 23.450 ÷ 1,34 = 17.500. Comprobación: el 34% de 17.500 es 5.950 y 17.500 + 5.950 = 23.450.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-porcentaje-020",
+      "unidadId": "porcentaje",
+      "moduloId": "porcentaje",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un vivero, el 86% de las plantas son de interior y, de esas, el 92% tienen flor. ¿Cuál de las siguientes expresiones representa el porcentaje del total de plantas que son de interior con flor?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,86 + 0,92",
+          "esCorrecta": false,
+          "errorCatalogado": "error-6",
+          "feedbackDescarte": "Esa suma los porcentajes y daría 178%, más que el total. El 92% se toma de las plantas de interior, no del total: los factores se multiplican."
+        },
+        {
+          "clave": "B",
+          "texto": "0,86 × 0,92",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el 92% del 86% es 0,92 × 0,86 = 0,7912, o sea cerca del 79% del total de plantas."
+        },
+        {
+          "clave": "C",
+          "texto": "0,92",
+          "esCorrecta": false,
+          "errorCatalogado": "error-8",
+          "feedbackDescarte": "Ese es el porcentaje de plantas con flor entre las de interior, no entre todas las plantas. Se pide la fracción del total."
+        },
+        {
+          "clave": "D",
+          "texto": "0,86 × 0,08",
+          "esCorrecta": false,
+          "errorCatalogado": "error-1",
+          "feedbackDescarte": "Esa expresión da las plantas de interior que NO tienen flor (el 8% del 86%). Se pide la parte con flor, no su complemento."
+        }
+      ],
+      "solucion": "El 86% de las plantas son de interior: 0,86 del total. De esas, el 92% tienen flor: 0,92 × 0,86 = 0,7912 del total, es decir, cerca de un 79,1%. La expresión pedida es 0,86 × 0,92.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
     }
   ],
   "contextosNumericos": [
@@ -415,10 +855,22 @@
     "adv-porcentaje-007: cuota mensual de un gimnasio, expresión de dos alzas; A, 9%, 28%, 1,09, 1,28, 1,37, 0,09, 0,28, 1,3952, 39,52",
     "adv-porcentaje-008: memoria de un pendrive, MB, parte y complemento; 5.200, 2.184, 3.016, 42%, 58%, 0,42, 0,58, 4,2, 95,8, 238, 2,38, 172, 1,72",
     "adv-porcentaje-009: abstracto, variación porcentual; 4.100, 4.551, 451, 11%, 0,11, 9,9, 0,099, 111, 1,11",
-    "adv-porcentaje-010: parlante, alza y baja sucesivas; 38.000, 24%, 5%, 44.764, 1,24, 0,95, 47.120, 45.220, 19, 1,19, 8.664, 0,24, 6.764, 1,178, 17,8"
+    "adv-porcentaje-010: parlante, alza y baja sucesivas; 38.000, 24%, 5%, 44.764, 1,24, 0,95, 47.120, 45.220, 19, 1,19, 8.664, 0,24, 6.764, 1,178, 17,8",
+    "adv-porcentaje-011: obras de una galería de arte por técnica, tabla; 455, 805, 490, 1.750, 26%, 0,26, 74, 385, 3,85, 2,6, 437,5",
+    "adv-porcentaje-012: visitas a un sitio web, tabla lunes y martes, baja porcentual; 3.302, 2.600, 702, 21,3, 0,213, 27, 78,7",
+    "adv-porcentaje-013: ocupación de un camping, variación de una tasa; 30%, 51%, 21, 70%, 0,7, 41,2, 0,412",
+    "adv-porcentaje-014: altura de una planta, volver al original tras dos alzas; H, 78, 38%, 3%, 1,38, 1,03, 0,62, 0,97, 1,41, 0,38, 0,03, 1,4214, 54,9",
+    "adv-porcentaje-015: leche de una fábrica de helados, litros, lo que queda; 825, 44%, 462, 0,56, 363, 0,44, 781, 36.300",
+    "adv-porcentaje-016: polera con descuento, expresión de volver al original; C, 32%, 0,68, 1,32, 0,32, ejemplo 3.740 → 5.500",
+    "adv-porcentaje-017: abstracto, qué porcentaje es; 850, 748, 88%, 0,88, 114, 1,14, 8,8, 12, 102",
+    "adv-porcentaje-018: pasaje de bus interurbano, alza simple; 3.300, 7%, 3.531, 1,07, 231, 0,07, 3.307, 26.400",
+    "adv-porcentaje-019: plan de datos móviles, volver al original desde un alza; 34%, 23.450, 17.500, 1,34, 15.477, 0,66, 7.973, 0,34, 23.416, 5.950",
+    "adv-porcentaje-020: plantas de un vivero, porcentaje de porcentaje; 86%, 92%, 0,86, 0,92, 0,7912, 79,1, 178, 0,08"
   ],
   "proveniencia": {
-    "fuentesAnalisis": ["temario DEMRE M1"],
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
     "declaracionOriginalidad": "AÚN PENDIENTE. Se completa al cerrar Ronda 1 y Ronda 2."
   }
 }
