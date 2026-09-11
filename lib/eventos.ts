@@ -1,4 +1,10 @@
 import posthog from "posthog-js";
+import type {
+  PayloadDescarteAlternativa,
+  PayloadDescarteFatal,
+  PayloadDescarteFin,
+  PayloadDescarteInicio,
+} from "@/lib/advance/descarte";
 import type { EstadoNodo } from "@/lib/estadoNodo";
 
 export type Evento =
@@ -67,7 +73,25 @@ export type Evento =
   | {
       nombre: "sentido_reportado";
       props: { leccion_id: string; paso: number; hizo_sentido: boolean };
-    };
+    }
+  /* ---------- Fobos Advance, modo descarte (2026-09-11) ---------- */
+  /* Nombres y props exactos de docs/fobos-advance.md §8. Las formas de los
+     cuatro eventos de sesión viven en lib/advance/descarte.ts, donde se
+     calculan (funciones puras con test): una sola fuente, sin duplicar.
+     `clave` es siempre la clave ORIGINAL del JSON, no la letra visible tras la
+     mezcla, para que el dato sea estable entre sesiones. Sin PII: ids de
+     contenido y números. */
+  /* Quién llega a la puerta y desde dónde: `tramo` (el tramo bloqueado del
+     riel), `portada` (redirigido desde /advance sin acceso) o `directo` (URL
+     escrita o compartida, sin origen declarado). */
+  | {
+      nombre: "advance_puerta_vista";
+      props: { eje_id: string | null; origen: "tramo" | "portada" | "directo" };
+    }
+  | { nombre: "advance_descarte_inicio"; props: PayloadDescarteInicio }
+  | { nombre: "advance_descarte_alternativa"; props: PayloadDescarteAlternativa }
+  | { nombre: "advance_descarte_fatal"; props: PayloadDescarteFatal }
+  | { nombre: "advance_descarte_fin"; props: PayloadDescarteFin };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en
