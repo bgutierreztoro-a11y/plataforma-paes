@@ -648,10 +648,10 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 
 ## 11. Decisiones pendientes de firma
 
-1. Unidad piloto para F2. Candidatas: porcentaje (catálogo maduro, alta frecuencia en la prueba) o proporcionalidad.
+1. Unidad piloto para F2. Decisión tomada: porcentaje. Banco piloto construido y cerrado en F2 el 2026-09-11 (§4 F2, registro del bloque B).
 2. Precio exacto y estructura de la temporada. Depende de la respuesta del abogado sobre 21.719.
 3. Fecha de compra del dominio propio, que destraba Clerk.
-4. Si `tiempoReferenciaSeg` se declara por ítem desde ahora (recomendado) o se difiere a calibración con datos reales.
+4. `tiempoReferenciaSeg` se declara por ítem desde ahora. Decisión tomada: verificado en los 20 ítems del banco piloto y exigido por `content/advance/schema/item-advance.schema.json`.
 
 ---
 
