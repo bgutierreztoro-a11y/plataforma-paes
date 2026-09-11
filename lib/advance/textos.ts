@@ -56,4 +56,22 @@ export const TEXTOS_ADVANCE = {
     siguiente: "Siguiente ítem",
     terminar: "Terminar la sesión",
   },
+
+  /* Pantalla final de la sesión (§6.1): tres preguntas en este orden y nada
+     más. Sin porcentajes, sin celebración. */
+  resultado: {
+    titulo: "Sesión terminada",
+    comoTeFue: "Cómo te fue",
+    /* Los números van aparte, en la clase `num`; acá solo las palabras. */
+    items: (n: number) => (n === 1 ? "ítem" : "ítems"),
+    descartesAcertados: (n: number) => (n === 1 ? "descarte acertado" : "descartes acertados"),
+    queError: "Qué error apareció más",
+    sinDescartes: "No hubo descartes acertados en esta sesión, así que no hay un error que destacar.",
+    queHacer: "Qué hacer ahora",
+    queHacerDetalle:
+      "Vuelve a leer el error de arriba y haz otra sesión: son cinco ítems nuevos de la misma unidad.",
+    queHacerSinError: "Haz otra sesión: son cinco ítems nuevos de la misma unidad.",
+    otraSesion: "Otra sesión",
+    volver: "Volver a Advance",
+  },
 } as const;

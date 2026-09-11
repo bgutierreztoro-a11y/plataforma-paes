@@ -18,8 +18,9 @@ import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import { TramoAdvance } from "@/components/advance/TramoAdvance";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
-import type { EstadoAlternativa } from "@/lib/advance/descarte";
-import { MUESTRA_DESCARTE } from "./muestraDescarte";
+import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
+import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
+import { CATALOGO_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import {
   LINEAS,
@@ -859,10 +860,59 @@ export default function PaginaDiseno() {
             </div>
           </div>
         </Seccion>
+
+        <Seccion
+          titulo="Resultado del descarte"
+          nota="La pantalla final de una sesión (§6.1): cómo te fue, qué error apareció más, qué hacer ahora. Sin gráficos ni porcentajes. Dos estados: con error dominante (TarjetaError con el rótulo y la descripción del catálogo de muestra) y sin descartes acertados. Sin el botón de otra sesión, que solo existe en la ruta real."
+        >
+          <div className="flex flex-col gap-6">
+            {RESULTADOS_MUESTRA.map(({ id, rotulo, registros }) => (
+              <div key={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                {/* Sobre `--color-bg`, el fondo real del body donde rinde la
+                    ruta, y no sobre `bg-screen` de la galería: `--linea-nav` de
+                    la 03 da 4,48 sobre screen y 4,54 sobre el fondo real
+                    (deuda-contraste-etiquetas.md §3). Se mide donde vive. */}
+                <PorLinea>
+                  {() => (
+                    <div
+                      data-resultado={id}
+                      className="rounded-sm border border-hairline bg-[var(--color-bg)]"
+                    >
+                      <ResultadoDescarte registros={registros} catalogo={CATALOGO_MUESTRA} />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
+          </div>
+        </Seccion>
       </div>
     </main>
   );
 }
+
+/* Registros de MUESTRA para la pantalla final: una sesión con error dominante
+   (error-7 aparece tres veces) y una sin ningún descarte acertado. */
+const RESULTADOS_MUESTRA: { id: string; rotulo: string; registros: RegistroItem[] }[] = [
+  {
+    id: "con-dominante",
+    rotulo: "Con error dominante · 3 ítems, 5 descartes acertados, Error 07 tres veces",
+    registros: [
+      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D", "B"], erroresIdentificados: ["error-3", "error-7", "error-1"], descarteFatal: null, tiempoMs: 41000 },
+      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B", "A"], erroresIdentificados: ["error-7"], descarteFatal: "A", tiempoMs: 12000 },
+      { itemId: "adv-muestra-galeria-003", ordenDescartes: ["D", "A"], erroresIdentificados: ["error-7"], descarteFatal: "B", tiempoMs: 9000 },
+    ],
+  },
+  {
+    id: "sin-descartes",
+    rotulo: "Sin descartes acertados · 2 ítems, los dos con descarte fatal al primer toque",
+    registros: [
+      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["A"], erroresIdentificados: [], descarteFatal: "A", tiempoMs: 3000 },
+      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["A"], erroresIdentificados: [], descarteFatal: "A", tiempoMs: 2000 },
+    ],
+  },
+];
 
 /* Los cuatro estados de AlternativaDescartable sobre la muestra: el distractor
    uno para intacta y descartada-correcta, la correcta para las otras dos. El
