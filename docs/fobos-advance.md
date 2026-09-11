@@ -182,7 +182,7 @@ Restricción visual: el tramo bloqueado no puede dominar la pantalla ni interrum
 
 Cada fase tiene criterio de salida verificable. No se pasa a la siguiente sin cumplirlo.
 
-### F0 — Desbloqueo de datos (sin UI nueva)
+### F0 — Desbloqueo de datos (sin UI nueva) — CERRADA 2026-09-09
 
 Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor no tiene error mapeado.
 
@@ -197,6 +197,28 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
 **0.5** (Benja) Actualizar MOS §7.1. Hoy dice literal que ningún ítem DEMRE se copia al producto. Con el criterio del abogado, el material liberado de DEMRE es utilizable y el material de privados (preuniversitarios) no. Mientras el texto viejo siga ahí, CC y el auditor van a bloquear todo ítem proveniente de forma liberada.
 
 **Criterio de salida:** `npm run auditar` reporta cero hallazgos 🔴 en las categorías `colision-distractor-correcta` y `catalogo-divergente`. Reporte de cobertura de `errorCatalogado` disponible por módulo.
+
+**Registro de cierre (2026-09-09):**
+
+1. `colision-distractor-correcta`: 0 🔴.
+2. `catalogo-divergente`: 0 🔴. No es un chequeo activo que haya pasado: la categoría se retiró del auditor el 2026-09-08 (`scripts/auditar-leccion.mjs:380-387`, commits `6c8eedc`/`3958991`) porque la migración a catálogo canónico-único eliminó la posibilidad de divergencia entre fuentes. Es un cero estructural — no hay guard corriendo, no hay nada que pudiera reportar 🔴.
+3. Reporte de cobertura por módulo: existe en `npm run validar` desde F0.4 (commit `745ee2e`). Total global 68,6% (430/627).
+
+   | Módulo | Cobertura |
+   |---|---|
+   | porcentaje | 100.0% |
+   | proporcionalidad | 100.0% |
+   | enteros-racionales | 91.7% |
+   | expresiones-algebraicas | 86.3% |
+   | cuerpos-geometricos | 81.7% |
+   | ecuaciones-inecuaciones | 75.4% |
+   | potencias-raices | 70.4% |
+   | figuras-geometricas | 68.3% |
+   | funcion-lineal-afin | 42.9% |
+   | sistemas-2x2 | 26.7% |
+   | funcion-cuadratica | 25.0% |
+
+**Deuda diferida, NO bloqueante de este cierre:** `cierre-v0.json` (cierre en producción de `funcion-lineal-afin` vía `lib/modulos.ts`) está en 0/24 distractores mapeados, y `l0-demo.json` en 0/9. Sin fecha de resolución todavía; queda como ítem abierto.
 
 ---
 
