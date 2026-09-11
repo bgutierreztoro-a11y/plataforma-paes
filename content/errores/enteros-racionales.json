@@ -32,6 +32,10 @@
     {
       "id": "enteros-racionales/error-8",
       "descripcion": "invertir el orden de la división de fracciones (calcular el divisor entre el dividendo, p. ej. resolver 3/4 ÷ 3 en vez de 3 ÷ 3/4)."
+    },
+    {
+      "id": "enteros-racionales/error-9",
+      "descripcion": "Calcula correctamente la diferencia entre dos negativos (o su valor absoluto) pero invierte la conclusión sobre cuál de los dos es mayor."
     }
   ]
 }

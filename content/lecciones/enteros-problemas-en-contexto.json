@@ -432,7 +432,7 @@
           "texto": "Sí: la diferencia −2,9 − (−5,4) = 2,5 es positiva, y una diferencia positiva confirma que el segundo, −5,4, es el mayor.",
           "esCorrecta": false,
           "feedback": "El cálculo −2,9 − (−5,4) = 2,5 está bien hecho, pero mal leído: una diferencia (primero menos segundo) positiva dice que el PRIMERO es mayor, o sea −2,9, no −5,4. Invertiste a cuál de los dos le corresponde ser mayor.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "error-9"
         },
         {
           "clave": "D",
@@ -461,7 +461,7 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión del contexto clima (Candidato A: ciudades ficticias Nortelva y Valle Frío, temperaturas bajo cero decimales, variación fraccionaria de grado por hora) contra el corpus completo, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío' = NO en todas. Veredicto: LIMPIO AL 100%. Escenario aprobado tal cual se propuso. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `l3-item-2` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l1-item-3` de enteros-operar-y-ordenar.json y con `cierre-enteros-6` de cierre-enteros-racionales.json (mismo molde error-5/error-2/error-1) es reutilización del propio patrón del proyecto, no coincidencia con terceros. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
   }

@@ -214,7 +214,7 @@
           "texto": "Sí: −0,6 − (−3,8) = 3,2 es positivo, así que desde −0,6 hay que \"subir\" 3,2 para llegar a −3,8: −3,8 es el mayor.",
           "esCorrecta": false,
           "feedback": "El cálculo −0,6 − (−3,8) = 3,2 está bien hecho, pero mal leído: una diferencia positiva (primero menos segundo) dice que el PRIMERO es mayor, o sea −0,6, no −3,8. Invertiste a cuál de los dos le corresponde ser mayor.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "error-9"
         },
         {
           "clave": "D",
@@ -313,7 +313,7 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Este cierre reutiliza los tres contextos ya verificados LIMPIO en las lecciones del módulo (buceo en enteros-operar-y-ordenar.json, bizcocho en enteros-operar-y-comparar.json, clima/Nortelva/Valle Frío en enteros-problemas-en-contexto.json), sin introducir vocabulario, escenas o nombres propios nuevos — solo números nuevos dentro de esos mismos contextos. No se ejecutó una consulta-fuentes nueva específica para este archivo; ver _notasInternas para el razonamiento y la salvedad explícita de que esto es una inferencia, no una verificación nueva."
     ],
-    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado.",
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, combinando los contextos y números ya establecidos en las tres lecciones del módulo. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `cierre-enteros-6` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa de contexto/redacción. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l3-item-2` de enteros-problemas-en-contexto.json y con `l1-item-3` de enteros-operar-y-ordenar.json (mismo molde error-5/error-2/error-1) es reutilización del propio patrón del proyecto, no coincidencia con terceros — y ya estaba documentado y aceptado (D2 rechazada) en docs/rediseno-distractores-veredicto.md. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
   }
