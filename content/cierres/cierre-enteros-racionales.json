@@ -204,24 +204,24 @@
         },
         {
           "clave": "B",
-          "texto": "Sí es correcta, porque el número con menor valor absoluto siempre es el menor, tenga o no signo negativo.",
+          "texto": "Sí: los negativos se ordenan igual que los positivos; como 0,6 < 3,8, también −0,6 < −3,8.",
           "esCorrecta": false,
-          "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −0,6 y −3,8, el de menor valor absoluto (0,6) es en realidad el MAYOR.",
+          "feedback": "Con negativos pasa exactamente al revés que con positivos: como 0,6 < 3,8, en realidad −0,6 > −3,8, no al revés. Mientras más chico el número sin signo, más cerca de 0 (y por lo tanto mayor) queda el negativo.",
           "errorCatalogado": "error-5"
         },
         {
           "clave": "C",
-          "texto": "Sí es correcta, porque −0,6 representa una temperatura más alta, y 'más alta' siempre significa 'matemáticamente menor'.",
+          "texto": "Sí: −0,6 − (−3,8) = 3,2 es positivo, así que desde −0,6 hay que \"subir\" 3,2 para llegar a −3,8: −3,8 es el mayor.",
           "esCorrecta": false,
-          "feedback": "'Más alta' (más cálida) y 'matemáticamente menor' no son lo mismo con negativos: son preguntas opuestas. −0,6 es efectivamente la más cálida, pero eso la hace la MAYOR como número, no la menor.",
-          "errorCatalogado": "error-5"
+          "feedback": "El cálculo −0,6 − (−3,8) = 3,2 está bien hecho, pero mal leído: una diferencia positiva (primero menos segundo) dice que el PRIMERO es mayor, o sea −0,6, no −3,8. Invertiste a cuál de los dos le corresponde ser mayor.",
+          "errorCatalogado": "error-2"
         },
         {
           "clave": "D",
-          "texto": "Sí es correcta, porque en la recta numérica los números negativos se ordenan igual que los positivos: mientras más chico el número sin signo, más a la izquierda queda.",
+          "texto": "No: −3,8 − (−0,6) = −3,8 − 0,6 = −4,4, y ese resultado negativo confirma que −3,8 es la menor.",
           "esCorrecta": false,
-          "feedback": "Con negativos pasa exactamente al revés: mientras más chico el número sin signo, MÁS A LA DERECHA queda (más cerca de 0, o sea, mayor). −0,6 está a la derecha de −3,8, no a la izquierda.",
-          "errorCatalogado": "error-5"
+          "feedback": "El resultado no es −4,4: al restar un negativo hay que sumar, −3,8 − (−0,6) = −3,8 + 0,6 = −3,2. Llegaste al veredicto correcto por un cálculo equivocado; corrige el signo aunque la conclusión te haya dado igual esta vez.",
+          "errorCatalogado": "error-1"
         }
       ],
       "solucion": "En la recta numérica, −0,6 está más cerca de 0 que −3,8, así que −0,6 > −3,8. La afirmación del estudiante compara los valores absolutos (0,6 y 3,8) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es A. ✓"

@@ -388,33 +388,33 @@
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Sí, porque restar un número siempre reduce el resultado, sin excepciones.",
-          "esCorrecta": false,
-          "feedback": "Esa regla solo vale para restar positivos. Aquí se resta un NEGATIVO, y eso cambia todo: restar un negativo equivale a sumar. Calcula (−8) − (−20) y compara con −8.",
-          "errorCatalogado": "error-1"
-        },
-        {
-          "clave": "B",
-          "texto": "No: (−8) − (−20) = 12, que es mayor que −8, porque restar un negativo equivale a sumar su opuesto.",
+          "texto": "No: (−8) − (−20) = −8 + 20 = 12, y 12 es mayor que −8. Restar un negativo equivale a sumar su opuesto.",
           "esCorrecta": true,
           "feedback": "Correcto. (−8) − (−20) = −8 + 20 = 12, y 12 es mayor que −8. La afirmación del estudiante es falsa."
         },
         {
-          "clave": "C",
-          "texto": "Sí, porque −20 es menor que −8, y restar un número menor siempre da un resultado menor.",
+          "clave": "B",
+          "texto": "Sí: (−8) − (−20) = −8 − 20 = −28, y −28 es menor que −8.",
           "esCorrecta": false,
-          "feedback": "Esa relación no es cierta al restar negativos. Que −20 sea menor que −8 no dice qué le pasa al resultado de la resta: hay que calcular (−8) − (−20) directamente, no razonar solo con el orden de los números originales.",
-          "errorCatalogado": "error-2"
+          "feedback": "Restaste 20 en vez de sumarlo: (−8) − (−20) no es −8 − 20. Restar un negativo cambia de signo el segundo término, así que la operación real es −8 + 20 = 12, no −8 − 20 = −28.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: tomando las profundidades como distancias, 8 − 20 = −12, y −12 es menor que −8.",
+          "esCorrecta": false,
+          "feedback": "Trataste −8 y −20 como distancias (8 y 20) y las restaste sin signo, perdiendo la información de que ambas son negativas. La resta con signo es (−8) − (−20) = 12, no 8 − 20 = −12.",
+          "errorCatalogado": "error-3"
         },
         {
           "clave": "D",
-          "texto": "Sí, porque hay que tratar las profundidades como distancias: sumando 8 y 20 se obtiene 28, un número mayor, que en profundidad significa 'más chico'.",
+          "texto": "No: el resultado es −28, pero −28 no es menor que −8, porque entre negativos el de mayor valor absoluto es el mayor.",
           "esCorrecta": false,
-          "feedback": "Estás sumando las profundidades como si fueran distancias que se acumulan, en vez de restarlas con su signo. La operación pedida es una resta de dos enteros con signo, no una suma de distancias.",
-          "errorCatalogado": "error-3"
+          "feedback": "Dos fallas encadenadas: (−8) − (−20) no es −8 − 20 (eso da −28; el cálculo correcto es −8 + 20 = 12), y además entre dos negativos el de MAYOR valor absoluto es el MENOR, no el mayor: −28 sería menor que −8, no al revés.",
+          "errorCatalogado": "error-5"
         }
       ],
-      "solucion": "(−8) − (−20) = −8 + 20 = 12. Como 12 > −8, la afirmación general 'restar siempre da un resultado menor' es falsa para este caso: restar un negativo equivale a sumar su valor absoluto, lo que puede aumentar el resultado. La alternativa correcta es B. ✓"
+      "solucion": "(−8) − (−20) = −8 + 20 = 12. Como 12 > −8, la afirmación general 'restar siempre da un resultado menor' es falsa para este caso: restar un negativo equivale a sumar su valor absoluto, lo que puede aumentar el resultado. La alternativa correcta es A. ✓"
     }
   ],
   "contextosNumericos": [
