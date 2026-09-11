@@ -17,6 +17,10 @@ import { SIN_DATO, TiraKPI } from "@/components/ui/linea/TiraKPI";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import { TramoAdvance } from "@/components/advance/TramoAdvance";
+import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
+import type { EstadoAlternativa } from "@/lib/advance/descarte";
+import { MUESTRA_DESCARTE } from "./muestraDescarte";
+import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import {
   LINEAS,
   NOMBRE_DE_LINEA,
@@ -824,7 +828,69 @@ export default function PaginaDiseno() {
             </div>
           </div>
         </Seccion>
+
+        <Seccion
+          titulo="Modo descarte"
+          nota="Una alternativa del modo descarte de Advance (docs/fobos-advance.md §6.1) en sus cuatro estados, sobre las cuatro líneas. Texto de MUESTRA, definido en app/%5Fdesign/muestraDescarte.ts, nunca en content/. Sin opacity en ningún estado: la descartada se hunde y se tacha, y el estado se anuncia por texto. Abajo, el ejecutor completo con dos ítems de muestra para el clic real; no emite eventos."
+        >
+          <div className="flex flex-col gap-6">
+            {ESTADOS_DESCARTE.map(({ estado, rotulo, alternativa, rotuloError }) => (
+              <div key={estado}>
+                <Rotulo>{rotulo}</Rotulo>
+                <PorLinea>
+                  {() => (
+                    <div data-descarte={estado}>
+                      <AlternativaDescartable
+                        alternativa={alternativa}
+                        estado={estado}
+                        rotuloError={rotuloError}
+                      />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
+
+            <div style={estiloDeLinea("01")} className="max-w-md" data-descarte-interactivo>
+              <Rotulo>Línea 01 · ejecutor con la muestra, dos ítems</Rotulo>
+              <div className="rounded-sm border border-hairline bg-screen">
+                <MuestraDescarteInteractiva />
+              </div>
+            </div>
+          </div>
+        </Seccion>
       </div>
     </main>
   );
 }
+
+/* Los cuatro estados de AlternativaDescartable sobre la muestra: el distractor
+   uno para intacta y descartada-correcta, la correcta para las otras dos. El
+   rótulo "Error 03" va escrito porque acá no hay catálogo que resolver. */
+const [MUESTRA_ITEM] = MUESTRA_DESCARTE;
+const MUESTRA_DISTRACTOR = MUESTRA_ITEM.alternativas[0];
+const MUESTRA_CORRECTA = MUESTRA_ITEM.alternativas[1];
+const ESTADOS_DESCARTE: {
+  estado: EstadoAlternativa;
+  rotulo: string;
+  alternativa: (typeof MUESTRA_ITEM.alternativas)[number];
+  rotuloError?: string;
+}[] = [
+  { estado: "intacta", rotulo: "Intacta", alternativa: MUESTRA_DISTRACTOR },
+  {
+    estado: "descartada-correcta",
+    rotulo: "Descartada correcta · tachada, hundida, con el rótulo del error y el feedbackDescarte",
+    alternativa: MUESTRA_DISTRACTOR,
+    rotuloError: "Error 03",
+  },
+  {
+    estado: "descartada-por-error",
+    rotulo: "Descartada por error · era la correcta; el ítem se cierra",
+    alternativa: MUESTRA_CORRECTA,
+  },
+  {
+    estado: "sobreviviente",
+    rotulo: "Sobreviviente · única sin descartar, se resalta antes de confirmar",
+    alternativa: MUESTRA_CORRECTA,
+  },
+];

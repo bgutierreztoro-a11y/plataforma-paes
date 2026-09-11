@@ -35,4 +35,25 @@ export const TEXTOS_ADVANCE = {
     vacio: "Todavía no hay entrenamientos disponibles.",
     detalle: "Cuando los haya, van a aparecer acá.",
   },
+
+  /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al
+     instante y es irreversible; el copy lo dice una vez, en la instrucción, y
+     no lo repite en cada alternativa. El descarte fatal se informa sin
+     dramatismo: es el único error real de la mecánica y es información, no
+     castigo. Sin celebración al confirmar. */
+  descarte: {
+    pill: "Descarte",
+    sustantivo: "Ítem",
+    instruccion: "Descarta las alternativas que no pueden ser. Cada descarte se evalúa al instante y no se deshace.",
+    /* Prefijo del estado anunciado por texto: "Descartada: Error 07". */
+    descartada: "Descartada",
+    descartadaPorError: "Descartada por error. Era la correcta.",
+    sobreviviente: "Queda esta.",
+    confirmar: "Confirmar",
+    confirmada: "Correcta",
+    confirmadaDetalle: "Descartaste las tres que no podían ser.",
+    solucion: "Solución",
+    siguiente: "Siguiente ítem",
+    terminar: "Terminar la sesión",
+  },
 } as const;

@@ -119,7 +119,7 @@ export function reducerItem(estado: EstadoItem, accion: AccionItem): EstadoItem 
           estados: { ...estado.estados, [alt.clave]: "descartada-por-error" },
           ordenDescartes: [...estado.ordenDescartes, alt.claveOriginal],
           descarteFatal: alt.claveOriginal,
-          tiempoMs: accion.enMs - estado.inicioMs,
+          tiempoMs: Math.round(accion.enMs - estado.inicioMs),
         };
       }
 
@@ -139,7 +139,7 @@ export function reducerItem(estado: EstadoItem, accion: AccionItem): EstadoItem 
     }
     case "CONFIRMAR": {
       if (estado.fase !== "confirmar") return estado;
-      return { ...estado, fase: "cerrado-confirmado", tiempoMs: accion.enMs - estado.inicioMs };
+      return { ...estado, fase: "cerrado-confirmado", tiempoMs: Math.round(accion.enMs - estado.inicioMs) };
     }
   }
 }
@@ -255,7 +255,7 @@ export function payloadDescarteAlternativa(
     clave: alt.claveOriginal,
     acertado: !alt.esCorrecta,
     posicion_en_orden: previo.ordenDescartes.length + 1,
-    ms: enMs - previo.inicioMs,
+    ms: Math.round(enMs - previo.inicioMs),
   };
 }
 
