@@ -1713,3 +1713,7 @@ queda hueco. Ninguno de los dos miente por separado, pero juntos dicen cosas
 distintas. Falta decidir si el título del cierre de módulo se ramifica también,
 o si a nivel de módulo terminar es el hecho y el desempeño se lee solo en el
 puntaje. No se resuelve aquí; se anota para decidir.
+
+## 🟡 El validador de contenido vive en `scripts/` y `lib/` lo importa en runtime (anotada 2026-09-11)
+
+`lib/contenido.ts` y `lib/advance/banco.ts` importan `scripts/validar-contenido.mjs` con un import de valor, cubierto por el shim `lib/validar-contenido.d.ts`; mover el validador a `lib/` y dejar `scripts/` como envoltorio de CLI eliminaría el cruce, pero toca hook, `package.json` y `auditar-leccion.mjs`, y quedó fuera del bloque A de F2 como excepción firmada.

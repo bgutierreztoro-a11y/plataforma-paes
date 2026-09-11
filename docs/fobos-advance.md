@@ -273,6 +273,16 @@ La mecánica que define el producto. Es la única de las cinco que funciona sin 
 
 **Criterio de salida:** un estudiante recorre 5 ítems en descarte a 390×844 con clic real, recibe el nombre del error correcto en cada descarte acertado, y llega a una pantalla final que le dice qué error apareció más. Sin persistencia todavía.
 
+**Registro del bloque A (código), 2026-09-11. Bloque B (banco piloto, 2.1) pendiente.**
+
+F2 se partió en dos bloques: A es todo el código (schema del banco, validador, 2.2 a 2.5, ruta y portada) sin crear un solo ítem; B es el banco piloto de 2.1, en otra sesión. El criterio de salida de F2 exige banco real, así que queda para el cierre de B. Lo que A deja verificado, con salida cruda en el log de la sesión: motor puro con 24 tests de transiciones, resumen y payloads, todos con la clave original; componentes con contraste medido por línea y estado sobre `/_design` (mínimo 4,52:1 en alternativas, 4,54:1 en el resultado, sin tocar tokens), 54 px de alto mínimo por alternativa, cero animaciones con `prefers-reduced-motion`; ruta `/advance/descarte/[unidadId]` con `force-dynamic`, verificada contra `next start` con un banco temporal de 7 ítems fuera de git: tres `curl` seguidos y dos "Otra sesión" en navegador a 390×844 dieron selecciones distintas; los cinco eventos de §8 capturados en consola con sus payloads reales, y `/_design` recorrido hasta el resultado sin emitir ninguno. Sin flags, todo `/advance/*` sigue en 404.
+
+Contrato del banco: `content/advance/schema/item-advance.schema.json` y `_esqueleto-banco.json` vienen de F0.3 (copiados por Benja); A solo movió `colisionesPermitidas` a `auditoria.colisionesPermitidas: [{ valor, motivo }]`, la forma que lee `auditar-leccion.mjs`, subió los feedbacks de descarte a 40 caracteres (el `MIN_FEEDBACK_PUBLICABLE` de lecciones) y la declaración de originalidad a 30, y agregó la regla de ids únicos. `scripts/validar-contenido.mjs` implementa el schema completo a mano (sin ajv, como el resto), con rama propia en el hook `--hook` para `content/advance/<unidad>/banco.json`; menos de 20 ítems o menos de 12 errores distintos avisa sin bloquear (§5.4).
+
+Desvíos respecto de lo planificado. El descarte es irreversible (§6.1 corregido arriba): sin segundo tap que restaure, y sobre la sobreviviente el tap es no-op. `onDescartar` recibe la clave visible en vez de un closure por alternativa, porque el compilador de React rechazaba el arrow dentro del `map` (`react-hooks/purity`). El texto de la alternativa va plano, sin `TextoEnriquecido`, que emite `<p>` y no cabe en un `button`. El ejecutor no importa `registrarEvento`: entrega payloads por callbacks opcionales y quien los envía es `SesionDescarte.tsx`, la isla de cliente de la ruta; así la galería lo monta sin callbacks. `RegistroPuertaVista` se monta en la ruta `/advance/puerta`, no dentro de `PuertaAdvance`, por el mismo motivo. `origen` viaja como `?origen=tramo|portada` declarado por los enlaces internos y validado en la ruta; el redirect desde `/advance/descarte/<unidad>` sin acceso llega sin `origen` y cuenta como `directo`. "Otra sesión" navega con `window.location.assign`, no con `Link`, para no reusar el Router Cache con los mismos cinco ítems. `lib/advance/banco.ts` importa `validarDatosBancoAdvance` de `scripts/validar-contenido.mjs` en runtime, excepción firmada igual que `lib/contenido.ts` (una sola fuente de reglas); verificado que el validador no llega al bundle de cliente. `FranjaDeItems` se reutiliza tal cual y anuncia "Pregunta N": en Advance los ítems son preguntas PAES, el sustantivo es correcto. El nombre corto del error en `content/errores/` no entra: el rótulo sigue siendo "Error 07" más `feedbackDescarte` en la alternativa y más `descripcion` en el resultado.
+
+Commits del bloque A: `6035b8d`, `6927b92`, `0edd948`, `d0064a6`, `7763ee2`, `1ddc7f3`, `265c475`, `dcc6731`, más el `docs:` de este registro.
+
 ---
 
 ### F3 — Persistencia
@@ -407,7 +417,7 @@ Menos de eso y el estudiante ve repetición inmediata. Más de 20 en la primera 
 
 **El cambio de tarea.** No es "elige la correcta". Es "elimina las que no pueden ser". Esa inversión es la que entrena la habilidad real de la PAES, donde el estudiante muchas veces no sabe resolver pero sí puede eliminar.
 
-**Interacción.** Un tap sobre una alternativa la descarta. Un segundo tap la restaura, mientras no se haya confirmado. Área táctil mínima 44px.
+**Interacción.** Un tap sobre una alternativa la descarta. El descarte es irreversible: no hay segundo tap que restaure, porque el dato que importa es la decisión tal como se tomó (decisión firmada 2026-09-11, F2 bloque A). Sobre la sobreviviente el tap no hace nada; solo Confirmar cierra el ítem. Área táctil mínima 44px.
 
 **Estados de una alternativa:**
 
@@ -588,6 +598,8 @@ advance_triage_decision     { item_id, decision, ms }    // F5
 ```
 
 `posicion_en_orden` es el dato que permite distinguir lectura de adivinanza. No sirve de nada hoy y va a ser valioso en F4. Capturarlo desde el primer día.
+
+Tipos exactos de los cinco de F2, tal como quedaron en `lib/eventos.ts` (2026-09-11): `eje_id: string | null` (null si la puerta se abrió sin eje o con un eje que no está en el mapa); `origen: "tramo" | "portada" | "directo"`, donde `tramo` es el tramo bloqueado del riel, `portada` el redirect de `/advance` sin acceso y `directo` cualquier otra llegada (URL escrita o compartida, o un valor de `?origen=` no declarado); `clave` en `advance_descarte_alternativa` y `advance_descarte_fatal` es la clave ORIGINAL del JSON, no la letra visible tras la mezcla; `error_dominante: string | null`, null cuando la sesión no tuvo ningún descarte acertado; `aciertos` en `advance_descarte_fin` cuenta ítems cerrados sin descarte fatal. Las formas de los cuatro eventos de sesión se calculan en `lib/advance/descarte.ts` (funciones puras con test) y `lib/eventos.ts` importa esos tipos: una sola fuente.
 
 ---
 
