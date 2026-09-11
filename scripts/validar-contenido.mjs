@@ -624,7 +624,8 @@ export function validarDatosBancoAdvance(data, unidadDelDirectorio, dirContent, 
     errores.push(`moduloId "${data.moduloId}" no tiene catálogo canónico en content/errores/${data.moduloId}.json`);
   }
 
-  if (data.titulo !== undefined && !esTexto(data.titulo)) errores.push('titulo, si está, es texto no vacío');
+  /* Obligatorio: la portada y la sesión muestran el título, nunca el unidadId. */
+  if (!esTexto(data.titulo)) errores.push('falta titulo (nombre técnico DEMRE de la unidad, lo que ve el estudiante)');
 
   if (data.contextosNumericos !== undefined) {
     if (!Array.isArray(data.contextosNumericos)) errores.push('contextosNumericos: debe ser un array de textos');
