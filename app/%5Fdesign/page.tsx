@@ -16,6 +16,7 @@ import { TarjetaError } from "@/components/ui/linea/TarjetaError";
 import { SIN_DATO, TiraKPI } from "@/components/ui/linea/TiraKPI";
 import { TarjetaLoQueFallo } from "@/components/ui/linea/TarjetaLoQueFallo";
 import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
+import { TramoAdvance } from "@/components/advance/TramoAdvance";
 import {
   LINEAS,
   NOMBRE_DE_LINEA,
@@ -777,6 +778,49 @@ export default function PaginaDiseno() {
                 lo que el glifo es, el piso son 3:1 y sobra en las dos
                 superficies.
               </p>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Tramo Advance"
+          nota="El tramo más allá del final del riel (docs/fobos-advance.md §3.1). Dos estados sobre las cuatro líneas: sin acceso, con segmento punteado y anillo hueco, y activo, con segmento sólido y anillo con chevron. El título va como en una parada; el subtítulo en --text-primary y no en el gris de las paradas, que sobre el fondo de página da 4,37 (deuda-contraste-etiquetas.md §1). Nunca opacity sobre texto; el glifo en --linea-nav, el segmento en --linea. Acá se mide el contraste en render, por línea, estado y elemento."
+        >
+          <div className="flex flex-col gap-6">
+            <div style={estiloDeLinea("03")} className="max-w-sm">
+              <Rotulo>Línea 03 · el empalme con el final del riel</Rotulo>
+              <div className="rounded-sm border border-hairline bg-screen px-4 py-2">
+                <RielEstaciones paradas={PARADAS_DE_MUESTRA.slice(0, 2)} />
+                <TramoAdvance estado="sin-acceso" ejeId="geometria" />
+              </div>
+            </div>
+
+            <div>
+              <Rotulo>Sin acceso</Rotulo>
+              <PorLinea>
+                {() => (
+                  <div
+                    data-tramo="sin-acceso"
+                    className="rounded-sm border border-hairline bg-screen px-4 py-2"
+                  >
+                    <TramoAdvance estado="sin-acceso" ejeId="numeros" />
+                  </div>
+                )}
+              </PorLinea>
+            </div>
+
+            <div>
+              <Rotulo>Activo</Rotulo>
+              <PorLinea>
+                {() => (
+                  <div
+                    data-tramo="activo"
+                    className="rounded-sm border border-hairline bg-screen px-4 py-2"
+                  >
+                    <TramoAdvance estado="activo" ejeId="numeros" />
+                  </div>
+                )}
+              </PorLinea>
             </div>
           </div>
         </Seccion>
