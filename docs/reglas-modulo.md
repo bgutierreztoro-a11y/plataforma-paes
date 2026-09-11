@@ -122,6 +122,18 @@ La caballera se eligió sobre la isométrica a propósito y esa elección no se 
 
 ---
 
+## 7. En un distractor que encadena dos errores, `errorCatalogado` marca solo el que decide el veredicto
+
+Cuando un distractor de un ítem tipo veredicto (Sí/No, Verdadero/Falso, argumentar) encadena dos errores para llegar a su conclusión, `errorCatalogado` etiqueta únicamente el error que determina el veredicto final (Sí/No). El error intermedio se explica en el `feedback` del distractor, pero no se cataloga por separado.
+
+**Origen:** rediseño de ítems con alternativas tipo veredicto, 2026-09-11 (`docs/rediseno-distractores-veredicto.md`, Hallazgo 1). Apareció por primera vez en `enteros-operar-y-ordenar.json`, l1-item-3, distractor D: el estudiante calcula mal la resta ((−8) − (−20) = −28 en vez de 12, el mecanismo de `error-1`) y además ordena los negativos al revés (cree que −28 es mayor que −8 porque tiene mayor valor absoluto, el mecanismo de `error-5`). El segundo error es el que decide si el estudiante responde "Sí" o "No" a la afirmación del enunciado; el primero solo explica de dónde salió el número que arrastra.
+
+**Por qué:** `errorCatalogado` es un campo singular — un distractor no puede llevar dos ids a la vez. Etiquetar el error intermedio en vez del que decide el veredicto rompe la relación entre el catálogo y la Capa 2 de feedback, que usa `errorCatalogado` para dirigir la corrección al tipo de error que hizo que el estudiante fallara la RESPUESTA, no al paso aritmético que arrastró de camino a ella.
+
+**Mecanizada como:** no mecanizada. Cuál de los dos errores "decide" el veredicto es juicio pedagógico y lo resuelve quien redacta o audita el ítem, igual que la regla 3.
+
+---
+
 ## Cómo se verifica todo esto
 
 | Herramienta | Qué cubre | Qué no |
