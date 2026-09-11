@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Boton, EnlaceBoton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import {
@@ -83,7 +84,15 @@ function leccionEnCurso(
  * tendrían que inventarse los tres. El estado `combinacion` de `<Estacion>`
  * queda soportado por el riel y visible en `/_design`, sin instanciar acá.
  */
-export function LineaDelEje({ eje }: { eje: EjeDelCamino }) {
+export function LineaDelEje({
+  eje,
+  despuesDelRiel,
+}: {
+  eje: EjeDelCamino;
+  /** Lo que sigue al riel dentro de su misma columna, antes del CTA. Lo resuelve
+   *  el server component de arriba; este archivo no sabe qué es. */
+  despuesDelRiel?: ReactNode;
+}) {
   const montado = useMontado();
   const progreso = montado ? leer() : null;
   const resumen = resumirRespuestas(progreso);
@@ -188,6 +197,7 @@ export function LineaDelEje({ eje }: { eje: EjeDelCamino }) {
     <div className="flex min-h-full flex-1 flex-col">
       <div className="mx-auto w-full max-w-2xl flex-1 px-4 pt-2 sm:px-6">
         <RielEstaciones paradas={paradas} escalonarDesde={PASO_DE_ENTRADA} />
+        {despuesDelRiel}
       </div>
       {/* El CTA al pie, con el ancho de la columna: una sola acción principal
           por vista y es lo último que se lee (MASTER.md §3.1).

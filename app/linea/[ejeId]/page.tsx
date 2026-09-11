@@ -5,6 +5,8 @@ import { LineaDelEje } from "@/components/camino/LineaDelEje";
 import { PlacaLinea, subtituloDePlaca } from "@/components/ui/linea/PlacaLinea";
 import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
+import { TramoAdvance } from "@/components/advance/TramoAdvance";
+import { advanceVisible, estadoAdvance } from "@/lib/advance/acceso";
 
 export async function generateStaticParams() {
   return ejesDelCamino().map((eje) => ({ ejeId: eje.id }));
@@ -56,6 +58,14 @@ export default async function PaginaLinea({
   const linea = lineaDeEje(ejeId);
   const estaciones = eje.temas.length;
 
+  /* El tramo de Advance al final del riel (docs/fobos-advance.md §3.1). Se
+     resuelve acá, en el servidor, porque el gate vive en lib/advance/acceso.ts
+     y se consume desde server components; la isla de cliente solo lo coloca.
+     Sin `advanceVisible()` no se monta nada y la pantalla es la de siempre. */
+  const tramoAdvance = advanceVisible() ? (
+    <TramoAdvance estado={await estadoAdvance()} ejeId={ejeId} />
+  ) : undefined;
+
   return (
     <main
       style={linea ? estiloDeLinea(linea) : undefined}
@@ -80,7 +90,7 @@ export default async function PaginaLinea({
         <h1 className="bg-primary px-4 py-3.5 text-titulo-l text-inverse">{eje.nombre}</h1>
       )}
 
-      <LineaDelEje eje={eje} />
+      <LineaDelEje eje={eje} despuesDelRiel={tramoAdvance} />
     </main>
   );
 }
