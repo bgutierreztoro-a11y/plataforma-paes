@@ -261,17 +261,17 @@
         },
         {
           "clave": "C",
-          "texto": "No tiene razón, pero porque la constante 900 también se duplicaría a 1.800.",
+          "texto": "Sí: la constante es 900 ÷ 20 = 45 hileras por cada 20 butacas, así que 40 butacas dan 90 hileras.",
           "esCorrecta": false,
-          "feedback": "La constante 900 es el total de butacas del auditorio: no cambia nunca, sea cual sea la configuración. Lo que cambia al reordenar las butacas por hilera es cómo se reparte ese total fijo entre las hileras, no el total mismo.",
+          "feedback": "Leíste la constante de la proporción inversa como si fuera la de una directa: 'tantas hileras por cada 20 butacas', y la escalaste. Pero en una inversa la constante es el PRODUCTO fijo (900), no una tasa que se multiplica. Con 40 butacas por hilera van 900 ÷ 40 = 22,5 hileras, no 90.",
           "errorCatalogado": "error-14"
         },
         {
           "clave": "D",
-          "texto": "No tiene razón, porque la constante 900 es la que cambia de una configuración a otra.",
+          "texto": "No: si las butacas por hilera suben 20 (de 20 a 40), las hileras bajan 20: quedan 25.",
           "esCorrecta": false,
-          "feedback": "Es al revés: 900 es exactamente lo que NO cambia entre configuraciones del mismo auditorio — es el total de butacas. Lo que cambia son las butacas por hilera y las hileras, no la constante.",
-          "errorCatalogado": "error-4"
+          "feedback": "El veredicto es correcto, pero por una cuenta que no corresponde: compensaste con una resta (bajar 20 hileras) lo que hay que compensar con una división. El producto es lo que se mantiene fijo: 900 ÷ 40 = 22,5 hileras, no 25.",
+          "errorCatalogado": "error-12"
         }
       ],
       "solucion": "Butacas por hilera × hileras = 900 en cualquier configuración de este auditorio (producto constante, proporción inversa). Con 20 butacas por hilera hay 45 hileras (20×45=900). Al duplicar a 40 butacas por hilera, las hileras son 900÷40=22,5, la mitad de 45, no el doble. La afirmación del estudiante es falsa. Respuesta: A."

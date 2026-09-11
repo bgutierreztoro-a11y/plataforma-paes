@@ -471,10 +471,10 @@
             },
             {
               "id": "d",
-              "texto": "No, porque los números no son redondos",
+              "texto": "No, porque el cociente cambia (83; 69,8; 66,5), y con eso ya queda descartada",
               "esCorrecta": false,
-              "feedback": "Llegaste a la respuesta correcta por un camino que no sirve. Que los números sean feos no decide nada: el esmalte turquesa de esta misma lección tenía constante 59 y era perfectamente proporcional. Lo que decide es si el cociente o el producto se repiten, no cómo se ven las cifras.",
-              "errorCatalogado": "error-11"
+              "feedback": "El veredicto es correcto, pero falta la mitad de la prueba: que el cociente cambie descarta la proporción DIRECTA, no cualquier tipo de proporcionalidad. Antes de descartarla del todo hay que probar también el producto (332, 1.745, 4.256: también distintos, ahí sí queda descartada).",
+              "errorCatalogado": "error-16"
             }
           ]
         }

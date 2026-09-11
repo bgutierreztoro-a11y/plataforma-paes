@@ -513,10 +513,10 @@
             },
             {
               "id": "d",
-              "texto": "No, porque las cantidades no son números redondos",
+              "texto": "No, porque si fueran proporcionales a 6 g le corresponderían 70 + 23,3 = 93,3 mL, y hay 115",
               "esCorrecta": false,
-              "feedback": "Llegaste a la respuesta correcta por un camino que no sirve. Que los números sean feos no tiene nada que ver: el gris perla tenía constante 12,5 y era perfectamente proporcional. Lo que decide es si el cociente se repite o no.",
-              "errorCatalogado": "error-11"
+              "feedback": "Llegaste al veredicto correcto por un camino que no sirve: sumaste la constante (23,3) una sola vez al valor de la primera fila en vez de multiplicarla por los 6 g. Si la relación fuera proporcional, a 6 g le corresponderían 6 × 23,3 = 140 mL, no 93,3.",
+              "errorCatalogado": "error-6"
             }
           ]
         }

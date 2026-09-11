@@ -608,10 +608,10 @@
             },
             {
               "id": "d",
-              "texto": "No, porque las divisiones no dan exactas",
+              "texto": "No, porque si fueran inversamente proporcionales, al pasar de 10 a 20 butacas las hileras deberían duplicarse de 44 a 88, y bajan a 34",
               "esCorrecta": false,
-              "feedback": "Llegaste a la respuesta correcta por un camino que no sirve. Que una división quede fea no decide nada: el auditorio municipal tenía 336 butacas acomodadas en hileras de 14 y era perfectamente inversa. Lo que decide es si el producto se repite en todas las configuraciones o no.",
-              "errorCatalogado": "error-11"
+              "feedback": "El criterio está invertido: en una relación inversa, si el ancho se duplica (de 10 a 20), las hileras deberían dividirse por 2, no duplicarse — pasarían de 44 a 22, no a 88. El veredicto te da igual (34 tampoco es 22), pero por el criterio equivocado; la prueba real es si el producto se repite.",
+              "errorCatalogado": "error-13"
             }
           ]
         }
