@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "item-advance.schema.json",
   "title": "Banco de ítems Fobos Advance",
-  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: errorCatalogado y feedbackDescarte son obligatorios en los tres distractores, feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. Sin errorCatalogado en los tres distractores el modo descarte no puede funcionar, por eso el validador rechaza el archivo en vez de advertir. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/.",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: errorCatalogado y feedbackDescarte son obligatorios en los tres distractores, feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. Sin errorCatalogado en los tres distractores el modo descarte no puede funcionar, por eso el validador rechaza el archivo en vez de advertir. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id.",
   "type": "object",
   "required": ["tipo", "unidadId", "moduloId", "items", "proveniencia"],
   "properties": {
@@ -224,8 +224,8 @@
         },
         "declaracionOriginalidad": {
           "type": "string",
-          "minLength": 1,
-          "description": "Estado real de las dos rondas de auditoría sobre este banco. Ningún conteo se escribe aquí sin verificarlo antes con node -e."
+          "minLength": 30,
+          "description": "Estado real de las dos rondas de auditoría sobre este banco. Ningún conteo se escribe aquí sin verificarlo antes con node -e. Mínimo 30 caracteres, el mismo umbral que scripts/validar-contenido.mjs exige a lecciones y cierres."
         },
         "autor": { "type": "string", "minLength": 1 },
         "fecha": { "type": "string", "minLength": 1 }
