@@ -78,4 +78,25 @@ export const TEXTOS_ADVANCE = {
     otraSesion: "Otra sesión",
     volver: "Volver a Advance",
   },
+
+  /* Pantalla /advance/errores (§6.3, F4). Los nombres de fase son los que ve
+     el estudiante (D8): "cerrado" no comunica logro y no se usa. La recaída se
+     dice con palabras (D11), y p(L) no se muestra (D10). */
+  errores: {
+    titulo: "Tus errores",
+    fase: {
+      "por-repasar": "Por repasar",
+      "en-estudio": "En estudio",
+      superado: "Superado",
+    },
+    recaida: "Volvió a aparecer",
+    /* Sin tarjetas (D9): sin ilustración, sin llamada a la acción inventada. */
+    vacioTitulo: "Todavía no hay errores por repasar",
+    vacioCuerpo:
+      "A medida que avances en las sesiones de descarte, tus errores se van a ir acumulando acá.",
+    /* Sin sesión de Clerk. No se muestra el vacío: sería mentira. */
+    ingresoTitulo: "Ingresa para ver tus errores",
+    ingresoCuerpo: "Tus errores se guardan en tu cuenta. Ingresa y vas a ver acá lo que llevas trabajado.",
+    ingresar: "Ingresar",
+  },
 } as const;

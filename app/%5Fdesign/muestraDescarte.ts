@@ -1,4 +1,5 @@
 import type { ItemAdvance } from "@/lib/advance/descarte";
+import type { GrupoDeUnidad } from "@/lib/advance/pantallaErrores";
 
 /**
  * Ítems de MUESTRA para la galería del modo descarte. Texto obviamente de
@@ -109,3 +110,38 @@ export const CATALOGO_MUESTRA: Record<string, string> = {
   "error-6": "Muestra: descripción del sexto error del catálogo.",
   "error-7": "Muestra: descripción del séptimo error del catálogo, el que más se repite en la muestra.",
 };
+
+/* Grupos de MUESTRA para /advance/errores (§6.3): los estados que hoy no
+   existen en Neon. `ejeId: null` en el primero para que la galería instale la
+   línea desde afuera y mida las cuatro; el segundo trae ejes reales (D13). */
+const UNA_UNIDAD: GrupoDeUnidad = {
+  unidadId: "muestra",
+  titulo: "Unidad de muestra",
+  ejeId: null,
+  tarjetas: [
+    { errorId: "error-7", descripcion: CATALOGO_MUESTRA["error-7"], fase: "por-repasar", recaida: true, ultimoIntentoMs: 3 },
+    { errorId: "error-1", descripcion: CATALOGO_MUESTRA["error-1"], fase: "por-repasar", recaida: false, ultimoIntentoMs: 2 },
+    { errorId: "error-3", descripcion: CATALOGO_MUESTRA["error-3"], fase: "en-estudio", recaida: false, ultimoIntentoMs: 2 },
+    { errorId: "error-6", descripcion: CATALOGO_MUESTRA["error-6"], fase: "superado", recaida: false, ultimoIntentoMs: 1 },
+  ],
+};
+
+export const GRUPOS_ERRORES_MUESTRA: { id: string; rotulo: string; grupos: GrupoDeUnidad[] }[] = [
+  { id: "vacio", rotulo: "Sin tarjetas (D9): ningún error con intentos", grupos: [] },
+  { id: "una-unidad", rotulo: "Una unidad: dos por repasar (una recaída), una en estudio, una superada", grupos: [UNA_UNIDAD] },
+  {
+    id: "dos-unidades",
+    rotulo: "Dos unidades (D13): aparece el título de cada una y cada grupo toma su línea",
+    grupos: [
+      { ...UNA_UNIDAD, unidadId: "muestra-numeros", titulo: "Porcentaje (muestra)", ejeId: "numeros" },
+      {
+        unidadId: "muestra-geometria",
+        titulo: "Figuras geométricas (muestra)",
+        ejeId: "geometria",
+        tarjetas: [
+          { errorId: "error-1", descripcion: CATALOGO_MUESTRA["error-1"], fase: "por-repasar", recaida: false, ultimoIntentoMs: 1 },
+        ],
+      },
+    ],
+  },
+];

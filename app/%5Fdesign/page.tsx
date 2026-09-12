@@ -19,8 +19,10 @@ import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import { TramoAdvance } from "@/components/advance/TramoAdvance";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
 import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
+import { IngresoErrores } from "@/components/advance/IngresoErrores";
+import { ListaErrores } from "@/components/advance/ListaErrores";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
-import { CATALOGO_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
+import { CATALOGO_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import {
   LINEAS,
@@ -883,6 +885,38 @@ export default function PaginaDiseno() {
                     </div>
                   )}
                 </PorLinea>
+              </div>
+            ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Errores del estudiante"
+          nota="La pantalla /advance/errores (§6.3, F4): el ciclo de vida de cada error en palabras, sin p(L) y sin ids. Cuatro estados con datos de MUESTRA: sin sesión de Clerk (ingreso), sin tarjetas (D9), una unidad con las tres fases y una recaída dicha por texto (D11) sobre las cuatro líneas, y dos unidades con título por unidad y línea propia (D13). El rótulo de fase va en --linea-nav sobre bg-card; se mide acá, por línea. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6">
+            <div>
+              <Rotulo>Sin sesión de Clerk</Rotulo>
+              <div data-errores-muestra="ingreso" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                <IngresoErrores />
+              </div>
+            </div>
+            {GRUPOS_ERRORES_MUESTRA.map(({ id, rotulo, grupos }) => (
+              <div key={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                {id === "una-unidad" ? (
+                  <PorLinea>
+                    {() => (
+                      <div data-errores-muestra={id} className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                        <ListaErrores grupos={grupos} />
+                      </div>
+                    )}
+                  </PorLinea>
+                ) : (
+                  <div data-errores-muestra={id} className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                    <ListaErrores grupos={grupos} />
+                  </div>
+                )}
               </div>
             ))}
           </div>
