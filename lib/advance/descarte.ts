@@ -272,3 +272,95 @@ export function payloadDescarteFin(unidadId: string, registros: RegistroItem[]):
     error_dominante: errorMasFrecuente(registros),
   };
 }
+
+/* ---------- cuerpo de persistencia (F3) ---------- */
+/* Lo que viaja de SesionDescarte a POST /api/advance/sesion. El tipo, el
+   armado y la validación viven acá y no en la ruta por la misma razón que los
+   payloads de §8: una sola fuente, funciones puras con test. `validarCuerpoSesion`
+   es forma y tipos, nada de negocio: el alfabeto de claves y el patrón de ids
+   de error son formato de contenido, no del esquema (misma razón que la 003 no
+   restringe `alternativa_elegida`). */
+
+export interface CuerpoSesionDescarte {
+  /* uuid generado en el cliente al montar la sesión. Con usuario e ítem forma
+     la clave única de la tabla: un reenvío del mismo cierre no duplica nada. */
+  sesionId: string;
+  unidadId: string;
+  registros: RegistroItem[];
+}
+
+/** Cliente. Copia los registros y redondea `tiempoMs`: la columna es integer. */
+export function cuerpoSesionDescarte(
+  sesionId: string,
+  unidadId: string,
+  registros: readonly RegistroItem[],
+): CuerpoSesionDescarte {
+  return {
+    sesionId,
+    unidadId,
+    registros: registros.map((r) => ({
+      itemId: r.itemId,
+      ordenDescartes: [...r.ordenDescartes],
+      erroresIdentificados: [...r.erroresIdentificados],
+      descarteFatal: r.descarteFatal,
+      tiempoMs: Math.round(r.tiempoMs),
+    })),
+  };
+}
+
+const FORMA_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const MAX_LARGO = 100;
+const MAX_REGISTROS = 50;
+const MAX_ENTRADAS = 16;
+/* Tope de `integer` en Postgres: lo que pase de ahí sería un 500, no un 400. */
+const MAX_TIEMPO_MS = 2_147_483_647;
+
+function textoCorto(valor: unknown): valor is string {
+  return typeof valor === "string" && valor.length > 0 && valor.length <= MAX_LARGO;
+}
+
+function listaDeTextos(valor: unknown): valor is string[] {
+  return Array.isArray(valor) && valor.length <= MAX_ENTRADAS && valor.every(textoCorto);
+}
+
+function registroValido(cruda: unknown): RegistroItem | null {
+  if (typeof cruda !== "object" || cruda === null) return null;
+  const r = cruda as Record<string, unknown>;
+  if (!textoCorto(r.itemId)) return null;
+  if (!listaDeTextos(r.ordenDescartes)) return null;
+  if (!listaDeTextos(r.erroresIdentificados)) return null;
+  if (r.descarteFatal !== null && !textoCorto(r.descarteFatal)) return null;
+  if (typeof r.tiempoMs !== "number" || !Number.isInteger(r.tiempoMs)) return null;
+  if (r.tiempoMs < 0 || r.tiempoMs > MAX_TIEMPO_MS) return null;
+  return {
+    itemId: r.itemId,
+    ordenDescartes: [...r.ordenDescartes],
+    erroresIdentificados: [...r.erroresIdentificados],
+    descarteFatal: r.descarteFatal,
+    tiempoMs: r.tiempoMs,
+  };
+}
+
+/**
+ * Servidor. Devuelve un objeto nuevo solo con los campos conocidos, o null si
+ * la forma o los tipos no cuadran (la ruta responde 400). Un `itemId` repetido
+ * dentro del cuerpo también es null: nuestro cliente nunca lo manda.
+ */
+export function validarCuerpoSesion(entrada: unknown): CuerpoSesionDescarte | null {
+  if (typeof entrada !== "object" || entrada === null) return null;
+  const c = entrada as Record<string, unknown>;
+  if (typeof c.sesionId !== "string" || !FORMA_UUID.test(c.sesionId)) return null;
+  if (!textoCorto(c.unidadId)) return null;
+  if (!Array.isArray(c.registros) || c.registros.length === 0) return null;
+  if (c.registros.length > MAX_REGISTROS) return null;
+
+  const vistos = new Set<string>();
+  const registros: RegistroItem[] = [];
+  for (const cruda of c.registros) {
+    const registro = registroValido(cruda);
+    if (!registro || vistos.has(registro.itemId)) return null;
+    vistos.add(registro.itemId);
+    registros.push(registro);
+  }
+  return { sesionId: c.sesionId, unidadId: c.unidadId, registros };
+}

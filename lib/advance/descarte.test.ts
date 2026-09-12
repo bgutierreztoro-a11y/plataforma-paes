@@ -9,8 +9,10 @@ import {
   payloadDescarteFin,
   payloadDescarteInicio,
   reducerItem,
+  cuerpoSesionDescarte,
   registroDe,
   resumenDeSesion,
+  validarCuerpoSesion,
   type EstadoItem,
   type ItemAdvance,
   type RegistroItem,
@@ -254,5 +256,105 @@ describe("payloads de eventos (§8)", () => {
       error_dominante: "error-1",
     });
     assert.deepEqual(payloadDescarteFin("porcentaje", []), { unidad_id: "porcentaje", aciertos: 0, total: 0, error_dominante: null });
+  });
+});
+
+describe("cuerpo de persistencia (F3)", () => {
+  const SESION = "6f1c2a4e-9b3d-4c7a-8e21-0f5b6d7c8a91";
+  /* Segundo ítem de la sesión: mismo ITEM de prueba con otro id, para que el
+     cuerpo no repita itemId. */
+  const fatal = () => ({
+    ...registroDe(descartar(descartar(inicial(), "B", T0 + 1), "C", T0 + 2)),
+    itemId: "adv-prueba-002",
+  });
+  const confirmado = () =>
+    registroDe(confirmar(descartar(descartar(descartar(inicial(), "D", T0 + 1), "B", T0 + 2), "A", T0 + 3), T0 + 900));
+
+  it("el cuerpo conserva sesión y unidad y copia los registros en vez de compartirlos", () => {
+    const registros = [confirmado(), fatal()];
+    const cuerpo = cuerpoSesionDescarte(SESION, "porcentaje", registros);
+    assert.equal(cuerpo.sesionId, SESION);
+    assert.equal(cuerpo.unidadId, "porcentaje");
+    assert.deepEqual(cuerpo.registros, registros);
+    assert.notEqual(cuerpo.registros, registros);
+    assert.notEqual(cuerpo.registros[0], registros[0]);
+    assert.notEqual(cuerpo.registros[0].ordenDescartes, registros[0].ordenDescartes);
+  });
+
+  it("tiempoMs sale entero y es el redondeo del de entrada", () => {
+    const conDecimales = { ...confirmado(), tiempoMs: 899.6 };
+    const [r] = cuerpoSesionDescarte(SESION, "porcentaje", [conDecimales]).registros;
+    assert.ok(Number.isInteger(r.tiempoMs));
+    assert.equal(r.tiempoMs, Math.round(conDecimales.tiempoMs));
+  });
+
+  it("ida y vuelta: lo que arma el cliente lo acepta el servidor tal cual", () => {
+    const cuerpo = cuerpoSesionDescarte(SESION, "porcentaje", [confirmado(), fatal()]);
+    const enviado = JSON.parse(JSON.stringify(cuerpo)) as unknown;
+    assert.deepEqual(validarCuerpoSesion(enviado), cuerpo);
+  });
+
+  it("devuelve un objeto nuevo solo con los campos conocidos", () => {
+    const cuerpo = cuerpoSesionDescarte(SESION, "porcentaje", [confirmado()]);
+    const conExtras = {
+      ...cuerpo,
+      usuarioId: "user_intruso",
+      registros: [{ ...cuerpo.registros[0], correcta: true }],
+    };
+    const validado = validarCuerpoSesion(conExtras);
+    assert.deepEqual(validado, cuerpo);
+    assert.notEqual(validado, conExtras);
+  });
+
+  it("rechaza lo que no es un cuerpo", () => {
+    for (const entrada of [null, undefined, 3, "x", [], {}]) {
+      assert.equal(validarCuerpoSesion(entrada), null, JSON.stringify(entrada));
+    }
+  });
+
+  it("rechaza sesionId sin forma de uuid y unidadId vacía o larga", () => {
+    const base = cuerpoSesionDescarte(SESION, "porcentaje", [confirmado()]);
+    assert.equal(validarCuerpoSesion({ ...base, sesionId: "sesion-1" }), null);
+    assert.equal(validarCuerpoSesion({ ...base, sesionId: 42 }), null);
+    assert.equal(validarCuerpoSesion({ ...base, unidadId: "" }), null);
+    assert.equal(validarCuerpoSesion({ ...base, unidadId: "u".repeat(101) }), null);
+    assert.notEqual(validarCuerpoSesion({ ...base, unidadId: "u".repeat(100) }), null);
+  });
+
+  it("rechaza registros vacíos, no arreglo, demasiados o con itemId repetido", () => {
+    const base = cuerpoSesionDescarte(SESION, "porcentaje", [confirmado()]);
+    assert.equal(validarCuerpoSesion({ ...base, registros: [] }), null);
+    assert.equal(validarCuerpoSesion({ ...base, registros: {} }), null);
+    const uno = base.registros[0];
+    assert.equal(validarCuerpoSesion({ ...base, registros: [uno, { ...uno }] }), null);
+    const muchos = Array.from({ length: 51 }, (_, i) => ({ ...uno, itemId: `i${i}` }));
+    assert.equal(validarCuerpoSesion({ ...base, registros: muchos }), null);
+    assert.notEqual(validarCuerpoSesion({ ...base, registros: muchos.slice(0, 50) }), null);
+  });
+
+  it("rechaza cada campo de registro con tipo o rango equivocado", () => {
+    const base = cuerpoSesionDescarte(SESION, "porcentaje", [confirmado()]);
+    const uno = base.registros[0];
+    const casos: Array<Partial<Record<keyof RegistroItem, unknown>>> = [
+      { itemId: "" },
+      { itemId: 7 },
+      { ordenDescartes: "ABC" },
+      { ordenDescartes: ["A", 2] },
+      { ordenDescartes: [""] },
+      { ordenDescartes: Array.from({ length: 17 }, () => "A") },
+      { erroresIdentificados: [null] },
+      { descarteFatal: undefined },
+      { descarteFatal: 1 },
+      { descarteFatal: "" },
+      { tiempoMs: -1 },
+      { tiempoMs: 1.5 },
+      { tiempoMs: "900" },
+      { tiempoMs: 2_147_483_648 },
+    ];
+    for (const caso of casos) {
+      assert.equal(validarCuerpoSesion({ ...base, registros: [{ ...uno, ...caso }] }), null, JSON.stringify(caso));
+    }
+    assert.notEqual(validarCuerpoSesion({ ...base, registros: [{ ...uno, tiempoMs: 2_147_483_647 }] }), null);
+    assert.notEqual(validarCuerpoSesion({ ...base, registros: [{ ...uno, erroresIdentificados: [] }] }), null);
   });
 });
