@@ -81,9 +81,11 @@ export const TEXTOS_ADVANCE = {
 
   /* Pantalla /advance/errores (§6.3, F4). Los nombres de fase son los que ve
      el estudiante (D8): "cerrado" no comunica logro y no se usa. La recaída se
-     dice con palabras (D11), y p(L) no se muestra (D10). */
+     dice con palabras (D11), y p(L) no se muestra (D10). Título "Por repasar"
+     desde F4b: con la tarjeta tocable, "Tus errores" ya no describe la acción
+     de la pantalla tan bien como el nombre de la primera fase. */
   errores: {
-    titulo: "Tus errores",
+    titulo: "Por repasar",
     fase: {
       "por-repasar": "Por repasar",
       "en-estudio": "En estudio",
@@ -98,5 +100,18 @@ export const TEXTOS_ADVANCE = {
     ingresoTitulo: "Ingresa para ver tus errores",
     ingresoCuerpo: "Tus errores se guardan en tu cuenta. Ingresa y vas a ver acá lo que llevas trabajado.",
     ingresar: "Ingresar",
+    /* Pantalla /advance/errores/[unidadId]/[errorId] (F4b): el repaso de un
+       error. camino/correcto/ejemplo son los rótulos de las tres secciones del
+       catálogo (content/errores/<modulo>.json), en ese orden. */
+    repaso: {
+      camino: "Cómo se comete",
+      correcto: "Lo correcto",
+      ejemplo: "Ejemplo",
+      practicar: "Practicar este error",
+      volver: "Volver a la lista",
+      /* Catálogos sin repaso todavía (todos menos porcentaje): sin esto la
+         pantalla sería h1 + dos botones con un hueco en medio. */
+      sinRepaso: "Todavía no hay repaso para este error.",
+    },
   },
 } as const;

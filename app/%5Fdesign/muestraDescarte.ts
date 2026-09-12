@@ -1,5 +1,6 @@
 import type { ItemAdvance } from "@/lib/advance/descarte";
-import type { GrupoDeUnidad } from "@/lib/advance/pantallaErrores";
+import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
+import type { RepasoDeError } from "@/lib/catalogoErrores";
 
 /**
  * Ítems de MUESTRA para la galería del modo descarte. Texto obviamente de
@@ -111,20 +112,28 @@ export const CATALOGO_MUESTRA: Record<string, string> = {
   "error-7": "Muestra: descripción del séptimo error del catálogo, el que más se repite en la muestra.",
 };
 
-/* Grupos de MUESTRA para /advance/errores (§6.3): los estados que hoy no
+/* Grupos de MUESTRA para /advance/errores (§6.3, F4b): los estados que hoy no
    existen en Neon. `ejeId: null` en el primero para que la galería instale la
-   línea desde afuera y mida las cuatro; el segundo trae ejes reales (D13). */
+   línea desde afuera y mida las cuatro; el segundo trae ejes reales (D13).
+   Una tarjeta (error-6) sin `apoyo`, para ver la caída de F4b en pantalla. */
+const TARJETAS_UNA_UNIDAD: TarjetaDeError[] = [
+  { unidadId: "muestra", errorId: "error-7", titulo: "Muestra: título del séptimo error", apoyo: "Muestra: apoyo del séptimo error, el que más se repite.", fase: "por-repasar", recaida: true, ultimoIntentoMs: 3 },
+  { unidadId: "muestra", errorId: "error-1", titulo: "Muestra: título del primer error", apoyo: "Muestra: apoyo del primer error.", fase: "por-repasar", recaida: false, ultimoIntentoMs: 2 },
+  { unidadId: "muestra", errorId: "error-3", titulo: "Muestra: título del tercer error", apoyo: "Muestra: apoyo del tercer error.", fase: "en-estudio", recaida: false, ultimoIntentoMs: 2 },
+  { unidadId: "muestra", errorId: "error-6", titulo: CATALOGO_MUESTRA["error-6"], fase: "superado", recaida: false, ultimoIntentoMs: 1 },
+];
+
 const UNA_UNIDAD: GrupoDeUnidad = {
   unidadId: "muestra",
   titulo: "Unidad de muestra",
   ejeId: null,
-  tarjetas: [
-    { errorId: "error-7", descripcion: CATALOGO_MUESTRA["error-7"], fase: "por-repasar", recaida: true, ultimoIntentoMs: 3 },
-    { errorId: "error-1", descripcion: CATALOGO_MUESTRA["error-1"], fase: "por-repasar", recaida: false, ultimoIntentoMs: 2 },
-    { errorId: "error-3", descripcion: CATALOGO_MUESTRA["error-3"], fase: "en-estudio", recaida: false, ultimoIntentoMs: 2 },
-    { errorId: "error-6", descripcion: CATALOGO_MUESTRA["error-6"], fase: "superado", recaida: false, ultimoIntentoMs: 1 },
-  ],
+  tarjetas: TARJETAS_UNA_UNIDAD,
 };
+
+/** Mismas tarjetas de `UNA_UNIDAD`, con `unidadId` reescrito al del grupo que las recibe (D13, dos unidades). */
+function tarjetasEn(unidadId: string): TarjetaDeError[] {
+  return TARJETAS_UNA_UNIDAD.map((t) => ({ ...t, unidadId }));
+}
 
 export const GRUPOS_ERRORES_MUESTRA: { id: string; rotulo: string; grupos: GrupoDeUnidad[] }[] = [
   { id: "vacio", rotulo: "Sin tarjetas (D9): ningún error con intentos", grupos: [] },
@@ -133,15 +142,30 @@ export const GRUPOS_ERRORES_MUESTRA: { id: string; rotulo: string; grupos: Grupo
     id: "dos-unidades",
     rotulo: "Dos unidades (D13): aparece el título de cada una y cada grupo toma su línea",
     grupos: [
-      { ...UNA_UNIDAD, unidadId: "muestra-numeros", titulo: "Porcentaje (muestra)", ejeId: "numeros" },
+      {
+        unidadId: "muestra-numeros",
+        titulo: "Porcentaje (muestra)",
+        ejeId: "numeros",
+        tarjetas: tarjetasEn("muestra-numeros"),
+      },
       {
         unidadId: "muestra-geometria",
         titulo: "Figuras geométricas (muestra)",
         ejeId: "geometria",
         tarjetas: [
-          { errorId: "error-1", descripcion: CATALOGO_MUESTRA["error-1"], fase: "por-repasar", recaida: false, ultimoIntentoMs: 1 },
+          { unidadId: "muestra-geometria", errorId: "error-1", titulo: "Muestra: título del primer error", apoyo: "Muestra: apoyo del primer error.", fase: "por-repasar", recaida: false, ultimoIntentoMs: 1 },
         ],
       },
     ],
   },
 ];
+
+/** El repaso de un error, de MUESTRA (F4b), para /_design. Textos obviamente de demostración. */
+export const REPASO_MUESTRA: { titulo: string; repaso: RepasoDeError } = {
+  titulo: "Muestra: título del error",
+  repaso: {
+    camino: "Muestra: cómo se comete este error, en un par de frases.",
+    correcto: "Muestra: cuál es el razonamiento correcto y por qué.",
+    ejemplo: "Muestra: un ejemplo numérico resuelto paso a paso.",
+  },
+};

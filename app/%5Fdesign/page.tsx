@@ -21,8 +21,9 @@ import { AlternativaDescartable } from "@/components/advance/AlternativaDescarta
 import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
 import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
+import { RepasoError } from "@/components/advance/RepasoError";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
-import { CATALOGO_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
+import { CATALOGO_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE, REPASO_MUESTRA } from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import {
   LINEAS,
@@ -152,6 +153,16 @@ function Seccion({
 
 function Rotulo({ children }: { children: ReactNode }) {
   return <p className="mb-2 text-cuerpo-xs text-muted">{children}</p>;
+}
+
+/**
+ * El eje cuya línea es `linea`, para que la muestra del repaso arme el mismo
+ * `?eje=` que la ruta real. Se busca en los ejes y no con un mapa inverso
+ * propio: `lineaDeEje` ya es el único puente eje → línea, y un segundo mapa
+ * acá podría desalinearse de él en silencio.
+ */
+function ejeDeLinea(linea: LineaId): string | null {
+  return ejesDelCamino().find((eje) => lineaDeEje(eje.id) === linea)?.id ?? null;
 }
 
 /**
@@ -892,7 +903,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Errores del estudiante"
-          nota="La pantalla /advance/errores (§6.3, F4): el ciclo de vida de cada error en palabras, sin p(L) y sin ids. Cuatro estados con datos de MUESTRA: sin sesión de Clerk (ingreso), sin tarjetas (D9), una unidad con las tres fases y una recaída dicha por texto (D11) sobre las cuatro líneas, y dos unidades con título por unidad y línea propia (D13). El rótulo de fase va en --linea-nav sobre bg-card; se mide acá, por línea. Sobre --color-bg, el fondo real del body."
+          nota="La pantalla /advance/errores (§6.3, F4, F4b): el ciclo de vida de cada error en palabras, sin p(L) y sin ids. Desde F4b cada tarjeta es un enlace a su repaso y muestra titulo + apoyo del catálogo (una de la muestra va sin apoyo, la caída a descripcion). Cuatro estados con datos de MUESTRA: sin sesión de Clerk (ingreso), sin tarjetas (D9), una unidad con las tres fases y una recaída dicha por texto (D11) sobre las cuatro líneas, y dos unidades con título por unidad y línea propia (D13). El rótulo de fase va en --linea-nav sobre bg-card; se mide acá, por línea. Sobre --color-bg, el fondo real del body."
         >
           <div className="flex flex-col gap-6">
             <div>
@@ -919,6 +930,30 @@ export default function PaginaDiseno() {
                 )}
               </div>
             ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Repaso de un error"
+          nota="La pantalla /advance/errores/[unidadId]/[errorId] (F4b): a dónde lleva cada tarjeta. Título del error, tres secciones en el orden del catálogo (cómo se comete, lo correcto, ejemplo) y dos salidas: practicar (la sesión de descarte de la unidad, sin filtro por error) y volver a la lista. Datos de MUESTRA. Con repaso sobre las cuatro líneas: el rótulo de sección va en --linea-nav y el botón en --linea-fondo, se miden acá. Sin repaso (todo catálogo que no sea porcentaje, hoy): el aviso en vez de las secciones, con ejeId null y el botón neutro. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6">
+            <div>
+              <Rotulo>Con repaso</Rotulo>
+              <PorLinea>
+                {(linea) => (
+                  <div data-repaso-muestra="con-repaso" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                    <RepasoError unidadId="muestra" ejeId={ejeDeLinea(linea)} titulo={REPASO_MUESTRA.titulo} repaso={REPASO_MUESTRA.repaso} />
+                  </div>
+                )}
+              </PorLinea>
+            </div>
+            <div>
+              <Rotulo>Sin repaso: el catálogo todavía no tiene el copy</Rotulo>
+              <div data-repaso-muestra="sin-repaso" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                <RepasoError unidadId="muestra" ejeId={null} titulo={REPASO_MUESTRA.titulo} />
+              </div>
+            </div>
           </div>
         </Seccion>
       </div>

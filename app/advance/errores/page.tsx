@@ -10,7 +10,7 @@ import { estadoDeErrores } from "@/lib/advance/dominio";
 import { itemsResueltosDe } from "@/lib/advance/itemsResueltos";
 import { tarjetasDeUnidad, type GrupoDeUnidad } from "@/lib/advance/pantallaErrores";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
-import { catalogoDelModulo } from "@/lib/catalogoErrores";
+import { catalogoCompletoDelModulo } from "@/lib/catalogoErrores";
 import { listarDescartesDeUsuario } from "@/lib/datos/advanceDescartes";
 import { ejeDeTema } from "@/lib/modulos";
 
@@ -68,14 +68,14 @@ export default async function PaginaErrores() {
   for (const { unidadId, titulo } of unidadesConBanco()) {
     const banco = obtenerBanco(unidadId);
     if (!banco) continue;
-    const catalogo = catalogoDelModulo(banco.moduloId);
+    const catalogo = catalogoCompletoDelModulo(banco.moduloId);
     const filas = await listarDescartesDeUsuario(userId, unidadId);
     const estados = estadoDeErrores([...catalogo.keys()], itemsResueltosDe(filas, banco.items));
     grupos.push({
       unidadId,
       titulo,
       ejeId: ejeDeTema(banco.moduloId)?.id ?? null,
-      tarjetas: tarjetasDeUnidad(estados, catalogo),
+      tarjetas: tarjetasDeUnidad(unidadId, estados, catalogo),
     });
     paraVista.push(...estados.map(({ fase, recaidas }) => ({ fase, recaidas })));
   }
