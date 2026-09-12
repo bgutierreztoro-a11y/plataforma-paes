@@ -110,7 +110,7 @@ components/advance/              todo lo exclusivo de Advance
   EjecutorDescarte.tsx
   AlternativaDescartable.tsx
   ResultadoDescarte.tsx
-  TarjetaError.tsx
+  TarjetaEstadoError.tsx         era TarjetaError.tsx en el plano; renombrado el 2026-09-12 para no colisionar con components/ui/linea/TarjetaError.tsx
   PanelDesempeno.tsx             fuera de F4 (§6.2)
   MapaRecuperables.tsx
   TramoAdvance.tsx               el punto de entrada en el riel
@@ -357,10 +357,13 @@ Recién aquí entran las mecánicas que dependen del historial.
 
 **4.1** Panel 2×2 (sección 6.2). Fuera de F4 (2026-09-12): con descarte, acierto no tiene definición limpia y el cuadrante de error conceptual queda vacío por diseño; requiere modo clásico.
 **4.2** Ciclo de vida del error con p(L) (sección 6.3).
-**4.3** Repaso de errores y sesiones de entrenamiento dirigidas.
-**4.4** Re-diagnóstico.
+*4.3 (repaso de errores y sesiones dirigidas) y 4.4 (re-diagnóstico) se reubican a F5 el 2026-09-12 (D6). No quedan pendientes dentro de F4: 4.3 exige `seleccion.ts` dirigido por estado de error, y sin datos reales de varios días eso se construye a ciegas.*
 
-**Criterio de salida:** un error pasa de abierto a cerrado por comportamiento real del estudiante, y la pantalla de errores lo refleja.
+**Registro del bloque A (motor), 2026-09-12.** Cuatro commits, sin push al cierre: `3e175b6` (`docs:`) iguala §6.3 a la doctrina P10 (p(T) 0,15 y umbral 0,95), saca el panel 2×2 de F4 y registra dos deudas en `docs/pendientes.md` (el orden de los ítems de una sesión no se persiste; el validador no exige tres errores distintos por ítem). `0f05f99` crea `lib/advance/dominio.ts`: BKT (`actualizarPL`), señales por ítem (`observacionesDeItem`, decisión D5: descarte correcto es acierto sobre su error, distractores en pie al fatal reciben fracaso, el acierto gana), estado por error (`aplicarObservacion`, `estadoDeErrores`) con cierre por umbral más dos aciertos separados por 24 horas, recaída que reinicia el ciclo, y la fase `sin-datos` aparte; 21 tests con instantes falsos, sin reloj. Las decisiones D1 a D5 y Op1 están escritas en la cabecera del módulo y no se repiten acá. `ebbedf5` agrega `listarDescartesDeUsuario(usuarioId, unidadId)` en `lib/datos/advanceDescartes.ts`, única lectura de la tabla, cronológica. `d0f77d4` es la migración `009_advance_descartes_select.sql` (GRANT SELECT a `app_m1`), aplicada en Neon por Benja. No existe tabla `estado_error`: el estado se calcula al vuelo desde las filas cruzadas con el banco. 300 tests, 0 fallos, al cerrar el bloque A.
+
+Estado real de `advance_descartes` al abrir el bloque B (SELECT de solo lectura, 2026-09-12): 15 filas de un solo usuario en la unidad porcentaje, 3 sesiones, 9 con descarte fatal, todas entre las 02:46 y las 02:53 UTC del mismo día. El "5 filas" del smoke de F3 quedó obsoleto. Con una ventana de siete minutos ninguna fase puede ser `cerrado`, y eso es lo que sostiene el criterio de salida de abajo.
+
+**Criterio de salida (reemplazado el 2026-09-12, D7):** la pantalla `/advance/errores` renderiza el estado real calculado desde Neon para un usuario con sesión Clerk real, con las fases correctas para los datos que existan; el paso a `cerrado` queda cubierto por los tests de `lib/advance/dominio.ts`. El criterio anterior ("un error pasa de abierto a cerrado por comportamiento real del estudiante, y la pantalla lo refleja") era indemostrable en sesión: exige tres aciertos con dos de ellos separados por 24 horas, y D4 prohíbe sembrar datos.
 
 ---
 
@@ -368,6 +371,8 @@ Recién aquí entran las mecánicas que dependen del historial.
 
 **5.1** Mapa de recuperables (sección 6.4).
 **5.2** Triage de 20 segundos (sección 6.5).
+**5.3** Repaso de errores y sesiones de entrenamiento dirigidas (era 4.3; reubicado el 2026-09-12, D6).
+**5.4** Re-diagnóstico (era 4.4; reubicado el 2026-09-12, D6).
 
 ---
 
@@ -627,13 +632,16 @@ advance_descarte_inicio     { unidad_id, items }
 advance_descarte_alternativa{ item_id, clave, acertado, posicion_en_orden, ms }
 advance_descarte_fatal      { item_id, clave }
 advance_descarte_fin        { unidad_id, aciertos, total, error_dominante }
-advance_error_cambio_fase   { error_id, desde, hacia }   // F4
+advance_errores_vista       { unidades, por_repasar, en_estudio, superados }   // F4
+advance_error_cambio_fase   { error_id, desde, hacia }   // F5, ver nota
 advance_triage_decision     { item_id, decision, ms }    // F5
 ```
 
 `posicion_en_orden` es el dato que permite distinguir lectura de adivinanza. No sirve de nada hoy y va a ser valioso en F4. Capturarlo desde el primer día.
 
 Tipos exactos de los cinco de F2, tal como quedaron en `lib/eventos.ts` (2026-09-11): `eje_id: string | null` (null si la puerta se abrió sin eje o con un eje que no está en el mapa); `origen: "tramo" | "portada" | "directo"`, donde `tramo` es el tramo bloqueado del riel, `portada` el redirect de `/advance` sin acceso y `directo` cualquier otra llegada (URL escrita o compartida, o un valor de `?origen=` no declarado); `clave` en `advance_descarte_alternativa` y `advance_descarte_fatal` es la clave ORIGINAL del JSON, no la letra visible tras la mezcla; `error_dominante: string | null`, null cuando la sesión no tuvo ningún descarte acertado; `aciertos` en `advance_descarte_fin` cuenta ítems cerrados sin descarte fatal. Las formas de los cuatro eventos de sesión se calculan en `lib/advance/descarte.ts` (funciones puras con test) y `lib/eventos.ts` importa esos tipos: una sola fuente.
+
+`advance_errores_vista` (F4, 2026-09-12): una vez por montaje de `/advance/errores` con sesión y acceso; la pantalla de ingreso y el 404 no emiten. Props: `unidades` (cuántas unidades con banco aportaron tarjetas), `por_repasar`, `en_estudio`, `superados` (conteo de tarjetas por fase visible). Sin ids de error ni de unidad. `advance_error_cambio_fase` pasa a F5: con el estado calculado al vuelo desde `advance_descartes` (sin tabla `estado_error`) no existe el momento de la transición, así que no hay nada que emitir; entra cuando exista un estado persistido que cambie.
 
 ---
 
