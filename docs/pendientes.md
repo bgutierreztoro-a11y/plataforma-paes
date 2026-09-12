@@ -13,6 +13,33 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
+## 🟡 El chequeo del espejo de `usuarios` que describe la 006 no existe, y la 007 debe borrar también en `advance_descartes` (abierta 2026-09-11, al planificar F3 de Advance)
+
+Dos notas sobre el mismo hueco: escribir por usuario en Neon cuando el espejo de
+Clerk todavía no llegó (el webhook `user.created` puede demorar o fallar).
+
+1. `db/migraciones/006_permisos_app.sql:59-61` justifica el SELECT de `app_m1`
+   sobre `usuarios` diciendo que "la capa de datos necesita saber si la fila
+   espejo ya llegó antes de escribir progreso". Ese chequeo no está en el código:
+   `grep -n -E "obtenerUsuarioPorClerkId|usuarios" lib/datos/progreso.ts` da 0
+   resultados, y `guardarProgreso` (`:72-82`) y `migrarProgresoLocal`
+   (`:205-220`) hacen el upsert directo. Con la FK de la 002, una escritura antes
+   del espejo reventaría como `DatosError` sin código SQLSTATE (`db.ts:82` solo
+   conserva el mensaje). Hoy no se manifiesta porque ninguna función de escritura
+   de `lib/datos/` tiene llamadores fuera del webhook. La 006 es una migración
+   aplicada y no se edita: si se implementa el chequeo, va en `lib/datos/` y se
+   documenta en la migración que lo necesite.
+
+2. `db/migraciones/008_advance_descartes.sql` (F3 de Advance) se creó sin FK a
+   `usuarios`, a propósito, para que una sesión terminada antes del espejo no se
+   pierda y para que ninguna lógica de identidad viva en el path de escritura de
+   Advance. Consecuencia: no hay `ON DELETE CASCADE`. Cuando exista la 007
+   (DELETE de `usuarios` para `user.deleted`, ver
+   `app/api/webhooks/clerk/route.ts:115-136`), tiene que borrar también en
+   `advance_descartes` por `usuario_id`. Hasta entonces una cuenta borrada deja
+   filas bajo un id opaco sin PII, igual que hoy `progreso_lecciones` y
+   `respuestas`.
+
 ## ✅ Migración del catálogo de errores a canónico único — completada (2026-09-08)
 
 Sesión de Fobos Advance F0, commits `9ec800b..3958991`.
