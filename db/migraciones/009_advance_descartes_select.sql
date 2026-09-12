@@ -1,0 +1,16 @@
+-- 009 · F4 lee advance_descartes
+--
+-- Un privilegio nuevo, justificado por una función concreta, en el formato de
+-- la 006 (qué código necesita cada permiso). La 008 lo dejó escrito: "Sin
+-- SELECT: F3 no lee. Se otorga en la migración de F4 con el código que lo use".
+--
+-- advance_descartes · SELECT: listarDescartesDeUsuario() en
+-- lib/datos/advanceDescartes.ts, que devuelve las filas de un estudiante en una
+-- unidad, en orden cronológico, para que lib/advance/dominio.ts calcule al
+-- vuelo el ciclo de vida de cada error. No existe tabla estado_error: el
+-- estado se deriva de estas filas en cada lectura (F4 bloque A, 2026-09-12).
+-- La consulta filtra siempre por usuario_id, primera columna del índice del
+-- UNIQUE de la 008; unidad_id se filtra sobre las pocas filas de ese
+-- estudiante. Sin índice nuevo.
+-- Sigue sin UPDATE ni DELETE: la tabla es append-only.
+GRANT SELECT ON advance_descartes TO app_m1;
