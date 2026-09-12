@@ -329,6 +329,24 @@ temporada
 
 **3.5** `lib/advance/repositorio.ts`.
 
+**Registro F3, bloque de escritura (2026-09-11).** Primer bloque de F3, acotado por firma a escribir y nada más. Commits con prefijo `advance:` y uno `docs:`; la 008 la aplica Benja con `npm run migrar`.
+
+*Qué se guarda.* Tabla `advance_descartes` (migración `db/migraciones/008_advance_descartes.sql`), una fila por ítem resuelto, escrita al terminar la sesión y en una sola transacción: o quedan los cinco ítems o ninguno. Columnas: `id uuid`; `usuario_id text` (id opaco de Clerk, verificado con `auth()` en el servidor, nunca del cliente); `sesion_id uuid` (generado en el cliente al montar la sesión); `unidad_id text`; `item_id text`; `orden_descartes text[]` (claves originales del JSON, en el orden en que se descartaron); `errores_identificados text[]` (ids locales del catálogo, uno por descarte acertado); `descarte_fatal text` (clave original de la correcta si la descartó, NULL si cerró confirmando); `tiempo_ms integer`; `creado_en timestamptz`. `UNIQUE (usuario_id, sesion_id, item_id)` con `INSERT ... ON CONFLICT DO NOTHING`: un reenvío del mismo cierre no duplica nada, gana la primera escritura. El rol `app_m1` tiene solo INSERT.
+
+*Qué NO se guarda.* Ninguna PII: ni nombre, ni correo, ni edad. Ni la letra visible tras la mezcla, ni el enunciado, ni el texto de las alternativas, ni el título de la unidad. Ni sesiones abandonadas a medias: el envío ocurre una sola vez, al cerrar el último ítem. Ni nada de la galería `/_design`, que monta el ejecutor sin callbacks.
+
+*La identidad de un error es compuesta.* Los ids de `errores_identificados` son locales al catálogo de su unidad: `error-7` existe en porcentaje y puede existir, con otro significado, en otra unidad. Por eso `unidad_id` vive en la misma fila que los errores. La identidad es `(unidad_id, id local)`, nunca el id suelto, y toda consulta de F4 que agrupe por error agrupa por los dos.
+
+*Qué NO hace este bloque.* No lee de vuelta: ni historial, ni reanudar, ni ocultar ítems ya resueltos (F4). `estadoAdvance()` sigue resolviendo por variable de entorno; el route handler la llama, no la reescribe. No hay entitlement de Advance. No se migra nada desde localStorage; `lib/progresoLocal.ts` y `lib/progresoSesion.ts` quedan intactos. Sin evento de PostHog para el guardado, sin reintento en el cliente, sin indicador de "guardado" en pantalla: si la red falla, el estudiante no se entera y la pantalla final se muestra igual.
+
+*Límite conocido: `NEXT_PUBLIC_ADVANCE_DEMO` es global.* Es una variable pública que se inlinea en el build, así que no distingue usuarios. El 403 de `POST /api/advance/sesion` es un interruptor de producto entero, no un gate por usuario. Aceptable en F3 porque no existe entitlement de Advance; deja de serlo en cuanto haya cobro.
+
+*Sin FK a `usuarios`, a propósito.* El espejo de Clerk lo escribe solo el webhook, que puede llegar después de la primera sesión de una cuenta nueva; con FK esa sesión se perdería, y Advance no crea usuarios. Consecuencia: no hay `ON DELETE CASCADE`. La 007 futura (DELETE de `usuarios`) tiene que borrar también en `advance_descartes`; hasta entonces una cuenta borrada deja filas bajo un id opaco sin PII. Anotado en `docs/pendientes.md`.
+
+*Desvíos respecto del boceto de 3.4 y 3.5.* La tabla se llama `advance_descartes`, no `intento_advance`; no lleva `modo` ni `correcto` (se derivan de `descarte_fatal`) y sí `sesion_id`, `orden_descartes` y `descarte_fatal`. `estado_error` y `temporada` no se crean en este bloque. El acceso a datos va en `lib/datos/advanceDescartes.ts`, no en `lib/advance/repositorio.ts`: `lib/datos/` es el único directorio del proyecto con SQL. La tabla entra al inventario de datos de 3.3.
+
+Piezas: `lib/advance/descarte.ts` (tipo `CuerpoSesionDescarte`, armado con `Math.round` de `tiempoMs` y validador de forma y tipos, con test), `lib/datos/advanceDescartes.ts` (escritura en lote), `app/api/advance/sesion/route.ts` (404 sin flag, 401 sin sesión, 403 sin acceso, 400 con cuerpo inválido o unidad e ítems que no están en el banco, 204 al escribir), `components/advance/EjecutorDescarte.tsx` (callback `alCerrarSesion` con los registros completos, una vez) y `components/advance/SesionDescarte.tsx` (`sesion_id` en el inicializador de estado, envío sin bloquear la UI).
+
 **Criterio de salida:** un estudiante inicia sesión, hace una sesión de descarte, cierra el navegador, vuelve, y su historial está ahí. Política de privacidad publicada y accesible.
 
 ---
