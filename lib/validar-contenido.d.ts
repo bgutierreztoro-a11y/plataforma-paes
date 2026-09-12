@@ -26,4 +26,12 @@ declare module "../scripts/validar-contenido.mjs" {
     dirContent?: string,
     erroresCatalogados?: Map<string, string>,
   ): string[];
+  /**
+   * Contrato de forma de un catálogo canónico (content/errores/<unidad>.json),
+   * sobre datos ya parseados: `{ unidad, errores[{ id, descripcion, titulo?,
+   * apoyo?, repaso? }] }`. `validarCatalogoErrores` es el mismo contrato leyendo
+   * el archivo desde `ruta`.
+   */
+  export function validarDatosCatalogoErrores(data: unknown): string[];
+  export function validarCatalogoErrores(ruta: string): string[];
 }

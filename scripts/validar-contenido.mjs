@@ -375,25 +375,32 @@ function raizContentDe(ruta) {
   return partes.slice(0, i + 1).join(sep);
 }
 
+const CAMPOS_REPASO = ['camino', 'correcto', 'ejemplo'];
+
 /**
  * Contrato de forma de un `content/errores/<unidad>.json`: tiene `unidad`, tiene
  * `errores[]` no vacío, y cada entrada lleva `id` con el prefijo `<unidad>/`,
  * `descripcion`, y sin ids locales duplicados.
+ *
+ * Desde F4b (2026-09-12) una entrada puede llevar además el copy para el
+ * estudiante: `titulo` y `apoyo` (la tarjeta de /advance/errores) y
+ * `repaso { camino, correcto, ejemplo }` (la pantalla de repaso). Los tres son
+ * OPCIONALES, porque solo porcentaje los tiene y los otros catálogos siguen
+ * siendo `{ id, descripcion }`; pero si están, son texto no vacío, y `repaso`
+ * trae los tres campos. No se rechazan claves desconocidas: `descripcion` es la
+ * ficha de autor y este contrato no decide qué más puede llevar una entrada.
  *
  * El espejo canónico ↔ catálogo embebido de la L1 (`MAPEO_LECCION_UNIDAD`) se
  * retiró junto con el último `catalogoErrores` embebido de `content/`: sin fuente
  * doble no hay divergencia posible. La cobertura de "todo id referenciado
  * resuelve" la da `validarReferenciasResuelven` sobre lecciones y cierres,
  * contra este mismo artefacto.
+ *
+ * Puro, sobre datos ya parseados, como `validarDatos` y
+ * `validarDatosBancoAdvance`; `validarCatalogoErrores` es el envoltorio que lee
+ * el archivo.
  */
-export function validarCatalogoErrores(ruta) {
-  let data;
-  try {
-    data = JSON.parse(readFileSync(ruta, 'utf8'));
-  } catch (e) {
-    return [`JSON inválido: ${e.message}`];
-  }
-
+export function validarDatosCatalogoErrores(data) {
   const errores = [];
   const unidad = data?.unidad;
   if (!esTexto(unidad)) return ['falta "unidad"'];
@@ -411,9 +418,31 @@ export function validarCatalogoErrores(ruta) {
     const local = e.id.slice(prefijo.length);
     if (idsLocales.has(local)) errores.push(`${p}: id local "${local}" duplicado`);
     idsLocales.add(local);
+
+    if (e.titulo !== undefined && !esTexto(e.titulo)) errores.push(`${p}.titulo: si está, es texto no vacío`);
+    if (e.apoyo !== undefined && !esTexto(e.apoyo)) errores.push(`${p}.apoyo: si está, es texto no vacío`);
+    if (e.repaso !== undefined) {
+      if (!e.repaso || typeof e.repaso !== 'object' || Array.isArray(e.repaso)) {
+        errores.push(`${p}.repaso: si está, es un objeto { camino, correcto, ejemplo }`);
+      } else {
+        for (const campo of CAMPOS_REPASO) {
+          if (!esTexto(e.repaso[campo])) errores.push(`${p}.repaso.${campo}: falta o está vacío`);
+        }
+      }
+    }
   });
 
   return errores;
+}
+
+export function validarCatalogoErrores(ruta) {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(ruta, 'utf8'));
+  } catch (e) {
+    return [`JSON inválido: ${e.message}`];
+  }
+  return validarDatosCatalogoErrores(data);
 }
 
 // ---------- bancos Fobos Advance: content/advance/<unidadId>/banco.json ----------
