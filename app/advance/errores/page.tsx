@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
+import { RegistroErroresVista, type EstadoParaVista } from "@/components/advance/RegistroErroresVista";
 import { advanceVisible, estadoAdvance, type EstadoAdvance } from "@/lib/advance/acceso";
 import { obtenerBanco, unidadesConBanco } from "@/lib/advance/banco";
 import { estadoDeErrores } from "@/lib/advance/dominio";
@@ -62,6 +63,8 @@ export default async function PaginaErrores() {
   }
 
   const grupos: GrupoDeUnidad[] = [];
+  /* El mismo `estados` que alimenta las tarjetas, proyectado: p(L) no viaja al cliente. */
+  const paraVista: EstadoParaVista[] = [];
   for (const { unidadId, titulo } of unidadesConBanco()) {
     const banco = obtenerBanco(unidadId);
     if (!banco) continue;
@@ -74,10 +77,12 @@ export default async function PaginaErrores() {
       ejeId: ejeDeTema(banco.moduloId)?.id ?? null,
       tarjetas: tarjetasDeUnidad(estados, catalogo),
     });
+    paraVista.push(...estados.map(({ fase, recaidas }) => ({ fase, recaidas })));
   }
 
   return (
     <main className="flex min-h-full flex-1 flex-col">
+      <RegistroErroresVista estados={paraVista} />
       <ListaErrores grupos={grupos} />
     </main>
   );
