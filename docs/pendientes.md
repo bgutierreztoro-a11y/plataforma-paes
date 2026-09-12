@@ -13,6 +13,43 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
+## 🔴 Copy crudo del catálogo en `/advance/errores`: la tarjeta muestra la descripción de `content/errores/` tal como está escrita, y no fue redactada para un estudiante (abierta 2026-09-12, al cerrar F4)
+
+`TarjetaEstadoError` (`components/advance/TarjetaEstadoError.tsx`) muestra
+`descripcion` de `content/errores/<modulo>.json` sin ninguna transformación:
+`catalogoDelModulo()` la lee y `tarjetasDeUnidad()` la copia a la tarjeta. Esas
+descripciones son fichas de autor, escritas para quien redacta ítems y
+distractores: mayúsculas de énfasis, frases como "Distinto de error-4: …",
+referencias a otros ids del catálogo y una extensión de párrafo largo. En
+`/advance/errores` se leen tal cual, como si fueran para el estudiante, y no lo
+son. La pantalla del resultado de descarte (`ResultadoDescarte`) tiene el mismo
+origen para "Qué error apareció más", así que el problema no es solo de F4.
+
+Resolver toca `content/`: o un campo nuevo por error redactado para el
+estudiante (con su auditoría de originalidad, regla 5 de CLAUDE.md), o una
+reescritura de las descripciones que además tendría que seguir sirviendo a
+`auditar-leccion.mjs` y a los feedbacks. Por eso es 🔴 y no se resuelve desde
+`components/`. No bloquea el cierre de F4 (criterio D7): la pantalla muestra
+el estado correcto; lo que está mal es el registro del copy.
+
+## 🟡 `/advance/errores` no agrupa por fase: el orden de D8 va implícito, sin encabezados de grupo (abierta 2026-09-12, al cerrar F4)
+
+Dentro de cada unidad las tarjetas van en el orden de `ORDEN_FASES`
+(`lib/advance/pantallaErrores.ts`: Por repasar, En estudio, Superado; dentro de
+cada fase el último intento más reciente arriba), pero `ListaErrores` solo
+agrupa por unidad: el único indicio de fase es el rótulo de cada tarjeta. Con
+las 9 entradas del catálogo de porcentaje y una sola unidad se lee sin
+problema; con volumen real (varias unidades, decenas de errores) la frontera
+entre "Por repasar" y "Superado" se pierde en el scroll. Revisar cuando haya
+volumen real de errores, no antes: agregar encabezados hoy sería diseñar
+contra datos de muestra.
+
+Misma situación de falta de datos reales: la marca de recaída de D11 ("Volvió a
+aparecer") está implementada y testeada pero sin verificación visual real, y
+con los datos de hoy no puede producirse (una recaída exige un `cerrado`
+previo, y eso exige 24 horas). Registrado en `docs/fobos-advance.md` §4 F4,
+cierre.
+
 ## 🟡 Dos deudas de F4 Bloque A: el orden de los ítems de una sesión no se persiste, y el validador no exige errores distintos por ítem (abierta 2026-09-12, al planificar el ciclo de vida del error)
 
 1. `advance_descartes` no guarda la posición del ítem dentro de la sesión. Las
