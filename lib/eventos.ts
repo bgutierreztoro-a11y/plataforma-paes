@@ -5,6 +5,7 @@ import type {
   PayloadDescarteFin,
   PayloadDescarteInicio,
 } from "@/lib/advance/descarte";
+import type { FaseError } from "@/lib/advance/dominio";
 import type { EstadoNodo } from "@/lib/estadoNodo";
 
 export type Evento =
@@ -91,7 +92,18 @@ export type Evento =
   | { nombre: "advance_descarte_inicio"; props: PayloadDescarteInicio }
   | { nombre: "advance_descarte_alternativa"; props: PayloadDescarteAlternativa }
   | { nombre: "advance_descarte_fatal"; props: PayloadDescarteFatal }
-  | { nombre: "advance_descarte_fin"; props: PayloadDescarteFin };
+  | { nombre: "advance_descarte_fin"; props: PayloadDescarteFin }
+  /* ---------- Fobos Advance, ciclo de vida del error (F4, 2026-09-12) ---------- */
+  /* Una vez por montaje de /advance/errores con sesión y acceso; la pantalla de
+     ingreso y el 404 no emiten. Un contador por fase con la clave exacta de
+     lib/advance/dominio.ts (`sin-datos`, `abierto`, `observacion`, `cerrado`),
+     derivado de FaseError para que tsc obligue las claves; `total` = errores
+     considerados y `recaidas` = errores con al menos una recaída. Sin ids de
+     error ni de unidad. */
+  | {
+      nombre: "advance_errores_vista";
+      props: { total: number; recaidas: number } & Record<FaseError, number>;
+    };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en
