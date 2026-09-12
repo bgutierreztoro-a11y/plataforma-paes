@@ -2,11 +2,11 @@
  * Sesiones del modo descarte de Fobos Advance. Una fila por ítem resuelto,
  * escrita al terminar la sesión; nunca se corrige una anterior.
  *
- * Este módulo NO expone lectura, actualización ni borrado, y no es un olvido:
- * F3 solo escribe (docs/fobos-advance.md §4, registro F3). La lectura llega
- * en F4 con su propia migración de permisos, y el rol app_m1 tiene solo INSERT
- * sobre esta tabla (db/migraciones/008_advance_descartes.sql). Las tres capas
- * afirman lo mismo.
+ * Escribe (F3) y lee (F4). No expone actualización ni borrado, y no es un
+ * olvido: la tabla es append-only y el rol app_m1 tiene INSERT (008) y SELECT
+ * (009), nada más. La única lectura es `listarDescartesDeUsuario`, la que
+ * justifica el GRANT de db/migraciones/009_advance_descartes_select.sql; una
+ * consulta nueva es una migración nueva que la cite.
  *
  * `usuarioId` es siempre el user id de Clerk verificado en el servidor con
  * auth(), nunca un valor que venga del cuerpo de la petición. La identidad de
@@ -14,7 +14,7 @@
  * cada fila y no en una tabla aparte.
  */
 import type { RegistroItem } from "@/lib/advance/descarte";
-import { consultarEnLote } from "./db";
+import { consultar, consultarEnLote } from "./db";
 
 /** Espejo de db/migraciones/008_advance_descartes.sql. */
 export interface FilaAdvanceDescarte {
@@ -72,5 +72,28 @@ export async function registrarSesionDescarte(
           ],
         ] as const,
     ),
+  );
+}
+
+/**
+ * Filas de un estudiante en una unidad, cronológicas, para que
+ * lib/advance/dominio.ts calcule al vuelo el ciclo de vida de sus errores. La
+ * identidad del error es (unidad_id, id local): por eso la unidad va en el
+ * filtro. `item_id` como segundo criterio solo hace determinista la lista; las
+ * filas de una sesión comparten `creado_en` y el orden que pesa lo fija
+ * dominio.ts (docs/pendientes.md, deudas de F4 bloque A).
+ */
+export async function listarDescartesDeUsuario(
+  usuarioId: string,
+  unidadId: string,
+): Promise<FilaAdvanceDescarte[]> {
+  return consultar<FilaAdvanceDescarte>(
+    "listarDescartesDeUsuario",
+    `SELECT id, usuario_id, sesion_id, unidad_id, item_id,
+            orden_descartes, errores_identificados, descarte_fatal, tiempo_ms, creado_en
+       FROM advance_descartes
+      WHERE usuario_id = $1 AND unidad_id = $2
+      ORDER BY creado_en ASC, item_id ASC`,
+    [usuarioId, unidadId],
   );
 }
