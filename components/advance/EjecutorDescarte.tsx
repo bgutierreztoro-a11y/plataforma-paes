@@ -43,6 +43,10 @@ interface EjecutorDescarteProps {
   alDescartar?: (payload: PayloadDescarteAlternativa) => void;
   alFatal?: (payload: PayloadDescarteFatal) => void;
   alTerminar?: (payload: PayloadDescarteFin) => void;
+  /* Persistencia (F3). Los registros completos de la sesión, una vez, al
+     cerrar el último ítem. Quien los envía es la ruta, no el ejecutor; la
+     galería no lo pasa y no envía nada. */
+  alCerrarSesion?: (registros: RegistroItem[]) => void;
 }
 
 /**
@@ -68,6 +72,7 @@ export function EjecutorDescarte({
   alDescartar,
   alFatal,
   alTerminar,
+  alCerrarSesion,
 }: EjecutorDescarteProps) {
   const [indice, setIndice] = useState(0);
   const [registros, setRegistros] = useState<RegistroItem[]>([]);
@@ -118,6 +123,7 @@ export function EjecutorDescarte({
     setRegistros(acumulados);
     if (esUltimo) {
       alTerminar?.(payloadDescarteFin(unidadId, acumulados));
+      alCerrarSesion?.(acumulados);
       setEstado(null);
       setIndice(items.length);
       return;
