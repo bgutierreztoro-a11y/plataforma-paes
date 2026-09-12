@@ -13,6 +13,32 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
+## 🟡 Dos deudas de F4 Bloque A: el orden de los ítems de una sesión no se persiste, y el validador no exige errores distintos por ítem (abierta 2026-09-12, al planificar el ciclo de vida del error)
+
+1. `advance_descartes` no guarda la posición del ítem dentro de la sesión. Las
+   filas de una sesión se insertan en una transacción (`consultarEnLote`) y
+   `creado_en DEFAULT now()` es la hora de inicio de la transacción, así que
+   las 5 comparten instante; `id` es `gen_random_uuid()` y `seleccionarSesion`
+   ordena con `Math.random`. Medido el 2026-09-12 sobre el banco piloto: el
+   100 % de las sesiones de 5 ítems repiten al menos un error (15 cupos sobre
+   9 errores; error-3 está en 10 de 20 ítems), y BKT no conmuta: desde
+   p(L0)=0,30, acierto→fracaso da 0,328 y fracaso→acierto da 0,547.
+   Decisión firmada para F4 (docs/fobos-advance.md §6.3, lib/advance/dominio.ts):
+   a igual instante, para cada error, primero sus aciertos y al final sus
+   fracasos (la permutación que termina más baja: nunca cierra lo que el orden
+   real no habría cerrado). Recuperar el orden real exige persistirlo (columna
+   `posicion`, o `creado_en DEFAULT clock_timestamp()`), toca el path de
+   escritura firmado en F3 y solo sirve para filas futuras. Se decide aparte.
+
+2. Ni `content/advance/schema/item-advance.schema.json` ni
+   `scripts/validar-contenido.mjs` (reglas 1 a 7 del `$comment`) exigen que los
+   tres `errorCatalogado` de un ítem sean distintos. El banco piloto cumple
+   (0 de 20 ítems repiten), pero un banco futuro podría romper el invariante de
+   D5 (un error nunca recibe acierto y fracaso en el mismo ítem).
+   `lib/advance/dominio.ts` deduplica y el acierto gana; la regla del validador
+   ("los tres `errorCatalogado` de un ítem son distintos") queda por firmar y
+   escribir en una sesión propia.
+
 ## 🟡 El chequeo del espejo de `usuarios` que describe la 006 no existe, y la 007 debe borrar también en `advance_descartes` (abierta 2026-09-11, al planificar F3 de Advance)
 
 Dos notas sobre el mismo hueco: escribir por usuario en Neon cuando el espejo de

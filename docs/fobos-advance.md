@@ -104,14 +104,14 @@ app/advance/                     ruta raíz propia, nunca anidada en /linea o /c
   descarte/[unidadId]/page.tsx   sesión de descarte
   errores/page.tsx               ciclo de vida de los errores
   entrenar/[sesionId]/page.tsx   sesión de entrenamiento
-  desempeno/page.tsx             panel 2×2
+  desempeno/page.tsx             panel 2×2, fuera de F4 (§6.2)
 
 components/advance/              todo lo exclusivo de Advance
   EjecutorDescarte.tsx
   AlternativaDescartable.tsx
   ResultadoDescarte.tsx
   TarjetaError.tsx
-  PanelDesempeno.tsx
+  PanelDesempeno.tsx             fuera de F4 (§6.2)
   MapaRecuperables.tsx
   TramoAdvance.tsx               el punto de entrada en el riel
   PuertaAdvance.tsx              estado bloqueado
@@ -355,7 +355,7 @@ Piezas: `lib/advance/descarte.ts` (tipo `CuerpoSesionDescarte`, armado con `Math
 
 Recién aquí entran las mecánicas que dependen del historial.
 
-**4.1** Panel 2×2 (sección 6.2).
+**4.1** Panel 2×2 (sección 6.2). Fuera de F4 (2026-09-12): con descarte, acierto no tiene definición limpia y el cuadrante de error conceptual queda vacío por diseño; requiere modo clásico.
 **4.2** Ciclo de vida del error con p(L) (sección 6.3).
 **4.3** Repaso de errores y sesiones de entrenamiento dirigidas.
 **4.4** Re-diagnóstico.
@@ -422,7 +422,7 @@ El enunciado es la parte barata. El trabajo real es el mapeo.
 
 Campos nuevos respecto del schema de lecciones:
 
-- `tiempoReferenciaSeg`: obligatorio. Valores por defecto según dificultad: baja 80, media 120, alta 160. Base: 140 minutos para 65 preguntas da 129 segundos promedio. Se calibra con datos reales cuando exista F3.
+- `tiempoReferenciaSeg`: obligatorio. Valores por defecto según dificultad: baja 80, media 120, alta 160. Base: 140 minutos para 65 preguntas da 129 segundos promedio. Se calibra con datos reales cuando exista F3. Queda escrito en el banco piloto sin consumidor a propósito: su consumidor es el panel 2×2 (§6.2), que exige modo clásico. No es un campo muerto y no se retira.
 - `errorCatalogado`: obligatorio en los tres distractores.
 - `feedbackDescarte`: el texto que aparece cuando el estudiante descarta **correctamente** esa alternativa. No es el feedback de haberla elegido. Es distinto y hay que escribirlo aparte.
 - `feedbackDescarteIncorrecto`: en la correcta. Aparece cuando el estudiante la descarta por error.
@@ -496,7 +496,7 @@ Sin gráficos. Sin porcentajes decorativos. Reutiliza `FranjaDeItems` para el ec
 
 ---
 
-### 6.2 Panel 2×2 (requiere F3)
+### 6.2 Panel 2×2 (requiere modo clásico)
 
 Cruce de acierto con tiempo, usando `tiempoReferenciaSeg`.
 
@@ -531,14 +531,14 @@ abierto  →  observación  →  cerrado
 
 **Cerrado.** p(L) supera el umbral, con aciertos espaciados en el tiempo. No basta con acertar tres veces seguidas en la misma sesión.
 
-**Modelo.** BKT simplificado. Parámetros iniciales, a calibrar con datos reales:
+**Modelo.** BKT simplificado. Parámetros iniciales, a calibrar con datos reales. Fuente: Corbett & Anderson (1995), vía `docs/doctrina-aprendizaje-fobos.md` P10. Corregido el 2026-09-12: acá decía p(T)=0,25 y umbral 0,85; manda la doctrina.
 
 ```
 p(L0)    = 0,30   conocimiento previo
-p(T)     = 0,25   probabilidad de aprender por intento
+p(T)     = 0,15   probabilidad de aprender por intento
 p(guess) = 0,25   4 alternativas
 p(slip)  = 0,10   error por descuido
-umbral de cierre = 0,85
+umbral de cierre = 0,95
 ```
 
 Restricción: dos de los aciertos tienen que estar separados por al menos 24 horas. Sin eso, cerrar un error es cuestión de insistir en la misma sesión.
