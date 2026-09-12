@@ -13,7 +13,11 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
-## 🔴 Copy crudo del catálogo en `/advance/errores`: la tarjeta muestra la descripción de `content/errores/` tal como está escrita, y no fue redactada para un estudiante (abierta 2026-09-12, al cerrar F4)
+## ✅ Copy crudo del catálogo en `/advance/errores`: resuelta para porcentaje (2026-09-12, F4b)
+
+Estaba abierta como 🔴 desde el cierre de F4, el mismo día ("la tarjeta muestra
+la descripción de `content/errores/` tal como está escrita, y no fue redactada
+para un estudiante"). El texto original:
 
 `TarjetaEstadoError` (`components/advance/TarjetaEstadoError.tsx`) muestra
 `descripcion` de `content/errores/<modulo>.json` sin ninguna transformación:
@@ -31,6 +35,47 @@ reescritura de las descripciones que además tendría que seguir sirviendo a
 `auditar-leccion.mjs` y a los feedbacks. Por eso es 🔴 y no se resuelve desde
 `components/`. No bloquea el cierre de F4 (criterio D7): la pantalla muestra
 el estado correcto; lo que está mal es el registro del copy.
+
+**Qué se hizo (F4b, commits `deca5f7`, `779e00d`, `0514560`).** La primera de
+las dos opciones: campos nuevos por error, redactados para el estudiante y
+firmados por Benja, en `content/errores/porcentaje.json`: `titulo` y `apoyo`
+(lo que muestra la tarjeta) y `repaso { camino, correcto, ejemplo }` (la
+pantalla nueva `/advance/errores/<unidadId>/<errorId>`, a la que la tarjeta
+ahora enlaza). `descripcion` no se tocó: sigue siendo la ficha de autor y la
+siguen consumiendo `auditar-leccion.mjs`, `lib/sanitizar.ts` y los feedbacks.
+El validador acepta los tres campos como opcionales y exige su forma cuando
+están; `catalogoCompletoDelModulo` los lee y `catalogoDelModulo` queda intacta
+como proyección. Registro en `docs/fobos-advance.md` §4, F4b.
+
+**Lo que NO cierra**, y sigue abierto:
+
+- Los otros diez catálogos (`cuerpos-geometricos`, `ecuaciones-inecuaciones`,
+  `enteros-racionales`, `expresiones-algebraicas`, `figuras-geometricas`,
+  `funcion-cuadratica`, `funcion-lineal-afin`, `potencias-raices`,
+  `proporcionalidad`, `sistemas-2x2`) siguen siendo `{ id, descripcion }`. Hoy
+  no tienen banco Advance, así que no producen tarjetas; el día que lo tengan,
+  `tarjetasDeUnidad` cae a `descripcion` sin `apoyo` y el repaso muestra
+  "Todavía no hay repaso para este error." en vez de las tres secciones. La
+  caída está cubierta por test y por la galería, pero es el mismo copy crudo
+  de esta entrada, unidad por unidad, hasta que cada catálogo tenga su copy.
+- `ResultadoDescarte` ("Qué error apareció más") sigue leyendo `descripcion`
+  vía `catalogoDelModulo`, exactamente como decía el texto original. F4b no lo
+  tocó: la decisión firmada fue dejar F2 con cero diff. Cuando se aborde, el
+  dato ya está en el catálogo (`titulo`/`apoyo` de porcentaje).
+
+## 🟡 «Practicar este error» abre la sesión completa de la unidad, no una sesión filtrada por ese error (abierta 2026-09-12, F4b)
+
+La pantalla de repaso `/advance/errores/<unidadId>/<errorId>`
+(`components/advance/RepasoError.tsx`) cierra con "Practicar este error", que
+enlaza a `/advance/descarte/<unidadId>`: la sesión normal de la unidad, cinco
+ítems al azar de `seleccionarSesion` (`lib/advance/seleccion.ts`), sin mirar
+qué error se acaba de repasar. El botón promete algo más específico de lo que
+entrega. Es la decisión firmada de F4b: una sesión dirigida por error es el
+punto 4.3 de `docs/fobos-advance.md`, reubicado a F5 el 2026-09-12 porque
+exige `seleccion.ts` dirigido por estado de error y datos reales de varios
+días para construirlo con sentido. Mientras tanto, el copy del botón se queda
+tal cual por decisión de Benja. Cuando 4.3 exista, el link ya tiene `unidadId`
+y `errorId` a mano en la ruta para pasarle el filtro.
 
 ## 🟡 `/advance/errores` no agrupa por fase: el orden de D8 va implícito, sin encabezados de grupo (abierta 2026-09-12, al cerrar F4)
 
