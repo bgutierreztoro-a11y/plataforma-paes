@@ -215,12 +215,22 @@ export function figurasDeEscena(datos: DatosTransformacionEscena): Poligono[] {
   return figuras;
 }
 
-/** Puntos que la escena necesita dentro de cuadro además de los vértices: centros de rotación. */
+/**
+ * Puntos que la escena necesita dentro de cuadro además de los vértices: el
+ * centro de cada rotación y un punto de cada eje de reflexión, para que el
+ * eje se vea aunque la figura quede lejos de él.
+ */
 export function puntosAuxiliares(datos: DatosTransformacionEscena): Punto[] {
   const puntos: Punto[] = [];
   for (const t of datos.transformaciones) {
     if (t.tipo === "rotacion") puntos.push(t.centro ?? ORIGEN);
-    if (t.tipo === "reflexion" && t.eje === "origen") puntos.push(ORIGEN);
+    if (t.tipo === "reflexion") {
+      if (typeof t.eje === "object") {
+        puntos.push("vertical" in t.eje ? [t.eje.vertical, 0] : [0, t.eje.horizontal]);
+      } else {
+        puntos.push(ORIGEN);
+      }
+    }
   }
   return puntos;
 }

@@ -26,7 +26,12 @@ import {
   type VistaCuerpo,
 } from "@/components/ilustraciones/IlustracionCuerpoGeometrico";
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
+import { IlustracionTransformacion } from "@/components/ilustraciones/IlustracionTransformacion";
+import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
 import { motivoRechazoCilindro, motivoRechazoParalelepipedo } from "@/lib/cuerposGeometricos";
+import { motivoRechazoDatosTransformacion } from "@/lib/transformacionesIsometricas";
+import { motivoRechazoDatosSemejanza } from "@/lib/semejanza";
+import type { DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
@@ -275,6 +280,20 @@ function esDatosCuerpoGeometrico(datos: unknown): datos is DatosCuerpoGeometrico
   }
 }
 
+/**
+ * Los dos `datos` con contrato cerrado se discriminan por `datos.tipo`, no por
+ * forma, y su guard es la misma función que corre `npm run validar`: lo que
+ * pasa el validador se dibuja, y lo que el validador rechaza cae acá al
+ * `<figure>` de texto. Mismo criterio que `esDatosCuerpoGeometrico`.
+ */
+function esDatosTransformacion(datos: unknown): datos is DatosTransformacion {
+  return motivoRechazoDatosTransformacion(datos) === null;
+}
+
+function esDatosSemejanza(datos: unknown): datos is DatosSemejanza {
+  return motivoRechazoDatosSemejanza(datos) === null;
+}
+
 function esDatosBandas(datos: unknown): datos is DatosBandas {
   const bandas = (datos as DatosBandas | null)?.bandas;
   return (
@@ -418,6 +437,24 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
       <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionCuerpoGeometrico {...bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosTransformacion(bloque.datos)) {
+    return (
+      <figure className={TARJETA_VISUAL}>
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionTransformacion {...bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosSemejanza(bloque.datos)) {
+    return (
+      <figure className={TARJETA_VISUAL}>
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <IlustracionSemejanza {...bloque.datos} />
       </figure>
     );
   }

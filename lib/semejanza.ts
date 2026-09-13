@@ -177,8 +177,14 @@ export const MAX_VERTICES_SEMEJANZA = 5;
 
 /** Mismo viewBox que las figuras y los cuerpos: 240 × 200 con margen 28. */
 export const VIEW_BOX_SEMEJANZA = { ancho: 240, alto: 200, margen: 28 } as const;
-/** Separación entre las dos figuras lado a lado, como fracción del ancho sumado de ambas. */
-export const SEPARACION_RELATIVA = 0.12;
+/**
+ * Separación entre las dos figuras lado a lado, como fracción del ancho sumado
+ * de ambas. Con 0,12 las cotas de los lados enfrentados se pisaban (medido el
+ * 2026-09-13 en /vista-previa/semejanza); 0,35 deja sitio a las dos.
+ */
+export const SEPARACION_RELATIVA = 0.35;
+/** Alto reservado bajo el suelo de la disposición anidada para la línea de cota de la base grande. */
+export const RESERVA_COTA_INFERIOR = 34;
 /** Mismo umbral que `ARISTA_MINIMA_PX` de los cuerpos: bajo 14 px una cota pisa a la vecina. */
 export const LADO_MINIMO_PX = 14;
 
@@ -220,10 +226,10 @@ export function ladoMasCorto(fig: Poligono): number {
   return minimo;
 }
 
-/** Píxeles por unidad de la disposición anidada: el triángulo grande llena el área útil. */
+/** Píxeles por unidad de la disposición anidada: el triángulo grande llena el área útil, menos la reserva de la cota inferior. */
 export function escalaAnidada(grande: TrianguloAnidado): number {
   const areaAncho = VIEW_BOX_SEMEJANZA.ancho - VIEW_BOX_SEMEJANZA.margen * 2;
-  const areaAlto = VIEW_BOX_SEMEJANZA.alto - VIEW_BOX_SEMEJANZA.margen * 2;
+  const areaAlto = VIEW_BOX_SEMEJANZA.alto - VIEW_BOX_SEMEJANZA.margen * 2 - RESERVA_COTA_INFERIOR;
   return Math.min(areaAncho / grande.horizontal, areaAlto / grande.vertical);
 }
 

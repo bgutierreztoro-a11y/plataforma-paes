@@ -142,3 +142,44 @@ export function cerosParabola(a: number, b: number, c: number): number[] {
     .map(sinCeroNegativo)
     .sort((p, q) => p - q);
 }
+
+// ---------- plano con rango propio ----------
+
+export interface RangoPlano {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+}
+
+/** El rango fijo de siempre, como objeto: lo que usan la recta y la parábola. */
+export const RANGO_FIJO: RangoPlano = {
+  xMin: DOMINIO.min,
+  xMax: DOMINIO.max,
+  yMin: DOMINIO.min,
+  yMax: DOMINIO.max,
+};
+
+/**
+ * Funciones de mapeo a píxeles para un rango cuadrado cualquiera, con la misma
+ * cuenta que `xAPixel`/`yAPixel`: con `RANGO_FIJO` devuelve exactamente esas.
+ * Existe porque las transformaciones isométricas encuadran cada escena a sus
+ * propios puntos, y estirar una figura de 6 unidades sobre 20 la dejaría
+ * ilegible.
+ */
+export function escalaPara(rango: RangoPlano) {
+  const escala = AREA / (rango.xMax - rango.xMin);
+  return {
+    xAPixel: (x: number) => MARGEN + (x - rango.xMin) * escala,
+    yAPixel: (y: number) => TAMANO_SVG - MARGEN - (y - rango.yMin) * escala,
+    pixelesPorUnidad: escala,
+  };
+}
+
+/** Cada cuántas unidades va un rótulo numérico en los ejes, según el ancho del rango. */
+export function pasoDeRotulos(rango: RangoPlano): number {
+  const ancho = rango.xMax - rango.xMin;
+  if (ancho <= 12) return 1;
+  if (ancho <= 24) return 2;
+  return 5;
+}
