@@ -1,0 +1,323 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-medidas-de-posicion",
+  "moduloId": "medidas-de-posicion",
+  "titulo": "Cierre del módulo: Medidas de posición",
+  "_notasInternas": [
+    "Cierre del módulo 'Medidas de posición', construido después de que las 3 lecciones (posicion-partir-en-cuatro, posicion-caja-que-resume, posicion-donde-quedaste-tu) pasaran npm run validar y npm run auditar sin bloqueantes. Diseño: docs/diseno-modulo-medidas-de-posicion.md, sección 'Cierre'.",
+    "Cobertura por lección: L1 (ordenar, mediana, cuartiles, rango intercuartil) = ítems 1, 2, 3 y 5. L2 (percentiles, resumen de cinco números, lectura del cajón) = ítems 4, 5 y 6. L3 (comparar grupos, percentil en contexto, menor es mejor) = ítems 7 y 8. Cobertura por habilidad: resolver = ítems 1, 2. modelar = ítems 3, 4. representar = ítems 5, 6. argumentar = ítems 7, 8 (2 de cada una). Dificultad: baja = ítems 1, 2; media = ítems 3, 4, 5, 6; alta = ítems 7, 8.",
+    "Catálogo canónico: content/errores/medidas-de-posicion.json. Ids referenciados: calcula-cuartiles-sin-ordenar (1A, 2C), toma-dato-central-sin-promediar (1B), confunde-mediana-con-promedio (1D), lee-cuartil-como-posicion-entera (2A, 3A, 4B, 5C), toma-cuartil-como-fraccion-del-rango (2D, 3C, 4D, 5D), confunde-rango-con-intercuartil (3D), cuenta-datos-sobre-en-vez-de-bajo (4A, 6D), ubica-mediana-en-centro-de-caja (5B), lee-caja-como-valores-posibles (6B, 7D), lee-bigote-largo-como-mas-datos (6C, 7C), concluye-promedio-desde-mediana (7B), invierte-lectura-cuando-menor-es-mejor (8B), lee-percentil-como-porcentaje-de-aciertos (8C), confunde-percentil-con-valor (8D). Los 24 distractores llevan errorCatalogado. compara-cajones-en-escalas-distintas no aparece en el cierre: todos los cajones del cierre van sobre la misma escala por convención del módulo, y el id se ejercita en la práctica de L3; con eso los 15 ids quedan cubiertos entre L1, L2, L3 y cierre.",
+    "Dominios: sacos de papas de un productor (ítems 1 y 5); tiempos de resolver un cubo (dominio de L1, números nuevos, ítem 2); pasos diarios (dominio de L2, números nuevos, ítem 3); salto largo (dominio de L3, números nuevos, ítem 4); mochilas escolares en kilos (ítem 6); minutos de espera de la micro en dos paraderos (ítem 7); una corrida de 10 kilómetros (ítem 8).",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (ordenar, mediana, media, cuartiles, cuartilesIncluyendo, rangoIntercuartil, percentil, percentilAlternativo, resumenCincoNumeros): ítem 1, 46, 52, 49, 58, 47, 51, 53, 48, 50, 54 → ordenados 46 a 54 y 58, mediana 50,5, promedio 50,8, quinto y sexto de la lista bruta 47 y 51 (49). Ítem 2, 19, 24, 21, 27, 18, 23, 30, 25 → 18, 19, 21, 23, 24, 25, 27, 30; Q3 = 26 (cuartiles = cuartilesIncluyendo, n = 8); sexto dato 25; 18 + 0,75 · 12 = 27; sexto y séptimo de la lista bruta 23 y 30 (26,5). Ítem 3, 12 días 3.900, 4.400, 4.800, 5.100, 5.300, 5.600, 5.900, 6.200, 6.500, 6.900, 7.400, 8.100 → Q1 4.950, Q3 6.700, rango intercuartil 1.750; rango 4.200; tercero y noveno 4.800 y 6.500 (1.700); fracción del rango 4.950 y 7.050 (2.100). Ítem 4, 12 saltos 320, 327, 336, 343, 351, 358, 364, 371, 379, 386, 395, 410 → P80: p = 9,6, posición 10, 386 (percentil = percentilAlternativo); posición 9, 379; P20 = 336; 320 + 0,8 · 90 = 392. Ítem 5, 41, 48, 44, 52, 39, 46, 50, 43 → 39, 41, 43, 44, 46, 48, 50, 52; resumen 39, 42, 45, 49, 52 (cuartiles = cuartilesIncluyendo); (42 + 49) / 2 = 45,5; segundo y sexto 41 y 48; 39 + 0,25 · 13 = 42,25 y 39 + 0,75 · 13 = 48,75. Ítem 6, cajón de mochilas 2,4; 3,6; 4,2; 5,0; 6,4 kg: sobre Q3 el 25 %; (6,4 − 5,0) / 4,0 = 35 %. Ítem 7, paraderos A 2, 5, 8, 12, 22 y B 4, 7, 8, 9, 14 (16 esperas cada uno; datos crudos en la visual, resumen coincidente): rango intercuartil 7 y 2; cajas (12 − 5) / 20 = 35 % y (9 − 7) / 10 = 20 % de sus escalas. Ítem 8, percentil 20 de los tiempos.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {50,5; 26; 1.750; 386; 25} y de texto (resumen en 5, veredictos en 7 y 8); distractores numéricos {49; 50; 50,8; 25 (ítem 2, segundos); 26,5; 27; 1.700; 2.100; 4.200; 336; 379; 392; 35; 50; 75}. El 25 es correcta en el ítem 6 (25 %, porcentaje de mochilas) y distractor en el ítem 2 (25 s, un tiempo): son ítems distintos, magnitudes distintas y el mismo dígito con otro rol; se deja registrado. Cotejo contra los contextosNumericos de L1, L2 y L3: ninguna escena ni conjunto de números de este cierre se repite en las lecciones (los dominios reutilizados llevan datos nuevos).",
+    "Ítems con visual en lib/visualesItems.tsx: cierre-posicion-6 (un cajón de mochilas con los cinco valores rotulados; se pide el porcentaje sobre Q3, que no está escrito) y cierre-posicion-7 (dos cajones de paraderos sobre la misma escala; se juzga la afirmación sobre la predictibilidad). Los ítems 1 a 5 y 8 no llevan visual: el cajón rotularía los valores que se piden.",
+    "Toda la aritmética de los 8 ítems y sus 24 alternativas fue recalculada desde cero a partir de los números propios de cada ítem, nunca por ingeniería inversa desde una alternativa deseada. Pendientes las dos auditorías en hilos aislados y la consulta de colisión de Benja antes de cualquier git push."
+  ],
+  "contextosNumericos": [
+    "cierre-posicion-1 (sacos de papas, resolver, baja): 46, 52, 49, 58, 47, 51, 53, 48, 50, 54 kg → mediana 50,5",
+    "cierre-posicion-2 (tiempos de un cubo, resolver, baja): 19, 24, 21, 27, 18, 23, 30, 25 s → Q3 = 26",
+    "cierre-posicion-3 (pasos diarios, modelar, media): 12 días ordenados 3.900, 4.400, 4.800, 5.100, 5.300, 5.600, 5.900, 6.200, 6.500, 6.900, 7.400, 8.100 → rango intercuartil 1.750",
+    "cierre-posicion-4 (salto largo, modelar, media): 12 saltos ordenados 320, 327, 336, 343, 351, 358, 364, 371, 379, 386, 395, 410 cm → percentil 80 = 386",
+    "cierre-posicion-5 (sacos de papas, representar, media): 41, 48, 44, 52, 39, 46, 50, 43 kg → resumen 39, 42, 45, 49, 52",
+    "cierre-posicion-6 (mochilas escolares, representar, media): cajón 2,4; 3,6; 4,2; 5,0; 6,4 kg → sobre 5,0 kg el 25 %",
+    "cierre-posicion-7 (dos paraderos, argumentar, alta): esperas en minutos, A con 2, 5, 8, 12, 22 y B con 4, 7, 8, 9, 14; misma mediana, rango intercuartil 7 contra 2",
+    "cierre-posicion-8 (corrida de 10 km, argumentar, alta): percentil 20 de los tiempos, el 20 % fue igual o más rápido"
+  ],
+  "items": [
+    {
+      "id": "cierre-posicion-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un productor pesó diez sacos de papas, en kilos y en el orden en que los fue cargando: 46, 52, 49, 58, 47, 51, 53, 48, 50, 54. ¿Cuál es la mediana de los pesos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "49 kg",
+          "esCorrecta": false,
+          "feedback": "49 promedia el quinto y el sexto saco de la lista tal como venía (47 y 51). Esa lista está en orden de carga, no de peso. Ordenada, los centrales son 50 y 51.",
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+        },
+        {
+          "clave": "B",
+          "texto": "50 kg",
+          "esCorrecta": false,
+          "feedback": "50 es el quinto saco de la fila ordenada, uno de los dos centrales. Con diez datos los centrales son el quinto y el sexto (50 y 51), y la mediana es su promedio.",
+          "errorCatalogado": "toma-dato-central-sin-promediar"
+        },
+        {
+          "clave": "C",
+          "texto": "50,5 kg",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ordenados: 46, 47, 48, 49, 50, 51, 52, 53, 54, 58. Los centrales son 50 y 51, y (50 + 51) / 2 = 50,5."
+        },
+        {
+          "clave": "D",
+          "texto": "50,8 kg",
+          "esCorrecta": false,
+          "feedback": "50,8 es el promedio de los diez pesos (508 / 10). La mediana es el centro de la fila ordenada, el promedio del quinto y el sexto dato; el saco de 58 la sube al promedio, no a la mediana.",
+          "errorCatalogado": "confunde-mediana-con-promedio"
+        }
+      ],
+      "solucion": "Se ordenan los diez pesos de menor a mayor: 46, 47, 48, 49, 50, 51, 52, 53, 54, 58. Con n = 10 (par), la mediana es el promedio de los dos centrales, el quinto y el sexto: (50 + 51) / 2 = 50,5 kg. Comprobación: cinco sacos pesan menos de 50,5 y cinco más. ✓"
+    },
+    {
+      "id": "cierre-posicion-2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Los tiempos, en segundos, de ocho intentos de resolver un cubo, en el orden en que se hicieron, fueron 19, 24, 21, 27, 18, 23, 30 y 25. Con Q3 como la mediana de la mitad superior de los datos ordenados, ¿cuál es el tercer cuartil?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "25 s",
+          "esCorrecta": false,
+          "feedback": "25 es el sexto tiempo de la fila ordenada, no el corte. La mitad superior es 24, 25, 27, 30, y su mediana es el promedio de 25 y 27.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "B",
+          "texto": "26 s",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ordenados: 18, 19, 21, 23, 24, 25, 27, 30. Mitad superior: 24, 25, 27, 30; su mediana es (25 + 27) / 2 = 26."
+        },
+        {
+          "clave": "C",
+          "texto": "26,5 s",
+          "esCorrecta": false,
+          "feedback": "26,5 promedia el sexto y el séptimo tiempo de la lista tal como venía (23 y 30). Esa lista no está ordenada. Ordenada, la mitad superior es 24, 25, 27, 30, y Q3 = 26.",
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+        },
+        {
+          "clave": "D",
+          "texto": "27 s",
+          "esCorrecta": false,
+          "feedback": "27 es 18 más tres cuartos del rango (12). Eso parte la escala de valores, no la fila de datos: bajo 27 quedan seis tiempos, no exactamente tres cuartos de ocho. Q3 es la mediana de la mitad superior, 26.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        }
+      ],
+      "solucion": "Se ordenan los ocho tiempos: 18, 19, 21, 23, 24, 25, 27, 30. Con n = 8, la mitad superior son los cuatro últimos: 24, 25, 27, 30. Su mediana es el promedio de los dos centrales, (25 + 27) / 2 = 26 segundos. Comprobación: bajo 26 quedan seis de los ocho tiempos, el 75 %. ✓"
+    },
+    {
+      "id": "cierre-posicion-3",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Una persona registró sus pasos diarios durante 12 días. Ordenados, fueron: 3.900, 4.400, 4.800, 5.100, 5.300, 5.600, 5.900, 6.200, 6.500, 6.900, 7.400, 8.100. Para describir cuán parejos fueron sus días, quiere el ancho del 50 % central de los datos. ¿Cuánto vale ese ancho?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.700 pasos",
+          "esCorrecta": false,
+          "feedback": "1.700 es 6.500 − 4.800, el noveno dato menos el tercero. Con doce datos, Q1 es el promedio del tercero y el cuarto (4.950) y Q3 el del noveno y el décimo (6.700): el ancho es 1.750.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "B",
+          "texto": "1.750 pasos",
+          "esCorrecta": true,
+          "feedback": "Correcto. Q1 = (4.800 + 5.100) / 2 = 4.950; Q3 = (6.500 + 6.900) / 2 = 6.700; rango intercuartil = 6.700 − 4.950 = 1.750."
+        },
+        {
+          "clave": "C",
+          "texto": "2.100 pasos",
+          "esCorrecta": false,
+          "feedback": "2.100 sale de tomar Q1 y Q3 como el mínimo más un cuarto y tres cuartos del rango (4.950 y 7.050). Acá el primero coincide por casualidad, pero el segundo no: Q3 es la mediana de la mitad superior, 6.700, y el ancho es 1.750.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        },
+        {
+          "clave": "D",
+          "texto": "4.200 pasos",
+          "esCorrecta": false,
+          "feedback": "4.200 es el rango, 8.100 − 3.900: el ancho de todos los datos. El ancho del 50 % central es el rango intercuartil, Q3 − Q1.",
+          "errorCatalogado": "confunde-rango-con-intercuartil"
+        }
+      ],
+      "solucion": "El ancho del 50 % central es el rango intercuartil, Q3 − Q1. Con n = 12, la mitad inferior son los seis primeros datos y Q1 es el promedio del tercero y el cuarto: (4.800 + 5.100) / 2 = 4.950. La mitad superior son los seis últimos y Q3 es el promedio del noveno y el décimo: (6.500 + 6.900) / 2 = 6.700. Rango intercuartil = 6.700 − 4.950 = 1.750 pasos. Comprobación: entre 4.950 y 6.700 quedan seis de los doce días, el 50 %. ✓"
+    },
+    {
+      "id": "cierre-posicion-4",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Los 12 saltos de un grupo de atletismo, ordenados, fueron 320, 327, 336, 343, 351, 358, 364, 371, 379, 386, 395 y 410 cm. Para fijar la marca mínima de una categoría avanzada, el club usa el percentil 80 del grupo (con la convención de tomar el dato en la posición siguiente cuando k · n ÷ 100 no es entero). ¿Cuál es esa marca?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "336 cm",
+          "esCorrecta": false,
+          "feedback": "336 es el tercer salto: deja el 80 % por ARRIBA. El percentil 80 deja el 80 % por abajo, así que está cerca del final de la fila: 0,8 · 12 = 9,6, posición 10.",
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+        },
+        {
+          "clave": "B",
+          "texto": "379 cm",
+          "esCorrecta": false,
+          "feedback": "379 es el salto número 9. Como 0,8 · 12 = 9,6 no es entero, el percentil 80 es el dato de la posición siguiente, la 10: 386.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "C",
+          "texto": "386 cm",
+          "esCorrecta": true,
+          "feedback": "Correcto. p = 0,8 · 12 = 9,6; no es entero, así que P80 es el dato en la posición 10: 386 cm. Hasta 386 inclusive quedan 10 de 12 saltos."
+        },
+        {
+          "clave": "D",
+          "texto": "392 cm",
+          "esCorrecta": false,
+          "feedback": "392 es 320 + 0,8 · 90, el 80 % del recorrido de la escala. Eso reparte los valores, no los datos. El percentil se busca por posición en la lista: la 10, que es 386.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        }
+      ],
+      "solucion": "n = 12 y k = 80: p = 80 · 12 ÷ 100 = 9,6. Como p no es entero, P80 es el dato en la posición siguiente, la 10, de la lista ordenada: 386 cm. Comprobación: bajo 386 quedan 9 de 12 saltos (el 75 %) y hasta 386 inclusive 10 de 12 (el 83 %), así que 386 es el primer salto que deja al menos el 80 % en o bajo él. ✓"
+    },
+    {
+      "id": "cierre-posicion-5",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Ocho sacos de papas pesaron, en kilos, 41, 48, 44, 52, 39, 46, 50 y 43. Para dibujar su diagrama de cajón, con Q1 y Q3 como las medianas de cada mitad, ¿cuál es el resumen de cinco números (mínimo, Q1, mediana, Q3, máximo)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "39; 42; 45; 49; 52",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ordenados: 39, 41, 43, 44, 46, 48, 50, 52. Mitad inferior 39, 41, 43, 44 → Q1 = 42; mediana = (44 + 46) / 2 = 45; mitad superior 46, 48, 50, 52 → Q3 = 49."
+        },
+        {
+          "clave": "B",
+          "texto": "39; 42; 45,5; 49; 52",
+          "esCorrecta": false,
+          "feedback": "45,5 es el centro geométrico de la caja, (42 + 49) / 2. La mediana es el promedio de los dos datos centrales, 44 y 46: 45. La caja no tiene por qué ser simétrica.",
+          "errorCatalogado": "ubica-mediana-en-centro-de-caja"
+        },
+        {
+          "clave": "C",
+          "texto": "39; 41; 45; 48; 52",
+          "esCorrecta": false,
+          "feedback": "41 y 48 son el segundo y el sexto dato. Con ocho datos cada mitad tiene cuatro, y su mediana es un promedio: (41 + 43) / 2 = 42 y (48 + 50) / 2 = 49.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "D",
+          "texto": "39; 42,25; 45; 48,75; 52",
+          "esCorrecta": false,
+          "feedback": "42,25 y 48,75 son el mínimo más un cuarto y tres cuartos del rango (13). Eso reparte la escala de valores, no los datos. Q1 y Q3 son las medianas de las mitades: 42 y 49.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        }
+      ],
+      "solucion": "Ordenados: 39, 41, 43, 44, 46, 48, 50, 52. Mínimo 39 y máximo 52. Mediana: promedio del cuarto y el quinto, (44 + 46) / 2 = 45. Q1: mediana de 39, 41, 43, 44 = (41 + 43) / 2 = 42. Q3: mediana de 46, 48, 50, 52 = (48 + 50) / 2 = 49. Resumen: 39; 42; 45; 49; 52. Comprobación: dos sacos bajo Q1, cuatro bajo la mediana, seis bajo Q3. ✓"
+    },
+    {
+      "id": "cierre-posicion-6",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El diagrama de cajón muestra el peso de las mochilas de un grupo de estudiantes: mínimo 2,4 kg, Q1 3,6 kg, mediana 4,2 kg, Q3 5,0 kg y máximo 6,4 kg. ¿Qué porcentaje de las mochilas pesa más de 5,0 kg?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "25 %",
+          "esCorrecta": true,
+          "feedback": "Correcto. 5,0 kg es Q3, y sobre Q3 queda el 25 % de los datos: el bigote derecho, sin importar cuánto mida."
+        },
+        {
+          "clave": "B",
+          "texto": "35 %",
+          "esCorrecta": false,
+          "feedback": "35 % es (6,4 − 5,0) / (6,4 − 2,4): la parte de la escala de kilos que ocupa el bigote derecho. Los datos se cuentan por tramos, y el bigote derecho tiene el 25 % de las mochilas.",
+          "errorCatalogado": "lee-caja-como-valores-posibles"
+        },
+        {
+          "clave": "C",
+          "texto": "50 %",
+          "esCorrecta": false,
+          "feedback": "Un bigote derecho largo no reúne más mochilas: tiene el 25 %, como cualquier tramo. Su largo (1,4 kg) dice que esas mochilas están repartidas entre 5,0 y 6,4 kg.",
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos"
+        },
+        {
+          "clave": "D",
+          "texto": "75 %",
+          "esCorrecta": false,
+          "feedback": "75 % es lo que queda BAJO Q3 (los otros tres tramos). Se pedía lo que pesa más de 5,0 kg, que es lo que queda sobre Q3: el 25 %.",
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+        }
+      ],
+      "solucion": "En un diagrama de cajón, Q3 deja el 75 % de los datos por abajo y el 25 % por arriba. Como 5,0 kg es el tercer cuartil, el 25 % de las mochilas pesa más de 5,0 kg: es el tramo del bigote derecho. El largo del bigote (de 5,0 a 6,4 kg) no cambia ese porcentaje; solo dice entre qué pesos se reparten esas mochilas. ✓"
+    },
+    {
+      "id": "cierre-posicion-7",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Los diagramas de cajón, sobre la misma escala, muestran los minutos de espera de la micro en dos paraderos, con 16 esperas registradas en cada uno. Paradero A: mínimo 2, Q1 5, mediana 8, Q3 12, máximo 22. Paradero B: mínimo 4, Q1 7, mediana 8, Q3 9, máximo 14. Una vecina afirma: «en el paradero B la espera es más predecible». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcta: las dos medianas son 8 minutos, pero en B el 50 % central de las esperas cabe en 2 minutos (de 7 a 9) y en A en 7 (de 5 a 12); B es más pareja.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La mediana no distingue los paraderos; el rango intercuartil sí: 9 − 7 = 2 contra 12 − 5 = 7. Y los extremos de B (4 y 14) también están más cerca que los de A (2 y 22)."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta, y además el promedio de espera es igual en los dos, porque las medianas coinciden.",
+          "esCorrecta": false,
+          "feedback": "El veredicto sobre la predictibilidad es correcto, pero el agregado no tiene respaldo: el cajón no muestra el promedio, y dos grupos con la misma mediana pueden tener promedios distintos (A tiene un máximo de 22 que sube su promedio y no su mediana).",
+          "errorCatalogado": "concluye-promedio-desde-mediana"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: en A hay más esperas cortas, porque su bigote izquierdo es más largo.",
+          "esCorrecta": false,
+          "feedback": "Un bigote más largo no tiene más esperas: tiene el 25 % de ellas, como cualquier tramo, cuatro en A y cuatro en B. En A esas cuatro esperas están más repartidas (de 2 a 5 minutos), y eso es menos predecible, no más.",
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: la caja de A ocupa el 35 % de su rango y la de B solo el 20 %, así que A concentra más esperas en su caja.",
+          "esCorrecta": false,
+          "feedback": "El porcentaje del rango que ocupa la caja es una parte de la escala de minutos, no una cantidad de esperas: toda caja tiene el 50 % de los datos, 8 de 16 en los dos paraderos. Lo que dice una caja más angosta es que esas 8 esperas están más juntas, o sea más predecibles.",
+          "errorCatalogado": "lee-caja-como-valores-posibles"
+        }
+      ],
+      "solucion": "Comparar dos cajones sobre la misma escala se hace con la mediana, el rango intercuartil y los extremos. Medianas: 8 minutos en ambos. Rango intercuartil: A, 12 − 5 = 7 minutos; B, 9 − 7 = 2 minutos. Extremos: A de 2 a 22, B de 4 a 14. El 50 % central de las esperas de B cabe en 2 minutos y el de A en 7, así que en B la espera varía menos: es más predecible. La afirmación es correcta y la alternativa que la respalda con evidencia es A."
+    },
+    {
+      "id": "cierre-posicion-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "En una corrida de 10 kilómetros, el tiempo de una corredora quedó en el percentil 20 de los tiempos de todos los participantes. Un amigo le dice: «quedaste entre los más lentos: solo le ganaste al 20 %». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: en tiempos, menor es mejor; percentil 20 significa que solo el 20 % tuvo un tiempo igual o menor, así que ella fue más rápida que el 80 %.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El percentil cuenta los datos en o bajo el propio, y en una carrera un tiempo bajo es un buen tiempo. Estar en el percentil 20 de los tiempos es estar entre los más rápidos."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: el percentil 20 siempre significa que el 80 % lo hizo mejor.",
+          "esCorrecta": false,
+          "feedback": "El percentil 20 significa que el 80 % tuvo un valor mayor. Con saltos, mayor es mejor y el percentil 20 sería un mal resultado; con tiempos, mayor es más lento, y el 80 % con tiempos mayores corrió más lento que ella.",
+          "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor"
+        },
+        {
+          "clave": "C",
+          "texto": "Es correcta: percentil 20 es como sacar 20 puntos de 100 en la carrera.",
+          "esCorrecta": false,
+          "feedback": "El percentil no es un puntaje ni una nota: es el porcentaje de participantes con un tiempo igual o menor que el suyo. No dice cuánto tardó ni cuántos puntos sacó, y en tiempos un percentil bajo es un buen resultado.",
+          "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, porque el percentil 20 quiere decir que llegó en el lugar 20 de la corrida.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto, pero la razón no: el percentil no es un lugar de llegada sino un porcentaje del grupo (el 20 % con tiempos iguales o menores). Si corrieron 500 personas, el percentil 20 no es el lugar 20.",
+          "errorCatalogado": "confunde-percentil-con-valor"
+        }
+      ],
+      "solucion": "El percentil de un dato es el porcentaje de datos del grupo en o bajo él. Percentil 20 de los tiempos: el 20 % de los participantes tuvo un tiempo igual o menor que el de la corredora, y el 80 % restante tuvo un tiempo mayor. Como en una carrera un tiempo mayor es más lento, la corredora fue más rápida que el 80 % de los participantes: quedó entre los más rápidos, no entre los más lentos. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Medidas de posición: solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Los 8 ítems, sus contextos (sacos de papas de un productor, tiempos de resolver un cubo, pasos diarios, salto largo de un grupo, mochilas escolares, minutos de espera de la micro en dos paraderos y una corrida de 10 kilómetros) y sus números fueron creados desde cero por el autor del proyecto, elegidos con n par y percentiles de posición no entera para que las dos convenciones de cuartil y de percentil coincidan, para no repetir ninguna escena ni conjunto de números de las tres lecciones del módulo ni de los contextosNumericos de content/, y verificados con node -e sobre lib/estadistica.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-medidas-de-posicion.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

@@ -228,6 +228,25 @@ const VISUALES: Record<string, EntradaVisual> = {
       ],
     },
   },
+  /* Mochilas: un cajón con los cinco valores; el porcentaje sobre Q3 no está escrito. */
+  "cierre-posicion-6": {
+    grafico: {
+      tipo: "diagramaCajon",
+      ejeHorizontal: "Peso en kg",
+      cajones: [{ nombre: "Mochilas", min: 2.4, q1: 3.6, mediana: 4.2, q3: 5, max: 6.4 }],
+    },
+  },
+  /* Dos paraderos sobre la misma escala: se juzga cuál espera es más predecible. */
+  "cierre-posicion-7": {
+    grafico: {
+      tipo: "diagramaCajon",
+      ejeHorizontal: "Minutos de espera",
+      cajones: [
+        { nombre: "Paradero A", min: 2, q1: 5, mediana: 8, q3: 12, max: 22, datos: [2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 12, 12, 15, 18, 22] },
+        { nombre: "Paradero B", min: 4, q1: 7, mediana: 8, q3: 9, max: 14, datos: [4, 5, 6, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 12, 14] },
+      ],
+    },
+  },
 };
 
 /**
