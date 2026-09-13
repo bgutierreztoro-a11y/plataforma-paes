@@ -110,13 +110,13 @@ Campos: `desafiosMinimos` (correcta **8**), `puntajeFinal` (correcta **90**).
 
 - **desafiosMinimos = 9** → "Estás a un desafío de distancia, y el motivo es el borde. Con 8 desafíos llegan a 34 + 56 = 90 puntos exactos. Como la condición dice 'al menos 90', esos 90 justos **sí** clasifican. El 9 sería necesario solo si pidieran superar los 90."
 - **desafiosMinimos = 7** → "Con 7 desafíos suman 34 + 49 = 83 puntos, y 83 no llega a 90. Prueba con uno más."
-- **desafiosMinimos = 56** → "Llegaste bien a 7d ≥ 56, pero ese 56 son los puntos que faltan, no los desafíos. Todavía falta repartir: cada desafío aporta 7 puntos." *(**error-4** del módulo)*
-- **desafiosMinimos = 13** → "Repartiste los 90 puntos entre los 7 de cada desafío (90 ÷ 7 ≈ 12,9 → 13) sin descontar antes los 34 que el equipo ya tenía. Esos 34 no hay que ganarlos de nuevo." *(**error-3** del módulo)*
+- **desafiosMinimos = 56** → "Llegaste bien a 7d ≥ 56, pero ese 56 son los puntos que faltan, no los desafíos. Todavía falta repartir: cada desafío aporta 7 puntos." *(**omite-dividir-por-coeficiente** del módulo)*
+- **desafiosMinimos = 13** → "Repartiste los 90 puntos entre los 7 de cada desafío (90 ÷ 7 ≈ 12,9 → 13) sin descontar antes los 34 que el equipo ya tenía. Esos 34 no hay que ganarlos de nuevo." *(**divide-antes-de-quitar-constante** del módulo)*
 - **puntajeFinal = 56** → "Ese es el aporte de los 8 desafíos (7 × 8 = 56), pero la pregunta es el puntaje **total**: faltan los 34 con que venían."
 
 **Nota de verificación matemática:** 34 + 7d ≥ 90. Restando 34 a ambos lados (desliza, no invierte): 7d ≥ 56. Dividiendo por 7, **positivo**, el sentido se conserva: d ≥ 8. Como d cuenta desafíos, es un entero ≥ 0, y el mínimo entero que cumple d ≥ 8 es **8**. Comprobación del borde: d = 8 → 34 + 7·8 = 34 + 56 = **90**, y 90 ≥ 90 **verdadero** ✓ clasifica. Comprobación del anterior: d = 7 → 34 + 49 = 83, y 83 ≥ 90 **falso** ✓ no clasifica. El 8 es efectivamente el mínimo.
 
-*Plausibilidad de los distractores:* **9** es el error de borde (leer "al menos" como estricto), el mismo que el Paso 1 anticipó y el que reaparece en el Ítem PAES 3. **7** es el vecino por abajo, que aparece si se resuelve 34 + 7d ≥ 90 con un redondeo mecánico hacia abajo de 56/7. **56** y **13** son errores ya catalogados en la lección de ecuaciones (error-4 y error-3), que sobreviven intactos al cambiar de `=` a `≥`.
+*Plausibilidad de los distractores:* **9** es el error de borde (leer "al menos" como estricto), el mismo que el Paso 1 anticipó y el que reaparece en el Ítem PAES 3. **7** es el vecino por abajo, que aparece si se resuelve 34 + 7d ≥ 90 con un redondeo mecánico hacia abajo de 56/7. **56** y **13** son errores ya catalogados en la lección de ecuaciones (omite-dividir-por-coeficiente y divide-antes-de-quitar-constante), que sobreviven intactos al cambiar de `=` a `≥`.
 
 ---
 
@@ -433,8 +433,8 @@ Errores reutilizados de `content/lecciones/ecuaciones-lineales.json` (los mismos
 
 | Id | Descripción (abreviada) | Dónde se usa acá |
 |----|--------------------------|------------------|
-| error-3 | Dividir por el coeficiente antes de haber quitado la constante | Paso 3 (distractor 13) |
-| error-4 | Olvidar dividir por el coeficiente | Paso 3 (distractor 56) |
+| divide-antes-de-quitar-constante | Dividir por el coeficiente antes de haber quitado la constante | Paso 3 (distractor 13) |
+| omite-dividir-por-coeficiente | Olvidar dividir por el coeficiente | Paso 3 (distractor 56) |
 
 Los errores 1, 2 y 5 no aparecen en este guion: son errores de **procedimiento algebraico**, y acá casi todas las inecuaciones se resuelven en dos pasos sin manipulación riesgosa. Forzar distractores artificiales para cubrirlos habría metido dificultad falsa en una lección cuyo foco declarado es traducir e interpretar, no despejar. Se ejercitan en la lección de ecuaciones, en "Inecuaciones 1" y en el cierre del módulo.
 
@@ -477,7 +477,7 @@ Los tres primeros se **superponen parcialmente** con los propuestos en el guion 
 
 4. **Omitir la cantidad inicial o fija al modelar, escribiendo solo el término variable.**
    *Aparece en:* Paso 2-d, Paso 7.3 (distractor 300), Ítem PAES 1-D.
-   *Nota:* es pariente cercano de `error-3` del catálogo actual ("dividir por el coeficiente antes de haber quitado la constante"), pero no es el mismo: aquel es un error de **procedimiento** (la constante está en la ecuación y se ignora al resolver), este es de **modelado** (la constante nunca llega a escribirse). Si se decide que es el mismo id, conviene ampliar la descripción de error-3 en vez de crear uno nuevo.
+   *Nota:* es pariente cercano de `divide-antes-de-quitar-constante` del catálogo actual ("dividir por el coeficiente antes de haber quitado la constante"), pero no es el mismo: aquel es un error de **procedimiento** (la constante está en la ecuación y se ignora al resolver), este es de **modelado** (la constante nunca llega a escribirse). Si se decide que es el mismo id, conviene ampliar la descripción de divide-antes-de-quitar-constante en vez de crear uno nuevo.
 
 5. **Entregar como respuesta final un valor decimal cuando el contexto exige un entero, dejando el ciclo detenido antes de interpretar.**
    *Aparece en:* Paso 8 (distractores 12,5 en ambas partes), Ítem PAES 2-C.
@@ -487,7 +487,7 @@ Los tres primeros se **superponen parcialmente** con los propuestos en el guion 
 
 7. **Responder una cantidad intermedia en vez de la preguntada: entregar los puntos que faltan en vez de los desafíos, o el peso total en vez de la carga.**
    *Aparece en:* Paso 3 (`puntajeFinal` = 56), Paso 7.3 (distractor 372).
-   *Nota:* podría considerarse cubierto por `error-4` del catálogo actual, que ya describe "quedarse en a·x = c y entregar c". Revisar antes de crear un id nuevo.
+   *Nota:* podría considerarse cubierto por `omite-dividir-por-coeficiente` del catálogo actual, que ya describe "quedarse en a·x = c y entregar c". Revisar antes de crear un id nuevo.
 
 ---
 

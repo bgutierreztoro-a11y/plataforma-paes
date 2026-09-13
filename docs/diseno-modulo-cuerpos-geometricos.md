@@ -170,9 +170,9 @@ Casos base usados en la columna de verificación: **caja 6×3×4** (S = 108, V =
 
 **`P11` es el error central de L3** y probablemente el más valioso del módulo, pero es el que más fácil se vuelve ambiguo: hay que redactarlo de modo que quede claro que el mecanismo es *elegir mal la magnitud*, no *equivocarse en la cuenta*. Si un ítem tiene ambos defectos posibles, el `errorCatalogado` no sirve.
 
-**`P9` se parece semánticamente a `error-1` de `potencias-multiplicar-corto`** («leer la potencia como una multiplicación entre la base y el exponente»). Los ids son locales al módulo, así que no hay conflicto técnico, pero conviene que la redacción de `P9` sea específica de la arista del cubo y no una regla general sobre potencias — si no, estaríamos duplicando un error de otro módulo con otro nombre.
+**`P9` se parece semánticamente a `cuenta-solo-caras-visibles` de `potencias-multiplicar-corto`** («leer la potencia como una multiplicación entre la base y el exponente»). Los ids son locales al módulo, así que no hay conflicto técnico, pero conviene que la redacción de `P9` sea específica de la arista del cubo y no una regla general sobre potencias — si no, estaríamos duplicando un error de otro módulo con otro nombre.
 
-**Cuáles esperaría que nazcan en cada archivo:** L1 pare `P1`–`P7`; L2 pare `P8`–`P10`; L3 pare `P11`–`P12` y reusa los anteriores donde el mecanismo calce. La numeración final tendrá que ser correlativa dentro del módulo (`error-1`…`error-12`) y respetar que cada archivo embeba solo el subconjunto que sus propios distractores usan, carácter a carácter (`docs/reglas-modulo.md` regla 5).
+**Cuáles esperaría que nazcan en cada archivo:** L1 pare `P1`–`P7`; L2 pare `P8`–`P10`; L3 pare `P11`–`P12` y reusa los anteriores donde el mecanismo calce. La numeración final tendrá que ser correlativa dentro del módulo (`cuenta-solo-caras-visibles`…`convierte-metros-cubicos-por-cien`) y respetar que cada archivo embeba solo el subconjunto que sus propios distractores usan, carácter a carácter (`docs/reglas-modulo.md` regla 5).
 
 **Errores sin id.** Los conceptuales que no producen un número reproducible van con feedback artesanal y **sin** `errorCatalogado`, mismo patrón que `sistemas-2x2` y `funcion-cuadratica`: p. ej. «creer que dos cuerpos con la misma superficie tienen el mismo volumen», o «pensar que duplicar todas las aristas duplica el volumen». Ese último es un error PAES clásico y muy bueno; si termina apareciendo en 3+ distractores, paro y propongo un id propio en vez de inventarlo.
 
@@ -378,4 +378,4 @@ Decisiones de alcance de Benja registradas: `plaza` y `helados` descartados como
 
 **Fase 3 desbloqueada para las tres lecciones.** Ningún dominio queda pendiente de verificación.
 
-**Pendiente y no bloqueante:** convertir `P1`…`P12` en `error-1`…`error-12` (SKILL.md §1 regla 4). Se hace al escribir L1, con la numeración correlativa definitiva.
+**Pendiente y no bloqueante:** convertir `P1`…`P12` en `cuenta-solo-caras-visibles`…`convierte-metros-cubicos-por-cien` (SKILL.md §1 regla 4). Se hace al escribir L1, con la numeración correlativa definitiva.

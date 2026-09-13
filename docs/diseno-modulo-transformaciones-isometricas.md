@@ -62,7 +62,7 @@ Lo que el módulo aporta de nuevo al eje: en figuras y cuerpos se medía; acá s
 
 *Descubrimiento:* la regla de la rotación de 90° antihorario se construye con una tabla de puntos y sus imágenes, mirando el dibujo: (1, 0) → (0, 1), (0, 1) → (−1, 0), (2, 1) → (−1, 2), (3, −2) → (2, 3). El estudiante escribe (x, y) → (−y, x) él mismo. Las reflexiones se tabulan en `pistas` y `generalizacion` con el mismo método.
 
-*Contraste P2 (paso `consolidacion`):* "Mucha gente refleja respecto del eje x cambiándole el signo a la x. Falla porque reflejar en el eje x es mirar hacia abajo: lo que cambia es la altura, la y. Lo que funciona es preguntarse qué coordenada mide la distancia al eje." Se nombran además el sentido horario contra antihorario (error-8) y la confusión origen/eje (error-9), con un `pregunta` cuyos distractores llevan esos ids.
+*Contraste P2 (paso `consolidacion`):* "Mucha gente refleja respecto del eje x cambiándole el signo a la x. Falla porque reflejar en el eje x es mirar hacia abajo: lo que cambia es la altura, la y. Lo que funciona es preguntarse qué coordenada mide la distancia al eje." Se nombran además el sentido horario contra antihorario (rota-en-sentido-contrario) y la confusión origen/eje (confunde-reflexion-origen-con-eje), con un `pregunta` cuyos distractores llevan esos ids.
 
 *Visual:* rotación con centro y arco (`descubrimiento`), reflexión con eje discontinuo (`pistas`, `practica`), traslación de figura completa con flecha (`curiosidad`). En los bloques que piden la imagen, `mostrarImagen: false`.
 
@@ -78,7 +78,7 @@ Lo que el módulo aporta de nuevo al eje: en figuras y cuerpos se medía; acá s
 
 *Corrección (2026-09-13):* este párrafo decía "(−4, 0) y eje x". No servía para el descubrimiento: con una traslación horizontal y una reflexión respecto del eje x los dos órdenes dan la misma imagen (la traslación es paralela al eje), así que no había nada que descubrir; y con (−4, 0) y el eje y, la imagen final se superponía al motivo original. El JSON (`isometrias-figura-y-su-imagen.json`, `_notasInternas` del paso `descubrimiento`) usa (−7, 0) y el eje y desde su primer commit; este documento quedó atrás y se alinea acá.
 
-*Contraste P2 (paso `consolidacion`):* "Mucha gente aplica primero la segunda transformación, porque 'da lo mismo'. Falla porque la reflexión cambia de lado lo que la traslación ya movió, y la traslación mueve lo que la reflexión ya volteó: los dos caminos terminan en lugares distintos. Lo que funciona es aplicar exactamente en el orden dicho, y comprobar con un vértice." Se nombra además el error de identificar por posición (error-12) y el de emparejar A con B' (error-13).
+*Contraste P2 (paso `consolidacion`):* "Mucha gente aplica primero la segunda transformación, porque 'da lo mismo'. Falla porque la reflexión cambia de lado lo que la traslación ya movió, y la traslación mueve lo que la reflexión ya volteó: los dos caminos terminan en lugares distintos. Lo que funciona es aplicar exactamente en el orden dicho, y comprobar con un vértice." Se nombra además el error de identificar por posición (mira-solo-donde-quedo-la-figura) y el de emparejar A con B' (empareja-vertice-con-imagen-ajena).
 
 *Visual:* composición con intermedias (`descubrimiento`), par figura e imagen para identificar (`pensar`, `practica`), par para hallar el eje (`generalizacion`).
 
@@ -92,24 +92,24 @@ Los ids nacen acá y se copian tal cual al catálogo canónico. Cada uno produce
 
 | id | Nace en | Mecanismo | Produce sobre el caso base |
 |---|---|---|---|
-| `error-1` | L1 | Confundir punto con vector: dar las coordenadas de un punto donde se pide un desplazamiento, o usar el punto de llegada como si fuera el desplazamiento. | Vector de A a B "= (2, 1)"; distancia "= √(2² + 1²)". |
-| `error-2` | L1 | Vector de A a B calculado como A − B en vez de B − A. | (−5, −3) en vez de (5, 3). |
-| `error-3` | L1 | Sumar o restar componentes cruzadas (x con y). | A + v = (−3 + 4, −2 + 3) = (1, 1) en vez de (0, 2). |
-| `error-4` | L1 | Distancia como \|Δx\| + \|Δy\| en vez de √(Δx² + Δy²). | Para Δ = (3, 4): 7 en vez de 5. |
-| `error-5` | L1 | Ponderar por un escalar multiplicando una sola componente. | 2 · (−3, 4) = (−6, 4) en vez de (−6, 8). |
-| `error-6` | L1 | Trasladar restando el vector (sentido contrario). | A − v = (−6, −6) en vez de (0, 2). |
-| `error-7` | L2 | Reflejar respecto de un eje cambiando el signo de la coordenada equivocada. | Reflejar (3, 1) en el eje x: (−3, 1) en vez de (3, −1). |
-| `error-8` | L2 | Rotar 90° en el sentido contrario al pedido. | 90° antihorario de (3, 1): (1, −3) en vez de (−1, 3). |
-| `error-9` | L2 | Confundir reflexión respecto del origen con reflexión respecto de un eje (una coordenada cambiada en vez de dos, o al revés). | Origen de (3, 1): (3, −1) en vez de (−3, −1). |
-| `error-10` | L2 | Creer que la isometría cambia longitudes, perímetro o área. | "La imagen tiene el doble de área" (conceptual, en ítems de argumentar). |
-| `error-11` | L3 | Componer en el orden contrario. | Reflejar y luego trasladar (1, 2): (1, 5) en vez de trasladar y luego reflejar: (−3, 5). |
-| `error-12` | L2 | Identificar o ejecutar mirando solo la posición y no la orientación: llamar traslación a una reflexión; reflejar sin voltear. | "F' es una traslación de F" cuando es una reflexión. |
-| `error-13` | L3 | Hallar el vector emparejando A con B' en vez de A con A'. | A(−3, 2), A'(1, −1), B'(4, 1): (7, −1) en vez de (4, −3). |
-| `error-14` | L3 | Ubicar el eje de reflexión sobre la figura, sobre la imagen o a la distancia entre ambas, en vez de en el punto medio. | P(1, 3), P'(7, 3): x = 1, x = 7 o x = 6, en vez de x = 4. |
-| `error-15` | L1 | Olvidar la raíz cuadrada en la distancia: entregar Δx² + Δy². | Para Δ = (3, 4): 25 en vez de 5. |
-| `error-16` | L2 | Aplicar la regla de otra transformación: intercambiar donde solo cambia un signo, o cambiar signos sin intercambiar. | 90° antihorario de (3, 1): (−3, 1) o (−3, −1) en vez de (−1, 3). |
+| `confunde-punto-con-vector` | L1 | Confundir punto con vector: dar las coordenadas de un punto donde se pide un desplazamiento, o usar el punto de llegada como si fuera el desplazamiento. | Vector de A a B "= (2, 1)"; distancia "= √(2² + 1²)". |
+| `calcula-vector-al-reves` | L1 | Vector de A a B calculado como A − B en vez de B − A. | (−5, −3) en vez de (5, 3). |
+| `cruza-componentes` | L1 | Sumar o restar componentes cruzadas (x con y). | A + v = (−3 + 4, −2 + 3) = (1, 1) en vez de (0, 2). |
+| `suma-distancias-por-cuadricula` | L1 | Distancia como \|Δx\| + \|Δy\| en vez de √(Δx² + Δy²). | Para Δ = (3, 4): 7 en vez de 5. |
+| `multiplica-una-sola-componente` | L1 | Ponderar por un escalar multiplicando una sola componente. | 2 · (−3, 4) = (−6, 4) en vez de (−6, 8). |
+| `traslada-en-sentido-contrario` | L1 | Trasladar restando el vector (sentido contrario). | A − v = (−6, −6) en vez de (0, 2). |
+| `cambia-coordenada-equivocada-al-reflejar` | L2 | Reflejar respecto de un eje cambiando el signo de la coordenada equivocada. | Reflejar (3, 1) en el eje x: (−3, 1) en vez de (3, −1). |
+| `rota-en-sentido-contrario` | L2 | Rotar 90° en el sentido contrario al pedido. | 90° antihorario de (3, 1): (1, −3) en vez de (−1, 3). |
+| `confunde-reflexion-origen-con-eje` | L2 | Confundir reflexión respecto del origen con reflexión respecto de un eje (una coordenada cambiada en vez de dos, o al revés). | Origen de (3, 1): (3, −1) en vez de (−3, −1). |
+| `cree-que-isometria-cambia-medidas` | L2 | Creer que la isometría cambia longitudes, perímetro o área. | "La imagen tiene el doble de área" (conceptual, en ítems de argumentar). |
+| `compone-en-orden-contrario` | L3 | Componer en el orden contrario. | Reflejar y luego trasladar (1, 2): (1, 5) en vez de trasladar y luego reflejar: (−3, 5). |
+| `mira-solo-donde-quedo-la-figura` | L2 | Identificar o ejecutar mirando solo la posición y no la orientación: llamar traslación a una reflexión; reflejar sin voltear. | "F' es una traslación de F" cuando es una reflexión. |
+| `empareja-vertice-con-imagen-ajena` | L3 | Hallar el vector emparejando A con B' en vez de A con A'. | A(−3, 2), A'(1, −1), B'(4, 1): (7, −1) en vez de (4, −3). |
+| `ubica-mal-eje-de-reflexion` | L3 | Ubicar el eje de reflexión sobre la figura, sobre la imagen o a la distancia entre ambas, en vez de en el punto medio. | P(1, 3), P'(7, 3): x = 1, x = 7 o x = 6, en vez de x = 4. |
+| `omite-raiz-en-distancia` | L1 | Olvidar la raíz cuadrada en la distancia: entregar Δx² + Δy². | Para Δ = (3, 4): 25 en vez de 5. |
+| `aplica-regla-de-otra-transformacion` | L2 | Aplicar la regla de otra transformación: intercambiar donde solo cambia un signo, o cambiar signos sin intercambiar. | 90° antihorario de (3, 1): (−3, 1) o (−3, −1) en vez de (−1, 3). |
 
-`error-12` nace en L2 (paso `problema`, opción "trasladó al otro lado sin voltear") y se reutiliza en L3 para identificar transformaciones: es el mismo mecanismo, ignorar la orientación.
+`mira-solo-donde-quedo-la-figura` nace en L2 (paso `problema`, opción "trasladó al otro lado sin voltear") y se reutiliza en L3 para identificar transformaciones: es el mismo mecanismo, ignorar la orientación.
 
 **Errores sin id.** Los conceptuales que no producen un resultado reproducible van con feedback artesanal y sin `errorCatalogado`, solo en bloques `seleccion` (nunca en `itemsPAES` ni en `items` del cierre, donde los tres distractores llevan id).
 
@@ -123,9 +123,9 @@ Dominio: recorridos a pie por el centro de una ciudad de calles en cuadrícula. 
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `isometrias-l1-item-1` | resolver | baja | vector de (−4, 3) a (2, −5) | (6, −8) | (−6, 8) `error-2`; (2, −5) `error-1`; (−1, −1) `error-3` |
-| `isometrias-l1-item-2` | representar | media | distancia entre P(−2, −7) y Q(6, 8), con los puntos dibujados | 17 | 10 `error-1`; 23 `error-4`; 289 `error-15` |
-| `isometrias-l1-item-3` | argumentar | alta | veredicto sobre "el vector de A(4, −2) a B(−1, 3) es (5, −5)" | No: B − A = (−5, 5) | Sí `error-2`; No, es (−1, 3) `error-1`; No, es (1, −1) `error-3` |
+| `isometrias-l1-item-1` | resolver | baja | vector de (−4, 3) a (2, −5) | (6, −8) | (−6, 8) `calcula-vector-al-reves`; (2, −5) `confunde-punto-con-vector`; (−1, −1) `cruza-componentes` |
+| `isometrias-l1-item-2` | representar | media | distancia entre P(−2, −7) y Q(6, 8), con los puntos dibujados | 17 | 10 `confunde-punto-con-vector`; 23 `suma-distancias-por-cuadricula`; 289 `omite-raiz-en-distancia` |
+| `isometrias-l1-item-3` | argumentar | alta | veredicto sobre "el vector de A(4, −2) a B(−1, 3) es (5, −5)" | No: B − A = (−5, 5) | Sí `calcula-vector-al-reves`; No, es (−1, 3) `confunde-punto-con-vector`; No, es (1, −1) `cruza-componentes` |
 
 ### L2, `isometrias-girar-reflejar-trasladar`
 
@@ -133,9 +133,9 @@ Dominio: patrón de bordado en punto cruz sobre una tela cuadriculada; el motivo
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `isometrias-l2-item-1` | resolver | baja | reflejar (−6, 2) respecto del eje x | (−6, −2) | (6, 2) `error-7`; (6, −2) `error-9`; (2, −6) `error-16` |
-| `isometrias-l2-item-2` | representar | media | imagen de A(1, 2), B(4, 2), C(1, 5) tras 90° antihorario, figura dibujada sin imagen | A'(−2, 1), B'(−2, 4), C'(−5, 1) | horario `error-8`; (−1, 2)… `error-16`; (−1, −2)… `error-16` |
-| `isometrias-l2-item-3` | argumentar | alta | qué se conserva al reflejar un cuadrilátero respecto del eje y | misma área y perímetro, orientación invertida | área distinta `error-10`; perímetro distinto `error-10`; "es lo mismo que trasladar" `error-12` |
+| `isometrias-l2-item-1` | resolver | baja | reflejar (−6, 2) respecto del eje x | (−6, −2) | (6, 2) `cambia-coordenada-equivocada-al-reflejar`; (6, −2) `confunde-reflexion-origen-con-eje`; (2, −6) `aplica-regla-de-otra-transformacion` |
+| `isometrias-l2-item-2` | representar | media | imagen de A(1, 2), B(4, 2), C(1, 5) tras 90° antihorario, figura dibujada sin imagen | A'(−2, 1), B'(−2, 4), C'(−5, 1) | horario `rota-en-sentido-contrario`; (−1, 2)… `aplica-regla-de-otra-transformacion`; (−1, −2)… `aplica-regla-de-otra-transformacion` |
+| `isometrias-l2-item-3` | argumentar | alta | qué se conserva al reflejar un cuadrilátero respecto del eje y | misma área y perímetro, orientación invertida | área distinta `cree-que-isometria-cambia-medidas`; perímetro distinto `cree-que-isometria-cambia-medidas`; "es lo mismo que trasladar" `mira-solo-donde-quedo-la-figura` |
 
 ### L3, `isometrias-figura-y-su-imagen`
 
@@ -143,22 +143,22 @@ Dominios: (núcleo) estampado de un logo escolar armado a partir de un motivo qu
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `isometrias-l3-item-1` | resolver | baja | (−1, 4) reflejado en el eje x y luego trasladado por (3, 2) | (2, −2) | (2, −6) `error-11`; (4, 6) `error-7`; (−4, −6) `error-6` |
-| `isometrias-l3-item-2` | modelar | media | qué transformación lleva F(1,1),(4,1),(4,3),(1,2) a F'(−1,1),(−4,1),(−4,3),(−1,2), ambas dibujadas | reflexión respecto del eje y | traslación `error-12`; reflexión eje x `error-7`; rotación 180° `error-9` |
-| `isometrias-l3-item-3` | argumentar | alta | veredicto sobre "trasladar por (2, 0) y luego reflejar en el eje y da lo mismo que al revés" | No, con un vértice de prueba | Sí, conmutan `error-11`; Sí, la reflexión no mueve `error-12`; No, porque reflejar cambia el tamaño `error-10` |
+| `isometrias-l3-item-1` | resolver | baja | (−1, 4) reflejado en el eje x y luego trasladado por (3, 2) | (2, −2) | (2, −6) `compone-en-orden-contrario`; (4, 6) `cambia-coordenada-equivocada-al-reflejar`; (−4, −6) `traslada-en-sentido-contrario` |
+| `isometrias-l3-item-2` | modelar | media | qué transformación lleva F(1,1),(4,1),(4,3),(1,2) a F'(−1,1),(−4,1),(−4,3),(−1,2), ambas dibujadas | reflexión respecto del eje y | traslación `mira-solo-donde-quedo-la-figura`; reflexión eje x `cambia-coordenada-equivocada-al-reflejar`; rotación 180° `confunde-reflexion-origen-con-eje` |
+| `isometrias-l3-item-3` | argumentar | alta | veredicto sobre "trasladar por (2, 0) y luego reflejar en el eje y da lo mismo que al revés" | No, con un vértice de prueba | Sí, conmutan `compone-en-orden-contrario`; Sí, la reflexión no mueve `mira-solo-donde-quedo-la-figura`; No, porque reflejar cambia el tamaño `cree-que-isometria-cambia-medidas` |
 
 ### Cierre, `cierre-transformaciones-isometricas` (8 ítems)
 
 | ítem | habilidad | dificultad | cubre | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `cierre-isometrias-1` | resolver | baja | operaciones con vectores: u + 2v, u = (−3, 5), v = (4, −2) | (5, 1) | (5, 3) `error-5`; (−7, 13) `error-3`; (−11, 9) `error-6` |
-| `cierre-isometrias-2` | resolver | baja | rotación 90° horario de (−4, 3) | (3, 4) | (−3, −4) `error-8`; (4, 3) `error-16`; (4, −3) `error-16` |
-| `cierre-isometrias-3` | representar | media | reflexión eje x de (2,2),(6,2),(2,5), figura dibujada sin imagen | (2,−2),(6,−2),(2,−5) | (−2,2)… `error-7`; (−2,−2)… `error-9`; (2,−2),(2,−6),(5,−2) `error-16` |
-| `cierre-isometrias-4` | modelar | media | vector de traslación con A(−6, 1) → A'(−2, −5), B(−3, 3) → B'(1, −3) | (4, −6) | (−4, 6) `error-2`; (−2, −5) `error-1`; (7, −4) `error-13` |
-| `cierre-isometrias-5` | representar | media | identificar: F(1,1),(3,1),(3,4) → F'(−1,−1),(−3,−1),(−3,−4), ambas dibujadas | rotación de 180° | traslación `error-12`; reflexión eje y `error-9`; rotación 90° antihorario `error-16` |
-| `cierre-isometrias-6` | argumentar | media | eje de reflexión entre P(−5, 2) y P'(3, 2) | x = −1 | x = −5 `error-14`; x = 3 `error-14`; x = 4 `error-14` |
-| `cierre-isometrias-7` | argumentar | alta | conservación bajo rotación de 90° | lados, ángulos y área iguales | lados cambian `error-10`; área cambia `error-10`; "es una traslación" `error-12` |
-| `cierre-isometrias-8` | modelar | alta | contexto (nave): (−3, 4) rotado 90° horario y luego trasladado por (2, 5) | (6, 8) | (9, 1) `error-11`; (−2, 2) `error-8`; (2, −2) `error-6` |
+| `cierre-isometrias-1` | resolver | baja | operaciones con vectores: u + 2v, u = (−3, 5), v = (4, −2) | (5, 1) | (5, 3) `multiplica-una-sola-componente`; (−7, 13) `cruza-componentes`; (−11, 9) `traslada-en-sentido-contrario` |
+| `cierre-isometrias-2` | resolver | baja | rotación 90° horario de (−4, 3) | (3, 4) | (−3, −4) `rota-en-sentido-contrario`; (4, 3) `aplica-regla-de-otra-transformacion`; (4, −3) `aplica-regla-de-otra-transformacion` |
+| `cierre-isometrias-3` | representar | media | reflexión eje x de (2,2),(6,2),(2,5), figura dibujada sin imagen | (2,−2),(6,−2),(2,−5) | (−2,2)… `cambia-coordenada-equivocada-al-reflejar`; (−2,−2)… `confunde-reflexion-origen-con-eje`; (2,−2),(2,−6),(5,−2) `aplica-regla-de-otra-transformacion` |
+| `cierre-isometrias-4` | modelar | media | vector de traslación con A(−6, 1) → A'(−2, −5), B(−3, 3) → B'(1, −3) | (4, −6) | (−4, 6) `calcula-vector-al-reves`; (−2, −5) `confunde-punto-con-vector`; (7, −4) `empareja-vertice-con-imagen-ajena` |
+| `cierre-isometrias-5` | representar | media | identificar: F(1,1),(3,1),(3,4) → F'(−1,−1),(−3,−1),(−3,−4), ambas dibujadas | rotación de 180° | traslación `mira-solo-donde-quedo-la-figura`; reflexión eje y `confunde-reflexion-origen-con-eje`; rotación 90° antihorario `aplica-regla-de-otra-transformacion` |
+| `cierre-isometrias-6` | argumentar | media | eje de reflexión entre P(−5, 2) y P'(3, 2) | x = −1 | x = −5 `ubica-mal-eje-de-reflexion`; x = 3 `ubica-mal-eje-de-reflexion`; x = 4 `ubica-mal-eje-de-reflexion` |
+| `cierre-isometrias-7` | argumentar | alta | conservación bajo rotación de 90° | lados, ángulos y área iguales | lados cambian `cree-que-isometria-cambia-medidas`; área cambia `cree-que-isometria-cambia-medidas`; "es una traslación" `mira-solo-donde-quedo-la-figura` |
+| `cierre-isometrias-8` | modelar | alta | contexto (nave): (−3, 4) rotado 90° horario y luego trasladado por (2, 5) | (6, 8) | (9, 1) `compone-en-orden-contrario`; (−2, 2) `rota-en-sentido-contrario`; (2, −2) `traslada-en-sentido-contrario` |
 
 Matriz habilidad × dificultad del cierre: resolver baja ×2 (1, 2); representar media ×2 (3, 5); modelar media (4), alta (8); argumentar media (6), alta (7). Total: 2 baja, 4 media, 2 alta; las cuatro habilidades, dos veces cada una. Cobertura por lección: L1 en 1 y 4; L2 en 2, 3, 5 y 7; L3 en 6 y 8.
 

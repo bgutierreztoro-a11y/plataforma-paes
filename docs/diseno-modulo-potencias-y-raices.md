@@ -161,37 +161,37 @@ de autoexplicación pueda distinguirlos.
 
 | id | L1 | L2 | L3 |
 |---|:--:|:--:|:--:|
-| `error-1` multiplicar base por exponente | ✓ | ✓ | |
-| `error-2` sumar exponentes de bases distintas | ✓ | | ✓ |
-| `error-3` la regla no va con esa operación | ✓ | | ✓ |
-| `error-4` el exponente negativo como signo | ✓ | | ✓ |
-| `error-5` `a⁰ = 0` | ✓ | | |
-| `error-6` base racional a medias | ✓ | ✓ | |
-| `error-7` índice y exponente invertidos | | ✓ | ✓ |
-| `error-8` repartir la raíz sobre una suma | | ✓ | ✓ |
-| `error-9` descomposición incompleta | | ✓ | |
-| `error-10` extraer el factor sin sacarle la raíz | | ✓ | |
-| `error-11` sumar radicales distintos | | ✓ | ✓ |
-| `error-12` la raíz como división por el índice | | ✓ | ✓ |
-| `error-13` responder otra magnitud | | ✓ | ✓ |
+| `multiplica-base-por-exponente` multiplicar base por exponente | ✓ | ✓ | |
+| `suma-exponentes-con-distinta-base` sumar exponentes de bases distintas | ✓ | | ✓ |
+| `cruza-reglas-de-exponentes` la regla no va con esa operación | ✓ | | ✓ |
+| `lee-exponente-negativo-como-signo` el exponente negativo como signo | ✓ | | ✓ |
+| `iguala-exponente-cero-a-cero` `a⁰ = 0` | ✓ | | |
+| `opera-una-sola-parte-de-la-fraccion` base racional a medias | ✓ | ✓ | |
+| `intercambia-indice-y-exponente` índice y exponente invertidos | | ✓ | ✓ |
+| `reparte-raiz-sobre-la-suma` repartir la raíz sobre una suma | | ✓ | ✓ |
+| `descompone-raiz-a-medias` descomposición incompleta | | ✓ | |
+| `saca-factor-sin-su-raiz` extraer el factor sin sacarle la raíz | | ✓ | |
+| `suma-radicales-distintos` sumar radicales distintos | | ✓ | ✓ |
+| `divide-por-el-indice-como-raiz` la raíz como división por el índice | | ✓ | ✓ |
+| `responde-otra-magnitud-potencias` responder otra magnitud | | ✓ | ✓ |
 
 **Revisión completa del catálogo (2026-08-17).** Las 13 descripciones se
 sometieron una por una a casos borde —bases 0, 1 y negativas; exponentes 0,
 negativos y fraccionarios; radicandos no cuadrados; índices pares e impares— en
 una auditoría corrida en hilo aislado, después de que la redacción de L2
 destapara tres afirmaciones falsas de corrido. Resultado: **cinco entradas
-quedaron intactas** (`error-6`, `error-7`, `error-8`, `error-10`, `error-13`) —con
-la salvedad de `error-7`, que salió intacto de **esta** revisión pero se corrigió
+quedaron intactas** (`opera-una-sola-parte-de-la-fraccion`, `intercambia-indice-y-exponente`, `reparte-raiz-sobre-la-suma`, `saca-factor-sin-su-raiz`, `responde-otra-magnitud-potencias`) —con
+la salvedad de `intercambia-indice-y-exponente`, que salió intacto de **esta** revisión pero se corrigió
 poco después, en el mismo commit `74b493d`, cuando la tercera corrida de la
 auditoría matemática mostró que «salvo en el caso en que m = n» seguía siendo
 falso con bases negativas; su redacción vigente es la de la lista de abajo— y
-**ocho se corrigieron** (`error-1` a `error-5`, `error-9`, `error-11`,
-`error-12`). Ningún ejemplo numérico estaba mal calculado: los 13 recálculos
+**ocho se corrigieron** (`multiplica-base-por-exponente` a `iguala-exponente-cero-a-cero`, `descompone-raiz-a-medias`, `suma-radicales-distintos`,
+`divide-por-el-indice-como-raiz`). Ningún ejemplo numérico estaba mal calculado: los 13 recálculos
 desde cero dan lo que su descripción dice. Todos los defectos estaban en las
 frases explicativas y en los cuantificadores absolutos —«nunca», «solo»,
 «ningún»—, que es donde una regla escrita para que se entienda se vuelve una
-promesa que no se cumple. El más grave era `error-3`, cuya frontera con
-`error-2` estaba invertida y afirmaba de `error-2` lo contrario de su propia
+promesa que no se cumple. El más grave era `cruza-reglas-de-exponentes`, cuya frontera con
+`suma-exponentes-con-distinta-base` estaba invertida y afirmaba de `suma-exponentes-con-distinta-base` lo contrario de su propia
 definición dos entradas más arriba; es además el texto que alimenta el paso de
 autoexplicación, cuya única función es separar esos dos errores.
 
@@ -199,12 +199,12 @@ autoexplicación, cuya única función es separar esos dos errores.
 defectos de redacción, pero si se pierden entre el documento y el JSON producen
 ítems con dos respuestas correctas (`colision-distractor-correcta`, 🔴):
 
-- **`error-9`:** `2√18` **vale exactamente lo mismo** que `6√2`. Todo ítem que
+- **`descompone-raiz-a-medias`:** `2√18` **vale exactamente lo mismo** que `6√2`. Todo ítem que
   use este error tiene que pedir la expresión completamente descompuesta, nunca
   «¿cuánto vale?».
-- **`error-12`:** con `√4` y `√0` el método equivocado acierta por casualidad
+- **`divide-por-el-indice-como-raiz`:** con `√4` y `√0` el método equivocado acierta por casualidad
   (`4 ÷ 2 = 2 = √4`). Prohibidos como radicandos de este error.
-- **`error-3`:** con `m = n = 2`, o con base 0 o 1, sumar y multiplicar
+- **`cruza-reglas-de-exponentes`:** con `m = n = 2`, o con base 0 o 1, sumar y multiplicar
   exponentes dan el mismo resultado. Prohibidos.
 
 **Convención de conteo, para toda copia al JSON:** se escribe «aparece N veces»
@@ -215,76 +215,76 @@ que multiplicado por sí mismo da 5».
 
 **Descripciones (redacción final, se copian literales al JSON):**
 
-- **`error-1`** — Leer la potencia como una multiplicación entre la base y el
+- **`multiplica-base-por-exponente`** — Leer la potencia como una multiplicación entre la base y el
   exponente: calcular `2⁵` como `2 · 5 = 10`, o `3⁴` como `12`. El exponente no
   es un factor: cuando es un número natural dice cuántas veces aparece la base
   multiplicándose, no por cuánto se multiplica.
 
-- **`error-2`** — Sumar los exponentes cuando las bases no son la misma: tratar
+- **`suma-exponentes-con-distinta-base`** — Sumar los exponentes cuando las bases no son la misma: tratar
   `2³ · 3⁴` como si fuera una sola potencia de exponente 7. La regla de sumar
   exponentes describe qué pasa cuando **se repite el mismo factor**; para usarla,
   las dos potencias tienen que estar escritas con la misma base, y 2 y 3 no lo
   están.
 
-- **`error-3`** — Aplicar a la operación equivocada la regla que corresponde a la
+- **`cruza-reglas-de-exponentes`** — Aplicar a la operación equivocada la regla que corresponde a la
   otra: el mecanismo es uno solo, no saber cuál operación entre potencias se
   traduce en cuál operación entre exponentes. Aparece igual en las dos
   direcciones —convertir `aᵐ · aⁿ` en `a^(m·n)` o convertir `(aᵐ)ⁿ` en
   `a^(m+n)`— y la señal es siempre la misma: se eligió la operación de exponentes
   antes de mirar qué se estaba haciendo con las potencias. Se distingue de
-  `error-2` en que acá la base **sí** es la misma: lo que falló no es cuál base,
+  `suma-exponentes-con-distinta-base` en que acá la base **sí** es la misma: lo que falló no es cuál base,
   sino cuál regla.
 
-- **`error-4`** — Leer el exponente negativo como si el signo pasara al
+- **`lee-exponente-negativo-como-signo`** — Leer el exponente negativo como si el signo pasara al
   resultado: calcular `2⁻³` como `−8` en vez de `1/8`. Con base positiva, bajar
   escalones nunca cambia de signo, solo divide: el signo menos del exponente dice
   «dividir», no «negativo».
 
-- **`error-5`** — Dar `a⁰ = 0`, leyendo el exponente cero como «no queda nada».
+- **`iguala-exponente-cero-a-cero`** — Dar `a⁰ = 0`, leyendo el exponente cero como «no queda nada».
   Con cualquier base distinta de 0, bajar un escalón divide por la base: desde
   `5¹ = 5`, bajar uno da `5 ÷ 5 = 1`. El escalón cero vale 1, no 0. Se distingue
-  de `error-4`, que es sobre el signo de los escalones de más abajo.
+  de `lee-exponente-negativo-como-signo`, que es sobre el signo de los escalones de más abajo.
 
-- **`error-6`** — En una potencia o raíz de base fraccionaria, operar solo una
+- **`opera-una-sola-parte-de-la-fraccion`** — En una potencia o raíz de base fraccionaria, operar solo una
   parte de la fracción: al elevar, dar `(2/3)³ = 8/3` (solo el numerador) o
   `= 2/27` (solo el denominador); al sacar raíz, dar `√(9/25) = 3/25` (solo el
   numerador) o `= 9/5` (solo el denominador). La base o el radicando es la
   fracción completa: el exponente o la raíz se aplica arriba y abajo.
 
-- **`error-7`** — Cambiar de lugar el índice y el exponente al pasar entre raíz y
+- **`intercambia-indice-y-exponente`** — Cambiar de lugar el índice y el exponente al pasar entre raíz y
   potencia: leer `a^(m/n)` como `ᵐ√(aⁿ)` en vez de `ⁿ√(aᵐ)`. El denominador del
   exponente es el índice de la raíz y el numerador es el exponente del radicando;
   invertirlos da otro número: con una base positiva distinta de 1, las dos
   lecturas solo coinciden cuando `m = n`.
 
-- **`error-8`** — Repartir la raíz sobre una suma o una resta: dar
+- **`reparte-raiz-sobre-la-suma`** — Repartir la raíz sobre una suma o una resta: dar
   `√(a + b) = √a + √b`. Las propiedades heredadas de las potencias reparten sobre
   productos y cocientes, no sobre sumas: primero se resuelve lo que está dentro de
   la raíz y después se saca la raíz.
 
-- **`error-9`** — Descomponer a medias: extraer un factor con raíz exacta que no
+- **`descompone-raiz-a-medias`** — Descomponer a medias: extraer un factor con raíz exacta que no
   es el mayor posible y quedarse ahí, como dar `√72 = 2√18` sin notar que 18
   todavía tiene un factor cuadrado. La extracción está bien hecha; lo que falta es
   seguir hasta que el radicando ya no tenga ningún factor mayor que 1 cuya raíz
-  **de ese mismo índice** sea exacta. Se distingue de `error-10`, donde el paso
+  **de ese mismo índice** sea exacta. Se distingue de `saca-factor-sin-su-raiz`, donde el paso
   mal hecho es la extracción misma.
 
-- **`error-10`** — Sacar el factor de la raíz sin sacarle la raíz: pasar de
+- **`saca-factor-sin-su-raiz`** — Sacar el factor de la raíz sin sacarle la raíz: pasar de
   `√(36 · 2)` a `36√2` en vez de `6√2`. Lo que sale afuera es la raíz del factor,
   no el factor.
 
-- **`error-11`** — Sumar radicales que no son el mismo, como si fueran términos
+- **`suma-radicales-distintos`** — Sumar radicales que no son el mismo, como si fueran términos
   semejantes: dar `2√3 + 3√2 = 5√5`. Solo se pueden juntar los que, **ya
   descompuestos**, quedan con el mismo índice y el mismo radicando; `√3` y `√2` no
   se pueden descomponer más y son dos números distintos, igual que `x` e `y` en
   álgebra.
 
-- **`error-12`** — Confundir sacar la raíz con dividir por el índice: dar
+- **`divide-por-el-indice-como-raiz`** — Confundir sacar la raíz con dividir por el índice: dar
   `√36 = 18` o `³√27 = 9`. La raíz busca un número que, usado como factor tantas
   veces como dice el índice, dé el radicando —`6 · 6 = 36`, `3 · 3 · 3 = 27`—;
   dividir no responde esa pregunta.
 
-- **`error-13`** — Calcular bien y responder otra magnitud: entregar el área
+- **`responde-otra-magnitud-potencias`** — Calcular bien y responder otra magnitud: entregar el área
   cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la
   potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y
   sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el

@@ -20,14 +20,14 @@ Un descubrimiento fijado por lección: L1 fija la sustitución; L2 fija el crite
 
 | id | Descripción |
 |---|---|
-| `error-1` | Al despejar una incógnita o distribuir una multiplicación sobre una suma/resta, aplicar la operación solo a una parte de la expresión en vez de a todos sus términos, rompiendo la igualdad. |
-| `error-2` | Al sustituir la expresión despejada, reemplazarla en la MISMA ecuación de la que se despejó (verificación circular) en vez de en la otra ecuación del sistema, con lo que el sistema nunca se reduce a una incógnita. |
-| `error-3` | Al sumar o restar las dos ecuaciones del sistema (o al distribuir un signo negativo), no aplicar el signo correctamente a todos los términos de una de ellas, invirtiendo el resultado de la eliminación. |
-| `error-4` | Encontrar el valor de una incógnita y no sustituir de vuelta en el sistema para encontrar el valor de la otra, entregando una solución incompleta. |
-| `error-5` | Invertir los valores de las dos incógnitas al reportar el par solución final, aunque ambos se hayan calculado correctamente. |
-| `error-6` | Al traducir un problema a ecuaciones, igualar una cantidad con el total equivocado (usa el total de dinero donde correspondía el total de unidades/personas, o viceversa), armando un sistema que no representa el problema. |
+| `distribuye-sobre-parte-de-expresion` | Al despejar una incógnita o distribuir una multiplicación sobre una suma/resta, aplicar la operación solo a una parte de la expresión en vez de a todos sus términos, rompiendo la igualdad. |
+| (retirado) | Al sustituir la expresión despejada, reemplazarla en la MISMA ecuación de la que se despejó (verificación circular) en vez de en la otra ecuación del sistema, con lo que el sistema nunca se reduce a una incógnita. **Retirado en `beff577` (2026-08-20, Ronda 1 de auditoría):** produce una identidad (40 = 40), no un valor, así que ningún distractor se deriva de él; `l1-item-1.C` quedó sin `errorCatalogado`. El catálogo canónico (`56b895b`) nació sin esta entrada; ver `docs/deuda-catalogo-errores-crossfile.md`. |
+| `pierde-signo-al-eliminar` | Al sumar o restar las dos ecuaciones del sistema (o al distribuir un signo negativo), no aplicar el signo correctamente a todos los términos de una de ellas, invirtiendo el resultado de la eliminación. |
+| `omite-sustituir-de-vuelta` | Encontrar el valor de una incógnita y no sustituir de vuelta en el sistema para encontrar el valor de la otra, entregando una solución incompleta. |
+| `invierte-valores-del-par` | Invertir los valores de las dos incógnitas al reportar el par solución final, aunque ambos se hayan calculado correctamente. |
+| `iguala-con-total-equivocado` | Al traducir un problema a ecuaciones, igualar una cantidad con el total equivocado (usa el total de dinero donde correspondía el total de unidades/personas, o viceversa), armando un sistema que no representa el problema. |
 
-L2 y L3 reutilizan estos ids donde el error calza (típicamente `error-1`, `error-3`, `error-5`, `error-6`); los errores conceptuales propios de L2 (confundir "sin solución" con "infinitas soluciones", comparar coeficientes sin llevarlos a forma comparable) y de L3 (traducciones específicas del contexto) van con feedback artesanal sin `errorCatalogado`, mismo patrón ya usado en `cierre-enteros-racionales.json` (alternativas C/D del ítem 5, sin id).
+L2 y L3 reutilizan estos ids donde el error calza (típicamente `distribuye-sobre-parte-de-expresion`, `pierde-signo-al-eliminar`, `invierte-valores-del-par`, `iguala-con-total-equivocado`); los errores conceptuales propios de L2 (confundir "sin solución" con "infinitas soluciones", comparar coeficientes sin llevarlos a forma comparable) y de L3 (traducciones específicas del contexto) van con feedback artesanal sin `errorCatalogado`, mismo patrón ya usado en `cierre-enteros-racionales.json` (alternativas C/D del ítem 5, sin id).
 
 ## Mapa de contextos numéricos (sin repetir escena entre lecciones ni con el cierre)
 

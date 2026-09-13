@@ -123,34 +123,34 @@ distractor están explícitamente en `null`).
 
 Uno por línea: `archivo · ref · errores · qué hay hoy en el alcance · qué falta`.
 
-1. `cuadratica-donde-toca-el-eje.json` · `pasos[4].bloques[1]` · {error-2} · el alcance formaliza el discriminante y afirma que una parábola puede tener dos, uno o ningún cero real · falta nombrar el camino de error-2: quedarse con una sola de las dos soluciones del producto nulo.
-2. `cuadratica-sube-y-baja.json` · `pasos[1].bloques[0]` · {error-3} · un `verdaderoFalso` sobre si el método escala a números feos, y un `numerica` de práctica · falta nombrar el camino de error-3: plantear la suma en vez del producto.
-3. `ecuaciones-lineales.json` · `pasos[1].bloques[0]` · {error-1} · un `verdaderoFalso` que reafirma la acción correcta ("quitar lo mismo de ambos platillos") · falta nombrar el camino de error-1: quitar de un solo platillo.
-4. `enteros-operar-y-comparar.json` \* · `pasos[0].bloques[0]` · {error-7} · un `texto` que plantea la receta de bizcocho y un `prediccion`; nada sobre ningún error · falta cualquier contraste. Único caso del corpus en `pasos[0]`.
-5. `enteros-operar-y-ordenar.json` · `pasos[7].bloques[0]` · {error-5} · una `abierta` metacognitiva sobre si restar siempre achica, que es otro error del módulo · falta nombrar el camino de error-5: comparar dos negativos por su valor absoluto.
-6. `enteros-operar-y-ordenar.json` · `pasos[9].bloques[1]` · {error-2, error-1, error-3} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
-7. `enteros-problemas-en-contexto.json` \* · `pasos[8].bloques[0]` · {error-2, error-3, error-1} · una `abierta` y un `texto` de cierre que sí nombran un camino equivocado, pero el de la comparación de negativos, no el de los tres ids del bloque · falta el contraste de los errores de resta con signo.
-8. `expresiones-deshacer-producto.json` · `pasos[5].bloques[1]` · {error-16, error-15} · tres `seleccion` de práctica, sin prosa · falta el contraste del producto simétrico.
-9. `expresiones-deshacer-producto.json` · `pasos[6].bloques[2]` · {error-13, error-9, error-14} · una `abierta` y un `numerica` sobre 4.896 ÷ 72 · falta nombrar la suma de cuadrados factorizada como diferencia.
-10. `expresiones-sumar-lo-que-se-parece.json` · `pasos[1].bloques[1]` · {error-2, error-3} · un `numerica` con la tabla de las dos barcazas · falta el contraste de "pegar las letras" y "separar el coeficiente".
-11. `expresiones-sumar-lo-que-se-parece.json` · `pasos[6].bloques[2]` · {error-7, error-5} · una `abierta` y un `seleccion` de aplicación · falta el contraste; el `texto` que sí nombra los cuatro errores está en `pasos[8]`, **dos pasos después**, fuera del alcance.
-12. `figuras-borde-y-superficie.json` · `pasos[6].bloques[1]` · {error-7} · un `verdaderoFalso` que propone un área errónea sin explicar el mecanismo, y práctica · falta nombrar el olvido del ÷2. La lista de errores del archivo está en `pasos[8]`, fuera del alcance.
-13. `figuras-borde-y-superficie.json` · `pasos[7].bloques[0]` · {error-12} · el `texto` de cierre en `pasos[8].bloques[1]` sí está en alcance, pero nombra otros tres errores (÷2, altura como lado inclinado, circunferencia vs. área) · falta el de error-12: dar por buena la hipotenusa de un trío parecido.
-14. `figuras-problemas-con-forma.json` · `pasos[4].bloques[3]` · {error-1, error-2} · el alcance contrasta error-10 (usar la cumbrera como altura) en `pasos[4].bloques[9]` y `pasos[5].bloques[0]` · falta el de error-1 (sumar los lados en vez de elevarlos al cuadrado) y error-2 (omitir la raíz final).
-15. `figuras-triangulo-no-se-rompe.json` · `pasos[6].bloques[0]` · {error-12} · un `verdaderoFalso` que propone "diagonal = 11 m" y un `prediccion` que invita a reconocer un trío · el texto presenta el valor equivocado pero no articula el mecanismo de error-12.
-16. `inecuaciones-resolucion.json` \* · `pasos[1].bloques[0]` · {error-6} · un `numerica` que dice "todavía no arreglamos la regla" sin decir cuál es la regla rota · falta nombrar el camino equivocado.
-17. `lineal-pendiente-e-intercepto.json` · `pasos[7].bloques[0]` · {error-1, error-4} · una única `abierta` metacognitiva ("¿qué parte te costó más?") · falta todo contraste.
-18. `porcentaje-concepto.json` \* · `pasos[6].bloques[2]` · {error-4, error-2} · una `abierta` y un `numerica` en dos partes · falta todo contraste.
-19. `potencias-multiplicar-corto.json` · `pasos[5].bloques[2]` · {error-2} · práctica de la regla del cociente y de la potencia de potencia · falta nombrar el camino de error-2: sumar exponentes con bases distintas.
-20. `potencias-multiplicar-corto.json` · `pasos[6].bloques[1]` · {error-3, error-1} · un `numerica` con base racional y dos bloques del escalón del microscopio · falta el contraste de aplicar la regla de la otra operación.
-21. `potencias-problemas-en-contexto.json` · `pasos[5].bloques[1]` · {error-13, error-7} · un `verdaderoFalso` que sí nombra un error, pero el de sumar exponentes con bases distintas · falta el de error-13 (responder otra magnitud) y error-7 (invertir índice y exponente).
-22. `potencias-raiz-escondida.json` · `pasos[6].bloques[0]` · {error-9, error-10} · un `numerica` de raíz de fracción, un `verdaderoFalso` sobre √(36+64), y el problema de la terraza · falta el contraste de la extracción incompleta y de sacar el factor sin sacarle la raíz.
-23. `proporcionalidad-directa.json` · `pasos[5].bloques[1]` · {error-8, error-6} · un `verdaderoFalso` que propone agregar 2 mL por 2 g, un movimiento equivocado distinto del catalogado en error-6 · falta nombrar el mecanismo de error-6 y el de error-8.
-24. `proporcionalidad-directa.json` · `pasos[6].bloques[2]` · {error-7, error-3, error-11} · una `abierta` y un `numerica` en dos partes sobre el esmalte · falta todo contraste.
-25. `proporcionalidad-reconocer.json` · `pasos[6].bloques[2]` · {error-7, error-3, error-11} · idéntico al anterior: `abierta` + `numerica` del esmalte · falta todo contraste.
-26. `sistemas-dos-historias.json` · `pasos[7].bloques[0]` · {error-5, error-4} · una única `abierta` metacognitiva · falta todo contraste.
-27. `sistemas-dos-historias.json` · `pasos[9].bloques[1]` · {error-5, error-1} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
-28. `sistemas-plantear-antes-resolver.json` \* · `pasos[9].bloques[1]` · {error-5} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
+1. `cuadratica-donde-toca-el-eje.json` · `pasos[4].bloques[1]` · {reporta-una-sola-raiz} · el alcance formaliza el discriminante y afirma que una parábola puede tener dos, uno o ningún cero real · falta nombrar el camino de reporta-una-sola-raiz: quedarse con una sola de las dos soluciones del producto nulo.
+2. `cuadratica-sube-y-baja.json` · `pasos[1].bloques[0]` · {plantea-suma-en-vez-de-producto} · un `verdaderoFalso` sobre si el método escala a números feos, y un `numerica` de práctica · falta nombrar el camino de plantea-suma-en-vez-de-producto: plantear la suma en vez del producto.
+3. `ecuaciones-lineales.json` · `pasos[1].bloques[0]` · {opera-un-solo-lado} · un `verdaderoFalso` que reafirma la acción correcta ("quitar lo mismo de ambos platillos") · falta nombrar el camino de opera-un-solo-lado: quitar de un solo platillo.
+4. `enteros-operar-y-comparar.json` \* · `pasos[0].bloques[0]` · {rechaza-division-que-agranda} · un `texto` que plantea la receta de bizcocho y un `prediccion`; nada sobre ningún error · falta cualquier contraste. Único caso del corpus en `pasos[0]`.
+5. `enteros-operar-y-ordenar.json` · `pasos[7].bloques[0]` · {compara-negativos-como-positivos} · una `abierta` metacognitiva sobre si restar siempre achica, que es otro error del módulo · falta nombrar el camino de compara-negativos-como-positivos: comparar dos negativos por su valor absoluto.
+6. `enteros-operar-y-ordenar.json` · `pasos[9].bloques[1]` · {invierte-orden-de-la-diferencia, pierde-signo-al-restar-negativo, trata-negativo-como-distancia} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
+7. `enteros-problemas-en-contexto.json` \* · `pasos[8].bloques[0]` · {invierte-orden-de-la-diferencia, trata-negativo-como-distancia, pierde-signo-al-restar-negativo} · una `abierta` y un `texto` de cierre que sí nombran un camino equivocado, pero el de la comparación de negativos, no el de los tres ids del bloque · falta el contraste de los errores de resta con signo.
+8. `expresiones-deshacer-producto.json` · `pasos[5].bloques[1]` · {omite-descontar-cuadrado-del-desvio, suma-cuadrado-del-desvio} · tres `seleccion` de práctica, sin prosa · falta el contraste del producto simétrico.
+9. `expresiones-deshacer-producto.json` · `pasos[6].bloques[2]` · {factoriza-suma-de-cuadrados, reparte-cuadrado-sobre-la-suma, aplica-forma-sin-verificar-condiciones} · una `abierta` y un `numerica` sobre 4.896 ÷ 72 · falta nombrar la suma de cuadrados factorizada como diferencia.
+10. `expresiones-sumar-lo-que-se-parece.json` · `pasos[1].bloques[1]` · {multiplica-letras-al-sumar, separa-coeficiente-de-su-letra} · un `numerica` con la tabla de las dos barcazas · falta el contraste de "pegar las letras" y "separar el coeficiente".
+11. `expresiones-sumar-lo-que-se-parece.json` · `pasos[6].bloques[2]` · {reduce-distinto-exponente, agrega-exponente-al-sumar-semejantes} · una `abierta` y un `seleccion` de aplicación · falta el contraste; el `texto` que sí nombra los cuatro errores está en `pasos[8]`, **dos pasos después**, fuera del alcance.
+12. `figuras-borde-y-superficie.json` · `pasos[6].bloques[1]` · {omite-mitad-en-area} · un `verdaderoFalso` que propone un área errónea sin explicar el mecanismo, y práctica · falta nombrar el olvido del ÷2. La lista de errores del archivo está en `pasos[8]`, fuera del alcance.
+13. `figuras-borde-y-superficie.json` · `pasos[7].bloques[0]` · {asume-trio-pitagorico} · el `texto` de cierre en `pasos[8].bloques[1]` sí está en alcance, pero nombra otros tres errores (÷2, altura como lado inclinado, circunferencia vs. área) · falta el de asume-trio-pitagorico: dar por buena la hipotenusa de un trío parecido.
+14. `figuras-problemas-con-forma.json` · `pasos[4].bloques[3]` · {suma-lados-en-vez-de-cuadrados, omite-raiz-final-pitagoras} · el alcance contrasta usa-lado-inclinado-como-altura (usar la cumbrera como altura) en `pasos[4].bloques[9]` y `pasos[5].bloques[0]` · falta el de suma-lados-en-vez-de-cuadrados (sumar los lados en vez de elevarlos al cuadrado) y omite-raiz-final-pitagoras (omitir la raíz final).
+15. `figuras-triangulo-no-se-rompe.json` · `pasos[6].bloques[0]` · {asume-trio-pitagorico} · un `verdaderoFalso` que propone "diagonal = 11 m" y un `prediccion` que invita a reconocer un trío · el texto presenta el valor equivocado pero no articula el mecanismo de asume-trio-pitagorico.
+16. `inecuaciones-resolucion.json` \* · `pasos[1].bloques[0]` · {maneja-mal-sentido-desigualdad} · un `numerica` que dice "todavía no arreglamos la regla" sin decir cuál es la regla rota · falta nombrar el camino equivocado.
+17. `lineal-pendiente-e-intercepto.json` · `pasos[7].bloques[0]` · {olvida-valor-inicial, confunde-signo-de-la-tasa} · una única `abierta` metacognitiva ("¿qué parte te costó más?") · falta todo contraste.
+18. `porcentaje-concepto.json` \* · `pasos[6].bloques[2]` · {confunde-aumento-un-con-aumento-a, trata-porcentaje-como-cantidad-fija} · una `abierta` y un `numerica` en dos partes · falta todo contraste.
+19. `potencias-multiplicar-corto.json` · `pasos[5].bloques[2]` · {suma-exponentes-con-distinta-base} · práctica de la regla del cociente y de la potencia de potencia · falta nombrar el camino de suma-exponentes-con-distinta-base: sumar exponentes con bases distintas.
+20. `potencias-multiplicar-corto.json` · `pasos[6].bloques[1]` · {cruza-reglas-de-exponentes, multiplica-base-por-exponente} · un `numerica` con base racional y dos bloques del escalón del microscopio · falta el contraste de aplicar la regla de la otra operación.
+21. `potencias-problemas-en-contexto.json` · `pasos[5].bloques[1]` · {responde-otra-magnitud-potencias, intercambia-indice-y-exponente} · un `verdaderoFalso` que sí nombra un error, pero el de sumar exponentes con bases distintas · falta el de responde-otra-magnitud-potencias (responder otra magnitud) y intercambia-indice-y-exponente (invertir índice y exponente).
+22. `potencias-raiz-escondida.json` · `pasos[6].bloques[0]` · {descompone-raiz-a-medias, saca-factor-sin-su-raiz} · un `numerica` de raíz de fracción, un `verdaderoFalso` sobre √(36+64), y el problema de la terraza · falta el contraste de la extracción incompleta y de sacar el factor sin sacarle la raíz.
+23. `proporcionalidad-directa.json` · `pasos[5].bloques[1]` · {nombra-mal-la-constante, suma-constante-en-vez-de-multiplicar} · un `verdaderoFalso` que propone agregar 2 mL por 2 g, un movimiento equivocado distinto del catalogado en suma-constante-en-vez-de-multiplicar · falta nombrar el mecanismo de suma-constante-en-vez-de-multiplicar y el de nombra-mal-la-constante.
+24. `proporcionalidad-directa.json` · `pasos[6].bloques[2]` · {trata-afin-como-proporcional, verifica-un-solo-par, decide-por-criterio-irrelevante} · una `abierta` y un `numerica` en dos partes sobre el esmalte · falta todo contraste.
+25. `proporcionalidad-reconocer.json` · `pasos[6].bloques[2]` · {trata-afin-como-proporcional, verifica-un-solo-par, decide-por-criterio-irrelevante} · idéntico al anterior: `abierta` + `numerica` del esmalte · falta todo contraste.
+26. `sistemas-dos-historias.json` · `pasos[7].bloques[0]` · {invierte-valores-del-par, omite-sustituir-de-vuelta} · una única `abierta` metacognitiva · falta todo contraste.
+27. `sistemas-dos-historias.json` · `pasos[9].bloques[1]` · {invierte-valores-del-par, distribuye-sobre-parte-de-expresion} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
+28. `sistemas-plantear-antes-resolver.json` \* · `pasos[9].bloques[1]` · {invierte-valores-del-par} · **alcance vacío**: último bloque del último paso · no existe bloque posterior donde contrastar.
 
 ## 3. Casos ambiguos
 
@@ -167,8 +167,8 @@ de intento con distractores catalogados" es una decisión doctrinal, no de audit
 Cita representativa — `cuerpos-cuanto-cabe-adentro.json`, `pasos[5].bloques[8]`:
 
 > **Ejercicio.** Otro arenero, más chico, mide 5 dm de largo, 2 dm de ancho y 4 dm de alto. ¿Cuántos decímetros cúbicos de arena caben?
-> `feedbackPorError[error-7]`: "11 es 5 + 2 + 4: sumaste las tres medidas. El volumen las multiplica: (5 × 2) × 4."
-> `feedbackPorError[error-10]`: "10 es 5 × 2, el área del fondo: una capa. El arenero tiene 4 dm de alto, así que son 4 capas: 10 × 4 = 40."
+> `feedbackPorError[suma-dimensiones-como-volumen]`: "11 es 5 + 2 + 4: sumaste las tres medidas. El volumen las multiplica: (5 × 2) × 4."
+> `feedbackPorError[entrega-area-base-como-volumen]`: "10 es 5 × 2, el área del fondo: una capa. El arenero tiene 4 dm de alto, así que son 4 capas: 10 × 4 = 40."
 
 Nótese que ese feedback **sí tiene la forma del contraste de P2** ("mucha gente
 hace X, X falla porque Y, lo que funciona es Z"), pero es condicional: solo lo lee
@@ -181,7 +181,7 @@ equivocado. La regla habla de distractores; acá el id etiqueta el acierto.
 
 - `ecuaciones-lineales.json` · `pasos[6].bloques[0]`:
   > "Para resolver **2x + 3 = 11**, ¿cuál de estos pasos **rompe** el equilibrio (y por lo tanto NO se puede hacer)?"
-  > opción correcta, `errorCatalogado: "error-1"`: "Restar 3 solo al lado izquierdo, quedando 2x = 11."
+  > opción correcta, `errorCatalogado: "opera-un-solo-lado"`: "Restar 3 solo al lado izquierdo, quedando 2x = 11."
 - `inecuaciones-resolucion.json` · `pasos[6].bloques[0]`: misma estructura con
   `7x + 2 < 30`.
 

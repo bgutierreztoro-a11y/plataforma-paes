@@ -49,7 +49,7 @@ Lo que el módulo aporta de nuevo al eje: en transformaciones isométricas la fi
 
 *Descubrimiento:* tabla de 3-4-5, 6-8-10 y 9-12-15 con las razones 6/3, 8/4, 10/5 y 9/3, 12/4, 15/5: en cada fila la razón se repite. Contra 4-5-6 (sumar 1 a cada lado): 4/3, 5/4, 6/5 distintas. El estudiante concluye que la forma se conserva multiplicando, no sumando.
 
-*Contraste P2 (paso `consolidacion`):* "Mucha gente agranda una figura sumándole lo mismo a cada lado. Falla porque 3-4-5 más 2 es 5-6-7, y ese triángulo ya no es rectángulo: las razones 5/3, 6/4 y 7/5 no coinciden. Lo que funciona es multiplicar todos los lados por la misma razón." Se nombran además invertir k (error-2) y emparejar lados no homólogos (error-3), con un `pregunta` que lleva esos ids.
+*Contraste P2 (paso `consolidacion`):* "Mucha gente agranda una figura sumándole lo mismo a cada lado. Falla porque 3-4-5 más 2 es 5-6-7, y ese triángulo ya no es rectángulo: las razones 5/3, 6/4 y 7/5 no coinciden. Lo que funciona es multiplicar todos los lados por la misma razón." Se nombran además invertir k (invierte-razon-de-semejanza) y emparejar lados no homólogos (empareja-lados-no-homologos), con un `pregunta` que lleva esos ids.
 
 *Visual:* `{ tipo: "semejanza", disposicion: "ladoALado" }` con 3-4-5 y 6-8-10 (`descubrimiento`), con 6-8-10 y 9-12-15 (`generalizacion`), y un trapecio con un lado rotulado x en el ítem de representar.
 
@@ -63,7 +63,7 @@ Lo que el módulo aporta de nuevo al eje: en transformaciones isométricas la fi
 
 *Descubrimiento:* tabla de cuadrados de lado 2, 4 y 6 (k = 2 y 3 respecto del primero) con sus áreas 4, 16 y 36: el área se multiplica por 4 y por 9. Se escribe k² recién después.
 
-*Contraste P2 (paso `consolidacion`):* "Mucha gente multiplica el área por k. Falla porque el área crece en dos direcciones a la vez: el lado por k y el otro lado también por k. Lo que funciona es k · k." Se nombran además leer 1:50 al revés (error-7) y no convertir unidades (error-8), con un `pregunta` que lleva esos ids.
+*Contraste P2 (paso `consolidacion`):* "Mucha gente multiplica el área por k. Falla porque el área crece en dos direcciones a la vez: el lado por k y el otro lado también por k. Lo que funciona es k · k." Se nombran además leer 1:50 al revés (usa-escala-al-reves) y no convertir unidades (mezcla-unidades-en-escala), con un `pregunta` que lleva esos ids.
 
 *Visual:* cuadrados lado a lado con k = 2 y k = 3 (`descubrimiento`).
 
@@ -77,7 +77,7 @@ Lo que el módulo aporta de nuevo al eje: en transformaciones isométricas la fi
 
 *Descubrimiento:* con la visual anidada (poste, persona, rayo común) se tabulan altura y sombra de la persona (1,6 m y 2 m) y la sombra del poste (7,5 m), y se descubre que altura ÷ sombra vale lo mismo en los dos triángulos (0,8), de donde sale la altura del poste (6 m). Luego se traslada el mismo esquema a la laguna (dos triángulos con vértice común en la orilla).
 
-*Contraste P2 (paso `consolidacion`):* "Mucha gente arma la proporción cruzando la altura de la persona con la sombra del poste. Falla porque esa cuenta compara cosas que no se corresponden: son dos triángulos, y cada lado tiene su homólogo en el otro. Lo que funciona es altura con altura y sombra con sombra, en las mismas unidades." Se nombran además mezclar unidades (error-8) y leer el 150 % como k = 2,5 (error-10).
+*Contraste P2 (paso `consolidacion`):* "Mucha gente arma la proporción cruzando la altura de la persona con la sombra del poste. Falla porque esa cuenta compara cosas que no se corresponden: son dos triángulos, y cada lado tiene su homólogo en el otro. Lo que funciona es altura con altura y sombra con sombra, en las mismas unidades." Se nombran además mezclar unidades (mezcla-unidades-en-escala) y leer el 150 % como k = 2,5 (lee-ampliacion-como-aumento).
 
 *Visual:* `{ tipo: "semejanza", disposicion: "anidada" }` en `descubrimiento` y `practica`.
 
@@ -91,21 +91,21 @@ Casos base: L1, triángulo 3-4-5 con k = 2. L2, plano 1:50 con lado de 4 cm; maq
 
 | id | Nace en | Mecanismo | Produce sobre el caso base |
 |---|---|---|---|
-| `error-1` | L1 | Escalar sumando una constante a cada lado en vez de multiplicar por la misma razón. | 3-4-5 + 3 = 6-7-8 en vez de 6-8-10; lado 4 "→ 7". |
-| `error-2` | L1 | Invertir la razón: original ÷ imagen, o aplicar 1/k donde va k. | k "= 1/2"; lado 4 → 2 en vez de 8; poste 9,375 m en vez de 6 m. |
-| `error-3` | L1 | Emparejar lados no homólogos, o tomar la imagen de otro lado como la del lado pedido. | Con imagen 6-8-10 y original 3-4-5, "k = 10/3". |
-| `error-4` | L1 | Dar por semejantes dos figuras solo por ser del mismo tipo (dos rectángulos, dos triángulos rectángulos). | "5-12-13 y 8-15-17 son semejantes porque ambos son rectángulos." |
-| `error-5` | L2 | Aplicar al área la razón lineal k (o n) una sola vez, en vez de k² (n²). | Cuadrado 4 cm en 1:50: 16 cm² × 50 = 800 cm² = 0,08 m² en vez de 4 m². |
-| `error-6` | L2 | Aplicar a una longitud (lado, perímetro) el factor k² del área. | Perímetro 16 cm en 1:40: 16 × 1.600 = 25.600 en vez de 640 cm. |
-| `error-7` | L2 | Usar la escala 1:n al revés: dividir el plano por n para obtener la realidad. | 8 cm en 1:40: 0,2 cm en vez de 320 cm. |
-| `error-8` | L2 | No convertir unidades o mezclarlas dentro de la proporción. | 320 "m" en vez de 3,2 m; 150 cm frente a 1,2 m. |
-| `error-9` | L3 | Proporción con cantidades no homólogas: altura de uno con sombra del otro. | h = 1,6 × 2 ÷ 7,5 ≈ 0,43 en vez de 6. |
-| `error-10` | L3 | Leer "al 150 %" como k = 2,5 (un 150 % más) o como sumar 150. | 10 cm → 25 cm o 160 cm en vez de 15 cm. |
-| `error-11` | L1 | Descartar la semejanza por posición u orientación distinta, o exigir la misma orientación. | "No son semejantes porque una está girada." |
+| `escala-sumando` | L1 | Escalar sumando una constante a cada lado en vez de multiplicar por la misma razón. | 3-4-5 + 3 = 6-7-8 en vez de 6-8-10; lado 4 "→ 7". |
+| `invierte-razon-de-semejanza` | L1 | Invertir la razón: original ÷ imagen, o aplicar 1/k donde va k. | k "= 1/2"; lado 4 → 2 en vez de 8; poste 9,375 m en vez de 6 m. |
+| `empareja-lados-no-homologos` | L1 | Emparejar lados no homólogos, o tomar la imagen de otro lado como la del lado pedido. | Con imagen 6-8-10 y original 3-4-5, "k = 10/3". |
+| `asume-semejanza-por-tipo` | L1 | Dar por semejantes dos figuras solo por ser del mismo tipo (dos rectángulos, dos triángulos rectángulos). | "5-12-13 y 8-15-17 son semejantes porque ambos son rectángulos." |
+| `aplica-k-al-area` | L2 | Aplicar al área la razón lineal k (o n) una sola vez, en vez de k² (n²). | Cuadrado 4 cm en 1:50: 16 cm² × 50 = 800 cm² = 0,08 m² en vez de 4 m². |
+| `aplica-k-cuadrado-a-longitud` | L2 | Aplicar a una longitud (lado, perímetro) el factor k² del área. | Perímetro 16 cm en 1:40: 16 × 1.600 = 25.600 en vez de 640 cm. |
+| `usa-escala-al-reves` | L2 | Usar la escala 1:n al revés: dividir el plano por n para obtener la realidad. | 8 cm en 1:40: 0,2 cm en vez de 320 cm. |
+| `mezcla-unidades-en-escala` | L2 | No convertir unidades o mezclarlas dentro de la proporción. | 320 "m" en vez de 3,2 m; 150 cm frente a 1,2 m. |
+| `cruza-altura-con-sombra-ajena` | L3 | Proporción con cantidades no homólogas: altura de uno con sombra del otro. | h = 1,6 × 2 ÷ 7,5 ≈ 0,43 en vez de 6. |
+| `lee-ampliacion-como-aumento` | L3 | Leer "al 150 %" como k = 2,5 (un 150 % más) o como sumar 150. | 10 cm → 25 cm o 160 cm en vez de 15 cm. |
+| `descarta-semejanza-por-orientacion` | L1 | Descartar la semejanza por posición u orientación distinta, o exigir la misma orientación. | "No son semejantes porque una está girada." |
 
 **Errores sin id.** Los conceptuales que no producen un resultado reproducible van con feedback artesanal y sin `errorCatalogado`, solo en bloques `seleccion`.
 
-**Descartado antes de nacer:** "despejar mal la proporción a/b = c/x (multiplicar en cruz el par equivocado)". Verificado con `node -e` sobre los casos base: sus dos salidas posibles coinciden siempre con las de `error-2` (2 × 7,5 ÷ 1,6 = 9,375) y de `error-9` (1,6 × 2 ÷ 7,5 ≈ 0,43), así que no produce ningún número propio y no puede ser un id (SKILL.md §2a). Por eso el catálogo salta de `error-9` a `error-10`.
+**Descartado antes de nacer:** "despejar mal la proporción a/b = c/x (multiplicar en cruz el par equivocado)". Verificado con `node -e` sobre los casos base: sus dos salidas posibles coinciden siempre con las de `invierte-razon-de-semejanza` (2 × 7,5 ÷ 1,6 = 9,375) y de `cruza-altura-con-sombra-ajena` (1,6 × 2 ÷ 7,5 ≈ 0,43), así que no produce ningún número propio y no puede ser un id (SKILL.md §2a). Por eso el catálogo salta de `cruza-altura-con-sombra-ajena` a `lee-ampliacion-como-aumento`.
 
 ---
 
@@ -117,9 +117,9 @@ Dominio: calcomanías triangulares y de otras formas para cuadernos, impresas en
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `semejanza-l1-item-1` | resolver | baja | lado menor de un triángulo semejante a 9-12-15 cuyo lado mayor mide 25 | 15 | 5,4 `error-2`; 18,75 `error-3`; 19 `error-1` |
-| `semejanza-l1-item-2` | representar | media | trapecio 7-5-4-4 cm y su imagen por 3/2 dibujados, lado rotulado x | 7,5 cm | 3,3 cm `error-2`; 6 cm `error-3`; 6,5 cm `error-1` |
-| `semejanza-l1-item-3` | argumentar | alta | veredicto sobre "5-12-13 y 8-15-17 son semejantes porque ambos son rectángulos" | No: 8/5, 15/12 y 17/13 son distintas | Sí, ángulo recto `error-4`; Sí, cada lado creció `error-1`; No, por estar girados `error-11` |
+| `semejanza-l1-item-1` | resolver | baja | lado menor de un triángulo semejante a 9-12-15 cuyo lado mayor mide 25 | 15 | 5,4 `invierte-razon-de-semejanza`; 18,75 `empareja-lados-no-homologos`; 19 `escala-sumando` |
+| `semejanza-l1-item-2` | representar | media | trapecio 7-5-4-4 cm y su imagen por 3/2 dibujados, lado rotulado x | 7,5 cm | 3,3 cm `invierte-razon-de-semejanza`; 6 cm `empareja-lados-no-homologos`; 6,5 cm `escala-sumando` |
+| `semejanza-l1-item-3` | argumentar | alta | veredicto sobre "5-12-13 y 8-15-17 son semejantes porque ambos son rectángulos" | No: 8/5, 15/12 y 17/13 son distintas | Sí, ángulo recto `asume-semejanza-por-tipo`; Sí, cada lado creció `escala-sumando`; No, por estar girados `descarta-semejanza-por-orientacion` |
 
 ### L2, `semejanza-medir-sin-acercarse`
 
@@ -127,9 +127,9 @@ Dominios: (núcleo) maqueta de un molino de viento a escala 1:40 para la exposic
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `semejanza-l2-item-1` | resolver | baja | 14 cm en un mapa 1:25.000, en km | 3,5 km | 0,00056 km `error-7`; 0,35 km `error-8`; 350 km `error-8` |
-| `semejanza-l2-item-2` | modelar | media | área real de la base de una maqueta 1:40 que mide 15 cm × 10 cm | 24 m² | 0,015 m² `error-7`; 0,6 m² `error-5`; 240.000 m² `error-8` |
-| `semejanza-l2-item-3` | argumentar | alta | qué pasa con el área de cada cara si la maqueta pasa de 1:40 a 1:20 | se multiplica por 4 | por 2 `error-5`; se reduce a la cuarta parte `error-2`; se reduce a la mitad `error-7` |
+| `semejanza-l2-item-1` | resolver | baja | 14 cm en un mapa 1:25.000, en km | 3,5 km | 0,00056 km `usa-escala-al-reves`; 0,35 km `mezcla-unidades-en-escala`; 350 km `mezcla-unidades-en-escala` |
+| `semejanza-l2-item-2` | modelar | media | área real de la base de una maqueta 1:40 que mide 15 cm × 10 cm | 24 m² | 0,015 m² `usa-escala-al-reves`; 0,6 m² `aplica-k-al-area`; 240.000 m² `mezcla-unidades-en-escala` |
+| `semejanza-l2-item-3` | argumentar | alta | qué pasa con el área de cada cara si la maqueta pasa de 1:40 a 1:20 | se multiplica por 4 | por 2 `aplica-k-al-area`; se reduce a la cuarta parte `invierte-razon-de-semejanza`; se reduce a la mitad `usa-escala-al-reves` |
 
 ### L3, `semejanza-plano-y-realidad`
 
@@ -137,22 +137,22 @@ Dominios: poste de alumbrado y persona con sus sombras; ancho de una laguna medi
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `semejanza-l3-item-1` | resolver | baja | altura de un poste con sombra de 6 m, si una persona de 1,8 m proyecta 2,4 m | 4,5 m | 0,72 m `error-9`; 5,4 m `error-1`; 8 m `error-2` |
-| `semejanza-l3-item-2` | modelar | media | área real de una sala de 4,5 cm × 6 cm en un plano 1:100 | 27 m² | 0,0027 m² `error-7`; 2,7 m² `error-5`; 270.000 m² `error-8` |
-| `semejanza-l3-item-3` | argumentar | alta | veredicto sobre "al 150 % el área se multiplica por 1,5" | No: por 2,25 | Sí `error-5`; No, por 2,5 `error-10`; No, y el perímetro también por 2,25 `error-6` |
+| `semejanza-l3-item-1` | resolver | baja | altura de un poste con sombra de 6 m, si una persona de 1,8 m proyecta 2,4 m | 4,5 m | 0,72 m `cruza-altura-con-sombra-ajena`; 5,4 m `escala-sumando`; 8 m `invierte-razon-de-semejanza` |
+| `semejanza-l3-item-2` | modelar | media | área real de una sala de 4,5 cm × 6 cm en un plano 1:100 | 27 m² | 0,0027 m² `usa-escala-al-reves`; 2,7 m² `aplica-k-al-area`; 270.000 m² `mezcla-unidades-en-escala` |
+| `semejanza-l3-item-3` | argumentar | alta | veredicto sobre "al 150 % el área se multiplica por 1,5" | No: por 2,25 | Sí `aplica-k-al-area`; No, por 2,5 `lee-ampliacion-como-aumento`; No, y el perímetro también por 2,25 `aplica-k-cuadrado-a-longitud` |
 
 ### Cierre, `cierre-semejanza-y-proporcionalidad` (8 ítems)
 
 | ítem | habilidad | dificultad | cubre | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `cierre-semejanza-1` | resolver | baja | k desde lados: 6-8-10 → 15-20-25 | 2,5 | 0,4 `error-2`; 2,1 `error-1`; 4,2 `error-3` |
-| `cierre-semejanza-2` | resolver | baja | lado faltante: 5-12-13 con lado mayor 39 | 15 | 5,6 `error-2`; 31 `error-1`; 36 `error-3` |
-| `cierre-semejanza-3` | representar | media | factor de área: cuadrados de lado 3 y 9 dibujados | 9 | 3 `error-5`; 1/3 `error-2`; 27 `error-6` |
-| `cierre-semejanza-4` | argumentar | media | factor de perímetro con k = 2/3 | se multiplica por 2/3 | por 4/9 `error-6`; por 3/2 `error-2`; se le resta 1/3 a cada lado sin multiplicar `error-1` |
-| `cierre-semejanza-5` | modelar | media | distancia real de 18 cm en un mapa 1:25.000 | 4,5 km | 0,00072 km `error-7`; 0,45 km `error-8`; 450 km `error-8` |
-| `cierre-semejanza-6` | modelar | media | área real de un living de 5 cm × 7 cm en 1:100 | 35 m² | 0,0035 m² `error-7`; 3,5 m² `error-5`; 350.000 m² `error-8` |
-| `cierre-semejanza-7` | representar | alta | sombra y altura con la figura anidada dibujada: persona 1,8 m, sombra 2,4 m, sombra del poste 10 m | h = 7,5 m | 1,8 × 2,4 ÷ 10 `error-9`; 10 − 0,6 `error-1`; 10 × 2,4 ÷ 1,8 `error-2` |
-| `cierre-semejanza-8` | argumentar | alta | qué pares son semejantes: 3-4-5 y 9-12-15; 6-8-10 y 8-10-12; dos rectángulos 2×3 y 4×5 | solo 3-4-5 y 9-12-15 | 6-8-10 y 8-10-12 `error-1`; los rectángulos `error-4`; ninguno, por orientación `error-11` |
+| `cierre-semejanza-1` | resolver | baja | k desde lados: 6-8-10 → 15-20-25 | 2,5 | 0,4 `invierte-razon-de-semejanza`; 2,1 `escala-sumando`; 4,2 `empareja-lados-no-homologos` |
+| `cierre-semejanza-2` | resolver | baja | lado faltante: 5-12-13 con lado mayor 39 | 15 | 5,6 `invierte-razon-de-semejanza`; 31 `escala-sumando`; 36 `empareja-lados-no-homologos` |
+| `cierre-semejanza-3` | representar | media | factor de área: cuadrados de lado 3 y 9 dibujados | 9 | 3 `aplica-k-al-area`; 1/3 `invierte-razon-de-semejanza`; 27 `aplica-k-cuadrado-a-longitud` |
+| `cierre-semejanza-4` | argumentar | media | factor de perímetro con k = 2/3 | se multiplica por 2/3 | por 4/9 `aplica-k-cuadrado-a-longitud`; por 3/2 `invierte-razon-de-semejanza`; se le resta 1/3 a cada lado sin multiplicar `escala-sumando` |
+| `cierre-semejanza-5` | modelar | media | distancia real de 18 cm en un mapa 1:25.000 | 4,5 km | 0,00072 km `usa-escala-al-reves`; 0,45 km `mezcla-unidades-en-escala`; 450 km `mezcla-unidades-en-escala` |
+| `cierre-semejanza-6` | modelar | media | área real de un living de 5 cm × 7 cm en 1:100 | 35 m² | 0,0035 m² `usa-escala-al-reves`; 3,5 m² `aplica-k-al-area`; 350.000 m² `mezcla-unidades-en-escala` |
+| `cierre-semejanza-7` | representar | alta | sombra y altura con la figura anidada dibujada: persona 1,8 m, sombra 2,4 m, sombra del poste 10 m | h = 7,5 m | 1,8 × 2,4 ÷ 10 `cruza-altura-con-sombra-ajena`; 10 − 0,6 `escala-sumando`; 10 × 2,4 ÷ 1,8 `invierte-razon-de-semejanza` |
+| `cierre-semejanza-8` | argumentar | alta | qué pares son semejantes: 3-4-5 y 9-12-15; 6-8-10 y 8-10-12; dos rectángulos 2×3 y 4×5 | solo 3-4-5 y 9-12-15 | 6-8-10 y 8-10-12 `escala-sumando`; los rectángulos `asume-semejanza-por-tipo`; ninguno, por orientación `descarta-semejanza-por-orientacion` |
 
 Matriz habilidad × dificultad del cierre: resolver baja ×2 (1, 2); representar media (3), alta (7); modelar media ×2 (5, 6); argumentar media (4), alta (8). Total: 2 baja, 4 media, 2 alta; las cuatro habilidades, dos veces cada una. Cobertura por lección: L1 en 1, 2, 4 y 8; L2 en 3, 5 y 6; L3 en 7.
 

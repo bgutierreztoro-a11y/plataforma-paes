@@ -34,7 +34,7 @@ y lo agrega con `erroresVivosDeSesion()` (`lib/erroresVivos.ts`), que produce so
   la clave A–D. Por eso la pantalla 10 muestra el estado vacío como caso normal
   —llegar desde la barra en una pestaña nueva— y lo pinta como tal, sin filas de
   ejemplo.
-- **Cuenta por descripción, no por id.** Los ids del catálogo (`error-7`) son
+- **Cuenta por descripción, no por id.** Los ids del catálogo (`deshace-porcentaje-con-mismo-porcentaje`) son
   locales al archivo —el mismo id nombra errores distintos en dos lecciones,
   `docs/deuda-catalogo-errores-crossfile.md`—, así que no hay un id de dos
   dígitos estable que poner en un chip. → **El chip se omite.**

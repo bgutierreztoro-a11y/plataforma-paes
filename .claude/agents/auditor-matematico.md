@@ -41,7 +41,7 @@ Para cada entrada, **deriva el `valorObtenido` desde el error descrito**, sin mi
 Tres formas de fallar, las tres son hallazgos:
 - **No derivable:** ningún procedimiento con los datos del enunciado produce ese número. Es un distractor inventado.
 - **Derivable por otro error:** el número sale, pero de un mecanismo distinto al que dice el `mensaje` o al que apunta `errorCatalogado`.
-- **Inalcanzable:** el error descrito, aplicado a estos datos, produce la respuesta **correcta**. Pasó en L1: `error-3` («calcula la constante con un solo par y no verifica») es inalcanzable cuando las dos filas comparten k, porque no verificar da igual el resultado bueno.
+- **Inalcanzable:** el error descrito, aplicado a estos datos, produce la respuesta **correcta**. Pasó en L1: `verifica-un-solo-par` («calcula la constante con un solo par y no verifica») es inalcanzable cuando las dos filas comparten k, porque no verificar da igual el resultado bueno.
 
 Verifica además la **banda de magnitud** (regla 3 de `docs/reglas-modulo.md`): si los distractores se pueden descartar a ojo por tamaño frente a la correcta, el ítem se acierta sin operar. Calcula la desviación porcentual de cada distractor respecto de la correcta y repórtala. Cuando un distractor no queda en banda, **la corrección es cambiar los datos base del problema**, no buscar otro número — en L1 tres intentos de cambiar el número fallaron y el cambio de datos funcionó a la primera.
 

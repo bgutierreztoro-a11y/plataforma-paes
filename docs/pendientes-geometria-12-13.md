@@ -73,8 +73,8 @@ final de la sesión.
   usa alguien". Se repuso sobre el canónico en el commit 1 (`validarCoberturaCatalogo`),
   medido contra los 13 catálogos: 0 ids sin uso, 0 huérfanos.
 - **Numeración de ids.** El brief decía que "los 11 módulos anteriores conservan la
-  numeración correlativa antigua" y que los nuevos "reinician en error-1". Medido:
-  **los 13 catálogos parten en `error-1`** con namespace de unidad; nunca hubo
+  numeración correlativa antigua" y que los nuevos "reinician en el id 1". Medido:
+  **los 13 catálogos partían en el id 1** con namespace de unidad; nunca hubo
   numeración global. Está escrito en `docs/deuda-catalogo-errores-crossfile.md`
   (sección 2026-09-13, punto b) con la salida del conteo.
 - **`docs/reglas-modulo.md` regla 5 sigue diciendo "embeber".** Es la única pieza de
@@ -88,7 +88,7 @@ final de la sesión.
   0,2). Cada cambio está en `_notasInternas` del archivo correspondiente con el
   motivo. El doc de diseño no se reescribió: su plan de ítems queda como plan, y
   los archivos son la verdad.
-- **`error-10` de semejanza no aparece en el cierre.** Se usa en L3 (práctica,
+- **`lee-ampliacion-como-aumento` de semejanza no aparece en el cierre.** Se usa en L3 (práctica,
   consolidación e ítem 3). Ninguno de los 8 ítems del cierre usa una ampliación
   porcentual, y forzarlo habría duplicado el ítem 3 de L3. Los 11 ids del catálogo
   quedan cubiertos entre L1, L2, L3 y cierre (verificado con `node -e`, informe

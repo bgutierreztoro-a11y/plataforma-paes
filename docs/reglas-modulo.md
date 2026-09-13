@@ -53,7 +53,7 @@ Un distractor tiene que cumplir las dos condiciones a la vez:
 
 | Intento | Valor | Por qué falló |
 |---|---|---|
-| 1 | 290 mL | No derivable de ningún procedimiento con los datos. Mapeado a `error-3`, que además es inalcanzable ahí: las dos filas comparten k, así que calcular la constante con un solo par sin verificar produce la respuesta **correcta** |
+| 1 | 290 mL | No derivable de ningún procedimiento con los datos. Mapeado a `convierte-mal-porcentaje-a-decimal`, que además es inalcanzable ahí: las dos filas comparten k, así que calcular la constante con un solo par sin verificar produce la respuesta **correcta** |
 | 2 | 280 mL | Derivable, pero colisionaba con la respuesta correcta de `baseLote7` en el paso 5 (ver regla 3b) |
 | 3 | 203 mL | Derivable y sin colisión, pero dejaba los dos distractores bajo 210 contra una correcta de 320: se acertaba por sentido de magnitud, sin dividir |
 | 4 | 360 mL | Correcto. Se llegó cambiando las filas base a 3 g y 6 g, que era la vía real |
@@ -68,7 +68,7 @@ Se compara contra **todas** las respuestas correctas del archivo, no solo las de
 
 **Por qué:** un estudiante que escribe 280 en el paso 2 recibe feedback de error por un número que la lección va a declarar correcto tres pasos después. Eso no es un descuido de redacción, es una contradicción que el estudiante puede detectar y que destruye la confianza en el feedback.
 
-**Excepción declarada:** si la colisión es deliberada se registra en `auditoria.colisionesPermitidas` con su motivo. El caso legítimo conocido es la constante misma, que es distractor antes del paso 5 (`error-4`, «entregó la constante en vez del resultado») y respuesta correcta en el paso 5. Declararla es obligatorio; que pase en silencio no.
+**Excepción declarada:** si la colisión es deliberada se registra en `auditoria.colisionesPermitidas` con su motivo. El caso legítimo conocido es la constante misma, que es distractor antes del paso 5 (`confunde-constante-con-valor-de-tabla`, «entregó la constante en vez del resultado») y respuesta correcta en el paso 5. Declararla es obligatorio; que pase en silencio no.
 
 ---
 
@@ -98,9 +98,9 @@ El `catalogoErrores` de un módulo va **embebido en cada archivo que lo referenc
 
 Hay un segundo efecto que no era obvio y que cierra la puerta a la versión anterior de la regla: `scripts/auditar-leccion.mjs` marca 🔴 `catalogo-sin-usar` cualquier id embebido que ningún distractor **del mismo archivo** use. O sea que las entradas que necesita L2 tampoco se podían guardar en L1 «esperando»: habrían puesto a L1 en rojo. El subconjunto por archivo no es una preferencia, es la única forma que pasa los dos chequeos a la vez.
 
-**Costo asumido y cómo se paga.** Duplicar descripciones crea una fuente doble sin dueño. El espejo antidivergencia de `scripts/validar-contenido.mjs` (`MAPEO_LECCION_UNIDAD`) no sirve acá: cubre `content/errores/<unidad>.json` contra la L1, y un módulo nuevo no tiene artefacto en `content/errores/` que espejar. Por eso el guard vive en `npm run auditar`: `catalogo-divergente`, 🔴, compara todas las lecciones del mismo módulo y exige que un id compartido tenga la descripción idéntica carácter a carácter. Su tabla de módulos es `MODULO_POR_LECCION`, hand-maintained igual que la del validador y por la misma razón (el contrato de lección no declara módulo). Una lección con catálogo que no esté en esa tabla se reporta como chequeo omitido (🟡), nunca se compara a ciegas contra otro módulo: los ids son locales, y `error-1` significa cosas distintas en Enteros y en Proporcionalidad.
+**Costo asumido y cómo se paga.** Duplicar descripciones crea una fuente doble sin dueño. El espejo antidivergencia de `scripts/validar-contenido.mjs` (`MAPEO_LECCION_UNIDAD`) no sirve acá: cubre `content/errores/<unidad>.json` contra la L1, y un módulo nuevo no tiene artefacto en `content/errores/` que espejar. Por eso el guard vive en `npm run auditar`: `catalogo-divergente`, 🔴, compara todas las lecciones del mismo módulo y exige que un id compartido tenga la descripción idéntica carácter a carácter. Su tabla de módulos es `MODULO_POR_LECCION`, hand-maintained igual que la del validador y por la misma razón (el contrato de lección no declara módulo). Una lección con catálogo que no esté en esa tabla se reporta como chequeo omitido (🟡), nunca se compara a ciegas contra otro módulo: los ids son locales al módulo (desde el 2026-09-13 son slugs únicos en todo el repo, pero el chequeo sigue siendo por módulo).
 
-**Deuda que el guard destapó al estrenarse (2026-08-14):** `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` son del mismo módulo y reciclan `error-1` a `error-5` con significados **completamente distintos** (en una, `error-1` es «olvidar el valor inicial»; en la otra, «confunde pendiente con intercepto»). Son 10 hallazgos 🔴, cinco por archivo. Es backlog del módulo Función lineal y afín, no bloqueo de lo nuevo — pero es exactamente el tipo de divergencia silenciosa que esta regla existe para impedir, y llevaba meses ahí.
+**Deuda que el guard destapó al estrenarse (2026-08-14):** `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` son del mismo módulo y reciclan `olvida-valor-inicial` a `aplica-cambio-una-sola-vez` con significados **completamente distintos** (en una, `olvida-valor-inicial` es «olvidar el valor inicial»; en la otra, «confunde pendiente con intercepto»). Son 10 hallazgos 🔴, cinco por archivo. Es backlog del módulo Función lineal y afín, no bloqueo de lo nuevo — pero es exactamente el tipo de divergencia silenciosa que esta regla existe para impedir, y llevaba meses ahí.
 
 ---
 
@@ -126,7 +126,7 @@ La caballera se eligió sobre la isométrica a propósito y esa elección no se 
 
 Cuando un distractor de un ítem tipo veredicto (Sí/No, Verdadero/Falso, argumentar) encadena dos errores para llegar a su conclusión, `errorCatalogado` etiqueta únicamente el error que determina el veredicto final (Sí/No). El error intermedio se explica en el `feedback` del distractor, pero no se cataloga por separado.
 
-**Origen:** rediseño de ítems con alternativas tipo veredicto, 2026-09-11 (`docs/rediseno-distractores-veredicto.md`, Hallazgo 1). Apareció por primera vez en `enteros-operar-y-ordenar.json`, l1-item-3, distractor D: el estudiante calcula mal la resta ((−8) − (−20) = −28 en vez de 12, el mecanismo de `error-1`) y además ordena los negativos al revés (cree que −28 es mayor que −8 porque tiene mayor valor absoluto, el mecanismo de `error-5`). El segundo error es el que decide si el estudiante responde "Sí" o "No" a la afirmación del enunciado; el primero solo explica de dónde salió el número que arrastra.
+**Origen:** rediseño de ítems con alternativas tipo veredicto, 2026-09-11 (`docs/rediseno-distractores-veredicto.md`, Hallazgo 1). Apareció por primera vez en `enteros-operar-y-ordenar.json`, l1-item-3, distractor D: el estudiante calcula mal la resta ((−8) − (−20) = −28 en vez de 12, el mecanismo de `pierde-signo-al-restar-negativo`) y además ordena los negativos al revés (cree que −28 es mayor que −8 porque tiene mayor valor absoluto, el mecanismo de `compara-negativos-como-positivos`). El segundo error es el que decide si el estudiante responde "Sí" o "No" a la afirmación del enunciado; el primero solo explica de dónde salió el número que arrastra.
 
 **Por qué:** `errorCatalogado` es un campo singular — un distractor no puede llevar dos ids a la vez. Etiquetar el error intermedio en vez del que decide el veredicto rompe la relación entre el catálogo y la Capa 2 de feedback, que usa `errorCatalogado` para dirigir la corrección al tipo de error que hizo que el estudiante fallara la RESPUESTA, no al paso aritmético que arrastró de camino a ella.
 

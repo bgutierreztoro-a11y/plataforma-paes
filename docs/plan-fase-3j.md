@@ -24,7 +24,7 @@ Corrida en `npm run dev` (`localhost:3000`), fallando ítems a propósito en
 `/cierre/figuras-geometricas` (3 de 8 correctas):
 
 - Tarjeta **"Lo que falló"**: presente, cuatro grupos, cada uno con pill del
-  error en tinta (`error-1`, `error-3`, `error-10`, `error-8`), los números de
+  error en tinta (`suma-lados-en-vez-de-cuadrados`, `suma-cuadrados-al-buscar-cateto`, `usa-lado-inclinado-como-altura`, `usa-altura-como-lado-inclinado`), los números de
   ítem ("Preguntas 1, 2") y la descripción resuelta del catálogo.
 - **"Repasar ese error"**: presente y con `disabled` real —superficie hundida,
   texto tenue—, no solo apagado a la vista.

@@ -148,8 +148,8 @@ Campos: `mayorEntero` (respuesta correcta **4**), `comprobacion` (respuesta corr
 **Feedback por error previsto:**
 
 - **mayorEntero = 5** → "Casi. Llegaste bien a que x tiene que ser menor que 5, pero fíjate en el signo: es `<`, no `≤`. ¿El propio 5 cumple? Reemplaza: 3·5 − 4 = 11, y 11 no es menor que 11. El 5 queda justo afuera."
-- **mayorEntero = 14** → "Llegaste a 3x < 15 y te detuviste ahí. Pero 15 es el peso de las TRES equis juntas: todavía falta repartir, dividir ambos lados por 3." *(error-1..5 del módulo: **error-4**)*
-- **mayorEntero = 2** → "Restaste el 4 cuando había que sumarlo. El término es −4, así que para eliminarlo se suma 4 en ambos lados: 3x < 11 + 4. Revisa esa dirección." *(**error-2**)*
+- **mayorEntero = 14** → "Llegaste a 3x < 15 y te detuviste ahí. Pero 15 es el peso de las TRES equis juntas: todavía falta repartir, dividir ambos lados por 3." *(opera-un-solo-lado..5 del módulo: **omite-dividir-por-coeficiente**)*
+- **mayorEntero = 2** → "Restaste el 4 cuando había que sumarlo. El término es −4, así que para eliminarlo se suma 4 en ambos lados: 3x < 11 + 4. Revisa esa dirección." *(**invierte-signo-al-transponer**)*
 - **comprobacion = 8** → "Reemplazaste el entero que ya habías respondido, no el siguiente. La Parte 2 pide sumarle 1 primero: si respondiste 4, evalúa en 5."
 
 **Nota de verificación matemática:** 3x − 4 < 11. Se suma 4 a ambos lados (operación que desliza, no invierte): 3x < 15. Se divide por 3, que es **positivo**, así que el sentido se conserva: x < 5. Mayor entero que cumple: **4**. Comprobación: 3·4 − 4 = 12 − 4 = 8, y 8 < 11 ✓. El siguiente entero, 5: 3·5 − 4 = 15 − 4 = **11**, y 11 < 11 es falso ✓ — el 5 queda excluido, que es justo lo que la Parte 2 hace tocar con la mano. Distractor 14: proviene de 3x < 15 sin dividir (el mayor entero menor que 15). Distractor 2: proviene de 3x < 7 → x < 7/3 ≈ 2,33, mayor entero 2.
@@ -272,7 +272,7 @@ Campo `mayorEntero`, respuesta correcta **−5**.
 
 - **−4** → "Dividiste bien por −5 y diste vuelta el signo, pero el borde te jugó una mala pasada: la solución es x < −4, y el `<` deja al −4 afuera. Reemplaza: −5·(−4) = 20, y 20 > 20 es falso. El mayor entero que sí cumple es el que viene justo antes."
 - **−3** → "Revisa si diste vuelta el sentido. Al dividir por −5 (negativo) el `>` tiene que convertirse en `<`. Si lo dejaste como `>`, te quedaste con x > −4, que es el conjunto equivocado: prueba −3 en la inecuación original y mira qué pasa."
-- **15** → "Restaste 5 en vez de dividir por −5. El −5 está **multiplicando** a la x, así que se cancela dividiendo, no restando." *(**error-4** del módulo, en su variante de no repartir por el coeficiente)*
+- **15** → "Restaste 5 en vez de dividir por −5. El −5 está **multiplicando** a la x, así que se cancela dividiendo, no restando." *(**omite-dividir-por-coeficiente** del módulo, en su variante de no repartir por el coeficiente)*
 
 **Nota de verificación matemática:** −5x > 20. Se divide por −5, negativo, luego el sentido se invierte: x < 20÷(−5) = −4, es decir **x < −4**. Comprobación del interior: x = −5 → −5·(−5) = 25, y 25 > 20 ✓ cumple. Comprobación del borde: x = −4 → −5·(−4) = 20, y 20 > 20 es **falso** ✓ el borde queda excluido, coherente con el `<`. Comprobación exterior: x = −3 → −5·(−3) = 15, y 15 > 20 es falso ✓. Mayor entero de x < −4: **−5**. El distractor −4 es el borde abierto tomado como incluido; el distractor −3 es el resultado de no invertir el sentido (daría x > −4, cuyo menor entero sería −3 y que un estudiante apurado puede leer como "el entero de la frontera por el otro lado").
 
@@ -291,7 +291,7 @@ Campo `mayorEntero`, respuesta correcta **−5**.
 **Feedback:**
 
 - **(a):** "Ese paso es válido: restas lo mismo (2) a los dos lados, la recta se desliza entera y el orden se conserva. La pregunta pide el paso que SÍ rompe."
-- **(b) correcta:** "Ese es. Le quitaste 2 a un lado y no al otro, así que ya no es la misma comparación. 7x < 30 da x < 30/7 ≈ 4,29, que no es lo mismo que x < 4." *(**error-1** del módulo)*
+- **(b) correcta:** "Ese es. Le quitaste 2 a un lado y no al otro, así que ya no es la misma comparación. 7x < 30 da x < 30/7 ≈ 4,29, que no es lo mismo que x < 4." *(**opera-un-solo-lado** del módulo)*
 - **(c):** "Ese paso es válido: 7 es positivo, así que dividir por 7 estira la recta sin darla vuelta y el `<` se queda igual. Llegas a x < 4, que es correcto."
 
 **Nota de verificación matemática:** 7x + 2 < 30 → 7x < 28 → x < 4 (7 positivo, sentido conservado). Comprobación: x = 3 → 21 + 2 = 23 < 30 ✓; x = 4 → 28 + 2 = 30 < 30 falso ✓ (borde abierto correcto). La opción (b) produce 7x < 30 → x < 30/7 ≈ 4,286, conjunto estrictamente mayor que el correcto (incluye por ejemplo x = 4,1, que en la original da 7·4,1 + 2 = 30,7, y 30,7 < 30 es falso) ✓ — efectivamente rompe.
@@ -320,7 +320,7 @@ Campos: `mayorEnteroCerrado` (correcta **4**), `mayorEnteroAbierto` (correcta **
 
 - **mayorEnteroAbierto = 4** → "Las dos partes no pueden dar lo mismo: esa es toda la gracia del ejercicio. Reemplaza x = 4 en la Parte 2: 4·4 + 3 = 19, y ¿19 es menor que 19? El `<` no admite el empate."
 - **mayorEnteroCerrado = 3** → "Te pasaste de cauteloso. En la Parte 1 el signo es `≤`, que sí admite el empate: 4·4 + 3 = 19, y 19 ≤ 19 es verdadero. El 4 sí cumple."
-- **cualquiera = 16** → "Llegaste a 4x ≤ 16 y respondiste ahí. Falta repartir: divide ambos lados por 4." *(**error-4**)*
+- **cualquiera = 16** → "Llegaste a 4x ≤ 16 y respondiste ahí. Falta repartir: divide ambos lados por 4." *(**omite-dividir-por-coeficiente**)*
 
 **Nota de verificación matemática:** 4x + 3 ≤ 19 → 4x ≤ 16 → x ≤ 4 (4 positivo, sentido conservado). Borde: x = 4 → 16 + 3 = 19, y 19 ≤ 19 **verdadero** ✓, luego el 4 pertenece y es el mayor entero. Para 4x + 3 < 19 → 4x < 16 → x < 4. Borde: x = 4 → 19 < 19 **falso** ✓, el 4 queda excluido; x = 3 → 12 + 3 = 15 < 19 ✓, luego el mayor entero es **3**. El par comparte todos los números y difiere solo en el borde: es el aislamiento limpio de la variable "tipo de borde".
 
@@ -341,7 +341,7 @@ Campo `diasUtiles`, respuesta correcta **5**.
 - **10** → "Calculaste en cuántos días se acaba toda la nieve (45 ÷ 6 = 7,5) o algo parecido, pero la ladera deja de servir mucho antes: no se necesita que la nieve llegue a cero, se necesita que no baje de 15 cm. Vuelve a armar la inecuación con ese 15 adentro."
 - **6** → "Estás a un día de distancia. Revisa el borde: al día 6 quedan 45 − 36 = 9 cm, y 9 no alcanza los 15 que se piden. Al día 5 quedan exactamente 15, y como el enunciado dice 'al menos 15', ese día todavía sirve."
 - **4** → "Te quedaste corto por el borde. Al día 5 quedan exactamente 15 cm. 'Al menos 15' incluye el 15 justo, así que el día 5 todavía cuenta."
-- **30** → "Ese es el resultado de 45 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 30 cm entre los 6 cm que se pierden cada día." *(**error-4**)*
+- **30** → "Ese es el resultado de 45 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 30 cm entre los 6 cm que se pierden cada día." *(**omite-dividir-por-coeficiente**)*
 
 **Pantalla 8.2** — bloque `abierta` (`mostrarRespuestaModelo: true`)
 
@@ -357,7 +357,7 @@ Campo `diasUtiles`, respuesta correcta **5**.
 
 Los dos caminos coinciden ✓. Comprobación directa: d = 5 → 45 − 30 = 15, y 15 ≥ 15 **verdadero** ✓ (el borde cerrado es el que hace que el día 5 cuente). d = 6 → 45 − 36 = 9, y 9 ≥ 15 **falso** ✓. d = 4 → 45 − 24 = 21 ≥ 15 ✓. Respuesta: **5 días**.
 
-*Por qué cada distractor es plausible y no un número al azar:* **6** es el error de borde en la dirección permisiva (incluir un día que ya no cumple); **4** es el error de borde en la dirección restrictiva (excluir el día que cumple justo, por desconfiar del empate); **30** es el numerador de la última división, el mismo tipo de error que error-4 en la lección de ecuaciones (quedarse en `a·x = c` y entregar c); **10** proviene de ignorar el umbral de 15 y trabajar con la nieve total.
+*Por qué cada distractor es plausible y no un número al azar:* **6** es el error de borde en la dirección permisiva (incluir un día que ya no cumple); **4** es el error de borde en la dirección restrictiva (excluir el día que cumple justo, por desconfiar del empate); **30** es el numerador de la última división, el mismo tipo de error que omite-dividir-por-coeficiente en la lección de ecuaciones (quedarse en `a·x = c` y entregar c); **10** proviene de ignorar el umbral de 15 y trabajar con la nieve total.
 
 **Nota de diseño:** este paso es la primera vez que la inversión aparece dentro de un contexto y no en una inecuación pelada. Se muestran los dos caminos a propósito: **la inversión se puede evitar** moviendo el término en vez de dividir por el negativo. Saber eso es un seguro contra el error más caro del tema, y además le quita dramatismo a la regla — no es una trampa, es una de dos rutas.
 
@@ -418,8 +418,8 @@ Selección múltiple, 4 alternativas A–D, respuesta única, formato DEMRE M1. 
 | Alt | Correcta | Error asociado |
 |-----|----------|----------------|
 | A | ✅ | — |
-| B | ❌ | **error-5** (reunir las incógnitas sumando en vez de restar) |
-| C | ❌ | **error-4** (no dividir por el coeficiente) |
+| B | ❌ | **suma-incognitas-en-vez-de-restar** (reunir las incógnitas sumando en vez de restar) |
+| C | ❌ | **omite-dividir-por-coeficiente** (no dividir por el coeficiente) |
 | D | ❌ | NUEVO — inversión injustificada del sentido |
 
 **Feedback por alternativa:**
@@ -431,7 +431,7 @@ Selección múltiple, 4 alternativas A–D, respuesta única, formato DEMRE M1. 
 
 **Nota de verificación matemática:** 6x + 5 < 2x + 29. Restando 2x: 4x + 5 < 29. Restando 5: 4x < 24. Dividiendo por 4 (positivo, sentido conservado): **x < 6**. Comprobación interior: x = 5 → izquierda 6·5 + 5 = 35; derecha 2·5 + 29 = 39; 35 < 39 ✓. Borde: x = 6 → izquierda 41; derecha 41; 41 < 41 **falso** ✓ (correctamente excluido). Exterior: x = 7 → 47 vs 43; 47 < 43 falso ✓.
 
-*Plausibilidad de cada distractor:* **B (x < 3)** sale del camino 8x + 5 < 29 → 8x < 24 → x < 3, exactamente el error-5 ya catalogado en la lección de ecuaciones y ya usado en su ítem PAES 1. **C (x < 24)** es el estado intermedio 4x < 24 leído como respuesta final: error-4, el más frecuente del módulo. **D (x > 6)** es la respuesta correcta con el sentido invertido, y es el distractor específico de esta lección: castiga a quien aprendió "en las inecuaciones hay que dar vuelta el signo" sin la condición. Los números están elegidos para que los cuatro resultados sean enteros limpios y ninguno coincida con otro.
+*Plausibilidad de cada distractor:* **B (x < 3)** sale del camino 8x + 5 < 29 → 8x < 24 → x < 3, exactamente el suma-incognitas-en-vez-de-restar ya catalogado en la lección de ecuaciones y ya usado en su ítem PAES 1. **C (x < 24)** es el estado intermedio 4x < 24 leído como respuesta final: omite-dividir-por-coeficiente, el más frecuente del módulo. **D (x > 6)** es la respuesta correcta con el sentido invertido, y es el distractor específico de esta lección: castiga a quien aprendió "en las inecuaciones hay que dar vuelta el signo" sin la condición. Los números están elegidos para que los cuatro resultados sean enteros limpios y ninguno coincida con otro.
 
 ---
 
@@ -482,7 +482,7 @@ Selección múltiple, 4 alternativas A–D, respuesta única, formato DEMRE M1. 
 |-----|----------|----------------|
 | A | ✅ | — |
 | B | ❌ | NUEVO — no invertir al dividir por negativo |
-| C | ❌ | **error-2** (equivocar la dirección al mover un término), aquí como diagnóstico falso |
+| C | ❌ | **invierte-signo-al-transponer** (equivocar la dirección al mover un término), aquí como diagnóstico falso |
 | D | ❌ | NUEVO — invertir el sentido y además cambiarle el signo al número |
 
 **Feedback por alternativa:**
@@ -504,12 +504,12 @@ Errores reutilizados de `content/lecciones/ecuaciones-lineales.json` (los mismos
 
 | Id | Descripción (abreviada) | Dónde se usa acá |
 |----|--------------------------|------------------|
-| error-1 | Operar en un solo lado, rompiendo el equilibrio | Paso 7.1-b |
-| error-2 | Equivocar el signo o la dirección al mover un término | Paso 3 (distractor 2); Ítem PAES 3-C (como diagnóstico falso) |
-| error-4 | Olvidar dividir por el coeficiente | Paso 3 (distractor 14); Paso 6.3 (distractor 15); Paso 7.3 (distractor 16); Paso 8 (distractor 30); Ítem PAES 1-C |
-| error-5 | Al reunir las incógnitas, sumarlas en vez de restarlas | Ítem PAES 1-B |
+| opera-un-solo-lado | Operar en un solo lado, rompiendo el equilibrio | Paso 7.1-b |
+| invierte-signo-al-transponer | Equivocar el signo o la dirección al mover un término | Paso 3 (distractor 2); Ítem PAES 3-C (como diagnóstico falso) |
+| omite-dividir-por-coeficiente | Olvidar dividir por el coeficiente | Paso 3 (distractor 14); Paso 6.3 (distractor 15); Paso 7.3 (distractor 16); Paso 8 (distractor 30); Ítem PAES 1-C |
+| suma-incognitas-en-vez-de-restar | Al reunir las incógnitas, sumarlas en vez de restarlas | Ítem PAES 1-B |
 
-`error-3` (repartir solo una parte de un lado) no aparece en este guion: ninguna situación diseñada lo produce de forma natural. Se ejercita en la lección de ecuaciones y reaparece en el cierre del módulo. No se forzó un distractor artificial con tal de cubrirlo.
+`divide-antes-de-quitar-constante` (repartir solo una parte de un lado) no aparece en este guion: ninguna situación diseñada lo produce de forma natural. Se ejercita en la lección de ecuaciones y reaparece en el cierre del módulo. No se forzó un distractor artificial con tal de cubrirlo.
 
 # Contextos numéricos usados (para no chocar entre lecciones)
 
@@ -558,7 +558,7 @@ Ninguno tiene id asignado. Son propuestas de descripción para que **Benja decid
 7. **Creer que la presencia de números negativos en el resultado invierte el sentido de la desigualdad, confundiendo "aparecieron negativos" con "multipliqué por un negativo".**
    *Aparece en:* Paso 2-b, Paso 7.2 (respuesta Verdadero).
 
-Observación para la decisión: los errores 4 y 5 son la misma dimensión (el borde) en direcciones opuestas, igual que los errores 1 y 2 son la misma dimensión (la inversión) en direcciones opuestas. Podrían catalogarse como dos ids o como cuatro. La lección de ecuaciones optó por ids finos (error-2 cubre "sumar cuando corresponde restar, o restar cuando corresponde sumar" en un solo id, o sea el criterio ahí fue **una dimensión = un id**). Si se mantiene ese criterio, esto serían 4 ids nuevos, no 7. La decisión es tuya.
+Observación para la decisión: los errores 4 y 5 son la misma dimensión (el borde) en direcciones opuestas, igual que los errores 1 y 2 son la misma dimensión (la inversión) en direcciones opuestas. Podrían catalogarse como dos ids o como cuatro. La lección de ecuaciones optó por ids finos (invierte-signo-al-transponer cubre "sumar cuando corresponde restar, o restar cuando corresponde sumar" en un solo id, o sea el criterio ahí fue **una dimensión = un id**). Si se mantiene ese criterio, esto serían 4 ids nuevos, no 7. La decisión es tuya.
 
 ---
 

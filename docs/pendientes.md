@@ -5,13 +5,37 @@
 Hecho y commiteado (Ronda 1 + Ronda 2 aprobadas, en git local, sin push):
 - f096041 — regla nueva: errorCatalogado marca solo el error que decide el veredicto final
 - d9576dc, 87debb2, 6697ea4, e605021 — 9 ítems reescritos (enteros x3, proporcionalidad x4, lineal x1, ecuaciones x1)
-- c469500 — enteros-racionales/error-9 nuevo + remapeo distractor C en 2 ítems
+- c469500 — enteros-y-racionales/invierte-conclusion-entre-negativos nuevo + remapeo distractor C en 2 ítems
 - a5d8a21 — Ronda 2 (originalidad) registrada en los 7 ítems restantes
 
 Pendiente, en docs/rediseno-distractores-veredicto.md:
 - 3 PARADAs de consultar-fuentes.mjs sin correr (las corre Benja manualmente): ítem 2.2 (cuerpos, cajita 4cm), 5.2 y 5.4 (cuadrática, ambos con y=x²-6x+5 y g(x)).
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
+
+Nota (2026-09-13): los `error-N` de la entrada de arriba son ids propuestos, nunca creados; numeración preexistente a la migración a slugs, conservada como registro.
+
+## Migración de ids a slugs (2026-09-13, sin commit al escribir esto)
+
+Los 148 ids de `content/errores/` pasaron de `error-N` a slugs descriptivos, y
+la `unidad` de cinco catálogos adoptó el id de tema del mapa de módulos (ver
+`docs/analisis/mapa-migracion-ids.json` y `docs/deuda-catalogo-errores-crossfile.md` (b)).
+Queda fuera, a propósito:
+- **`content/diagnostico/dag-m1.json`** sigue con sus propios slugs de unidad
+  (`enteros-racionales`, `potencias-raices`, `ecuaciones-inecuaciones`,
+  `funcion-lineal-afin`, `semejanza-proporcionalidad`, `tablas-graficos`,
+  `medidas-posicion`, `reglas-probabilidad`), distintos del tema id y ahora
+  también de la `unidad` del catálogo. Es del motor de diagnóstico (gate propio,
+  banco vacío); unificarlo es una decisión aparte (D3 del plan del 2026-09-13).
+- **Prosa de las descripciones del catálogo** que cita otros ids («Distinto de
+  error-4: …»): 14 menciones en 6 catálogos, intactas porque el texto de los
+  errores no se toca en la migración. Reescribirlas con el slug es decisión de
+  contenido pendiente (lista exacta en el informe de la PARADA 2).
+- **Datos persistidos en Neon** (`advance_descartes.errores_identificados`,
+  `advance_triage`): guardan ids locales viejos si hay filas; conteo pendiente
+  (D5) antes de decidir migración de datos o tolerancia en lectura.
+- **Rótulo visible** (`rotuloDeError`): pasó de «Error 07» a `titulo` o slug
+  humanizado; se firma aparte en `/_design` (D4).
 
 ## ✅ Migración 010 (`advance_triage`) aplicada en Neon (abierta y cerrada 2026-09-12, F5a → F5a2)
 
@@ -38,7 +62,7 @@ para un estudiante"). El texto original:
 `descripcion` de `content/errores/<modulo>.json` sin ninguna transformación:
 `catalogoDelModulo()` la lee y `tarjetasDeUnidad()` la copia a la tarjeta. Esas
 descripciones son fichas de autor, escritas para quien redacta ítems y
-distractores: mayúsculas de énfasis, frases como "Distinto de error-4: …",
+distractores: mayúsculas de énfasis, frases como "Distinto de confunde-aumento-un-con-aumento-a: …",
 referencias a otros ids del catálogo y una extensión de párrafo largo. En
 `/advance/errores` se leen tal cual, como si fueran para el estudiante, y no lo
 son. La pantalla del resultado de descarte (`ResultadoDescarte`) tiene el mismo
@@ -122,7 +146,7 @@ cierre.
    las 5 comparten instante; `id` es `gen_random_uuid()` y `seleccionarSesion`
    ordena con `Math.random`. Medido el 2026-09-12 sobre el banco piloto: el
    100 % de las sesiones de 5 ítems repiten al menos un error (15 cupos sobre
-   9 errores; error-3 está en 10 de 20 ítems), y BKT no conmuta: desde
+   9 errores; convierte-mal-porcentaje-a-decimal está en 10 de 20 ítems), y BKT no conmuta: desde
    p(L0)=0,30, acierto→fracaso da 0,328 y fracaso→acierto da 0,547.
    Decisión firmada para F4 (docs/fobos-advance.md §6.3, lib/advance/dominio.ts):
    a igual instante, para cada error, primero sus aciertos y al final sus
@@ -291,7 +315,7 @@ distribución de habilidades y la terna de dificultad que `docs/calibracion-lecc
 
 - `enteros-operar-y-comparar.json` — `l2-item-3` pasó de `resolver`/`media` a
   `argumentar`/`alta`, reescrito al patrón "4 afirmaciones, 3 falsas por razones
-  distintas y catalogadas" (`error-7`, `error-8`, `error-4` de
+  distintas y catalogadas" (`rechaza-division-que-agranda`, `invierte-orden-division-fracciones`, `compara-fracciones-solo-por-numerador` de
   `content/errores/enteros-racionales.json`). Commit `aea0c76`.
 - `lineal-pendiente-e-intercepto.json` — `l2-item-1` pasó de `representar`/`media`
   a `resolver`/`media` (evaluar `y = 12 − 5x` en `x = 4`). Commit `f776960`.
@@ -367,9 +391,9 @@ embeber el catálogo; este necesita además mapear distractor por distractor.
 
 Se conecta con la entrada ya abierta sobre la Capa 2 de los cierres, y con la
 deuda de `funcion-lineal-afin`, cuyo catálogo tiene dos L1 que reciclan
-`error-1` a `error-5` con significados distintos: **mapear los distractores de
+`olvida-valor-inicial` a `aplica-cambio-una-sola-vez` con significados distintos: **mapear los distractores de
 `cierre-v0` no se puede hacer antes de resolver esa colisión de ids**, porque
-hoy `error-1` es ambiguo dentro de ese módulo.
+hoy `olvida-valor-inicial` es ambiguo dentro de ese módulo.
 
 ## 🟢 Dos vestigios del pipeline retirado en `scripts/validar-contenido.mjs` (anotada 2026-08-14)
 
@@ -478,27 +502,27 @@ una afirmación de quien escribe el ítem.
 ## ✅ `funcion-lineal-afin`: catálogo de errores sin fusionar, bloquea sus ítems de diagnóstico (abierta 2026-08-02) — el gatillo duro se cayó (2026-09-08)
 
 **La colisión que hacía de esto una decisión de contenido ya no existe.** El
-commit `e33b262` (F0.2) renumeró `lineal-pendiente-e-intercepto.json` a `error-8`
-a `error-12`, así que los dos catálogos embebidos del módulo ya no reciclan
+commit `e33b262` (F0.2) renumeró `lineal-pendiente-e-intercepto.json` a `confunde-pendiente-con-intercepto`
+a `omite-coeficiente-de-posicion`, así que los dos catálogos embebidos del módulo ya no reciclan
 ningún id con significado distinto. Verificado con `node -e` el 2026-09-08:
 intersección vacía entre los dos conjuntos de ids.
 
 Consecuencia: **fusionar el catálogo del módulo pasó de decisión de contenido a
-tarea mecánica.** Sumar `error-8` a `error-12` a
+tarea mecánica.** Sumar `confunde-pendiente-con-intercepto` a `omite-coeficiente-de-posicion` a
 `content/errores/funcion-lineal-afin.json` ya no exige criterio humano sobre qué
 error es cuál, porque no hay dos candidatos para el mismo id. El gatillo duro
 sobre los ítems de diagnóstico de esta unidad queda levantado.
 
 **Corrección de conteo:** el párrafo de abajo dice "los 6 errores migrados".
 `content/errores/funcion-lineal-afin.json` tiene **7** entradas,
-`funcion-lineal-afin/error-1` a `funcion-lineal-afin/error-7`, espejo exacto de
+`funcion-lineal-y-afin/olvida-valor-inicial` a `funcion-lineal-y-afin/intercambia-tasa-y-valor-inicial`, espejo exacto de
 las 7 de `lineal-patrones-de-cambio.json`. Faltan las 5 de
 `lineal-pendiente-e-intercepto.json`: el canónico cubre 7 de las 12 del módulo.
 
 Los 6 errores migrados a `content/errores/funcion-lineal-afin.json` vienen de
 un solo L1 (`lineal-patrones-de-cambio.json`). El otro L1 de la misma unidad,
 `lineal-pendiente-e-intercepto.json` (5 errores), numera su propio
-`error-1`…`error-5` con significados distintos a los del primero, y no está
+`olvida-valor-inicial`…`aplica-cambio-una-sola-vez` con significados distintos a los del primero, y no está
 migrado (ver "🟡 `content/errores/` es una copia, no la fuente" más abajo).
 
 **Gatillo duro:** ningún ítem de diagnóstico de la unidad `funcion-lineal-afin`
@@ -511,7 +535,7 @@ criterio humano sobre qué error es cuál.
 esta colisión; el resto puede tener sus ítems de diagnóstico escritos sin
 esperar a que esta se resuelva.
 
-**Namespace de ids de error: dos convenciones conviviendo, nada que las cruce (anotada 2026-08-02).** `content/errores/<unidad>.json` usa ids con prefijo de módulo (`funcion-lineal-afin/error-7`), que es lo que exige el validador de ítems de diagnóstico (reglas 6e y 6h en `validarFormaItemDiagnostico`). En cambio, los arrays `catalogoErrores` embebidos en los L1 y el campo `errorCatalogado` de toda lección usan el id local pelado (`error-7`), y el contrato de lección no verifica ese campo contra ningún catálogo — `validarDatos` ni lo mira. El prefijo desambigua **entre** unidades, no **dentro** de una: `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` pertenecen al mismo módulo, así que sus dos `error-1` de significado distinto colapsarían igual en `funcion-lineal-afin/error-1` — por eso los 5 errores del segundo siguen sin migrar y la colisión de arriba sigue abierta. Falta decidir la convención única (y si el campo `errorCatalogado` de las lecciones debe validarse contra el artefacto) antes de que el diagnóstico adaptativo lo consuma.
+**Namespace de ids de error: dos convenciones conviviendo, nada que las cruce (anotada 2026-08-02).** `content/errores/<unidad>.json` usa ids con prefijo de módulo (`funcion-lineal-y-afin/intercambia-tasa-y-valor-inicial`), que es lo que exige el validador de ítems de diagnóstico (reglas 6e y 6h en `validarFormaItemDiagnostico`). En cambio, los arrays `catalogoErrores` embebidos en los L1 y el campo `errorCatalogado` de toda lección usan el id local pelado (`intercambia-tasa-y-valor-inicial`), y el contrato de lección no verifica ese campo contra ningún catálogo — `validarDatos` ni lo mira. El prefijo desambigua **entre** unidades, no **dentro** de una: `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` pertenecen al mismo módulo, así que sus dos `olvida-valor-inicial` de significado distinto colapsarían igual en `funcion-lineal-y-afin/olvida-valor-inicial` — por eso los 5 errores del segundo siguen sin migrar y la colisión de arriba sigue abierta. Falta decidir la convención única (y si el campo `errorCatalogado` de las lecciones debe validarse contra el artefacto) antes de que el diagnóstico adaptativo lo consuma.
 
 ## 🟡 Deudas del motor de diagnóstico (abierta 2026-08-02)
 
@@ -571,15 +595,15 @@ corrida del validador.
 
 **✅ Colisión resuelta el 2026-09-08 (commit `e33b262`, F0.2).** Los dos
 catálogos embebidos siguen existiendo, pero ya no reciclan ids:
-`lineal-patrones-de-cambio.json` usa `error-1` a `error-7` y
-`lineal-pendiente-e-intercepto.json` usa `error-8` a `error-12`. Intersección
+`lineal-patrones-de-cambio.json` usa `olvida-valor-inicial` a `intercambia-tasa-y-valor-inicial` y
+`lineal-pendiente-e-intercepto.json` usa `confunde-pendiente-con-intercepto` a `omite-coeficiente-de-posicion`. Intersección
 vacía, verificada con `node -e`. Lo que sigue vigente de este párrafo es que el
 canónico cubre 7 de las 12 entradas del módulo, no que haya ambigüedad de
 significado. El párrafo original queda abajo como registro.
 
 **✅ Colisión resuelta el 2026-09-08 (commit `fc162b5`, no `56b895b`).**
-`content/errores/funcion-lineal-afin.json` pasó de 7 a 12 entradas: `error-8` a
-`error-12` se copiaron desde el embebido de `lineal-pendiente-e-intercepto.json`
+`content/errores/funcion-lineal-afin.json` pasó de 7 a 12 entradas: `confunde-pendiente-con-intercepto` a
+`omite-coeficiente-de-posicion` se copiaron desde el embebido de `lineal-pendiente-e-intercepto.json`
 (sin colisión de ids desde `e33b262`), y los dos catálogos embebidos se
 retiraron de ambos L1. `56b895b` explícitamente no tocó este módulo (lo dice su
 propio mensaje de commit); la fusión real es `fc162b5`, seis commits después.
@@ -638,7 +662,7 @@ Decisiones tomadas durante la migración (todas confirmadas con el autor del pro
 
 ## Catálogo de errores: solo cubre errores computacionales, no discriminación de tipo de crecimiento
 
-`catalogoErrores` de `l1-patrones-de-cambio.json` (`error-1` a `error-4`) documenta errores computacionales explícitos: olvidar el valor inicial, contar mal los saltos, confundir la dirección al despejar, confundir el signo en un cálculo hacia adelante. Hay una familia de errores distinta que el catálogo no cubre: **discriminar tipo de crecimiento** (confundir crecimiento multiplicativo/exponencial con aditivo; verificar solo algunas diferencias en vez de todas; confundir un patrón con diferencias crecientes —no constante— con cambio constante). Aparece en `l1-item-3` (las 4 alternativas quedaron deliberadamente sin `errorCatalogado`, decisión del 2026-07-08 tras la auditoría de fidelidad) y ya apareció antes, sin etiquetar, en el paso "problema" (Diego con depósitos crecientes) y en el paso "práctica" (bacterias que se duplican).
+`catalogoErrores` de `l1-patrones-de-cambio.json` (`olvida-valor-inicial` a `confunde-signo-de-la-tasa`) documenta errores computacionales explícitos: olvidar el valor inicial, contar mal los saltos, confundir la dirección al despejar, confundir el signo en un cálculo hacia adelante. Hay una familia de errores distinta que el catálogo no cubre: **discriminar tipo de crecimiento** (confundir crecimiento multiplicativo/exponencial con aditivo; verificar solo algunas diferencias en vez de todas; confundir un patrón con diferencias crecientes —no constante— con cambio constante). Aparece en `l1-item-3` (las 4 alternativas quedaron deliberadamente sin `errorCatalogado`, decisión del 2026-07-08 tras la auditoría de fidelidad) y ya apareció antes, sin etiquetar, en el paso "problema" (Diego con depósitos crecientes) y en el paso "práctica" (bacterias que se duplican).
 
 **No se creó categoría nueva ahora** porque un solo ítem no es caso de uso suficiente para diseñar bien la taxonomía. **Pendiente para Lección 3 o 4:** si este patrón de error se repite, evaluar si amerita un catálogo propio (paralelo a `catalogoErrores`, quizás `catalogoErroresConceptuales`) en vez de forzarlo dentro del catálogo computacional actual.
 
@@ -1694,7 +1718,7 @@ pero hay que cerrarlo antes de Gate 3.
 
 Las tres lecciones del módulo Porcentaje (`porcentaje-concepto`,
 `porcentaje-rebaja-doble`, `porcentaje-volver-atras`) **no tienen
-`catalogoErrores` embebido** — referencian `error-1`…`error-N` pelados,
+`catalogoErrores` embebido** — referencian los ids locales pelados (`reporta-descuento-en-vez-de-resto`, …),
 resueltos únicamente contra `content/errores/porcentaje.json`, que
 `lib/sanitizar.ts` no lee para resolver la Capa 2 del feedback (ver "Ningún
 cierre tiene `catalogoErrores`" más arriba, 2026-08-04: mismo mecanismo, ahí
@@ -1758,13 +1782,13 @@ nada desde antes del 2026-08-14.
 ## ✅ Guard `catalogo-divergente`: 10 hallazgos reales entre `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json` (abierta 2026-08-14, backlog de otro módulo — confirmada, no introducida por Proporcionalidad) — resuelta (2026-09-08)
 
 **Resuelta por la renumeración del commit `e33b262` (F0.2).**
-`lineal-pendiente-e-intercepto.json` pasó a numerar `error-8` a `error-12`, así
-que ya no comparte ni un id con `lineal-patrones-de-cambio.json` (`error-1` a
-`error-7`) y el guard no tiene qué comparar. Medido con `node -e` el 2026-09-08:
+`lineal-pendiente-e-intercepto.json` pasó a numerar `confunde-pendiente-con-intercepto` a `omite-coeficiente-de-posicion`, así
+que ya no comparte ni un id con `lineal-patrones-de-cambio.json` (`olvida-valor-inicial` a
+`intercambia-tasa-y-valor-inicial`) y el guard no tiene qué comparar. Medido con `node -e` el 2026-09-08:
 
 ```
-ids de patrones-de-cambio    : error-1, error-2, error-3, error-4, error-5, error-6, error-7
-ids de pendiente-e-intercepto: error-8, error-9, error-10, error-11, error-12
+ids de patrones-de-cambio    : olvida-valor-inicial, cuenta-mal-los-saltos, confunde-direccion-al-despejar, confunde-signo-de-la-tasa, aplica-cambio-una-sola-vez, multiplica-valor-inicial-por-pasos, intercambia-tasa-y-valor-inicial
+ids de pendiente-e-intercepto: confunde-pendiente-con-intercepto, confunde-signo-de-la-pendiente, lee-intercepto-en-eje-equivocado, malinterpreta-punto-de-cruce, omite-coeficiente-de-posicion
 INTERSECCION: VACIA -> ninguna colision posible
 ```
 
@@ -1776,8 +1800,8 @@ mal.
 en rojo hoy por un motivo ajeno a Proporcionalidad: los catálogos embebidos de
 `lineal-patrones-de-cambio.json` y `lineal-pendiente-e-intercepto.json`
 (módulo `funcion-lineal-afin` en `MODULO_POR_LECCION` de
-`scripts/auditar-leccion.mjs`) reciclan los mismos cinco ids —`error-1` a
-`error-5`— con descripciones distintas entre los dos archivos. El guard
+`scripts/auditar-leccion.mjs`) reciclan los mismos cinco ids —`olvida-valor-inicial` a
+`aplica-cambio-una-sola-vez`— con descripciones distintas entre los dos archivos. El guard
 antidivergencia (mismo mecanismo que protege a Proporcionalidad, ver
 `docs/reglas-modulo.md` §5) lo detecta y lo marca 🔴 en las dos direcciones: 5
 hallazgos `catalogo-divergente` en cada archivo, 10 en total. Confirmado
@@ -1817,15 +1841,15 @@ Los cinco, con sus consumidores reales:
 
 | id | archivo que lo embebía | consumidores |
 |---|---|---|
-| `error-4` | `enteros-operar-y-ordenar` | 2: `enteros-operar-y-comparar` `l2-item-3` alt D, y `cierre-enteros-racionales` `cierre-enteros-5` alt B |
-| `error-6` | `enteros-operar-y-ordenar` | 3, todos en lecciones: `enteros-operar-y-comparar` paso3/bloque1 `feedbackPorError` valor 0.75, `enteros-problemas-en-contexto` paso8/bloque1 opción c, `enteros-problemas-en-contexto` `l3-item-3` alt C |
-| `error-7` | `enteros-operar-y-ordenar` | 10: 7 en `enteros-operar-y-comparar`, 3 en `cierre-enteros-racionales` |
-| `error-8` | `enteros-operar-y-ordenar` | 6: 4 en `enteros-operar-y-comparar`, 2 en `cierre-enteros-racionales` |
-| `error-7` | `lineal-patrones-de-cambio` | 5, todos en `lineal-modelamiento-paes` |
+| `compara-fracciones-solo-por-numerador` | `enteros-operar-y-ordenar` | 2: `enteros-operar-y-comparar` `l2-item-3` alt D, y `cierre-enteros-racionales` `cierre-enteros-5` alt B |
+| `suma-denominadores` | `enteros-operar-y-ordenar` | 3, todos en lecciones: `enteros-operar-y-comparar` paso3/bloque1 `feedbackPorError` valor 0.75, `enteros-problemas-en-contexto` paso8/bloque1 opción c, `enteros-problemas-en-contexto` `l3-item-3` alt C |
+| `rechaza-division-que-agranda` | `enteros-operar-y-ordenar` | 10: 7 en `enteros-operar-y-comparar`, 3 en `cierre-enteros-racionales` |
+| `invierte-orden-division-fracciones` | `enteros-operar-y-ordenar` | 6: 4 en `enteros-operar-y-comparar`, 2 en `cierre-enteros-racionales` |
+| `intercambia-tasa-y-valor-inicial` | `lineal-patrones-de-cambio` | 5, todos en `lineal-modelamiento-paes` |
 
 Corrección al conteo previo de este documento: la entrada del 2026-09-07
-registraba para `error-4` un único consumidor (el del cierre). Son **dos**:
-también lo usa `enteros-operar-y-comparar` en `l2-item-3` alt D. Y `error-6` no
+registraba para `confunde-signo-de-la-tasa` un único consumidor (el del cierre). Son **dos**:
+también lo usa `enteros-operar-y-comparar` en `l2-item-3` alt D. Y `suma-denominadores` no
 pasa por el cierre; sus tres consumidores están en L2 y L3.
 
 **Ejecución.** No se borró ninguna entrada de catálogo, embebido o canónico. Un
