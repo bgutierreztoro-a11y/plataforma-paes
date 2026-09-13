@@ -405,6 +405,7 @@ function raizContentDe(ruta) {
 }
 
 const CAMPOS_REPASO = ['camino', 'correcto', 'ejemplo'];
+const MIN_MOTIVO_RESERVADO = 20;
 
 /**
  * Contrato de forma de un `content/errores/<unidad>.json`: tiene `unidad`, tiene
@@ -450,6 +451,9 @@ export function validarDatosCatalogoErrores(data) {
 
     if (e.titulo !== undefined && !esTexto(e.titulo)) errores.push(`${p}.titulo: si está, es texto no vacío`);
     if (e.apoyo !== undefined && !esTexto(e.apoyo)) errores.push(`${p}.apoyo: si está, es texto no vacío`);
+    if (e.reservado !== undefined && !(esTexto(e.reservado) && e.reservado.trim().length >= MIN_MOTIVO_RESERVADO)) {
+      errores.push(`${p}.reservado: si está, es un motivo de al menos ${MIN_MOTIVO_RESERVADO} caracteres (para qué pieza se guarda el id)`);
+    }
     if (e.repaso !== undefined) {
       if (!e.repaso || typeof e.repaso !== 'object' || Array.isArray(e.repaso)) {
         errores.push(`${p}.repaso: si está, es un objeto { camino, correcto, ejemplo }`);
@@ -472,6 +476,74 @@ export function validarCatalogoErrores(ruta) {
     return [`JSON inválido: ${e.message}`];
   }
   return validarDatosCatalogoErrores(data);
+}
+
+/**
+ * Cobertura del catálogo canónico (2026-09-13): todo id de
+ * `content/errores/<unidad>.json` tiene que estar referenciado por algún
+ * `errorCatalogado` de un archivo de ESE módulo, o llevar `reservado` con el
+ * motivo (para qué pieza se guarda). Es el gemelo de `validarReferenciasResuelven`:
+ * aquel garantiza que todo id referenciado existe; este, que todo id que
+ * existe se usa. Reemplaza al `catalogo-sin-usar` retirado el 2026-09-08, que
+ * medía sobre la copia embebida por archivo (donde un id que la L1 embebía
+ * para el cierre era un falso positivo); sobre el canónico y por módulo
+ * entero no hay esa ambigüedad, y medido el 2026-09-13 da 0 disparos en los
+ * 13 catálogos.
+ *
+ * `referenciados` es el conjunto de ids completos (`<unidad>/error-N`) que el
+ * módulo referencia, armado por `idsReferenciadosPorUnidad` sobre el corpus.
+ * Puro, sobre datos ya parseados. Solo tiene sentido en la corrida completa:
+ * un archivo suelto no sabe qué usan los demás archivos de su módulo.
+ */
+export function validarCoberturaCatalogo(data, referenciados) {
+  const errores = [];
+  for (const e of Array.isArray(data?.errores) ? data.errores : []) {
+    if (!esTexto(e?.id) || referenciados.has(e.id)) continue;
+    if (esTexto(e?.reservado)) continue;
+    errores.push(
+      `${e.id} no lo referencia ningún errorCatalogado del módulo (lecciones, cierre, diagnóstico ni Advance); úsalo o decláralo "reservado" con el motivo`,
+    );
+  }
+  return errores;
+}
+
+/**
+ * Mapa unidad → conjunto de ids completos (`<unidad>/error-N`) que referencia
+ * algún archivo de contenido de esa unidad. Recorre lecciones y cierres (id
+ * local + `moduloId`), ítems de diagnóstico (id ya con namespace) y bancos
+ * Advance (id local + `moduloId`). Un archivo sin `moduloId` cuyos ids no
+ * traen namespace (content/diagnostico.json) no aporta: no se sabe de qué
+ * módulo hablan, y `validarReferenciasResuelven` ya lo reporta aparte.
+ */
+function idsReferenciadosPorUnidad(dirContent) {
+  const porUnidad = new Map();
+  const anotar = (idCompleto) => {
+    const unidad = idCompleto.split('/')[0];
+    if (!porUnidad.has(unidad)) porUnidad.set(unidad, new Set());
+    porUnidad.get(unidad).add(idCompleto);
+  };
+  const recorrerArchivo = (ruta) => {
+    let data;
+    try {
+      data = JSON.parse(readFileSync(ruta, 'utf8'));
+    } catch {
+      return; // ese JSON roto ya se reporta por su cuenta
+    }
+    const moduloId = esTexto(data?.moduloId) ? data.moduloId : null;
+    (function recorrer(nodo) {
+      if (Array.isArray(nodo)) return void nodo.forEach(recorrer);
+      if (!nodo || typeof nodo !== 'object') return;
+      if (esTexto(nodo.errorCatalogado)) {
+        if (nodo.errorCatalogado.includes('/')) anotar(nodo.errorCatalogado);
+        else if (moduloId) anotar(`${moduloId}/${nodo.errorCatalogado}`);
+      }
+      for (const v of Object.values(nodo)) recorrer(v);
+    })(data);
+  };
+  for (const ruta of archivosDeContenido(dirContent)) recorrerArchivo(ruta);
+  for (const ruta of archivosDeItemDiagnostico(dirContent)) recorrerArchivo(ruta);
+  for (const ruta of archivosDeBancoAdvance(dirContent)) recorrerArchivo(ruta);
+  return porUnidad;
 }
 
 // ---------- bancos Fobos Advance: content/advance/<unidadId>/banco.json ----------
@@ -1254,9 +1326,15 @@ if (coberturaPorModulo.size > 0) {
   console.log(`   TOTAL: ${granMapeados}/${granTotal} (${pctGlobal})`);
 }
 
+const referenciadosPorUnidad = idsReferenciadosPorUnidad(raiz);
 for (const ruta of archivosDeCatalogoErrores(raiz)) {
   n++;
-  if (!reportar(ruta, validarCatalogoErrores(ruta))) ok = false;
+  const errores = validarCatalogoErrores(ruta);
+  if (errores.length === 0) {
+    const data = JSON.parse(readFileSync(ruta, 'utf8'));
+    errores.push(...validarCoberturaCatalogo(data, referenciadosPorUnidad.get(data.unidad) ?? new Set()));
+  }
+  if (!reportar(ruta, errores)) ok = false;
 }
 
 const rutaDagM1 = join(raiz, 'diagnostico', 'dag-m1.json');

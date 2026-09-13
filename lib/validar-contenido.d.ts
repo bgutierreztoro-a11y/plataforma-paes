@@ -34,4 +34,11 @@ declare module "../scripts/validar-contenido.mjs" {
    */
   export function validarDatosCatalogoErrores(data: unknown): string[];
   export function validarCatalogoErrores(ruta: string): string[];
+  /**
+   * Cobertura del catálogo canónico: todo id de `data.errores[]` está en
+   * `referenciados` (ids completos `<unidad>/error-N` que el módulo usa) o
+   * lleva `reservado` con el motivo. Solo la corrida completa del CLI arma
+   * `referenciados`; sobre datos en memoria sirve para probar el contrato.
+   */
+  export function validarCoberturaCatalogo(data: unknown, referenciados: Set<string>): string[];
 }

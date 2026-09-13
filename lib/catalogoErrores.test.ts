@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { validarDatosCatalogoErrores } from "../scripts/validar-contenido.mjs";
+import { validarCoberturaCatalogo, validarDatosCatalogoErrores } from "../scripts/validar-contenido.mjs";
 import { catalogoCompletoDelModulo, catalogoDelModulo } from "./catalogoErrores.ts";
 
 /* La primera mitad prueba el contrato de forma del catálogo sobre datos en
@@ -67,6 +67,43 @@ describe("validarDatosCatalogoErrores", () => {
     assert.match(validarDatosCatalogoErrores(catalogo({ id: "prueba/error-1" }))[0], /falta descripcion/);
     assert.match(validarDatosCatalogoErrores(catalogo(entrada(), entrada()))[0], /id local "error-1" duplicado/);
     assert.deepEqual(validarDatosCatalogoErrores({ unidad: "prueba", errores: [] }), ['falta "errores"[] con al menos un error']);
+  });
+
+  it("reservado, si está, es un motivo real y no una marca vacía", () => {
+    assert.deepEqual(validarDatosCatalogoErrores(catalogo(entrada({ reservado: "se guarda para el cierre del módulo" }))), []);
+    for (const malo of ["", "   ", "pendiente", true, 7]) {
+      const errores = validarDatosCatalogoErrores(catalogo(entrada({ reservado: malo })));
+      assert.equal(errores.length, 1, JSON.stringify(malo));
+      assert.match(errores[0], /^errores\[0\]\.reservado: si está, es un motivo de al menos 20 caracteres/);
+    }
+  });
+});
+
+describe("validarCoberturaCatalogo", () => {
+  /* Gemelo del chequeo inverso: todo id que existe en el canónico lo usa
+     alguna pieza del módulo, o dice por qué se guarda. Medido el 2026-09-13
+     sobre los 13 catálogos reales: 0 ids sin uso. El assert es la relación. */
+  const tres = catalogo(entrada({}, 1), entrada({}, 2), entrada({}, 3));
+
+  it("con todos los ids referenciados no hay hallazgos", () => {
+    const usados = new Set(["prueba/error-1", "prueba/error-2", "prueba/error-3"]);
+    assert.deepEqual(validarCoberturaCatalogo(tres, usados), []);
+  });
+
+  it("un id que ningún archivo del módulo referencia se nombra por su id completo", () => {
+    const errores = validarCoberturaCatalogo(tres, new Set(["prueba/error-1", "prueba/error-3"]));
+    assert.equal(errores.length, 1);
+    assert.match(errores[0], /^prueba\/error-2 no lo referencia ningún errorCatalogado del módulo/);
+  });
+
+  it("un id reservado con motivo no cuenta como sin uso", () => {
+    const conReserva = catalogo(entrada({}, 1), entrada({ reservado: "se guarda para el cierre del módulo" }, 2));
+    assert.deepEqual(validarCoberturaCatalogo(conReserva, new Set(["prueba/error-1"])), []);
+  });
+
+  it("las referencias de otro módulo no cubren los ids de este", () => {
+    const errores = validarCoberturaCatalogo(catalogo(entrada()), new Set(["otro/error-1"]));
+    assert.equal(errores.length, 1);
   });
 });
 
