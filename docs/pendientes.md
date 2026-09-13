@@ -13,6 +13,15 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
+## 🟡 Migración 010 (`advance_triage`) pendiente de aplicar en Neon (abierta 2026-09-12, F5a)
+
+`db/migraciones/010_advance_triage.sql` está en el repo (commit `39e115c`) y no
+se ha aplicado: la aplica Benja con `npm run migrar` (nunca CC). Hasta
+entonces `POST /api/advance/triage` responde 500 saneado y la sesión de triage
+termina igual en pantalla, sin guardar nada. Verificar con
+`npm run migrar -- --estado` antes y después. Al aplicarla, cerrar esta
+entrada; el punto 3 de la entrada de la 007 (abajo) sigue abierto.
+
 ## ✅ Copy crudo del catálogo en `/advance/errores`: resuelta para porcentaje (2026-09-12, F4b)
 
 Estaba abierta como 🔴 desde el cierre de F4, el mismo día ("la tarjeta muestra
@@ -151,6 +160,11 @@ Clerk todavía no llegó (el webhook `user.created` puede demorar o fallar).
    `advance_descartes` por `usuario_id`. Hasta entonces una cuenta borrada deja
    filas bajo un id opaco sin PII, igual que hoy `progreso_lecciones` y
    `respuestas`.
+
+3. `db/migraciones/010_advance_triage.sql` (F5a, 2026-09-12) repite el patrón
+   de la 008: sin FK a `usuarios` y sin `ON DELETE CASCADE`. La 007 tiene que
+   borrar también en `advance_triage` por `usuario_id`. Anotado en la cabecera
+   de la 010.
 
 ## ✅ Migración del catálogo de errores a canónico único — completada (2026-09-08)
 

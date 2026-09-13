@@ -399,10 +399,43 @@ Lo que F4c no cierra: los otros diez catálogos siguen sin `titulo` ni `apoyo`, 
 
 ### F5 — Mapa de recuperables y triage
 
-**5.1** Mapa de recuperables (sección 6.4).
-**5.2** Triage de 20 segundos (sección 6.5).
+Dividida el 2026-09-12 en F5a (triage, construida) y F5b (mapa, bloqueada por el conteo DEMRE). 5.3 y 5.4 siguen en F5 sin fase propia todavía.
+
+**5.1** Mapa de recuperables (sección 6.4). Es F5b.
+**5.2** Triage de 20 segundos (sección 6.5). Es F5a.
 **5.3** Repaso de errores y sesiones de entrenamiento dirigidas (era 4.3; reubicado el 2026-09-12, D6).
 **5.4** Re-diagnóstico (era 4.4; reubicado el 2026-09-12, D6).
+
+#### F5a — Triage de 20 segundos — CERRADA en local 2026-09-12, sin push
+
+**Decisiones firmadas al abrir, no se reabren.**
+
+- **D14** Fuente: el banco de porcentaje (`content/advance/porcentaje/banco.json`), 20 ítems mezclados con la misma mecánica que la sesión de descarte (`seleccionarSesion`, que cae a `lib/mezclar.ts`), sin repetir en la sesión. El banco tiene exactamente 20 ítems, así que hoy la sesión es el banco entero en otro orden.
+- **D15** Persistencia: tabla `advance_triage`, append-only, migración `db/migraciones/010_advance_triage.sql`, mismo patrón que la 008: `usuario_id` sin FK, `sesion_id` uuid generado en el cliente en el inicializador de `useState`, `UNIQUE (usuario_id, sesion_id, item_id)`, `INSERT ... ON CONFLICT DO NOTHING`. Columnas: `usuario_id`, `sesion_id`, `item_id`, `unidad_id`, `decision` (`resuelvo | dejo | marco | sin-decision`, con CHECK), `ms` (integer, `>= 0`), `creado_en`. `GRANT INSERT, SELECT` a `app_m1` en la misma migración. La 007 futura de DELETE debe alcanzar esta tabla (anotado en la 010 y en `docs/pendientes.md`).
+- **D16** Timeout a los 20 s: se registra `decision = sin-decision` con `ms = 20000`. No se convierte en "dejo".
+- **D17** Veredicto, calculado en runtime desde `estadoDeErrores` (`lib/advance/dominio.ts`) sobre `advance_descartes`, nunca guardado: `resuelvo` en ítem con al menos un distractor cuyo error está abierto → lectura a revisar; `dejo` en ítem cuyos tres errores están cerrados → punto regalado; cualquier decisión sobre ítem con algún error en `sin-datos` → sin veredicto; `marco` → sin veredicto siempre; `sin-decision` → sin veredicto; resto → lectura buena. Sin datos suficientes es sin veredicto: nunca un veredicto inventado.
+- **D18** Pantalla final: total de decisiones, cuántas con veredicto, listado ítem por ítem con decisión y veredicto. Sin porcentaje, sin puntaje, sin proyección (Ley 19.496).
+
+**Registro de F5a, 2026-09-12.** Cuatro commits, hashes de `git log` al cierre, sin push. `master` estaba igual a `origin/master` (`6c37102`) al abrir.
+
+- `441501c` `tooling:` `lib/advance/triage.ts`, puro, sin I/O ni reloj (D4: los instantes se inyectan). Tipos `Decision` y `Veredicto`; `seleccionarItems(items, aleatorio)` sobre `seleccionarSesion`; `fasesDe` proyecta `EstadoDeError[]` a `errorId → fase` sin p(L); `registroDecision` y `registroSinDecision` (D16); `veredicto` según D17 en orden fijo (marco y sin-decision primero, después resuelvo con abierto, después dejo con todo cerrado, después sin-datos, resto lectura buena); `erroresAbiertosDe`; `resumenTriage` (D18); payload de `advance_triage_decision`. 22 tests, una rama por caso de D17, más el error ausente del mapa, que cuenta como `sin-datos`.
+- `39e115c` `advance:` la 010, `lib/datos/advanceTriage.ts` (`registrarSesionTriage` en lote atómico y `listarTriageDeUsuario`, cronológica), `cuerpoSesionTriage` y `validarCuerpoTriage` en `triage.ts` (6 tests), y `app/api/advance/triage/route.ts` con el orden de guardas de `/api/advance/sesion`: 404 sin flag, 401 sin sesión, 403 sin acceso, 400 con cuerpo inválido o unidad e ítems fuera del banco, 204 al escribir.
+- `3fca89a` `advance:` ruta `app/advance/triage/[unidadId]/page.tsx` (`force-dynamic`; guardas flag → sesión Clerk → acceso → `unidadId`; sin sesión, `IngresoErrores` con copy de triage). Componentes `SesionTriage` (sesionId, evento por ítem, POST al cerrar con `keepalive`), `EjecutorTriage` (reloj en `performance.now()`, tick de 250 ms, a 0 registra sin-decision y avanza), `ItemTriage` (presentacional: el ítem como en la prueba, cuenta "Quedan N s" con el número en `.num` y `aria-live`, tres botones `secundario` del mismo peso) y `ResultadoTriage` (D18, con `TarjetaError` del primer error abierto solo en lectura a revisar, enlazada al repaso). Textos bajo `triage.*` en `lib/advance/textos.ts`; entrada desde `/advance` por unidad, junto al descarte; evento en `lib/eventos.ts`. Galería `/_design` con el ítem con cuenta fija, el ejecutor con reloj real y el resultado en dos estados.
+- Más el `docs:` de este registro.
+
+**Mediciones, 390×844 contra `next start`, `prefers-reduced-motion: reduce`, sobre `/_design`, spec en el scratchpad de la sesión (fuera del repo), números de `3fca89a`.** Ítem con cuenta, cuatro líneas: cuenta "Quedan 12 s" con `aria-label` igual; los tres botones 48×324 px; contraste mínimo 4,52:1 (pill "Triage" sobre `--linea-fondo` de la 01) y 4,69:1 en las otras tres (la letra del chip, `text-secondary` sobre blanco); 0 nodos con transición o animación en los cuatro bloques. Resultado con veredictos, cuatro líneas: filas `resuelvo → lectura-a-revisar`, `dejo → lectura-buena`, `dejo → punto-regalado`, `marco → sin-veredicto`; una sola tarjeta, `href` `/advance/errores/muestra/error-1`, 94 px de alto; retorno 44 px; contraste mínimo 4,57:1 (01), 8,38:1 (02), 4,54:1 (03), 6,48:1 (04), siempre el retorno sobre el fondo real del body salvo en la 02; 0 nodos con movimiento. Resultado todo sin veredicto: "4 decisiones, 0 con veredicto", sin tarjetas, aviso de historial insuficiente, mismos mínimos de contraste, 0 movimiento. Ninguna de las palabras "acierto", "puntaje", "predicción" ni raya en la sección. Clic real en el ejecutor: "La dejo" pasa del ítem 001 al 002 con "Ítem 2 de 2"; "La marco y sigo" cierra con `dejo:lectura-buena, marco:sin-veredicto`. Sin scroll horizontal.
+
+**Verificación:** `npx tsc --noEmit`, `npm run lint`, `npm run validar` (única advertencia, preexistente: el banco cubre 9 errores y el mínimo es 12), `npm run test:unit` (360 tests, 0 fallos) y `npm run build` en verde.
+
+**Migración 010 pendiente de aplicar por Benja** con `npm run migrar`; hasta entonces `POST /api/advance/triage` responde 500 (saneado) y la pantalla final se muestra igual. Como en F4, la verificación en navegador con sesión Clerk real la hace Benja antes del push.
+
+**Desvíos respecto del brief, decididos solos y anotados:** la migración vive en `db/migraciones/`, no en `migrations/`; "abierto o en recaída" de D17 es `fase === "abierto"` (la recaída no es una fase en `dominio.ts`, es `recaidas >= 1` con fase abierto); `seleccionarItems` inyecta `aleatorio` en vez de una semilla, porque `lib/mezclar.ts` no tiene semilla; el resultado lista el enunciado de cada ítem; `listarTriageDeUsuario` existe y tiene SELECT por D15 sin que ninguna ruta lo consuma todavía; `ItemTriage` es un cuarto componente, presentacional, para que la galería monte la cuenta fija.
+
+**Lo que F5a no cierra:** el triage no filtra por error ni por fase (5.3); el veredicto se calcula contra el estado al abrir la página, no al decidir; `advance_triage` no se lee desde ninguna pantalla.
+
+#### F5b — Mapa de recuperables — BLOQUEADA
+
+Requiere el conteo real de frecuencia por unidad sobre formas liberadas de DEMRE (§6.4), que no existe todavía. Es análisis, no código. No se construye nada de la pantalla hasta tener ese número.
 
 ---
 
