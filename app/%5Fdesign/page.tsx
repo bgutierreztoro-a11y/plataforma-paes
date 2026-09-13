@@ -913,15 +913,15 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Triage de 20 segundos"
-          nota="La sesión de triage de Advance (docs/fobos-advance.md §6.5, F5a): un ítem tal como se ve en la prueba, la cuenta en segundos y tres decisiones del mismo peso; no se resuelve nada. Arriba, el ítem con la cuenta fija en 12 s sobre las cuatro líneas: el número es lo único que cambia, sin barra que se vacía ni animación. En medio, el ejecutor con la muestra para el clic real, con reloj de verdad y sin callbacks. Abajo, la pantalla final (D18) en dos estados con datos de MUESTRA: los cuatro veredictos en palabras, con la tarjeta del error abierto solo en lectura a revisar, y todo sin veredicto cuando no hay historial. Sin porcentaje ni proyección. Sobre --color-bg, el fondo real del body."
+          nota="La sesión de triage de Advance (docs/fobos-advance.md §6.5, F5a, copy de F5a2): un ítem tal como se ve en la prueba, la instrucción completa encima de la cuenta (corta del ítem 2 en adelante), la cuenta en segundos y dos decisiones del mismo peso; no se resuelve nada. Arriba, el primer ítem con la cuenta fija en 12 s sobre las cuatro líneas: el número es lo único que cambia, sin barra que se vacía ni animación. En medio, el ejecutor con la muestra para el clic real, con reloj de verdad y sin callbacks. Abajo, la pantalla final (D18) en dos estados con datos de MUESTRA: cada fila con su rótulo en negrita y su explicación, la tarjeta del error abierto solo en Ojo con el tiempo, la nota fija al pie, y todo sin datos cuando no hay historial. Sin porcentaje ni proyección. Sobre --color-bg, el fondo real del body."
         >
           <div className="flex flex-col gap-6">
             <div>
-              <Rotulo>Ítem con cuenta: ítem 5 de 20, quedan 12 s</Rotulo>
+              <Rotulo>Ítem con cuenta: ítem 1 de 20 con la instrucción completa, quedan 12 s</Rotulo>
               <PorLinea>
                 {() => (
                   <div data-triage="item" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
-                    <ItemTriage item={MUESTRA_DESCARTE[0]} indice={4} total={20} segundos={12} titulo="Unidad de muestra" />
+                    <ItemTriage item={MUESTRA_DESCARTE[0]} indice={0} total={20} segundos={12} titulo="Unidad de muestra" />
                   </div>
                 )}
               </PorLinea>

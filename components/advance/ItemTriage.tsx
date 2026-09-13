@@ -18,12 +18,13 @@ interface ItemTriageProps {
   /* Título de la unidad (nombre técnico DEMRE). Opcional solo para la
      galería, que monta la muestra sin banco. */
   titulo?: string;
-  /* Recibe una de las tres decisiones. Opcional para que la galería, que es
+  /* Recibe una de las dos decisiones. Opcional para que la galería, que es
      un server component, pueda rendir el ítem fijo sin pasar una función. */
   onDecidir?: (decision: Exclude<Decision, "sin-decision">) => void;
 }
 
-const DECISIONES = ["resuelvo", "dejo", "marco"] as const;
+/* Dos decisiones desde F5a2. `dejo` sigue en el tipo sin botón que la emita. */
+const DECISIONES = ["resuelvo", "marco"] as const;
 
 /**
  * Un ítem del triage de 20 segundos (docs/fobos-advance.md §6.5), tal como se
@@ -38,9 +39,13 @@ const DECISIONES = ["resuelvo", "dejo", "marco"] as const;
  * que apagar porque nada se mueve. `aria-live="polite"` anuncia la cuenta sin
  * interrumpir; `aria-atomic` para que se lea la frase completa.
  *
- * Tres botones `secundario` apilados, mismo peso: ninguna decisión es "la
- * correcta", y darle color de línea a una la señalaría como tal. Los tres
+ * Dos botones `secundario` apilados, mismo peso: ninguna decisión es "la
+ * correcta", y darle color de línea a una la señalaría como tal. Los dos
  * pasan los 44 px por el `py-3.5` de `Boton`.
+ *
+ * La instrucción va en todos los ítems, encima de la cuenta: quien entra al
+ * ítem 8 tiene que poder leerla. Completa en el primero; corta en los demás,
+ * para no robarle lectura a los 20 s.
  *
  * Las alternativas toman `ALTERNATIVA_BASE` y `CHIP_BASE` sin la capa
  * interactiva: son `div`, no `button`, y no responden al dedo.
@@ -66,6 +71,10 @@ export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }:
         <BarraProgreso valor={indice} total={total} etiqueta={conteo} />
       </div>
 
+      <p className="mb-4 text-cuerpo-m text-primary" data-instruccion={indice === 0 ? "completa" : "corta"}>
+        {indice === 0 ? triage.instruccion : triage.instruccionCorta}
+      </p>
+
       {/* La cuenta, sola en su fila: es lo único que cambia. El número va en
           `.num` y las palabras en sans; `aria-label` lleva la frase entera. */}
       <p
@@ -83,8 +92,6 @@ export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }:
         <div className="text-base font-medium text-primary">
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
-
-        <p className="text-cuerpo-s text-primary">{triage.instruccion}</p>
 
         <ul className="space-y-2.5" aria-label="Alternativas">
           {item.alternativas.map((alt) => (

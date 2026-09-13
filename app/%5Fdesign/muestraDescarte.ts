@@ -225,26 +225,27 @@ export const MUESTRA_TRIAGE: ItemAdvance[] = [
   { ...ITEM_TODO_CERRADO, id: "adv-muestra-galeria-004", enunciado: "MUESTRA DE GALERÍA. Cuarto ítem, marcado para volver después." },
 ];
 
-/* Con FASES_MUESTRA: resuelvo sobre error-1 abierto → lectura a revisar;
-   dejo con error-6 en observación → lectura buena; dejo con todo cerrado →
-   punto regalado; marco → sin veredicto. */
+/* Con FASES_MUESTRA (dos decisiones, F5a2): resuelvo sobre error-1 abierto →
+   Ojo con el tiempo; marco con error-6 en observación → Buena lectura; marco
+   con todo cerrado → Podías con esta; tiempo agotado → Todavía sin datos.
+   `dejo` no aparece: quedó sin emisor. */
 const REGISTROS_TRIAGE: RegistroTriage[] = [
   { itemId: "adv-muestra-galeria-001", decision: "resuelvo", ms: 8420 },
-  { itemId: "adv-muestra-galeria-002", decision: "dejo", ms: 4110 },
-  { itemId: "adv-muestra-galeria-003", decision: "dejo", ms: 6035 },
-  { itemId: "adv-muestra-galeria-004", decision: "marco", ms: 20000 },
+  { itemId: "adv-muestra-galeria-002", decision: "marco", ms: 4110 },
+  { itemId: "adv-muestra-galeria-003", decision: "marco", ms: 6035 },
+  { itemId: "adv-muestra-galeria-004", decision: "sin-decision", ms: 20000 },
 ];
 
 export const RESULTADOS_TRIAGE_MUESTRA: { id: string; rotulo: string; fases: FasesPorError; registros: RegistroTriage[] }[] = [
   {
     id: "con-veredictos",
-    rotulo: "Con veredictos: los cuatro, uno por ítem (la tarjeta solo en lectura a revisar)",
+    rotulo: "Con veredictos: los cuatro rótulos con su explicación, uno por ítem (la tarjeta solo en Ojo con el tiempo)",
     fases: FASES_MUESTRA,
     registros: REGISTROS_TRIAGE,
   },
   {
     id: "sin-veredicto",
-    rotulo: "Todo sin veredicto: sin historial (todo sin-datos), las mismas decisiones",
+    rotulo: "Todo sin datos: sin historial de descarte, las mismas decisiones",
     fases: FASES_SIN_DATOS,
     registros: REGISTROS_TRIAGE,
   },

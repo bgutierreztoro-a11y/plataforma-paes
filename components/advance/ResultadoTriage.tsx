@@ -31,8 +31,10 @@ interface ResultadoTriageProps {
 /**
  * La pantalla final de una sesión de triage (docs/fobos-advance.md §6.5,
  * D18): cuántas decisiones, cuántas con veredicto, y el listado ítem por
- * ítem con su decisión y su veredicto en palabras. Sin porcentaje, sin
- * puntaje, sin proyección (Ley 19.496).
+ * ítem con su decisión y su veredicto en palabras: un rótulo en negrita y
+ * una explicación debajo (F5a2). Sin porcentaje ni proyección (Ley 19.496).
+ * Al pie, siempre, la nota que dice de dónde salen "los errores" y que el
+ * triage no juzga: el estudiante de F5a no entendía ninguna de las dos cosas.
  *
  * El veredicto se calcula acá, en runtime, con `resumenTriage` sobre las
  * fases que la página leyó al abrir (D17); no viene del servidor ni se guarda.
@@ -93,8 +95,11 @@ export function ResultadoTriage({ registros, items, fases, catalogo, unidadId, r
                       <TextoEnriquecido contenido={item.enunciado} />
                     </div>
                   )}
-                  <p className="text-cuerpo-m font-medium text-primary" data-veredicto-texto>
+                  <p className="text-cuerpo-m font-semibold text-primary" data-veredicto-texto>
                     {triage.veredicto[fila.veredicto]}
+                  </p>
+                  <p className="text-cuerpo-s text-primary" data-explicacion>
+                    {triage.explicacion[fila.veredicto]}
                   </p>
                   {error && (
                     <Link
@@ -119,6 +124,9 @@ export function ResultadoTriage({ registros, items, fases, catalogo, unidadId, r
           <h2 className="text-etiqueta uppercase text-primary">{resultado.queHacer}</h2>
           <p className="text-cuerpo-m text-primary">
             {hayARevisar ? resultado.queHacerDetalle : resultado.queHacerSinRevisar}
+          </p>
+          <p className="text-cuerpo-s text-primary" data-nota>
+            {resultado.nota}
           </p>
           {rutaOtraSesion && (
             <Boton

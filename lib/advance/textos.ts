@@ -117,52 +117,77 @@ export const TEXTOS_ADVANCE = {
     },
   },
 
-  /* Triage de 20 segundos (docs/fobos-advance.md §6.5, F5a). Se muestra un
-     ítem, corre una cuenta de 20 s y el estudiante decide; no resuelve nada.
-     Las tres decisiones pesan igual: ninguna es "la correcta". El veredicto se
-     dice con palabras (D17) y la pantalla final no lleva porcentaje, puntaje
-     ni proyección (D18, Ley 19.496). El tiempo agotado se informa sin
-     dramatismo: es un dato, no un castigo. */
+  /* Triage de 20 segundos (docs/fobos-advance.md §6.5, F5a, copy de F5a2).
+     Se muestra un ítem, corre una cuenta de 20 s y el estudiante decide; no
+     resuelve nada. Las dos decisiones pesan igual: ninguna es "la correcta".
+     El veredicto es un rótulo más una explicación (D17) y la pantalla final
+     no lleva porcentaje ni proyección (D18, Ley 19.496). El tiempo agotado se
+     informa sin dramatismo: es un dato, no un castigo. F5a2 explica lo que
+     F5a daba por sabido: qué son "los errores" (vienen del descarte, no del
+     triage) y que el triage no juzga, muestra dónde se puede ir el tiempo. */
   triage: {
     pill: "Triage",
     sustantivo: "Ítem",
-    instruccion: "Lee el ítem y decide. No hay que resolverlo.",
+    /* Texto firmado (F5a2). Va en el primer ítem, encima de la cuenta. */
+    instruccion:
+      "No tienes que resolver nada. Solo decidir en 20 segundos si le dedicarías tiempo a esta pregunta en la prueba o si la marcarías para volver después.",
+    /* Los ítems 2 en adelante llevan la versión corta, en el mismo lugar:
+       quien entra a mitad de sesión la sigue viendo sin perder los 20 s. */
+    instruccionCorta: "No hay que resolver nada: decide si le dedicarías tiempo en la prueba o si pasas a la siguiente.",
     /* La cuenta regresiva: "Quedan N s". La frase entera va al aria-label; en
        pantalla el número va en `.num` entre las dos palabras. */
     cuenta: (n: number) => `Quedan ${n} s`,
     cuentaAntes: "Quedan",
     cuentaDespues: "s",
+    /* Dos botones desde F5a2: resuelvo y marco. `dejo` fue "La dejo" en F5a
+       y quedó sin emisor; se conserva porque el tipo `Decision` la exige y
+       una fila vieja podría llegar a esta tabla. `sin-decision` es el tiempo
+       agotado y se dice así, sin más. */
     decision: {
       resuelvo: "La resuelvo",
       dejo: "La dejo",
-      marco: "La marco y sigo",
-      "sin-decision": "Sin decisión",
+      marco: "Paso a la siguiente",
+      "sin-decision": "Se acabó el tiempo",
     },
+    /* Rótulo del veredicto (F5a2, textos firmados): en negrita en la fila. */
     veredicto: {
-      "lectura-buena": "Lectura buena",
-      "lectura-a-revisar": "Lectura a revisar",
-      "punto-regalado": "Punto regalado",
-      "sin-veredicto": "Sin veredicto",
+      "lectura-buena": "Buena lectura",
+      "lectura-a-revisar": "Ojo con el tiempo",
+      "punto-regalado": "Podías con esta",
+      "sin-veredicto": "Todavía sin datos",
+    },
+    /* Explicación del veredicto (F5a2, textos firmados): debajo del rótulo,
+       en cuerpo-s. */
+    explicacion: {
+      "lectura-buena": "Tu decisión calza con lo que ya sabes hacer.",
+      "lectura-a-revisar":
+        "Esta pregunta se apoya en un procedimiento que todavía estás afinando. Decidir resolverla no está mal, pero en la prueba real es donde se te pueden ir varios minutos.",
+      "punto-regalado":
+        "Solo usa procedimientos que ya dominas. Volver después te cuesta tiempo que no necesitabas gastar.",
+      "sin-veredicto":
+        "Necesitamos más sesiones de descarte en este contenido para decirte algo útil.",
     },
     /* Pantalla final (D18). Los números van aparte, en `.num`. */
     resultado: {
       titulo: "Sesión terminada",
       decisiones: (n: number) => (n === 1 ? "decisión" : "decisiones"),
-      conVeredicto: "con veredicto",
+      conVeredicto: "con comentario",
       comoLeiste: "Cómo leíste cada ítem",
       /* Cuando ningún ítem tiene veredicto: dice por qué, sin inventar uno. */
       sinVeredictos:
-        "Todavía no hay historial suficiente para dar un veredicto. Haz sesiones de descarte y vuelve.",
+        "Todavía no tenemos sesiones de descarte tuyas en este contenido. Haz algunas y vuelve: ahí podremos decirte dónde se te puede ir el tiempo.",
       queHacer: "Qué hacer ahora",
       queHacerDetalle:
-        "Revisa los ítems marcados como lectura a revisar: el error abierto de cada uno lleva a su repaso.",
+        "Mira los ítems con Ojo con el tiempo: la tarjeta de cada uno lleva al repaso del procedimiento que estás afinando.",
       queHacerSinRevisar: "Haz otra sesión: son veinte ítems de la misma unidad, en otro orden.",
       otraSesion: "Otra sesión",
+      /* Nota fija al pie (F5a2, texto firmado): siempre visible. */
+      nota: "Lo que aquí llamamos errores viene de tus sesiones de descarte, no de lo que decidiste recién. En el triage no hay respuestas buenas ni malas: solo te mostramos dónde se te puede ir el tiempo en la prueba.",
     },
-    /* Sin sesión de Clerk. El triage se evalúa contra el historial propio y
-       sin cuenta no hay historial. */
+    /* Sin sesión de Clerk. El triage se lee contra el historial propio y sin
+       cuenta no hay historial. */
     ingresoTitulo: "Ingresa para hacer el triage",
     ingresoCuerpo:
-      "El triage se evalúa contra tu propio historial de descarte, que se guarda en tu cuenta. Ingresa y vuelve.",
+      "El triage se lee contra tus sesiones de descarte, que se guardan en tu cuenta. Ingresa y vuelve.",
   },
 } as const;
