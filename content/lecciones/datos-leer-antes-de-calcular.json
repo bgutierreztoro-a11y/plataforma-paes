@@ -1,0 +1,734 @@
+{
+  "tipo": "leccion",
+  "id": "datos-leer-antes-de-calcular",
+  "moduloId": "tablas-y-graficos",
+  "titulo": "Tablas de frecuencia absoluta y relativa",
+  "objetivo": "Contar datos brutos y armar una tabla de frecuencias absolutas, calcular la frecuencia relativa de cada categoría como fracción, decimal y porcentaje sobre el total propio, comprobar que las relativas suman 1 (100 %), y comparar dos grupos de distinto tamaño usando solo frecuencias relativas.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Fracciones, decimales y su equivalencia (Lección 2 del módulo Enteros y racionales)",
+    "Fracción a porcentaje y porcentaje de una cantidad (Lección 1 del módulo Porcentaje)"
+  ],
+  "conceptos": [
+    "frecuencia absoluta: cuántas veces aparece cada categoría o valor en los datos",
+    "total n: la suma de todas las frecuencias absolutas",
+    "frecuencia relativa: frecuencia absoluta dividida por el total propio, como fracción, decimal o porcentaje",
+    "las frecuencias relativas de una tabla suman 1, o sea 100 %",
+    "dos grupos de distinto tamaño se comparan con frecuencias relativas, nunca con absolutas",
+    "en una tabla de datos numéricos, el valor es lo que se mide y la frecuencia es cuántas veces aparece"
+  ],
+  "_notasInternas": [
+    "L1 del módulo tablas-y-graficos (eje Probabilidad y estadística, módulo #14). moduloId = tablas-y-graficos (id de tema; el slug del DAG quedó fuera de la migración del 2026-09-13). Descriptor DEMRE (docs/temario-demre-m1-2027.md:117): 'Tablas de frecuencia absoluta y relativa'. Diseño: docs/diseno-modulo-tablas-y-graficos.md.",
+    "Catálogo canónico: content/errores/tablas-y-graficos.json. Ids que este archivo referencia: compara-absolutas-de-grupos-distintos, divide-por-total-equivocado, olvida-el-factor-cien, confunde-frecuencia-con-valor, divide-por-categorias-en-vez-de-n (los cinco nacen acá). Los demás nacen en L2 y L3.",
+    "Dominio: una panadería de barrio con un local chico y una sucursal grande; el tipo de pan de los pedidos de una mañana (marraqueta, hallulla, dobladita, integral). Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (tablaFrecuencias, frecuenciaRelativa, sumaFrecuenciasRelativas): sábado chico n = 20 (10, 5, 3, 2 → 1/2, 1/4, 3/20, 1/10 → 50, 25, 15, 10 %); sábado grande n = 40 (14, 12, 8, 6 → 7/20, 3/10, 1/5, 3/20 → 35, 30, 20, 15 %); panes por pedido n = 10 (1 ×2, 2 ×4, 3 ×3, 4 ×1 → 20, 40, 30, 10 %); domingo chico n = 24 (hallulla 9 → 37,5 %, integral 3 → 12,5 %) y grande n = 40 (16, 12, 8, 4 → 40, 30, 20, 10 %); taller de la mañana 6 de 16 → 37,5 %. La suma de relativas da 1 exacto en las cinco tablas.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {0,25; 15; 10; 4; 12,5; 20; 0,3; 37,5; 32; 40}; distractores numéricos {0,125; 1,25; 25; 0,15; 30; 150; 0,1; 5; 50; 2; 8; 7,5; 75; 0,2; 200; 0,375; 0,32; 0,4; 35}; sin intersección. Por eso el ejercicio de descubrimiento pide el integral de la sucursal (15 %) y no la dobladita (20 %, que es correcta en aplicación), y el ítem 1 da 32 pedidos como total del otro local y no 40 (8/40 = 20 % chocaría con la misma correcta).",
+    "Visuales: tabla de frecuencias (variante tabla) en descubrimiento y aplicación; barras agrupadas de los dos locales (graficoBarras, el primer bloque visual nuevo del módulo) en descubrimiento. Ningún bloque rotula el valor que su propio campo pide: las barras muestran conteos, y lo que se pide son relativas.",
+    "Sin auditoria.constante: no hay una constante numérica única. La expresión 'frecuencia relativa' aparece por primera vez en descubrimiento, después de que el estudiante ya dividió 10/20 y 14/40; la definición formal va en generalización.",
+    "P2: el paso consolidación nombra los caminos equivocados de compara-absolutas-de-grupos-distintos, divide-por-total-equivocado y olvida-el-factor-cien antes del correcto, y su bloque pregunta lleva divide-por-total-equivocado, olvida-el-factor-cien y divide-por-categorias-en-vez-de-n en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: local chico, 20 pedidos brutos del sábado: marraqueta 10, hallulla 5, dobladita 3, integral 2",
+    "problema: sucursal grande, 40 pedidos del sábado: marraqueta 14, hallulla 12, dobladita 8, integral 6; marraqueta 50 % en el chico contra 35 % en la grande",
+    "pensar/pistas: frecuencia relativa de hallulla en el chico, 5/20 = 0,25",
+    "descubrimiento: tabla de los dos locales con absolutas, fracciones, decimales y porcentajes; integral de la sucursal 6/40 = 15 %",
+    "generalizacion: integral del chico 2/20 = 10 %; panes por pedido n = 10 (1 ×2, 2 ×4, 3 ×3, 4 ×1), cuatro pedidos de 2 panes",
+    "practica: domingo, hallulla 9 de 24 en el chico (37,5 %) contra 12 de 40 en la grande (30 %); integral 3 de 24 = 12,5 %",
+    "aplicacion: domingo en la grande, 40 pedidos: marraqueta 16, hallulla 12, dobladita 8, integral 4; dobladita 20 %, hallulla 0,3",
+    "consolidacion: taller de la mañana, dobladita 6 de 16 pedidos = 37,5 % (la tarde tuvo 24 pedidos)",
+    "itemsPAES: local A 25 pedidos (10, 8, 5, 2) y local B 32 pedidos, hallulla 8/25 = 32 %; panes por pedido n = 20 (1 ×4, 2 ×8, 3 ×6, 4 ×2), más de 2 panes = 40 %; marraqueta 14 de 40 contra 10 de 20"
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "relativaHallulla": "frecuencia relativa como decimal: cociente entre dos conteos, sin unidad",
+      "relativaHallullaGrande": "frecuencia relativa como decimal: cociente entre dos conteos, sin unidad"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Veinte pedidos en una lista",
+      "_notasInternas": [
+        "Sin regla: solo la lista bruta y la pregunta de si se puede leer así. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una **panadería de barrio** tiene un local chico y una sucursal grande. El sábado, en el local chico, anotaron el tipo de pan de los primeros **20 pedidos**, en el orden en que llegaron:\n\nmarraqueta, hallulla, marraqueta, dobladita, marraqueta, integral, hallulla, marraqueta, marraqueta, hallulla, dobladita, marraqueta, hallulla, marraqueta, integral, marraqueta, hallulla, marraqueta, dobladita, marraqueta.\n\nAsí, en fila, es difícil decir algo. ¿Cuál se pidió más? ¿Cuánto más?"
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin contar con lápiz, ¿qué fracción de los 20 pedidos crees que fue de marraqueta?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Alrededor de la mitad",
+            "Alrededor de un cuarto",
+            "Casi todos"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Para responder con seguridad hay que **contar**. Y para comparar con la sucursal grande, que tuvo 40 pedidos, contar no basta. Esta lección es sobre las dos cosas: la tabla que ordena el conteo y el número que permite comparar."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Dónde es más popular la marraqueta?",
+      "_notasInternas": [
+        "Conteo del chico: 10, 5, 3, 2 de 20. La sucursal ya entrega su tabla: 14, 12, 8, 6 de 40. La marraqueta gana en absoluta en la grande (14 > 10) y en relativa en el chico (50 % > 35 %). Distractor b es compara-absolutas-de-grupos-distintos; c es conceptual sin id. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Contando la lista del local chico: **marraqueta 10, hallulla 5, dobladita 3, integral 2**. Eso se llama **frecuencia absoluta**: cuántas veces apareció cada tipo. Suman 20, el total de pedidos.\n\nLa sucursal grande mandó su propio conteo del sábado, sobre **40 pedidos**: marraqueta 14, hallulla 12, dobladita 8, integral 6."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "La dueña quiere saber en cuál de los dos locales la marraqueta es más popular, o sea, en cuál representa una parte mayor de los pedidos. ¿Qué dirías?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En el local chico: 10 de 20 es la mitad, y 14 de 40 es bastante menos que la mitad.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 10 de 20 es 1/2 de los pedidos; 14 de 40 es 7/20, o sea 35 %. La sucursal vendió más marraquetas, pero también vendió más de todo: en proporción, la marraqueta pesa más en el chico."
+            },
+            {
+              "id": "b",
+              "texto": "En la sucursal grande: vendió 14 marraquetas contra 10 del chico.",
+              "esCorrecta": false,
+              "feedback": "14 es más que 10, pero la sucursal tuvo 40 pedidos y el chico 20. Comparar los conteos de dos grupos de distinto tamaño no dice cuál pesa más: hay que mirar qué parte del total es cada uno, 10/20 contra 14/40.",
+              "errorCatalogado": "compara-absolutas-de-grupos-distintos"
+            },
+            {
+              "id": "c",
+              "texto": "Da lo mismo: en los dos locales la marraqueta es el pan más pedido.",
+              "esCorrecta": false,
+              "feedback": "Que sea el más pedido en ambos no dice cuánto pesa en cada uno. En el chico es la mitad de los pedidos; en la grande, 14 de 40, menos de la mitad. La pregunta es por la parte del total, y esa parte es distinta."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si la sucursal hubiera tenido también 20 pedidos y 14 marraquetas, ahí sí bastaría con comparar 14 contra 10.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Con el mismo total, comparar los conteos es lo mismo que comparar las partes: 14 de 20 contra 10 de 20. El problema aparece solo cuando los totales son distintos.",
+          "feedbackFalso": "En realidad es verdadero: si los dos totales son 20, entonces 14 de 20 es más parte que 10 de 20, y el conteo alcanza. Lo que rompe la comparación es que los totales sean distintos, como 20 y 40."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "La parte que es hallulla",
+      "_notasInternas": [
+        "Hallulla en el chico: 5/20 = 0,25. feedbackPorError: 0,125 es divide-por-total-equivocado (5/40, el total de la sucursal); 1,25 es divide-por-categorias-en-vez-de-n (5/4); 25 es olvida-el-factor-cien (escribió el porcentaje donde se pedía el decimal). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "En el local chico, 5 de los 20 pedidos fueron de hallulla. ¿Qué parte del total representa la hallulla? Escríbela como número decimal (por ejemplo, la mitad sería 0,5). Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "relativaHallulla",
+              "etiqueta": "Parte de los pedidos que fue hallulla (decimal)",
+              "respuestaCorrecta": 0.25
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "relativaHallulla",
+              "valorObtenido": 0.125,
+              "mensaje": "Ese valor es 5 dividido por 40, y 40 es el total de la sucursal, no del local chico. La parte se calcula sobre el total propio: 5 de los 20 pedidos del chico.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "campoId": "relativaHallulla",
+              "valorObtenido": 1.25,
+              "mensaje": "Ese valor divide 5 por 4, que es la cantidad de tipos de pan, no la cantidad de pedidos. Una parte mayor que 1 no puede ser: nadie pide más que el total. Divide por los 20 pedidos.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            },
+            {
+              "campoId": "relativaHallulla",
+              "valorObtenido": 25,
+              "mensaje": "Ese es el porcentaje. Se pedía el decimal, que es 100 veces más chico: el porcentaje se obtiene multiplicando el decimal por 100, así que para volver hay que dividir por 100.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            }
+          ],
+          "feedbackPorDefecto": "Parte del total es una división: los pedidos de hallulla divididos por todos los pedidos del local chico. Escribe el cociente como decimal."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para la hallulla",
+      "_notasInternas": [
+        "Misma hallulla. El nivel 3 nombra la división 5 ÷ 20 y la deja sin ejecutar."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "«Parte del total» quiere decir una fracción: arriba lo que cumple (los pedidos de hallulla), abajo todos los pedidos de ese mismo local."
+            },
+            {
+              "nivel": 2,
+              "texto": "El local chico tuvo 20 pedidos en total, no 40. La fracción es 5 sobre 20; solo falta escribirla como decimal."
+            },
+            {
+              "nivel": 3,
+              "texto": "Divide 5 entre 20. Puedes pensar 5/20 como 1/4, y 1/4 como decimal es lo mismo que 25 centésimos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Una columna que sí compara",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Tabla de los dos locales con absolutas, fracción, decimal y porcentaje. Barras agrupadas de los conteos (graficoBarras). El estudiante ve que las absolutas no comparan (los grupos tienen distinto n) y que la columna dividida por el total propio sí. Acá aparece por primera vez 'frecuencia relativa'; la definición formal va en generalización. Numérica: integral de la sucursal 6/40 = 15 %; feedbackPorError 0,15 olvida-el-factor-cien; 30 divide-por-total-equivocado (6/20); 150 divide-por-categorias-en-vez-de-n (6/4). Verificado con node -e.",
+        "El bloque de barras rotula los conteos (10, 5, 3, 2 y 14, 12, 8, 6), que son datos del enunciado; ningún campo pide leerlos."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Pon los dos locales lado a lado. Primero los **conteos**, como barras:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de barras agrupadas con los pedidos del sábado por tipo de pan: local chico, 10, 5, 3 y 2; sucursal, 14, 12, 8 y 6. Cada barra lleva su valor escrito.",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Marraqueta", "Hallulla", "Dobladita", "Integral"],
+            "series": [
+              { "nombre": "Local chico", "valores": [10, 5, 3, 2] },
+              { "nombre": "Sucursal", "valores": [14, 12, 8, 6] }
+            ],
+            "ejeVertical": "Pedidos"
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Todas las barras de la sucursal son más altas. Claro: tuvo el doble de pedidos. Ahora divide cada conteo por el total **de su propio local** (20 en el chico, 40 en la sucursal):"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con los cuatro tipos de pan y, para cada local, la frecuencia absoluta, la fracción sobre el total propio, su decimal y su porcentaje. El chico: 10/20 = 0,5 = 50 %, 5/20 = 0,25 = 25 %, 3/20 = 0,15 = 15 %, 2/20 = 0,1 = 10 %. La sucursal: 14/40 = 0,35 = 35 %, 12/40 = 0,3 = 30 %, 8/40 = 0,2 = 20 %, 6/40 = 0,15 = 15 %.",
+          "datos": {
+            "columnas": ["Tipo", "Chico: conteo", "Chico: parte", "Sucursal: conteo", "Sucursal: parte"],
+            "filas": [
+              ["Marraqueta", "10", "10/20 = 0,5 = 50 %", "14", "14/40 = 0,35 = 35 %"],
+              ["Hallulla", "5", "5/20 = 0,25 = 25 %", "12", "12/40 = 0,3 = 30 %"],
+              ["Dobladita", "3", "3/20 = 0,15 = 15 %", "8", "8/40 = 0,2 = 20 %"],
+              ["Integral", "2", "2/20 = 0,1 = 10 %", "6", "6/40 = 0,15 = 15 %"],
+              ["Total", "20", "1 = 100 %", "40", "1 = 100 %"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira la tabla. ¿Qué columna sirve para comparar un local con el otro, y por qué?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Las de «parte»: cada número está dividido por el total de su local, así que 50 % y 35 % se pueden comparar aunque un local tenga 20 pedidos y el otro 40.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Esa columna se llama **frecuencia relativa**: la frecuencia absoluta dividida por el total propio. Al estar las dos sobre su propio total, comparan partes con partes. Y fíjate en que cada columna de partes suma 1, o sea 100 %."
+            },
+            {
+              "id": "b",
+              "texto": "Las de «conteo»: 14 contra 10 dice directamente que la marraqueta se vende más en la sucursal.",
+              "esCorrecta": false,
+              "feedback": "14 contra 10 compara conteos de grupos de distinto tamaño: la sucursal tiene más de todo porque tuvo 40 pedidos. Para saber dónde pesa más la marraqueta hay que mirar la parte: 0,5 contra 0,35.",
+              "errorCatalogado": "compara-absolutas-de-grupos-distintos"
+            },
+            {
+              "id": "c",
+              "texto": "Ninguna: para comparar habría que tener la misma cantidad de pedidos en los dos locales.",
+              "esCorrecta": false,
+              "feedback": "No hace falta igualar los totales: para eso existe la columna de partes. Dividir cada conteo por su propio total es justamente lo que deja a los dos locales en pie de igualdad, como si ambos tuvieran 100 pedidos."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Con la tabla a la vista, calcula tú la parte del pan integral en la sucursal, en porcentaje.",
+          "campos": [
+            {
+              "id": "porcentajeIntegralSucursal",
+              "etiqueta": "Pan integral en la sucursal",
+              "respuestaCorrecta": 15,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeIntegralSucursal",
+              "valorObtenido": 0.15,
+              "mensaje": "Ese es el decimal, 6 dividido por 40. Para pasarlo a porcentaje se multiplica por 100.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "porcentajeIntegralSucursal",
+              "valorObtenido": 30,
+              "mensaje": "Ese valor divide 6 por 20, el total del local chico. El integral de la sucursal se compara con los 40 pedidos de la sucursal.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "campoId": "porcentajeIntegralSucursal",
+              "valorObtenido": 150,
+              "mensaje": "Ese valor divide 6 por 4, la cantidad de tipos de pan. Un tipo no puede ser el 150 % de los pedidos. Se divide por los 40 pedidos.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "feedbackPorDefecto": "Conteo del integral en la sucursal dividido por el total de la sucursal, 6 ÷ 40, y ese decimal multiplicado por 100."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que las partes de un mismo local sumen exactamente 1 (100 %)?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido: 10/20 + 5/20 + 3/20 + 2/20 = 20/20. Cada pedido está en una sola fila, así que al juntar las partes se recupera el total entero. Es una comprobación rápida de que la tabla está bien.",
+          "feedbackFalso": "En realidad sí: 10 + 5 + 3 + 2 = 20, así que las fracciones suman 20/20 = 1. Si las partes de una tabla no suman 100 %, hay un conteo mal hecho o un total equivocado."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **contar no compara; dividir por el total propio, sí.** En el próximo paso le pones nombre a cada columna."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Absoluta, relativa y el total",
+      "_notasInternas": [
+        "PRIMERA aparición de las definiciones formales. Ejercicio: integral del chico 2/20 = 10 %; feedbackPorError 0,1 olvida-el-factor-cien; 5 divide-por-total-equivocado (2/40); 50 divide-por-categorias-en-vez-de-n (2/4). Segunda tabla, numérica: panes por pedido n = 10 (1 ×2, 2 ×4, 3 ×3, 4 ×1); pedidos de 2 panes = 4; feedbackPorError 2 y 8 son confunde-frecuencia-con-valor (respondió el valor; sumó los panes 2 · 4). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\n- **Frecuencia absoluta** (f): cuántas veces aparece una categoría. Se cuenta.\n- **Total** (n): la suma de todas las frecuencias absolutas.\n- **Frecuencia relativa**: f dividido por n. Se puede escribir como **fracción** (5/20), como **decimal** (0,25) o como **porcentaje** (25 %). Las tres dicen lo mismo.\n\n> Las frecuencias relativas de una tabla **suman 1**, o sea 100 %.\n\nY la regla que salió del descubrimiento: para comparar dos grupos de **distinto tamaño**, se comparan frecuencias relativas, cada una calculada sobre su propio n."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** En el local chico, 2 de los 20 pedidos fueron de pan integral. ¿Cuál es su frecuencia relativa, en porcentaje?",
+          "campos": [
+            {
+              "id": "porcentajeIntegralChico",
+              "etiqueta": "Pan integral en el local chico",
+              "respuestaCorrecta": 10,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeIntegralChico",
+              "valorObtenido": 0.1,
+              "mensaje": "Ese es el decimal. El porcentaje es el decimal por 100.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "porcentajeIntegralChico",
+              "valorObtenido": 5,
+              "mensaje": "Ese valor divide 2 por 40, el total de la sucursal. El local chico tuvo 20 pedidos: 2 de 20.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "campoId": "porcentajeIntegralChico",
+              "valorObtenido": 50,
+              "mensaje": "Ese valor divide 2 por 4, la cantidad de tipos de pan. La frecuencia relativa se calcula sobre n, los 20 pedidos.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "feedbackPorDefecto": "Frecuencia absoluta dividida por el total del local chico: 2 ÷ 20, y luego por 100 para el porcentaje."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La tabla también sirve cuando lo que se anota es un **número**, no un tipo. En el local chico registraron cuántos panes llevó cada uno de 10 pedidos: 2, 3, 1, 2, 4, 2, 3, 2, 1, 3. La tabla de frecuencias queda así:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de panes por pedido: 1 pan, 2 pedidos (20 %); 2 panes, 4 pedidos (40 %); 3 panes, 3 pedidos (30 %); 4 panes, 1 pedido (10 %); total 10 pedidos, 100 %.",
+          "datos": {
+            "columnas": ["Panes por pedido (valor)", "Pedidos (frecuencia)", "Frecuencia relativa"],
+            "filas": [
+              ["1", "2", "2/10 = 20 %"],
+              ["2", "4", "4/10 = 40 %"],
+              ["3", "3", "3/10 = 30 %"],
+              ["4", "1", "1/10 = 10 %"],
+              ["Total", "10", "100 %"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ojo con las dos columnas: la primera es **lo que se mide** (panes) y la segunda es **cuántas veces** apareció. ¿Cuántos pedidos llevaron exactamente 2 panes?",
+          "campos": [
+            {
+              "id": "pedidosDosPanes",
+              "etiqueta": "Pedidos con 2 panes",
+              "respuestaCorrecta": 4,
+              "unidad": "pedidos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "pedidosDosPanes",
+              "valorObtenido": 2,
+              "mensaje": "Ese 2 es el valor del dato (2 panes), no cuántas veces apareció. La columna de frecuencia dice cuántos pedidos llevaron 2 panes.",
+              "errorCatalogado": "confunde-frecuencia-con-valor"
+            },
+            {
+              "campoId": "pedidosDosPanes",
+              "valorObtenido": 8,
+              "mensaje": "8 son los panes que suman esos pedidos (2 panes por 4 pedidos), no la cantidad de pedidos. Se pedía cuántos pedidos, o sea la frecuencia de la fila.",
+              "errorCatalogado": "confunde-frecuencia-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Busca la fila cuyo valor es 2 panes y lee su frecuencia: cuántos pedidos aparecen en esa fila."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "El domingo, en los dos locales",
+      "_notasInternas": [
+        "P1 seleccion: domingo, hallulla 9 de 24 en el chico (37,5 %) contra 12 de 40 en la sucursal (30 %): pesa más en el chico. Distractores: 'la sucursal, 12 > 9' compara-absolutas-de-grupos-distintos; 'la sucursal, 9/40 = 22,5 % contra 30 %' divide-por-total-equivocado; 'igual, 1 de 4 tipos' divide-por-categorias-en-vez-de-n. P2 numérica: integral del chico 3/24 = 12,5 %; feedbackPorError 0,125 olvida-el-factor-cien, 7,5 divide-por-total-equivocado (3/40), 75 divide-por-categorias-en-vez-de-n (3/4). P3 verdaderoFalso: relativas que no suman 100 %. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El domingo el local chico tuvo 24 pedidos, 9 de hallulla; la sucursal tuvo 40 pedidos, 12 de hallulla. ¿En cuál local pesa más la hallulla?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En el chico: 9/24 = 37,5 % contra 12/40 = 30 %.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cada conteo sobre su propio total: 9 de 24 es 3/8 = 37,5 %, y 12 de 40 es 3/10 = 30 %. Más hallullas en la sucursal, pero menos parte."
+            },
+            {
+              "id": "b",
+              "texto": "En la sucursal: vendió 12 hallullas y el chico solo 9.",
+              "esCorrecta": false,
+              "feedback": "12 contra 9 compara conteos de locales con distinto total (40 y 24). Sobre sus propios totales, 12/40 = 30 % y 9/24 = 37,5 %: la hallulla pesa más en el chico.",
+              "errorCatalogado": "compara-absolutas-de-grupos-distintos"
+            },
+            {
+              "id": "c",
+              "texto": "En la sucursal: el chico llega a 9/40 = 22,5 %, menos que el 30 % de la sucursal.",
+              "esCorrecta": false,
+              "feedback": "9/40 divide las hallullas del chico por el total de la sucursal. Cada frecuencia relativa va sobre su propio total: 9 de los 24 pedidos del chico, que es 37,5 %.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "id": "d",
+              "texto": "Pesa igual: en los dos locales la hallulla es 1 de los 4 tipos de pan, un 25 %.",
+              "esCorrecta": false,
+              "feedback": "«1 de 4 tipos» divide por la cantidad de categorías, no por los pedidos. La frecuencia relativa se calcula sobre n: 9 de 24 pedidos y 12 de 40 pedidos, que no dan lo mismo.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ese mismo domingo, 3 de los 24 pedidos del local chico fueron de pan integral. ¿Cuál es su frecuencia relativa, en porcentaje?",
+          "campos": [
+            {
+              "id": "porcentajeIntegralDomingo",
+              "etiqueta": "Pan integral el domingo, local chico",
+              "respuestaCorrecta": 12.5,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeIntegralDomingo",
+              "valorObtenido": 0.125,
+              "mensaje": "Ese es el decimal, 3 dividido por 24. Falta multiplicar por 100 para el porcentaje.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "porcentajeIntegralDomingo",
+              "valorObtenido": 7.5,
+              "mensaje": "Ese valor divide 3 por 40, el total de la sucursal. El domingo el chico tuvo 24 pedidos: 3 de 24.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "campoId": "porcentajeIntegralDomingo",
+              "valorObtenido": 75,
+              "mensaje": "Ese valor divide 3 por 4, los tipos de pan. La frecuencia relativa va sobre los 24 pedidos.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "feedbackPorDefecto": "Divide los pedidos de integral (3) por el total de pedidos del chico ese día (24) y pasa el decimal a porcentaje."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Una tabla de frecuencias relativas en porcentaje de cuatro tipos de pan trae 40 %, 30 %, 20 % y 15 %. Puede estar bien hecha.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso: 40 + 30 + 20 + 15 = 105, y las frecuencias relativas de una tabla suman exactamente 100 %. Hay un conteo o un total equivocado.",
+          "feedbackFalso": "Exacto. Suman 105 %, y eso es imposible: cada pedido está en una sola fila, así que las partes tienen que sumar el total, 100 %. Es la comprobación más rápida de una tabla."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La tabla completa del domingo",
+      "_notasInternas": [
+        "Domingo en la sucursal: 40 pedidos, 16, 12, 8, 4. Numérica con dos campos: dobladita en porcentaje 8/40 = 20 %; hallulla como decimal 12/40 = 0,3. feedbackPorError: 0,2 olvida-el-factor-cien (decimal donde iba porcentaje); 200 divide-por-categorias-en-vez-de-n (8/4); 30 olvida-el-factor-cien (porcentaje donde iba decimal). Verificado con node -e. La abierta pide comparar con el sábado (35 % → 40 % de marraqueta)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El domingo la sucursal anotó sus 40 pedidos completos:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de la sucursal el domingo: marraqueta 16, hallulla 12, dobladita 8, integral 4; total 40. Las columnas de frecuencia relativa están vacías para que el estudiante las complete.",
+          "datos": {
+            "columnas": ["Tipo", "Frecuencia absoluta", "Frecuencia relativa"],
+            "filas": [
+              ["Marraqueta", "16", "?"],
+              ["Hallulla", "12", "?"],
+              ["Dobladita", "8", "?"],
+              ["Integral", "4", "?"],
+              ["Total", "40", "1 = 100 %"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Completa dos casillas de la tabla: la dobladita en porcentaje y la hallulla como decimal.",
+          "campos": [
+            {
+              "id": "porcentajeDobladitaSucursal",
+              "etiqueta": "Dobladita",
+              "respuestaCorrecta": 20,
+              "unidad": "%"
+            },
+            {
+              "id": "relativaHallullaGrande",
+              "etiqueta": "Hallulla (decimal)",
+              "respuestaCorrecta": 0.3
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeDobladitaSucursal",
+              "valorObtenido": 0.2,
+              "mensaje": "Ese es el decimal de la dobladita. En esta casilla iba el porcentaje: el decimal por 100.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "porcentajeDobladitaSucursal",
+              "valorObtenido": 200,
+              "mensaje": "Ese valor divide 8 por 4, los tipos de pan. Se divide por los 40 pedidos: 8 de 40.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            },
+            {
+              "campoId": "relativaHallullaGrande",
+              "valorObtenido": 30,
+              "mensaje": "Ese es el porcentaje de la hallulla. En esta casilla iba el decimal, que es el porcentaje dividido por 100.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            }
+          ],
+          "feedbackPorDefecto": "Cada frecuencia relativa es el conteo de la fila dividido por 40. Para la dobladita, 8 ÷ 40 y luego por 100; para la hallulla, 12 ÷ 40 tal cual."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "El sábado la marraqueta fue el 35 % de los pedidos de la sucursal (14 de 40); el domingo fue 16 de 40. Explica con la tabla si el domingo la marraqueta pesó más o menos que el sábado, y por qué esta vez sí se pueden comparar los conteos directamente.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Pesó más: 16/40 = 40 % contra 35 %. Como los dos días la sucursal tuvo exactamente 40 pedidos, comparar 16 contra 14 es lo mismo que comparar 40 % contra 35 %: con el mismo total, los conteos y las partes ordenan igual."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Contar y comparar",
+      "_notasInternas": [
+        "Metacognición sobre qué cambia entre absoluta y relativa. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve L2: la misma tabla, dibujada."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué 14 de 40 puede ser «menos» que 10 de 20, si 14 es más grande que 10? ¿Qué número tendrías que calcular antes de comparar dos locales?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que hable de la parte del total, que divida cada conteo por su propio n y que diga que 14/40 = 35 % es menos que 10/20 = 50 %, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con las tablas de frecuencia, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Comparar conteos de grupos de distinto tamaño:** más marraquetas no significa mayor parte. Se comparan frecuencias relativas.\n2. **Dividir por el total equivocado:** cada frecuencia relativa va sobre el n de su propio grupo.\n3. **Perder el factor 100:** 0,25 y 25 % son lo mismo, pero 0,25 % no.\n4. **Confundir el valor con la frecuencia:** en «2 panes, 4 pedidos», el 4 es cuántas veces y el 2 es qué se midió.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: esta misma tabla, ¿se puede leer sin números, en un dibujo? ¿Y qué se pierde al dibujarla? Esa es la próxima lección."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de compara-absolutas-de-grupos-distintos, divide-por-total-equivocado y olvida-el-factor-cien, seguido de un bloque pregunta: taller de la mañana, dobladita 6 de 16 = 37,5 % (la tarde tuvo 24 pedidos); 0,375 % olvida-el-factor-cien; 25 % divide-por-total-equivocado (6/24, el total de la tarde); 150 % divide-por-categorias-en-vez-de-n (6/4). Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- La **frecuencia absoluta** cuenta; el **total n** es la suma de todas.\n- La **frecuencia relativa** es f ÷ n, y se escribe como fracción, decimal o porcentaje.\n- Las relativas de una tabla **suman 1 (100 %)**.\n- Dos grupos de distinto tamaño se comparan **solo con relativas**, cada una sobre su propio total.\n- En una tabla numérica, el **valor** es lo que se mide y la **frecuencia** es cuántas veces aparece.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **compara los conteos** de dos grupos de distinto tamaño. Falla porque 14 de 40 es menos parte que 10 de 20, aunque 14 sea más que 10. Lo que funciona es **dividir cada conteo por su propio total**.\n\nMucha gente divide por **el total equivocado**: el del otro grupo, o la cantidad de categorías. Falla porque la parte queda comparada con algo que no es el grupo. Lo que funciona es preguntarse «¿de cuántos pedidos de este mismo local?».\n\nMucha gente **pierde el 100**: escribe 0,375 donde va 37,5 %, o al revés. Falla porque las tres formas dicen lo mismo solo si se convierte bien. Lo que funciona es multiplicar el decimal por 100 para el porcentaje, y dividir por 100 para volver.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "En el taller de panadería de la mañana se hicieron 16 pedidos, 6 de ellos de dobladita; en el de la tarde, 24 pedidos. ¿Cuál es la frecuencia relativa de la dobladita en el taller de la mañana?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "0,375 %",
+              "esCorrecta": false,
+              "feedback": "0,375 es el decimal, 6 ÷ 16. Para escribirlo como porcentaje se multiplica por 100: 37,5 %. Con el signo % delante de 0,375 el número queda 100 veces más chico de lo que es.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "clave": "B",
+              "texto": "25 %",
+              "esCorrecta": false,
+              "feedback": "25 % es 6 ÷ 24: divide los pedidos de la mañana por el total de la tarde. La frecuencia relativa de la mañana va sobre los 16 pedidos de la mañana: 6 ÷ 16 = 37,5 %.",
+              "errorCatalogado": "divide-por-total-equivocado"
+            },
+            {
+              "clave": "C",
+              "texto": "37,5 %",
+              "esCorrecta": true,
+              "feedback": "Correcto. 6 ÷ 16 = 3/8 = 0,375 = 37,5 %. El total de la tarde no interviene: cada taller tiene su propia frecuencia relativa."
+            },
+            {
+              "clave": "D",
+              "texto": "150 %",
+              "esCorrecta": false,
+              "feedback": "150 % es 6 ÷ 4, dividiendo por la cantidad de tipos de pan. Ninguna categoría puede pasar del 100 %. Se divide por n, los 16 pedidos: 37,5 %.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "notaVerificacionMatematica": "6/16 = 3/8 = 0,375 = 37,5 %, verificado con frecuenciaRelativa(6, 16) de lib/estadistica.ts. Distractores: 0,375 leído como porcentaje (olvida-el-factor-cien); 6/24 = 25 % (divide-por-total-equivocado); 6/4 = 150 % (divide-por-categorias-en-vez-de-n). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "datos-l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una panadería registró los pedidos de una mañana en su local A: marraqueta 10, hallulla 8, dobladita 5, integral 2, en total 25 pedidos. Su local B tuvo 32 pedidos esa misma mañana. ¿Cuál es la frecuencia relativa de la hallulla en el local A?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,32 %",
+          "esCorrecta": false,
+          "feedback": "0,32 es el decimal, 8 ÷ 25. El porcentaje es el decimal por 100: 32 %. Escribir 0,32 % es dejar el número 100 veces más chico.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        },
+        {
+          "clave": "B",
+          "texto": "25 %",
+          "esCorrecta": false,
+          "feedback": "25 % es 8 ÷ 32: divide las hallullas del local A por el total del local B. La frecuencia relativa se calcula sobre el total propio, los 25 pedidos del local A: 8 ÷ 25 = 32 %.",
+          "errorCatalogado": "divide-por-total-equivocado"
+        },
+        {
+          "clave": "C",
+          "texto": "32 %",
+          "esCorrecta": true,
+          "feedback": "Correcto. 8 de 25 pedidos: 8 ÷ 25 = 0,32 = 32 %. El total del local B no interviene."
+        },
+        {
+          "clave": "D",
+          "texto": "200 %",
+          "esCorrecta": false,
+          "feedback": "200 % es 8 ÷ 4, dividiendo por la cantidad de tipos de pan en vez de por los pedidos. Ningún tipo puede ser más del 100 % de los pedidos. Se divide por n = 25.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Frecuencia relativa = frecuencia absoluta ÷ total del mismo grupo. Hallulla en el local A: 8 ÷ 25 = 0,32, y como porcentaje 0,32 · 100 = 32 %. Comprobación: las cuatro relativas del local A son 10/25 = 40 %, 8/25 = 32 %, 5/25 = 20 % y 2/25 = 8 %, que suman 100 %. ✓"
+    },
+    {
+      "id": "datos-l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "En una tabla de frecuencias, una panadería anotó cuántos panes llevó cada uno de 20 pedidos: 1 pan, 4 pedidos; 2 panes, 8 pedidos; 3 panes, 6 pedidos; 4 panes, 2 pedidos. ¿Qué porcentaje de los pedidos llevó más de 2 panes?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,4 %",
+          "esCorrecta": false,
+          "feedback": "0,4 es el decimal: (6 + 2) ÷ 20. En porcentaje es 0,4 · 100 = 40 %, no 0,4 %.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        },
+        {
+          "clave": "B",
+          "texto": "35 %",
+          "esCorrecta": false,
+          "feedback": "35 % sale de sumar los valores 3 + 4 = 7 y dividir por 20. Pero 3 y 4 son los panes por pedido, no cuántos pedidos hubo: los pedidos con más de 2 panes son 6 + 2 = 8, la columna de frecuencia. 8 ÷ 20 = 40 %.",
+          "errorCatalogado": "confunde-frecuencia-con-valor"
+        },
+        {
+          "clave": "C",
+          "texto": "40 %",
+          "esCorrecta": true,
+          "feedback": "Correcto. Más de 2 panes son las filas de 3 y de 4 panes: 6 + 2 = 8 pedidos de 20, o sea 8 ÷ 20 = 0,4 = 40 %."
+        },
+        {
+          "clave": "D",
+          "texto": "200 %",
+          "esCorrecta": false,
+          "feedback": "200 % divide los 8 pedidos por 4, la cantidad de filas de la tabla, en vez de por los 20 pedidos. Una parte no puede pasar del 100 %: 8 ÷ 20 = 40 %.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "«Más de 2 panes» reúne las filas de 3 panes (6 pedidos) y 4 panes (2 pedidos): 6 + 2 = 8 pedidos. Se cuentan pedidos (la columna de frecuencia), no panes (la columna de valor). Frecuencia relativa: 8 ÷ 20 = 0,4 = 40 %. Comprobación: las frecuencias 4 + 8 + 6 + 2 = 20 = n, y los pedidos con 2 panes o menos son 12 de 20 = 60 %, que con el 40 % completa el 100 %. ✓"
+    },
+    {
+      "id": "datos-l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un local chico tuvo 20 pedidos, 10 de marraqueta; la sucursal tuvo 40 pedidos, 14 de marraqueta. Un estudiante afirma: «la marraqueta es más popular en la sucursal, porque vendió 14 contra 10». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: en la sucursal la marraqueta es 14/40 = 35 % de los pedidos, y en el chico 10/20 = 50 %; pesa más en el chico.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los totales son distintos (40 y 20), así que los conteos no se comparan directo. Sobre su propio total, 35 % contra 50 %: la marraqueta es una parte mayor en el local chico."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: 14 marraquetas son más que 10, así que en la sucursal es más popular.",
+          "esCorrecta": false,
+          "feedback": "14 es más que 10, pero la sucursal tuvo el doble de pedidos. Con totales distintos hay que comparar frecuencias relativas: 14/40 = 35 % y 10/20 = 50 %. La parte es mayor en el chico.",
+          "errorCatalogado": "compara-absolutas-de-grupos-distintos"
+        },
+        {
+          "clave": "C",
+          "texto": "Es correcta: la sucursal llega a 14/20 = 70 %, más que el 50 % del chico.",
+          "esCorrecta": false,
+          "feedback": "14/20 divide las marraquetas de la sucursal por el total del local chico. El total de la sucursal es 40: 14/40 = 35 %, que es menos que 50 %.",
+          "errorCatalogado": "divide-por-total-equivocado"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, pero porque da lo mismo: en los dos locales la marraqueta es 1 de 4 tipos de pan, un 25 % en ambos.",
+          "esCorrecta": false,
+          "feedback": "«1 de 4 tipos» divide por la cantidad de categorías, no por los pedidos. La frecuencia relativa se calcula sobre n: 10/20 = 50 % y 14/40 = 35 %, que no son iguales.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Para comparar grupos de distinto tamaño se usan frecuencias relativas sobre el total propio. Local chico: 10/20 = 0,5 = 50 %. Sucursal: 14/40 = 0,35 = 35 %. Como 50 % > 35 %, la marraqueta representa una parte mayor de los pedidos en el local chico, aunque la sucursal haya vendido más unidades. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Representación de datos a través de tablas y gráficos: solo para calibrar alcance (tablas de frecuencia absoluta y relativa), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (una panadería de barrio con un local chico y una sucursal grande, y el tipo de pan de los pedidos de una mañana) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los números (20 pedidos con 10, 5, 3 y 2; 40 con 14, 12, 8 y 6; 24 con 9 y 3; 40 con 16, 12, 8 y 4; 10 pedidos con 1 ×2, 2 ×4, 3 ×3, 4 ×1; 16 con 6; 25 con 10, 8, 5 y 2; 20 con 4, 8, 6 y 2) se eligieron para que las frecuencias relativas reduzcan limpio, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-tablas-y-graficos.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados, y no se usan los contextos gastados de notas, edades, estaturas ni goles.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

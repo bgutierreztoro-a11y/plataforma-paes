@@ -157,6 +157,32 @@ const VISUALES: Record<string, EntradaVisual> = {
       chica: { horizontal: 1.8, vertical: 1.35, etiquetaHorizontal: "1,8 m", etiquetaVertical: "1,35 m" },
     },
   },
+
+  /* ---- tablas y gráficos: el gráfico es el estímulo, nunca la respuesta ---- */
+
+  /* Kilos de queso por mes, enero a mayo: se pregunta la variación entre
+     febrero y marzo, que no está escrita en el gráfico (los puntos sí). */
+  "datos-l2-item-2": {
+    grafico: {
+      tipo: "graficoLineas",
+      categorias: ["Ene", "Feb", "Mar", "Abr", "May"],
+      series: [{ nombre: "Kilos", valores: [85, 105, 95, 125, 145] }],
+      ejeVertical: "Kilos vendidos",
+    },
+  },
+  /* El afiche engañoso: precios del kilo en cuatro locales con el eje desde
+     8.200. Es el único uso de ejeTruncado fuera de una lección, y va marcado
+     ejemploEnganoso porque el ítem pide justamente detectar el engaño. */
+  "datos-l2-item-3": {
+    grafico: {
+      tipo: "graficoBarras",
+      categorias: ["Local A", "Local B", "Local C", "Local D"],
+      series: [{ nombre: "Precio", valores: [8300, 8500, 8700, 8900] }],
+      ejeVertical: "Pesos por kilo",
+      ejeTruncado: true,
+      ejemploEnganoso: true,
+    },
+  },
 };
 
 /**

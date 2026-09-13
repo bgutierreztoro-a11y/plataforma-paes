@@ -1,0 +1,681 @@
+{
+  "tipo": "leccion",
+  "id": "datos-numero-que-representa",
+  "moduloId": "tablas-y-graficos",
+  "titulo": "Promedio de un conjunto de datos",
+  "objetivo": "Calcular el promedio de datos sueltos y desde una tabla de frecuencias (ponderando cada valor por su frecuencia), el promedio de la unión de dos grupos ponderando por el tamaño de cada uno, el dato que falta para alcanzar un promedio objetivo, y predecir cómo un dato extremo mueve el promedio.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Tabla de frecuencias: valor y frecuencia (Lección 1 de este módulo)",
+    "Gráfico de barras (Lección 2 de este módulo)",
+    "Operatoria con decimales (Lección 2 del módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "promedio (media): la suma de todos los datos dividida por n, la cantidad de datos",
+    "desde una tabla de frecuencias: Σ valor · frecuencia dividido por n, nunca el promedio de los valores distintos",
+    "n es la cantidad de datos, no la cantidad de filas ni de grupos",
+    "promedio de la unión de dos grupos: ponderado por el tamaño de cada uno",
+    "dato faltante: promedio objetivo · n menos la suma de los conocidos",
+    "un dato extremo mueve el promedio, pero solo en su diferencia repartida entre los n datos"
+  ],
+  "_notasInternas": [
+    "L3 del módulo tablas-y-graficos (módulo #14). moduloId = tablas-y-graficos. Descriptor DEMRE (docs/temario-demre-m1-2027.md:119-120): 'Promedio de un conjunto de datos' y 'Problemas que involucren tablas y gráficos en diversos contextos'. Diseño: docs/diseno-modulo-tablas-y-graficos.md.",
+    "Catálogo canónico: content/errores/tablas-y-graficos.json. Ids que este archivo referencia: promedia-valores-distintos-sin-ponderar, promedia-promedios-sin-ponderar, deja-un-dato-fuera-del-conteo, entrega-promedio-como-dato-faltante, cree-que-extremo-no-afecta-promedio (nacen acá), divide-por-categorias-en-vez-de-n y confunde-frecuencia-con-valor (nacen en L1).",
+    "Dominio: un gallinero familiar; huevos recogidos por día durante 8, 12 o 20 días, y dos gallineros que se juntan. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (media, mediaDesdeTabla, mediaUnion, datoFaltante): 8 días 12, 10, 11, 13, 12, 12, 11, 15 → 96/8 = 12; tabla n = 12 (10 ×3, 11 ×4, 12 ×3, 14 ×2) → 138/12 = 11,5; tabla n = 20 (9 ×3, 10 ×6, 11 ×7, 12 ×4) → 212/20 = 10,6; unión 8 días a 12 con 24 días a 10 → 336/32 = 10,5; dato faltante 5 días a 12 con 11, 13, 10, 12 → 60 − 46 = 14; extremo 8 días a 12 más un día de 30 → 126/9 = 14; unión 8 días a 14 con 32 días a 9 → 400/40 = 10; consolidación 8 días a 11 más un día de 20 → 108/9 = 12.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {12; 11,5; 10,6; 10,5; 14; 14; 10; 12; 9,4} y las de opciones {14 huevos}; distractores numéricos {11,75; 34,5; 3; 10,5 (nota abajo); 11; 53; 5; 168; 2; 12 (nota abajo); 21; 11,5 (nota abajo); 200; 13,5; 15,5; 2,5; 9,5; 23,5}. Colisiones declaradas en auditoria.colisionesPermitidas: 10,5 es correcta en generalización (unión) y distractor en descubrimiento (promedio de los valores distintos 9, 10, 11, 12); 11,5 es correcta en pensar (tabla de 12 días) y distractor en aplicación (promedio de promedios 14 y 9); 12 es correcta en curiosidad/consolidación y distractor en práctica (entrega-promedio-como-dato-faltante) y práctica P2 (no cambia). Las tres son deliberadas: el número que ya fue promedio correcto reaparece como el atajo equivocado en otro contexto, y el feedback lo dice.",
+    "Visuales: barras de huevos por día (curiosidad), tabla de frecuencias y su expansión (descubrimiento), barras agrupadas de los dos gallineros con sus promedios (generalización). Las barras rotulan datos del enunciado; ningún campo pide leer el promedio de un gráfico.",
+    "Sin auditoria.constante: no hay una constante única. El atajo Σ valor · f / n aparece por primera vez en descubrimiento, después de que el estudiante expandió la tabla y sumó los 12 datos uno a uno.",
+    "P2: el paso consolidación nombra los caminos equivocados de promedia-valores-distintos-sin-ponderar, promedia-promedios-sin-ponderar y cree-que-extremo-no-afecta-promedio antes del correcto, y su bloque pregunta lleva cree-que-extremo-no-afecta-promedio, deja-un-dato-fuera-del-conteo y promedia-promedios-sin-ponderar en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: 8 días de huevos, 12, 10, 11, 13, 12, 12, 11, 15; promedio 12 por día",
+    "problema: cómo se calcula el promedio de esos 8 días (sin cifra nueva)",
+    "pensar/pistas: 12 días en tabla, 10 ×3, 11 ×4, 12 ×3, 14 ×2; promedio 11,5",
+    "descubrimiento: la misma tabla expandida; tabla de 20 días, 9 ×3, 10 ×6, 11 ×7, 12 ×4; promedio 10,6",
+    "generalizacion: gallinero de la casa 8 días a 12 y gallinero de la parcela 24 días a 10; unión 10,5 huevos por día",
+    "practica: quinto día para promediar 12 con 11, 13, 10, 12 → 14; 8 días a 12 y un noveno día de 30 → promedio 14",
+    "aplicacion: 8 días a 14 y 32 días a 9; unión 10",
+    "consolidacion: 8 días a 11 y un noveno día de 20 → promedio 12",
+    "itemsPAES: tabla de 10 días 8 ×2, 9 ×3, 10 ×4, 11 ×1 → 9,4; unión 12 días a 10 con 20 días a 12 (expresión); 9 días a 10 y un décimo día de 20 → 11"
+  ],
+  "auditoria": {
+    "colisionesPermitidas": [
+      { "valor": 10.5, "motivo": "promedio correcto de la unión en generalización y, en descubrimiento, el promedio equivocado de los cuatro valores distintos 9, 10, 11 y 12 sin ponderar: es el mismo número con dos orígenes, y el feedback lo nombra" },
+      { "valor": 11.5, "motivo": "promedio correcto de la tabla de 12 días en pensar y, en aplicación, el promedio de promedios sin ponderar (14 y 9): la coincidencia es la trampa de esa aplicación y el feedback lo dice" },
+      { "valor": 12, "motivo": "promedio correcto de los 8 días en curiosidad y de la consolidación, y en práctica el atajo equivocado de responder el promedio objetivo como dato faltante y de afirmar que un día extremo no lo mueve" }
+    ]
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Ocho días, un número",
+      "_notasInternas": [
+        "Sin regla: los 8 datos en barras y la pregunta de cuál número resume la semana. Verificado con node -e: media = 96/8 = 12. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En un **gallinero familiar** anotan cuántos huevos recogen cada día. En ocho días seguidos:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de barras con los huevos recogidos en ocho días: 12, 10, 11, 13, 12, 12, 11 y 15. Cada barra lleva su valor.",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Día 1", "Día 2", "Día 3", "Día 4", "Día 5", "Día 6", "Día 7", "Día 8"],
+            "series": [{ "nombre": "Huevos", "valores": [12, 10, 11, 13, 12, 12, 11, 15] }],
+            "ejeVertical": "Huevos"
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Si tuvieras que decir con un solo número cuántos huevos da el gallinero «por día», ¿qué dirías?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ese número que resume el conjunto se llama **promedio**. Esta lección es sobre cómo se calcula cuando los datos vienen sueltos, cuando vienen en una tabla, y cuando se juntan dos grupos."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Repartir parejo",
+      "_notasInternas": [
+        "Selección sobre el procedimiento: sumar los 8 y dividir por 8 (correcto); dividir por 5 valores distintos (divide-por-categorias-en-vez-de-n); tomar el más repetido (conceptual, sin id). Verdadero/falso sobre 'repartir parejo'."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Los ocho días dieron 12, 10, 11, 13, 12, 12, 11 y 15 huevos. ¿Cómo se calcula el promedio de huevos por día?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Se suman los ocho días y el total se divide por 8.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 12 + 10 + 11 + 13 + 12 + 12 + 11 + 15 = 96 huevos en 8 días, y 96 ÷ 8 = 12 por día. Es como si los 96 huevos se repartieran parejo entre los ocho días."
+            },
+            {
+              "id": "b",
+              "texto": "Se suman los ocho días y el total se divide por 5, que son los valores distintos que aparecen (10, 11, 12, 13 y 15).",
+              "esCorrecta": false,
+              "feedback": "Se divide por la cantidad de datos, que son 8 días, no por cuántos valores distintos hubo. 96 ÷ 5 daría 19,2 huevos por día, más que cualquier día real: no puede ser un promedio.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            },
+            {
+              "id": "c",
+              "texto": "Se toma el número que más se repite, 12, porque es el día típico.",
+              "esCorrecta": false,
+              "feedback": "El más repetido es otra forma de resumir, pero no es el promedio. El promedio usa todos los datos: los suma y reparte parejo. Acá coincide en 12, pero con otros datos no coincidiría."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si el promedio es 12 huevos por día, en 8 días se juntan exactamente 96 huevos, aunque ningún día haya dado exactamente 12.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. El promedio por la cantidad de días devuelve el total: 12 · 8 = 96. Esa es la idea de «repartir parejo», y sirve al revés para encontrar un dato que falta.",
+          "feedbackFalso": "En realidad es verdadero: promedio · n = suma total, siempre. 12 · 8 = 96, que es lo que sumaron los ocho días. El promedio no tiene por qué ser uno de los datos."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Doce días en una tabla",
+      "_notasInternas": [
+        "Tabla n = 12: 10 ×3, 11 ×4, 12 ×3, 14 ×2. Suma 30 + 44 + 36 + 28 = 138; promedio 11,5. feedbackPorError: 11,75 es promedia-valores-distintos-sin-ponderar ((10 + 11 + 12 + 14) / 4); 34,5 es divide-por-categorias-en-vez-de-n (138 / 4); 3 es confunde-frecuencia-con-valor ((3 + 4 + 3 + 2) / 4, promedió las frecuencias). Verificado con node -e (mediaDesdeTabla)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Los siguientes doce días los anotaron ya resumidos en una tabla de frecuencias:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de frecuencias de doce días: 10 huevos en 3 días, 11 huevos en 4 días, 12 huevos en 3 días, 14 huevos en 2 días; total 12 días.",
+          "datos": {
+            "columnas": ["Huevos por día (valor)", "Días (frecuencia)"],
+            "filas": [
+              ["10", "3"],
+              ["11", "4"],
+              ["12", "3"],
+              ["14", "2"],
+              ["Total", "12"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuál es el promedio de huevos por día en esos doce días? Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "promedioDoceDias",
+              "etiqueta": "Promedio de huevos por día",
+              "respuestaCorrecta": 11.5,
+              "unidad": "huevos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "promedioDoceDias",
+              "valorObtenido": 11.75,
+              "mensaje": "Ese valor promedia 10, 11, 12 y 14 como si cada uno hubiera aparecido una sola vez. Pero el 11 apareció 4 días y el 14 solo 2: cada valor pesa según su frecuencia.",
+              "errorCatalogado": "promedia-valores-distintos-sin-ponderar"
+            },
+            {
+              "campoId": "promedioDoceDias",
+              "valorObtenido": 34.5,
+              "mensaje": "Ese valor divide el total de huevos por 4, las filas de la tabla. Los datos son 12 días, no 4: se divide por 12.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            },
+            {
+              "campoId": "promedioDoceDias",
+              "valorObtenido": 3,
+              "mensaje": "Ese valor promedia la columna de frecuencias (3, 4, 3, 2), que dice cuántos días, no cuántos huevos. Lo que se promedia son los huevos, cada valor tantas veces como días tuvo.",
+              "errorCatalogado": "confunde-frecuencia-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Piensa cuántos huevos se juntaron en los 12 días: cada valor multiplicado por sus días, todo sumado. Ese total se divide por 12."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para la tabla",
+      "_notasInternas": [
+        "Misma tabla. El nivel 3 nombra los cuatro productos y la división por 12, sin ejecutarlos."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La tabla es una forma abreviada de la lista: «10 huevos, 3 días» quiere decir que hubo tres días con 10. Si escribes la lista completa, tiene 12 números."
+            },
+            {
+              "nivel": 2,
+              "texto": "Para sumar los 12 números no hace falta escribirlos: tres días con 10 aportan 3 · 10 huevos; cuatro con 11 aportan 4 · 11; y así con cada fila."
+            },
+            {
+              "nivel": 3,
+              "texto": "Suma 3 · 10, 4 · 11, 3 · 12 y 2 · 14, y divide el total por 12, que es la cantidad de días (la suma de la columna de frecuencias)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "La tabla es una lista abreviada",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Se expande la tabla a los 12 datos y se suma (138); luego el estudiante descubre que 10 · 3 + 11 · 4 + 12 · 3 + 14 · 2 es la misma suma, y que se divide por 12 (datos) y no por 4 (filas). Selección sobre por qué coinciden. Numérica con la tabla de 20 días (9 ×3, 10 ×6, 11 ×7, 12 ×4): 212/20 = 10,6; feedbackPorError 10,5 promedia-valores-distintos-sin-ponderar ((9 + 10 + 11 + 12) / 4; colisión declarada con la unión de generalización), 53 divide-por-categorias-en-vez-de-n (212 / 4), 5 confunde-frecuencia-con-valor (20 / 4, promedió las frecuencias). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Escribe la tabla como lista, un número por día:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "La tabla expandida: fila de 10 huevos con sus tres días (10, 10, 10, que suman 30); fila de 11 con cuatro días (11, 11, 11, 11, que suman 44); fila de 12 con tres días (36); fila de 14 con dos días (28). Total 138 huevos en 12 días.",
+          "datos": {
+            "columnas": ["Fila", "La lista completa", "Suma de la fila", "Atajo"],
+            "filas": [
+              ["10 huevos, 3 días", "10, 10, 10", "30", "10 · 3 = 30"],
+              ["11 huevos, 4 días", "11, 11, 11, 11", "44", "11 · 4 = 44"],
+              ["12 huevos, 3 días", "12, 12, 12", "36", "12 · 3 = 36"],
+              ["14 huevos, 2 días", "14, 14", "28", "14 · 2 = 28"],
+              ["Total", "12 datos", "138", "138 ÷ 12 = 11,5"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira las dos últimas columnas. ¿Por qué el atajo «valor por frecuencia» da la misma suma que la lista completa?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Porque multiplicar 11 por 4 es lo mismo que sumar 11 cuatro veces: la frecuencia dice cuántas veces entra cada valor en la suma.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Eso es todo el atajo: **Σ valor · frecuencia** es la suma de la lista completa, y se divide por **n = 12**, la cantidad de datos, que es la suma de las frecuencias."
+            },
+            {
+              "id": "b",
+              "texto": "Es una coincidencia de estos números; con otra tabla habría que escribir la lista completa igual.",
+              "esCorrecta": false,
+              "feedback": "No es coincidencia: en cualquier tabla, un valor que aparece f veces aporta valor · f a la suma. Por eso el atajo sirve siempre, y por eso hay que dividir por la cantidad de datos y no por la de filas."
+            },
+            {
+              "id": "c",
+              "texto": "Porque los cuatro valores (10, 11, 12, 14) promedian 11,75, que está cerca de 11,5.",
+              "esCorrecta": false,
+              "feedback": "11,75 promedia los valores como si cada uno hubiera aparecido una vez. Está cerca porque las frecuencias son parecidas, pero no es el promedio: el 11 apareció más veces que el 14, y eso baja el promedio real a 11,5.",
+              "errorCatalogado": "promedia-valores-distintos-sin-ponderar"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Prueba el atajo con otra tabla. Un mes después anotaron veinte días:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de veinte días: 9 huevos en 3 días, 10 huevos en 6 días, 11 huevos en 7 días, 12 huevos en 4 días; total 20 días.",
+          "datos": {
+            "columnas": ["Huevos por día (valor)", "Días (frecuencia)"],
+            "filas": [
+              ["9", "3"],
+              ["10", "6"],
+              ["11", "7"],
+              ["12", "4"],
+              ["Total", "20"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuál es el promedio de huevos por día en esos veinte días?",
+          "campos": [
+            {
+              "id": "promedioVeinteDias",
+              "etiqueta": "Promedio de huevos por día",
+              "respuestaCorrecta": 10.6,
+              "unidad": "huevos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "promedioVeinteDias",
+              "valorObtenido": 10.5,
+              "mensaje": "Ese valor promedia 9, 10, 11 y 12 sin mirar cuántos días tuvo cada uno. El 11 apareció 7 veces y el 9 solo 3: cada valor entra en la suma tantas veces como su frecuencia.",
+              "errorCatalogado": "promedia-valores-distintos-sin-ponderar"
+            },
+            {
+              "campoId": "promedioVeinteDias",
+              "valorObtenido": 53,
+              "mensaje": "Ese valor divide los 212 huevos por 4 filas. Los datos son 20 días: se divide por 20.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            },
+            {
+              "campoId": "promedioVeinteDias",
+              "valorObtenido": 5,
+              "mensaje": "Ese valor promedia las frecuencias (3, 6, 7, 4), que cuentan días. Lo que se promedia son los huevos por día, ponderados por esos días.",
+              "errorCatalogado": "confunde-frecuencia-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Σ valor · frecuencia: 9 · 3 + 10 · 6 + 11 · 7 + 12 · 4. Ese total se divide por n = 20."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que el promedio, 10,6, no sea ninguno de los valores de la tabla?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. El promedio reparte el total parejo, y ese reparto no tiene por qué caer en un valor real. Lo que sí tiene que cumplir es quedar entre el menor y el mayor: 10,6 está entre 9 y 12.",
+          "feedbackFalso": "En realidad sí tiene sentido: 212 huevos repartidos parejo en 20 días dan 10,6 por día, aunque ningún día haya dado 10,6. El promedio siempre queda entre el menor y el mayor valor, y nada más."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **la tabla es una lista abreviada; el promedio es Σ valor · frecuencia dividido por n, la cantidad de datos.** En el próximo paso, la fórmula y un caso más: dos gallineros que se juntan."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La fórmula, y dos grupos que se juntan",
+      "_notasInternas": [
+        "PRIMERA aparición de la fórmula formal. Unión: gallinero de la casa 8 días a 12 (96 huevos) y gallinero de la parcela 24 días a 10 (240 huevos); unión 336/32 = 10,5. feedbackPorError 11 promedia-promedios-sin-ponderar ((12 + 10) / 2), 168 divide-por-categorias-en-vez-de-n (336 / 2 grupos). Verificado con node -e (mediaUnion). Barras agrupadas de días y huevos por gallinero: rotulan datos del enunciado (8, 24, 96, 240)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\n> **Promedio = suma de todos los datos ÷ n**, donde n es la cantidad de datos.\n\nDesde una tabla de frecuencias:\n\n> **Promedio = Σ valor · frecuencia ÷ n**, con n = suma de las frecuencias.\n\nY al revés: **suma total = promedio · n**. Esa igualdad es la que sirve para juntar grupos y para encontrar un dato que falta.\n\nUn caso nuevo: la familia tiene otro gallinero en una parcela. En la casa, **8 días** con promedio **12** huevos; en la parcela, **24 días** con promedio **10**. ¿Cuál es el promedio de los 32 días juntos?"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de barras agrupadas de los dos gallineros: días registrados (8 en la casa, 24 en la parcela) y huevos totales (96 en la casa, 240 en la parcela).",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Casa", "Parcela"],
+            "series": [
+              { "nombre": "Días", "valores": [8, 24] },
+              { "nombre": "Huevos totales", "valores": [96, 240] }
+            ],
+            "ejeVertical": "Cantidad"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Calcula el promedio de huevos por día de los 32 días juntos. Pista: primero recupera los huevos totales de cada gallinero con promedio · n.",
+          "campos": [
+            {
+              "id": "promedioUnion",
+              "etiqueta": "Promedio de los 32 días",
+              "respuestaCorrecta": 10.5,
+              "unidad": "huevos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "promedioUnion",
+              "valorObtenido": 11,
+              "mensaje": "Ese valor promedia los dos promedios, (12 + 10) / 2, como si los dos gallineros pesaran igual. Pero la parcela tiene 24 días y la casa 8: los huevos totales son 96 + 240 = 336 en 32 días.",
+              "errorCatalogado": "promedia-promedios-sin-ponderar"
+            },
+            {
+              "campoId": "promedioUnion",
+              "valorObtenido": 168,
+              "mensaje": "Ese valor divide los 336 huevos por 2, la cantidad de gallineros. Los datos son días: 8 + 24 = 32, y se divide por 32.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "feedbackPorDefecto": "Huevos de la casa: 12 · 8. Huevos de la parcela: 10 · 24. Suma los dos totales y divide por los 32 días."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "El día que falta y el día raro",
+      "_notasInternas": [
+        "P1 numérica, dato faltante: 5 días con promedio objetivo 12; conocidos 11, 13, 10, 12 (suma 46) → 60 − 46 = 14; feedbackPorError 2 deja-un-dato-fuera-del-conteo (12 · 4 − 46), 12 entrega-promedio-como-dato-faltante (colisión declarada). P2 selección, dato extremo: 8 días a 12 (96) y un noveno día de 30 → 126/9 = 14; distractores 12 'no cambia' cree-que-extremo-no-afecta-promedio, 21 promedia-promedios-sin-ponderar ((12 + 30) / 2). P3 verdaderoFalso sobre el promedio entre el mínimo y el máximo. Verificado con node -e (datoFaltante, media)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Quieren que cinco días promedien 12 huevos. Los primeros cuatro dieron 11, 13, 10 y 12. ¿Cuántos huevos tiene que dar el quinto día?",
+          "campos": [
+            {
+              "id": "huevosQuintoDia",
+              "etiqueta": "Huevos del quinto día",
+              "respuestaCorrecta": 14,
+              "unidad": "huevos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "huevosQuintoDia",
+              "valorObtenido": 2,
+              "mensaje": "Ese valor multiplica 12 por 4, los días conocidos. Pero el promedio de 12 es sobre los 5 días, contando el que falta: el total tiene que ser 12 · 5 = 60.",
+              "errorCatalogado": "deja-un-dato-fuera-del-conteo"
+            },
+            {
+              "campoId": "huevosQuintoDia",
+              "valorObtenido": 12,
+              "mensaje": "12 es el promedio que se quiere, no lo que tiene que dar el quinto día. Los cuatro conocidos suman 46, menos que 12 · 4 = 48: el quinto día tiene que compensar, así que da más que 12.",
+              "errorCatalogado": "entrega-promedio-como-dato-faltante"
+            }
+          ],
+          "feedbackPorDefecto": "Promedio · n es la suma que se necesita: 12 · 5. Réstale lo que ya suman los cuatro días conocidos."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ocho días promediaron 12 huevos. El noveno día, por una nueva gallina que empezó a poner, dieron 30. ¿Cuál es el nuevo promedio de los nueve días?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "14 huevos: (96 + 30) ÷ 9.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los 8 días sumaban 12 · 8 = 96; con el noveno, 126 huevos en 9 días: 126 ÷ 9 = 14. El día extremo sube el promedio, pero su diferencia (18 sobre 12) se reparte entre los nueve días: sube 2."
+            },
+            {
+              "id": "b",
+              "texto": "12 huevos: un solo día raro no cambia el promedio.",
+              "esCorrecta": false,
+              "feedback": "Un dato extremo sí mueve el promedio, porque entra en la suma: 96 + 30 = 126 en 9 días da 14, no 12. Lo que pasa es que su diferencia se reparte entre todos los días, así que mueve menos de lo que parece.",
+              "errorCatalogado": "cree-que-extremo-no-afecta-promedio"
+            },
+            {
+              "id": "c",
+              "texto": "21 huevos: el promedio entre 12 y 30.",
+              "esCorrecta": false,
+              "feedback": "(12 + 30) / 2 trata el promedio de 8 días y el dato de 1 día como si pesaran igual. Los 8 días son 96 huevos, no 12: (96 + 30) / 9 = 14.",
+              "errorCatalogado": "promedia-promedios-sin-ponderar"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El promedio de un conjunto de datos siempre queda entre el dato menor y el dato mayor.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Repartir parejo no puede dar más que el mayor ni menos que el menor. Sirve de control: si un promedio calculado queda fuera de ese rango (como 34,5 huevos por día), hay un error de cuenta.",
+          "feedbackFalso": "En realidad es verdadero: el promedio es un reparto parejo de la suma, y ese reparto queda siempre entre el menor y el mayor dato. Un resultado fuera del rango delata una división por el número equivocado."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Dos gallineros, un solo promedio",
+      "_notasInternas": [
+        "Unión: 8 días a 14 (112 huevos) y 32 días a 9 (288 huevos) → 400/40 = 10. feedbackPorError 11,5 promedia-promedios-sin-ponderar ((14 + 9) / 2; colisión declarada con pensar), 200 divide-por-categorias-en-vez-de-n (400 / 2). Verificado con node -e (mediaUnion). Abierta sobre cuándo sí coincide el promedio de promedios."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Otro mes, otros registros. En la casa, **8 días** con promedio **14**; en la parcela, **32 días** con promedio **9**. La familia quiere un solo promedio para los 40 días."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuál es el promedio de huevos por día de los 40 días juntos?",
+          "campos": [
+            {
+              "id": "promedioUnionMes",
+              "etiqueta": "Promedio de los 40 días",
+              "respuestaCorrecta": 10,
+              "unidad": "huevos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "promedioUnionMes",
+              "valorObtenido": 11.5,
+              "mensaje": "Ese valor es (14 + 9) / 2, el promedio de los dos promedios. Pero la parcela aporta 32 días y la casa solo 8: los totales son 112 y 288 huevos, y 400 en 40 días da bastante menos que 11,5.",
+              "errorCatalogado": "promedia-promedios-sin-ponderar"
+            },
+            {
+              "campoId": "promedioUnionMes",
+              "valorObtenido": 200,
+              "mensaje": "Ese valor divide los 400 huevos por 2 gallineros. Los datos son días, 8 + 32 = 40.",
+              "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+            }
+          ],
+          "feedbackPorDefecto": "Huevos de cada gallinero: promedio · días (14 · 8 y 9 · 32). Suma los dos y divide por 40."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "¿En qué caso el promedio de los dos promedios sí daría el promedio de la unión? Explica con los gallineros.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Cuando los dos grupos tienen la misma cantidad de datos. Si la casa y la parcela hubieran registrado 32 días cada uno, (14 + 9) / 2 = 11,5 sería el promedio de los 64 días. Con 8 y 32 días, la parcela pesa cuatro veces más y el promedio de la unión queda mucho más cerca de 9."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Un número que representa",
+      "_notasInternas": [
+        "Metacognición sobre ponderar. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve el módulo siguiente: el promedio esconde cómo se reparten los datos."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué el promedio de una tabla no es el promedio de los valores de la primera columna? ¿Y por qué juntar dos gallineros no es promediar sus dos promedios?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que hable de multiplicar cada valor por su frecuencia y de que el grupo con más días pesa más, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con el promedio, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Promediar los valores distintos de la tabla** sin ponderar por su frecuencia.\n2. **Promediar promedios** de grupos de distinto tamaño sin ponderar por n.\n3. **Dividir por las filas o los grupos** en vez de por la cantidad de datos.\n4. **Creer que un dato extremo no mueve el promedio**, o que lo mueve en toda su diferencia.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: dos gallineros pueden tener el mismo promedio y repartirse muy distinto (uno parejo, otro con días de 4 y de 20). ¿Qué números muestran eso que el promedio esconde? Ese es el próximo módulo."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de promedia-valores-distintos-sin-ponderar, promedia-promedios-sin-ponderar y cree-que-extremo-no-afecta-promedio, seguido de un bloque pregunta: 8 días a 11 (88) más un noveno día de 20 → 108/9 = 12; 11 cree-que-extremo-no-afecta-promedio; 13,5 deja-un-dato-fuera-del-conteo (108/8); 15,5 promedia-promedios-sin-ponderar ((11 + 20) / 2). Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **Promedio = suma de los datos ÷ n**, y al revés, **suma = promedio · n**.\n- Desde una tabla: **Σ valor · frecuencia ÷ n**, con n la suma de las frecuencias.\n- Unión de dos grupos: **suma de los totales ÷ suma de los n**, no promedio de promedios.\n- Dato faltante: **promedio objetivo · n menos la suma de los conocidos**.\n- Un dato extremo mueve el promedio, pero **su diferencia se reparte entre los n datos**.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **promedia los valores distintos** de la tabla: (10 + 11 + 12 + 14) ÷ 4. Falla porque el 11 apareció cuatro veces y el 14 dos, y pesan distinto. Lo que funciona es **multiplicar cada valor por su frecuencia y dividir por n**.\n\nMucha gente **promedia los promedios** de dos grupos: (12 + 10) ÷ 2. Falla porque un grupo de 24 días pesa tres veces más que uno de 8. Lo que funciona es **volver a los totales** con promedio · n, sumarlos y dividir por todos los días.\n\nMucha gente cree que **un día extremo no mueve el promedio**, o que lo mueve en toda su diferencia. Falla porque el dato entra en la suma, pero su diferencia se reparte entre todos los días. Lo que funciona es **rehacer la suma y dividir por el nuevo n**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Ocho días promediaron 11 huevos. El noveno día dieron 20. ¿Cuál es el promedio de huevos por día de los nueve días?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "11 huevos",
+              "esCorrecta": false,
+              "feedback": "El promedio no se queda igual: el noveno día entra en la suma. 8 · 11 = 88 huevos, más 20 son 108 en 9 días, y 108 ÷ 9 no es 11.",
+              "errorCatalogado": "cree-que-extremo-no-afecta-promedio"
+            },
+            {
+              "clave": "B",
+              "texto": "12 huevos",
+              "esCorrecta": true,
+              "feedback": "Correcto. 8 · 11 = 88; 88 + 20 = 108; 108 ÷ 9 = 12. El día de 20 está 9 sobre el promedio anterior, y esos 9 huevos repartidos en 9 días suben el promedio en 1."
+            },
+            {
+              "clave": "C",
+              "texto": "13,5 huevos",
+              "esCorrecta": false,
+              "feedback": "13,5 es 108 ÷ 8: la suma de los nueve días dividida por ocho. Con el noveno día ya son 9 datos, y se divide por 9.",
+              "errorCatalogado": "deja-un-dato-fuera-del-conteo"
+            },
+            {
+              "clave": "D",
+              "texto": "15,5 huevos",
+              "esCorrecta": false,
+              "feedback": "15,5 es (11 + 20) ÷ 2: promedia el promedio de 8 días con el dato de 1 día como si pesaran igual. Los 8 días son 88 huevos; (88 + 20) ÷ 9 = 12.",
+              "errorCatalogado": "promedia-promedios-sin-ponderar"
+            }
+          ],
+          "notaVerificacionMatematica": "8 · 11 = 88; (88 + 20) / 9 = 12, verificado con media de lib/estadistica.ts sobre los nueve datos. Distractores: 11 (no cambia, cree-que-extremo-no-afecta-promedio); 108 / 8 = 13,5 (deja-un-dato-fuera-del-conteo); (11 + 20) / 2 = 15,5 (promedia-promedios-sin-ponderar). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "datos-l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En un gallinero anotaron los huevos recogidos durante diez días en una tabla de frecuencias: 8 huevos en 2 días, 9 huevos en 3 días, 10 huevos en 4 días y 11 huevos en 1 día. ¿Cuál es el promedio de huevos por día?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2,5",
+          "esCorrecta": false,
+          "feedback": "2,5 es el promedio de las frecuencias (2 + 3 + 4 + 1) ÷ 4, que cuentan días, no huevos. Lo que se promedia son los huevos por día: 8 · 2 + 9 · 3 + 10 · 4 + 11 · 1 = 94 huevos en 10 días.",
+          "errorCatalogado": "confunde-frecuencia-con-valor"
+        },
+        {
+          "clave": "B",
+          "texto": "9,4",
+          "esCorrecta": true,
+          "feedback": "Correcto. Σ valor · frecuencia = 16 + 27 + 40 + 11 = 94 huevos; n = 2 + 3 + 4 + 1 = 10 días; 94 ÷ 10 = 9,4."
+        },
+        {
+          "clave": "C",
+          "texto": "9,5",
+          "esCorrecta": false,
+          "feedback": "9,5 es (8 + 9 + 10 + 11) ÷ 4: promedia los valores como si cada uno hubiera aparecido un día. El 10 apareció 4 días y el 11 solo 1; ponderando, 94 ÷ 10 = 9,4.",
+          "errorCatalogado": "promedia-valores-distintos-sin-ponderar"
+        },
+        {
+          "clave": "D",
+          "texto": "23,5",
+          "esCorrecta": false,
+          "feedback": "23,5 es 94 ÷ 4: la suma de huevos dividida por las filas de la tabla. Los datos son 10 días, y ningún día dio 23 huevos: se divide por 10.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Promedio desde la tabla = Σ valor · frecuencia ÷ n. Suma: 8 · 2 + 9 · 3 + 10 · 4 + 11 · 1 = 16 + 27 + 40 + 11 = 94 huevos. n = 2 + 3 + 4 + 1 = 10 días. Promedio = 94 ÷ 10 = 9,4 huevos por día. Comprobación: queda entre el menor (8) y el mayor (11) valor. ✓"
+    },
+    {
+      "id": "datos-l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En un gallinero se registraron 12 días con un promedio de 10 huevos por día, y en otro, 20 días con un promedio de 12 huevos por día. ¿Qué expresión permite calcular el promedio de huevos por día de los 32 días en conjunto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(12 · 10 + 20 · 12) ÷ (12 + 20)",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada promedio por sus días devuelve los huevos totales (120 y 240); la suma de los totales se divide por la suma de los días, 32."
+        },
+        {
+          "clave": "B",
+          "texto": "(10 + 12) ÷ 2",
+          "esCorrecta": false,
+          "feedback": "Promediar los dos promedios trata a los dos gallineros como si pesaran igual, pero uno tiene 20 días y el otro 12. Hay que volver a los totales: 12 · 10 y 20 · 12, y dividir por los 32 días.",
+          "errorCatalogado": "promedia-promedios-sin-ponderar"
+        },
+        {
+          "clave": "C",
+          "texto": "(12 · 10 + 20 · 12) ÷ 2",
+          "esCorrecta": false,
+          "feedback": "Los totales están bien recuperados, pero se dividen por 2 gallineros. El promedio es por día, y los días son 12 + 20 = 32.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        },
+        {
+          "clave": "D",
+          "texto": "(12 + 20) ÷ 2",
+          "esCorrecta": false,
+          "feedback": "12 y 20 son cantidades de días, no huevos: esa expresión promedia cuántos días registró cada gallinero. Los huevos se recuperan con promedio · días, y ese total se divide por 32.",
+          "errorCatalogado": "confunde-frecuencia-con-valor"
+        }
+      ],
+      "solucion": "Suma total = promedio · n en cada grupo: 12 · 10 = 120 huevos y 20 · 12 = 240 huevos. Promedio de la unión = (120 + 240) ÷ (12 + 20) = 360 ÷ 32 = 11,25 huevos por día. La expresión que lo modela es (12 · 10 + 20 · 12) ÷ (12 + 20). Comprobación: el resultado queda entre 10 y 12, más cerca de 12 porque ese grupo tiene más días. ✓"
+    },
+    {
+      "id": "datos-l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un productor dice: «en nueve días mi gallinero promedió 10 huevos; el décimo día dieron 20, así que el promedio de los diez días sube a 15». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: los nueve días suman 90 huevos, más 20 son 110 en diez días, y el promedio sube a 11.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 9 · 10 = 90; (90 + 20) ÷ 10 = 11. El día de 20 está 10 huevos sobre el promedio anterior, y esos 10 huevos repartidos en 10 días suben el promedio solo en 1."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: el promedio entre 10 y 20 es 15.",
+          "esCorrecta": false,
+          "feedback": "(10 + 20) ÷ 2 promedia el promedio de nueve días con el dato de un día como si pesaran igual. Los nueve días son 90 huevos, no 10: (90 + 20) ÷ 10 = 11.",
+          "errorCatalogado": "promedia-promedios-sin-ponderar"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: un solo día no cambia el promedio, que sigue en 10.",
+          "esCorrecta": false,
+          "feedback": "Un dato extremo sí cambia el promedio, porque entra en la suma: 90 + 20 = 110 en diez días da 11. Lo que no hace es cambiarlo en toda su diferencia.",
+          "errorCatalogado": "cree-que-extremo-no-afecta-promedio"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: el promedio sube a 12,2, porque 110 ÷ 9 = 12,2.",
+          "esCorrecta": false,
+          "feedback": "La suma 110 está bien, pero con el décimo día ya son diez datos: se divide por 10, no por 9. 110 ÷ 10 = 11.",
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo"
+        }
+      ],
+      "solucion": "Suma de los nueve días = promedio · n = 10 · 9 = 90 huevos. Con el décimo día: 90 + 20 = 110 huevos en 10 días, y el promedio es 110 ÷ 10 = 11. Otra forma de verlo: el día de 20 está 10 huevos por encima del promedio anterior, y esos 10 huevos repartidos entre los 10 días suben el promedio en 1. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Representación de datos a través de tablas y gráficos: solo para calibrar alcance (promedio de un conjunto de datos), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (un gallinero familiar, los huevos recogidos por día y un segundo gallinero en una parcela) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los números (8 días con 12, 10, 11, 13, 12, 12, 11, 15; tablas 10 ×3, 11 ×4, 12 ×3, 14 ×2 y 9 ×3, 10 ×6, 11 ×7, 12 ×4 y 8 ×2, 9 ×3, 10 ×4, 11 ×1; uniones 8 a 12 con 24 a 10, 8 a 14 con 32 a 9 y 12 a 10 con 20 a 12; datos faltantes y extremos 11, 13, 10, 12 → 14; 8 a 12 más 30; 8 a 11 más 20; 9 a 10 más 20) se eligieron para que todo promedio sea entero o con un decimal, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-tablas-y-graficos.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

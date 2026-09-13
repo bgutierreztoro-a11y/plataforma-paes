@@ -1,0 +1,743 @@
+{
+  "tipo": "leccion",
+  "id": "datos-grafico-puede-mentir",
+  "moduloId": "tablas-y-graficos",
+  "titulo": "Tipos de gráficos que permitan representar datos",
+  "objetivo": "Leer gráficos de barras, circulares, de líneas y pictogramas con clave; saber qué muestra y qué esconde cada uno (el circular no muestra el total, las líneas son para evolución en el tiempo); calcular el ángulo de un sector como frecuencia relativa por 360° y recuperar una cantidad desde un sector y el total; y detectar un gráfico engañoso por un eje que no parte de 0.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Frecuencia absoluta y relativa, y su suma 100 % (Lección 1 de este módulo)",
+    "Porcentaje de una cantidad (Lección 1 del módulo Porcentaje)"
+  ],
+  "conceptos": [
+    "el gráfico de barras muestra cantidades; el circular muestra partes del 100 % y no muestra el total",
+    "ángulo de un sector = frecuencia relativa · 360°; porcentaje = frecuencia relativa · 100",
+    "cantidad desde un sector = porcentaje · total ÷ 100: sin el total no hay cantidad",
+    "el gráfico de líneas une periodos consecutivos: sirve para evolución en el tiempo, no para categorías sueltas",
+    "un pictograma tiene clave: cada símbolo vale una cantidad fija",
+    "la altura de una barra representa la cantidad solo si el eje parte de 0; un eje truncado exagera las diferencias"
+  ],
+  "_notasInternas": [
+    "L2 del módulo tablas-y-graficos (módulo #14). moduloId = tablas-y-graficos. Descriptor DEMRE (docs/temario-demre-m1-2027.md:118): 'Tipos de gráficos que permitan representar datos'. Diseño: docs/diseno-modulo-tablas-y-graficos.md.",
+    "Catálogo canónico: content/errores/tablas-y-graficos.json. Ids que este archivo referencia: lee-sector-como-cantidad-sin-total, calcula-angulo-con-cien, usa-complemento-del-sector, lee-altura-en-eje-truncado, usa-lineas-para-categorias, elige-circular-para-comparar-totales, toma-valor-final-como-variacion, acumula-en-vez-de-variar, resta-periodos-al-reves (nacen acá) y olvida-el-factor-cien (nace en L1).",
+    "Dominio: una quesería artesanal del sur: quesos vendidos por tipo en una semana (mantecoso, chanco, gouda, de cabra), kilos vendidos por mes, precio del kilo en cuatro locales. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (tablaFrecuencias, anguloSector, escalaDeValores): semana n = 40 (16, 12, 8, 4 → 40, 30, 20, 10 % → 144°, 108°, 72°, 36°; los ángulos suman 360 exacto); mes de 60 quesos con cabra 10 % → 6; mes de 24 quesos con un sector de 45° → 3 quesos = 12,5 %; kilos por mes enero a junio 115, 145, 135, 175, 165, 195, variación marzo → abril 175 − 135 = 40; precios 8.300, 8.500, 8.700, 8.900: con eje truncado la escala es 8.200 a 9.000 de 100 en 100, así que la barra de D mide 7 escalones y la de A 1, mientras que 8.900 ÷ 8.300 = 1,072 (un 7,2 % más).",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {8; 108; 12; 40; 72; 6; 12,5} y las de opciones y alternativas {8 quesos; 12,5 %; bajó 10 kg; 8}; distractores numéricos {20; 32; 800; 30; 252; 1.200; 28; 175; 310; −40; 288; 10; 600; 54; 0,125; 45; 87,5; 24; 25; 95; 200}; sin intersección. Por eso la cantidad de cabra de aplicación sale de un mes de 60 quesos (6) y no de uno de 40 (4), que chocaría con la barra de cabra de la semana.",
+    "Visuales: circular sin total (curiosidad), barras + circular del mismo conjunto y pictograma con clave ▲ = 4 (descubrimiento), líneas de kilos por mes (generalización), barras con eje truncado marcadas ejemploEnganoso junto a las mismas barras desde 0 (práctica). Ítems 2 y 3 con visual en lib/visualesItems.tsx (líneas de kilos por mes y barras engañosas de precios): en los dos el gráfico es el estímulo y ninguno rotula la respuesta pedida (la variación y el veredicto no están escritos en el gráfico).",
+    "Sin auditoria.constante: no hay una constante numérica única. La expresión 'el circular no muestra el total' aparece por primera vez en descubrimiento, después de que el estudiante intentó leer una cantidad desde el circular sin total.",
+    "P2: el paso consolidación nombra los caminos equivocados de lee-sector-como-cantidad-sin-total, lee-altura-en-eje-truncado y usa-lineas-para-categorias antes del correcto, y su bloque pregunta lleva olvida-el-factor-cien, calcula-angulo-con-cien y usa-complemento-del-sector en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: circular de la semana sin total: mantecoso 40 %, chanco 30 %, gouda 20 %, de cabra 10 %",
+    "problema: la semana tuvo 40 quesos; gouda 20 % de 40 = 8",
+    "pensar/pistas: ángulo del sector de chanco, 12 de 40 → 108°",
+    "descubrimiento: barras 16, 12, 8, 4 y circular 40, 30, 20, 10 % del mismo conjunto; chanco 30 % de 40 = 12; pictograma con clave ▲ = 4 quesos (4, 3, 2, 1 símbolos)",
+    "generalizacion: kilos vendidos por mes, enero a junio: 115, 145, 135, 175, 165, 195; variación marzo → abril = 40 kg",
+    "practica: ángulo de gouda 8 de 40 → 72°; precio del kilo de mantecoso en cuatro locales 8.300, 8.500, 8.700 y 8.900 pesos, eje truncado desde 8.200 (D parece siete veces A; es un 7 % más)",
+    "aplicacion: afiche de un mes con 60 quesos, queso de cabra 10 % → 6 quesos",
+    "consolidacion: mes de 24 quesos, sector de cabra de 45° → 12,5 % (3 quesos)",
+    "itemsPAES: sector de cabra 25 % con 32 quesos → 8; líneas de kilos por mes 85, 105, 95, 125, 145, variación febrero → marzo = bajó 10 kg; afiche con eje truncado, precios 8.300 a 8.900, veredicto sobre 'casi el doble' (es un 7 %)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Un círculo sin números",
+      "_notasInternas": [
+        "Sin regla: el circular de la semana con sus porcentajes y sin el total. La predicción no se corrige; la idea es que el estudiante note que falta un dato."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una **quesería artesanal del sur** resumió en un gráfico circular los quesos que vendió en una semana, por tipo:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico circular con cuatro sectores rotulados: mantecoso 40 %, chanco 30 %, gouda 20 % y de cabra 10 %. No se indica el total de quesos.",
+          "datos": {
+            "tipo": "graficoCircular",
+            "rotulo": "porcentaje",
+            "sectores": [
+              { "categoria": "Mantecoso", "porcentaje": 40 },
+              { "categoria": "Chanco", "porcentaje": 30 },
+              { "categoria": "Gouda", "porcentaje": 20 },
+              { "categoria": "De cabra", "porcentaje": 10 }
+            ]
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Mirando solo el gráfico, ¿cuántos quesos mantecosos se vendieron esa semana?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "40 quesos",
+            "Muchos más que los de cabra, pero no se puede decir cuántos",
+            "Depende de cuántos quesos se vendieron en total"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Un gráfico responde algunas preguntas y esconde otras. Esta lección es sobre cuál gráfico responde cuál pregunta, y sobre cómo un gráfico puede hacerte creer algo que los números no dicen."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Con el total, sí",
+      "_notasInternas": [
+        "Ahora se da el total: 40 quesos. Gouda 20 % de 40 = 8. Distractores: 20 quesos es lee-sector-como-cantidad-sin-total (leyó el porcentaje como cantidad); 32 es usa-complemento-del-sector (40 − 8); 800 es olvida-el-factor-cien (40 · 20 sin dividir por 100). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La quesería agrega el dato que faltaba: esa semana vendió **40 quesos** en total. Con eso, el sector de gouda (20 %) sí se puede convertir en una cantidad."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuántos quesos gouda se vendieron esa semana?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "8 quesos: el 20 % de 40.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 20 % de 40 es 0,2 · 40 = 8. El sector dice qué parte del total es gouda; el total convierte esa parte en quesos."
+            },
+            {
+              "id": "b",
+              "texto": "20 quesos: es lo que dice el sector.",
+              "esCorrecta": false,
+              "feedback": "El sector dice 20 %, no 20 quesos. Un porcentaje es una parte del total: el 20 % de 40 es 8. Si el total fuera 200, el mismo 20 % serían 40 quesos.",
+              "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+            },
+            {
+              "id": "c",
+              "texto": "32 quesos: los 40 menos el 20 %.",
+              "esCorrecta": false,
+              "feedback": "32 son los quesos que NO son gouda (el 80 % de 40). Se pedía el gouda, el sector de 20 %: 0,2 · 40 = 8.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            },
+            {
+              "id": "d",
+              "texto": "800 quesos: 40 por 20.",
+              "esCorrecta": false,
+              "feedback": "40 · 20 multiplica por el porcentaje sin dividir por 100. El 20 % es 0,2: 40 · 0,2 = 8. Ninguna parte puede superar el total de 40.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Dos queserías pueden tener exactamente el mismo gráfico circular y haber vendido cantidades muy distintas de quesos.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. El circular reparte el 100 % de cada quesería; 40 quesos y 400 quesos con las mismas proporciones dan el mismo dibujo. Por eso, sin el total, un sector no es una cantidad.",
+          "feedbackFalso": "En realidad es verdadero: el circular solo muestra proporciones. Con 40 quesos o con 400, si el 20 % es gouda el sector es el mismo. El total no está en el dibujo."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "¿Cuánto mide el sector?",
+      "_notasInternas": [
+        "Chanco: 12 de 40 → 12/40 · 360 = 108°. feedbackPorError: 30 es calcula-angulo-con-cien (el porcentaje leído como grados); 252 es usa-complemento-del-sector (28/40 · 360). Verificado con node -e (anguloSector(12, 40) = 108)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "De los 40 quesos, 12 fueron chanco. Si dibujas el gráfico circular con compás y transportador, ¿cuántos grados debe medir el sector de chanco? (El círculo completo tiene 360°.) Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "anguloChanco",
+              "etiqueta": "Ángulo del sector de chanco",
+              "respuestaCorrecta": 108,
+              "unidad": "°"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "anguloChanco",
+              "valorObtenido": 30,
+              "mensaje": "30 es el porcentaje del chanco (12 de 40), no su ángulo. El círculo completo son 360°, no 100: la parte 12/40 hay que multiplicarla por 360.",
+              "errorCatalogado": "calcula-angulo-con-cien"
+            },
+            {
+              "campoId": "anguloChanco",
+              "valorObtenido": 252,
+              "mensaje": "252° es el sector de todo lo que NO es chanco: 28 de 40 por 360. El chanco es 12 de 40, la parte que sí cumple.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            }
+          ],
+          "feedbackPorDefecto": "El sector es la misma fracción del círculo que el chanco es de los quesos: 12 de 40. Multiplica esa fracción por los 360° del círculo."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el sector",
+      "_notasInternas": [
+        "Mismo chanco. El nivel 3 nombra 12/40 · 360 y deja la multiplicación sin ejecutar."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El círculo entero representa los 40 quesos y mide 360°. El sector de chanco tiene que ser la misma parte del círculo que el chanco es del total."
+            },
+            {
+              "nivel": 2,
+              "texto": "La frecuencia relativa del chanco es 12/40. El ángulo es esa misma fracción, pero de 360° en vez de 100."
+            },
+            {
+              "nivel": 3,
+              "texto": "Calcula 12/40 · 360. Puedes simplificar 12/40 a 3/10 y sacar los 3/10 de 360."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El mismo dato, dos gráficos",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Barras (16, 12, 8, 4) y circular (40, 30, 20, 10 %) del mismo conjunto, uno sobre otro. El estudiante nota que las barras traen las cantidades y el circular las partes, y que del circular se recupera la barra solo con el total. Numérica: chanco 30 % de 40 = 12; feedbackPorError 30 lee-sector-como-cantidad-sin-total, 1.200 olvida-el-factor-cien (40 · 30), 28 usa-complemento-del-sector (40 − 12). Pictograma con clave ▲ = 4 (4, 3, 2, 1 símbolos). Verificado con node -e.",
+        "Las barras rotulan 16, 12, 8 y 4, que son datos del enunciado; la numérica pide recuperar el 12 desde el circular y el total, no leerlo de la barra: el texto lo dice explícitamente."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Los 40 quesos de la semana, primero en **barras** y después en **circular**. Es exactamente el mismo conjunto de datos."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de barras de los quesos vendidos por tipo: mantecoso 16, chanco 12, gouda 8, de cabra 4. Cada barra lleva su valor.",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Mantecoso", "Chanco", "Gouda", "De cabra"],
+            "series": [{ "nombre": "Quesos", "valores": [16, 12, 8, 4] }],
+            "ejeVertical": "Quesos"
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico circular del mismo conjunto: mantecoso 40 %, chanco 30 %, gouda 20 %, de cabra 10 %.",
+          "datos": {
+            "tipo": "graficoCircular",
+            "rotulo": "porcentaje",
+            "sectores": [
+              { "categoria": "Mantecoso", "porcentaje": 40 },
+              { "categoria": "Chanco", "porcentaje": 30 },
+              { "categoria": "Gouda", "porcentaje": 20 },
+              { "categoria": "De cabra", "porcentaje": 10 }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Compara los dos gráficos. ¿Qué muestra cada uno y qué esconde?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Las barras muestran cuántos quesos de cada tipo; el circular muestra qué parte del total es cada tipo, pero no cuántos quesos son.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Las barras traen las cantidades (16, 12, 8, 4) y dejan ver el total sumándolas. El circular trae las partes (40 %, 30 %, 20 %, 10 %) y el total no está en ninguna parte del dibujo."
+            },
+            {
+              "id": "b",
+              "texto": "Los dos muestran lo mismo: en el circular el sector de 30 % quiere decir 30 quesos chanco.",
+              "esCorrecta": false,
+              "feedback": "30 % no son 30 quesos: la barra de chanco dice 12. El sector es una parte del total, y el total (40) no está en el circular. 30 % de 40 = 12.",
+              "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+            },
+            {
+              "id": "c",
+              "texto": "El circular es más preciso, porque los porcentajes suman 100 y las barras no suman nada.",
+              "esCorrecta": false,
+              "feedback": "Las barras sí suman: 16 + 12 + 8 + 4 = 40, el total de la semana. Que el circular sume 100 % no lo hace más preciso: es una forma distinta de mostrar los mismos datos, con la desventaja de esconder el total."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Tapa las barras con la mano y usa solo el circular más el total. El sector de chanco es 30 % y esa semana se vendieron 40 quesos. ¿Cuántos quesos chanco se vendieron?",
+          "campos": [
+            {
+              "id": "quesosChanco",
+              "etiqueta": "Quesos chanco",
+              "respuestaCorrecta": 12,
+              "unidad": "quesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "quesosChanco",
+              "valorObtenido": 30,
+              "mensaje": "30 es el porcentaje del sector, no la cantidad. Para pasar a quesos hay que sacar el 30 % del total: 0,3 · 40.",
+              "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+            },
+            {
+              "campoId": "quesosChanco",
+              "valorObtenido": 1200,
+              "mensaje": "40 · 30 multiplica por el porcentaje sin dividir por 100. El 30 % es 0,3, y 0,3 · 40 no puede pasar de 40.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "quesosChanco",
+              "valorObtenido": 28,
+              "mensaje": "28 son los quesos que NO son chanco (el 70 % de 40). El sector de chanco es el 30 %: 0,3 · 40.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            }
+          ],
+          "feedbackPorDefecto": "Porcentaje del sector por el total, dividido por 100: 30 · 40 ÷ 100. Comprueba después destapando la barra de chanco."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Hay una tercera forma, el **pictograma**: cada símbolo vale una cantidad fija, que se llama **clave**. Con la clave ▲ = 4 quesos, la misma semana queda así:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Pictograma con clave: cada triángulo vale 4 quesos. Mantecoso: cuatro triángulos (16). Chanco: tres triángulos (12). Gouda: dos triángulos (8). De cabra: un triángulo (4).",
+          "datos": {
+            "columnas": ["Tipo", "Símbolos (▲ = 4 quesos)", "Quesos"],
+            "filas": [
+              ["Mantecoso", "▲ ▲ ▲ ▲", "16"],
+              ["Chanco", "▲ ▲ ▲", "12"],
+              ["Gouda", "▲ ▲", "8"],
+              ["De cabra", "▲", "4"]
+            ]
+          }
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que el pictograma y las barras digan lo mismo, si el pictograma tiene solo 10 símbolos y las barras suman 40?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido: cada símbolo vale 4, así que 10 símbolos son 40 quesos. Sin la clave, el pictograma sería tan incompleto como el circular sin total.",
+          "feedbackFalso": "En realidad sí dicen lo mismo: 4 + 3 + 2 + 1 = 10 símbolos, y con la clave ▲ = 4 son 40 quesos. La clave es al pictograma lo que el total es al circular."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **el circular muestra partes y esconde el total; para recuperar la cantidad hay que multiplicar el porcentaje por el total.** En el próximo paso, los otros dos gráficos y la regla completa."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Cuál gráfico para cuál pregunta",
+      "_notasInternas": [
+        "PRIMERA aparición de la tabla completa de gráficos y de la regla del sector (fRel · 360°). Líneas: kilos por mes enero a junio 115, 145, 135, 175, 165, 195. Numérica: variación marzo → abril = 175 − 135 = 40; feedbackPorError 180 toma-valor-final-como-variacion, 310 acumula-en-vez-de-variar (135 + 175), −40 resta-periodos-al-reves (135 − 175). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\n- **Barras:** una barra por categoría, la altura es la cantidad. Muestra cantidades y deja ver el total.\n- **Circular:** un sector por categoría; **ángulo = frecuencia relativa · 360°** y **porcentaje = frecuencia relativa · 100**. Muestra partes y **esconde el total**.\n- **Pictograma:** símbolos repetidos con una **clave** (▲ = 4). Sin la clave no dice nada.\n- **Líneas:** puntos unidos, uno por **periodo consecutivo** (meses, años, semanas). Muestra cómo cambia algo en el tiempo. No sirve para categorías sueltas: entre «chanco» y «gouda» no hay un «entre».\n\n> Para pasar de un sector a una cantidad: **cantidad = porcentaje · total ÷ 100.**"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La quesería también anota los **kilos vendidos por mes**. Eso sí evoluciona en el tiempo, así que va en líneas:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de líneas de kilos vendidos por mes, de enero a junio: 115, 145, 135, 175, 165 y 195. Cada punto lleva su valor.",
+          "datos": {
+            "tipo": "graficoLineas",
+            "categorias": ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+            "series": [{ "nombre": "Kilos", "valores": [115, 145, 135, 175, 165, 195] }],
+            "ejeVertical": "Kilos vendidos"
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** ¿Cuánto varió la venta entre marzo y abril? Escribe la variación en kilos (positiva si subió, negativa si bajó).",
+          "campos": [
+            {
+              "id": "variacionMarzoAbril",
+              "etiqueta": "Variación de marzo a abril",
+              "respuestaCorrecta": 40,
+              "unidad": "kg"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "variacionMarzoAbril",
+              "valorObtenido": 175,
+              "mensaje": "175 es lo que se vendió en abril, no cuánto cambió. La variación es la diferencia entre los dos meses: abril menos marzo.",
+              "errorCatalogado": "toma-valor-final-como-variacion"
+            },
+            {
+              "campoId": "variacionMarzoAbril",
+              "valorObtenido": 310,
+              "mensaje": "310 es marzo más abril, el acumulado de los dos meses. La variación pregunta cuánto subió o bajó: se resta, no se suma.",
+              "errorCatalogado": "acumula-en-vez-de-variar"
+            },
+            {
+              "campoId": "variacionMarzoAbril",
+              "valorObtenido": -40,
+              "mensaje": "El signo quedó al revés: de 135 a 175 la venta subió. La variación es final menos inicial, abril menos marzo, y eso da positivo.",
+              "errorCatalogado": "resta-periodos-al-reves"
+            }
+          ],
+          "feedbackPorDefecto": "Variación = valor final − valor inicial. Lee abril y marzo en el gráfico y resta en ese orden."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Elegir el gráfico, y desconfiar de uno",
+      "_notasInternas": [
+        "P1 seleccion sobre qué pregunta va en líneas: distractores usa-lineas-para-categorias y elige-circular-para-comparar-totales. P2 numérica: ángulo de gouda 8/40 · 360 = 72°; feedbackPorError 20 calcula-angulo-con-cien, 288 usa-complemento-del-sector (32/40 · 360). P3: dos gráficos de barras de los mismos precios (8.300, 8.500, 8.700, 8.900), uno con eje truncado marcado ejemploEnganoso (escala 8.200 a 9.000: D mide 7 escalones y A 1) y el otro desde 0; seleccion con lee-altura-en-eje-truncado. 8.900 ÷ 8.300 = 1,072, un 7,2 % más. Verificado con node -e (escalaDeValores)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál de estas preguntas se responde mejor con un gráfico de líneas?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "¿Cómo cambiaron los kilos vendidos mes a mes, de enero a junio?",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los meses son periodos consecutivos: la línea que une un punto con el siguiente muestra si la venta sube o baja en el tiempo."
+            },
+            {
+              "id": "b",
+              "texto": "¿Qué tipo de queso se vende más? Uniendo mantecoso, chanco, gouda y cabra con una línea se ve la tendencia a la baja.",
+              "esCorrecta": false,
+              "feedback": "Los tipos de queso no tienen orden en el tiempo: si se ponen en otro orden, la «tendencia» desaparece. Entre dos categorías no hay un «entre» que la línea pueda representar. Esa pregunta va en barras.",
+              "errorCatalogado": "usa-lineas-para-categorias"
+            },
+            {
+              "id": "c",
+              "texto": "¿Cuál de dos locales vendió más quesos? Basta comparar sus dos gráficos circulares.",
+              "esCorrecta": false,
+              "feedback": "Dos circulares no dicen cuál local vendió más: cada uno reparte su propio 100 % y esconde su total. Para comparar cantidades entre locales hacen falta las cantidades, o sea barras.",
+              "errorCatalogado": "elige-circular-para-comparar-totales"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "En el circular de la semana (40 quesos), ¿cuántos grados mide el sector de gouda, que corresponde a 8 quesos?",
+          "campos": [
+            {
+              "id": "anguloGouda",
+              "etiqueta": "Ángulo del sector de gouda",
+              "respuestaCorrecta": 72,
+              "unidad": "°"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "anguloGouda",
+              "valorObtenido": 20,
+              "mensaje": "20 es el porcentaje del gouda, no su ángulo. El círculo tiene 360°: la fracción 8/40 se multiplica por 360, no por 100.",
+              "errorCatalogado": "calcula-angulo-con-cien"
+            },
+            {
+              "campoId": "anguloGouda",
+              "valorObtenido": 288,
+              "mensaje": "288° corresponde a los 32 quesos que NO son gouda. El sector de gouda es 8 de 40, por 360.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            }
+          ],
+          "feedbackPorDefecto": "Fracción del gouda, 8/40, multiplicada por los 360° del círculo. Simplifica 8/40 a 1/5 si te ayuda."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ahora, uno para **desconfiar**. Un afiche compara el precio del kilo de queso mantecoso en cuatro locales: 8.300, 8.500, 8.700 y 8.900 pesos. Así lo dibujó el afiche:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Gráfico de barras engañoso: precio del kilo en los locales A, B, C y D, 8.300, 8.500, 8.700 y 8.900 pesos, sobre un eje vertical que parte de 8.200 y no de 0, marcado con un quiebre. La barra de D se ve siete veces más alta que la de A.",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Local A", "Local B", "Local C", "Local D"],
+            "series": [{ "nombre": "Precio", "valores": [8300, 8500, 8700, 8900] }],
+            "ejeVertical": "Pesos por kilo",
+            "ejeTruncado": true,
+            "ejemploEnganoso": true
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Y así se ven los **mismos cuatro precios** con el eje desde 0:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Los mismos precios, 8.300, 8.500, 8.700 y 8.900 pesos, en barras con el eje vertical desde 0: las cuatro barras son casi iguales.",
+          "datos": {
+            "tipo": "graficoBarras",
+            "categorias": ["Local A", "Local B", "Local C", "Local D"],
+            "series": [{ "nombre": "Precio", "valores": [8300, 8500, 8700, 8900] }],
+            "ejeVertical": "Pesos por kilo"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Según el afiche, ¿el local D cobra muchísimo más que el A?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "No: cobra 600 pesos más sobre 8.300, cerca de un 7 % más. El afiche parte el eje en 8.200 y eso exagera la diferencia.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 8.900 ÷ 8.300 ≈ 1,07. Con el eje truncado, la barra de A mide un escalón y la de D siete, pero eso mide la distancia a 8.200, no el precio. Con el eje desde 0 las barras se parecen, que es lo que dicen los números."
+            },
+            {
+              "id": "b",
+              "texto": "Sí: la barra de D es siete veces más alta que la de A.",
+              "esCorrecta": false,
+              "feedback": "La barra de D es siete veces más alta solo porque el eje parte de 8.200: las alturas miden lo que sobra de 8.200, no el precio. Con el eje desde 0, 8.900 y 8.300 son barras casi iguales, y la diferencia real es un 7 %.",
+              "errorCatalogado": "lee-altura-en-eje-truncado"
+            },
+            {
+              "id": "c",
+              "texto": "No se puede saber: el afiche no dice cuántos quesos vendió cada local.",
+              "esCorrecta": false,
+              "feedback": "La pregunta es sobre precios, no sobre cantidades vendidas, y los precios están rotulados en las barras: 8.300 y 8.900. Con esos dos números se responde: 600 pesos más, cerca de un 7 %."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El afiche del mes",
+      "_notasInternas": [
+        "Afiche: circular de un mes con 60 quesos, queso de cabra 10 % → 6. feedbackPorError 10 lee-sector-como-cantidad-sin-total, 600 olvida-el-factor-cien (60 · 10), 54 usa-complemento-del-sector (60 − 6). Verificado con node -e. Abierta sobre qué dato agregarle a un afiche circular."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En el afiche del mes, la quesería puso un circular con **queso de cabra: 10 %** y, en letra chica, «**60 quesos** vendidos este mes»."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuántos quesos de cabra se vendieron ese mes?",
+          "campos": [
+            {
+              "id": "quesosCabraMes",
+              "etiqueta": "Quesos de cabra",
+              "respuestaCorrecta": 6,
+              "unidad": "quesos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "quesosCabraMes",
+              "valorObtenido": 10,
+              "mensaje": "10 es el porcentaje del sector, no la cantidad. La cantidad es el 10 % del total de 60: 0,1 · 60.",
+              "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+            },
+            {
+              "campoId": "quesosCabraMes",
+              "valorObtenido": 600,
+              "mensaje": "60 · 10 multiplica por el porcentaje sin dividir por 100. El 10 % es 0,1, y 0,1 · 60 no puede pasar de 60.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "campoId": "quesosCabraMes",
+              "valorObtenido": 54,
+              "mensaje": "54 son los quesos que NO son de cabra (el 90 % de 60). El sector de cabra es el 10 %: 0,1 · 60.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            }
+          ],
+          "feedbackPorDefecto": "Cantidad = porcentaje · total ÷ 100. Con 10 % y 60 quesos: 10 · 60 ÷ 100."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Si te encargaran el afiche del próximo mes y solo pudieras poner un gráfico circular, ¿qué dato agregarías al lado para que cualquiera pueda saber cuántos quesos de cada tipo se vendieron? ¿Y qué gráfico usarías si la pregunta fuera cómo cambiaron las ventas de enero a diciembre?",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Agregaría el total de quesos vendidos en el mes: con el total, cada sector se convierte en cantidad (porcentaje · total ÷ 100). Para la evolución de enero a diciembre usaría un gráfico de líneas, porque los meses son periodos consecutivos y la línea muestra las subidas y bajadas."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Lo que el gráfico esconde",
+      "_notasInternas": [
+        "Metacognición sobre qué pregunta responde cada gráfico. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve L3: resumir la tabla en un solo número."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué un gráfico circular sin el total no sirve para saber cuántos quesos se vendieron? ¿Y qué le mirarías primero a un gráfico de barras antes de creerle?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que diga que el circular reparte el 100 % y necesita el total para volver a cantidades, y que en las barras hay que mirar si el eje parte de 0, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con los gráficos, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Leer un sector como cantidad:** 20 % no son 20 quesos; hace falta el total.\n2. **Confundir grados con porcentaje:** el círculo tiene 360°, no 100. Un sector de 45° es 12,5 %.\n3. **Creerle a la altura de una barra sin mirar el eje:** si el eje no parte de 0, la diferencia se exagera.\n4. **Unir con líneas cosas que no van en orden:** entre dos tipos de queso no hay tendencia.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: si hubiera que resumir toda la tabla de kilos por mes en **un solo número**, ¿cuál sería? Esa es la próxima lección."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de lee-sector-como-cantidad-sin-total, lee-altura-en-eje-truncado y usa-lineas-para-categorias, seguido de un bloque pregunta: mes de 24 quesos, sector de cabra de 45° → 45/360 = 12,5 % (3 quesos); 0,125 % olvida-el-factor-cien; 45 % calcula-angulo-con-cien (grados leídos como por ciento); 87,5 % usa-complemento-del-sector. Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **Barras** para cantidades; **circular** para partes del 100 %; **líneas** para evolución en periodos consecutivos; **pictograma** con clave.\n- **Ángulo del sector = frecuencia relativa · 360°**; porcentaje = frecuencia relativa · 100.\n- **Cantidad = porcentaje · total ÷ 100.** Sin el total, el circular no da cantidades.\n- La altura de una barra vale solo si **el eje parte de 0**.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **lee un sector como cantidad**: «20 % son 20 quesos». Falla porque el circular reparte el 100 % y no sabe cuánto es el total: 20 % de 40 es 8 y 20 % de 200 es 40. Lo que funciona es **multiplicar el porcentaje por el total y dividir por 100**.\n\nMucha gente **le cree a la altura** de las barras aunque el eje no parta de 0. Falla porque la altura mide la distancia al número donde empieza el eje, no la cantidad: 8.900 contra 8.300 parece siete veces cuando es un 7 %. Lo que funciona es **mirar dónde empieza el eje antes de comparar**.\n\nMucha gente **une categorías con una línea** y ve una «tendencia». Falla porque entre chanco y gouda no hay un «entre»: si se cambia el orden, la tendencia cambia. Lo que funciona es **líneas solo para periodos consecutivos**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "En el circular de un mes en que se vendieron 24 quesos, el sector de queso de cabra mide 45°. ¿Qué porcentaje de los quesos vendidos fue de cabra?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "0,125 %",
+              "esCorrecta": false,
+              "feedback": "0,125 es la fracción 45/360 como decimal. Para escribirla como porcentaje se multiplica por 100: 12,5 %. Con el signo % pegado a 0,125 el número queda 100 veces más chico.",
+              "errorCatalogado": "olvida-el-factor-cien"
+            },
+            {
+              "clave": "B",
+              "texto": "12,5 %",
+              "esCorrecta": true,
+              "feedback": "Correcto. 45/360 = 1/8 = 0,125 = 12,5 %. Y con el total: 1/8 de 24 son 3 quesos de cabra."
+            },
+            {
+              "clave": "C",
+              "texto": "45 %",
+              "esCorrecta": false,
+              "feedback": "45 son los grados del sector, no su porcentaje. El círculo completo tiene 360°, no 100: 45/360 = 12,5 %.",
+              "errorCatalogado": "calcula-angulo-con-cien"
+            },
+            {
+              "clave": "D",
+              "texto": "87,5 %",
+              "esCorrecta": false,
+              "feedback": "87,5 % es todo lo que NO es de cabra: los otros 315° del círculo. El sector de cabra es 45/360 = 12,5 %.",
+              "errorCatalogado": "usa-complemento-del-sector"
+            }
+          ],
+          "notaVerificacionMatematica": "45/360 = 1/8 = 12,5 %; 1/8 · 24 = 3 quesos, verificado con anguloSector(3, 24) = 45 de lib/estadistica.ts. Distractores: 0,125 leído como porcentaje (olvida-el-factor-cien); 45° leído como 45 % (calcula-angulo-con-cien); 100 − 12,5 = 87,5 (usa-complemento-del-sector). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "datos-l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En el gráfico circular de las ventas de una quesería, el sector de queso de cabra corresponde al 25 %. Esa semana se vendieron 32 quesos en total. ¿Cuántos quesos de cabra se vendieron?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8",
+          "esCorrecta": true,
+          "feedback": "Correcto. 25 % de 32 = 0,25 · 32 = 8 quesos. El sector da la parte; el total la convierte en cantidad."
+        },
+        {
+          "clave": "B",
+          "texto": "24",
+          "esCorrecta": false,
+          "feedback": "24 son los quesos que NO son de cabra: el 75 % de 32. Se pedía el sector de 25 %: 0,25 · 32 = 8.",
+          "errorCatalogado": "usa-complemento-del-sector"
+        },
+        {
+          "clave": "C",
+          "texto": "25",
+          "esCorrecta": false,
+          "feedback": "25 es el porcentaje del sector, no una cantidad de quesos. Con 32 quesos en total, el 25 % son 8. Si el total fuera 100, recién ahí 25 % serían 25.",
+          "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+        },
+        {
+          "clave": "D",
+          "texto": "800",
+          "esCorrecta": false,
+          "feedback": "32 · 25 multiplica por el porcentaje sin dividir por 100. El 25 % es 0,25, y ninguna parte puede superar el total de 32.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        }
+      ],
+      "solucion": "Cantidad = porcentaje · total ÷ 100 = 25 · 32 ÷ 100 = 8 quesos. Comprobación: 8 de 32 es 8/32 = 1/4 = 25 %, el sector del gráfico. ✓"
+    },
+    {
+      "id": "datos-l2-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El gráfico de líneas muestra los kilos de queso vendidos por una quesería de enero a mayo: 85, 105, 95, 125 y 145 kg. ¿Cuál fue la variación de la venta entre febrero y marzo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Bajó 10 kg",
+          "esCorrecta": true,
+          "feedback": "Correcto. Variación = marzo − febrero = 95 − 105 = −10: la venta bajó 10 kg de un mes al otro."
+        },
+        {
+          "clave": "B",
+          "texto": "Bajó 95 kg",
+          "esCorrecta": false,
+          "feedback": "95 kg es lo que se vendió en marzo, no cuánto cambió. La variación es la diferencia entre los dos meses: 95 − 105 = −10, bajó 10 kg.",
+          "errorCatalogado": "toma-valor-final-como-variacion"
+        },
+        {
+          "clave": "C",
+          "texto": "Subió 10 kg",
+          "esCorrecta": false,
+          "feedback": "El tamaño es correcto pero el sentido no: de 105 en febrero a 95 en marzo la venta bajó. La variación es final menos inicial, 95 − 105 = −10, o sea una baja.",
+          "errorCatalogado": "resta-periodos-al-reves"
+        },
+        {
+          "clave": "D",
+          "texto": "Subió 200 kg",
+          "esCorrecta": false,
+          "feedback": "200 es febrero más marzo, el acumulado de los dos meses. La variación pregunta cuánto cambió de un mes al otro, y eso se resta: 95 − 105 = −10.",
+          "errorCatalogado": "acumula-en-vez-de-variar"
+        }
+      ],
+      "solucion": "En el gráfico, febrero vale 105 kg y marzo 95 kg. Variación = valor final − valor inicial = 95 − 105 = −10 kg: la venta bajó 10 kg. Comprobación con el trazo del gráfico: entre febrero y marzo la línea desciende, y de marzo a abril vuelve a subir (95 → 125). ✓"
+    },
+    {
+      "id": "datos-l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un afiche compara el precio del kilo de queso mantecoso en cuatro locales, A, B, C y D, con un gráfico de barras cuyo eje vertical parte de 8.200 pesos: los precios son 8.300, 8.500, 8.700 y 8.900. Un cliente afirma: «el local D cobra casi el doble que el A». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: D cobra 600 pesos más sobre 8.300, cerca de un 7 % más; la barra parece mucho más alta porque el eje no parte de 0.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 8.900 ÷ 8.300 ≈ 1,07. En el afiche la barra de A mide un escalón sobre 8.200 y la de D siete, pero esas alturas miden lo que sobra de 8.200, no el precio. Con el eje desde 0, las cuatro barras son casi iguales."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: la barra de D es siete veces más alta que la de A, así que cobra muchísimo más.",
+          "esCorrecta": false,
+          "feedback": "Siete veces más alta solo porque el eje parte de 8.200. La altura de una barra representa la cantidad únicamente cuando el eje parte de 0; acá representa la distancia a 8.200. Los precios reales, 8.900 y 8.300, difieren en un 7 %.",
+          "errorCatalogado": "lee-altura-en-eje-truncado"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, pero por una diferencia aún menor: D cobra apenas un 0,07 % más que A.",
+          "esCorrecta": false,
+          "feedback": "600 ÷ 8.300 = 0,072, y eso es un 7,2 %, no un 0,07 %: falta multiplicar el decimal por 100. El veredicto de que no es el doble es correcto, pero la diferencia es un 7 %.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, y el error del afiche es otro: debió usar un gráfico de líneas de A a D para mostrar cómo sube el precio de un local al siguiente.",
+          "esCorrecta": false,
+          "feedback": "Los locales son categorías sin orden: si se ordenan de otra forma, la «subida» desaparece. Una línea entre A y D no representa nada. El problema del afiche es el eje que no parte de 0, no el tipo de gráfico.",
+          "errorCatalogado": "usa-lineas-para-categorias"
+        }
+      ],
+      "solucion": "Los precios están rotulados: A cobra 8.300 y D 8.900. La diferencia es 600 pesos, y 600 ÷ 8.300 ≈ 0,072, o sea un 7,2 % más, lejos del doble (que sería 16.600). El afiche engaña con el eje: al partir de 8.200 en escalones de 100, la barra de A mide 1 escalón y la de D 7, y esa razón de 7 a 1 compara distancias a 8.200, no precios. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Representación de datos a través de tablas y gráficos: solo para calibrar alcance (tipos de gráficos), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (una quesería artesanal del sur, sus quesos vendidos por tipo, sus kilos por mes y un afiche que compara precios en cuatro locales) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los números (40 quesos con 16, 12, 8 y 4; 60 con 10 %; 24 con 45°; 32 con 25 %; kilos 115, 145, 135, 175, 165, 195 y 85, 105, 95, 125, 145; precios 8.300, 8.500, 8.700 y 8.900) se eligieron para que porcentajes y ángulos salgan enteros o con un decimal, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-tablas-y-graficos.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
