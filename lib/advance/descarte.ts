@@ -166,7 +166,7 @@ export type ResultadoItemDescarte = "correcto" | "incorrecto";
 export interface ResumenSesion {
   items: number;
   descartesAcertados: number;
-  /* Id local del catálogo (`error-7`) o null si no hubo descartes acertados.
+  /* Id local del catálogo (`deshace-porcentaje-con-mismo-porcentaje`) o null si no hubo descartes acertados.
      Empate: gana el que apareció primero en la sesión. */
   errorMasFrecuente: string | null;
   resultados: ResultadoItemDescarte[];

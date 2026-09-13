@@ -16,16 +16,19 @@ import path from "node:path";
  * Porcentaje completo entre ellos.
  *
  * FORMA DE LOS IDS. El artefacto guarda ids con prefijo de unidad
- * (`"porcentaje/error-7"`), que es lo que exige la regla 6e de
- * `scripts/validar-contenido.mjs` para los ítems de diagnóstico. Las referencias
- * dentro de lecciones y cierres son locales (`"error-7"`), y así se quedan: el
- * prefijo se quita acá, al construir el Map, así que la clave de búsqueda es el
- * id pelado y `errorCatalogado` nunca cambia de forma en el contenido.
+ * (`"porcentaje/deshace-porcentaje-con-mismo-porcentaje"`), que es lo que exige
+ * la regla 6e de `scripts/validar-contenido.mjs` para los ítems de diagnóstico.
+ * Las referencias dentro de lecciones y cierres son locales
+ * (`"deshace-porcentaje-con-mismo-porcentaje"`), y así se quedan: el prefijo se
+ * quita acá, al construir el Map, así que la clave de búsqueda es el id pelado
+ * y `errorCatalogado` nunca cambia de forma en el contenido. Desde el
+ * 2026-09-13 el id local es un slug descriptivo único en toda la plataforma
+ * (`docs/analisis/mapa-migracion-ids.json`), ya no un número por unidad.
  *
- * Eso último no es cosmético. `rotuloDeError` en `lib/progresoSesion.ts` hace
- * `/^error-(\d+)$/.exec(...)` sobre el valor de `errorCatalogado` para rotular
- * "Error 07" en pantalla, y cae a mostrar el id crudo si no calza. Si la forma
- * prefijada llegara hasta ahí, el estudiante leería "porcentaje/error-7".
+ * Eso último no es cosmético. `rotuloDeError` en `lib/progresoSesion.ts`
+ * humaniza el valor de `errorCatalogado` para rotularlo en pantalla cuando no
+ * hay `titulo`. Si la forma prefijada llegara hasta ahí, el estudiante leería
+ * el prefijo de unidad delante del rótulo.
  *
  * SOLO SERVIDOR. Este módulo lee disco. Nada que corra en el cliente puede
  * importarlo con un import de valor.
@@ -57,7 +60,7 @@ export interface RepasoDeError {
  * opcionales, y quien los muestra decide a qué cae cuando faltan.
  */
 export interface EntradaError {
-  /** Id local (`error-7`), la misma clave del Map; sin prefijo de unidad, por lo mismo que en `catalogoDelModulo`. */
+  /** Id local (`deshace-porcentaje-con-mismo-porcentaje`), la misma clave del Map; sin prefijo de unidad, por lo mismo que en `catalogoDelModulo`. */
   id: string;
   descripcion: string;
   titulo?: string;

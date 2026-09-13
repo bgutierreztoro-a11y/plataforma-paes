@@ -69,25 +69,27 @@ test("el getter de sesión devuelve cada error con su conteo y se vacía al rein
    pasado, porque el contador no lo conoce. Recién desde la segunda hay un hecho
    de esta misma sesión que nombrar. */
 test("la primera vez el rótulo no nombra ningún conteo", () => {
-  assert.equal(rotuloDeError("error-7", 1), "Error 07");
+  assert.equal(rotuloDeError("deshace-porcentaje-con-mismo-porcentaje", 1), "Deshace porcentaje con mismo porcentaje");
 });
 
 test("desde la segunda vez el rótulo nombra el conteo", () => {
-  assert.equal(rotuloDeError("error-7", 2), "Error 07, te ha pasado 2 veces");
-  assert.equal(rotuloDeError("error-12", 5), "Error 12, te ha pasado 5 veces");
+  assert.equal(rotuloDeError("suma-denominadores", 2), "Suma denominadores, te ha pasado 2 veces");
+  assert.equal(rotuloDeError("omite-coeficiente-de-posicion", 5), "Omite coeficiente de posicion, te ha pasado 5 veces");
 });
 
-test("el id se rellena a dos dígitos y conserva los de tres", () => {
-  assert.equal(rotuloDeError("error-1", 1), "Error 01");
-  assert.equal(rotuloDeError("error-104", 1), "Error 104");
+/* D4 (2026-09-13): cuando la pantalla tiene el `titulo` del catálogo, ese es el
+   rótulo; el slug humanizado es solo la caída para los catálogos sin copy. */
+test("con titulo del catálogo, el rótulo es el titulo", () => {
+  assert.equal(rotuloDeError("elige-mal-base-del-porcentaje", 1, "Elegir mal la base del porcentaje"), "Elegir mal la base del porcentaje");
+  assert.equal(rotuloDeError("elige-mal-base-del-porcentaje", 3, "Elegir mal la base del porcentaje"), "Elegir mal la base del porcentaje, te ha pasado 3 veces");
+  assert.equal(rotuloDeError("elige-mal-base-del-porcentaje", 1, "   "), "Elige mal base del porcentaje");
 });
 
-/* Los ids de `content/errores/` llevan la unidad por delante. No siguen la forma
-   `error-N`, así que se muestran tal cual en vez de forzarlos a un número que no
-   tienen. */
-test("un id que no es `error-N` se muestra sin transformar", () => {
+/* Los ids de `content/errores/` llevan la unidad por delante. No son un slug
+   pelado, así que se muestran tal cual en vez de humanizarlos. */
+test("un id con prefijo de unidad se muestra sin transformar", () => {
   assert.equal(
-    rotuloDeError("ecuaciones-inecuaciones/error-4", 3),
-    "ecuaciones-inecuaciones/error-4, te ha pasado 3 veces",
+    rotuloDeError("ecuaciones-e-inecuaciones-primer-grado/omite-dividir-por-coeficiente", 3),
+    "ecuaciones-e-inecuaciones-primer-grado/omite-dividir-por-coeficiente, te ha pasado 3 veces",
   );
 });

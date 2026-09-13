@@ -5,8 +5,8 @@ import type { ItemAdvance } from "./descarte.ts";
 import { itemsResueltosDe } from "./itemsResueltos.ts";
 
 /* Banco en memoria, sin mezclar (claveOriginal = clave, como lo entrega
-   obtenerBanco). Correcta C; A → error-1, B → error-2, D → error-3. */
-function item(id: string, errores: [string, string, string] = ["error-1", "error-2", "error-3"]): ItemAdvance {
+   obtenerBanco). Correcta C; A → falla-1, B → falla-2, D → falla-3. */
+function item(id: string, errores: [string, string, string] = ["falla-1", "falla-2", "falla-3"]): ItemAdvance {
   return {
     id,
     unidadId: "prueba",
@@ -41,7 +41,7 @@ function fila(
     item_id: itemId,
     orden_descartes: ordenDescartes,
     /* A propósito distinto de lo que dice el banco: el cruce no debe leerlo. */
-    errores_identificados: ["error-99"],
+    errores_identificados: ["falla-99"],
     descarte_fatal: descarteFatal,
     tiempo_ms: 42_000,
     creado_en: creadoEn,
@@ -55,9 +55,9 @@ describe("itemsResueltosDe", () => {
     const [r] = itemsResueltosDe([fila("adv-prueba-001", ["A", "B", "D"], null)], BANCO);
     assert.equal(r.itemId, "adv-prueba-001");
     assert.deepEqual(r.distractores, [
-      { claveOriginal: "A", errorId: "error-1" },
-      { claveOriginal: "B", errorId: "error-2" },
-      { claveOriginal: "D", errorId: "error-3" },
+      { claveOriginal: "A", errorId: "falla-1" },
+      { claveOriginal: "B", errorId: "falla-2" },
+      { claveOriginal: "D", errorId: "falla-3" },
     ]);
     assert.deepEqual(r.ordenDescartes, ["A", "B", "D"]);
     assert.equal(r.descarteFatal, null);
@@ -66,7 +66,7 @@ describe("itemsResueltosDe", () => {
 
   it("los errores salen del banco, no de errores_identificados", () => {
     const [r] = itemsResueltosDe([fila("adv-prueba-001", ["A"], null)], BANCO);
-    assert.ok(r.distractores.every((d) => d.errorId !== "error-99"));
+    assert.ok(r.distractores.every((d) => d.errorId !== "falla-99"));
   });
 
   it("fila con fatal: descarteFatal y ordenDescartes viajan tal cual", () => {
@@ -91,11 +91,11 @@ describe("itemsResueltosDe", () => {
   });
 
   it("un errorCatalogado fuera del catálogo se conserva con su id: la omisión es de pantalla (D12)", () => {
-    const banco = [item("adv-prueba-003", ["error-1", "error-fantasma", "error-3"])];
+    const banco = [item("adv-prueba-003", ["falla-1", "error-fantasma", "falla-3"])];
     const [r] = itemsResueltosDe([fila("adv-prueba-003", ["B"], null)], banco);
     assert.deepEqual(
       r.distractores.map((d) => d.errorId),
-      ["error-1", "error-fantasma", "error-3"],
+      ["falla-1", "error-fantasma", "falla-3"],
     );
   });
 

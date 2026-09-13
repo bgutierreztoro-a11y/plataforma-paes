@@ -16,7 +16,7 @@ function catalogo(...errores: Record<string, unknown>[]) {
 }
 
 function entrada(extra: Record<string, unknown> = {}, n = 1) {
-  return { id: `prueba/error-${n}`, descripcion: `Descripción ${n}.`, ...extra };
+  return { id: `prueba/falla-${["uno","dos","tres"][n-1] ?? n}`, descripcion: `Descripción ${n}.`, ...extra };
 }
 
 describe("validarDatosCatalogoErrores", () => {
@@ -63,9 +63,9 @@ describe("validarDatosCatalogoErrores", () => {
   });
 
   it("los campos nuevos no relajan las reglas viejas", () => {
-    assert.match(validarDatosCatalogoErrores(catalogo({ id: "error-1", descripcion: "x" }))[0], /debe empezar con "prueba\/"/);
-    assert.match(validarDatosCatalogoErrores(catalogo({ id: "prueba/error-1" }))[0], /falta descripcion/);
-    assert.match(validarDatosCatalogoErrores(catalogo(entrada(), entrada()))[0], /id local "error-1" duplicado/);
+    assert.match(validarDatosCatalogoErrores(catalogo({ id: "falla-uno", descripcion: "x" }))[0], /debe empezar con "prueba\/"/);
+    assert.match(validarDatosCatalogoErrores(catalogo({ id: "prueba/falla-uno" }))[0], /falta descripcion/);
+    assert.match(validarDatosCatalogoErrores(catalogo(entrada(), entrada()))[0], /id local "falla-uno" duplicado/);
     assert.deepEqual(validarDatosCatalogoErrores({ unidad: "prueba", errores: [] }), ['falta "errores"[] con al menos un error']);
   });
 
@@ -86,23 +86,23 @@ describe("validarCoberturaCatalogo", () => {
   const tres = catalogo(entrada({}, 1), entrada({}, 2), entrada({}, 3));
 
   it("con todos los ids referenciados no hay hallazgos", () => {
-    const usados = new Set(["prueba/error-1", "prueba/error-2", "prueba/error-3"]);
+    const usados = new Set(["prueba/falla-uno", "prueba/falla-dos", "prueba/falla-tres"]);
     assert.deepEqual(validarCoberturaCatalogo(tres, usados), []);
   });
 
   it("un id que ningún archivo del módulo referencia se nombra por su id completo", () => {
-    const errores = validarCoberturaCatalogo(tres, new Set(["prueba/error-1", "prueba/error-3"]));
+    const errores = validarCoberturaCatalogo(tres, new Set(["prueba/falla-uno", "prueba/falla-tres"]));
     assert.equal(errores.length, 1);
-    assert.match(errores[0], /^prueba\/error-2 no lo referencia ningún errorCatalogado del módulo/);
+    assert.match(errores[0], /^prueba\/falla-dos no lo referencia ningún errorCatalogado del módulo/);
   });
 
   it("un id reservado con motivo no cuenta como sin uso", () => {
     const conReserva = catalogo(entrada({}, 1), entrada({ reservado: "se guarda para el cierre del módulo" }, 2));
-    assert.deepEqual(validarCoberturaCatalogo(conReserva, new Set(["prueba/error-1"])), []);
+    assert.deepEqual(validarCoberturaCatalogo(conReserva, new Set(["prueba/falla-uno"])), []);
   });
 
   it("las referencias de otro módulo no cubren los ids de este", () => {
-    const errores = validarCoberturaCatalogo(catalogo(entrada()), new Set(["otro/error-1"]));
+    const errores = validarCoberturaCatalogo(catalogo(entrada()), new Set(["otro/falla-uno"]));
     assert.equal(errores.length, 1);
   });
 });
@@ -120,7 +120,9 @@ describe("catalogoCompletoDelModulo", () => {
   it("el id de cada entrada es local y coincide con su clave", () => {
     for (const [clave, e] of completo) {
       assert.equal(e.id, clave);
-      assert.match(clave, /^error-\d+$/);
+      /* Slug descriptivo kebab-case (2026-09-13); la forma posicional error-N ya no existe. */
+      assert.match(clave, /^[a-z0-9]+(-[a-z0-9]+)+$/);
+      assert.doesNotMatch(clave, /^error-\d+$/);
     }
   });
 

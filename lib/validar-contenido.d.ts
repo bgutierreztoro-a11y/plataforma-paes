@@ -1,6 +1,6 @@
 declare module "../scripts/validar-contenido.mjs" {
   /**
-   * `erroresCatalogados` es el mapa `"<unidad>/error-N" → unidad` que arma el
+   * `erroresCatalogados` es el mapa `"<unidad>/<slug>" → unidad` que arma el
    * runner del validador. Cuando se pasa, `validarDatos` corre además el chequeo
    * inverso (todo `errorCatalogado` referenciado resuelve). La llamada de
    * runtime en `lib/contenido.ts` lo omite a propósito.
@@ -36,7 +36,7 @@ declare module "../scripts/validar-contenido.mjs" {
   export function validarCatalogoErrores(ruta: string): string[];
   /**
    * Cobertura del catálogo canónico: todo id de `data.errores[]` está en
-   * `referenciados` (ids completos `<unidad>/error-N` que el módulo usa) o
+   * `referenciados` (ids completos `<unidad>/<slug>` que el módulo usa) o
    * lleva `reservado` con el motivo. Solo la corrida completa del CLI arma
    * `referenciados`; sobre datos en memoria sirve para probar el contrato.
    */

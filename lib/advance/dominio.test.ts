@@ -23,11 +23,11 @@ const UN_MINUTO = 60 * 1000;
 const DIA_3 = DIA_1 + 2 * SEPARACION_MINIMA_MS;
 const DIA_5 = DIA_3 + 2 * SEPARACION_MINIMA_MS;
 
-/* Ítem estándar: correcta C; A → error-1, B → error-2, D → error-3. */
+/* Ítem estándar: correcta C; A → falla-1, B → falla-2, D → falla-3. */
 const DISTRACTORES = [
-  { claveOriginal: "A", errorId: "error-1" },
-  { claveOriginal: "B", errorId: "error-2" },
-  { claveOriginal: "D", errorId: "error-3" },
+  { claveOriginal: "A", errorId: "falla-1" },
+  { claveOriginal: "B", errorId: "falla-2" },
+  { claveOriginal: "D", errorId: "falla-3" },
 ];
 
 function item(
@@ -70,50 +70,50 @@ describe("actualizarPL", () => {
 describe("observacionesDeItem (D5)", () => {
   it("sin fatal: tres aciertos y cero fracasos", () => {
     const { aciertos, fracasos } = observacionesDeItem(completo(DIA_1));
-    assert.deepEqual(aciertos, ["error-1", "error-2", "error-3"]);
+    assert.deepEqual(aciertos, ["falla-1", "falla-2", "falla-3"]);
     assert.deepEqual(fracasos, []);
   });
 
   it("fatal tras un descarte correcto: ese error acierta, los dos en pie fracasan, ninguno recibe ambos", () => {
     const { aciertos, fracasos } = observacionesDeItem(item(["A", "C"], "C", DIA_1));
-    assert.deepEqual(aciertos, ["error-1"]);
-    assert.deepEqual(fracasos, ["error-2", "error-3"]);
+    assert.deepEqual(aciertos, ["falla-1"]);
+    assert.deepEqual(fracasos, ["falla-2", "falla-3"]);
     assert.equal(aciertos.filter((e) => fracasos.includes(e)).length, 0);
   });
 
   it("fatal al primer toque: cero aciertos y tres fracasos", () => {
     const { aciertos, fracasos } = observacionesDeItem(fatalInmediato(DIA_1));
     assert.deepEqual(aciertos, []);
-    assert.deepEqual(fracasos, ["error-1", "error-2", "error-3"]);
+    assert.deepEqual(fracasos, ["falla-1", "falla-2", "falla-3"]);
   });
 
   it("los aciertos siguen el orden de orden_descartes, no el de las alternativas", () => {
     const { aciertos } = observacionesDeItem(item(["D", "A", "B"], null, DIA_1));
-    assert.deepEqual(aciertos, ["error-3", "error-1", "error-2"]);
+    assert.deepEqual(aciertos, ["falla-3", "falla-1", "falla-2"]);
   });
 
   it("mismo error en dos distractores, uno descartado y otro en pie al fatal: acierto, no fracaso (decisión 3)", () => {
     const repetido = [
-      { claveOriginal: "A", errorId: "error-1" },
-      { claveOriginal: "B", errorId: "error-1" },
-      { claveOriginal: "D", errorId: "error-3" },
+      { claveOriginal: "A", errorId: "falla-1" },
+      { claveOriginal: "B", errorId: "falla-1" },
+      { claveOriginal: "D", errorId: "falla-3" },
     ];
     const { aciertos, fracasos } = observacionesDeItem(item(["A", "C"], "C", DIA_1, repetido));
-    assert.deepEqual(aciertos, ["error-1"]);
-    assert.deepEqual(fracasos, ["error-3"]);
+    assert.deepEqual(aciertos, ["falla-1"]);
+    assert.deepEqual(fracasos, ["falla-3"]);
   });
 });
 
 describe("aplicarObservacion", () => {
   it("no muta el estado recibido", () => {
-    const inicial = estadoSinDatos("error-1");
+    const inicial = estadoSinDatos("falla-1");
     const copia = { ...inicial };
     aplicarObservacion(inicial, "acierto", DIA_1);
     assert.deepEqual(inicial, copia);
   });
 
   it("un fracaso desde observación no es recaída", () => {
-    const enObservacion = aplicarObservacion(estadoSinDatos("error-1"), "acierto", DIA_1);
+    const enObservacion = aplicarObservacion(estadoSinDatos("falla-1"), "acierto", DIA_1);
     const abierto = aplicarObservacion(enObservacion, "fracaso", DIA_1);
     assert.equal(abierto.fase, "abierto");
     assert.equal(abierto.recaidas, 0);
@@ -123,31 +123,31 @@ describe("aplicarObservacion", () => {
 
 describe("estadoDeErrores: fases", () => {
   it("un error del catálogo sin intentos es sin-datos, no abierto, con p(L) = p(L0)", () => {
-    const estados = estadoDeErrores(["error-1", "error-9"], [completo(DIA_1)]);
-    const sinIntentos = estadoDe(estados, "error-9");
+    const estados = estadoDeErrores(["falla-1", "falla-9"], [completo(DIA_1)]);
+    const sinIntentos = estadoDe(estados, "falla-9");
     assert.equal(sinIntentos.fase, "sin-datos");
     assert.equal(sinIntentos.pL, PARAMETROS_BKT.pL0);
     assert.equal(sinIntentos.ultimoIntentoMs, null);
-    assert.equal(estadoDe(estados, "error-1").fase, "observacion");
+    assert.equal(estadoDe(estados, "falla-1").fase, "observacion");
   });
 
   it("sin ítems, todos los errores del catálogo son sin-datos", () => {
-    const estados = estadoDeErrores(["error-1", "error-2", "error-3"], []);
+    const estados = estadoDeErrores(["falla-1", "falla-2", "falla-3"], []);
     assert.equal(estados.length, 3);
     assert.ok(estados.every((e) => e.fase === "sin-datos"));
   });
 
   it("tres aciertos en la misma sesión no cierran, aunque p(L) supere el umbral", () => {
-    const estados = estadoDeErrores(["error-1"], [completo(DIA_1), completo(DIA_1), completo(DIA_1)]);
-    const e = estadoDe(estados, "error-1");
+    const estados = estadoDeErrores(["falla-1"], [completo(DIA_1), completo(DIA_1), completo(DIA_1)]);
+    const e = estadoDe(estados, "falla-1");
     assert.equal(e.aciertos, 3);
     assert.ok(e.pL >= UMBRAL_CIERRE, `p(L) = ${e.pL} debía superar el umbral para que el caso pruebe algo`);
     assert.equal(e.fase, "observacion");
   });
 
   it("aciertos en dos instantes separados por 24 h o más, con p(L) sobre el umbral, cierran", () => {
-    const estados = estadoDeErrores(["error-1"], [completo(DIA_1), completo(DIA_1), completo(DIA_3)]);
-    const e = estadoDe(estados, "error-1");
+    const estados = estadoDeErrores(["falla-1"], [completo(DIA_1), completo(DIA_1), completo(DIA_3)]);
+    const e = estadoDe(estados, "falla-1");
     assert.ok(e.pL >= UMBRAL_CIERRE);
     assert.equal(e.fase, "cerrado");
     assert.equal(e.recaidas, 0);
@@ -155,15 +155,15 @@ describe("estadoDeErrores: fases", () => {
 
   it("dos instantes separados por menos de 24 h no cierran", () => {
     const casiUnDia = DIA_1 + SEPARACION_MINIMA_MS - UN_MINUTO;
-    const estados = estadoDeErrores(["error-1"], [completo(DIA_1), completo(DIA_1), completo(casiUnDia)]);
-    const e = estadoDe(estados, "error-1");
+    const estados = estadoDeErrores(["falla-1"], [completo(DIA_1), completo(DIA_1), completo(casiUnDia)]);
+    const e = estadoDe(estados, "falla-1");
     assert.ok(e.pL >= UMBRAL_CIERRE);
     assert.equal(e.fase, "observacion");
   });
 
   it("un fracaso deja el error abierto", () => {
-    const estados = estadoDeErrores(["error-2"], [item(["A", "C"], "C", DIA_1)]);
-    assert.equal(estadoDe(estados, "error-2").fase, "abierto");
+    const estados = estadoDeErrores(["falla-2"], [item(["A", "C"], "C", DIA_1)]);
+    assert.equal(estadoDe(estados, "falla-2").fase, "abierto");
   });
 });
 
@@ -171,8 +171,8 @@ describe("estadoDeErrores: recaída (decisión 2)", () => {
   const cerrado = [completo(DIA_1), completo(DIA_1), completo(DIA_3)];
 
   it("un error cerrado que recibe fracaso vuelve a abierto, marca la recaída y reinicia el ciclo", () => {
-    const estados = estadoDeErrores(["error-1"], [...cerrado, fatalInmediato(DIA_5)]);
-    const e = estadoDe(estados, "error-1");
+    const estados = estadoDeErrores(["falla-1"], [...cerrado, fatalInmediato(DIA_5)]);
+    const e = estadoDe(estados, "falla-1");
     assert.equal(e.fase, "abierto");
     assert.equal(e.recaidas, 1);
     assert.equal(e.primerAciertoMs, null);
@@ -180,25 +180,25 @@ describe("estadoDeErrores: recaída (decisión 2)", () => {
   });
 
   it("un acierto inmediato tras la recaída no recierra, aunque p(L) vuelva a superar el umbral", () => {
-    const estados = estadoDeErrores(["error-1"], [
+    const estados = estadoDeErrores(["falla-1"], [
       ...cerrado,
       fatalInmediato(DIA_5),
       completo(DIA_5 + UN_MINUTO),
     ]);
-    const e = estadoDe(estados, "error-1");
+    const e = estadoDe(estados, "falla-1");
     assert.ok(e.pL >= UMBRAL_CIERRE, `p(L) = ${e.pL} debía superar el umbral para que el caso pruebe algo`);
     assert.equal(e.fase, "observacion");
     assert.equal(e.primerAciertoMs, DIA_5 + UN_MINUTO);
   });
 
   it("tras la recaída, dos aciertos nuevos separados por 24 h o más vuelven a cerrar; la marca se conserva", () => {
-    const estados = estadoDeErrores(["error-1"], [
+    const estados = estadoDeErrores(["falla-1"], [
       ...cerrado,
       fatalInmediato(DIA_5),
       completo(DIA_5 + UN_MINUTO),
       completo(DIA_5 + UN_MINUTO + SEPARACION_MINIMA_MS),
     ]);
-    const e = estadoDe(estados, "error-1");
+    const e = estadoDe(estados, "falla-1");
     assert.equal(e.fase, "cerrado");
     assert.equal(e.recaidas, 1);
   });
@@ -209,12 +209,12 @@ describe("estadoDeErrores: orden (decisión 1, Op1)", () => {
     const acertado = item(["A", "B", "D"], null, DIA_1);
     const fallado = item(["B", "C"], "C", DIA_1);
     const esperado = aplicarObservacion(
-      aplicarObservacion(estadoSinDatos("error-1"), "acierto", DIA_1),
+      aplicarObservacion(estadoSinDatos("falla-1"), "acierto", DIA_1),
       "fracaso",
       DIA_1,
     );
     for (const items of [[acertado, fallado], [fallado, acertado]]) {
-      const e = estadoDe(estadoDeErrores(["error-1"], items), "error-1");
+      const e = estadoDe(estadoDeErrores(["falla-1"], items), "falla-1");
       assert.equal(e.pL, esperado.pL);
       assert.equal(e.fase, "abierto");
     }
@@ -224,18 +224,18 @@ describe("estadoDeErrores: orden (decisión 1, Op1)", () => {
     const antes = item(["B", "C"], "C", DIA_1);
     const despues = completo(DIA_3);
     const esperado = aplicarObservacion(
-      aplicarObservacion(estadoSinDatos("error-1"), "fracaso", DIA_1),
+      aplicarObservacion(estadoSinDatos("falla-1"), "fracaso", DIA_1),
       "acierto",
       DIA_3,
     );
-    const e = estadoDe(estadoDeErrores(["error-1"], [despues, antes]), "error-1");
+    const e = estadoDe(estadoDeErrores(["falla-1"], [despues, antes]), "falla-1");
     assert.equal(e.pL, esperado.pL);
     assert.equal(e.fase, "observacion");
   });
 
   it("el orden del ítem no cambia el p(L) de ningún error: cada uno recibe una sola observación por ítem", () => {
-    const [primero] = estadoDeErrores(["error-2"], [item(["A", "B", "C"], "C", DIA_1)]);
-    const [segundo] = estadoDeErrores(["error-2"], [item(["B", "A", "C"], "C", DIA_1)]);
+    const [primero] = estadoDeErrores(["falla-2"], [item(["A", "B", "C"], "C", DIA_1)]);
+    const [segundo] = estadoDeErrores(["falla-2"], [item(["B", "A", "C"], "C", DIA_1)]);
     assert.equal(primero.pL, segundo.pL);
     assert.equal(primero.aciertos, 1);
     assert.equal(primero.fracasos, 0);

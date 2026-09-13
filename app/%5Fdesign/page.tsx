@@ -43,6 +43,7 @@ import {
   type LineaId,
 } from "@/components/ui/linea/colores";
 import { ejesDelCamino } from "@/lib/camino";
+import { rotuloDeError } from "@/lib/progresoSesion";
 
 export const metadata: Metadata = {
   title: "Dirección Línea — capa visual base",
@@ -445,16 +446,22 @@ export default function PaginaDiseno() {
           <PorLinea>
             {() => (
               <div className="space-y-3">
+                {/* D4 (2026-09-13): el rótulo ya no es "Error 07". Con slugs, la
+                    clave es `rotuloDeError`: el slug humanizado (primera y
+                    segunda) o, donde la pantalla lo tenga, el `titulo` del
+                    catálogo (tercera, catálogo de porcentaje). El slug largo en
+                    versalitas es la forma que ve HOY toda lección sin `titulo`;
+                    pendiente de firma aparte. */}
                 <TarjetaError
-                  clave="Error 07"
+                  clave={rotuloDeError("pierde-signo-al-reducir", 1)}
                   diagnostico="Restaste el paréntesis sin repartir el signo"
                 />
                 <TarjetaError
-                  clave="Error 07 · te ha pasado 3 veces"
+                  clave={rotuloDeError("pierde-signo-al-reducir", 3)}
                   diagnostico="Restaste el paréntesis sin repartir el signo"
                 />
                 <TarjetaError
-                  clave="Error 07 · te ha pasado 3 veces"
+                  clave={rotuloDeError("elige-mal-base-del-porcentaje", 3, "Elegir mal la base del porcentaje")}
                   diagnostico="Restaste el paréntesis sin repartir el signo"
                   detalle="Al sacar un paréntesis precedido de un menos, cambian de signo todos los términos de adentro, no solo el primero."
                 />
@@ -608,12 +615,12 @@ export default function PaginaDiseno() {
             <TarjetaLoQueFallo
               grupos={[
                 {
-                  id: "error-5",
+                  id: "responde-parte-en-vez-de-total",
                   descripcion:
                     "Al factorizar x² + bx + c como (x − p)(x − q), invertir el signo de la raíz al leerla desde el factor.",
                   numerosDeItem: [2, 6],
                 },
-                { id: "error-9", numerosDeItem: [4] },
+                { id: "elige-mal-base-del-porcentaje", numerosDeItem: [4] },
               ]}
             />
           </div>
@@ -1019,25 +1026,25 @@ export default function PaginaDiseno() {
 }
 
 /* Registros de MUESTRA para la pantalla final: una sesión con error dominante
-   (error-7 aparece tres veces), una con dominante sin copy (error-6, el único
+   (deshace-porcentaje-con-mismo-porcentaje aparece tres veces), una con dominante sin copy (suma-porcentajes-sucesivos, el único
    de COPY_MUESTRA sin titulo: la caída a descripcion de F4c) y una sin ningún
    descarte acertado. */
 const RESULTADOS_MUESTRA: { id: string; rotulo: string; registros: RegistroItem[] }[] = [
   {
     id: "con-dominante",
-    rotulo: "Con error dominante · 3 ítems, 5 descartes acertados, Error 07 tres veces",
+    rotulo: "Con error dominante · 3 ítems, 5 descartes acertados, deshace-porcentaje-con-mismo-porcentaje tres veces",
     registros: [
-      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D", "B"], erroresIdentificados: ["error-3", "error-7", "error-1"], descarteFatal: null, tiempoMs: 41000 },
-      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B", "A"], erroresIdentificados: ["error-7"], descarteFatal: "A", tiempoMs: 12000 },
-      { itemId: "adv-muestra-galeria-003", ordenDescartes: ["D", "A"], erroresIdentificados: ["error-7"], descarteFatal: "B", tiempoMs: 9000 },
+      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D", "B"], erroresIdentificados: ["convierte-mal-porcentaje-a-decimal", "deshace-porcentaje-con-mismo-porcentaje", "reporta-descuento-en-vez-de-resto"], descarteFatal: null, tiempoMs: 41000 },
+      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B", "A"], erroresIdentificados: ["deshace-porcentaje-con-mismo-porcentaje"], descarteFatal: "A", tiempoMs: 12000 },
+      { itemId: "adv-muestra-galeria-003", ordenDescartes: ["D", "A"], erroresIdentificados: ["deshace-porcentaje-con-mismo-porcentaje"], descarteFatal: "B", tiempoMs: 9000 },
     ],
   },
   {
     id: "sin-copy",
-    rotulo: "Con error dominante sin copy · 2 ítems, 3 descartes acertados, Error 06 dos veces: cae a descripcion",
+    rotulo: "Con error dominante sin copy · 2 ítems, 3 descartes acertados, suma-porcentajes-sucesivos dos veces: cae a descripcion",
     registros: [
-      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D"], erroresIdentificados: ["error-6", "error-1"], descarteFatal: "B", tiempoMs: 15000 },
-      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B"], erroresIdentificados: ["error-6"], descarteFatal: "A", tiempoMs: 8000 },
+      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D"], erroresIdentificados: ["suma-porcentajes-sucesivos", "reporta-descuento-en-vez-de-resto"], descarteFatal: "B", tiempoMs: 15000 },
+      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B"], erroresIdentificados: ["suma-porcentajes-sucesivos"], descarteFatal: "A", tiempoMs: 8000 },
     ],
   },
   {
@@ -1052,7 +1059,7 @@ const RESULTADOS_MUESTRA: { id: string; rotulo: string; registros: RegistroItem[
 
 /* Los cuatro estados de AlternativaDescartable sobre la muestra: el distractor
    uno para intacta y descartada-correcta, la correcta para las otras dos. El
-   rótulo "Error 03" va escrito porque acá no hay catálogo que resolver. */
+   rótulo va escrito con `rotuloDeError` porque acá no hay catálogo que resolver. */
 const [MUESTRA_ITEM] = MUESTRA_DESCARTE;
 const MUESTRA_DISTRACTOR = MUESTRA_ITEM.alternativas[0];
 const MUESTRA_CORRECTA = MUESTRA_ITEM.alternativas[1];
@@ -1067,7 +1074,7 @@ const ESTADOS_DESCARTE: {
     estado: "descartada-correcta",
     rotulo: "Descartada correcta · tachada, hundida, con el rótulo del error y el feedbackDescarte",
     alternativa: MUESTRA_DISTRACTOR,
-    rotuloError: "Error 03",
+    rotuloError: rotuloDeError("convierte-mal-porcentaje-a-decimal", 1),
   },
   {
     estado: "descartada-por-error",

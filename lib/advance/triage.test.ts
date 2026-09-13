@@ -18,7 +18,7 @@ import {
   type FasesPorError,
 } from "./triage.ts";
 
-/* Un ítem ya mezclado, con tres distractores: error-1, error-3, error-2 en
+/* Un ítem ya mezclado, con tres distractores: falla-1, falla-3, falla-2 en
    ese orden visible. */
 function item(id = "adv-prueba-001"): ItemAdvance {
   return {
@@ -30,10 +30,10 @@ function item(id = "adv-prueba-001"): ItemAdvance {
     tiempoReferenciaSeg: 120,
     enunciado: "Enunciado de prueba.",
     alternativas: [
-      { clave: "A", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "error-1", feedbackDescarte: "fd1" },
-      { clave: "B", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "error-3", feedbackDescarte: "fd3" },
+      { clave: "A", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "falla-1", feedbackDescarte: "fd1" },
+      { clave: "B", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "falla-3", feedbackDescarte: "fd3" },
       { clave: "C", claveOriginal: "A", texto: "a", esCorrecta: true, feedbackDescarteIncorrecto: "fdi" },
-      { clave: "D", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "error-2", feedbackDescarte: "fd2" },
+      { clave: "D", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "falla-2", feedbackDescarte: "fd2" },
     ],
     solucion: "Solución de prueba.",
   };
@@ -42,9 +42,9 @@ function item(id = "adv-prueba-001"): ItemAdvance {
 const ITEM = item();
 
 const fases = (f1: FaseError, f2: FaseError, f3: FaseError): FasesPorError => ({
-  "error-1": f1,
-  "error-2": f2,
-  "error-3": f3,
+  "falla-1": f1,
+  "falla-2": f2,
+  "falla-3": f3,
 });
 
 describe("veredicto (D17)", () => {
@@ -99,10 +99,10 @@ describe("veredicto (D17)", () => {
   });
 
   it("un error ausente del mapa cuenta como sin-datos", () => {
-    const sinError2: FasesPorError = { "error-1": "cerrado", "error-3": "cerrado" };
+    const sinError2: FasesPorError = { "falla-1": "cerrado", "falla-3": "cerrado" };
     assert.equal(veredicto("dejo", ITEM, sinError2), "sin-veredicto");
     assert.equal(veredicto("resuelvo", ITEM, sinError2), "sin-veredicto");
-    assert.equal(veredicto("resuelvo", ITEM, { "error-3": "abierto" }), "lectura-a-revisar");
+    assert.equal(veredicto("resuelvo", ITEM, { "falla-3": "abierto" }), "lectura-a-revisar");
   });
 
   it("un ítem sin distractores no tiene veredicto", () => {
@@ -113,7 +113,7 @@ describe("veredicto (D17)", () => {
 
 describe("erroresAbiertosDe", () => {
   it("devuelve los abiertos en el orden de las alternativas", () => {
-    assert.deepEqual(erroresAbiertosDe(ITEM, fases("abierto", "abierto", "cerrado")), ["error-1", "error-2"]);
+    assert.deepEqual(erroresAbiertosDe(ITEM, fases("abierto", "abierto", "cerrado")), ["falla-1", "falla-2"]);
     assert.deepEqual(erroresAbiertosDe(ITEM, fases("cerrado", "sin-datos", "observacion")), []);
   });
 });
@@ -121,11 +121,11 @@ describe("erroresAbiertosDe", () => {
 describe("fasesDe", () => {
   it("proyecta solo errorId → fase, sin p(L) ni contadores", () => {
     const estados: EstadoDeError[] = [
-      { ...estadoSinDatos("error-1"), fase: "abierto", pL: 0.42, fracasos: 2, ultimoIntentoMs: 10 },
-      estadoSinDatos("error-2"),
+      { ...estadoSinDatos("falla-1"), fase: "abierto", pL: 0.42, fracasos: 2, ultimoIntentoMs: 10 },
+      estadoSinDatos("falla-2"),
     ];
     const f = fasesDe(estados);
-    assert.deepEqual(f, { "error-1": "abierto", "error-2": "sin-datos" });
+    assert.deepEqual(f, { "falla-1": "abierto", "falla-2": "sin-datos" });
     assert.equal("pL" in f, false);
   });
 });
@@ -172,7 +172,7 @@ describe("resumenTriage (D18)", () => {
     assert.deepEqual(
       resumen.filas.map((x) => [x.itemId, x.veredicto, x.erroresAbiertos]),
       [
-        ["i-1", "lectura-a-revisar", ["error-1"]],
+        ["i-1", "lectura-a-revisar", ["falla-1"]],
         ["i-2", "lectura-buena", []],
         ["i-3", "lectura-buena", []],
         ["i-4", "sin-veredicto", []],

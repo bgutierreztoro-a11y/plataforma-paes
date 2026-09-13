@@ -13,9 +13,9 @@ const item = (n: number): ItemAdvance => ({
   enunciado: `Enunciado ${n}`,
   alternativas: [
     { clave: "A", claveOriginal: "A", texto: "a", esCorrecta: true, feedbackDescarteIncorrecto: "fdi" },
-    { clave: "B", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "error-1", feedbackDescarte: "fd" },
-    { clave: "C", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "error-2", feedbackDescarte: "fd" },
-    { clave: "D", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "error-3", feedbackDescarte: "fd" },
+    { clave: "B", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "falla-1", feedbackDescarte: "fd" },
+    { clave: "C", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "falla-2", feedbackDescarte: "fd" },
+    { clave: "D", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "falla-3", feedbackDescarte: "fd" },
   ],
   solucion: "s",
 });

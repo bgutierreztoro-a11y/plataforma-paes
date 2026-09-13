@@ -113,9 +113,9 @@ export type CierreCliente = Omit<CierreContenido, ClaveInterna | "items"> & {
  * `descripcionError` correspondiente del catálogo del módulo. Corre ANTES de
  * `quitarClavesInternas` — después, `catalogoErrores` ya no existe.
  *
- * Los ids del catálogo embebido son locales ("error-4"), y dentro de un mismo
+ * Los ids del catálogo embebido son locales ("confunde-aumento-un-con-aumento-a"), y dentro de un mismo
  * archivo eso es inequívoco. NO lo es entre archivos: `content/errores/` usa
- * ids con unidad ("ecuaciones-inecuaciones/error-4") y los cierres mezclan
+ * ids con unidad ("ecuaciones-e-inecuaciones-primer-grado/omite-dividir-por-coeficiente") y los cierres mezclan
  * ítems de dos unidades sin catálogo propio. Por eso la resolución es
  * estrictamente local al archivo: sin `catalogoErrores`, no se resuelve nada.
  * Un id sin entrada se deja sin descripción en vez de adivinar.
@@ -145,13 +145,17 @@ function idsReferenciados(valor: unknown, acumulado = new Set<string>()): Set<st
   return acumulado;
 }
 
-/** Orden estable por número de id ("error-2" antes que "error-10"), no alfabético. */
-function ordenarIds(ids: Iterable<string>): string[] {
-  const numero = (id: string) => {
-    const m = /error-(\d+)/.exec(id);
-    return m ? Number(m[1]) : Number.MAX_SAFE_INTEGER;
-  };
-  return [...ids].sort((a, b) => numero(a) - numero(b) || a.localeCompare(b));
+/**
+ * Orden estable por posición en el catálogo del módulo, no alfabético. Antes de
+ * la migración a slugs (2026-09-13) se ordenaba por el número del id; como los
+ * catálogos estaban numerados en orden de archivo, la secuencia es la misma y
+ * los señuelos de autoexplicación no se mueven. Un id que el catálogo no tiene
+ * va al final, en orden alfabético.
+ */
+function ordenarIds(ids: Iterable<string>, catalogo: Map<string, string>): string[] {
+  const posicion = new Map([...catalogo.keys()].map((id, i) => [id, i]));
+  const indice = (id: string) => posicion.get(id) ?? Number.MAX_SAFE_INTEGER;
+  return [...ids].sort((a, b) => indice(a) - indice(b) || a.localeCompare(b));
 }
 
 /**
@@ -232,12 +236,9 @@ function catalogoDe(contenido: { moduloId?: string }) {
 }
 
 function prepararParaCliente<T>(contenido: { moduloId?: string }): T {
+  const catalogo = catalogoDe(contenido);
   return quitarClavesInternas(
-    resolverDescripcionesDeError(
-      contenido,
-      catalogoDe(contenido),
-      ordenarIds(idsReferenciados(contenido)),
-    ),
+    resolverDescripcionesDeError(contenido, catalogo, ordenarIds(idsReferenciados(contenido), catalogo)),
   ) as T;
 }
 

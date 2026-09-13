@@ -2,7 +2,7 @@ import type { RespuestaRegistrada } from "@/lib/estadoSetItems";
 import type { ItemCliente } from "@/lib/sanitizar";
 
 export interface GrupoDeError {
-  /** El id tal como viene del contenido: "error-5". Es una referencia, no una frase. */
+  /** El id tal como viene del contenido: "invierte-valores-del-par". Es una referencia, no una frase. */
   id: string;
   /**
    * El texto del error, ya resuelto en el servidor por `lib/sanitizar.ts:122-145`

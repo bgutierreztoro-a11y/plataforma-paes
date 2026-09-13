@@ -20,7 +20,7 @@ import {
 
 /* Un ítem ya MEZCLADO: la letra visible no coincide con la original en
    ninguna alternativa. La correcta original es la A y se ve como C.
-   Visible → original: A→B (error-1), B→D (error-3), C→A (correcta), D→C (error-2). */
+   Visible → original: A→B (falla-1), B→D (falla-3), C→A (correcta), D→C (falla-2). */
 const ITEM: ItemAdvance = {
   id: "adv-prueba-001",
   unidadId: "prueba",
@@ -30,10 +30,10 @@ const ITEM: ItemAdvance = {
   tiempoReferenciaSeg: 120,
   enunciado: "Enunciado de prueba.",
   alternativas: [
-    { clave: "A", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "error-1", feedbackDescarte: "fd1" },
-    { clave: "B", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "error-3", feedbackDescarte: "fd3" },
+    { clave: "A", claveOriginal: "B", texto: "b", esCorrecta: false, errorCatalogado: "falla-1", feedbackDescarte: "fd1" },
+    { clave: "B", claveOriginal: "D", texto: "d", esCorrecta: false, errorCatalogado: "falla-3", feedbackDescarte: "fd3" },
     { clave: "C", claveOriginal: "A", texto: "a", esCorrecta: true, feedbackDescarteIncorrecto: "fdi" },
-    { clave: "D", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "error-2", feedbackDescarte: "fd2" },
+    { clave: "D", claveOriginal: "C", texto: "c", esCorrecta: false, errorCatalogado: "falla-2", feedbackDescarte: "fd2" },
   ],
   solucion: "Solución de prueba.",
 };
@@ -63,7 +63,7 @@ describe("tabla de transiciones", () => {
     assert.equal(e.fase, "descartando");
     assert.equal(e.estados.A, "descartada-correcta");
     assert.deepEqual(e.ordenDescartes, ["B"]);
-    assert.deepEqual(e.erroresIdentificados, ["error-1"]);
+    assert.deepEqual(e.erroresIdentificados, ["falla-1"]);
     assert.equal(e.descarteFatal, null);
     assert.equal(e.tiempoMs, null);
   });
@@ -72,7 +72,7 @@ describe("tabla de transiciones", () => {
     const e = descartar(descartar(inicial(), "D", T0 + 100), "A", T0 + 200);
     assert.equal(e.fase, "descartando");
     assert.deepEqual(e.ordenDescartes, ["C", "B"]);
-    assert.deepEqual(e.erroresIdentificados, ["error-2", "error-1"]);
+    assert.deepEqual(e.erroresIdentificados, ["falla-2", "falla-1"]);
     assert.equal(e.estados.C, "intacta");
   });
 
@@ -81,7 +81,7 @@ describe("tabla de transiciones", () => {
     assert.equal(e.fase, "confirmar");
     assert.equal(e.estados.C, "sobreviviente");
     assert.deepEqual(e.ordenDescartes, ["C", "B", "D"]);
-    assert.deepEqual(e.erroresIdentificados, ["error-2", "error-1", "error-3"]);
+    assert.deepEqual(e.erroresIdentificados, ["falla-2", "falla-1", "falla-3"]);
     assert.equal(e.tiempoMs, null);
     assert.equal(itemCerrado(e), false);
   });
@@ -92,7 +92,7 @@ describe("tabla de transiciones", () => {
     assert.equal(e.estados.C, "descartada-por-error");
     assert.equal(e.descarteFatal, "A");
     assert.deepEqual(e.ordenDescartes, ["B", "A"]);
-    assert.deepEqual(e.erroresIdentificados, ["error-1"]);
+    assert.deepEqual(e.erroresIdentificados, ["falla-1"]);
     assert.equal(e.tiempoMs, 2500);
     assert.equal(itemCerrado(e), true);
   });
@@ -162,7 +162,7 @@ describe("mezcla: el registro guarda la clave original, nunca la visible", () =>
     assert.deepEqual(registroDe(e), {
       itemId: "adv-prueba-001",
       ordenDescartes: ["C", "D", "B"],
-      erroresIdentificados: ["error-2", "error-3", "error-1"],
+      erroresIdentificados: ["falla-2", "falla-3", "falla-1"],
       descarteFatal: null,
       tiempoMs: 900,
     } satisfies RegistroItem);
@@ -171,9 +171,9 @@ describe("mezcla: el registro guarda la clave original, nunca la visible", () =>
 
 describe("resumen de sesión", () => {
   const registros: RegistroItem[] = [
-    { itemId: "i1", ordenDescartes: ["B", "C", "D"], erroresIdentificados: ["error-1", "error-2", "error-3"], descarteFatal: null, tiempoMs: 100 },
-    { itemId: "i2", ordenDescartes: ["C", "A"], erroresIdentificados: ["error-2"], descarteFatal: "A", tiempoMs: 200 },
-    { itemId: "i3", ordenDescartes: ["D", "B", "C"], erroresIdentificados: ["error-3", "error-1", "error-2"], descarteFatal: null, tiempoMs: 300 },
+    { itemId: "i1", ordenDescartes: ["B", "C", "D"], erroresIdentificados: ["falla-1", "falla-2", "falla-3"], descarteFatal: null, tiempoMs: 100 },
+    { itemId: "i2", ordenDescartes: ["C", "A"], erroresIdentificados: ["falla-2"], descarteFatal: "A", tiempoMs: 200 },
+    { itemId: "i3", ordenDescartes: ["D", "B", "C"], erroresIdentificados: ["falla-3", "falla-1", "falla-2"], descarteFatal: null, tiempoMs: 300 },
   ];
 
   it("cuenta ítems, descartes acertados y resultados por ítem", () => {
@@ -184,15 +184,15 @@ describe("resumen de sesión", () => {
   });
 
   it("error más frecuente por conteo", () => {
-    assert.equal(resumenDeSesion(registros).errorMasFrecuente, "error-2");
+    assert.equal(resumenDeSesion(registros).errorMasFrecuente, "falla-2");
   });
 
   it("empate: gana el que apareció primero en la sesión", () => {
     const empate: RegistroItem[] = [
-      { itemId: "i1", ordenDescartes: ["C", "B"], erroresIdentificados: ["error-7", "error-4"], descarteFatal: "A", tiempoMs: 1 },
-      { itemId: "i2", ordenDescartes: ["B", "C"], erroresIdentificados: ["error-4", "error-7"], descarteFatal: "A", tiempoMs: 1 },
+      { itemId: "i1", ordenDescartes: ["C", "B"], erroresIdentificados: ["falla-7", "falla-4"], descarteFatal: "A", tiempoMs: 1 },
+      { itemId: "i2", ordenDescartes: ["B", "C"], erroresIdentificados: ["falla-4", "falla-7"], descarteFatal: "A", tiempoMs: 1 },
     ];
-    assert.equal(errorMasFrecuente(empate), "error-7");
+    assert.equal(errorMasFrecuente(empate), "falla-7");
   });
 
   it("sin descartes acertados → null", () => {
@@ -245,15 +245,15 @@ describe("payloads de eventos (§8)", () => {
 
   it("fin: aciertos son ítems sin fatal, error_dominante como en el resumen", () => {
     const registros: RegistroItem[] = [
-      { itemId: "i1", ordenDescartes: ["B", "C", "D"], erroresIdentificados: ["error-1", "error-2", "error-3"], descarteFatal: null, tiempoMs: 1 },
+      { itemId: "i1", ordenDescartes: ["B", "C", "D"], erroresIdentificados: ["falla-1", "falla-2", "falla-3"], descarteFatal: null, tiempoMs: 1 },
       { itemId: "i2", ordenDescartes: ["A"], erroresIdentificados: [], descarteFatal: "A", tiempoMs: 1 },
-      { itemId: "i3", ordenDescartes: ["B", "A"], erroresIdentificados: ["error-1"], descarteFatal: "A", tiempoMs: 1 },
+      { itemId: "i3", ordenDescartes: ["B", "A"], erroresIdentificados: ["falla-1"], descarteFatal: "A", tiempoMs: 1 },
     ];
     assert.deepEqual(payloadDescarteFin("porcentaje", registros), {
       unidad_id: "porcentaje",
       aciertos: 1,
       total: 3,
-      error_dominante: "error-1",
+      error_dominante: "falla-1",
     });
     assert.deepEqual(payloadDescarteFin("porcentaje", []), { unidad_id: "porcentaje", aciertos: 0, total: 0, error_dominante: null });
   });

@@ -143,8 +143,8 @@
         "esCorrecta": { "const": false },
         "errorCatalogado": {
           "type": "string",
-          "pattern": "^error-[0-9]+$",
-          "description": "Id del catálogo canónico del módulo, content/errores/<moduloId>.json. Obligatorio en los tres distractores. Si el ítem necesita un error que no existe, CC se detiene y propone el texto a Benja antes de asignarle id."
+          "pattern": "^(?!error-[0-9]+$)[a-z0-9]+(-[a-z0-9]+)+$",
+          "description": "Id local (slug descriptivo, ver docs/analisis/mapa-migracion-ids.json) del catálogo canónico del módulo, content/errores/<moduloId>.json. Obligatorio en los tres distractores. Si el ítem necesita un error que no existe, CC se detiene y propone el texto a Benja antes de asignarle id."
         },
         "feedbackDescarte": {
           "type": "string",

@@ -5,8 +5,8 @@ import type { RespuestaRegistrada } from "./estadoSetItems.ts";
 import type { ItemCliente } from "./sanitizar.ts";
 
 /* Cuatro ítems que cubren los casos que de verdad existen en content/cierres/:
-   - i1 y i3 comparten `error-5` y ambos traen descripción (cierre CON catálogo).
-   - i2 lleva `error-9` sin descripción: el tag existe y el catálogo no lo
+   - i1 y i3 comparten `falla-5` y ambos traen descripción (cierre CON catálogo).
+   - i2 lleva `falla-9` sin descripción: el tag existe y el catálogo no lo
      define, que es lo que pasa en los 5 cierres sin `catalogoErrores`.
    - i4 tiene un distractor sin `errorCatalogado`, el caso más común de todos. */
 const ITEMS = [
@@ -18,7 +18,7 @@ const ITEMS = [
         clave: "B",
         texto: "b",
         esCorrecta: false,
-        errorCatalogado: "error-5",
+        errorCatalogado: "falla-5",
         descripcionError: "Invirtió el signo al leer la raíz desde el factor.",
       },
     ],
@@ -27,7 +27,7 @@ const ITEMS = [
     id: "i2",
     alternativas: [
       { clave: "A", texto: "a", esCorrecta: true },
-      { clave: "C", texto: "c", esCorrecta: false, errorCatalogado: "error-9" },
+      { clave: "C", texto: "c", esCorrecta: false, errorCatalogado: "falla-9" },
     ],
   },
   {
@@ -38,7 +38,7 @@ const ITEMS = [
         clave: "D",
         texto: "d",
         esCorrecta: false,
-        errorCatalogado: "error-5",
+        errorCatalogado: "falla-5",
         descripcionError: "Invirtió el signo al leer la raíz desde el factor.",
       },
     ],
@@ -64,7 +64,7 @@ test("dos ítems con el mismo errorCatalogado caen en un solo grupo", () => {
   const grupos = agruparErroresDelCierre(ITEMS, [fallo("i1", "B"), fallo("i3", "D")]);
 
   assert.equal(grupos.length, 1);
-  assert.equal(grupos[0].id, "error-5");
+  assert.equal(grupos[0].id, "falla-5");
   /* El número es la posición en el cierre, en base 1: i1 → 1, i3 → 3. Es lo que
      el estudiante ve en la franja, no el índice del array. */
   assert.deepEqual(grupos[0].numerosDeItem, [1, 3]);
@@ -73,7 +73,7 @@ test("dos ítems con el mismo errorCatalogado caen en un solo grupo", () => {
 test("un tag sin entrada en el catálogo da grupo sin descripción, no lo descarta", () => {
   const [grupo] = agruparErroresDelCierre(ITEMS, [fallo("i2", "C")]);
 
-  assert.equal(grupo.id, "error-9");
+  assert.equal(grupo.id, "falla-9");
   assert.equal(grupo.descripcion, undefined);
   assert.deepEqual(grupo.numerosDeItem, [2]);
 });
@@ -95,7 +95,7 @@ test("los grupos salen en el orden en que el estudiante cometió los errores", (
 
   assert.deepEqual(
     grupos.map((g) => g.id),
-    ["error-9", "error-5"],
+    ["falla-9", "falla-5"],
   );
 });
 

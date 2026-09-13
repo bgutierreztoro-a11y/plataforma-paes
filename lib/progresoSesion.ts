@@ -42,7 +42,7 @@ export function obtenerResultadoDiagnostico(): ResultadoSet | null {
 
    ## Por qué la clave es la descripción y no el id
 
-   Los ids del catálogo (`error-7`) son **locales al archivo**: el mismo id
+   Los ids del catálogo (`deshace-porcentaje-con-mismo-porcentaje`) son **locales al archivo**: el mismo id
    nombra errores distintos en dos lecciones (ver
    `docs/deuda-catalogo-errores-crossfile.md`). Contar por id exigiría un espacio
    de nombres por archivo, y el dato que lo daría —`contextoId`— hoy llega como
@@ -83,26 +83,31 @@ export function ocurrenciasDeErrorDeSesion(): { descripcion: string; veces: numb
 }
 
 /**
- * El rótulo en versalitas del banner de error: `error-7` + 3 → `Error 07, te ha
- * pasado 3 veces`. Va en minúsculas; el `uppercase` lo pone `TarjetaError`.
+ * El rótulo en versalitas del banner de error: `deshace-porcentaje-con-mismo-porcentaje`
+ * + 3 → `Deshace porcentaje con mismo porcentaje, te ha pasado 3 veces`. Va en
+ * minúsculas salvo la inicial; el `uppercase` lo pone `TarjetaError`.
  *
  * **El conteo solo se nombra a partir de la segunda vez.** Con una sola
- * ocurrencia el rótulo es `Error 07` a secas: decir "te ha pasado 1 vez" no
+ * ocurrencia el rótulo es la referencia a secas: decir "te ha pasado 1 vez" no
  * agrega información y convierte un dato en una etiqueta. Y el conteo es de la
  * sesión, así que puede quedar por debajo del real — nunca por encima: ver la
  * nota de `ocurrenciasPorError`, acá arriba.
  *
- * El id es local al archivo del módulo, no un número global de la plataforma
- * (`docs/deuda-catalogo-errores-crossfile.md`). Se muestra igual porque siempre
- * viaja pegado a su propia descripción en la misma tarjeta: el rótulo es una
- * referencia para volver a encontrarlo, no una clasificación que el estudiante
- * tenga que interpretar solo.
- *
- * Un id que no siga la forma `error-N` —los de `content/errores/` llevan la
- * unidad por delante— se muestra tal cual en vez de forzarlo a un número.
+ * Desde la migración a slugs (2026-09-13, `docs/analisis/mapa-migracion-ids.json`)
+ * el id ya no es un número: es un slug descriptivo, único en toda la plataforma.
+ * La referencia es el `titulo` del catálogo cuando la pantalla lo tiene (hoy
+ * solo porcentaje) y, si no, el slug humanizado: inicial en mayúscula y guiones
+ * como espacios. Antes era "Error 07"; el rótulo sigue siendo una referencia
+ * para volver a encontrar el error, pegada a su descripción en la misma tarjeta.
  */
-export function rotuloDeError(errorCatalogado: string, ocurrencias: number): string {
-  const numero = /^error-(\d+)$/.exec(errorCatalogado);
-  const referencia = numero ? `Error ${numero[1].padStart(2, "0")}` : errorCatalogado;
+export function rotuloDeError(errorCatalogado: string, ocurrencias: number, titulo?: string): string {
+  const referencia = titulo?.trim() ? titulo.trim() : humanizarSlug(errorCatalogado);
   return ocurrencias >= 2 ? `${referencia}, te ha pasado ${ocurrencias} veces` : referencia;
+}
+
+/** `suma-denominadores` → `Suma denominadores`. Un id que no sea slug se devuelve tal cual. */
+export function humanizarSlug(slug: string): string {
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return slug;
+  const texto = slug.replace(/-/g, " ");
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }

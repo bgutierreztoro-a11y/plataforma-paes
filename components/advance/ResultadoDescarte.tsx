@@ -33,7 +33,7 @@ interface ResultadoDescarteProps {
  * celebración. `FranjaDeItems` es el eco visual de la sesión, igual que en el
  * cierre de una lección.
  *
- * "Nombre del error" es el rótulo de `rotuloDeError` ("Error 07") más el
+ * "Nombre del error" es el rótulo de `rotuloDeError` (el slug humanizado) más el
  * `titulo` del catálogo canónico y, debajo, su `apoyo`, en `TarjetaError`: la
  * misma pieza que ve el estudiante cuando falla un ítem en la capa gratis.
  * Desde F4c es el copy para el estudiante y no la ficha de autor; un catálogo

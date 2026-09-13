@@ -8,7 +8,7 @@ import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
 interface AlternativaDescartableProps {
   alternativa: AlternativaAdvance;
   estado: EstadoAlternativa;
-  /* "Error 07": el rótulo del error catalogado, ya resuelto por quien monta.
+  /* El rótulo del error catalogado (slug humanizado o titulo), ya resuelto por quien monta.
      Solo se lee en `descartada-correcta`. */
   rotuloError?: string;
   /* Si el ítem ya está cerrado o la alternativa es la sobreviviente, el toque
@@ -23,7 +23,7 @@ interface AlternativaDescartableProps {
  * Una alternativa del modo descarte (docs/fobos-advance.md §6.1).
  *
  * Es un `button` con `aria-pressed`: presionada = descartada. El estado se
- * anuncia por texto ("Descartada: Error 07") y no solo por el tachado, así que
+ * anuncia por texto ("Descartada: Suma denominadores") y no solo por el tachado, así que
  * un lector de pantalla y una persona que no distinga el tachado leen lo
  * mismo.
  *

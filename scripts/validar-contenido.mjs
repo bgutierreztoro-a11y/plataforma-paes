@@ -560,7 +560,9 @@ function idsReferenciadosPorUnidad(dirContent) {
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const ID_ITEM_ADVANCE = /^adv-[a-z0-9]+(-[a-z0-9]+)*$/;
-const ERROR_LOCAL = /^error-[0-9]+$/;
+// Id local del catálogo: slug descriptivo kebab-case (desde la migración del 2026-09-13,
+// docs/analisis/mapa-migracion-ids.json). Ya no se admite la forma posicional error-N.
+const ERROR_LOCAL = /^(?!error-[0-9]+$)[a-z0-9]+(-[a-z0-9]+)+$/;
 const FUENTES_ORIGEN = ['propia', 'demre-liberada', 'temario-demre'];
 const TIEMPO_REFERENCIA_SEG = [20, 600];
 // §5.4: volumen mínimo para que el descarte tenga sentido en una unidad.
@@ -666,7 +668,7 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
       if (!esTexto(a.errorCatalogado)) {
         errores.push(`${q}: distractor sin errorCatalogado; en Advance es obligatorio en los tres (sin él el modo descarte no funciona)`);
       } else if (!ERROR_LOCAL.test(a.errorCatalogado)) {
-        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no tiene la forma error-N`);
+        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no es un slug kebab-case (la forma posicional error-N dejó de existir el 2026-09-13)`);
       } else if (erroresCatalogados && esTexto(banco?.moduloId) && !erroresCatalogados.has(`${banco.moduloId}/${a.errorCatalogado}`)) {
         // Regla (3): todo errorCatalogado existe en el catálogo canónico del módulo.
         errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no está en content/errores/${banco.moduloId}.json`);

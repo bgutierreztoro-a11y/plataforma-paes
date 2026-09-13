@@ -51,7 +51,7 @@ export const TEXTOS_ADVANCE = {
     pill: "Descarte",
     sustantivo: "Ítem",
     instruccion: "Descarta las alternativas que no pueden ser. Cada descarte se evalúa al instante y no se deshace.",
-    /* Prefijo del estado anunciado por texto: "Descartada: Error 07". */
+    /* Prefijo del estado anunciado por texto: "Descartada: Suma denominadores". */
     descartada: "Descartada",
     descartadaPorError: "Descartada por error. Era la correcta.",
     sobreviviente: "Queda esta.",
