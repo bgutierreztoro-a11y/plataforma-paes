@@ -38,6 +38,11 @@ Segunda sesión (2026-09-13, cierre), en el orden del brief:
 7. `tooling:` registro (`lib/modulos.ts`: `IDS_CIERRE` + `cierreId` de los temas 12 y
    13; `lib/descripcionesLecciones.tsx`: 6 entradas).
 8. `docs:` `docs/mapa-modulos-m1.md` (13/16) + este archivo.
+9. `contenido:` L2, el ítem 1 pasa de "dos refugios" a "la entrada del parque y un
+   camping" (refugio es dominio ya usado en el corpus y prohibido en el doc de diseño).
+10. `contenido:` L2, la nota interna del barrido deja de listar el 1.800 (distractor
+    descartado antes de escribir el archivo); barrido recalculado con `node -e`.
+11. `docs:` este archivo, con los puntos 9 y 10.
 
 Los hashes exactos están en `git log --oneline origin/master..HEAD` del informe
 final de la sesión.
@@ -48,8 +53,8 @@ final de la sesión.
    clave de la sección "Palabras clave" de los dos docs de diseño. Dominios que
    se sumaron en esta sesión y no están en esa lista del doc de semejanza:
    `"exposicion"`, `"sala de exposicion"`, `"meson"`, `"faro"` (maqueta del ítem 2 de L2),
-   `"quincho"`, `"mastil"`, `"cable"`, `"puerta"`, `"nino"` (ítem 7 del cierre) y
-   `"arbol"`. Un dominio con SI se reemplaza entero, nunca se ajusta.
+   `"quincho"`, `"mastil"`, `"cable"`, `"puerta"`, `"nino"` (ítem 7 del cierre),
+   `"camping"` (ítem 1 de L2) y `"arbol"`. Un dominio con SI se reemplaza entero, nunca se ajusta.
 2. **Auditoría matemática** (hilo `/clear`, `.claude/agents/revisor-matematico.md`)
    sobre los 8 archivos nuevos del módulo 12 + 13 (4 + 4).
 3. **Auditoría de originalidad** (hilo `/clear`) sobre los mismos 8.
