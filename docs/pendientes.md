@@ -58,10 +58,14 @@ como proyección. Registro en `docs/fobos-advance.md` §4, F4b.
   "Todavía no hay repaso para este error." en vez de las tres secciones. La
   caída está cubierta por test y por la galería, pero es el mismo copy crudo
   de esta entrada, unidad por unidad, hasta que cada catálogo tenga su copy.
-- `ResultadoDescarte` ("Qué error apareció más") sigue leyendo `descripcion`
-  vía `catalogoDelModulo`, exactamente como decía el texto original. F4b no lo
-  tocó: la decisión firmada fue dejar F2 con cero diff. Cuando se aborde, el
-  dato ya está en el catálogo (`titulo`/`apoyo` de porcentaje).
+  Desde F4c la misma caída aplica también a `ResultadoDescarte`
+  (`copyDeError`, `lib/advance/copyDeError.ts`).
+- ✅ `ResultadoDescarte` ("Qué error apareció más"): resuelta el 2026-09-12
+  en F4c (`5581557`). Seguía leyendo `descripcion` vía `catalogoDelModulo`
+  porque la decisión firmada de F4b fue dejar F2 con cero diff. Ahora la
+  page de `/advance/descarte/[unidadId]` resuelve `titulo` + `apoyo` con
+  `copyDelCatalogo(catalogoCompletoDelModulo(...))` y la tarjeta enlaza al
+  repaso del error. Registro en `docs/fobos-advance.md` §4, F4c.
 
 ## 🟡 «Practicar este error» abre la sesión completa de la unidad, no una sesión filtrada por ese error (abierta 2026-09-12, F4b)
 
