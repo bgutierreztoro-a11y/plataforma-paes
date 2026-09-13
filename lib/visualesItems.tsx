@@ -127,13 +127,24 @@ const VISUALES: Record<string, EntradaVisual> = {
       imagen: { cotas: ["10,5 cm", "x", "6 cm", "6 cm"] },
     },
   },
-  /* Sombra y altura: el poste, la persona y el rayo común. */
+  /* Dos cuadrados lado a lado, 3 cm y 9 cm: se pregunta por los factores de
+     perímetro y área, no por una cota. */
+  "cierre-semejanza-3": {
+    semejanza: {
+      tipo: "semejanza",
+      disposicion: "ladoALado",
+      original: { vertices: [[0, 0], [3, 0], [3, 3], [0, 3]], cotas: ["3 cm", "3 cm", "3 cm", "3 cm"] },
+      k: 3,
+      imagen: { cotas: ["9 cm", "9 cm", "9 cm", "9 cm"] },
+    },
+  },
+  /* Sombra y altura: el poste, el niño y el rayo común. */
   "cierre-semejanza-7": {
     semejanza: {
       tipo: "semejanza",
       disposicion: "anidada",
-      grande: { horizontal: 10, vertical: 7.5, etiquetaHorizontal: "10 m", etiquetaVertical: "h" },
-      chica: { horizontal: 2.4, vertical: 1.8, etiquetaHorizontal: "2,4 m", etiquetaVertical: "1,8 m" },
+      grande: { horizontal: 9, vertical: 6.75, etiquetaHorizontal: "9 m", etiquetaVertical: "h" },
+      chica: { horizontal: 1.8, vertical: 1.35, etiquetaHorizontal: "1,8 m", etiquetaVertical: "1,35 m" },
     },
   },
 };

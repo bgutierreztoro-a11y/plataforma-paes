@@ -1,0 +1,323 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-semejanza-y-proporcionalidad",
+  "moduloId": "semejanza-proporcionalidad",
+  "titulo": "Cierre del módulo: Semejanza y proporcionalidad de figuras",
+  "_notasInternas": [
+    "Cierre del módulo 'Semejanza y proporcionalidad de figuras', construido después de que las 3 lecciones (semejanza-misma-forma-otro-tamano, semejanza-medir-sin-acercarse, semejanza-plano-y-realidad) pasaran npm run validar y npm run auditar sin bloqueantes. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md, sección 'Cierre'.",
+    "Cobertura por lección: L1 (concepto, k, lados homólogos, criterios) = ítems 1, 2, 4 y 8. L2 (escalas, k y k²) = ítems 3, 5 y 6. L3 (sombras, homólogo con homólogo) = ítem 7. Cobertura por habilidad: resolver = ítems 1, 2. representar = ítems 3, 7. modelar = ítems 5, 6. argumentar = ítems 4, 8 (2 de cada una). Dificultad: baja = ítems 1, 2; media = ítems 3, 4, 5, 6; alta = ítems 7, 8.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids referenciados: error-1, error-2, error-3, error-4, error-5, error-6, error-7, error-8, error-9, error-11. Los 24 distractores llevan errorCatalogado. Cobertura: error-1 (1D, 2C, 4D, 8B), error-2 (1A, 2A, 3D, 4C, 7D), error-3 (1C, 2D), error-4 (8C), error-5 (3B, 6B), error-6 (3C, 4B), error-7 (5A, 6A), error-8 (5B, 5D, 6D), error-9 (7A), error-11 (8D). error-10 (leer 150 % como 2,5) no aparece en el cierre: se ejercita tres veces en L3 (práctica, consolidación e ítem 3) y ninguno de los 8 ítems del cierre usa una ampliación porcentual; con los 11 ids cubiertos entre L1, L2, L3 y cierre, el módulo completo no deja ninguno sin uso.",
+    "Cambios respecto de la tabla del doc de diseño: ítem 1 usa 12-16-20 → 18-24-30 (k = 3/2) en vez de 6-8-10 → 15-20-25 (k = 2,5; 2,5 y 15-20-25 ya están en L1); ítem 5 usa 22 cm → 5,5 km en vez de 18 cm → 4,5 km (4,5 está en L1); ítem 7 usa un niño de 1,35 m con sombra de 1,8 m y un poste con sombra de 9 m → 6,75 m, en vez de persona 1,8 m, sombra 2,4 m y sombra 10 m → 7,5 m (7,5 está en L1 y 2,4 en L2). La entrada cierre-semejanza-7 de lib/visualesItems.tsx se actualizó a estos números en el mismo commit, y se agregó cierre-semejanza-3 (cuadrados de lado 3 y 9).",
+    "Todas las cifras verificadas con node -e sobre lib/semejanza.ts (sonSemejantesPorLados, factores, fraccion, mismaFraccion, motivoRechazoDatosSemejanza): 18/12 = 24/16 = 30/20 = 3/2; 5-12-13 con lado mayor 39 → k = 3, lado medio 36 (15-36-39 semejante a 5-12-13); cuadrados 3 y 9: perímetro × 3, área × 9; k = 2/3: perímetro × 2/3, área × 4/9; 22 cm · 25.000 = 550.000 cm = 5,5 km; 5 cm × 7 cm en 1:100 → 5 m × 7 m = 35 m²; 1,35 · 9 ÷ 1,8 = 6,75 (1,35/1,8 = 6,75/9 = 3/4 exacto; tríos 1,35-1,8-2,25 y 6,75-9-11,25); 3-4-5 y 9-12-15 semejantes (k = 3), 6-8-10 y 8-10-12 no (8/6, 10/8, 12/10 distintas), rectángulos 2 × 3 y 4 × 5 no (4/2 = 2, 5/3 distintas). Las dos visuales pasan motivoRechazoDatosSemejanza.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {3/2; 36; 5,5; 35; 6,75}, distractores numéricos {2/3; 1,875; 6; 4; 38; 93,6; 0,00088; 0,55; 550; 0,0035; 0,35; 350.000; 0,27; 8,55; 12}; sin intersección. Cotejo contra los contextosNumericos de L1, L2 y L3: ninguna escena ni conjunto de números de este cierre se repite en las lecciones; la única cifra decimal compartida con otro archivo del repo es 1,8 (sombra del niño en el ítem 7), que en potencias-raiz-escondida es el valor 9/5 de un distractor, con otro rol.",
+    "Ítems con visual en lib/visualesItems.tsx: cierre-semejanza-3 (dos cuadrados lado a lado, 3 cm y 9 cm, con las ocho cotas rotuladas) y cierre-semejanza-7 (figura anidada: poste con sombra 9 m y altura h, niño 1,35 m con sombra 1,8 m). En las dos, la incógnita va con letra y ningún ítem pide comparar longitudes a ojo.",
+    "Toda la aritmética de los 8 ítems y sus 24 alternativas fue recalculada desde cero a partir de los números propios de cada ítem, nunca por ingeniería inversa desde una alternativa deseada. Pendientes las dos auditorías en hilos aislados y la consulta de colisión de Benja antes de cualquier git push."
+  ],
+  "items": [
+    {
+      "id": "cierre-semejanza-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un triángulo tiene lados de 12 cm, 16 cm y 20 cm, y otro, semejante a él, tiene lados de 18 cm, 24 cm y 30 cm. ¿Cuál es la razón de semejanza k del primero al segundo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "k = 2/3",
+          "esCorrecta": false,
+          "feedback": "2/3 es 12/18, el primero dividido por el segundo: la razón al revés. Como el segundo triángulo es más grande, k tiene que ser mayor que 1: 18/12 = 3/2.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "k = 3/2",
+          "esCorrecta": true,
+          "feedback": "Correcto. Lados homólogos, menor con menor: 18/12 = 3/2. Y se confirma con los otros pares: 24/16 = 3/2 y 30/20 = 3/2."
+        },
+        {
+          "clave": "C",
+          "texto": "k = 1,875",
+          "esCorrecta": false,
+          "feedback": "1,875 es 30/16: divide el lado mayor del segundo por el lado medio del primero, que no son homólogos. Mayor con mayor: 30/20 = 1,5; menor con menor: 18/12 = 1,5.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "k = 6, porque el lado menor creció de 12 a 18",
+          "esCorrecta": false,
+          "feedback": "Que el lado menor haya crecido 6 no da la razón, y además los otros lados crecieron 8 y 10, no 6. La razón de semejanza se calcula dividiendo, no restando: 18 ÷ 12 = 1,5.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Se emparejan los lados homólogos ordenándolos de menor a mayor: 12 con 18, 16 con 24, 20 con 30. Razón de semejanza k = imagen ÷ original = 18/12 = 3/2. Comprobación: 24/16 = 3/2 y 30/20 = 3/2, las tres razones coinciden, así que los triángulos son efectivamente semejantes con k = 3/2 = 1,5. (Los dos son 3-4-5 escalados: por 4 y por 6.) ✓"
+    },
+    {
+      "id": "cierre-semejanza-2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un triángulo rectángulo tiene lados de 5 cm, 12 cm y 13 cm. Otro triángulo, semejante a él, tiene su lado mayor de 39 cm. ¿Cuánto mide el lado medio del segundo triángulo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4 cm",
+          "esCorrecta": false,
+          "feedback": "4 es 12 · 13 ÷ 39: aplica la razón al revés, 13/39 = 1/3, y achica el triángulo. El segundo es más grande (39 frente a 13): k = 39 ÷ 13 = 3, y el lado medio es 12 · 3 = 36 cm.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "36 cm",
+          "esCorrecta": true,
+          "feedback": "Correcto. Mayor con mayor: k = 39 ÷ 13 = 3. Lado medio: 12 · 3 = 36 cm. El segundo triángulo es 15-36-39."
+        },
+        {
+          "clave": "C",
+          "texto": "38 cm",
+          "esCorrecta": false,
+          "feedback": "38 es 12 + 26: le suma al lado medio lo que creció el lado mayor (de 13 a 39). Sumar lo mismo a cada lado no conserva la forma: se multiplica por k = 39 ÷ 13 = 3, y 12 · 3 = 36 cm.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "93,6 cm",
+          "esCorrecta": false,
+          "feedback": "93,6 es 12 · 39 ÷ 5: empareja el lado mayor del segundo (39) con el lado menor del primero (5). Los homólogos son mayor con mayor: k = 39 ÷ 13 = 3, y el lado medio es 12 · 3 = 36 cm.",
+          "errorCatalogado": "error-3"
+        }
+      ],
+      "solucion": "Lados homólogos: el mayor del primero (13) con el mayor del segundo (39). Razón de semejanza k = 39 ÷ 13 = 3. Lado medio del segundo: 12 · 3 = 36 cm. Comprobación: el lado menor sería 5 · 3 = 15, y 15-36-39 es 3 · (5-12-13), un triángulo rectángulo (15² + 36² = 225 + 1.296 = 1.521 = 39²). ✓"
+    },
+    {
+      "id": "cierre-semejanza-3",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "En la figura se muestran dos cuadrados: uno de lado 3 cm y otro de lado 9 cm. ¿Cuál afirmación sobre el perímetro y el área del cuadrado grande, comparados con los del chico, es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El perímetro es 3 veces el del chico y el área es 9 veces la del chico.",
+          "esCorrecta": true,
+          "feedback": "Correcto. k = 9 ÷ 3 = 3. El perímetro es una longitud y se multiplica por k = 3 (12 cm → 36 cm); el área se multiplica por k² = 9 (9 cm² → 81 cm²)."
+        },
+        {
+          "clave": "B",
+          "texto": "El perímetro es 3 veces el del chico y el área también es 3 veces la del chico.",
+          "esCorrecta": false,
+          "feedback": "El perímetro sí va por 3, pero el área crece en dos direcciones: el cuadrado grande es 3 veces más ancho y 3 veces más alto, así que su área es 3 · 3 = 9 veces la del chico. Comprueba: 9 · 9 = 81 y 3 · 3 = 9, y 81 ÷ 9 = 9.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "El perímetro es 9 veces el del chico y el área también es 9 veces la del chico.",
+          "esCorrecta": false,
+          "feedback": "El área sí va por 9, pero el perímetro es una longitud (la suma de los cuatro lados) y se multiplica por k = 3, no por k²: 4 · 3 = 12 cm y 4 · 9 = 36 cm, y 36 ÷ 12 = 3.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "D",
+          "texto": "El perímetro es 1/3 del chico y el área es 1/9 de la del chico.",
+          "esCorrecta": false,
+          "feedback": "Esa es la comparación al revés: del grande al chico. La pregunta compara el grande con el chico, y el grande es más grande: k = 9 ÷ 3 = 3, perímetro por 3 y área por 9.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Razón de semejanza del chico al grande: k = 9 ÷ 3 = 3. Perímetros: chico 4 · 3 = 12 cm, grande 4 · 9 = 36 cm; 36 ÷ 12 = 3 = k. Áreas: chico 3² = 9 cm², grande 9² = 81 cm²; 81 ÷ 9 = 9 = k². Toda longitud (el perímetro incluido) se multiplica por k, y el área por k². La afirmación correcta es A."
+    },
+    {
+      "id": "cierre-semejanza-4",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "Un triángulo se reduce con razón de semejanza k = 2/3. Un estudiante afirma que «el perímetro de la copia es 4/9 del perímetro original, porque al reducir se multiplica por k²». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: el perímetro es una longitud y se multiplica por k = 2/3; lo que se multiplica por 4/9 es el área.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada lado se multiplica por 2/3, así que la suma de los lados (el perímetro) también se multiplica por 2/3. El factor k² = 4/9 es solo para el área, que crece o se reduce en dos direcciones."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: al reducir una figura, todas sus medidas se multiplican por k².",
+          "esCorrecta": false,
+          "feedback": "Solo el área se multiplica por k². Los lados se multiplican por k, y el perímetro es la suma de los lados: 2/3 · (a + b + c) = 2/3 del perímetro original. Que sea una reducción no cambia la regla.",
+          "errorCatalogado": "error-6"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: como es una reducción, el perímetro se multiplica por 3/2.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto pero la razón no: 3/2 agrandaría el perímetro, y la copia es más chica. La razón de semejanza es k = 2/3 tal como está, y el perímetro se multiplica por 2/3.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: el perímetro disminuye en una cantidad fija, porque a cada lado se le resta lo mismo.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto pero la razón no: una reducción semejante no resta lo mismo a cada lado, multiplica cada lado por 2/3. Un lado de 9 pasa a 6 (resta 3) y uno de 3 pasa a 2 (resta 1). El perímetro se multiplica por 2/3.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Con razón de semejanza k, cada lado de la copia es k veces el lado original, y el perímetro, que es la suma de los lados, es k veces el perímetro original: k · (a + b + c). Con k = 2/3, el perímetro de la copia es 2/3 del original. El factor k² = 4/9 corresponde al área, no al perímetro. Ejemplo: un triángulo 6-8-10 (perímetro 24) reducido por 2/3 es 4-16/3-20/3, de perímetro 16, y 16 ÷ 24 = 2/3. La afirmación no es correcta, y la alternativa que lo explica es A."
+    },
+    {
+      "id": "cierre-semejanza-5",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En un mapa a escala 1:25.000, el inicio y el término de un sendero están a 22 cm de distancia. ¿Cuál es la distancia real que recorre el sendero, medida en línea recta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,00088 km",
+          "esCorrecta": false,
+          "feedback": "0,00088 es 22 ÷ 25.000: divide el mapa por la escala, como si la realidad fuera más chica que el dibujo. En 1:25.000 la realidad es 25.000 veces el mapa: 22 · 25.000 = 550.000 cm = 5,5 km.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "B",
+          "texto": "0,55 km",
+          "esCorrecta": false,
+          "feedback": "0,55 km son 550 m: la conversión se pasó de largo. 22 · 25.000 = 550.000 cm, y como 1 km = 100.000 cm, son 5,5 km. Al pasar de cm a km se divide por 100.000, no por 1.000.000.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "5,5 km",
+          "esCorrecta": true,
+          "feedback": "Correcto. 22 cm · 25.000 = 550.000 cm = 5.500 m = 5,5 km."
+        },
+        {
+          "clave": "D",
+          "texto": "550 km",
+          "esCorrecta": false,
+          "feedback": "550 es la cuenta correcta, pero en metros no está bien: 22 · 25.000 = 550.000 son centímetros. 550.000 cm = 5.500 m = 5,5 km. Un sendero de 550 km cruzaría varias regiones.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Escala 1:25.000: la distancia real es 25.000 veces la del mapa. 22 cm · 25.000 = 550.000 cm. Conversión: 550.000 cm = 5.500 m = 5,5 km. La distancia real es 5,5 km. Comprobación: 5,5 km = 550.000 cm, y 550.000 ÷ 25.000 = 22 cm en el mapa. ✓"
+    },
+    {
+      "id": "cierre-semejanza-6",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En el plano de una casa a escala 1:100, el living mide 5 cm × 7 cm. ¿Cuál es el área real del living?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,0035 m²",
+          "esCorrecta": false,
+          "feedback": "0,0035 es 35 ÷ 10.000: divide en vez de multiplicar, como si la casa fuera más chica que su plano. La escala 1:100 agranda: los lados reales son 5 m y 7 m, y el área es 5 · 7 = 35 m².",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "B",
+          "texto": "0,35 m²",
+          "esCorrecta": false,
+          "feedback": "0,35 m² es 35 cm² · 100 = 3.500 cm²: multiplica el área por 100 una sola vez. El área se multiplica por 100², porque cada lado se multiplica por 100: 5 m · 7 m = 35 m².",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "35 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. Lados reales: 5 cm · 100 = 500 cm = 5 m y 7 cm · 100 = 700 cm = 7 m. Área real: 5 · 7 = 35 m²."
+        },
+        {
+          "clave": "D",
+          "texto": "350.000 m²",
+          "esCorrecta": false,
+          "feedback": "350.000 es el área real en cm²: 35 cm² · 10.000 = 350.000 cm². Como 1 m² = 10.000 cm², son 35 m². Un living de 350.000 m² sería más grande que treinta canchas de fútbol.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Camino 1, por los lados: 5 cm · 100 = 500 cm = 5 m; 7 cm · 100 = 700 cm = 7 m; área real = 5 · 7 = 35 m². Camino 2, por el factor de área: área en el plano = 5 · 7 = 35 cm²; factor = 100² = 10.000; 35 · 10.000 = 350.000 cm² = 35 m². Los dos caminos coinciden. ✓"
+    },
+    {
+      "id": "cierre-semejanza-7",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "enunciado": "En la figura, un poste de altura h proyecta una sombra de 9 m, y un niño de 1,35 m de estatura, parado en la misma línea, proyecta una sombra de 1,8 m que termina en el mismo punto. ¿Cuánto mide el poste?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,27 m",
+          "esCorrecta": false,
+          "feedback": "0,27 es 1,35 · 1,8 ÷ 9: cruza la altura del niño con las sombras al revés y da un poste más bajo que el niño. Homólogo con homólogo: h ÷ 1,35 = 9 ÷ 1,8 = 5, y h = 5 · 1,35 = 6,75 m.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "B",
+          "texto": "6,75 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. La sombra del poste es 9 ÷ 1,8 = 5 veces la del niño, así que el poste es 5 veces el niño: 5 · 1,35 = 6,75 m."
+        },
+        {
+          "clave": "C",
+          "texto": "8,55 m",
+          "esCorrecta": false,
+          "feedback": "8,55 es 1,35 + 7,2: le suma a la altura del niño lo que la sombra del poste tiene de más. Las figuras semejantes no crecen sumando: la sombra se multiplicó por 5 (9 ÷ 1,8), y la altura también se multiplica por 5: 6,75 m.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "12 m",
+          "esCorrecta": false,
+          "feedback": "12 es 9 · 1,8 ÷ 1,35: la proporción invertida. La razón de semejanza es sombra grande ÷ sombra chica = 5, y el poste es 5 veces el niño, 6,75 m, no 12.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Los dos triángulos (poste con su sombra, niño con su sombra) comparten el vértice del extremo de las sombras y tienen ángulo recto con el suelo: son semejantes. Razón de semejanza con las sombras, que son lados homólogos: 9 ÷ 1,8 = 5. Altura del poste: h = 5 · 1,35 = 6,75 m. Comprobación por la otra forma: altura ÷ sombra = 1,35 ÷ 1,8 = 0,75 en el niño y 6,75 ÷ 9 = 0,75 en el poste. ✓ (Los triángulos son 3-4-5 escalados: 1,35-1,8-2,25 y 6,75-9-11,25.)"
+    },
+    {
+      "id": "cierre-semejanza-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Se tienen tres pares de figuras: (I) los triángulos 3-4-5 y 9-12-15; (II) los triángulos 6-8-10 y 8-10-12; (III) los rectángulos de 2 × 3 y de 4 × 5. ¿Cuáles pares están formados por figuras semejantes?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Solo el par I: 9/3 = 12/4 = 15/5 = 3. En II las razones 8/6, 10/8 y 12/10 son distintas, y en III 4/2 y 5/3 también.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La semejanza exige que todas las razones entre lados homólogos coincidan. Solo en el par I se cumple; en II y en III las razones se desparejan."
+        },
+        {
+          "clave": "B",
+          "texto": "Los pares I y II: en II cada lado creció 2 unidades, así que la forma se conserva.",
+          "esCorrecta": false,
+          "feedback": "Sumar 2 a cada lado no conserva la forma: 8-10-12 ni siquiera es rectángulo (64 + 100 = 164, y 144 ≠ 164). La prueba es dividir, no restar: 8/6, 10/8 y 12/10 son distintas. Solo el par I es semejante.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "C",
+          "texto": "Los pares I y III: dos rectángulos siempre son semejantes, porque tienen los cuatro ángulos rectos.",
+          "esCorrecta": false,
+          "feedback": "Los ángulos iguales son necesarios pero no bastan en un cuadrilátero: falta que los lados sean proporcionales, y 4/2 = 2 mientras 5/3 no lo es. Un rectángulo de 2 × 3 y uno de 4 × 5 tienen formas distintas. Solo el par I es semejante.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "D",
+          "texto": "Ninguno: no se sabe si las figuras de cada par están dibujadas en la misma posición y con la misma orientación.",
+          "esCorrecta": false,
+          "feedback": "La posición y la orientación no tienen nada que ver con la semejanza: una figura girada o volteada sigue teniendo los mismos ángulos y los mismos lados. Lo que decide es la razón entre lados homólogos, y en el par I coincide (3, 3 y 3).",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Par I: 9/3 = 3, 12/4 = 3, 15/5 = 3; las tres razones coinciden, son semejantes (9-12-15 es 3 · (3-4-5)). Par II: 8/6 ≈ 1,33, 10/8 = 1,25, 12/10 = 1,2; distintas, no son semejantes (sumar 2 a cada lado deforma la figura). Par III: 4/2 = 2, 5/3 ≈ 1,67; distintas, no son semejantes aunque los dos sean rectángulos. Ni la posición ni la orientación importan. Solo el par I, alternativa A."
+    }
+  ],
+  "contextosNumericos": [
+    "cierre-semejanza-1 (triángulos abstractos, resolver): 12-16-20 y 18-24-30, k = 3/2",
+    "cierre-semejanza-2 (triángulo abstracto, resolver): 5-12-13 con lado mayor 39 → lado medio 36 (k = 3)",
+    "cierre-semejanza-3 (cuadrados dibujados, representar): lados 3 cm y 9 cm, perímetro × 3, área × 9",
+    "cierre-semejanza-4 (triángulo abstracto, argumentar): reducción con k = 2/3, perímetro × 2/3, área × 4/9 (afirmación errónea: perímetro × 4/9)",
+    "cierre-semejanza-5 (mapa de un sendero, inicio y término, modelar): 22 cm en 1:25.000 → 5,5 km",
+    "cierre-semejanza-6 (plano de una casa, modelar): living de 5 cm × 7 cm en 1:100 → 35 m²",
+    "cierre-semejanza-7 (poste y niño con sus sombras, figura anidada, representar): sombra del poste 9 m, niño 1,35 m con sombra 1,8 m → 6,75 m (k = 5)",
+    "cierre-semejanza-8 (pares de figuras, argumentar): 3-4-5 y 9-12-15 semejantes; 6-8-10 y 8-10-12 no; rectángulos 2 × 3 y 4 × 5 no"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, unidad Semejanza y proporcionalidad de figuras: alcance y formato de ítems (ver docs/mapa-modulos-m1.md y docs/temario-demre-m1-2027.md)."
+    ],
+    "declaracionOriginalidad": "Enunciados creados desde cero por el autor del proyecto, reutilizando los contextos ya presentes en las tres lecciones del módulo (mapa a escala 1:25.000 de un sendero, plano de vivienda 1:100, poste y persona con sus sombras) y dejando el resto de los ítems sin dominio, con triángulos, cuadrados y rectángulos abstractos. No se introdujo ningún dominio nuevo. Los números de cada ítem (12-16-20 y 18-24-30; 5-12-13 y 15-36-39; cuadrados de 3 y 9; k = 2/3; 22 cm → 5,5 km; 5 cm × 7 cm → 35 m²; 1,35-1,8 y 6,75-9; 3-4-5 y 9-12-15, 6-8-10 y 8-10-12, 2 × 3 y 4 × 5) se eligieron para no coincidir con los contextosNumericos de L1 (semejanza-misma-forma-otro-tamano), L2 (semejanza-medir-sin-acercarse) ni L3 (semejanza-plano-y-realidad), ni entre sí, y se verificaron con node -e sobre lib/semejanza.ts. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado, y en particular ningún ítem cuenta cuántas figuras chicas caben en una grande. Pendientes las auditorías matemática y de originalidad en hilos aislados, y la consulta de colisión de dominio de Benja, antes de conectar el cierre y de cualquier git push.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
