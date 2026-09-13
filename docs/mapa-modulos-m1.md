@@ -71,11 +71,11 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | **completo** |
 | 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | **completo** |
 | 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | **completo** |
-| 14 | Probabilidad y estadística | Representación de datos a través de tablas y gráficos | `tablas-y-graficos` | sin contenido |
-| 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
+| 14 | Probabilidad y estadística | Representación de datos a través de tablas y gráficos | `tablas-y-graficos` | **completo** |
+| 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | **completo** |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-13 completos · 3 sin contenido · 39 de 48 lecciones escritas (verificado el
+15 completos · 1 sin contenido · 45 de 48 lecciones escritas (verificado el
 2026-09-13 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
 
 El conteo decía 31 hasta el 2026-08-26. El comando que citaba
@@ -305,17 +305,56 @@ Benja que el módulo 12; ver `docs/pendientes-geometria-12-13.md`.
 
 | id | Título | Archivo |
 |---|---|---|
-| `datos-grafico-puede-mentir` | Tablas de frecuencia y tipos de gráficos | no |
-| `datos-numero-que-representa` | Promedio de un conjunto de datos | no |
-| `datos-leer-antes-de-calcular` | Problemas con tablas y gráficos | no |
+| `datos-leer-antes-de-calcular` | Tablas de frecuencia absoluta y relativa | sí |
+| `datos-grafico-puede-mentir` | Tipos de gráficos que permitan representar datos | sí |
+| `datos-numero-que-representa` | Promedio de un conjunto de datos | sí |
+
+Cierre: `cierre-tablas-y-graficos`.
+
+Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-tablas-y-graficos.json` está conectado como `cierreId`
+en `lib/modulos.ts`. Catálogo canónico en `content/errores/tablas-y-graficos.json`
+(19 ids). Diseño en `docs/diseno-modulo-tablas-y-graficos.md`. Pendientes de
+Benja: la consulta de colisión (`consultar-fuentes.mjs`) y las dos auditorías
+en hilos aislados antes de cualquier `git push`; ver
+`docs/pendientes-estadistica-14-15.md`.
+
+Las filas van en orden pedagógico, que no es el de la carga masiva de los 48
+ids (que decía `datos-grafico-puede-mentir`, `datos-numero-que-representa`,
+`datos-leer-antes-de-calcular`): tablas de frecuencia primero, después los
+tipos de gráfico, promedio al final. Los ids se conservaron (cada slug calza
+con exactamente una de esas lecciones) y se reordenó `lecciones` en
+`lib/modulos.ts`, como en `expresiones-algebraicas`; los títulos pasaron a los
+descriptores literales del temario (`docs/temario-demre-m1-2027.md:117-119`),
+como en `potencias-y-raices` y `cuerpos-geometricos`. El cuarto descriptor,
+«Problemas que involucren tablas y gráficos en diversos contextos», se cubre
+en la L3 y en el cierre, no con una lección propia.
 
 ### 15. Medidas de posición — `medidas-de-posicion`
 
 | id | Título | Archivo |
 |---|---|---|
-| `posicion-donde-quedaste-tu` | Cuartiles y percentiles | no |
-| `posicion-partir-en-cuatro` | Cálculo de cuartiles en conjuntos de datos | no |
-| `posicion-caja-que-resume` | Diagrama de cajón | no |
+| `posicion-partir-en-cuatro` | Cálculo de cuartiles en conjuntos de datos | sí |
+| `posicion-caja-que-resume` | Percentiles y diagrama de cajón | sí |
+| `posicion-donde-quedaste-tu` | Problemas que involucren medidas de posición en diversos contextos | sí |
+
+Cierre: `cierre-medidas-de-posicion`.
+
+Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-medidas-de-posicion.json` está conectado como
+`cierreId` en `lib/modulos.ts`. Catálogo canónico en
+`content/errores/medidas-de-posicion.json` (15 ids). Diseño en
+`docs/diseno-modulo-medidas-de-posicion.md`. Mismos pendientes de Benja que el
+módulo 14; ver `docs/pendientes-estadistica-14-15.md`.
+
+Mismo criterio de orden que el módulo 14: cuartiles primero
+(`posicion-partir-en-cuatro`), percentiles y cajón después
+(`posicion-caja-que-resume`), y la posición relativa de un dato en contexto al
+final (`posicion-donde-quedaste-tu`). Ids sin renombrar; `lecciones`
+reordenado en `lib/modulos.ts`; los títulos de la primera y la tercera cambian
+respecto de la carga masiva («Cuartiles y percentiles» y «Diagrama de cajón»)
+para alinearse con el contenido real de cada lección y con los descriptores
+del temario (`docs/temario-demre-m1-2027.md:124-126`).
 
 ### 16. Reglas de las probabilidades — `reglas-de-probabilidades`
 
