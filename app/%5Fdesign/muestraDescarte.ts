@@ -1,5 +1,6 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
 import type { ItemAdvance } from "@/lib/advance/descarte";
+import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import type { EntradaError, RepasoDeError } from "@/lib/catalogoErrores";
 
@@ -184,3 +185,67 @@ export const REPASO_MUESTRA: { titulo: string; repaso: RepasoDeError } = {
     ejemplo: "Muestra: un ejemplo numérico resuelto paso a paso.",
   },
 };
+
+/* ---------- triage de 20 segundos (F5a) ---------- */
+
+/* Fases de MUESTRA por error (D17): error-1 abierto, error-6 en observación,
+   error-3 y error-7 cerrados. Con los cuatro ítems de abajo produce los cuatro
+   veredictos. `FASES_SIN_DATOS` es el otro estado de la galería: todo
+   sin-datos, todo sin veredicto. */
+export const FASES_MUESTRA: FasesPorError = {
+  "error-1": "abierto",
+  "error-3": "cerrado",
+  "error-6": "observacion",
+  "error-7": "cerrado",
+};
+
+export const FASES_SIN_DATOS: FasesPorError = {
+  "error-1": "sin-datos",
+  "error-3": "sin-datos",
+  "error-6": "sin-datos",
+  "error-7": "sin-datos",
+};
+
+/* Dos ítems más para el resultado del triage: el tercero con sus tres
+   distractores en errores cerrados (error-3 y error-7), para el punto
+   regalado; el cuarto es igual y se marca, para el sin veredicto. */
+const ITEM_TODO_CERRADO: ItemAdvance = {
+  ...MUESTRA_DESCARTE[0],
+  id: "adv-muestra-galeria-003",
+  enunciado: "MUESTRA DE GALERÍA. Tercer ítem, cuyos tres distractores codifican errores ya superados.",
+  alternativas: MUESTRA_DESCARTE[0].alternativas.map((a) =>
+    a.esCorrecta ? a : { ...a, errorCatalogado: a.errorCatalogado === "error-1" ? "error-3" : a.errorCatalogado },
+  ),
+};
+
+export const MUESTRA_TRIAGE: ItemAdvance[] = [
+  MUESTRA_DESCARTE[0],
+  MUESTRA_DESCARTE[1],
+  ITEM_TODO_CERRADO,
+  { ...ITEM_TODO_CERRADO, id: "adv-muestra-galeria-004", enunciado: "MUESTRA DE GALERÍA. Cuarto ítem, marcado para volver después." },
+];
+
+/* Con FASES_MUESTRA: resuelvo sobre error-1 abierto → lectura a revisar;
+   dejo con error-6 en observación → lectura buena; dejo con todo cerrado →
+   punto regalado; marco → sin veredicto. */
+const REGISTROS_TRIAGE: RegistroTriage[] = [
+  { itemId: "adv-muestra-galeria-001", decision: "resuelvo", ms: 8420 },
+  { itemId: "adv-muestra-galeria-002", decision: "dejo", ms: 4110 },
+  { itemId: "adv-muestra-galeria-003", decision: "dejo", ms: 6035 },
+  { itemId: "adv-muestra-galeria-004", decision: "marco", ms: 20000 },
+];
+
+export const RESULTADOS_TRIAGE_MUESTRA: { id: string; rotulo: string; fases: FasesPorError; registros: RegistroTriage[] }[] = [
+  {
+    id: "con-veredictos",
+    rotulo: "Con veredictos: los cuatro, uno por ítem (la tarjeta solo en lectura a revisar)",
+    fases: FASES_MUESTRA,
+    registros: REGISTROS_TRIAGE,
+  },
+  {
+    id: "sin-veredicto",
+    rotulo: "Todo sin veredicto: sin historial (todo sin-datos), las mismas decisiones",
+    fases: FASES_SIN_DATOS,
+    registros: REGISTROS_TRIAGE,
+  },
+];

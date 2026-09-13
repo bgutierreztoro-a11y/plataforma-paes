@@ -34,10 +34,12 @@ export const TEXTOS_ADVANCE = {
     titulo: "Fobos Advance",
     vacio: "Todavía no hay entrenamientos disponibles.",
     detalle: "Cuando los haya, van a aparecer acá.",
-    /* Con al menos un banco: una sesión de descarte por unidad. */
-    conBancos: "Entrenamiento de descarte, cinco ítems por sesión.",
+    /* Con al menos un banco: una sesión de descarte y una de triage por unidad. */
+    conBancos:
+      "Entrenamiento de descarte, cinco ítems por sesión. Triage de 20 segundos, veinte ítems por sesión.",
     /* Recibe el `titulo` del banco (nombre técnico DEMRE), nunca el unidadId. */
     sesion: (titulo: string) => `Descarte: ${titulo}`,
+    triage: (titulo: string) => `Triage: ${titulo}`,
   },
 
   /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al
@@ -113,5 +115,54 @@ export const TEXTOS_ADVANCE = {
          pantalla sería h1 + dos botones con un hueco en medio. */
       sinRepaso: "Todavía no hay repaso para este error.",
     },
+  },
+
+  /* Triage de 20 segundos (docs/fobos-advance.md §6.5, F5a). Se muestra un
+     ítem, corre una cuenta de 20 s y el estudiante decide; no resuelve nada.
+     Las tres decisiones pesan igual: ninguna es "la correcta". El veredicto se
+     dice con palabras (D17) y la pantalla final no lleva porcentaje, puntaje
+     ni proyección (D18, Ley 19.496). El tiempo agotado se informa sin
+     dramatismo: es un dato, no un castigo. */
+  triage: {
+    pill: "Triage",
+    sustantivo: "Ítem",
+    instruccion: "Lee el ítem y decide. No hay que resolverlo.",
+    /* La cuenta regresiva: "Quedan N s". La frase entera va al aria-label; en
+       pantalla el número va en `.num` entre las dos palabras. */
+    cuenta: (n: number) => `Quedan ${n} s`,
+    cuentaAntes: "Quedan",
+    cuentaDespues: "s",
+    decision: {
+      resuelvo: "La resuelvo",
+      dejo: "La dejo",
+      marco: "La marco y sigo",
+      "sin-decision": "Sin decisión",
+    },
+    veredicto: {
+      "lectura-buena": "Lectura buena",
+      "lectura-a-revisar": "Lectura a revisar",
+      "punto-regalado": "Punto regalado",
+      "sin-veredicto": "Sin veredicto",
+    },
+    /* Pantalla final (D18). Los números van aparte, en `.num`. */
+    resultado: {
+      titulo: "Sesión terminada",
+      decisiones: (n: number) => (n === 1 ? "decisión" : "decisiones"),
+      conVeredicto: "con veredicto",
+      comoLeiste: "Cómo leíste cada ítem",
+      /* Cuando ningún ítem tiene veredicto: dice por qué, sin inventar uno. */
+      sinVeredictos:
+        "Todavía no hay historial suficiente para dar un veredicto. Haz sesiones de descarte y vuelve.",
+      queHacer: "Qué hacer ahora",
+      queHacerDetalle:
+        "Revisa los ítems marcados como lectura a revisar: el error abierto de cada uno lleva a su repaso.",
+      queHacerSinRevisar: "Haz otra sesión: son veinte ítems de la misma unidad, en otro orden.",
+      otraSesion: "Otra sesión",
+    },
+    /* Sin sesión de Clerk. El triage se evalúa contra el historial propio y
+       sin cuenta no hay historial. */
+    ingresoTitulo: "Ingresa para hacer el triage",
+    ingresoCuerpo:
+      "El triage se evalúa contra tu propio historial de descarte, que se guarda en tu cuenta. Ingresa y vuelve.",
   },
 } as const;

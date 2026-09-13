@@ -6,6 +6,7 @@ import type {
   PayloadDescarteInicio,
 } from "@/lib/advance/descarte";
 import type { FaseError } from "@/lib/advance/dominio";
+import type { PayloadTriageDecision } from "@/lib/advance/triage";
 import type { EstadoNodo } from "@/lib/estadoNodo";
 
 export type Evento =
@@ -103,7 +104,14 @@ export type Evento =
   | {
       nombre: "advance_errores_vista";
       props: { total: number; recaidas: number } & Record<FaseError, number>;
-    };
+    }
+  /* ---------- Fobos Advance, triage de 20 segundos (F5a, 2026-09-12) ---------- */
+  /* Una vez por ítem decidido, incluido `sin-decision` (tiempo agotado, D16),
+     con la forma de §8. La forma vive en lib/advance/triage.ts, donde se
+     calcula (función pura con test). El veredicto no viaja: se calcula en
+     runtime y no se guarda ni se mide (D17). Sin PII: id de contenido, la
+     decisión y milisegundos. */
+  | { nombre: "advance_triage_decision"; props: PayloadTriageDecision };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en

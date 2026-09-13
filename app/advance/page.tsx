@@ -21,8 +21,8 @@ export const metadata: Metadata = {
  * /advance: la portada, "qué hacer ahora" (docs/fobos-advance.md §1.2).
  *
  * Sin acceso, redirige a la puerta conservando el eje de origen. Con acceso,
- * enlaza a una sesión de descarte por cada unidad con banco en disco (F2); sin
- * ningún banco, lo dice tal cual, sin prometer fecha.
+ * enlaza a una sesión de descarte (F2) y a una de triage (F5a) por cada unidad
+ * con banco en disco; sin ningún banco, lo dice tal cual, sin prometer fecha.
  */
 export default async function PaginaAdvance({
   searchParams,
@@ -71,18 +71,19 @@ export default async function PaginaAdvance({
         </div>
         {unidades.length > 0 && (
           <ul className="w-full max-w-md space-y-2.5" data-sesiones>
-            {unidades.map(({ unidadId, titulo }) => (
-              <li key={unidadId}>
-                <EnlaceBoton
-                  variante="linea"
-                  href={
-                    ejeId ? `/advance/descarte/${unidadId}?eje=${ejeId}` : `/advance/descarte/${unidadId}`
-                  }
-                >
-                  {portada.sesion(titulo)}
-                </EnlaceBoton>
-              </li>
-            ))}
+            {unidades.map(({ unidadId, titulo }) => {
+              const eje = ejeId ? `?eje=${ejeId}` : "";
+              return (
+                <li key={unidadId} className="space-y-2.5">
+                  <EnlaceBoton variante="linea" href={`/advance/descarte/${unidadId}${eje}`}>
+                    {portada.sesion(titulo)}
+                  </EnlaceBoton>
+                  <EnlaceBoton variante="linea" href={`/advance/triage/${unidadId}${eje}`}>
+                    {portada.triage(titulo)}
+                  </EnlaceBoton>
+                </li>
+              );
+            })}
           </ul>
         )}
         <div className="w-full max-w-md">

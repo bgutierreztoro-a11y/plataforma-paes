@@ -19,12 +19,22 @@ import { ListaErroresVivos } from "@/components/errores/ListaErroresVivos";
 import { TramoAdvance } from "@/components/advance/TramoAdvance";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
 import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
+import { ItemTriage } from "@/components/advance/ItemTriage";
+import { ResultadoTriage } from "@/components/advance/ResultadoTriage";
 import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
 import { RepasoError } from "@/components/advance/RepasoError";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
-import { COPY_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE, REPASO_MUESTRA } from "./muestraDescarte";
+import {
+  COPY_MUESTRA,
+  GRUPOS_ERRORES_MUESTRA,
+  MUESTRA_DESCARTE,
+  MUESTRA_TRIAGE,
+  REPASO_MUESTRA,
+  RESULTADOS_TRIAGE_MUESTRA,
+} from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
+import { MuestraTriageInteractiva } from "./MuestraTriageInteractiva";
 import {
   LINEAS,
   NOMBRE_DE_LINEA,
@@ -893,6 +903,53 @@ export default function PaginaDiseno() {
                       className="rounded-sm border border-hairline bg-[var(--color-bg)]"
                     >
                       <ResultadoDescarte registros={registros} catalogo={COPY_MUESTRA} unidadId="muestra" />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Triage de 20 segundos"
+          nota="La sesión de triage de Advance (docs/fobos-advance.md §6.5, F5a): un ítem tal como se ve en la prueba, la cuenta en segundos y tres decisiones del mismo peso; no se resuelve nada. Arriba, el ítem con la cuenta fija en 12 s sobre las cuatro líneas: el número es lo único que cambia, sin barra que se vacía ni animación. En medio, el ejecutor con la muestra para el clic real, con reloj de verdad y sin callbacks. Abajo, la pantalla final (D18) en dos estados con datos de MUESTRA: los cuatro veredictos en palabras, con la tarjeta del error abierto solo en lectura a revisar, y todo sin veredicto cuando no hay historial. Sin porcentaje ni proyección. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6">
+            <div>
+              <Rotulo>Ítem con cuenta: ítem 5 de 20, quedan 12 s</Rotulo>
+              <PorLinea>
+                {() => (
+                  <div data-triage="item" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                    <ItemTriage item={MUESTRA_DESCARTE[0]} indice={4} total={20} segundos={12} titulo="Unidad de muestra" />
+                  </div>
+                )}
+              </PorLinea>
+            </div>
+
+            <div style={estiloDeLinea("01")} className="max-w-md" data-triage-interactivo>
+              <Rotulo>Línea 01 · ejecutor con la muestra, dos ítems, reloj real</Rotulo>
+              <div className="rounded-sm border border-hairline bg-screen">
+                <MuestraTriageInteractiva />
+              </div>
+            </div>
+
+            {RESULTADOS_TRIAGE_MUESTRA.map(({ id, rotulo, fases, registros }) => (
+              <div key={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                <PorLinea>
+                  {() => (
+                    <div
+                      data-triage-resultado={id}
+                      className="rounded-sm border border-hairline bg-[var(--color-bg)]"
+                    >
+                      <ResultadoTriage
+                        registros={registros}
+                        items={MUESTRA_TRIAGE}
+                        fases={fases}
+                        catalogo={COPY_MUESTRA}
+                        unidadId="muestra"
+                      />
                     </div>
                   )}
                 </PorLinea>
