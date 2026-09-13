@@ -124,6 +124,8 @@ export const IDS_CIERRE = [
   "cierre-cuerpos-geometricos",
   "cierre-transformaciones-isometricas",
   "cierre-semejanza-y-proporcionalidad",
+  "cierre-tablas-y-graficos",
+  "cierre-medidas-de-posicion",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -396,11 +398,22 @@ export const EJES = [
         capacidad:
           "Ya puedes leer un gráfico con criterio y detectar cuando está mal construido.",
         objetivo: "Leer un gráfico rápido y detectar cuándo está armado para confundirte.",
+        /**
+         * Orden pedagógico, no el de la carga masiva: tablas de frecuencia
+         * primero, después los tipos de gráfico, promedio al final. Cada slug
+         * calza con una sola lección (`datos-leer-antes-de-calcular` es la de
+         * tablas, `datos-grafico-puede-mentir` la de gráficos con el eje
+         * truncado, `datos-numero-que-representa` la de promedio), así que se
+         * reordena sin renombrar, igual que en `expresiones-algebraicas`.
+         * Decidido el 2026-09-13, antes de que existiera ningún archivo del
+         * módulo; ver docs/diseno-modulo-tablas-y-graficos.md.
+         */
         lecciones: [
+          "datos-leer-antes-de-calcular",
           "datos-grafico-puede-mentir",
           "datos-numero-que-representa",
-          "datos-leer-antes-de-calcular",
         ],
+        cierreId: "cierre-tablas-y-graficos",
       },
       {
         id: "medidas-de-posicion",
@@ -409,11 +422,19 @@ export const EJES = [
           "Ya puedes interpretar media, mediana, cuartiles y percentiles, y elegir cuál usar.",
         objetivo:
           "Interpretar media, mediana, cuartiles y percentiles, y saber cuál conviene mirar en cada caso.",
+        /**
+         * Mismo criterio que `tablas-y-graficos`: cuartiles primero
+         * (`posicion-partir-en-cuatro`), percentiles y cajón después
+         * (`posicion-caja-que-resume`), y la posición relativa de un dato en
+         * contexto al final (`posicion-donde-quedaste-tu`). Reordenado sin
+         * renombrar el 2026-09-13; ver docs/diseno-modulo-medidas-de-posicion.md.
+         */
         lecciones: [
-          "posicion-donde-quedaste-tu",
           "posicion-partir-en-cuatro",
           "posicion-caja-que-resume",
+          "posicion-donde-quedaste-tu",
         ],
+        cierreId: "cierre-medidas-de-posicion",
       },
       {
         id: "reglas-de-probabilidades",

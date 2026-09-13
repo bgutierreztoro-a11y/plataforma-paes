@@ -191,6 +191,36 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Calcula alturas y distancias que no puedes medir, con sombras y triángulos semejantes, emparejando siempre lo que se corresponde.",
     Ilustracion: IlustracionPlano,
   },
+  "datos-leer-antes-de-calcular": {
+    descripcion:
+      "Arma la tabla de frecuencias desde los datos brutos y descubre que dos grupos de distinto tamaño solo se comparan con frecuencias relativas.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "datos-grafico-puede-mentir": {
+    descripcion:
+      "Lee barras, circulares, líneas y pictogramas sabiendo qué esconde cada uno, y detecta el gráfico cuyo eje no parte de 0.",
+    Ilustracion: IlustracionPlano,
+  },
+  "datos-numero-que-representa": {
+    descripcion:
+      "Calcula el promedio desde datos sueltos, desde una tabla ponderando y desde dos grupos que se juntan, y anticipa cómo lo mueve un dato extremo.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "posicion-partir-en-cuatro": {
+    descripcion:
+      "Ordena los datos, reparte la fila en cuatro y descubre los cuartiles como cortes en los datos, no en la escala.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "posicion-caja-que-resume": {
+    descripcion:
+      "Construye y lee un diagrama de cajón: cada tramo tiene el 25 % de los datos, y su largo es dispersión, no cantidad.",
+    Ilustracion: IlustracionPlano,
+  },
+  "posicion-donde-quedaste-tu": {
+    descripcion:
+      "Compara dos grupos por sus cajones sobre la misma escala y ubica un dato por su percentil, también cuando menor es mejor.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {
