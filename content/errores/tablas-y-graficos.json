@@ -1,0 +1,81 @@
+{
+  "unidad": "tablas-y-graficos",
+  "errores": [
+    {
+      "id": "tablas-y-graficos/compara-absolutas-de-grupos-distintos",
+      "descripcion": "Comparar frecuencias absolutas entre grupos de distinto tamaño y concluir que un dato 'pesa más' donde el conteo es mayor, aunque su proporción sea menor: 14 de 40 se lee como más que 10 de 20, cuando es 35 % contra 50 %. Los grupos de distinto tamaño se comparan con la frecuencia relativa, cada una sobre su propio total."
+    },
+    {
+      "id": "tablas-y-graficos/divide-por-total-equivocado",
+      "descripcion": "Calcular la frecuencia relativa dividiendo por un total que no es el del propio grupo: el total del otro grupo, el total general o cualquier otro número que no sea n. La frecuencia relativa es la frecuencia absoluta dividida por el total de datos de ese mismo grupo."
+    },
+    {
+      "id": "tablas-y-graficos/olvida-el-factor-cien",
+      "descripcion": "Olvidar el factor 100 al pasar entre decimal y porcentaje, o al recuperar una cantidad desde un porcentaje: entregar 0,25 % donde va 25 %, escribir 25 donde va 0,25, o multiplicar un total por el porcentaje sin dividir por 100 (40 · 25 = 1.000 en vez de 10)."
+    },
+    {
+      "id": "tablas-y-graficos/confunde-frecuencia-con-valor",
+      "descripcion": "Confundir la frecuencia (cuántas veces aparece un dato) con el valor del dato (lo que se mide): responder el valor donde se pide cuántos casos hubo, sumar los valores donde se cuentan casos, o promediar las frecuencias en vez de los datos."
+    },
+    {
+      "id": "tablas-y-graficos/divide-por-categorias-en-vez-de-n",
+      "descripcion": "Dividir por el número de categorías (las filas de la tabla, o el número de grupos) en vez de por n, el total de datos: 5/4 como frecuencia relativa de una tabla con cuatro tipos y 20 pedidos, o la suma de valor por frecuencia dividida por 4 filas en vez de por 12 datos."
+    },
+    {
+      "id": "tablas-y-graficos/lee-sector-como-cantidad-sin-total",
+      "descripcion": "Confundir la cantidad de un grupo con su porcentaje o su ángulo: leer un sector de 30 % como 30 unidades sin conocer el total, o tratar 12 unidades como 12 % (o como 12 · 3,6 grados). El gráfico circular reparte el 100 %: para volver a la cantidad hace falta el total."
+    },
+    {
+      "id": "tablas-y-graficos/calcula-angulo-con-cien",
+      "descripcion": "Calcular el ángulo de un sector con 100 en vez de 360, o al revés: leer 30 % como 30 grados (cuando son 108°), o leer un sector de 45° como 45 % (cuando es 12,5 %). El ángulo es la frecuencia relativa por 360°; el porcentaje es la frecuencia relativa por 100."
+    },
+    {
+      "id": "tablas-y-graficos/usa-complemento-del-sector",
+      "descripcion": "Calcular el sector o la cantidad con los datos que NO cumplen la condición (n − f) en vez de con los que sí (f): 28 de 40 en vez de 12 de 40 para el ángulo, o 40 − 8 = 32 en vez de 8 para la cantidad que corresponde al 20 %."
+    },
+    {
+      "id": "tablas-y-graficos/lee-altura-en-eje-truncado",
+      "descripcion": "Comparar barras por su altura visible cuando el eje vertical no parte de 0, concluyendo 'el doble' o 'siete veces' donde la diferencia real es de un 7 %; o recomendar truncar el eje 'para que se note la diferencia'. La altura de una barra solo representa la cantidad cuando el eje empieza en 0."
+    },
+    {
+      "id": "tablas-y-graficos/usa-lineas-para-categorias",
+      "descripcion": "Elegir un gráfico de líneas para categorías que no tienen orden en el tiempo (tipos de queso, locales), o leer la pendiente entre dos categorías como si fuera una tendencia. Las líneas unen valores de periodos consecutivos; entre categorías sueltas no hay 'entre'."
+    },
+    {
+      "id": "tablas-y-graficos/elige-circular-para-comparar-totales",
+      "descripcion": "Elegir un gráfico circular (o dos) para comparar cantidades entre dos grupos, cuando el circular reparte el 100 % de cada grupo y esconde su total: dos círculos con sectores iguales pueden representar 40 y 400 unidades."
+    },
+    {
+      "id": "tablas-y-graficos/toma-valor-final-como-variacion",
+      "descripcion": "Entregar el valor del segundo periodo (o el del primero) como si fuera la variación entre los dos periodos, en vez de la diferencia final menos inicial."
+    },
+    {
+      "id": "tablas-y-graficos/acumula-en-vez-de-variar",
+      "descripcion": "Sumar los valores de los dos periodos (el acumulado) donde se pide la variación entre ellos: 140 + 180 = 320 en vez de 180 − 140 = 40."
+    },
+    {
+      "id": "tablas-y-graficos/resta-periodos-al-reves",
+      "descripcion": "Calcular la variación como inicial menos final en vez de final menos inicial, y entregar una subida donde hubo una baja, o al revés: 110 − 100 = 10 leído como 'subió 10' cuando de 110 a 100 bajó 10."
+    },
+    {
+      "id": "tablas-y-graficos/promedia-valores-distintos-sin-ponderar",
+      "descripcion": "Promediar los valores distintos de una tabla de frecuencias sin multiplicar cada uno por su frecuencia: (10 + 11 + 12 + 14) / 4 = 11,75 cuando el 11 apareció cuatro veces y el 14 dos, y el promedio real es 138 / 12 = 11,5."
+    },
+    {
+      "id": "tablas-y-graficos/promedia-promedios-sin-ponderar",
+      "descripcion": "Calcular el promedio de la unión de dos grupos como el promedio de sus promedios, sin ponderar por el tamaño de cada grupo; o promediar el promedio anterior con un dato nuevo como si pesaran lo mismo. (12 + 10) / 2 = 11 cuando 8 días a 12 y 24 días a 10 dan (96 + 240) / 32 = 10,5."
+    },
+    {
+      "id": "tablas-y-graficos/deja-un-dato-fuera-del-conteo",
+      "descripcion": "Contar n − 1 datos donde hay n: dividir la suma por n − 1 (108 / 8 = 13,5 en vez de 108 / 9 = 12), o multiplicar el promedio objetivo solo por los datos conocidos (n − 1) al buscar el que falta (12 · 4 − 46 = 2 en vez de 12 · 5 − 46 = 14)."
+    },
+    {
+      "id": "tablas-y-graficos/entrega-promedio-como-dato-faltante",
+      "descripcion": "Responder el propio promedio objetivo como el dato que falta, como si bastara con repetirlo, o tratarlo como un dato más de la lista. El dato faltante es el promedio objetivo por n menos la suma de los conocidos, y solo coincide con el promedio cuando los conocidos ya promedian eso."
+    },
+    {
+      "id": "tablas-y-graficos/cree-que-extremo-no-afecta-promedio",
+      "descripcion": "Afirmar que un dato muy alejado no cambia el promedio ('es un solo día'), o que lo cambia en toda su distancia, sin repartir esa diferencia entre los n datos: con 8 días a 12 y un noveno día de 30, el promedio no sigue en 12 ni salta a 30, pasa a (96 + 30) / 9 = 14."
+    }
+  ]
+}
