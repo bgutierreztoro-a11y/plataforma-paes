@@ -26,10 +26,10 @@ git fetch
 
 ## 1. Reglas duras (no negociables, de CLAUDE.md)
 
-1. `catalogoErrores` **nace** una sola vez, con su redacción original en el JSON de L1 del módulo. Pero cada archivo que lo usa (L2, L3, cierre) debe **embeber** el subconjunto exacto de entradas que sus propios distractores referencian vía `errorCatalogado`, copiado carácter a carácter desde donde nació — nunca solo el ID suelto sin el catálogo embebido (`docs/reglas-modulo.md` regla 5, corregida 2026-08-14; motivo técnico en la sección 2d de abajo). "No duplicar" se refiere a no reescribir una entrada con otro texto o significado en otro archivo, no a evitar embeberla.
+1. **Catálogo canónico por módulo (doctrina vigente desde el 2026-09-08, ratificada el 2026-09-13).** El catálogo de errores de un módulo vive **una sola vez** en `content/errores/<moduloId>.json`, con ids `<moduloId>/error-N` que **reinician en `error-1` en cada módulo** (no hay numeración global; el máximo de otro módulo no importa). Ningún archivo de contenido embebe `catalogoErrores`: el schema ya no lo admite. Cada lección y cierre declara `moduloId` (la unidad del DAG, que puede diferir del id de tema: `semejanza-proporcionalidad` frente a `semejanza-y-proporcionalidad`) y referencia ids locales `error-N` en `errorCatalogado`; `lib/sanitizar.ts` los resuelve contra el canónico. El validador cruza los dos lados en `npm run validar`: todo id referenciado existe en el canónico (`validarReferenciasResuelven`) y todo id del canónico lo usa al menos un archivo del módulo, o lleva `reservado` con el motivo (`validarCoberturaCatalogo`, solo en la corrida completa). Se escribe el catálogo entero en su propio commit ANTES de la L1, con cada id verificado con `node -e` (sección 2a). Detalle y consecuencias para `/advance/errores/[unidadId]/[errorId]`: `docs/deuda-catalogo-errores-crossfile.md`, sección del 2026-09-13.
 2. La clave del schema para ítems de lección es `itemsPAES` (NO `paesItems`). El cierre usa `items`.
 3. Nunca corras `scripts/consultar-fuentes.mjs` ni leas `fuentes-analisis-aisladas/` tú mismo (CC). Eso lo corre Benja manualmente y pega la salida cruda en el chat. Esto aplica también dentro de una sesión de auditoría: si el hook `check-fuentes-aisladas.mjs` te bloquea Read/Grep/Glob sobre esa carpeta, no lo rodees — repórtalo como NO CERTIFICABLE y sigue.
-4. Si necesitas un error que no tiene ID en `catalogoErrores`: PARA, propone el texto exacto, espera aprobación. No inventes IDs sin autorización.
+4. Si necesitas un error que no tiene ID en `content/errores/<moduloId>.json`: PARA, propone el texto exacto, espera aprobación. No inventes IDs sin autorización (salvo brief que firme por adelantado el catálogo del módulo, como el del 2026-09-13).
 5. Nunca edites `CLAUDE.md`.
 6. Commits de propósito único: contenido separado de registro, correcciones separadas de contenido nuevo.
 7. Ningún archivo se marca "publicable" ni con campo `estado` (el campo fue eliminado del schema el 2026-08-12 — no lo reintroduzcas). El gate real de publicación es commit sin push + firma explícita de Benja.
@@ -49,7 +49,7 @@ Estos son bugs y confusiones reales que ocurrieron produciendo el módulo sistem
 
 **c) Colisión de fuentes: buscar solo la frase compuesta no basta.** `consultar-fuentes.mjs "estanques de agua"` puede dar NO mientras las palabras sueltas "estanque" y "agua" por separado dan SI en el material fuente. Al generar candidatos de contexto para Fase 1, incluye SIEMPRE también las palabras clave sueltas más distintivas de cada candidato, no solo la frase completa. Prioriza como alto riesgo cualquier término que aparezca en archivos con nombre relacionado directamente al tema de la lección (ej. `MOD-06_Ecuacion_Recta_Sistemas.md` para un módulo de sistemas de ecuaciones) — eso es señal de arquetipo específico, no ruido de vocabulario genérico.
 
-**d) `catalogoErrores` no se resuelve cross-file en runtime — por eso la regla es embeber, no solo referenciar.** `lib/sanitizar.ts` resuelve `errorCatalogado` → descripción SOLO contra el `catalogoErrores` del mismo archivo que se está sanitizando (`catalogoDe(contenido)` usa `contenido.catalogoErrores ?? []`, sin fusionar el de la L1 del módulo). Por eso `docs/reglas-modulo.md` regla 5 (corregida 2026-08-14) es una regla vigente y activa, no una nota de deuda: **cada archivo que referencia un error DEBE embeber su propio subconjunto exacto**, copiado carácter a carácter desde donde la entrada nació. Esta regla anula la #1 de más arriba en cuanto a "vive una sola vez" — el catálogo *nace* una sola vez (en L1), pero se *embebe* en cada archivo que lo usa. Si encuentras un módulo antiguo que no lo hace (`porcentaje`, `enteros-racionales`, `ecuaciones-inecuaciones`, `funcion-lineal-afin`, `sistemas-2x2` — ver `docs/deuda-catalogo-errores-crossfile.md`), es contenido desactualizado pendiente de corrección, no un patrón aceptable a replicar. No lo arregles sin autorización (es trabajo aparte sobre módulos ya publicados), pero nunca repitas el patrón sin embeber en contenido nuevo.
+**d) (HISTÓRICO, resuelto el 2026-09-08.) `catalogoErrores` no se resolvía cross-file en runtime, y por eso la regla era embeber.** Hasta esa fecha `lib/sanitizar.ts` resolvía `errorCatalogado` solo contra el `catalogoErrores` del mismo archivo, y cada L2/L3/cierre tenía que embeber su subconjunto copiado carácter a carácter. Eso ya no existe: `catalogoDe()` resuelve contra `content/errores/<moduloId>.json` y los 28 catálogos embebidos se retiraron (`docs/deuda-catalogo-errores-crossfile.md`, estado RESUELTA). **Hoy embeber `catalogoErrores` es un error de schema**, no una precaución. La regla vigente es la #1 de arriba.
 
 **e) Confusión de repositorio/checkout.** Hay dos clones en el disco de Benja: `Desktop\plataforma-paes-clean` (canónico, el único válido) y `Desktop\Plataforma PAES` (obsoleto). Si en algún punto "los archivos no existen" pero Benja jura que sí, lo primero es comparar `pwd` y `git rev-parse HEAD` entre tu sesión y la de Benja antes de asumir pérdida de trabajo o hacer cualquier operación destructiva.
 
@@ -86,7 +86,7 @@ Al recibir el veredicto: cualquier candidato con SI se descarta por completo (no
 `docs/diseno-modulo-{nombre}.md`: objetivo del módulo, objetivos de cada lección, progresión conceptual L1→L2→L3, catálogo de errores propuesto (IDs + descripción REAL y verificable — nada inventado, cada uno debe corresponder a un mecanismo de error que produzca un resultado numérico reproducible), mapa de contextos numéricos por lección sin repetir.
 
 ### Fase 3 — L1
-JSON con los 10 pasos en orden pedagógico fijo (`curiosidad → problema → pensar → pistas → descubrimiento → generalizacion → practica → aplicacion → reflexion → consolidacion`), `catalogoErrores` embebido, 2–3 `itemsPAES`.
+JSON con los 10 pasos en orden pedagógico fijo (`curiosidad → problema → pensar → pistas → descubrimiento → generalizacion → practica → aplicacion → reflexion → consolidacion`), `moduloId` declarado, `errorCatalogado` con ids locales del catálogo canónico ya commiteado, 2–3 `itemsPAES`. Sin `catalogoErrores` embebido.
 
 Requisitos pedagógicos (estilo Brilliant, solo con bloques existentes):
 - El estudiante descubre el patrón ANTES de recibir la regla formal — la notación formal aparece recién en el paso `generalizacion`.
@@ -95,13 +95,13 @@ Requisitos pedagógicos (estilo Brilliant, solo con bloques existentes):
 - Cada distractor de cada ítem tiene `feedback` artesanal ≥40 caracteres, específico al error, referenciando un `errorCatalogado` válido y verificado (ver sección 2a/2b antes de escribir cada uno).
 
 ### Fase 4 — L2
-Igual que L1, pero embebe su propio subconjunto de `catalogoErrores` — copiado carácter a carácter desde L1 para cada error que sus propios distractores usan. No basta con referenciar el ID: sin el subconjunto embebido, la Capa 2 del feedback queda muda (`lib/sanitizar.ts` resuelve solo contra el catálogo del mismo archivo).
+Igual que L1: mismo `moduloId`, ids locales del mismo catálogo canónico. Si un error nace en L2, ya estaba en el catálogo desde el commit del catálogo (el catálogo se diseña completo en la Fase 2); nunca se agrega un id al vuelo sin pasar por la sección 2a.
 
 ### Fase 5 — L3
-Igual que L2: embebe su propio subconjunto de `catalogoErrores` — copiado carácter a carácter desde L1 para cada error que sus propios distractores usan. No basta con referenciar el ID: sin el subconjunto embebido, la Capa 2 del feedback queda muda (`lib/sanitizar.ts` resuelve solo contra el catálogo del mismo archivo). Mayor densidad de formato PAES, cierra la progresión.
+Igual que L2. Mayor densidad de formato PAES, cierra la progresión.
 
 ### Fase 6 — Cierre
-`content/cierres/cierre-{modulo}.json`, `tipo: "cierre"`, exactamente 8 `items`, cobertura balanceada de las 3 lecciones y de las 4 habilidades (resolver, modelar, representar, argumentar). Referencia IDs del catálogo de L1.
+`content/cierres/cierre-{modulo}.json`, `tipo: "cierre"`, mismo `moduloId`, exactamente 8 `items`, cobertura balanceada de las 3 lecciones y de las 4 habilidades (resolver, modelar, representar, argumentar). Referencia ids locales del catálogo canónico del módulo.
 
 ### Fase 7 — Registro
 - `lib/modulos.ts`: agregar `cierreId` al tema y el ID a `IDS_CIERRE`.
@@ -111,7 +111,7 @@ Igual que L2: embebe su propio subconjunto de `catalogoErrores` — copiado car�
 
 ### Fase 8 — Validación y commits
 - `npm run validar` y `npm run auditar` hasta verde. Pega salida cruda completa de la última corrida.
-- Verifica a mano con `node -e`, salida cruda: (a) cada archivo embebe exactamente el subconjunto de `catalogoErrores` que sus propios distractores referencian —ni de más (🔴 `catalogo-sin-usar`) ni de menos (🔴 `catalogo-colgando`)—, copiado carácter a carácter desde donde la entrada nació; (b) todo `errorCatalogado` resuelve contra el catálogo del **propio** archivo; (c) clave `itemsPAES` en lecciones, `items` en cierre; (d) ningún archivo tiene campo `estado`.
+- Verifica a mano con `node -e`, salida cruda: (a) ningún archivo trae `catalogoErrores` embebido; (b) todo `errorCatalogado` del módulo resuelve contra `content/errores/<moduloId>.json` y todo id del catálogo lo usa al menos un archivo del módulo (los dos lados los cruza también `npm run validar`); (c) clave `itemsPAES` en lecciones, `items` en cierre; (d) ningún archivo tiene campo `estado`.
 - Commits de propósito único, en orden: arquitectura → L1 → L2 → L3 → cierre → registro.
 - Reporte final: archivos creados con ruta, hashes de commits nuevos, total de commits ahead de origin, decisiones propias que Benja debería revisar.
 
@@ -144,7 +144,7 @@ Si APROBADA ambas rondas: reporta a Benja y espera confirmación explícita ante
 - Cualquier error o ID de catálogo nuevo que no exista y necesites proponer.
 - Cualquier señal de estar en el repo/checkout equivocado, o de haber "perdido" commits (antes de cualquier operación git destructiva).
 - Auditoría RECHAZADA — reportar hallazgos crudos para armar el prompt de corrección.
-- Cualquier decisión de arquitectura (ej. cómo arreglar el bug cross-file de catalogoErrores) — no la implementes solo.
+- Cualquier decisión de arquitectura — no la implementes solo.
 - Antes de cualquier `git push`.
 
 Fuera de estos puntos, ejecuta las fases de corrido sin pedir un prompt nuevo por cada paso.

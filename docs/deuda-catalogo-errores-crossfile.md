@@ -129,3 +129,50 @@ Registrado en la segunda pasada de F0.2. No es una propagación manual: es la fo
 ## Qué no cubre este documento
 
 Elegir entre (a) y (b), o una tercera opción, es una decisión de arquitectura pendiente, no se toma acá. Este documento solo registra el mecanismo y el alcance verificado para que esa decisión se tome con datos exactos.
+
+## 2026-09-13 — Doctrina vigente: catálogo canónico por módulo, ids por namespace
+
+Registrado al producir los módulos 12 (`transformaciones-isometricas`) y 13
+(`semejanza-y-proporcionalidad`, `moduloId` = `semejanza-proporcionalidad`), los
+primeros que nacen **sin** `catalogoErrores` embebido en ninguna pieza.
+
+**(a) Fuente única.** Desde la migración del 2026-09-08 (arriba), y para los
+módulos 12 y 13 desde su primer commit, el catálogo de errores de un módulo vive
+una sola vez en `content/errores/<moduloId>.json`. Ninguna lección ni cierre
+embebe `catalogoErrores`; el schema ya no lo admite. Cada archivo declara
+`moduloId` y referencia ids locales (`error-N`); `lib/sanitizar.ts:catalogoDe()`
+los resuelve contra el canónico y `validarReferenciasResuelven` (validador)
+exige que todo id referenciado exista ahí. Desde este mismo día el validador
+cierra el otro lado: `validarCoberturaCatalogo` exige, en la corrida completa,
+que **todo id del canónico lo referencie al menos un archivo del módulo**
+(lección, cierre, ítem de diagnóstico o banco Advance), o que la entrada lleve
+`reservado` con el motivo (≥20 caracteres). Reemplaza al `catalogo-sin-usar`
+retirado el 2026-09-08, que medía sobre la copia embebida por archivo y daba
+falsos positivos; sobre el canónico y por módulo entero no hay ambigüedad.
+Medido el 2026-09-13 sobre los 13 catálogos: 0 ids sin uso, 0 huérfanos.
+
+**(b) Numeración.** Los ids llevan namespace de unidad y **reinician en
+`error-1` en cada módulo**. Verificado el 2026-09-13 sobre los 13 catálogos:
+todos parten en `error-1` y son correlativos dentro de su namespace (la única
+excepción es `sistemas-2x2`, con 5 entradas y máximo `error-6`: un id retirado
+dejó hueco). **No existe ni existió una numeración correlativa global**: el
+`error-16` de `expresiones-algebraicas` es el máximo de ese namespace, no del
+repo, y `transformaciones-isometricas/error-16` es otro id distinto. La premisa
+del brief de esta sesión («partir del siguiente al máximo del repo» y «los 11
+módulos anteriores conservan la numeración correlativa antigua») no describe el
+repo: los 11 anteriores usan la misma convención que los 2 nuevos.
+
+**(c) Rutas `/advance/errores/[unidadId]/[errorId]`.** El `errorId` de la URL es
+el id **local** (`error-N`), y la página lo resuelve con
+`catalogoCompletoDelModulo(banco.moduloId).get(errorId)` después de validar
+`unidadId` con `obtenerBanco`. Consecuencias: (1) un `errorId` solo identifica
+un error junto con su `unidadId`; `/advance/errores/porcentaje/error-1` y
+`/advance/errores/semejanza-proporcionalidad/error-1` son páginas distintas y
+ninguna consumidora puede indexar por `errorId` a secas (registros, eventos y
+progreso guardan siempre el par, o el id completo `<unidad>/error-N`); (2) las
+rutas de los módulos 12 y 13 existirán recién cuando tengan banco en
+`content/advance/<unidadId>/banco.json` (hoy solo `porcentaje` lo tiene): sin
+banco, `obtenerBanco` devuelve 404 aunque el catálogo exista; (3) el
+`unidadId` de la ruta es el del banco, que coincide con el `moduloId` del
+catálogo (`semejanza-proporcionalidad`, no el id de tema
+`semejanza-y-proporcionalidad`).
