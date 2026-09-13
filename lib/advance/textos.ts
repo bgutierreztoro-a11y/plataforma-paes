@@ -133,7 +133,7 @@ export const TEXTOS_ADVANCE = {
       "No tienes que resolver nada. Solo decidir en 20 segundos si le dedicarías tiempo a esta pregunta en la prueba o si la marcarías para volver después.",
     /* Los ítems 2 en adelante llevan la versión corta, en el mismo lugar:
        quien entra a mitad de sesión la sigue viendo sin perder los 20 s. */
-    instruccionCorta: "No hay que resolver nada: decide si le dedicarías tiempo en la prueba o si pasas a la siguiente.",
+    instruccionCorta: "No hay que resolver nada: decide si le dedicarías tiempo o si pasas a la siguiente.",
     /* La cuenta regresiva: "Quedan N s". La frase entera va al aria-label; en
        pantalla el número va en `.num` entre las dos palabras. */
     cuenta: (n: number) => `Quedan ${n} s`,
@@ -178,7 +178,7 @@ export const TEXTOS_ADVANCE = {
         "Todavía no tenemos sesiones de descarte tuyas en este contenido. Haz algunas y vuelve: ahí podremos decirte dónde se te puede ir el tiempo.",
       queHacer: "Qué hacer ahora",
       queHacerDetalle:
-        "Mira los ítems con Ojo con el tiempo: la tarjeta de cada uno lleva al repaso del procedimiento que estás afinando.",
+        "Revisa los ítems que dicen Ojo con el tiempo: la tarjeta de cada uno lleva al repaso del procedimiento que estás afinando.",
       queHacerSinRevisar: "Haz otra sesión: son veinte ítems de la misma unidad, en otro orden.",
       otraSesion: "Otra sesión",
       /* Nota fija al pie (F5a2, texto firmado): siempre visible. */
