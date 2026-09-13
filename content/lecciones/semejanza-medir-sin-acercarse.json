@@ -39,7 +39,7 @@
     "practica: plano de la sala de la exposición a escala 1:50; pared de 13 cm → 6,5 m; mesón de 8 cm × 4 cm → 4 m × 2 m, área 8 m², perímetro 24 cm → 12 m",
     "aplicacion: mapa de trekking de un parque nacional a escala 1:25.000 (adimensional, es la escala); sendero de 8 cm → 2 km; 3 km → 12 cm en el mapa",
     "consolidacion: puerta del molino real de 2 m → 5 cm en la maqueta",
-    "itemsPAES: 14 cm en un mapa 1:25.000 → 3,5 km entre dos refugios; base de una maqueta de un faro a escala 1:40, de 12 cm × 10 cm → 4,8 m × 4 m = 19,2 m²; de 1:40 a 1:20 el área de cada cara se multiplica por 4",
+    "itemsPAES: 14 cm en un mapa 1:25.000 → 3,5 km entre la entrada del parque y un camping; base de una maqueta de un faro a escala 1:40, de 12 cm × 10 cm → 4,8 m × 4 m = 19,2 m²; de 1:40 a 1:20 el área de cada cara se multiplica por 4",
     "Los valores de cada distractor (ledger completo) están en _notasInternas, no acá: la convención del módulo (L1 y cierre) registra en contextosNumericos los datos y las respuestas correctas de cada escena, y el barrido de colisión distractor/correcta vive en la nota interna."
   ],
   "auditoria": {
@@ -627,7 +627,7 @@
       "id": "semejanza-l2-item-1",
       "habilidad": "resolver",
       "dificultad": "baja",
-      "enunciado": "En un mapa a escala 1:25.000, la distancia entre dos refugios de un parque nacional mide 14 cm. ¿Cuál es la distancia real entre los refugios?",
+      "enunciado": "En un mapa a escala 1:25.000, la distancia entre la entrada de un parque nacional y su camping mide 14 cm. ¿Cuál es la distancia real entre la entrada y el camping?",
       "alternativas": [
         {
           "clave": "A",
@@ -657,7 +657,7 @@
           "errorCatalogado": "error-8"
         }
       ],
-      "solucion": "Escala 1:25.000: la distancia real es 25.000 veces la del mapa. 14 cm · 25.000 = 350.000 cm. Conversión: 350.000 cm = 3.500 m = 3,5 km. La distancia real entre los refugios es 3,5 km. Comprobación: 3,5 km = 350.000 cm, y 350.000 ÷ 25.000 = 14 cm en el mapa. ✓"
+      "solucion": "Escala 1:25.000: la distancia real es 25.000 veces la del mapa. 14 cm · 25.000 = 350.000 cm. Conversión: 350.000 cm = 3.500 m = 3,5 km. La distancia real entre la entrada y el camping es 3,5 km. Comprobación: 3,5 km = 350.000 cm, y 350.000 ÷ 25.000 = 14 cm en el mapa. ✓"
     },
     {
       "id": "semejanza-l2-item-2",
