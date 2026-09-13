@@ -74,7 +74,9 @@ Lo que el módulo aporta de nuevo al eje: en figuras y cuerpos se medía; acá s
 
 *Concepto clave:* el orden de una composición importa, y para identificar una transformación hay que mirar la orientación, no solo la posición.
 
-*Descubrimiento:* la misma figura, con "trasladar por (−4, 0) y luego reflejar respecto del eje x" y con el orden contrario, tabulada vértice a vértice: los resultados difieren. Se construye con la visual `mostrarIntermedias: true`.
+*Descubrimiento:* la misma figura (motivo (1, 1), (3, 1), (3, 3), (1, 4)), con "trasladar por (−7, 0) y luego reflejar respecto del eje y" y con el orden contrario, tabulada vértice a vértice: los resultados difieren ((6, 1), (4, 1), (4, 3), (6, 4) contra (−8, 1), (−10, 1), (−10, 3), (−8, 4)). Se construye con la visual `mostrarIntermedias: true`.
+
+*Corrección (2026-09-13):* este párrafo decía "(−4, 0) y eje x". No servía para el descubrimiento: con una traslación horizontal y una reflexión respecto del eje x los dos órdenes dan la misma imagen (la traslación es paralela al eje), así que no había nada que descubrir; y con (−4, 0) y el eje y, la imagen final se superponía al motivo original. El JSON (`isometrias-figura-y-su-imagen.json`, `_notasInternas` del paso `descubrimiento`) usa (−7, 0) y el eje y desde su primer commit; este documento quedó atrás y se alinea acá.
 
 *Contraste P2 (paso `consolidacion`):* "Mucha gente aplica primero la segunda transformación, porque 'da lo mismo'. Falla porque la reflexión cambia de lado lo que la traslación ya movió, y la traslación mueve lo que la reflexión ya volteó: los dos caminos terminan en lugares distintos. Lo que funciona es aplicar exactamente en el orden dicho, y comprobar con un vértice." Se nombra además el error de identificar por posición (error-12) y el de emparejar A con B' (error-13).
 
