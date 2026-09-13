@@ -1,11 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  CELDA_MINIMA_PX,
   areaConSigno,
+  celdaEnPantalla,
   componer,
   distancia,
   esPuntoEntero,
+  figurasDeEscena,
+  motivoRechazoDatosTransformacion,
   motivoRechazoTransformacion,
+  rangoEscena,
   ponderarVector,
   reflejar,
   restarVectores,
@@ -219,4 +224,59 @@ test("motivoRechazoTransformacion acepta lo válido y nombra lo inválido", () =
   assert.match(motivoRechazoTransformacion({ tipo: "reflexion", eje: { vertical: 2, horizontal: 1 } })!, /eje/);
   assert.match(motivoRechazoTransformacion({ tipo: "escala" })!, /tipo/);
   assert.match(motivoRechazoTransformacion(null)!, /objeto/);
+});
+
+// ---------- contrato del bloque { tipo: "transformacion" } ----------
+
+test("motivoRechazoDatosTransformacion acepta una escena legible y devuelve sus figuras", () => {
+  const datos = {
+    tipo: "transformacion" as const,
+    figura: [[1, 1], [4, 1], [2, 3]] as Punto[],
+    transformaciones: [{ tipo: "rotacion", grados: 90, sentido: "horario" }] as Transformacion[],
+  };
+  assert.equal(motivoRechazoDatosTransformacion(datos), null);
+  const figuras = figurasDeEscena(datos);
+  assert.equal(figuras.length, 2);
+  assert.deepEqual(figuras[1], rotar(datos.figura, { grados: 90, sentido: "horario" }));
+});
+
+test("la escena se rechaza cuando una imagen se sale del plano o las celdas quedan ilegibles", () => {
+  assert.match(
+    motivoRechazoDatosTransformacion({
+      tipo: "transformacion",
+      figura: [[9, 9]],
+      transformaciones: [{ tipo: "traslacion", vector: [3, 0] }],
+    })!,
+    /se sale/,
+  );
+  // De (−10, −10) a (10, 10) con margen 1 son 22 celdas: justo en el límite, se acepta.
+  assert.equal(
+    motivoRechazoDatosTransformacion({
+      tipo: "transformacion",
+      figura: [[-10, -10], [10, 10]],
+      transformaciones: [],
+    }),
+    null,
+  );
+  assert.ok(celdaEnPantalla(rangoEscena([[-10, -10], [10, 10]])) >= CELDA_MINIMA_PX);
+});
+
+test("la escena se rechaza por forma: puntos no enteros, rótulos de más, trazo desconocido", () => {
+  const base = { tipo: "transformacion", figura: [[1, 1], [3, 1], [2, 2]], transformaciones: [] };
+  assert.match(motivoRechazoDatosTransformacion({ ...base, figura: [[1.5, 1]] })!, /enteros/);
+  assert.match(motivoRechazoDatosTransformacion({ ...base, rotulos: ["A", "B"] })!, /rotulos/);
+  assert.match(motivoRechazoDatosTransformacion({ ...base, trazo: "lineas" })!, /trazo/);
+  assert.match(motivoRechazoDatosTransformacion({ ...base, figura: [[1, 1], [1, 1], [2, 2]] })!, /repetidos/);
+  assert.match(motivoRechazoDatosTransformacion({ ...base, transformaciones: [{ tipo: "rotacion", grados: 45, sentido: "horario" }] })!, /transformaciones\[0\]/);
+  assert.match(motivoRechazoDatosTransformacion({ tipo: "semejanza" })!, /tipo/);
+});
+
+test("rangoEscena es cuadrado, contiene el origen y deja el margen pedido", () => {
+  const rango = rangoEscena([[2, 3], [6, 3], [4, 5]]);
+  assert.equal(rango.xMax - rango.xMin, rango.yMax - rango.yMin);
+  assert.ok(rango.xMin <= 0 && rango.yMin <= 0);
+  assert.ok(rango.xMax >= 7 && rango.yMax >= 6);
+  for (const r of [rangoEscena([[-3, 8]]), rangoEscena([[7, -2], [1, 1]])]) {
+    assert.equal(r.xMax - r.xMin, r.yMax - r.yMin);
+  }
 });

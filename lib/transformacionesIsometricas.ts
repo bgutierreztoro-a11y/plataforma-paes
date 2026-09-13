@@ -167,3 +167,148 @@ export function motivoRechazoTransformacion(t: unknown): string | null {
       return 'tipo debe ser "traslacion", "rotacion" o "reflexion"';
   }
 }
+
+// ---------- contrato del bloque de visualización { tipo: "transformacion" } ----------
+
+/** Toda coordenada de contenido vive en [−10, 10], igual que el plano de los sliders. */
+export const LIMITE_COORDENADA = 10;
+export const MAX_VERTICES = 5;
+export const MAX_TRANSFORMACIONES = 3;
+/** Margen en unidades del plano alrededor del punto más extremo de la escena. */
+export const MARGEN_UNIDADES = 1;
+/**
+ * Ancho mínimo de una celda de la cuadrícula, en píxeles del viewBox de 320
+ * con margen 28 (`lib/planoCartesiano.ts`): bajo 12 px un rótulo de vértice
+ * de 9 px pisa al vecino. Con coordenadas en [−10, 10] y margen 1 la escena
+ * más ancha posible mide 22 unidades y da exactamente 12 px por celda.
+ */
+export const CELDA_MINIMA_PX = 12;
+const AREA_PLANO_PX = 320 - 28 * 2;
+
+export interface DatosTransformacionEscena {
+  tipo: "transformacion";
+  figura: Punto[];
+  transformaciones: Transformacion[];
+  rotulos?: string[];
+  rotulosImagen?: string[];
+  rotuloVector?: string;
+  trazo?: "poligono" | "puntos";
+  mostrarImagen?: boolean;
+  mostrarIntermedias?: boolean;
+}
+
+export interface Rango {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+}
+
+/**
+ * Las figuras de la escena, en orden: la original y una imagen por cada
+ * transformación aplicada sobre la anterior. `figuras[k]` es el resultado de
+ * las primeras k transformaciones.
+ */
+export function figurasDeEscena(datos: DatosTransformacionEscena): Poligono[] {
+  const figuras: Poligono[] = [datos.figura];
+  for (const t of datos.transformaciones) figuras.push(componer(figuras[figuras.length - 1], [t]));
+  return figuras;
+}
+
+/** Puntos que la escena necesita dentro de cuadro además de los vértices: centros de rotación. */
+export function puntosAuxiliares(datos: DatosTransformacionEscena): Punto[] {
+  const puntos: Punto[] = [];
+  for (const t of datos.transformaciones) {
+    if (t.tipo === "rotacion") puntos.push(t.centro ?? ORIGEN);
+    if (t.tipo === "reflexion" && t.eje === "origen") puntos.push(ORIGEN);
+  }
+  return puntos;
+}
+
+/**
+ * Rango cuadrado, con celdas enteras, que contiene todos los puntos con el
+ * margen dado. Se hace cuadrado ensanchando el lado corto de forma simétrica,
+ * para que las celdas sean cuadradas dentro del viewBox cuadrado de
+ * `PlanoBase` y un ángulo recto se vea recto. Siempre incluye el origen: los
+ * ejes son la referencia que hace legible cualquier coordenada.
+ */
+export function rangoEscena(puntos: readonly Punto[], margen = MARGEN_UNIDADES): Rango {
+  const xs = [0, ...puntos.map((p) => p[0])];
+  const ys = [0, ...puntos.map((p) => p[1])];
+  let xMin = Math.min(...xs) - margen;
+  let xMax = Math.max(...xs) + margen;
+  let yMin = Math.min(...ys) - margen;
+  let yMax = Math.max(...ys) + margen;
+  const ancho = xMax - xMin;
+  const alto = yMax - yMin;
+  if (ancho > alto) {
+    const extra = ancho - alto;
+    yMin -= Math.floor(extra / 2);
+    yMax += Math.ceil(extra / 2);
+  } else if (alto > ancho) {
+    const extra = alto - ancho;
+    xMin -= Math.floor(extra / 2);
+    xMax += Math.ceil(extra / 2);
+  }
+  return { xMin, xMax, yMin, yMax };
+}
+
+export const celdaEnPantalla = (rango: Rango) => AREA_PLANO_PX / (rango.xMax - rango.xMin);
+
+const dentroDelLimite = (p: Punto) =>
+  Math.abs(p[0]) <= LIMITE_COORDENADA && Math.abs(p[1]) <= LIMITE_COORDENADA;
+
+/**
+ * Lo que rechaza un bloque `{ tipo: "transformacion" }` de contenido, o
+ * `null` si se puede dibujar. Cubre la forma (puntos enteros, rótulos con la
+ * cantidad justa, transformaciones válidas) y la legibilidad (toda la escena,
+ * imágenes incluidas, dentro de [−10, 10] y con celdas de al menos
+ * `CELDA_MINIMA_PX`). El validador de contenido y el type guard del bloque
+ * llaman a esta misma función: un JSON que pasa `npm run validar` se dibuja.
+ */
+export function motivoRechazoDatosTransformacion(datos: unknown): string | null {
+  const d = datos as Partial<DatosTransformacionEscena> | null;
+  if (typeof d !== "object" || d === null || d.tipo !== "transformacion") {
+    return 'tipo debe ser "transformacion"';
+  }
+  const figura = d.figura;
+  if (!Array.isArray(figura) || figura.length < 1 || figura.length > MAX_VERTICES) {
+    return `figura debe tener entre 1 y ${MAX_VERTICES} puntos`;
+  }
+  if (!figura.every(esPuntoEntero)) return "figura: todos los puntos deben ser pares de enteros";
+  if (!figura.every(dentroDelLimite)) return `figura: toda coordenada debe estar en [−${LIMITE_COORDENADA}, ${LIMITE_COORDENADA}]`;
+  if (new Set(figura.map((p) => p.join(","))).size !== figura.length) return "figura: hay vértices repetidos";
+
+  const ts = d.transformaciones;
+  if (!Array.isArray(ts) || ts.length > MAX_TRANSFORMACIONES) {
+    return `transformaciones debe ser un arreglo de 0 a ${MAX_TRANSFORMACIONES} elementos`;
+  }
+  for (let i = 0; i < ts.length; i++) {
+    const motivo = motivoRechazoTransformacion(ts[i]);
+    if (motivo) return `transformaciones[${i}]: ${motivo}`;
+  }
+
+  for (const clave of ["rotulos", "rotulosImagen"] as const) {
+    const r = d[clave];
+    if (r === undefined) continue;
+    if (!Array.isArray(r) || r.length !== figura.length || !r.every((s) => typeof s === "string" && s.length > 0)) {
+      return `${clave} debe traer exactamente un texto no vacío por vértice (${figura.length})`;
+    }
+  }
+  if (d.rotuloVector !== undefined && typeof d.rotuloVector !== "string") return "rotuloVector debe ser texto";
+  if (d.trazo !== undefined && d.trazo !== "poligono" && d.trazo !== "puntos") return 'trazo debe ser "poligono" o "puntos"';
+  for (const clave of ["mostrarImagen", "mostrarIntermedias"] as const) {
+    if (d[clave] !== undefined && typeof d[clave] !== "boolean") return `${clave} debe ser booleano`;
+  }
+  if (d.trazo === "puntos" && figura.length > 3) return 'con trazo "puntos" se admiten hasta 3 puntos';
+
+  const escena = d as DatosTransformacionEscena;
+  const todos = [...figurasDeEscena(escena).flat(), ...puntosAuxiliares(escena)];
+  const fuera = todos.find((p) => !dentroDelLimite(p));
+  if (fuera) return `la imagen (${fuera[0]}, ${fuera[1]}) se sale de [−${LIMITE_COORDENADA}, ${LIMITE_COORDENADA}]`;
+  const celda = celdaEnPantalla(rangoEscena(todos));
+  if (celda < CELDA_MINIMA_PX) {
+    return `la escena es demasiado ancha: cada celda mediría ${celda.toFixed(1)} px y el mínimo es ${CELDA_MINIMA_PX}`;
+  }
+  return null;
+}

@@ -172,8 +172,67 @@ export interface BloqueVisualizacion {
   tipo: "visualizacion";
   variante: "tabla" | "grafico" | "diagrama" | "regla-signos";
   descripcion: string;
+  /* Libre salvo dos formas con contrato cerrado, discriminadas por `datos.tipo`:
+     `DatosTransformacion` y `DatosSemejanza` (abajo). Sigue siendo `unknown`
+     porque el resto de las variantes (tabla, bandas, figuras, cuerpos) se
+     discrimina por forma en `BloqueVisualizacion.tsx`, no por un campo. */
   datos?: unknown;
 }
+
+// ---------- datos con contrato cerrado de `bloqueVisualizacion` ----------
+
+/** Coordenada entera [x, y] en [−10, 10]. Espejo de `puntoEntero` del schema. */
+export type PuntoEntero = [number, number];
+
+export type TransformacionIsometrica =
+  | { tipo: "traslacion"; vector: [number, number] }
+  | { tipo: "rotacion"; grados: 90 | 180 | 270; sentido: "antihorario" | "horario"; centro?: PuntoEntero }
+  | {
+      tipo: "reflexion";
+      eje: "x" | "y" | "origen" | { vertical: number } | { horizontal: number };
+    };
+
+/** Espejo de `datosTransformacion`. El contrato vivo es `motivoRechazoDatosTransformacion` en lib/transformacionesIsometricas.ts. */
+export interface DatosTransformacion {
+  tipo: "transformacion";
+  figura: PuntoEntero[];
+  transformaciones: TransformacionIsometrica[];
+  rotulos?: string[];
+  rotulosImagen?: string[];
+  rotuloVector?: string;
+  trazo?: "poligono" | "puntos";
+  mostrarImagen?: boolean;
+  mostrarIntermedias?: boolean;
+}
+
+export interface FiguraSemejanzaDatos {
+  vertices: [number, number][];
+  cotas: string[];
+  rotulos?: string[];
+}
+
+export interface TrianguloAnidadoDatos {
+  horizontal: number;
+  vertical: number;
+  etiquetaHorizontal: string;
+  etiquetaVertical: string;
+}
+
+/** Espejo de `datosSemejanza`. El contrato vivo es `motivoRechazoDatosSemejanza` en lib/semejanza.ts. */
+export type DatosSemejanza =
+  | {
+      tipo: "semejanza";
+      disposicion: "ladoALado";
+      original: FiguraSemejanzaDatos;
+      k: number;
+      imagen: { cotas: string[]; rotulos?: string[] };
+    }
+  | {
+      tipo: "semejanza";
+      disposicion: "anidada";
+      grande: TrianguloAnidadoDatos;
+      chica: TrianguloAnidadoDatos;
+    };
 
 export type Bloque =
   | BloqueTexto

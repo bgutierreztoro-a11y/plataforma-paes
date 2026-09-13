@@ -21,6 +21,8 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve, dirname, basename, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { construirDag, ancestros } from '../lib/diagnostico/dag.ts';
+import { motivoRechazoDatosTransformacion } from '../lib/transformacionesIsometricas.ts';
+import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -103,6 +105,30 @@ function validarBloqueInteractivoSlider(bloque, donde, errores) {
     errores.push(
       `${donde}.variables: con objeto ${objeto === 'parabola' ? '"parabola"' : '"recta" (o ausente)'} se esperan ${esperadas} controles (hay ${cantidad})`,
     );
+  }
+}
+
+/**
+ * Contrato de los dos `datos` de `visualizacion` que sí tienen forma cerrada
+ * (schema: `datosTransformacion`, `datosSemejanza`), discriminados por
+ * `datos.tipo`. Los datos sin `tipo` siguen siendo libres y no se tocan.
+ *
+ * El motivo lo produce la misma función que usa el type guard del bloque en
+ * `components/bloques/BloqueVisualizacion.tsx`: un JSON que pasa por acá se
+ * dibuja, y uno que no se dibuja no pasa por acá. Sin este chequeo, un vértice
+ * fuera de [−10, 10] o una figura anidada que no es semejante caían en
+ * silencio al `<figure>` de texto.
+ */
+function validarBloqueVisualizacion(bloque, donde, errores) {
+  const datos = bloque?.datos;
+  if (!datos || typeof datos !== 'object') return;
+  const tipo = datos.tipo;
+  if (tipo === 'transformacion') {
+    const motivo = motivoRechazoDatosTransformacion(datos);
+    if (motivo) errores.push(`${donde}.datos (transformacion): ${motivo}`);
+  } else if (tipo === 'semejanza') {
+    const motivo = motivoRechazoDatosSemejanza(datos);
+    if (motivo) errores.push(`${donde}.datos (semejanza): ${motivo}`);
   }
 }
 
@@ -201,6 +227,9 @@ export function validarDatos(data, erroresCatalogados) {
           paso.bloques.forEach((bloque, j) => {
             if (bloque?.tipo === 'interactivoSlider') {
               validarBloqueInteractivoSlider(bloque, `pasos[${i}].bloques[${j}]`, errores);
+            }
+            if (bloque?.tipo === 'visualizacion') {
+              validarBloqueVisualizacion(bloque, `pasos[${i}].bloques[${j}]`, errores);
             }
           });
         }

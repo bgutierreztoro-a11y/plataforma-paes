@@ -1,12 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  LADO_MINIMO_PX,
   area,
+  escalaAnidada,
+  escalaLadoALado,
   escalarPoligono,
   factores,
   fraccion,
   ladosHomologos,
   mismaFraccion,
+  motivoRechazoDatosSemejanza,
   perimetro,
   razon,
   sonSemejantesPorLados,
@@ -70,8 +74,7 @@ test("escalarPoligono confirma los factores sobre figuras reales", () => {
 });
 
 test("escalarPoligono desde otro centro deja fijo al centro y conserva la forma", () => {
-  const centro = [4, 0] as const;
-  const imagen = escalarPoligono(TRIANGULO_345, 2, [centro[0], centro[1]]);
+  const imagen = escalarPoligono(TRIANGULO_345, 2, [4, 0]);
   assert.deepEqual(imagen[1], [4, 0]);
   assert.deepEqual(imagen, [[-4, 0], [4, 0], [-4, 6]]);
   assert.equal(area(imagen), 4 * area(TRIANGULO_345));
@@ -115,4 +118,50 @@ test("el criterio acepta lados decimales de contenido sin tolerancia flotante", 
   assert.deepEqual(sonSemejantesPorLados([3, 4, 5], [4.5, 6, 7.5]), { numerador: 3, denominador: 2 });
   assert.equal(sonSemejantesPorLados([3, 4, 5], [4.5, 6, 7.6]), null);
   assert.throws(() => sonSemejantesPorLados([3, 4, 0], [6, 8, 10]), /positivos/);
+});
+
+// ---------- contrato del bloque { tipo: "semejanza" } ----------
+
+const LADO_A_LADO = {
+  tipo: "semejanza",
+  disposicion: "ladoALado",
+  original: { vertices: TRIANGULO_345, cotas: ["4", "5", "3"] },
+  k: 2,
+  imagen: { cotas: ["8", "10", "6"] },
+};
+
+const ANIDADA = {
+  tipo: "semejanza",
+  disposicion: "anidada",
+  grande: { horizontal: 12, vertical: 9, etiquetaHorizontal: "12 m", etiquetaVertical: "h" },
+  chica: { horizontal: 4, vertical: 3, etiquetaHorizontal: "4 m", etiquetaVertical: "3 m" },
+};
+
+test("motivoRechazoDatosSemejanza acepta las dos disposiciones bien formadas", () => {
+  assert.equal(motivoRechazoDatosSemejanza(LADO_A_LADO), null);
+  assert.equal(motivoRechazoDatosSemejanza(ANIDADA), null);
+});
+
+test("lado a lado: cotas faltantes, k no positivo y lados ilegibles se rechazan", () => {
+  assert.match(motivoRechazoDatosSemejanza({ ...LADO_A_LADO, imagen: { cotas: ["8", "10"] } })!, /imagen\.cotas/);
+  assert.match(motivoRechazoDatosSemejanza({ ...LADO_A_LADO, k: 0 })!, /k debe ser/);
+  assert.match(
+    motivoRechazoDatosSemejanza({ ...LADO_A_LADO, original: { vertices: [[0, 0], [2, 0], [4, 0]], cotas: ["a", "b", "c"] } })!,
+    /alineados/,
+  );
+  const alargado = { ...LADO_A_LADO, original: { vertices: [[0, 0], [40, 0], [0, 1]], cotas: ["a", "b", "c"] }, k: 1 };
+  assert.match(motivoRechazoDatosSemejanza(alargado)!, /px en pantalla/);
+  assert.ok(escalaLadoALado(TRIANGULO_345, 2) * 3 >= LADO_MINIMO_PX);
+});
+
+test("anidada: si los dos triángulos no son semejantes, no se dibuja", () => {
+  const torcida = { ...ANIDADA, chica: { ...ANIDADA.chica, vertical: 2 } };
+  assert.match(motivoRechazoDatosSemejanza(torcida)!, /no son semejantes/);
+  const alReves = { ...ANIDADA, chica: { ...ANIDADA.chica, horizontal: 16, vertical: 12 } };
+  assert.match(motivoRechazoDatosSemejanza(alReves)!, /menor que grande/);
+  const sinEtiqueta = { ...ANIDADA, grande: { ...ANIDADA.grande, etiquetaVertical: "" } };
+  assert.match(motivoRechazoDatosSemejanza(sinEtiqueta)!, /etiquetaHorizontal y etiquetaVertical/);
+  assert.ok(escalaAnidada(ANIDADA.grande) * 4 >= LADO_MINIMO_PX);
+  assert.match(motivoRechazoDatosSemejanza({ tipo: "semejanza", disposicion: "encimada" })!, /disposicion/);
+  assert.match(motivoRechazoDatosSemejanza({ tipo: "transformacion" })!, /tipo/);
 });
