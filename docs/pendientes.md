@@ -13,14 +13,20 @@ Pendiente, en docs/rediseno-distractores-veredicto.md:
 - Lotes bloqueados por id nuevo sin aprobar: lote 2 (cuerpos, 2 ítems restantes), lote 3 (figuras, ítem 3.1), lote 5 (cuadrática, 4 ítems), lote 7 (potencias, 1 ítem), lote 10 (sistemas, 5 ítems). 15 ids nuevos propuestos en la tabla consolidada del documento, con el ajuste de sistemas-2x2/error-8 dividido en error-8 + error-13 ya decidido.
 - Orden sugerido al retomar: correr las 3 PARADAs primero, después aprobar tabla de ids, después escribir lote por lote como se hizo con 1/8/6/4.1.
 
-## 🟡 Migración 010 (`advance_triage`) pendiente de aplicar en Neon (abierta 2026-09-12, F5a)
+## ✅ Migración 010 (`advance_triage`) aplicada en Neon (abierta y cerrada 2026-09-12, F5a → F5a2)
 
-`db/migraciones/010_advance_triage.sql` está en el repo (commit `39e115c`) y no
-se ha aplicado: la aplica Benja con `npm run migrar` (nunca CC). Hasta
-entonces `POST /api/advance/triage` responde 500 saneado y la sesión de triage
-termina igual en pantalla, sin guardar nada. Verificar con
-`npm run migrar -- --estado` antes y después. Al aplicarla, cerrar esta
-entrada; el punto 3 de la entrada de la 007 (abajo) sigue abierto.
+`db/migraciones/010_advance_triage.sql` (commit `39e115c`) quedó aplicada por
+Benja con `npm run migrar` el 2026-09-12 (informado al abrir F5a2; CC no lo
+verificó contra Neon). El punto 3 de la entrada de la 007 (abajo) sigue
+abierto.
+
+Nota F5a2 (2026-09-12), ya con la 010 aplicada en Neon: el valor `dejo` del
+CHECK de `decision` quedó sin emisor (el triage pasó a dos decisiones,
+`resuelvo` y `marco`). La 010 no se edita porque `scripts/migrar.mjs` rechaza
+una migración aplicada cuyo contenido cambió; la nota vive en la cabecera de
+`lib/advance/triage.ts` y en `docs/fobos-advance.md` §4 F5a2. No se escribe
+una 011: las filas viejas con `dejo` siguen siendo válidas y el validador y
+`veredicto()` las siguen aceptando.
 
 ## ✅ Copy crudo del catálogo en `/advance/errores`: resuelta para porcentaje (2026-09-12, F4b)
 

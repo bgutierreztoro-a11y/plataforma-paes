@@ -433,6 +433,23 @@ Dividida el 2026-09-12 en F5a (triage, construida) y F5b (mapa, bloqueada por el
 
 **Lo que F5a no cierra:** el triage no filtra por error ni por fase (5.3); el veredicto se calcula contra el estado al abrir la página, no al decidir; `advance_triage` no se lee desde ninguna pantalla.
 
+#### F5a2 — Triage con dos decisiones y copy explicado — CERRADA en local 2026-09-12, sin push
+
+**Por qué.** Con F5a en la mano, el estudiante no entendía dos cosas: qué eran "los errores" que aparecían en el resultado (creía que eran errores del triage, cuando vienen de sus sesiones de descarte) y por qué el triage parecía juzgarlo ("Lectura a revisar" sonaba a reprobado). Además, "La dejo" y "La marco y sigo" eran la misma decisión con dos nombres: en la prueba, no resolver ahora es pasar a la siguiente. Cambia solo la interfaz y el copy; la mecánica, la persistencia, el POST y el cálculo del veredicto no cambian, salvo la rama de `marco` en D17.
+
+**Qué cambió.**
+
+- **Dos decisiones:** "La resuelvo" (`resuelvo`) y "Paso a la siguiente" (`marco`). El botón "La dejo" desaparece. El valor `dejo` queda en `Decision`, en `DECISIONES` (el validador lo sigue aceptando) y en el CHECK de la 010, **sin emisor**: ninguna interfaz lo produce y las filas viejas con `dejo` siguen siendo válidas. La 010 no se toca ni se escribe una 011: está aplicada, y `scripts/migrar.mjs` rechaza una migración aplicada cuyo contenido cambió en disco (compara sha256), así que la nota de "sin emisor" vive en la cabecera de `lib/advance/triage.ts`, acá y en `docs/pendientes.md`, no en la migración.
+- **D17 ajustado:** `marco` deja de ser sin veredicto siempre y toma la regla que tenía `dejo`: con los tres errores del ítem cerrados → punto regalado ("Podías con esta"); con algún error sin datos → sin veredicto; resto → lectura buena. `dejo` conserva la misma regla para filas viejas. Orden de evaluación: `sin-decision` → sin veredicto; `resuelvo` con un abierto → lectura a revisar; `marco` o `dejo` con todo cerrado → punto regalado; algún sin-datos → sin veredicto; resto → lectura buena.
+- **Copy (textos firmados, literales, en `lib/advance/textos.ts` bajo `triage.*`):** instrucción "No tienes que resolver nada. Solo decidir en 20 segundos si le dedicarías tiempo a esta pregunta en la prueba o si la marcarías para volver después.", en todos los ítems encima de la cuenta (completa en el primero, corta del segundo en adelante: "No hay que resolver nada: decide si le dedicarías tiempo en la prueba o si pasas a la siguiente."). Veredictos con rótulo en negrita y explicación en cuerpo-s: "Ojo con el tiempo", "Podías con esta", "Buena lectura", "Todavía sin datos", con las cuatro explicaciones del brief. Nota fija al pie del resultado, siempre visible: "Lo que aquí llamamos errores viene de tus sesiones de descarte, no de lo que decidiste recién. En el triage no hay respuestas buenas ni malas: solo te mostramos dónde se te puede ir el tiempo en la prueba."
+- **Textos de F5a que chocaban y se reemplazaron:** el aviso de sin datos total ("Todavía no tenemos sesiones de descarte tuyas en este contenido. Haz algunas y vuelve: ahí podremos decirte dónde se te puede ir el tiempo."), "con veredicto" → "con comentario" en el conteo, "Qué hacer ahora" con Ojo con el tiempo, el cuerpo de ingreso ("El triage se lee contra tus sesiones de descarte...") y "Sin decisión" → "Se acabó el tiempo".
+
+**Registro, 2026-09-12.** Tres commits encima de `3ea37b0`, sin reescribir historia, sin push: `17da3c3` `tooling:` D17 y tests (30); `d42a984` `advance:` ItemTriage, ResultadoTriage, textos, galería; más el `docs:` de este registro.
+
+**Mediciones, 390×844 contra `next start`, `prefers-reduced-motion: reduce`, sobre `/_design`, spec en el scratchpad de la sesión (fuera del repo), números de `d42a984`.** Ítem 1, cuatro líneas: instrucción completa presente, 16,75:1 sobre el fondo del body; los dos botones 48×324 px, texto 17,76:1; contraste mínimo del bloque 4,52:1 (pill de la 01) y 4,69:1 en las otras tres (letra del chip); 0 nodos con movimiento. Resultado con veredictos, cuatro líneas: filas `resuelvo → Ojo con el tiempo`, `marco → Buena lectura`, `marco → Podías con esta`, `sin-decision → Todavía sin datos`; rótulo en peso 600 y explicación, 17,76:1 sobre la tarjeta; nota fija presente, 16,75:1; una sola tarjeta de error, en la fila Ojo con el tiempo, 94 px; retorno 44 px; contraste mínimo 4,57:1 (01), 8,38:1 (02), 4,54:1 (03), 6,48:1 (04); 0 nodos con movimiento. Todo sin datos: "4 decisiones, 0 con comentario", cuatro "Todavía sin datos", aviso nuevo, nota presente, sin tarjetas, mismos mínimos. Ninguna de "acierto", "puntaje", "predicción", "fallaste", "incorrecto" ni raya en la sección. Clic real: "Paso a la siguiente" pasa del ítem 001 al 002 con la instrucción corta; cierra con `marco:lectura-buena, resuelvo:lectura-buena`. Sin scroll horizontal.
+
+**Verificación:** `npx tsc --noEmit`, `npm run lint`, `npm run validar` (advertencia preexistente del banco), `npm run test:unit` (362 tests, 0 fallos) y `npm run build` en verde. La verificación en navegador con sesión Clerk real la hace Benja antes del push.
+
 #### F5b — Mapa de recuperables — BLOQUEADA
 
 Requiere el conteo real de frecuencia por unidad sobre formas liberadas de DEMRE (§6.4), que no existe todavía. Es análisis, no código. No se construye nada de la pantalla hasta tener ese número.
@@ -634,15 +651,16 @@ Requiere: conteo real de frecuencia por unidad sobre formas liberadas de DEMRE. 
 
 Entrenamiento de la habilidad de administración de tiempo, que ninguna plataforma entrena.
 
-Se muestra una pregunta. 20 segundos. Tres decisiones:
+Se muestra una pregunta. 20 segundos. Dos decisiones (desde F5a2, 2026-09-12; F5a tenía tres):
 
 - **La resuelvo.** Creo que puedo en tiempo razonable.
-- **La dejo.** No es para mí hoy.
-- **La marco y sigo.** Vuelvo si sobra tiempo.
+- **Paso a la siguiente.** No ahora; vuelvo si sobra tiempo.
 
-No se resuelve nada. Solo se decide.
+No se resuelve nada. Solo se decide. La instrucción que ve el estudiante: "No tienes que resolver nada. Solo decidir en 20 segundos si le dedicarías tiempo a esta pregunta en la prueba o si la marcarías para volver después."
 
-La evaluación es contra el historial propio: si el estudiante dijo "la resuelvo" en un ítem que codifica un error que él tiene abierto, la lectura fue mala. Si dijo "la dejo" en un ítem de una habilidad que domina, está regalando puntos.
+La evaluación es contra el historial propio, y se le dice al estudiante con un rótulo y una explicación, sin juzgarlo: si dijo "la resuelvo" en un ítem que codifica un error que tiene abierto, "Ojo con el tiempo". Si pasó a la siguiente en un ítem cuyos errores ya tiene cerrados, "Podías con esta". Si su decisión calza con lo que sabe hacer, "Buena lectura". Sin historial en ese contenido, "Todavía sin datos". Al pie, siempre: los "errores" vienen de las sesiones de descarte, no del triage, y en el triage no hay respuestas buenas ni malas.
+
+Historia de la tercera decisión: F5a tenía "La dejo" (`dejo`) y "La marco y sigo" (`marco`). En la prueba son la misma decisión, así que F5a2 dejó una sola, "Paso a la siguiente", con el valor `marco`. `dejo` sigue existiendo en el tipo, en el validador y en el CHECK de la migración 010, sin ningún emisor.
 
 Sin historial esto no se puede evaluar, por eso vive en F4 y no antes.
 
