@@ -1,0 +1,714 @@
+{
+  "tipo": "leccion",
+  "id": "semejanza-misma-forma-otro-tamano",
+  "moduloId": "semejanza-proporcionalidad",
+  "titulo": "Concepto de semejanza de figuras",
+  "objetivo": "Reconocer cuándo dos figuras son semejantes (misma forma, otro tamaño: ángulos iguales y lados homólogos proporcionales), calcular la razón de semejanza k como lado de la imagen dividido por lado de la original, identificar lados homólogos (mayor con mayor, menor con menor) y usar k para calcular un lado que falta.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Tríos pitagóricos y sus múltiplos (Lección 1 del módulo Figuras geométricas)",
+    "Razón entre dos cantidades y proporción (Lección 1 del módulo Proporcionalidad)",
+    "Fracciones y decimales: 3/2 = 1,5, 2/3, 5/2 = 2,5 (Lección 2 del módulo Enteros y racionales)"
+  ],
+  "conceptos": [
+    "dos figuras son semejantes si tienen la misma forma y distinto tamaño: sus ángulos son iguales y sus lados homólogos son proporcionales",
+    "razón de semejanza: k = lado de la imagen ÷ lado homólogo de la original; k > 1 agranda, k < 1 achica",
+    "lados homólogos: el mayor con el mayor, el menor con el menor",
+    "escalar es multiplicar todos los lados por la misma razón; sumar una constante a cada lado no conserva la forma",
+    "en triángulos, dos ángulos iguales bastan para que sean semejantes (criterio AA); con los tres lados, basta comprobar que las tres razones coinciden",
+    "los tríos pitagóricos escalados son triángulos semejantes: 3-4-5, 6-8-10, 9-12-15"
+  ],
+  "_notasInternas": [
+    "L1 del módulo semejanza-y-proporcionalidad (eje Geometría, módulo #13). moduloId = semejanza-proporcionalidad (unidad del DAG). Descriptor DEMRE (docs/temario-demre-m1-2027.md:109): 'Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala y otras situaciones de la vida diaria y otras asignaturas'. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: error-1, error-2, error-3, error-4, error-11 (nacen acá). error-5 a error-10 nacen en L2 y L3.",
+    "Dominio: calcomanías triangulares para cuadernos, impresas desde el mismo diseño en tres tamaños (chica 3-4-5 cm, mediana 4,5-6-7,5 cm, grande 6-8-10 cm) y una edición gigante 9-12-15 cm. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
+    "Requisito de diseño registrado: los tríos pitagóricos escalados son el hilo del módulo. Todas las cifras verificadas con node -e sobre lib/semejanza.ts (sonSemejantesPorLados, razon, escalarPoligono): 3-4-5 → 6-8-10 (k = 2), 9-12-15 (k = 3), 4,5-6-7,5 (k = 3/2); 6-8-10 → 9-12-15 (k = 3/2); 5-12-13 → 12,5-30-32,5 (k = 2,5); 8-15-17 → 12-22,5-25,5 (k = 3/2); 7-24-25 → 10,5-36-37,5 (k = 3/2); 6-8-10 → 15-20-25 (k = 2,5); 4,5-6-7,5 → 9-12-15 (k = 2); 3-4-5 → 7,5-10-12,5 (k = 2,5); 9-12-15 → 15-20-25 (k = 5/3); trapecio 7-5-4-4 → 10,5-7,5-6-6 (k = 3/2); 5-12-13 contra 8-15-17: razones 1,6, 1,25 y 17/13, no semejantes; 4-5-6 contra 3-4-5: razones 4/3, 5/4, 6/5, no semejantes.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,5; 7,5; 2,5; 12; 15; 10}, distractores numéricos {5; 7; 2; 4,8; 6; 0,4; 16,5; 13,6; 21; 2,4; 18,75; 13,5; 3,75; 20; 1,6; 11,5; 12,5; 5,4; 19; 3,3; 6,5}; sin intersección. Por eso la razón del descubrimiento se pide sobre 5-12-13 → 12,5-30-32,5 (k = 2,5) y no sobre 5-12-13 → 10-24-26 (k = 2): el 2 ya es distractor de error-2 en pensar. Y por eso el distractor de error-3 de aplicacion es 20 y no 12: 12 es la respuesta correcta de generalizacion.",
+    "Visuales: curiosidad (3-4-5 y la grande con cotas '?'), descubrimiento (3-4-5 y 6-8-10), generalizacion (6-8-10 y 9-12-15), todas ladoALado con todas las cotas rotuladas. Ítem 2 con visual en lib/visualesItems.tsx (clave semejanza-l1-item-2): trapecio 7-5-4-4 y su imagen con el lado pedido rotulado x. Ningún bloque rotula la cota que se pregunta.",
+    "Sin auditoria.constante: no hay una constante numérica única. La palabra 'razón de semejanza' y la letra k aparecen por primera vez en descubrimiento, y la definición formal en generalizacion.",
+    "P2: el paso consolidacion nombra los caminos equivocados de error-1, error-2 y error-3 antes del correcto, y su bloque pregunta lleva esos tres ids en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: calcomanía chica de 3 cm, 4 cm y 5 cm; la grande tiene el lado menor de 6 cm y los otros dos sin revelar",
+    "problema: calcomanía grande con lado menor 6 cm: los otros dos miden 8 cm y 10 cm (k = 2)",
+    "pensar/pistas: calcomanía mediana con el lado de 4 cm ampliado a 6 cm: los otros miden 4,5 cm y 7,5 cm (k = 3/2)",
+    "descubrimiento: tabla 3-4-5, 6-8-10, 9-12-15 con razones 2 y 3; contraejemplo 4-5-6 (sumar 1); razón de 6-8-10 a 9-12-15, k = 3/2; razón de 5-12-13 a 12,5-30-32,5, k = 2,5",
+    "generalizacion: 6-8-10 y 9-12-15 (k = 3/2); 8-15-17 con lado mayor 25,5, lado menor 12 (k = 3/2)",
+    "practica: 7-24-25 y 10,5-36-37,5 semejantes con k = 3/2; 6-8-10 con lado mayor 25, lado menor 15 (k = 2,5)",
+    "aplicacion: mediana 4,5-6-7,5 ampliada con el lado de 6 en 12: hipotenusa 15 (k = 2)",
+    "consolidacion: 3-4-5 ampliado con lado mayor 12,5: el lado de 4 pasa a 10 cm (k = 2,5)",
+    "itemsPAES: 9-12-15 con lado mayor 25, lado menor 15 (k = 5/3); trapecio 7-5-4-4 cm y su imagen por 3/2, lado de 5 → 7,5 cm; 5-12-13 contra 8-15-17, no semejantes"
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "razonDeSemejanza": "razón entre dos longitudes, cociente sin unidad: es un número puro"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "La misma forma, otro tamaño",
+      "_notasInternas": [
+        "Sin regla: solo la intuición de que 'más grande pero igual' significa algo preciso. La visual muestra la chica con sus tres cotas y la grande con el lado menor rotulado y los otros dos con '?'. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Para los cuadernos del colegio se imprimen **calcomanías triangulares** a partir de un mismo diseño, en varios tamaños. La chica tiene lados de **3 cm, 4 cm y 5 cm** (un triángulo rectángulo: es el trío 3-4-5 que ya conoces).\n\nLa grande se ve igual, solo que más grande: su lado menor mide **6 cm**, el doble."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "La calcomanía chica, un triángulo rectángulo de lados 3 cm, 4 cm y 5 cm, y a su lado la grande, con el lado menor rotulado 6 cm y los otros dos rotulados con un signo de interrogación.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "ladoALado",
+            "original": { "vertices": [[0, 0], [4, 0], [0, 3]], "cotas": ["4 cm", "5 cm", "3 cm"] },
+            "k": 2,
+            "imagen": { "cotas": ["?", "?", "6 cm"] }
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Si la grande tiene exactamente la misma forma que la chica y su lado menor es el doble, ¿cuánto crees que miden los otros dos lados?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "8 cm y 10 cm: el doble cada uno",
+            "7 cm y 8 cm: 3 cm más cada uno, igual que el lado menor",
+            "No se puede saber sin medir"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "«Igual pero más grande» tiene un nombre en matemática: las dos figuras son **semejantes**. Esta lección es sobre qué significa eso exactamente, y sobre cómo, sabiendo un solo lado de la grande, se calculan los demás."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Cuáles medidas conservan la forma?",
+      "_notasInternas": [
+        "Los otros dos lados de la grande: 8 y 10 (k = 2). Distractores: 7 y 8 es error-1 (sumó 3, lo mismo que el lado menor); 2 y 2,5 es error-2 (aplicó 1/2 en vez de 2). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "La calcomanía chica mide 3 cm, 4 cm y 5 cm. La grande tiene la misma forma y su lado menor mide 6 cm. ¿Cuánto miden los otros dos lados de la grande?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "8 cm y 10 cm",
+              "esCorrecta": true,
+              "feedback": "Correcto. El lado menor pasó de 3 a 6: se multiplicó por 2. Para conservar la forma, todos los lados se multiplican por lo mismo: 4 · 2 = 8 y 5 · 2 = 10. La grande es 6-8-10, y sigue siendo un triángulo rectángulo."
+            },
+            {
+              "id": "b",
+              "texto": "7 cm y 8 cm",
+              "esCorrecta": false,
+              "feedback": "7 y 8 suman 3 cm a cada lado, igual que le pasó al lado menor. Pero 6-7-8 no tiene la forma de 3-4-5: ya no es un triángulo rectángulo (6² + 7² = 85, y 8² = 64). La forma se conserva multiplicando, no sumando: 4 · 2 y 5 · 2.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "2 cm y 2,5 cm",
+              "esCorrecta": false,
+              "feedback": "2 y 2,5 son 4 y 5 divididos por 2: eso achica la calcomanía en vez de agrandarla. El lado menor creció de 3 a 6, o sea se multiplicó por 2, y los otros dos se multiplican por 2 también: 8 cm y 10 cm.",
+              "errorCatalogado": "error-2"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Una calcomanía ampliada que conserva la forma tiene los mismos ángulos que la original.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Cambiar de tamaño sin cambiar de forma es justamente eso: los ángulos quedan iguales y los lados crecen todos en la misma proporción. La grande sigue teniendo su ángulo recto.",
+          "feedbackFalso": "En realidad es verdadero. Si los ángulos cambiaran, cambiaría la forma. Ampliar conservando la forma deja los ángulos iguales; lo que cambia son los lados, todos multiplicados por lo mismo."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "La mediana",
+      "_notasInternas": [
+        "Mediana: el lado de 4 cm pasa a 6 cm, k = 6/4 = 3/2. Lado corto 3 · 1,5 = 4,5; hipotenusa 5 · 1,5 = 7,5. feedbackPorError: ladoCorto 5 y hipotenusa 7 son error-1 (sumó 2, lo que creció el lado de 4); ladoCorto 2 es error-2 (3 · 2/3, razón invertida); ladoCorto 4,8 e hipotenusa 6 son error-3 (emparejó el 6 con el lado de 5 y usó k = 6/5). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "La calcomanía mediana también tiene la misma forma que la chica (3 cm, 4 cm, 5 cm), pero esta vez el dato es otro: el lado que en la chica mide 4 cm, en la mediana mide 6 cm. ¿Cuánto miden los otros dos lados de la mediana? Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "ladoCorto",
+              "etiqueta": "El lado que en la chica mide 3 cm",
+              "respuestaCorrecta": 4.5,
+              "unidad": "cm"
+            },
+            {
+              "id": "hipotenusa",
+              "etiqueta": "El lado que en la chica mide 5 cm",
+              "respuestaCorrecta": 7.5,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoCorto",
+              "valorObtenido": 5,
+              "mensaje": "Ese valor suma 2 cm al lado de 3, porque el lado de 4 creció 2. Pero crecer 2 cm no es lo mismo para un lado de 3 que para uno de 4: la forma se conserva multiplicando por la misma razón, y 6 ÷ 4 = 1,5.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "hipotenusa",
+              "valorObtenido": 7,
+              "mensaje": "Ese valor suma 2 cm al lado de 5. Sumar lo mismo a cada lado no conserva la forma: hay que multiplicar cada lado por la misma razón, 6 ÷ 4 = 1,5.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "ladoCorto",
+              "valorObtenido": 2,
+              "mensaje": "Ese valor multiplica por 4 ÷ 6, la razón al revés, y achica el lado. La mediana es más grande que la chica: la razón es lado nuevo dividido por lado original, 6 ÷ 4 = 1,5, y 3 · 1,5 es mayor que 3.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "ladoCorto",
+              "valorObtenido": 4.8,
+              "mensaje": "Ese valor usa la razón 6 ÷ 5, como si el lado de 6 fuera la copia del lado de 5. Pero el enunciado dice que el 6 es la copia del lado de 4: la razón es 6 ÷ 4 = 1,5, y se aplica a los lados que corresponden.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "hipotenusa",
+              "valorObtenido": 6,
+              "mensaje": "Ese valor empareja el lado de 6 con el lado de 5, como si fuera su copia. El 6 es la copia del lado de 4 (razón 6 ÷ 4 = 1,5); la copia del lado de 5 es 5 · 1,5.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Primero la razón: cuánto creció el lado que sí conoces, 6 ÷ 4. Después multiplica cada uno de los otros lados de la chica por esa razón."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para la mediana",
+      "_notasInternas": [
+        "Misma mediana. El nivel 3 nombra la razón 1,5 y deja las dos multiplicaciones sin ejecutar."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "En la grande, el lado menor pasó de 3 a 6 y los demás se multiplicaron por lo mismo. Acá el dato es otro lado: pregúntate por cuánto se multiplicó."
+            },
+            {
+              "nivel": 2,
+              "texto": "El lado de 4 pasó a 6. Cuánto se multiplicó es el cociente lado nuevo dividido por lado original, y ese mismo cociente vale para los tres lados."
+            },
+            {
+              "nivel": 3,
+              "texto": "6 ÷ 4 = 1,5. Multiplica 3 por 1,5 para el lado corto y 5 por 1,5 para el lado mayor."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Multiplicar, no sumar",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Tabla con 3-4-5, 6-8-10 y 9-12-15 y las razones lado a lado: 2, 2, 2 y 3, 3, 3. Contraejemplo 4-5-6 (sumar 1): razones 4/3, 5/4, 6/5, distintas. Visual: 3-4-5 y 6-8-10 lado a lado. Aquí aparece por primera vez la expresión 'razón de semejanza' y la letra k; la definición formal se deja para generalizacion. seleccion sobre k de 6-8-10 a 9-12-15: 3/2 correcto; 2/3 error-2; 3 error-3 (9 ÷ 3, emparejó el menor de la grande con el menor de la chica de tres tamaños atrás); 1 error-1 (sumó 3 a cada lado). numérica: k de 5-12-13 a 12,5-30-32,5 = 2,5; feedbackPorError 0,4 error-2 (5 ÷ 12,5). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Hay tres calcomanías con la forma de 3-4-5: la chica, la grande (6-8-10) y una edición gigante (9-12-15). Compara cada lado de las grandes con el lado que le corresponde en la chica: **el menor con el menor, el mayor con el mayor**."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "La calcomanía chica de lados 3 cm, 4 cm y 5 cm y la grande de lados 6 cm, 8 cm y 10 cm, una junto a otra a la misma escala, con todas las cotas rotuladas.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "ladoALado",
+            "original": { "vertices": [[0, 0], [4, 0], [0, 3]], "cotas": ["4 cm", "5 cm", "3 cm"] },
+            "k": 2,
+            "imagen": { "cotas": ["8 cm", "10 cm", "6 cm"] }
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con los lados de la chica, de la grande y de la gigante, y la razón lado grande dividido por lado chico en cada columna.",
+          "datos": {
+            "columnas": ["Lado menor", "Lado medio", "Lado mayor", "Razón con la chica"],
+            "filas": [
+              ["3", "4", "5", "chica"],
+              ["6", "8", "10", "6/3 = 2, 8/4 = 2, 10/5 = 2"],
+              ["9", "12", "15", "9/3 = 3, 12/4 = 3, 15/5 = 3"],
+              ["4", "5", "6", "4/3, 5/4, 6/5: distintas"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira la tabla. La última fila es 3-4-5 con 1 cm más en cada lado. ¿Qué distingue a las filas que sí tienen la forma de la chica de la que no la tiene?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "En 6-8-10 y en 9-12-15 la razón con la chica es la misma en los tres lados (2 y 3); en 4-5-6 las tres razones son distintas.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Esa razón común es la **razón de semejanza**, k. Si los tres lados se multiplican por el mismo k, la forma se conserva; si a cada lado se le suma lo mismo, las razones se desparejan y la forma cambia."
+            },
+            {
+              "id": "b",
+              "texto": "Que 6-8-10 y 9-12-15 tienen todos los lados pares o múltiplos de 3, y 4-5-6 no.",
+              "esCorrecta": false,
+              "feedback": "Eso es una coincidencia de estos números, no la razón de fondo. Lo que importa es la columna de la derecha: en las filas semejantes la razón se repite en los tres lados, y en 4-5-6 no."
+            },
+            {
+              "id": "c",
+              "texto": "Que 4-5-6 creció muy poco: si se le sumara más a cada lado, tendría la forma de 3-4-5.",
+              "esCorrecta": false,
+              "feedback": "Sumar más no arregla nada: 3-4-5 más 3 es 6-7-8, y sus razones 2, 1,75 y 1,6 siguen siendo distintas. Sumar la misma cantidad a cada lado nunca conserva la forma; multiplicar por la misma razón, siempre.",
+              "errorCatalogado": "error-1"
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora compara la gigante 9-12-15 con la grande 6-8-10. ¿Cuál es la razón de semejanza k de la grande a la gigante?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "k = 3/2 = 1,5",
+              "esCorrecta": true,
+              "feedback": "Correcto. 9/6 = 12/8 = 15/10 = 1,5. La gigante es una vez y media la grande."
+            },
+            {
+              "id": "b",
+              "texto": "k = 2/3",
+              "esCorrecta": false,
+              "feedback": "2/3 es 6/9, la grande dividida por la gigante: la razón al revés. Como la gigante es la más grande, k tiene que ser mayor que 1: 9/6 = 1,5.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "c",
+              "texto": "k = 3",
+              "esCorrecta": false,
+              "feedback": "3 es 9/3, la gigante comparada con la chica, no con la grande. La pregunta empareja la gigante con la grande: 9/6 = 1,5.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "id": "d",
+              "texto": "k = 1, porque a cada lado se le sumaron 3 cm",
+              "esCorrecta": false,
+              "feedback": "Es cierto que 9 − 6, 12 − 8 y 15 − 10 son 3, 4 y 5, no siempre 3. Y aunque fueran iguales, la razón de semejanza no se calcula restando sino dividiendo: 9/6 = 1,5.",
+              "errorCatalogado": "error-1"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Otro diseño de calcomanía es el trío 5-12-13. Una copia semejante mide 12,5 cm, 30 cm y 32,5 cm. ¿Cuál es la razón de semejanza k de la copia respecto del diseño original?",
+          "campos": [
+            {
+              "id": "razonDeSemejanza",
+              "etiqueta": "k",
+              "respuestaCorrecta": 2.5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "razonDeSemejanza",
+              "valorObtenido": 0.4,
+              "mensaje": "Ese valor es 5 ÷ 12,5: el original dividido por la copia. La razón de semejanza es copia dividido por original, y como la copia es más grande, k es mayor que 1.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Divide un lado de la copia por su lado homólogo del original: 12,5 ÷ 5, o 30 ÷ 12, o 32,5 ÷ 13. Las tres divisiones dan lo mismo."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que las tres divisiones (12,5 ÷ 5, 30 ÷ 12 y 32,5 ÷ 13) den el mismo número?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. Que den lo mismo es exactamente lo que significa que las figuras son semejantes: todos los lados crecieron en la misma proporción. Si una división diera distinto, la copia estaría deformada.",
+          "feedbackFalso": "En realidad sí tiene sentido: 12,5 ÷ 5 = 2,5, 30 ÷ 12 = 2,5 y 32,5 ÷ 13 = 2,5. Que la razón se repita en los tres pares de lados es la prueba de que la copia conserva la forma."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir es la idea central: **misma forma significa misma razón en todos los pares de lados que se corresponden.** En el próximo paso vas a escribir eso como definición, y a ver un atajo para triángulos."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La definición, y un atajo para triángulos",
+      "_notasInternas": [
+        "PRIMERA aparición de la definición formal: semejantes = ángulos iguales y lados homólogos proporcionales; k = imagen ÷ original; criterio AA. Visual: 6-8-10 y 9-12-15 lado a lado. Ejercicio: 8-15-17 con lado mayor 25,5 → k = 1,5, lado menor 12; feedbackPorError 16,5 error-1 (8 + 8,5, lo que creció el lado mayor); 13,6 error-3 (8 · 25,5/15, emparejó el 25,5 con el 15). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\nDos figuras son **semejantes** cuando tienen la misma forma y distinto tamaño. Eso se comprueba con dos cosas a la vez:\n- sus **ángulos** son iguales, uno a uno;\n- sus **lados homólogos** (los que se corresponden: el mayor con el mayor, el menor con el menor) son **proporcionales**: al dividir cada lado de la imagen por su homólogo de la original, sale siempre el mismo número.\n\nEse número es la **razón de semejanza**:\n\n**k = lado de la imagen ÷ lado homólogo de la original**\n\nk > 1 agranda; k < 1 achica; k = 1 es una copia del mismo tamaño.\n\n**Atajo para triángulos:** si dos triángulos tienen dos ángulos iguales, ya son semejantes (el tercero queda obligado, porque los tres suman 180°). Y si conoces los tres lados de cada uno, basta comprobar que las tres razones coinciden."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "La calcomanía grande de lados 6 cm, 8 cm y 10 cm y la gigante de lados 9 cm, 12 cm y 15 cm, una junto a otra a la misma escala, con todas las cotas rotuladas.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "ladoALado",
+            "original": { "vertices": [[0, 0], [8, 0], [0, 6]], "cotas": ["8 cm", "10 cm", "6 cm"] },
+            "k": 1.5,
+            "imagen": { "cotas": ["12 cm", "15 cm", "9 cm"] }
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Un diseño con forma de 8-15-17 se imprime en una copia semejante cuyo lado mayor mide 25,5 cm. ¿Cuánto mide el lado menor de la copia?",
+          "campos": [
+            {
+              "id": "ladoMenorCopia",
+              "etiqueta": "Lado menor de la copia",
+              "respuestaCorrecta": 12,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoMenorCopia",
+              "valorObtenido": 16.5,
+              "mensaje": "Ese valor suma al lado de 8 lo mismo que creció el lado mayor, 8,5. Sumar no conserva la forma. Primero la razón, 25,5 ÷ 17 = 1,5, y después 8 · 1,5.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "ladoMenorCopia",
+              "valorObtenido": 13.6,
+              "mensaje": "Ese valor divide 25,5 por 15, emparejando el lado mayor de la copia con el lado medio del original. Los lados homólogos son el mayor con el mayor: k = 25,5 ÷ 17 = 1,5, y el lado menor es 8 · 1,5.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Razón de semejanza: lado mayor de la copia dividido por lado mayor del original, 25,5 ÷ 17. Después multiplica el lado menor, 8, por esa razón."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "¿Semejantes o no?",
+      "_notasInternas": [
+        "P1 seleccion: 7-24-25 y 10,5-36-37,5, semejantes con k = 1,5 (10,5/7 = 36/24 = 37,5/25 = 1,5); distractores: 'no, porque crecieron 3,5, 12 y 12,5' error-1 (espera crecimiento aditivo); 'sí, con k = 2/3' error-2; 'no, porque está girado' error-11. P2 numérica: 6-8-10 con lado mayor 25 → k = 2,5, lado menor 15; feedbackPorError 21 error-1 (6 + 15), 2,4 error-2 (6 · 10/25), 18,75 error-3 (6 · 25/8). P3 verdaderoFalso con error-4 en el feedback. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Dos calcomanías triangulares tienen lados de 7 cm, 24 cm y 25 cm la primera, y 10,5 cm, 36 cm y 37,5 cm la segunda, que además está girada respecto de la primera. ¿Son semejantes?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Sí, con razón de semejanza k = 1,5: 10,5/7 = 36/24 = 37,5/25.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Las tres razones entre lados homólogos coinciden, así que la segunda tiene la misma forma que la primera, una vez y media más grande. Que esté girada no importa."
+            },
+            {
+              "id": "b",
+              "texto": "No, porque los lados no crecieron lo mismo: 3,5 cm, 12 cm y 12,5 cm.",
+              "esCorrecta": false,
+              "feedback": "Que crezcan cantidades distintas es lo esperable en figuras semejantes: cada lado crece en proporción a su tamaño. La prueba no es restar sino dividir, y 10,5/7, 36/24 y 37,5/25 dan 1,5 las tres veces.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "id": "c",
+              "texto": "Sí, con razón de semejanza k = 2/3.",
+              "esCorrecta": false,
+              "feedback": "Sí son semejantes, pero 2/3 es 7/10,5, la primera dividida por la segunda. La segunda es más grande, y la razón de la primera a la segunda es 10,5/7 = 1,5, mayor que 1.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "id": "d",
+              "texto": "No, porque la segunda está girada y para comparar tendrían que estar en la misma posición.",
+              "esCorrecta": false,
+              "feedback": "La semejanza no depende de cómo esté puesta la figura: girada, volteada o en otro lugar, sigue teniendo los mismos ángulos y los mismos lados. Se comparan los lados homólogos, y las tres razones dan 1,5.",
+              "errorCatalogado": "error-11"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una calcomanía 6-8-10 se amplía a una copia semejante cuyo lado mayor mide 25 cm. ¿Cuánto mide el lado menor de la copia?",
+          "campos": [
+            {
+              "id": "ladoMenorAmpliado",
+              "etiqueta": "Lado menor de la copia",
+              "respuestaCorrecta": 15,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoMenorAmpliado",
+              "valorObtenido": 21,
+              "mensaje": "Ese valor suma al lado de 6 los 15 cm que creció el lado mayor. Sumar no conserva la forma: la razón es 25 ÷ 10 = 2,5 y el lado menor es 6 · 2,5.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "ladoMenorAmpliado",
+              "valorObtenido": 2.4,
+              "mensaje": "Ese valor multiplica por 10 ÷ 25, la razón al revés, y achica la calcomanía. La copia es más grande: k = 25 ÷ 10 = 2,5, y 6 · 2,5 es mayor que 6.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "ladoMenorAmpliado",
+              "valorObtenido": 18.75,
+              "mensaje": "Ese valor divide 25 por 8, emparejando el lado mayor de la copia con el lado medio del original. Mayor con mayor: k = 25 ÷ 10 = 2,5, y después 6 · 2,5.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "Razón: lado mayor de la copia dividido por lado mayor del original, 25 ÷ 10. Después multiplica el lado menor, 6, por esa razón."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Dos rectángulos cualesquiera son siempre semejantes, porque los dos tienen cuatro ángulos rectos.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso. Los ángulos iguales son necesarios pero no bastan en un cuadrilátero: un rectángulo de 2 por 3 y uno de 2 por 10 tienen los cuatro ángulos rectos y formas muy distintas (uno es casi cuadrado y el otro es una tira). Falta que los lados sean proporcionales: 2/2 = 1 y 10/3 no coinciden.",
+          "feedbackFalso": "Exacto. Ser del mismo tipo no basta: un rectángulo de 2 por 3 y uno de 2 por 10 tienen los mismos ángulos y formas distintas, porque 2/2 y 10/3 no coinciden. La semejanza exige ángulos iguales **y** lados proporcionales. En triángulos, en cambio, dos ángulos iguales sí bastan."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El atajo de los ángulos",
+      "_notasInternas": [
+        "Criterio AA en contexto: la mediana 4,5-6-7,5 y una copia con los mismos ángulos cuyo lado homólogo al de 6 mide 12; k = 2; hipotenusa 15. feedbackPorError 13,5 error-1 (7,5 + 6, lo que creció el lado de 6); 3,75 error-2 (7,5 ÷ 2); 20 error-3 (7,5 · 12/4,5, emparejó el 12 con el lado de 4,5). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En la imprenta comparan la calcomanía mediana (4,5 cm, 6 cm y 7,5 cm) con una nueva que llegó sin medidas completas: solo saben que **sus ángulos son los mismos** que los de la mediana y que el lado que corresponde al de 6 cm mide **12 cm**.\n\nCon los ángulos iguales ya sabes que son semejantes: no hace falta medir los tres lados para saberlo."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuánto mide en la calcomanía nueva el lado que corresponde al de 7,5 cm de la mediana?",
+          "campos": [
+            {
+              "id": "ladoMayorNueva",
+              "etiqueta": "Lado mayor de la nueva",
+              "respuestaCorrecta": 15,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoMayorNueva",
+              "valorObtenido": 13.5,
+              "mensaje": "Ese valor suma 6 cm al lado de 7,5, porque el lado de 6 creció 6. Sumar no conserva la forma: la razón es 12 ÷ 6 = 2, y el lado mayor es 7,5 · 2.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "campoId": "ladoMayorNueva",
+              "valorObtenido": 3.75,
+              "mensaje": "Ese valor divide 7,5 por 2 en vez de multiplicarlo. La nueva es más grande (su lado de 12 es el doble del de 6), así que k = 2 y el lado mayor es 7,5 · 2.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "ladoMayorNueva",
+              "valorObtenido": 20,
+              "mensaje": "Ese valor usa la razón 12 ÷ 4,5, emparejando el lado de 12 con el lado menor de la mediana. El enunciado dice que el 12 corresponde al lado de 6: k = 12 ÷ 6 = 2, y 7,5 · 2.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "feedbackPorDefecto": "La razón sale del par que conoces: 12 ÷ 6 = 2. Multiplica 7,5 por esa razón."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Inventa un triángulo con lados enteros y una copia semejante con k = 2,5. Escribe los tres lados de la copia y, al lado, explica cómo comprobarías que la copia no se hizo sumando.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Original 6-8-10; copia con k = 2,5: 15-20-25. Comprobación: 15/6 = 20/8 = 25/10 = 2,5, las tres razones iguales. Si se hubiera hecho sumando (por ejemplo, 9 a cada lado: 15-17-19), las razones serían 2,5, 2,125 y 1,9, distintas, y la copia no tendría la forma del original."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Igual pero más grande",
+      "_notasInternas": [
+        "Metacognición sobre qué significa 'misma forma'. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve L2: si el lado se duplica, ¿el área también?"
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: si te dan dos triángulos con sus tres lados, ¿qué harías para decidir si son semejantes? ¿Y por qué no sirve fijarse en cuánto creció cada lado?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que empareje mayor con mayor y menor con menor, divida y compare las tres razones, y diga que restar no sirve porque cada lado crece en proporción a su tamaño, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con la semejanza, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Sumar en vez de multiplicar:** agregarle lo mismo a cada lado deforma la figura. Se multiplica por la misma razón.\n2. **Invertir la razón:** k es imagen dividido por original. Si la copia es más grande, k es mayor que 1.\n3. **Emparejar lados que no se corresponden:** el mayor va con el mayor, el menor con el menor.\n4. **Creer que basta con ser del mismo tipo:** dos rectángulos no son semejantes por ser rectángulos; hace falta que los lados sean proporcionales.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: la grande tiene los lados del doble que la chica. ¿Su **área** también es el doble? Esa es la próxima lección."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de error-1, error-2 y error-3, seguido de un bloque pregunta: 3-4-5 con lado mayor 12,5 → k = 2,5, el lado de 4 pasa a 10 cm; 11,5 error-1 (4 + 7,5); 1,6 error-2 (4 ÷ 2,5); 12,5 error-3 (tomó el lado mayor de la copia como si fuera la copia del lado de 4). Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Dos figuras son **semejantes** si tienen los mismos ángulos y sus **lados homólogos son proporcionales**: misma forma, otro tamaño.\n- **k = lado de la imagen ÷ lado homólogo de la original.** Mayor que 1 agranda, menor que 1 achica.\n- Los lados homólogos se emparejan **mayor con mayor, menor con menor**.\n- En triángulos, **dos ángulos iguales** bastan para asegurar la semejanza.\n- Los tríos pitagóricos escalados (3-4-5, 6-8-10, 9-12-15) son triángulos semejantes.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente agranda una figura **sumándole lo mismo a cada lado**. Falla porque 3-4-5 más 2 es 5-6-7, y ese triángulo ya no es rectángulo: las razones 5/3, 6/4 y 7/5 no coinciden. Lo que funciona es **multiplicar todos los lados por la misma razón**.\n\nMucha gente calcula k **al revés**, original dividido por imagen, y achica lo que había que agrandar. Falla porque el resultado queda del lado equivocado de 1. Lo que funciona es **imagen dividido por original**, y comprobar que k sea mayor que 1 si la copia es más grande.\n\nMucha gente empareja **lados que no se corresponden**, y la razón sale distinta en cada par. Falla porque compara el lado mayor de una figura con el menor de la otra. Lo que funciona es ordenar los lados de las dos figuras y emparejar **mayor con mayor**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "La calcomanía chica mide 3 cm, 4 cm y 5 cm. Una copia semejante tiene el lado mayor de 12,5 cm. ¿Cuánto mide en la copia el lado que en la chica mide 4 cm?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "1,6 cm",
+              "esCorrecta": false,
+              "feedback": "1,6 es 4 ÷ 2,5: divide en vez de multiplicar, con la razón al revés. La copia es más grande que la chica (12,5 frente a 5), así que k = 12,5 ÷ 5 = 2,5 y el lado de 4 se multiplica: 4 · 2,5.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "B",
+              "texto": "10 cm",
+              "esCorrecta": true,
+              "feedback": "Correcto. k = 12,5 ÷ 5 = 2,5 (mayor con mayor), y el lado de 4 pasa a 4 · 2,5 = 10 cm."
+            },
+            {
+              "clave": "C",
+              "texto": "11,5 cm",
+              "esCorrecta": false,
+              "feedback": "11,5 suma al lado de 4 los 7,5 cm que creció el lado mayor. Sumar lo mismo a cada lado deforma la figura. Se multiplica por la razón: 4 · 2,5.",
+              "errorCatalogado": "error-1"
+            },
+            {
+              "clave": "D",
+              "texto": "12,5 cm",
+              "esCorrecta": false,
+              "feedback": "12,5 es el lado mayor de la copia, la imagen del lado de 5, no del de 4. Cada lado tiene su homólogo: el 12,5 corresponde al 5, y el lado que corresponde al 4 es 4 · 2,5 = 10 cm.",
+              "errorCatalogado": "error-3"
+            }
+          ],
+          "notaVerificacionMatematica": "k = 12,5 ÷ 5 = 2,5. Lado pedido: 4 · 2,5 = 10. Copia completa 7,5-10-12,5, verificada con sonSemejantesPorLados. Distractores: 4 + 7,5 = 11,5 (error-1); 4 ÷ 2,5 = 1,6 (error-2); 12,5 tomado como imagen del 4 (error-3). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "semejanza-l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un triángulo tiene lados de 9 cm, 12 cm y 15 cm. Otro triángulo, semejante a él, tiene su lado mayor de 25 cm. ¿Cuánto mide el lado menor del segundo triángulo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5,4 cm",
+          "esCorrecta": false,
+          "feedback": "5,4 es 9 · 15 ÷ 25: aplica la razón al revés, 15/25, y achica el triángulo. El segundo es más grande (25 frente a 15): k = 25 ÷ 15 = 5/3, y el lado menor es 9 · 5/3 = 15 cm.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "15 cm",
+          "esCorrecta": true,
+          "feedback": "Correcto. Mayor con mayor: k = 25 ÷ 15 = 5/3. Lado menor: 9 · 5/3 = 15 cm. El segundo triángulo es 15-20-25."
+        },
+        {
+          "clave": "C",
+          "texto": "18,75 cm",
+          "esCorrecta": false,
+          "feedback": "18,75 es 9 · 25 ÷ 12: empareja el lado mayor del segundo con el lado medio del primero. Los homólogos son mayor con mayor: k = 25 ÷ 15 = 5/3, y 9 · 5/3 = 15 cm.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "D",
+          "texto": "19 cm",
+          "esCorrecta": false,
+          "feedback": "19 es 9 + 10: le suma al lado menor lo que creció el lado mayor (de 15 a 25). Sumar no conserva la forma; se multiplica por la razón 25 ÷ 15 = 5/3, y 9 · 5/3 = 15 cm.",
+          "errorCatalogado": "error-1"
+        }
+      ],
+      "solucion": "Lados homólogos: el mayor del primero (15) con el mayor del segundo (25). Razón de semejanza k = 25 ÷ 15 = 5/3. Lado menor del segundo: 9 · 5/3 = 15 cm. Comprobación: el lado medio sería 12 · 5/3 = 20, y 15-20-25 es 5 · (3-4-5), un triángulo rectángulo semejante a 9-12-15 = 3 · (3-4-5). ✓"
+    },
+    {
+      "id": "semejanza-l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "En la figura se muestran un trapecio de lados 7 cm, 5 cm, 4 cm y 4 cm y una copia semejante con razón k = 3/2, en la que el lado homólogo al de 7 cm mide 10,5 cm. ¿Cuánto mide el lado x, homólogo al de 5 cm?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3,3 cm",
+          "esCorrecta": false,
+          "feedback": "3,3 es 5 ÷ 1,5: divide en vez de multiplicar, con la razón al revés. La copia es más grande (10,5 frente a 7), así que cada lado se multiplica por 3/2: x = 5 · 1,5 = 7,5 cm.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "B",
+          "texto": "6 cm",
+          "esCorrecta": false,
+          "feedback": "6 cm es la imagen de los lados de 4 cm (4 · 1,5), no la del lado de 5. Cada lado tiene su propio homólogo: el de x corresponde al de 5, y x = 5 · 1,5 = 7,5 cm.",
+          "errorCatalogado": "error-3"
+        },
+        {
+          "clave": "C",
+          "texto": "6,5 cm",
+          "esCorrecta": false,
+          "feedback": "6,5 suma 1,5 al lado de 5, como si la razón fuera una cantidad que se agrega. k = 3/2 multiplica: x = 5 · 1,5 = 7,5 cm. (Fíjate en que 7 · 1,5 = 10,5, no 7 + 1,5.)",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "7,5 cm",
+          "esCorrecta": true,
+          "feedback": "Correcto. Con k = 3/2, cada lado de la copia es 1,5 veces su homólogo: x = 5 · 1,5 = 7,5 cm. Comprobación con el lado dado: 7 · 1,5 = 10,5 cm."
+        }
+      ],
+      "solucion": "La razón de semejanza es k = 3/2 = 1,5, y se confirma con el par dado: 10,5 ÷ 7 = 1,5. El lado x es homólogo al de 5 cm, así que x = 5 · 1,5 = 7,5 cm. Los otros dos lados de la copia miden 4 · 1,5 = 6 cm cada uno. La copia completa es 10,5-7,5-6-6, que tiene la forma de 7-5-4-4. ✓"
+    },
+    {
+      "id": "semejanza-l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma que un triángulo de lados 5, 12 y 13 y otro de lados 8, 15 y 17 son semejantes, «porque los dos son triángulos rectángulos». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: las razones entre lados homólogos son 8/5 = 1,6, 15/12 = 1,25 y 17/13, que son distintas, así que no tienen la misma forma.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Los dos son rectángulos, pero eso solo asegura un ángulo igual; los otros dos ángulos son distintos, y por eso las razones entre lados homólogos no coinciden. Ser del mismo tipo no basta para ser semejantes."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: al tener los dos un ángulo recto, son triángulos del mismo tipo y por lo tanto semejantes.",
+          "esCorrecta": false,
+          "feedback": "Un ángulo igual no basta: en triángulos hacen falta dos. Los otros ángulos de 5-12-13 y de 8-15-17 son distintos, y las razones 8/5, 15/12 y 17/13 no coinciden. Hay muchísimos triángulos rectángulos de formas distintas.",
+          "errorCatalogado": "error-4"
+        },
+        {
+          "clave": "C",
+          "texto": "Es correcta, y además se ve en los lados: 8 − 5 = 3 y 15 − 12 = 3, los lados crecieron lo mismo.",
+          "esCorrecta": false,
+          "feedback": "Que dos lados crezcan 3 no dice nada sobre la forma (y el tercero creció 4). La semejanza se prueba dividiendo, no restando: 8/5 = 1,6 y 15/12 = 1,25 son distintas, así que no son semejantes.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, pero por otra razón: para ser semejantes los dos triángulos tendrían que estar dibujados en la misma posición y con la misma orientación.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto pero la razón no: la posición y la orientación no tienen nada que ver con la semejanza. Lo que la descarta es que las razones entre lados homólogos (8/5, 15/12, 17/13) no coinciden.",
+          "errorCatalogado": "error-11"
+        }
+      ],
+      "solucion": "Para que dos triángulos sean semejantes, las razones entre lados homólogos deben coincidir. Se emparejan mayor con mayor y menor con menor: 8/5 = 1,6; 15/12 = 1,25; 17/13 ≈ 1,31. Son distintas, así que los triángulos no son semejantes. Tener un ángulo recto cada uno no basta: el criterio para triángulos pide dos ángulos iguales, y los ángulos agudos de estos dos triángulos son distintos (en 5-12-13 el menor mide unos 22,6° y en 8-15-17 unos 28,1°). La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, unidad Semejanza y proporcionalidad de figuras: solo para calibrar alcance (concepto de semejanza), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (calcomanías triangulares para cuadernos impresas en varios tamaños desde el mismo diseño, con una imprenta que compara medidas) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los números son tríos pitagóricos escalados (3-4-5, 6-8-10, 9-12-15, 4,5-6-7,5, 5-12-13, 12,5-30-32,5, 8-15-17, 12-22,5-25,5, 7-24-25, 10,5-36-37,5, 15-20-25, 7,5-10-12,5) y un trapecio 7-5-4-4 con su imagen 10,5-7,5-6-6, elegidos para no repetir ningún par ni escena de los contextosNumericos de content/ y verificados con node -e sobre lib/semejanza.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-semejanza-y-proporcionalidad.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados, y en particular no se usa el mecanismo de placas cuyo lado se triplica. Pendientes las auditorías matemática y de originalidad en hilos aislados antes de cualquier git push.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
