@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 import { construirDag, ancestros } from '../lib/diagnostico/dag.ts';
 import { motivoRechazoDatosTransformacion } from '../lib/transformacionesIsometricas.ts';
 import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
+import { esTipoGraficoEstadistico, motivoRechazoDatosGrafico } from '../lib/estadistica.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -109,15 +110,21 @@ function validarBloqueInteractivoSlider(bloque, donde, errores) {
 }
 
 /**
- * Contrato de los dos `datos` de `visualizacion` que sí tienen forma cerrada
- * (schema: `datosTransformacion`, `datosSemejanza`), discriminados por
- * `datos.tipo`. Los datos sin `tipo` siguen siendo libres y no se tocan.
+ * Contrato de los `datos` de `visualizacion` que sí tienen forma cerrada
+ * (schema: `datosTransformacion`, `datosSemejanza`, `datosGraficoBarras`,
+ * `datosGraficoLineas`, `datosGraficoCircular`, `datosDiagramaCajon`),
+ * discriminados por `datos.tipo`. Los datos sin `tipo` siguen siendo libres y
+ * no se tocan.
  *
  * El motivo lo produce la misma función que usa el type guard del bloque en
  * `components/bloques/BloqueVisualizacion.tsx`: un JSON que pasa por acá se
  * dibuja, y uno que no se dibuja no pasa por acá. Sin este chequeo, un vértice
- * fuera de [−10, 10] o una figura anidada que no es semejante caían en
- * silencio al `<figure>` de texto.
+ * fuera de [−10, 10], una figura anidada que no es semejante, un circular cuyos
+ * porcentajes no suman 100 o un cajón con Q1 > mediana caían en silencio al
+ * `<figure>` de texto. Para los gráficos de datos el contrato exige además que
+ * `ejeTruncado` venga solo en un bloque marcado `ejemploEnganoso` (el gráfico
+ * que enseña a desconfiar) y que un cajón con datos crudos coincida con
+ * `resumenCincoNumeros` de lib/estadistica.ts.
  */
 function validarBloqueVisualizacion(bloque, donde, errores) {
   const datos = bloque?.datos;
@@ -129,6 +136,9 @@ function validarBloqueVisualizacion(bloque, donde, errores) {
   } else if (tipo === 'semejanza') {
     const motivo = motivoRechazoDatosSemejanza(datos);
     if (motivo) errores.push(`${donde}.datos (semejanza): ${motivo}`);
+  } else if (esTipoGraficoEstadistico(tipo)) {
+    const motivo = motivoRechazoDatosGrafico(datos);
+    if (motivo) errores.push(`${donde}.datos (${tipo}): ${motivo}`);
   }
 }
 

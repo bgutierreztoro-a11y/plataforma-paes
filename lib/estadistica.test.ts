@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { validarDatos } from "../scripts/validar-contenido.mjs";
 import {
   angulosDeTabla,
   anguloSector,
@@ -332,4 +333,20 @@ test("cajón: orden de los cinco valores y coincidencia con los datos crudos", (
   assert.match(motivoRechazoDatosGrafico({ ...CAJON, cajones: [] })!, /entre 1 y 2/);
   assert.match(motivoRechazoDatosGrafico({ ...CAJON, marcas: [{ valor: "33", rotulo: "hoy" }] })!, /marcas\[0\]/);
   assert.match(motivoRechazoDatosGrafico({ tipo: "histograma" })!, /tipo debe ser uno de/);
+});
+
+// ---------- el validador de contenido usa el mismo contrato ----------
+
+test("npm run validar rechaza un bloque de datos mal formado con el motivo del contrato", () => {
+  const pasos = [
+    "curiosidad", "problema", "pensar", "pistas", "descubrimiento",
+    "generalizacion", "practica", "aplicacion", "reflexion", "consolidacion",
+  ].map((tipo) => ({ tipo, titulo: tipo, bloques: [{ tipo: "texto", contenido: "x" }] }));
+  const malo = { ...CIRCULAR, sectores: [{ categoria: "A", porcentaje: 60 }, { categoria: "B", porcentaje: 30 }] };
+  pasos[4].bloques.push({ tipo: "visualizacion", variante: "grafico", descripcion: "d", datos: malo } as never);
+  const errores = validarDatos({ tipo: "leccion", pasos });
+  assert.ok(errores.some((e) => /pasos\[4\]\.bloques\[1\]\.datos \(graficoCircular\): los porcentajes suman 90, no 100/.test(e)), errores.join("\n"));
+
+  pasos[4].bloques[1] = { tipo: "visualizacion", variante: "grafico", descripcion: "d", datos: CIRCULAR } as never;
+  assert.ok(!validarDatos({ tipo: "leccion", pasos }).some((e) => e.includes("graficoCircular")));
 });

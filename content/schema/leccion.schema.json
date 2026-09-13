@@ -350,7 +350,7 @@
         "variante": { "enum": ["tabla", "grafico", "diagrama", "regla-signos"] },
         "descripcion": { "type": "string", "minLength": 1, "description": "Qué debe mostrarse, en términos suficientes para que diseño/desarrollo lo construya." },
         "datos": {
-          "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante. Dos formas sí tienen contrato cerrado, discriminadas por `datos.tipo`: \"transformacion\" (lib/transformacionesIsometricas.ts) y \"semejanza\" (lib/semejanza.ts). Los datos sin `tipo` siguen siendo libres; el `allOf` de abajo no los toca.",
+          "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante. Seis formas sí tienen contrato cerrado, discriminadas por `datos.tipo`: \"transformacion\" (lib/transformacionesIsometricas.ts), \"semejanza\" (lib/semejanza.ts) y los cuatro gráficos de datos \"graficoBarras\", \"graficoLineas\", \"graficoCircular\" y \"diagramaCajon\" (lib/estadistica.ts). Los datos sin `tipo` siguen siendo libres; el `allOf` de abajo no los toca.",
           "allOf": [
             {
               "if": { "type": "object", "properties": { "tipo": { "const": "transformacion" } }, "required": ["tipo"] },
@@ -359,6 +359,22 @@
             {
               "if": { "type": "object", "properties": { "tipo": { "const": "semejanza" } }, "required": ["tipo"] },
               "then": { "$ref": "#/definitions/datosSemejanza" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "graficoBarras" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosGraficoBarras" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "graficoLineas" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosGraficoLineas" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "graficoCircular" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosGraficoCircular" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "diagramaCajon" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosDiagramaCajon" }
             }
           ]
         }
@@ -479,6 +495,107 @@
         { "if": { "properties": { "disposicion": { "const": "ladoALado" } } }, "then": { "required": ["original", "k", "imagen"] } },
         { "if": { "properties": { "disposicion": { "const": "anidada" } } }, "then": { "required": ["grande", "chica"] } }
       ],
+      "additionalProperties": false
+    },
+
+    "serieDatos": {
+      "type": "object",
+      "required": ["nombre", "valores"],
+      "properties": {
+        "nombre": { "type": "string", "minLength": 1, "maxLength": 18 },
+        "valores": { "type": "array", "minItems": 2, "maxItems": 8, "items": { "type": "number", "minimum": 0 }, "description": "Exactamente un valor por categoría. Todos se rotulan en el gráfico: solo el valor rotulado es autoritativo." }
+      },
+      "additionalProperties": false
+    },
+
+    "datosGraficoBarras": {
+      "type": "object",
+      "description": "Barras simples (una serie) o agrupadas (dos series) sobre categorías. Eje vertical desde 0 salvo ejeTruncado: true, que exige ejemploEnganoso: true (el gráfico que enseña a desconfiar, marcado con quiebre en el eje). Contrato en motivoRechazoDatosGrafico (lib/estadistica.ts): valores numéricos no negativos, uno por categoría.",
+      "required": ["tipo", "categorias", "series", "ejeVertical"],
+      "properties": {
+        "tipo": { "const": "graficoBarras" },
+        "categorias": { "type": "array", "minItems": 2, "maxItems": 8, "items": { "type": "string", "minLength": 1, "maxLength": 18 } },
+        "series": { "type": "array", "minItems": 1, "maxItems": 2, "items": { "$ref": "#/definitions/serieDatos" } },
+        "ejeVertical": { "type": "string", "minLength": 1, "description": "Rótulo del eje vertical con su unidad." },
+        "ejeTruncado": { "type": "boolean" },
+        "ejemploEnganoso": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "datosGraficoLineas": {
+      "type": "object",
+      "description": "Hasta dos series sobre categorías ORDENADAS en el tiempo (meses, años, semanas), con cada punto rotulado con su valor. Misma regla de eje que las barras.",
+      "required": ["tipo", "categorias", "series", "ejeVertical"],
+      "properties": {
+        "tipo": { "const": "graficoLineas" },
+        "categorias": { "type": "array", "minItems": 2, "maxItems": 8, "items": { "type": "string", "minLength": 1, "maxLength": 18 } },
+        "series": { "type": "array", "minItems": 1, "maxItems": 2, "items": { "$ref": "#/definitions/serieDatos" } },
+        "ejeVertical": { "type": "string", "minLength": 1 },
+        "ejeTruncado": { "type": "boolean" },
+        "ejemploEnganoso": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "sectorCircular": {
+      "type": "object",
+      "required": ["categoria"],
+      "properties": {
+        "categoria": { "type": "string", "minLength": 1, "maxLength": 18 },
+        "porcentaje": { "type": "number", "exclusiveMinimum": 0 },
+        "angulo": { "type": "number", "exclusiveMinimum": 0 }
+      },
+      "additionalProperties": false
+    },
+
+    "datosGraficoCircular": {
+      "type": "object",
+      "description": "Sectores rotulados con su porcentaje o su ángulo, declarados desde el contenido (el componente no calcula nada). Los porcentajes suman 100 exacto y los ángulos 360, medido con sumaExacta (tolerancia 0 sobre racionales). Sin 3D ni explosión.",
+      "required": ["tipo", "sectores", "rotulo"],
+      "properties": {
+        "tipo": { "const": "graficoCircular" },
+        "sectores": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "$ref": "#/definitions/sectorCircular" } },
+        "rotulo": { "enum": ["porcentaje", "angulo"], "description": "Qué medida se escribe en cada sector. Esa medida es obligatoria en todos los sectores." }
+      },
+      "additionalProperties": false
+    },
+
+    "cajonResumen": {
+      "type": "object",
+      "required": ["nombre", "min", "q1", "mediana", "q3", "max"],
+      "properties": {
+        "nombre": { "type": "string", "minLength": 1, "maxLength": 18 },
+        "min": { "type": "number" },
+        "q1": { "type": "number" },
+        "mediana": { "type": "number" },
+        "q3": { "type": "number" },
+        "max": { "type": "number" },
+        "datos": { "type": "array", "minItems": 4, "items": { "type": "number" }, "description": "Opcional. Si vienen, resumenCincoNumeros(datos) tiene que dar exactamente los cinco valores declarados." }
+      },
+      "additionalProperties": false
+    },
+
+    "marcaCajon": {
+      "type": "object",
+      "required": ["valor", "rotulo"],
+      "properties": {
+        "valor": { "type": "number" },
+        "rotulo": { "type": "string", "minLength": 1, "maxLength": 18 }
+      },
+      "additionalProperties": false
+    },
+
+    "datosDiagramaCajon": {
+      "type": "object",
+      "description": "Uno o dos cajones horizontales sobre la MISMA escala, con min, Q1, mediana, Q3 y max rotulados, bigotes, y hasta dos datos individuales marcados con su rótulo. La escala se calcula desde todos los valores con margen (escalaDeCajon). Se exige min ≤ q1 ≤ mediana ≤ q3 ≤ max.",
+      "required": ["tipo", "cajones", "ejeHorizontal"],
+      "properties": {
+        "tipo": { "const": "diagramaCajon" },
+        "cajones": { "type": "array", "minItems": 1, "maxItems": 2, "items": { "$ref": "#/definitions/cajonResumen" } },
+        "ejeHorizontal": { "type": "string", "minLength": 1, "description": "Rótulo del eje horizontal con su unidad." },
+        "marcas": { "type": "array", "maxItems": 2, "items": { "$ref": "#/definitions/marcaCajon" } }
+      },
       "additionalProperties": false
     },
 

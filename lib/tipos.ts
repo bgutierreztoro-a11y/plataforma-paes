@@ -172,10 +172,11 @@ export interface BloqueVisualizacion {
   tipo: "visualizacion";
   variante: "tabla" | "grafico" | "diagrama" | "regla-signos";
   descripcion: string;
-  /* Libre salvo dos formas con contrato cerrado, discriminadas por `datos.tipo`:
-     `DatosTransformacion` y `DatosSemejanza` (abajo). Sigue siendo `unknown`
-     porque el resto de las variantes (tabla, bandas, figuras, cuerpos) se
-     discrimina por forma en `BloqueVisualizacion.tsx`, no por un campo. */
+  /* Libre salvo seis formas con contrato cerrado, discriminadas por `datos.tipo`:
+     `DatosTransformacion`, `DatosSemejanza` y los cuatro `DatosGraficoEstadistico`
+     (abajo). Sigue siendo `unknown` porque el resto de las variantes (tabla,
+     bandas, figuras, cuerpos) se discrimina por forma en
+     `BloqueVisualizacion.tsx`, no por un campo. */
   datos?: unknown;
 }
 
@@ -233,6 +234,73 @@ export type DatosSemejanza =
       grande: TrianguloAnidadoDatos;
       chica: TrianguloAnidadoDatos;
     };
+
+export interface SerieDatos {
+  nombre: string;
+  valores: number[];
+}
+
+/** Espejo de `datosGraficoBarras`. El contrato vivo es `motivoRechazoDatosGrafico` en lib/estadistica.ts. */
+export interface DatosGraficoBarras {
+  tipo: "graficoBarras";
+  categorias: string[];
+  series: SerieDatos[];
+  ejeVertical: string;
+  ejeTruncado?: boolean;
+  ejemploEnganoso?: boolean;
+}
+
+/** Espejo de `datosGraficoLineas`. */
+export interface DatosGraficoLineas {
+  tipo: "graficoLineas";
+  categorias: string[];
+  series: SerieDatos[];
+  ejeVertical: string;
+  ejeTruncado?: boolean;
+  ejemploEnganoso?: boolean;
+}
+
+export interface SectorCircular {
+  categoria: string;
+  porcentaje?: number;
+  angulo?: number;
+}
+
+/** Espejo de `datosGraficoCircular`: porcentajes que suman 100, o ángulos que suman 360. */
+export interface DatosGraficoCircular {
+  tipo: "graficoCircular";
+  sectores: SectorCircular[];
+  rotulo: "porcentaje" | "angulo";
+}
+
+export interface CajonResumen {
+  nombre: string;
+  min: number;
+  q1: number;
+  mediana: number;
+  q3: number;
+  max: number;
+  datos?: number[];
+}
+
+export interface MarcaCajon {
+  valor: number;
+  rotulo: string;
+}
+
+/** Espejo de `datosDiagramaCajon`: uno o dos cajones sobre la misma escala. */
+export interface DatosDiagramaCajon {
+  tipo: "diagramaCajon";
+  cajones: CajonResumen[];
+  ejeHorizontal: string;
+  marcas?: MarcaCajon[];
+}
+
+export type DatosGraficoEstadistico =
+  | DatosGraficoBarras
+  | DatosGraficoLineas
+  | DatosGraficoCircular
+  | DatosDiagramaCajon;
 
 export type Bloque =
   | BloqueTexto
