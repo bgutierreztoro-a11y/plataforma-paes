@@ -1,0 +1,742 @@
+{
+  "tipo": "leccion",
+  "id": "semejanza-medir-sin-acercarse",
+  "moduloId": "semejanza-proporcionalidad",
+  "titulo": "Semejanza aplicada a escalas y modelos",
+  "objetivo": "Leer y usar una escala 1:n en planos, mapas y maquetas, convertir las unidades al pasar del dibujo a la realidad y al revés, y saber que al escalar por k toda longitud (lado, perímetro) se multiplica por k y toda área por k².",
+  "tiempoEstimadoMin": 35,
+  "prerrequisitos": [
+    "Razón de semejanza k = imagen ÷ original y lados homólogos (Lección 1 de este módulo)",
+    "Conversión de unidades de longitud: cm, m, km (Lección 2 del módulo Figuras geométricas)",
+    "Área y perímetro de rectángulos y cuadrados (Lección 2 del módulo Figuras geométricas)"
+  ],
+  "conceptos": [
+    "escala 1:n: la realidad es n veces el dibujo; para pasar del dibujo a la realidad se multiplica por n, y para pasar de la realidad al dibujo se divide por n",
+    "al pasar del dibujo a la realidad hay que convertir unidades: 40 veces 15 cm son 600 cm, o sea 6 m",
+    "razón de perímetros: si los lados se multiplican por k, el perímetro también se multiplica por k",
+    "razón de áreas: si los lados se multiplican por k, el área se multiplica por k², porque crece en dos direcciones a la vez",
+    "en una escala 1:n, las longitudes reales son n veces las del dibujo y las áreas reales son n² veces",
+    "una maqueta, un plano y un mapa son figuras semejantes a lo que representan"
+  ],
+  "_notasInternas": [
+    "L2 del módulo semejanza-y-proporcionalidad (eje Geometría, módulo #13). moduloId = semejanza-proporcionalidad. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md, sección L2. Descriptor DEMRE (docs/temario-demre-m1-2027.md:109): 'Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala y otras situaciones de la vida diaria y otras asignaturas'.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: error-2, error-5, error-6, error-7, error-8. error-5 a error-8 nacen acá; error-2 se reutiliza en el ítem 3 (razón invertida al pasar de 1:40 a 1:20).",
+    "Dominios: (núcleo) maqueta de un molino de viento a escala 1:40 para la exposición de fin de año; (aplicación) mapa de una ruta de trekking en un parque nacional a escala 1:25.000; (práctica) plano de la sala de la exposición a escala 1:50. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
+    "Cambio respecto de los números reservados en el doc de diseño: la torre pasó de 12 cm (4,8 m) a 15 cm (6 m) y el aspa de 8 cm (3,2 m) a 11 cm (4,4 m); la base pasó de 5 cm × 3 cm a 10 cm × 6 cm (4 m × 2,4 m, 9,6 m²). Motivo: 1,2, 3,2 con 2,4 y 0,2 (distractor de error-7 del aspa) chocaban con contextosNumericos de otras lecciones (1,2 en enteros y porcentaje; 0,2 en potencias) y el brief pide no propagar advertencias 🟡. Se agregó el cable de la torre (8-15-17 en la maqueta, 3,2 m-6 m-6,8 m real) como hilo de tríos pitagóricos escalados. El mapa usa 8 cm → 2 km y 3 km → 12 cm en vez de 6 cm → 1,5 km (1,5 choca con enteros y porcentaje).",
+    "Requisito de diseño: el descubrimiento es por tabulación, con cuadrados de lado 2, 4 y 6 cm y áreas 4, 16 y 36 cm². El estudiante ve los factores 4 y 9 antes de que aparezca k². La expresión k² y el número 1.600 (40²) aparecen por primera vez en descubrimiento, después de la tabla.",
+    "Todas las cifras verificadas con node -e sobre lib/semejanza.ts (factores, fraccion, mismaFraccion): 15 cm × 40 = 600 cm = 6 m; 11 cm × 40 = 440 cm = 4,4 m; base 10 cm × 6 cm → 4 m × 2,4 m = 9,6 m² (60 cm² × 1.600 = 96.000 cm²); cable 17 cm → 6,8 m; perímetro 32 cm → 12,8 m; plano 1:50: 13 cm → 6,5 m, mesón 8 cm × 4 cm → 4 m × 2 m = 8 m², perímetro 24 cm → 12 m; mapa 1:25.000: 8 cm → 200.000 cm = 2 km, 3 km = 300.000 cm → 12 cm; puerta 2 m = 200 cm → 5 cm; ítems: 14 cm → 3,5 km; base 12 cm × 10 cm → 4,8 m × 4 m = 19,2 m²; de 1:40 a 1:20, k = 2, área × 4.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,4; 4; 2,4; 9,6; 1.600; 6,8; 12,8; 6,5; 8; 2; 12; 5; 3,5; 19,2}, distractores numéricos {0,275; 440; 0,25; 400; 0,15; 240; 0,24; 2.400; 96.000; 40; 80; 0,425; 680; 272; 512; 1.280; 0,26; 650; 0,16; 80.000; 1.800; 0,00032; 200; 75.000; 0,00012; 0,05; 0,125; 0,00056; 0,35; 35; 0,012; 0,48; 192.000}; sin intersección. La predicción de curiosidad (6 m / 0,375 cm / 600 m) no se corrige y no entra al barrido.",
+    "Visuales: descubrimiento lleva dos bloques { tipo: 'semejanza', disposicion: 'ladoALado' } con todas las cotas rotuladas: cuadrado de 2 cm y su imagen por k = 2 (4 cm), y cuadrado de 2 cm y su imagen por k = 3 (6 cm). Ningún bloque rotula una cota que se pregunte. Los ítems no llevan visual.",
+    "Sin auditoria.constante: no hay una constante numérica única (1.600 es el factor de área de 1:40, pero la lección enseña k² en general). Campo adimensional declarado: factorArea (cociente entre dos áreas, número puro).",
+    "P2: el paso consolidacion nombra los caminos equivocados de error-5, error-7 y error-8 antes del correcto, y su bloque pregunta lleva error-8, error-6 y error-7 en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: maqueta de un molino de viento a escala 1:40; torre de 15 cm en la maqueta, 6 m reales (predicción sin corregir)",
+    "problema: aspa de 11 cm en la maqueta → 4,4 m reales",
+    "pensar/pistas: base de la maqueta de 10 cm × 6 cm → 4 m × 2,4 m, área real 9,6 m² (área en la maqueta 60 cm²)",
+    "descubrimiento: cuadrados de lado 2 cm, 4 cm y 6 cm con áreas 4, 16 y 36 cm²; factores de área 4 y 9; factor de área de 1:40 = 1.600 (adimensional, es 40²)",
+    "generalizacion: cable de la torre 8-15-17 cm en la maqueta → 3,2 m, 6 m y 6,8 m; perímetro de la base 32 cm → 12,8 m",
+    "practica: plano de la sala de la exposición a escala 1:50; pared de 13 cm → 6,5 m; mesón de 8 cm × 4 cm → 4 m × 2 m, área 8 m², perímetro 24 cm → 12 m",
+    "aplicacion: mapa de trekking de un parque nacional a escala 1:25.000 (adimensional, es la escala); sendero de 8 cm → 2 km; 3 km → 12 cm en el mapa",
+    "consolidacion: puerta del molino real de 2 m → 5 cm en la maqueta",
+    "itemsPAES: 14 cm en un mapa 1:25.000 → 3,5 km entre dos refugios; base de una maqueta de un faro a escala 1:40, de 12 cm × 10 cm → 4,8 m × 4 m = 19,2 m²; de 1:40 a 1:20 el área de cada cara se multiplica por 4",
+    "Los valores de cada distractor (ledger completo) están en _notasInternas, no acá: la convención del módulo (L1 y cierre) registra en contextosNumericos los datos y las respuestas correctas de cada escena, y el barrido de colisión distractor/correcta vive en la nota interna."
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "factorArea": "cociente entre el área real y el área de la maqueta, dos áreas en la misma unidad: es un número puro"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Cuarenta veces más chico",
+      "_notasInternas": [
+        "Sin regla de área todavía. Se presenta la maqueta 1:40 y se lee la escala en palabras (la realidad es 40 veces la maqueta): eso no es el descubrimiento de la lección, que es k². La predicción no se corrige. La respuesta correcta (6 m) queda como número entero sin decimales, para que los tres candidatos se distingan por la operación y no por la cifra."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Para la exposición de fin de año, un curso construye la **maqueta de un molino de viento** a escala **1:40**. La escala se lee así: cada centímetro de la maqueta representa **40 centímetros** del molino real. La realidad es 40 veces la maqueta.\n\nLa torre de la maqueta mide **15 cm** de alto."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular todavía, ¿cuánto crees que mide la torre del molino real?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "6 m: 15 cm multiplicado por 40 son 600 cm",
+            "0,375 cm: 15 cm dividido por 40",
+            "600 m: 15 multiplicado por 40"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "La maqueta y el molino real son **figuras semejantes**: misma forma, otro tamaño, con razón de semejanza k = 40 de la maqueta a la realidad. Todo lo de la lección anterior sirve acá. Pero hay una pregunta que quedó abierta: si los lados se multiplican por 40, ¿el área también? Esta lección la responde."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Leer la escala",
+      "_notasInternas": [
+        "Aspa de 11 cm → 440 cm = 4,4 m. Distractores: 0,275 cm es error-7 (11 ÷ 40, la escala al revés); 440 m es error-8 (multiplicó bien y no convirtió cm a m). Verificado con node -e. La predicción sobre el área de la base prepara el descubrimiento y no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un aspa de la maqueta mide 11 cm. ¿Cuánto mide el aspa del molino real?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "4,4 m",
+              "esCorrecta": true,
+              "feedback": "Correcto. 11 cm · 40 = 440 cm, y 440 cm son 4,4 m. Primero se multiplica por la escala y después se convierte la unidad."
+            },
+            {
+              "id": "b",
+              "texto": "0,275 cm",
+              "esCorrecta": false,
+              "feedback": "0,275 es 11 ÷ 40: eso achica el aspa, y el molino real es más grande que la maqueta. En 1:40 la realidad es 40 veces el dibujo, así que se multiplica: 11 · 40 = 440 cm = 4,4 m.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "440 m",
+              "esCorrecta": false,
+              "feedback": "440 es la cuenta correcta, pero en centímetros: 11 cm · 40 = 440 cm. Un aspa de 440 m sería más alta que un cerro. Falta convertir: 440 cm = 4,4 m.",
+              "errorCatalogado": "error-8"
+            }
+          ]
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "La base de la maqueta es un rectángulo. Si cada lado del rectángulo real es 40 veces el de la maqueta, ¿cuántas veces más grande crees que es el área real que el área de la maqueta?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "40 veces, igual que los lados",
+            "80 veces, porque son dos lados",
+            "Más de 80 veces"
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "La base de la maqueta",
+      "_notasInternas": [
+        "Base 10 cm × 6 cm → 4 m × 2,4 m; área real 4 · 2,4 = 9,6 m². El camino esperado es convertir primero los lados. feedbackPorError: largo 0,25 y ancho 0,15 son error-7 (÷ 40); largo 400 y ancho 240 son error-8 (cm sin convertir); área 0,24 es error-5 (60 cm² · 40 = 2.400 cm² = 0,24 m²); área 2.400 es error-5 sin convertir; área 96.000 es error-8 (60 · 1.600 = 96.000 cm² reportados como m²). Verificado con node -e. Ninguno de los mensajes nombra k² ni 1.600: el descubrimiento viene en el paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "La base de la maqueta mide 10 cm de largo y 6 cm de ancho. Calcula las medidas reales de la base del molino y su área real. Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "largoReal",
+              "etiqueta": "Largo real",
+              "respuestaCorrecta": 4,
+              "unidad": "m"
+            },
+            {
+              "id": "anchoReal",
+              "etiqueta": "Ancho real",
+              "respuestaCorrecta": 2.4,
+              "unidad": "m"
+            },
+            {
+              "id": "areaReal",
+              "etiqueta": "Área real",
+              "respuestaCorrecta": 9.6,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "largoReal",
+              "valorObtenido": 0.25,
+              "mensaje": "Ese valor divide 10 por 40. La base real es más grande que la de la maqueta: en 1:40 se multiplica por 40, y después se pasa de cm a m.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "largoReal",
+              "valorObtenido": 400,
+              "mensaje": "Ese valor está en centímetros: 10 cm · 40 = 400 cm. El campo pide metros, y 400 cm son 4 m.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "campoId": "anchoReal",
+              "valorObtenido": 0.15,
+              "mensaje": "Ese valor divide 6 por 40. La escala 1:40 agranda: se multiplica 6 cm por 40, y después se convierte a metros.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "anchoReal",
+              "valorObtenido": 240,
+              "mensaje": "Ese valor está en centímetros: 6 cm · 40 = 240 cm. En metros son 2,4 m.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "campoId": "areaReal",
+              "valorObtenido": 0.24,
+              "mensaje": "Ese valor multiplica el área de la maqueta (60 cm²) por 40 una sola vez y convierte a m². Pero el área no crece igual que un lado: prueba calcular primero los dos lados reales en metros y después multiplicarlos entre sí.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "areaReal",
+              "valorObtenido": 2400,
+              "mensaje": "Ese valor multiplica 60 cm² por 40 una sola vez, y además queda en cm². Calcula primero los lados reales en metros (largo y ancho) y multiplícalos: así el área sale directamente en m².",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "areaReal",
+              "valorObtenido": 96000,
+              "mensaje": "Ese valor es el área real, pero en cm². Como 1 m² son 10.000 cm², hay que dividir por 10.000. Más corto: multiplica los lados reales ya convertidos a metros.",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "Primero cada lado: multiplica por 40 y pasa a metros. Después el área real es largo real por ancho real, los dos en metros."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para la base",
+      "_notasInternas": [
+        "Misma base. Las pistas empujan a convertir los lados antes de calcular el área; el nivel 3 entrega los dos lados en metros y deja la multiplicación sin ejecutar. Ninguna pista nombra k² ni 1.600."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "El largo y el ancho reales se calculan igual que el aspa: multiplica por 40 y convierte a metros. Deja el área para el final."
+            },
+            {
+              "nivel": 2,
+              "texto": "Para el área no multipliques los 60 cm² de la maqueta por 40: eso trata al área como si fuera un lado. Usa los dos lados reales que ya tienes."
+            },
+            {
+              "nivel": 3,
+              "texto": "Largo real: 10 · 40 = 400 cm = 4 m. Ancho real: 6 · 40 = 240 cm = 2,4 m. El área real es 4 · 2,4, en m²."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El área crece dos veces",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Tabla de cuadrados de lado 2, 4 y 6 cm con áreas 4, 16 y 36 cm²: el lado se multiplica por 2 y por 3, el área por 4 y por 9. Dos visuales ladoALado (2 → 4 con k = 2; 2 → 6 con k = 3), todas las cotas rotuladas. Aquí aparecen por primera vez k² y el 1.600 de la maqueta. seleccion: factores 4 y 9 correcto; 2 y 3 es error-5; 8 y 27 no tiene id (confunde con volumen, tres direcciones). numerica: factor de área de 1:40 = 1.600 (adimensional); feedbackPorError 40 es error-5; 80 es sumar 40 + 40, sin id. Verificado con node -e: factores(2).area = 4, factores(3).area = 9, factores(40).area = 1.600."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Antes de volver al molino, mira algo más simple: tres cuadrados. El primero tiene lado **2 cm**. El segundo tiene los lados multiplicados por 2 (**4 cm**) y el tercero, por 3 (**6 cm**). Compara sus áreas."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Un cuadrado de lado 2 cm y, a su lado, un cuadrado de lado 4 cm (razón k = 2), a la misma escala y con las cuatro cotas rotuladas en cada uno.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "ladoALado",
+            "original": { "vertices": [[0, 0], [2, 0], [2, 2], [0, 2]], "cotas": ["2 cm", "2 cm", "2 cm", "2 cm"] },
+            "k": 2,
+            "imagen": { "cotas": ["4 cm", "4 cm", "4 cm", "4 cm"] }
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "El mismo cuadrado de lado 2 cm y, a su lado, un cuadrado de lado 6 cm (razón k = 3), a la misma escala y con las cuatro cotas rotuladas en cada uno.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "ladoALado",
+            "original": { "vertices": [[0, 0], [2, 0], [2, 2], [0, 2]], "cotas": ["2 cm", "2 cm", "2 cm", "2 cm"] },
+            "k": 3,
+            "imagen": { "cotas": ["6 cm", "6 cm", "6 cm", "6 cm"] }
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con el lado de cada cuadrado, por cuánto se multiplicó el lado respecto del primero, el área y por cuánto se multiplicó el área.",
+          "datos": {
+            "columnas": ["Lado", "Lado ÷ lado del primero", "Área", "Área ÷ área del primero"],
+            "filas": [
+              ["2 cm", "1", "4 cm²", "1"],
+              ["4 cm", "2", "16 cm²", "16 ÷ 4 = 4"],
+              ["6 cm", "3", "36 cm²", "36 ÷ 4 = 9"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira la última columna. Cuando el lado se multiplica por 2, ¿por cuánto se multiplica el área? ¿Y cuando el lado se multiplica por 3?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Por 4 y por 9: el área se multiplica por el factor del lado elevado al cuadrado.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 4 = 2 · 2 y 9 = 3 · 3. El área crece en dos direcciones a la vez: el largo se multiplica por k y el ancho también por k, así que el área se multiplica por **k · k = k²**."
+            },
+            {
+              "id": "b",
+              "texto": "Por 2 y por 3, lo mismo que los lados.",
+              "esCorrecta": false,
+              "feedback": "La tabla dice otra cosa: 16 no es el doble de 4, es el cuádruple; y 36 no es el triple de 4, es nueve veces. El área crece en dos direcciones, y por eso el factor del lado se aplica dos veces: 2 · 2 = 4 y 3 · 3 = 9.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "Por 8 y por 27: dos por dos por dos, y tres por tres por tres.",
+              "esCorrecta": false,
+              "feedback": "Eso sería para un volumen, que crece en tres direcciones. Un área es plana y crece en dos: largo y ancho. La tabla lo confirma: 16 ÷ 4 = 4 = 2 · 2 y 36 ÷ 4 = 9 = 3 · 3."
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora el molino. Cada lado real es 40 veces el de la maqueta. ¿Por cuánto se multiplica el área al pasar de la maqueta a la realidad?",
+          "campos": [
+            {
+              "id": "factorArea",
+              "etiqueta": "Factor del área",
+              "respuestaCorrecta": 1600
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "factorArea",
+              "valorObtenido": 40,
+              "mensaje": "Ese es el factor de los lados. Recién viste que el área se multiplica por el factor del lado elevado al cuadrado: 40 · 40.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "factorArea",
+              "valorObtenido": 80,
+              "mensaje": "Ese valor suma 40 + 40. El área no suma los dos factores, los multiplica: largo por 40 y ancho por 40 es 40 · 40."
+            }
+          ],
+          "feedbackPorDefecto": "El largo real es 40 veces el de la maqueta y el ancho también. El área se multiplica por 40 · 40."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Comprueba con la base: 60 cm² · 1.600 = 96.000 cm², y 96.000 cm² son 9,6 m². ¿Coincide con el área que calculaste multiplicando los lados reales (4 m · 2,4 m)?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí: 4 · 2,4 = 9,6 m² por un camino y 60 · 1.600 = 96.000 cm² = 9,6 m² por el otro. Los dos caminos dan lo mismo, y el segundo es la regla: área real = área de la maqueta · 40².",
+          "feedbackFalso": "En realidad sí coincide: 4 · 2,4 = 9,6 m², y 60 · 1.600 = 96.000 cm² = 9,6 m² (porque 1 m² = 10.000 cm²). Que los dos caminos den lo mismo es la prueba de que el área se multiplica por 40², no por 40."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **al multiplicar los lados por k, el área se multiplica por k².** Con 1:40, las longitudes reales son 40 veces las de la maqueta y las áreas reales son 1.600 veces. En el próximo paso lo escribes como regla, junto con lo que le pasa al perímetro."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Longitudes por k, áreas por k²",
+      "_notasInternas": [
+        "PRIMERA aparición de la regla completa: 1:n, longitud × n, perímetro × k, área × k². Hilo de tríos pitagóricos: el cable de la torre forma 8-15-17 en la maqueta (anclado a 8 cm del pie de la torre de 15 cm), y en la realidad 3,2 m-6 m-6,8 m. Ejercicio 1: cable real 6,8 m; feedbackPorError 0,425 es error-7 (17 ÷ 40); 680 es error-8 (cm); 272 es error-6 (17 · 1.600 = 27.200 cm = 272 m, aplicó el factor del área a una longitud). Ejercicio 2: perímetro de la base 32 cm → 12,8 m; 512 es error-6 (32 · 1.600 cm = 512 m); 1.280 es error-8. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\nUna **escala 1:n** dice que la realidad es n veces el dibujo. El dibujo (maqueta, plano, mapa) y la realidad son figuras semejantes con **k = n** del dibujo a la realidad.\n\n- Toda **longitud** real (un lado, una altura, un cable, el perímetro) es la del dibujo **multiplicada por n**. Y para volver del real al dibujo, se **divide** por n.\n- Toda **área** real es la del dibujo **multiplicada por n²**, porque el área crece en dos direcciones.\n- Después de multiplicar, **convierte la unidad**: 600 cm son 6 m; 96.000 cm² son 9,6 m².\n\nEn general, si dos figuras son semejantes con razón k: **perímetro de la imagen = k · perímetro original** y **área de la imagen = k² · área original**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 1.** La torre de la maqueta (15 cm) se sujeta con un cable que va desde su punta hasta el suelo, a 8 cm del pie de la torre. Torre, suelo y cable forman un triángulo rectángulo, y 8-15-17 es un trío pitagórico: el cable mide 17 cm. ¿Cuánto mide el cable del molino real?",
+          "campos": [
+            {
+              "id": "cableReal",
+              "etiqueta": "Cable real",
+              "respuestaCorrecta": 6.8,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "cableReal",
+              "valorObtenido": 0.425,
+              "mensaje": "Ese valor divide 17 por 40 y achica el cable. La realidad es 40 veces la maqueta: 17 · 40, y después a metros.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "cableReal",
+              "valorObtenido": 680,
+              "mensaje": "Ese valor está en centímetros: 17 · 40 = 680 cm. Convierte a metros.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "campoId": "cableReal",
+              "valorObtenido": 272,
+              "mensaje": "Ese valor multiplica 17 cm por 1.600, el factor del área. Pero el cable es una longitud, y las longitudes se multiplican por 40, no por 40². Fíjate: un cable de 272 m sería más de cuarenta veces la torre real.",
+              "errorCatalogado": "error-6"
+            }
+          ],
+          "feedbackPorDefecto": "El cable es una longitud: multiplica 17 cm por 40 y convierte a metros. (Comprobación: la torre real mide 6 m y el anclaje queda a 3,2 m, y 3,2-6-6,8 es 8-15-17 multiplicado por 0,4.)"
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 2.** El perímetro de la base de la maqueta (10 cm × 6 cm) es 32 cm. ¿Cuánto mide el perímetro de la base real?",
+          "campos": [
+            {
+              "id": "perimetroReal",
+              "etiqueta": "Perímetro real",
+              "respuestaCorrecta": 12.8,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "perimetroReal",
+              "valorObtenido": 512,
+              "mensaje": "Ese valor multiplica 32 cm por 1.600. El perímetro es una longitud, aunque sume cuatro lados: se multiplica por 40, no por 40². Comprueba con los lados reales: 4 + 2,4 + 4 + 2,4.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "campoId": "perimetroReal",
+              "valorObtenido": 1280,
+              "mensaje": "Ese valor está en centímetros: 32 · 40 = 1.280 cm. En metros son 12,8 m.",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "El perímetro es una longitud: 32 cm · 40, y después a metros. Comprobación: los lados reales son 4 m y 2,4 m."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "El plano de la sala",
+      "_notasInternas": [
+        "Plano 1:50 de la sala de la exposición. P1 seleccion: pared 13 cm → 6,5 m; 0,26 cm es error-7; 650 m es error-8. P2 numerica: mesón 8 cm × 4 cm → 4 m × 2 m = 8 m²; feedbackPorError 0,16 es error-5 (32 cm² · 50 = 1.600 cm² = 0,16 m²); 80.000 es error-8 (32 · 2.500 cm² reportados como m²). El distractor 'error-5 sin convertir' (32 · 50 = 1.600 cm²) se omite a propósito: 1.600 es la respuesta correcta del factor de área en descubrimiento y colisionaría (regla 3b). P3 verdaderoFalso sobre perímetro: 24 cm → 12 m, no 24 · 2.500. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La sala donde se expondrá la maqueta tiene su propio plano, a escala **1:50**. Misma lógica, otro número: cada centímetro del plano son 50 cm reales."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "En el plano, la pared del fondo de la sala mide 13 cm. ¿Cuánto mide la pared real?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "6,5 m",
+              "esCorrecta": true,
+              "feedback": "Correcto. 13 cm · 50 = 650 cm = 6,5 m."
+            },
+            {
+              "id": "b",
+              "texto": "0,26 cm",
+              "esCorrecta": false,
+              "feedback": "0,26 es 13 ÷ 50. Una pared de un cuarto de centímetro no existe: la escala 1:50 agranda, así que se multiplica por 50 y se convierte: 650 cm = 6,5 m.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "650 m",
+              "esCorrecta": false,
+              "feedback": "650 es la cuenta correcta, en centímetros. Una pared de 650 m mediría seis cuadras. Convierte: 650 cm = 6,5 m.",
+              "errorCatalogado": "error-8"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "El mesón donde irá la maqueta mide 8 cm × 4 cm en el plano. ¿Cuál es el área real del mesón?",
+          "campos": [
+            {
+              "id": "areaMeson",
+              "etiqueta": "Área real del mesón",
+              "respuestaCorrecta": 8,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaMeson",
+              "valorObtenido": 0.16,
+              "mensaje": "Ese valor multiplica el área del plano (32 cm²) por 50 una sola vez. El área se multiplica por 50², o mejor: convierte los lados primero, 4 m y 2 m, y multiplícalos.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "areaMeson",
+              "valorObtenido": 80000,
+              "mensaje": "Ese valor es el área real en cm²: 32 · 2.500 = 80.000 cm². El campo pide m², y 1 m² son 10.000 cm².",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "Lados reales: 8 · 50 = 400 cm = 4 m y 4 · 50 = 200 cm = 2 m. El área real es 4 · 2, en m²."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "El perímetro del mesón en el plano es 24 cm. Para obtener el perímetro real hay que multiplicar 24 por 2.500, porque 2.500 es 50².",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso. El perímetro es una longitud, no un área: se multiplica por 50, no por 50². 24 cm · 50 = 1.200 cm = 12 m, que es justamente 4 + 2 + 4 + 2 con los lados reales.",
+          "feedbackFalso": "Exacto. El perímetro suma longitudes, así que se multiplica por 50: 24 · 50 = 1.200 cm = 12 m. Comprueba con los lados reales: 4 + 2 + 4 + 2 = 12 m. El 50² es solo para áreas."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El mapa del parque",
+      "_notasInternas": [
+        "Mapa de trekking 1:25.000. Numerica 1: sendero 8 cm → 200.000 cm = 2 km; feedbackPorError 0,00032 es error-7 (8 ÷ 25.000); 200 es error-8 (200.000 cm leídos como m, o sea 200 km). Numerica 2: 3 km = 300.000 cm → 12 cm; 75.000 es error-7 (3 · 25.000, multiplicó lo real por n); 0,00012 es error-8 (3 ÷ 25.000 sin pasar km a cm). Verificado con node -e. La abierta traslada k² a un área en el mapa sin pedir número."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un mapa de trekking de un parque nacional está a escala **1:25.000**: cada centímetro del mapa son 25.000 cm reales. La escala es enorme, y por eso acá conviene convertir con cuidado: **1 km = 1.000 m = 100.000 cm**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un sendero mide 8 cm en el mapa. ¿Cuánto mide en la realidad, en kilómetros?",
+          "campos": [
+            {
+              "id": "senderoReal",
+              "etiqueta": "Largo real del sendero",
+              "respuestaCorrecta": 2,
+              "unidad": "km"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "senderoReal",
+              "valorObtenido": 0.00032,
+              "mensaje": "Ese valor divide 8 por 25.000. Un sendero real no puede ser más corto que su dibujo: la escala 1:25.000 agranda, se multiplica.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "senderoReal",
+              "valorObtenido": 200,
+              "mensaje": "8 · 25.000 = 200.000, pero en centímetros. 200.000 cm no son 200 km: como 1 km = 100.000 cm, son 2 km. Un sendero de 200 km cruzaría media región.",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "8 cm · 25.000 = 200.000 cm. Convierte a kilómetros dividiendo por 100.000."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Otro sendero mide 3 km en la realidad. ¿Cuántos centímetros mide en el mapa?",
+          "campos": [
+            {
+              "id": "senderoMapa",
+              "etiqueta": "Largo en el mapa",
+              "respuestaCorrecta": 12,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "senderoMapa",
+              "valorObtenido": 75000,
+              "mensaje": "Ese valor multiplica 3 por 25.000. Para ir de la realidad al mapa se divide por 25.000, no se multiplica: el mapa es más chico. Y antes hay que pasar los 3 km a centímetros.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "senderoMapa",
+              "valorObtenido": 0.00012,
+              "mensaje": "Ese valor divide 3 por 25.000, pero con los 3 en kilómetros. Primero convierte: 3 km = 300.000 cm. Recién entonces divide por 25.000.",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "Pasa 3 km a centímetros (1 km = 100.000 cm) y divide por 25.000: el mapa es 25.000 veces más chico que la realidad."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "En el mapa, una laguna ocupa una zona de cierta área. Explica con tus palabras por cuánto habría que multiplicar esa área del mapa para obtener el área real de la laguna, y por qué no basta con multiplicar por 25.000.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Por 25.000², que es 625.000.000. Cada longitud de la laguna real (largo, ancho) es 25.000 veces la del mapa, y el área crece en las dos direcciones a la vez, así que el factor del largo se aplica dos veces: 25.000 · 25.000. Multiplicar por 25.000 una sola vez trataría al área como si fuera una longitud."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Un número para los lados, otro para las áreas",
+      "_notasInternas": [
+        "Metacognición sobre cuándo se usa n y cuándo n². El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve L3: ¿y cuando no hay plano, sino un poste al sol y su sombra?"
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: si te dan una escala 1:n y una medida del dibujo, ¿cómo decides si multiplicas por n o por n²? ¿Y en qué momento conviertes las unidades?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que distinga longitud (× n) de área (× n²), que diga que del dibujo a la realidad se multiplica y al revés se divide, y que convierta la unidad después de escalar, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con las escalas, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Multiplicar el área por n:** el área crece en dos direcciones y se multiplica por n².\n2. **Multiplicar una longitud por n²:** un lado, un cable o un perímetro se multiplican por n, aunque el perímetro sume cuatro lados.\n3. **Leer la escala al revés:** en 1:n la realidad es n veces el dibujo. Del dibujo a la realidad se multiplica; de la realidad al dibujo se divide.\n4. **No convertir las unidades:** 440 cm no son 440 m, y 200.000 cm no son 200 km.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: hasta acá siempre hubo un dibujo con su escala. ¿Y cuando no hay plano ni maqueta, sino un poste al sol y su sombra? Esa es la próxima lección."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de error-5, error-7 y error-8, seguido de un bloque pregunta: puerta real de 2 m = 200 cm → 200 ÷ 40 = 5 cm en la maqueta; 0,05 cm es error-8 (2 ÷ 40 sin pasar a cm); 0,125 cm es error-6 (200 ÷ 1.600, el factor del área en una longitud); 80 m es error-7 (200 cm · 40 = 8.000 cm = 80 m, multiplicó lo real por n). Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Una **escala 1:n** significa que la realidad es **n veces** el dibujo: del dibujo a la realidad se multiplica por n; de la realidad al dibujo se divide por n.\n- Toda **longitud** (lado, altura, cable, perímetro) se multiplica por **k**.\n- Toda **área** se multiplica por **k²**, porque crece en dos direcciones.\n- Después de escalar, **convierte la unidad**: cm a m, cm a km, cm² a m².\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **multiplica el área por k**. Falla porque el área crece en dos direcciones a la vez: el largo se multiplica por k y el ancho también. Lo que funciona es **k · k**, o convertir los lados primero y multiplicarlos después.\n\nMucha gente **lee 1:50 como si fuera 50:1** y divide el plano por 50 para llegar a la realidad. Falla porque le sale una pared de un cuarto de centímetro. Lo que funciona es recordar que **1:n agranda**: la realidad es n veces el dibujo.\n\nMucha gente **multiplica bien y no convierte**, y entrega 650 m donde eran 650 cm. Falla porque el número es correcto y la unidad no. Lo que funciona es **convertir siempre al final**, y comprobar que el resultado tenga sentido: una pared no mide seis cuadras.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "La puerta del molino real mide 2 m de alto. ¿Cuánto mide la puerta en la maqueta a escala 1:40?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "0,05 cm",
+              "esCorrecta": false,
+              "feedback": "0,05 es 2 ÷ 40, con los 2 en metros. Primero convierte: 2 m = 200 cm. Recién entonces divide por 40, porque la maqueta es 40 veces más chica: 200 ÷ 40 = 5 cm.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "clave": "B",
+              "texto": "0,125 cm",
+              "esCorrecta": false,
+              "feedback": "0,125 es 200 ÷ 1.600: divide por el factor del área. La altura de una puerta es una longitud, y las longitudes se dividen por 40: 200 ÷ 40 = 5 cm.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "clave": "C",
+              "texto": "5 cm",
+              "esCorrecta": true,
+              "feedback": "Correcto. 2 m = 200 cm, y de la realidad a la maqueta se divide por 40: 200 ÷ 40 = 5 cm."
+            },
+            {
+              "clave": "D",
+              "texto": "80 m",
+              "esCorrecta": false,
+              "feedback": "80 m es 200 cm · 40 = 8.000 cm: multiplica lo real por 40, como si la maqueta fuera más grande que el molino. La maqueta es la chica: de la realidad a la maqueta se divide por 40: 200 ÷ 40 = 5 cm.",
+              "errorCatalogado": "error-7"
+            }
+          ],
+          "notaVerificacionMatematica": "2 m = 200 cm. Maqueta: 200 ÷ 40 = 5 cm. Distractores: 2 ÷ 40 = 0,05 (error-8, sin convertir); 200 ÷ 1.600 = 0,125 (error-6); 200 · 40 = 8.000 cm = 80 m (error-7). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "semejanza-l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En un mapa a escala 1:25.000, la distancia entre dos refugios de un parque nacional mide 14 cm. ¿Cuál es la distancia real entre los refugios?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,00056 km",
+          "esCorrecta": false,
+          "feedback": "0,00056 es 14 ÷ 25.000: divide el mapa por la escala, como si la realidad fuera más chica que el dibujo. En 1:25.000 la realidad es 25.000 veces el mapa: 14 · 25.000 = 350.000 cm = 3,5 km.",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "B",
+          "texto": "0,35 km",
+          "esCorrecta": false,
+          "feedback": "0,35 km son 350 m: la conversión se quedó corta. 14 · 25.000 = 350.000 cm, y como 1 km = 100.000 cm, son 3,5 km, no 0,35.",
+          "errorCatalogado": "error-8"
+        },
+        {
+          "clave": "C",
+          "texto": "3,5 km",
+          "esCorrecta": true,
+          "feedback": "Correcto. 14 cm · 25.000 = 350.000 cm = 3.500 m = 3,5 km."
+        },
+        {
+          "clave": "D",
+          "texto": "35 km",
+          "esCorrecta": false,
+          "feedback": "35 km es diez veces la distancia real: 350.000 cm son 3.500 m, y 3.500 m son 3,5 km. Al convertir de cm a km se divide por 100.000, no por 10.000.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Escala 1:25.000: la distancia real es 25.000 veces la del mapa. 14 cm · 25.000 = 350.000 cm. Conversión: 350.000 cm = 3.500 m = 3,5 km. La distancia real entre los refugios es 3,5 km. Comprobación: 3,5 km = 350.000 cm, y 350.000 ÷ 25.000 = 14 cm en el mapa. ✓"
+    },
+    {
+      "id": "semejanza-l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "La maqueta de un faro, a escala 1:40, está montada sobre una base rectangular de 12 cm × 10 cm que representa el terreno del faro. ¿Cuál es el área real del terreno?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,012 m²",
+          "esCorrecta": false,
+          "feedback": "0,012 es 19,2 ÷ 1.600: divide en vez de multiplicar, como si el terreno real fuera más chico que la base de la maqueta. La escala 1:40 agranda: los lados reales son 4,8 m y 4 m, y el área real es 4,8 · 4 = 19,2 m².",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "B",
+          "texto": "0,48 m²",
+          "esCorrecta": false,
+          "feedback": "0,48 m² es 120 cm² · 40 = 4.800 cm²: multiplica el área por 40 una sola vez. El área se multiplica por 40² = 1.600, porque cada lado se multiplica por 40: 4,8 m · 4 m = 19,2 m².",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "19,2 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. Lados reales: 12 · 40 = 480 cm = 4,8 m y 10 · 40 = 400 cm = 4 m. Área real: 4,8 · 4 = 19,2 m²."
+        },
+        {
+          "clave": "D",
+          "texto": "192.000 m²",
+          "esCorrecta": false,
+          "feedback": "192.000 es el área real en cm²: 120 cm² · 1.600 = 192.000 cm². Como 1 m² = 10.000 cm², son 19,2 m². Un terreno de 192.000 m² serían casi veinte canchas de fútbol.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Camino 1, por los lados: 12 cm · 40 = 480 cm = 4,8 m; 10 cm · 40 = 400 cm = 4 m; área real = 4,8 · 4 = 19,2 m². Camino 2, por el factor de área: área de la base = 12 · 10 = 120 cm²; factor = 40² = 1.600; 120 · 1.600 = 192.000 cm² = 19,2 m². Los dos caminos coinciden. ✓"
+    },
+    {
+      "id": "semejanza-l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un curso construyó la maqueta de un molino a escala 1:40 y decide rehacerla a escala 1:20. ¿Qué pasa con el área de cada cara de la maqueta nueva respecto de la anterior?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Se multiplica por 2, porque cada lado se multiplica por 2.",
+          "esCorrecta": false,
+          "feedback": "Cada lado sí se multiplica por 2 (de 1:40 a 1:20 la maqueta se agranda al doble), pero el área crece en dos direcciones: se multiplica por 2² = 4.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "B",
+          "texto": "Se multiplica por 4, porque cada lado se multiplica por 2 y el área por 2².",
+          "esCorrecta": true,
+          "feedback": "Correcto. En 1:40 cada centímetro real da 1/40 cm de maqueta; en 1:20 da 1/20 cm, el doble. Con k = 2 en los lados, el área de cada cara se multiplica por k² = 4."
+        },
+        {
+          "clave": "C",
+          "texto": "Se divide por 4, porque la razón entre las escalas es 20/40 = 1/2 y el área va con (1/2)².",
+          "esCorrecta": false,
+          "feedback": "La razón está al revés. La maqueta 1:20 es la más grande (cada centímetro real ocupa más maqueta), así que k = 40/20 = 2, no 1/2. El área se multiplica por 2² = 4.",
+          "errorCatalogado": "error-2"
+        },
+        {
+          "clave": "D",
+          "texto": "Se divide por 2, porque 1:20 es una escala más chica que 1:40.",
+          "esCorrecta": false,
+          "feedback": "1:20 no es más chica: en 1:20 la realidad es solo 20 veces la maqueta, así que la maqueta es más grande que en 1:40, donde la realidad es 40 veces. La maqueta nueva es el doble en cada lado y el cuádruple en área.",
+          "errorCatalogado": "error-7"
+        }
+      ],
+      "solucion": "En 1:40, una longitud real L se representa con L/40; en 1:20, con L/20. La razón de la nueva a la anterior es (L/20) ÷ (L/40) = 40/20 = 2: cada lado de la maqueta nueva es el doble. Como el área se multiplica por k², el área de cada cara se multiplica por 2² = 4. No se divide, porque 1:20 produce una maqueta más grande que 1:40 (menos reducción). La alternativa correcta es B."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, unidad Semejanza y proporcionalidad de figuras: solo para calibrar alcance (modelos a escala), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (maqueta de un molino de viento a escala 1:40 para una exposición de fin de año, plano de la sala de la exposición a escala 1:50, mapa de trekking de un parque nacional a escala 1:25.000, maqueta de un faro) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. El descubrimiento por tabulación de áreas de cuadrados escalados por 2 y por 3 es un diseño propio. Los números (torre 15 cm → 6 m, aspa 11 cm → 4,4 m, base 10 cm × 6 cm → 9,6 m², cable 8-15-17 → 3,2-6-6,8 m, pared 13 cm → 6,5 m, mesón 8 cm × 4 cm → 8 m², sendero 8 cm → 2 km, 3 km → 12 cm, puerta 2 m → 5 cm, 14 cm → 3,5 km, base 12 cm × 10 cm → 19,2 m²) se eligieron para no repetir ninguna cifra distintiva de los contextosNumericos de content/ y se verificaron con node -e sobre lib/semejanza.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-semejanza-y-proporcionalidad.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados, y en particular ningún ítem cuenta cuántas figuras chicas caben en una grande. Pendientes las auditorías matemática y de originalidad en hilos aislados antes de cualquier git push.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
