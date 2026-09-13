@@ -29,11 +29,18 @@ import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
 import { IlustracionTransformacion } from "@/components/ilustraciones/IlustracionTransformacion";
 import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
 import { GraficoEstadistico } from "@/components/ilustraciones/GraficoEstadistico";
+import { VisualProbabilidad } from "@/components/ilustraciones/VisualProbabilidad";
 import { motivoRechazoCilindro, motivoRechazoParalelepipedo } from "@/lib/cuerposGeometricos";
 import { motivoRechazoDatosTransformacion } from "@/lib/transformacionesIsometricas";
 import { motivoRechazoDatosSemejanza } from "@/lib/semejanza";
 import { motivoRechazoDatosGrafico } from "@/lib/estadistica";
-import type { DatosGraficoEstadistico, DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
+import { motivoRechazoDatosProbabilidad } from "@/lib/probabilidad";
+import type {
+  DatosGraficoEstadistico,
+  DatosSemejanza,
+  DatosTransformacion,
+  DatosVisualProbabilidad,
+} from "@/lib/tipos";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
@@ -301,6 +308,11 @@ function esDatosGraficoEstadistico(datos: unknown): datos is DatosGraficoEstadis
   return motivoRechazoDatosGrafico(datos) === null;
 }
 
+/** Los dos bloques de probabilidad (árbol y cuadrícula del espacio muestral), mismo guard que el validador. */
+function esDatosVisualProbabilidad(datos: unknown): datos is DatosVisualProbabilidad {
+  return motivoRechazoDatosProbabilidad(datos) === null;
+}
+
 function esDatosBandas(datos: unknown): datos is DatosBandas {
   const bandas = (datos as DatosBandas | null)?.bandas;
   return (
@@ -471,6 +483,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
       <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <GraficoEstadistico datos={bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosVisualProbabilidad(bloque.datos)) {
+    return (
+      <figure className={TARJETA_VISUAL}>
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <VisualProbabilidad datos={bloque.datos} />
       </figure>
     );
   }

@@ -3,7 +3,13 @@ import { PlanoItem } from "@/components/grafico/PlanoItem";
 import { IlustracionTransformacion } from "@/components/ilustraciones/IlustracionTransformacion";
 import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
 import { GraficoEstadistico } from "@/components/ilustraciones/GraficoEstadistico";
-import type { DatosGraficoEstadistico, DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
+import { VisualProbabilidad } from "@/components/ilustraciones/VisualProbabilidad";
+import type {
+  DatosGraficoEstadistico,
+  DatosSemejanza,
+  DatosTransformacion,
+  DatosVisualProbabilidad,
+} from "@/lib/tipos";
 
 /* Apoyo visual por ítem (capa de UI, no de contenido): plano cartesiano para
    ítems cuyo enunciado entrega puntos concretos. Solo se agrega donde el
@@ -26,7 +32,15 @@ import type { DatosGraficoEstadistico, DatosSemejanza, DatosTransformacion } fro
    decidir qué representación corresponde) y NUNCA cuando entrega directo el
    valor pedido (pedir la mediana y rotularla en el cajón, pedir el porcentaje
    de un sector y escribirlo en el sector). Todo valor visible es un dato del
-   enunciado. */
+   enunciado.
+
+   Para el módulo de probabilidad la misma regla: un árbol o una cuadrícula del
+   espacio muestral se dibuja cuando ES el estímulo (leer las ramas de un
+   sorteo sin reposición para combinar caminos, contar pares en una cuadrícula
+   sin las celdas del evento marcadas) y NUNCA cuando entrega la respuesta
+   (pedir la probabilidad de un camino y rotularla al final de la rama, pedir
+   cuántos pares cumplen y marcarlos con el contador). Toda probabilidad
+   escrita en una rama es un dato del enunciado. */
 
 interface EntradaRecta {
   puntos: [number, number][];
@@ -51,7 +65,8 @@ type EntradaVisual =
   | EntradaRecta
   | { transformacion: DatosTransformacion }
   | { semejanza: DatosSemejanza }
-  | { grafico: DatosGraficoEstadistico };
+  | { grafico: DatosGraficoEstadistico }
+  | { probabilidad: DatosVisualProbabilidad };
 
 const VISUALES: Record<string, EntradaVisual> = {
   /* "Una recta pasa por los puntos (1, 2) y (3, 8)" — pide la pendiente */
@@ -264,6 +279,7 @@ export function visualDeItem(itemId: string, textoTentativo?: string | null): Re
   if ("transformacion" in entrada) return <IlustracionTransformacion {...entrada.transformacion} />;
   if ("semejanza" in entrada) return <IlustracionSemejanza {...entrada.semejanza} />;
   if ("grafico" in entrada) return <GraficoEstadistico datos={entrada.grafico} />;
+  if ("probabilidad" in entrada) return <VisualProbabilidad datos={entrada.probabilidad} />;
 
   const m =
     textoTentativo && entrada.pendientePorTexto
