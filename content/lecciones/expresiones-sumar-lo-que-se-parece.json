@@ -27,9 +27,9 @@
     "DIFERENCIACIÓN FRENTE A ecuaciones-lineales.json: allá la letra es una INCÓGNITA, un valor único que hay que despejar, y el trabajo termina cuando se sabe cuánto vale. Acá la letra es una CANTIDAD GENÉRICA que nunca se averigua: el resultado del ejercicio es otra expresión, no un número. La distinción se hace explícita en el texto del paso 6 y en el ítem 3, y es la razón de que el paso 5 compruebe la identidad con dos valores distintos de r en vez de con uno.",
     "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Los términos «barcaza», «contenedor refrigerado», «manifiesto de carga» y «puerto fluvial» volvieron NO en consultar-fuentes.mjs, corrido por Benja fuera de la sesión de redacción (mecanismo 2 de CLAUDE.md), salida pegada sin reformular. Se descartó por criterio, no por colisión, el dominio de respaldo «taller de vitrales»: aunque volvió NO, comparte la familia «taller artesanal con dos insumos» con el taller de esmaltes de proporcionalidad-directa.",
     "El paso 8 cambia LAS MAGNITUDES, no solo la historia: de masa por contenedor a minutos de grúa por contenedor, y además introduce la resta en contexto (contenedores que se quedan a bordo). Si se cambiara el contexto del paso 5 por el del paso 8 la lección no funcionaría igual, que es el chequeo de transferencia real de §2 de docs/calibracion-lecciones-e-items.md.",
-    "El error-7 (reducir términos con la misma letra y distinto exponente) se planta acá en la práctica P3 y no se explota más en esta lección: pertenece de lleno a L2 y L3, donde aparecen los cuadrados. Es deliberado, igual que proporcionalidad-directa plantó su error-7 para L3.",
-    "DISTRACTOR NO PLANTADO, y conviene saber por qué (2026-08-14). En el primer ensayo del paso 5 NO se planta el distractor de error-6 —darle a la letra el valor 1 y entregar el conteo—, aunque en el segundo ensayo y en el ítem 3 sí está. Su valor sería el número de refrigerados del día, que es la respuesta correcta del paso 3, y eso lo vuelve un hallazgo 🔴 colision-distractor-correcta. La colisión no se arregla cambiando cifras: el paso 5 pesa exactamente los contenedores que el paso 3 contó, así que si n es el total, el paso 3 pide n y el error-6 produce n × 1 = n, sea cual sea la elección de números. La vía correcta es no plantarlo, siguiendo el precedente de proporcionalidad-inversa.json, que resolvió un caso idéntico igual. El mecanismo queda cubierto tres veces más en el archivo (segundo ensayo del paso 5, y alternativas B y D del ítem 3), y el feedbackPorDefecto de este campo trae el control de sentido que lo ataja: avisa que la respuesta debe ser una masa y no una cantidad de bultos.",
-    "MAPEOS RETIRADOS EN LA MISMA REVISIÓN: los feedbackPorError de los valores 12 y 32 (haber calculado solo la barcaza de la mañana en cada ensayo) estaban mapeados a error-1, y el mapeo era falso: error-1 es juntar términos de distinta parte literal, no dejar un cálculo a medias. Un cálculo incompleto es un desliz de ejecución, no un error conceptual del catálogo, así que se retiraron los dos en vez de inventarle una categoría al catálogo. Los dos casos quedan cubiertos por el feedbackPorDefecto de su campo, que indica las dos partes de la cuenta.",
+    "El reduce-distinto-exponente (reducir términos con la misma letra y distinto exponente) se planta acá en la práctica P3 y no se explota más en esta lección: pertenece de lleno a L2 y L3, donde aparecen los cuadrados. Es deliberado, igual que proporcionalidad-directa plantó su reduce-distinto-exponente para L3.",
+    "DISTRACTOR NO PLANTADO, y conviene saber por qué (2026-08-14). En el primer ensayo del paso 5 NO se planta el distractor de asigna-valor-a-la-letra —darle a la letra el valor 1 y entregar el conteo—, aunque en el segundo ensayo y en el ítem 3 sí está. Su valor sería el número de refrigerados del día, que es la respuesta correcta del paso 3, y eso lo vuelve un hallazgo 🔴 colision-distractor-correcta. La colisión no se arregla cambiando cifras: el paso 5 pesa exactamente los contenedores que el paso 3 contó, así que si n es el total, el paso 3 pide n y el asigna-valor-a-la-letra produce n × 1 = n, sea cual sea la elección de números. La vía correcta es no plantarlo, siguiendo el precedente de proporcionalidad-inversa.json, que resolvió un caso idéntico igual. El mecanismo queda cubierto tres veces más en el archivo (segundo ensayo del paso 5, y alternativas B y D del ítem 3), y el feedbackPorDefecto de este campo trae el control de sentido que lo ataja: avisa que la respuesta debe ser una masa y no una cantidad de bultos.",
+    "MAPEOS RETIRADOS EN LA MISMA REVISIÓN: los feedbackPorError de los valores 12 y 32 (haber calculado solo la barcaza de la mañana en cada ensayo) estaban mapeados a junta-terminos-no-semejantes, y el mapeo era falso: junta-terminos-no-semejantes es juntar términos de distinta parte literal, no dejar un cálculo a medias. Un cálculo incompleto es un desliz de ejecución, no un error conceptual del catálogo, así que se retiraron los dos en vez de inventarle una categoría al catálogo. Los dos casos quedan cubiertos por el feedbackPorDefecto de su campo, que indica las dos partes de la cuenta.",
     "AUDITORÍAS (cerradas el 2026-08-15): las dos corrieron en hilos aparte del de redacción y sus hallazgos están aplicados. Revisión matemática: PASA en los cuatro archivos del módulo, 208 comprobaciones, 0 fallos, cero hallazgos de contenido. Auditoría de originalidad: COMPLETA, los cuatro puntos del checklist MOS §7.3 en SI y cero colisiones; el punto 1 quedó respaldado por los cinco términos técnicos del módulo corridos contra el corpus de fuentes aisladas, todos LIMPIO, más los 30 términos de dominio en NO. El archivo queda habilitado para publicarse."
   ],
   "auditoria": {
@@ -89,7 +89,7 @@
       "_notasInternas": [
         "ACÁ NACE LA LETRA, y nace motivada: es la respuesta al hueco que dejó el paso 1. No se presenta como tema nuevo ni como abstracción, sino como el recurso obvio para poder escribir el manifiesto sin tener las masas.",
         "El acto de este paso es NOTACIONAL: traducir «4 refrigerados y 7 secos» a 4r + 7s. No se reduce nada, no se juntan dos manifiestos, no aparece la palabra semejantes. La estructura sigue guardada para el paso 5.",
-        "Verificación: no hay aritmética que verificar. Lo que hay que verificar es la derivabilidad de los dos distractores. 11rs sale de contar los once bultos (4 + 7 = 11) y pegar las dos letras, error-2. 4 + 7 + r + s sale de leer «4r» como «4 y además r», error-3.",
+        "Verificación: no hay aritmética que verificar. Lo que hay que verificar es la derivabilidad de los dos distractores. 11rs sale de contar los once bultos (4 + 7 = 11) y pegar las dos letras, multiplica-letras-al-sumar. 4 + 7 + r + s sale de leer «4r» como «4 y además r», separa-coeficiente-de-su-letra.",
         "El feedback de los distractores argumenta EN EL CONTEXTO (un refrigerado y un seco no pesan lo mismo, el manifiesto los cuenta separados por algo) y nunca enuncia la regla general de términos semejantes. Es la misma distancia que guarda el paso 2 de proporcionalidad-directa, cuyo feedback habla de mL por gramo sin nombrar la constante."
       ],
       "bloques": [
@@ -106,7 +106,7 @@
               "texto": "11rs",
               "esCorrecta": false,
               "feedback": "Contaste bien los bultos: 4 y 7 son 11. Pero después juntaste las dos letras en una sola cosa, y ahí se perdió la diferencia que importa. Un refrigerado y un seco no pesan lo mismo — por eso el manifiesto los anota en filas separadas y no en una sola. Fíjate además en lo que dice «11rs»: es once veces el producto de las dos masas, que no es ninguna cantidad que exista en el muelle.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "multiplica-letras-al-sumar"
             },
             {
               "id": "b",
@@ -119,7 +119,7 @@
               "texto": "4 + 7 + r + s",
               "esCorrecta": false,
               "feedback": "Separaste cada número de su letra. Pero «4r» no significa «4 y además r»: significa **cuatro veces r**, la masa de un refrigerado repetida cuatro veces. Compruébalo con un caso: si un refrigerado pesara 2 toneladas, cuatro pesarían 8, no 6.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "separa-coeficiente-de-su-letra"
             }
           ]
         }
@@ -132,7 +132,7 @@
         "Registro del intento genuino ANTES de cualquier ayuda, y el paso donde el error se PRODUCE sin nombrarse.",
         "Se pide el conteo por clase, no la expresión, y la razón es de diseño: pedir la expresión obligaría a poner «9r + 10s» entre las opciones, y eso regalaría la estructura tres pasos antes. Contar por clase es lo que el estudiante sí puede hacer con lo que sabe hasta acá, y en el paso 5 va a descubrir que ese conteo ES la operación algebraica.",
         "Verificación: barcaza de la mañana 4 refrigerados y 7 secos; barcaza de la tarde 5 refrigerados y 3 secos. Refrigerados combinados 4 + 5 = 9 ✓. Secos combinados 7 + 3 = 10 ✓. Total de bultos 19, que es el valor del distractor.",
-        "Verificación de los distractores: 19 en cualquiera de los dos campos es haber contado todos los bultos juntos sin separar por clase (error-1). Es el mismo error en los dos campos y por eso está declarado dos veces, una por campoId, como exige el contrato de feedbackPorError."
+        "Verificación de los distractores: 19 en cualquiera de los dos campos es haber contado todos los bultos juntos sin separar por clase (junta-terminos-no-semejantes). Es el mismo error en los dos campos y por eso está declarado dos veces, una por campoId, como exige el contrato de feedbackPorError."
       ],
       "bloques": [
         {
@@ -157,13 +157,13 @@
               "campoId": "refrigeradosCombinados",
               "valorObtenido": 19,
               "mensaje": "Contaste todos los bultos del día de una vez. Son 19, y ese número es correcto para «cuántos contenedores llegaron». Pero acá la pregunta es más fina: cuántos de ellos son refrigerados. Vuelve a la tabla y suma solo esa columna.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "junta-terminos-no-semejantes"
             },
             {
               "campoId": "secosCombinados",
               "valorObtenido": 19,
               "mensaje": "Ese es el total de bultos del día, refrigerados y secos mezclados. La pregunta pide solo los secos: son los de la última columna de la tabla, y hay que sumar las dos barcazas.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "junta-terminos-no-semejantes"
             }
           ],
           "feedbackPorDefecto": "Toma la tabla por columnas, no por filas. La columna de refrigerados tiene dos números que hay que sumar entre sí, y la de secos otros dos. Son dos cuentas separadas."
@@ -207,7 +207,7 @@
         "Verificación del primer ensayo (r = 3 t): los 4 refrigerados de la mañana pesan 4 × 3 = 12 t; los 5 de la tarde, 5 × 3 = 15 t; juntos 12 + 15 = 27 t. Por el otro camino, 9 × 3 = 27 t ✓. Coinciden.",
         "Verificación del segundo ensayo (r = 8 t): 4 × 8 = 32; 5 × 8 = 40; juntos 32 + 40 = 72. Por el otro camino, 9 × 8 = 72 ✓. Coinciden.",
         "Verificación del contraste final: 9r + 10s no admite un solo término porque r y s son cantidades distintas y desconocidas. Si alguien escribiera 19 de algo, estaría afirmando que r = s, que es justamente lo que el paso 1 estableció que es falso (el refrigerado carga su equipo de frío).",
-        "Distractor NO plantado en el primer campo: 9 sería haber entregado el número de contenedores en vez de la masa, o sea haberle dado a r el valor 1 (error-6), y NO se planta porque colisiona con la respuesta correcta del paso 3 — ver la nota de cabecera del archivo. El primer campo solo lleva feedbackPorDefecto. En el segundo campo sí está plantado el 27, que es arrastrar el resultado del primer ensayo sin rehacer la cuenta; va sin errorCatalogado desde la auditoría matemática, porque es un desliz de ejecución y no un mecanismo del catálogo.",
+        "Distractor NO plantado en el primer campo: 9 sería haber entregado el número de contenedores en vez de la masa, o sea haberle dado a r el valor 1 (asigna-valor-a-la-letra), y NO se planta porque colisiona con la respuesta correcta del paso 3 — ver la nota de cabecera del archivo. El primer campo solo lleva feedbackPorDefecto. En el segundo campo sí está plantado el 27, que es arrastrar el resultado del primer ensayo sin rehacer la cuenta; va sin errorCatalogado desde la auditoría matemática, porque es un desliz de ejecución y no un mecanismo del catálogo.",
         "PRIMERA APARICIÓN de la estructura en todo el archivo. Los pasos 1 a 4 no la nombran: el 1 abre el hueco, el 2 da la notación, el 3 produce el error y el 4 orienta sin enunciar. Verificado texto por texto."
       ],
       "bloques": [
@@ -273,7 +273,7 @@
         "El texto separa explícitamente la letra-cantidad-genérica de la letra-incógnita, que es la confusión previsible con el módulo Ecuaciones. Va acá y no antes porque necesita que el estudiante ya haya visto que el resultado es una expresión.",
         "Verificación del ejemplo trabajado: 6a + 2b + 3a. Términos en a: 6 + 3 = 9. Término en b: 2, solo, no tiene con quién juntarse. Resultado 9a + 2b ✓.",
         "Verificación del ejercicio, con letras y cifras DISTINTAS a las del ejemplo (regla de §2 de calibracion): 8m + 7n − 3m. Términos en m: 8 − 3 = 5. Término en n: 7. Resultado 5m + 7n ✓.",
-        "Verificación de los distractores del ejercicio: 11m + 7n es 8 + 3 = 11, o sea tratar la resta como suma (error-4). 15mn es 8 + 7 = 15 con las letras pegadas (error-2). 5m + 7n es la correcta y 5mn sería reducir bien y fundir después, que ya está cubierto por error-2 en el otro distractor."
+        "Verificación de los distractores del ejercicio: 11m + 7n es 8 + 3 = 11, o sea tratar la resta como suma (pierde-signo-al-reducir). 15mn es 8 + 7 = 15 con las letras pegadas (multiplica-letras-al-sumar). 5m + 7n es la correcta y 5mn sería reducir bien y fundir después, que ya está cubierto por multiplica-letras-al-sumar en el otro distractor."
       ],
       "bloques": [
         {
@@ -299,21 +299,21 @@
               "texto": "11m + 7n",
               "esCorrecta": false,
               "feedback": "Sumaste el 3 en vez de restarlo. Mira el signo que tiene delante el término: es −3m, o sea que se están quitando tres de esos, no agregando. Si te quedan más m de las que había al principio, algo se dio vuelta.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "pierde-signo-al-reducir"
             },
             {
               "id": "c",
               "texto": "15mn",
               "esCorrecta": false,
               "feedback": "Juntaste los tres términos en uno solo (8 + 7 = 15) y pegaste las dos letras. Pero m y n son cantidades distintas: no hay razón para pensar que valen lo mismo, y mientras no la haya, sus términos no se pueden fundir. Además el −3m se te volvió una suma en el camino.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "multiplica-letras-al-sumar"
             },
             {
               "id": "d",
               "texto": "5m² + 7n",
               "esCorrecta": false,
               "feedback": "El coeficiente te quedó bien: 8 − 3 = 5. Pero la parte literal no cambia al reducir. Al juntar 8m con −3m estás contando cuántas m hay, no multiplicándolas entre ellas — y contar no produce exponentes.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "agrega-exponente-al-sumar-semejantes"
             }
           ]
         }
@@ -326,8 +326,8 @@
         "Progresión estricta baja → media → media/alta, como exige §5.1 de calibracion.",
         "P1 (baja). Verificación: 7x + 4y + 2x. Términos en x: 7 + 2 = 9. Término en y: 4. Resultado 9x + 4y ✓. Es el mismo esqueleto del ejemplo trabajado del paso 6, a propósito: la primera práctica confirma antes de complicar.",
         "P2 (media). Verificación: 11p − 6q − 4p. Términos en p: 11 − 4 = 7. Término en q: −6, que se copia con su signo. Resultado 7p − 6q ✓. Es el primer ejercicio donde hay dos signos negativos y solo uno de ellos participa en la reducción.",
-        "Verificación de los distractores de P2: 15p − 6q es 11 + 4, o sea tratar la resta como suma (error-4). 1p − 6q es 11 − 6 − 4, haber metido el −6q en la cuenta de las p (error-1): el estudiante operó los tres coeficientes en fila sin mirar la parte literal. 7p + 6q pierde el signo del término que se copia solo, que es una variante de error-4 en el término que no se reduce.",
-        "P3 (media/alta). Verificación: 3x + 2x² NO se reduce. Las partes literales son x y x², que no son iguales — un exponente distinto es una parte literal distinta. Comprobación numérica con x = 2: 3(2) + 2(4) = 6 + 8 = 14, mientras que 5x² daría 20 y 5x³ daría 40. Ninguna coincide ✓. Planta error-7 para L2 y L3, donde aparecen los cuadrados de verdad."
+        "Verificación de los distractores de P2: 15p − 6q es 11 + 4, o sea tratar la resta como suma (pierde-signo-al-reducir). 1p − 6q es 11 − 6 − 4, haber metido el −6q en la cuenta de las p (junta-terminos-no-semejantes): el estudiante operó los tres coeficientes en fila sin mirar la parte literal. 7p + 6q pierde el signo del término que se copia solo, que es una variante de pierde-signo-al-reducir en el término que no se reduce.",
+        "P3 (media/alta). Verificación: 3x + 2x² NO se reduce. Las partes literales son x y x², que no son iguales — un exponente distinto es una parte literal distinta. Comprobación numérica con x = 2: 3(2) + 2(4) = 6 + 8 = 14, mientras que 5x² daría 20 y 5x³ daría 40. Ninguna coincide ✓. Planta reduce-distinto-exponente para L2 y L3, donde aparecen los cuadrados de verdad."
       ],
       "bloques": [
         {
@@ -345,14 +345,14 @@
               "texto": "13xy",
               "esCorrecta": false,
               "feedback": "Sumaste los tres coeficientes (7 + 4 + 2 = 13) y pegaste las dos letras. Pero el 4y no es semejante a los otros dos: tiene otra parte literal, así que no entra en esa cuenta.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "multiplica-letras-al-sumar"
             },
             {
               "id": "c",
               "texto": "11x + 2y",
               "esCorrecta": false,
               "feedback": "Metiste el 4 en la cuenta de las x (7 + 4 = 11) y después le dejaste al término de y el coeficiente que sobraba. Los coeficientes solo se suman entre términos que tienen la misma parte literal: revisa cuáles son en esta expresión.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "junta-terminos-no-semejantes"
             }
           ]
         },
@@ -371,21 +371,21 @@
               "texto": "15p − 6q",
               "esCorrecta": false,
               "feedback": "Sumaste las p en vez de restarlas. El término es −4p, con el signo pegado adelante: se están quitando cuatro. El resultado tiene que quedar con menos p que las 11 del principio, no con más.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "pierde-signo-al-reducir"
             },
             {
               "id": "c",
               "texto": "1p − 6q",
               "esCorrecta": false,
               "feedback": "Operaste los tres coeficientes en fila, de izquierda a derecha: 11 − 6 − 4 = 1. Pero el −6 pertenece a un término de q, y las q no se cuentan junto con las p. Antes de operar hay que mirar qué letra lleva cada término.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "junta-terminos-no-semejantes"
             },
             {
               "id": "d",
               "texto": "7p + 6q",
               "esCorrecta": false,
               "feedback": "La parte de las p te quedó bien (11 − 4 = 7). Pero al copiar el término de q le cambiaste el signo: en la expresión original dice −6q, y un término que se copia solo se copia entero, signo incluido.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "pierde-signo-al-reducir"
             }
           ]
         },
@@ -398,14 +398,14 @@
               "texto": "5x²",
               "esCorrecta": false,
               "feedback": "Sumaste los coeficientes como si los dos términos fueran semejantes, pero no lo son: uno lleva x y el otro x². Compruébalo dándole a x el valor 2: la expresión original da 3(2) + 2(4) = 14, mientras que 5x² daría 20. Números distintos, así que no son la misma expresión.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "reduce-distinto-exponente"
             },
             {
               "id": "b",
               "texto": "5x³",
               "esCorrecta": false,
               "feedback": "Sumaste los coeficientes y además los exponentes. Ninguna de las dos cosas corresponde acá. Con x = 2, la expresión original vale 14 y 5x³ vale 40: no se parecen ni de lejos.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "reduce-distinto-exponente"
             },
             {
               "id": "c",
@@ -418,7 +418,7 @@
               "texto": "6x³",
               "esCorrecta": false,
               "feedback": "Multiplicaste los términos en vez de dejarlos sumados: 3 × 2 = 6 y x · x² = x³. Pero entre los dos términos hay un signo +, no una multiplicación. Reducir nunca convierte una suma en un producto.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "agrega-exponente-al-sumar-semejantes"
             }
           ]
         }
@@ -430,7 +430,7 @@
       "_notasInternas": [
         "Contexto de transferencia: cambian LAS MAGNITUDES, no solo la historia. Ya no es masa por contenedor sino MINUTOS DE GRÚA por contenedor. Y hay una diferencia estructural además de la de unidades: en los pasos anteriores todo se sumaba, acá una parte de la carga se retira y aparece la resta dentro del contexto, no como ejercicio abstracto.",
         "Verificación: programados 8 refrigerados y 11 secos. Se quedan a bordo 3 refrigerados. Términos en c: 8 − 3 = 5. Término en g: 11. Resultado 5c + 11g ✓.",
-        "Verificación de los distractores: 11c + 11g es 8 + 3 = 11, sumar los que se quedan en vez de descontarlos (error-4). 16cg es 8 + 11 − 3 = 16 con las letras pegadas (error-2). 5c + 8g cruza los coeficientes, le da al término de g el 8 que era de los refrigerados (error-8).",
+        "Verificación de los distractores: 11c + 11g es 8 + 3 = 11, sumar los que se quedan en vez de descontarlos (pierde-signo-al-reducir). 16cg es 8 + 11 − 3 = 16 con las letras pegadas (multiplica-letras-al-sumar). 5c + 8g cruza los coeficientes, le da al término de g el 8 que era de los refrigerados (cruza-coeficientes-entre-letras).",
         "La parte 1 pide escribir la operación sin calcularla, igual que el paso 8 de proporcionalidad-directa: separa el modelado de la ejecución."
       ],
       "bloques": [
@@ -455,21 +455,21 @@
               "texto": "11c + 11g",
               "esCorrecta": false,
               "feedback": "Sumaste los 3 refrigerados en vez de descontarlos. Pero esos tres no se bajan: siguen a bordo, así que la grúa no gasta ni un minuto en ellos. El tiempo tiene que salir menor que si se descargaran los 8.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "pierde-signo-al-reducir"
             },
             {
               "id": "c",
               "texto": "16cg",
               "esCorrecta": false,
               "feedback": "Hiciste la cuenta de los bultos (8 + 11 − 3 = 16) y después pegaste las dos letras en una. Pero bajar un refrigerado y bajar un seco toman tiempos distintos —por eso les pusimos letras distintas—, así que los dos grupos no se pueden contar juntos.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "multiplica-letras-al-sumar"
             },
             {
               "id": "d",
               "texto": "5c + 8g",
               "esCorrecta": false,
               "feedback": "La cuenta de los refrigerados está bien (8 − 3 = 5), pero después le pasaste al término de los secos el 8 que era de los refrigerados. Los secos son 11 y no los tocó nadie: ese término se copia tal cual.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "cruza-coeficientes-entre-letras"
             }
           ]
         }
@@ -529,21 +529,21 @@
           "texto": "12u + 9v",
           "esCorrecta": false,
           "feedback": "La parte de las v está bien (4 + 5 = 9), pero en las u sumaste el 3 en vez de restarlo. El término es −3u: se están quitando tres, así que el coeficiente tiene que quedar menor que 9, no mayor.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "pierde-signo-al-reducir"
         },
         {
           "clave": "C",
           "texto": "15uv",
           "esCorrecta": false,
           "feedback": "Operaste los cuatro coeficientes juntos (9 + 4 − 3 + 5 = 15) y pegaste las dos letras. Pero u y v son cantidades distintas: sus términos no son semejantes y no entran en la misma cuenta.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "multiplica-letras-al-sumar"
         },
         {
           "clave": "D",
           "texto": "9u + 6v",
           "esCorrecta": false,
           "feedback": "Las dos cuentas están bien hechas, pero quedaron cruzadas: el 6 salió de los términos en u y el 9 de los términos en v, y en tu respuesta están al revés. Revisa qué coeficiente le corresponde a cada letra.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "cruza-coeficientes-entre-letras"
         }
       ],
       "solucion": "Se agrupan los términos por parte literal. En u: 9u − 3u = (9 − 3)u = 6u. En v: 4v + 5v = (4 + 5)v = 9v. La expresión reducida es 6u + 9v. Verificación numérica independiente con u = 2 y v = 3: la expresión original da 9(2) + 4(3) − 3(2) + 5(3) = 18 + 12 − 6 + 15 = 39, y la reducida da 6(2) + 9(3) = 12 + 27 = 39 ✓. Segunda verificación con u = 1 y v = 1: original 9 + 4 − 3 + 5 = 15, reducida 6 + 9 = 15 ✓."
@@ -559,7 +559,7 @@
           "texto": "24rs",
           "esCorrecta": false,
           "feedback": "Contaste bien todos los contenedores (6 + 5 + 4 + 9 = 24), pero después juntaste las dos masas en un solo término. Un refrigerado y un seco no pesan lo mismo, así que sus contenedores no se pueden contar en una sola cuenta.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "multiplica-letras-al-sumar"
         },
         {
           "clave": "B",
@@ -572,14 +572,14 @@
           "texto": "24(r + s)",
           "esCorrecta": false,
           "feedback": "Esta expresión reparte los 24 contenedores como si cada uno pesara r y s a la vez. Compruébalo con un caso: si r fuera 5 y s fuera 2, esta expresión daría 168, mientras que la carga real —10 refrigerados de 5 y 14 secos de 2— pesa 78. El total sale más del doble.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "junta-terminos-no-semejantes"
         },
         {
           "clave": "D",
           "texto": "10 + 14 + r + s",
           "esCorrecta": false,
           "feedback": "Separaste los números de las letras y los dejaste sumados aparte. Pero «10r» no es «10 y además r»: es la masa de un refrigerado repetida diez veces. Además esta expresión sumaría contenedores con toneladas, que son cosas distintas.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "separa-coeficiente-de-su-letra"
         }
       ],
       "solucion": "Se cuentan por separado las dos clases, porque tienen masas distintas. Refrigerados: 6 + 4 = 10, que aportan 10r. Secos: 5 + 9 = 14, que aportan 14s. La masa total es 10r + 14s, y la expresión no se puede reducir más porque los dos términos no son semejantes. Verificación con valores arbitrarios r = 5 y s = 2: por viajes, el primero pesa 6(5) + 5(2) = 40 y el segundo 4(5) + 9(2) = 38, en total 78; por la expresión, 10(5) + 14(2) = 50 + 28 = 78 ✓. Lo que este ítem pide es el modelo, no un valor numérico."
@@ -601,21 +601,21 @@
           "texto": "3a + 5a = 8a solo si a es un número positivo.",
           "esCorrecta": false,
           "feedback": "La igualdad no depende del signo de a. Compruébalo con un valor negativo: si a = −2, el lado izquierdo da 3(−2) + 5(−2) = −6 − 10 = −16, y el derecho 8(−2) = −16. Iguales. Lo que hace válida la reducción es que la parte literal coincida, no qué valor tenga.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "asigna-valor-a-la-letra"
         },
         {
           "clave": "C",
           "texto": "3a + 5a = 8a², porque las dos letras se multiplican.",
           "esCorrecta": false,
           "feedback": "Al reducir términos semejantes se operan los coeficientes y la parte literal se mantiene: las letras no se multiplican entre sí, se está contando cuántas veces aparece la misma cantidad. Compruébalo con a = 3: el lado izquierdo da 9 + 15 = 24 y 8a² daría 72.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "agrega-exponente-al-sumar-semejantes"
         },
         {
           "clave": "D",
           "texto": "No se puede afirmar nada mientras no se sepa cuánto vale a.",
           "esCorrecta": false,
           "feedback": "Es justo al revés: hay cosas que se pueden afirmar precisamente porque no dependen del valor. Tres de algo más cinco de eso mismo son ocho de eso, valga lo que valga. Conocer a permitiría calcular un número, pero la igualdad ya es cierta sin ese dato.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "asigna-valor-a-la-letra"
         }
       ],
       "solucion": "Los términos 3a y 5a son semejantes porque tienen idéntica parte literal, así que se reducen operando los coeficientes: 3a + 5a = (3 + 5)a = 8a. La igualdad es una identidad, válida para todo valor de a, de modo que A es correcta y D es falsa. B es falsa porque el signo de a no interviene: con a = −2 ambos lados valen −16, y con a = 0 ambos valen 0. C es falsa porque reducir no multiplica las partes literales; con a = 3 el lado izquierdo vale 24 y 8a² vale 72."

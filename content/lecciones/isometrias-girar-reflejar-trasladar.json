@@ -19,14 +19,14 @@
   ],
   "_notasInternas": [
     "L2 del módulo transformaciones-isometricas (eje Geometría, módulo #12). Descriptor DEMRE (docs/temario-demre-m1-2027.md:104): 'Rotación, traslación y reflexión de figuras geométricas'. Diseño: docs/diseno-modulo-transformaciones-isometricas.md.",
-    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: error-1, error-3, error-6 (nacidos en L1) y error-7, error-8, error-9, error-10, error-12, error-16 (nacen acá).",
+    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: confunde-punto-con-vector, cruza-componentes, traslada-en-sentido-contrario (nacidos en L1) y cambia-coordenada-equivocada-al-reflejar, rota-en-sentido-contrario, confunde-reflexion-origen-con-eje, cree-que-isometria-cambia-medidas, mira-solo-donde-quedo-la-figura, aplica-regla-de-otra-transformacion (nacen acá).",
     "Dominio: patrón de bordado en punto cruz sobre una tela cuadriculada; el motivo se copia trasladado, volteado o girado. Motivo base A(1, 1), B(4, 1), C(1, 3). Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
     "Todas las cifras verificadas con node -e con lib/transformacionesIsometricas.ts: traslación del motivo por (0, 4); reflexión del motivo respecto del eje y; rotación de (3, 1) 90° antihorario = (−1, 3); tabla (1, 0), (0, 1), (2, 1), (3, −2); rotación del motivo 90° antihorario = (−1, 1), (−1, 4), (−3, 1); (−2, 5) → (−5, −2); (1, 6) girado 180° = (−1, −6); (−4, 3) reflejado en el eje x = (−4, −3); P(2, 1), Q(5, 1), R(2, 4) reflejados respecto del origen; D(−2, 4) + (6, −5) = (4, −1); (4, −1) + (−3, 2) = (1, 1); (2, 7) girado 90° horario = (7, −2) y reflejado en el eje y = (−2, 7); (−5, −2) reflejado en el eje x = (−5, 2).",
     "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {−1, 3, −5, −2, −6, 4, 7}, distractores numéricos {1, −3, 5, 2, 9, −8, −7, 10}; sin intersección. Por eso la traslación de practica usa el vector (6, −5) y no (5, −6): con (5, −6) la llegada (3, −2) repetía el −2 que ya es distractor en pensar. Y por eso el giro de 180° de generalizacion no lleva feedbackPorError en x para el giro de 90°: su valor (−6) es la respuesta correcta en y.",
-    "error-16 tiene dos variantes numéricas (cambiar signos sin intercambiar; intercambiar sin cambiar signo). En los bloques seleccion aparece dos veces con el mismo id cuando las dos variantes son distractores en banda; en los itemsPAES los tres distractores llevan id y el ítem 2 lleva error-16 dos veces por la misma razón.",
+    "aplica-regla-de-otra-transformacion tiene dos variantes numéricas (cambiar signos sin intercambiar; intercambiar sin cambiar signo). En los bloques seleccion aparece dos veces con el mismo id cuando las dos variantes son distractores en banda; en los itemsPAES los tres distractores llevan id y el ítem 2 lleva aplica-regla-de-otra-transformacion dos veces por la misma razón.",
     "Visuales: curiosidad (traslación del motivo con imagen y flecha), problema (motivo y eje y, sin imagen), pensar (punto y centro, sin imagen), descubrimiento (rotación del motivo con imagen, centro y arco), practica (motivo y origen, sin imagen). Ítem 2 con visual en lib/visualesItems.tsx (clave isometrias-l2-item-2), sin imagen. Ningún bloque dibuja la imagen cuyo valor se pregunta.",
     "Sin auditoria.constante: no hay una constante numérica que vigilar. Las reglas de coordenadas aparecen como fórmula por primera vez en generalizacion; en descubrimiento el estudiante la construye desde la tabla.",
-    "P2: el paso consolidacion nombra los caminos equivocados de error-7, error-8 y error-9 antes del correcto, y su bloque pregunta lleva error-7, error-9 y error-16 en los distractores."
+    "P2: el paso consolidacion nombra los caminos equivocados de cambia-coordenada-equivocada-al-reflejar, rota-en-sentido-contrario y confunde-reflexion-origen-con-eje antes del correcto, y su bloque pregunta lleva cambia-coordenada-equivocada-al-reflejar, confunde-reflexion-origen-con-eje y aplica-regla-de-otra-transformacion en los distractores."
   ],
   "contextosNumericos": [
     "curiosidad: motivo A(1, 1), B(4, 1), C(1, 3) trasladado por (0, 4) hasta (1, 5), (4, 5), (1, 7)",
@@ -89,7 +89,7 @@
       "tipo": "problema",
       "titulo": "El motivo en el espejo",
       "_notasInternas": [
-        "Reflexión del motivo respecto del eje y: (−1, 1), (−4, 1), (−1, 3). Distractores: (1, −1), (4, −1), (1, −3) es error-7 (reflejó respecto del eje x); (−1, −1), (−4, −1), (−1, −3) es error-9 (reflejó respecto del origen); (−4, 1), (−1, 1), (−4, 3) es error-12 (trasladó el motivo por (−5, 0) al otro lado sin voltearlo: C sigue a la izquierda). La visual muestra el motivo y el eje sin la imagen. Verificado con node -e."
+        "Reflexión del motivo respecto del eje y: (−1, 1), (−4, 1), (−1, 3). Distractores: (1, −1), (4, −1), (1, −3) es cambia-coordenada-equivocada-al-reflejar (reflejó respecto del eje x); (−1, −1), (−4, −1), (−1, −3) es confunde-reflexion-origen-con-eje (reflejó respecto del origen); (−4, 1), (−1, 1), (−4, 3) es mira-solo-donde-quedo-la-figura (trasladó el motivo por (−5, 0) al otro lado sin voltearlo: C sigue a la izquierda). La visual muestra el motivo y el eje sin la imagen. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -122,21 +122,21 @@
               "texto": "A' = (1, −1), B' = (4, −1), C' = (1, −3)",
               "esCorrecta": false,
               "feedback": "Esos vértices cambiaron de signo en y: es la reflexión respecto del eje x, el espejo horizontal, que manda el motivo hacia abajo. El eje y es vertical: lo que cambia es la x, la distancia hacia la izquierda o hacia la derecha del espejo.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "id": "c",
               "texto": "A' = (−1, −1), B' = (−4, −1), C' = (−1, −3)",
               "esCorrecta": false,
               "feedback": "Esos vértices cambiaron de signo en x y también en y: eso es reflejar respecto del origen, que voltea la figura dos veces (como un giro de 180°). Respecto del eje y solo cruza hacia la izquierda: cambia la x, la y se conserva.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             },
             {
               "id": "d",
               "texto": "A' = (−4, 1), B' = (−1, 1), C' = (−4, 3)",
               "esCorrecta": false,
               "feedback": "Ese motivo quedó al otro lado del eje, pero sin voltearse: C sigue a la izquierda, igual que en el original. Eso es una traslación de 5 cuadros hacia la izquierda, no una reflexión. En el espejo, cada vértice cambia de signo en x: A = (1, 1) va a (−1, 1), no a (−4, 1).",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "mira-solo-donde-quedo-la-figura"
             }
           ]
         },
@@ -153,7 +153,7 @@
       "tipo": "pensar",
       "titulo": "Un cuarto de vuelta",
       "_notasInternas": [
-        "Intento antes de la regla: girar el punto (3, 1) 90° antihorario en torno al origen; la visual muestra el punto y el centro, sin la imagen. Correcto (−1, 3). feedbackPorError: x = 1 e y = −3 son error-8 (giró en sentido horario, (1, −3)); x = −3 es error-16 (cambió el signo de x sin intercambiar, (−3, 1)). No se usa la variante (−3, −1) de error-16 porque su y = −1 coincide con la x correcta."
+        "Intento antes de la regla: girar el punto (3, 1) 90° antihorario en torno al origen; la visual muestra el punto y el centro, sin la imagen. Correcto (−1, 3). feedbackPorError: x = 1 e y = −3 son rota-en-sentido-contrario (giró en sentido horario, (1, −3)); x = −3 es aplica-regla-de-otra-transformacion (cambió el signo de x sin intercambiar, (−3, 1)). No se usa la variante (−3, −1) de aplica-regla-de-otra-transformacion porque su y = −1 coincide con la x correcta."
       ],
       "bloques": [
         {
@@ -194,19 +194,19 @@
               "campoId": "giradaX",
               "valorObtenido": 1,
               "mensaje": "Ese valor sale de girar en sentido horario, hacia la derecha: el punto termina en (1, −3), abajo a la derecha. Antihorario es hacia la izquierda: un punto que está a la derecha del origen sube y pasa al lado izquierdo.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "giradaY",
               "valorObtenido": -3,
               "mensaje": "Ese valor sale de girar en sentido horario: el punto termina en (1, −3), debajo del eje x. Girando hacia la izquierda, P sube: su y final es positiva.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "giradaX",
               "valorObtenido": -3,
               "mensaje": "Ese valor cambia el signo de la x y deja todo lo demás igual: eso es voltear el punto hacia el otro lado, no girarlo. En un giro de 90° las coordenadas se intercambian: la distancia horizontal pasa a ser vertical y viceversa.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ],
           "feedbackPorDefecto": "Piensa en el punto como «3 hacia la derecha y 1 hacia arriba». Al girar un cuarto de vuelta hacia la izquierda, «hacia la derecha» se convierte en «hacia arriba» y «hacia arriba» se convierte en «hacia la izquierda»."
@@ -244,7 +244,7 @@
       "tipo": "descubrimiento",
       "titulo": "La regla está en la tabla",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Tabla de giros de 90° antihorario: (1, 0) → (0, 1), (0, 1) → (−1, 0), (2, 1) → (−1, 2), (3, −2) → (2, 3). El estudiante construye (x, y) → (−y, x). Visual: el motivo girado con centro y arco. seleccion de la regla: (y, −x) es error-8; (−x, y) y (−x, −y) son las dos variantes de error-16. Comprobación numérica sobre (−2, 5) → (−5, −2): x = 5 e y = 2 son error-8 (horario: (5, 2)); x = 2 es error-16 ((2, 5), intercambió sin cambiar signo). Verificado con node -e."
+        "CORAZÓN DE LA LECCIÓN. Tabla de giros de 90° antihorario: (1, 0) → (0, 1), (0, 1) → (−1, 0), (2, 1) → (−1, 2), (3, −2) → (2, 3). El estudiante construye (x, y) → (−y, x). Visual: el motivo girado con centro y arco. seleccion de la regla: (y, −x) es rota-en-sentido-contrario; (−x, y) y (−x, −y) son las dos variantes de aplica-regla-de-otra-transformacion. Comprobación numérica sobre (−2, 5) → (−5, −2): x = 5 e y = 2 son rota-en-sentido-contrario (horario: (5, 2)); x = 2 es aplica-regla-de-otra-transformacion ((2, 5), intercambió sin cambiar signo). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -290,21 +290,21 @@
               "texto": "(x, y) → (y, −x): la y pasa adelante tal cual y la x pasa atrás con el signo cambiado.",
               "esCorrecta": false,
               "feedback": "Esa regla falla en la primera fila: (1, 0) iría a (0, −1), hacia abajo, y la tabla dice (0, 1), hacia arriba. (y, −x) es el giro en sentido horario, el contrario.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "id": "c",
               "texto": "(x, y) → (−x, y): la x cambia de signo y la y se conserva.",
               "esCorrecta": false,
               "feedback": "Esa regla falla desde la primera fila: (1, 0) iría a (−1, 0), y la tabla dice (0, 1). Cambiar un signo sin intercambiar las coordenadas es voltear respecto de un eje, no girar un cuarto de vuelta.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             },
             {
               "id": "d",
               "texto": "(x, y) → (−x, −y): las dos coordenadas cambian de signo.",
               "esCorrecta": false,
               "feedback": "Esa regla lleva (1, 0) a (−1, 0), al lado opuesto: es media vuelta, 180°, no un cuarto. En la tabla, (1, 0) va a (0, 1): las coordenadas se intercambian.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ]
         },
@@ -328,19 +328,19 @@
               "campoId": "reglaX",
               "valorObtenido": 5,
               "mensaje": "Ese valor viene de (y, −x) = (5, 2), el giro en sentido horario. Antihorario es (−y, x): la primera coordenada es la y con el signo cambiado, −5.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "reglaY",
               "valorObtenido": 2,
               "mensaje": "Ese valor viene de (y, −x) = (5, 2), el giro en sentido horario. En el giro antihorario la segunda coordenada es la x original tal cual: −2.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "reglaX",
               "valorObtenido": 2,
               "mensaje": "Ese valor intercambia las coordenadas sin cambiar el signo, (2, 5). La regla es (−y, x): la y pasa adelante con el signo cambiado, −5.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ],
           "feedbackPorDefecto": "Regla del giro de 90° antihorario: (x, y) → (−y, x). Con x = −2 e y = 5: primera coordenada −y, segunda coordenada x."
@@ -362,7 +362,7 @@
       "tipo": "generalizacion",
       "titulo": "Las reglas, y lo que no cambia",
       "_notasInternas": [
-        "PRIMERA aparición de las reglas como fórmulas, en tabla. Ejercicios: (−4, 3) reflejado respecto del eje x = (−4, −3) en seleccion, con (4, 3) error-7, (4, −3) error-9 y (3, 4) error-16 (intercambió, es el giro de 90° horario); (1, 6) girado 180° = (−1, −6) en numerica, con y = 1 error-16 (giró 90° antihorario, (−6, 1); su x = −6 no se usa porque es la y correcta) y x = 1 error-9 (cambió solo la y, como una reflexión en el eje x, (1, −6)). Verificado con node -e."
+        "PRIMERA aparición de las reglas como fórmulas, en tabla. Ejercicios: (−4, 3) reflejado respecto del eje x = (−4, −3) en seleccion, con (4, 3) cambia-coordenada-equivocada-al-reflejar, (4, −3) confunde-reflexion-origen-con-eje y (3, 4) aplica-regla-de-otra-transformacion (intercambió, es el giro de 90° horario); (1, 6) girado 180° = (−1, −6) en numerica, con y = 1 aplica-regla-de-otra-transformacion (giró 90° antihorario, (−6, 1); su x = −6 no se usa porque es la y correcta) y x = 1 confunde-reflexion-origen-con-eje (cambió solo la y, como una reflexión en el eje x, (1, −6)). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -402,21 +402,21 @@
               "texto": "(4, 3)",
               "esCorrecta": false,
               "feedback": "(4, 3) cambió la x, o sea cruzó hacia la derecha: eso es reflejar respecto del eje y. Respecto del eje x, el espejo es horizontal y lo que cambia es la altura, la y.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "id": "c",
               "texto": "(4, −3)",
               "esCorrecta": false,
               "feedback": "(4, −3) cambió las dos coordenadas: eso es reflejar respecto del origen, media vuelta completa. Respecto de un solo eje cambia una sola coordenada, la que mide la distancia a ese eje.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             },
             {
               "id": "d",
               "texto": "(3, 4)",
               "esCorrecta": false,
               "feedback": "(3, 4) intercambió las coordenadas y cambió un signo: es la regla del giro de 90° horario, (y, −x). Una reflexión respecto de un eje no intercambia nada: solo cambia el signo de una coordenada.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ]
         },
@@ -440,13 +440,13 @@
               "campoId": "mediaVueltaY",
               "valorObtenido": 1,
               "mensaje": "Ese valor viene de intercambiar las coordenadas, como en un giro de 90°. Media vuelta no intercambia nada: manda el punto al lado opuesto del origen, cambiando el signo de las dos coordenadas.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             },
             {
               "campoId": "mediaVueltaX",
               "valorObtenido": 1,
               "mensaje": "Ese valor deja la x igual y cambia solo la y: eso es reflejar respecto del eje x. Girar 180° equivale a reflejar respecto del origen, y cambian las dos coordenadas de signo.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             }
           ],
           "feedbackPorDefecto": "Regla del giro de 180°: (x, y) → (−x, −y). Cambia el signo de las dos coordenadas de (1, 6)."
@@ -457,7 +457,7 @@
       "tipo": "practica",
       "titulo": "El motivo completo",
       "_notasInternas": [
-        "P1 seleccion: P(2, 1), Q(5, 1), R(2, 4) reflejados respecto del origen = (−2, −1), (−5, −1), (−2, −4); distractores (2, −1), (5, −1), (2, −4) y (−2, 1), (−5, 1), (−2, 4) son las dos variantes de error-9 (cambió una sola coordenada); (−1, 2), (−1, 5), (−4, 2) es error-16 (giró 90° antihorario). Visual: motivo y origen marcado, sin imagen. P2 numérica: D(−2, 4) + (6, −5) = (4, −1); feedbackPorError x = −8 e y = 9 son error-6 (restó el vector, (−8, 9)); x = −7 e y = 10 son error-3 (cruzó, (−2 − 5, 4 + 6)). P3 verdaderoFalso con error-10 en el feedback. P4 pregunta: (4, −1) + (−3, 2) = (1, 1); (7, −3) error-6; (−3, 2) error-1; (6, −4) error-3. Verificado con node -e."
+        "P1 seleccion: P(2, 1), Q(5, 1), R(2, 4) reflejados respecto del origen = (−2, −1), (−5, −1), (−2, −4); distractores (2, −1), (5, −1), (2, −4) y (−2, 1), (−5, 1), (−2, 4) son las dos variantes de confunde-reflexion-origen-con-eje (cambió una sola coordenada); (−1, 2), (−1, 5), (−4, 2) es aplica-regla-de-otra-transformacion (giró 90° antihorario). Visual: motivo y origen marcado, sin imagen. P2 numérica: D(−2, 4) + (6, −5) = (4, −1); feedbackPorError x = −8 e y = 9 son traslada-en-sentido-contrario (restó el vector, (−8, 9)); x = −7 e y = 10 son cruza-componentes (cruzó, (−2 − 5, 4 + 6)). P3 verdaderoFalso con cree-que-isometria-cambia-medidas en el feedback. P4 pregunta: (4, −1) + (−3, 2) = (1, 1); (7, −3) traslada-en-sentido-contrario; (−3, 2) confunde-punto-con-vector; (6, −4) cruza-componentes. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -491,21 +491,21 @@
               "texto": "P' = (2, −1), Q' = (5, −1), R' = (2, −4)",
               "esCorrecta": false,
               "feedback": "Esa imagen cambió solo la y: es la reflexión respecto del eje x, el espejo horizontal. Respecto del origen se cambian las dos coordenadas, como si se reflejara en los dos ejes a la vez.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             },
             {
               "id": "c",
               "texto": "P' = (−2, 1), Q' = (−5, 1), R' = (−2, 4)",
               "esCorrecta": false,
               "feedback": "Esa imagen cambió solo la x: es la reflexión respecto del eje y, el espejo vertical. Respecto del origen se cambian las dos coordenadas de cada vértice.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             },
             {
               "id": "d",
               "texto": "P' = (−1, 2), Q' = (−1, 5), R' = (−4, 2)",
               "esCorrecta": false,
               "feedback": "Esa imagen intercambió las coordenadas: es un giro de 90° antihorario, (−y, x). La reflexión respecto del origen no intercambia nada; cambia los dos signos, (−x, −y).",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ]
         },
@@ -531,25 +531,25 @@
               "campoId": "trasladadaX",
               "valorObtenido": -8,
               "mensaje": "Ese valor resta el vector, −2 − 6: el vértice se fue hacia la izquierda. Trasladar por (6, −5) es sumar: 6 cuadros hacia la derecha, −2 + 6.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "campoId": "trasladadaY",
               "valorObtenido": 9,
               "mensaje": "Ese valor resta el vector, 4 − (−5): el vértice subió. El vector dice 5 hacia abajo, y eso es sumar −5: 4 + (−5).",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "campoId": "trasladadaX",
               "valorObtenido": -7,
               "mensaje": "Ese valor suma −2 + (−5): la x del vértice con el movimiento vertical. En x solo entra el movimiento horizontal: −2 + 6.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             },
             {
               "campoId": "trasladadaY",
               "valorObtenido": 10,
               "mensaje": "Ese valor suma 4 + 6: la y del vértice con el movimiento horizontal. En y solo entra el movimiento vertical: 4 + (−5).",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
           "feedbackPorDefecto": "Suma el vector al vértice, coordenada a coordenada: en x, −2 + 6; en y, 4 + (−5)."
@@ -576,24 +576,24 @@
               "texto": "(7, −3)",
               "esCorrecta": false,
               "feedback": "(7, −3) resta el vector: (4 − (−3), −1 − 2). Eso mueve el vértice en el sentido contrario al que indica el vector. Trasladar es sumar: (4 + (−3), −1 + 2).",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "clave": "C",
               "texto": "(−3, 2)",
               "esCorrecta": false,
               "feedback": "(−3, 2) es el vector, cuánto se mueve el vértice, no dónde termina. El punto de llegada es el vértice más el vector: (4 + (−3), −1 + 2).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "clave": "D",
               "texto": "(6, −4)",
               "esCorrecta": false,
               "feedback": "(6, −4) cruza las componentes: 4 + 2 suma la x del vértice con el movimiento vertical, y −1 + (−3) suma la y con el movimiento horizontal. Cada coordenada se suma con la suya: (4 + (−3), −1 + 2).",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
-          "notaVerificacionMatematica": "(4, −1) + (−3, 2) = (1, 1). Distractores: restar el vector (7, −3), error-6; el vector solo (−3, 2), error-1; cruzado (4 + 2, −1 − 3) = (6, −4), error-3. Verificado con node -e."
+          "notaVerificacionMatematica": "(4, −1) + (−3, 2) = (1, 1). Distractores: restar el vector (7, −3), traslada-en-sentido-contrario; el vector solo (−3, 2), confunde-punto-con-vector; cruzado (4 + 2, −1 − 3) = (6, −4), cruza-componentes. Verificado con node -e."
         }
       ]
     },
@@ -601,7 +601,7 @@
       "tipo": "aplicacion",
       "titulo": "El patrón de cuatro copias",
       "_notasInternas": [
-        "Vértice (2, 7) del motivo: girado 90° horario = (7, −2); feedbackPorError x = −7 e y = 2 son error-8 (antihorario, (−7, 2)); y = −7 es error-16 (cambió el signo de y sin intercambiar, (2, −7)). Reflejado respecto del eje y = (−2, 7); feedbackPorError x = 2 e y = −7 son error-7 (cambió la y en vez de la x, (2, −7)). Verificado con node -e."
+        "Vértice (2, 7) del motivo: girado 90° horario = (7, −2); feedbackPorError x = −7 e y = 2 son rota-en-sentido-contrario (antihorario, (−7, 2)); y = −7 es aplica-regla-de-otra-transformacion (cambió el signo de y sin intercambiar, (2, −7)). Reflejado respecto del eje y = (−2, 7); feedbackPorError x = 2 e y = −7 son cambia-coordenada-equivocada-al-reflejar (cambió la y en vez de la x, (2, −7)). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -630,19 +630,19 @@
               "campoId": "horarioX",
               "valorObtenido": -7,
               "mensaje": "Ese valor viene de (−y, x) = (−7, 2), el giro antihorario, hacia la izquierda. El patrón gira hacia la derecha, en sentido horario: la regla es (y, −x).",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "horarioY",
               "valorObtenido": 2,
               "mensaje": "Ese valor viene de (−y, x) = (−7, 2), el giro antihorario. En sentido horario la segunda coordenada es la x original con el signo cambiado: −2.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "campoId": "horarioY",
               "valorObtenido": -7,
               "mensaje": "Ese valor cambia el signo de la y sin intercambiar las coordenadas: eso es voltear el vértice hacia abajo, no girarlo. Un giro de 90° intercambia las coordenadas: (y, −x).",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ],
           "feedbackPorDefecto": "Regla del giro de 90° horario: (x, y) → (y, −x). Con x = 2 e y = 7: primera coordenada y, segunda coordenada −x."
@@ -669,13 +669,13 @@
               "campoId": "reflejadaX",
               "valorObtenido": 2,
               "mensaje": "Ese valor deja la x igual, así que el vértice no cruzó el espejo. El eje y es vertical: la coordenada que mide la distancia a él es la x, y es la que cambia de signo.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "campoId": "reflejadaY",
               "valorObtenido": -7,
               "mensaje": "Ese valor cambió la y: es reflejar respecto del eje x, hacia abajo. Respecto del eje y la altura se conserva y lo que cambia de signo es la x.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             }
           ],
           "feedbackPorDefecto": "Regla de la reflexión respecto del eje y: (x, y) → (−x, y). Cambia el signo de la x y conserva la y."
@@ -711,7 +711,7 @@
       "tipo": "consolidacion",
       "titulo": "Lo que te llevas",
       "_notasInternas": [
-        "Síntesis + contraste P2 explícito con los caminos de error-7, error-8 y error-9, seguido de un bloque pregunta: (−5, −2) reflejado respecto del eje x = (−5, 2); (5, −2) error-7; (5, 2) error-9; (−2, 5) error-16 ((y, −x), giro horario). Verificado con node -e."
+        "Síntesis + contraste P2 explícito con los caminos de cambia-coordenada-equivocada-al-reflejar, rota-en-sentido-contrario y confunde-reflexion-origen-con-eje, seguido de un bloque pregunta: (−5, −2) reflejado respecto del eje x = (−5, 2); (5, −2) cambia-coordenada-equivocada-al-reflejar; (5, 2) confunde-reflexion-origen-con-eje; (−2, 5) aplica-regla-de-otra-transformacion ((y, −x), giro horario). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -733,24 +733,24 @@
               "texto": "(5, −2)",
               "esCorrecta": false,
               "feedback": "(5, −2) cambió el signo de la x: cruzó hacia la derecha, como en el espejo vertical del eje y. Respecto del eje x, la coordenada que mide la distancia al espejo es la y, y es la que cambia: (−5, 2).",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "clave": "C",
               "texto": "(5, 2)",
               "esCorrecta": false,
               "feedback": "(5, 2) cambió las dos coordenadas: es la reflexión respecto del origen, que voltea el punto dos veces. Respecto de un solo eje cambia una sola coordenada: (−5, 2).",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             },
             {
               "clave": "D",
               "texto": "(−2, 5)",
               "esCorrecta": false,
               "feedback": "(−2, 5) intercambió las coordenadas y cambió un signo: es la regla del giro de 90° horario, (y, −x). Una reflexión no intercambia coordenadas; cambia el signo de una: (−5, 2).",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ],
-          "notaVerificacionMatematica": "Reflexión respecto del eje x: (x, y) → (x, −y); (−5, −2) → (−5, 2). Distractores: (5, −2) cambia la x, error-7; (5, 2) cambia las dos, error-9; (−2, 5) = (y, −x), giro horario, error-16. Verificado con node -e."
+          "notaVerificacionMatematica": "Reflexión respecto del eje x: (x, y) → (x, −y); (−5, −2) → (−5, 2). Distractores: (5, −2) cambia la x, cambia-coordenada-equivocada-al-reflejar; (5, 2) cambia las dos, confunde-reflexion-origen-con-eje; (−2, 5) = (y, −x), giro horario, aplica-regla-de-otra-transformacion. Verificado con node -e."
         }
       ]
     }
@@ -773,21 +773,21 @@
           "texto": "(6, 2)",
           "esCorrecta": false,
           "feedback": "(6, 2) cambió el signo de la x: es la reflexión respecto del eje y, el espejo vertical. El eje x es horizontal, y lo que cambia al cruzarlo es la altura: (−6, −2).",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
         },
         {
           "clave": "C",
           "texto": "(6, −2)",
           "esCorrecta": false,
           "feedback": "(6, −2) cambió las dos coordenadas: es la reflexión respecto del origen, equivalente a media vuelta. Respecto del eje x cambia una sola, la y: (−6, −2).",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-reflexion-origen-con-eje"
         },
         {
           "clave": "D",
           "texto": "(2, 6)",
           "esCorrecta": false,
           "feedback": "(2, 6) intercambió las coordenadas y cambió el signo de una: es la regla del giro de 90° horario, (y, −x). Una reflexión respecto de un eje no intercambia: cambia el signo de la coordenada que mide la distancia al eje, (−6, −2).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         }
       ],
       "solucion": "Reflexión respecto del eje x: (x, y) → (x, −y). Con (−6, 2): la x se conserva, −6; la y cambia de signo, −2. La imagen es (−6, −2). Comprobación: el punto y su imagen están a la misma distancia del eje x (2 unidades), uno arriba y otro abajo, y sobre la misma vertical x = −6. ✓"
@@ -809,21 +809,21 @@
           "texto": "A' = (2, −1), B' = (2, −4), C' = (5, −1)",
           "esCorrecta": false,
           "feedback": "Esos vértices salen de (y, −x), la regla del giro en sentido horario: el triángulo cae al cuarto cuadrante. Antihorario es hacia la izquierda, (−y, x), y el triángulo sube al segundo cuadrante.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "rota-en-sentido-contrario"
         },
         {
           "clave": "C",
           "texto": "A' = (−1, 2), B' = (−4, 2), C' = (−1, 5)",
           "esCorrecta": false,
           "feedback": "Esos vértices cambiaron el signo de la x sin intercambiar las coordenadas: es la reflexión respecto del eje y, no un giro. El lado AB sigue horizontal, y tras girar 90° tendría que quedar vertical. La regla del giro intercambia: (−y, x).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         },
         {
           "clave": "D",
           "texto": "A' = (−1, −2), B' = (−4, −2), C' = (−1, −5)",
           "esCorrecta": false,
           "feedback": "Esos vértices cambiaron los dos signos sin intercambiar las coordenadas: es un giro de 180°, media vuelta. Un cuarto de vuelta intercambia las coordenadas: (1, 2) va a (−2, 1), no a (−1, −2).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         }
       ],
       "solucion": "Giro de 90° antihorario en torno al origen: (x, y) → (−y, x). A = (1, 2) → (−2, 1). B = (4, 2) → (−2, 4). C = (1, 5) → (−5, 1). Comprobación de conservación: AB mide 3 y A'B' mide 4 − 1 = 3; AC mide 3 y A'C' mide −2 − (−5) = 3. El ángulo recto en A se conserva en A'. ✓"
@@ -845,21 +845,21 @@
           "texto": "La imagen tiene el mismo perímetro pero el doble de área, porque al voltearse la figura se abre hacia el otro lado.",
           "esCorrecta": false,
           "feedback": "El área no cambia. Cada vértice queda a la misma distancia del eje que antes, y las distancias entre vértices se conservan: la figura reflejada es una copia exacta, con la misma área.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cree-que-isometria-cambia-medidas"
         },
         {
           "clave": "C",
           "texto": "La imagen tiene la misma área pero menor perímetro, porque los lados que estaban lejos del eje quedan más cerca.",
           "esCorrecta": false,
           "feedback": "El perímetro no cambia. Que un lado quede más cerca del eje no lo acorta: cada lado de la imagen mide lo mismo que su lado original, porque la reflexión conserva las distancias entre vértices.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cree-que-isometria-cambia-medidas"
         },
         {
           "clave": "D",
           "texto": "La imagen es exactamente igual al original, sin cambio de orientación: reflejar es como trasladar la figura al otro lado del eje.",
           "esCorrecta": false,
           "feedback": "Reflejar no es trasladar. Al trasladar, la figura se corre sin voltearse; al reflejar, queda invertida: el vértice que estaba más a la izquierda pasa a ser el que está más a la derecha. Las medidas sí son las mismas, pero la orientación no.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura"
         }
       ],
       "solucion": "La reflexión respecto del eje y aplica (x, y) → (−x, y) a cada vértice. Para dos vértices cualesquiera (x₁, y₁) y (x₂, y₂), la distancia entre sus imágenes es √((−x₁ − (−x₂))² + (y₁ − y₂)²) = √((x₁ − x₂)² + (y₁ − y₂)²), la misma que entre los originales. Como todas las distancias se conservan, se conservan los lados, el perímetro, los ángulos y el área. La orientación sí cambia: el orden de los vértices recorridos se invierte, lo que estaba a la izquierda queda a la derecha. La afirmación correcta es la A."

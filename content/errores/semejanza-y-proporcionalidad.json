@@ -1,48 +1,48 @@
 {
-  "unidad": "semejanza-proporcionalidad",
+  "unidad": "semejanza-y-proporcionalidad",
   "errores": [
     {
-      "id": "semejanza-proporcionalidad/error-1",
+      "id": "semejanza-y-proporcionalidad/escala-sumando",
       "descripcion": "Escalar sumando en vez de multiplicando: agregar la misma cantidad a cada lado (3-4-5 → 5-6-7) en vez de multiplicar todos los lados por la misma razón. Sumar una constante no conserva la forma: las razones entre lados homólogos dejan de coincidir."
     },
     {
-      "id": "semejanza-proporcionalidad/error-2",
+      "id": "semejanza-y-proporcionalidad/invierte-razon-de-semejanza",
       "descripcion": "Invertir la razón de semejanza: calcular k como original ÷ imagen en vez de imagen ÷ original, o aplicar 1/k donde corresponde k. El resultado queda del lado equivocado: se achica lo que había que agrandar, o al revés."
     },
     {
-      "id": "semejanza-proporcionalidad/error-3",
+      "id": "semejanza-y-proporcionalidad/empareja-lados-no-homologos",
       "descripcion": "Emparejar lados que no son homólogos al armar la proporción o al calcular el lado que falta: comparar el lado mayor de una figura con uno que no es el mayor de la otra, o tomar la imagen de otro lado como si fuera la del lado pedido. Los lados homólogos se emparejan mayor con mayor y menor con menor."
     },
     {
-      "id": "semejanza-proporcionalidad/error-4",
+      "id": "semejanza-y-proporcionalidad/asume-semejanza-por-tipo",
       "descripcion": "Dar por semejantes dos figuras solo porque son del mismo tipo (dos rectángulos, dos triángulos rectángulos) sin verificar que las razones entre lados homólogos coincidan o que los ángulos sean iguales."
     },
     {
-      "id": "semejanza-proporcionalidad/error-5",
+      "id": "semejanza-y-proporcionalidad/aplica-k-al-area",
       "descripcion": "Aplicar a un área la razón lineal k una sola vez (área × k, o área × n con escala 1:n) en vez de k² (o n²): al escalar por k, el área se multiplica por k · k."
     },
     {
-      "id": "semejanza-proporcionalidad/error-6",
+      "id": "semejanza-y-proporcionalidad/aplica-k-cuadrado-a-longitud",
       "descripcion": "Aplicar a una longitud (un lado o el perímetro) el factor k² del área, en vez de k: al escalar por k, toda longitud se multiplica solo por k."
     },
     {
-      "id": "semejanza-proporcionalidad/error-7",
+      "id": "semejanza-y-proporcionalidad/usa-escala-al-reves",
       "descripcion": "Usar la escala 1:n al revés: dividir por n la medida del plano para obtener la real (o multiplicar por n la medida real para obtener la del plano), cuando 1:n significa que la realidad es n veces más grande que el dibujo."
     },
     {
-      "id": "semejanza-proporcionalidad/error-8",
+      "id": "semejanza-y-proporcionalidad/mezcla-unidades-en-escala",
       "descripcion": "No convertir las unidades al pasar del plano o mapa a la realidad, o mezclar unidades dentro de una misma proporción: entregar en centímetros lo que se pidió en metros o kilómetros, o comparar una altura en centímetros con una sombra en metros."
     },
     {
-      "id": "semejanza-proporcionalidad/error-9",
+      "id": "semejanza-y-proporcionalidad/cruza-altura-con-sombra-ajena",
       "descripcion": "Armar la proporción con cantidades que no se corresponden: cruzar la altura de un objeto con la sombra del otro (altura ÷ sombra ajena) en vez de altura con altura y sombra con sombra."
     },
     {
-      "id": "semejanza-proporcionalidad/error-10",
+      "id": "semejanza-y-proporcionalidad/lee-ampliacion-como-aumento",
       "descripcion": "Leer una ampliación al 150 % como 'un 150 % más' (k = 2,5) o como sumar 150 a la medida, en vez de k = 1,5: al 150 % significa que la copia mide 1,5 veces la original."
     },
     {
-      "id": "semejanza-proporcionalidad/error-11",
+      "id": "semejanza-y-proporcionalidad/descarta-semejanza-por-orientacion",
       "descripcion": "Descartar la semejanza porque las figuras están en distinta posición u orientación (una girada o volteada respecto de la otra), o exigir que estén orientadas igual para compararlas. La semejanza no depende de dónde ni cómo esté puesta la figura."
     }
   ]

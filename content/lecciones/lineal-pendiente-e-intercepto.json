@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "lineal-pendiente-e-intercepto",
-  "moduloId": "funcion-lineal-afin",
+  "moduloId": "funcion-lineal-y-afin",
   "titulo": "Tablas y gráficos de función lineal y afín",
   "objetivo": "Entender qué controla la forma de una recta —la pendiente cambia la inclinación, el coeficiente de posición cambia dónde cruza el eje Y— para leer, escribir y comparar funciones lineales y afines con seguridad en los ítems de la PAES M1.",
   "tiempoEstimadoMin": 24,
@@ -21,8 +21,8 @@
     "EXCEPCIÓN de dominio en Ítem 10.2 (l2-item-2): el guion trae un contexto de ESTACIONAMIENTO ($1.500 fijo + $600/hora). Se reemplazó por un dominio nuevo aprobado —huerta escolar, plantines por sembrar que decrecen por cantero sembrado (función afín DECRECIENTE)— por decisión de producto (contexto no comercial, MOS §7.1), no por colisión detectada en el estacionamiento. Números nuevos (160 inicial, 25 por cantero) verificados sin repetición contra Lección 1, Paso 8 de esta lección ni los otros ítems del cierre. Dominio verificado sin colisión léxica vía subagente consulta-fuentes (huerta/plantines/canteros/sembrar = NO); se evitó la palabra 'cultivo' (colisión) y 'curso' (colisión genérica). NO se usó 'cultivo' en ningún campo. Verificación de originalidad profunda sobre el texto redactado queda PENDIENTE de /revision-originalidad.",
     "Los otros dos ítems del cierre (10.1 tabla→ecuación y 10.3 argumentar rectas paralelas) y los 9 pasos previos se migran fieles al guion, con sus mismos números.",
     "AUDITORÍA DE SOLAPAMIENTO TEMÁTICO 2026-07-22: el Paso 8 exigía el mismo procedimiento algebraico que l3-item-1 (reunir incógnitas de ambos lados, después las constantes, después dividir), y lo exigía sin haberlo enseñado nunca, una lección antes de que la Lección 3 lo introduzca. Se reescribió para evaluar lectura e interpretación de m y n, que es lo que esta lección sí enseña. Ver la nota del Paso 8 para el detalle y la verificación matemática. La Lección 3 no se tocó.",
-    "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: error-4 estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 error-5 ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, error-4 quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea error-2, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a error-2, y error-4 se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 error-5 se mantiene sin cambios.",
-    "F0.2 (ficha 45): l2-item-1 se reescribió de representar (tabla → ecuación) a resolver (evaluar y = 12 − 5x en x = 4), para cubrir la habilidad 'resolver' que §3.5 exige y que el auditor marcaba como faltante; con eso el set queda resolver + modelar + argumentar. La nota de arriba sobre '10.1 tabla→ecuación' queda como registro histórico de la migración. Distractores mapeados a error-9 (signo de la pendiente), error-12 (olvida el coeficiente de posición) y error-8 (confunde pendiente con coeficiente de posición), los tres del catálogo local. Recuento del guard de catálogo tras el cambio: error-8 pasa de 11 a 10 usos, error-9 de 3 a 4, error-12 se mantiene en 2; ningún id del catálogo queda sin uso."
+    "CATÁLOGO DE ERRORES 2026-07-22, misma auditoría: confunde-signo-de-la-tasa estaba descrito como 'al comparar dos costos para igualarlos, suma en vez de restar', que es la misma confusión que l3 aplica-cambio-una-sola-vez ('al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas') catalogada dos veces bajo ids distintos en archivos distintos, porque dos lecciones se creyeron dueñas del mismo procedimiento. Al dejar el Paso 8 de pedir esa operación, confunde-signo-de-la-tasa quedó sin uso legítimo: su única referencia restante era la alternativa D de l2-item-2 (y = 160 + 25x), que en realidad comete un error de signo de la tasa, o sea cuenta-mal-los-saltos, y cuyo propio feedback ya lo decía ('si disminuyen, el 25 se resta, no se suma'). Esa alternativa se reetiquetó a cuenta-mal-los-saltos, y confunde-signo-de-la-tasa se redefinió para cubrir la mala interpretación del punto de cruce entre dos rectas, que es un concepto propio de esta lección (está declarado en 'conceptos') y no se pisa con nada de la Lección 3. l3 aplica-cambio-una-sola-vez se mantiene sin cambios.",
+    "F0.2 (ficha 45): l2-item-1 se reescribió de representar (tabla → ecuación) a resolver (evaluar y = 12 − 5x en x = 4), para cubrir la habilidad 'resolver' que §3.5 exige y que el auditor marcaba como faltante; con eso el set queda resolver + modelar + argumentar. La nota de arriba sobre '10.1 tabla→ecuación' queda como registro histórico de la migración. Distractores mapeados a confunde-signo-de-la-pendiente (signo de la pendiente), omite-coeficiente-de-posicion (olvida el coeficiente de posición) y confunde-pendiente-con-intercepto (confunde pendiente con coeficiente de posición), los tres del catálogo local. Recuento del guard de catálogo tras el cambio: confunde-pendiente-con-intercepto pasa de 11 a 10 usos, confunde-signo-de-la-pendiente de 3 a 4, omite-coeficiente-de-posicion se mantiene en 2; ningún id del catálogo queda sin uso."
   ],
   "auditoria": {
     "sliderJustificado": "Esta lección (L2 de Función lineal y afín) lleva la interacción insignia con sliders: el concepto mismo (qué controla la pendiente y qué controla el coeficiente de posición) exige manipular ambos por separado para verse."
@@ -118,7 +118,7 @@
       "tipo": "descubrimiento",
       "titulo": "Dos controles: pendiente y coeficiente de posición",
       "_notasInternas": [
-        "Pantalla original: Paso 5 (micro-preguntas 5.1, 5.2, 5.3). Secuencia predice→mueve→compara. 5.1 mapea a error-1 (confunde pendiente con intercepto); 5.3 mapea a error-2 (signo de la pendiente).",
+        "Pantalla original: Paso 5 (micro-preguntas 5.1, 5.2, 5.3). Secuencia predice→mueve→compara. 5.1 mapea a olvida-valor-inicial (confunde pendiente con intercepto); 5.3 mapea a cuenta-mal-los-saltos (signo de la pendiente).",
         "2026-07-28: bloque interactivoSlider (dosVariables + secuenciaMicropreguntas) agregado — estaba ausente desde la creación del archivo (ver commit ea912b1). El schema se extendió con el campo opcional mensajeCorrecto en secuenciaMicropreguntas para no perder el feedback de la opción correcta de cada micro-pregunta."
       ],
       "bloques": [
@@ -142,7 +142,7 @@
                 {
                   "prediccion": "El control de la pendiente",
                   "mensaje": "Compruébalo tú: mueve solo el control de pendiente. ¿Se mueve el punto donde la recta cruza el eje Y, o se queda clavado ahí?",
-                  "errorCatalogado": "error-8"
+                  "errorCatalogado": "confunde-pendiente-con-intercepto"
                 }
               ],
               "mensajeCorrecto": "Exacto. El coeficiente de posición es justamente el punto donde la recta cruza el eje Y. Muévelo y verás el cruce subir y bajar, sin cambiar la inclinación."
@@ -154,7 +154,7 @@
                 {
                   "prediccion": "El control del coeficiente de posición",
                   "mensaje": "Prueba mover solo el control de coeficiente de posición. ¿La recta se pone más o menos empinada, o solo sube y baja completa sin cambiar su ángulo?",
-                  "errorCatalogado": "error-8"
+                  "errorCatalogado": "confunde-pendiente-con-intercepto"
                 }
               ],
               "mensajeCorrecto": "Eso es. La pendiente controla la inclinación: más pendiente, recta más empinada."
@@ -166,7 +166,7 @@
                 {
                   "prediccion": "Verdadero",
                   "mensaje": "Una recta no se acorta. Lleva la pendiente a negativo y observa la dirección: ¿sube de izquierda a derecha, o baja? Una pendiente negativa hace que la recta BAJE, no que se acorte.",
-                  "errorCatalogado": "error-9"
+                  "errorCatalogado": "confunde-signo-de-la-pendiente"
                 }
               ],
               "mensajeCorrecto": "Correcto. Una recta no se acorta: con pendiente negativa cambia de dirección y baja de izquierda a derecha. El signo de la pendiente dice si sube o baja."
@@ -198,7 +198,7 @@
       "tipo": "practica",
       "titulo": "¿Dónde cruza el eje Y?",
       "_notasInternas": [
-        "Pantalla original: Paso 7. Opción múltiple de un paso. Verificación: y = 4x − 2, intercepto en x=0 → y = −2, punto (0, −2). Distractores: B (0,4) error-1; C (−2,0) error-3; D (0,2) error-2."
+        "Pantalla original: Paso 7. Opción múltiple de un paso. Verificación: y = 4x − 2, intercepto en x=0 → y = −2, punto (0, −2). Distractores: B (0,4) olvida-valor-inicial; C (−2,0) confunde-direccion-al-despejar; D (0,2) cuenta-mal-los-saltos."
       ],
       "bloques": [
         {
@@ -216,21 +216,21 @@
               "texto": "(0, 4)",
               "esCorrecta": false,
               "feedback": "El 4 es lo que inclina la recta, no dónde cruza el eje Y. ¿Qué número en y = mx + n te dice el cruce con el eje Y?",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "confunde-pendiente-con-intercepto"
             },
             {
               "id": "c",
               "texto": "(−2, 0)",
               "esCorrecta": false,
               "feedback": "Ojo con los ejes: el coeficiente de posición que buscamos es el cruce con el eje Y, así que la primera coordenada del punto debe ser 0. Revisa cuál eje estás mirando.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-intercepto-en-eje-equivocado"
             },
             {
               "id": "d",
               "texto": "(0, 2)",
               "esCorrecta": false,
               "feedback": "Casi. Revisa el signo del término sin x en la ecuación. ¿La ecuación dice +2 o −2?",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-signo-de-la-pendiente"
             }
           ]
         }
@@ -241,11 +241,11 @@
       "titulo": "Los dos planes, ahora con precios",
       "_notasInternas": [
         "Pantalla original: Paso 8. Retoma el contexto del Paso 2.",
-        "REESCRITO 2026-07-22 tras la auditoría de solapamiento temático entre lecciones. El bloque pedía '¿con cuántos gigas ambos planes cuestan lo mismo?', o sea igualar 300x + 4800 = 900x + 1200 y despejar: reunir incógnitas de ambos lados, después las constantes, después dividir. Ese procedimiento es paso a paso intercambiable con l3-item-1 (5x + 8 = x − 4) y es lo que la Lección 3 existe para enseñar. Peor que la duplicación: L2 tiene como prerrequisito a L1, no a L3, así que el paso exigía ejecutar sin ningún andamio el procedimiento más difícil de una lección que el estudiante todavía no ha visto, y que allá está reservado para el ítem de dificultad alta. Corroboración de que no fue deliberado: L2 error-4 y L3 error-5 describían la misma confusión con ids distintos en archivos distintos.",
+        "REESCRITO 2026-07-22 tras la auditoría de solapamiento temático entre lecciones. El bloque pedía '¿con cuántos gigas ambos planes cuestan lo mismo?', o sea igualar 300x + 4800 = 900x + 1200 y despejar: reunir incógnitas de ambos lados, después las constantes, después dividir. Ese procedimiento es paso a paso intercambiable con l3-item-1 (5x + 8 = x − 4) y es lo que la Lección 3 existe para enseñar. Peor que la duplicación: L2 tiene como prerrequisito a L1, no a L3, así que el paso exigía ejecutar sin ningún andamio el procedimiento más difícil de una lección que el estudiante todavía no ha visto, y que allá está reservado para el ítem de dificultad alta. Corroboración de que no fue deliberado: L2 confunde-signo-de-la-tasa y L3 aplica-cambio-una-sola-vez describían la misma confusión con ids distintos en archivos distintos.",
         "El paso ahora evalúa lo que L2 sí enseña: leer m y n de dos ecuaciones ya escritas e interpretar qué significa su punto de cruce en el contexto. No pide despejar x ni igualar las ecuaciones; ese procedimiento queda como exclusivo de L3.",
         "CORRECCIÓN DE COHERENCIA 2026-07-22: el Paso 2 declara 'Plan A cobra un cargo fijo bajo pero cobra caro cada giga; Plan B cobra un cargo fijo alto pero cada giga sale barato', y este paso tenía las etiquetas al revés (A = 4.800 fijo + 300/giga). Con el enunciado anterior el desajuste era casi invisible porque la respuesta era un número y las etiquetas apenas intervenían, pero el enunciado nuevo trata precisamente de cuál plan tiene el cargo fijo más alto y cuál sube más rápido: un estudiante que recordara el Paso 2 habría respondido mal por hacerle caso a la lección. Se intercambió qué ecuación lleva cada etiqueta. Los cuatro números y el cruce en x = 6 no cambian. El guion (leccion-2-guion.md, Pasos 2 y 8) arrastra la misma inversión y sigue sin corregir.",
         "Verificación matemática. Plan A: y = 900x + 1200 (fijo bajo 1.200, giga caro 900). Plan B: y = 300x + 4800 (fijo alto 4.800, giga barato 300). Cargo fijo: 1200 < 4800, el más alto es el del Plan B. Ritmo por giga: 900 > 300, el que sube más rápido es el Plan A. Cruce: 900x + 1200 = 300x + 4800 → 600x = 3600 → x = 6; en x = 6 ambos dan 6.600. ✓ Dirección de conveniencia: en x = 0, A = 1.200 y B = 4.800 → conviene A; en x = 10, A = 10.200 y B = 7.800 → conviene B. O sea que con menos de 6 gigas conviene A y con más de 6 conviene B, y la alternativa D (que afirma lo contrario a partir del cruce) es falsa. ✓",
-        "Alternativa D usa error-4 en su definición redefinida (interpretar mal qué significa la intersección en el contexto, no calcularla mal). Alternativas B y C son las dos direcciones de error-1: leer la pendiente como si fuera el cargo fijo, y leer el cargo fijo como si fuera el ritmo.",
+        "Alternativa D usa confunde-signo-de-la-tasa en su definición redefinida (interpretar mal qué significa la intersección en el contexto, no calcularla mal). Alternativas B y C son las dos direcciones de olvida-valor-inicial: leer la pendiente como si fuera el cargo fijo, y leer el cargo fijo como si fuera el ritmo.",
         "Números de este paso (1.200/900/4.800/300 → cruce 6) NO se repiten en los ítems del cierre ni en el ítem de la huerta (160/25)."
       ],
       "bloques": [
@@ -264,21 +264,21 @@
               "texto": "El Plan B cobra el cargo fijo más bajo, porque cobra solo $300 por cada giga.",
               "esCorrecta": false,
               "feedback": "Estás leyendo el número que acompaña a la x como si fuera el cargo fijo. En y = mx + n, el 300 es lo que se paga por cada giga; el cargo fijo es lo que se paga aunque uses 0 gigas. ¿Qué queda de cada ecuación cuando x = 0?",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "confunde-pendiente-con-intercepto"
             },
             {
               "id": "c",
               "texto": "El Plan B sube más rápido por cada giga, porque su costo empieza en un número más alto.",
               "esCorrecta": false,
               "feedback": "Empezar más arriba y subir más rápido son dos cosas distintas, y las controla un número distinto cada una. El Plan B efectivamente empieza más arriba, pero eso no dice nada sobre su ritmo. ¿Cuál de los dos números de la ecuación te dice cuánto sube el costo por cada giga?",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "confunde-pendiente-con-intercepto"
             },
             {
               "id": "d",
               "texto": "El punto donde las dos rectas se cruzan marca el consumo a partir del cual el Plan A pasa a ser el más barato.",
               "esCorrecta": false,
               "feedback": "Tienes bien qué es el cruce, pero al revés la dirección. Fíjate en el ritmo: el Plan A sube $900 por giga y el Plan B sube $300. Después del cruce, ¿cuál de los dos se dispara y cuál se queda atrás?",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "malinterpreta-punto-de-cruce"
             }
           ]
         }
@@ -331,21 +331,21 @@
           "texto": "32",
           "esCorrecta": false,
           "feedback": "Ese valor sale de sumar en vez de restar: 12 + 5·4 = 32. La pendiente es −5, con signo negativo, así que el término 5x se resta. En y = 12 − 5x la recta baja a medida que x crece.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-signo-de-la-pendiente"
         },
         {
           "clave": "C",
           "texto": "−20",
           "esCorrecta": false,
           "feedback": "Ese valor es solo −5·4 = −20: se calculó el término de la pendiente pero se dejó fuera el coeficiente de posición 12, que es el valor de y cuando x = 0. Hay que sumarlo: 12 + (−20) = −8.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "omite-coeficiente-de-posicion"
         },
         {
           "clave": "D",
           "texto": "43",
           "esCorrecta": false,
           "feedback": "Ese valor intercambia los papeles de los dos números: toma el 12 como pendiente y el 5 como coeficiente de posición, calculando 12·4 − 5 = 43. En y = 12 − 5x el número que multiplica a x es −5 (la pendiente) y el 12 es el término independiente.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "confunde-pendiente-con-intercepto"
         }
       ],
       "solucion": "Se evalúa la función en x = 4 reemplazando directamente: y = 12 − 5·(4) = 12 − 20 = −8. Comprobación leyendo los parámetros: el coeficiente de posición es 12 (valor de y en x = 0) y la pendiente es −5 (y baja 5 por cada unidad que sube x); desde (0, 12), al avanzar 4 unidades en x se baja 5·4 = 20, y 12 − 20 = −8. Descarte de los distractores: 12 + 20 = 32 usa la pendiente con signo positivo; −20 olvida el coeficiente de posición; 12·4 − 5 = 43 confunde cuál número es la pendiente. Respuesta: −8."
@@ -367,21 +367,21 @@
           "texto": "y = 25 − 160x",
           "esCorrecta": false,
           "feedback": "Invertiste los papeles. ¿Cuál número es la cantidad con la que se PARTE (se cuenta una sola vez) y cuál se repite POR cada cantero? El que se repite por cantero va con la x.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "confunde-pendiente-con-intercepto"
         },
         {
           "clave": "C",
           "texto": "y = −25x",
           "esCorrecta": false,
           "feedback": "El ritmo al que bajan los plantines está bien (25 por cantero), pero olvidaste de cuántos se parte. Con 0 canteros sembrados, ¿cuántos plantines quedan por sembrar todavía?",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "omite-coeficiente-de-posicion"
         },
         {
           "clave": "D",
           "texto": "y = 160 + 25x",
           "esCorrecta": false,
           "feedback": "Fíjate en la dirección: los plantines que quedan por sembrar ¿aumentan o disminuyen a medida que se siembran más canteros? Si disminuyen, el 25 se resta, no se suma.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-signo-de-la-pendiente"
         }
       ],
       "solucion": "Cantidad inicial (coeficiente de posición) = 160 plantines por sembrar. Por cada cantero se siembran 25, así que los que quedan bajan 25 por cantero (pendiente −25). Modelo: y = 160 − 25x. Comprobación x=4: 160 − 25·4 = 160 − 100 = 60 plantines quedan; sembrados 100, total 160. ✓ Resultado entero para todo x entero."
@@ -403,21 +403,21 @@
           "texto": "Sí: la pendiente dice cuánto cambia y por cada unidad de x desde el origen, así que dos rectas con la misma m pasan por los mismos puntos.",
           "esCorrecta": false,
           "feedback": "Estás asumiendo que las dos rectas parten del mismo punto en el eje Y (n=0), pero el coeficiente de posición no tiene por qué ser igual solo porque la pendiente lo es: y = 2x + 1 e y = 2x + 3 tienen la misma m y jamás se cruzan.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "omite-coeficiente-de-posicion"
         },
         {
           "clave": "C",
           "texto": "Sí: si tienen la misma m cortan el eje X en el mismo punto, y con ese punto y la inclinación la recta queda fija.",
           "esCorrecta": false,
           "feedback": "Ese punto fijo no existe en el eje X: y = 2x + 1 lo corta en x = −0,5, e y = 2x + 3 lo corta en x = −1,5. Son puntos distintos aunque compartan la misma m; el que sí comparten dos rectas con igual m es solo la inclinación, no un cruce con ningún eje.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "lee-intercepto-en-eje-equivocado"
         },
         {
           "clave": "D",
           "texto": "No, pero por otra razón: las dos cortan el eje Y en (0, m), y lo que puede diferir es la inclinación, que la da n.",
           "esCorrecta": false,
           "feedback": "Invertiste los papeles: el corte con el eje Y es (0, n), no (0, m), y la inclinación la da m, no n. Con m y n cambiados de lugar, la explicación describe algo que no es cierto para ninguna de las dos rectas del ejemplo.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "confunde-pendiente-con-intercepto"
         }
       ],
       "solucion": "Dos rectas con igual m y distinto n son paralelas y distintas (por ejemplo y = 2x + 1 e y = 2x + 3 nunca se cruzan y no coinciden). La afirmación es falsa; la justificación correcta es A."

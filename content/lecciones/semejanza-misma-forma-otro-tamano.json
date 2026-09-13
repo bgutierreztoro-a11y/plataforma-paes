@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "semejanza-misma-forma-otro-tamano",
-  "moduloId": "semejanza-proporcionalidad",
+  "moduloId": "semejanza-y-proporcionalidad",
   "titulo": "Concepto de semejanza de figuras",
   "objetivo": "Reconocer cuándo dos figuras son semejantes (misma forma, otro tamaño: ángulos iguales y lados homólogos proporcionales), calcular la razón de semejanza k como lado de la imagen dividido por lado de la original, identificar lados homólogos (mayor con mayor, menor con menor) y usar k para calcular un lado que falta.",
   "tiempoEstimadoMin": 30,
@@ -20,13 +20,13 @@
   ],
   "_notasInternas": [
     "L1 del módulo semejanza-y-proporcionalidad (eje Geometría, módulo #13). moduloId = semejanza-proporcionalidad (unidad del DAG). Descriptor DEMRE (docs/temario-demre-m1-2027.md:109): 'Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala y otras situaciones de la vida diaria y otras asignaturas'. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md.",
-    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: error-1, error-2, error-3, error-4, error-11 (nacen acá). error-5 a error-10 nacen en L2 y L3.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: escala-sumando, invierte-razon-de-semejanza, empareja-lados-no-homologos, asume-semejanza-por-tipo, descarta-semejanza-por-orientacion (nacen acá). aplica-k-al-area a lee-ampliacion-como-aumento nacen en L2 y L3.",
     "Dominio: calcomanías triangulares para cuadernos, impresas desde el mismo diseño en tres tamaños (chica 3-4-5 cm, mediana 4,5-6-7,5 cm, grande 6-8-10 cm) y una edición gigante 9-12-15 cm. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
     "Requisito de diseño registrado: los tríos pitagóricos escalados son el hilo del módulo. Todas las cifras verificadas con node -e sobre lib/semejanza.ts (sonSemejantesPorLados, razon, escalarPoligono): 3-4-5 → 6-8-10 (k = 2), 9-12-15 (k = 3), 4,5-6-7,5 (k = 3/2); 6-8-10 → 9-12-15 (k = 3/2); 5-12-13 → 12,5-30-32,5 (k = 2,5); 8-15-17 → 12-22,5-25,5 (k = 3/2); 7-24-25 → 10,5-36-37,5 (k = 3/2); 6-8-10 → 15-20-25 (k = 2,5); 4,5-6-7,5 → 9-12-15 (k = 2); 3-4-5 → 7,5-10-12,5 (k = 2,5); 9-12-15 → 15-20-25 (k = 5/3); trapecio 7-5-4-4 → 10,5-7,5-6-6 (k = 3/2); 5-12-13 contra 8-15-17: razones 1,6, 1,25 y 17/13, no semejantes; 4-5-6 contra 3-4-5: razones 4/3, 5/4, 6/5, no semejantes.",
-    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,5; 7,5; 2,5; 12; 15; 10}, distractores numéricos {5; 7; 2; 4,8; 6; 0,4; 16,5; 13,6; 21; 2,4; 18,75; 13,5; 3,75; 20; 1,6; 11,5; 12,5; 5,4; 19; 3,3; 6,5}; sin intersección. Por eso la razón del descubrimiento se pide sobre 5-12-13 → 12,5-30-32,5 (k = 2,5) y no sobre 5-12-13 → 10-24-26 (k = 2): el 2 ya es distractor de error-2 en pensar. Y por eso el distractor de error-3 de aplicacion es 20 y no 12: 12 es la respuesta correcta de generalizacion.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,5; 7,5; 2,5; 12; 15; 10}, distractores numéricos {5; 7; 2; 4,8; 6; 0,4; 16,5; 13,6; 21; 2,4; 18,75; 13,5; 3,75; 20; 1,6; 11,5; 12,5; 5,4; 19; 3,3; 6,5}; sin intersección. Por eso la razón del descubrimiento se pide sobre 5-12-13 → 12,5-30-32,5 (k = 2,5) y no sobre 5-12-13 → 10-24-26 (k = 2): el 2 ya es distractor de invierte-razon-de-semejanza en pensar. Y por eso el distractor de empareja-lados-no-homologos de aplicacion es 20 y no 12: 12 es la respuesta correcta de generalizacion.",
     "Visuales: curiosidad (3-4-5 y la grande con cotas '?'), descubrimiento (3-4-5 y 6-8-10), generalizacion (6-8-10 y 9-12-15), todas ladoALado con todas las cotas rotuladas. Ítem 2 con visual en lib/visualesItems.tsx (clave semejanza-l1-item-2): trapecio 7-5-4-4 y su imagen con el lado pedido rotulado x. Ningún bloque rotula la cota que se pregunta.",
     "Sin auditoria.constante: no hay una constante numérica única. La palabra 'razón de semejanza' y la letra k aparecen por primera vez en descubrimiento, y la definición formal en generalizacion.",
-    "P2: el paso consolidacion nombra los caminos equivocados de error-1, error-2 y error-3 antes del correcto, y su bloque pregunta lleva esos tres ids en los distractores."
+    "P2: el paso consolidacion nombra los caminos equivocados de escala-sumando, invierte-razon-de-semejanza y empareja-lados-no-homologos antes del correcto, y su bloque pregunta lleva esos tres ids en los distractores."
   ],
   "contextosNumericos": [
     "curiosidad: calcomanía chica de 3 cm, 4 cm y 5 cm; la grande tiene el lado menor de 6 cm y los otros dos sin revelar",
@@ -88,7 +88,7 @@
       "tipo": "problema",
       "titulo": "¿Cuáles medidas conservan la forma?",
       "_notasInternas": [
-        "Los otros dos lados de la grande: 8 y 10 (k = 2). Distractores: 7 y 8 es error-1 (sumó 3, lo mismo que el lado menor); 2 y 2,5 es error-2 (aplicó 1/2 en vez de 2). Verificado con node -e."
+        "Los otros dos lados de la grande: 8 y 10 (k = 2). Distractores: 7 y 8 es escala-sumando (sumó 3, lo mismo que el lado menor); 2 y 2,5 es invierte-razon-de-semejanza (aplicó 1/2 en vez de 2). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -106,14 +106,14 @@
               "texto": "7 cm y 8 cm",
               "esCorrecta": false,
               "feedback": "7 y 8 suman 3 cm a cada lado, igual que le pasó al lado menor. Pero 6-7-8 no tiene la forma de 3-4-5: ya no es un triángulo rectángulo (6² + 7² = 85, y 8² = 64). La forma se conserva multiplicando, no sumando: 4 · 2 y 5 · 2.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "id": "c",
               "texto": "2 cm y 2,5 cm",
               "esCorrecta": false,
               "feedback": "2 y 2,5 son 4 y 5 divididos por 2: eso achica la calcomanía en vez de agrandarla. El lado menor creció de 3 a 6, o sea se multiplicó por 2, y los otros dos se multiplican por 2 también: 8 cm y 10 cm.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             }
           ]
         },
@@ -130,7 +130,7 @@
       "tipo": "pensar",
       "titulo": "La mediana",
       "_notasInternas": [
-        "Mediana: el lado de 4 cm pasa a 6 cm, k = 6/4 = 3/2. Lado corto 3 · 1,5 = 4,5; hipotenusa 5 · 1,5 = 7,5. feedbackPorError: ladoCorto 5 y hipotenusa 7 son error-1 (sumó 2, lo que creció el lado de 4); ladoCorto 2 es error-2 (3 · 2/3, razón invertida); ladoCorto 4,8 e hipotenusa 6 son error-3 (emparejó el 6 con el lado de 5 y usó k = 6/5). Verificado con node -e."
+        "Mediana: el lado de 4 cm pasa a 6 cm, k = 6/4 = 3/2. Lado corto 3 · 1,5 = 4,5; hipotenusa 5 · 1,5 = 7,5. feedbackPorError: ladoCorto 5 y hipotenusa 7 son escala-sumando (sumó 2, lo que creció el lado de 4); ladoCorto 2 es invierte-razon-de-semejanza (3 · 2/3, razón invertida); ladoCorto 4,8 e hipotenusa 6 son empareja-lados-no-homologos (emparejó el 6 con el lado de 5 y usó k = 6/5). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -155,31 +155,31 @@
               "campoId": "ladoCorto",
               "valorObtenido": 5,
               "mensaje": "Ese valor suma 2 cm al lado de 3, porque el lado de 4 creció 2. Pero crecer 2 cm no es lo mismo para un lado de 3 que para uno de 4: la forma se conserva multiplicando por la misma razón, y 6 ÷ 4 = 1,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "campoId": "hipotenusa",
               "valorObtenido": 7,
               "mensaje": "Ese valor suma 2 cm al lado de 5. Sumar lo mismo a cada lado no conserva la forma: hay que multiplicar cada lado por la misma razón, 6 ÷ 4 = 1,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "campoId": "ladoCorto",
               "valorObtenido": 2,
               "mensaje": "Ese valor multiplica por 4 ÷ 6, la razón al revés, y achica el lado. La mediana es más grande que la chica: la razón es lado nuevo dividido por lado original, 6 ÷ 4 = 1,5, y 3 · 1,5 es mayor que 3.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "campoId": "ladoCorto",
               "valorObtenido": 4.8,
               "mensaje": "Ese valor usa la razón 6 ÷ 5, como si el lado de 6 fuera la copia del lado de 5. Pero el enunciado dice que el 6 es la copia del lado de 4: la razón es 6 ÷ 4 = 1,5, y se aplica a los lados que corresponden.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             },
             {
               "campoId": "hipotenusa",
               "valorObtenido": 6,
               "mensaje": "Ese valor empareja el lado de 6 con el lado de 5, como si fuera su copia. El 6 es la copia del lado de 4 (razón 6 ÷ 4 = 1,5); la copia del lado de 5 es 5 · 1,5.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             }
           ],
           "feedbackPorDefecto": "Primero la razón: cuánto creció el lado que sí conoces, 6 ÷ 4. Después multiplica cada uno de los otros lados de la chica por esa razón."
@@ -217,7 +217,7 @@
       "tipo": "descubrimiento",
       "titulo": "Multiplicar, no sumar",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Tabla con 3-4-5, 6-8-10 y 9-12-15 y las razones lado a lado: 2, 2, 2 y 3, 3, 3. Contraejemplo 4-5-6 (sumar 1): razones 4/3, 5/4, 6/5, distintas. Visual: 3-4-5 y 6-8-10 lado a lado. Aquí aparece por primera vez la expresión 'razón de semejanza' y la letra k; la definición formal se deja para generalizacion. seleccion sobre k de 6-8-10 a 9-12-15: 3/2 correcto; 2/3 error-2; 3 error-3 (9 ÷ 3, emparejó el menor de la grande con el menor de la chica de tres tamaños atrás); 1 error-1 (sumó 3 a cada lado). numérica: k de 5-12-13 a 12,5-30-32,5 = 2,5; feedbackPorError 0,4 error-2 (5 ÷ 12,5). Verificado con node -e."
+        "CORAZÓN DE LA LECCIÓN. Tabla con 3-4-5, 6-8-10 y 9-12-15 y las razones lado a lado: 2, 2, 2 y 3, 3, 3. Contraejemplo 4-5-6 (sumar 1): razones 4/3, 5/4, 6/5, distintas. Visual: 3-4-5 y 6-8-10 lado a lado. Aquí aparece por primera vez la expresión 'razón de semejanza' y la letra k; la definición formal se deja para generalizacion. seleccion sobre k de 6-8-10 a 9-12-15: 3/2 correcto; 2/3 invierte-razon-de-semejanza; 3 empareja-lados-no-homologos (9 ÷ 3, emparejó el menor de la grande con el menor de la chica de tres tamaños atrás); 1 escala-sumando (sumó 3 a cada lado). numérica: k de 5-12-13 a 12,5-30-32,5 = 2,5; feedbackPorError 0,4 invierte-razon-de-semejanza (5 ÷ 12,5). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -271,7 +271,7 @@
               "texto": "Que 4-5-6 creció muy poco: si se le sumara más a cada lado, tendría la forma de 3-4-5.",
               "esCorrecta": false,
               "feedback": "Sumar más no arregla nada: 3-4-5 más 3 es 6-7-8, y sus razones 2, 1,75 y 1,6 siguen siendo distintas. Sumar la misma cantidad a cada lado nunca conserva la forma; multiplicar por la misma razón, siempre.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             }
           ]
         },
@@ -290,21 +290,21 @@
               "texto": "k = 2/3",
               "esCorrecta": false,
               "feedback": "2/3 es 6/9, la grande dividida por la gigante: la razón al revés. Como la gigante es la más grande, k tiene que ser mayor que 1: 9/6 = 1,5.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "id": "c",
               "texto": "k = 3",
               "esCorrecta": false,
               "feedback": "3 es 9/3, la gigante comparada con la chica, no con la grande. La pregunta empareja la gigante con la grande: 9/6 = 1,5.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             },
             {
               "id": "d",
               "texto": "k = 1, porque a cada lado se le sumaron 3 cm",
               "esCorrecta": false,
               "feedback": "Es cierto que 9 − 6, 12 − 8 y 15 − 10 son 3, 4 y 5, no siempre 3. Y aunque fueran iguales, la razón de semejanza no se calcula restando sino dividiendo: 9/6 = 1,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             }
           ]
         },
@@ -323,7 +323,7 @@
               "campoId": "razonDeSemejanza",
               "valorObtenido": 0.4,
               "mensaje": "Ese valor es 5 ÷ 12,5: el original dividido por la copia. La razón de semejanza es copia dividido por original, y como la copia es más grande, k es mayor que 1.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             }
           ],
           "feedbackPorDefecto": "Divide un lado de la copia por su lado homólogo del original: 12,5 ÷ 5, o 30 ÷ 12, o 32,5 ÷ 13. Las tres divisiones dan lo mismo."
@@ -345,7 +345,7 @@
       "tipo": "generalizacion",
       "titulo": "La definición, y un atajo para triángulos",
       "_notasInternas": [
-        "PRIMERA aparición de la definición formal: semejantes = ángulos iguales y lados homólogos proporcionales; k = imagen ÷ original; criterio AA. Visual: 6-8-10 y 9-12-15 lado a lado. Ejercicio: 8-15-17 con lado mayor 25,5 → k = 1,5, lado menor 12; feedbackPorError 16,5 error-1 (8 + 8,5, lo que creció el lado mayor); 13,6 error-3 (8 · 25,5/15, emparejó el 25,5 con el 15). Verificado con node -e."
+        "PRIMERA aparición de la definición formal: semejantes = ángulos iguales y lados homólogos proporcionales; k = imagen ÷ original; criterio AA. Visual: 6-8-10 y 9-12-15 lado a lado. Ejercicio: 8-15-17 con lado mayor 25,5 → k = 1,5, lado menor 12; feedbackPorError 16,5 escala-sumando (8 + 8,5, lo que creció el lado mayor); 13,6 empareja-lados-no-homologos (8 · 25,5/15, emparejó el 25,5 con el 15). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -380,13 +380,13 @@
               "campoId": "ladoMenorCopia",
               "valorObtenido": 16.5,
               "mensaje": "Ese valor suma al lado de 8 lo mismo que creció el lado mayor, 8,5. Sumar no conserva la forma. Primero la razón, 25,5 ÷ 17 = 1,5, y después 8 · 1,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "campoId": "ladoMenorCopia",
               "valorObtenido": 13.6,
               "mensaje": "Ese valor divide 25,5 por 15, emparejando el lado mayor de la copia con el lado medio del original. Los lados homólogos son el mayor con el mayor: k = 25,5 ÷ 17 = 1,5, y el lado menor es 8 · 1,5.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             }
           ],
           "feedbackPorDefecto": "Razón de semejanza: lado mayor de la copia dividido por lado mayor del original, 25,5 ÷ 17. Después multiplica el lado menor, 8, por esa razón."
@@ -397,7 +397,7 @@
       "tipo": "practica",
       "titulo": "¿Semejantes o no?",
       "_notasInternas": [
-        "P1 seleccion: 7-24-25 y 10,5-36-37,5, semejantes con k = 1,5 (10,5/7 = 36/24 = 37,5/25 = 1,5); distractores: 'no, porque crecieron 3,5, 12 y 12,5' error-1 (espera crecimiento aditivo); 'sí, con k = 2/3' error-2; 'no, porque está girado' error-11. P2 numérica: 6-8-10 con lado mayor 25 → k = 2,5, lado menor 15; feedbackPorError 21 error-1 (6 + 15), 2,4 error-2 (6 · 10/25), 18,75 error-3 (6 · 25/8). P3 verdaderoFalso con error-4 en el feedback. Verificado con node -e."
+        "P1 seleccion: 7-24-25 y 10,5-36-37,5, semejantes con k = 1,5 (10,5/7 = 36/24 = 37,5/25 = 1,5); distractores: 'no, porque crecieron 3,5, 12 y 12,5' escala-sumando (espera crecimiento aditivo); 'sí, con k = 2/3' invierte-razon-de-semejanza; 'no, porque está girado' descarta-semejanza-por-orientacion. P2 numérica: 6-8-10 con lado mayor 25 → k = 2,5, lado menor 15; feedbackPorError 21 escala-sumando (6 + 15), 2,4 invierte-razon-de-semejanza (6 · 10/25), 18,75 empareja-lados-no-homologos (6 · 25/8). P3 verdaderoFalso con asume-semejanza-por-tipo en el feedback. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -415,21 +415,21 @@
               "texto": "No, porque los lados no crecieron lo mismo: 3,5 cm, 12 cm y 12,5 cm.",
               "esCorrecta": false,
               "feedback": "Que crezcan cantidades distintas es lo esperable en figuras semejantes: cada lado crece en proporción a su tamaño. La prueba no es restar sino dividir, y 10,5/7, 36/24 y 37,5/25 dan 1,5 las tres veces.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "id": "c",
               "texto": "Sí, con razón de semejanza k = 2/3.",
               "esCorrecta": false,
               "feedback": "Sí son semejantes, pero 2/3 es 7/10,5, la primera dividida por la segunda. La segunda es más grande, y la razón de la primera a la segunda es 10,5/7 = 1,5, mayor que 1.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "id": "d",
               "texto": "No, porque la segunda está girada y para comparar tendrían que estar en la misma posición.",
               "esCorrecta": false,
               "feedback": "La semejanza no depende de cómo esté puesta la figura: girada, volteada o en otro lugar, sigue teniendo los mismos ángulos y los mismos lados. Se comparan los lados homólogos, y las tres razones dan 1,5.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "descarta-semejanza-por-orientacion"
             }
           ]
         },
@@ -449,19 +449,19 @@
               "campoId": "ladoMenorAmpliado",
               "valorObtenido": 21,
               "mensaje": "Ese valor suma al lado de 6 los 15 cm que creció el lado mayor. Sumar no conserva la forma: la razón es 25 ÷ 10 = 2,5 y el lado menor es 6 · 2,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "campoId": "ladoMenorAmpliado",
               "valorObtenido": 2.4,
               "mensaje": "Ese valor multiplica por 10 ÷ 25, la razón al revés, y achica la calcomanía. La copia es más grande: k = 25 ÷ 10 = 2,5, y 6 · 2,5 es mayor que 6.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "campoId": "ladoMenorAmpliado",
               "valorObtenido": 18.75,
               "mensaje": "Ese valor divide 25 por 8, emparejando el lado mayor de la copia con el lado medio del original. Mayor con mayor: k = 25 ÷ 10 = 2,5, y después 6 · 2,5.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             }
           ],
           "feedbackPorDefecto": "Razón: lado mayor de la copia dividido por lado mayor del original, 25 ÷ 10. Después multiplica el lado menor, 6, por esa razón."
@@ -479,7 +479,7 @@
       "tipo": "aplicacion",
       "titulo": "El atajo de los ángulos",
       "_notasInternas": [
-        "Criterio AA en contexto: la mediana 4,5-6-7,5 y una copia con los mismos ángulos cuyo lado homólogo al de 6 mide 12; k = 2; hipotenusa 15. feedbackPorError 13,5 error-1 (7,5 + 6, lo que creció el lado de 6); 3,75 error-2 (7,5 ÷ 2); 20 error-3 (7,5 · 12/4,5, emparejó el 12 con el lado de 4,5). Verificado con node -e."
+        "Criterio AA en contexto: la mediana 4,5-6-7,5 y una copia con los mismos ángulos cuyo lado homólogo al de 6 mide 12; k = 2; hipotenusa 15. feedbackPorError 13,5 escala-sumando (7,5 + 6, lo que creció el lado de 6); 3,75 invierte-razon-de-semejanza (7,5 ÷ 2); 20 empareja-lados-no-homologos (7,5 · 12/4,5, emparejó el 12 con el lado de 4,5). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -502,19 +502,19 @@
               "campoId": "ladoMayorNueva",
               "valorObtenido": 13.5,
               "mensaje": "Ese valor suma 6 cm al lado de 7,5, porque el lado de 6 creció 6. Sumar no conserva la forma: la razón es 12 ÷ 6 = 2, y el lado mayor es 7,5 · 2.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "campoId": "ladoMayorNueva",
               "valorObtenido": 3.75,
               "mensaje": "Ese valor divide 7,5 por 2 en vez de multiplicarlo. La nueva es más grande (su lado de 12 es el doble del de 6), así que k = 2 y el lado mayor es 7,5 · 2.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "campoId": "ladoMayorNueva",
               "valorObtenido": 20,
               "mensaje": "Ese valor usa la razón 12 ÷ 4,5, emparejando el lado de 12 con el lado menor de la mediana. El enunciado dice que el 12 corresponde al lado de 6: k = 12 ÷ 6 = 2, y 7,5 · 2.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             }
           ],
           "feedbackPorDefecto": "La razón sale del par que conoces: 12 ÷ 6 = 2. Multiplica 7,5 por esa razón."
@@ -550,7 +550,7 @@
       "tipo": "consolidacion",
       "titulo": "Lo que te llevas",
       "_notasInternas": [
-        "Síntesis + contraste P2 explícito con los caminos de error-1, error-2 y error-3, seguido de un bloque pregunta: 3-4-5 con lado mayor 12,5 → k = 2,5, el lado de 4 pasa a 10 cm; 11,5 error-1 (4 + 7,5); 1,6 error-2 (4 ÷ 2,5); 12,5 error-3 (tomó el lado mayor de la copia como si fuera la copia del lado de 4). Alternativas numéricas en orden creciente. Verificado con node -e."
+        "Síntesis + contraste P2 explícito con los caminos de escala-sumando, invierte-razon-de-semejanza y empareja-lados-no-homologos, seguido de un bloque pregunta: 3-4-5 con lado mayor 12,5 → k = 2,5, el lado de 4 pasa a 10 cm; 11,5 escala-sumando (4 + 7,5); 1,6 invierte-razon-de-semejanza (4 ÷ 2,5); 12,5 empareja-lados-no-homologos (tomó el lado mayor de la copia como si fuera la copia del lado de 4). Alternativas numéricas en orden creciente. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -566,7 +566,7 @@
               "texto": "1,6 cm",
               "esCorrecta": false,
               "feedback": "1,6 es 4 ÷ 2,5: divide en vez de multiplicar, con la razón al revés. La copia es más grande que la chica (12,5 frente a 5), así que k = 12,5 ÷ 5 = 2,5 y el lado de 4 se multiplica: 4 · 2,5.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "clave": "B",
@@ -579,17 +579,17 @@
               "texto": "11,5 cm",
               "esCorrecta": false,
               "feedback": "11,5 suma al lado de 4 los 7,5 cm que creció el lado mayor. Sumar lo mismo a cada lado deforma la figura. Se multiplica por la razón: 4 · 2,5.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             },
             {
               "clave": "D",
               "texto": "12,5 cm",
               "esCorrecta": false,
               "feedback": "12,5 es el lado mayor de la copia, la imagen del lado de 5, no del de 4. Cada lado tiene su homólogo: el 12,5 corresponde al 5, y el lado que corresponde al 4 es 4 · 2,5 = 10 cm.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             }
           ],
-          "notaVerificacionMatematica": "k = 12,5 ÷ 5 = 2,5. Lado pedido: 4 · 2,5 = 10. Copia completa 7,5-10-12,5, verificada con sonSemejantesPorLados. Distractores: 4 + 7,5 = 11,5 (error-1); 4 ÷ 2,5 = 1,6 (error-2); 12,5 tomado como imagen del 4 (error-3). Verificado con node -e."
+          "notaVerificacionMatematica": "k = 12,5 ÷ 5 = 2,5. Lado pedido: 4 · 2,5 = 10. Copia completa 7,5-10-12,5, verificada con sonSemejantesPorLados. Distractores: 4 + 7,5 = 11,5 (escala-sumando); 4 ÷ 2,5 = 1,6 (invierte-razon-de-semejanza); 12,5 tomado como imagen del 4 (empareja-lados-no-homologos). Verificado con node -e."
         }
       ]
     }
@@ -606,7 +606,7 @@
           "texto": "5,4 cm",
           "esCorrecta": false,
           "feedback": "5,4 es 9 · 15 ÷ 25: aplica la razón al revés, 15/25, y achica el triángulo. El segundo es más grande (25 frente a 15): k = 25 ÷ 15 = 5/3, y el lado menor es 9 · 5/3 = 15 cm.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-razon-de-semejanza"
         },
         {
           "clave": "B",
@@ -619,14 +619,14 @@
           "texto": "18,75 cm",
           "esCorrecta": false,
           "feedback": "18,75 es 9 · 25 ÷ 12: empareja el lado mayor del segundo con el lado medio del primero. Los homólogos son mayor con mayor: k = 25 ÷ 15 = 5/3, y 9 · 5/3 = 15 cm.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "empareja-lados-no-homologos"
         },
         {
           "clave": "D",
           "texto": "19 cm",
           "esCorrecta": false,
           "feedback": "19 es 9 + 10: le suma al lado menor lo que creció el lado mayor (de 15 a 25). Sumar no conserva la forma; se multiplica por la razón 25 ÷ 15 = 5/3, y 9 · 5/3 = 15 cm.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "escala-sumando"
         }
       ],
       "solucion": "Lados homólogos: el mayor del primero (15) con el mayor del segundo (25). Razón de semejanza k = 25 ÷ 15 = 5/3. Lado menor del segundo: 9 · 5/3 = 15 cm. Comprobación: el lado medio sería 12 · 5/3 = 20, y 15-20-25 es 5 · (3-4-5), un triángulo rectángulo semejante a 9-12-15 = 3 · (3-4-5). ✓"
@@ -642,21 +642,21 @@
           "texto": "3,3 cm",
           "esCorrecta": false,
           "feedback": "3,3 es 5 ÷ 1,5: divide en vez de multiplicar, con la razón al revés. La copia es más grande (10,5 frente a 7), así que cada lado se multiplica por 3/2: x = 5 · 1,5 = 7,5 cm.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-razon-de-semejanza"
         },
         {
           "clave": "B",
           "texto": "6 cm",
           "esCorrecta": false,
           "feedback": "6 cm es la imagen de los lados de 4 cm (4 · 1,5), no la del lado de 5. Cada lado tiene su propio homólogo: el de x corresponde al de 5, y x = 5 · 1,5 = 7,5 cm.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "empareja-lados-no-homologos"
         },
         {
           "clave": "C",
           "texto": "6,5 cm",
           "esCorrecta": false,
           "feedback": "6,5 suma 1,5 al lado de 5, como si la razón fuera una cantidad que se agrega. k = 3/2 multiplica: x = 5 · 1,5 = 7,5 cm. (Fíjate en que 7 · 1,5 = 10,5, no 7 + 1,5.)",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "escala-sumando"
         },
         {
           "clave": "D",
@@ -684,21 +684,21 @@
           "texto": "Es correcta: al tener los dos un ángulo recto, son triángulos del mismo tipo y por lo tanto semejantes.",
           "esCorrecta": false,
           "feedback": "Un ángulo igual no basta: en triángulos hacen falta dos. Los otros ángulos de 5-12-13 y de 8-15-17 son distintos, y las razones 8/5, 15/12 y 17/13 no coinciden. Hay muchísimos triángulos rectángulos de formas distintas.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "asume-semejanza-por-tipo"
         },
         {
           "clave": "C",
           "texto": "Es correcta, y además se ve en los lados: 8 − 5 = 3 y 15 − 12 = 3, los lados crecieron lo mismo.",
           "esCorrecta": false,
           "feedback": "Que dos lados crezcan 3 no dice nada sobre la forma (y el tercero creció 4). La semejanza se prueba dividiendo, no restando: 8/5 = 1,6 y 15/12 = 1,25 son distintas, así que no son semejantes.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "escala-sumando"
         },
         {
           "clave": "D",
           "texto": "No es correcta, pero por otra razón: para ser semejantes los dos triángulos tendrían que estar dibujados en la misma posición y con la misma orientación.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero la razón no: la posición y la orientación no tienen nada que ver con la semejanza. Lo que la descarta es que las razones entre lados homólogos (8/5, 15/12, 17/13) no coinciden.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "descarta-semejanza-por-orientacion"
         }
       ],
       "solucion": "Para que dos triángulos sean semejantes, las razones entre lados homólogos deben coincidir. Se emparejan mayor con mayor y menor con menor: 8/5 = 1,6; 15/12 = 1,25; 17/13 ≈ 1,31. Son distintas, así que los triángulos no son semejantes. Tener un ángulo recto cada uno no basta: el criterio para triángulos pide dos ángulos iguales, y los ángulos agudos de estos dos triángulos son distintos (en 5-12-13 el menor mide unos 22,6° y en 8-15-17 unos 28,1°). La afirmación no es correcta y la alternativa que lo explica es A."

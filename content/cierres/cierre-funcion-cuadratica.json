@@ -8,7 +8,7 @@
     "Cobertura por lección: L1 (cuadratica-sube-y-baja) = items 1,2,3. L2 (cuadratica-punto-mas-alto) = items 4,5. L3 (cuadratica-donde-toca-el-eje) = items 6,7,8. Cobertura por habilidad: resolver = items 1,4. representar = items 2,6. modelar = items 3,7. argumentar = items 5,8 (2 de cada una de las 4).",
     "Contextos reutilizados del módulo, todos con cifras NUEVAS respecto de las 3 lecciones (verificado contra contextosNumericos de cada archivo de lección antes de fijar los números): números pares consecutivos (item1, K=960 — las lecciones usaron 48,168,288,120,224,528,728), caja de cartón (item2, largo=ancho+5, área=150 — las lecciones usaron largo=ancho+3, área=88), campeonato de tenis de mesa (item3, P=66 — la lección usó P=45), huerto escolar (item4, total(d)=−2d²+20d — las lecciones usaron los coeficientes (a,b) = (−4,24),(−5,30),(−3,18),(−2,16); este item usa (−2,20), no repetido), dron de reparto (item5, h(t)=−3t²+18t — la lección usó −2t²+8t), letrero-arco de gimnasio (item6, h(x)=−x²+6x+27 — las lecciones usaron −x²+4, −x²+2x+8, −x²+4x+5), llaveros (item7, derivado de I(q)=−q²+20q y C(q)=6q+24 → G(q)=−q²+14q−24 — la lección usó G(q)=−q²+20q−64 directamente, sin derivarlo de ingreso/costo).",
     "Octavo contexto: se usó la RESERVA del módulo, 'perfil de una rampa de snow park' (candidato 8 de Fase 1, verificado LIMPIO por Benja, no usado en ninguna lección) para el item8, con h(x)=−x²+8x−12. Es además el item integrador: conecta explícitamente el método de L1/L3 (factorizar, encontrar ceros) con el de L2 (fórmula del vértice), pidiendo reconocer que el vértice cae siempre a mitad de camino entre los dos ceros — mismo rol que el item8 de cierre-sistemas-2x2.json.",
-    "catalogoErrores: subconjunto EXACTO de cuadratica-sube-y-baja.json (L1) referenciado por los distractores de este cierre, copiado carácter a carácter (mismo criterio que cuadratica-donde-toca-el-eje.json/L3). Se usan error-1 (item1, item3), error-2 (item6), error-3 (item2) y error-5 (item1, item6). error-4 (expansión FOIL de un producto de binomios) NO se usa: el item7 tiene una distractor que distribuye mal un signo negativo al restar C(q), pero ese mecanismo es sobre resta de una expresión, no sobre expandir un producto de binomios — no calza con la descripción de error-4, así que ese distractor queda sin errorCatalogado en vez de forzar la reutilización. No se necesitó ningún id nuevo."
+    "catalogoErrores: subconjunto EXACTO de cuadratica-sube-y-baja.json (L1) referenciado por los distractores de este cierre, copiado carácter a carácter (mismo criterio que cuadratica-donde-toca-el-eje.json/L3). Se usan reporta-raiz-fuera-del-contexto (item1, item3), reporta-una-sola-raiz (item6), plantea-suma-en-vez-de-producto (item2) y invierte-signo-de-las-raices (item1, item6). distribuye-sobre-un-solo-termino (expansión FOIL de un producto de binomios) NO se usa: el item7 tiene una distractor que distribuye mal un signo negativo al restar C(q), pero ese mecanismo es sobre resta de una expresión, no sobre expandir un producto de binomios — no calza con la descripción de distribuye-sobre-un-solo-termino, así que ese distractor queda sin errorCatalogado en vez de forzar la reutilización. No se necesitó ningún id nuevo."
   ],
   "items": [
     {
@@ -34,14 +34,14 @@
           "texto": "−32",
           "esCorrecta": false,
           "feedback": "−32 es, junto con −30, la otra solución matemática de la ecuación (−32 × −30 = 960). Pero el problema pide números positivos, así que esa pareja negativa no es la respuesta.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto"
         },
         {
           "clave": "D",
           "texto": "−30",
           "esCorrecta": false,
           "feedback": "−30 no es una solución de la ecuación n² + 2n − 960 = 0: el factor correspondiente, (n − 30), se anula en n = 30 (positivo), no en n = −30. Invertiste el signo al leer la raíz desde el factor.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-signo-de-las-raices"
         }
       ],
       "solucion": "Si n es el menor de los dos números, el mayor es n + 2, y su producto es n(n + 2) = 960, es decir n² + 2n − 960 = 0. Factorizando: se buscan dos números que sumen 2 y multiplicados den −960: esos números son 32 y −30. La ecuación queda (n − 30)(n + 32) = 0, así que n = 30 o n = −32. Como se piden números positivos, la respuesta es n = 30. Comprobación: 30 × 32 = 960. ✓"
@@ -63,7 +63,7 @@
           "texto": "w + (w + 5) = 150",
           "esCorrecta": false,
           "feedback": "150 cm² es un ÁREA, que se obtiene multiplicando ancho por largo, no sumándolos. Sumar w + (w+5) daría el perímetro parcial, no el área.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "plantea-suma-en-vez-de-producto"
         },
         {
           "clave": "C",
@@ -103,7 +103,7 @@
           "texto": "−11",
           "esCorrecta": false,
           "feedback": "−11 es, matemáticamente, la otra raíz de n² − n − 132 = 0. Pero una cantidad de participantes no puede ser negativa: esa solución no tiene sentido en este problema y hay que descartarla.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto"
         },
         {
           "clave": "D",
@@ -197,14 +197,14 @@
           "texto": "Solo en x = 9",
           "esCorrecta": false,
           "feedback": "La ecuación factorizada tiene dos factores, y cualquiera de los dos puede anularse: hay dos ceros, x=9 y x=−3, no solo uno.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "reporta-una-sola-raiz"
         },
         {
           "clave": "C",
           "texto": "En x = −9 y x = 3",
           "esCorrecta": false,
           "feedback": "Los signos están invertidos: el factor (x − 9) se anula en x = 9 (no en x = −9), y el factor (x + 3) se anula en x = −3 (no en x = 3).",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-signo-de-las-raices"
         },
         {
           "clave": "D",

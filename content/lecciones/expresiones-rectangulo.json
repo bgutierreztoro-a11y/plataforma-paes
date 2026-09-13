@@ -18,14 +18,14 @@
     "desarrollo de un producto"
   ],
   "_notasInternas": [
-    "L2 del módulo Expresiones algebraicas. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5 en su versión corregida el 2026-08-14. Seis entradas: error-5, error-6 y error-7 COPIADAS CARÁCTER A CARÁCTER desde expresiones-sumar-lo-que-se-parece.json, y error-9, error-10 y error-11 nuevas, firmadas por Benja el 2026-08-14. Los tres nuevos ids NO se retropropagan a L1: L1 no los usa y agregárselos lo pondría en 🔴 catalogo-sin-usar.",
+    "L2 del módulo Expresiones algebraicas. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5 en su versión corregida el 2026-08-14. Seis entradas: agrega-exponente-al-sumar-semejantes, asigna-valor-a-la-letra y reduce-distinto-exponente COPIADAS CARÁCTER A CARÁCTER desde expresiones-sumar-lo-que-se-parece.json, y reparte-cuadrado-sobre-la-suma, cuenta-una-vez-termino-cruzado y abandona-cuadrado-del-segundo nuevas, firmadas por Benja el 2026-08-14. Los tres nuevos ids NO se retropropagan a L1: L1 no los usa y agregárselos lo pondría en 🔴 catalogo-sin-usar.",
     "OBJETO DE DESCUBRIMIENTO (estructura, no constante): que el cuadrado de una suma tiene TRES términos y que el del medio vale exactamente el doble del producto de los dos sumandos. Por eso no se declara auditoria.constante, igual que en L1. El chequeo de filtración de npm run auditar queda omitido y lo reporta como hallazgo 🟢, que la corrida por defecto NO imprime: para verlo hay que correr con AUDITAR_VERBOSE=1 en el entorno.",
     "REGLA DURA DE NO FILTRACIÓN: el término del medio no circula antes del paso 5. En los pasos 1 a 4 no aparece el 420, ni la palabra «doble», ni ninguna descomposición en tres partes. Lo que sí puede aparecer —y aparece— es el valor de 73², porque el resultado no es la estructura: el paso 3 lo obtiene multiplicando a la antigua y el paso 5 descubre de dónde sale. Es el mismo reparto que en proporcionalidad-directa, donde el paso 3 pide el 480 y el paso 5 descubre la constante que lo produce.",
     "EL PASO 2 REFUTA SIN REVELAR, y es la pieza de la que depende toda la lección. El error de partir 73² en 70² + 3² se derriba con un control de sentido puro: 73 × 70 ya vale 5110, así que 73 × 73 tiene que ser mayor, y 4909 no lo es. El estudiante queda sabiendo que el atajo falla y sin saber todavía por qué ni cuánto falta. Cuidado en cualquier reescritura: decir «faltan 420» acá mataría el paso 5.",
     "POR QUÉ NO SE USA EL MODELO DE ÁREA, que es el contexto canónico de este contenido (decisión de Benja, 2026-08-14). Hay una razón de originalidad —el rectángulo partido en cuatro es el ejemplo más repetido del tema— y una razón técnica que la vuelve inapelable: definitions.item no admite figuras y BloqueVisualizacion no tiene renderer para variante 'grafico' (docs/pendientes.md), así que un cuadrado partido en cuatro terminaría descrito en palabras dentro de un recuadro «Figura». La regla 1 de docs/reglas-modulo.md apunta al mismo lado. Acá el término del medio se ve mejor en la aritmética que en un dibujo que no podemos dibujar: el paso 5 lo deduce aplicando la distributiva dos veces, que además deja la deducción al alcance de los prerrequisitos declarados.",
     "ALCANCE, LÍMITE DURO: esta lección desarrolla (a+b)² y nada más. NO toca a² − b², ni el cuadrado de una diferencia, ni ninguna factorización. La diferencia de cuadrados y la lectura inversa de la forma son el objeto de descubrimiento de expresiones-deshacer-producto (L3) y adelantarlas acá le quitaría su razón de existir, igual que la regla 1 de reglas-modulo.md documentó para el caso de proporcionalidad. El puente del paso 10 anuncia L3 por su comportamiento, sin mostrar ninguna forma factorizada.",
-    "DISEÑO NUMÉRICO: los cinco cuadrados del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y quedándose con los casos cuyas cuatro piezas —el cuadrado, los dos cuadrados parciales y el valor del error-9— estuvieran libres. Se descartaron por colisión 51² (2500 y 100 ocupados), 64² (3600 y 480), 82² (6400 y 320), 47² (560), 36² (900 y 360) y 71² (140). Las 41 cifras de tres dígitos o más del archivo se verificaron una por una antes de redactar. CRITERIO DEL CONTEO, para que sea reproducible y no haya que adivinarlo: son valores DISTINTOS, no ocurrencias, sobre el CONTENIDO VISIBLE del archivo —se excluyen _notasInternas, proveniencia, contextosNumericos, notaDiseno, objetivo, prerrequisitos, conceptos, auditoria y catalogoErrores, y también los años—, extraídos con numerosDe/aNumero de scripts/auditar-leccion.mjs y no con una regex propia. Ese detalle no es decorativo: una regex escrita a mano en la auditoría descartaba las cifras seguidas de punto final de frase y devolvía un total menor. Contando de otra forma el número cambia —solo sobre pasos son menos, sobre el archivo entero son más—, así que si alguien recuenta y no le da 41, lo primero que tiene que revisar es el recorte, no el archivo.",
-    "El 73 es buen núcleo por una razón medible: el término del medio vale 420 sobre un total de 5329, así que el error-9 se desvía casi un 8 % y no se puede confundir con un descuido de cálculo. Con números más chicos la diferencia se disimula.",
+    "DISEÑO NUMÉRICO: los cinco cuadrados del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y quedándose con los casos cuyas cuatro piezas —el cuadrado, los dos cuadrados parciales y el valor del reparte-cuadrado-sobre-la-suma— estuvieran libres. Se descartaron por colisión 51² (2500 y 100 ocupados), 64² (3600 y 480), 82² (6400 y 320), 47² (560), 36² (900 y 360) y 71² (140). Las 41 cifras de tres dígitos o más del archivo se verificaron una por una antes de redactar. CRITERIO DEL CONTEO, para que sea reproducible y no haya que adivinarlo: son valores DISTINTOS, no ocurrencias, sobre el CONTENIDO VISIBLE del archivo —se excluyen _notasInternas, proveniencia, contextosNumericos, notaDiseno, objetivo, prerrequisitos, conceptos, auditoria y catalogoErrores, y también los años—, extraídos con numerosDe/aNumero de scripts/auditar-leccion.mjs y no con una regex propia. Ese detalle no es decorativo: una regex escrita a mano en la auditoría descartaba las cifras seguidas de punto final de frase y devolvía un total menor. Contando de otra forma el número cambia —solo sobre pasos son menos, sobre el archivo entero son más—, así que si alguien recuenta y no le da 41, lo primero que tiene que revisar es el recorte, no el archivo.",
+    "El 73 es buen núcleo por una razón medible: el término del medio vale 420 sobre un total de 5329, así que el reparte-cuadrado-sobre-la-suma se desvía casi un 8 % y no se puede confundir con un descuido de cálculo. Con números más chicos la diferencia se disimula.",
     "El paso 8 es transferencia de REGISTRO, no de contexto: pasa del número a la letra. Es la transferencia que este contenido pide, porque la forma general con letras es lo que el estudiante va a usar en L3 y en la PAES; cambiar de historia manteniendo números habría sido más barato y menos útil.",
     "AUDITORÍAS (cerradas el 2026-08-15): las dos corrieron en hilos aparte del de redacción y sus hallazgos están aplicados. Revisión matemática: PASA en los cuatro archivos del módulo, 208 comprobaciones, 0 fallos, cero hallazgos de contenido. Auditoría de originalidad: COMPLETA, los cuatro puntos del checklist MOS §7.3 en SI y cero colisiones; el punto 1 quedó respaldado por los cinco términos técnicos del módulo corridos contra el corpus de fuentes aisladas, todos LIMPIO, más los 30 términos de dominio en NO. Cerró además las dos preguntas que este archivo tenía abiertas: «cálculo mental» quedó confirmado como habilidad o eje curricular con la fuente a la vista, y el modelo de área del rectángulo está efectivamente en el corpus (mineduc-curriculum/03-unidad-2-algebra-funciones.md:86), así que la nota de más arriba que lo descarta pasó de intuición a hecho verificado. El archivo queda habilitado para publicarse."
   ],
@@ -84,7 +84,7 @@
       "_notasInternas": [
         "LA PIEZA DE LA QUE DEPENDE TODA LA LECCIÓN: se refuta el atajo sin decir por qué falla ni cuánto le falta. El control de sentido es puro: 73 × 70 = 5110 ya supera a 4909, y 73 × 73 tiene que ser todavía mayor que 73 × 70. El estudiante queda sabiendo que el atajo está roto y sin la estructura que lo arregla.",
         "Verificación: el atajo da 70² + 3² = 4900 + 9 = 4909. Control: 73 × 70 = 5110 ✓. Como 5110 > 4909 y además 73 × 73 > 73 × 70 porque 73 > 70, el candidato 4909 queda descartado sin necesidad de calcular 73² ✓.",
-        "Verificación de los distractores: la opción b apela a la paridad, que no dice nada del tamaño del resultado y es el tipo de criterio irrelevante que hay que desarmar. La opción c acepta el atajo, que es error-9 en su forma más pura.",
+        "Verificación de los distractores: la opción b apela a la paridad, que no dice nada del tamaño del resultado y es el tipo de criterio irrelevante que hay que desarmar. La opción c acepta el atajo, que es reparte-cuadrado-sobre-la-suma en su forma más pura.",
         "CUIDADO EN CUALQUIER REESCRITURA: decir acá «faltan 420» o «al atajo le falta un término» mataría el paso 5. La refutación tiene que quedarse en que el número es demasiado chico."
       ],
       "bloques": [
@@ -113,7 +113,7 @@
               "texto": "Ninguna: 4.909 está bien, porque 70 y 3 son las dos partes de 73",
               "esCorrecta": false,
               "feedback": "Que 70 y 3 sean las dos partes de 73 es cierto, pero de ahí no se sigue que elevar cada parte y sumarlas dé el cuadrado del total. Compruébalo con el número más chico que se te ocurra: 5 es 4 más 1, y sin embargo 5 × 5 = 25, mientras que 4 × 4 más 1 × 1 da 17. El atajo ya falla ahí.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             }
           ]
         }
@@ -125,7 +125,7 @@
       "_notasInternas": [
         "Registro del intento genuino. Se pide el resultado real, obtenido como cada uno pueda: multiplicando a la antigua, sumando 73 setenta y tres veces, o como sea. La estructura no hace falta para responder, y por eso el paso no la filtra.",
         "Verificación: 73 × 73. Por descomposición del segundo factor, 73 × 70 = 5.110 y 73 × 3 = 219; sumados, 5.329 ✓. Por multiplicación en columna, 73 × 73 = 5.329 ✓. Dos vías coincidentes.",
-        "Verificación de los distractores: 4.909 es el atajo del paso anterior (error-9). 5.320 es haber llegado a la descomposición pero abandonar el último término (error-11): 4.900 + 420. 5.119 es contar el cruce una sola vez (error-10): 4.900 + 210 + 9.",
+        "Verificación de los distractores: 4.909 es el atajo del paso anterior (reparte-cuadrado-sobre-la-suma). 5.320 es haber llegado a la descomposición pero abandonar el último término (abandona-cuadrado-del-segundo): 4.900 + 420. 5.119 es contar el cruce una sola vez (cuenta-una-vez-termino-cruzado): 4.900 + 210 + 9.",
         "Los tres distractores estructurales se plantan acá aunque la estructura todavía no sea pública, y no la filtran: sus feedback señalan que el número es demasiado chico y remiten al control de sentido del paso 2, sin descomponer nada. Un estudiante que llegue a 5.320 o a 5.119 lo hizo por su cuenta, y el feedback lo acompaña sin nombrar lo que el paso 5 va a nombrar."
       ],
       "bloques": [
@@ -145,19 +145,19 @@
               "campoId": "cuadradoDelDesafio",
               "valorObtenido": 4909,
               "mensaje": "Ese es el atajo que el club acaba de descartar. Recuerda el control de sentido: 73 × 70 ya vale 5.110, así que el resultado verdadero tiene que ser mayor que eso. Haz la multiplicación completa.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "campoId": "cuadradoDelDesafio",
               "valorObtenido": 5320,
               "mensaje": "Estás muy cerca y por buen camino, pero se te quedó algo afuera al final. Prueba a comprobar el resultado por otra vía: 73 × 70 más 73 × 3.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "abandona-cuadrado-del-segundo"
             },
             {
               "campoId": "cuadradoDelDesafio",
               "valorObtenido": 5119,
               "mensaje": "Otra vez por debajo de la cuenta, aunque menos que el atajo del club. Vuelve al control de sentido: el resultado tiene que superar los 5.110 de 73 × 70, y por bastante más que nueve.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             }
           ],
           "feedbackPorDefecto": "Una vía cómoda: parte el segundo factor. 73 × 73 es lo mismo que 73 × 70 más 73 × 3. El primer producto ya lo tienes del paso anterior."
@@ -203,7 +203,7 @@
         "Verificación del caso 73: 73² = 5.329 ✓. Atajo: 4.900 + 9 = 4.909. Diferencia 5.329 − 4.909 = 420. Y 2 × 70 × 3 = 420 ✓.",
         "Verificación de la deducción del texto, que es el argumento que reemplaza al modelo de área: 73 × 73 = 73 × (70 + 3) = 73 × 70 + 73 × 3. Ahora se abre cada uno: 73 × 70 = (70 + 3) × 70 = 70 × 70 + 3 × 70, y 73 × 3 = 70 × 3 + 3 × 3. Sumando todo: 70² + 3 × 70 + 70 × 3 + 3² = 70² + 2 × (70 × 3) + 3² ✓. El cruce 70 × 3 aparece dos veces porque la distributiva se aplica dos veces, una por cada factor. Comprobación numérica: 4.900 + 420 + 9 = 5.329 ✓.",
         "Verificación de la comprobación fuera de tabla: 97 = 90 + 7. 90² = 8.100; 2 × 90 × 7 = 1.260; 7² = 49. Total 8.100 + 1.260 + 49 = 9.409. Control independiente: 97 × 97 = 9.409 ✓.",
-        "Verificación de sus distractores: 8.149 es 8.100 + 49, el atajo sin término del medio (error-9). 8.779 es 8.100 + 630 + 49, con el cruce contado una sola vez, porque 90 × 7 = 630 (error-10). 9.360 es 8.100 + 1.260, abandonando el último término (error-11).",
+        "Verificación de sus distractores: 8.149 es 8.100 + 49, el atajo sin término del medio (reparte-cuadrado-sobre-la-suma). 8.779 es 8.100 + 630 + 49, con el cruce contado una sola vez, porque 90 × 7 = 630 (cuenta-una-vez-termino-cruzado). 9.360 es 8.100 + 1.260, abandonando el último término (abandona-cuadrado-del-segundo).",
         "PRIMERA APARICIÓN de la estructura en todo el archivo. Verificado que los pasos 1 a 4 no contienen el 420, ni la palabra «doble», ni descomposición en tres términos."
       ],
       "bloques": [
@@ -251,19 +251,19 @@
               "campoId": "cuadradoComprobacion",
               "valorObtenido": 8149,
               "mensaje": "Sumaste 8.100 y 49, o sea volviste al atajo del principio. Falta la pieza del medio, que acá es el doble de 90 × 7.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "campoId": "cuadradoComprobacion",
               "valorObtenido": 8779,
               "mensaje": "Encontraste el cruce, 90 × 7 = 630, pero lo contaste una sola vez. Acuérdate de por qué aparecía dos veces: el 90 se cruza con el 7 y el 7 se cruza con el 90.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             },
             {
               "campoId": "cuadradoComprobacion",
               "valorObtenido": 9360,
               "mensaje": "Pusiste bien las dos primeras piezas, 8.100 y el doble de 90 × 7, pero te faltó la última: el cuadrado del 7.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "abandona-cuadrado-del-segundo"
             }
           ],
           "feedbackPorDefecto": "Tres piezas, en este orden: el cuadrado de 90, después el doble de 90 × 7, y por último el cuadrado de 7. Súmalas."
@@ -278,7 +278,7 @@
         "El texto conecta explícitamente con L1: el término del medio y el último término no se pueden juntar porque no son semejantes, así que la forma desarrollada ya está reducida. Es la primera vez que el módulo usa una lección anterior como herramienta y conviene que se note.",
         "Verificación del ejemplo trabajado: 45 = 40 + 5. 40² = 1.600; 2 × 40 × 5 = 400; 5² = 25. Total 1.600 + 400 + 25 = 2.025. Control independiente: 45 × 45 = 2.025 ✓. El atajo daría 1.600 + 25 = 1.625.",
         "Verificación del ejercicio, con cifras DISTINTAS a las del ejemplo (regla de §2 de calibracion): 93 = 90 + 3. 90² = 8.100; 2 × 90 × 3 = 540; 3² = 9. Total 8.649. Control independiente: 93 × 93 = 8.649 ✓.",
-        "Verificación de los distractores del ejercicio: 8.109 es 8.100 + 9, el atajo (error-9). 8.379 es 8.100 + 270 + 9, con el cruce contado una vez, porque 90 × 3 = 270 (error-10). 8.640 es 8.100 + 540, sin el último término (error-11). Las cuatro alternativas quedan entre 8.109 y 8.649, dentro de un 7 % entre sí, así que ninguna se descarta por tamaño."
+        "Verificación de los distractores del ejercicio: 8.109 es 8.100 + 9, el atajo (reparte-cuadrado-sobre-la-suma). 8.379 es 8.100 + 270 + 9, con el cruce contado una vez, porque 90 × 3 = 270 (cuenta-una-vez-termino-cruzado). 8.640 es 8.100 + 540, sin el último término (abandona-cuadrado-del-segundo). Las cuatro alternativas quedan entre 8.109 y 8.649, dentro de un 7 % entre sí, así que ninguna se descarta por tamaño."
       ],
       "bloques": [
         {
@@ -304,21 +304,21 @@
               "texto": "8.109",
               "esCorrecta": false,
               "feedback": "Sumaste solo los dos cuadrados, 8.100 y 9. Es el mismo atajo que el club descartó en el primer desafío, y falla por la misma razón: se pierde el cruce entre las dos partes.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "id": "c",
               "texto": "8.379",
               "esCorrecta": false,
               "feedback": "Encontraste el cruce, 90 × 3 = 270, pero lo contaste una sola vez. En la forma es 2ab, no ab: el cruce ocurre dos veces, una por cada término que se reparte.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             },
             {
               "id": "d",
               "texto": "8.640",
               "esCorrecta": false,
               "feedback": "Pusiste bien el cuadrado del primero y el doble del producto, pero te quedaste sin el tercer término. La forma tiene tres piezas y la última es el cuadrado del segundo, que acá es 3² = 9.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "abandona-cuadrado-del-segundo"
             }
           ]
         }
@@ -331,9 +331,9 @@
         "Progresión estricta baja → media → media/alta, como exige §5.1 de calibracion, y además progresión de registro: P1 numérico, P2 con letra, P3 con letra y coeficiente.",
         "P1 (baja). Verificación: 22 = 20 + 2. 400 + 2 × 20 × 2 + 4 = 400 + 80 + 4 = 484. Control independiente: 22 × 22 = 484 ✓. Atajo fallido: 400 + 4 = 404.",
         "P2 (media). Verificación: (x + 6)² = x² + 2 · x · 6 + 6² = x² + 12x + 36 ✓. Comprobación numérica con x = 4: la forma da 16 + 48 + 36 = 100, y (4 + 6)² = 10² = 100 ✓.",
-        "Verificación de los distractores de P2: x² + 36 es el atajo (error-9). 13x² + 36 es haber desarrollado bien y después reducir x² con 12x como si fueran semejantes, que es justo lo que L1 prohíbe (error-7). x² + 12x² + 36 es haberle puesto exponente al término del medio al escribirlo (error-5).",
+        "Verificación de los distractores de P2: x² + 36 es el atajo (reparte-cuadrado-sobre-la-suma). 13x² + 36 es haber desarrollado bien y después reducir x² con 12x como si fueran semejantes, que es justo lo que L1 prohíbe (reduce-distinto-exponente). x² + 12x² + 36 es haberle puesto exponente al término del medio al escribirlo (agrega-exponente-al-sumar-semejantes).",
         "P3 (media/alta). Verificación: (2x + 3)² con a = 2x y b = 3. a² = (2x)² = 4x²; 2ab = 2 · 2x · 3 = 12x; b² = 9. Resultado 4x² + 12x + 9 ✓. Comprobación numérica con x = 1: la forma da 4 + 12 + 9 = 25, y (2 + 3)² = 25 ✓. Con x = 2: 16 + 24 + 9 = 49, y (4 + 3)² = 49 ✓.",
-        "Verificación de los distractores de P3: 2x² + 12x + 9 es no haber elevado al cuadrado el coeficiente del primer término, que es el error específico de este caso. 4x² + 9 es el atajo (error-9). 4x² + 6x + 9 cuenta el cruce una sola vez (error-10). El primer distractor no lleva errorCatalogado: no elevar el coeficiente no es ninguno de los seis mecanismos del catálogo, y antes que forzarle un id ajeno se deja sin mapear, con su feedback artesanal igual de completo."
+        "Verificación de los distractores de P3: 2x² + 12x + 9 es no haber elevado al cuadrado el coeficiente del primer término, que es el error específico de este caso. 4x² + 9 es el atajo (reparte-cuadrado-sobre-la-suma). 4x² + 6x + 9 cuenta el cruce una sola vez (cuenta-una-vez-termino-cruzado). El primer distractor no lleva errorCatalogado: no elevar el coeficiente no es ninguno de los seis mecanismos del catálogo, y antes que forzarle un id ajeno se deja sin mapear, con su feedback artesanal igual de completo."
       ],
       "bloques": [
         {
@@ -351,14 +351,14 @@
               "texto": "404",
               "esCorrecta": false,
               "feedback": "Sumaste 400 y 4 y te saltaste el medio. Acá el término que falta es chico —80— pero igual te deja lejos: haz el control de sentido con 22 × 20 = 440 y vas a ver que 404 ni siquiera llega ahí.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "id": "c",
               "texto": "444",
               "esCorrecta": false,
               "feedback": "Contaste el cruce una sola vez: 400 + 40 + 4. Pero 20 × 2 aparece dos veces en el desarrollo, así que el término del medio es 80 y no 40.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             }
           ]
         },
@@ -377,21 +377,21 @@
               "texto": "x² + 36",
               "esCorrecta": false,
               "feedback": "Es el atajo de siempre, ahora con letras. Compruébalo con x = 4: esta expresión da 16 + 36 = 52, mientras que (4 + 6)² es 100. La diferencia son los 48 del término del medio.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "id": "c",
               "texto": "13x² + 36",
               "esCorrecta": false,
               "feedback": "Desarrollaste bien y después juntaste x² con 12x, pero esos dos no son semejantes: uno tiene parte literal x² y el otro x. Es exactamente lo que viste en la lección anterior con 3x + 2x².",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "reduce-distinto-exponente"
             },
             {
               "id": "d",
               "texto": "x² + 12x² + 36",
               "esCorrecta": false,
               "feedback": "El coeficiente del medio está bien, pero le agregaste un exponente que no le corresponde. El doble del producto es 2 · x · 6, y ahí la x aparece una sola vez: queda 12x, no 12x².",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "agrega-exponente-al-sumar-semejantes"
             }
           ]
         },
@@ -416,14 +416,14 @@
               "texto": "4x² + 9",
               "esCorrecta": false,
               "feedback": "El atajo otra vez. Los dos cuadrados están bien calculados, pero falta el medio. Con x = 1 esta expresión da 13, contra los 25 del resultado verdadero.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "id": "d",
               "texto": "4x² + 6x + 9",
               "esCorrecta": false,
               "feedback": "Calculaste el cruce como 2x · 3 = 6x y lo pusiste una sola vez. Falta duplicarlo: el término del medio es 2ab, o sea 2 · 2x · 3 = 12x. Con x = 1 tu expresión da 19 y el resultado verdadero es 25.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             }
           ]
         }
@@ -437,7 +437,7 @@
         "La parte 1 pide escribir el desarrollo sin comprobarlo, y la parte 2 lo pone a prueba con un valor. Separar modelar de verificar es el mismo reparto que el paso 8 de L1.",
         "Verificación: (t + 6)² = t² + 2 · t · 6 + 6² = t² + 12t + 36 ✓.",
         "Verificación de la comprobación con t = 5: por el desarrollo, 25 + 60 + 36 = 121. Por el camino directo, (5 + 6)² = 11² = 121 ✓. Coinciden.",
-        "Verificación de los distractores: 61 es 25 + 36, el atajo (error-9). 85 es 25 + 60, sin el último término (error-11). 91 es 25 + 30 + 36, con el cruce contado una vez (error-10).",
+        "Verificación de los distractores: 61 es 25 + 36, el atajo (reparte-cuadrado-sobre-la-suma). 85 es 25 + 60, sin el último término (abandona-cuadrado-del-segundo). 91 es 25 + 30 + 36, con el cruce contado una vez (cuenta-una-vez-termino-cruzado).",
         "NOTA: el desarrollo de (t + 6)² es el mismo que el de (x + 6)² de la práctica P2, con otra letra. Es deliberado y no es repetición ociosa: allá el ejercicio terminaba en la expresión, acá la expresión es el punto de partida y lo que se evalúa es comprobarla contra un valor concreto. Son dos actos distintos sobre la misma forma."
       ],
       "bloques": [
@@ -463,19 +463,19 @@
               "campoId": "comprobacionConValor",
               "valorObtenido": 61,
               "mensaje": "Sumaste solo 25 y 36, o sea usaste el atajo dentro de tu propio desarrollo. Fíjate en que la regla que escribiste tiene tres términos, y el del medio con t = 5 vale 60.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "campoId": "comprobacionConValor",
               "valorObtenido": 85,
               "mensaje": "Pusiste el cuadrado del primero y el término del medio, pero te faltó el 36 del final.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "abandona-cuadrado-del-segundo"
             },
             {
               "campoId": "comprobacionConValor",
               "valorObtenido": 91,
               "mensaje": "Calculaste el término del medio como t × 6 = 30 en vez de 2 × t × 6 = 60. El cruce va duplicado, también cuando hay letras.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "cuenta-una-vez-termino-cruzado"
             }
           ],
           "feedbackPorDefecto": "Reemplaza t por 5 en los tres términos de tu desarrollo: 5², después 12 × 5, después 36. Y comprueba por el otro camino: 5 + 6 son 11, y 11 al cuadrado tiene que darte lo mismo."
@@ -536,21 +536,21 @@
           "texto": "4.981",
           "esCorrecta": false,
           "feedback": "Sumaste solo los dos cuadrados, 4.900 y 81, sin el término del medio. Un control rápido lo descarta: 79 × 70 ya vale 5.530, y 79 × 79 tiene que superarlo.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
         },
         {
           "clave": "C",
           "texto": "5.611",
           "esCorrecta": false,
           "feedback": "Calculaste el cruce como 70 · 9 = 630 y lo contaste una sola vez. El término del medio es el doble de ese producto, 1.260, porque al desarrollar el cruce aparece dos veces.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado"
         },
         {
           "clave": "D",
           "texto": "6.160",
           "esCorrecta": false,
           "feedback": "Pusiste bien el cuadrado del primero y el doble del producto, pero te quedaste sin el tercer término: falta 9² = 81.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "abandona-cuadrado-del-segundo"
         }
       ],
       "solucion": "Se escribe 79 como 70 + 9 y se aplica el desarrollo del cuadrado de un binomio: (70 + 9)² = 70² + 2 · 70 · 9 + 9² = 4.900 + 1.260 + 81 = 6.241. Verificación por multiplicación directa: 79 × 79 = 79 × 80 − 79 = 6.320 − 79 = 6.241 ✓. Control de magnitud: 79 × 70 = 5.530 y 79 × 80 = 6.320, así que el resultado debe caer entre esos dos valores, y 6.241 lo hace ✓."
@@ -566,7 +566,7 @@
           "texto": "x² + 25",
           "esCorrecta": false,
           "feedback": "Elevaste al cuadrado cada término por separado y perdiste el del medio. Compruébalo con x = 3: esta expresión da 34, mientras que (3 + 5)² es 64.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
         },
         {
           "clave": "B",
@@ -579,14 +579,14 @@
           "texto": "x² + 5x + 25",
           "esCorrecta": false,
           "feedback": "Encontraste el cruce, x · 5, pero lo contaste una sola vez. En el desarrollo va duplicado: 2 · x · 5 = 10x. Con x = 3 tu expresión da 49 y el valor correcto es 64.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado"
         },
         {
           "clave": "D",
           "texto": "x² + 10x",
           "esCorrecta": false,
           "feedback": "Los dos primeros términos están bien, pero abandonaste el último: falta el cuadrado del segundo término, que es 25. Con x = 3 tu expresión da 39 en vez de 64.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "abandona-cuadrado-del-segundo"
         }
       ],
       "solucion": "Aplicando (a + b)² = a² + 2ab + b² con a = x y b = 5: a² = x², 2ab = 2 · x · 5 = 10x y b² = 25, de modo que (x + 5)² = x² + 10x + 25. La expresión no admite reducción porque los tres términos tienen partes literales distintas. Verificación numérica con x = 3: el desarrollo da 9 + 30 + 25 = 64 y el cálculo directo da (3 + 5)² = 8² = 64 ✓. Segunda verificación con x = 10: el desarrollo da 100 + 100 + 25 = 225 y el directo (10 + 5)² = 15² = 225 ✓."
@@ -608,7 +608,7 @@
           "texto": "Es verdadera, porque el cuadrado se reparte entre los términos de la suma.",
           "esCorrecta": false,
           "feedback": "El cuadrado no se reparte sobre una suma: eso vale para un producto, no para una suma. Un solo contraejemplo basta para descartarla: con a = 1 y b = 1, el lado izquierdo es (1 + 1)² = 4 y el derecho es 1 + 1 = 2.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
         },
         {
           "clave": "C",
@@ -621,7 +621,7 @@
           "texto": "No se puede decidir mientras no se sepa cuánto valen a y b.",
           "esCorrecta": false,
           "feedback": "Sí se puede decidir, y sin conocer ningún valor: basta desarrollar los dos lados y compararlos. El izquierdo da a² + 2ab + b² y el derecho a² + b², así que difieren en 2ab. Determinar cuándo esa diferencia se anula tampoco necesita valores concretos.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "asigna-valor-a-la-letra"
         }
       ],
       "solucion": "Desarrollando el lado izquierdo, (a + b)² = a² + 2ab + b². Comparado con el derecho, a² + b², la diferencia entre ambos es exactamente 2ab. Por lo tanto la igualdad se cumple si y solo si 2ab = 0, es decir si a = 0 o b = 0, y falla en cualquier otro caso. La afirmación del estudiante es entonces falsa como enunciado general, lo que descarta B, pero no es falsa sin excepción, lo que descarta C. Contraejemplo que refuta el caso general: con a = 1 y b = 1 el izquierdo vale 4 y el derecho 2. Caso en que sí se cumple: con a = 7 y b = 0, ambos lados valen 49. D es falsa porque la comparación se resuelve desarrollando, sin necesidad de valores particulares."
@@ -633,11 +633,11 @@
       "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
       "docs/reglas-modulo.md — reglas 1 a 5, en particular la regla 1 (no usar una representación que el concepto no exige, que junto con la ausencia de renderer de figuras descarta el modelo de área), la regla 4 (ids de campo neutros) y la regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo).",
       "content/diagnostico/dag-m1.json — la unidad expresiones-algebraicas depende solo de enteros-racionales, de donde salen los prerrequisitos de aritmética y distributiva declarados.",
-      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de las entradas error-5, error-6 y error-7 del catálogo embebido, y fuente de los dos prerrequisitos intramódulo declarados.",
+      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de las entradas agrega-exponente-al-sumar-semejantes, asigna-valor-a-la-letra y reduce-distinto-exponente del catálogo embebido, y fuente de los dos prerrequisitos intramódulo declarados.",
       "Dominio «club de cálculo mental»: el término se verificó contra el corpus de fuentes aisladas mediante consultar-fuentes.mjs, corrido por el autor fuera de esta sesión (chequeo léxico SI/NO, sin lectura de fuentes en el hilo de redacción). «club de cálculo mental» vuelve NO. «cálculo mental» vuelve SI en un archivo de currículum, y el autor clasificó esa aparición como habilidad o eje curricular y no como actividad con la misma mecánica, de modo que no constituye colisión de contexto. El dominio de respaldo «viaje de estudios» se descartó por volver SI en el mismo chequeo.",
       "Auditoría de originalidad, punto 1 (2026-08-15): términos de dominio corridos contra el corpus de fuentes aisladas con consultar-fuentes.mjs, en dos rondas cubriendo las tres lecciones del módulo. Ronda 1 (dominio de L1 y candidato de respaldo taller de vitrales): barcaza, contenedor refrigerado, manifiesto de carga, puerto fluvial, vitral, lámina de vidrio, tinte, club de cálculo mental, elevar al cuadrado de cabeza, número redondo cercano, costo por estudiante, sucursal, ajuste de precio y producto simétrico vuelven NO (14 términos); cálculo mental y viaje de estudios vuelven SI y se descartan sin ser colisión de contexto, según la clasificación ya registrada arriba. Ronda 2 (dominio de esta lección y de L3, verbos y sinónimos del puerto y del cálculo mental): grúa, muelle, naviero, bulto, descargar, atracar, embarcación, flete, carga fluvial, doble del producto, elevar al cuadrado, número redondo, atajo, de cabeza, sin calculadora y desvío vuelven NO (16 términos). Total: 30 términos de dominio en NO, 2 en SI sin colisión de contexto. Los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— se corrieron aparte y vuelven LIMPIO."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular. Se hace constar una decisión de método relevante para quien re-audite: el chequeo léxico marcó SI para «cálculo mental» en un archivo de currículum, y la clasificación de esa aparición como habilidad curricular la hizo el autor con la evidencia a la vista, fuera de la sesión de redacción; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido, según la prohibición de CLAUDE.md sobre el hilo redactor. Se descartó además el modelo de área del rectángulo —el contexto canónico de este contenido— por originalidad y porque el schema no admite figuras. AUDITORÍAS INDEPENDIENTES, estado al 2026-08-15. (a) REVISIÓN MATEMÁTICA: CORRIDA, en hilo aparte del de redacción. Recalculó desde cero los cinco cuadrados, la tabla del paso 5 y los valores de error-9 a error-11, y no encontró ningún error de cálculo; su único hallazgo sobre este archivo fue un errorCatalogado mal mapeado en la alternativa C del ítem 3. Aplicado desde el commit a0e54cc, y la corrida de cierre —posterior a esa corrección— dio veredicto PASA sobre los cuatro archivos del módulo: 208 comprobaciones, 0 fallos, cero hallazgos de contenido. (b) AUDITORÍA DE ORIGINALIDAD: COMPLETA, cerrada el 2026-08-15 en hilo aparte del de redacción. Los cuatro puntos del checklist MOS §7.3 quedaron en SI, es decir cerrados a favor del archivo: punto 1, ningún enunciado ni ejercicio sustancialmente similar a una fuente conocida; punto 2, ninguna visualización que replique la composición de otra; punto 3, secuencia interna propia, sin copiar la estructura expresiva de ninguna guía; punto 4, proveniencia registrada. Quedaron cerrados también el uso solo descriptivo de «PAES» y «DEMRE», la ausencia de datos personales y la ausencia de placeholders. Evidencia del punto 1: se corrieron contra el corpus de fuentes aisladas los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— y los cinco vuelven LIMPIO, incluido el chequeo contra el material DEMRE de la forma 113; los 30 términos de dominio del módulo vuelven NO. Cero colisiones. La auditoría cerró además las dos preguntas abiertas que este archivo dejó anotadas: la clasificación de «cálculo mental» como habilidad o eje curricular quedó confirmada con la fuente a la vista, y el modelo de área del rectángulo sí está en el corpus (mineduc-curriculum/03-unidad-2-algebra-funciones.md:86), de modo que descartarlo dejó de ser una intuición del redactor y pasó a ser un hecho verificado. La aritmética anotada en las _notasInternas sigue siendo autochequeo del redactor; lo que la respalda ahora es la revisión matemática independiente.",
+    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular. Se hace constar una decisión de método relevante para quien re-audite: el chequeo léxico marcó SI para «cálculo mental» en un archivo de currículum, y la clasificación de esa aparición como habilidad curricular la hizo el autor con la evidencia a la vista, fuera de la sesión de redacción; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido, según la prohibición de CLAUDE.md sobre el hilo redactor. Se descartó además el modelo de área del rectángulo —el contexto canónico de este contenido— por originalidad y porque el schema no admite figuras. AUDITORÍAS INDEPENDIENTES, estado al 2026-08-15. (a) REVISIÓN MATEMÁTICA: CORRIDA, en hilo aparte del de redacción. Recalculó desde cero los cinco cuadrados, la tabla del paso 5 y los valores de reparte-cuadrado-sobre-la-suma a abandona-cuadrado-del-segundo, y no encontró ningún error de cálculo; su único hallazgo sobre este archivo fue un errorCatalogado mal mapeado en la alternativa C del ítem 3. Aplicado desde el commit a0e54cc, y la corrida de cierre —posterior a esa corrección— dio veredicto PASA sobre los cuatro archivos del módulo: 208 comprobaciones, 0 fallos, cero hallazgos de contenido. (b) AUDITORÍA DE ORIGINALIDAD: COMPLETA, cerrada el 2026-08-15 en hilo aparte del de redacción. Los cuatro puntos del checklist MOS §7.3 quedaron en SI, es decir cerrados a favor del archivo: punto 1, ningún enunciado ni ejercicio sustancialmente similar a una fuente conocida; punto 2, ninguna visualización que replique la composición de otra; punto 3, secuencia interna propia, sin copiar la estructura expresiva de ninguna guía; punto 4, proveniencia registrada. Quedaron cerrados también el uso solo descriptivo de «PAES» y «DEMRE», la ausencia de datos personales y la ausencia de placeholders. Evidencia del punto 1: se corrieron contra el corpus de fuentes aisladas los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— y los cinco vuelven LIMPIO, incluido el chequeo contra el material DEMRE de la forma 113; los 30 términos de dominio del módulo vuelven NO. Cero colisiones. La auditoría cerró además las dos preguntas abiertas que este archivo dejó anotadas: la clasificación de «cálculo mental» como habilidad o eje curricular quedó confirmada con la fuente a la vista, y el modelo de área del rectángulo sí está en el corpus (mineduc-curriculum/03-unidad-2-algebra-funciones.md:86), de modo que descartarlo dejó de ser una intuición del redactor y pasó a ser un hecho verificado. La aritmética anotada en las _notasInternas sigue siendo autochequeo del redactor; lo que la respalda ahora es la revisión matemática independiente.",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática y auditoría de originalidad corridas y aplicadas en hilos independientes",
     "fecha": "2026-08-14"
   }

@@ -19,14 +19,14 @@
     "condiciones de aplicación de una forma"
   ],
   "_notasInternas": [
-    "L3 del módulo Expresiones algebraicas, y la que cierra el recorrido: L1 sumó expresiones, L2 las multiplicó, L3 recorre la multiplicación al revés. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5. Siete entradas: error-6 copiada carácter a carácter desde expresiones-sumar-lo-que-se-parece.json, error-9 copiada carácter a carácter desde expresiones-rectangulo.json, y error-12 a error-16 nuevas, firmadas por Benja el 2026-08-14.",
-    "PODA DEL CATÁLOGO: el plan previo incluía también error-11 («desarrolla el cuadrado de una suma y abandona el último término»), copiado de L2. Se retiró porque ningún distractor de este archivo lo usa: L3 no desarrolla cuadrados de sumas salvo en el ítem 3, donde el error vivo es error-9 y no error-11. Dejarlo embebido habría puesto el archivo en 🔴 catalogo-sin-usar. Reportado a Benja al cerrar la lección, como se acordó.",
+    "L3 del módulo Expresiones algebraicas, y la que cierra el recorrido: L1 sumó expresiones, L2 las multiplicó, L3 recorre la multiplicación al revés. Catálogo EMBEBIDO con el subconjunto que este archivo usa, según docs/reglas-modulo.md §5. Siete entradas: asigna-valor-a-la-letra copiada carácter a carácter desde expresiones-sumar-lo-que-se-parece.json, reparte-cuadrado-sobre-la-suma copiada carácter a carácter desde expresiones-rectangulo.json, y factoriza-diferencia-como-cuadrado-binomio a omite-descontar-cuadrado-del-desvio nuevas, firmadas por Benja el 2026-08-14.",
+    "PODA DEL CATÁLOGO: el plan previo incluía también abandona-cuadrado-del-segundo («desarrolla el cuadrado de una suma y abandona el último término»), copiado de L2. Se retiró porque ningún distractor de este archivo lo usa: L3 no desarrolla cuadrados de sumas salvo en el ítem 3, donde el error vivo es reparte-cuadrado-sobre-la-suma y no abandona-cuadrado-del-segundo. Dejarlo embebido habría puesto el archivo en 🔴 catalogo-sin-usar. Reportado a Benja al cerrar la lección, como se acordó.",
     "OBJETO DE DESCUBRIMIENTO (estructura, no constante): que el producto de la suma por la diferencia de dos números deja únicamente la resta de sus cuadrados, porque los dos términos cruzados se cancelan — y que esa igualdad, leída al revés, permite reconocer de qué producto viene una diferencia de cuadrados. Por eso no se declara auditoria.constante. El chequeo de filtración de npm run auditar queda omitido y lo reporta como hallazgo 🟢, que la corrida por defecto NO imprime: para verlo hay que correr con AUDITAR_VERBOSE=1 en el entorno.",
     "REGLA DURA DE NO FILTRACIÓN: la estructura no circula antes del paso 5. En los pasos 1 a 4 no aparece la cancelación de los cruces, ni la forma factorizada, ni el cuadrado del desvío como explicación. Lo que sí aparece es el valor de 68 × 72, porque el resultado no es la estructura: el paso 3 lo obtiene multiplicando y el paso 5 descubre de dónde sale la diferencia con 4.900.",
     "CONTINUIDAD CON L2, decidida con Benja el 2026-08-14: el núcleo de esta lección se apoya en el mismo 70 al cuadrado que el club ya calculó en L2 para resolver 73 al cuadrado. No se introduce un número nuevo, se le da un uso nuevo a uno que el estudiante ya tiene. Se descartó reusar 73 al cuadrado como caso de entrada porque el objeto de L3 es un producto de dos factores distintos, no un cuadrado.",
     "EL CONTRASTE CON L2 ES EL ARGUMENTO CENTRAL DEL PASO 5, y conviene no diluirlo en ninguna reescritura: en L2 los dos términos cruzados se SUMABAN y por eso aparecía el 2ab; acá los dos cruces tienen signos opuestos y se CANCELAN, y por eso no queda ningún término del medio. Es la misma cuenta —repartir la multiplicación dos veces— con un signo distinto, y ver las dos caras juntas es lo que convierte la forma en algo entendido en vez de memorizado.",
-    "LA TRAMPA VA COMO MECANISMO, NO COMO ADVERTENCIA (decisión de Fase 1, reafirmada por Benja): el caso 68 × 73 vive en el mismo 70 al cuadrado que el núcleo y sin embargo el atajo falla, porque los desvíos son −2 y +3 y no son simétricos. Dos casos casi idénticos a la vista y solo uno que funciona: la condición de simetría se nota en vez de enunciarse. Está en la práctica P2 como distractor mapeado a error-14, nunca como una frase de advertencia.",
-    "DISEÑO NUMÉRICO: los seis productos simétricos del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y conservando solo los casos cuyas piezas —el producto, el cuadrado del centro, el cuadrado del desvío y los valores de error-15 y error-16— estuvieran libres. Se descartó el caso más obvio del tema, el que se apoya en 50 al cuadrado, porque esa cifra ya está ocupada en cierre-porcentaje.json.",
+    "LA TRAMPA VA COMO MECANISMO, NO COMO ADVERTENCIA (decisión de Fase 1, reafirmada por Benja): el caso 68 × 73 vive en el mismo 70 al cuadrado que el núcleo y sin embargo el atajo falla, porque los desvíos son −2 y +3 y no son simétricos. Dos casos casi idénticos a la vista y solo uno que funciona: la condición de simetría se nota en vez de enunciarse. Está en la práctica P2 como distractor mapeado a aplica-forma-sin-verificar-condiciones, nunca como una frase de advertencia.",
+    "DISEÑO NUMÉRICO: los seis productos simétricos del archivo se eligieron barriendo las cifras de todos los contextosNumericos de content/ y conservando solo los casos cuyas piezas —el producto, el cuadrado del centro, el cuadrado del desvío y los valores de suma-cuadrado-del-desvio y omite-descontar-cuadrado-del-desvio— estuvieran libres. Se descartó el caso más obvio del tema, el que se apoya en 50 al cuadrado, porque esa cifra ya está ocupada en cierre-porcentaje.json.",
     "El paso 8 es transferencia de USO, no de contexto: la factorización deja de ser un fin y pasa a ser una herramienta para dividir de cabeza. Es la primera vez en el módulo que una forma algebraica sirve para resolver algo que sin ella cuesta más, y por eso el paso cierra el arco de los tres archivos.",
     "AUDITORÍAS (cerradas el 2026-08-15): las dos corrieron en hilos aparte del de redacción y sus hallazgos están aplicados. Revisión matemática: PASA en los cuatro archivos del módulo, 208 comprobaciones, 0 fallos, cero hallazgos de contenido. Auditoría de originalidad: COMPLETA, los cuatro puntos del checklist MOS §7.3 en SI y cero colisiones; el punto 1 quedó respaldado por los cinco términos técnicos del módulo corridos contra el corpus de fuentes aisladas, todos LIMPIO, más los 30 términos de dominio en NO. La clasificación de «cálculo mental» como habilidad o eje curricular, heredada de L2, quedó confirmada con la fuente a la vista. El archivo queda habilitado para publicarse."
   ],
@@ -39,7 +39,7 @@
     "colisionesPermitidas": [
       {
         "valor": 4896,
-        "motivo": "Es el resultado del núcleo de la lección, respuesta correcta del campo productoDelDesafio en el paso 3, y es distractor en la práctica P2 (error-14). La colisión no es un subproducto: es el punto pedagógico del ejercicio. La trampa 68 × 73 vive en el mismo centro 70 que el núcleo 68 × 72, y quien fuerza el atajo pese a que los desvíos son −2 y +3 obtiene exactamente el resultado del otro problema. Que el número le suene conocido es la señal de que aplicó una forma sin comprobar su condición, y el feedback lo nombra: «el atajo te devolvió la respuesta de otro problema». Cambiar la base de la trampa lo evitaría, pero eliminaría el mejor feedback del paso y rompería el contraste entre dos casos casi idénticos de los que solo uno funciona. Además el orden es el favorable frente a lo que motiva la regla 3b: el 4896 ya fue confirmado como correcto en el paso 3 cuando aparece marcado en el paso 7, así que el estudiante no vive ninguna contradicción. Ver docs/reglas-modulo.md §3b."
+        "motivo": "Es el resultado del núcleo de la lección, respuesta correcta del campo productoDelDesafio en el paso 3, y es distractor en la práctica P2 (aplica-forma-sin-verificar-condiciones). La colisión no es un subproducto: es el punto pedagógico del ejercicio. La trampa 68 × 73 vive en el mismo centro 70 que el núcleo 68 × 72, y quien fuerza el atajo pese a que los desvíos son −2 y +3 obtiene exactamente el resultado del otro problema. Que el número le suene conocido es la señal de que aplicó una forma sin comprobar su condición, y el feedback lo nombra: «el atajo te devolvió la respuesta de otro problema». Cambiar la base de la trampa lo evitaría, pero eliminaría el mejor feedback del paso y rompería el contraste entre dos casos casi idénticos de los que solo uno funciona. Además el orden es el favorable frente a lo que motiva la regla 3b: el 4896 ya fue confirmado como correcto en el paso 3 cuando aparece marcado en el paso 7, así que el estudiante no vive ninguna contradicción. Ver docs/reglas-modulo.md §3b."
       }
     ]
   },
@@ -66,7 +66,7 @@
       "_notasInternas": [
         "Gancho: un desafío que parece más difícil que los de L2 porque los dos factores son distintos, y que en realidad es más fácil si se ve la simetría. La pista está a la vista —68 y 72 rodean al 70— y no se explota todavía.",
         "Verificación: no hay operación resuelta en este paso. Los únicos números son 68, 72 y 70.",
-        "NO PUEDE APARECER ACÁ: la cancelación de los cruces, el cuadrado del desvío, ni ninguna forma factorizada. La opción 2 de la predicción propone que el resultado sea el cuadrado del centro, que es error-16, y se ofrece sin corregir porque prediccion no lleva feedback por contrato."
+        "NO PUEDE APARECER ACÁ: la cancelación de los cruces, el cuadrado del desvío, ni ninguna forma factorizada. La opción 2 de la predicción propone que el resultado sea el cuadrado del centro, que es omite-descontar-cuadrado-del-desvio, y se ofrece sin corregir porque prediccion no lleva feedback por contrato."
       ],
       "bloques": [
         {
@@ -92,7 +92,7 @@
       "_notasInternas": [
         "Misma pieza estructural que el paso 2 de L2: refuta sin revelar. El argumento compara los dos productos repartiendo la multiplicación, sin calcular ninguno de los dos ni decir cuánto se pierde.",
         "Verificación del argumento: 68 × 72 = 68 × 70 + 68 × 2. Y 70 × 70 = 68 × 70 + 2 × 70. Los dos comparten el sumando 68 × 70, así que la comparación se reduce a comparar 68 × 2 contra 2 × 70, o sea 136 contra 140. Como 136 < 140, el producto 68 × 72 es menor que 4.900 ✓. El argumento es exacto y no entrega el resultado.",
-        "Verificación de los distractores: la opción b apela a que 4.900 es un cuadrado perfecto, lo que no impide que sea el resultado de un producto de factores distintos —de hecho 4.900 = 49 × 100— y por eso es un criterio inservible. La opción c acepta la compensación, que es error-16 en su forma más pura.",
+        "Verificación de los distractores: la opción b apela a que 4.900 es un cuadrado perfecto, lo que no impide que sea el resultado de un producto de factores distintos —de hecho 4.900 = 49 × 100— y por eso es un criterio inservible. La opción c acepta la compensación, que es omite-descontar-cuadrado-del-desvio en su forma más pura.",
         "CUIDADO EN CUALQUIER REESCRITURA: decir acá «se pierden 4» o «falta el cuadrado del desvío» mataría el paso 5. La refutación tiene que quedarse en que el producto es menor."
       ],
       "bloques": [
@@ -121,7 +121,7 @@
               "texto": "Que los dos dan lo mismo, porque las dos unidades que baja uno las sube el otro",
               "esCorrecta": false,
               "feedback": "Esa es justamente la intuición que hay que revisar. Bajar dos unidades en un factor y subirlas en el otro no se compensa, porque cada desvío se multiplica por un número distinto: las dos que sube van multiplicadas por 68, y las dos que baja iban multiplicadas por 70. Míralo en los repartos de arriba.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
             }
           ]
         }
@@ -133,7 +133,7 @@
       "_notasInternas": [
         "Registro del intento genuino. Se pide el producto real, obtenido como cada uno pueda. La estructura no hace falta para responder y por eso el paso no la filtra.",
         "Verificación: 68 × 72. Por reparto, 68 × 70 = 4.760 y 68 × 2 = 136; sumados, 4.896 ✓. Por multiplicación en columna, 68 × 72 = 4.896 ✓. Dos vías coincidentes.",
-        "Verificación de los distractores: 4.900 es haber aceptado la compensación exacta, o sea entregar el cuadrado del centro sin descontar nada (error-16). 4.904 es haber notado que hay que corregir pero en el sentido contrario, sumando el cuadrado del desvío (error-15): 4.900 + 4.",
+        "Verificación de los distractores: 4.900 es haber aceptado la compensación exacta, o sea entregar el cuadrado del centro sin descontar nada (omite-descontar-cuadrado-del-desvio). 4.904 es haber notado que hay que corregir pero en el sentido contrario, sumando el cuadrado del desvío (suma-cuadrado-del-desvio): 4.900 + 4.",
         "Los dos distractores estructurales se plantan acá aunque la estructura no sea pública, y no la filtran: sus feedback remiten al argumento del paso 2 —el producto tiene que ser menor que 4.900— sin decir por cuánto."
       ],
       "bloques": [
@@ -153,13 +153,13 @@
               "campoId": "productoDelDesafio",
               "valorObtenido": 4900,
               "mensaje": "Ese es el cuadrado de 70, o sea la compensación exacta que el club acaba de descartar. El argumento del paso anterior mostró que el producto tiene que quedar por debajo de 4.900. Haz la multiplicación completa.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
             },
             {
               "campoId": "productoDelDesafio",
               "valorObtenido": 4904,
               "mensaje": "Corregiste el 4.900, pero hacia el lado equivocado: te pasaste para arriba. Acuérdate de lo que quedó demostrado, que el producto es MENOR que el cuadrado de 70.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "suma-cuadrado-del-desvio"
             }
           ],
           "feedbackPorDefecto": "Una vía cómoda: reparte el segundo factor. 68 × 72 es 68 × 70 más 68 × 2. El primer producto sale de multiplicar por 7 y correr un cero."
@@ -206,7 +206,7 @@
         "Verificación de la deducción con letras, que es el argumento central: (a − b)(a + b) se reparte en a·a + a·b − b·a − b·b. Los dos cruces son a·b y −b·a, iguales en valor y opuestos en signo, así que se cancelan y queda a² − b² ✓. Comprobación numérica con a = 70 y b = 2: 4.900 + 140 − 140 − 4 = 4.896 ✓.",
         "EL CONTRASTE CON L2, que es lo que hay que preservar: allá los dos cruces se sumaban y daban 2ab; acá tienen signos opuestos y se anulan. Misma cuenta, distinto signo, resultado estructuralmente distinto.",
         "Verificación de la comprobación fuera de tabla: 53 × 57. Centro 55, cuadrado 3.025; desvío 2, cuadrado 4. Resultado 3.025 − 4 = 3.021. Control independiente: 53 × 57 = 53 × 50 + 53 × 7 = 2.650 + 371 = 3.021 ✓.",
-        "Verificación de sus distractores: 3.025 es entregar el cuadrado del centro (error-16). 3.029 es sumar el cuadrado del desvío en vez de restarlo (error-15).",
+        "Verificación de sus distractores: 3.025 es entregar el cuadrado del centro (omite-descontar-cuadrado-del-desvio). 3.029 es sumar el cuadrado del desvío en vez de restarlo (suma-cuadrado-del-desvio).",
         "PRIMERA APARICIÓN de la estructura en todo el archivo. Verificado que los pasos 1 a 4 no contienen la cancelación de cruces, el cuadrado del desvío como explicación, ni ninguna forma factorizada."
       ],
       "bloques": [
@@ -254,13 +254,13 @@
               "campoId": "productoComprobacion",
               "valorObtenido": 3025,
               "mensaje": "Ese es el cuadrado de 55, o sea te quedaste sin descontar. Los dos factores se apartan 2 del centro, y ese apartamiento cuesta el cuadrado de 2.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
             },
             {
               "campoId": "productoComprobacion",
               "valorObtenido": 3029,
               "mensaje": "Sumaste el cuadrado del desvío en vez de restarlo. El producto de dos números que rodean a un centro siempre queda por debajo del cuadrado de ese centro, nunca por encima.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "suma-cuadrado-del-desvio"
             }
           ],
           "feedbackPorDefecto": "Dos pasos: el cuadrado de 55, y después descontarle el cuadrado del desvío. El desvío es lo que se apartan 53 y 57 del 55."
@@ -274,7 +274,7 @@
         "Recién acá se nombran los conceptos —factorizar, diferencia de cuadrados— y se da la forma en sus dos direcciones. Ni un paso antes.",
         "El texto insiste en las dos lecturas de la misma igualdad, porque de eso trata la lección: hacia la derecha es multiplicar, hacia la izquierda es factorizar. El estudiante ya sabía la primera desde L2.",
         "Verificación del ejercicio, con cifras DISTINTAS a las del núcleo: 81 × 89. Centro 85, cuadrado 7.225; desvío 4, cuadrado 16. Resultado 7.225 − 16 = 7.209. Control independiente: 81 × 89 = 81 × 90 − 81 = 7.290 − 81 = 7.209 ✓.",
-        "Verificación de los distractores del ejercicio: 7.225 es el cuadrado del centro sin descontar (error-16). 7.241 es 7.225 + 16, sumando el cuadrado del desvío (error-15). 7.209 es la correcta. La cuarta alternativa, 6.561, es el cuadrado del menor de los dos factores (81² = 6.561 ✓), un error real que no encaja en ninguno de los siete mecanismos del catálogo; se deja sin errorCatalogado antes que forzarle un id ajeno, con su feedback artesanal completo. Es el mismo criterio ya usado en la práctica P3 de L2.",
+        "Verificación de los distractores del ejercicio: 7.225 es el cuadrado del centro sin descontar (omite-descontar-cuadrado-del-desvio). 7.241 es 7.225 + 16, sumando el cuadrado del desvío (suma-cuadrado-del-desvio). 7.209 es la correcta. La cuarta alternativa, 6.561, es el cuadrado del menor de los dos factores (81² = 6.561 ✓), un error real que no encaja en ninguno de los siete mecanismos del catálogo; se deja sin errorCatalogado antes que forzarle un id ajeno, con su feedback artesanal completo. Es el mismo criterio ya usado en la práctica P3 de L2.",
         "Las cuatro alternativas quedan entre 6.561 y 7.241, así que ninguna se descarta por tamaño."
       ],
       "bloques": [
@@ -297,14 +297,14 @@
               "texto": "7.225",
               "esCorrecta": false,
               "feedback": "Te quedaste en el cuadrado del centro sin descontar nada. Los dos factores se apartan 4 unidades del 85, y ese apartamiento cuesta exactamente 4² = 16.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
             },
             {
               "id": "c",
               "texto": "7.241",
               "esCorrecta": false,
               "feedback": "Sumaste el cuadrado del desvío en lugar de restarlo. Acuérdate de la forma: es a² menos b², nunca más. El producto siempre queda por debajo del cuadrado del centro.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "suma-cuadrado-del-desvio"
             },
             {
               "id": "d",
@@ -322,9 +322,9 @@
       "_notasInternas": [
         "Progresión estricta baja → media → media/alta, y progresión de propósito: P1 aplica la forma, P2 y P3 comprueban sus dos condiciones. Que las dos trampas vengan después de la aplicación es deliberado: primero se aprende a usarla, después dónde deja de valer.",
         "P1 (baja). Verificación: x² − 25 = x² − 5², así que factoriza como (x + 5)(x − 5) ✓. Comprobación desarrollando: (x + 5)(x − 5) = x² − 5x + 5x − 25 = x² − 25 ✓.",
-        "Verificación de los distractores de P1: (x − 5)² es confundir la diferencia de cuadrados con el cuadrado de un binomio (error-12); desarrollado da x² − 10x + 25, que no es la expresión de partida. (x + 25)(x − 25) es no haber extraído la raíz del segundo término (error-14); desarrollado da x² − 625.",
+        "Verificación de los distractores de P1: (x − 5)² es confundir la diferencia de cuadrados con el cuadrado de un binomio (factoriza-diferencia-como-cuadrado-binomio); desarrollado da x² − 10x + 25, que no es la expresión de partida. (x + 25)(x − 25) es no haber extraído la raíz del segundo término (aplica-forma-sin-verificar-condiciones); desarrollado da x² − 625.",
         "P2 (media). LA TRAMPA COMO MECANISMO. Verificación: 68 × 73 = 4.964 ✓ (68 × 70 + 68 × 3 = 4.760 + 204 = 4.964). Los desvíos respecto de 70 son −2 y +3, distintos, así que la forma NO aplica. Quien la aplica igual, tomando el desvío como 2, obtiene 4.900 − 4 = 4.896, que es justo el resultado del núcleo de la lección — coincidencia deliberada y muy útil: el estudiante que se equivoca acá obtiene un número que ya vio como correcto en otro problema. Quien multiplica los dos desvíos obtiene 4.900 − 6 = 4.894.",
-        "Verificación de los distractores de P2: 4.896 y 4.894 salen de los dos modos de forzar la forma sobre un caso que no la cumple, ambos error-14. La alternativa correcta no es un número sino la constatación de que hay que multiplicar a la antigua, lo que obliga a mirar la condición antes que el atajo.",
+        "Verificación de los distractores de P2: 4.896 y 4.894 salen de los dos modos de forzar la forma sobre un caso que no la cumple, ambos aplica-forma-sin-verificar-condiciones. La alternativa correcta no es un número sino la constatación de que hay que multiplicar a la antigua, lo que obliga a mirar la condición antes que el atajo.",
         "P3 (media/alta). Verificación: x² + 36 es una SUMA de cuadrados y no se factoriza con esta forma. Control numérico con x = 10: la expresión vale 100 + 36 = 136, mientras que (x + 6)(x − 6) vale 16 × 4 = 64 y (x + 6)² vale 256. Ninguno coincide ✓. Se eligió x = 10 y no x = 8 porque con 8 el valor sería 100, cifra ya ocupada en el corpus."
       ],
       "bloques": [
@@ -343,14 +343,14 @@
               "texto": "(x − 5)²",
               "esCorrecta": false,
               "feedback": "Confundiste las dos formas. Un cuadrado de binomio produce un término del medio: si desarrollas (x − 5)² obtienes x² − 10x + 25, que no es la expresión de partida. La diferencia de cuadrados da dos factores distintos, no uno repetido.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "factoriza-diferencia-como-cuadrado-binomio"
             },
             {
               "id": "c",
               "texto": "(x + 25)(x − 25)",
               "esCorrecta": false,
               "feedback": "Usaste el 25 tal cual, sin extraerle la raíz. En la forma, lo que va dentro de los paréntesis es la raíz de cada término: la de 25 es 5. Compruébalo desarrollando lo que escribiste: da x² − 625.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
             }
           ]
         },
@@ -363,14 +363,14 @@
               "texto": "4.896",
               "esCorrecta": false,
               "feedback": "Aplicaste el atajo, pero acá no se puede: mira las distancias al 70. El 68 está a 2 por debajo, y el 73 está a 3 por encima. No son simétricos, así que no hay un desvío único que elevar al cuadrado. Y fíjate en el número que te dio: es el resultado del primer desafío de la sesión, el de 68 × 72 — el atajo te devolvió la respuesta de otro problema.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
             },
             {
               "id": "b",
               "texto": "4.894",
               "esCorrecta": false,
               "feedback": "Notaste que los desvíos son distintos y multiplicaste 2 por 3 para descontar 6. Es un buen intento, pero la forma no se arregla así: exige que los dos factores se aparten lo MISMO del centro, y acá no lo hacen. Cuando la condición no se cumple, no hay atajo que valga.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
             },
             {
               "id": "c",
@@ -389,14 +389,14 @@
               "texto": "(x + 6)(x − 6)",
               "esCorrecta": false,
               "feedback": "Ese producto no devuelve la expresión de partida. Desarróllalo y vas a ver que da x² − 36, con resta: los cruces se cancelan y el signo del segundo término queda negativo, siempre. Compruébalo con x = 10: tu producto vale 16 × 4 = 64, y x² + 36 vale 136.",
-              "errorCatalogado": "error-13"
+              "errorCatalogado": "factoriza-suma-de-cuadrados"
             },
             {
               "id": "b",
               "texto": "(x + 6)²",
               "esCorrecta": false,
               "feedback": "Un cuadrado de binomio trae término del medio: (x + 6)² es x² + 12x + 36, no x² + 36. Con x = 10 tu expresión vale 256 y la de partida 136.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
             },
             {
               "id": "c",
@@ -409,7 +409,7 @@
               "texto": "x(x + 36)",
               "esCorrecta": false,
               "feedback": "Sacaste como factor común una x que el segundo término no tiene. Desarrolla lo que escribiste: da x² + 36x, no x² + 36. El 36 está solo, sin ninguna x que lo acompañe.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
             }
           ]
         }
@@ -447,7 +447,7 @@
               "campoId": "divisionConFactorizacion",
               "valorObtenido": 70,
               "mensaje": "El 70 es el centro entre los dos factores, no uno de los factores. Los que multiplicados dan 4.896 son 68 y 72: si divides por uno, te queda el otro.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
             }
           ],
           "feedbackPorDefecto": "No dividas. Pregúntate qué dos números multiplicados dan 4.896 — ya los tienes desde el primer desafío de la sesión. Si divides ese producto por uno de ellos, queda el otro."
@@ -508,14 +508,14 @@
           "texto": "4.225",
           "esCorrecta": false,
           "feedback": "Ese es el cuadrado de 65, el número central. Falta descontarle el cuadrado del desvío: los dos factores se apartan 2 unidades, así que hay que restar 4.",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "omite-descontar-cuadrado-del-desvio"
         },
         {
           "clave": "C",
           "texto": "4.229",
           "esCorrecta": false,
           "feedback": "Sumaste el cuadrado del desvío en vez de restarlo. El producto de dos números que rodean a un centro siempre queda por debajo del cuadrado de ese centro.",
-          "errorCatalogado": "error-15"
+          "errorCatalogado": "suma-cuadrado-del-desvio"
         },
         {
           "clave": "D",
@@ -543,21 +543,21 @@
           "texto": "(x − 6)²",
           "esCorrecta": false,
           "feedback": "Esa forma corresponde al cuadrado de un binomio, que trae término del medio: desarrollada da x² − 12x + 36. La expresión de partida no tiene término del medio ni el 36 es positivo en ella.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "factoriza-diferencia-como-cuadrado-binomio"
         },
         {
           "clave": "C",
           "texto": "(x + 36)(x − 36)",
           "esCorrecta": false,
           "feedback": "Usaste el 36 sin extraerle la raíz. Dentro de los paréntesis va la raíz de cada término, y la de 36 es 6. Compruébalo desarrollando lo que escribiste: da x² − 1.296.",
-          "errorCatalogado": "error-14"
+          "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
         },
         {
           "clave": "D",
           "texto": "x(x − 36)",
           "esCorrecta": false,
           "feedback": "Sacaste como factor común una x que el segundo término no tiene: el 36 está solo. Al desarrollar, tu expresión da x² − 36x, con una x de más en el último término.",
-          "errorCatalogado": "error-14"
+          "errorCatalogado": "aplica-forma-sin-verificar-condiciones"
         }
       ],
       "solucion": "La expresión x² − 36 es una resta entre dos cuadrados, porque 36 = 6². Aplicando a² − b² = (a + b)(a − b) con a = x y b = 6 se obtiene (x + 6)(x − 6). Verificación desarrollando: (x + 6)(x − 6) = x² − 6x + 6x − 36 = x² − 36 ✓, donde los dos términos cruzados se cancelan por tener signos opuestos. Verificación numérica con x = 10: la expresión original vale 100 − 36 = 64 y el producto vale 16 × 4 = 64 ✓."
@@ -579,21 +579,21 @@
           "texto": "Es verdadera, porque los dos términos son cuadrados y eso basta para aplicar la forma.",
           "esCorrecta": false,
           "feedback": "Que los dos términos sean cuadrados es una de las dos condiciones, pero falta la otra: tienen que estar restándose. Compruébalo con k = 6 y x = 10: la expresión vale 136 y el producto propuesto vale 16 × 4 = 64.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "factoriza-suma-de-cuadrados"
         },
         {
           "clave": "C",
           "texto": "Es falsa, pero se arregla escribiendo (x + k)² en su lugar.",
           "esCorrecta": false,
           "feedback": "Acertaste en que es falsa y erraste en el reemplazo. El cuadrado de un binomio trae término del medio: (x + k)² es x² + 2kx + k², que tiene un 2kx que la expresión original no tiene.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma"
         },
         {
           "clave": "D",
           "texto": "Depende del valor de x: para algunos valores se cumple y para otros no.",
           "esCorrecta": false,
           "feedback": "Una factorización tiene que valer para todo valor de x, no para algunos. Y acá no vale para ninguno salvo casos que k distinto de cero excluye: la diferencia entre las dos expresiones es 2k², que no depende de x en absoluto.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "asigna-valor-a-la-letra"
         }
       ],
       "solucion": "Desarrollando el producto propuesto: (x + k)(x − k) = x² − kx + kx − k² = x² − k², porque los términos cruzados se cancelan. Comparado con x² + k², las dos expresiones difieren en 2k², cantidad que es distinta de cero siempre que k lo sea, y que además no depende de x. Por lo tanto la afirmación es falsa para todo k distinto de cero, lo que descarta B, y lo es de forma estructural y no según el valor de x, lo que descarta D. C también es falsa porque (x + k)² = x² + 2kx + k² introduce un término del medio ausente en la expresión original. Verificación numérica con k = 6 y x = 10: x² + k² = 136, mientras que (x + 6)(x − 6) = 64 y (x + 6)² = 256 ✓."
@@ -605,12 +605,12 @@
       "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y registro de zonas de contexto saturadas (§6).",
       "docs/reglas-modulo.md — reglas 1 a 5, en particular la regla 3 (todo distractor derivable y en banda de magnitud) y la regla 5 en su versión corregida el 2026-08-14 (catálogo embebido por archivo con el subconjunto que ese archivo usa).",
       "content/diagnostico/dag-m1.json — la unidad expresiones-algebraicas depende solo de enteros-racionales, de donde salen los prerrequisitos de aritmética declarados.",
-      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de la entrada error-6 del catálogo embebido y de uno de los prerrequisitos intramódulo.",
-      "content/lecciones/expresiones-rectangulo.json — L2 del mismo módulo: origen literal de la entrada error-9, origen del prerrequisito sobre el cuadrado de un binomio, y origen del cuadrado de 70 que esta lección reutiliza como continuidad deliberada.",
+      "content/lecciones/expresiones-sumar-lo-que-se-parece.json — L1 del mismo módulo: origen literal de la entrada asigna-valor-a-la-letra del catálogo embebido y de uno de los prerrequisitos intramódulo.",
+      "content/lecciones/expresiones-rectangulo.json — L2 del mismo módulo: origen literal de la entrada reparte-cuadrado-sobre-la-suma, origen del prerrequisito sobre el cuadrado de un binomio, y origen del cuadrado de 70 que esta lección reutiliza como continuidad deliberada.",
       "Dominio «club de cálculo mental»: mismo dominio de L2, ya verificado contra el corpus de fuentes aisladas mediante consultar-fuentes.mjs corrido por el autor fuera de esta sesión. «club de cálculo mental» vuelve NO; la aparición de «cálculo mental» en un archivo de currículum fue clasificada por el autor como habilidad o eje curricular y no como actividad con la misma mecánica, de modo que no constituye colisión de contexto.",
       "Auditoría de originalidad, punto 1 (2026-08-15): términos de dominio corridos contra el corpus de fuentes aisladas con consultar-fuentes.mjs, en dos rondas cubriendo las tres lecciones del módulo. Ronda 1 (dominio de L1 y candidato de respaldo taller de vitrales): barcaza, contenedor refrigerado, manifiesto de carga, puerto fluvial, vitral, lámina de vidrio, tinte, club de cálculo mental, elevar al cuadrado de cabeza, número redondo cercano, costo por estudiante, sucursal, ajuste de precio y producto simétrico vuelven NO (14 términos); cálculo mental y viaje de estudios vuelven SI y se descartan sin ser colisión de contexto, según la clasificación ya registrada arriba. Ronda 2 (dominio de L2 y de esta lección, verbos y sinónimos del puerto y del cálculo mental): grúa, muelle, naviero, bulto, descargar, atracar, embarcación, flete, carga fluvial, doble del producto, elevar al cuadrado, número redondo, atajo, de cabeza, sin calculadora y desvío vuelven NO (16 términos). Total: 30 términos de dominio en NO, 2 en SI sin colisión de contexto. Los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— se corrieron aparte y vuelven LIMPIO."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido. Se hace constar una decisión de diseño relevante para quien re-audite: se descartó el caso numérico más frecuente de este contenido, el que se apoya en el cuadrado de cincuenta, por colisión de cifra con un archivo ya publicado del corpus propio, no por adyacencia con material externo. AUDITORÍAS INDEPENDIENTES, estado al 2026-08-15. (a) REVISIÓN MATEMÁTICA: CORRIDA, en hilo aparte del de redacción. Recalculó desde cero los seis productos simétricos, la tabla del paso 5, la trampa del paso 7 y los valores de error-12 a error-16, y no encontró ningún error de cálculo; confirmó además que la colisión declarada en auditoria.colisionesPermitidas es correcta y que el trade-off pedagógico que alega se sostiene. Su único hallazgo sobre este archivo fue un errorCatalogado mal mapeado en la opción b del paso 2, inalcanzable ahí porque la forma todavía no se ha descubierto. Aplicado desde el commit a0e54cc, y la corrida de cierre —posterior a esa corrección— dio veredicto PASA sobre los cuatro archivos del módulo: 208 comprobaciones, 0 fallos, cero hallazgos de contenido. (b) AUDITORÍA DE ORIGINALIDAD: COMPLETA, cerrada el 2026-08-15 en hilo aparte del de redacción. Los cuatro puntos del checklist MOS §7.3 quedaron en SI, es decir cerrados a favor del archivo: punto 1, ningún enunciado ni ejercicio sustancialmente similar a una fuente conocida; punto 2, ninguna visualización que replique la composición de otra; punto 3, secuencia interna propia, sin copiar la estructura expresiva de ninguna guía; punto 4, proveniencia registrada. Quedaron cerrados también el uso solo descriptivo de «PAES» y «DEMRE», la ausencia de datos personales y la ausencia de placeholders. Evidencia del punto 1: se corrieron contra el corpus de fuentes aisladas los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— y los cinco vuelven LIMPIO, incluido el chequeo contra el material DEMRE de la forma 113; los 30 términos de dominio del módulo vuelven NO. Cero colisiones. La clasificación de «cálculo mental» como habilidad o eje curricular, que este archivo hereda de L2, quedó confirmada por la auditoría con la fuente a la vista. La aritmética anotada en las _notasInternas sigue siendo autochequeo del redactor; lo que la respalda ahora es la revisión matemática independiente.",
+    "declaracionOriginalidad": "Enunciados, contextos, expresiones y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. La verificación de colisión de dominio se hizo con consultar-fuentes.mjs corrido fuera del hilo de redacción (mecanismo 2 de CLAUDE.md), con salida pegada sin reformular; el hilo que redactó este archivo nunca leyó la fuente ni recibió su contenido. Se hace constar una decisión de diseño relevante para quien re-audite: se descartó el caso numérico más frecuente de este contenido, el que se apoya en el cuadrado de cincuenta, por colisión de cifra con un archivo ya publicado del corpus propio, no por adyacencia con material externo. AUDITORÍAS INDEPENDIENTES, estado al 2026-08-15. (a) REVISIÓN MATEMÁTICA: CORRIDA, en hilo aparte del de redacción. Recalculó desde cero los seis productos simétricos, la tabla del paso 5, la trampa del paso 7 y los valores de factoriza-diferencia-como-cuadrado-binomio a omite-descontar-cuadrado-del-desvio, y no encontró ningún error de cálculo; confirmó además que la colisión declarada en auditoria.colisionesPermitidas es correcta y que el trade-off pedagógico que alega se sostiene. Su único hallazgo sobre este archivo fue un errorCatalogado mal mapeado en la opción b del paso 2, inalcanzable ahí porque la forma todavía no se ha descubierto. Aplicado desde el commit a0e54cc, y la corrida de cierre —posterior a esa corrección— dio veredicto PASA sobre los cuatro archivos del módulo: 208 comprobaciones, 0 fallos, cero hallazgos de contenido. (b) AUDITORÍA DE ORIGINALIDAD: COMPLETA, cerrada el 2026-08-15 en hilo aparte del de redacción. Los cuatro puntos del checklist MOS §7.3 quedaron en SI, es decir cerrados a favor del archivo: punto 1, ningún enunciado ni ejercicio sustancialmente similar a una fuente conocida; punto 2, ninguna visualización que replique la composición de otra; punto 3, secuencia interna propia, sin copiar la estructura expresiva de ninguna guía; punto 4, proveniencia registrada. Quedaron cerrados también el uso solo descriptivo de «PAES» y «DEMRE», la ausencia de datos personales y la ausencia de placeholders. Evidencia del punto 1: se corrieron contra el corpus de fuentes aisladas los cinco términos técnicos del módulo —cuadrado de un binomio, producto notable, diferencia de cuadrados, factorizar y término del medio— y los cinco vuelven LIMPIO, incluido el chequeo contra el material DEMRE de la forma 113; los 30 términos de dominio del módulo vuelven NO. Cero colisiones. La clasificación de «cálculo mental» como habilidad o eje curricular, que este archivo hereda de L2, quedó confirmada por la auditoría con la fuente a la vista. La aritmética anotada en las _notasInternas sigue siendo autochequeo del redactor; lo que la respalda ahora es la revisión matemática independiente.",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática y auditoría de originalidad corridas y aplicadas en hilos independientes",
     "fecha": "2026-08-14"
   }

@@ -1,48 +1,48 @@
 {
-  "unidad": "ecuaciones-inecuaciones",
+  "unidad": "ecuaciones-e-inecuaciones-primer-grado",
   "errores": [
     {
-      "id": "ecuaciones-inecuaciones/error-1",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/opera-un-solo-lado",
       "descripcion": "Aplicar una operación a un solo lado de la ecuación, rompiendo el equilibrio (p. ej. quitar bolitas de un solo platillo, o 'borrar' el +5 de la izquierda sin tocar la derecha)."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-2",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/invierte-signo-al-transponer",
       "descripcion": "Equivocarse en el signo o la dirección al mover un término al otro lado: sumar cuando corresponde restar, o restar cuando corresponde sumar."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-3",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/divide-antes-de-quitar-constante",
       "descripcion": "Repartir (dividir) solo una parte de un lado en vez del lado completo, o dividir por el coeficiente antes de haber quitado las bolitas sueltas (la constante)."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-4",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/omite-dividir-por-coeficiente",
       "descripcion": "Olvidar dividir por el número de bolsas (el coeficiente): quedarse en 'a·x = c' y entregar c como respuesta sin repartir entre las a bolsas."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-5",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/suma-incognitas-en-vez-de-restar",
       "descripcion": "Al reunir las incógnitas que están en ambos lados, sumarlas en vez de restarlas (o contar mal cuántas bolsas quedan al pasarlas a un solo lado)."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-6",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/maneja-mal-sentido-desigualdad",
       "descripcion": "Manejar mal el sentido de la desigualdad al multiplicar o dividir: no invertirlo cuando el factor es negativo, o invertirlo cuando no corresponde."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-7",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/confunde-borde-abierto-y-cerrado",
       "descripcion": "Confundir borde abierto con cerrado: incluir el extremo con < o > , o excluirlo con ≤ o ≥."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-8",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/invierte-direccion-en-recta-numerica",
       "descripcion": "Invertir la dirección al representar el conjunto solución en la recta numérica."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-9",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/traduce-mal-desigualdad-verbal",
       "descripcion": "Traducir mal el lenguaje natural a desigualdad: equivocar la inclusión del extremo (\"al menos\", \"más de\") o la dirección (poner techo donde va piso)."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-10",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/redondea-contra-el-contexto",
       "descripcion": "No devolver la solución al contexto: entregar un decimal donde se exige entero, o redondear en la dirección que el contexto no permite."
     },
     {
-      "id": "ecuaciones-inecuaciones/error-11",
+      "id": "ecuaciones-e-inecuaciones-primer-grado/omite-cantidad-inicial-en-inecuacion",
       "descripcion": "Omitir la cantidad inicial (o el término constante) al traducir la situación a una inecuación, modelando solo la parte variable."
     }
   ]

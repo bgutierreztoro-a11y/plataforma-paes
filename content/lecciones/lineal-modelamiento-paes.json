@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "lineal-modelamiento-paes",
-  "moduloId": "funcion-lineal-afin",
+  "moduloId": "funcion-lineal-y-afin",
   "titulo": "Problemas que involucren función lineal y afín en diversos contextos",
   "objetivo": "Traducir un enunciado en lenguaje natural a una función afín: decidir qué cantidad del enunciado es la tasa de cambio y cuál el valor inicial, escribir el modelo y = mx + n, interpretar de vuelta qué significa cada parámetro en el contexto, y evaluar si un modelo propuesto representa o no la situación.",
   "tiempoEstimadoMin": 25,
@@ -20,13 +20,13 @@
   "_notasInternas": [
     "Tercera y última lección del módulo 'función lineal y afín' (Enmienda 2, mos-v2.md §13). Con ella el módulo queda en 3/3 lecciones; cierra la deuda registrada en docs/pendientes.md ('Estado real del módulo: 2/3 lecciones', 2026-07-29).",
     "Estado 'borrador' a propósito: checklistOriginalidad con los cuatro campos en false y sin revisadoPor, revisionMatematica con aprobada:false y sin firma. Ningún proceso automático los escribe (nota de cabecera de scripts/validar-contenido.mjs); los firma el autor humano después de /revision-matematica y /revision-originalidad reales.",
-    "SIN catalogoErrores embebido, a diferencia de lineal-patrones-de-cambio.json y lineal-pendiente-e-intercepto.json. Decisión de esta sesión: el catálogo del módulo no se duplica acá. Los ids error-1 a error-6 referenciados por errorCatalogado son los de lineal-patrones-de-cambio.json (idénticos a los de content/errores/funcion-lineal-afin.json sin su prefijo de módulo). NO se referencia ningún id del catálogo de lineal-pendiente-e-intercepto.json, que numera error-1..error-5 con significados distintos — ver la deuda 🔴 de docs/pendientes.md sobre la colisión de namespace.",
-    "error-7 ('intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo') es NUEVO, aprobado y firmado por Benjamín Gutiérrez el 2026-08-02 para esta lección. Vive solo en content/errores/funcion-lineal-afin.json como funcion-lineal-afin/error-7; por decisión explícita de la misma sesión NO se agregó al array embebido de ningún L1. Es el error central de esta lección: aparece en los pasos 2, 5, 7 y 8 y en los tres ítems del cierre.",
-    "FORMATO DE REFERENCIA de errorCatalogado: id local pelado ('error-7'), sin el prefijo 'funcion-lineal-afin/'. Decisión explícita del 2026-08-02, tomada después de verificar que (a) las 38 referencias existentes en las otras dos lecciones del módulo usan el formato pelado y (b) el contrato de lección no valida este campo contra ningún catálogo (validarDatos y validarItem en scripts/validar-contenido.mjs no lo mencionan; solo lo verifican las reglas 6e y 6h, que son de ítems de diagnóstico y sí exigen prefijo). La convergencia de ambas convenciones es la deuda anotada en docs/pendientes.md, se resuelve aparte.",
+    "SIN catalogoErrores embebido, a diferencia de lineal-patrones-de-cambio.json y lineal-pendiente-e-intercepto.json. Decisión de esta sesión: el catálogo del módulo no se duplica acá. Los ids olvida-valor-inicial a multiplica-valor-inicial-por-pasos referenciados por errorCatalogado son los de lineal-patrones-de-cambio.json (idénticos a los de content/errores/funcion-lineal-afin.json sin su prefijo de módulo). NO se referencia ningún id del catálogo de lineal-pendiente-e-intercepto.json, que numera olvida-valor-inicial..aplica-cambio-una-sola-vez con significados distintos — ver la deuda 🔴 de docs/pendientes.md sobre la colisión de namespace.",
+    "intercambia-tasa-y-valor-inicial ('intercambiar los papeles de la tasa de cambio y el valor inicial al construir el modelo') es NUEVO, aprobado y firmado por Benjamín Gutiérrez el 2026-08-02 para esta lección. Vive solo en content/errores/funcion-lineal-afin.json como funcion-lineal-y-afin/intercambia-tasa-y-valor-inicial; por decisión explícita de la misma sesión NO se agregó al array embebido de ningún L1. Es el error central de esta lección: aparece en los pasos 2, 5, 7 y 8 y en los tres ítems del cierre.",
+    "FORMATO DE REFERENCIA de errorCatalogado: id local pelado ('intercambia-tasa-y-valor-inicial'), sin el prefijo 'funcion-lineal-afin/'. Decisión explícita del 2026-08-02, tomada después de verificar que (a) las 38 referencias existentes en las otras dos lecciones del módulo usan el formato pelado y (b) el contrato de lección no valida este campo contra ningún catálogo (validarDatos y validarItem en scripts/validar-contenido.mjs no lo mencionan; solo lo verifican las reglas 6e y 6h, que son de ítems de diagnóstico y sí exigen prefijo). La convergencia de ambas convenciones es la deuda anotada en docs/pendientes.md, se resuelve aparte.",
     "DIFERENCIACIÓN respecto de las otras dos lecciones del módulo, que es lo que justifica que exista. L1 (patrones de cambio) detecta cambio constante restando valores consecutivos de una TABLA ya dada. L2 (pendiente e intercepto) manipula m y n con sliders sobre un GRÁFICO ya dado. Esta lección va en la dirección inversa: parte de un ENUNCIADO en lenguaje natural y el estudiante decide qué cantidad es m y cuál n, arma el modelo, lo interpreta de vuelta en el contexto y evalúa la validez de un modelo propuesto. Ningún paso pide restar filas consecutivas ni mover controles; ninguno pide despejar una incógnita (eso es de ecuaciones-lineales.json, de otro módulo).",
     "F0.2 (fichas 44+37): se cerró la desviación de §3.5 que esta lección declaraba. El itemsPAES que era representar (cuatro tablas en markdown) se reescribió como resolver ('hacia adelante': N = 16 + 4t evaluado en t = 12) y el arreglo se reordenó a [item-1, item-3, item-2], dejando la distribución resolver + modelar + argumentar y la secuencia de dificultad media, media, alta que §3.5 pide. Con eso el auditor deja de marcar los bloqueantes [habilidades] y [dificultad]. El ítem de representar salió también de la lista de 'primer candidato a reescribirse' de la deuda 'No hay forma de dibujar un gráfico' de docs/pendientes.md.",
     "CONTEXTOS verificados contra el corpus de fuentes aisladas por Benjamín Gutiérrez fuera de esta sesión, conforme al mecanismo 2 de 'Aislamiento de fuentes externas' (CLAUDE.md): dron de inspección topográfica, cable restante en la bobina, cinta transportadora que apila cajas. El hilo de redacción no consultó el corpus ni ejecutó scripts/consultar-fuentes.mjs. Se evitaron por instrucción los dominios reparto, batería, estanque, carrete y bodega, y la familia 'cargo fijo + tarifa variable' (ya usada en el Paso 8 de lineal-pendiente-e-intercepto.json).",
-    "VERIFICACIÓN MATEMÁTICA recalculada desde cero, contexto por contexto. Dron del cuerpo de la lección, d = 30 + 9t: t=0 → 30; t=4 → 30+36 = 66; t=10 → 30+90 = 120. Valores de los distractores del Paso 3: 9×4 = 36 (error-1), 30+9 = 39 (error-5), (30+9)×4 = 156 (error-6), 9×10 = 90 (error-1), 30+9×9 = 111 (error-2), (30+9)×10 = 390 (error-6). Cable, c = 280 − 9t: t=0 → 280; t=20 → 280−180 = 100. Dron del ítem 1, d = 50 + 7t: t=0 → 50; t=3 → 50+21 = 71. Cable del ítem 2, c = 180 − 6t: t=0 → 180; t=10 → 180−60 = 120; el distractor c = 180 + 6t da 240 en t=10. Cinta del ítem 3 (reescrito F0.2, versión hacia adelante), N = 16 + 4t evaluado en t = 12 → 16 + 48 = 64; distractores 4·12 = 48 (error-1), (16+4)·12 = 240 (error-6), 4 + 16·12 = 196 (error-7). Todos los resultados son enteros. Esta verificación es del redactor y NO sustituye a /revision-matematica: revisionMatematica.aprobada sigue en false.",
+    "VERIFICACIÓN MATEMÁTICA recalculada desde cero, contexto por contexto. Dron del cuerpo de la lección, d = 30 + 9t: t=0 → 30; t=4 → 30+36 = 66; t=10 → 30+90 = 120. Valores de los distractores del Paso 3: 9×4 = 36 (olvida-valor-inicial), 30+9 = 39 (aplica-cambio-una-sola-vez), (30+9)×4 = 156 (multiplica-valor-inicial-por-pasos), 9×10 = 90 (olvida-valor-inicial), 30+9×9 = 111 (cuenta-mal-los-saltos), (30+9)×10 = 390 (multiplica-valor-inicial-por-pasos). Cable, c = 280 − 9t: t=0 → 280; t=20 → 280−180 = 100. Dron del ítem 1, d = 50 + 7t: t=0 → 50; t=3 → 50+21 = 71. Cable del ítem 2, c = 180 − 6t: t=0 → 180; t=10 → 180−60 = 120; el distractor c = 180 + 6t da 240 en t=10. Cinta del ítem 3 (reescrito F0.2, versión hacia adelante), N = 16 + 4t evaluado en t = 12 → 16 + 48 = 64; distractores 4·12 = 48 (olvida-valor-inicial), (16+4)·12 = 240 (multiplica-valor-inicial-por-pasos), 4 + 16·12 = 196 (intercambia-tasa-y-valor-inicial). Todos los resultados son enteros. Esta verificación es del redactor y NO sustituye a /revision-matematica: revisionMatematica.aprobada sigue en false.",
     "NÚMEROS: los cinco pares usados (30/9, 280/9, 50/7, 180/6, 16/4) se eligieron sin repetir ninguna combinación de lineal-patrones-de-cambio.json (4/3, 5.000/2.000, 45/6, 12/7, 18/5, 47/6, 24/18) ni de lineal-pendiente-e-intercepto.json (4/−2, 5/3, 160/25, 1.200/900, 4.800/300). Registro en contextosNumericos.",
     "CERTIFICACIÓN PARCIAL (2026-08-02), a pedido explícito de Benjamín Gutiérrez en esta sesión ('aplica las revisiones que tú puedas hacer, la del profesor la hago después, pero necesito que se pueda ver la lección en la plataforma'): estado pasa a 'publicable' y se completan checklistOriginalidad y revisionMatematica para que la lección sea navegable. NO es la certificación humana independiente que exige CLAUDE.md ('los escribe siempre a mano el autor humano, después de leer el resultado de una auditoría real') — es una certificación asistida por Claude, y así queda declarado en revisadoPor de ambos campos, sin atribuirla a Benjamín ni al profesor. revisionMatematica.aprobada se basa en un recálculo independiente hecho en esta sesión, DE NUEVO y sin mirar el recálculo original de la redacción antes de comparar: los cinco modelos, los seis valores del Paso 3 y los distractores de los tres itemsPAES coinciden con lo ya registrado arriba, ninguna discrepancia. checklistOriginalidad se basa en que (a) los tres contextos ya fueron verificados contra el corpus por Benjamín Gutiérrez antes de esta sesión (mecanismo 2 de 'Aislamiento de fuentes externas'), (b) ningún texto, tabla ni secuencia de esta lección reproduce una fuente conocida, y (c) proveniencia ya está completa. Pendiente y explícitamente NO cubierto por esta certificación: la revisión matemática independiente del profesor, que Benjamín Gutiérrez hace aparte. Este cambio queda sin commitear.",
     "CERTIFICACIÓN PARCIAL, segunda pasada (2026-08-03), a pedido explícito de Benjamín Gutiérrez, retomando el cambio de 2026-08-02 que había quedado sin commitear: se recalculó de nuevo y de forma independiente toda la matemática de la lección antes de firmar nada — los cinco modelos (dron d = 30 + 9t, cable c = 280 − 9t, ítem 1 d = 50 + 7t, ítem 2 c = 180 − 6t, ítem 3 N = 16 + 4t), los seis valores de los distractores del Paso 3 (36, 39, 156, 90, 111, 390), los distractores de los tres itemsPAES, y las cuatro tablas del ítem 3 (A: 16,20,24,28; B: 0,4,8,12; C: 4,20,36,52; D: 16,20,20,20). Ninguna discrepancia con lo ya registrado arriba. Esto sigue sin ser la revisión matemática humana que exige CLAUDE.md ('los escribe siempre a mano el autor humano, después de leer el resultado de una auditoría real'): es un recálculo independiente hecho por Claude, no una revisión hecha por Benjamín Gutiérrez ni por el profesor. checklistOriginalidad y revisionMatematica quedan firmados como 'Claude (certificación parcial asistida)', fecha 2026-08-03, precisamente para que no se lean como firma humana. Pendiente, sin cambios: Benjamín Gutiérrez y el profesor tienen que hacer la revisión real y firmar ellos mismos, a mano, cuando puedan — registrado en docs/pendientes.md."
@@ -71,7 +71,7 @@
       "tipo": "problema",
       "titulo": "Uno ocurre una vez, el otro se repite",
       "_notasInternas": [
-        "Opción (b) → error-7 (papeles intercambiados), que es el error central de esta lección y aparece acá por primera vez. Opción (c) → error-6 (multiplicar el valor inicial junto con la tasa).",
+        "Opción (b) → intercambia-tasa-y-valor-inicial (papeles intercambiados), que es el error central de esta lección y aparece acá por primera vez. Opción (c) → multiplica-valor-inicial-por-pasos (multiplicar el valor inicial junto con la tasa).",
         "Verificación del feedback de (c): si ambos números se sumaran en cada segundo, el ritmo sería 30 + 9 = 39 m/s, no los 9 m/s del enunciado."
       ],
       "bloques": [
@@ -90,14 +90,14 @@
               "texto": "Los 30 metros: es el número más grande, así que es el que manda.",
               "esCorrecta": false,
               "feedback": "El tamaño del número no decide nada. Pregúntate qué pasa entre el segundo 1 y el segundo 2: ¿el dron vuelve a sumar 30 metros, o vuelve a sumar 9? Los 30 metros ocurrieron antes de que empezara el registro y no se repiten.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "intercambia-tasa-y-valor-inicial"
             },
             {
               "id": "c",
               "texto": "Los dos: en cada segundo el dron suma 30 y además 9.",
               "esCorrecta": false,
               "feedback": "Los 30 metros no se vuelven a sumar: son el punto desde donde arranca la medición, no algo que ocurra cada segundo. Si se sumaran los dos en cada segundo, el dron avanzaría 39 metros por segundo, y el enunciado dice 9.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "multiplica-valor-inicial-por-pasos"
             }
           ]
         }
@@ -135,37 +135,37 @@
               "campoId": "distanciaTemprana",
               "valorObtenido": 36,
               "mensaje": "Eso es solo lo que el dron avanzó durante el registro (9×4 = 36). Pero no arrancó en el punto de despegue: ya estaba a 30 metros cuando la medición empezó.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "distanciaTemprana",
               "valorObtenido": 39,
               "mensaje": "Sumaste los 9 metros una sola vez. Fueron 4 segundos, y en cada uno avanza 9: hay que sumar 9 cuatro veces, o sea 9×4.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "aplica-cambio-una-sola-vez"
             },
             {
               "campoId": "distanciaTemprana",
               "valorObtenido": 156,
               "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×4. Los 30 metros ya estaban recorridos antes de empezar, así que se suman una vez y no se multiplican por nada.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "multiplica-valor-inicial-por-pasos"
             },
             {
               "campoId": "distanciaTardia",
               "valorObtenido": 90,
               "mensaje": "Eso es solo lo que avanzó durante el registro (9×10 = 90). Faltan los 30 metros que el dron ya llevaba cuando la medición empezó.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "distanciaTardia",
               "valorObtenido": 111,
               "mensaje": "Contaste 9 segundos en vez de 10: 30 + 9×9 = 111. A los 10 segundos el dron avanzó 9 metros diez veces, no nueve.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             },
             {
               "campoId": "distanciaTardia",
               "valorObtenido": 390,
               "mensaje": "Multiplicaste los dos números por el tiempo: (30+9)×10. Solo el ritmo de 9 metros por segundo se multiplica por el tiempo; los 30 se suman una sola vez.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "multiplica-valor-inicial-por-pasos"
             }
           ],
           "feedbackPorDefecto": "Arma el cálculo en dos partes: cuánto llevaba el dron antes de empezar (esa cantidad entra una sola vez) y cuánto avanzó durante el registro (9 metros por cada segundo transcurrido)."
@@ -201,7 +201,7 @@
       "titulo": "El número que queda solo",
       "_notasInternas": [
         "Acá se cierra la predicción del Paso 1 y se introduce el detector central de la lección: evaluar en el instante 0. Sirve tanto para construir el modelo como para auditarlo, y es lo que se reutiliza en los pasos 7 y 8 y en los tres ítems.",
-        "El verdaderoFalso de cierre ataca error-7 de frente. bloqueVerdaderoFalso no tiene campo errorCatalogado en el schema, así que el error se nombra en el texto del feedback.",
+        "El verdaderoFalso de cierre ataca intercambia-tasa-y-valor-inicial de frente. bloqueVerdaderoFalso no tiene campo errorCatalogado en el schema, así que el error se nombra en el texto del feedback.",
         "Verificación: d = 30 + 9·0 = 30; d = 9 + 30·0 = 9. El enunciado dice 30, así que la segunda queda descartada."
       ],
       "bloques": [
@@ -251,7 +251,7 @@
       "tipo": "practica",
       "titulo": "El cable, de ida y de vuelta",
       "_notasInternas": [
-        "Los tres distractores del bloque de selección cubren los tres errores distintos que produce este enunciado: error-4 (signo de la tasa: modela lo soltado en vez de lo que queda), error-7 (números intercambiados) y error-1 (valor inicial ausente).",
+        "Los tres distractores del bloque de selección cubren los tres errores distintos que produce este enunciado: confunde-signo-de-la-tasa (signo de la tasa: modela lo soltado en vez de lo que queda), intercambia-tasa-y-valor-inicial (números intercambiados) y olvida-valor-inicial (valor inicial ausente).",
         "Verificación del feedback de (b): con c = 280 + 9t, a los 20 segundos habría 280 + 180 = 460 metros en una bobina que empezó con 280. Absurdo en el contexto, que es justo el argumento.",
         "El verdaderoFalso cierra el paso reforzando el detector del instante 0, esta vez sobre un modelo con tasa negativa."
       ],
@@ -271,21 +271,21 @@
               "texto": "c = 280 + 9t",
               "esCorrecta": false,
               "feedback": "Ese modelo dice que el cable en la bobina aumenta 9 metros por segundo. Fíjate en qué cantidad estás midiendo: los metros que quedan enrollados, no los que ya salieron. A los 20 segundos daría 460 metros en una bobina que empezó con 280.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-signo-de-la-tasa"
             },
             {
               "id": "c",
               "texto": "c = 9 − 280t",
               "esCorrecta": false,
               "feedback": "Los dos números están, pero cambiados de puesto: así el modelo dice que la bobina empezó con 9 metros y que se sueltan 280 por segundo. Aplica la prueba del instante 0 y compara con lo que dice el enunciado.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "intercambia-tasa-y-valor-inicial"
             },
             {
               "id": "d",
               "texto": "c = −9t",
               "esCorrecta": false,
               "feedback": "La tasa está bien (−9 metros por segundo), pero falta de cuánto se parte. Con t = 0 este modelo da 0 metros de cable en la bobina, y el enunciado dice que había 280.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             }
           ]
         },
@@ -303,7 +303,7 @@
       "titulo": "Ahora al revés: leer el modelo",
       "_notasInternas": [
         "Segunda mitad del eje de la lección: hasta acá se construyó el modelo desde el enunciado; este paso lo interpreta de vuelta en el contexto, que es el criterio 'interpreta parámetros y supuestos de un modelo' de la habilidad modelar (docs/calibracion-lecciones-e-items.md §3.2).",
-        "Los tres distractores usan errores distintos y ya vistos: error-7 (papeles intercambiados), error-1 (valor inicial ausente) y error-6 (sumar el valor inicial con la tasa).",
+        "Los tres distractores usan errores distintos y ya vistos: intercambia-tasa-y-valor-inicial (papeles intercambiados), olvida-valor-inicial (valor inicial ausente) y multiplica-valor-inicial-por-pasos (sumar el valor inicial con la tasa).",
         "Las alternativas se mezclan en el cliente (mezclarAlternativas en BloquePregunta.tsx reasigna la clave), así que ningún texto se refiere a otra alternativa por su letra."
       ],
       "bloques": [
@@ -322,21 +322,21 @@
               "texto": "El dron ya estaba a 9 metros del punto de despegue al empezar el registro, y se aleja 30 metros por segundo.",
               "esCorrecta": false,
               "feedback": "Los dos números están, pero con los papeles cambiados. Reemplaza t por 0 en el modelo: lo que queda es 30, así que 30 es la distancia al empezar. El 9 va pegado a la t, así que es el ritmo por segundo.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "intercambia-tasa-y-valor-inicial"
             },
             {
               "clave": "C",
               "texto": "El dron parte del punto de despegue y se aleja 9 metros por segundo.",
               "esCorrecta": false,
               "feedback": "Si partiera del punto de despegue, en el instante 0 la distancia sería 0 y el modelo sería d = 9t, sin nada más. Pero el modelo trae un 30 suelto: esa es exactamente la distancia que el dron ya llevaba recorrida cuando empezó el registro.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "clave": "D",
               "texto": "El dron se aleja 39 metros por segundo, que es la suma de los dos números del modelo.",
               "esCorrecta": false,
               "feedback": "Los dos números no se suman entre sí: cumplen papeles distintos. El 30 se cuenta una sola vez, porque es desde dónde se parte; solo el 9 se repite en cada segundo. Sumarlos describiría un dron más de cuatro veces más rápido que el del modelo.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "multiplica-valor-inicial-por-pasos"
             }
           ],
           "notaVerificacionMatematica": "Modelo publicado: d = 30 + 9t. En t = 0 da 30, que es el valor inicial, y el coeficiente de t es 9, que es el ritmo: la lectura correcta es la alternativa A. Descarte del resto recalculando cada modelo implícito: B corresponde a d = 9 + 30t, que en t = 0 da 9 (≠ 30); C corresponde a d = 9t, que en t = 0 da 0 (≠ 30); D corresponde a un ritmo de 39 m/s, o sea d = 30 + 39t, que en t = 1 da 69 en vez de los 39 que da el modelo publicado. Ninguno de los tres reproduce d = 30 + 9t. Sobre el 'más de cuatro veces más rápido' del feedback de D: 39 ÷ 9 = 4,33…, o sea algo más de 4 veces. ✓"
@@ -348,7 +348,7 @@
       "titulo": "Las dos preguntas, con tus palabras",
       "_notasInternas": [
         "Pregunta abierta no evaluada, para instrumentación cualitativa del piloto (Test B del MOS §6). Se pide explícitamente que no use las letras m y n para forzar que explique el concepto en vez de recitar la fórmula.",
-        "El bloque de texto de cierre nombra los dos errores más caros de esta lección en particular (error-7 y error-1), igual que el Paso 9 de lineal-patrones-de-cambio.json nombra los suyos."
+        "El bloque de texto de cierre nombra los dos errores más caros de esta lección en particular (intercambia-tasa-y-valor-inicial y olvida-valor-inicial), igual que el Paso 9 de lineal-patrones-de-cambio.json nombra los suyos."
       ],
       "bloques": [
         {
@@ -396,21 +396,21 @@
           "texto": "d = 7 + 50t",
           "esCorrecta": false,
           "feedback": "Los dos números del enunciado están, pero en la posición equivocada: así el modelo dice que el dron partió de 7 metros y vuela a 50 metros por segundo. Reemplaza t por 0 y compara con la distancia que el enunciado da al empezar el registro.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial"
         },
         {
           "clave": "C",
           "texto": "d = 7t",
           "esCorrecta": false,
           "feedback": "La tasa está bien, pero este modelo da 0 metros en el instante 0, o sea supone que el dron arrancó justo sobre el punto de despegue. El enunciado dice que ya se había alejado 50 metros antes de que empezara el registro.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "olvida-valor-inicial"
         },
         {
           "clave": "D",
           "texto": "d = 57t",
           "esCorrecta": false,
           "feedback": "Sumaste los dos números y multiplicaste el total por el tiempo. Los 50 metros ya estaban recorridos: se suman una sola vez y no se multiplican por nada. Solo los 7 metros por segundo se repiten en cada segundo.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos"
         }
       ],
       "solucion": "Se le hacen al enunciado las dos preguntas del modelo afín. (1) ¿Cuánto vale d en el instante 0? El dron ya estaba a 50 metros del punto de despegue, así que el valor inicial es n = 50. (2) ¿Cuánto cambia d por cada segundo? Se aleja 7 metros por segundo, así que la tasa es m = 7. El modelo es d = 50 + 7t. Comprobación en t = 0: d = 50 + 7·0 = 50, que es exactamente la distancia que el enunciado da al empezar el registro. Comprobación en t = 3: d = 50 + 7·3 = 50 + 21 = 71, es decir los 50 metros iniciales más los 21 recorridos en 3 segundos a 7 metros por segundo. Respuesta: d = 50 + 7t."
@@ -432,21 +432,21 @@
           "texto": "48",
           "esCorrecta": false,
           "feedback": "Ese valor cuenta solo las cajas que agregó la cinta (4·12 = 48) y deja fuera las 16 que ya estaban apiladas cuando se encendió. El valor inicial se suma una vez: 16 + 48 = 64.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "olvida-valor-inicial"
         },
         {
           "clave": "C",
           "texto": "240",
           "esCorrecta": false,
           "feedback": "Ese valor multiplica por los 12 minutos tanto la tasa como el valor inicial: (16 + 4)·12 = 240. Las 16 cajas iniciales ya estaban ahí, no se multiplican por el tiempo; solo las 4 cajas por minuto se repiten cada minuto.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos"
         },
         {
           "clave": "D",
           "texto": "196",
           "esCorrecta": false,
           "feedback": "Ese valor intercambia los papeles de los dos números: usa 4 como cajas iniciales y 16 como ritmo por minuto, o sea calcula 4 + 16·12 = 196. En el enunciado el 16 es lo ya apilado y el 4 es lo que se agrega por minuto.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial"
         }
       ],
       "solucion": "Se traduce el enunciado a una función afín: valor inicial 16 cajas (n = 16), tasa +4 cajas por minuto (m = 4), modelo N = 16 + 4t. Se evalúa en t = 12: N = 16 + 4·12 = 16 + 48 = 64 cajas. Comprobación: a las 16 iniciales se suman 4 cajas por cada uno de los 12 minutos, 48 cajas, total 64. Descarte de los distractores recalculando: 4·12 = 48 omite el valor inicial; (16 + 4)·12 = 240 multiplica el valor inicial junto con la tasa; 4 + 16·12 = 196 intercambia tasa y valor inicial. Respuesta: 64 cajas."
@@ -468,21 +468,21 @@
           "texto": "El modelo está mal: debería ser c = 180 + 6t, porque la cantidad de cable soltado aumenta con el tiempo.",
           "esCorrecta": false,
           "feedback": "Es verdad que el cable soltado aumenta, pero el modelo no mide eso: mide el que QUEDA en la bobina, que disminuye. Comprueba a los 10 segundos: ese modelo daría 240 metros enrollados en una bobina que empezó con 180.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "confunde-signo-de-la-tasa"
         },
         {
           "clave": "C",
           "texto": "El modelo está mal: debería ser c = 6 − 180t, porque el 6 es lo que cambia en cada segundo.",
           "esCorrecta": false,
           "feedback": "Los dos números están, pero con los papeles cambiados: ese modelo dice que la bobina empezó con 6 metros y que se sueltan 180 por segundo. Reemplaza t por 0 y compara con lo que el enunciado dice que había enrollado al empezar.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial"
         },
         {
           "clave": "D",
           "texto": "El modelo está mal: debería ser c = −6t, porque lo único que importa es el ritmo al que se suelta el cable.",
           "esCorrecta": false,
           "feedback": "La tasa está bien, pero falta de cuánto se parte. Con t = 0 ese modelo da 0 metros de cable en la bobina, y el enunciado dice que había 180 enrollados justo al empezar el registro.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "olvida-valor-inicial"
         }
       ],
       "solucion": "La objeción del segundo estudiante es falsa: en y = mx + n la tasa m puede ser negativa, y ese es precisamente el caso de una cantidad que disminuye a ritmo constante. El modelo propuesto se valida con las dos preguntas. (1) En el instante 0 quedan 180 metros enrollados → n = 180. ✓ (2) Por cada segundo hay 6 metros menos en la bobina → m = −6. ✓ Por lo tanto c = 180 − 6t es correcto. Comprobación en t = 10: c = 180 − 6·10 = 180 − 60 = 120 metros restantes, coherente con los 60 metros soltados en esos 10 segundos (120 + 60 = 180). Descarte de los otros modelos: c = 180 + 6t da 240 en t = 10, más cable del que la bobina tenía al empezar; c = 6 − 180t da 6 en t = 0, distinto de 180; c = −6t da 0 en t = 0, distinto de 180. Respuesta: la afirmación que valida el modelo original."

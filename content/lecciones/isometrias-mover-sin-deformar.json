@@ -20,13 +20,13 @@
   ],
   "_notasInternas": [
     "L1 del módulo transformaciones-isometricas (eje Geometría, módulo #12). Descriptor DEMRE (docs/temario-demre-m1-2027.md:103): 'Puntos y vectores en el plano cartesiano'. Diseño: docs/diseno-modulo-transformaciones-isometricas.md.",
-    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: error-1, error-2, error-3, error-4, error-5, error-6, error-15. Los demás nacen en L2 y L3.",
+    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: confunde-punto-con-vector, calcula-vector-al-reves, cruza-componentes, suma-distancias-por-cuadricula, multiplica-una-sola-componente, traslada-en-sentido-contrario, omite-raiz-en-distancia. Los demás nacen en L2 y L3.",
     "Dominio: recorridos a pie por el centro de una ciudad de calles en cuadrícula, con el cruce de dos avenidas como referencia (el origen) y cada cuadra como unidad. Lugares: hostal (2, 1), museo (5, 5), estación (−3, −2), biblioteca (0, 2), mercado (−1, 5). Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
     "Todas las cifras verificadas con node -e antes de escribir: vector (3, 4) desde (2, 1), (−3, −2), (−4, −3), (1, −2), (−2, 3) y (3, −6); vector de (−3, −2) a (2, 1) = (5, 3); u + v con u = (5, −2), v = (−1, 6) = (4, 4); 2 · (−3, 2) = (−6, 4); distancias con tríos 8-15-17 (de (−2, −7) a (6, 8)), 3-4-5 (de (−5, 2) a (−2, 6) y del hostal al mercado) y 9-12-15 (de (−9, −3) a (0, 9), ítem 2).",
-    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b) sobre todos los respuestaCorrecta y valores de alternativa del archivo: correctas numéricas {5, 3, 6, −2, 4, −6, 17, −1, 15}, distractores numéricos {−5, −3, 2, 1, 7, 0, −10, 11, 23, 289, 25, −7, 9, 21, 225}; sin intersección. La cuarta persona del descubrimiento parte de (3, −6) y no de (4, −5) porque con (4, −5) la llegada (7, −1) chocaba con el distractor 7 de error-4 en practica.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b) sobre todos los respuestaCorrecta y valores de alternativa del archivo: correctas numéricas {5, 3, 6, −2, 4, −6, 17, −1, 15}, distractores numéricos {−5, −3, 2, 1, 7, 0, −10, 11, 23, 289, 25, −7, 9, 21, 225}; sin intersección. La cuarta persona del descubrimiento parte de (3, −6) y no de (4, −5) porque con (4, −5) la llegada (7, −1) chocaba con el distractor 7 de suma-distancias-por-cuadricula en practica.",
     "Sin auditoria.constante: la lección no tiene una constante numérica única cuya circulación haya que vigilar. La notación formal (B − A, u + v, k · v, √(Δx² + Δy²)) aparece por primera vez en generalizacion.",
     "Visuales: curiosidad (un punto trasladado, con flecha rotulada) y descubrimiento (tres puntos sueltos con el mismo vector, trazo 'puntos'). El ítem 2 dibuja los dos puntos (lib/visualesItems.tsx, clave isometrias-l1-item-2): ver los puntos ayuda a armar el triángulo, la distancia igual hay que calcularla. Ningún bloque dibuja la imagen cuyo valor se pregunta.",
-    "P2 (docs/doctrina-aprendizaje-fobos.md): el paso consolidacion nombra los caminos equivocados de error-2, error-1 y error-3 antes del correcto, y su bloque pregunta lleva esos tres ids en los distractores."
+    "P2 (docs/doctrina-aprendizaje-fobos.md): el paso consolidacion nombra los caminos equivocados de calcula-vector-al-reves, confunde-punto-con-vector y cruza-componentes antes del correcto, y su bloque pregunta lleva esos tres ids en los distractores."
   ],
   "contextosNumericos": [
     "curiosidad: hostal en (2, 1) y museo en (5, 5); desplazamiento 3 cuadras al este y 4 al norte, vector (3, 4)",
@@ -92,7 +92,7 @@
       "tipo": "problema",
       "titulo": "El mismo camino desde otro lugar",
       "_notasInternas": [
-        "Estación (−3, −2) + (3, 4) = (0, 2), la biblioteca. Distractores: (3, 4) es error-1 (dio el vector como si fuera el punto de llegada); (−6, −6) es error-6 (restó el vector); (1, 1) es error-3 (−3 + 4, −2 + 3, componentes cruzadas). Verificado con node -e."
+        "Estación (−3, −2) + (3, 4) = (0, 2), la biblioteca. Distractores: (3, 4) es confunde-punto-con-vector (dio el vector como si fuera el punto de llegada); (−6, −6) es traslada-en-sentido-contrario (restó el vector); (1, 1) es cruza-componentes (−3 + 4, −2 + 3, componentes cruzadas). Verificado con node -e."
         ],
       "bloques": [
         {
@@ -110,21 +110,21 @@
               "texto": "A (3, 4)",
               "esCorrecta": false,
               "feedback": "(3, 4) es cuánto se movió, no dónde llegó. Un vector describe un desplazamiento; para saber la posición final hay que sumárselo al punto de partida: (−3 + 3, −2 + 4) = (0, 2).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "id": "c",
               "texto": "A (−6, −6)",
               "esCorrecta": false,
               "feedback": "(−6, −6) sale de restar: −3 − 3 y −2 − 4. Pero el movimiento es hacia el este y hacia el norte, o sea en el sentido positivo: se suma. Restar el vector te lleva justo al lado contrario.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "id": "d",
               "texto": "A (1, 1)",
               "esCorrecta": false,
               "feedback": "(1, 1) mezcla las coordenadas: −3 + 4 y −2 + 3. El movimiento hacia el este (3) va con la x, y el movimiento hacia el norte (4) va con la y. Cada componente se suma con la suya: (−3 + 3, −2 + 4).",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ]
         },
@@ -141,7 +141,7 @@
       "tipo": "pensar",
       "titulo": "De la estación al hostal",
       "_notasInternas": [
-        "Vector de (−3, −2) a (2, 1): (2 − (−3), 1 − (−2)) = (5, 3). feedbackPorError: −5 y −3 son error-2 (partida menos llegada); 2 y 1 son error-1 (las coordenadas del hostal como si fueran el desplazamiento). Ids de campo neutros, con unidad 'cuadras'."
+        "Vector de (−3, −2) a (2, 1): (2 − (−3), 1 − (−2)) = (5, 3). feedbackPorError: −5 y −3 son calcula-vector-al-reves (partida menos llegada); 2 y 1 son confunde-punto-con-vector (las coordenadas del hostal como si fueran el desplazamiento). Ids de campo neutros, con unidad 'cuadras'."
       ],
       "bloques": [
         {
@@ -166,25 +166,25 @@
               "campoId": "haciaElEste",
               "valorObtenido": -5,
               "mensaje": "Ese número tiene el signo al revés: sale de restar la partida menos la llegada, −3 − 2. El hostal está al este de la estación, así que el desplazamiento en x es positivo: llegada menos partida, 2 − (−3).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "haciaElNorte",
               "valorObtenido": -3,
               "mensaje": "Ese número tiene el signo al revés: sale de restar la partida menos la llegada, −2 − 1. El hostal está al norte de la estación, así que el desplazamiento en y es positivo: llegada menos partida, 1 − (−2).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "haciaElEste",
               "valorObtenido": 2,
               "mensaje": "Ese es dónde está el hostal en x, no cuánto hay que moverse para llegar. La estación no parte del cruce de las avenidas: parte de x = −3. El movimiento es la diferencia, 2 − (−3).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "campoId": "haciaElNorte",
               "valorObtenido": 1,
               "mensaje": "Ese es dónde está el hostal en y, no cuánto hay que moverse para llegar. La estación parte de y = −2, y el movimiento es la diferencia, 1 − (−2).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             }
           ],
           "feedbackPorDefecto": "Compara coordenada a coordenada, llegada menos partida: en x, 2 − (−3); en y, 1 − (−2). Recuerda que restar un negativo es sumar."
@@ -222,7 +222,7 @@
       "tipo": "descubrimiento",
       "titulo": "El mismo vector desde tres lugares",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Tres partidas (−4, −3), (1, −2), (−2, 3) con el mismo vector (3, 4): llegadas (−1, 1), (4, 2), (1, 7). La tabla muestra llegada − partida = (3, 4) en las tres filas. La notación B − A NO se escribe todavía: se deja para generalizacion. Cuarta partida (3, −6) → (6, −2); feedbackPorError: x = 0 e y = −10 son error-6 (restó el vector), x = 7 e y = −3 son error-3 (3 + 4 y −6 + 3, componentes cruzadas). El verdaderoFalso es el check metacognitivo."
+        "CORAZÓN DE LA LECCIÓN. Tres partidas (−4, −3), (1, −2), (−2, 3) con el mismo vector (3, 4): llegadas (−1, 1), (4, 2), (1, 7). La tabla muestra llegada − partida = (3, 4) en las tres filas. La notación B − A NO se escribe todavía: se deja para generalizacion. Cuarta partida (3, −6) → (6, −2); feedbackPorError: x = 0 e y = −10 son traslada-en-sentido-contrario (restó el vector), x = 7 e y = −3 son cruza-componentes (3 + 4 y −6 + 3, componentes cruzadas). El verdaderoFalso es el check metacognitivo."
       ],
       "bloques": [
         {
@@ -275,7 +275,7 @@
               "texto": "Nada: como parten de lugares distintos, sus movimientos también son distintos.",
               "esCorrecta": false,
               "feedback": "Las partidas son distintas, pero el movimiento es el mismo: en las tres filas, llegada menos partida da (3, 4). Un vector no es un lugar del plano, es un desplazamiento, y por eso puede repetirse desde cualquier punto.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             }
           ]
         },
@@ -301,25 +301,25 @@
               "campoId": "llegadaX",
               "valorObtenido": 0,
               "mensaje": "Ese valor sale de restar 3 − 3. Pero el movimiento es hacia el este, en el sentido positivo de x: el vector se suma a la partida, 3 + 3.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "campoId": "llegadaY",
               "valorObtenido": -10,
               "mensaje": "Ese valor sale de restar −6 − 4. El movimiento es hacia el norte, en el sentido positivo de y: el vector se suma a la partida, −6 + 4.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             },
             {
               "campoId": "llegadaX",
               "valorObtenido": 7,
               "mensaje": "Ese valor suma 3 + 4: la x de la partida con el movimiento hacia el norte. El movimiento hacia el norte va con la y. En x solo entra el movimiento hacia el este: 3 + 3.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             },
             {
               "campoId": "llegadaY",
               "valorObtenido": -3,
               "mensaje": "Ese valor suma −6 + 3: la y de la partida con el movimiento hacia el este. El movimiento hacia el este va con la x. En y solo entra el movimiento hacia el norte: −6 + 4.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
           "feedbackPorDefecto": "Suma el vector a la partida, coordenada a coordenada: en x, 3 + 3; en y, −6 + 4."
@@ -341,7 +341,7 @@
       "tipo": "generalizacion",
       "titulo": "La notación, y las operaciones",
       "_notasInternas": [
-        "PRIMERA aparición de la notación formal: P + v, B − A, u + v, u − v, k · v, √(Δx² + Δy²). Ejemplo trabajado u = (2, −1), v = (−4, 3). Ejercicios: (5, −2) + (−1, 6) = (4, 4), feedbackPorError 11 y −3 (error-3, componentes cruzadas: 5 + 6 y −2 − 1); 2 · (−3, 2) = (−6, 4), feedbackPorError 2 (error-5, multiplicó solo la x); distancia de (−2, −7) a (6, 8): Δ = (8, 15), 17, feedbackPorError 23 (error-4, 8 + 15) y 289 (error-15, 64 + 225 sin raíz). Verificado con node -e."
+        "PRIMERA aparición de la notación formal: P + v, B − A, u + v, u − v, k · v, √(Δx² + Δy²). Ejemplo trabajado u = (2, −1), v = (−4, 3). Ejercicios: (5, −2) + (−1, 6) = (4, 4), feedbackPorError 11 y −3 (cruza-componentes, componentes cruzadas: 5 + 6 y −2 − 1); 2 · (−3, 2) = (−6, 4), feedbackPorError 2 (multiplica-una-sola-componente, multiplicó solo la x); distancia de (−2, −7) a (6, 8): Δ = (8, 15), 17, feedbackPorError 23 (suma-distancias-por-cuadricula, 8 + 15) y 289 (omite-raiz-en-distancia, 64 + 225 sin raíz). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -368,13 +368,13 @@
               "campoId": "sumaX",
               "valorObtenido": 11,
               "mensaje": "11 es 5 + 6: la primera componente de u con la segunda de v. Las componentes se suman con las suyas: la primera de u con la primera de v, 5 + (−1).",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             },
             {
               "campoId": "sumaY",
               "valorObtenido": -3,
               "mensaje": "−3 es −2 + (−1): la segunda componente de u con la primera de v. La segunda se suma con la segunda: −2 + 6.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
           "feedbackPorDefecto": "Suma componente a componente: 5 + (−1) para la primera, −2 + 6 para la segunda."
@@ -399,7 +399,7 @@
               "campoId": "dobleY",
               "valorObtenido": 2,
               "mensaje": "Ese número deja la segunda componente tal como estaba. Multiplicar un vector por 2 estira las dos componentes: no solo la x, también la y, 2 · 2.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "multiplica-una-sola-componente"
             }
           ],
           "feedbackPorDefecto": "Multiplica las dos componentes por 2: 2 · (−3) y 2 · 2."
@@ -424,13 +424,13 @@
               "campoId": "distanciaAB",
               "valorObtenido": 23,
               "mensaje": "23 es 8 + 15, el camino por la cuadrícula: primero todo hacia un lado y después todo hacia el otro. La distancia en línea recta es la hipotenusa del triángulo de catetos 8 y 15, y esa se calcula con Pitágoras.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "suma-distancias-por-cuadricula"
             },
             {
               "campoId": "distanciaAB",
               "valorObtenido": 289,
               "mensaje": "289 es 8² + 15², la suma de los cuadrados. Falta el último paso: la distancia es la raíz cuadrada de esa suma.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "omite-raiz-en-distancia"
             }
           ],
           "feedbackPorDefecto": "Primero el vector de A a B: Δ = (6 − (−2), 8 − (−7)) = (8, 15). Después Pitágoras: √(8² + 15²)."
@@ -441,7 +441,7 @@
       "tipo": "practica",
       "titulo": "Vectores y distancias",
       "_notasInternas": [
-        "P1 seleccion: vector de (−5, 2) a (−1, −4) = (4, −6); distractores (−4, 6) error-2, (−1, −4) error-1, (−3, 1) error-3 (−1 − 2, −4 − (−5)). P2 numérica: distancia de (−5, 2) a (−2, 6), Δ = (3, 4), 5; feedbackPorError 7 (error-4) y 25 (error-15). P3 verdaderoFalso sobre el vector opuesto."
+        "P1 seleccion: vector de (−5, 2) a (−1, −4) = (4, −6); distractores (−4, 6) calcula-vector-al-reves, (−1, −4) confunde-punto-con-vector, (−3, 1) cruza-componentes (−1 − 2, −4 − (−5)). P2 numérica: distancia de (−5, 2) a (−2, 6), Δ = (3, 4), 5; feedbackPorError 7 (suma-distancias-por-cuadricula) y 25 (omite-raiz-en-distancia). P3 verdaderoFalso sobre el vector opuesto."
       ],
       "bloques": [
         {
@@ -459,21 +459,21 @@
               "texto": "(−4, 6)",
               "esCorrecta": false,
               "feedback": "(−4, 6) es A − B, partida menos llegada: el vector queda apuntando al revés, de B hacia A. El vector de A a B es B − A.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "id": "c",
               "texto": "(−1, −4)",
               "esCorrecta": false,
               "feedback": "(−1, −4) es el punto B, dónde se llega, no el desplazamiento para llegar. Como A no es el origen, hay que restar: B − A.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "id": "d",
               "texto": "(−3, 1)",
               "esCorrecta": false,
               "feedback": "(−3, 1) cruza las coordenadas: resta la x de B con la y de A, y la y de B con la x de A. Cada coordenada se resta con la suya: x con x, y con y.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ]
         },
@@ -493,13 +493,13 @@
               "campoId": "distanciaEnLineaRecta",
               "valorObtenido": 7,
               "mensaje": "7 es 3 + 4, la suma de las dos componentes. Eso mide el camino por la cuadrícula, no la línea recta: la distancia es √(3² + 4²).",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "suma-distancias-por-cuadricula"
             },
             {
               "campoId": "distanciaEnLineaRecta",
               "valorObtenido": 25,
               "mensaje": "25 es 3² + 4². Te falta la raíz cuadrada: la distancia es √25.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "omite-raiz-en-distancia"
             }
           ],
           "feedbackPorDefecto": "El vector entre los puntos es (−2 − (−5), 6 − 2) = (3, 4). La distancia es √(3² + 4²)."
@@ -517,7 +517,7 @@
       "tipo": "aplicacion",
       "titulo": "Dos tramos y un atajo",
       "_notasInternas": [
-        "Desde el hostal (2, 1): tramo 1 (2, −3) hasta un mirador en (4, −2); tramo 2 (−5, 7) hasta el mercado en (−1, 5). Suma de vectores (−3, 4). feedbackPorError: x = 11 e y = −7 son error-3 (2 + 2 + 7 y 1 − 3 − 5, componentes cruzadas al sumar los tramos). Distancia hostal-mercado: Δ = (−3, 4), 5; feedbackPorError 7 (error-4) y 25 (error-15). Verificado con node -e."
+        "Desde el hostal (2, 1): tramo 1 (2, −3) hasta un mirador en (4, −2); tramo 2 (−5, 7) hasta el mercado en (−1, 5). Suma de vectores (−3, 4). feedbackPorError: x = 11 e y = −7 son cruza-componentes (2 + 2 + 7 y 1 − 3 − 5, componentes cruzadas al sumar los tramos). Distancia hostal-mercado: Δ = (−3, 4), 5; feedbackPorError 7 (suma-distancias-por-cuadricula) y 25 (omite-raiz-en-distancia). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -546,13 +546,13 @@
               "campoId": "mercadoX",
               "valorObtenido": 11,
               "mensaje": "11 es 2 + 2 + 7: la x del hostal más una componente de cada tramo, pero el 7 es el movimiento hacia el norte y va con la y. En x solo entran los movimientos este-oeste: 2 + 2 + (−5).",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             },
             {
               "campoId": "mercadoY",
               "valorObtenido": -7,
               "mensaje": "−7 es 1 − 3 − 5: la y del hostal con el movimiento hacia el sur y con el movimiento hacia el oeste, que es de x. En y solo entran los movimientos norte-sur: 1 + (−3) + 7.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
           "feedbackPorDefecto": "Suma los dos tramos al hostal, coordenada a coordenada: en x, 2 + 2 + (−5); en y, 1 + (−3) + 7. Da lo mismo sumar primero los dos vectores, (2, −3) + (−5, 7), y después el hostal."
@@ -573,13 +573,13 @@
               "campoId": "atajoEnLineaRecta",
               "valorObtenido": 7,
               "mensaje": "7 es 3 + 4, el largo del camino por las calles. La línea recta es la hipotenusa del triángulo de catetos 3 y 4, y esa se calcula con Pitágoras.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "suma-distancias-por-cuadricula"
             },
             {
               "campoId": "atajoEnLineaRecta",
               "valorObtenido": 25,
               "mensaje": "25 es 3² + 4². Falta la raíz cuadrada: el atajo mide √25.",
-              "errorCatalogado": "error-15"
+              "errorCatalogado": "omite-raiz-en-distancia"
             }
           ],
           "feedbackPorDefecto": "El vector total del hostal al mercado es la suma de los tramos, (2, −3) + (−5, 7) = (−3, 4). El atajo es √((−3)² + 4²)."
@@ -615,7 +615,7 @@
       "tipo": "consolidacion",
       "titulo": "Lo que te llevas",
       "_notasInternas": [
-        "Síntesis + contraste P2 explícito (formato 'mucha gente hace X, X falla porque Y, lo que sí funciona es Z') con los caminos de error-2, error-1 y error-3, seguido de un bloque pregunta cuyos distractores llevan esos tres ids. Vector de (−2, 4) a (1, −1) = (3, −5); (−3, 5) error-2; (1, −1) error-1; (−3, 1) error-3 (1 − 4, −1 − (−2)). Verificado con node -e."
+        "Síntesis + contraste P2 explícito (formato 'mucha gente hace X, X falla porque Y, lo que sí funciona es Z') con los caminos de calcula-vector-al-reves, confunde-punto-con-vector y cruza-componentes, seguido de un bloque pregunta cuyos distractores llevan esos tres ids. Vector de (−2, 4) a (1, −1) = (3, −5); (−3, 5) calcula-vector-al-reves; (1, −1) confunde-punto-con-vector; (−3, 1) cruza-componentes (1 − 4, −1 − (−2)). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -637,24 +637,24 @@
               "texto": "(−3, 5)",
               "esCorrecta": false,
               "feedback": "(−3, 5) es partida menos llegada: (−2 − 1, 4 − (−1)). Ese vector apunta hacia atrás, desde la llegada hacia la partida. El desplazamiento es llegada menos partida, (1 − (−2), −1 − 4).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "clave": "C",
               "texto": "(1, −1)",
               "esCorrecta": false,
               "feedback": "(1, −1) es el punto de llegada, no cuánto se movió la persona. Como no partió del origen sino de (−2, 4), el desplazamiento es la diferencia entre llegada y partida.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "clave": "D",
               "texto": "(−3, 1)",
               "esCorrecta": false,
               "feedback": "(−3, 1) cruza las coordenadas: 1 − 4 toma la x de la llegada con la y de la partida, y −1 − (−2) toma la y de la llegada con la x de la partida. Cada coordenada se resta con la suya: x con x, y con y.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-componentes"
             }
           ],
-          "notaVerificacionMatematica": "Llegada (1, −1) menos partida (−2, 4): (1 + 2, −1 − 4) = (3, −5). Distractores: partida menos llegada (−3, 5), error-2; punto de llegada (1, −1), error-1; cruzado (1 − 4, −1 + 2) = (−3, 1), error-3. Verificado con node -e."
+          "notaVerificacionMatematica": "Llegada (1, −1) menos partida (−2, 4): (1 + 2, −1 − 4) = (3, −5). Distractores: partida menos llegada (−3, 5), calcula-vector-al-reves; punto de llegada (1, −1), confunde-punto-con-vector; cruzado (1 − 4, −1 + 2) = (−3, 1), cruza-componentes. Verificado con node -e."
         }
       ]
     }
@@ -671,7 +671,7 @@
           "texto": "(−6, 8)",
           "esCorrecta": false,
           "feedback": "(−6, 8) es A − B, partida menos llegada: (−4 − 2, 3 − (−5)). Ese vector va de B hacia A. El vector de A a B es B − A: (2 − (−4), −5 − 3).",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "calcula-vector-al-reves"
         },
         {
           "clave": "B",
@@ -684,14 +684,14 @@
           "texto": "(2, −5)",
           "esCorrecta": false,
           "feedback": "(2, −5) es el punto B, la posición de llegada, no el desplazamiento desde A. Como A no es el origen, el vector se obtiene restando: B − A.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "confunde-punto-con-vector"
         },
         {
           "clave": "D",
           "texto": "(−1, −1)",
           "esCorrecta": false,
           "feedback": "(−1, −1) cruza las coordenadas: 2 − 3 resta la x de B con la y de A, y −5 − (−4) resta la y de B con la x de A. El vector se calcula coordenada con coordenada: (2 − (−4), −5 − 3).",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "cruza-componentes"
         }
       ],
       "solucion": "Vector de A a B = B − A, coordenada a coordenada. En x: 2 − (−4) = 2 + 4 = 6. En y: −5 − 3 = −8. El vector es (6, −8). Comprobación: A + (6, −8) = (−4 + 6, 3 − 8) = (2, −5) = B. ✓"
@@ -707,7 +707,7 @@
           "texto": "9",
           "esCorrecta": false,
           "feedback": "9 es la distancia desde el origen hasta Q, √(0² + 9²), como si P fuera el origen. Pero P está en (−9, −3): la distancia se calcula con las diferencias entre los dos puntos, Δ = Q − P = (9, 12), no con las coordenadas de Q.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "confunde-punto-con-vector"
         },
         {
           "clave": "B",
@@ -720,14 +720,14 @@
           "texto": "21",
           "esCorrecta": false,
           "feedback": "21 es 9 + 12, el camino por la cuadrícula: primero 9 hacia la derecha y después 12 hacia arriba. La distancia en línea recta es la hipotenusa del triángulo de catetos 9 y 12, √(9² + 12²).",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "suma-distancias-por-cuadricula"
         },
         {
           "clave": "D",
           "texto": "225",
           "esCorrecta": false,
           "feedback": "225 es 9² + 12², la suma de los cuadrados de las componentes. Falta el último paso de Pitágoras: la distancia es la raíz cuadrada, √225.",
-          "errorCatalogado": "error-15"
+          "errorCatalogado": "omite-raiz-en-distancia"
         }
       ],
       "solucion": "Vector de P a Q: Q − P = (0 − (−9), 9 − (−3)) = (9, 12). Distancia: √(9² + 12²) = √(81 + 144) = √225 = 15. Comprobación con el trío pitagórico 3-4-5: (9, 12, 15) = 3 · (3, 4, 5). ✓"
@@ -749,21 +749,21 @@
           "texto": "Es correcta: (5, −5) sale de 4 − (−1) y de −2 − 3, y da lo mismo restar en un orden o en el otro.",
           "esCorrecta": false,
           "feedback": "No da lo mismo. 4 − (−1) y −2 − 3 son A − B, partida menos llegada, y eso es el vector que va de B a A. El orden de la resta define hacia dónde apunta: de A a B es B − A = (−5, 5).",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "calcula-vector-al-reves"
         },
         {
           "clave": "C",
           "texto": "No es correcta: el vector es (−1, 3), porque el vector de A a B son las coordenadas del punto B al que se llega.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero la razón no: (−1, 3) es la posición de B, no el desplazamiento desde A. Solo coincidirían si A fuera el origen. El vector de A a B es B − A = (−5, 5).",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "confunde-punto-con-vector"
         },
         {
           "clave": "D",
           "texto": "No es correcta: el vector es (1, −1), que sale de restar −1 − (−2) y 3 − 4.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero la cuenta cruza las coordenadas: −1 − (−2) resta la x de B con la y de A, y 3 − 4 resta la y de B con la x de A. Cada coordenada se resta con la suya: (−1 − 4, 3 − (−2)) = (−5, 5).",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "cruza-componentes"
         }
       ],
       "solucion": "El vector de A a B es B − A, coordenada a coordenada: en x, −1 − 4 = −5; en y, 3 − (−2) = 5. El vector es (−5, 5). La regla del estudiante, restar el mayor menos el menor, produce A − B = (5, −5), que es el vector de B a A, o sea el opuesto. La afirmación no es correcta y la alternativa que lo explica bien es A. Comprobación: A + (−5, 5) = (4 − 5, −2 + 5) = (−1, 3) = B. ✓"

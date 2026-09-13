@@ -20,8 +20,8 @@
     "Lección 3 (última) del módulo figuras-geometricas (eje Geometría). Descriptor DEMRE: 'Aplicaciones de perímetro y área en contexto'. Es la lección de síntesis del módulo: no introduce una figura nueva, integra Pitágoras (L1) con área/perímetro de las 4 figuras (L2) en problemas de dos pasos.",
     "Dominio 'techo/invernadero' declarado por Benjamín Gutiérrez como YA CONFIRMADO sin colisión al inicio de esta tarea ('dominio ya confirmado sin colisión, no lo vuelvas a verificar'). A diferencia de L1 y L2, en este hilo NO se corrió scripts/consultar-fuentes.mjs ni se pegó salida cruda de esa verificación — quedó fuera de esta sesión, por instrucción explícita. Ver proveniencia.declaracionOriginalidad para el detalle honesto de este punto.",
     "Ilustraciones: decisión explícita de Benjamín (AskUserQuestion de esta sesión) de usar SOLO figuras separadas con los componentes ya existentes (trianguloPitagoras, triangulo, paralelogramo con desplazamiento:0 como rectángulo, trapecio, circulo), sin fusionar geometrías nuevas. Cero cambios en lib/figurasGeometricas.ts, components/ilustraciones/IlustracionFiguraGeometrica.tsx ni components/bloques/BloqueVisualizacion.tsx. El muro rectangular del invernadero se dibuja con 'paralelogramo' y desplazamiento:0 explícito (colapsa a rectángulo real, ya soportado por verticesParalelogramo).",
-    "catalogoErrores embebido: error-1 y error-2 copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1), reutilizados en los sub-cálculos de Pitágoras dentro de un problema de área/perímetro. error-7, error-8 y error-9 copiados carácter a carácter desde figuras-borde-y-superficie.json (L2); error-8 se reutiliza aquí también en un trapecio, no solo en un paralelogramo (su descripción ya lo permite: 'como un paralelogramo cortado...' es un ejemplo, no una restricción de figura). error-3, error-4, error-5 y error-6 de L1 NO se reutilizan: ningún distractor de este archivo produce su mecanismo exacto con los datos reales (regla 2b de la skill) — no se fuerza su uso. 2026-08-30: error-12 de L1 SÍ se incorpora (copiado byte a byte desde figuras-triangulo-no-se-rompe.json, guard catalogo-divergente en verde), usado en dos distractores del paso practica. Decisión de producto de esa fecha: su descripción se mantiene genérica aunque L3 lo aplica en la dirección inversa a L1/L2 (forzar un trío con cateto+hipotenusa para despejar la altura, no con dos catetos para despejar la hipotenusa) — el catálogo describe el patrón de razonamiento, no la fórmula; el detalle direccional vive en el feedback artesanal de cada distractor. Ronda 1 y Ronda 2 de esa edición: OK / NO BLOQUEA.",
-    "error-10 y error-11 son NUEVOS, nacen en este archivo (no en L1). Ambos fueron propuestos por CC en el chat de esta sesión, con el texto exacto y los números calculados con node -e mostrados ANTES de escribir este JSON, y aprobados por Benjamín ('Asigna error-10 al Candidato A y error-11 al Candidato B, con los textos exactos ya propuestos en el plan'). error-10 ('usa el lado inclinado como si fuera la altura') es el mecanismo específico de síntesis de esta lección: aparece en pensar, descubrimiento, generalizacion (trapecio), practica, aplicacion e itemsPAES l3-item-1 — siempre con un valor numérico distinto y reproducible, nunca forzado. error-11 ('perímetro de figura compuesta cuenta el borde interior compartido') aparece en aplicacion e itemsPAES l3-item-3, con el invernadero muro+techo como única figura compuesta del archivo.",
+    "catalogoErrores embebido: suma-lados-en-vez-de-cuadrados y omite-raiz-final-pitagoras copiados carácter a carácter desde figuras-triangulo-no-se-rompe.json (L1), reutilizados en los sub-cálculos de Pitágoras dentro de un problema de área/perímetro. omite-mitad-en-area, usa-altura-como-lado-inclinado y confunde-circunferencia-con-area copiados carácter a carácter desde figuras-borde-y-superficie.json (L2); usa-altura-como-lado-inclinado se reutiliza aquí también en un trapecio, no solo en un paralelogramo (su descripción ya lo permite: 'como un paralelogramo cortado...' es un ejemplo, no una restricción de figura). suma-cuadrados-al-buscar-cateto, trata-cateto-como-hipotenusa, duplica-en-vez-de-elevar-al-cuadrado y eleva-suma-de-catetos de L1 NO se reutilizan: ningún distractor de este archivo produce su mecanismo exacto con los datos reales (regla 2b de la skill) — no se fuerza su uso. 2026-08-30: asume-trio-pitagorico de L1 SÍ se incorpora (copiado byte a byte desde figuras-triangulo-no-se-rompe.json, guard catalogo-divergente en verde), usado en dos distractores del paso practica. Decisión de producto de esa fecha: su descripción se mantiene genérica aunque L3 lo aplica en la dirección inversa a L1/L2 (forzar un trío con cateto+hipotenusa para despejar la altura, no con dos catetos para despejar la hipotenusa) — el catálogo describe el patrón de razonamiento, no la fórmula; el detalle direccional vive en el feedback artesanal de cada distractor. Ronda 1 y Ronda 2 de esa edición: OK / NO BLOQUEA.",
+    "usa-lado-inclinado-como-altura y cuenta-borde-interior-en-figura-compuesta son NUEVOS, nacen en este archivo (no en L1). Ambos fueron propuestos por CC en el chat de esta sesión, con el texto exacto y los números calculados con node -e mostrados ANTES de escribir este JSON, y aprobados por Benjamín ('Asigna usa-lado-inclinado-como-altura al Candidato A y cuenta-borde-interior-en-figura-compuesta al Candidato B, con los textos exactos ya propuestos en el plan'). usa-lado-inclinado-como-altura ('usa el lado inclinado como si fuera la altura') es el mecanismo específico de síntesis de esta lección: aparece en pensar, descubrimiento, generalizacion (trapecio), practica, aplicacion e itemsPAES l3-item-1 — siempre con un valor numérico distinto y reproducible, nunca forzado. cuenta-borde-interior-en-figura-compuesta ('perímetro de figura compuesta cuenta el borde interior compartido') aparece en aplicacion e itemsPAES l3-item-3, con el invernadero muro+techo como única figura compuesta del archivo.",
     "Verificación de colisiones: TODOS los valores numéricos (triples pitagóricas, alturas, áreas, perímetros, y los valores que produce cada mecanismo de error) se generaron con un script node dedicado que probó combinaciones hasta encontrar un set con CERO colisiones distractor-vs-respuesta-correcta en todo el archivo (incluyendo curiosidad, que no tiene distractores pero sí valores 'correctos' narrados). Salida cruda de esa verificación (0 colisiones) pegada en el reporte de esta sesión, no repetida acá. Cuatro valores 'correctos' se repiten entre bloques distintos sin que eso sea una colisión real (pensar.altura=12 y generalizacion.altura=12; practicaTrapVF.altura=24 y item1.altura=24; item2.perimetro=72 y item3.altura... no, ver nota siguiente): son números correctos de EJERCICIOS DISTINTOS que coinciden por azar, igual que ocurre en L1/L2 con valores como 12 o 18 — no afecta el chequeo mecánico, que solo bloquea cuando un DISTRACTOR coincide con la respuesta correcta de otro bloque. Fase 1 (2026-08-29): la terna 20-21-29 del paso practica se reemplazó por un caso deliberadamente irracional (semiancho 8, cumbrera 18, altura √260 ≈ 16,1 — no entera); re-verificada con node -e la ausencia de colisión distractor↔respuesta-correcta para los 4 valores nuevos del bloque (15, 10, 260, 8), y que 18²−8²=260 no es cuadrado perfecto.",
     "π se usa siempre como 3,14 (no Math.PI). El único uso de círculo en este archivo (practica) usa radio 25 cm precisamente porque 2×3,14×25=157 y 3,14×25²=1962,5 son ambos exactos en punto flotante de JavaScript (verificado con node -e: literales como 31,4 o 62,8 con otros radios NO son exactos, ver verificación de esta sesión) — evita el problema de comparación estricta de BloqueNumerica.tsx documentado en las notas de L2.",
     "Es la última lección del módulo: el puente de 'consolidacion' apunta al cierre del módulo (aún no construido en esta tarea), no a una lección siguiente."
@@ -76,7 +76,7 @@
               "texto": "Usar directamente el ancho (16 m) y la cumbrera (17 m) en la fórmula del área: (16 × 17) ÷ 2.",
               "esCorrecta": false,
               "feedback": "La cumbrera es el lado inclinado del techo, no su altura real. Usarla directamente en la fórmula del área da un resultado más grande que el verdadero: hay que encontrar la altura real primero.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             },
             {
               "id": "b",
@@ -106,7 +106,7 @@
       "titulo": "Encuentra la altura, y después el área",
       "_notasInternas": [
         "Techo 5-13, semiancho5 cumbrera13 altura12 (verificado 5²+12²=25+144=169=13²). Ancho10, área60 (10×12÷2). Dos campos en un mismo bloque numerica, mismo patrón que la 'aplicacion' de L2.",
-        "alturaTechoM: error-1 (13-5=8), error-2 (13²-5²=144, sin raíz). areaTechoM: error-7 (10×12=120, sin ÷2), error-10 (10×13÷2=65, cumbrera como altura)."
+        "alturaTechoM: suma-lados-en-vez-de-cuadrados (13-5=8), omite-raiz-final-pitagoras (13²-5²=144, sin raíz). areaTechoM: omite-mitad-en-area (10×12=120, sin ÷2), usa-lado-inclinado-como-altura (10×13÷2=65, cumbrera como altura)."
       ],
       "bloques": [
         {
@@ -131,25 +131,25 @@
               "campoId": "alturaTechoM",
               "valorObtenido": 8,
               "mensaje": "8 es la resta directa entre la cumbrera y la mitad del ancho (13 − 5), sin pasar por los cuadrados ni la raíz cuadrada. La altura real se encuentra igual que un cateto: cuadrado, cuadrado, resta, raíz cuadrada.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
             },
             {
               "campoId": "alturaTechoM",
               "valorObtenido": 144,
               "mensaje": "144 es 13² − 5² (169 − 25), un paso intermedio correcto. Pero ese número es el CUADRADO de la altura, no la altura misma: falta sacarle la raíz cuadrada.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "omite-raiz-final-pitagoras"
             },
             {
               "campoId": "areaTechoM",
               "valorObtenido": 120,
               "mensaje": "120 es ancho × altura (10 × 12) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo, que es la mitad de esa superficie.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "omite-mitad-en-area"
             },
             {
               "campoId": "areaTechoM",
               "valorObtenido": 65,
               "mensaje": "65 sale de usar la cumbrera (13 m) directamente como si fuera la altura: (10 × 13) ÷ 2. Pero la cumbrera es el lado INCLINADO del techo, no su altura real: la altura real (12 m) es la que encontraste con Pitágoras, y es menor que la cumbrera.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             }
           ],
           "feedbackPorDefecto": "Primero encuentra la altura con Pitágoras: la mitad del ancho (5 m) y la altura son los catetos, la cumbrera (13 m) es la hipotenusa. Luego usa esa altura en la fórmula del área del triángulo."
@@ -188,8 +188,8 @@
       "titulo": "El techo escondía un triángulo rectángulo",
       "_notasInternas": [
         "CORAZÓN DE LA LECCIÓN. Techo 9-40-41 (verificado 9²+40²=81+1600=1681=41²). Ancho18, área360 (18×40÷2).",
-        "Seleccion altura: a=40(correcta) b=32(error-1,41-9) c=1600(error-2,41²-9² sin raíz) d=9(ad-hoc, repite semiancho).",
-        "Seleccion/pregunta area: a=360(correcta) b=720(error-7,18×40 sin ÷2) c=369(error-10,18×41÷2) d=18(ad-hoc, repite ancho).",
+        "Seleccion altura: a=40(correcta) b=32(suma-lados-en-vez-de-cuadrados,41-9) c=1600(omite-raiz-final-pitagoras,41²-9² sin raíz) d=9(ad-hoc, repite semiancho).",
+        "Seleccion/pregunta area: a=360(correcta) b=720(omite-mitad-en-area,18×40 sin ÷2) c=369(usa-lado-inclinado-como-altura,18×41÷2) d=18(ad-hoc, repite ancho).",
         "Notacion formal se deja para 'generalizacion', aquí el patrón se describe en palabras con los números concretos."
       ],
       "bloques": [
@@ -235,14 +235,14 @@
               "texto": "32 metros",
               "esCorrecta": false,
               "feedback": "32 es la resta directa entre la cumbrera y la mitad del ancho (41 − 9), sin pasar por los cuadrados ni la raíz cuadrada. La altura real se encuentra igual que un cateto: cuadrado, cuadrado, resta, raíz cuadrada.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
             },
             {
               "id": "c",
               "texto": "1.600 metros",
               "esCorrecta": false,
               "feedback": "1.600 es 41² − 9², un paso intermedio correcto. Pero ese número es el cuadrado de la altura, no la altura misma: falta sacarle la raíz cuadrada.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "omite-raiz-final-pitagoras"
             },
             {
               "id": "d",
@@ -292,14 +292,14 @@
               "texto": "720 m²",
               "esCorrecta": false,
               "feedback": "720 m² es ancho × altura (18 × 40) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo, que es la mitad de esa superficie.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "omite-mitad-en-area"
             },
             {
               "id": "c",
               "texto": "369 m²",
               "esCorrecta": false,
               "feedback": "369 sale de usar la cumbrera (41 m) directamente como si fuera la altura: (18 × 41) ÷ 2. Pero la cumbrera es el lado inclinado del techo, no su altura real, que ya calculaste con Pitágoras: 40 m.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             },
             {
               "id": "d",
@@ -324,14 +324,14 @@
               "texto": "720 m²",
               "esCorrecta": false,
               "feedback": "720 m² es ancho × altura sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "omite-mitad-en-area"
             },
             {
               "clave": "C",
               "texto": "369 m²",
               "esCorrecta": false,
               "feedback": "369 sale de usar la cumbrera (41 m) directamente como si fuera la altura, en vez de calcular la altura real (40 m) con Pitágoras primero.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             },
             {
               "clave": "D",
@@ -361,7 +361,7 @@
       "_notasInternas": [
         "Notacion formal aparece aqui por primera vez.",
         "Trapecio: offset5, lado13, baseMenor8, baseMayor18, altura12 (verificado 13²-5²=169-25=144=12²), area156 (verificado (18+8)/2*12=13*12=156).",
-        "Seleccion: a=156(correcta) b=312(error-7, (18+8)*12 sin promediar) c=169(error-10, usa lado13 como altura: (18+8)/2*13=169) d=108(ad-hoc, usa solo baseMayor con formula de triangulo: 18*12/2=108)."
+        "Seleccion: a=156(correcta) b=312(omite-mitad-en-area, (18+8)*12 sin promediar) c=169(usa-lado-inclinado-como-altura, usa lado13 como altura: (18+8)/2*13=169) d=108(ad-hoc, usa solo baseMayor con formula de triangulo: 18*12/2=108)."
       ],
       "bloques": [
         {
@@ -420,14 +420,14 @@
               "texto": "(18 + 8) × 12 = 312 m², sin promediar las bases.",
               "esCorrecta": false,
               "feedback": "312 m² sale de multiplicar la SUMA de las bases por la altura, sin promediarlas antes. Como el trapecio no es un rectángulo completo, hay que promediar las dos bases, no solo sumarlas.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "omite-mitad-en-area"
             },
             {
               "id": "c",
               "texto": "(18 + 8) ÷ 2 = 13. 13 × 13 = 169 m², usando el lado inclinado (13 m) como si fuera la altura.",
               "esCorrecta": false,
               "feedback": "169 m² sale de usar el lado inclinado (13 m) directamente como si fuera la altura. Pero el lado inclinado y la altura real (12 m) no miden lo mismo: la altura real se obtiene con Pitágoras, restando primero la mitad de la diferencia de bases.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             },
             {
               "id": "d",
@@ -447,11 +447,11 @@
       "tipo": "practica",
       "titulo": "Tres ejercicios, y una figura compuesta a la vista",
       "_notasInternas": [
-        "Seleccion triangulo (Fase 1, 2026-08-29): reemplaza la terna 20-21-29 por un caso deliberadamente irracional. semiancho8 cumbrera18 ancho16, altura real = √(18²−8²) = √260 ≈ 16,1 m — NO entera (verificado con node -e: 324−64=260, no es cuadrado perfecto). Near-miss del trío base 8-15-17 (cumbrera 18 en vez de 17): tienta a forzar altura=15. a='√260 ≈ 16,1 m'(correcta, hay que ir al teorema) b='15 metros'(forzar el trío 8-15-17 donde no calza; mecanismo error-12, ver nota siguiente) c='10 metros'(error-1, 18−8 resta directa) d='260 metros'(error-2, 18²−8² sin raíz). Se pide la ALTURA, no el área: la altura ya no viene servida, el alumno decide atajo-vs-teorema. Colisión distractor↔correcta verificada: 15, 10 y 260 no son respuesta correcta de ningún bloque del archivo.",
-        "Distractor b de la seleccion del triangulo: su mecanismo es error-12 ('ver números parecidos a un trío conocido y dar por hecho la hipotenusa sin comprobar que los catetos calcen; el resultado puede ser irracional'), definido en L1 (figuras-triangulo-no-se-rompe.json, commit 84a3bbb) y propagado byte a byte a L2. El feedback de b hace el trabajo pedagógico completo de error-12 con el patrón de redacción de los distractores error-12 de L1 y L2 (el gemelo más cercano es la opción incorrecta de la selección de clasificación '¿aplica el atajo del trío?' del paso aplicacion de L2). 2026-08-30: ya lleva el campo errorCatalogado 'error-12' — la entrada se propagó byte a byte desde L1 al catalogoErrores de L3 en la misma edición que agregó el bloque de clasificación (ver la nota siguiente y docs/deuda-catalogo-errores-crossfile.md). Decisión de producto (2026-08-30): la descripción de error-12 se deja genérica y NO se ajusta, pese a que L3 la aplica en dirección inversa a L1/L2 —acá el trío se fuerza con (cateto, hipotenusa) para despejar la altura, no con dos catetos para despejar la hipotenusa—; el texto del catálogo describe el patrón de razonamiento, no la fórmula, así que cubre las dos direcciones, y la precisión direccional la aporta el feedback de cada distractor. Ronda 1 y Ronda 2 de este cambio: OK / NO BLOQUEA (2026-08-30). Ver proveniencia.declaracionOriginalidad.",
-        "Bloque 0 de clasificacion (2026-08-30): agregado como PRIMER bloque del paso, a imagen de pasos[6].bloques[0] de L1 y pasos[7].bloques[0] de L2; el bloque de la altura del techo triangular baja a bloques[1]. Encuadre uniforme (mitad del ancho, cumbrera) -> altura, es decir cateto a partir de hipotenusa, que es lo que este paso realmente pide. Ternas verificadas con node -e: (7,25) -> sqrt(625-49)=sqrt(576)=24, trio base 7-24-25, aplica el atajo; (10,26) -> sqrt(676-100)=sqrt(576)=24, 5-12-13 escalado x2, aplica; (8,18) -> sqrt(324-64)=sqrt(260)~16,12, IRRACIONAL, no calza con ningun trio. Los pares se eligieron con la hipotenusa dada y no como par de catetos (7,24)/(10,24): bajo el encuadre de este paso esos pares darian sqrt(527)~22,96 y sqrt(476)~21,82, ambos irracionales, y dejarian de ser los casos 'si aplica el atajo'. Coherencia adicional: (7,25) -> 24 es exactamente el triangulo rectangulo del trapecio de bloques[2] (offset 7, lado 25, altura 24), asi que la clasificacion prevé los dos ejercicios que siguen, igual que en L1. Opcion b codifica error-12 (forzar 8-15-17 sobre la cumbrera 18); es el segundo uso de error-12 en el paso, junto al distractor '15 metros' de bloques[1] — mismo mecanismo, una vez clasificando y otra calculando. Enunciado de bloques[1] recortado: ya no repite la pregunta '¿forman un trio conocido o hay que ir al teorema?', que ahora la hace este bloque. Colision distractor<->correcta (regla 3b): los numeros nuevos (7, 25, 10, 26, 24) aparecen solo en prosa de opciones de clasificacion, nunca como respuestaCorrecta ni valorObtenido, asi que no entran en la regla.",
-        "VerdaderoFalso trapecio: offset7 lado25 baseMenor12 baseMayor26 altura24 (verificado 25²-7²=625-49=576=24²), perimetro88 (26+12+50). Afirmacion falsa 86 (26+12+48, usa altura24 como si fuera lado, mecanismo error-8, no se etiqueta ID porque los bloques verdaderoFalso no tienen campo errorCatalogado en el schema, igual que en L1/L2).",
-        "Circulo: radio25 (exacto en punto flotante), circunferencia157. Distractor error-9: 1962.5 (area en vez de circunferencia). Distractor ad-hoc: 50 (2*25, olvida pi)."
+        "Seleccion triangulo (Fase 1, 2026-08-29): reemplaza la terna 20-21-29 por un caso deliberadamente irracional. semiancho8 cumbrera18 ancho16, altura real = √(18²−8²) = √260 ≈ 16,1 m — NO entera (verificado con node -e: 324−64=260, no es cuadrado perfecto). Near-miss del trío base 8-15-17 (cumbrera 18 en vez de 17): tienta a forzar altura=15. a='√260 ≈ 16,1 m'(correcta, hay que ir al teorema) b='15 metros'(forzar el trío 8-15-17 donde no calza; mecanismo asume-trio-pitagorico, ver nota siguiente) c='10 metros'(suma-lados-en-vez-de-cuadrados, 18−8 resta directa) d='260 metros'(omite-raiz-final-pitagoras, 18²−8² sin raíz). Se pide la ALTURA, no el área: la altura ya no viene servida, el alumno decide atajo-vs-teorema. Colisión distractor↔correcta verificada: 15, 10 y 260 no son respuesta correcta de ningún bloque del archivo.",
+        "Distractor b de la seleccion del triangulo: su mecanismo es asume-trio-pitagorico ('ver números parecidos a un trío conocido y dar por hecho la hipotenusa sin comprobar que los catetos calcen; el resultado puede ser irracional'), definido en L1 (figuras-triangulo-no-se-rompe.json, commit 84a3bbb) y propagado byte a byte a L2. El feedback de b hace el trabajo pedagógico completo de asume-trio-pitagorico con el patrón de redacción de los distractores asume-trio-pitagorico de L1 y L2 (el gemelo más cercano es la opción incorrecta de la selección de clasificación '¿aplica el atajo del trío?' del paso aplicacion de L2). 2026-08-30: ya lleva el campo errorCatalogado 'asume-trio-pitagorico' — la entrada se propagó byte a byte desde L1 al catalogoErrores de L3 en la misma edición que agregó el bloque de clasificación (ver la nota siguiente y docs/deuda-catalogo-errores-crossfile.md). Decisión de producto (2026-08-30): la descripción de asume-trio-pitagorico se deja genérica y NO se ajusta, pese a que L3 la aplica en dirección inversa a L1/L2 —acá el trío se fuerza con (cateto, hipotenusa) para despejar la altura, no con dos catetos para despejar la hipotenusa—; el texto del catálogo describe el patrón de razonamiento, no la fórmula, así que cubre las dos direcciones, y la precisión direccional la aporta el feedback de cada distractor. Ronda 1 y Ronda 2 de este cambio: OK / NO BLOQUEA (2026-08-30). Ver proveniencia.declaracionOriginalidad.",
+        "Bloque 0 de clasificacion (2026-08-30): agregado como PRIMER bloque del paso, a imagen de pasos[6].bloques[0] de L1 y pasos[7].bloques[0] de L2; el bloque de la altura del techo triangular baja a bloques[1]. Encuadre uniforme (mitad del ancho, cumbrera) -> altura, es decir cateto a partir de hipotenusa, que es lo que este paso realmente pide. Ternas verificadas con node -e: (7,25) -> sqrt(625-49)=sqrt(576)=24, trio base 7-24-25, aplica el atajo; (10,26) -> sqrt(676-100)=sqrt(576)=24, 5-12-13 escalado x2, aplica; (8,18) -> sqrt(324-64)=sqrt(260)~16,12, IRRACIONAL, no calza con ningun trio. Los pares se eligieron con la hipotenusa dada y no como par de catetos (7,24)/(10,24): bajo el encuadre de este paso esos pares darian sqrt(527)~22,96 y sqrt(476)~21,82, ambos irracionales, y dejarian de ser los casos 'si aplica el atajo'. Coherencia adicional: (7,25) -> 24 es exactamente el triangulo rectangulo del trapecio de bloques[2] (offset 7, lado 25, altura 24), asi que la clasificacion prevé los dos ejercicios que siguen, igual que en L1. Opcion b codifica asume-trio-pitagorico (forzar 8-15-17 sobre la cumbrera 18); es el segundo uso de asume-trio-pitagorico en el paso, junto al distractor '15 metros' de bloques[1] — mismo mecanismo, una vez clasificando y otra calculando. Enunciado de bloques[1] recortado: ya no repite la pregunta '¿forman un trio conocido o hay que ir al teorema?', que ahora la hace este bloque. Colision distractor<->correcta (regla 3b): los numeros nuevos (7, 25, 10, 26, 24) aparecen solo en prosa de opciones de clasificacion, nunca como respuestaCorrecta ni valorObtenido, asi que no entran en la regla.",
+        "VerdaderoFalso trapecio: offset7 lado25 baseMenor12 baseMayor26 altura24 (verificado 25²-7²=625-49=576=24²), perimetro88 (26+12+50). Afirmacion falsa 86 (26+12+48, usa altura24 como si fuera lado, mecanismo usa-altura-como-lado-inclinado, no se etiqueta ID porque los bloques verdaderoFalso no tienen campo errorCatalogado en el schema, igual que en L1/L2).",
+        "Circulo: radio25 (exacto en punto flotante), circunferencia157. Distractor confunde-circunferencia-con-area: 1962.5 (area en vez de circunferencia). Distractor ad-hoc: 50 (2*25, olvida pi)."
       ],
       "bloques": [
         {
@@ -469,7 +469,7 @@
               "texto": "En los tres. (7, 25) es 7-24-25, (10, 26) es 5-12-13 al doble, y (8, 18) es prácticamente el 8-15-17.",
               "esCorrecta": false,
               "feedback": "(8, 18) NO es el 8-15-17: forzar un trío porque un número se parece te da una altura equivocada. El 8-15-17 exige cateto 8 e hipotenusa 17 exactos, no una cumbrera de 18; con 8 y 18, la relación a² + b² = c² da √260 ≈ 16,1, no 15. La altura tampoco tiene por qué ser un número entero.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "asume-trio-pitagorico"
             },
             {
               "id": "c",
@@ -494,21 +494,21 @@
               "texto": "15 metros",
               "esCorrecta": false,
               "feedback": "El 8-15-17 exige catetos 8 y 15 exactos, con hipotenusa 17 — no una cumbrera de 18. Forzar el trío porque los números se parecen te da una altura equivocada: con cateto 8 e hipotenusa 18, la relación a² + b² = c² da altura = √(18² − 8²) = √260 ≈ 16,1 m, no 15. La altura tampoco tiene por qué ser un número entero.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "asume-trio-pitagorico"
             },
             {
               "id": "c",
               "texto": "10 metros",
               "esCorrecta": false,
               "feedback": "10 es la resta directa entre la cumbrera y la mitad del ancho (18 − 8), sin pasar por los cuadrados ni la raíz cuadrada. La altura real se encuentra igual que un cateto: cuadrado, cuadrado, resta, raíz cuadrada.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
             },
             {
               "id": "d",
               "texto": "260 metros",
               "esCorrecta": false,
               "feedback": "260 es 18² − 8², un paso intermedio correcto. Pero ese número es el cuadrado de la altura, no la altura misma: falta sacarle la raíz cuadrada.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "omite-raiz-final-pitagoras"
             }
           ]
         },
@@ -550,7 +550,7 @@
               "campoId": "circunferenciaOculoCm",
               "valorObtenido": 1962.5,
               "mensaje": "1.962,5 es el resultado de usar la fórmula del ÁREA (π × radio² = 3,14 × 25²), no la de la circunferencia. La circunferencia —el borde— se calcula como 2 × π × radio.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-circunferencia-con-area"
             },
             {
               "campoId": "circunferenciaOculoCm",
@@ -566,9 +566,9 @@
       "tipo": "aplicacion",
       "titulo": "El invernadero completo: dos piezas, un solo borde exterior",
       "_notasInternas": [
-        "Invernadero: semiancho12 cumbrera37 Hw6 (verificado 37²-12²=1369-144=1225=35²). W=24, alturaTecho35, areaTecho420 (24*35/2). PerimetroCorrecto=W+2*Hw+2*cumbrera=24+12+74=110. CandidatoB(error-11)=3*W+2*Hw+2*cumbrera=72+12+74=158.",
-        "Numerica bloque1 (Pitagoras+area techo): alturaTechoM error-1(37-12=25) error-2(37²-12²=1225). areaTechoM error-7(24*35=840) error-10(24*37/2=444).",
-        "Numerica bloque2 (perimetro compuesto): perimetroMarcoM error-11(158, cuenta el ancho W dos veces de mas) y un ad-hoc(24+6+37=67, olvida duplicar Hw y cumbrera, sin ID)."
+        "Invernadero: semiancho12 cumbrera37 Hw6 (verificado 37²-12²=1369-144=1225=35²). W=24, alturaTecho35, areaTecho420 (24*35/2). PerimetroCorrecto=W+2*Hw+2*cumbrera=24+12+74=110. CandidatoB(cuenta-borde-interior-en-figura-compuesta)=3*W+2*Hw+2*cumbrera=72+12+74=158.",
+        "Numerica bloque1 (Pitagoras+area techo): alturaTechoM suma-lados-en-vez-de-cuadrados(37-12=25) omite-raiz-final-pitagoras(37²-12²=1225). areaTechoM omite-mitad-en-area(24*35=840) usa-lado-inclinado-como-altura(24*37/2=444).",
+        "Numerica bloque2 (perimetro compuesto): perimetroMarcoM cuenta-borde-interior-en-figura-compuesta(158, cuenta el ancho W dos veces de mas) y un ad-hoc(24+6+37=67, olvida duplicar Hw y cumbrera, sin ID)."
       ],
       "bloques": [
         {
@@ -610,25 +610,25 @@
               "campoId": "alturaTechoM",
               "valorObtenido": 25,
               "mensaje": "25 es la resta directa entre la cumbrera y la mitad del ancho (37 − 12), sin pasar por los cuadrados ni la raíz cuadrada.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
             },
             {
               "campoId": "alturaTechoM",
               "valorObtenido": 1225,
               "mensaje": "1.225 es 37² − 12² (1369 − 144), un paso intermedio correcto. Pero ese número es el cuadrado de la altura, no la altura misma: falta la raíz cuadrada.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "omite-raiz-final-pitagoras"
             },
             {
               "campoId": "areaTechoM",
               "valorObtenido": 840,
               "mensaje": "840 m² es ancho × altura (24 × 35) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "omite-mitad-en-area"
             },
             {
               "campoId": "areaTechoM",
               "valorObtenido": 444,
               "mensaje": "444 sale de usar la cumbrera (37 m) directamente como si fuera la altura: (24 × 37) ÷ 2. La altura real, calculada con Pitágoras, es 35 m, no 37 m.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "usa-lado-inclinado-como-altura"
             }
           ],
           "feedbackPorDefecto": "Primero encuentra la altura con Pitágoras: 12² + altura² = 37². Luego usa esa altura en (ancho × altura) ÷ 2, con ancho = 24 m."
@@ -679,7 +679,7 @@
               "campoId": "perimetroMarcoM",
               "valorObtenido": 158,
               "mensaje": "158 sale de sumar el perímetro del muro (2 × (24 + 6) = 60) y el perímetro del techo (24 + 2 × 37 = 98) por separado: 60 + 98 = 158. Pero eso cuenta el ancho (24 m) DOS VECES —una como techo del muro, otra como base del techo— cuando ese borde es interior y no queda expuesto por fuera.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "cuenta-borde-interior-en-figura-compuesta"
             },
             {
               "campoId": "perimetroMarcoM",
@@ -701,7 +701,7 @@
       "tipo": "reflexion",
       "titulo": "Dos trampas nuevas",
       "_notasInternas": [
-        "Metacognicion sobre error-10 y error-11, sin mostrar los IDs, mismo criterio que L1/L2. Nombra tambien los errores 1,2,7,8,9 reutilizados, en lenguaje llano."
+        "Metacognicion sobre usa-lado-inclinado-como-altura y cuenta-borde-interior-en-figura-compuesta, sin mostrar los IDs, mismo criterio que L1/L2. Nombra tambien los errores 1,2,7,8,9 reutilizados, en lenguaje llano."
       ],
       "bloques": [
         {
@@ -748,14 +748,14 @@
           "texto": "175 m²",
           "esCorrecta": false,
           "feedback": "175 sale de usar la cumbrera (25 m) directamente como si fuera la altura: (14 × 25) ÷ 2. La altura real, calculada con Pitágoras, es 24 m, no 25 m.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "usa-lado-inclinado-como-altura"
         },
         {
           "clave": "C",
           "texto": "336 m²",
           "esCorrecta": false,
           "feedback": "336 m² es ancho × altura (14 × 24) sin dividir por 2: es el área de un rectángulo con esas medidas, no la del triángulo del techo.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "omite-mitad-en-area"
         },
         {
           "clave": "D",
@@ -783,14 +783,14 @@
           "texto": "68 m",
           "esCorrecta": false,
           "feedback": "68 m sale de usar la altura real del techo (15 m, la que se necesitaría para el ÁREA) como si fuera la medida de los lados inclinados: 27 + 11 + 2 × 15. Pero el enunciado ya da los lados inclinados directamente (17 m): no hay que reemplazarlos por la altura.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "usa-altura-como-lado-inclinado"
         },
         {
           "clave": "C",
           "texto": "84 m",
           "esCorrecta": false,
           "feedback": "84 m sale de calcular un lado inclinado 'a mano' como la suma directa de la mitad de la diferencia de bases y la altura (8 + 15 = 23), en vez de usar el lado inclinado que el enunciado ya entrega (17 m).",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         },
         {
           "clave": "D",
@@ -818,14 +818,14 @@
           "texto": "Sí es correcto: 284 metros es el marco total del invernadero.",
           "esCorrecta": false,
           "feedback": "284 m cuenta el ancho del invernadero (42 m) dos veces: una vez como parte del perímetro del muro, y otra vez como parte del perímetro del techo. Pero ese borde —donde el muro y el techo se unen— es interior, no forma parte del contorno exterior. El marco real es 200 m.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "cuenta-borde-interior-en-figura-compuesta"
         },
         {
           "clave": "C",
           "texto": "No es correcto: el marco real es 194 metros, usando la altura del techo (72 m) en vez de la cumbrera (75 m) para los dos lados inclinados.",
           "esCorrecta": false,
           "feedback": "194 m sale de usar la altura real del techo (72 m, la que serviría para calcular su ÁREA) en vez de la cumbrera (75 m) para los lados inclinados del contorno. El perímetro usa la cumbrera dada, no la altura.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "usa-altura-como-lado-inclinado"
         },
         {
           "clave": "D",
@@ -841,7 +841,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: aplicaciones de perímetro y área en contexto), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (techos e invernaderos: casetas, bodegas, galpones, naves industriales) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de esta sesión, sobre las palabras clave techo, invernadero, cumbrera, óculo, cuatro aguas y nave industrial. Único hit: 'techo' en 3 fuentes, clasificado tras inspección binaria como colisión de vocabulario genérico (mismo patrón que 'cultivo'/'curso' en L2), sin overlap de mecanismo ni de contexto. Ronda 2 (checklist de originalidad, MOS §7.3) revisada y aprobada el 2026-08-26. Ronda 1 (auditoría matemática) completada en hilo aislado el 2026-08-26: verificación con node -e de todos los triples pitagóricos del archivo, de todas las áreas y perímetros, y de los 27 usos de errorCatalogado (error-1, 2, 7, 8, 9, 10, 11) contra su descripción semántica — sin hallazgos, sin correcciones. Con esto ambas rondas, matemática y originalidad, quedan cerradas para esta lección. error-10 y error-11 fueron propuestos por CC y aprobados por Benjamín en el chat de esta sesión (texto sin cambios, con los números de cada uso mostrados antes de asignar el ID); catalogoErrores nace en este archivo para esos dos IDs, y embebe error-1, error-2 (desde L1) y error-7, error-8, error-9 (desde L2) copiados carácter a carácter. Fase 1 (2026-08-29): la terna 20-21-29 del paso practica se reemplazó por un caso deliberadamente sin terna pitagórica entera —hipotenusa irracional— (semiancho 8, cumbrera 18; altura real √260 ≈ 16,1 m). El triángulo sigue siendo rectángulo y el teorema sí aplica; lo que no existe es una terna entera. Sirve para ejercitar en L3 el caso en que el atajo del trío no aplica; verificado con node -e que 18²−8²=260 no es cuadrado perfecto y que ningún valor del bloque nuevo (15, 10, 260, 8) colisiona con una respuesta correcta del archivo. El conteo de usos de errorCatalogado se mantiene en 27: los distractores que forzaban error-10 y error-7 en ese bloque se sustituyen por uno de error-1 y uno de error-2. El distractor que fuerza el trío 8-15-17 documenta el mecanismo de error-12 en su feedback pero aún no lleva el tag errorCatalogado; propagar error-12 al catalogoErrores de L3 es parte del fix crossfile pendiente (docs/deuda-catalogo-errores-crossfile.md). Ronda 1 (matemática) y Ronda 2 (originalidad) se re-corrieron para este cambio de Fase 1 en hilos /clear aislados el 2026-08-29, igual que quedó registrado para el cambio equivalente en L1. 2026-08-30 — corrección de las dos frases anteriores y del conteo: el fix crossfile ya se aplicó. error-12 se copió byte a byte desde figuras-triangulo-no-se-rompe.json al catalogoErrores de L3 (igualdad verificada con node -e), el distractor '15 metros' ya lleva su tag errorCatalogado, y el paso practica ganó un bloque de clasificación previo —(7,25), (10,26), (8,18) como (mitad del ancho, cumbrera)— cuya opción incorrecta es el segundo uso de error-12. El conteo de usos de errorCatalogado sube de 27 a 29 (los dos nuevos son ambos de error-12). Ternas del bloque nuevo recalculadas desde cero con node -e: sqrt(625−49)=24, sqrt(676−100)=24, sqrt(324−64)=sqrt(260)≈16,12 irracional. Ronda 1 (matemática) y Ronda 2 (originalidad) de este cambio: corridas el 2026-08-30, resultado OK / NO BLOQUEA — sin hallazgos, sin correcciones. Con esto ambas rondas quedan cerradas también para la edición del 2026-08-30. Decisión de producto registrada en la misma fecha: la descripción de error-12 en catalogoErrores se mantiene GENÉRICA sin ajustarla, aunque en L3 el mecanismo se ejercita en dirección inversa a como lo enuncian L1 y L2 — L1/L2 lo usan como (cateto, cateto) → hipotenusa forzada; L3 lo usa como (cateto, hipotenusa) → cateto/altura forzada (opción b del bloque de clasificación y distractor '15 metros'). El texto del catálogo cubre ambas direcciones porque describe el patrón de razonamiento ('ver números parecidos a un trío y dar por hecho el lado que falta sin comprobar que los otros calcen; el resultado puede ser irracional'), no una fórmula concreta. Se copia byte a byte desde L1 para no divergir el catálogo del módulo (guard catalogo-divergente), y el trabajo de precisar la dirección lo hace el feedback artesanal de cada distractor, no el catálogo.",
+    "declaracionOriginalidad": "Enunciados, contextos (techos e invernaderos: casetas, bodegas, galpones, naves industriales) y la secuencia didáctica creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de esta sesión, sobre las palabras clave techo, invernadero, cumbrera, óculo, cuatro aguas y nave industrial. Único hit: 'techo' en 3 fuentes, clasificado tras inspección binaria como colisión de vocabulario genérico (mismo patrón que 'cultivo'/'curso' en L2), sin overlap de mecanismo ni de contexto. Ronda 2 (checklist de originalidad, MOS §7.3) revisada y aprobada el 2026-08-26. Ronda 1 (auditoría matemática) completada en hilo aislado el 2026-08-26: verificación con node -e de todos los triples pitagóricos del archivo, de todas las áreas y perímetros, y de los 27 usos de errorCatalogado (suma-lados-en-vez-de-cuadrados, 2, 7, 8, 9, 10, 11) contra su descripción semántica — sin hallazgos, sin correcciones. Con esto ambas rondas, matemática y originalidad, quedan cerradas para esta lección. usa-lado-inclinado-como-altura y cuenta-borde-interior-en-figura-compuesta fueron propuestos por CC y aprobados por Benjamín en el chat de esta sesión (texto sin cambios, con los números de cada uso mostrados antes de asignar el ID); catalogoErrores nace en este archivo para esos dos IDs, y embebe suma-lados-en-vez-de-cuadrados, omite-raiz-final-pitagoras (desde L1) y omite-mitad-en-area, usa-altura-como-lado-inclinado, confunde-circunferencia-con-area (desde L2) copiados carácter a carácter. Fase 1 (2026-08-29): la terna 20-21-29 del paso practica se reemplazó por un caso deliberadamente sin terna pitagórica entera —hipotenusa irracional— (semiancho 8, cumbrera 18; altura real √260 ≈ 16,1 m). El triángulo sigue siendo rectángulo y el teorema sí aplica; lo que no existe es una terna entera. Sirve para ejercitar en L3 el caso en que el atajo del trío no aplica; verificado con node -e que 18²−8²=260 no es cuadrado perfecto y que ningún valor del bloque nuevo (15, 10, 260, 8) colisiona con una respuesta correcta del archivo. El conteo de usos de errorCatalogado se mantiene en 27: los distractores que forzaban usa-lado-inclinado-como-altura y omite-mitad-en-area en ese bloque se sustituyen por uno de suma-lados-en-vez-de-cuadrados y uno de omite-raiz-final-pitagoras. El distractor que fuerza el trío 8-15-17 documenta el mecanismo de asume-trio-pitagorico en su feedback pero aún no lleva el tag errorCatalogado; propagar asume-trio-pitagorico al catalogoErrores de L3 es parte del fix crossfile pendiente (docs/deuda-catalogo-errores-crossfile.md). Ronda 1 (matemática) y Ronda 2 (originalidad) se re-corrieron para este cambio de Fase 1 en hilos /clear aislados el 2026-08-29, igual que quedó registrado para el cambio equivalente en L1. 2026-08-30 — corrección de las dos frases anteriores y del conteo: el fix crossfile ya se aplicó. asume-trio-pitagorico se copió byte a byte desde figuras-triangulo-no-se-rompe.json al catalogoErrores de L3 (igualdad verificada con node -e), el distractor '15 metros' ya lleva su tag errorCatalogado, y el paso practica ganó un bloque de clasificación previo —(7,25), (10,26), (8,18) como (mitad del ancho, cumbrera)— cuya opción incorrecta es el segundo uso de asume-trio-pitagorico. El conteo de usos de errorCatalogado sube de 27 a 29 (los dos nuevos son ambos de asume-trio-pitagorico). Ternas del bloque nuevo recalculadas desde cero con node -e: sqrt(625−49)=24, sqrt(676−100)=24, sqrt(324−64)=sqrt(260)≈16,12 irracional. Ronda 1 (matemática) y Ronda 2 (originalidad) de este cambio: corridas el 2026-08-30, resultado OK / NO BLOQUEA — sin hallazgos, sin correcciones. Con esto ambas rondas quedan cerradas también para la edición del 2026-08-30. Decisión de producto registrada en la misma fecha: la descripción de asume-trio-pitagorico en catalogoErrores se mantiene GENÉRICA sin ajustarla, aunque en L3 el mecanismo se ejercita en dirección inversa a como lo enuncian L1 y L2 — L1/L2 lo usan como (cateto, cateto) → hipotenusa forzada; L3 lo usa como (cateto, hipotenusa) → cateto/altura forzada (opción b del bloque de clasificación y distractor '15 metros'). El texto del catálogo cubre ambas direcciones porque describe el patrón de razonamiento ('ver números parecidos a un trío y dar por hecho el lado que falta sin comprobar que los otros calcen; el resultado puede ser irracional'), no una fórmula concreta. Se copia byte a byte desde L1 para no divergir el catálogo del módulo (guard catalogo-divergente), y el trabajo de precisar la dirección lo hace el feedback artesanal de cada distractor, no el catálogo.",
     "autor": "Benjamín Gutiérrez"
   }
 }

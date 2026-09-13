@@ -21,7 +21,7 @@
     "Marco pedagógico: el insight es que dos cambios porcentuales sucesivos se componen MULTIPLICANDO factores, no sumando porcentajes. El estudiante lo descubre en el paso 5 observando que el cociente precio_final ÷ precio_lista es siempre 0,72 —nunca 0,70— antes de que se le enuncie ninguna regla. La fórmula (1 − p/100)(1 − q/100) aparece recién en el paso 6.",
     "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Corrida por Benja fuera de sesión (mecanismo 2 de CLAUDE.md), salida pegada tal cual sin reformular. Resultados textuales: «descuentos sucesivos: NO» / «rebaja sobre rebaja: NO» / «descuento adicional sobre precio rebajado: NO» / «liquidacion tienda de ropa: NO» / «feria del libro socio club de lectura: NO» / «taller reparacion bicicletas presupuesto: NO».",
     "VERIFICACIÓN COMPLEMENTARIA (2026-08-12, posterior a la primera redacción): las dos keywords que faltaban se corrieron y volvieron «descuento adicional en caja: NO» y «aumento y descuento del mismo porcentaje: NO». Con eso quedó habilitado el framing «sube p% y luego baja p%», que en la primera versión de este archivo estaba explícitamente vetado por falta de verificación.",
-    "ELECCIÓN DEL ÍTEM DE ARGUMENTAR (2026-08-12). El item-3 original —«50% y 10% adicional, ¿de cuánto es el descuento total?»— fue REEMPLAZADO por el framing «subió 50% y luego bajó 50%». Razón: item-1 (resolver) ya evalúa la composición de dos descuentos sucesivos, así que el item-3 original repetía el mismo mecanismo con otra habilidad. El framing nuevo evalúa la composición de un AUMENTO con una BAJA —factor 1,50 × 0,50 = 0,75—, que es el único caso que ningún otro ítem de la lección toca y el más contraintuitivo de los tres. Además instancia por primera vez la variante de porcentaje/error-6 que hasta ahora existía solo como texto de catálogo, y deja armado el puente conceptual a L3 (porcentaje-volver-atras): si subir y bajar el mismo porcentaje no devuelve el valor inicial, entonces deshacer un cambio porcentual exige otra operación. El ítem original NO se descartó: se conservó como cuarto bloque del paso 7 (práctica), donde sigue siendo útil porque pregunta por el PORCENTAJE de descuento total y no por un precio — una discriminación que ningún otro bloque de práctica evalúa.",
+    "ELECCIÓN DEL ÍTEM DE ARGUMENTAR (2026-08-12). El item-3 original —«50% y 10% adicional, ¿de cuánto es el descuento total?»— fue REEMPLAZADO por el framing «subió 50% y luego bajó 50%». Razón: item-1 (resolver) ya evalúa la composición de dos descuentos sucesivos, así que el item-3 original repetía el mismo mecanismo con otra habilidad. El framing nuevo evalúa la composición de un AUMENTO con una BAJA —factor 1,50 × 0,50 = 0,75—, que es el único caso que ningún otro ítem de la lección toca y el más contraintuitivo de los tres. Además instancia por primera vez la variante de porcentaje/suma-porcentajes-sucesivos que hasta ahora existía solo como texto de catálogo, y deja armado el puente conceptual a L3 (porcentaje-volver-atras): si subir y bajar el mismo porcentaje no devuelve el valor inicial, entonces deshacer un cambio porcentual exige otra operación. El ítem original NO se descartó: se conservó como cuarto bloque del paso 7 (práctica), donde sigue siendo útil porque pregunta por el PORCENTAJE de descuento total y no por un precio — una discriminación que ningún otro bloque de práctica evalúa.",
     "Selección de contexto (§6.1: tres candidatos, no uno). Los tres volvieron limpios. Se eligió «feria del libro + socio del club de lectura» porque los dos descuentos provienen de fuentes distintas (editorial y membresía), lo que hace que la secuencia sea narrativamente natural y que la pregunta «¿por qué no sumarlos?» surja sola. Se DESCARTÓ «liquidación de tienda de ropa» pese a venir limpio: es el molde de libro de texto para descuentos sucesivos y §6 marca los dominios transaccionales/comerciales como zona de riesgo acumulado. El tercer candidato (taller de reparación de bicicletas) se reservó para el paso 8, que exige contexto NUEVO respecto del paso 5.",
     "Contextos evitados por estar quemados en el módulo: colegio/estudiantes/talleres/encuesta/transporte (porcentaje-concepto), buceo (enteros-operar-y-ordenar), recetas y tazas (enteros-operar-y-comparar), temperaturas y termómetro (enteros-problemas-en-contexto).",
     "CONFLICTO CONOCIDO con la regla de cifras quemadas: el insight de esta lección fue fijado por el autor como 20% seguido de 10% (0,80 × 0,90 = 0,72), y 20 figura entre las cifras usadas en porcentaje-concepto. La instrucción explícita del insight manda sobre la regla de no repetición. Todas las demás cifras —precios base y porcentajes secundarios— se eligieron fuera de la lista quemada (20, 25, 30, 35, 40, 45, 15, 64, 80, 120, 150, 240, 350).",
@@ -45,7 +45,7 @@
       "tipo": "curiosidad",
       "titulo": "El cartel dice 20%, la caja dice 10% más",
       "_notasInternas": [
-        "Gancho: la suma intuitiva de porcentajes falla. Ataca error-6 de entrada sin nombrarlo.",
+        "Gancho: la suma intuitiva de porcentajes falla. Ataca suma-porcentajes-sucesivos de entrada sin nombrarlo.",
         "La predicción no se corrige antes del bloque de texto: el dato es verificable de inmediato y el objetivo es abrir la pregunta, no sostener el suspenso.",
         "Verificación: 18.000 × 0,80 = 14.400. 14.400 × 0,90 = 12.960. Descuento total = 18.000 − 12.960 = 5.040. 5.040 ÷ 18.000 = 0,28 → 28%, no 30%."
       ],
@@ -89,14 +89,14 @@
               "texto": "En el Stand B",
               "esCorrecta": false,
               "feedback": "Es la respuesta que dan casi todos, porque «dos descuentos» suena a más descuento que «uno solo». Pero calcula el B por partes: primero el 20% sobre $18.000, y después el 10% sobre lo que quedó, no sobre los $18.000 originales. Vas a llegar a un número mayor que el del Stand A.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "id": "c",
               "texto": "Da lo mismo: 20% + 10% es igual a 30%",
               "esCorrecta": false,
               "feedback": "Esa suma es exactamente la trampa. El 10% del Stand B no se aplica sobre el precio original, sino sobre el precio que ya quedó rebajado — y ese precio es más chico, así que el 10% también rinde menos. Los dos stands no terminan en el mismo número.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             }
           ]
         }
@@ -127,19 +127,19 @@
               "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 5250,
               "mensaje": "Sumaste los dos porcentajes y aplicaste un 30% de una vez (7.500 × 0,70 = 5.250). Pero el segundo descuento no se aplica sobre los $7.500: se aplica sobre lo que quedó después del primero. Prueba haciendo los dos pasos por separado.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 6000,
               "mensaje": "Ese es el precio después del primer descuento, y está bien calculado: 7.500 × 0,80 = 6.000. Te falta el segundo paso — sobre esos $6.000 todavía hay que aplicar el 10% de socio.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "responde-parte-en-vez-de-total"
             },
             {
               "campoId": "precioFinalLibroDirecto",
               "valorObtenido": 2100,
               "mensaje": "Calculaste cuánto te DESCUENTAN en total, no cuánto PAGAS. La pregunta pide el precio final, que es lo que queda después de restar el descuento.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Hazlo en dos pasos separados. Paso 1: ¿cuánto queda del libro después de quitarle el 20%? Paso 2: a ese resultado —no a los $7.500— quítale el 10%."
@@ -211,13 +211,13 @@
               "campoId": "factorUnico",
               "valorObtenido": 0.7,
               "mensaje": "0,70 sería el multiplicador si el descuento total fuera del 30%. Pero la última columna de la tabla no decía 0,70 en ninguna fila: decía 0,72, en las cinco. Ese 0,72 sale de multiplicar lo que queda de cada descuento, no de sumar los porcentajes.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "campoId": "factorUnico",
               "valorObtenido": 0.28,
               "mensaje": "0,28 es la parte que te DESCUENTAN, y está bien calculada. Pero el multiplicador que buscamos es el que deja el precio que PAGAS, que es la parte que queda: 1 − 0,28.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Vuelve a la última columna de la tabla. Ese valor se repitió en los cinco precios, y es exactamente el multiplicador que buscas."
@@ -255,19 +255,19 @@
               "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 25600,
               "mensaje": "Sumaste 10% + 10% y aplicaste un 20% de una vez (32.000 × 0,80 = 25.600). Con la regla: 0,90 × 0,90 = 0,81, no 0,80. Dos descuentos del 10% equivalen a uno del 19%, no del 20%.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 28800,
               "mensaje": "Ese es el precio después del primer 10%, bien calculado. Falta aplicarle el segundo 10% a esos $28.800.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "responde-parte-en-vez-de-total"
             },
             {
               "campoId": "precioFinalEnciclopedia",
               "valorObtenido": 6080,
               "mensaje": "Calculaste el descuento total (el 19% de $32.000), no el precio final. Lo que se paga es lo que queda: el 81%.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Dos factores: el primer 10% deja 0,90 y el segundo también deja 0,90. Multiplícalos entre sí y después multiplica el resultado por los $32.000."
@@ -301,13 +301,13 @@
               "campoId": "precioFinalLibroInvertido",
               "valorObtenido": 6300,
               "mensaje": "Volviste a sumar los porcentajes (9.000 × 0,70). Los factores son 0,90 y 0,80, y hay que multiplicarlos: 0,90 × 0,80 = 0,72.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "campoId": "precioFinalLibroInvertido",
               "valorObtenido": 8100,
               "mensaje": "Ese es el precio después del 10%, correcto. Falta aplicarle el 20% a esos $8.100.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "responde-parte-en-vez-de-total"
             }
           ],
           "feedbackPorDefecto": "Calcula el factor de cada descuento (¿qué parte queda de cada uno?) y multiplícalos. Después compara tu factor con el 0,72 que apareció en la tabla del paso anterior: fíjate si cambió al invertir el orden."
@@ -328,7 +328,7 @@
               "texto": "Se pagan $8.750, porque el descuento total es del 30%.",
               "esCorrecta": false,
               "feedback": "Volviste a sumar 20 + 10. El descuento total no es del 30% sino del 28%, porque el factor es 0,80 × 0,90 = 0,72 y no 0,70.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "id": "b",
@@ -341,14 +341,14 @@
               "texto": "Se pagan $3.500, porque el descuento total es del 28%.",
               "esCorrecta": false,
               "feedback": "El 28% está bien identificado —ese es el descuento real—, pero $3.500 es cuánto te descuentan, no cuánto pagas. Lo que se paga es el 72% restante.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             },
             {
               "id": "d",
               "texto": "Se pagan $10.000, porque ese es el precio con descuento.",
               "esCorrecta": false,
               "feedback": "Ese es el precio después del primer descuento, y está bien calculado. Pero todavía queda por aplicar el 10% de socio sobre esos $10.000.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "responde-parte-en-vez-de-total"
             }
           ]
         },
@@ -367,21 +367,21 @@
               "texto": "Del 60%, porque 50% + 10% = 60%",
               "esCorrecta": false,
               "feedback": "El 10% se aplica sobre un precio ya rebajado a la mitad, así que aporta mucho menos que un 10% del precio original. Multiplica los factores en vez de sumar los porcentajes: 0,50 × 0,90 = 0,45.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "id": "c",
               "texto": "Del 45%",
               "esCorrecta": false,
               "feedback": "El 45% está bien calculado, pero es la parte que se PAGA, no la que se descuenta. Si se paga el 45%, el descuento es el 55% que falta para completar el total.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             },
             {
               "id": "d",
               "texto": "Depende del precio del artículo",
               "esCorrecta": false,
               "feedback": "El porcentaje de descuento no depende del precio. Un artículo caro y uno barato quedan multiplicados por el mismo 0,45: cambia cuántos pesos te ahorras, no qué porcentaje te descuentan.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "trata-porcentaje-como-cantidad-fija"
             }
           ]
         }
@@ -418,19 +418,19 @@
               "campoId": "precioMantenimiento",
               "valorObtenido": 9600,
               "mensaje": "Sumaste 50% + 10% y aplicaste un 60% de descuento (24.000 × 0,40 = 9.600). Los factores son 0,50 y 0,90: multiplicados dan 0,45, no 0,40. El descuento real es del 55%.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-porcentajes-sucesivos"
             },
             {
               "campoId": "precioMantenimiento",
               "valorObtenido": 12000,
               "mensaje": "Ese es el precio con el 50% de temporada baja, bien calculado. Falta el 10% de cliente frecuente sobre esos $12.000.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "responde-parte-en-vez-de-total"
             },
             {
               "campoId": "precioMantenimiento",
               "valorObtenido": 13200,
               "mensaje": "Calculaste cuánto te ahorras (el 55% de $24.000), no cuánto pagas. El precio final es el 45% que queda.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: multiplica los $24.000 por 0,50 y ese resultado por 0,90."
@@ -486,21 +486,21 @@
           "texto": "$6.600",
           "esCorrecta": false,
           "feedback": "Sumaste los porcentajes: 20% + 50% = 70% de descuento, o sea multiplicar por 0,30 (22.000 × 0,30 = 6.600). Pero los factores se multiplican, no se suman: 0,80 × 0,50 = 0,40. El descuento total es del 60%, no del 70%.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "suma-porcentajes-sucesivos"
         },
         {
           "clave": "C",
           "texto": "$13.200",
           "esCorrecta": false,
           "feedback": "Calculaste cuánto se descuenta en total (el 60% de $22.000), no cuánto se paga. El precio final es el 40% que queda: 22.000 × 0,40.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto"
         },
         {
           "clave": "D",
           "texto": "$17.600",
           "esCorrecta": false,
           "feedback": "Ese es el precio después del primer descuento, y está bien calculado (22.000 × 0,80). Falta aplicarle el 50% adicional a esos $17.600.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "responde-parte-en-vez-de-total"
         }
       ],
       "solucion": "Cada descuento se convierte en su factor: un 20% de descuento deja 1 − 0,20 = 0,80; un 50% deja 1 − 0,50 = 0,50. Como se aplican uno tras otro, los factores se multiplican: 0,80 × 0,50 = 0,40. Precio final = 22.000 × 0,40 = $8.800. Verificación por pasos: 22.000 × 0,80 = 17.600; 17.600 × 0,50 = 8.800. ✓ Ambas vías coinciden."
@@ -522,21 +522,21 @@
           "texto": "P × 0,70",
           "esCorrecta": false,
           "feedback": "Esta expresión suma los porcentajes (20 + 10 = 30) y aplica un único descuento del 30%. Pero el segundo descuento no se calcula sobre P, sino sobre el precio ya rebajado. El factor correcto es 0,80 × 0,90 = 0,72, no 0,70.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "suma-porcentajes-sucesivos"
         },
         {
           "clave": "C",
           "texto": "P × 0,20 × 0,10",
           "esCorrecta": false,
           "feedback": "Usaste los factores de lo que se descuenta en vez de los de lo que queda. Un 20% de descuento no deja el 20% del precio: deja el 80%. La expresión debe construirse con 0,80 y 0,90.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto"
         },
         {
           "clave": "D",
           "texto": "P × 0,80",
           "esCorrecta": false,
           "feedback": "Esta expresión modela solamente el primer descuento y es correcta hasta ahí, pero deja fuera el 10% adicional. Falta multiplicar por el factor del segundo descuento.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "responde-parte-en-vez-de-total"
         }
       ],
       "solucion": "Un descuento del p% deja el factor (1 − p/100). El primer descuento del 20% deja el factor 0,80, así que tras aplicarlo el precio es P × 0,80. El segundo descuento del 10% se aplica sobre ESE precio, no sobre P, y deja el factor 0,90: precio final = (P × 0,80) × 0,90 = P × 0,80 × 0,90. Equivale a P × 0,72. ✓"
@@ -558,21 +558,21 @@
           "texto": "El precio de abril es igual al de febrero, porque subió y bajó el mismo 50%.",
           "esCorrecta": false,
           "feedback": "Es la conclusión que parece obvia y es falsa. La baja del 50% no se aplica al precio de febrero, sino al de marzo, que era más alto — así que se descuentan más pesos de los que se habían sumado. Los factores no se cancelan: 1,50 × 0,50 = 0,75, no 1.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "suma-porcentajes-sucesivos"
         },
         {
           "clave": "C",
           "texto": "El precio de abril es el 25% del de febrero, porque en total bajó un 25%.",
           "esCorrecta": false,
           "feedback": "La parte del 25% está bien vista: en total el precio sí bajó un 25%. Pero si baja un 25%, lo que queda es el 75%, no el 25%. Estás entregando lo que se perdió en vez de lo que quedó.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto"
         },
         {
           "clave": "D",
           "texto": "Depende del precio de febrero: si el producto era caro, en abril termina más caro que al principio.",
           "esCorrecta": false,
           "feedback": "El resultado no depende del precio inicial. Sea cual sea, queda multiplicado por el mismo 0,75: cambia cuántos pesos se pierden, no la proporción. El porcentaje es una parte del total, no una cantidad fija que dependa de cuán caro sea el producto.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija"
         }
       ],
       "solucion": "Un alza del 50% multiplica por 1 + 50/100 = 1,50. Una baja del 50% multiplica por 1 − 50/100 = 0,50. Como se aplican una tras otra, los factores se multiplican: 1,50 × 0,50 = 0,75. El precio de abril es el 75% del de febrero, es decir un 25% más barato. Verificación con una cifra concreta: si en febrero costaba $8.000, en marzo cuesta 8.000 × 1,50 = $12.000, y en abril 12.000 × 0,50 = $6.000. Y 6.000 ÷ 8.000 = 0,75. ✓ La clave es que la baja se calcula sobre $12.000 y no sobre $8.000."

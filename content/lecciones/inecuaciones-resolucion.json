@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-resolucion",
-  "moduloId": "ecuaciones-inecuaciones",
+  "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
   "titulo": "Resolución de inecuaciones lineales",
   "objetivo": "Resolver inecuaciones lineales de una incógnita aplicando la misma operación a ambos lados; reconocer y justificar que multiplicar o dividir por un número negativo invierte el sentido de la desigualdad; representar el conjunto solución en la recta numérica; y distinguir el borde cerrado (≤, ≥) del abierto (<, >).",
   "tiempoEstimadoMin": 24,
@@ -22,10 +22,10 @@
     "DECISIÓN (a) — POR QUÉ SE DESCARTÓ LA BALANZA. La balanza de ecuaciones-lineales.json modela el signo '='. La extensión obvia para '<' sería una balanza desequilibrada, y funciona para sumar/restar (el lado pesado sigue pesado) y para multiplicar por un positivo. Pero NO puede representar multiplicar por un negativo: no existe un platillo con peso negativo. O sea, guarda silencio exactamente en el único caso donde la regla cambia — y peor, al funcionar sin excepción en todo lo que sí puede mostrar, sugiere activamente la conclusión falsa de que el sentido nunca se invierte. Sería un andamio que enseña el error que la lección quiere desmontar. No es una objeción nueva: la propia lección de ecuaciones ya lo anticipó en su Paso 6 ('no existe una bolsa con −3 bolitas'); esta lección arranca donde ese reconocimiento quedó abierto, y esa continuidad se le explicita al estudiante en el Paso 5.",
     "DECISIÓN (a) — QUÉ LA REEMPLAZA: LA RECTA NUMÉRICA CON UN ESPEJO EN EL 0. La recta modela '<' de forma nativa y sin metáfora: 'a < b' significa literalmente 'a está a la izquierda de b'. Cada operación permitida es una transformación geométrica visible: sumar/restar DESLIZA la recta (orden conservado), multiplicar/dividir por un positivo la ESTIRA o ENCOGE desde el 0 (orden conservado), y multiplicar/dividir por un negativo la REFLEJA en un espejo puesto en el 0 (orden intercambiado). Así la inversión deja de ser una regla que memorizar y pasa a ser una consecuencia obligatoria: un espejo intercambia izquierda con derecha, y si 'menor' significa 'está a la izquierda', reflejar intercambia menor con mayor. Ventaja adicional: la misma recta es donde después se dibuja el conjunto solución (Paso 6), así que la imagen central y la representación que pide el temario son la misma cosa, sin dos metáforas compitiendo.",
     "DECISIÓN (b) — LOS PASOS 1 A 7 VAN CASI SIN CONTEXTO DEL MUNDO REAL. Solo el Paso 8 (nieve en un refugio de montaña) tiene escenario; el resto es matemática pelada, recta numérica y bordes. Se eligió así para minimizar la superficie de dominios nuevos que hay que verificar contra el corpus de fuentes aisladas, dado lo caro que salió históricamente el clean-room en lineal-patrones-de-cambio.json (4 intentos de contexto en un solo paso). TRADE-OFF ACEPTADO: menos anclaje concreto en la lección procedimental. Para revertirlo hay que agregar contextos a los Pasos 3 y 7, lo que suma 2-3 dominios más a verificar.",
-    "DECISIÓN (d) — COBERTURA PARCIAL DEL CATÁLOGO, A PROPÓSITO. Esta lección usa error-1, error-2, error-4, error-5 (mecanismo algebraico, heredados de ecuaciones-lineales) y error-6, error-7, error-8 (propios de inecuaciones). NO usa error-3 (repartir solo una parte de un lado): ninguna situación diseñada acá lo produce de forma natural, y forzar un distractor artificial con tal de cubrirlo habría metido dificultad falsa. error-3 se ejercita en ecuaciones-lineales.json y reaparece en el cierre del módulo.",
+    "DECISIÓN (d) — COBERTURA PARCIAL DEL CATÁLOGO, A PROPÓSITO. Esta lección usa opera-un-solo-lado, invierte-signo-al-transponer, omite-dividir-por-coeficiente, suma-incognitas-en-vez-de-restar (mecanismo algebraico, heredados de ecuaciones-lineales) y maneja-mal-sentido-desigualdad, confunde-borde-abierto-y-cerrado, invierte-direccion-en-recta-numerica (propios de inecuaciones). NO usa divide-antes-de-quitar-constante (repartir solo una parte de un lado): ninguna situación diseñada acá lo produce de forma natural, y forzar un distractor artificial con tal de cubrirlo habría metido dificultad falsa. divide-antes-de-quitar-constante se ejercita en ecuaciones-lineales.json y reaparece en el cierre del módulo.",
     "DECISIÓN (e) — 'x < −4' SE REPITE A PROPÓSITO. El conjunto solución x < −4 aparece dos veces: en el Paso 6 (desde −5x > 20) y en el ítem PAES 3 (desde −3x + 2 > 14). Se dejó así deliberadamente: llegar al mismo conjunto por dos caminos distintos refuerza que el resultado no depende de los números particulares. Si en revisión se prefiere que no se repita, el ítem PAES 3 admite cambiar el 14 por 20 (−3x + 2 > 20 → x < −6) sin tocar nada más de su estructura ni de sus distractores.",
-    "DISTRACTORES SIN errorCatalogado, Y POR QUÉ. Tres distractores quedan deliberadamente sin id: (1) Paso 5, alternativa B ('los negativos son más chicos, así que todo se hace más chico') es una idea equivocada sobre la MAGNITUD, no sobre el sentido de la desigualdad, y no calza con ninguno de los diez errores del catálogo. (2) Paso 5, alternativa C y (3) ítem PAES 3, alternativa D son la misma confusión —cambiar el signo del NÚMERO creyendo que eso es invertir el signo de la DESIGUALDAD—, que se propuso al catálogo en el guion y no fue incorporada. Se dejan sin id en vez de forzar error-6, que describe el manejo del sentido y no esta confusión de referentes. El ítem PAES 3, alternativa C tampoco lleva id: quien la elige no comete error-2, sino que atribuye mal un error que no está ahí (el Paso 1 del desarrollo mostrado es correcto); etiquetarla como error-2 daría un diagnóstico falso al motor que después lea estos campos.",
-    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json (commit 195bea7). Los distractores referencian los ids locales pelados (error-1, error-6, …), que es la convención que usan hoy todas las lecciones; el prefijo namespaced ('ecuaciones-inecuaciones/error-6') vive solo en el artefacto de content/errores/.",
+    "DISTRACTORES SIN errorCatalogado, Y POR QUÉ. Tres distractores quedan deliberadamente sin id: (1) Paso 5, alternativa B ('los negativos son más chicos, así que todo se hace más chico') es una idea equivocada sobre la MAGNITUD, no sobre el sentido de la desigualdad, y no calza con ninguno de los diez errores del catálogo. (2) Paso 5, alternativa C y (3) ítem PAES 3, alternativa D son la misma confusión —cambiar el signo del NÚMERO creyendo que eso es invertir el signo de la DESIGUALDAD—, que se propuso al catálogo en el guion y no fue incorporada. Se dejan sin id en vez de forzar maneja-mal-sentido-desigualdad, que describe el manejo del sentido y no esta confusión de referentes. El ítem PAES 3, alternativa C tampoco lleva id: quien la elige no comete invierte-signo-al-transponer, sino que atribuye mal un error que no está ahí (el Paso 1 del desarrollo mostrado es correcto); etiquetarla como invierte-signo-al-transponer daría un diagnóstico falso al motor que después lea estos campos.",
+    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json (commit 195bea7). Los distractores referencian los ids locales pelados (opera-un-solo-lado, maneja-mal-sentido-desigualdad, …), que es la convención que usan hoy todas las lecciones; el prefijo namespaced ('ecuaciones-e-inecuaciones-primer-grado/maneja-mal-sentido-desigualdad') vive solo en el artefacto de content/errores/.",
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética de esta lección fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez. Los 6 dominios candidatos de esta lección (refugio de montaña, nieve acumulada, ladera de práctica, deshielo, espejo en el cero, recta numérica reflejada) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de esta sesión."
   ],
@@ -65,14 +65,14 @@
               "texto": "Se rompen las tres que terminan con números negativos: restar 14, multiplicar por −1 y dividir por −2.",
               "esCorrecta": false,
               "feedback": "Revisa la fila de restar 14 con cuidado: quedó −10 a la izquierda y −4 a la derecha. ¿Es cierto que −10 < −4? Sí lo es: −10 está más a la izquierda en la recta. Aparecieron negativos y la afirmación aguantó. Entonces 'que haya negativos' no puede ser el criterio. ¿Qué tienen en común las otras dos que sí se rompieron, y que esta no tiene?",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "maneja-mal-sentido-desigualdad"
             },
             {
               "id": "c",
               "texto": "Se rompen todas las que involucran multiplicar o dividir; sumar y restar siempre son seguras.",
               "esCorrecta": false,
               "feedback": "Multiplicar por 3 dio 12 < 30, y dividir por 2 dio 2 < 5. Las dos siguen siendo verdaderas. Así que multiplicar y dividir no son peligrosos por sí solos. Compara esas dos filas con las dos últimas: ¿en qué se diferencia el número por el que multiplicaste o dividiste?",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "maneja-mal-sentido-desigualdad"
             }
           ]
         }
@@ -102,19 +102,19 @@
               "campoId": "mayorEntero",
               "valorObtenido": 5,
               "mensaje": "Casi. Llegaste bien a que x tiene que ser menor que 5, pero fíjate en el signo: es `<`, no `≤`. ¿El propio 5 cumple? Reemplaza: 3·5 − 4 = 11, y 11 no es menor que 11. El 5 queda justo afuera.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "mayorEntero",
               "valorObtenido": 14,
               "mensaje": "Llegaste a 3x < 15 y te detuviste ahí. Pero 15 es el peso de las TRES equis juntas: todavía falta repartir, dividir ambos lados por 3.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "mayorEntero",
               "valorObtenido": 2,
               "mensaje": "Restaste el 4 cuando había que sumarlo. El término es −4, así que para eliminarlo se suma 4 en ambos lados: 3x < 11 + 4. Revisa esa dirección.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             },
             {
               "campoId": "comprobacion",
@@ -189,7 +189,7 @@
               "texto": "Porque multiplicar siempre invierte el sentido, sea por positivo o por negativo.",
               "esCorrecta": false,
               "feedback": "Vuelve a la tabla del paso anterior: multiplicar por 3 dio 12 < 30, que sigue siendo verdadera. Multiplicar por un positivo estira la recta pero no la da vuelta. ¿Qué tenía de distinto el −1?",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "maneja-mal-sentido-desigualdad"
             }
           ],
           "notaVerificacionMatematica": "Partiendo de 4 < 10. Multiplicar por 3: 12 y 30; 12 está a la izquierda de 30, orden conservado ✓ — esto refuta D. Multiplicar por −1: −4 y −10, ambos con el mismo valor absoluto que sus originales (4 y 10), luego no hubo 'achicamiento' ✓ — esto refuta B. La única transformación que intercambia el orden izquierda-derecha es la reflexión respecto de 0, que es precisamente lo que hace multiplicar por un negativo. Única correcta: A."
@@ -264,19 +264,19 @@
               "campoId": "mayorEnteroNegativo",
               "valorObtenido": -4,
               "mensaje": "Dividiste bien por −5 y diste vuelta el signo, pero el borde te jugó una mala pasada: la solución es x < −4, y el `<` deja al −4 afuera. Reemplaza: −5·(−4) = 20, y 20 > 20 es falso. El mayor entero que sí cumple es el que viene justo antes.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "mayorEnteroNegativo",
               "valorObtenido": -3,
               "mensaje": "Revisa si diste vuelta el sentido. Al dividir por −5 (negativo) el `>` tiene que convertirse en `<`. Si lo dejaste como `>`, te quedaste con x > −4, que es el conjunto equivocado: prueba −3 en la inecuación original y mira qué pasa.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "maneja-mal-sentido-desigualdad"
             },
             {
               "campoId": "mayorEnteroNegativo",
               "valorObtenido": 15,
               "mensaje": "Restaste 5 en vez de dividir por −5. El −5 está **multiplicando** a la x, así que se cancela dividiendo, no restando.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             }
           ],
           "feedbackPorDefecto": "El −5 está multiplicando a la x: para despejarla hay que dividir ambos lados por −5. Y como −5 es negativo, el `>` se convierte en `<`. Después mira el borde con cuidado: el `<` no admite el empate."
@@ -302,7 +302,7 @@
               "texto": "Restar 2 solo al lado izquierdo, quedando 7x < 30.",
               "esCorrecta": true,
               "feedback": "Ese es. Le quitaste 2 a un lado y no al otro, así que ya no es la misma comparación. 7x < 30 da x < 30/7 ≈ 4,29, que no es lo mismo que x < 4.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "opera-un-solo-lado"
             },
             {
               "id": "c",
@@ -339,19 +339,19 @@
               "campoId": "mayorEnteroAbierto",
               "valorObtenido": 4,
               "mensaje": "Las dos partes no pueden dar lo mismo: esa es toda la gracia del ejercicio. Reemplaza x = 4 en la Parte 2: 4·4 + 3 = 19, y ¿19 es menor que 19? El `<` no admite el empate.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "mayorEnteroCerrado",
               "valorObtenido": 3,
               "mensaje": "Te pasaste de cauteloso. En la Parte 1 el signo es `≤`, que sí admite el empate: 4·4 + 3 = 19, y 19 ≤ 19 es verdadero. El 4 sí cumple.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "mayorEnteroCerrado",
               "valorObtenido": 16,
               "mensaje": "Llegaste a 4x ≤ 16 y respondiste ahí. Falta repartir: divide ambos lados por 4.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             }
           ],
           "feedbackPorDefecto": "En las dos partes: resta 3 en ambos lados y después divide por 4 (positivo, así que el signo no se da vuelta). Lo único que cambia entre la Parte 1 y la Parte 2 es si el valor del borde entra o no."
@@ -378,19 +378,19 @@
               "campoId": "diasUtiles",
               "valorObtenido": 10,
               "mensaje": "Estás a un día de distancia. Revisa el borde: al día 10 quedan 42 − 30 = 12 cm, y 12 no alcanza los 15 que se piden. Al día 9 quedan exactamente 15, y como el enunciado dice 'al menos 15', ese día todavía sirve.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "diasUtiles",
               "valorObtenido": 8,
               "mensaje": "Te quedaste corto por el borde. Al día 9 quedan exactamente 15 cm. 'Al menos 15' incluye el 15 justo, así que el día 9 todavía cuenta.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "confunde-borde-abierto-y-cerrado"
             },
             {
               "campoId": "diasUtiles",
               "valorObtenido": 27,
               "mensaje": "Ese es el resultado de 42 − 15, la nieve que puede perderse en total. Es un paso intermedio correcto, pero la pregunta es de **días**: falta repartir esos 27 cm entre los 3 cm que se pierden cada día.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "diasUtiles",
@@ -453,21 +453,21 @@
           "texto": "x < 3",
           "esCorrecta": false,
           "feedback": "Al juntar las equis de los dos lados las sumaste (6x + 2x = 8x) en vez de restarlas. La x de la derecha se pasa a la izquierda restando: 6x − 2x = 4x, no 8x.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar"
         },
         {
           "clave": "C",
           "texto": "x < 24",
           "esCorrecta": false,
           "feedback": "Llegaste bien a 4x < 24, pero te detuviste ahí. Ese 24 es el peso de las cuatro equis juntas: falta dividir ambos lados por 4.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "omite-dividir-por-coeficiente"
         },
         {
           "clave": "D",
           "texto": "x > 6",
           "esCorrecta": false,
           "feedback": "El resultado numérico está bien, pero diste vuelta el sentido sin motivo. Repasa cuándo se invierte: solo al multiplicar o dividir por un **negativo**. Acá restaste y dividiste por 4, que es positivo — nada se da vuelta.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "maneja-mal-sentido-desigualdad"
         }
       ],
       "solucion": "6x + 5 < 2x + 29. Se resta 2x en ambos lados: 4x + 5 < 29. Se resta 5 en ambos lados: 4x < 24. Se divide por 4, que es positivo, así que el sentido se conserva: x < 6. Comprobación interior: x = 5 → izquierda 6·5 + 5 = 35, derecha 2·5 + 29 = 39, y 35 < 39 ✓. Comprobación del borde: x = 6 → izquierda 41, derecha 41, y 41 < 41 es falso ✓, el 6 queda correctamente excluido. Comprobación exterior: x = 7 → izquierda 47, derecha 43, y 47 < 43 es falso ✓."
@@ -489,14 +489,14 @@
           "texto": "Un punto vacío en −2, con la recta sombreada hacia la derecha.",
           "esCorrecta": false,
           "feedback": "La dirección está bien, pero el punto vacío dice que el −2 **no** pertenece a la solución. Fíjate en la rayita de abajo del `≥`: es un `=` escondido, y significa que el −2 sí cumple. Punto relleno.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado"
         },
         {
           "clave": "C",
           "texto": "Un punto relleno en −2, con la recta sombreada hacia la izquierda.",
           "esCorrecta": false,
           "feedback": "El borde está bien marcado, pero sombreaste hacia el lado equivocado. 'x mayor o igual que −2' son los números que están a la derecha de −2 en la recta: −1, 0, 5… Los de la izquierda (−3, −7) son menores.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "invierte-direccion-en-recta-numerica"
         },
         {
           "clave": "D",
@@ -524,21 +524,21 @@
           "texto": "x > −4: los dos pasos aplican la misma operación a ambos lados, el desarrollo del estudiante es válido.",
           "esCorrecta": false,
           "feedback": "Es cierto que aplicó la misma operación a ambos lados, y esa parte del método está bien. Pero eso alcanza para las ecuaciones; para las inecuaciones falta la segunda mitad de la regla. Comprueba con un número: x = 0 cumple x > −4. Reemplaza x = 0 en la inecuación original: −3·0 + 2 = 2. ¿Es 2 > 14?",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "maneja-mal-sentido-desigualdad"
         },
         {
           "clave": "C",
           "texto": "x < −16/3: en el Paso 1 se suma 2, −3x > 16, y después se invierte el sentido.",
           "esCorrecta": false,
           "feedback": "El +2 se elimina RESTANDO 2 en ambos lados, no sumando: 14 − 2 = 12, no 14 + 2 = 16. Sumar en vez de restar resuelve una inecuación distinta a la del enunciado.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-signo-al-transponer"
         },
         {
           "clave": "D",
           "texto": "x > 12: de −3x > 12 se pasa a x > 12 sin dividir por el coeficiente.",
           "esCorrecta": false,
           "feedback": "Falta el paso final: −3x > 12 no es lo mismo que x > 12, hay que dividir ambos lados por −3 (y por ser negativo, invertir el sentido) para dejar la x sola. Sin ese paso el coeficiente −3 queda pegado a la incógnita.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "omite-dividir-por-coeficiente"
         }
       ],
       "solucion": "−3x + 2 > 14. Paso 1 (correcto): restar 2 a ambos lados → −3x > 12. Paso 2: dividir por −3, que es negativo, obliga a invertir el sentido → x < 12 ÷ (−3) = −4, es decir x < −4. Comprobación del conjunto correcto: x = −5 → −3·(−5) + 2 = 15 + 2 = 17, y 17 > 14 ✓ pertenece, y en efecto −5 < −4. x = 0 → −3·0 + 2 = 2, y 2 > 14 es falso ✓ no pertenece — esto refuta directamente x > −4, porque bajo esa solución el 0 debería pertenecer. Comprobación del borde: x = −4 → 12 + 2 = 14, y 14 > 14 es falso ✓, correctamente excluido por el borde abierto. Respuesta: A."

@@ -1,14 +1,14 @@
 {
   "tipo": "cierre",
   "id": "cierre-potencias-y-raices",
-  "moduloId": "potencias-raices",
+  "moduloId": "potencias-y-raices",
   "titulo": "Cierre del módulo: Potencias y raíces enésimas",
   "_notasInternas": [
     "Cierre del módulo 'Potencias y raíces enésimas' (docs/diseno-modulo-potencias-y-raices.md), construido después de que las 3 lecciones (potencias-multiplicar-corto, potencias-raiz-escondida, potencias-problemas-en-contexto) pasaran npm run validar y npm run auditar en verde (0 bloqueantes).",
     "Distribución: ítems 1-3 sobre el foco de L1 (potencia de exponente entero, negativo, base racional, reglas de producto/cociente/potencia de potencia), ítems 4-6 sobre el foco de L2 (raíz enésima, exponente fraccionario, descomposición, propiedades heredadas), ítems 7-8 sobre el foco de L3 (decidir entre potencia y raíz según lo que pide el enunciado, en contexto). 2 ítems por habilidad (resolver, representar, modelar, argumentar); dificultad 1 baja, 5 media, 2 alta.",
     "Dominio: siguiendo docs/diseno-modulo-potencias-y-raices.md §g ('Cierre: mezcla de los tres, sin contexto nuevo. Cifras distintas de las usadas en las lecciones'), los ítems 1-6 son números puros (igual que la mayoría de los itemsPAES de L1 y L2) y no requieren consulta de colisión. El ítem 7 reutiliza el dominio de L3 (medicamento que un organismo elimina por intervalos, fracción retenida r) con cifras nuevas (D=2000mg, 3 intervalos, 250mg finales; L3 usó 1024, 6250, 135 y sus derivados). El ítem 8 reutiliza el dominio de L1 (perilla de aumento que multiplica por un factor fijo cada escalón), pero con una perilla distinta cuyo factor por escalón se desconoce y hay que encontrar (4 escalones, aumento total 81; L1 usó siempre factor conocido =4 con escalones de -2 a 4). Ninguno de los dos dominios necesitó correr scripts/consultar-fuentes.mjs: ambos ya están LIMPIO desde el diseño del módulo, y reusarlos con cifras nuevas es exactamente lo que el diseño firmado prevé para el cierre.",
     "Ítem 4: la posible ambigüedad entre '10√2' (forma maximal) y '2√50' (forma válida pero no maximal, mismo valor numérico) se resuelve en el propio enunciado, que pide explícitamente 'la forma que extrae el mayor factor cuadrado posible' — no queda como nota aparte. Es el mismo patrón que ya usa potencias-raiz-escondida.json paso 7 (distractor 2√45 para la respuesta correcta 6√5).",
-    "Catálogo de errores: embebe 12 de las 13 entradas del módulo, copiadas carácter a carácter desde donde nacieron — error-1, error-2, error-3, error-4 y error-6 desde potencias-multiplicar-corto.json (L1); error-7, error-8, error-9, error-10, error-11, error-12 y error-13 desde potencias-raiz-escondida.json (L2). error-5 ('dar a⁰=0') queda fuera: ningún distractor de este archivo lo usa, y npm run auditar marca 🔴 catalogo-sin-usar cualquier entrada embebida sin uso en el mismo archivo (docs/reglas-modulo.md regla 5). npm run auditar no procesa content/cierres/ (scripts/auditar-leccion.mjs:389 lo anota explícitamente), así que la resolución de cada errorCatalogado contra este catálogo se verificó a mano con node -e antes de commitear, no por el chequeo mecánico.",
+    "Catálogo de errores: embebe 12 de las 13 entradas del módulo, copiadas carácter a carácter desde donde nacieron — multiplica-base-por-exponente, suma-exponentes-con-distinta-base, cruza-reglas-de-exponentes, lee-exponente-negativo-como-signo y opera-una-sola-parte-de-la-fraccion desde potencias-multiplicar-corto.json (L1); intercambia-indice-y-exponente, reparte-raiz-sobre-la-suma, descompone-raiz-a-medias, saca-factor-sin-su-raiz, suma-radicales-distintos, divide-por-el-indice-como-raiz y responde-otra-magnitud-potencias desde potencias-raiz-escondida.json (L2). iguala-exponente-cero-a-cero ('dar a⁰=0') queda fuera: ningún distractor de este archivo lo usa, y npm run auditar marca 🔴 catalogo-sin-usar cualquier entrada embebida sin uso en el mismo archivo (docs/reglas-modulo.md regla 5). npm run auditar no procesa content/cierres/ (scripts/auditar-leccion.mjs:389 lo anota explícitamente), así que la resolución de cada errorCatalogado contra este catálogo se verificó a mano con node -e antes de commitear, no por el chequeo mecánico.",
     "Todos los valores numéricos de los 8 ítems (respuesta correcta y cada distractor) se recalcularon desde cero con node -e antes de fijar el texto de las alternativas, siguiendo docs/reglas-modulo.md regla 3: primero se corrió el mecanismo de cada error sobre los datos base, y el valor que dio ese cálculo es el que se usó como distractor — nunca al revés."
   ],
   "items": [
@@ -29,14 +29,14 @@
           "texto": "−9",
           "esCorrecta": false,
           "feedback": "El signo del exponente no pasa al resultado: bajar un escalón divide por la base, nunca cambia el signo. 3⁻² es 1/3², no −(3²).",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "lee-exponente-negativo-como-signo"
         },
         {
           "clave": "C",
           "texto": "−6",
           "esCorrecta": false,
           "feedback": "El exponente no es un factor que se multiplica por la base: 3⁻² no es 3 por −2. El exponente dice cuántas veces se usa la base como factor, no por cuánto se multiplica.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "multiplica-base-por-exponente"
         },
         {
           "clave": "D",
@@ -65,14 +65,14 @@
           "texto": "−(2/5)³",
           "esCorrecta": false,
           "feedback": "El exponente negativo no vuelve negativo el resultado: pasa la base a su recíproco y hace el exponente positivo. −(2/5)³ le agrega un signo que la potencia original no tiene.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "lee-exponente-negativo-como-signo"
         },
         {
           "clave": "C",
           "texto": "(2/5) · (−3)",
           "esCorrecta": false,
           "feedback": "El exponente no se multiplica por la base como si fuera un factor: (2/5)⁻³ no es (2/5) por −3. Hay que invertir la fracción y usar el exponente positivo correspondiente.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "multiplica-base-por-exponente"
         },
         {
           "clave": "D",
@@ -101,21 +101,21 @@
           "texto": "2³ · 3⁴ = 6⁷, porque para multiplicar potencias basta sumar los exponentes",
           "esCorrecta": false,
           "feedback": "La regla de sumar exponentes solo aplica cuando las dos potencias comparten la misma base. Acá 2 y 3 son bases distintas: 2³ · 3⁴ = 8 · 81 = 648, y 6⁷ es un número mucho mayor (279.936), así que no coinciden.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "suma-exponentes-con-distinta-base"
         },
         {
           "clave": "C",
           "texto": "5⁴ = 5 · 4 = 20, porque el exponente indica por cuánto se multiplica la base",
           "esCorrecta": false,
           "feedback": "El exponente no es un factor que se multiplica por la base: dice cuántas veces la base se usa como factor. 5⁴ es 5 · 5 · 5 · 5 = 625, no 5 · 4.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "multiplica-base-por-exponente"
         },
         {
           "clave": "D",
           "texto": "(3²)³ = 3²⁺³ = 3⁵, porque la potencia de una potencia también suma los exponentes",
           "esCorrecta": false,
           "feedback": "La regla que suma exponentes es para multiplicar potencias de igual base, no para una potencia elevada a otra potencia: ahí los exponentes se multiplican. (3²)³ = 3²·³ = 3⁶ = 729, no 3⁵ = 243.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "cruza-reglas-de-exponentes"
         }
       ],
       "solucion": "A es verdadera: al multiplicar potencias de igual base, el número total de factores repetidos es la suma de los dos exponentes, así que 2³ · 2⁴ = 2⁷ = 128. B es falsa porque 2 y 3 son bases distintas: 2³ · 3⁴ = 8 · 81 = 648 ≠ 6⁷ = 279.936. C es falsa porque 5⁴ = 5 · 5 · 5 · 5 = 625 ≠ 20. D es falsa porque la potencia de una potencia multiplica los exponentes, no los suma: (3²)³ = 3⁶ = 729 ≠ 3⁵ = 243. ✓"
@@ -137,21 +137,21 @@
           "texto": "2√50",
           "esCorrecta": false,
           "feedback": "El valor es el mismo (2√50 = 10√2), pero no es la forma pedida: 4 sí es un factor cuadrado de 200, pero no el mayor. El radicando 50 todavía tiene un factor cuadrado (25) sin extraer.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "descompone-raiz-a-medias"
         },
         {
           "clave": "C",
           "texto": "100√2",
           "esCorrecta": false,
           "feedback": "Lo que sale de la raíz es la raíz del factor cuadrado, no el factor mismo: de √(100 · 2), lo que sale afuera es √100 = 10, no el 100 completo. La descomposición correcta es 10√2, no 100√2.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "saca-factor-sin-su-raiz"
         },
         {
           "clave": "D",
           "texto": "100",
           "esCorrecta": false,
           "feedback": "Sacar la raíz cuadrada no es dividir por el índice: √200 no es 200÷2. La raíz busca un número que multiplicado por sí mismo dé 200, y 100·100=10.000, muy lejos de 200.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "divide-por-el-indice-como-raiz"
         }
       ],
       "solucion": "200 = 100 · 2, y 100 es el mayor factor cuadrado de 200 (el siguiente candidato, 400, ya no cabe). √200 = √(100 · 2) = √100 · √2 = 10√2. El radicando queda en 2, que no tiene ningún factor mayor que 1 con raíz cuadrada exacta, así que 10√2 es la forma maximal. ✓"
@@ -173,14 +173,14 @@
           "texto": "³√(11⁴)",
           "esCorrecta": false,
           "feedback": "El índice y el exponente están invertidos: el denominador del exponente (4) es el índice de la raíz, y el numerador (3) es el exponente del radicando. Acá quedaron al revés.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-indice-y-exponente"
         },
         {
           "clave": "C",
           "texto": "11 · (3/4)",
           "esCorrecta": false,
           "feedback": "El exponente fraccionario no se multiplica por la base como si fuera un factor: 11^(3/4) no es 11 por 3/4. El exponente dice cómo elevar y de qué índice sacar la raíz, no un factor de multiplicación.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "multiplica-base-por-exponente"
         },
         {
           "clave": "D",
@@ -209,21 +209,21 @@
           "texto": "√(16 + 9) = √16 + √9, porque la raíz se reparte sobre cualquier operación dentro de ella",
           "esCorrecta": false,
           "feedback": "Ninguna propiedad reparte una raíz sobre una suma: primero se suma dentro de la raíz y después se saca la raíz. √(16+9) = √25 = 5, mientras que √16+√9 = 4+3 = 7; no coinciden.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "reparte-raiz-sobre-la-suma"
         },
         {
           "clave": "C",
           "texto": "√2 + √3 = √5, porque se pueden sumar directamente los radicandos",
           "esCorrecta": false,
           "feedback": "√2 y √3 son dos números distintos que no se pueden descomponer más, así que no son términos semejantes: sumarlos no es lo mismo que sumar sus radicandos. Numéricamente, √2 + √3 ≈ 3,15, mientras que √5 ≈ 2,24.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "suma-radicales-distintos"
         },
         {
           "clave": "D",
           "texto": "√(9/16) = 3/16, porque la raíz se aplica solo al numerador",
           "esCorrecta": false,
           "feedback": "La raíz se aplica a la fracción completa, arriba y abajo: √(9/16) = √9/√16 = 3/4, no 3/16. Aplicarla solo al numerador deja el denominador sin la raíz que también le corresponde.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion"
         }
       ],
       "solucion": "A es verdadera: el producto de raíces del mismo índice es la raíz del producto, √50 · √2 = √100 = 10. B es falsa porque ninguna propiedad reparte la raíz sobre una suma: √(16+9) = √25 = 5 ≠ √16+√9 = 7. C es falsa porque √2 y √3 no son términos semejantes: √2+√3 ≈ 3,15 ≠ √5 ≈ 2,24. D es falsa porque la raíz se aplica a numerador y denominador: √(9/16) = 3/4 ≠ 3/16. ✓"
@@ -245,21 +245,21 @@
           "texto": "(250/2.000)³",
           "esCorrecta": false,
           "feedback": "El índice y el exponente están invertidos: para despejar r hay que sacar la raíz cúbica de la razón, no elevarla al cubo. Elevar en vez de extraer la raíz da un número mucho más chico que r.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-indice-y-exponente"
         },
         {
           "clave": "C",
           "texto": "(250/2.000) / 3",
           "esCorrecta": false,
           "feedback": "Sacar la raíz cúbica no es dividir por el índice: r es el número que, multiplicado por sí mismo 3 veces, da la razón 250/2.000, y dividir por 3 no responde esa pregunta.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "divide-por-el-indice-como-raiz"
         },
         {
           "clave": "D",
           "texto": "250/2.000",
           "esCorrecta": false,
           "feedback": "250/2.000 es la razón total entre lo que queda y la dosis inicial tras los 3 intervalos juntos, no la fracción r que se retiene en CADA intervalo por separado; falta aplicar la raíz cúbica para separar los 3 intervalos.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "responde-otra-magnitud-potencias"
         }
       ],
       "solucion": "Tras n intervalos, la dosis restante es D · rⁿ. Con D=2.000, n=3 y dosis final 250: 2.000 · r³ = 250 → r³ = 250/2.000 = 0,125 → r = ³√0,125 = 0,5. La expresión que representa r es ³√(250/2.000), que efectivamente da 0,5 (se retiene la mitad de la dosis en cada intervalo). ✓"
@@ -281,14 +281,14 @@
           "texto": "9",
           "esCorrecta": false,
           "feedback": "Se usó el índice equivocado: se sacó raíz cuadrada (√81=9) en vez de raíz cuarta. Con 4 escalones hay que deshacer un exponente 4, no un exponente 2: la raíz que corresponde es ⁴√81, no √81.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "cruza-reglas-de-exponentes"
         },
         {
           "clave": "C",
           "texto": "81",
           "esCorrecta": false,
           "feedback": "81 es el aumento TOTAL tras los 4 escalones, no el factor por el que multiplica cada escalón por separado. Falta aplicar la raíz cuarta para encontrar cuánto multiplica un solo escalón.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "responde-otra-magnitud-potencias"
         },
         {
           "clave": "D",

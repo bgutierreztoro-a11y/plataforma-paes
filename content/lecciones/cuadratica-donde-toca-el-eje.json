@@ -18,8 +18,8 @@
   ],
   "_notasInternas": [
     "Lección 3 del módulo función cuadrática. Sigue docs/diseno-modulo-funcion-cuadratica.md: núcleo = letrero luminoso en forma de arco sobre la entrada de un gimnasio (ancho de la base según altura máxima); aplicación = ganancia neta de emprendimiento de llaveros (ceros = cantidades de equilibrio). Ambos contextos verificados sin colisión por Benja junto con el resto del módulo; el único candidato descartado del módulo ('arco de un puente peatonal') no pertenece a esta lección.",
-    "DESVIACIÓN DELIBERADA de la instrucción literal 'NO copies el texto, solo referencia el id' para error-1 y error-2: CLAUDE.md regla 1 (no negociable, motivo técnico en su sección 2d) exige que cada archivo que referencia un error de otro archivo EMBEBA el subconjunto exacto copiado carácter a carácter, porque lib/sanitizar.ts resuelve errorCatalogado solo contra el catalogoErrores del MISMO archivo (no fusiona el de L1). Un errorCatalogado sin el catálogo embebido deja muda la Capa 2 del feedback en producción. Interpreto la instrucción del autor como 'no reformules la descripción con tus propias palabras' (que sí cumplo: las dos entradas de abajo son copia carácter a carácter de cuadratica-sube-y-baja.json), no como 'omite el catálogo'. Lo marco explícito para que el autor lo corrija si quería lo segundo.",
-      "El umbral de 3+ para pausar y proponer un id nuevo aplica SOLO a los 2 errores propios de L3 sin id ('no hay ceros reales' != 'error de calculo'; 'olvida que el eje Y es (0,c) sin resolver'), no a la reutilización de error-1/error-2 de L1 (esos se reusan tantas veces como el mecanismo calce, sin tope). Conteo de los 2 propios de L3: 'no hay ceros reales != error de calculo' usado 2 veces (paso descubrimiento, bloque pregunta, alternativa B; item l3-item-3). 'eje Y es (0,c) sin resolver' usado 1 vez (paso generalizacion, bloque seleccion, opcion b). Ninguno llega a 3.",
+    "DESVIACIÓN DELIBERADA de la instrucción literal 'NO copies el texto, solo referencia el id' para reporta-raiz-fuera-del-contexto y reporta-una-sola-raiz: CLAUDE.md regla 1 (no negociable, motivo técnico en su sección 2d) exige que cada archivo que referencia un error de otro archivo EMBEBA el subconjunto exacto copiado carácter a carácter, porque lib/sanitizar.ts resuelve errorCatalogado solo contra el catalogoErrores del MISMO archivo (no fusiona el de L1). Un errorCatalogado sin el catálogo embebido deja muda la Capa 2 del feedback en producción. Interpreto la instrucción del autor como 'no reformules la descripción con tus propias palabras' (que sí cumplo: las dos entradas de abajo son copia carácter a carácter de cuadratica-sube-y-baja.json), no como 'omite el catálogo'. Lo marco explícito para que el autor lo corrija si quería lo segundo.",
+      "El umbral de 3+ para pausar y proponer un id nuevo aplica SOLO a los 2 errores propios de L3 sin id ('no hay ceros reales' != 'error de calculo'; 'olvida que el eje Y es (0,c) sin resolver'), no a la reutilización de reporta-raiz-fuera-del-contexto/reporta-una-sola-raiz de L1 (esos se reusan tantas veces como el mecanismo calce, sin tope). Conteo de los 2 propios de L3: 'no hay ceros reales != error de calculo' usado 2 veces (paso descubrimiento, bloque pregunta, alternativa B; item l3-item-3). 'eje Y es (0,c) sin resolver' usado 1 vez (paso generalizacion, bloque seleccion, opcion b). Ninguno llega a 3.",
     "Interactivo: un solo interactivoSlider (paso descubrimiento), exactamente como se especificó: objeto parabola, variante unaVariable, a fijo en -1 y b fijo en 0 (editable:false, igual que en L2), c editable con valorInicial=4 (min/max en los defaults [-5,5]). Con a=-1,b=0 fijos, variar c reproduce los 3 casos del discriminante moviendo un solo control: c=4 -> 2 ceros, c=0 -> 1 cero (raiz doble), c<0 -> 0 ceros reales (verificado con node -e). mostrarVertice:true (ya se gano en L2) y mostrarCeros:true (nuevo en esta leccion).",
     "El estado inicial del slider (a=-1,b=0,c=4, es decir y=-x²+4) coincide deliberadamente con el ejemplo numerico del letrero luminoso de la curiosidad (mismos ceros ±2, mismo vertice (0,4)): el interactivo es literalmente el mismo arco que el estudiante ya calculo a mano, ahora explorable."
   ],
@@ -115,7 +115,7 @@
       "titulo": "Encuentra los dos ceros",
       "_notasInternas": [
         "h(x)=-x^2+4x+5. Verificado con node -e: ceros -1 y 5 (discriminante 36), vertice (2,9). Factorizacion -(x-5)(x+1).",
-        "Distractor ceroMenor=1: confunde el signo del factor (x+1) pensando que la raiz es +1 en vez de -1 -- error propio de este item, sin errorCatalogado (no es error-1 ni error-2; es un error de lectura de signo en la factorizacion, deliberadamente NO catalogado por instruccion del autor de reusar solo error-1/error-2)."
+        "Distractor ceroMenor=1: confunde el signo del factor (x+1) pensando que la raiz es +1 en vez de -1 -- error propio de este item, sin errorCatalogado (no es reporta-raiz-fuera-del-contexto ni reporta-una-sola-raiz; es un error de lectura de signo en la factorizacion, deliberadamente NO catalogado por instruccion del autor de reusar solo reporta-raiz-fuera-del-contexto/reporta-una-sola-raiz)."
       ],
       "bloques": [
         {
@@ -176,7 +176,7 @@
       "titulo": "¿Cuántos ceros puede tener una parábola?",
       "_notasInternas": [
         "CORAZON DE LA LECCION. Retoma h(x)=-x^2+4 (curiosidad) factorizado como -(x-2)(x+2), conectando el algebra de L1 con la lectura grafica.",
-        "Bloque seleccion houses error-2 (opcion b, reporta solo un cero) via errorCatalogado (id reusado de L1, texto embebido arriba).",
+        "Bloque seleccion houses reporta-una-sola-raiz (opcion b, reporta solo un cero) via errorCatalogado (id reusado de L1, texto embebido arriba).",
         "interactivoSlider: objeto parabola, variante unaVariable, a=-1 fijo, b=0 fijo, c editable min:-5 max:5 valorInicial:4. Verificado con node -e: c=4->2 ceros, c=2-> 2 ceros (irracionales), c=1->2 ceros, c=0->1 cero (raiz doble en x=0), c=-1 y c=-3 -> 0 ceros reales (discriminante negativo). exploracionMinima=6 con instruccion explicita de bajar c hasta un valor negativo, para garantizar que la exploracion cruce los 3 casos.",
         "Bloque pregunta: y=-x^2-3 (a=-1,b=0,c=-3). Verificado con node -e: discriminante=-12<0, sin ceros reales. Alternativa B houses el error propio de L3 'no hay ceros reales != error de calculo' (uso 1/2, sin errorCatalogado)."
       ],
@@ -200,7 +200,7 @@
               "texto": "Solo el valor positivo, x = 2, porque es 'el' cero de la función.",
               "esCorrecta": false,
               "feedback": "Una función cuadrática puede tener DOS ceros reales, y ambos son igual de válidos matemáticamente. Quedarte solo con el positivo es reportar una respuesta incompleta.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "reporta-una-sola-raiz"
             },
             {
               "id": "c",
@@ -337,7 +337,7 @@
               "texto": "Solo x = 4, porque es la solución positiva.",
               "esCorrecta": false,
               "feedback": "Ambos factores pueden anularse: (x − 4) da x = 4, pero (x + 3) también da un valor válido, x = −3. La respuesta completa incluye los dos.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "reporta-una-sola-raiz"
             },
             {
               "id": "c",
@@ -385,7 +385,7 @@
       "titulo": "El equilibrio de un emprendimiento de llaveros",
       "_notasInternas": [
         "G(q)=-q^2+20q-64. Verificado con node -e: ceros 4 y 16 (discriminante 144), vertice (10,36). q=4->0, q=16->0, q=10->36.",
-        "Bloque abierta houses error-2 (uso 2/2, via texto de feedback conceptual, no distractor formal con id -- ver bloque numerica que SI usa errorCatalogado en su feedbackPorError)."
+        "Bloque abierta houses reporta-una-sola-raiz (uso 2/2, via texto de feedback conceptual, no distractor formal con id -- ver bloque numerica que SI usa errorCatalogado en su feedbackPorError)."
       ],
       "bloques": [
         {
@@ -414,7 +414,7 @@
               "campoId": "equilibrioMayor",
               "valorObtenido": 4,
               "mensaje": "4 es la cantidad de equilibrio MENOR (la que ya pusiste en el otro campo). La ecuación −q² + 20q − 64 = 0 tiene dos soluciones distintas, y aquí se pide la mayor de las dos.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "reporta-una-sola-raiz"
             }
           ],
           "feedbackPorDefecto": "Iguala G(q) a 0: −q² + 20q − 64 = 0, o bien q² − 20q + 64 = 0. Busca dos números que sumen −20 y multiplicados den 64 para factorizar."
@@ -484,7 +484,7 @@
           "texto": "Solo x = 5. Eje Y: (0, −15).",
           "esCorrecta": false,
           "feedback": "La ecuación factorizada (x−5)(x+3)=0 tiene DOS soluciones: falta x = −3, que también es un cero válido de la función.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "reporta-una-sola-raiz"
         },
         {
           "clave": "D",
@@ -512,7 +512,7 @@
           "texto": "Día −1",
           "esCorrecta": false,
           "feedback": "−1 es, matemáticamente, la otra solución de la ecuación. Pero d representa días transcurridos desde el lanzamiento de la promoción, y no puede ser negativo: esa solución no tiene sentido en este problema.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto"
         },
         {
           "clave": "C",

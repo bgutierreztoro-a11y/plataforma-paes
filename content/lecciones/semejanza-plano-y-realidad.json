@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "semejanza-plano-y-realidad",
-  "moduloId": "semejanza-proporcionalidad",
+  "moduloId": "semejanza-y-proporcionalidad",
   "titulo": "Problemas de semejanza en contexto",
   "objetivo": "Resolver problemas de sombras y alturas, distancias inaccesibles, ampliaciones al 150 % y planos de vivienda con área real, armando la proporción con cantidades homólogas (altura con altura, sombra con sombra) y con las unidades coherentes.",
   "tiempoEstimadoMin": 35,
@@ -20,15 +20,15 @@
   ],
   "_notasInternas": [
     "L3 del módulo semejanza-y-proporcionalidad (eje Geometría, módulo #13). moduloId = semejanza-proporcionalidad. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md, sección L3. Descriptor DEMRE (docs/temario-demre-m1-2027.md:109): 'Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala y otras situaciones de la vida diaria y otras asignaturas'.",
-    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: error-1, error-2, error-3, error-5, error-6, error-7, error-8, error-9, error-10. error-9 y error-10 nacen acá; los demás se reutilizan con los mecanismos de L1 y L2.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: escala-sumando, invierte-razon-de-semejanza, empareja-lados-no-homologos, aplica-k-al-area, aplica-k-cuadrado-a-longitud, usa-escala-al-reves, mezcla-unidades-en-escala, cruza-altura-con-sombra-ajena, lee-ampliacion-como-aumento. cruza-altura-con-sombra-ajena y lee-ampliacion-como-aumento nacen acá; los demás se reutilizan con los mecanismos de L1 y L2.",
     "Dominios: (núcleo) poste de alumbrado y una persona con sus sombras; (descubrimiento) ancho de una laguna medido con estacas en la orilla; (generalización) árbol y persona con unidades mezcladas; (práctica) fotocopia al 150 % de un dibujo triangular; (aplicación) plano de vivienda 1:100 con el área real de un dormitorio; (ítems) mástil con su sombra, quincho en un plano 1:100. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
-    "Cambios respecto de los números reservados en el doc de diseño: persona 1,65 m con sombra 2,2 m y sombra del poste 6,6 m → 4,95 m (en vez de 1,6 m, 2 m, 7,5 m → 6 m: 1,6 choca con enteros y 7,5 con L1); laguna CD = 9 m, DE = 12 m, CB = 36 m → AB = 48 m (tríos 9-12-15 y 36-48-60, k = 4); árbol con persona de 165 cm, sombra 2,2 m y sombra del árbol 12 m → 9 m; fotocopia de un dibujo triangular 6-8-10 cm → 9-12-15 cm, área 24 → 54 cm² (en vez de un rectángulo, para que el área quede bajo 100 y no colisione con ningún contexto); ítem 1 con persona 1,95 m, sombra 2,6 m y sombra del mástil 7,8 m → 5,85 m (en vez de 1,8, 2,4 y 6 → 4,5: 4,5 choca con L1 y 1,8-2,4 se reserva para cierre-semejanza-7); ítem 2 quincho 6 cm × 7 cm → 42 m² (en vez de sala 4,5 cm × 6 cm → 27 m²: 27 es distractor de error-3 en la laguna).",
+    "Cambios respecto de los números reservados en el doc de diseño: persona 1,65 m con sombra 2,2 m y sombra del poste 6,6 m → 4,95 m (en vez de 1,6 m, 2 m, 7,5 m → 6 m: 1,6 choca con enteros y 7,5 con L1); laguna CD = 9 m, DE = 12 m, CB = 36 m → AB = 48 m (tríos 9-12-15 y 36-48-60, k = 4); árbol con persona de 165 cm, sombra 2,2 m y sombra del árbol 12 m → 9 m; fotocopia de un dibujo triangular 6-8-10 cm → 9-12-15 cm, área 24 → 54 cm² (en vez de un rectángulo, para que el área quede bajo 100 y no colisione con ningún contexto); ítem 1 con persona 1,95 m, sombra 2,6 m y sombra del mástil 7,8 m → 5,85 m (en vez de 1,8, 2,4 y 6 → 4,5: 4,5 choca con L1 y 1,8-2,4 se reserva para cierre-semejanza-7); ítem 2 quincho 6 cm × 7 cm → 42 m² (en vez de sala 4,5 cm × 6 cm → 27 m²: 27 es distractor de empareja-lados-no-homologos en la laguna).",
     "Hilo de tríos pitagóricos escalados: persona 1,65-2,2-2,75 (3-4-5 × 0,55) y poste 4,95-6,6-8,25 (3-4-5 × 1,65, k = 3); laguna 9-12-15 y 36-48-60 (k = 4); fotocopia 6-8-10 → 9-12-15 (k = 3/2); dormitorio 3-4-5 (diagonal 5 cm → 5 m); mástil 1,95-2,6-3,25 y 5,85-7,8-9,75 (k = 3).",
     "Todas las cifras verificadas con node -e sobre lib/semejanza.ts (fraccion, mismaFraccion, factores, motivoRechazoDatosSemejanza): 1,65/2,2 = 4,95/6,6 = 3/4 exacto; h = 1,65 · 6,6 ÷ 2,2 = 4,95; AB = 12 · 36 ÷ 9 = 48; árbol 1,65 · 12 ÷ 2,2 = 9; fotocopia 8 · 1,5 = 12, 10 · 1,5 = 15, 24 · 2,25 = 54; dormitorio 3 m · 4 m = 12 m²; 30 · 1,5 = 45; mástil 1,95 · 7,8 ÷ 2,6 = 5,85; quincho 6 m · 7 m = 42 m²; factores(1,5) = { perimetro: 1,5, area: 2,25 }. Las tres visuales anidadas pasan motivoRechazoDatosSemejanza (null).",
     "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,95; 48; 9; 12; 15; 54; 5; 45; 5,85; 42}, distractores numéricos {0,55; 8,8; 6,05; 0,25; 3; 27; 39; 900; 0,3025; 16; 20; 158; 25; 14; 36; 60; 0,12; 0,0012; 120.000; 0,05; 500; 67,5; 75; 0,65; 7,15; 10,4; 0,42; 0,0042; 420.000}; sin intersección. 36 y 60 son datos (CB = 36 m; CA = 60 m en la solución de la laguna), no respuestas correctas, así que pueden ser distractores del área de la fotocopia sin violar la regla.",
     "Visuales: tres bloques { tipo: 'semejanza', disposicion: 'anidada' } con todas las cotas rotuladas: curiosidad (poste 6,6 m con altura h y persona 2,2 m con 1,65 m), descubrimiento (laguna: CB = 36 m con AB = x y CD = 9 m con DE = 12 m), generalizacion (árbol: sombra 12 m con altura h y persona 2,2 m con 165 cm). En las tres la incógnita va con letra. Los ítems no llevan visual.",
     "Sin auditoria.constante: no hay una constante única (0,75 es la razón altura ÷ sombra de la escena del poste, no de la lección). Sin campos adimensionales: todos los campos numéricos llevan unidad.",
-    "P2: el paso consolidacion nombra los caminos equivocados de error-9, error-8 y error-10 antes del correcto, y su bloque pregunta lleva error-2, error-6 y error-10 en los distractores."
+    "P2: el paso consolidacion nombra los caminos equivocados de cruza-altura-con-sombra-ajena, mezcla-unidades-en-escala y lee-ampliacion-como-aumento antes del correcto, y su bloque pregunta lleva invierte-razon-de-semejanza, aplica-k-cuadrado-a-longitud y lee-ampliacion-como-aumento en los distractores."
   ],
   "contextosNumericos": [
     "curiosidad: poste de alumbrado con sombra de 6,6 m; persona de 1,65 m con sombra de 2,2 m; altura del poste 4,95 m (predicción sin corregir)",
@@ -47,7 +47,7 @@
       "tipo": "curiosidad",
       "titulo": "Medir un poste sin subirse",
       "_notasInternas": [
-        "Sin regla. Visual anidada con h como incógnita. La predicción no se corrige: 4,95 m es lo correcto; 8,8 m es la proporción invertida (error-2); la tercera opción es la duda razonable."
+        "Sin regla. Visual anidada con h como incógnita. La predicción no se corrige: 4,95 m es lo correcto; 8,8 m es la proporción invertida (invierte-razon-de-semejanza); la tercera opción es la duda razonable."
       ],
       "bloques": [
         {
@@ -125,7 +125,7 @@
       "tipo": "pensar",
       "titulo": "La altura del poste",
       "_notasInternas": [
-        "h = 1,65 · 6,6 ÷ 2,2 = 4,95 m (k = 3). feedbackPorError: 0,55 es error-9 (1,65 · 2,2 ÷ 6,6, altura de la persona con sombra del poste cruzadas); 8,8 es error-2 (6,6 · 2,2 ÷ 1,65, proporción invertida); 6,05 es error-1 (1,65 + 4,4, sumó lo que creció la sombra). Verificado con node -e."
+        "h = 1,65 · 6,6 ÷ 2,2 = 4,95 m (k = 3). feedbackPorError: 0,55 es cruza-altura-con-sombra-ajena (1,65 · 2,2 ÷ 6,6, altura de la persona con sombra del poste cruzadas); 8,8 es invierte-razon-de-semejanza (6,6 · 2,2 ÷ 1,65, proporción invertida); 6,05 es escala-sumando (1,65 + 4,4, sumó lo que creció la sombra). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -144,19 +144,19 @@
               "campoId": "alturaPoste",
               "valorObtenido": 0.55,
               "mensaje": "Ese valor cruza la altura de la persona con la sombra del poste (1,65 · 2,2 ÷ 6,6) y da un poste más bajo que la persona. Empareja lo que se corresponde: la sombra del poste con la sombra de la persona, y la altura del poste con la de la persona.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "cruza-altura-con-sombra-ajena"
             },
             {
               "campoId": "alturaPoste",
               "valorObtenido": 8.8,
               "mensaje": "Ese valor arma la proporción al revés: 6,6 · 2,2 ÷ 1,65. La sombra del poste es 3 veces la de la persona, así que el poste es 3 veces la persona, no más. Comprueba: 6,6 ÷ 2,2 = 3, y 3 · 1,65 no da 8,8.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "campoId": "alturaPoste",
               "valorObtenido": 6.05,
               "mensaje": "Ese valor suma a la altura de la persona los 4,4 m que la sombra del poste tiene de más. Las figuras semejantes no crecen sumando: la sombra se multiplicó por 3 (6,6 ÷ 2,2), y la altura también se multiplica por 3.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             }
           ],
           "feedbackPorDefecto": "Los dos triángulos son semejantes. Calcula la razón de semejanza con las dos sombras (la del poste dividida por la de la persona) y multiplica la altura de la persona por esa razón."
@@ -194,7 +194,7 @@
       "tipo": "descubrimiento",
       "titulo": "Homólogo con homólogo",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Tabla altura, sombra y altura ÷ sombra: persona 1,65 ÷ 2,2 = 0,75; poste 4,95 ÷ 6,6 = 0,75. Seleccion: la razón se repite (correcto); 'distinto porque el poste es más alto' sin id; 1,65 ÷ 6,6 = 0,25 es error-9. Luego se traslada el esquema a la laguna: visual anidada con CB = 36 m (base grande), AB = x, CD = 9 m, DE = 12 m. numerica AB = 12 · 36 ÷ 9 = 48; feedbackPorError 3 es error-2 (12 · 9 ÷ 36); 27 es error-3 (9 · 36 ÷ 12, emparejó CD con AB); 39 es error-1 (12 + 27). V/F metacognitivo. Verificado con node -e; la anidada de la laguna pasa motivoRechazoDatosSemejanza."
+        "CORAZÓN DE LA LECCIÓN. Tabla altura, sombra y altura ÷ sombra: persona 1,65 ÷ 2,2 = 0,75; poste 4,95 ÷ 6,6 = 0,75. Seleccion: la razón se repite (correcto); 'distinto porque el poste es más alto' sin id; 1,65 ÷ 6,6 = 0,25 es cruza-altura-con-sombra-ajena. Luego se traslada el esquema a la laguna: visual anidada con CB = 36 m (base grande), AB = x, CD = 9 m, DE = 12 m. numerica AB = 12 · 36 ÷ 9 = 48; feedbackPorError 3 es invierte-razon-de-semejanza (12 · 9 ÷ 36); 27 es empareja-lados-no-homologos (9 · 36 ÷ 12, emparejó CD con AB); 39 es escala-sumando (12 + 27). V/F metacognitivo. Verificado con node -e; la anidada de la laguna pasa motivoRechazoDatosSemejanza."
       ],
       "bloques": [
         {
@@ -234,7 +234,7 @@
               "texto": "Para el poste habría que dividir la altura de la persona por la sombra del poste: 1,65 ÷ 6,6 = 0,25.",
               "esCorrecta": false,
               "feedback": "Esa cuenta mezcla la altura de un triángulo con la sombra del otro, y 0,25 no describe a ninguno de los dos. Cada cociente se arma dentro de su propio triángulo: 4,95 ÷ 6,6 para el poste, 1,65 ÷ 2,2 para la persona. Y da 0,75 en los dos.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "cruza-altura-con-sombra-ajena"
             }
           ]
         },
@@ -269,19 +269,19 @@
               "campoId": "anchoLaguna",
               "valorObtenido": 3,
               "mensaje": "Ese valor arma la proporción al revés (12 · 9 ÷ 36) y da una laguna más angosta que la estaca. El triángulo grande es 36 ÷ 9 = 4 veces el chico: el ancho es 4 veces la estaca.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "campoId": "anchoLaguna",
               "valorObtenido": 27,
               "mensaje": "Ese valor empareja CD (9 m) con AB, pero CD es la base del triángulo chico y su homólogo es CB, la base del grande. AB, la altura del grande, se corresponde con DE, la altura del chico: AB ÷ DE = CB ÷ CD.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "empareja-lados-no-homologos"
             },
             {
               "campoId": "anchoLaguna",
               "valorObtenido": 39,
               "mensaje": "Ese valor suma a los 12 m de la estaca los 27 m que la base grande tiene de más. Los triángulos semejantes no crecen sumando: la base se multiplicó por 4 (36 ÷ 9), y la altura también se multiplica por 4.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             }
           ],
           "feedbackPorDefecto": "Base con base: CB ÷ CD = 36 ÷ 9 = 4 es la razón de semejanza. Altura con altura: AB = 4 · DE."
@@ -303,7 +303,7 @@
       "tipo": "generalizacion",
       "titulo": "La regla, y las unidades",
       "_notasInternas": [
-        "PRIMERA aparición de la regla completa (dos formas de armar la proporción, homólogo con homólogo, misma unidad). Ejercicio con unidades mezcladas: persona 165 cm con sombra 2,2 m, sombra del árbol 12 m → 1,65 · 12 ÷ 2,2 = 9 m. feedbackPorError: 900 es error-8 (165 · 12 ÷ 2,2 sin convertir cm a m); 0,3025 es error-9 (1,65 · 2,2 ÷ 12); 16 es error-2 (12 · 2,2 ÷ 1,65). Visual anidada con la etiqueta '165 cm' a propósito. Verificado con node -e."
+        "PRIMERA aparición de la regla completa (dos formas de armar la proporción, homólogo con homólogo, misma unidad). Ejercicio con unidades mezcladas: persona 165 cm con sombra 2,2 m, sombra del árbol 12 m → 1,65 · 12 ÷ 2,2 = 9 m. feedbackPorError: 900 es mezcla-unidades-en-escala (165 · 12 ÷ 2,2 sin convertir cm a m); 0,3025 es cruza-altura-con-sombra-ajena (1,65 · 2,2 ÷ 12); 16 es invierte-razon-de-semejanza (12 · 2,2 ÷ 1,65). Visual anidada con la etiqueta '165 cm' a propósito. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -337,19 +337,19 @@
               "campoId": "alturaArbol",
               "valorObtenido": 900,
               "mensaje": "Ese valor usa 165 sin convertir: mezcla centímetros con metros en la misma proporción, y sale un árbol de 900 m. Primero 165 cm = 1,65 m; después la proporción.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "mezcla-unidades-en-escala"
             },
             {
               "campoId": "alturaArbol",
               "valorObtenido": 0.3025,
               "mensaje": "Ese valor cruza la altura de la persona con su sombra y divide por la sombra del árbol (1,65 · 2,2 ÷ 12): sale un árbol de 30 cm. Homólogo con homólogo: altura del árbol ÷ altura de la persona = sombra del árbol ÷ sombra de la persona.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "cruza-altura-con-sombra-ajena"
             },
             {
               "campoId": "alturaArbol",
               "valorObtenido": 16,
               "mensaje": "Ese valor arma la proporción al revés (12 · 2,2 ÷ 1,65). La sombra del árbol es 12 ÷ 2,2 veces la de la persona, y el árbol es esa misma cantidad de veces la persona: 1,65 · 12 ÷ 2,2.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             }
           ],
           "feedbackPorDefecto": "Convierte 165 cm a metros. Después: altura del árbol ÷ 1,65 = 12 ÷ 2,2. Despeja la altura del árbol."
@@ -360,7 +360,7 @@
       "tipo": "practica",
       "titulo": "Al 150 %",
       "_notasInternas": [
-        "Fotocopia al 150 % de un dibujo triangular 6-8-10 cm: k = 1,5 → 9-12-15. numerica con dos campos: lado de 8 → 12; hipotenusa 10 → 15. feedbackPorError: 20 es error-10 (8 · 2,5); 158 es error-10 (8 + 150); 25 es error-10 (10 · 2,5); 14 es error-1 (10 + 4, lo que creció el lado de 8). seleccion sobre el área: 24 cm² → 54 cm² (× 2,25) correcto; 36 es error-5 (24 · 1,5); 60 es error-10 (24 · 2,5). 36 y 60 son datos en la laguna (CB y CA), no respuestas correctas. Verificado con node -e."
+        "Fotocopia al 150 % de un dibujo triangular 6-8-10 cm: k = 1,5 → 9-12-15. numerica con dos campos: lado de 8 → 12; hipotenusa 10 → 15. feedbackPorError: 20 es lee-ampliacion-como-aumento (8 · 2,5); 158 es lee-ampliacion-como-aumento (8 + 150); 25 es lee-ampliacion-como-aumento (10 · 2,5); 14 es escala-sumando (10 + 4, lo que creció el lado de 8). seleccion sobre el área: 24 cm² → 54 cm² (× 2,25) correcto; 36 es aplica-k-al-area (24 · 1,5); 60 es lee-ampliacion-como-aumento (24 · 2,5). 36 y 60 son datos en la laguna (CB y CA), no respuestas correctas. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -389,25 +389,25 @@
               "campoId": "ladoMedioCopia",
               "valorObtenido": 20,
               "mensaje": "Ese valor multiplica por 2,5, como si «al 150 %» fuera «un 150 % más». Al 150 % la copia mide el 150 % del original, o sea 1,5 veces: 8 · 1,5.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-ampliacion-como-aumento"
             },
             {
               "campoId": "ladoMedioCopia",
               "valorObtenido": 158,
               "mensaje": "Ese valor suma 150 al lado, como si el 150 fueran centímetros. Es un porcentaje: la copia mide el 150 % del original, 8 · 1,5.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-ampliacion-como-aumento"
             },
             {
               "campoId": "ladoMayorCopia",
               "valorObtenido": 25,
               "mensaje": "Ese valor multiplica 10 por 2,5. Al 150 % se multiplica por 1,5: la copia es una vez y media el original, no dos veces y media.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-ampliacion-como-aumento"
             },
             {
               "campoId": "ladoMayorCopia",
               "valorObtenido": 14,
               "mensaje": "Ese valor suma 4 al lado de 10, porque el lado de 8 creció 4. Sumar lo mismo a cada lado deforma la figura: cada lado se multiplica por 1,5, y 10 · 1,5 no es 14.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "escala-sumando"
             }
           ],
           "feedbackPorDefecto": "Al 150 %, k = 1,5. Multiplica cada lado por 1,5. Comprobación: la copia tiene que seguir siendo un trío pitagórico."
@@ -427,14 +427,14 @@
               "texto": "36 cm²",
               "esCorrecta": false,
               "feedback": "36 es 24 · 1,5: multiplica el área por k una sola vez. El área crece en dos direcciones y se multiplica por k² = 2,25 (Lección 2). Comprueba con los lados de la copia: 9 · 12 ÷ 2.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "aplica-k-al-area"
             },
             {
               "id": "c",
               "texto": "60 cm²",
               "esCorrecta": false,
               "feedback": "60 es 24 · 2,5: lee «al 150 %» como k = 2,5. Al 150 %, k = 1,5, y el área se multiplica por 1,5² = 2,25.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-ampliacion-como-aumento"
             }
           ]
         }
@@ -444,7 +444,7 @@
       "tipo": "aplicacion",
       "titulo": "El plano de la casa",
       "_notasInternas": [
-        "Plano de vivienda 1:100. Dormitorio 3 cm × 4 cm → 3 m × 4 m = 12 m² (numerica); feedbackPorError 0,12 es error-5 (12 cm² · 100 = 1.200 cm² = 0,12 m²); 0,0012 es error-7 (12 ÷ 10.000); 120.000 es error-8 (12 · 10.000 cm² reportados como m²). seleccion: diagonal 5 cm (3-4-5) → 5 m; 0,05 m es error-7 (5 ÷ 100); 500 m es error-8 (cm sin convertir). Verificado con node -e. La abierta integra sombras y plano."
+        "Plano de vivienda 1:100. Dormitorio 3 cm × 4 cm → 3 m × 4 m = 12 m² (numerica); feedbackPorError 0,12 es aplica-k-al-area (12 cm² · 100 = 1.200 cm² = 0,12 m²); 0,0012 es usa-escala-al-reves (12 ÷ 10.000); 120.000 es mezcla-unidades-en-escala (12 · 10.000 cm² reportados como m²). seleccion: diagonal 5 cm (3-4-5) → 5 m; 0,05 m es usa-escala-al-reves (5 ÷ 100); 500 m es mezcla-unidades-en-escala (cm sin convertir). Verificado con node -e. La abierta integra sombras y plano."
       ],
       "bloques": [
         {
@@ -467,19 +467,19 @@
               "campoId": "areaDormitorio",
               "valorObtenido": 0.12,
               "mensaje": "Ese valor multiplica el área del plano (12 cm²) por 100 una sola vez. El área se multiplica por 100², o mejor: los lados reales son 3 m y 4 m, y el área es 3 · 4.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "aplica-k-al-area"
             },
             {
               "campoId": "areaDormitorio",
               "valorObtenido": 0.0012,
               "mensaje": "Ese valor divide por 100² en vez de multiplicar. La escala 1:100 agranda: la casa es 100 veces el plano. Lados reales: 3 · 100 = 300 cm = 3 m y 4 · 100 = 400 cm = 4 m.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "usa-escala-al-reves"
             },
             {
               "campoId": "areaDormitorio",
               "valorObtenido": 120000,
               "mensaje": "Ese valor es el área real en cm²: 12 · 10.000 = 120.000 cm². Como 1 m² = 10.000 cm², son 12 m². Un dormitorio de 120.000 m² sería una cancha de fútbol veinte veces.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "mezcla-unidades-en-escala"
             }
           ],
           "feedbackPorDefecto": "Convierte cada lado: 3 cm · 100 = 3 m y 4 cm · 100 = 4 m. El área real es el producto, en m²."
@@ -499,14 +499,14 @@
               "texto": "0,05 m",
               "esCorrecta": false,
               "feedback": "0,05 es 5 ÷ 100: divide el plano por la escala, y una diagonal de 5 cm no puede ser real. En 1:100 se multiplica: 5 · 100 = 500 cm = 5 m.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "usa-escala-al-reves"
             },
             {
               "id": "c",
               "texto": "500 m",
               "esCorrecta": false,
               "feedback": "500 es la cuenta correcta en centímetros: 5 · 100 = 500 cm. Convierte: 500 cm = 5 m. Una diagonal de 500 m sería más larga que cinco cuadras.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "mezcla-unidades-en-escala"
             }
           ]
         },
@@ -541,7 +541,7 @@
       "tipo": "consolidacion",
       "titulo": "Lo que te llevas",
       "_notasInternas": [
-        "Síntesis + contraste P2 explícito con los caminos de error-9, error-8 y error-10, seguido de un bloque pregunta: dibujo de 30 cm al 150 % → 45 cm; 20 es error-2 (30 ÷ 1,5, la razón al revés); 67,5 es error-6 (30 · 2,25, el factor del área en una longitud); 75 es error-10 (30 · 2,5). Alternativas numéricas en orden creciente. Verificado con node -e."
+        "Síntesis + contraste P2 explícito con los caminos de cruza-altura-con-sombra-ajena, mezcla-unidades-en-escala y lee-ampliacion-como-aumento, seguido de un bloque pregunta: dibujo de 30 cm al 150 % → 45 cm; 20 es invierte-razon-de-semejanza (30 ÷ 1,5, la razón al revés); 67,5 es aplica-k-cuadrado-a-longitud (30 · 2,25, el factor del área en una longitud); 75 es lee-ampliacion-como-aumento (30 · 2,5). Alternativas numéricas en orden creciente. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -557,7 +557,7 @@
               "texto": "20 cm",
               "esCorrecta": false,
               "feedback": "20 es 30 ÷ 1,5: divide en vez de multiplicar, y la copia sale más chica que el original. Al 150 % la copia es más grande: k = 1,5 y se multiplica, 30 · 1,5.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-razon-de-semejanza"
             },
             {
               "clave": "B",
@@ -570,17 +570,17 @@
               "texto": "67,5 cm",
               "esCorrecta": false,
               "feedback": "67,5 es 30 · 2,25: aplica el factor del área (1,5²) a una longitud. El largo es una longitud y se multiplica por k = 1,5: 30 · 1,5 = 45 cm.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "aplica-k-cuadrado-a-longitud"
             },
             {
               "clave": "D",
               "texto": "75 cm",
               "esCorrecta": false,
               "feedback": "75 es 30 · 2,5: lee «al 150 %» como «un 150 % más». Al 150 % significa que la copia mide el 150 % del original, o sea 1,5 veces: 30 · 1,5 = 45 cm.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "lee-ampliacion-como-aumento"
             }
           ],
-          "notaVerificacionMatematica": "k = 150/100 = 1,5. Largo de la copia: 30 · 1,5 = 45. Distractores: 30 ÷ 1,5 = 20 (error-2); 30 · 2,25 = 67,5 (error-6); 30 · 2,5 = 75 (error-10). Verificado con node -e."
+          "notaVerificacionMatematica": "k = 150/100 = 1,5. Largo de la copia: 30 · 1,5 = 45. Distractores: 30 ÷ 1,5 = 20 (invierte-razon-de-semejanza); 30 · 2,25 = 67,5 (aplica-k-cuadrado-a-longitud); 30 · 2,5 = 75 (lee-ampliacion-como-aumento). Verificado con node -e."
         }
       ]
     }
@@ -597,7 +597,7 @@
           "texto": "0,65 m",
           "esCorrecta": false,
           "feedback": "0,65 es 1,95 · 2,6 ÷ 7,8: cruza la altura de la persona con las sombras al revés y da un mástil más bajo que una persona. Homólogo con homólogo: altura del mástil ÷ 1,95 = 7,8 ÷ 2,6 = 3, y el mástil mide 3 · 1,95 = 5,85 m.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "cruza-altura-con-sombra-ajena"
         },
         {
           "clave": "B",
@@ -610,14 +610,14 @@
           "texto": "7,15 m",
           "esCorrecta": false,
           "feedback": "7,15 es 1,95 + 5,2: le suma a la altura de la persona lo que la sombra del mástil tiene de más. Los triángulos semejantes crecen multiplicando: la sombra se triplicó (7,8 ÷ 2,6 = 3) y la altura también se triplica: 5,85 m.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "escala-sumando"
         },
         {
           "clave": "D",
           "texto": "10,4 m",
           "esCorrecta": false,
           "feedback": "10,4 es 7,8 · 2,6 ÷ 1,95: la proporción invertida. La razón de semejanza es sombra grande ÷ sombra chica = 3, y el mástil es 3 veces la persona, 5,85 m, no 10,4.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-razon-de-semejanza"
         }
       ],
       "solucion": "Los dos triángulos (mástil con su sombra, persona con su sombra) son semejantes: ángulo recto con el suelo y el mismo ángulo del sol. Razón de semejanza con los lados homólogos conocidos: sombra del mástil ÷ sombra de la persona = 7,8 ÷ 2,6 = 3. Altura del mástil = 3 · 1,95 = 5,85 m. Comprobación por la otra forma: altura ÷ sombra = 1,95 ÷ 2,6 = 0,75 en la persona y 5,85 ÷ 7,8 = 0,75 en el mástil. ✓ (Los triángulos son 3-4-5 escalados: 1,95-2,6-3,25 y 5,85-7,8-9,75.)"
@@ -633,14 +633,14 @@
           "texto": "0,0042 m²",
           "esCorrecta": false,
           "feedback": "0,0042 es 42 ÷ 10.000: divide en vez de multiplicar, como si la casa fuera más chica que su plano. La escala 1:100 agranda: los lados reales son 6 m y 7 m, y el área es 6 · 7 = 42 m².",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "usa-escala-al-reves"
         },
         {
           "clave": "B",
           "texto": "0,42 m²",
           "esCorrecta": false,
           "feedback": "0,42 m² es 42 cm² · 100 = 4.200 cm²: multiplica el área por 100 una sola vez. El área se multiplica por 100² porque cada lado se multiplica por 100: 6 m · 7 m = 42 m².",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "aplica-k-al-area"
         },
         {
           "clave": "C",
@@ -653,7 +653,7 @@
           "texto": "420.000 m²",
           "esCorrecta": false,
           "feedback": "420.000 es el área real en cm²: 42 cm² · 10.000 = 420.000 cm². Como 1 m² = 10.000 cm², son 42 m². Un quincho de 420.000 m² sería más grande que cuarenta canchas.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "mezcla-unidades-en-escala"
         }
       ],
       "solucion": "Camino 1, por los lados: 6 cm · 100 = 600 cm = 6 m; 7 cm · 100 = 700 cm = 7 m; área real = 6 · 7 = 42 m². Camino 2, por el factor de área: área en el plano = 6 · 7 = 42 cm²; factor = 100² = 10.000; 42 · 10.000 = 420.000 cm² = 42 m². Los dos caminos coinciden. ✓"
@@ -669,7 +669,7 @@
           "texto": "Es correcta: al 150 % todas las medidas de la figura, incluida el área, se multiplican por 1,5.",
           "esCorrecta": false,
           "feedback": "Las longitudes sí se multiplican por 1,5, pero el área crece en dos direcciones: largo por 1,5 y ancho por 1,5. El área se multiplica por 1,5² = 2,25. Comprueba con un rectángulo de 2 × 2: la copia es 3 × 3, y 9 no es 1,5 veces 4.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "aplica-k-al-area"
         },
         {
           "clave": "B",
@@ -682,14 +682,14 @@
           "texto": "No es correcta: al 150 % la copia es un 150 % más grande, así que las longitudes se multiplican por 2,5 y el área por 2,5².",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero la razón no. «Al 150 %» significa que la copia mide el 150 % del original, o sea 1,5 veces, no 2,5. Con k = 1,5, el área se multiplica por 1,5² = 2,25.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "lee-ampliacion-como-aumento"
         },
         {
           "clave": "D",
           "texto": "No es correcta: el área se multiplica por 2,25, y el perímetro también se multiplica por 2,25, porque los dos son medidas de toda la figura.",
           "esCorrecta": false,
           "feedback": "El área sí va por 2,25, pero el perímetro es una longitud (una suma de lados) y se multiplica por k = 1,5, no por k². Solo el área lleva el cuadrado.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "aplica-k-cuadrado-a-longitud"
         }
       ],
       "solucion": "Una fotocopia al 150 % es una semejanza con k = 150/100 = 1,5. Toda longitud (lados, diagonales, perímetro) se multiplica por k = 1,5. El área se multiplica por k² = 1,5 · 1,5 = 2,25, porque el largo y el ancho crecen a la vez. La afirmación confunde el factor de las longitudes con el de las áreas: no es correcta, y la alternativa que lo explica es B. Comprobación con el triángulo 6-8-10 de la lección: área 24 cm², copia 9-12-15 con área 54 cm², y 54 ÷ 24 = 2,25. ✓"

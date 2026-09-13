@@ -5,7 +5,7 @@
   "titulo": "Cierre del módulo: Sistemas de ecuaciones lineales (2x2)",
   "_notasInternas": [
     "Cierre del módulo 'Sistemas de ecuaciones lineales (2x2)' (docs/diseno-modulo-sistemas-2x2.md), construido después de que las 3 lecciones (sistemas-dos-historias, sistemas-rectas-no-se-cruzan, sistemas-plantear-antes-resolver) pasaran npm run validar y npm run auditar en verde.",
-    "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia error-1, error-5 y error-6, los tres ya definidos ahí. No se necesitó ningún id nuevo.",
+    "El catálogo de errores del módulo vive únicamente en content/lecciones/sistemas-dos-historias.json (L1); este archivo referencia distribuye-sobre-parte-de-expresion, invierte-valores-del-par y iguala-con-total-equivocado, los tres ya definidos ahí. No se necesitó ningún id nuevo.",
     "Contextos nuevos, sin repetir escena con ninguna de las 3 lecciones: kiosco escolar, drones en un trayecto, repartidores en bicicleta, entradas de un evento escolar, collares de piedra y madera. El ítem 8 es el integrador pedido: combina el mecanismo de L1 (boletería de cine, sustitución) con el de L3 (edades de hermanos, plantear antes de resolver), reutilizando los resultados ya conocidos (24 adultos, 23 años) sin introducir escena nueva.",
     "Ronda 2 de auditoría de originalidad (2026-08-19): los contextos 'ciclistas a distinta velocidad' (items 3 y 4) y 'mezcla de café' (item 7) fueron rechazados por coincidir con arquetipos clásicos presentes en el material fuente específico del tema (MOD-06_Ecuacion_Recta_Sistemas.md, MA-30_Sistemas_Ecuaciones.md), pese a que la verificación original de 2026-08-19 los había marcado NO contra el corpus general (esa verificación de origen sigue siendo válida para 'kiosco escolar' y 'entradas de un evento escolar', que no se tocaron). Se reemplazaron por 'drones en un trayecto', 'repartidores en bicicleta' y 'collares de piedra y madera'; términos sueltos exactos consultados el 2026-08-19 por Benja: 'drones en un trayecto' → NO, 'repartidores en bicicleta' → NO, 'collares de piedra y madera' → NO. Esta declaración cubre exactamente esos tres términos, no combinaciones ni palabras sueltas no consultadas."
   ],
@@ -27,7 +27,7 @@
           "texto": "33",
           "esCorrecta": false,
           "feedback": "Ese es el número de jugos (j = 33), no de completos. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál producto.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-valores-del-par"
         },
         {
           "clave": "C",
@@ -41,7 +41,7 @@
           "texto": "9",
           "esCorrecta": false,
           "feedback": "Al despejar j en c + j = 60, hay que aplicar el signo negativo: j = 60 − c. Si se escribe j = 60 + c por no aplicar bien ese signo, la sustitución posterior (1.200c + 600(60 + c) = 52.200 → 1.800c = 16.200 → c = 9) lleva a un valor como este, que no cumple el sistema real.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion"
         }
       ],
       "solucion": "c + j = 60; 1.200c + 600j = 52.200. j = 60 − c → 1.200c + 600(60 − c) = 52.200 → 1.200c + 36.000 − 600c = 52.200 → 600c = 16.200 → c = 27, j = 33. Comprobación: 27 + 33 = 60 ✓; 1.200×27 + 600×33 = 32.400 + 19.800 = 52.200 ✓. ✓"
@@ -63,7 +63,7 @@
           "texto": "b + s = 19.400 ; 900b + 700s = 24",
           "esCorrecta": false,
           "feedback": "Invertiste a qué ecuación corresponde cada total. La ecuación de CANTIDAD de productos debe igualarse a 24, no a 19.400 (que es dinero); y la ecuación de DINERO debe igualarse a 19.400, no a 24.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "iguala-con-total-equivocado"
         },
         {
           "clave": "C",
@@ -171,7 +171,7 @@
           "texto": "g + p = 242.000 ; 2.500g + 4.000p = 80",
           "esCorrecta": false,
           "feedback": "Invertiste a qué ecuación corresponde cada total. La ecuación de CANTIDAD de entradas debe igualarse a 80, no a 242.000 (que es dinero); y la ecuación de DINERO debe igualarse a 242.000, no a 80.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "iguala-con-total-equivocado"
         },
         {
           "clave": "C",
@@ -207,7 +207,7 @@
           "texto": "25",
           "esCorrecta": false,
           "feedback": "Ese es el número de entradas general (g = 25), no preferencial. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de entrada.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-valores-del-par"
         },
         {
           "clave": "C",
@@ -221,7 +221,7 @@
           "texto": "7",
           "esCorrecta": false,
           "feedback": "Al despejar g en g + p = 60, hay que aplicar el signo negativo: g = 60 − p. Si se escribe g = 60 + p por no aplicar bien ese signo, la sustitución posterior (2.000(60 + p) + 3.000p = 155.000 → 5.000p = 35.000 → p = 7) lleva a un valor como este, que no cumple el sistema real.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion"
         }
       ],
       "solucion": "g + p = 60; 2.000g + 3.000p = 155.000. g = 60 − p → 2.000(60 − p) + 3.000p = 155.000 → 120.000 − 2.000p + 3.000p = 155.000 → 1.000p = 35.000 → p = 35, g = 25. Comprobación: 25 + 35 = 60 ✓; 2.000×25 + 3.000×35 = 50.000 + 105.000 = 155.000 ✓. ✓"
@@ -243,7 +243,7 @@
           "texto": "13",
           "esCorrecta": false,
           "feedback": "Ese es el número de collares de madera (m = 13), no de piedra. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de collar.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-valores-del-par"
         },
         {
           "clave": "C",
@@ -257,7 +257,7 @@
           "texto": "2",
           "esCorrecta": false,
           "feedback": "Al despejar m en p + m = 20, hay que aplicar el signo negativo: m = 20 − p. Si se escribe m = 20 + p por no aplicar bien ese signo, la sustitución posterior (9.000p + 5.000(20 + p) = 128.000 → 14.000p = 28.000 → p = 2) lleva a un valor como este, que no cumple el sistema real.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion"
         }
       ],
       "solucion": "p + m = 20; 9.000p + 5.000m = 128.000. m = 20 − p → 9.000p + 5.000(20 − p) = 128.000 → 9.000p + 100.000 − 5.000p = 128.000 → 4.000p = 28.000 → p = 7, m = 13. Comprobación: 7 + 13 = 20 ✓; 9.000×7 + 5.000×13 = 63.000 + 65.000 = 128.000 ✓. ✓"

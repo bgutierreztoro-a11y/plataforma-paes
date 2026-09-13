@@ -25,14 +25,14 @@
     "VERIFICACIÓN DE COLISIÓN DE DOMINIO: hecha. Términos 'pigmento' y 'esmalte' volvieron NO en consultar-fuentes.mjs, corrido por Benja fuera de la sesión de redacción (mecanismo 2 de CLAUDE.md), salida pegada sin reformular. Se descartaron por SI del script: engranaje/diente, obrero/cuadrilla/jornada, llave/estanque/caudal/bomba, escala/mapa, receta/ingrediente/harina/masa, hilo/telar, litro/bencina/consumo/eléctrico, horno, resolución. Se descartaron por criterio pese a estar limpios: polea/correa (molde canónico de proporción inversa). AUDITORÍA DE ORIGINALIDAD: corrida el 2026-08-13 en hilo aparte abierto con /clear, y cerrada — el detalle y la única adyacencia que hubo que resolver están en proveniencia.declaracionOriginalidad.",
     "REVISIÓN MATEMÁTICA: CORRIDA el 2026-08-13 en hilo propio abierto con /clear; hallazgos aplicados en el commit cffbbe0. Levantó la dirección del tono del paso 1, el catálogo de errores, la tensión del paso 2 y —lo más determinante— cuatro filtraciones de la constante antes del paso 5: el bloque de texto del paso 1, el feedback del distractor 129 del paso 3, el feedback de la alternativa correcta del paso 2 y la pista de nivel 3 del paso 4. La aritmética recalculada durante la redacción quedó anotada en las _notasInternas de cada paso; esta auditoría la verificó de forma independiente, no la reemplazó. Desde el 2026-08-13 la no-filtración de la constante además se mide sola: `npm run auditar` la chequea contra auditoria.constante.",
     "El paso 8 cambia el par de magnitudes a propósito (piezas ↔ mL de esmalte, en vez de gramos de pigmento ↔ mL de base). Si se cambiara el contexto del paso 5 por el del paso 8 la lección NO seguiría funcionando igual, que es el chequeo de transferencia real que exige §2 de docs/calibracion-lecciones-e-items.md.",
-    "El error-7 (relación con valor inicial distinto de cero que parece proporcional) se planta acá en la práctica P3 y en el ítem 3, pero se explota de verdad en proporcionalidad-reconocer (L3). Es deliberado: el paso 5 de esta lección deja viva la pregunta '¿existe la constante?', así que comprobar que a veces NO existe pertenece al alcance de L1."
+    "El trata-afin-como-proporcional (relación con valor inicial distinto de cero que parece proporcional) se planta acá en la práctica P3 y en el ítem 3, pero se explota de verdad en proporcionalidad-reconocer (L3). Es deliberado: el paso 5 de esta lección deja viva la pregunta '¿existe la constante?', así que comprobar que a veces NO existe pertenece al alcance de L1."
   ],
   "auditoria": {
     "constante": 40,
     "colisionesPermitidas": [
       {
         "valor": 40,
-        "motivo": "Es la constante de la lección, y la colisión es el diseño, no un descuido. Antes del paso 5 el 40 es distractor tres veces (error-4, «entregó la constante en vez del resultado»): en el campo baseLoteEncargo del paso 3 y en baseLoteIlegible y baseLoteGrande del paso 5. En el paso 5, campo cocienteConstante, el 40 es la respuesta correcta, porque ahí la pregunta cambia: ya no se pide un total de base sino el cociente mismo. Que el estudiante escriba 40 cuando se le pide un total es precisamente el error-4 —encontró la constante y se detuvo antes de aplicarla—, y su feedback lo dice sin repetir la cifra. Ver docs/reglas-modulo.md §3b."
+        "motivo": "Es la constante de la lección, y la colisión es el diseño, no un descuido. Antes del paso 5 el 40 es distractor tres veces (confunde-constante-con-valor-de-tabla, «entregó la constante en vez del resultado»): en el campo baseLoteEncargo del paso 3 y en baseLoteIlegible y baseLoteGrande del paso 5. En el paso 5, campo cocienteConstante, el 40 es la respuesta correcta, porque ahí la pregunta cambia: ya no se pide un total de base sino el cociente mismo. Que el estudiante escriba 40 cuando se le pide un total es precisamente el confunde-constante-con-valor-de-tabla —encontró la constante y se detuvo antes de aplicarla—, y su feedback lo dice sin repetir la cifra. Ver docs/reglas-modulo.md §3b."
       }
     ]
   },
@@ -58,7 +58,7 @@
       "tipo": "curiosidad",
       "titulo": "El mismo verde, dos veces, y uno salió mal",
       "_notasInternas": [
-        "Gancho: el error aditivo aparece en la primera pantalla, encarnado en un lote echado a perder. Ataca error-1 de entrada sin nombrarlo.",
+        "Gancho: el error aditivo aparece en la primera pantalla, encarnado en un lote echado a perder. Ataca usa-diferencia-constante de entrada sin nombrarlo.",
         "Verificación: lote correcto 120 ÷ 3 = 40 mL por gramo. Lote fallido 150 ÷ 6 = 25 mL por gramo. 25 < 40, o sea cada gramo de pigmento recibió menos base, la mezcla quedó más concentrada y por lo tanto más oscura. ✓",
         "El número 40 NO aparece en este paso, y esa ausencia es deliberada y frágil: hay que cuidarla en cada reescritura. El bloque de texto describe el problema (3 g en 120 mL; 6 g en 150 mL) y sostiene el argumento cualitativo —el doble de pigmento con apenas algo más de base deja menos líquido por gramo, y menos líquido por gramo oscurece— sin ejecutar ninguna división. Historial: hasta el 2026-08-13 este bloque decía 'cada gramo de pigmento se repartió en 40 mL de base. El martes, en 25 mL' y una nota interna afirmaba lo contrario, que el 40 no se revelaba acá. La auditoría matemática desmintió la nota; la decisión posterior de Benja fue purgar el 40 de los pasos 1 a 4 para que aparezca por primera vez en el paso 5. También se quitó 'le faltaban 120', que entregaba el total correcto del lote del martes y con él la constante a quien dividiera."
       ],
@@ -86,8 +86,8 @@
         "El problema fuerza a comparar tres candidatos sin entregar herramienta formal. La intuición ya no alcanza porque los tres números son plausibles a ojo: 242, 320 y 360 caben todos en la misma banda y ninguno se puede descartar por tamaño.",
         "Verificación: el taller tiene dos lotes correctos, 3 g / 120 mL y 6 g / 240 mL. Ambos dan 40 mL por gramo (120 ÷ 3 = 40; 240 ÷ 6 = 40) ✓.",
         "Verificación de los candidatos para 8 g: 320 ÷ 8 = 40 ✓ correcto. 242 ÷ 8 = 30,25 ✗. 360 ÷ 8 = 45 ✗.",
-        "Los dos distractores comparten error-1 y ahora encarnan SUB-MECANISMOS DISTINTOS de la misma familia (usar la diferencia en vez del cociente). El 242 suma la diferencia de gramos al total de base de la fila: de 6 g a 8 g hay +2, y 240 + 2 = 242. El 360 traslada el salto de base de un tramo al otro: de 3 g a 6 g la base sube 120 mL, y le vuelve a sumar 120 a los 240 sin notar que ese tramo es de 2 g y no de 3. El 360 es además múltiplo de 40, así que parece un lote perfectamente legítimo —lo es, pero de otra cantidad de pigmento— y por eso es el distractor duro del ítem.",
-        "HISTORIAL DEL DISTRACTOR DURO, para no repetir el ciclo: (1) era 290 mL, no derivable de ningún procedimiento con los datos y mapeado a error-3, un error inalcanzable acá porque las dos filas comparten k y calcular la constante con un solo par sin verificar produce la respuesta correcta; (2) pasó a 280, que colisionaba con la respuesta correcta del campo hoy llamado baseLoteIlegible en el paso 5 (entonces se llamaba baseLote7, antes del renombre a ids neutros del 2026-08-13); (3) pasó a 203, derivable y sin colisión, pero dejaba los dos distractores por debajo de 210 contra una correcta de 320, de modo que se podía acertar por sentido de magnitud sin dividir; (4) para arreglar eso se cambiaron las filas base, que era la vía correcta. Con 3 g y 6 g la diferencia es de 3 gramos y el salto trasladado cae en 360, a solo 12,5 % de la correcta.",
+        "Los dos distractores comparten usa-diferencia-constante y ahora encarnan SUB-MECANISMOS DISTINTOS de la misma familia (usar la diferencia en vez del cociente). El 242 suma la diferencia de gramos al total de base de la fila: de 6 g a 8 g hay +2, y 240 + 2 = 242. El 360 traslada el salto de base de un tramo al otro: de 3 g a 6 g la base sube 120 mL, y le vuelve a sumar 120 a los 240 sin notar que ese tramo es de 2 g y no de 3. El 360 es además múltiplo de 40, así que parece un lote perfectamente legítimo —lo es, pero de otra cantidad de pigmento— y por eso es el distractor duro del ítem.",
+        "HISTORIAL DEL DISTRACTOR DURO, para no repetir el ciclo: (1) era 290 mL, no derivable de ningún procedimiento con los datos y mapeado a verifica-un-solo-par, un error inalcanzable acá porque las dos filas comparten k y calcular la constante con un solo par sin verificar produce la respuesta correcta; (2) pasó a 280, que colisionaba con la respuesta correcta del campo hoy llamado baseLoteIlegible en el paso 5 (entonces se llamaba baseLote7, antes del renombre a ids neutros del 2026-08-13); (3) pasó a 203, derivable y sin colisión, pero dejaba los dos distractores por debajo de 210 contra una correcta de 320, de modo que se podía acertar por sentido de magnitud sin dividir; (4) para arreglar eso se cambiaron las filas base, que era la vía correcta. Con 3 g y 6 g la diferencia es de 3 gramos y el salto trasladado cae en 360, a solo 12,5 % de la correcta.",
         "POR QUÉ ESTAS FILAS Y NO OTRAS. Con 8 g pedidos, el salto trasladado vale 40 · (2b − a). Las combinaciones que lo dejan cerca de 320 sin romper nada son pocas: a = 1 pondría una fila de 1 g / 40 mL y filtraría la constante dentro de la propia tabla; b = 7 pondría 7 g / 280 mL, que es justo el lote que el paso 5 manda reconstruir; y (2,5), (4,6) y (6,7) hacen que el error produzca 320, o sea la respuesta correcta, lo que premiaría el razonamiento equivocado. Queda (3,6). Bonus narrativo: el lote bueno de 6 g lleva 240 mL, que es exactamente lo que le faltó al lote del martes del paso 1 (6 g con 150 mL).",
         "ECO EVITADO: una versión previa dejaba 360 mL también en el paso 5, como base del lote ilegible. Se cambió ese lote a 520 mL → 13 g para que el 360 sea exclusivo de este ítem y su feedback no filtre nada del paso 5."
       ],
@@ -101,7 +101,7 @@
               "texto": "242 mL",
               "esCorrecta": false,
               "feedback": "Ese número sale de sumar: del lote de 6 g al de 8 g hay 2 g de diferencia, y le agregaste 2 mL a los 240. Fíjate en lo que eso significa: que dos gramos más de pigmento se conformen con dos mililitros más de base, cuando el lote de 6 g ya se llevaba 240 enteros. Reparte 242 mL entre 8 g y te salen 30,25 mL por gramo, menos de lo que recibía cada gramo en los lotes buenos — el verde te saldría más oscuro.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "id": "b",
@@ -114,7 +114,7 @@
               "texto": "360 mL",
               "esCorrecta": false,
               "feedback": "Trasladaste el salto de un tramo al otro. De 3 g a 6 g la base sube 120 mL, y le sumaste otros 120 a los 240 para llegar a 8 g — pero de 6 g a 8 g el pigmento sube 2 gramos, no 3. El salto de la base no es fijo: depende de cuántos gramos agregues. Reparte 360 mL entre 8 g y te salen 45 mL por gramo, más de lo que recibía cada gramo en los lotes buenos — el verde te saldría más claro.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             }
           ]
         }
@@ -126,7 +126,7 @@
       "_notasInternas": [
         "Registro del intento genuino ANTES de cualquier ayuda. Este es el dato pedagógico más valioso de la lección.",
         "Verificación: 12 g × 40 mL/g = 480 mL. Ruta alternativa: 12 es 4 veces 3, y 120 × 4 = 480 ✓.",
-        "Verificación de los distractores: aditivo, de 3 a 12 hay +9, y 120 + 9 = 129 (error-1). Entregar la constante en vez del resultado: 40 (error-4). Escalar una sola cantidad: 12 × 120 = 1.440 (error-5)."
+        "Verificación de los distractores: aditivo, de 3 a 12 hay +9, y 120 + 9 = 129 (usa-diferencia-constante). Entregar la constante en vez del resultado: 40 (confunde-constante-con-valor-de-tabla). Escalar una sola cantidad: 12 × 120 = 1.440 (escala-una-sola-cantidad)."
       ],
       "bloques": [
         {
@@ -145,19 +145,19 @@
               "campoId": "baseLoteEncargo",
               "valorObtenido": 129,
               "mensaje": "Le sumaste a la base la misma cantidad que le sumaste al pigmento (9). Pero mira el lote de 3 g: tres gramos se llevaban 120 mL enteros, muchísima base para cada gramo. Con 129 mL para 12 g, cada gramo recibiría apenas 10,75 mL. El tono se te va a ir muy oscuro.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "baseLoteEncargo",
               "valorObtenido": 40,
               "mensaje": "Ese número es importante y lo encontraste bien: son los mL de base que le tocan a UN gramo. Pero acá el lote tiene 12 gramos, no uno. Te falta el último movimiento.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "baseLoteEncargo",
               "valorObtenido": 1440,
               "mensaje": "Multiplicaste los 120 mL del lote chico por los 12 g del lote nuevo. Pero los 120 mL ya venían acompañados de 3 g: al multiplicarlos por 12 estás ampliando la base 12 veces mientras el pigmento solo se multiplicó por 4. Ampliaste un lado y no el otro.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "escala-una-sola-cantidad"
             }
           ],
           "feedbackPorDefecto": "Compara los lotes buenos entre sí. De 3 g a 120 mL, de 6 g a 240 mL, de 8 g a 320 mL. Divide la base por el pigmento en cada uno y anota los tres resultados antes de responder."
@@ -200,8 +200,8 @@
         "REQUISITO (b), RESUELTO DENTRO DEL REGISTRO TABULAR: el estudiante calcula los cinco cocientes con su propia mano y comprueba que coinciden, así que ve la invariante en vez de que se la cuenten. El cierre del paso no repite ese cálculo: le devuelve una tabla con dos filas borradas para que la constante deje de ser un número observado y pase a ser una herramienta que reconstruye datos que no están. Se ejercitan los dos sentidos —de la cantidad al total (7 g → 280 mL) y del total a la cantidad (520 mL → 13 g)—, lo que impide resolver por simple copia de un patrón de multiplicación.",
         "REQUISITO (d), RESUELTO EL 2026-08-13 (decisión de Benja, opción 1: purgar). La auditoría matemática levantó que el 40 circulaba antes de este paso en cuatro lugares: el bloque de texto del paso 1, el feedback del distractor 129 del paso 3, el feedback de la alternativa correcta del paso 2 —que además ejecutaba las dos divisiones— y, el más determinante, la pista de nivel 3 del paso 4, que entregaba 120 ÷ 3 = 40 servido. Los cuatro se reescribieron: el 40 ya no aparece en ningún texto de los pasos 1 a 4 y este paso es su primera aparición. REGLA QUE QUEDA VIGENTE para cualquier reescritura futura: ningún bloque anterior al paso 5 puede nombrar el 40 ni ejecutar una división base ÷ pigmento. La única excepción admitida es el feedbackPorError del valor 40 en el paso 3, porque solo se dispara cuando el estudiante ya escribió ese número por su cuenta —y aun así el texto no lo repite, dice 'ese número'. La diferencia con porcentaje-concepto.json queda ahora limpia: allá el 30% venía dado como dato del problema y el paso 5 solo confirmaba que 0,30 se repetía; acá la cifra no existe hasta que el estudiante divide. Contrapartida asumida: la pista 3 del paso 4 ya no ejecuta la división, así que su gradación frente a la pista 2 se sostiene en otra cosa —nombra los operandos y agrega el movimiento final (que el resultado es por gramo y el lote tiene 12)—, no en entregar el cálculo hecho.",
         "Verificación de la tabla completa: 120 ÷ 3 = 40 ✓; 240 ÷ 6 = 40 ✓; 320 ÷ 8 = 40 ✓; 480 ÷ 12 = 40 ✓; 600 ÷ 15 = 40 ✓. Las cinco filas dan cociente entero y exacto: elegidas así para que ningún decimal distraiga del patrón.",
-        "Verificación de los distractores del cociente: restar en vez de dividir en la primera fila da 120 − 3 = 117 (error-1). Dividir al revés da 3 ÷ 120 = 0,025 (error-2).",
-        "Verificación de la micro-pregunta: 25 g × 40 mL/g = 1.000 mL ✓. Distractores: sumar la constante una vez, 25 + 40 = 65 (error-6); entregar la constante, 40 (error-4); invertir, 25 ÷ 40 = 0,625 (error-2)."
+        "Verificación de los distractores del cociente: restar en vez de dividir en la primera fila da 120 − 3 = 117 (usa-diferencia-constante). Dividir al revés da 3 ÷ 120 = 0,025 (invierte-el-cociente).",
+        "Verificación de la micro-pregunta: 25 g × 40 mL/g = 1.000 mL ✓. Distractores: sumar la constante una vez, 25 + 40 = 65 (suma-constante-en-vez-de-multiplicar); entregar la constante, 40 (confunde-constante-con-valor-de-tabla); invertir, 25 ÷ 40 = 0,625 (invierte-el-cociente)."
       ],
       "bloques": [
         {
@@ -246,13 +246,13 @@
               "campoId": "cocienteConstante",
               "valorObtenido": 117,
               "mensaje": "Restaste en vez de dividir: 120 − 3 = 117. Prueba esa misma resta en la segunda fila: 240 − 6 = 234, y en la tercera 320 − 8 = 312. Te dan tres números distintos, así que la resta no es lo que se mantiene. Vuelve a intentarlo dividiendo.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "cocienteConstante",
               "valorObtenido": 0.025,
               "mensaje": "Dividiste al revés: pigmento entre base (3 ÷ 120). Ese número también se repite en las cinco filas, así que no está mal mirado — pero es difícil de usar. Divide en el otro orden, base entre pigmento, y vas a obtener directamente cuántos mL le tocan a un gramo.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-el-cociente"
             }
           ],
           "feedbackPorDefecto": "Empieza por la primera fila: 120 ÷ 3. Después haz lo mismo con 240 ÷ 6 y con 320 ÷ 8. Si los tres te dan lo mismo, ese es el número que busca la pregunta."
@@ -295,25 +295,25 @@
               "campoId": "baseLoteIlegible",
               "valorObtenido": 47,
               "mensaje": "Le sumaste el 40 al pigmento (7 + 40). El 40 no se agrega una vez al final: es lo que se lleva cada gramo, y este lote tiene 7 gramos que reclaman los suyos.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-constante-en-vez-de-multiplicar"
             },
             {
               "campoId": "baseLoteIlegible",
               "valorObtenido": 40,
               "mensaje": "Ese es el número que le corresponde a un solo gramo. El lote tiene 7, así que ese 40 hay que repetirlo 7 veces.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "pigmentoLoteIlegible",
               "valorObtenido": 20800,
               "mensaje": "Multiplicaste cuando acá había que hacer lo contrario. Fíjate en qué te están dando: los 520 mL son la base, o sea la cantidad grande, y te preguntan por el pigmento, que siempre es la chica. Si multiplicas, el resultado crece todavía más. Pregúntate cuántas veces cabe 40 dentro de 520.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "multiplica-al-volver-del-total"
             },
             {
               "campoId": "pigmentoLoteIlegible",
               "valorObtenido": 560,
               "mensaje": "Sumaste 40 a los 520. Comprueba adónde te lleva: 560 g de pigmento con 520 mL de base sería más pigmento que base, cuando en todos los lotes de la tabla cada gramo se llevaba 40 mL.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "multiplica-al-volver-del-total"
             }
           ],
           "feedbackPorDefecto": "Los dos lotes se resuelven con el mismo 40, pero en sentidos opuestos. En el primero conoces el pigmento y buscas la base: cada gramo aporta 40 mL. En el segundo conoces la base y buscas el pigmento: hay que ver cuántas veces cabe 40 dentro de 520."
@@ -334,19 +334,19 @@
               "campoId": "baseLoteGrande",
               "valorObtenido": 65,
               "mensaje": "Sumaste el 40 una sola vez (25 + 40). Pero el 40 no es una cantidad que se agrega al final: es lo que se lleva CADA gramo. Con 25 gramos, hay que darle 40 mL a cada uno de los 25.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-constante-en-vez-de-multiplicar"
             },
             {
               "campoId": "baseLoteGrande",
               "valorObtenido": 40,
               "mensaje": "Ese es el número que le toca a un solo gramo. El lote tiene 25 gramos, así que ese 40 hay que repetirlo 25 veces.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "baseLoteGrande",
               "valorObtenido": 0.625,
               "mensaje": "Dividiste 25 entre 40. Control rápido de sentido: la base siempre sale un número mucho más grande que el pigmento —120 contra 3, 600 contra 15—, así que un resultado menor que 1 no puede ser una cantidad de base.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-el-cociente"
             }
           ],
           "feedbackPorDefecto": "A un gramo le corresponden 40 mL. Este lote tiene 25 gramos. Cada uno de esos 25 gramos necesita sus propios 40 mL."
@@ -360,8 +360,8 @@
         "Recién acá se nombra el concepto, se da la notación y la fórmula, como exige el marco pedagógico. Ni un paso antes.",
         "Verificación del ejemplo trabajado: azul cobalto 210 ÷ 6 = 35 ✓; 9 × 35 = 315 ✓.",
         "Verificación del ejercicio, con cifras DISTINTAS a las del ejemplo (regla de §2 de calibracion): ocre 140 ÷ 5 = 28 ✓; 8 × 28 = 224 ✓.",
-        "Verificación de los distractores del ejercicio: aditivo, de 5 a 8 hay +3, y 140 + 3 = 143 (error-1). Entregar la constante: 28 (error-4). Escalar una sola cantidad: 140 × 8 = 1.120 (error-5).",
-        "El bloque de selección intermedio es el único lugar donde se trabaja la INTERPRETACIÓN de la constante (error-8): qué magnitud va arriba y cuál abajo, y por qué es 'por cada uno' y no un total."
+        "Verificación de los distractores del ejercicio: aditivo, de 5 a 8 hay +3, y 140 + 3 = 143 (usa-diferencia-constante). Entregar la constante: 28 (confunde-constante-con-valor-de-tabla). Escalar una sola cantidad: 140 × 8 = 1.120 (escala-una-sola-cantidad).",
+        "El bloque de selección intermedio es el único lugar donde se trabaja la INTERPRETACIÓN de la constante (nombra-mal-la-constante): qué magnitud va arriba y cuál abajo, y por qué es 'por cada uno' y no un total."
       ],
       "bloques": [
         {
@@ -383,21 +383,21 @@
               "texto": "Que cada mL de base lleva 35 g de pigmento",
               "esCorrecta": false,
               "feedback": "Diste vuelta las dos magnitudes. Si cada mL llevara 35 g de pigmento, un lote de 210 mL necesitaría 7.350 g de pigmento — más de siete kilos para un tarro de esmalte. La base es la cantidad grande y el pigmento la chica, así que el 35 va en el sentido base por gramo.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "nombra-mal-la-constante"
             },
             {
               "id": "c",
               "texto": "Que el lote lleva 35 mL de base en total",
               "esCorrecta": false,
               "feedback": "El lote lleva 210 mL en total, ese dato ya estaba en el enunciado. La constante no es un total: es cuánto le toca a UNO. Un total cambia con el tamaño del lote; la constante es justamente lo que no cambia.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "nombra-mal-la-constante"
             },
             {
               "id": "d",
               "texto": "Que hay que sumarle 35 mL a la base de cada lote",
               "esCorrecta": false,
               "feedback": "La constante no se suma, se multiplica. Compruébalo: si a los 210 mL del lote de 6 g le sumaras 35, tendrías 245 mL para 6 g, o sea 40,8 mL por gramo. Cambió la razón, y con ella el tono.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-constante-en-vez-de-multiplicar"
             }
           ]
         },
@@ -417,19 +417,19 @@
               "campoId": "baseOcre",
               "valorObtenido": 143,
               "mensaje": "Le sumaste a la base los 3 g que le sumaste al pigmento. Comprueba la razón: 143 ÷ 8 = 17,875 mL por gramo, cuando el lote original daba 28. Cambió la razón, así que cambió el tono.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "baseOcre",
               "valorObtenido": 28,
               "mensaje": "Encontraste bien la constante del ocre: 140 ÷ 5 = 28 mL por gramo. Falta el último paso, aplicarla a los 8 gramos del lote nuevo.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "baseOcre",
               "valorObtenido": 1120,
               "mensaje": "Multiplicaste los 140 mL completos por los 8 g. Pero esos 140 mL ya correspondían a 5 g: al multiplicarlos por 8 estás ampliando la base ocho veces mientras el pigmento solo creció de 5 a 8. Lo que se multiplica por la cantidad nueva es la constante, no el total anterior.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "escala-una-sola-cantidad"
             }
           ],
           "feedbackPorDefecto": "Dos pasos. Primero saca la constante del ocre dividiendo 140 entre 5. Después multiplica esa constante por los 8 gramos del lote nuevo."
@@ -441,10 +441,10 @@
       "titulo": "Práctica: tres formas de equivocarse",
       "_notasInternas": [
         "Progresión estricta baja → media → media/alta, como exige §5.1 de calibracion.",
-        "P1 (baja/media). Verificación: gris perla 100 ÷ 8 = 12,5 mL por gramo ✓; 14 × 12,5 = 175 ✓. Constante decimal a propósito: es el único lugar del archivo donde el redondeo prematuro (error-9) puede aparecer de forma natural.",
-        "Verificación de los distractores de P1: redondear k a 12 da 14 × 12 = 168 (error-9). Aditivo, de 8 a 14 hay +6, y 100 + 6 = 106 (error-1). Entregar la constante: 12,5 (error-4).",
+        "P1 (baja/media). Verificación: gris perla 100 ÷ 8 = 12,5 mL por gramo ✓; 14 × 12,5 = 175 ✓. Constante decimal a propósito: es el único lugar del archivo donde el redondeo prematuro (redondea-constante-antes-de-tiempo) puede aparecer de forma natural.",
+        "Verificación de los distractores de P1: redondear k a 12 da 14 × 12 = 168 (redondea-constante-antes-de-tiempo). Aditivo, de 8 a 14 hay +6, y 100 + 6 = 106 (usa-diferencia-constante). Entregar la constante: 12,5 (confunde-constante-con-valor-de-tabla).",
         "P2 (media). Verificación: el verde musgo tiene k = 40. Agregar 2 g y 2 mL a un lote de 3 g / 120 mL deja 5 g / 122 mL, o sea 24,4 mL por gramo. La afirmación es falsa.",
-        "P3 (media/alta). Verificación de que la tabla NO es proporcional: 70 ÷ 3 = 23,33…; 115 ÷ 6 = 19,166…; 160 ÷ 9 = 17,77…. Tres cocientes distintos ✓. La relación es base = 25 + 15 · pigmento (3 → 25 + 45 = 70 ✓; 6 → 25 + 90 = 115 ✓; 9 → 25 + 135 = 160 ✓): crece con diferencias constantes y por eso engaña, pero tiene valor inicial 25, no 0. Planta error-7 para L3."
+        "P3 (media/alta). Verificación de que la tabla NO es proporcional: 70 ÷ 3 = 23,33…; 115 ÷ 6 = 19,166…; 160 ÷ 9 = 17,77…. Tres cocientes distintos ✓. La relación es base = 25 + 15 · pigmento (3 → 25 + 45 = 70 ✓; 6 → 25 + 90 = 115 ✓; 9 → 25 + 135 = 160 ✓): crece con diferencias constantes y por eso engaña, pero tiene valor inicial 25, no 0. Planta trata-afin-como-proporcional para L3."
       ],
       "bloques": [
         {
@@ -463,19 +463,19 @@
               "campoId": "baseGrisPerla",
               "valorObtenido": 168,
               "mensaje": "La constante es 12,5 mL por gramo y la redondeaste a 12 antes de multiplicar. Con números chicos la diferencia se nota poco, pero acá te dejó 7 mL abajo — suficiente para que el gris salga más oscuro. Redondea al final, nunca a mitad de camino.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "redondea-constante-antes-de-tiempo"
             },
             {
               "campoId": "baseGrisPerla",
               "valorObtenido": 106,
               "mensaje": "Le sumaste a la base los 6 g que le sumaste al pigmento. Comprueba: 106 ÷ 14 = 7,57 mL por gramo, muy lejos de los 12,5 del lote original.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "baseGrisPerla",
               "valorObtenido": 12.5,
               "mensaje": "Sacaste bien la constante (100 ÷ 8 = 12,5), pero eso es lo que necesita un solo gramo. El lote tiene 14.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             }
           ],
           "feedbackPorDefecto": "Divide 100 entre 8 para obtener cuántos mL le tocan a un gramo. No redondees ese resultado. Después multiplícalo por 14."
@@ -496,14 +496,14 @@
               "texto": "Sí, porque cuando una sube la otra también sube",
               "esCorrecta": false,
               "feedback": "Que suban juntas es necesario, pero no alcanza. La prueba es el cociente, no la dirección: 70 ÷ 3 = 23,3; 115 ÷ 6 = 19,2; 160 ÷ 9 = 17,8. Cada gramo recibe menos base que el anterior, así que el tono se va oscureciendo fila a fila.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "trata-afin-como-proporcional"
             },
             {
               "id": "b",
               "texto": "Sí, porque 70 ÷ 3 da la constante de la tabla",
               "esCorrecta": false,
               "feedback": "Sacaste la constante de la primera fila y te detuviste ahí. Ese es el paso que falta siempre: comprobarla en las demás. 115 ÷ 6 = 19,2 y 160 ÷ 9 = 17,8, ninguno igual a 23,3. Una constante que solo vale en una fila no es una constante.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "verifica-un-solo-par"
             },
             {
               "id": "c",
@@ -516,7 +516,7 @@
               "texto": "No, porque si fueran proporcionales a 6 g le corresponderían 70 + 23,3 = 93,3 mL, y hay 115",
               "esCorrecta": false,
               "feedback": "Llegaste al veredicto correcto por un camino que no sirve: sumaste la constante (23,3) una sola vez al valor de la primera fila en vez de multiplicarla por los 6 g. Si la relación fuera proporcional, a 6 g le corresponderían 6 × 23,3 = 140 mL, no 93,3.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-constante-en-vez-de-multiplicar"
             }
           ]
         }
@@ -528,7 +528,7 @@
       "_notasInternas": [
         "Contexto de transferencia: cambian LAS MAGNITUDES, no solo la historia. Ya no es pigmento ↔ base (dos ingredientes de una mezcla) sino piezas ↔ esmalte (objetos y material que consumen). Si se cambiara el contexto del paso 5 por este, la lección no funcionaría igual: acá no hay razón que determine un tono, hay consumo por unidad. Esa es la transferencia real que pide §2 de calibracion.",
         "Verificación: 90 ÷ 5 = 18 mL por pieza ✓; 12 × 18 = 216 ✓.",
-        "Verificación de los distractores: aditivo, de 5 a 12 hay +7, y 90 + 7 = 97 (error-1). Entregar la constante: 18 (error-4). Escalar una sola cantidad: 90 × 12 = 1.080 (error-5)."
+        "Verificación de los distractores: aditivo, de 5 a 12 hay +7, y 90 + 7 = 97 (usa-diferencia-constante). Entregar la constante: 18 (confunde-constante-con-valor-de-tabla). Escalar una sola cantidad: 90 × 12 = 1.080 (escala-una-sola-cantidad)."
       ],
       "bloques": [
         {
@@ -553,19 +553,19 @@
               "campoId": "esmaltePiezas",
               "valorObtenido": 97,
               "mensaje": "Le sumaste 7 mL porque hay 7 piezas más. Pero cada pieza nueva no consume 1 mL: consume lo mismo que las anteriores, 18 mL. Siete piezas más son 7 × 18 = 126 mL más.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "esmaltePiezas",
               "valorObtenido": 18,
               "mensaje": "Sacaste bien cuánto gasta una pieza (90 ÷ 5 = 18 mL). Con eso ya tienes la constante; falta multiplicarla por las 12 piezas del encargo.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "esmaltePiezas",
               "valorObtenido": 1080,
               "mensaje": "Multiplicaste los 90 mL completos por las 12 piezas. Esos 90 mL ya cubrían 5 piezas, así que multiplicarlos por 12 daría para 60 piezas, no para 12. Lo que se multiplica por la cantidad nueva es el gasto de UNA pieza.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "escala-una-sola-cantidad"
             }
           ],
           "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: primero cuánto esmalte gasta una sola pieza, después multiplícalo por las 12 piezas."
@@ -620,7 +620,7 @@
           "texto": "141 mL",
           "esCorrecta": false,
           "feedback": "Le sumaste a la base los 9 g que le sumaste al pigmento. La razón del lote original es 132 ÷ 6 = 22 mL por gramo, y con 141 mL para 15 g quedaría en 9,4 mL por gramo: el tono cambiaría por completo.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "usa-diferencia-constante"
         },
         {
           "clave": "B",
@@ -633,14 +633,14 @@
           "texto": "22 mL",
           "esCorrecta": false,
           "feedback": "Ese es el valor de la constante, y está bien calculado (132 ÷ 6 = 22). Pero corresponde a un solo gramo de pigmento, y el lote tiene 15: falta multiplicar.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla"
         },
         {
           "clave": "D",
           "texto": "1.980 mL",
           "esCorrecta": false,
           "feedback": "Multiplicaste los 132 mL completos por los 15 g. Esos 132 mL ya venían con 6 g de pigmento, así que multiplicarlos por 15 alcanzaría para 90 g. Lo que se multiplica por la cantidad nueva es la constante, no el total del lote anterior.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "escala-una-sola-cantidad"
         }
       ],
       "solucion": "Se obtiene la constante dividiendo base entre pigmento en el lote conocido: 132 ÷ 6 = 22 mL de base por cada gramo. Luego se multiplica por la cantidad pedida: 15 × 22 = 330 mL. Verificación por otra vía: 15 g es 2,5 veces 6 g, y 132 × 2,5 = 330 ✓. Segunda verificación de la razón: 330 ÷ 15 = 22, igual que el lote original ✓."
@@ -656,14 +656,14 @@
           "texto": "b = 184 · p",
           "esCorrecta": false,
           "feedback": "Tomaste como constante los 184 mL, que son el total de un lote de 8 g, no lo que le corresponde a un gramo. Compruébalo con el dato conocido: si p = 8, esta expresión da 1.472 mL, ocho veces lo que el enunciado dice.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "escala-una-sola-cantidad"
         },
         {
           "clave": "B",
           "texto": "b = p ÷ 23",
           "esCorrecta": false,
           "feedback": "Encontraste el 23, que es la constante correcta, pero la usaste al revés. Compruébalo con el dato conocido: si p = 8, esta expresión da 0,35 mL de base, y el enunciado dice 184. La base es la cantidad grande, así que se multiplica.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-el-cociente"
         },
         {
           "clave": "C",
@@ -676,7 +676,7 @@
           "texto": "b = 184 + p",
           "esCorrecta": false,
           "feedback": "Esta expresión suma el pigmento a la base, y son magnitudes distintas: no se pueden sumar gramos con mililitros. Además haría que un lote de 0 g necesitara 184 mL de base, cuando sin pigmento no hay esmalte que preparar.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "usa-diferencia-constante"
         }
       ],
       "solucion": "En una proporción directa, y = k · x. Acá la constante se obtiene del par conocido: k = 184 ÷ 8 = 23 mL de base por gramo de pigmento. La expresión pedida es entonces b = 23 · p. Verificación: con p = 8 se obtiene 23 × 8 = 184, que coincide con el dato del enunciado ✓. Lo que este ítem pide es el modelo, no un valor numérico."
@@ -698,21 +698,21 @@
           "texto": "Si se le agregan 3 g de pigmento, hay que agregarle 3 mL de base.",
           "esCorrecta": false,
           "feedback": "Esta afirmación suma la misma cifra a las dos cantidades, y en una proporción directa lo que se conserva es el cociente, no la diferencia. Cada gramo nuevo necesita su propia constante: agregar 3 g obliga a agregar 3 · k mL, no 3 mL.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "usa-diferencia-constante"
         },
         {
           "clave": "C",
           "texto": "Cualquier tabla en la que la base suba cada vez que sube el pigmento es de proporción directa.",
           "esCorrecta": false,
           "feedback": "Que las dos cantidades suban juntas es necesario, pero no suficiente. Una tabla puede subir de forma perfectamente ordenada y no ser proporcional: basta con que necesite algo de base incluso con cero pigmento, y ahí el cociente cambia en cada fila. La prueba es el cociente, no la dirección.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "trata-afin-como-proporcional"
         },
         {
           "clave": "D",
           "texto": "Si se duplica el pigmento, a la base hay que sumarle la constante una vez.",
           "esCorrecta": false,
           "feedback": "La constante no se agrega al final: es lo que consume cada unidad, así que se multiplica por la cantidad. Si el pigmento pasa de p a 2p, la base pasa de k · p a k · 2p, o sea aumenta en k · p mL, y eso depende del tamaño del lote — no es una sola constante.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "suma-constante-en-vez-de-multiplicar"
         }
       ],
       "solucion": "Si b = k · p, al reemplazar p por 2p se obtiene b' = k · (2p) = 2 · (k · p) = 2b: la base se duplica, así que A es correcta. B es falsa porque conserva la diferencia y no el cociente; agregar 3 g exige agregar 3 · k mL. C es falsa porque el crecimiento conjunto no garantiza cociente constante: una relación con valor inicial distinto de cero crece de forma ordenada y no es proporcional. D es falsa porque el aumento al duplicar es k · p, que depende del lote, y no la constante sola."
@@ -727,7 +727,7 @@
       "Ampliación de la verificación léxica el 2026-08-13, durante la auditoría de originalidad: se corrieron además los términos que la verificación de redacción no había probado —colorante, disolver, diluir, mezcla, color, pintura, cerámica, barniz, y el vocabulario de tono del gancho (más oscuro, más claro, intensidad del color, mezcla de color)—. 'disolver', 'diluir', 'cerámica', 'barniz' y todo el vocabulario de tono vuelven NO contra el corpus completo. La única señal fue 'colorante' en la forma DEMRE 2026 liberada; ver la declaración de originalidad para cómo se resolvió.",
       "content/lecciones/porcentaje-concepto.json y la L2 del módulo Función lineal y afín — leídas como referencia de densidad, tono y calidad de feedback, y para garantizar que ninguna cifra ni formulación se repita (lecciones propias del proyecto, no fuentes externas)."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. AUDITORÍAS INDEPENDIENTES, AMBAS CERRADAS EL 2026-08-13, cada una en hilo aparte abierto con /clear. (1) Revisión matemática: corrida, hallazgos aplicados en el commit cffbbe0. (2) Auditoría de originalidad: corrida; checklist MOS §7.3 con los cuatro puntos en SI. El punto 1 quedó abierto durante la auditoría por una sola adyacencia —el chequeo léxico marcó «colorante» en fuentes-demre-liberadas/paes-m1-2026-forma113.md, y el hilo auditor no podía comparar enunciado contra enunciado porque el subagente auditor-originalidad no existe como subagent_type en este entorno (docs/pendientes.md)—. La adyacencia quedó DESCARTADA por verificación directa del autor sobre el PDF de la forma liberada, el 2026-08-13: no existe en esa forma ningún ítem de gotas ni de colorante, y el escenario no coincide con el de esta lección. Los términos 'disolver' y 'diluir' vuelven NO contra el corpus completo. ADVERTENCIA PARA QUIEN RE-AUDITE: consultar-fuentes.mjs sigue devolviendo SI para «colorante» y «gotas de colorante» sobre la transcripción .md de esa forma, así que un chequeo léxico futuro va a volver a marcarlo. La discrepancia entre esa transcripción y el PDF revisado no está explicada; lo que cierra el punto es la revisión directa del PDF, que manda sobre el chequeo léxico. Ninguna otra adyacencia quedó abierta. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre el distractor d del bloque de práctica «Práctica: tres formas de equivocarse» tras el rediseño del split de veredicto, commit 87debb2): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura contra los patrones DEMRE conocidos y contra el resto del corpus — el dominio (pigmento/base, esmaltes) ya está cleared arriba en este mismo campo, y el distractor nuevo solo agrega una cifra (93,3 mL) dentro de ese dominio ya verificado. Sin coincidencia sospechosa. El distractor nuevo no duplica literalmente (misma redacción) ningún otro distractor del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/) — reemplaza al «no son números redondos» (error-11) que sí estaba repetido en las tres lecciones de proporcionalidad y que el rediseño eliminó por eso mismo. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO. Esta nota cubre solo el distractor rediseñado, no reabre ni sustituye el resto de este campo.",
+    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. AUDITORÍAS INDEPENDIENTES, AMBAS CERRADAS EL 2026-08-13, cada una en hilo aparte abierto con /clear. (1) Revisión matemática: corrida, hallazgos aplicados en el commit cffbbe0. (2) Auditoría de originalidad: corrida; checklist MOS §7.3 con los cuatro puntos en SI. El punto 1 quedó abierto durante la auditoría por una sola adyacencia —el chequeo léxico marcó «colorante» en fuentes-demre-liberadas/paes-m1-2026-forma113.md, y el hilo auditor no podía comparar enunciado contra enunciado porque el subagente auditor-originalidad no existe como subagent_type en este entorno (docs/pendientes.md)—. La adyacencia quedó DESCARTADA por verificación directa del autor sobre el PDF de la forma liberada, el 2026-08-13: no existe en esa forma ningún ítem de gotas ni de colorante, y el escenario no coincide con el de esta lección. Los términos 'disolver' y 'diluir' vuelven NO contra el corpus completo. ADVERTENCIA PARA QUIEN RE-AUDITE: consultar-fuentes.mjs sigue devolviendo SI para «colorante» y «gotas de colorante» sobre la transcripción .md de esa forma, así que un chequeo léxico futuro va a volver a marcarlo. La discrepancia entre esa transcripción y el PDF revisado no está explicada; lo que cierra el punto es la revisión directa del PDF, que manda sobre el chequeo léxico. Ninguna otra adyacencia quedó abierta. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre el distractor d del bloque de práctica «Práctica: tres formas de equivocarse» tras el rediseño del split de veredicto, commit 87debb2): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura contra los patrones DEMRE conocidos y contra el resto del corpus — el dominio (pigmento/base, esmaltes) ya está cleared arriba en este mismo campo, y el distractor nuevo solo agrega una cifra (93,3 mL) dentro de ese dominio ya verificado. Sin coincidencia sospechosa. El distractor nuevo no duplica literalmente (misma redacción) ningún otro distractor del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/) — reemplaza al «no son números redondos» (decide-por-criterio-irrelevante) que sí estaba repetido en las tres lecciones de proporcionalidad y que el rediseño eliminó por eso mismo. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO. Esta nota cubre solo el distractor rediseñado, no reabre ni sustituye el resto de este campo.",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto; revisión matemática independiente corrida el 2026-08-13, hallazgos aplicados en cffbbe0; auditoría de originalidad independiente corrida y cerrada el 2026-08-13, checklist MOS §7.3 con los cuatro puntos en SI",
     "fecha": "2026-08-13"
   }

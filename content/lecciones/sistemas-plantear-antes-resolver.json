@@ -17,7 +17,7 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (edades de dos hermanos, boletos de bus y metro, sueldo con bono fijo y comisión) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19.",
-    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza error-1 y error-5 de esa lección donde el error calza. Los errores propios de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, plantear con el rol de las dos incógnitas invertido, o no cerrar el desplazamiento temporal en la misma incógnita) van con feedback artesanal sin errorCatalogado. error-4 y error-6 se desmapearon el 2026-08-20 (auditoría matemática Ronda 1): ninguno de los dos describía el mecanismo real de los distractores a los que estaban asignados (consolidación D y l3-item-2.C respectivamente)."
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza distribuye-sobre-parte-de-expresion y invierte-valores-del-par de esa lección donde el error calza. Los errores propios de esta lección (olvidar aplicar el desplazamiento temporal antes de comparar, plantear con el rol de las dos incógnitas invertido, o no cerrar el desplazamiento temporal en la misma incógnita) van con feedback artesanal sin errorCatalogado. omite-sustituir-de-vuelta y iguala-con-total-equivocado se desmapearon el 2026-08-20 (auditoría matemática Ronda 1): ninguno de los dos describía el mecanismo real de los distractores a los que estaban asignados (consolidación D y l3-item-2.C respectivamente)."
   ],
   "pasos": [
     {
@@ -144,7 +144,7 @@
       "tipo": "practica",
       "titulo": "Practica: otra pareja de hermanos",
       "_notasInternas": [
-        "Nueva pareja (Camila y Diego, suma 27, condición con 'dentro de 3 años' y 'hace 3 años' combinadas). Correcto: Camila = 15 (Diego = 12). feedbackPorError cubre error-5 (swap) y un error propio de la lección (ignora el desplazamiento temporal), sin id."
+        "Nueva pareja (Camila y Diego, suma 27, condición con 'dentro de 3 años' y 'hace 3 años' combinadas). Correcto: Camila = 15 (Diego = 12). feedbackPorError cubre invierte-valores-del-par (swap) y un error propio de la lección (ignora el desplazamiento temporal), sin id."
       ],
       "bloques": [
         {
@@ -163,7 +163,7 @@
               "campoId": "edadCamila",
               "valorObtenido": 12,
               "mensaje": "Ese es el resultado para Diego, no para Camila. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál hermano.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-valores-del-par"
             },
             {
               "campoId": "edadCamila",
@@ -259,7 +259,7 @@
               "texto": "10",
               "esCorrecta": false,
               "feedback": "Ese es el resultado para Fernanda, no para Isidora. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál hermana.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-valores-del-par"
             },
             {
               "clave": "C",
@@ -299,7 +299,7 @@
           "texto": "6",
           "esCorrecta": false,
           "feedback": "Ese es el número de boletos de BUS (b = 6), no de metro. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál tipo de boleto.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-valores-del-par"
         },
         {
           "clave": "C",
@@ -313,7 +313,7 @@
           "texto": "5",
           "esCorrecta": false,
           "feedback": "Al despejar b en b + m = 17, hay que aplicar el signo negativo: b = 17 − m. Si se escribe b = 17 + m por no aplicar bien ese signo, la sustitución posterior (300(17 + m) + 800m = 10.600 → 1.100m = 5.500 → m = 5) lleva a un valor como este, que no cumple el sistema real.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion"
         }
       ],
       "solucion": "b + m = 17; 300b + 800m = 10.600. b = 17 − m → 300(17 − m) + 800m = 10.600 → 5.100 − 300m + 800m = 10.600 → 500m = 5.500 → m = 11, b = 6. Comprobación: 6 + 11 = 17 ✓; 300×6 + 800×11 = 1.800 + 8.800 = 10.600 ✓. ✓"

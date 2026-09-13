@@ -16,7 +16,7 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contextos (planes de telefonía, arriendo de bicicletas) verificados LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19. El contexto de l2-item-2 ('estanques de agua') fue rechazado en la Ronda 2 de auditoría de originalidad (2026-08-19) por coincidir con un arquetipo clásico presente en el material fuente específico del tema (MOD-06_Ecuacion_Recta_Sistemas.md, MA-30_Sistemas_Ecuaciones.md); se reemplazó por 'ahorro semanal de dos amigos', verificado LIMPIO por Benja el mismo día.",
-    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza error-1 (Paso 7) del catálogo de esa lección. Los errores conceptuales propios de esta lección (confundir 'sin solución' con 'infinitas soluciones', o creer que depende del valor de la incógnita) van con feedback artesanal sin errorCatalogado, mismo patrón que cierre-enteros-racionales.json."
+    "Sin catalogoErrores propio (regla dura del módulo: vive solo en sistemas-dos-historias.json). Se reutiliza distribuye-sobre-parte-de-expresion (Paso 7) del catálogo de esa lección. Los errores conceptuales propios de esta lección (confundir 'sin solución' con 'infinitas soluciones', o creer que depende del valor de la incógnita) van con feedback artesanal sin errorCatalogado, mismo patrón que cierre-enteros-racionales.json."
   ],
   "pasos": [
     {
@@ -141,7 +141,7 @@
       "tipo": "practica",
       "titulo": "Practica: la misma oferta, escrita distinto",
       "_notasInternas": [
-        "Introduce el caso de infinitas soluciones. Plan C1 = 12.000+40m, Plan C2 = 2×(6.000+20m). Correcto: 12.400 (a los 10 minutos, coinciden). feedbackPorError cubre error-1 (distribución parcial del 2)."
+        "Introduce el caso de infinitas soluciones. Plan C1 = 12.000+40m, Plan C2 = 2×(6.000+20m). Correcto: 12.400 (a los 10 minutos, coinciden). feedbackPorError cubre distribuye-sobre-parte-de-expresion (distribución parcial del 2)."
       ],
       "bloques": [
         {
@@ -160,7 +160,7 @@
               "campoId": "costoPlanC",
               "valorObtenido": 12200,
               "mensaje": "El 2 tiene que multiplicar a los DOS términos dentro del paréntesis: 2×6.000 y 2×(20×10), no solo al primero. 2 × (6.000 + 200) = 2×6.000 + 2×200 = 12.000 + 400 = 12.400.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "distribuye-sobre-parte-de-expresion"
             }
           ],
           "feedbackPorDefecto": "2 × (6.000 + 20×10) = 2 × (6.000 + 200) = 2 × 6.200 = 12.400. Coincide exactamente con la Forma 1 a los 10 minutos: 12.000 + 40×10 = 12.400. Son la misma recta, escrita de dos formas distintas."

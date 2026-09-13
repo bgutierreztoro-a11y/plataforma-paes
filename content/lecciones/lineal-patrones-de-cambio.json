@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "lineal-patrones-de-cambio",
-  "moduloId": "funcion-lineal-afin",
+  "moduloId": "funcion-lineal-y-afin",
   "titulo": "Concepto de función lineal y función afín",
   "objetivo": "Detectar si una situación o tabla tiene cambio constante mirando las diferencias entre valores consecutivos; predecir valores futuros usando la estructura 'valor inicial + cambio por paso × cantidad de pasos'; y distinguir cambio constante de otros tipos de crecimiento.",
   "tiempoEstimadoMin": 22,
@@ -105,37 +105,37 @@
               "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 6000,
               "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 9000,
               "mensaje": "Ese es el total de la semana 2, no de la 3. Cuenta de nuevo: de la semana 0 a la semana 3 hay 3 saltos de $2.000.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             },
             {
               "campoId": "ahorroSemanaTemprana",
               "valorObtenido": 13000,
               "mensaje": "Te pasaste por un salto. De la semana 0 a la 3 hay exactamente 3 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 3 × 2.000?",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             },
             {
               "campoId": "ahorroSemanaTardia",
               "valorObtenido": 16000,
               "mensaje": "Te faltó algo: Camila no partió de cero. Ella ya tenía $5.000 antes de la primera semana. ¿Dónde entra ese monto inicial en tu cálculo?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "ahorroSemanaTardia",
               "valorObtenido": 19000,
               "mensaje": "Estás cerca. Cuenta con cuidado: de la semana 0 a la semana 8 hay 8 saltos de $2.000, no 7. Un truco: semana 1 tiene 1 salto, semana 2 tiene 2 saltos... semana 8 tiene 8.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             },
             {
               "campoId": "ahorroSemanaTardia",
               "valorObtenido": 23000,
               "mensaje": "Te pasaste por un salto. De la semana 0 a la 8 hay exactamente 8 aumentos de $2.000. Revisa: ¿cuánto da 5.000 + 8 × 2.000?",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             }
           ],
           "feedbackPorDefecto": "Revisa el patrón: cada semana el total sube exactamente $2.000. Parte de los $5.000 iniciales y avanza semana a semana si lo necesitas."
@@ -219,19 +219,19 @@
               "campoId": "paginasQuedan",
               "valorObtenido": 30,
               "mensaje": "Calculaste cuántas páginas leyó (30), que es un paso intermedio correcto. Pero la pregunta es cuántas le QUEDAN por leer. ¿De cuántas páginas partía el libro?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "paginasQuedan",
               "valorObtenido": 75,
               "mensaje": "Sumaste, pero las páginas leídas se restan de las que faltan. Cuando el cambio es hacia abajo, se resta: 45 − 6×5.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-signo-de-la-tasa"
             },
             {
               "campoId": "paginasQuedan",
               "valorObtenido": 21,
               "mensaje": "Revisa el conteo de días: son 5 días completos, entonces 6×5 = 30 páginas leídas. 45 − 30 = ?",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             }
           ],
           "feedbackPorDefecto": "Estructura: páginas totales (45) menos las leídas (6 páginas por cada uno de los 5 días)."
@@ -264,13 +264,13 @@
               "campoId": "costoImpresionPaginas",
               "valorObtenido": 42,
               "mensaje": "Calculaste bien el costo de las páginas ($42), pero la tabla parte en $12 con cero páginas: ese cargo fijo se paga siempre. Súmalo.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "costoImpresionPaginas",
               "valorObtenido": 47,
               "mensaje": "Contaste un salto de menos. De 0 a 6 páginas hay 6 aumentos de $7.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             }
           ],
           "feedbackPorDefecto": "Primero detecta el salto restando filas consecutivas. Luego: valor inicial + salto × 6."
@@ -339,13 +339,13 @@
               "campoId": "estampillasMartinaTotal",
               "valorObtenido": 30,
               "mensaje": "Eso es solo lo que consiguió en las 6 semanas (5×6=30). Pero Martina no partió de cero: ya tenía 18 estampillas antes de empezar a coleccionar en serio.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "olvida-valor-inicial"
             },
             {
               "campoId": "estampillasMartinaTotal",
               "valorObtenido": 43,
               "mensaje": "Contaste una semana de menos. Fueron 6 semanas completas: 18 + 5×6, no 18 + 5×5.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "cuenta-mal-los-saltos"
             }
           ],
           "feedbackPorDefecto": "Usa tu receta de la parte 1 reemplazando las semanas por 6."
@@ -397,7 +397,7 @@
           "texto": "83",
           "esCorrecta": false,
           "feedback": "Sumaste el total ganado (6×6=36) en vez de restarlo. Para llegar al valor de la ronda 0 hay que quitar lo ganado del total final, no agregarlo: 47 − 36.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "confunde-direccion-al-despejar"
         },
         {
           "clave": "B",
@@ -410,14 +410,14 @@
           "texto": "17",
           "esCorrecta": false,
           "feedback": "Contaste 5 rondas en vez de 6 (47 − 6×5 = 17). Desde la ronda 0 hasta después de la ronda 6 hay exactamente 6 aumentos de 6 fichas, no 5.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "cuenta-mal-los-saltos"
         },
         {
           "clave": "D",
           "texto": "41",
           "esCorrecta": false,
           "feedback": "Restaste la ganancia de una sola ronda (6 fichas), pero fueron 6 rondas completas. Hay que restar lo ganado en las 6 rondas juntas: 6×6 = 36, no solo 6.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "aplica-cambio-una-sola-vez"
         }
       ],
       "solucion": "Cambio constante de +6 fichas por ronda. En 6 rondas ganó en total 6×6 = 36 fichas. La cantidad inicial se obtiene retrocediendo: 47 − 36 = 11 fichas. Verificación: 11 + 6×6 = 11 + 36 = 47. ✓"
@@ -433,14 +433,14 @@
           "texto": "90",
           "esCorrecta": false,
           "feedback": "Calculaste bien las latas nuevas (18×5=90), pero el grupo no partió de cero: ya tenían 24 latas juntadas de campañas anteriores. Ese punto de partida se suma siempre.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "olvida-valor-inicial"
         },
         {
           "clave": "B",
           "texto": "210",
           "esCorrecta": false,
           "feedback": "Multiplicaste todo por 5, incluidas las 24 latas iniciales: (24+18)×5. Pero esas 24 ya estaban juntadas antes de esta semana; solo lo que se junta cada semana se multiplica por 5.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos"
         },
         {
           "clave": "C",
@@ -453,7 +453,7 @@
           "texto": "96",
           "esCorrecta": false,
           "feedback": "Contaste una semana de menos. Fueron 5 semanas completas: 24 + 18×5, no 24 + 18×4.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "cuenta-mal-los-saltos"
         }
       ],
       "solucion": "Total = latas iniciales + latas nuevas por semana × semanas = 24 + 18×5 = 24 + 90 = 114."

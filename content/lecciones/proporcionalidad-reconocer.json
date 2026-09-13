@@ -25,12 +25,12 @@
     "EL «CASO TEMPRANO» (pasos 2-3, tono índigo, k no existe): 16 + 23·pigmento. Es una relación AFÍN, dentro del dominio esmaltes YA VERIFICADO limpio por L1 (pigmento/base/mL/gramos/taller), así que no necesita verificación de dominio propia. Su función es distinta de la tabla trampa del paso 5: acá el estudiante hace las DOS pruebas él mismo por primera vez y descubre que ninguna funciona, en un solo caso concreto, ANTES de que el paso 5 generalice el protocolo con tres casos a la vez (incluido el hielo, dominio nuevo). Sin este caso temprano, el paso 5 tendría que enseñar el protocolo Y sorprender con un dominio nuevo al mismo tiempo — dos cargas cognitivas a la vez, que es justo lo que el marco pedagógico de L1 prohíbe.",
     "EL HIELO (paso 5 tabla C, P3 del paso 7, ítem 3): tres instancias DISTINTAS de la misma relación afín, masa = valor inicial + tasa · horas, ninguna reutiliza la cifra de otra. Ninguna nombra el contenedor. La magnitud es masa (gramos de hielo derretido acumulados), nunca volumen, nivel ni altura — cumple la restricción de Benja. El valor inicial se justifica narrativamente como «lo que ya se había derretido antes de empezar a medir», sin necesidad de un segundo objeto ni de un contenedor: el hielo llevaba un rato derritiéndose antes de que alguien empezara a registrar cuánto llevaba. Verificación de que el modelo es afín puro y falla las dos pruebas, en las tres instancias: paso 5 (valor inicial 27, tasa 64 g/h) — filas 3h→219g, 6h→411g, 9h→603g; cociente 219/3=73, 411/6=68,5, 603/9=67,0 (cambia); producto 3×219=657, 6×411=2466 (cambia). P3 del paso 7 (valor inicial 44, tasa 61 g/h) — filas 2h→166g, 5h→349g, 8h→532g; cociente 166/2=83, 349/5=69,8, 532/8=66,5 (cambia); producto 2×166=332, 5×349=1745 (cambia). Ítem 3 (valor inicial 38, tasa 47 g/h) — filas 4h→226g, 7h→367g, 11h→555g; cociente 226/4=56,5, 367/7≈52,43, 555/11≈50,45 (cambia); producto 4×226=904, 7×367=2569, 11×555=6105 (cambia). Las tres pasan el chequeo del modelo afín (valor_inicial + tasa × horas, verificado fila por fila) y fallan las dos pruebas en las tres filas, no solo en una.",
     "CIFRAS: barrido corrido contra los 26 archivos JSON de content/ (lecciones + cierres + diagnóstico), incluyendo ya proporcionalidad-inversa.json. Constantes nuevas introducidas y verificadas SIN colisión: 16+23p (índigo, pasos 2-3), 59 (esmalte turquesa, ejemplo paso 6), 792 (auditorio extra, ejercicio paso 6), 37 (esmalte lila, P1 paso 7), 29 (esmaltado de piezas, paso 8), 53 (esmalte coral, ítem 2), 728 (auditorio de un centro comunitario, ítem 1), y las tres instancias del hielo (paso 5, P3, ítem 3) documentadas en la nota anterior. Se descartaron por colisión real, antes de fijarse, varios candidatos: un valor de constante ya usado como distractor en el paso 5 de proporcionalidad-inversa.json; un tramo de la tabla índigo que coincidía con el lote fallido del paso 1 y un distractor de P1 del paso 7, ambos de proporcionalidad-directa.json; y un primer valor de distractor del hielo (216) que coincidía con la respuesta correcta del paso 8 de proporcionalidad-directa.json (12 piezas × 18 mL). Detalle completo, sin transcribir las cifras descartadas dos veces, en contextosNumericos.",
-    "CATÁLOGO: subconjunto de 10 ids de los 16 del módulo (error-1, error-3, error-4, error-5, error-7, error-10, error-11, error-12, error-13) más error-16 nuevo, copiados carácter a carácter desde L1/L2 en su versión POST-9f85feb (la generalizada). error-13 se usa en los distractores del ítem 2 (representar). error-3 y error-11 se agregaron al completar P3 del paso 7 y el ítem 3: error-3 para el distractor «sacó la constante de una sola fila y no verificó las demás», error-11 para el distractor «no es proporcional porque los números no son redondos» — el mismo mecanismo que L1 y L2 ya usaron en sus propios P3. No se incluyen error-2, error-6, error-8, error-9, error-14, error-15 porque ningún distractor de este archivo los usa.",
-    "error-7 YA CUBRE EL MECANISMO CENTRAL DE LA TRAMPA (verificado en fase 1, aprobado por Benja): «Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo.» No se creó ninguna entrada nueva para esto.",
-    "error-16 (NUEVO, aprobado por Benja el 2026-08-14, texto exacto sin cambios): «Aplica una sola de las dos pruebas — solo cociente, o solo producto — y concluye a partir de ese resultado sin probar la que falta: descarta proporcionalidad al fallar el cociente sin probar el producto, o la da por directa al pasar el cociente sin comprobar si el producto también se mantiene.» Es el mecanismo propio de esta lección: solo existe cuando hay que elegir entre dos pruebas, así que ni L1 ni L2 podían tenerlo.",
+    "CATÁLOGO: subconjunto de 10 ids de los 16 del módulo (usa-diferencia-constante, verifica-un-solo-par, confunde-constante-con-valor-de-tabla, escala-una-sola-cantidad, trata-afin-como-proporcional, multiplica-al-volver-del-total, decide-por-criterio-irrelevante, compensa-con-resta, aplica-directa-a-relacion-inversa) más aplica-una-sola-prueba nuevo, copiados carácter a carácter desde L1/L2 en su versión POST-9f85feb (la generalizada). aplica-directa-a-relacion-inversa se usa en los distractores del ítem 2 (representar). verifica-un-solo-par y decide-por-criterio-irrelevante se agregaron al completar P3 del paso 7 y el ítem 3: verifica-un-solo-par para el distractor «sacó la constante de una sola fila y no verificó las demás», decide-por-criterio-irrelevante para el distractor «no es proporcional porque los números no son redondos» — el mismo mecanismo que L1 y L2 ya usaron en sus propios P3. No se incluyen invierte-el-cociente, suma-constante-en-vez-de-multiplicar, nombra-mal-la-constante, redondea-constante-antes-de-tiempo, lee-constante-inversa-como-unitaria, grafica-mal-la-inversa porque ningún distractor de este archivo los usa.",
+    "trata-afin-como-proporcional YA CUBRE EL MECANISMO CENTRAL DE LA TRAMPA (verificado en fase 1, aprobado por Benja): «Trata como proporcional una relación con valor inicial distinto de cero porque crece de forma regular; el cociente cambia en cada fila, pero no llega a comprobarlo.» No se creó ninguna entrada nueva para esto.",
+    "aplica-una-sola-prueba (NUEVO, aprobado por Benja el 2026-08-14, texto exacto sin cambios): «Aplica una sola de las dos pruebas — solo cociente, o solo producto — y concluye a partir de ese resultado sin probar la que falta: descarta proporcionalidad al fallar el cociente sin probar el producto, o la da por directa al pasar el cociente sin comprobar si el producto también se mantiene.» Es el mecanismo propio de esta lección: solo existe cuando hay que elegir entre dos pruebas, así que ni L1 ni L2 podían tenerlo.",
     "REGLA DE PRODUCTO, PERMANENTE (heredada de L1/L2): sin interactivoSlider, sin representación de función lineal dibujada. El ítem 2 (representar) usa el mismo patrón de L2: tabla en markdown dentro del enunciado, alternativas como descripciones verbales de gráficos, porque definitions.item del schema no admite figuras.",
     "PASO 8 (aplicación): se restringió a UN solo dominio de transferencia (esmaltado de piezas de cerámica, ya usado en el paso 8 de L1, con cifras nuevas) en vez de dos, para no sobrecargar el paso. La verificación de tipo en un dominio distinto al inverso ya la cubre el ítem 1 (auditorio, resolver). Si Benja prefiere un segundo dominio de transferencia acá, se puede agregar patio/losetas (L2) con cifras nuevas ya verificadas y en reserva: ancho 1.320 cm, filas 24/55 y 30/44, pedido 33 cm → 40 losetas — no incluidas en este borrador por decisión de alcance, no por falta de verificación.",
-    "REVISIÓN MATEMÁTICA: CORRIDA Y APLICADA (commit 468f60a, 'correcciones de auditoría matemática L3 — tabla índigo visible, mapeo error-12'): remapeó los dos distractores de resta del esmalte índigo (paso 3, campos cocienteIndigoMenor/Mayor) de error-1 a error-12 — son una resta, no una confusión de valor de tabla — y agregó el bloque de visualización que faltaba antes de la prueba del producto en el paso 3 (pensar). AUDITORÍA DE ORIGINALIDAD: CORRIDA el 2026-08-14 en hilo separado, protocolo MOS §7.3 — veredicto APROBADA, ver proveniencia.declaracionOriginalidad para el detalle completo, incluida la única inexactitud que corrigió sobre sí misma (aparición de «llenar» en el ítem 1, ajena al dominio del caso trampa)."
+    "REVISIÓN MATEMÁTICA: CORRIDA Y APLICADA (commit 468f60a, 'correcciones de auditoría matemática L3 — tabla índigo visible, mapeo compensa-con-resta'): remapeó los dos distractores de resta del esmalte índigo (paso 3, campos cocienteIndigoMenor/Mayor) de usa-diferencia-constante a compensa-con-resta — son una resta, no una confusión de valor de tabla — y agregó el bloque de visualización que faltaba antes de la prueba del producto en el paso 3 (pensar). AUDITORÍA DE ORIGINALIDAD: CORRIDA el 2026-08-14 en hilo separado, protocolo MOS §7.3 — veredicto APROBADA, ver proveniencia.declaracionOriginalidad para el detalle completo, incluida la única inexactitud que corrigió sobre sí misma (aparición de «llenar» en el ítem 1, ajena al dominio del caso trampa)."
   ],
   "auditoria": {
     "_nota": "Sin auditoria.constante declarada, deliberado: esta lección no tiene una sola constante que proteger con el mecanismo escalar. Tiene dos callbacks ya públicos (40, 900) y tres instancias de una relación afín (paso 5, P3 del paso 7, ítem 3), cada una con su propio valor inicial y tasa, verificadas a mano contra filtración. Ver _notasInternas."
@@ -41,11 +41,11 @@
     "problema (Paso 2) y pensar (Paso 3): esmalte ÍNDIGO, tercer tono del taller (no usado en L1). Relación AFÍN, no proporcional: base = 16 + 23 · pigmento. Filas: 2 g → 62 mL, 4 g → 108 mL, 6 g → 154 mL. Verificación cociente: 62/2=31, 108/4=27, 154/6=25,666...; no constante. Verificación producto: 2×62=124, 4×108=432; no constante. Ninguna de las dos pruebas pasa: es el «caso temprano», más chico que la trampa del paso 5. Cifras 62, 108, 154, 124, 432 y sus distractores 60, 104 (resta en vez de dividir) y 64, 112 (suma en vez de multiplica) verificadas sin colisión en todo content/.",
     "descubrimiento (Paso 5): tabla A esmaltes, filas EXACTAS de proporcionalidad-directa.json (3/120, 6/240, 8/320, k=40, cociente). Tabla B auditorio, filas EXACTAS de proporcionalidad-inversa.json (20/45, 25/36, 30/30, k=900, producto). Tabla C: hielo derritiéndose, sin nombrar el contenedor, masa en gramos de hielo derretido acumulado vs. horas transcurridas desde que se empezó a medir. Relación afín: masa = 27 + 64 · horas. Filas: 3 h → 219 g, 6 h → 411 g, 9 h → 603 g. Cociente 73/68,5/67 (cambia); producto 657/2466/... (cambia). Falla las dos pruebas.",
     "generalizacion (Paso 6): ejemplo trabajado esmalte TURQUESA (nuevo tono), k=59, filas 3 g/177 mL y 5 g/295 mL, solo interpretación, sin cálculo del estudiante. Ejercicio con cifras distintas: auditorio EXTRA del mismo centro cultural, k=792 (inversa), filas 18/44 y 22/36, pedido 24 butacas por hilera → 33 hileras; distractores 34 (canje 1 a 1 desde la fila de 22), 792 (entregó la constante) y 19.008 (multiplicó en vez de dividir). Cifras 59, 177, 295, 792, 34, 19008 verificadas sin colisión.",
-    "practica (Paso 7): P1 esmalte LILA (nuevo tono), k=37 (directa), filas 4 g/148 mL, 7 g/259 mL, 9 g/333 mL, pedido 11 g → 407 mL; distractores 335 (aditivo, +2 g sobre la fila de 9 g), 37 (entregó la constante) y 3.663 (escaló la fila completa). P2 verdaderoFalso sobre error-16, reutilizando el auditorio (900) con las filas 20/45 y 25/36 ya públicas: plantea la trampa de concluir «no son proporcionales» solo porque el cociente no coincide, sin probar el producto. P3: segunda instancia del hielo, masa = 44 + 61 · horas. Filas: 2 h → 166 g, 5 h → 349 g, 8 h → 532 g. Cociente 83/69,8/66,5 (cambia); producto 332/1745/... (cambia). Alternativas: (a) «sí, porque suben ordenadas» → error-7; (b) «sí, 166÷2=83 es la constante» → error-3; (c) correcta, ninguna prueba se repite en las tres filas; (d) «no, porque los números no son redondos» → error-11.",
+    "practica (Paso 7): P1 esmalte LILA (nuevo tono), k=37 (directa), filas 4 g/148 mL, 7 g/259 mL, 9 g/333 mL, pedido 11 g → 407 mL; distractores 335 (aditivo, +2 g sobre la fila de 9 g), 37 (entregó la constante) y 3.663 (escaló la fila completa). P2 verdaderoFalso sobre aplica-una-sola-prueba, reutilizando el auditorio (900) con las filas 20/45 y 25/36 ya públicas: plantea la trampa de concluir «no son proporcionales» solo porque el cociente no coincide, sin probar el producto. P3: segunda instancia del hielo, masa = 44 + 61 · horas. Filas: 2 h → 166 g, 5 h → 349 g, 8 h → 532 g. Cociente 83/69,8/66,5 (cambia); producto 332/1745/... (cambia). Alternativas: (a) «sí, porque suben ordenadas» → trata-afin-como-proporcional; (b) «sí, 166÷2=83 es la constante» → verifica-un-solo-par; (c) correcta, ninguna prueba se repite en las tres filas; (d) «no, porque los números no son redondos» → decide-por-criterio-irrelevante.",
     "aplicacion (Paso 8): esmaltado de piezas de cerámica (mismo par de magnitudes de L1: piezas ↔ mL de esmalte), k=29 (directa), filas 6 piezas/174 mL y 9 piezas/261 mL, pedido 13 piezas → 377 mL; distractores 181 (aditivo desde la fila de 6 piezas), 29 (entregó la constante) y 3.393 (escaló la fila completa). Cifras 29, 174, 261, 377, 181, 3393 verificadas sin colisión — nótese que se evitó 265 como distractor porque colisionaba con la fila del ítem 2 de este mismo archivo (ver más abajo).",
     "itemsPAES item-1 (resolver, baja): auditorio de un centro comunitario (nuevo, dentro del dominio auditorio ya limpio), k=728 (inversa), filas 8/91, 13/56, 26/28, pedido 14 butacas por hilera → 52 hileras; distractores 85 (canje/resta desde la fila de 8), 728 (entregó la constante) y 10.192 (multiplicó en vez de dividir). Cifras verificadas sin colisión en content/.",
     "itemsPAES item-2 (representar, media): esmalte CORAL (nuevo tono), k=53 (directa), filas 3 g/159 mL, 5 g/265 mL, 8 g/424 mL; las cuatro alternativas son descripciones verbales de gráficos, no dibujos. Cifras 53, 159, 265, 424 verificadas sin colisión.",
-    "itemsPAES item-3 (argumentar, alta): tercera instancia del hielo, masa = 38 + 47 · horas. Filas: 4 h → 226 g, 7 h → 367 g, 11 h → 555 g. Cociente 56,5/52,43.../50,45... (cambia); producto 904/2569/6105 (cambia). Pone al estudiante frente a la afirmación «suben juntas, luego son directamente proporcionales» y pide evaluarla; correcta refuta con el cociente que cambia, distractores mapean a error-7 (suben ordenadas → sí), error-16 (descarta directa y asume inversa sin probar) y error-11 (números no redondos).",
+    "itemsPAES item-3 (argumentar, alta): tercera instancia del hielo, masa = 38 + 47 · horas. Filas: 4 h → 226 g, 7 h → 367 g, 11 h → 555 g. Cociente 56,5/52,43.../50,45... (cambia); producto 904/2569/6105 (cambia). Pone al estudiante frente a la afirmación «suben juntas, luego son directamente proporcionales» y pide evaluarla; correcta refuta con el cociente que cambia, distractores mapean a trata-afin-como-proporcional (suben ordenadas → sí), aplica-una-sola-prueba (descarta directa y asume inversa sin probar) y decide-por-criterio-irrelevante (números no redondos).",
     "NOTA DE NO COLISIÓN (barrido corrido el 2026-08-14 contra los 26 archivos JSON de content/, incluyendo ya proporcionalidad-inversa.json), cada cifra nueva de índigo, turquesa, auditorio extra, lila, piezas, auditorio del centro comunitario, coral y las tres instancias del hielo (paso 5, P3, ítem 3) verificada una por una contra content/ completo. Todas nuevas en el corpus, sin excepción, salvo dígitos sueltos por debajo de 100 que reaparecen en otros módulos con otro rol y otras unidades — el mismo tipo de coincidencia que L1 y L2 ya documentaron como no bloqueante en sus propios archivos. Tres candidatos se descartaron ANTES de fijarse por colisión real con L1/L2 (detalle en la nota de _notasInternas raíz sobre CIFRAS, no acá): un valor de constante ya usado como distractor en el paso 5 de proporcionalidad-inversa.json, una primera versión de la tabla índigo cuyas filas coincidían con el lote fallido del paso 1 y un distractor del paso 7 de proporcionalidad-directa.json, y un primer distractor del hielo que coincidía con la respuesta correcta del paso 8 de proporcionalidad-directa.json. IMPORTANTE PARA QUIEN REESCRIBA ESTA NOTA (regla heredada de proporcionalidad-inversa.json): las cifras puntuales de esta verificación NO se transcriben acá a propósito. Enumerarlas haría que scripts/auditar-leccion.mjs las leyera como cifras propias de esta lección y devolviera colisiones falsas contra los archivos que ya las usan con otro rol — exactamente lo que le pasó a un borrador anterior de este archivo (🟡 colision-entre-archivos sobre cifras de reutilización deliberada del paso 5 y sobre las cifras descartadas de esta misma nota). Las filas de esmaltes y auditorio del paso 5, documentadas arriba en este mismo campo con sus valores completos porque son REUTILIZACIÓN DELIBERADA de L1/L2, no cuentan como colisión: es exactamente el diseño aprobado, y el 🟡 que su transcripción genera en npm run auditar es esperado y se reporta como tal, no se oculta."
   ],
   "pasos": [
@@ -79,7 +79,7 @@
       "_notasInternas": [
         "CASO TEMPRANO. Tono nuevo del taller (índigo), relación AFÍN: base = 16 + 23 · pigmento. Verificación: 16+23×2=62 ✓; 16+23×4=108 ✓; 16+23×6=154 ✓.",
         "Verificación de la prueba pedida (cociente, la herramienta de L1): 62÷2=31; 108÷4=27. Ninguno se repite todavía con solo dos filas — y el texto de cierre agrega la tercera (154÷6=25,666...) para dejar clarísimo que no hay ninguna coincidencia posible.",
-        "Verificación de los distractores: restar en vez de dividir da 62−2=60 y 108−4=104 (error-1).",
+        "Verificación de los distractores: restar en vez de dividir da 62−2=60 y 108−4=104 (usa-diferencia-constante).",
         "Esta tabla NO es la trampa grande del paso 5: es más chica y vive en un dominio ya limpio (esmaltes), a propósito, para no gastar la sorpresa del dominio nuevo enseñando el protocolo al mismo tiempo."
       ],
       "bloques": [
@@ -114,13 +114,13 @@
               "campoId": "cocienteIndigoMenor",
               "valorObtenido": 60,
               "mensaje": "Restaste en vez de dividir: 62 − 2 = 60. La prueba de proporción directa es una división, base entre pigmento, no una resta.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             },
             {
               "campoId": "cocienteIndigoMayor",
               "valorObtenido": 104,
               "mensaje": "Restaste en vez de dividir: 108 − 4 = 104. Prueba dividiendo: 108 ÷ 4.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             }
           ],
           "feedbackPorDefecto": "Divide la base por el pigmento en cada lote. En el primero, 62 ÷ 2. En el segundo, 108 ÷ 4. Anota los dos resultados uno al lado del otro."
@@ -137,7 +137,7 @@
       "_notasInternas": [
         "Registro del intento genuino: el estudiante aplica por su cuenta la prueba de L2 (producto) sobre la MISMA tabla índigo, sin que se le diga todavía que también va a fallar.",
         "Verificación: 2×62=124; 4×108=432. No coinciden, así que tampoco pasa la prueba de proporción inversa.",
-        "Verificación de los distractores: sumar en vez de multiplicar da 2+62=64 y 4+108=112 (error-12, forma simple: suma directa de los dos valores)."
+        "Verificación de los distractores: sumar en vez de multiplicar da 2+62=64 y 4+108=112 (compensa-con-resta, forma simple: suma directa de los dos valores)."
       ],
       "bloques": [
         {
@@ -171,13 +171,13 @@
               "campoId": "productoIndigoMenor",
               "valorObtenido": 64,
               "mensaje": "Sumaste en vez de multiplicar: 2 + 62 = 64. La prueba de proporción inversa es multiplicar las dos cantidades, no sumarlas.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             },
             {
               "campoId": "productoIndigoMayor",
               "valorObtenido": 112,
               "mensaje": "Sumaste en vez de multiplicar: 4 + 108 = 112. Multiplica: 4 × 108.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             }
           ],
           "feedbackPorDefecto": "Multiplica pigmento por base en cada lote. En el primero, 2 × 62. En el segundo, 4 × 108. Compara los dos resultados."
@@ -220,7 +220,7 @@
         "Verificación tabla A: 120÷3=40; 240÷6=40; 320÷8=40 ✓ (idéntico a proporcionalidad-directa.json).",
         "Verificación tabla B: 20×45=900; 25×36=900; 30×30=900 ✓ (idéntico a proporcionalidad-inversa.json).",
         "REGLA VIGENTE: ningún bloque de los pasos 1 a 4 nombra 40 ni 900 — la primera aparición de los dos es acá, y es deliberada (son callbacks, no secretos: ver la nota raíz sobre por qué la regla 2 de docs/reglas-modulo.md no aplica de la misma forma acá). Lo que SÍ debe seguir protegido hasta que se resuelva la tabla C es su propia conclusión.",
-        "Verificación tabla C (hielo, valor inicial 27, tasa 64 g/h): 27+64×3=219 ✓; 27+64×6=411 ✓; 27+64×9=603 ✓. Cociente: 219÷3=73, 411÷6=68,5, 603÷9=67 — distintos. Producto: 3×219=657, 6×411=2.466 — distintos. Falla las dos pruebas en las tres filas. Distractor del producto: 3+219=222 (sumó en vez de multiplicar, error-12)."
+        "Verificación tabla C (hielo, valor inicial 27, tasa 64 g/h): 27+64×3=219 ✓; 27+64×6=411 ✓; 27+64×9=603 ✓. Cociente: 219÷3=73, 411÷6=68,5, 603÷9=67 — distintos. Producto: 3×219=657, 6×411=2.466 — distintos. Falla las dos pruebas en las tres filas. Distractor del producto: 3+219=222 (sumó en vez de multiplicar, compensa-con-resta)."
       ],
       "bloques": [
         {
@@ -305,7 +305,7 @@
               "campoId": "pruebaProductoC",
               "valorObtenido": 222,
               "mensaje": "Sumaste en vez de multiplicar: 3 + 219 = 222. La segunda prueba es multiplicar, no sumar.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             }
           ],
           "feedbackPorDefecto": "Divide 219 ÷ 3 para el cociente, y multiplica 219 × 3 para el producto. Después comprueba los dos en la fila de 6 horas antes de decidir nada."
@@ -327,7 +327,7 @@
         "Recién acá se formaliza el protocolo con nombre y pasos explícitos, como exige el marco pedagógico. Ni un paso antes.",
         "Ejemplo trabajado, esmalte TURQUESA (tono nuevo), solo interpretación: 3 g/177 mL y 5 g/295 mL. Verificación: 177÷3=59; 295÷5=59 ✓. No pide cálculo al estudiante, solo que reconozca qué prueba aplicar y por qué da directa.",
         "Ejercicio con cifras DISTINTAS al ejemplo (regla de §2 de calibración): auditorio EXTRA, k=792 (inversa). Verificación: 18×44=792; 22×36=792 ✓; pedido 792÷24=33 ✓.",
-        "Verificación de los distractores del ejercicio: canje 1 a 1 desde la fila de 22 (butacas +2, hileras −2): 36−2=34 (error-12). Entregar la constante: 792 (error-4). Multiplicar en vez de dividir: 24×792=19.008 (error-10)."
+        "Verificación de los distractores del ejercicio: canje 1 a 1 desde la fila de 22 (butacas +2, hileras −2): 36−2=34 (compensa-con-resta). Entregar la constante: 792 (confunde-constante-con-valor-de-tabla). Multiplicar en vez de dividir: 24×792=19.008 (multiplica-al-volver-del-total)."
       ],
       "bloques": [
         {
@@ -349,14 +349,14 @@
               "texto": "Multiplicar; el producto va a ser el mismo en las dos filas, así que es inversamente proporcional",
               "esCorrecta": false,
               "feedback": "Pruébalo: 3 × 177 = 531 y 5 × 295 = 1.475. No coinciden. El producto no es la prueba que funciona acá.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-una-sola-prueba"
             },
             {
               "id": "c",
               "texto": "Ninguna prueba hace falta: las dos columnas suben juntas, así que ya se sabe que es proporcional",
               "esCorrecta": false,
               "feedback": "Que suban juntas no decide nada por sí solo — lo viste con el esmalte índigo, que subía igual de ordenado y no era proporcional. Siempre hay que aplicar la prueba.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "trata-afin-como-proporcional"
             }
           ]
         },
@@ -376,19 +376,19 @@
               "campoId": "hilerasAuditorioExtra",
               "valorObtenido": 34,
               "mensaje": "Le restaste a las hileras lo mismo que le sumaste al ancho: de 22 a 24 son +2 butacas, y le quitaste 2 a las 36. Pero una butaca de ancho no vale una hilera. Comprueba el total: 18 × 44 = 792 y 22 × 36 = 792. Ese es el número que hay que acomodar en hileras de 24.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "compensa-con-resta"
             },
             {
               "campoId": "hilerasAuditorioExtra",
               "valorObtenido": 792,
               "mensaje": "Encontraste bien la constante: 18 × 44 = 792 butacas en total. Falta acomodar ese total en hileras de 24 butacas cada una.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "hilerasAuditorioExtra",
               "valorObtenido": 19008,
               "mensaje": "Multiplicaste el total por el ancho nuevo. El total ya está completo: lo que se pregunta es cuántas hileras de 24 butacas caben en él, y eso es una división.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "multiplica-al-volver-del-total"
             }
           ],
           "feedbackPorDefecto": "Primero comprueba que 18 × 44 y 22 × 36 dan lo mismo — ese es el total de butacas del auditorio. Después acomoda ese total en hileras de 24 butacas."
@@ -400,9 +400,9 @@
       "titulo": "Práctica: clasificar antes de calcular",
       "_notasInternas": [
         "Progresión estricta baja → media → media/alta, como exige §5.1 de calibración.",
-        "P1 (baja/media). Esmalte LILA (tono nuevo), k=37, directa. Verificación: 148÷4=37; 259÷7=37; 333÷9=37 ✓; pedido 11×37=407 ✓. Distractores: aditivo desde la fila de 9 g (+2 g → 333+2=335, error-1); entregar la constante (37, error-4); escalar la fila completa (333×11=3.663, error-5).",
-        "P2 (media). VerdaderoFalso sobre error-16, reutilizando el auditorio (900) con las filas ya públicas 20/45 y 25/36. Verificación: 45÷20=2,25; 36÷25=1,44 — no coinciden, así que un estudiante que se detiene ahí concluye erróneamente «no proporcional». Pero 20×45=900 y 25×36=900 sí coinciden: es inversamente proporcional. La afirmación del enunciado (que concluye «no proporcional» solo con el cociente) es FALSA.",
-        "P3 (media/alta). Hielo, segunda instancia: masa = 44 + 61 · horas. Verificación: 44+61×2=166 ✓; 44+61×5=349 ✓; 44+61×8=532 ✓. Cociente: 166÷2=83, 349÷5=69,8, 532÷8=66,5 — distintos ✓. Producto: 2×166=332, 5×349=1.745, 8×532=4.256 — distintos ✓. Falla las dos pruebas. Opción (a) mapea a error-7 (crece ordenado, se trata como proporcional); (b) a error-3 (constante de una sola fila); (d) a error-11 (criterio irrelevante, con contraejemplo real del propio archivo: el esmalte turquesa, k=59, del paso 6). Es el espejo exacto de P3 de L1 y de L2, mismo patrón de cuatro alternativas."
+        "P1 (baja/media). Esmalte LILA (tono nuevo), k=37, directa. Verificación: 148÷4=37; 259÷7=37; 333÷9=37 ✓; pedido 11×37=407 ✓. Distractores: aditivo desde la fila de 9 g (+2 g → 333+2=335, usa-diferencia-constante); entregar la constante (37, confunde-constante-con-valor-de-tabla); escalar la fila completa (333×11=3.663, escala-una-sola-cantidad).",
+        "P2 (media). VerdaderoFalso sobre aplica-una-sola-prueba, reutilizando el auditorio (900) con las filas ya públicas 20/45 y 25/36. Verificación: 45÷20=2,25; 36÷25=1,44 — no coinciden, así que un estudiante que se detiene ahí concluye erróneamente «no proporcional». Pero 20×45=900 y 25×36=900 sí coinciden: es inversamente proporcional. La afirmación del enunciado (que concluye «no proporcional» solo con el cociente) es FALSA.",
+        "P3 (media/alta). Hielo, segunda instancia: masa = 44 + 61 · horas. Verificación: 44+61×2=166 ✓; 44+61×5=349 ✓; 44+61×8=532 ✓. Cociente: 166÷2=83, 349÷5=69,8, 532÷8=66,5 — distintos ✓. Producto: 2×166=332, 5×349=1.745, 8×532=4.256 — distintos ✓. Falla las dos pruebas. Opción (a) mapea a trata-afin-como-proporcional (crece ordenado, se trata como proporcional); (b) a verifica-un-solo-par (constante de una sola fila); (d) a decide-por-criterio-irrelevante (criterio irrelevante, con contraejemplo real del propio archivo: el esmalte turquesa, k=59, del paso 6). Es el espejo exacto de P3 de L1 y de L2, mismo patrón de cuatro alternativas."
       ],
       "bloques": [
         {
@@ -421,19 +421,19 @@
               "campoId": "baseEsmalteLila",
               "valorObtenido": 335,
               "mensaje": "Le sumaste a la base los 2 g que le sumaste al pigmento desde la fila de 9 g. Pero cada gramo se lleva 37 mL, no 1: dos gramos más son 2 × 37 = 74 mL más, no 2.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "baseEsmalteLila",
               "valorObtenido": 37,
               "mensaje": "Ese es el cociente que se repite en las tres filas — la constante. Pero el lote tiene 11 gramos, no uno: falta multiplicar.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "baseEsmalteLila",
               "valorObtenido": 3663,
               "mensaje": "Multiplicaste los 333 mL completos por los 11 g. Esos 333 mL ya correspondían a 9 g: lo que se multiplica por la cantidad nueva es la constante (37), no el total de otra fila.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "escala-una-sola-cantidad"
             }
           ],
           "feedbackPorDefecto": "Primero comprueba que 148÷4, 259÷7 y 333÷9 dan el mismo número: es directamente proporcional. Después multiplica esa constante por los 11 gramos."
@@ -454,14 +454,14 @@
               "texto": "Sí, porque las dos cantidades suben juntas de forma pareja",
               "esCorrecta": false,
               "feedback": "Que suban juntas y de forma pareja es necesario, pero no alcanza. La prueba es el cociente o el producto, no la dirección: 166 ÷ 2 = 83; 349 ÷ 5 = 69,8; 532 ÷ 8 = 66,5. El cociente cambia en cada fila, así que no es directamente proporcional.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "trata-afin-como-proporcional"
             },
             {
               "id": "b",
               "texto": "Sí, porque 166 ÷ 2 = 83 es la constante",
               "esCorrecta": false,
               "feedback": "Sacaste el cociente de la primera fila y te detuviste ahí. Ese es el paso que falta siempre: comprobarlo en las demás. 349 ÷ 5 = 69,8 y 532 ÷ 8 = 66,5, ninguno igual a 83. Una constante que solo vale en una fila no es una constante.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "verifica-un-solo-par"
             },
             {
               "id": "c",
@@ -474,7 +474,7 @@
               "texto": "No, porque el cociente cambia (83; 69,8; 66,5), y con eso ya queda descartada",
               "esCorrecta": false,
               "feedback": "El veredicto es correcto, pero falta la mitad de la prueba: que el cociente cambie descarta la proporción DIRECTA, no cualquier tipo de proporcionalidad. Antes de descartarla del todo hay que probar también el producto (332, 1.745, 4.256: también distintos, ahí sí queda descartada).",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-una-sola-prueba"
             }
           ]
         }
@@ -487,7 +487,7 @@
         "Contexto de transferencia: mismo par de magnitudes que el paso 8 de L1 (piezas ↔ mL de esmalte), con cifras NUEVAS, y con el requisito extra de que el estudiante clasifique primero — en L1 el tipo ya venía dado, acá no.",
         "Restringido a un solo dominio de transferencia (ver nota raíz): el segundo dominio (patio/losetas) queda en reserva, ya verificado, si Benja lo pide.",
         "Verificación: 174÷6=29; 261÷9=29 ✓ (directa). Pedido: 13×29=377 ✓.",
-        "Verificación de los distractores: aditivo desde la fila de 6 piezas (+7 piezas → 174+7=181, error-1); entregar la constante (29, error-4); escalar la fila completa (261×13=3.393, error-5)."
+        "Verificación de los distractores: aditivo desde la fila de 6 piezas (+7 piezas → 174+7=181, usa-diferencia-constante); entregar la constante (29, confunde-constante-con-valor-de-tabla); escalar la fila completa (261×13=3.393, escala-una-sola-cantidad)."
       ],
       "bloques": [
         {
@@ -512,19 +512,19 @@
               "campoId": "esmaltePiezasNuevo",
               "valorObtenido": 181,
               "mensaje": "Le sumaste 7 mL porque hay 7 piezas más desde la fila de 6. Pero cada pieza nueva no consume 1 mL: consume 29, la constante. Siete piezas más son 7 × 29 = 203 mL más, no 7.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "usa-diferencia-constante"
             },
             {
               "campoId": "esmaltePiezasNuevo",
               "valorObtenido": 29,
               "mensaje": "Sacaste bien cuánto gasta una pieza (174 ÷ 6 = 29 mL). Con eso ya tienes la constante; falta multiplicarla por las 13 piezas del encargo.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "confunde-constante-con-valor-de-tabla"
             },
             {
               "campoId": "esmaltePiezasNuevo",
               "valorObtenido": 3393,
               "mensaje": "Multiplicaste los 261 mL completos por las 13 piezas. Esos 261 mL ya cubrían 9 piezas: lo que se multiplica por la cantidad nueva es el gasto de UNA pieza (29 mL), no el total de otra fila.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "escala-una-sola-cantidad"
             }
           ],
           "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: la constante que ya confirmaste (29 mL por pieza), multiplicada por las 13 piezas del encargo."
@@ -537,7 +537,7 @@
       "_notasInternas": [
         "La abierta no se corrige, se guarda. Es el termómetro de si el criterio de las dos pruebas prendió o si el estudiante solo memorizó qué operación usar en cada dominio conocido.",
         "La consigna fuerza la comparación con el paso 3, como exige §2 de calibración, y pide explícitamente el caso donde ninguna prueba funcionó.",
-        "El texto de cierre recoge los errores más frecuentes de ESTA lección específicamente: error-7 (crecimiento ordenado sin ser proporcional) y error-16 (una sola prueba) son los dos que ni L1 ni L2 podían enseñar."
+        "El texto de cierre recoge los errores más frecuentes de ESTA lección específicamente: trata-afin-como-proporcional (crecimiento ordenado sin ser proporcional) y aplica-una-sola-prueba (una sola prueba) son los dos que ni L1 ni L2 podían enseñar."
       ],
       "bloques": [
         {
@@ -579,7 +579,7 @@
           "texto": "85 hileras",
           "esCorrecta": false,
           "feedback": "Le restaste a la fila de 8 butacas la diferencia hacia 14 (6 butacas más, 6 hileras menos: 91−6=85). Pero una butaca de ancho no vale una hilera. Comprueba el total: 8 × 91 = 728. Ese es el número que hay que acomodar en hileras de 14, no un ajuste fila por fila.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "compensa-con-resta"
         },
         {
           "clave": "B",
@@ -592,14 +592,14 @@
           "texto": "728 hileras",
           "esCorrecta": false,
           "feedback": "Eso es el total de butacas del auditorio, no el número de hileras. Cada hilera de esta configuración se lleva 14 de esas butacas, así que faltan bastantes menos hileras que butacas: falta acomodarlas.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla"
         },
         {
           "clave": "D",
           "texto": "10.192 hileras",
           "esCorrecta": false,
           "feedback": "Multiplicaste el total del auditorio por el ancho nuevo. El total ya incluye todas las butacas: multiplicarlo por 14 sería como llenar el auditorio catorce veces. Cuando conoces el total y el tamaño de cada parte, la operación que da el número de partes es la división.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "multiplica-al-volver-del-total"
         }
       ],
       "solucion": "Se verifica primero que las tres filas comparten producto constante: 8×91=728, 13×56=728, 26×28=728 — inversamente proporcional. La constante es 728 butacas en total. Para 14 butacas por hilera, las hileras son 728÷14=52. Verificación: 52×14=728 ✓."
@@ -621,21 +621,21 @@
           "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin llegar a tocarlos.",
           "esCorrecta": false,
           "feedback": "Esa es la forma de una proporción INVERSA, donde el producto (no el cociente) se mantiene fijo. Acá el cociente 159÷3, 265÷5 y 424÷8 da 53 las tres veces, y las dos cantidades suben juntas, no una sube mientras la otra baja.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "aplica-directa-a-relacion-inversa"
         },
         {
           "clave": "C",
           "texto": "Una recta que sube con la misma inclinación, pero que no pasa por el origen.",
           "esCorrecta": false,
           "feedback": "Esa forma corresponde a una relación con valor inicial distinto de cero — sube ordenada, pero no es proporcional. No es el caso acá: el cociente 159÷3=53, 265÷5=53 y 424÷8=53 se repite exacto en las tres filas, así que la recta sí pasa por el origen.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "trata-afin-como-proporcional"
         },
         {
           "clave": "D",
           "texto": "Una recta que baja de forma uniforme, cortando el eje horizontal.",
           "esCorrecta": false,
           "feedback": "Los datos suben, no bajan: con más pigmento hay más base en las tres filas. Una recta que baja contradice la tabla del enunciado.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "aplica-directa-a-relacion-inversa"
         }
       ],
       "solucion": "El cociente base÷pigmento es constante en las tres filas: 159÷3=53, 265÷5=53, 424÷8=53. Es una proporción directa, y = 53·x. Su gráfico es una recta que pasa por el origen (con pigmento 0 no hay esmalte que preparar) y sube con pendiente constante 53. La descripción correcta es la A."
@@ -657,21 +657,21 @@
           "texto": "El argumento es verdadero: como las dos cantidades suben juntas y de forma pareja, tienen que ser directamente proporcionales.",
           "esCorrecta": false,
           "feedback": "Esta es exactamente la trampa que el argumento tiende. Que suban juntas y parejo no basta: hay que comprobar el cociente en todas las filas, y acá cambia (56,5 en la primera, 52,4 en la segunda, 50,45 en la tercera). Una relación puede crecer de forma perfectamente ordenada sin ser proporcional — lo viste con el esmalte índigo al principio de la lección.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "trata-afin-como-proporcional"
         },
         {
           "clave": "C",
           "texto": "El argumento es falso, pero porque la relación es inversamente proporcional, no directamente.",
           "esCorrecta": false,
           "feedback": "Descartaste la proporción directa correctamente, pero diste por hecho la inversa sin probarla. El producto tampoco se repite: 4 × 226 = 904, 7 × 367 = 2.569, 11 × 555 = 6.105, los tres distintos. Descartar una prueba no prueba la otra: hay que comprobar las dos.",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-una-sola-prueba"
         },
         {
           "clave": "D",
           "texto": "El argumento es falso porque 226, 367 y 555 no son números redondos.",
           "esCorrecta": false,
           "feedback": "Llegaste a la conclusión correcta por un motivo que no sirve. Que las cifras no sean redondas no decide nada: el esmalte turquesa de esta misma lección tenía constante 59 —tampoco un número especialmente redondo— y era perfectamente proporcional. Lo que decide es si el cociente o el producto se repiten en todas las filas.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "decide-por-criterio-irrelevante"
         }
       ],
       "solucion": "El argumento «suben juntas, luego son directamente proporcionales» es falso. Se prueba el cociente gramos÷horas en las tres filas: 226÷4=56,5; 367÷7≈52,43; 555÷11≈50,45 — los tres distintos, así que no es directamente proporcional. Se prueba también el producto, para descartar la proporción inversa y no solo la directa: 4×226=904; 7×367=2.569; 11×555=6.105 — también distintos. Ninguna de las dos pruebas da constante: la relación no es proporcional de ninguna forma. La causa estructural es que masa = 38 + 47·horas es una relación AFÍN, con valor inicial 38 (lo que ya se había derretido antes de empezar a medir) y tasa constante 47 g/h — crece de forma perfectamente regular, pero el valor inicial distinto de cero impide que el cociente se mantenga fijo, y el hecho de que sea una suma y no un producto puro impide que el producto se mantenga fijo. La alternativa correcta es la A."
@@ -685,8 +685,8 @@
       "content/lecciones/proporcionalidad-directa.json (L1) y content/lecciones/proporcionalidad-inversa.json (L2) — leídas enteras. Fuente de las filas exactas reutilizadas en el paso 5, del catálogo de errores del que se heredan 9 entradas literales, y de la lista de cifras que este archivo no puede repetir (lecciones propias del proyecto, no fuentes externas).",
       "Corridas de scripts/consultar-fuentes.mjs sobre el corpus de fuentes aisladas para el dominio del caso trampa, ejecutadas por Benja fuera de la sesión de redacción, en dos rondas el 2026-08-14. Ronda 1 (fase de diseño): caja/base/altura, estanque/tanque/agua/nivel/profundidad, planta/brote/tallo/crecer/crecimiento/altura/semana — los tres candidatos completos volvieron SI. Ronda 2: vela, cera, resorte/estirar, banda, consumir, cabello/pelo, corte — todos SI. Único candidato limpio: hielo, derretir, derretirse, fusión — los cuatro NO. Restricción adicional sobre vocabulario de contenedor y magnitud, misma corrida: agua, nivel, estanque, tanque, recipiente, llenar, profundidad, altura — los ocho SI, ninguno usado en el texto final."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ESTADO AL 2026-08-14, DECLARADO SIN ADORNO. VERIFICACIÓN DE COLISIÓN DE DOMINIO — COMPLETA. (1) Esmaltes y auditorio: no requirió verificación propia, porque ambos dominios ya están cleared en las proveniencias de proporcionalidad-directa.json y proporcionalidad-inversa.json, y este archivo no introduce vocabulario nuevo de dominio en esas partes — solo cifras nuevas dentro de vocabulario ya limpio. (2) Hielo (caso trampa): verificado en dos rondas de consultar-fuentes.mjs, corridas por Benja fuera de la sesión de redacción, salida usada tal cual sin reformular (ver fuentesAnalisis para el detalle completo con los términos SI y NO). El dominio final —hielo, derretir, derretirse, fusión— volvió NO los cuatro. La restricción adicional de vocabulario del contenedor y la magnitud (agua, nivel, estanque, tanque, recipiente, llenar, profundidad, altura, los ocho SI) se cumplió en el caso trampa (hielo): masa en gramos, contenedor sin nombrar en ningún momento. Verificado por lectura del texto visible completo el 2026-08-14 (auditoría de originalidad): «llenar» sí aparece una vez en todo el archivo, pero fuera del caso trampa — en el feedback de la alternativa D del ítem 1 («sería como llenar el auditorio catorce veces»), sobre butacas de un auditorio, sin relación con el dominio de contenedor/líquido que la restricción protege. No es una colisión: no toca el caso trampa ni el vocabulario de nivel/volumen que se buscaba evitar; se deja registrado en vez de editarse porque no representa el riesgo que la restricción existía para prevenir. Adicionalmente, «bloque» (misma lista de términos verificados por Benja, también SI) aparece tres veces describiendo el hielo («un bloque de hielo», paso 5, paso 7 e ítem 3); se abrió la fuente que lo marca SI (MA-07_Algebra_Polinomios.md, ejercicios 21-22) durante esta auditoría: es un ejercicio de volumen de paralelepípedos (mecanismo geométrico, volumen = largo × ancho × alto) sin relación estructural con una relación afín masa-tiempo — coincidencia léxica, no de escenario ni de mecanismo, no bloqueante. VERIFICACIÓN DE CIFRAS — COMPLETA. Barrido corrido contra los 26 archivos JSON de content/, incluyendo proporcionalidad-inversa.json, para cada cifra nueva de este archivo (índigo, turquesa, auditorio extra, lila, piezas, auditorio del centro comunitario, coral, y las tres instancias del hielo). Tres candidatos numéricos se descartaron antes de fijarse por colisión real con L1/L2 (detalle en _notasInternas de contextosNumericos, no transcrito acá a propósito para no generar colisiones falsas en npm run auditar — ver la nota dentro de contextosNumericos sobre por qué). MODELO MATEMÁTICO DEL CASO TRAMPA — verificado por el autor durante la redacción y confirmado de forma independiente por la auditoría matemática (commit 468f60a, 2026-08-14): las tres instancias del hielo son afines puras (masa = valor inicial + tasa · horas), con cociente y producto que cambian fila a fila en las tres, cálculos completos en _notasInternas de cada paso. AMBAS AUDITORÍAS OBLIGATORIAS (matemática, originalidad) YA CORRIERON, cada una en su hilo separado con /clear: matemática aplicó dos correcciones (ver commit 468f60a) y originalidad se corrió el 2026-08-14 con veredicto APROBADA. El archivo pasa npm run validar y npm run auditar — ningún marcador de trabajo pendiente, catálogo consistente contra L1/L2. Nada se dio por cumplido sin evidencia: donde este campo dice que algo se verificó, hay una corrida o un cálculo detrás, no una afirmación de intención. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre el distractor d del bloque de práctica «Práctica: clasificar antes de calcular» tras el rediseño del split de veredicto, commit 87debb2): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura contra los patrones DEMRE conocidos y contra el resto del corpus — el dominio (hielo derretido) ya está cleared arriba en este mismo campo, y el distractor nuevo solo agrega los cocientes ya calculados (83; 69,8; 66,5) dentro de ese dominio ya verificado. Sin coincidencia sospechosa. El distractor nuevo no duplica literalmente (misma redacción) ningún otro distractor del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/) — reemplaza al «los números no son redondos» (error-11) que sí estaba repetido en las tres lecciones de proporcionalidad y que el rediseño eliminó por eso mismo. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO. Esta nota cubre solo el distractor rediseñado, no reabre ni sustituye el resto de este campo.",
-    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Fase 1 (diseño del paso 5, id de error nuevo error-16) aprobada por Benja el 2026-08-14. Dominio del caso trampa (hielo derritiéndose) aprobado por Benja el 2026-08-14 tras dos rondas de verificación léxica corridas por él fuera de la sesión de redacción. Archivo completo: pasa npm run validar y npm run auditar. Revisión matemática independiente corrida y aplicada (commit 468f60a, 2026-08-14). Auditoría de originalidad corrida el 2026-08-14 en hilo separado abierto con /clear, protocolo MOS §7.3 — veredicto APROBADA.",
+    "declaracionOriginalidad": "Enunciados, contextos numéricos, tablas y secuencia creados desde cero por el autor del proyecto para esta lección. El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado. ESTADO AL 2026-08-14, DECLARADO SIN ADORNO. VERIFICACIÓN DE COLISIÓN DE DOMINIO — COMPLETA. (1) Esmaltes y auditorio: no requirió verificación propia, porque ambos dominios ya están cleared en las proveniencias de proporcionalidad-directa.json y proporcionalidad-inversa.json, y este archivo no introduce vocabulario nuevo de dominio en esas partes — solo cifras nuevas dentro de vocabulario ya limpio. (2) Hielo (caso trampa): verificado en dos rondas de consultar-fuentes.mjs, corridas por Benja fuera de la sesión de redacción, salida usada tal cual sin reformular (ver fuentesAnalisis para el detalle completo con los términos SI y NO). El dominio final —hielo, derretir, derretirse, fusión— volvió NO los cuatro. La restricción adicional de vocabulario del contenedor y la magnitud (agua, nivel, estanque, tanque, recipiente, llenar, profundidad, altura, los ocho SI) se cumplió en el caso trampa (hielo): masa en gramos, contenedor sin nombrar en ningún momento. Verificado por lectura del texto visible completo el 2026-08-14 (auditoría de originalidad): «llenar» sí aparece una vez en todo el archivo, pero fuera del caso trampa — en el feedback de la alternativa D del ítem 1 («sería como llenar el auditorio catorce veces»), sobre butacas de un auditorio, sin relación con el dominio de contenedor/líquido que la restricción protege. No es una colisión: no toca el caso trampa ni el vocabulario de nivel/volumen que se buscaba evitar; se deja registrado en vez de editarse porque no representa el riesgo que la restricción existía para prevenir. Adicionalmente, «bloque» (misma lista de términos verificados por Benja, también SI) aparece tres veces describiendo el hielo («un bloque de hielo», paso 5, paso 7 e ítem 3); se abrió la fuente que lo marca SI (MA-07_Algebra_Polinomios.md, ejercicios 21-22) durante esta auditoría: es un ejercicio de volumen de paralelepípedos (mecanismo geométrico, volumen = largo × ancho × alto) sin relación estructural con una relación afín masa-tiempo — coincidencia léxica, no de escenario ni de mecanismo, no bloqueante. VERIFICACIÓN DE CIFRAS — COMPLETA. Barrido corrido contra los 26 archivos JSON de content/, incluyendo proporcionalidad-inversa.json, para cada cifra nueva de este archivo (índigo, turquesa, auditorio extra, lila, piezas, auditorio del centro comunitario, coral, y las tres instancias del hielo). Tres candidatos numéricos se descartaron antes de fijarse por colisión real con L1/L2 (detalle en _notasInternas de contextosNumericos, no transcrito acá a propósito para no generar colisiones falsas en npm run auditar — ver la nota dentro de contextosNumericos sobre por qué). MODELO MATEMÁTICO DEL CASO TRAMPA — verificado por el autor durante la redacción y confirmado de forma independiente por la auditoría matemática (commit 468f60a, 2026-08-14): las tres instancias del hielo son afines puras (masa = valor inicial + tasa · horas), con cociente y producto que cambian fila a fila en las tres, cálculos completos en _notasInternas de cada paso. AMBAS AUDITORÍAS OBLIGATORIAS (matemática, originalidad) YA CORRIERON, cada una en su hilo separado con /clear: matemática aplicó dos correcciones (ver commit 468f60a) y originalidad se corrió el 2026-08-14 con veredicto APROBADA. El archivo pasa npm run validar y npm run auditar — ningún marcador de trabajo pendiente, catálogo consistente contra L1/L2. Nada se dio por cumplido sin evidencia: donde este campo dice que algo se verificó, hay una corrida o un cálculo detrás, no una afirmación de intención. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre el distractor d del bloque de práctica «Práctica: clasificar antes de calcular» tras el rediseño del split de veredicto, commit 87debb2): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura contra los patrones DEMRE conocidos y contra el resto del corpus — el dominio (hielo derretido) ya está cleared arriba en este mismo campo, y el distractor nuevo solo agrega los cocientes ya calculados (83; 69,8; 66,5) dentro de ese dominio ya verificado. Sin coincidencia sospechosa. El distractor nuevo no duplica literalmente (misma redacción) ningún otro distractor del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/) — reemplaza al «los números no son redondos» (decide-por-criterio-irrelevante) que sí estaba repetido en las tres lecciones de proporcionalidad y que el rediseño eliminó por eso mismo. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO. Esta nota cubre solo el distractor rediseñado, no reabre ni sustituye el resto de este campo.",
+    "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Fase 1 (diseño del paso 5, id de error nuevo aplica-una-sola-prueba) aprobada por Benja el 2026-08-14. Dominio del caso trampa (hielo derritiéndose) aprobado por Benja el 2026-08-14 tras dos rondas de verificación léxica corridas por él fuera de la sesión de redacción. Archivo completo: pasa npm run validar y npm run auditar. Revisión matemática independiente corrida y aplicada (commit 468f60a, 2026-08-14). Auditoría de originalidad corrida el 2026-08-14 en hilo separado abierto con /clear, protocolo MOS §7.3 — veredicto APROBADA.",
     "fecha": "2026-08-14"
   }
 }

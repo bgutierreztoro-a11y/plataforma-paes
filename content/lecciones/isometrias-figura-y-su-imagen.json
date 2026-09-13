@@ -18,14 +18,14 @@
   ],
   "_notasInternas": [
     "L3 del módulo transformaciones-isometricas (eje Geometría, módulo #12). Descriptor DEMRE (docs/temario-demre-m1-2027.md:105): 'Problemas que involucren rotación, traslación y reflexión en diversos contextos'. Diseño: docs/diseno-modulo-transformaciones-isometricas.md.",
-    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: error-1, error-2, error-6 (L1), error-7, error-8, error-9, error-10, error-12, error-16 (L2) y error-11, error-13, error-14 (nacen acá).",
+    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids que este archivo referencia: confunde-punto-con-vector, calcula-vector-al-reves, traslada-en-sentido-contrario (L1), cambia-coordenada-equivocada-al-reflejar, rota-en-sentido-contrario, confunde-reflexion-origen-con-eje, cree-que-isometria-cambia-medidas, mira-solo-donde-quedo-la-figura, aplica-regla-de-otra-transformacion (L2) y compone-en-orden-contrario, empareja-vertice-con-imagen-ajena, ubica-mal-eje-de-reflexion (nacen acá).",
     "Dominios: (núcleo) logo del centro de estudiantes para estampar en poleras, armado con un motivo que se copia trasladado y reflejado; (aplicación) nave de un videojuego 2D sobre una pantalla de píxeles que se refleja y se mueve. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
     "Corrección respecto del doc de diseño: la composición del descubrimiento es 'trasladar por (−7, 0) y luego reflejar respecto del eje y', no '(−4, 0) y eje x'. Con una traslación horizontal y una reflexión respecto del eje x los dos órdenes coinciden (la traslación es paralela al eje), y con (−4, 0) y el eje y la imagen final se superponía al motivo original. Verificado con node -e sobre lib/transformacionesIsometricas.ts.",
     "Todas las cifras verificadas con node -e: (1, 2) trasladado por (2, 3) y reflejado respecto del eje y = (−3, 5), al revés (1, 5); F(2, 1), (5, 1), (2, 3) reflejado respecto del eje y = (−2, 1), (−5, 1), (−2, 3); motivo (1, 1), (3, 1), (3, 3), (1, 4) trasladado por (−7, 0) y reflejado en el eje y = (6, 1), (4, 1), (4, 3), (6, 4), al revés (−8, 1), (−10, 1), (−10, 3), (−8, 4); vector de A(−3, 2) a A'(1, −1) = (4, −3), coherente con B(0, 4) → B'(4, 1); eje entre P(1, 3) y P'(7, 3) en x = 4; (2, 0), (4, 0), (4, 3) girado 90° antihorario = (0, 2), (0, 4), (−3, 4); (2, 3) girado 90° horario y trasladado por (1, 1) = (4, −1); vector de (−6, −3) a (2, 5) = (8, 8); eje entre Q(3, −4) y Q'(3, 6) en y = 1; nave (−4, −2) reflejada en el eje y y trasladada por (5, 0) = (9, −2); (2, −3) trasladado por (−4, 1) y reflejado en el eje y = (2, −2); (−1, 4) reflejado en el eje x y trasladado por (3, 2) = (2, −2).",
-    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4, −3, 8, 9, −2}, distractores numéricos {−4, 3, 7, −1, 1, −8, 2, 5}; sin intersección. El ejercicio del eje no lleva la variante 'a la distancia' (x = 6) de error-14 porque 6 era la x correcta de la nave en la primera versión de aplicacion; la nave quedó en (9, −2) y el 6 se retiró igual para no apretar el margen.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4, −3, 8, 9, −2}, distractores numéricos {−4, 3, 7, −1, 1, −8, 2, 5}; sin intersección. El ejercicio del eje no lleva la variante 'a la distancia' (x = 6) de ubica-mal-eje-de-reflexion porque 6 era la x correcta de la nave en la primera versión de aplicacion; la nave quedó en (9, −2) y el 6 se retiró igual para no apretar el margen.",
     "Visuales: curiosidad (composición con intermedias), pensar (figura e imagen para identificar), descubrimiento (los dos órdenes, con intermedias), generalizacion (par girado para identificar), practica (par para el eje). Ítem 2 con visual en lib/visualesItems.tsx (clave isometrias-l3-item-2): figura e imagen dibujadas, se pide cuál regla, no una coordenada.",
     "Sin auditoria.constante: no hay una constante numérica única. Los procedimientos para hallar vector y eje aparecen como regla por primera vez en generalizacion.",
-    "P2: el paso consolidacion nombra los caminos equivocados de error-11, error-12 y error-13 antes del correcto, y su bloque pregunta lleva error-11, error-7 y error-6 en los distractores."
+    "P2: el paso consolidacion nombra los caminos equivocados de compone-en-orden-contrario, mira-solo-donde-quedo-la-figura y empareja-vertice-con-imagen-ajena antes del correcto, y su bloque pregunta lleva compone-en-orden-contrario, cambia-coordenada-equivocada-al-reflejar y traslada-en-sentido-contrario en los distractores."
   ],
   "contextosNumericos": [
     "curiosidad: motivo del logo (1, 1), (3, 1), (3, 3), (1, 4), sin resolver (solo la pregunta de si el orden importa)",
@@ -92,7 +92,7 @@
       "tipo": "problema",
       "titulo": "Un punto, dos pasos",
       "_notasInternas": [
-        "(1, 2) trasladado por (2, 3) = (3, 5); reflejado respecto del eje y = (−3, 5). Distractores: (1, 5) es error-11 (reflejó primero: (−1, 2) + (2, 3)); (3, −5) es error-7 (reflejó respecto del eje x tras trasladar); (1, −1) es error-6 (restó el vector, (−1, −1), y reflejó respecto del eje y). Verificado con node -e."
+        "(1, 2) trasladado por (2, 3) = (3, 5); reflejado respecto del eje y = (−3, 5). Distractores: (1, 5) es compone-en-orden-contrario (reflejó primero: (−1, 2) + (2, 3)); (3, −5) es cambia-coordenada-equivocada-al-reflejar (reflejó respecto del eje x tras trasladar); (1, −1) es traslada-en-sentido-contrario (restó el vector, (−1, −1), y reflejó respecto del eje y). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -110,21 +110,21 @@
               "texto": "En (1, 5)",
               "esCorrecta": false,
               "feedback": "(1, 5) sale de reflejar primero y trasladar después: (1, 2) → (−1, 2) → (−1 + 2, 2 + 3) = (1, 5). Pero el orden pedido es el contrario. El orden importa: primero se traslada, y la reflexión actúa sobre el punto ya trasladado.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "compone-en-orden-contrario"
             },
             {
               "id": "c",
               "texto": "En (3, −5)",
               "esCorrecta": false,
               "feedback": "(3, −5) refleja respecto del eje x: cambió la y del punto trasladado (3, 5). La reflexión pedida es respecto del eje y, el espejo vertical, y ahí lo que cambia de signo es la x: (−3, 5).",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "id": "d",
               "texto": "En (1, −1)",
               "esCorrecta": false,
               "feedback": "(1, −1) resta el vector en vez de sumarlo: (1 − 2, 2 − 3) = (−1, −1), y después refleja. Trasladar por (2, 3) es sumar 2 en x y 3 en y: (3, 5), que reflejado da (−3, 5).",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             }
           ]
         },
@@ -141,7 +141,7 @@
       "tipo": "pensar",
       "titulo": "¿Qué le hicieron a F?",
       "_notasInternas": [
-        "Identificar la transformación a partir de figura e imagen, con las dos dibujadas: F(2, 1), (5, 1), (2, 3) y F'(−2, 1), (−5, 1), (−2, 3), reflexión respecto del eje y. Distractores: traslación por (−4, 0) es error-12 (solo mira que A pasó a (−2, 1), sin notar que B no se movió lo mismo ni que F' quedó volteada); reflexión respecto del eje x es error-7; rotación de 180° es error-9 (confunde el origen con un eje). El verdaderoFalso refuerza la conservación."
+        "Identificar la transformación a partir de figura e imagen, con las dos dibujadas: F(2, 1), (5, 1), (2, 3) y F'(−2, 1), (−5, 1), (−2, 3), reflexión respecto del eje y. Distractores: traslación por (−4, 0) es mira-solo-donde-quedo-la-figura (solo mira que A pasó a (−2, 1), sin notar que B no se movió lo mismo ni que F' quedó volteada); reflexión respecto del eje x es cambia-coordenada-equivocada-al-reflejar; rotación de 180° es confunde-reflexion-origen-con-eje (confunde el origen con un eje). El verdaderoFalso refuerza la conservación."
       ],
       "bloques": [
         {
@@ -173,21 +173,21 @@
               "texto": "Una traslación por el vector (−4, 0).",
               "esCorrecta": false,
               "feedback": "Es cierto que A pasó de (2, 1) a (−2, 1), que es moverse (−4, 0). Pero B pasó de (5, 1) a (−5, 1), que es moverse (−10, 0): no todos los vértices se movieron igual, así que no es una traslación. Además F' quedó volteada, y una traslación nunca voltea.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "mira-solo-donde-quedo-la-figura"
             },
             {
               "id": "c",
               "texto": "Una reflexión respecto del eje x.",
               "esCorrecta": false,
               "feedback": "Reflejar respecto del eje x cambiaría el signo de la y y mandaría la figura hacia abajo: A iría a (2, −1). Acá la y no cambió y la x sí: el espejo es vertical, el eje y.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "id": "d",
               "texto": "Una rotación de 180° en torno al origen.",
               "esCorrecta": false,
               "feedback": "Media vuelta cambiaría el signo de las dos coordenadas: A iría a (−2, −1), debajo del eje x. Acá solo cambió la x: es una reflexión respecto de un eje, no respecto del origen.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "confunde-reflexion-origen-con-eje"
             }
           ]
         },
@@ -231,7 +231,7 @@
       "tipo": "descubrimiento",
       "titulo": "El orden importa",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Motivo (1, 1), (3, 1), (3, 3), (1, 4). Orden 1: trasladar por (−7, 0) y reflejar en el eje y = (6, 1), (4, 1), (4, 3), (6, 4). Orden 2: reflejar y trasladar = (−8, 1), (−10, 1), (−10, 3), (−8, 4). Dos visuales con intermedias y una tabla vértice a vértice. Luego se recupera un vector desde un par: A(−3, 2) → A'(1, −1), v = (4, −3), coherente con B(0, 4) → B'(4, 1). feedbackPorError: −4 y 3 son error-2 (A − A'); 7 y −1 son error-13 (A con B': (4 − (−3), 1 − 2)). Verificado con node -e."
+        "CORAZÓN DE LA LECCIÓN. Motivo (1, 1), (3, 1), (3, 3), (1, 4). Orden 1: trasladar por (−7, 0) y reflejar en el eje y = (6, 1), (4, 1), (4, 3), (6, 4). Orden 2: reflejar y trasladar = (−8, 1), (−10, 1), (−10, 3), (−8, 4). Dos visuales con intermedias y una tabla vértice a vértice. Luego se recupera un vector desde un par: A(−3, 2) → A'(1, −1), v = (4, −3), coherente con B(0, 4) → B'(4, 1). feedbackPorError: −4 y 3 son calcula-vector-al-reves (A − A'); 7 y −1 son empareja-vertice-con-imagen-ajena (A con B': (4 − (−3), 1 − 2)). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -295,7 +295,7 @@
               "texto": "Da lo mismo: son las mismas dos transformaciones y la imagen final es la misma, solo que dibujada dos veces.",
               "esCorrecta": false,
               "feedback": "No es la misma imagen: mira la tabla. A termina en (6, 1) con un orden y en (−8, 1) con el otro. Cuando se componen transformaciones, cambiar el orden cambia el resultado.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "compone-en-orden-contrario"
             },
             {
               "id": "c",
@@ -329,25 +329,25 @@
               "campoId": "vectorX",
               "valorObtenido": -4,
               "mensaje": "Ese valor es A − A', original menos imagen: el vector al revés. La traslación va de A hacia A', así que es A' − A: 1 − (−3).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "vectorY",
               "valorObtenido": 3,
               "mensaje": "Ese valor es A − A', original menos imagen: el vector al revés. La traslación va de A hacia A': −1 − 2.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "vectorX",
               "valorObtenido": 7,
               "mensaje": "Ese valor empareja A con B': 4 − (−3). Pero B' es la imagen de B, no de A. Cada vértice se compara con su propia imagen: A con A', B con B'.",
-              "errorCatalogado": "error-13"
+              "errorCatalogado": "empareja-vertice-con-imagen-ajena"
             },
             {
               "campoId": "vectorY",
               "valorObtenido": -1,
               "mensaje": "Ese valor empareja A con B': 1 − 2. B' es la imagen de B. El vector se calcula con un vértice y su propia imagen: A' − A, y se comprueba con B' − B.",
-              "errorCatalogado": "error-13"
+              "errorCatalogado": "empareja-vertice-con-imagen-ajena"
             }
           ],
           "feedbackPorDefecto": "Imagen menos original de un mismo vértice: A' − A = (1 − (−3), −1 − 2). Comprueba que B' − B dé lo mismo."
@@ -365,7 +365,7 @@
       "tipo": "generalizacion",
       "titulo": "El método para reconocer y recuperar",
       "_notasInternas": [
-        "PRIMERA aparición del método como regla: orientación y lados para identificar; A' − A para el vector; punto medio para el eje. Ejercicio numérica: eje entre P(1, 3) y P'(7, 3), x = 4; feedbackPorError 1 y 7 son error-14 (el eje sobre P o sobre P'). Seleccion: (2, 0), (4, 0), (4, 3) → (0, 2), (0, 4), (−3, 4) es un giro de 90° antihorario; distractores: horario error-8; reflexión respecto del eje y error-12 (mira que la figura cruzó al otro lado sin notar que quedó girada, no volteada); rotación de 180° error-16. Verificado con node -e."
+        "PRIMERA aparición del método como regla: orientación y lados para identificar; A' − A para el vector; punto medio para el eje. Ejercicio numérica: eje entre P(1, 3) y P'(7, 3), x = 4; feedbackPorError 1 y 7 son ubica-mal-eje-de-reflexion (el eje sobre P o sobre P'). Seleccion: (2, 0), (4, 0), (4, 3) → (0, 2), (0, 4), (−3, 4) es un giro de 90° antihorario; distractores: horario rota-en-sentido-contrario; reflexión respecto del eje y mira-solo-donde-quedo-la-figura (mira que la figura cruzó al otro lado sin notar que quedó girada, no volteada); rotación de 180° aplica-regla-de-otra-transformacion. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -388,13 +388,13 @@
               "campoId": "ejeVertical",
               "valorObtenido": 1,
               "mensaje": "Ese valor pone el eje sobre el propio punto P. Si el espejo pasara por P, P quedaría fijo y no se movería hasta (7, 3). El eje está a mitad de camino entre P y P'.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "ubica-mal-eje-de-reflexion"
             },
             {
               "campoId": "ejeVertical",
               "valorObtenido": 7,
               "mensaje": "Ese valor pone el eje sobre la imagen P'. Un espejo que pasara por P' dejaría a P' fijo, y P tendría que estar a la misma distancia del otro lado. El eje está en el punto medio de 1 y 7.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "ubica-mal-eje-de-reflexion"
             }
           ],
           "feedbackPorDefecto": "El eje pasa por el punto medio entre P y P'. En x: (1 + 7) ÷ 2. La y no interviene porque el eje es vertical."
@@ -414,21 +414,21 @@
               "texto": "Una rotación de 90° horario en torno al origen.",
               "esCorrecta": false,
               "feedback": "El giro horario, (y, −x), mandaría (2, 0) a (0, −2), hacia abajo. Acá (2, 0) fue a (0, 2), hacia arriba: el giro fue hacia la izquierda, antihorario.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "id": "c",
               "texto": "Una reflexión respecto del eje y.",
               "esCorrecta": false,
               "feedback": "Reflejar respecto del eje y mandaría (2, 0) a (−2, 0), sobre el mismo eje x. Acá los vértices cambiaron de dirección: el lado horizontal quedó vertical. Eso es un giro, no un espejo; mirar solo que la figura «se fue» hacia la izquierda no basta.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "mira-solo-donde-quedo-la-figura"
             },
             {
               "id": "d",
               "texto": "Una rotación de 180° en torno al origen.",
               "esCorrecta": false,
               "feedback": "Media vuelta, (−x, −y), mandaría (2, 0) a (−2, 0) y (4, 3) a (−4, −3). Acá las coordenadas se intercambiaron, (4, 3) → (−3, 4): es un cuarto de vuelta, no media.",
-              "errorCatalogado": "error-16"
+              "errorCatalogado": "aplica-regla-de-otra-transformacion"
             }
           ]
         }
@@ -438,7 +438,7 @@
       "tipo": "practica",
       "titulo": "Componer, recuperar, reconocer",
       "_notasInternas": [
-        "P1 seleccion: (2, 3) girado 90° horario = (3, −2), trasladado por (1, 1) = (4, −1); distractores (4, −3) error-11 (trasladó primero: (3, 4) → (4, −3)); (−2, 3) error-8 (antihorario: (−3, 2) + (1, 1)); (2, −3) error-6 (restó el vector: (3, −2) − (1, 1)). P2 numérica: vector de (−6, −3) a (2, 5) = (8, 8); feedbackPorError −8 error-2 (en las dos componentes), 2 y 5 error-1 (entregó el punto imagen). P3 verdaderoFalso sobre orientación. P4 pregunta: eje horizontal entre Q(3, −4) y Q'(3, 6), y = 1; y = −4, y = 6, y = 10 son error-14. Verificado con node -e."
+        "P1 seleccion: (2, 3) girado 90° horario = (3, −2), trasladado por (1, 1) = (4, −1); distractores (4, −3) compone-en-orden-contrario (trasladó primero: (3, 4) → (4, −3)); (−2, 3) rota-en-sentido-contrario (antihorario: (−3, 2) + (1, 1)); (2, −3) traslada-en-sentido-contrario (restó el vector: (3, −2) − (1, 1)). P2 numérica: vector de (−6, −3) a (2, 5) = (8, 8); feedbackPorError −8 calcula-vector-al-reves (en las dos componentes), 2 y 5 confunde-punto-con-vector (entregó el punto imagen). P3 verdaderoFalso sobre orientación. P4 pregunta: eje horizontal entre Q(3, −4) y Q'(3, 6), y = 1; y = −4, y = 6, y = 10 son ubica-mal-eje-de-reflexion. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -456,21 +456,21 @@
               "texto": "En (4, −3)",
               "esCorrecta": false,
               "feedback": "(4, −3) traslada primero y gira después: (2, 3) → (3, 4) → (4, −3). El orden pedido es el contrario: el giro actúa sobre (2, 3) y la traslación sobre el punto ya girado, (3, −2).",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "compone-en-orden-contrario"
             },
             {
               "id": "c",
               "texto": "En (−2, 3)",
               "esCorrecta": false,
               "feedback": "(−2, 3) gira en sentido antihorario, (−y, x): (2, 3) → (−3, 2), y luego traslada. El enunciado pide sentido horario, (y, −x): (2, 3) → (3, −2), y luego (4, −1).",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "rota-en-sentido-contrario"
             },
             {
               "id": "d",
               "texto": "En (2, −3)",
               "esCorrecta": false,
               "feedback": "(2, −3) resta el vector en vez de sumarlo: (3 − 1, −2 − 1). Trasladar por (1, 1) es sumar 1 a cada coordenada del punto girado: (3 + 1, −2 + 1).",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             }
           ]
         },
@@ -494,25 +494,25 @@
               "campoId": "vectorFiguraX",
               "valorObtenido": -8,
               "mensaje": "Ese valor es original menos imagen, −6 − 2: el vector al revés. La traslación va del original a la imagen: 2 − (−6).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "vectorFiguraY",
               "valorObtenido": -8,
               "mensaje": "Ese valor es original menos imagen, −3 − 5: el vector al revés. La traslación va del original a la imagen: 5 − (−3).",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "calcula-vector-al-reves"
             },
             {
               "campoId": "vectorFiguraX",
               "valorObtenido": 2,
               "mensaje": "Ese valor es la x del punto de llegada, no cuánto se movió el vértice. Como el original no es el origen, el vector es la diferencia: 2 − (−6).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             },
             {
               "campoId": "vectorFiguraY",
               "valorObtenido": 5,
               "mensaje": "Ese valor es la y del punto de llegada, no cuánto se movió el vértice. El vector es imagen menos original: 5 − (−3).",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "confunde-punto-con-vector"
             }
           ],
           "feedbackPorDefecto": "Vector de traslación: imagen menos original, (2 − (−6), 5 − (−3))."
@@ -533,7 +533,7 @@
               "texto": "y = −4",
               "esCorrecta": false,
               "feedback": "y = −4 es la recta que pasa por el propio Q. Si el espejo pasara por Q, Q quedaría fijo y no se movería hasta (3, 6). El eje está a mitad de camino: en el punto medio de −4 y 6.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "ubica-mal-eje-de-reflexion"
             },
             {
               "clave": "B",
@@ -546,17 +546,17 @@
               "texto": "y = 6",
               "esCorrecta": false,
               "feedback": "y = 6 es la recta que pasa por la imagen Q'. Un espejo que pasara por Q' dejaría fijo a Q', y Q tendría que estar 10 unidades más abajo, en y = −4 respecto de un eje en y = 1, no de uno en y = 6. El eje está en el punto medio, y = 1.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "ubica-mal-eje-de-reflexion"
             },
             {
               "clave": "D",
               "texto": "y = 10",
               "esCorrecta": false,
               "feedback": "10 es la distancia entre Q y Q', 6 − (−4), no la posición del eje. El eje está a la mitad de esa distancia, 5 unidades por encima de Q: y = −4 + 5 = 1.",
-              "errorCatalogado": "error-14"
+              "errorCatalogado": "ubica-mal-eje-de-reflexion"
             }
           ],
-          "notaVerificacionMatematica": "Punto medio de −4 y 6: (−4 + 6) ÷ 2 = 1. Eje horizontal y = 1; Q dista 5 hacia abajo y Q' 5 hacia arriba. Distractores: y = −4 (sobre Q), y = 6 (sobre Q'), y = 10 (la distancia), los tres error-14. Verificado con node -e."
+          "notaVerificacionMatematica": "Punto medio de −4 y 6: (−4 + 6) ÷ 2 = 1. Eje horizontal y = 1; Q dista 5 hacia abajo y Q' 5 hacia arriba. Distractores: y = −4 (sobre Q), y = 6 (sobre Q'), y = 10 (la distancia), los tres ubica-mal-eje-de-reflexion. Verificado con node -e."
         }
       ]
     },
@@ -564,7 +564,7 @@
       "tipo": "aplicacion",
       "titulo": "La nave en la pantalla",
       "_notasInternas": [
-        "Dominio de aplicación: nave de un videojuego 2D con el centro de la pantalla como origen. Nave en (−4, −2): reflejada respecto del eje y = (4, −2); trasladada por (5, 0) = (9, −2). feedbackPorError: x = −1 es error-11 (trasladó primero: (1, −2) → (−1, −2)); x = 1 e y = 2 son error-7 (reflejó respecto del eje x: (−4, 2) + (5, 0) = (1, 2)). No se usa error-6 acá porque restar el vector produce (−1, −2), el mismo valor que error-11. Verificado con node -e."
+        "Dominio de aplicación: nave de un videojuego 2D con el centro de la pantalla como origen. Nave en (−4, −2): reflejada respecto del eje y = (4, −2); trasladada por (5, 0) = (9, −2). feedbackPorError: x = −1 es compone-en-orden-contrario (trasladó primero: (1, −2) → (−1, −2)); x = 1 e y = 2 son cambia-coordenada-equivocada-al-reflejar (reflejó respecto del eje x: (−4, 2) + (5, 0) = (1, 2)). No se usa traslada-en-sentido-contrario acá porque restar el vector produce (−1, −2), el mismo valor que compone-en-orden-contrario. Verificado con node -e."
       ],
       "bloques": [
         {
@@ -593,19 +593,19 @@
               "campoId": "naveX",
               "valorObtenido": -1,
               "mensaje": "Ese valor traslada primero y refleja después: (−4 + 5, −2) = (1, −2) → (−1, −2). El juego refleja primero: (−4, −2) → (4, −2), y sobre eso traslada, 4 + 5.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "compone-en-orden-contrario"
             },
             {
               "campoId": "naveX",
               "valorObtenido": 1,
               "mensaje": "Ese valor refleja respecto del eje x, dejando la x en −4, y luego suma 5. La reflexión es respecto del eje y: cambia el signo de la x, que pasa a 4, y después se suma 5.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "campoId": "naveY",
               "valorObtenido": 2,
               "mensaje": "Ese valor cambió el signo de la y: eso es reflejar respecto del eje x. Respecto del eje y la altura se conserva: la nave sigue en y = −2.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             }
           ],
           "feedbackPorDefecto": "Primero la reflexión respecto del eje y: (−4, −2) → (4, −2). Después la traslación por (5, 0): (4 + 5, −2 + 0)."
@@ -641,7 +641,7 @@
       "tipo": "consolidacion",
       "titulo": "Lo que te llevas",
       "_notasInternas": [
-        "Síntesis + contraste P2 explícito con los caminos de error-11, error-12 y error-13, seguido de un bloque pregunta: (2, −3) trasladado por (−4, 1) = (−2, −2), reflejado respecto del eje y = (2, −2); (−6, −2) error-11 (reflejó primero: (−2, −3) → (−6, −2)); (−2, 2) error-7 (reflejó respecto del eje x tras trasladar); (−6, −4) error-6 (restó el vector, (6, −4), y reflejó). Verificado con node -e."
+        "Síntesis + contraste P2 explícito con los caminos de compone-en-orden-contrario, mira-solo-donde-quedo-la-figura y empareja-vertice-con-imagen-ajena, seguido de un bloque pregunta: (2, −3) trasladado por (−4, 1) = (−2, −2), reflejado respecto del eje y = (2, −2); (−6, −2) compone-en-orden-contrario (reflejó primero: (−2, −3) → (−6, −2)); (−2, 2) cambia-coordenada-equivocada-al-reflejar (reflejó respecto del eje x tras trasladar); (−6, −4) traslada-en-sentido-contrario (restó el vector, (6, −4), y reflejó). Verificado con node -e."
       ],
       "bloques": [
         {
@@ -663,24 +663,24 @@
               "texto": "(−6, −2)",
               "esCorrecta": false,
               "feedback": "(−6, −2) refleja primero y traslada después: (2, −3) → (−2, −3) → (−6, −2). El orden pedido es el contrario: primero se traslada, a (−2, −2), y la reflexión actúa sobre ese punto.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "compone-en-orden-contrario"
             },
             {
               "clave": "C",
               "texto": "(−2, 2)",
               "esCorrecta": false,
               "feedback": "(−2, 2) refleja respecto del eje x: cambió la y del punto trasladado (−2, −2). El espejo pedido es el eje y, vertical, y ahí cambia de signo la x: (2, −2).",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
             },
             {
               "clave": "D",
               "texto": "(−6, −4)",
               "esCorrecta": false,
               "feedback": "(−6, −4) resta el vector en vez de sumarlo: (2 + 4, −3 − 1) = (6, −4), y después refleja. Trasladar por (−4, 1) es sumar −4 en x y 1 en y: (−2, −2), que reflejado da (2, −2).",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "traslada-en-sentido-contrario"
             }
           ],
-          "notaVerificacionMatematica": "(2, −3) + (−4, 1) = (−2, −2); reflexión respecto del eje y: (2, −2). Distractores: al revés, (−2, −3) + (−4, 1) = (−6, −2), error-11; eje x, (−2, 2), error-7; restar el vector, (6, −4) → (−6, −4), error-6. Verificado con node -e."
+          "notaVerificacionMatematica": "(2, −3) + (−4, 1) = (−2, −2); reflexión respecto del eje y: (2, −2). Distractores: al revés, (−2, −3) + (−4, 1) = (−6, −2), compone-en-orden-contrario; eje x, (−2, 2), cambia-coordenada-equivocada-al-reflejar; restar el vector, (6, −4) → (−6, −4), traslada-en-sentido-contrario. Verificado con node -e."
         }
       ]
     }
@@ -703,21 +703,21 @@
           "texto": "(2, −6)",
           "esCorrecta": false,
           "feedback": "(2, −6) traslada primero y refleja después: (−1, 4) → (2, 6) → (2, −6). El enunciado pide reflejar primero: (−1, −4), y sobre ese punto trasladar, (2, −2).",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "compone-en-orden-contrario"
         },
         {
           "clave": "C",
           "texto": "(4, 6)",
           "esCorrecta": false,
           "feedback": "(4, 6) refleja respecto del eje y, cambiando la x: (1, 4), y luego traslada. La reflexión pedida es respecto del eje x, que cambia la y: (−1, −4), y luego (2, −2).",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
         },
         {
           "clave": "D",
           "texto": "(−4, −6)",
           "esCorrecta": false,
           "feedback": "(−4, −6) resta el vector en vez de sumarlo: (−1 − 3, −4 − 2). Trasladar por (3, 2) es sumar 3 en x y 2 en y al punto reflejado: (−1 + 3, −4 + 2) = (2, −2).",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "traslada-en-sentido-contrario"
         }
       ],
       "solucion": "Paso 1, reflexión respecto del eje x: (x, y) → (x, −y), así que (−1, 4) → (−1, −4). Paso 2, traslación por (3, 2): (−1 + 3, −4 + 2) = (2, −2). El punto final es (2, −2). Comprobación del orden: en el orden contrario se obtiene (2, 6) → (2, −6), distinto, lo que confirma que el orden importa. ✓"
@@ -739,21 +739,21 @@
           "texto": "Una traslación hacia la izquierda.",
           "esCorrecta": false,
           "feedback": "Una traslación mueve todos los vértices por el mismo vector, y acá A se movió (−2, 0) mientras B se movió (−8, 0). Además F' quedó volteada (B' a la izquierda de A'), y una traslación nunca voltea. Mirar solo que F' «se fue» hacia la izquierda no basta.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura"
         },
         {
           "clave": "C",
           "texto": "Una reflexión respecto del eje x.",
           "esCorrecta": false,
           "feedback": "Reflejar respecto del eje x cambiaría el signo de la y: A iría a (1, −1), debajo del eje. Acá la y de cada vértice se conservó y la que cambió fue la x: el espejo es vertical, el eje y.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
         },
         {
           "clave": "D",
           "texto": "Una rotación de 180° en torno al origen.",
           "esCorrecta": false,
           "feedback": "Media vuelta cambiaría el signo de las dos coordenadas: A iría a (−1, −1). Acá solo cambió la x, así que es una reflexión respecto de un eje, no respecto del origen.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-reflexion-origen-con-eje"
         }
       ],
       "solucion": "Se compara cada vértice con su imagen: (1, 1) → (−1, 1), (4, 1) → (−4, 1), (4, 3) → (−4, 3), (1, 2) → (−1, 2). En todos, la x cambia de signo y la y se conserva: es la regla (x, y) → (−x, y), la reflexión respecto del eje y. Se descarta la traslación porque los vértices no se movieron por el mismo vector (A por (−2, 0), B por (−8, 0)) y porque F' quedó volteada; se descarta la reflexión respecto del eje x porque la y no cambió; y la rotación de 180° porque cambiaría también la y. La transformación es la reflexión respecto del eje y, alternativa A."
@@ -775,21 +775,21 @@
           "texto": "Es correcta: las dos son isometrías, y las isometrías se pueden aplicar en cualquier orden sin que cambie el resultado.",
           "esCorrecta": false,
           "feedback": "Que las dos conserven las medidas no significa que se puedan intercambiar. La traslación mueve hacia la derecha lo que la reflexión después manda hacia la izquierda, y al revés: con (1, 1) se obtiene (−3, 1) en un orden y (1, 1) en el otro.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "compone-en-orden-contrario"
         },
         {
           "clave": "C",
           "texto": "Es correcta: la reflexión no cambia la posición de la figura, solo la voltea, así que la traslación es lo único que la mueve, y da lo mismo cuándo se aplique.",
           "esCorrecta": false,
           "feedback": "La reflexión sí cambia la posición: manda cada punto al otro lado del eje, a la misma distancia. Por eso (3, 1) va a (−3, 1) y (−1, 1) va a (1, 1). Como mueve, importa si actúa antes o después de la traslación.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura"
         },
         {
           "clave": "D",
           "texto": "No es correcta, pero por otra razón: la reflexión cambia el tamaño de la figura, así que el resultado depende de si se agranda antes o después de trasladar.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto, pero la razón no: la reflexión es una isometría y no cambia ningún tamaño. La afirmación falla por el orden, no por las medidas: (1, 1) termina en (−3, 1) o en (1, 1) según cuál transformación actúe primero.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cree-que-isometria-cambia-medidas"
         }
       ],
       "solucion": "Se prueba con un vértice cualquiera, por ejemplo (1, 1). Orden 1, trasladar por (2, 0) y luego reflejar respecto del eje y: (1, 1) → (3, 1) → (−3, 1). Orden 2, reflejar y luego trasladar: (1, 1) → (−1, 1) → (1, 1). Como (−3, 1) ≠ (1, 1), los dos órdenes no dan lo mismo y la afirmación no es correcta. La razón es el orden, no las medidas: las dos transformaciones son isometrías y conservan el tamaño de la figura. En general, trasladar y reflejar solo conmutan cuando el vector de traslación es paralelo al eje de reflexión, y (2, 0) es perpendicular al eje y. La alternativa correcta es la A."

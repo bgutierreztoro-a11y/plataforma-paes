@@ -17,7 +17,7 @@
           "clave": "A",
           "texto": "PLANTILLA. Valor que produce el error-N.",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "plantilla-error-uno",
           "feedbackDescarte": "PLANTILLA. Por qué esa alternativa no podía ser, nombrando el error concreto."
         },
         {
@@ -30,14 +30,14 @@
           "clave": "C",
           "texto": "PLANTILLA. Valor que produce otro error del catálogo.",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "plantilla-error-dos",
           "feedbackDescarte": "PLANTILLA. Texto del descarte acertado, nombra el error."
         },
         {
           "clave": "D",
           "texto": "PLANTILLA. Valor que produce un tercer error del catálogo.",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "plantilla-error-tres",
           "feedbackDescarte": "PLANTILLA. Texto del descarte acertado, nombra el error."
         }
       ],

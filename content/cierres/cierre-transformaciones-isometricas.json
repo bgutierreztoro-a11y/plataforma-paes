@@ -6,7 +6,7 @@
   "_notasInternas": [
     "Cierre del módulo 'Transformaciones isométricas', construido después de que las 3 lecciones (isometrias-mover-sin-deformar, isometrias-girar-reflejar-trasladar, isometrias-figura-y-su-imagen) pasaran npm run validar y npm run auditar sin bloqueantes. Diseño: docs/diseno-modulo-transformaciones-isometricas.md, sección 'Cierre'.",
     "Cobertura por lección: L1 (puntos y vectores) = ítems 1 y 4. L2 (rotación, traslación y reflexión) = ítems 2, 3, 5 y 7. L3 (problemas: composición, identificar, hallar el eje) = ítems 6 y 8. Cobertura por habilidad: resolver = ítems 1, 2. representar = ítems 3, 5. modelar = ítems 4, 8. argumentar = ítems 6, 7 (2 de cada una). Dificultad: baja = ítems 1, 2; media = ítems 3, 4, 5, 6; alta = ítems 7, 8.",
-    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids referenciados: error-1, error-2, error-3, error-5, error-6, error-7, error-8, error-9, error-10, error-11, error-12, error-13, error-14, error-16. Los 24 distractores llevan errorCatalogado. Cobertura: error-1 (4C), error-2 (4B), error-3 (1C), error-5 (1B), error-6 (1D, 8D), error-7 (3B), error-8 (2B, 8C), error-9 (3C, 5C), error-10 (7B, 7C), error-11 (8B), error-12 (5B, 7D), error-13 (4D), error-14 (6B, 6C, 6D), error-16 (2C, 2D, 3D, 5D). error-4 y error-15 (distancia) no aparecen: la distancia ya cerró en L1 con tres ítems y el cierre reparte sus 8 en los otros mecanismos.",
+    "Catálogo canónico: content/errores/transformaciones-isometricas.json. Ids referenciados: confunde-punto-con-vector, calcula-vector-al-reves, cruza-componentes, multiplica-una-sola-componente, traslada-en-sentido-contrario, cambia-coordenada-equivocada-al-reflejar, rota-en-sentido-contrario, confunde-reflexion-origen-con-eje, cree-que-isometria-cambia-medidas, compone-en-orden-contrario, mira-solo-donde-quedo-la-figura, empareja-vertice-con-imagen-ajena, ubica-mal-eje-de-reflexion, aplica-regla-de-otra-transformacion. Los 24 distractores llevan errorCatalogado. Cobertura: confunde-punto-con-vector (4C), calcula-vector-al-reves (4B), cruza-componentes (1C), multiplica-una-sola-componente (1B), traslada-en-sentido-contrario (1D, 8D), cambia-coordenada-equivocada-al-reflejar (3B), rota-en-sentido-contrario (2B, 8C), confunde-reflexion-origen-con-eje (3C, 5C), cree-que-isometria-cambia-medidas (7B, 7C), compone-en-orden-contrario (8B), mira-solo-donde-quedo-la-figura (5B, 7D), empareja-vertice-con-imagen-ajena (4D), ubica-mal-eje-de-reflexion (6B, 6C, 6D), aplica-regla-de-otra-transformacion (2C, 2D, 3D, 5D). suma-distancias-por-cuadricula y omite-raiz-en-distancia (distancia) no aparecen: la distancia ya cerró en L1 con tres ítems y el cierre reparte sus 8 en los otros mecanismos.",
     "Contextos reutilizados de las lecciones con cifras nuevas: logo del centro de estudiantes (ítem 4, copia por traslación), motivo de bordado en punto cruz (ítem 6, eje de reflexión), nave del videojuego (ítem 8, composición). Los demás ítems son abstractos, sin dominio, como los ítems de números puros de otros cierres. No se introdujo ningún dominio nuevo.",
     "Todas las cifras verificadas con node -e sobre lib/transformacionesIsometricas.ts: u + 2v con u = (−3, 5), v = (4, −2) = (5, 1); (−4, 3) girado 90° horario = (3, 4); (2, 2), (6, 2), (2, 5) reflejados respecto del eje x = (2, −2), (6, −2), (2, −5); A(−6, 1) → A'(−2, −5) y B(−3, 3) → B'(1, −3), vector (4, −6); (1, 1), (3, 1), (3, 4) → (−1, −1), (−3, −1), (−3, −4), giro de 180°; eje entre P(−5, 2) y P'(3, 2) en x = −1; rectángulo de lados 3 y 5 girado 90°; nave (−3, 4) girada 90° horario = (4, 3) y trasladada por (2, 5) = (6, 8).",
     "Cotejo de cifras contra los contextosNumericos de L1, L2 y L3: ningún par punto-imagen ni vector de este cierre se repite en las lecciones. El ítem 8 termina en (6, 8); la lección 1 usa el vector (6, 8) como diferencia para una distancia de 10 (de (−2, −1) a (4, 7)), con otro rol.",
@@ -31,21 +31,21 @@
           "texto": "(5, 3)",
           "esCorrecta": false,
           "feedback": "(5, 3) multiplica por 2 solo la primera componente de v: usa (8, −2) en vez de (8, −4). El escalar multiplica las dos componentes: 2v = (8, −4), y u + 2v = (5, 1).",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "multiplica-una-sola-componente"
         },
         {
           "clave": "C",
           "texto": "(−7, 13)",
           "esCorrecta": false,
           "feedback": "(−7, 13) cruza las componentes: −3 + (−4) suma la x de u con la y de 2v, y 5 + 8 suma la y de u con la x de 2v. Se suma x con x e y con y: (−3 + 8, 5 + (−4)) = (5, 1).",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "cruza-componentes"
         },
         {
           "clave": "D",
           "texto": "(−11, 9)",
           "esCorrecta": false,
           "feedback": "(−11, 9) es u − 2v: (−3 − 8, 5 + 4). La operación pedida es una suma; restar el vector lo aplica en sentido contrario. u + 2v = (−3 + 8, 5 − 4) = (5, 1).",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "traslada-en-sentido-contrario"
         }
       ],
       "solucion": "Primero la ponderación, las dos componentes por 2: 2v = 2 · (4, −2) = (8, −4). Después la suma, componente a componente: u + 2v = (−3 + 8, 5 + (−4)) = (5, 1). Comprobación: (5, 1) − u = (8, −4) = 2v. ✓"
@@ -67,21 +67,21 @@
           "texto": "(−3, −4)",
           "esCorrecta": false,
           "feedback": "(−3, −4) es el giro en sentido antihorario, (−y, x): manda el punto al tercer cuadrante, hacia la izquierda. En sentido horario se gira hacia la derecha: (y, −x) = (3, 4).",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "rota-en-sentido-contrario"
         },
         {
           "clave": "C",
           "texto": "(4, 3)",
           "esCorrecta": false,
           "feedback": "(4, 3) cambia el signo de la x sin intercambiar las coordenadas: eso es reflejar respecto del eje y, no girar. Un giro de 90° intercambia las coordenadas: (y, −x) = (3, 4).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         },
         {
           "clave": "D",
           "texto": "(4, −3)",
           "esCorrecta": false,
           "feedback": "(4, −3) cambia los dos signos sin intercambiar: es media vuelta, 180°. Un cuarto de vuelta intercambia las coordenadas: (y, −x) = (3, 4).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         }
       ],
       "solucion": "Regla del giro de 90° en sentido horario en torno al origen: (x, y) → (y, −x). Con x = −4 e y = 3: primera coordenada y = 3; segunda coordenada −x = −(−4) = 4. La imagen es (3, 4). Comprobación: el punto y su imagen están a la misma distancia del origen, √(16 + 9) = 5 en los dos casos. ✓"
@@ -103,21 +103,21 @@
           "texto": "A' = (−2, 2), B' = (−6, 2), C' = (−2, 5)",
           "esCorrecta": false,
           "feedback": "Esos vértices cambiaron el signo de la x: es la reflexión respecto del eje y, el espejo vertical, que manda el triángulo hacia la izquierda. Respecto del eje x el espejo es horizontal y lo que cambia es la y.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar"
         },
         {
           "clave": "C",
           "texto": "A' = (−2, −2), B' = (−6, −2), C' = (−2, −5)",
           "esCorrecta": false,
           "feedback": "Esos vértices cambiaron de signo en x y en y: es la reflexión respecto del origen, equivalente a media vuelta. Respecto de un solo eje cambia una sola coordenada: la y, porque el eje x es horizontal.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-reflexion-origen-con-eje"
         },
         {
           "clave": "D",
           "texto": "A' = (2, −2), B' = (2, −6), C' = (5, −2)",
           "esCorrecta": false,
           "feedback": "Esos vértices intercambiaron las coordenadas y cambiaron un signo: es la regla del giro de 90° horario, (y, −x). Una reflexión no intercambia nada; cambia el signo de una coordenada: (x, −y).",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         }
       ],
       "solucion": "Reflexión respecto del eje x: (x, y) → (x, −y), aplicada a cada vértice. A = (2, 2) → (2, −2). B = (6, 2) → (6, −2). C = (2, 5) → (2, −5). Comprobación de conservación: AB mide 4 y A'B' también; AC mide 3 y A'C' también; el ángulo recto en A se conserva en A'. La imagen es la alternativa A."
@@ -139,21 +139,21 @@
           "texto": "(−4, 6)",
           "esCorrecta": false,
           "feedback": "(−4, 6) es A − A', original menos imagen: el vector al revés, que llevaría la copia de vuelta al original. La traslación va del original a la imagen: A' − A = (4, −6).",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "calcula-vector-al-reves"
         },
         {
           "clave": "C",
           "texto": "(−2, −5)",
           "esCorrecta": false,
           "feedback": "(−2, −5) es el punto A', dónde quedó el vértice, no cuánto se movió. Como A no es el origen, el vector es la diferencia A' − A = (4, −6).",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "confunde-punto-con-vector"
         },
         {
           "clave": "D",
           "texto": "(7, −4)",
           "esCorrecta": false,
           "feedback": "(7, −4) es B' − A: empareja el vértice A con la imagen de B. Cada vértice se compara con su propia imagen: A' − A = (4, −6), y B' − B da lo mismo.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "empareja-vertice-con-imagen-ajena"
         }
       ],
       "solucion": "En una traslación todos los vértices se mueven por el mismo vector, y ese vector es imagen menos original de cualquier vértice. Con A: A' − A = (−2 − (−6), −5 − 1) = (4, −6). Con B: B' − B = (1 − (−3), −3 − 3) = (4, −6). Coinciden, así que la traslación es por (4, −6). Comprobación: A + (4, −6) = (−2, −5) = A'. ✓"
@@ -175,21 +175,21 @@
           "texto": "Una traslación hacia abajo y hacia la izquierda.",
           "esCorrecta": false,
           "feedback": "Una traslación mueve todos los vértices por el mismo vector, y acá (1, 1) se movió (−2, −2) mientras (3, 4) se movió (−6, −8). Además, en F el lado vertical está a la derecha y en F' quedó a la izquierda: la figura giró, no se corrió.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura"
         },
         {
           "clave": "C",
           "texto": "Una reflexión respecto del eje y.",
           "esCorrecta": false,
           "feedback": "Reflejar respecto del eje y cambiaría solo la x: (1, 1) iría a (−1, 1), sobre el eje x. Acá cambiaron las dos coordenadas, y eso es reflejar respecto del origen, que equivale a girar 180°.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-reflexion-origen-con-eje"
         },
         {
           "clave": "D",
           "texto": "Una rotación de 90° antihorario en torno al origen.",
           "esCorrecta": false,
           "feedback": "Un cuarto de vuelta intercambia las coordenadas, (−y, x): (3, 4) iría a (−4, 3). Acá (3, 4) fue a (−3, −4), sin intercambio y con los dos signos cambiados: es media vuelta, no un cuarto.",
-          "errorCatalogado": "error-16"
+          "errorCatalogado": "aplica-regla-de-otra-transformacion"
         }
       ],
       "solucion": "Se compara cada vértice con su imagen: (1, 1) → (−1, −1), (3, 1) → (−3, −1), (3, 4) → (−3, −4). En todos, las dos coordenadas cambian de signo sin intercambiarse: (x, y) → (−x, −y), la rotación de 180° en torno al origen (que coincide con la reflexión respecto del origen). No es traslación porque los vértices no se movieron por el mismo vector; no es reflexión respecto del eje y porque también cambió la y; no es un giro de 90° porque las coordenadas no se intercambiaron. La respuesta es A."
@@ -211,21 +211,21 @@
           "texto": "Es correcto: el eje es x = −5, porque toda reflexión deja fijo el punto que se refleja y desde ahí lo copia al otro lado.",
           "esCorrecta": false,
           "feedback": "Si el eje pasara por P, P quedaría fijo, sin moverse, y no podría tener por imagen a (3, 2). El eje está entre P y P', a la misma distancia de los dos: x = −1.",
-          "errorCatalogado": "error-14"
+          "errorCatalogado": "ubica-mal-eje-de-reflexion"
         },
         {
           "clave": "C",
           "texto": "No es correcto: el eje es x = 3, porque pasa por la imagen P', que es donde termina la reflexión.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero el eje no: una recta que pase por P' dejaría fijo a P', y P debería estar 8 unidades más a la izquierda de x = 3 para reflejarse ahí, en x = −5 respecto de un eje en x = −1, no en x = 3. El eje pasa por el punto medio, x = −1.",
-          "errorCatalogado": "error-14"
+          "errorCatalogado": "ubica-mal-eje-de-reflexion"
         },
         {
           "clave": "D",
           "texto": "No es correcto: el eje es x = 4, porque la distancia entre P y P' es 8 y el eje queda a la mitad, en 8 ÷ 2 = 4.",
           "esCorrecta": false,
           "feedback": "El veredicto es correcto pero el eje no: 4 es la mitad de la distancia entre P y P', no la posición del eje. El eje está 4 unidades a la derecha de P, en x = −5 + 4 = −1.",
-          "errorCatalogado": "error-14"
+          "errorCatalogado": "ubica-mal-eje-de-reflexion"
         }
       ],
       "solucion": "En una reflexión, el eje es perpendicular al segmento que une cada punto con su imagen y pasa por su punto medio. P y P' tienen la misma y, así que el eje es vertical, x = punto medio de −5 y 3 = (−5 + 3) ÷ 2 = −1. Comprobación: la distancia de P al eje es −1 − (−5) = 4, y la de P' al eje es 3 − (−1) = 4; iguales, como corresponde. El eje no puede pasar por P (P quedaría fijo) ni por P' (P' quedaría fijo), y 8 ÷ 2 = 4 es la distancia al eje, no su coordenada. La afirmación no es correcta y la alternativa que lo explica es A."
@@ -247,21 +247,21 @@
           "texto": "Los lados se intercambian, así que la imagen es un rectángulo de 3 por 5 con otra área.",
           "esCorrecta": false,
           "feedback": "Que el lado de 5 pase a ser vertical no cambia el área: 5 × 3 y 3 × 5 son los mismos 15. Ninguna rotación cambia lados ni área; solo cambia hacia dónde apuntan los lados.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cree-que-isometria-cambia-medidas"
         },
         {
           "clave": "C",
           "texto": "Los lados siguen midiendo 5 y 3, pero el área cambia porque el rectángulo queda inclinado respecto de cómo estaba.",
           "esCorrecta": false,
           "feedback": "Con los mismos lados y los mismos ángulos rectos, el área es la misma, 15. Que la figura quede girada no la achica ni la agranda: una rotación es una isometría.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "cree-que-isometria-cambia-medidas"
         },
         {
           "clave": "D",
           "texto": "Es lo mismo que una traslación: lados y área se conservan y los lados de la imagen quedan paralelos a los originales.",
           "esCorrecta": false,
           "feedback": "Lados y área sí se conservan, pero los lados no quedan paralelos: tras un giro de 90°, el lado horizontal queda vertical. En una traslación, en cambio, cada lado sigue apuntando en la misma dirección. Girar y trasladar se distinguen justamente en eso.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura"
         }
       ],
       "solucion": "La rotación de 90° antihorario aplica (x, y) → (−y, x) a cada vértice, y esa regla conserva las distancias entre vértices: los lados siguen midiendo 5 y 3, los ángulos siguen siendo rectos y el área sigue siendo 5 × 3 = 15. Lo que cambia es la dirección de los lados: un lado que iba de (0, 0) a (5, 0) pasa a ir de (0, 0) a (0, 5), vertical. En una traslación los lados quedan paralelos a los originales, así que la rotación no es una traslación aunque conserve las medidas. La afirmación correcta es A."
@@ -283,21 +283,21 @@
           "texto": "(9, 1)",
           "esCorrecta": false,
           "feedback": "(9, 1) traslada primero y gira después: (−3, 4) → (−1, 9) → (9, 1). El juego gira primero, y la traslación actúa sobre la nave ya girada, (4, 3): (6, 8).",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "compone-en-orden-contrario"
         },
         {
           "clave": "C",
           "texto": "(−2, 2)",
           "esCorrecta": false,
           "feedback": "(−2, 2) gira en sentido antihorario, (−y, x): (−3, 4) → (−4, −3), y luego traslada. El giro pedido es horario, (y, −x): (−3, 4) → (4, 3), y luego (6, 8).",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "rota-en-sentido-contrario"
         },
         {
           "clave": "D",
           "texto": "(2, −2)",
           "esCorrecta": false,
           "feedback": "(2, −2) resta el vector en vez de sumarlo: (4 − 2, 3 − 5). Trasladar por (2, 5) es sumar 2 en x y 5 en y a la nave girada: (4 + 2, 3 + 5) = (6, 8).",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "traslada-en-sentido-contrario"
         }
       ],
       "solucion": "Paso 1, giro de 90° horario en torno al origen, (x, y) → (y, −x): (−3, 4) → (4, −(−3)) = (4, 3). Paso 2, traslación por (2, 5): (4 + 2, 3 + 5) = (6, 8). La nave queda en (6, 8). Comprobación del orden: en el orden contrario se obtiene (−1, 9) → (9, 1), distinto, lo que confirma que el orden importa. ✓"

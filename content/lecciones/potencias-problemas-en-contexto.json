@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "potencias-problemas-en-contexto",
-  "moduloId": "potencias-raices",
+  "moduloId": "potencias-y-raices",
   "titulo": "Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos",
   "objetivo": "Decidir, a partir de lo que entrega un enunciado, si corresponde aplicar una potencia o una raíz enésima para resolverlo, y aplicar esa decisión en situaciones de multiplicación repetida por un factor fijo: calcular el resultado cuando el factor y la cantidad de repeticiones son conocidos, y encontrar el factor desconocido cuando lo que se conoce es el resultado final y la cantidad de repeticiones.",
   "tiempoEstimadoMin": 26,
@@ -19,7 +19,7 @@
     "índice y exponente en la notación de raíz"
   ],
   "_notasInternas": [
-    "L3 del módulo Potencias y raíces enésimas. Arquitectura fijada y firmada en docs/diseno-modulo-potencias-y-raices.md. Este archivo implementa §a (L3), embebe el subconjunto de §c que usa (error-2, error-3, error-7, error-8, error-11, error-12, error-13, copiados carácter a carácter desde potencias-multiplicar-corto.json y potencias-raiz-escondida.json) y sigue el reparto de bloques de §e.",
+    "L3 del módulo Potencias y raíces enésimas. Arquitectura fijada y firmada en docs/diseno-modulo-potencias-y-raices.md. Este archivo implementa §a (L3), embebe el subconjunto de §c que usa (suma-exponentes-con-distinta-base, cruza-reglas-de-exponentes, intercambia-indice-y-exponente, reparte-raiz-sobre-la-suma, suma-radicales-distintos, divide-por-el-indice-como-raiz, responde-otra-magnitud-potencias, copiados carácter a carácter desde potencias-multiplicar-corto.json y potencias-raiz-escondida.json) y sigue el reparto de bloques de §e.",
     "REEMPLAZO COMPLETO DE DOMINIO (2026-08-21): el dominio anterior de este archivo —rebote de una pelota en el gimnasio del colegio, respaldo (d) de §f— tuvo COLISIÓN REAL confirmada contra un ítem DEMRE 2024 en Material/MA-02_Numeros_Racionales.md:106 (subcarpeta fuentes-analisis-aisladas/Material/). El candidato se descarta ENTERO, no se ajusta (§6.1 de docs/calibracion-lecciones-e-items.md: 'si vuelve SÍ en cualquiera de las tres dimensiones, descartar el candidato completo'). Ningún dato, frase ni cifra del dominio pelota se reutiliza en esta reescritura.",
     "DOMINIO NUEVO: medicamento que se elimina del organismo por intervalos. Cuatro tandas de consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md, corridas por Benja fuera de esta sesión), resueltas y cerradas el 2026-08-22 (detalle completo en docs/diseno-modulo-potencias-y-raices.md §f y en proveniencia de este archivo): primera tanda (léxico genérico del dominio: medicamento, dosis, torrente sanguíneo, metabolismo, eliminación, fármaco → NO salvo organismo → SI, 3 hits); segunda tanda (frases compuestas exactas del texto final → las 5, NO); tercera tanda (vocabulario de rol y cifras sueltas: paciente, médico, hospital, 6250, 135 → paciente y 135 con hits en dominios ajenos, geometría/estadística, sin colisión); cuarta tanda (verbos y sustantivos funcionales: elimina, reduce, queda, quedan, sangre, cuerpo → todos con hits en dominios ajenos o ruido léxico de palabras genéricas del idioma, sin colisión). Los tres hits originales de \"organismo\" están todos resueltos: Material/MA-34_Potencia_Ecuacion_Exponencial.md (LIMPIO, ítem 25 amebas, mecanismo inverso), mineduc-curriculum/... (falso positivo, organismo=DEMRE institución) y pdv-terceros/MA-34_... (evaluados los 5 ítems del dominio decaimiento/crecimiento, ninguno comparte mecanismo con este archivo). El candidato está CONFIRMADO LIMPIO en su totalidad: el punto 1 del checklist MOS §7.3 queda CERTIFICADO para este archivo, sin más rondas de términos sueltos pendientes.",
     "MECANISMO IDÉNTICO AL DESCARTADO, SOLO CAMBIA EL ESCENARIO: ida D·rⁿ (dosis inicial D, fracción retenida r por intervalo, n intervalos, dosis final D_n) / vuelta r = ⁿ√(D_n/D). r se entrega siempre como dato del enunciado —una fracción retenida ya observada, nunca derivada de una fórmula de vida media ni de un decaimiento exponencial continuo—, exactamente la misma cautela que ya regía para el dominio pelota (r es un dato medido, no un modelo físico). Ningún fármaco real, dosis real ni nombre de paciente aparece: el medicamento es genérico y el escenario es un modelo simplificado declarado como tal, no una afirmación de farmacología real.",
@@ -27,7 +27,7 @@
     "OBJETO DE DESCUBRIMIENTO (patrón, no constante): que la misma relación D_n = D · rⁿ se lee en dos direcciones, y que el enunciado —no la lección— dice cuál dirección hace falta. Por eso este módulo no declara auditoria.constante (decisión ya fijada en §0 del documento de diseño, igual que en L1 y L2).",
     "UNIDADES: a diferencia de L1 y L2, en L3 los campos numerica SÍ miden una magnitud real (miligramos), según fija §0 y §e del documento de diseño. Todos los campos que piden una dosis llevan \"unidad\": \"miligramos\". La única excepción es el campo que pide la fracción r (paso pistas): r es una razón adimensional —la misma naturaleza que el «aumento» de L1—, así que se declara en auditoria.camposAdimensionales, no se le inventa una unidad.",
     "IDS DE CAMPO SIN CIFRA (regla 4 de docs/reglas-modulo.md): fraccionPorIntervalo, dosisTrasSeisIntervalos, dosisTrasSieteIntervalos — ninguno lleva un dígito; los números de intervalos se escriben en palabras dentro del id, no como cifra.",
-    "NÚMEROS SIN COLISIÓN INTERNA (regla 3b), verificados antes de commitear: valores correctos usados en campos/alternativas — 0,2 (pistas numerica); 0,25 (descubrimiento numerica); 0,0625 (practica numerica); 1/3 (aplicación pregunta A); 4 (item-1 A). Valores distractor — 0,000064 (pistas, error-12); 1 (descubrimiento y item-1 B, mismo valor reutilizado a propósito para el mismo quinto intervalo del medicamento original, igual que el archivo descartado reutilizaba su propio distractor por rebote de más); 0,00006103515625 (practica numerica, error-3); 1020 (item-1 C, error-13); 256 (item-1 D); 5 (aplicación pregunta B, sin catalogar — dato Dₙ copiado directo, sin procedimiento, no calza con error-13); 1/81 (aplicación pregunta D, error-12); expresiones sin evaluar (0,25/1024)^6, (0,25/1024)/6, 6·(0,25/1024) (item-2 B, C, D) y (5/135)³ (aplicación pregunta C), envueltas en negrita markdown para que scripts/auditar-leccion.mjs no las lea como valor numérico, mismo mecanismo documentado en L1, L2 y en el archivo descartado. Ninguno de los valores distractor coincide con ningún valor declarado correcto en este archivo. La verificación mecánica completa la hace npm run auditar, esta nota es el chequeo manual previo.",
+    "NÚMEROS SIN COLISIÓN INTERNA (regla 3b), verificados antes de commitear: valores correctos usados en campos/alternativas — 0,2 (pistas numerica); 0,25 (descubrimiento numerica); 0,0625 (practica numerica); 1/3 (aplicación pregunta A); 4 (item-1 A). Valores distractor — 0,000064 (pistas, divide-por-el-indice-como-raiz); 1 (descubrimiento y item-1 B, mismo valor reutilizado a propósito para el mismo quinto intervalo del medicamento original, igual que el archivo descartado reutilizaba su propio distractor por rebote de más); 0,00006103515625 (practica numerica, cruza-reglas-de-exponentes); 1020 (item-1 C, responde-otra-magnitud-potencias); 256 (item-1 D); 5 (aplicación pregunta B, sin catalogar — dato Dₙ copiado directo, sin procedimiento, no calza con responde-otra-magnitud-potencias); 1/81 (aplicación pregunta D, divide-por-el-indice-como-raiz); expresiones sin evaluar (0,25/1024)^6, (0,25/1024)/6, 6·(0,25/1024) (item-2 B, C, D) y (5/135)³ (aplicación pregunta C), envueltas en negrita markdown para que scripts/auditar-leccion.mjs no las lea como valor numérico, mismo mecanismo documentado en L1, L2 y en el archivo descartado. Ninguno de los valores distractor coincide con ningún valor declarado correcto en este archivo. La verificación mecánica completa la hace npm run auditar, esta nota es el chequeo manual previo.",
     "AUDITORÍAS: PENDIENTES DE NUEVO, SIN ARRASTRAR NINGÚN RESULTADO ANTERIOR. Todo lo redactado antes de hoy en este archivo describía el dominio pelota, ya descartado por colisión real; el contenido actual es 100% nuevo, así que ninguna ronda de auditoría previa (la Ronda 1 y la Ronda 2 que corrieron sobre el dominio pelota, cualquiera haya sido su resultado) dice nada sobre este texto. La revisión matemática y la auditoría de originalidad se corren desde cero, en un hilo nuevo, sin memoria de esta conversación, antes de firmar el commit de contenido."
   ],
   "auditoria": {
@@ -40,14 +40,14 @@
     "curiosidad (Paso 1): medicamento con dosis inicial de 1024 mg, r = 1/4 conocido (dado en el enunciado). Tabla de intervalos 0 a 3 (dosis 1024, 256, 64, 16 mg). Predicción libre sobre el intervalo 4 (sin corrección).",
     "problema (Paso 2): medicamento distinto, dosis inicial 6250 mg, 5 intervalos contados, dosis final 2 mg, r desconocido. Selección pedagógica sobre qué dato falta.",
     "pensar (Paso 3): predicción libre sobre el valor de r del medicamento del paso 2, sin corrección.",
-    "pistas (Paso 4): resolución guiada del r del medicamento del paso 2. Numérica: r = 0,2, distractor 0,000064 (error-12, razón 0,00032 dividida por el índice 5).",
+    "pistas (Paso 4): resolución guiada del r del medicamento del paso 2. Numérica: r = 0,2, distractor 0,000064 (divide-por-el-indice-como-raiz, razón 0,00032 dividida por el índice 5).",
     "descubrimiento (Paso 5): conecta el tanteo del paso 4 con la raíz quinta. Numérica de refuerzo hacia adelante: dosis tras 6 intervalos del medicamento original (r = 1/4, D = 1024 mg), correcto 0,25 mg.",
-    "generalizacion (Paso 6): fórmula general D_n = D·rⁿ y r = (D_n/D)^(1/n). Selección sobre cuál expresión representa r, distractor error-13 (se queda en la razón total) y error-7 (índice y exponente invertidos).",
-    "practica (Paso 7): combinación de exponentes de igual base, r² · r³ = r⁵ (selección, distractor error-3: r⁶). Verdadero/falso sobre no poder combinar factores de dos medicamentos distintos sumando exponentes (error-2, sin poder etiquetarlo por ser bloque verdaderoFalso). Numérica: dosis tras 7 intervalos (r³ · r⁴), correcto 0,0625 mg, distractor error-3: 0,00006103515625 mg (exponentes multiplicados, 3·4, en vez de sumados).",
-    "aplicacion (Paso 8, pregunta formato PAES embebida): tercer medicamento, dosis inicial 135 mg, tras 3 intervalos llega a 5 mg, r desconocido. Correcto 1/3, distractores 5 (repite la dosis final, sin catalogar: es el dato copiado directo del enunciado, sin procedimiento de por medio, no calza con error-13), error-7 ((5/135)³, índice y exponente invertidos) y error-12 (1/81, razón 1/27 dividida por el índice 3).",
-    "itemsPAES item-1 (resolver, media): medicamento original, r = 1/4 conocido, dosis tras 4 intervalos. Correcto 4 mg. Distractores 1 (un intervalo de más, sin catalogar), 1020 (error-13, dosis eliminada en vez de restante) y 256 (dosis del primer intervalo, sin catalogar).",
-    "itemsPAES item-2 (modelar, media): medicamento que parte de 1024 mg y llega a 0,25 mg tras 6 intervalos, r desconocido. Pide la expresión de r, no el valor. Distractores error-7 (exponente 6 en vez de 1/6) y error-12 (dividir por 6 en vez de la raíz sexta), más un cuarto distractor sin catalogar.",
-    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa cuatro afirmaciones generales sobre potencias y raíces, con error-2, error-8 y error-11 como las tres falsas.",
+    "generalizacion (Paso 6): fórmula general D_n = D·rⁿ y r = (D_n/D)^(1/n). Selección sobre cuál expresión representa r, distractor responde-otra-magnitud-potencias (se queda en la razón total) y intercambia-indice-y-exponente (índice y exponente invertidos).",
+    "practica (Paso 7): combinación de exponentes de igual base, r² · r³ = r⁵ (selección, distractor cruza-reglas-de-exponentes: r⁶). Verdadero/falso sobre no poder combinar factores de dos medicamentos distintos sumando exponentes (suma-exponentes-con-distinta-base, sin poder etiquetarlo por ser bloque verdaderoFalso). Numérica: dosis tras 7 intervalos (r³ · r⁴), correcto 0,0625 mg, distractor cruza-reglas-de-exponentes: 0,00006103515625 mg (exponentes multiplicados, 3·4, en vez de sumados).",
+    "aplicacion (Paso 8, pregunta formato PAES embebida): tercer medicamento, dosis inicial 135 mg, tras 3 intervalos llega a 5 mg, r desconocido. Correcto 1/3, distractores 5 (repite la dosis final, sin catalogar: es el dato copiado directo del enunciado, sin procedimiento de por medio, no calza con responde-otra-magnitud-potencias), intercambia-indice-y-exponente ((5/135)³, índice y exponente invertidos) y divide-por-el-indice-como-raiz (1/81, razón 1/27 dividida por el índice 3).",
+    "itemsPAES item-1 (resolver, media): medicamento original, r = 1/4 conocido, dosis tras 4 intervalos. Correcto 4 mg. Distractores 1 (un intervalo de más, sin catalogar), 1020 (responde-otra-magnitud-potencias, dosis eliminada en vez de restante) y 256 (dosis del primer intervalo, sin catalogar).",
+    "itemsPAES item-2 (modelar, media): medicamento que parte de 1024 mg y llega a 0,25 mg tras 6 intervalos, r desconocido. Pide la expresión de r, no el valor. Distractores intercambia-indice-y-exponente (exponente 6 en vez de 1/6) y divide-por-el-indice-como-raiz (dividir por 6 en vez de la raíz sexta), más un cuarto distractor sin catalogar.",
+    "itemsPAES item-3 (argumentar, alta): sin cifras de dominio; evalúa cuatro afirmaciones generales sobre potencias y raíces, con suma-exponentes-con-distinta-base, reparte-raiz-sobre-la-suma y suma-radicales-distintos como las tres falsas.",
     "NOTA DE NO COLISIÓN (chequeo del redactor, no exhaustivo): 1024, 6250, 135 y las dosis derivadas de ellas son cifras nuevas, no usadas en ningún otro archivo de content/ con este mecanismo. npm run auditar marca 🟡 colision-entre-archivos con potencias-multiplicar-corto.json (comparte 0,0625; 0,25; 256; 1024): es la misma coincidencia aritmética que ya existía con el dominio pelota, ambos archivos usan potencias de base 4 —L1 en escalones de un microscopio, este archivo en fracción retenida 1/4—, sin relación de dominio real; advertencia, no bloqueo. potencias-raiz-escondida.json comparte algún dígito suelto con este archivo, pero son magnitudes de otro dominio (baldosas de un patio), sin relación real. Ninguna frase ni cifra del dominio pelota descartado (2 metros, r = 1/2, «rebote», «gimnasio») se reutiliza aquí. La verificación completa la hace npm run auditar, no esta nota."
   ],
   "pasos": [
@@ -144,7 +144,7 @@
       "_notasInternas": [
         "Gradación real: la 1 recuerda que el mismo factor se repite 5 veces, la 2 nombra la operación (buscar un número que usado 5 veces como factor dé cierta razón) sin ejecutarla, la 3 entrega la razón ya calculada y deja solo el tanteo final.",
         "Verificación: razón = 2 ÷ 6250 = 0,00032. El número que usado 5 veces como factor da 0,00032 es 0,2, porque 0,2⁵ = 0,00032.",
-        "Distractor 0,000064 (error-12): 0,00032 ÷ 5 = 0,000064, confundir sacar la raíz con dividir por el índice."
+        "Distractor 0,000064 (divide-por-el-indice-como-raiz): 0,00032 ÷ 5 = 0,000064, confundir sacar la raíz con dividir por el índice."
       ],
       "bloques": [
         {
@@ -180,7 +180,7 @@
               "campoId": "fraccionPorIntervalo",
               "valorObtenido": 0.000064,
               "mensaje": "0,000064 sale de dividir 0,00032 por 5. Pero dividir por el índice no es lo mismo que sacar la raíz: buscas el número que usado 5 veces como factor da 0,00032, no el que resulta de repartir 0,00032 entre 5 partes.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "divide-por-el-indice-como-raiz"
             }
           ],
           "feedbackPorDefecto": "Divide 2 por 6250 para obtener la razón total (0,00032), y busca el número que multiplicado por sí mismo 5 veces da esa razón."
@@ -224,7 +224,7 @@
           "tipo": "abierta",
           "enunciado": "En la lección anterior, encontrar el lado de un patio cuadrado a partir de su área también era buscar un número que, multiplicado por sí mismo, diera un total conocido.\n\n**¿En qué se parece eso a encontrar la fracción r del medicamento, y en qué es distinto?**",
           "mostrarRespuestaModelo": false,
-          "notaDiseno": "Sin corrección automática. Señal de comprensión: que note que ambos son 'deshacer' una multiplicación repetida (raíz), y que la diferencia es solo cuántas veces se repite el factor (2 veces en el patio, 5 en el medicamento). Señal de alerta: describir el medicamento como una división, arrastrando el error-12."
+          "notaDiseno": "Sin corrección automática. Señal de comprensión: que note que ambos son 'deshacer' una multiplicación repetida (raíz), y que la diferencia es solo cuántas veces se repite el factor (2 veces en el patio, 5 en el medicamento). Señal de alerta: describir el medicamento como una división, arrastrando el divide-por-el-indice-como-raiz."
         }
       ]
     },
@@ -233,7 +233,7 @@
       "titulo": "La fórmula, para cualquier medicamento",
       "_notasInternas": [
         "Recién acá se nombra la fórmula general, como exige el marco pedagógico.",
-        "Verificación selección: r = (D_n/D)^(1/n) es la forma correcta. Distractor b (error-13): D_n/D se queda en la razón total, sin sacar la raíz — exactamente 'quedarse en la potencia cuando lo que se pedía era deshacerla'. Distractor c (error-7): (D_n/D)^n invierte índice y exponente. Distractor d: invierte cuál dosis va arriba, sin mecanismo catalogado exacto."
+        "Verificación selección: r = (D_n/D)^(1/n) es la forma correcta. Distractor b (responde-otra-magnitud-potencias): D_n/D se queda en la razón total, sin sacar la raíz — exactamente 'quedarse en la potencia cuando lo que se pedía era deshacerla'. Distractor c (intercambia-indice-y-exponente): (D_n/D)^n invierte índice y exponente. Distractor d: invierte cuál dosis va arriba, sin mecanismo catalogado exacto."
       ],
       "bloques": [
         {
@@ -255,14 +255,14 @@
               "texto": "**D_n / D**",
               "esCorrecta": false,
               "feedback": "D_n/D es la razón total entre las dos dosis, no la fracción por intervalo: es rⁿ, no r. Falta seguir hasta deshacer el exponente n, sacando la raíz de índice n.",
-              "errorCatalogado": "error-13"
+              "errorCatalogado": "responde-otra-magnitud-potencias"
             },
             {
               "id": "c",
               "texto": "**(D_n / D)^n**",
               "esCorrecta": false,
               "feedback": "Acá el exponente n quedó arriba en vez de abajo: elevar a n en vez de sacar la raíz de índice n invierte exactamente el índice y el exponente. La operación que deshace una potencia n no es otra potencia n, es su raíz.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "intercambia-indice-y-exponente"
             },
             {
               "id": "d",
@@ -278,10 +278,10 @@
       "tipo": "practica",
       "titulo": "Práctica: combinar intervalos con cuidado",
       "_notasInternas": [
-        "Progresión: combinar exponentes del mismo medicamento (selección) → no poder combinar los de dos medicamentos distintos (verdadero/falso, error-2 sin poder etiquetarlo) → cálculo numérico concreto de la combinación (numérica, error-3).",
-        "Verificación selección: r² · r³ = r⁵ (regla del producto de potencias de igual base). Distractor error-3: r⁶ = r^(2·3), exponentes multiplicados en vez de sumados.",
+        "Progresión: combinar exponentes del mismo medicamento (selección) → no poder combinar los de dos medicamentos distintos (verdadero/falso, suma-exponentes-con-distinta-base sin poder etiquetarlo) → cálculo numérico concreto de la combinación (numérica, cruza-reglas-de-exponentes).",
+        "Verificación selección: r² · r³ = r⁵ (regla del producto de potencias de igual base). Distractor cruza-reglas-de-exponentes: r⁶ = r^(2·3), exponentes multiplicados en vez de sumados.",
         "Verificación verdadero/falso: dos medicamentos con factores rA y rB distintos no comparten base, así que (rA)² · (rB)³ no se puede escribir como una sola potencia sumando exponentes. La afirmación es falsa.",
-        "Verificación numérica: medicamento original, r = 1/4, D = 1024 mg. Dosis tras 7 intervalos = 1024 · (1/4)⁷ = 0,0625 mg (equivalente a combinar 3 intervalos y 4 intervalos más: r³ · r⁴ = r⁷). Distractor error-3: exponentes multiplicados (3 · 4 = 12) en vez de sumados: 1024 · (1/4)¹² = 0,00006103515625 mg."
+        "Verificación numérica: medicamento original, r = 1/4, D = 1024 mg. Dosis tras 7 intervalos = 1024 · (1/4)⁷ = 0,0625 mg (equivalente a combinar 3 intervalos y 4 intervalos más: r³ · r⁴ = r⁷). Distractor cruza-reglas-de-exponentes: exponentes multiplicados (3 · 4 = 12) en vez de sumados: 1024 · (1/4)¹² = 0,00006103515625 mg."
       ],
       "bloques": [
         {
@@ -299,7 +299,7 @@
               "texto": "**r⁶**",
               "esCorrecta": false,
               "feedback": "r⁶ sale de multiplicar los exponentes (2 · 3) en vez de sumarlos. Esa regla es para una potencia de una potencia —(r²)³—, no para el producto de dos potencias de igual base.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-reglas-de-exponentes"
             },
             {
               "id": "c",
@@ -338,7 +338,7 @@
               "campoId": "dosisTrasSieteIntervalos",
               "valorObtenido": 0.00006103515625,
               "mensaje": "Este valor sale de combinar los 3 intervalos y los 4 intervalos multiplicando los exponentes (3 · 4 = 12) en vez de sumarlos (3 + 4 = 7). Esa regla es para una potencia de una potencia, no para combinar dos tandas de intervalos seguidas.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "cruza-reglas-de-exponentes"
             }
           ],
           "feedbackPorDefecto": "Los 3 intervalos y los 4 intervalos se combinan sumando los exponentes: r³ · r⁴ = r⁷. Calcula 1024 · (1/4)⁷."
@@ -351,7 +351,7 @@
       "_notasInternas": [
         "Vuelve a la dirección vuelta (raíz), con un tercer medicamento y cifras nuevas, para cerrar el ciclo ida/vuelta con un ítem formato PAES embebido.",
         "Verificación: D = 135 mg, D_3 = 5 mg, razón = 5/135 = 1/27. r = ³√(1/27) = 1/3, porque (1/3)³ = 1/27.",
-        "Distractor B (sin catalogar): 5, repite la dosis final dada en vez de encontrar r. Es el dato Dₙ copiado directo del enunciado, sin cálculo de por medio; no corresponde a error-13 porque ese error exige un procedimiento completo que llega a otra magnitud, y acá no hay procedimiento — mismo criterio que item-1-D e item-2-D de este archivo. Distractor C (error-7): (5/135)³ eleva al cubo en vez de sacar la raíz cúbica —índice y exponente invertidos—, se deja como expresión sin evaluar. Distractor D (error-12): 1/27 dividido por el índice 3 es 1/81, en vez de sacar la raíz cúbica de 1/27.",
+        "Distractor B (sin catalogar): 5, repite la dosis final dada en vez de encontrar r. Es el dato Dₙ copiado directo del enunciado, sin cálculo de por medio; no corresponde a responde-otra-magnitud-potencias porque ese error exige un procedimiento completo que llega a otra magnitud, y acá no hay procedimiento — mismo criterio que item-1-D e item-2-D de este archivo. Distractor C (intercambia-indice-y-exponente): (5/135)³ eleva al cubo en vez de sacar la raíz cúbica —índice y exponente invertidos—, se deja como expresión sin evaluar. Distractor D (divide-por-el-indice-como-raiz): 1/27 dividido por el índice 3 es 1/81, en vez de sacar la raíz cúbica de 1/27.",
         "Alternativas con notación envueltas en negrita markdown (mismo mecanismo que L1, L2 y el archivo descartado): scripts/auditar-leccion.mjs solo extrae un valor de un texto que sea una cifra sin dígitos después; '(5/135)³' y '1/81' ya rompen ese patrón por su cuenta, pero se envuelven igual por consistencia con el resto del módulo."
       ],
       "bloques": [
@@ -376,14 +376,14 @@
               "texto": "**(5/135)³**",
               "esCorrecta": false,
               "feedback": "Esta expresión eleva la razón al cubo en vez de sacarle la raíz cúbica: invierte el índice y el exponente. La operación que deshace 3 intervalos no es otra potencia de exponente 3, es la raíz de índice 3.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "intercambia-indice-y-exponente"
             },
             {
               "clave": "D",
               "texto": "**1/81**",
               "esCorrecta": false,
               "feedback": "1/81 sale de dividir la razón 1/27 por el índice 3, confundiendo sacar la raíz con dividir por el índice. Lo que se busca es el número que usado 3 veces como factor da 1/27, no el resultado de repartir 1/27 en 3 partes.",
-              "errorCatalogado": "error-12"
+              "errorCatalogado": "divide-por-el-indice-como-raiz"
             }
           ]
         }
@@ -455,7 +455,7 @@
           "texto": "1020",
           "esCorrecta": false,
           "feedback": "1020 miligramos es cuánto se ELIMINÓ (1024 − 4), no la dosis que queda. La pregunta pide la dosis del cuarto intervalo, no la cantidad eliminada en el camino.",
-          "errorCatalogado": "error-13"
+          "errorCatalogado": "responde-otra-magnitud-potencias"
         },
         {
           "clave": "D",
@@ -483,14 +483,14 @@
           "texto": "**(0,25 / 1024)⁶**",
           "esCorrecta": false,
           "feedback": "Esta expresión eleva la razón a la 6 en vez de sacarle la raíz de índice 6: invierte el índice y el exponente. La operación que deshace 6 intervalos no es otra potencia de exponente 6.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "intercambia-indice-y-exponente"
         },
         {
           "clave": "C",
           "texto": "**(0,25 / 1024) / 6**",
           "esCorrecta": false,
           "feedback": "Esta expresión divide la razón por el índice 6, confundiendo sacar la raíz con repartir en partes iguales. Se busca el número que usado 6 veces como factor da esa razón, no el resultado de dividirla entre 6.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "divide-por-el-indice-como-raiz"
         },
         {
           "clave": "D",
@@ -518,21 +518,21 @@
           "texto": "Toda multiplicación de dos potencias, sin importar si las bases son iguales o distintas, se puede escribir como una sola potencia sumando los exponentes.",
           "esCorrecta": false,
           "feedback": "Falso. La regla de sumar exponentes exige que las dos potencias compartan la misma base: 2³ · 2⁴ se puede escribir como 2⁷ porque ambas son potencias de 2, pero 2³ · 3⁴ no tiene ninguna base común que repetirse, así que no existe una sola potencia equivalente.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "suma-exponentes-con-distinta-base"
         },
         {
           "clave": "C",
           "texto": "La raíz de una suma es igual a la suma de las raíces: √(a + b) = √a + √b, para cualquier a y b positivos.",
           "esCorrecta": false,
           "feedback": "Falso. Ninguna propiedad heredada de las potencias reparte una raíz sobre una suma: por ejemplo, √(9 + 16) = √25 = 5, mientras que √9 + √16 = 3 + 4 = 7. Primero se resuelve la suma dentro de la raíz, y recién después se saca la raíz.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "reparte-raiz-sobre-la-suma"
         },
         {
           "clave": "D",
           "texto": "Dos radicales con índices y radicandos distintos siempre se pueden sumar directamente, igual que si fueran el mismo término: por ejemplo, 2√3 + 3√2 = 5√5.",
           "esCorrecta": false,
           "feedback": "Falso. Solo se pueden sumar directamente radicales que, ya descompuestos, comparten el mismo índice y el mismo radicando. √3 y √2 son dos números distintos que no se pueden descomponer más, igual que x e y en álgebra: no se funden en un solo término sumando los coeficientes.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "suma-radicales-distintos"
         }
       ],
       "solucion": "La única afirmación verdadera es A: la regla de sumar exponentes en un producto de potencias depende estrictamente de que ambas compartan la misma base, y no existe ninguna regla —de potencias o de raíces— que combine bases distintas en una sola expresión. B contradice esto directamente. C y D son falsas porque ni la raíz ni la suma de radicales distintos se comportan como B propone: ambas se refutan con un contraejemplo numérico simple (√(9+16) ≠ √9+√16; 2√3+3√2 ≠ 5√5, verificable con valores aproximados: 2√3+3√2 ≈ 3,46+4,24 = 7,7, mientras 5√5 ≈ 11,18)."
@@ -541,14 +541,14 @@
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 proceso 2027 (DEMRE/UCE), Números → Potencias y raíces enésimas, descriptor «Problemas que involucren potencias y raíces enésimas en los números reales en diversos contextos» (docs/temario-demre-m1-2027.md:41-43) — usado solo para calibrar alcance, habilidades y formato de ítems, nunca como origen de texto, ejemplos ni diagramas.",
-      "docs/diseno-modulo-potencias-y-raices.md — arquitectura completa del módulo, firmada: arco de L3 (§a), catálogo de errores del módulo (§c, de donde se copiaron carácter a carácter error-2, error-3, error-7, error-8, error-11, error-12 y error-13), reparto de habilidades y dificultad (§d), diferenciación estructural por bloques (§e), y §f actualizada con el reemplazo de dominio documentado abajo.",
+      "docs/diseno-modulo-potencias-y-raices.md — arquitectura completa del módulo, firmada: arco de L3 (§a), catálogo de errores del módulo (§c, de donde se copiaron carácter a carácter suma-exponentes-con-distinta-base, cruza-reglas-de-exponentes, intercambia-indice-y-exponente, reparte-raiz-sobre-la-suma, suma-radicales-distintos, divide-por-el-indice-como-raiz y responde-otra-magnitud-potencias), reparto de habilidades y dificultad (§d), diferenciación estructural por bloques (§e), y §f actualizada con el reemplazo de dominio documentado abajo.",
       "docs/calibracion-lecciones-e-items.md — arquitectura de 10 pasos, distribución de habilidades (§3.5), calibración de dificultad (§5.1) y regla de §6.1 (un candidato que colisiona se descarta entero, no se ajusta), aplicada acá para botar el dominio pelota completo.",
       "docs/reglas-modulo.md — regla 3 (ajustar datos base, no el número del distractor), regla 3b (ningún distractor vale lo mismo que una respuesta correcta del archivo), regla 4 (ids de campo neutros, sin cifra) y regla 5 (catálogo embebido por archivo, subconjunto copiado carácter a carácter).",
       "content/lecciones/potencias-multiplicar-corto.json y content/lecciones/potencias-raiz-escondida.json — origen literal de las siete entradas de catalogoErrores embebidas en este archivo (copia carácter a carácter, verificada por el guard catalogo-divergente de scripts/auditar-leccion.mjs).",
       "content/diagnostico/dag-m1.json — la unidad potencias-raices depende solo de enteros-racionales; los prerrequisitos de esta lección son los conceptos de L1 y L2 del propio módulo, ya construidos.",
       "REEMPLAZO DE DOMINIO (2026-08-21): el dominio anterior de este archivo, rebote de una pelota en el gimnasio del colegio, tuvo colisión real confirmada contra un ítem DEMRE 2024 en Material/MA-02_Numeros_Racionales.md:106 (subcarpeta fuentes-analisis-aisladas/Material/, hallazgo levantado fuera de esta redacción). El dominio se descartó por completo, sin ajustar ninguna cifra ni frase (regla de §6.1: un candidato que colisiona se abandona entero). Dominio nuevo: medicamento que se elimina del organismo por intervalos. Primera tanda de consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md, corrida por Benja fuera de esta sesión): «medicamento», «dosis», «torrente sanguíneo», «metabolismo», «eliminación» y «fármaco» dieron NO; «organismo» dio SI (3 hits: Material/MA-34_Potencia_Ecuacion_Exponencial.md, mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md, pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md). CORRECCIÓN DEL REGISTRO (mismo día): una versión anterior de esta nota afirmaba que los tres hits ya se habían resuelto LIMPIO vía el subagente auditor-originalidad; eso no ocurrió — el hook que debía habilitar a ese subagente sobre fuentes-analisis-aisladas/ no funciona. Lo que sí ocurrió: Benja revisó manualmente (mecanismo 2, fuera de esta sesión) Material/MA-34_Potencia_Ecuacion_Exponencial.md — LIMPIO, su ítem 25 es reproducción de amebas, mecanismo inverso (crecimiento, no eliminación) y dominio distinto, sin escenario compartido con este candidato. RESOLUCIÓN DE LOS DOS HITS RESTANTES (2026-08-22, mecanismo 2, Benja fuera de sesión): mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md — el término aparece en «DEMRE, como organismo técnico responsable de desarrollar la batería de instrumentos de evaluación...»: organismo = institución (DEMRE), no cuerpo humano, sin relación de dominio con este archivo. Falso positivo, sin colisión. pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md — el término aparece en el ítem 19 (alometría, superficie corporal vs. masa, exponente fijo 2/3, relación estática sin intervalos) y en el enunciado marco del ítem 25 (amebas). Se revisaron también los ítems 21 (Pudú, 90·0,5^x), 23 (bacterias) y 24 (elemento radioactivo) por compartir el dominio genérico de decaimiento/crecimiento exponencial en un ser vivo o proceso físico: ninguno usa el mecanismo de este archivo (Dₙ = D·rⁿ con r dato conocido, arco ida/vuelta potencia↔raíz para hallar r desconocido). El más cercano por mecanismo, ítem 21 (Pudú), es un decaimiento de un solo disparo —calcula un valor dado la fórmula— sin el paso de hallar r por raíz ni el arco ida/vuelta, con dominio (fauna silvestre) y cifras sin solape con la dosis de medicamento de este archivo: adyacencia de plantilla genérica de decaimiento exponencial (ubicua, no exclusiva de esta fuente), registrada como observación 🟢 no bloqueante, sin colisión sustancial. Segunda tanda con las cifras y frases exactas del texto final («dosis inicial», «1024 miligramos», «el organismo elimina», «cada intervalo de tiempo», «dosis que queda en el organismo»), corrida el 2026-08-22: las cinco, NO en todo el corpus de fuentes-analisis-aisladas/. TERCERA TANDA (2026-08-22, mecanismo 2): vocabulario de rol («paciente», «médico», «hospital») y cifras sueltas fuera de la frase compuesta («6250», «135»). «médico», «hospital» y «6250»: NO en el corpus. «135»: SI en 12 archivos, todos de Geometría (perímetros, polígonos, congruencia, ecuación de la recta, cuerpos geométricos), dominio ajeno ya descartado en la segunda tanda de docs/diseno-modulo-potencias-y-raices.md §f. «paciente»: SI en Material/MOD-05_Estadistica_Probabilidades.md:66 — ítem de estadística/probabilidad sobre IMC de pacientes en dieta, dominio ajeno (estadística descriptiva, sin decaimiento geométrico ni arco potencia↔raíz), sin colisión. Con las tres tandas cerradas, el candidato (e) queda LIMPIO en su totalidad."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto del medicamento que se elimina del organismo, expresiones y secuencia de los 10 pasos creados desde cero por el autor del proyecto para esta lección, en reemplazo íntegro del dominio anterior (rebote de una pelota), descartado por colisión real confirmada con un ítem DEMRE 2024 (Material/MA-02_Numeros_Racionales.md:106). El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado, y ninguna frase ni cifra del dominio pelota descartado se reutilizó. Verificación de colisión del dominio nuevo, cerrada el 2026-08-22: mecanismo 2 de CLAUDE.md (consultar-fuentes.mjs corrido fuera del hilo de redacción, salida pegada sin reformular) dio NO en el léxico genérico y SI en «organismo» (3 hits). Los tres están resueltos: Material/MA-34_Potencia_Ecuacion_Exponencial.md (ítem 25, amebas) — LIMPIO, mecanismo inverso y dominio distinto, revisado por Benja el 2026-08-21; mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md — falso positivo (organismo = DEMRE como institución), sin relación de dominio; pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md — evaluados los cinco ítems del dominio decaimiento/crecimiento exponencial (19, 21, 23, 24, 25), ninguno usa el mecanismo de este archivo (Dₙ = D·rⁿ con r dato conocido, arco ida/vuelta potencia↔raíz), sin colisión sustancial (detalle y veredicto completo en docs/diseno-modulo-potencias-y-raices.md §f y en fuentesAnalisis arriba). Segunda tanda con las cifras y frases exactas de este archivo («dosis inicial», «1024 miligramos», «el organismo elimina», «cada intervalo de tiempo», «dosis que queda en el organismo»), corrida el 2026-08-22: las cinco, NO en todo el corpus. El hilo que redactó este archivo nunca leyó fuentes-analisis-aisladas/ ni recibió su contenido; toda la verificación de colisión se hizo por mecanismo 2 (Benja fuera de sesión). AUDITORÍAS INDEPENDIENTES, historial desde el reemplazo de dominio: todo lo auditado antes del 2026-08-21 en este archivo (cualquier ronda matemática o de originalidad, sobre el dominio pelota) queda sin valor, porque el contenido es 100% nuevo desde ese reemplazo. Ronda 1 (matemática, post-reemplazo de dominio), 2026-08-21 — 1 hallazgo 🟡: errorCatalogado=\"error-13\" mal mapeado en el paso aplicación, alternativa B (el distractor \"5\" es el dato Dₙ copiado directo del enunciado, sin procedimiento de por medio; no corresponde a error-13, que exige un procedimiento completo que llega a otra magnitud). Corregido quitando la etiqueta en el commit f06fe04. Tercera tanda (2026-08-22, mecanismo 2): «paciente», «médico», «hospital», «6250», «135» — sin colisión en ninguno. Cuarta y última tanda (2026-08-22, mecanismo 2): «elimina», «reduce», «queda», «quedan», «sangre», «cuerpo» — todos con hits en dominios ajenos (álgebra/funciones, geometría, estadística) o ruido léxico de palabras funcionales del idioma español de alta frecuencia (queda: 43 archivos, quedan: 11 — sin valor discriminante); «medicamento», «torrente», «dosificacion», «farmaco», «concentracion», «vida media» dieron NO. Cierre definitivo: en ninguna de las cuatro tandas se encontró colisión de dominio, mecanismo, plantilla sintáctica o frase distintiva — solo adyacencias descartadas por lectura real y ruido léxico genérico. El punto 1 del checklist MOS §7.3 (similitud sustancial de enunciado o ejercicio) queda CERTIFICADO para este archivo; no se corren más rondas de términos sueltos, porque el criterio de palabra genérica aislada no converge y no reduce incertidumbre real (detalle completo en docs/diseno-modulo-potencias-y-raices.md §f). Checklist de originalidad (los 4 puntos de MOS §7.3): (1) similitud sustancial — CERTIFICADO, ver arriba; (2) diagrama/visualización replica composición existente — NO, tabla genérica intervalo/dosis; (3) secuencia interna copia guía específica — NO, secuencia propia verificada; (4) proveniencia registrada — SI, este mismo campo. Marcas (MOS §7.4): «PAES»/«DEMRE» solo en metadatos, uso descriptivo. PII (MOS §7.5): cero, ni en enunciados ni en metadatos salvo el nombre de pila «Benja» del autor documentando su propio proceso (observación sistémica ya registrada, no bloqueo).",
+    "declaracionOriginalidad": "Enunciados, contexto del medicamento que se elimina del organismo, expresiones y secuencia de los 10 pasos creados desde cero por el autor del proyecto para esta lección, en reemplazo íntegro del dominio anterior (rebote de una pelota), descartado por colisión real confirmada con un ítem DEMRE 2024 (Material/MA-02_Numeros_Racionales.md:106). El temario DEMRE se usó solo para calibrar alcance y formato (proceso clean-room, MOS §7.2); ningún texto, ejemplo ni diagrama de fuente externa fue reproducido ni parafraseado, y ninguna frase ni cifra del dominio pelota descartado se reutilizó. Verificación de colisión del dominio nuevo, cerrada el 2026-08-22: mecanismo 2 de CLAUDE.md (consultar-fuentes.mjs corrido fuera del hilo de redacción, salida pegada sin reformular) dio NO en el léxico genérico y SI en «organismo» (3 hits). Los tres están resueltos: Material/MA-34_Potencia_Ecuacion_Exponencial.md (ítem 25, amebas) — LIMPIO, mecanismo inverso y dominio distinto, revisado por Benja el 2026-08-21; mineduc-curriculum/2027-26-03-19-temario-paes-regular-m1.md — falso positivo (organismo = DEMRE como institución), sin relación de dominio; pdv-terceros/MA-34_Potencia_Ecuacion_Exponencial.md — evaluados los cinco ítems del dominio decaimiento/crecimiento exponencial (19, 21, 23, 24, 25), ninguno usa el mecanismo de este archivo (Dₙ = D·rⁿ con r dato conocido, arco ida/vuelta potencia↔raíz), sin colisión sustancial (detalle y veredicto completo en docs/diseno-modulo-potencias-y-raices.md §f y en fuentesAnalisis arriba). Segunda tanda con las cifras y frases exactas de este archivo («dosis inicial», «1024 miligramos», «el organismo elimina», «cada intervalo de tiempo», «dosis que queda en el organismo»), corrida el 2026-08-22: las cinco, NO en todo el corpus. El hilo que redactó este archivo nunca leyó fuentes-analisis-aisladas/ ni recibió su contenido; toda la verificación de colisión se hizo por mecanismo 2 (Benja fuera de sesión). AUDITORÍAS INDEPENDIENTES, historial desde el reemplazo de dominio: todo lo auditado antes del 2026-08-21 en este archivo (cualquier ronda matemática o de originalidad, sobre el dominio pelota) queda sin valor, porque el contenido es 100% nuevo desde ese reemplazo. Ronda 1 (matemática, post-reemplazo de dominio), 2026-08-21 — 1 hallazgo 🟡: errorCatalogado=\"responde-otra-magnitud-potencias\" mal mapeado en el paso aplicación, alternativa B (el distractor \"5\" es el dato Dₙ copiado directo del enunciado, sin procedimiento de por medio; no corresponde a responde-otra-magnitud-potencias, que exige un procedimiento completo que llega a otra magnitud). Corregido quitando la etiqueta en el commit f06fe04. Tercera tanda (2026-08-22, mecanismo 2): «paciente», «médico», «hospital», «6250», «135» — sin colisión en ninguno. Cuarta y última tanda (2026-08-22, mecanismo 2): «elimina», «reduce», «queda», «quedan», «sangre», «cuerpo» — todos con hits en dominios ajenos (álgebra/funciones, geometría, estadística) o ruido léxico de palabras funcionales del idioma español de alta frecuencia (queda: 43 archivos, quedan: 11 — sin valor discriminante); «medicamento», «torrente», «dosificacion», «farmaco», «concentracion», «vida media» dieron NO. Cierre definitivo: en ninguna de las cuatro tandas se encontró colisión de dominio, mecanismo, plantilla sintáctica o frase distintiva — solo adyacencias descartadas por lectura real y ruido léxico genérico. El punto 1 del checklist MOS §7.3 (similitud sustancial de enunciado o ejercicio) queda CERTIFICADO para este archivo; no se corren más rondas de términos sueltos, porque el criterio de palabra genérica aislada no converge y no reduce incertidumbre real (detalle completo en docs/diseno-modulo-potencias-y-raices.md §f). Checklist de originalidad (los 4 puntos de MOS §7.3): (1) similitud sustancial — CERTIFICADO, ver arriba; (2) diagrama/visualización replica composición existente — NO, tabla genérica intervalo/dosis; (3) secuencia interna copia guía específica — NO, secuencia propia verificada; (4) proveniencia registrada — SI, este mismo campo. Marcas (MOS §7.4): «PAES»/«DEMRE» solo en metadatos, uso descriptivo. PII (MOS §7.5): cero, ni en enunciados ni en metadatos salvo el nombre de pila «Benja» del autor documentando su propio proceso (observación sistémica ya registrada, no bloqueo).",
     "autor": "Redacción asistida por Claude Code bajo dirección del autor del proyecto. Reemplazo completo de dominio el 2026-08-21 por colisión real confirmada del dominio anterior con un ítem DEMRE 2024. Ronda 1 de auditoría matemática (post-reemplazo) corrió el 2026-08-21 en hilo aislado — APROBADA sin discrepancias. Ronda de auditoría de originalidad (checklist MOS §7.3, hilo aislado) corrió el 2026-08-22: cuatro tandas de verificación de colisión de dominio (mecanismo 2, detalle en fuentesAnalisis y en docs/diseno-modulo-potencias-y-raices.md §f), todas sin colisión sustancial — punto 1 del checklist CERTIFICADO. Los 4 puntos del checklist MOS §7.3 en SI. Módulo potencias-y-raices (L1+L2+L3) APROBADO en ambas rondas.",
     "fecha": "2026-08-21"
   }

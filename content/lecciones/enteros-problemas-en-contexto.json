@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "enteros-problemas-en-contexto",
-  "moduloId": "enteros-racionales",
+  "moduloId": "enteros-y-racionales",
   "titulo": "Problemas que involucren el conjunto de los números enteros y racionales en diversos contextos",
   "objetivo": "Comparar temperaturas bajo cero y calcular variaciones de temperatura que combinan enteros negativos y fracciones, aplicando que entre dos negativos el de mayor valor absoluto es el MENOR, y que ese mismo número puede representar la temperatura más fría sin ser matemáticamente mayor.",
   "tiempoEstimadoMin": 22,
@@ -19,8 +19,8 @@
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (clima, Candidato A: Nortelva/Valle Frío) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
     "Verificación de colisión del contexto clima/Nortelva/Valle Frío contra el corpus completo, ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO AL 100%. Todo NO: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío'. Escenario aprobado tal cual se propuso. No se corrió una consulta nueva en esta sesión (confirmado por Benja como ya verificado).",
-    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí, mismo patrón que enteros-operar-y-comparar.json (L2). Esta lección usa activamente error-1, error-2, error-3, error-5 y error-6 (todos ya definidos en L1). No usa error-4, error-7 ni error-8, que son específicos de comparación de fracciones positivas o de división de fracciones, no de esta lección.",
-    "Insight fijado (piso de partida entregado por Benja, formalizado en el Paso 5): comparar dos negativos invierte la intuición de 'mayor'. −2,8 °C es más cálido (mayor) que −4,3 °C, aunque 2,8 sea menor que 4,3 en valor absoluto. Mismo mecanismo que error-5 de L1, aplicado ahora a decimales y a un contexto físico (temperatura) en vez de solo abstracto (recta numérica).",
+    "El catálogo de errores del módulo 'Enteros y racionales' vive únicamente en enteros-operar-y-ordenar.json (L1) — no se duplica aquí, mismo patrón que enteros-operar-y-comparar.json (L2). Esta lección usa activamente pierde-signo-al-restar-negativo, invierte-orden-de-la-diferencia, trata-negativo-como-distancia, compara-negativos-como-positivos y suma-denominadores (todos ya definidos en L1). No usa compara-fracciones-solo-por-numerador, rechaza-division-que-agranda ni invierte-orden-division-fracciones, que son específicos de comparación de fracciones positivas o de división de fracciones, no de esta lección.",
+    "Insight fijado (piso de partida entregado por Benja, formalizado en el Paso 5): comparar dos negativos invierte la intuición de 'mayor'. −2,8 °C es más cálido (mayor) que −4,3 °C, aunque 2,8 sea menor que 4,3 en valor absoluto. Mismo mecanismo que compara-negativos-como-positivos de L1, aplicado ahora a decimales y a un contexto físico (temperatura) en vez de solo abstracto (recta numérica).",
     "No se inventaron nombres de ciudad nuevos más allá de Nortelva y Valle Frío (las dos únicas verificadas contra el corpus). Donde el diseño necesitaba un tercer punto de comparación (Paso 7, Paso 9) se usó una lectura genérica sin nombre propio ('un refugio de montaña cercano') para no introducir un sustantivo propio sin verificar.",
     "El Paso 8 (aplicación) combina el insight de esta lección con el de L2 (dividir/operar con fracciones) sumando 3/4 de grado por hora a una temperatura negativa — frase '3/4 de grado' reutilizada literalmente porque es la que pasó la verificación de colisión (ver nota de arriba), en vez de introducir una fracción nueva sin verificar.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
@@ -30,7 +30,7 @@
       "tipo": "curiosidad",
       "titulo": "¿Cuál ciudad está más fría?",
       "_notasInternas": [
-        "Instala la pregunta central sin enseñar método todavía. El enunciado del verdaderoFalso está diseñado para atraer directamente el error-5."
+        "Instala la pregunta central sin enseñar método todavía. El enunciado del verdaderoFalso está diseñado para atraer directamente el compara-negativos-como-positivos."
       ],
       "bloques": [
         {
@@ -79,7 +79,7 @@
       "tipo": "pistas",
       "titulo": "¿Cuánto más cálida es Nortelva?",
       "_notasInternas": [
-        "feedbackPorError anticipa error-1 (al restar un negativo, invertir el signo del resultado) y error-2 (invertir el orden de la diferencia), ambos ya definidos en L1 y directamente aplicables a decimales."
+        "feedbackPorError anticipa pierde-signo-al-restar-negativo (al restar un negativo, invertir el signo del resultado) y invierte-orden-de-la-diferencia (invertir el orden de la diferencia), ambos ya definidos en L1 y directamente aplicables a decimales."
       ],
       "bloques": [
         {
@@ -98,13 +98,13 @@
               "campoId": "diferencia",
               "valorObtenido": -7.1,
               "mensaje": "Trataste −(−4,3) como si fuera −4,3, sin invertir el signo. Restar un negativo equivale a sumar su opuesto: (−2,8) − (−4,3) = −2,8 + 4,3, no −2,8 − 4,3.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "pierde-signo-al-restar-negativo"
             },
             {
               "campoId": "diferencia",
               "valorObtenido": -1.5,
               "mensaje": "El tamaño está bien, pero calculaste (−4,3) − (−2,8) en vez de (−2,8) − (−4,3). Fíjate en cuál temperatura va primero en la resta que pide el enunciado.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             }
           ],
           "feedbackPorDefecto": "(−2,8) − (−4,3) = −2,8 + 4,3 = 1,5. Nortelva está 1,5 °C más cálida que Valle Frío."
@@ -171,7 +171,7 @@
               "campoId": "diferencia",
               "valorObtenido": -1.7,
               "mensaje": "El tamaño está bien, pero el enunciado pide la diferencia como número positivo. Revisa el orden de la resta: la temperatura mayor (−1,9) menos la menor (−3,6) da un resultado positivo.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             }
           ],
           "feedbackPorDefecto": "(−1,9) − (−3,6) = −1,9 + 3,6 = 1,7 °C de diferencia."
@@ -186,7 +186,7 @@
       "tipo": "practica",
       "titulo": "Ordena las tres lecturas",
       "_notasInternas": [
-        "Tercer punto de comparación sin nombre de ciudad ('un refugio de montaña'), para no introducir un sustantivo propio no verificado. Distractores de la selección usan error-5. El verdaderoFalso no lleva errorCatalogado (el tipo de bloque no tiene ese campo en el schema); el error se explica en el texto de feedback."
+        "Tercer punto de comparación sin nombre de ciudad ('un refugio de montaña'), para no introducir un sustantivo propio no verificado. Distractores de la selección usan compara-negativos-como-positivos. El verdaderoFalso no lleva errorCatalogado (el tipo de bloque no tiene ese campo en el schema); el error se explica en el texto de feedback."
       ],
       "bloques": [
         {
@@ -204,21 +204,21 @@
               "texto": "−1,2, −2,8, −4,3",
               "esCorrecta": false,
               "feedback": "Este es el orden exactamente al revés. Ordenaste como si el número 'sin signo' más chico (1,2) fuera el menor, pero con negativos pasa lo contrario: −1,2 es el MAYOR de los tres, no el menor.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             },
             {
               "id": "c",
               "texto": "−2,8, −4,3, −1,2",
               "esCorrecta": false,
               "feedback": "El extremo −1,2 quedó bien ubicado como el mayor, pero invertiste −2,8 y −4,3. ¿Cuál de los dos está más a la izquierda en la recta numérica: el que tiene 2,8 o el que tiene 4,3?",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             },
             {
               "id": "d",
               "texto": "−4,3, −1,2, −2,8",
               "esCorrecta": false,
               "feedback": "Identificaste bien que −4,3 es la menor, pero invertiste el orden entre −1,2 y −2,8. Compara solo esos dos: ¿cuál está más lejos de 0 hacia la izquierda?",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             }
           ]
         },
@@ -253,14 +253,14 @@
               "texto": "−5,8 °C",
               "esCorrecta": false,
               "feedback": "Ese valor sale de RESTAR 1,5 °C en vez de sumarlo, como si 'subir' la temperatura significara alejarse más de 0. Pero subir la temperatura acerca el número a 0 (o lo hace positivo): hay que sumar, no restar.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "trata-negativo-como-distancia"
             },
             {
               "id": "c",
               "texto": "−3,55 °C",
               "esCorrecta": false,
               "feedback": "Ese valor sale de sumar 3/4 + 3/4 como (3+3)/(4+4) = 6/8 = 0,75, en vez de 6/4 = 1,5. Al sumar fracciones el denominador NO se suma: hay que mantenerlo igual y sumar solo los numeradores.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "suma-denominadores"
             },
             {
               "id": "d",
@@ -294,21 +294,21 @@
               "texto": "-1,6",
               "esCorrecta": false,
               "feedback": "El tamaño está bien, pero calculaste (−2,8) − (−1,2) en vez de (−1,2) − (−2,8). Revisa cuál temperatura va primero en la resta.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             },
             {
               "clave": "C",
               "texto": "-4,0",
               "esCorrecta": false,
               "feedback": "Sumaste las dos temperaturas como si fueran magnitudes que se acumulan (−1,2 + (−2,8) = −4,0), en vez de restarlas con su signo para encontrar la diferencia entre los dos puntos.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "trata-negativo-como-distancia"
             },
             {
               "clave": "D",
               "texto": "4,0",
               "esCorrecta": false,
               "feedback": "Trataste −(−2,8) como −2,8 en vez de +2,8, sin invertir el signo del segundo negativo, y además perdiste el signo del resultado final. Restar un negativo equivale a sumar su opuesto.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "pierde-signo-al-restar-negativo"
             }
           ],
           "notaVerificacionMatematica": "(−1,2) − (−2,8) = −1,2 + 2,8 = 1,6. Comprobación con distancia: entre −2,8 y −1,2 hay 1,6 unidades en la recta numérica, y −1,2 es la mayor de las dos (está más cerca de 0). ✓"
@@ -353,21 +353,21 @@
           "texto": "(−3,1) − (−1,6)",
           "esCorrecta": false,
           "feedback": "Esta operación invierte el orden: da −1,5, un resultado negativo, cuando la pregunta pide cuántos grados MÁS FRÍA está el refugio (un número positivo). Fíjate en cuál temperatura hay que restar de cuál.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-orden-de-la-diferencia"
         },
         {
           "clave": "C",
           "texto": "(−3,1) + (−1,6)",
           "esCorrecta": false,
           "feedback": "Sumar las dos temperaturas no calcula una diferencia, acumula dos magnitudes negativas sin sentido para esta pregunta. Para comparar dos puntos hay que restarlos, no sumarlos.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         },
         {
           "clave": "D",
           "texto": "(−1,6) − 3,1",
           "esCorrecta": false,
           "feedback": "Esta operación trata la temperatura del refugio como si fuera positiva (3,1 en vez de −3,1), perdiendo su signo. Restar un negativo (−3,1) equivale a sumar su opuesto, no a restar el número sin signo.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "pierde-signo-al-restar-negativo"
         }
       ],
       "solucion": "La base (−1,6 °C) es la temperatura mayor; el refugio (−3,1 °C) es la menor. Cuántos grados más fría está el refugio = (−1,6) − (−3,1) = −1,6 + 3,1 = 1,5 °C. ✓"
@@ -389,21 +389,21 @@
           "texto": "-6,7",
           "esCorrecta": false,
           "feedback": "Ese valor sale de restar 1,5 °C en vez de sumarlo, como si subir la temperatura alejara el número de 0. Pero subir acerca la temperatura a 0: hay que sumar el aumento, no restarlo.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         },
         {
           "clave": "C",
           "texto": "-4,45",
           "esCorrecta": false,
           "feedback": "Ese valor sale de sumar 3/4 + 3/4 como (3+3)/(4+4) = 6/8 = 0,75 en vez de 6/4 = 1,5. Al sumar fracciones el denominador no se suma: se mantiene igual y se suman solo los numeradores.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "suma-denominadores"
         },
         {
           "clave": "D",
           "texto": "3,7",
           "esCorrecta": false,
           "feedback": "Este resultado pierde el signo negativo de la temperatura inicial. −5,2 + 1,5 sigue siendo negativo, porque 1,5 no alcanza para llegar a 0.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         }
       ],
       "solucion": "Aumento total = 2 × 3/4 = 6/4 = 1,5 °C. Temperatura final = −5,2 + 1,5 = −3,7 °C. Comprobación: como el aumento (1,5) es menor que la distancia a 0 (5,2), la temperatura final sigue siendo negativa. ✓"
@@ -425,21 +425,21 @@
           "texto": "Sí: entre dos negativos, el de mayor valor absoluto es el mayor, igual que con los positivos.",
           "esCorrecta": false,
           "feedback": "Esa regla solo vale para positivos. Con negativos pasa lo contrario: entre −5,4 y −2,9, el de mayor valor absoluto (5,4) es en realidad el MENOR.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "compara-negativos-como-positivos"
         },
         {
           "clave": "C",
           "texto": "Sí: la diferencia −2,9 − (−5,4) = 2,5 es positiva, y una diferencia positiva confirma que el segundo, −5,4, es el mayor.",
           "esCorrecta": false,
           "feedback": "El cálculo −2,9 − (−5,4) = 2,5 está bien hecho, pero mal leído: una diferencia (primero menos segundo) positiva dice que el PRIMERO es mayor, o sea −2,9, no −5,4. Invertiste a cuál de los dos le corresponde ser mayor.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "invierte-conclusion-entre-negativos"
         },
         {
           "clave": "D",
           "texto": "No: −5,4 − (−2,9) = −5,4 − 2,9 = −8,3, y un resultado negativo indica que −5,4 es el menor.",
           "esCorrecta": false,
           "feedback": "El resultado no es −8,3: al restar un negativo hay que sumar, −5,4 − (−2,9) = −5,4 + 2,9 = −2,5. Llegaste al veredicto correcto por un cálculo equivocado; corrige el signo aunque la conclusión te haya dado igual esta vez.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "pierde-signo-al-restar-negativo"
         }
       ],
       "solucion": "En la recta numérica, −5,4 está más a la izquierda que −2,9, así que −5,4 < −2,9. La afirmación del estudiante compara los valores absolutos (5,4 y 2,9) en vez de los números con signo, y por eso llega a la conclusión opuesta a la correcta. La alternativa correcta es A. ✓"
@@ -461,7 +461,7 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión del contexto clima (Candidato A: ciudades ficticias Nortelva y Valle Frío, temperaturas bajo cero decimales, variación fraccionaria de grado por hora) contra el corpus completo, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: '-2,8', '-2.8', '-4,3', '-4.3', '3/4 de grado', 'grados bajo cero', 'Nortelva', 'Valle Frío' = NO en todas. Veredicto: LIMPIO AL 100%. Escenario aprobado tal cual se propuso. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `l3-item-2` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l1-item-3` de enteros-operar-y-ordenar.json y con `cierre-enteros-6` de cierre-enteros-racionales.json (mismo molde error-5/error-2/error-1) es reutilización del propio patrón del proyecto, no coincidencia con terceros. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
+    "declaracionOriginalidad": "Enunciados, contexto y ciudades ficticias creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `l3-item-2` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l1-item-3` de enteros-operar-y-ordenar.json y con `cierre-enteros-6` de cierre-enteros-racionales.json (mismo molde compara-negativos-como-positivos/invierte-orden-de-la-diferencia/pierde-signo-al-restar-negativo) es reutilización del propio patrón del proyecto, no coincidencia con terceros. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
   }

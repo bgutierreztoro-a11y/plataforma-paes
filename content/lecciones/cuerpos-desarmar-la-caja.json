@@ -20,11 +20,11 @@
   ],
   "_notasInternas": [
     "L1 del módulo cuerpos-geometricos (eje Geometría, módulo #11). Descriptor DEMRE / docs/mapa-modulos-m1.md:246: 'Área de superficie de paralelepípedos, cubos y cilindros'.",
-    "catalogoErrores NACE en este archivo. Mapeo desde la propuesta P1…P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): error-1←P1, error-2←P2, error-3←P3, error-4←P4, error-5←P6, error-6←P7. P5 ('solo el manto, sin las dos tapas') NO entra en L1: produce exactamente el valor del manto (2πrh), que este archivo muestra como resultado correcto al desenrollar el cilindro en 'practica' — usarlo como distractor sería colisión distractor/correcta. P5 se traslada a L3, donde el cilindro no expone el manto como paso intermedio. P8…P12 son mecanismos de volumen (L2/L3).",
-    "error-2 y error-5 se usan SOLO en bloques 'seleccion' (mecanismo conceptual). Sus valores numéricos quedan fuera de banda de magnitud como distractor numérico (docs/reglas-modulo.md regla 3.2): 26 vs 108 para error-2, 6280 vs 1256 para error-5. No aparecen como alternativa de itemsPAES; error-5 aparece como feedbackPorError en 'practica' (valorObtenido 6908) solo porque se dispara únicamente si el estudiante teclea ese valor por su cuenta.",
+    "catalogoErrores NACE en este archivo. Mapeo desde la propuesta P1…P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): cuenta-solo-caras-visibles←P1, suma-aristas-como-superficie←P2, omite-tapa-y-base←P3, suma-una-sola-tapa-cilindro←P4, usa-area-base-en-manto←P6, confunde-radio-con-diametro-cilindro←P7. P5 ('solo el manto, sin las dos tapas') NO entra en L1: produce exactamente el valor del manto (2πrh), que este archivo muestra como resultado correcto al desenrollar el cilindro en 'practica' — usarlo como distractor sería colisión distractor/correcta. P5 se traslada a L3, donde el cilindro no expone el manto como paso intermedio. P8…P12 son mecanismos de volumen (L2/L3).",
+    "suma-aristas-como-superficie y usa-area-base-en-manto se usan SOLO en bloques 'seleccion' (mecanismo conceptual). Sus valores numéricos quedan fuera de banda de magnitud como distractor numérico (docs/reglas-modulo.md regla 3.2): 26 vs 108 para suma-aristas-como-superficie, 6280 vs 1256 para usa-area-base-en-manto. No aparecen como alternativa de itemsPAES; usa-area-base-en-manto aparece como feedbackPorError en 'practica' (valorObtenido 6908) solo porque se dispara únicamente si el estudiante teclea ese valor por su cuenta.",
     "Reconciliación de dos secciones del doc de diseño que no calzaban: 'Reparto de escenas' decía núcleo = farol (cilindro); la tabla 'Las 6 celdas de L1' ponía paralelepípedo 6×3×4 en el paso 'descubrimiento'. Manda la lógica pedagógica: el descubrimiento 'superficie = área de la red → seis rectángulos → 2(ab+bc+ac)' necesita una caja, no un cilindro. Se resolvió sin cambiar dominios firmados: el farol de papel de la fiesta de barrio se fabrica de caja, cúbico y cilíndrico — mismo contexto, tres cuerpos. 'aplicacion' usa el segundo dominio firmado (parlante cúbico con tela acústica).",
     "Todas las cifras verificadas con node -e antes de escribir (π = 3,14 exacto, no Math.PI). Cuerpos por paso: 'descubrimiento' caja 6×3×4 (caras 18/12/24, S 108); 'generalizacion' cubo arista 5 (S 150) + refuerzo cubo arista 7 (S 294); 'practica' cilindro r=10 h=20 (tapas 628, manto 1256, S 1884); 'aplicacion' parlante cubo arista 8 (S 384) + caja 5×3×4 (S 94); 'reflexion' cubo arista 6 (S = V = 216, pregunta abierta, sin ítem PAES). itemsPAES: caja 4×2×5 (S 76), cilindro r=10 h=20 (representar, sin cifras nuevas), cubo arista 10 (argumentar, afirmación 4a²=400 vs 6a²=600).",
-    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b, 🔴 intra-archivo) corrido sobre todos los respuestaCorrecta + alternativas esCorrecta del archivo: sin colisiones. El refuerzo del cubo en 'generalizacion' usa arista 7 tras descartar la 3 (S 54), que colisionaba con el distractor error-1 de la caja 6×3×4. Cubo arista 4 evitado en todo el archivo (4a² = 64 = su propio volumen, riesgo P3). Cubo arista 6 reservado para la pregunta abierta de cierre.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b, 🔴 intra-archivo) corrido sobre todos los respuestaCorrecta + alternativas esCorrecta del archivo: sin colisiones. El refuerzo del cubo en 'generalizacion' usa arista 7 tras descartar la 3 (S 54), que colisionaba con el distractor cuenta-solo-caras-visibles de la caja 6×3×4. Cubo arista 4 evitado en todo el archivo (4a² = 64 = su propio volumen, riesgo P3). Cubo arista 6 reservado para la pregunta abierta de cierre.",
     "Colisión declarada en auditoria.colisionesPermitidas: 216 (cubo de arista 6, S = V). No hay ítem PAES ni campo numérico con ese valor; es un bloque de texto + predicción que planta la pregunta de L2 ('¿superficie y volumen miden lo mismo?').",
     "π ≈ 3,14 escrito explícito en cada enunciado del cilindro: BloqueNumerica.tsx compara el input parseado contra el literal guardado con igualdad estricta (numero === respuestaCorrecta), sin tolerancia. Todos los valores del cilindro con r=10 son enteros exactos con 3,14 (628, 1256, 1884, 1570, 785).",
     "Sin interactivoSlider (docs/reglas-modulo.md regla 1: el concepto no lo exige, no hay ninguna magnitud continua que mover). Sin auditoria.constante: L1 no tiene una constante numérica única cuya circulación previa haya que vigilar; la notación formal 2(ab+bc+ac) aparece por primera vez en 'generalizacion', y ningún total de superficie se entrega antes del paso 'descubrimiento'."
@@ -116,7 +116,7 @@
       "tipo": "pensar",
       "titulo": "Prueba con el farol de caja",
       "_notasInternas": [
-        "Farol-caja 6×3×4, S = 2(18+12+24) = 108 (verificado node -e). Distractor error-1: 18+12+24 = 54 (mitad, tres caras). Distractor error-2: 2(6+3+4) = 26. vista 'desarrollo' con las tres cotas rotuladas (docs/reglas-modulo.md regla 6). Campo con id neutro sin cifra (regla 4)."
+        "Farol-caja 6×3×4, S = 2(18+12+24) = 108 (verificado node -e). Distractor cuenta-solo-caras-visibles: 18+12+24 = 54 (mitad, tres caras). Distractor suma-aristas-como-superficie: 2(6+3+4) = 26. vista 'desarrollo' con las tres cotas rotuladas (docs/reglas-modulo.md regla 6). Campo con id neutro sin cifra (regla 4)."
       ],
       "bloques": [
         {
@@ -151,13 +151,13 @@
               "campoId": "areaDelFarol",
               "valorObtenido": 54,
               "mensaje": "54 suma solo tres caras: una de 18, una de 12 y una de 24. Pero la caja tiene seis caras, en tres pares iguales: cada una de esas tres se repite en el lado opuesto. La superficie real es el doble.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             },
             {
               "campoId": "areaDelFarol",
               "valorObtenido": 26,
               "mensaje": "26 es 2 × (6 + 3 + 4): sumaste las tres medidas y las duplicaste, como si midieras un borde. La superficie no suma longitudes de aristas, suma áreas de caras: cada cara es el producto de dos medidas, no su suma.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "suma-aristas-como-superficie"
             }
           ],
           "feedbackPorDefecto": "La caja tiene seis caras, en tres pares iguales: una de 6 × 3, una de 3 × 4 y una de 6 × 4, cada una repetida dos veces. Calcula el área de cada par y súmalas."
@@ -195,7 +195,7 @@
       "tipo": "descubrimiento",
       "titulo": "La superficie es la red",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Mismo farol-caja 6×3×4, S = 108 (verificado). seleccion y pregunta comparten el set: 108 (correcta), 54 (error-1), 26 (error-2), 84 (ad-hoc: olvidó el par de caras de 12; 108 − 2×12 = 84). La notación formal 2(ab+bc+ac) NO aparece aquí: se deja para 'generalizacion' (requisito pedagógico). Dos visualizaciones: armado (solido) y desplegado (desarrollo), lado a lado. verdaderoFalso metacognitivo = el check '¿tiene sentido?' que pide el SKILL."
+        "CORAZÓN DE LA LECCIÓN. Mismo farol-caja 6×3×4, S = 108 (verificado). seleccion y pregunta comparten el set: 108 (correcta), 54 (cuenta-solo-caras-visibles), 26 (suma-aristas-como-superficie), 84 (ad-hoc: olvidó el par de caras de 12; 108 − 2×12 = 84). La notación formal 2(ab+bc+ac) NO aparece aquí: se deja para 'generalizacion' (requisito pedagógico). Dos visualizaciones: armado (solido) y desplegado (desarrollo), lado a lado. verdaderoFalso metacognitivo = el check '¿tiene sentido?' que pide el SKILL."
       ],
       "bloques": [
         {
@@ -249,14 +249,14 @@
               "texto": "54 cm²",
               "esCorrecta": false,
               "feedback": "54 es 18 + 12 + 24: una sola cara de cada par. Cada una de esas caras tiene una gemela en el lado opuesto del farol, así que hay que sumar seis caras, no tres. El total es el doble.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             },
             {
               "id": "c",
               "texto": "26 cm²",
               "esCorrecta": false,
               "feedback": "26 es 2 × (6 + 3 + 4): sumaste las tres medidas del farol y las duplicaste. Eso mide longitudes, no superficie. Cada cara es un rectángulo, y su área es el producto de dos medidas, no la suma.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "suma-aristas-como-superficie"
             },
             {
               "id": "d",
@@ -281,14 +281,14 @@
               "texto": "54 cm²",
               "esCorrecta": false,
               "feedback": "54 cm² suma solo una cara de cada par (18 + 12 + 24). El farol tiene seis caras, no tres: cada cara tiene su opuesta idéntica, así que la superficie real es el doble.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             },
             {
               "clave": "C",
               "texto": "26 cm²",
               "esCorrecta": false,
               "feedback": "26 cm² es 2 × (6 + 3 + 4): la suma de las tres aristas, duplicada. Esa cuenta mide un contorno, no una superficie. El área de cada cara multiplica dos medidas.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "suma-aristas-como-superficie"
             },
             {
               "clave": "D",
@@ -297,7 +297,7 @@
               "feedback": "72 es 6 × 3 × 4, el producto de las tres medidas. Ese número no cuenta caras: multiplicar las tres dimensiones mide otra cosa, no el papel que cubre el farol."
             }
           ],
-          "notaVerificacionMatematica": "Caras: 6×3=18, 3×4=12, 6×4=24. Superficie = 2×(18+12+24) = 2×54 = 108. Distractores: 18+12+24=54 (error-1); 2×(6+3+4)=26 (error-2); 6×3×4=72 (ad-hoc). Verificado con node -e."
+          "notaVerificacionMatematica": "Caras: 6×3=18, 3×4=12, 6×4=24. Superficie = 2×(18+12+24) = 2×54 = 108. Distractores: 18+12+24=54 (cuenta-solo-caras-visibles); 2×(6+3+4)=26 (suma-aristas-como-superficie); 6×3×4=72 (ad-hoc). Verificado con node -e."
         },
         {
           "tipo": "verdaderoFalso",
@@ -316,7 +316,7 @@
       "tipo": "generalizacion",
       "titulo": "La fórmula, y el caso del cubo",
       "_notasInternas": [
-        "PRIMERA aparición de la notación formal S = 2(ab + bc + ac), con ejemplo sobre el 6×3×4 (108). Cubo arista 5: S = 6×25 = 150. Distractor error-3: 4×25 = 100 (solo las 4 caras laterales). Distractor error-2 adaptado: 6×5 = 30 (solo seleccion). Refuerzo numérico: cubo arista 7, S = 6×49 = 294; feedbackPorError 196 (error-3, 4×49) y 147 (error-1, 3×49, la mitad de las caras). Arista 5 y 7 elegidas: 4 prohibida (4a²=64=V), 6 reservada al cierre, 3 colisiona (S 54)."
+        "PRIMERA aparición de la notación formal S = 2(ab + bc + ac), con ejemplo sobre el 6×3×4 (108). Cubo arista 5: S = 6×25 = 150. Distractor omite-tapa-y-base: 4×25 = 100 (solo las 4 caras laterales). Distractor suma-aristas-como-superficie adaptado: 6×5 = 30 (solo seleccion). Refuerzo numérico: cubo arista 7, S = 6×49 = 294; feedbackPorError 196 (omite-tapa-y-base, 4×49) y 147 (cuenta-solo-caras-visibles, 3×49, la mitad de las caras). Arista 5 y 7 elegidas: 4 prohibida (4a²=64=V), 6 reservada al cierre, 3 colisiona (S 54)."
       ],
       "bloques": [
         {
@@ -354,14 +354,14 @@
               "texto": "100 cm²",
               "esCorrecta": false,
               "feedback": "100 es 4 × 25: contaste solo las cuatro caras de los lados y olvidaste la tapa y la base. Un cubo tiene seis caras, no cuatro.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "omite-tapa-y-base"
             },
             {
               "id": "c",
               "texto": "30 cm²",
               "esCorrecta": false,
               "feedback": "30 sale de 2 × (5 + 5 + 5): esa es la suma de tres aristas duplicada (no corresponde al perímetro real del cubo), mide largo, no superficie. El resultado quedaría en centímetros lineales, no en cm². La superficie suma áreas de caras: 6 × (5 × 5) = 150 cm².",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "suma-aristas-como-superficie"
             },
             {
               "id": "d",
@@ -387,13 +387,13 @@
               "campoId": "areaDelFarolCubico",
               "valorObtenido": 196,
               "mensaje": "196 es 4 × 7²: solo las cuatro caras laterales. Falta la tapa y la base. El cubo tiene seis caras iguales: 6 × 49.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "omite-tapa-y-base"
             },
             {
               "campoId": "areaDelFarolCubico",
               "valorObtenido": 147,
               "mensaje": "147 es 3 × 49: la mitad de las caras. Un cubo tiene seis caras iguales, no tres; cada cara vale 7 × 7 = 49 cm².",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             }
           ],
           "feedbackPorDefecto": "Cada cara del cubo mide 7 × 7 = 49 cm². El cubo tiene seis caras iguales: multiplica 49 por 6."
@@ -404,7 +404,7 @@
       "tipo": "practica",
       "titulo": "El farol cilíndrico, desenrollado",
       "_notasInternas": [
-        "Cilindro r=10, h=20, π=3,14. tapas = 2×3,14×100 = 628; manto = 2×3,14×10×20 = 1256; S = 1884 (todos enteros exactos, verificado node -e). El manto desenrollado ES un rectángulo de 2πr × h: la 'prueba más convincente del descubrimiento' (doc de diseño). seleccion conceptual usa error-5 (manto = πr²h). numerica: feedbackPorError 1570 (error-4, πr² + 2πrh = 314 + 1256), 785 (error-6, radio 10 leído como diámetro -> r=5: 2×3,14×25 + 2×3,14×5×20 = 157 + 628), 6908 (error-5, 2πr² + πr²h = 628 + 6280; solo se dispara si el estudiante teclea ese valor). Prerrequisito 2πr y πr² ya cubierto por figuras-borde-y-superficie (módulo #10 L2). π escrito explícito por la comparación estricta de BloqueNumerica."
+        "Cilindro r=10, h=20, π=3,14. tapas = 2×3,14×100 = 628; manto = 2×3,14×10×20 = 1256; S = 1884 (todos enteros exactos, verificado node -e). El manto desenrollado ES un rectángulo de 2πr × h: la 'prueba más convincente del descubrimiento' (doc de diseño). seleccion conceptual usa usa-area-base-en-manto (manto = πr²h). numerica: feedbackPorError 1570 (suma-una-sola-tapa-cilindro, πr² + 2πrh = 314 + 1256), 785 (confunde-radio-con-diametro-cilindro, radio 10 leído como diámetro -> r=5: 2×3,14×25 + 2×3,14×5×20 = 157 + 628), 6908 (usa-area-base-en-manto, 2πr² + πr²h = 628 + 6280; solo se dispara si el estudiante teclea ese valor). Prerrequisito 2πr y πr² ya cubierto por figuras-borde-y-superficie (módulo #10 L2). π escrito explícito por la comparación estricta de BloqueNumerica."
       ],
       "bloques": [
         {
@@ -440,7 +440,7 @@
               "texto": "Al área de la tapa, π × radio²: la superficie del círculo.",
               "esCorrecta": false,
               "feedback": "El área de la tapa (π × radio²) mide una superficie, en cm². La base del rectángulo es una longitud, en cm: es el contorno de la tapa, la circunferencia 2 × π × radio, no su área.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "usa-area-base-en-manto"
             },
             {
               "id": "c",
@@ -466,19 +466,19 @@
               "campoId": "areaDelFarolCilindrico",
               "valorObtenido": 1570,
               "mensaje": "1570 es el manto (1256) más una sola tapa (314). El cilindro tiene dos tapas iguales, arriba y abajo: falta sumar la segunda, otros 314 cm².",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "suma-una-sola-tapa-cilindro"
             },
             {
               "campoId": "areaDelFarolCilindrico",
               "valorObtenido": 785,
               "mensaje": "785 sale de usar 10 como si fuera el diámetro, con radio 5. El enunciado da el radio, 10 cm, no el diámetro: con radio 10 las tapas suman 628 y el manto 1256.",
-              "errorCatalogado": "error-6"
+              "errorCatalogado": "confunde-radio-con-diametro-cilindro"
             },
             {
               "campoId": "areaDelFarolCilindrico",
               "valorObtenido": 6908,
               "mensaje": "6908 usa π × radio² × altura para el manto (3,14 × 100 × 20 = 6280). Esa es el área de la tapa multiplicada por la altura, no el manto. El manto es la circunferencia por la altura: 2 × π × radio × altura = 1256.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "usa-area-base-en-manto"
             }
           ],
           "feedbackPorDefecto": "Tapas: 2 × (π × 10²) = 2 × 314 = 628. Manto: (2 × π × 10) × 20 = 62,8 × 20 = 1256. Total: 628 + 1256."
@@ -489,7 +489,7 @@
       "tipo": "aplicacion",
       "titulo": "El parlante y una caja más",
       "_notasInternas": [
-        "Dominio nuevo (firmado): parlante cúbico con tela acústica, arista 8. S = 6×64 = 384. Distractor error-3: 4×64 = 256. Distractor error-1: 3×64 = 192 (mitad de las caras). Segundo ejercicio: farol-caja 5×3×4, S = 2(15+12+20) = 94; feedbackPorError 47 (error-1, mitad). Arista 8 del parlante: distinta de la 5 y la 7 de 'generalizacion', y de la 6 del cierre. Cierra con abierta de síntesis de las tres fórmulas."
+        "Dominio nuevo (firmado): parlante cúbico con tela acústica, arista 8. S = 6×64 = 384. Distractor omite-tapa-y-base: 4×64 = 256. Distractor cuenta-solo-caras-visibles: 3×64 = 192 (mitad de las caras). Segundo ejercicio: farol-caja 5×3×4, S = 2(15+12+20) = 94; feedbackPorError 47 (cuenta-solo-caras-visibles, mitad). Arista 8 del parlante: distinta de la 5 y la 7 de 'generalizacion', y de la 6 del cierre. Cierra con abierta de síntesis de las tres fórmulas."
       ],
       "bloques": [
         {
@@ -524,13 +524,13 @@
               "campoId": "areaDelParlante",
               "valorObtenido": 256,
               "mensaje": "256 es 4 × 8²: las cuatro caras de los lados, sin la de arriba ni la de abajo. Forrar el parlante completo son seis caras: 6 × 64.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "omite-tapa-y-base"
             },
             {
               "campoId": "areaDelParlante",
               "valorObtenido": 192,
               "mensaje": "192 es 3 × 64: la mitad de las caras. El cubo tiene seis caras iguales de 8 × 8 = 64 cm², no tres.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             }
           ],
           "feedbackPorDefecto": "Cada cara del parlante mide 8 × 8 = 64 cm². Son seis caras iguales: 6 × 64."
@@ -551,7 +551,7 @@
               "campoId": "areaDeLaCajaFinal",
               "valorObtenido": 47,
               "mensaje": "47 suma una sola cara de cada par: 15 + 12 + 20. Cada una tiene su gemela opuesta, así que la superficie es el doble: 2 × 47.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "cuenta-solo-caras-visibles"
             }
           ],
           "feedbackPorDefecto": "Las tres caras distintas miden 5 × 3 = 15, 3 × 4 = 12 y 5 × 4 = 20. Cada una se repite: S = 2 × (15 + 12 + 20)."
@@ -629,7 +629,7 @@
           "texto": "38 cm²",
           "esCorrecta": false,
           "feedback": "38 cm² suma una sola cara de cada par (8 + 10 + 20). La caja tiene seis caras: cada una tiene su opuesta idéntica, así que la superficie real es el doble.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "cuenta-solo-caras-visibles"
         },
         {
           "clave": "C",
@@ -663,7 +663,7 @@
           "texto": "Un solo círculo más un rectángulo cuya base es la circunferencia de la tapa: se suma una tapa en vez de dos.",
           "esCorrecta": false,
           "feedback": "El cilindro tiene dos tapas iguales, una arriba y otra abajo. Con una sola tapa falta sumar la otra: la red completa lleva dos círculos, no uno.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "suma-una-sola-tapa-cilindro"
         },
         {
           "clave": "C",
@@ -676,7 +676,7 @@
           "texto": "Dos círculos más un rectángulo, pero tomando como base del rectángulo el área de la tapa (π × radio²) en lugar de su contorno.",
           "esCorrecta": false,
           "feedback": "La base del manto desenrollado es el contorno de la tapa, la circunferencia 2 × π × radio, que es una longitud. El área de la tapa (π × radio²) es una superficie: no puede ser la base de un rectángulo.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "usa-area-base-en-manto"
         }
       ],
       "solucion": "La red del cilindro tiene tres piezas: dos círculos iguales, cada uno de área π × radio² (las tapas), y el manto. El manto, desenrollado, es un rectángulo de altura igual a la del cilindro y base igual a la circunferencia de la tapa, 2 × π × radio. El área total es 2 × (π × radio²) + (2 × π × radio) × altura. La descripción que corresponde a esa red es la A."
@@ -698,14 +698,14 @@
           "texto": "Sí es correcto: 400 cm² es la superficie del cubo.",
           "esCorrecta": false,
           "feedback": "400 cm² son solo cuatro caras (4 × 10²). El cubo tiene seis caras iguales: falta sumar la de arriba y la de abajo. La superficie real es 600 cm².",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "omite-tapa-y-base"
         },
         {
           "clave": "C",
           "texto": "No es correcto: la superficie real es 300 cm², porque el cubo tiene tres pares de caras y basta sumar una de cada par.",
           "esCorrecta": false,
           "feedback": "300 es 3 × 10²: una sola cara de cada par. En un cubo las seis caras son iguales y todas cuentan; no se suma solo la mitad. La superficie es 6 × 100 = 600 cm².",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "cuenta-solo-caras-visibles"
         },
         {
           "clave": "D",
@@ -721,7 +721,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: área de superficie de paralelepípedos, cubos y cilindros), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (faroles de papel para una fiesta de barrio, en sus formas de caja, cubo y cilindro; parlante cúbico forrado con tela acústica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, en dos tandas sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'farol de papel', 'farol', 'papel de seda', 'parlante', 'tela acustica', 'forrar', 'bloque de hormigon', 'hormigon', 'serigrafia', 'acuario', 'pecera', 'silo', 'granos', 'arenero', 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md) y 'arena' LIMPIO; 'piscina' es dominio de la Lección 2, no de esta, y quedó descartada allá. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. Auditoría matemática (Ronda 1): corrida el 2026-08-27, sin hallazgos que bloqueen (1 corrección aplicada en generalizacion/seleccion, error-2). Auditoría de originalidad (Ronda 2): corrida el 2026-08-27 contra MA-22_Cuerpos_Geometricos.md y el ensayo PSU (5/6__EN2_Matema_tica_M1) — sin coincidencias ALTA, ningún ítem es reformulación cercana de un ítem DEMRE/PSU existente.",
+    "declaracionOriginalidad": "Enunciados, contextos (faroles de papel para una fiesta de barrio, en sus formas de caja, cubo y cilindro; parlante cúbico forrado con tela acústica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, en dos tandas sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'farol de papel', 'farol', 'papel de seda', 'parlante', 'tela acustica', 'forrar', 'bloque de hormigon', 'hormigon', 'serigrafia', 'acuario', 'pecera', 'silo', 'granos', 'arenero', 'termo', 'aislante', 'aislacion', 'camara de frio' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md) y 'arena' LIMPIO; 'piscina' es dominio de la Lección 2, no de esta, y quedó descartada allá. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. Auditoría matemática (Ronda 1): corrida el 2026-08-27, sin hallazgos que bloqueen (1 corrección aplicada en generalizacion/seleccion, suma-aristas-como-superficie). Auditoría de originalidad (Ronda 2): corrida el 2026-08-27 contra MA-22_Cuerpos_Geometricos.md y el ensayo PSU (5/6__EN2_Matema_tica_M1) — sin coincidencias ALTA, ningún ítem es reformulación cercana de un ítem DEMRE/PSU existente.",
     "autor": "Benjamín Gutiérrez"
   }
 }

@@ -16,7 +16,7 @@
   ],
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-sistemas-2x2.md (2026-08-19). Contexto (boletería de cine, adultos y niños) verificado LIMPIO por Benja vía consultar-fuentes.mjs el 2026-08-19 (mecanismo (2) de CLAUDE.md); 'manzanas y peras' fue descartado del set de candidatos por colisión y no se usa en este módulo.",
-      "catalogoErrores incluye el catálogo del módulo 'Sistemas de ecuaciones lineales (2x2)' (error-1, error-3 a error-6). Los cinco se usan activamente dentro de esta misma lección (ver pasos 2, 7, 8 e itemsPAES), para que la auditoría mecánica (npm run auditar) no reporte ningún id como sin uso. error-2 (sustitución circular, misma ecuación de la que se despejó) se eliminó del catálogo el 2026-08-20: por definición produce una identidad (40=40), no un valor numérico, así que no existe un distractor de opción múltiple genuinamente derivable de ese mecanismo; el único punto que lo usaba (l1-item-1.C) quedó con errorCatalogado null y feedback artesanal propio (auditoría matemática Ronda 1).",
+      "catalogoErrores incluye el catálogo del módulo 'Sistemas de ecuaciones lineales (2x2)' (distribuye-sobre-parte-de-expresion, pierde-signo-al-eliminar a iguala-con-total-equivocado). Los cinco se usan activamente dentro de esta misma lección (ver pasos 2, 7, 8 e itemsPAES), para que la auditoría mecánica (npm run auditar) no reporte ningún id como sin uso. El id de sustitución circular (misma ecuación de la que se despejó; era el segundo del catálogo) se eliminó del catálogo el 2026-08-20: por definición produce una identidad (40=40), no un valor numérico, así que no existe un distractor de opción múltiple genuinamente derivable de ese mecanismo; el único punto que lo usaba (l1-item-1.C) quedó con errorCatalogado null y feedback artesanal propio (auditoría matemática Ronda 1).",
     "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido) además del arreglo itemsPAES, con números propios distintos del resto de la lección."
   ],
   "pasos": [
@@ -128,7 +128,7 @@
       "tipo": "generalizacion",
       "titulo": "El método, en general",
       "_notasInternas": [
-        "Notación formal + chequeo metacognitivo verdaderoFalso sobre error-4 (solución incompleta)."
+        "Notación formal + chequeo metacognitivo verdaderoFalso sobre omite-sustituir-de-vuelta (solución incompleta)."
       ],
       "bloques": [
         {
@@ -148,7 +148,7 @@
       "tipo": "practica",
       "titulo": "Practica: otra boletería",
       "_notasInternas": [
-        "Nueva boletería (adulto $8.000, niño $3.000, 25 entradas, $130.000). Correcto: a = 11 (n = 14). feedbackPorError cubre error-5 (invierte y pide n en vez de a) y error-3 (error de signo al distribuir sobre el paréntesis, equivalente a sumar en vez de restar)."
+        "Nueva boletería (adulto $8.000, niño $3.000, 25 entradas, $130.000). Correcto: a = 11 (n = 14). feedbackPorError cubre invierte-valores-del-par (invierte y pide n en vez de a) y pierde-signo-al-eliminar (error de signo al distribuir sobre el paréntesis, equivalente a sumar en vez de restar)."
       ],
       "bloques": [
         {
@@ -167,13 +167,13 @@
               "campoId": "a",
               "valorObtenido": 14,
               "mensaje": "Calculaste bien el sistema, pero ese es el número de entradas de NIÑO (n = 14), no de adulto. El enunciado pregunta por a, no por n.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-valores-del-par"
             },
             {
               "campoId": "a",
               "valorObtenido": 5,
               "mensaje": "Al combinar 8.000a + 3.000(25 − a) = 130.000, el signo negativo debe aplicarse a los dos términos dentro del paréntesis. Si en vez de eso se distribuye como si fuera 3.000(25 + a) (sin restar), la ecuación queda 8.000a + 3.000(25 + a) = 130.000 → 11.000a = 55.000 → a = 5.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "pierde-signo-al-eliminar"
             }
           ],
           "feedbackPorDefecto": "n = 25 − a. Sustituyendo: 8.000a + 3.000(25 − a) = 130.000 → 8.000a + 75.000 − 3.000a = 130.000 → 5.000a = 55.000 → a = 11. (Y n = 25 − 11 = 14.)"
@@ -184,7 +184,7 @@
       "tipo": "aplicacion",
       "titulo": "Elige el par solución correcto",
       "_notasInternas": [
-        "Boletería nueva (adulto $10.000, niño $6.000, 20 entradas, $168.000). Correcto: (12, 8). Distractores cubren error-5 (swap) y error-4 (incompleta); un distractor sin id catalogado (error de lectura del problema)."
+        "Boletería nueva (adulto $10.000, niño $6.000, 20 entradas, $168.000). Correcto: (12, 8). Distractores cubren invierte-valores-del-par (swap) y omite-sustituir-de-vuelta (incompleta); un distractor sin id catalogado (error de lectura del problema)."
       ],
       "bloques": [
         {
@@ -202,7 +202,7 @@
               "texto": "8 adultos y 12 niños",
               "esCorrecta": false,
               "feedback": "Calculaste bien los dos números (12 y 8), pero los intercambiaste al reportarlos: 12 es la cantidad de ADULTOS, no de niños.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-valores-del-par"
             },
             {
               "id": "c",
@@ -216,7 +216,7 @@
               "texto": "12 adultos y 20 niños",
               "esCorrecta": false,
               "feedback": "Encontraste bien que hay 12 adultos, pero no volviste a sustituir para encontrar los niños: escribiste el total de entradas (20) en vez de calcular n = 20 − 12 = 8.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-sustituir-de-vuelta"
             }
           ]
         }
@@ -263,7 +263,7 @@
               "texto": "7",
               "esCorrecta": false,
               "feedback": "Ese es el número de entradas de NIÑO (n = 7), no de adulto. Calculaste bien el sistema pero invertiste cuál valor corresponde a cuál incógnita al responder.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-valores-del-par"
             },
             {
               "clave": "C",
@@ -277,7 +277,7 @@
               "texto": "9",
               "esCorrecta": false,
               "feedback": "Al despejar n en a + n = 22, hay que aplicar el signo negativo: n = 22 − a. Si se escribe n = 22 + a por no aplicar bien ese signo, la sustitución posterior (4.000a + 1.000(22 + a) = 67.000 → 5.000a = 45.000 → a = 9) lleva a un valor como este, que no cumple el sistema real.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "distribuye-sobre-parte-de-expresion"
             }
           ],
           "notaVerificacionMatematica": "a + n = 22; 4.000a + 1.000n = 67.000. n = 22 − a → 4.000a + 1.000(22 − a) = 67.000 → 3.000a = 45.000 → a = 15, n = 7. Comprobación: 15 + 7 = 22 ✓; 4.000×15 + 1.000×7 = 60.000 + 7.000 = 67.000 ✓."
@@ -303,7 +303,7 @@
           "texto": "19 adultos y 21 niños",
           "esCorrecta": false,
           "feedback": "Calculaste bien los dos valores (21 y 19), pero los intercambiaste al reportarlos: la cantidad de adultos es 21, no 19.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-valores-del-par"
         },
         {
           "clave": "C",
@@ -317,7 +317,7 @@
           "texto": "9 adultos y 49 niños",
           "esCorrecta": false,
           "feedback": "Al despejar n en a + n = 40, hay que aplicar el signo negativo: n = 40 − a. Si se escribe n = 40 + a por no aplicar bien ese signo, la sustitución posterior (5.000a + 2.000(40 + a) = 143.000 → 7.000a = 63.000 → a = 9) lleva a un par como este, que no cumple el sistema real.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion"
         }
       ],
       "solucion": "a + n = 40; 5.000a + 2.000n = 143.000. n = 40 − a → 5.000a + 2.000(40 − a) = 143.000 → 3.000a = 63.000 → a = 21, n = 19. Comprobación: 21 + 19 = 40 ✓; 5.000×21 + 2.000×19 = 105.000 + 38.000 = 143.000 ✓. ✓"
@@ -339,7 +339,7 @@
           "texto": "a + n = 210.000 ; 9.000a + 3.000n = 30",
           "esCorrecta": false,
           "feedback": "Invertiste a qué ecuación corresponde cada total. La ecuación de CANTIDAD de entradas debe igualarse a 30 (el total de entradas), no a 210.000 (que es dinero); y la ecuación de DINERO debe igualarse a 210.000, no a 30.",
-          "errorCatalogado": "error-6"
+          "errorCatalogado": "iguala-con-total-equivocado"
         },
         {
           "clave": "C",

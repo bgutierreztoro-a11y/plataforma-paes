@@ -44,7 +44,7 @@
       "tipo": "curiosidad",
       "titulo": "Pagaste $6.000, pero ¿cuánto valía la entrada?",
       "_notasInternas": [
-        "Gancho: la operación inversa intuitiva falla. Ataca error-7 de entrada sin nombrarlo.",
+        "Gancho: la operación inversa intuitiva falla. Ataca deshace-porcentaje-con-mismo-porcentaje de entrada sin nombrarlo.",
         "La predicción no se corrige antes del bloque de texto: el objetivo es abrir la pregunta.",
         "Verificación: 5.000 × 1,20 = 6.000. Quitarle el 20% al total: 6.000 × 0,80 = 4.800. Comprobación de que 4.800 es falso: 4.800 × 1,20 = 5.760, que no son los 6.000 pagados. ✓"
       ],
@@ -82,7 +82,7 @@
               "texto": "Tiene razón Ana: para deshacer un recargo del 20% hay que quitarle un 20%.",
               "esCorrecta": false,
               "feedback": "Eso es lo que suena razonable, pero no lo comprobaste. Toma el número de Ana y aplícale el recargo, que es la operación que sí sabes hacer: $4.800 más su 20%. Si el resultado no son los $6.000 que se pagaron, su respuesta no puede ser la correcta.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "id": "b",
@@ -95,7 +95,7 @@
               "texto": "Ninguno: el recargo del 20% son $20, así que la entrada valía $5.980.",
               "esCorrecta": false,
               "feedback": "El 20% no son $20. Un porcentaje no es una cantidad fija de pesos: es una parte del precio, y cuánto vale esa parte depende del precio. Sobre $5.000, el 20% son $1.000.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "trata-porcentaje-como-cantidad-fija"
             }
           ]
         }
@@ -126,19 +126,19 @@
               "campoId": "entradaSinRecargo",
               "valorObtenido": 14400,
               "mensaje": "Le quitaste el 20% al total. Compruébalo hacia adelante: $14.400 más su 20% da $17.280, no $18.000. Quitar el mismo porcentaje no deshace lo que se sumó, porque el 20% del total es más grande que el 20% de la entrada.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "entradaSinRecargo",
               "valorObtenido": 3600,
               "mensaje": "Calculaste el 20% del total pagado. Ojo: eso ni siquiera es el recargo — el recargo real fue de $3.000, porque se calculó sobre la entrada y no sobre el total. Y en todo caso la pregunta pide el precio de partida, no lo que se sumó encima.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             },
             {
               "campoId": "entradaSinRecargo",
               "valorObtenido": 22500,
               "mensaje": "Dividir es el camino correcto, pero no por ese número. Fíjate en el tamaño del resultado: te dio más que los $18.000 pagados, y la entrada tiene que costar MENOS que el total con recargo. Estás dividiendo por 0,80 cuando el factor que se aplicó fue otro.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             }
           ],
           "feedbackPorDefecto": "Llama V al valor de la entrada. Con el recargo, lo que se paga es V más su 20%. ¿Por qué número hay que multiplicar V para obtener el total de $18.000? Una vez que lo tengas, ya casi está."
@@ -178,7 +178,7 @@
         "ESCALERA CAMBIADA (2026-08-12, tras auditoría). El slider (ya retirado) corría antes de 5.000 a 25.000 con las filas 5.000/10.000/15.000/20.000/25.000 — exactamente el mismo dominio y las mismas cinco bases que el slider de porcentaje-rebaja-doble.json, de modo que las dos lecciones consecutivas del módulo mostraban la misma escalera de precios. Se bajó a 2.000→6.000. Queda un solape residual aceptado por el autor: con precios redondos y los factores 1,20 y 0,80 no existe una escalera exacta sin ninguna cifra en común con L2. La fila 5.000 → 6.000 coincide a propósito con el caso de apertura del paso 1, para que el estudiante reconozca su propio ejemplo dentro de la tabla.",
         "La regla V = X ÷ f NO aparece en este paso. Se formaliza en el paso 6. Acá el estudiante solo observa que la vuelta se queda corta SIEMPRE en la misma proporción.",
         "Verificación de la tabla completa: 2.000 × 1,20 = 2.400, y 2.400 × 0,80 = 1.920 (1.920/2.000 = 0,96); 3.000 → 3.600 → 2.880 (0,96); 4.000 → 4.800 → 3.840 (0,96); 5.000 → 6.000 → 4.800 (0,96); 6.000 → 7.200 → 5.760 (0,96). Los cinco valores dan cantidades exactas: elegidos así a propósito.",
-        "Verificación de la micro-pregunta: el divisor que recupera el original es 1,2, porque el total es siempre original × 1,20. Distractores: 0,8 y 0,2 (divisores mal elegidos, ambos descritos en error-7); 0,96 (es el factor de la ida y vuelta completa, no el de la vuelta)."
+        "Verificación de la micro-pregunta: el divisor que recupera el original es 1,2, porque el total es siempre original × 1,20. Distractores: 0,8 y 0,2 (divisores mal elegidos, ambos descritos en deshace-porcentaje-con-mismo-porcentaje); 0,96 (es el factor de la ida y vuelta completa, no el de la vuelta)."
       ],
       "bloques": [
         {
@@ -211,19 +211,19 @@
               "campoId": "divisorRecargo",
               "valorObtenido": 0.8,
               "mensaje": "0,80 es el factor de la vuelta que acabas de ver fallar: es el que produce el 0,96 en vez de 1. El total se obtuvo multiplicando la entrada por 1,20, así que para deshacerlo hay que dividir por ese mismo 1,20.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "divisorRecargo",
               "valorObtenido": 0.2,
               "mensaje": "0,20 es solo el recargo, no el factor completo. El total no es «la entrada por 0,20»: es la entrada más su 20%, o sea la entrada por 1,20.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "divisorRecargo",
               "valorObtenido": 0.96,
               "mensaje": "0,96 es el resultado de la ida y la vuelta juntas — el número que probaba que el método fallaba. No es el factor de una sola de las dos operaciones. El de la ida es 1,20.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             }
           ],
           "feedbackPorDefecto": "El total pagado se obtuvo multiplicando el valor de la entrada por un número. Ese número es el que aparece en la segunda columna de la tabla como operación. Para deshacer una multiplicación, se divide por el mismo número."
@@ -261,19 +261,19 @@
               "campoId": "arriendoAntes",
               "valorObtenido": 13500,
               "mensaje": "Le aplicaste un descuento del 50% al valor final. Compruébalo hacia adelante: $13.500 subido un 50% da $20.250, no $27.000. El alza del 50% multiplicó por 1,50, así que hay que dividir por 1,50.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "arriendoAntes",
               "valorObtenido": 54000,
               "mensaje": "Dividir es correcto, pero por 1,50 y no por 0,50. Un alza del 50% no multiplica por 0,50: multiplica por 1 + 0,50. Además el resultado tiene que ser MENOR que $27.000, porque el precio subió.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "arriendoAntes",
               "valorObtenido": 9000,
               "mensaje": "$9.000 es cuánto SUBIÓ el arriendo, y de hecho está bien calculado. Pero la pregunta pide cuánto costaba antes, que es el valor final menos esa alza.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Primero identifica el factor: un alza del 50% multiplica por 1 + 50/100. Después divide los $27.000 por ese factor. Y comprueba tu resultado subiéndolo un 50%: tiene que darte $27.000 exactos."
@@ -306,19 +306,19 @@
               "campoId": "precioAntesDescuento",
               "valorObtenido": 17280,
               "mensaje": "Le sumaste un 20% al precio pagado. Es el error más común de todos, y se detecta comprobando hacia adelante: a $17.280 quítale su 20% y te da $13.824, no $14.400. El descuento multiplicó por 0,80, así que hay que dividir por 0,80.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "precioAntesDescuento",
               "valorObtenido": 12000,
               "mensaje": "Dividiste por 1,20, que es el factor de un ALZA del 20%. Acá hubo un descuento, y el factor de un descuento del 20% es 0,80. Además, el precio original tiene que ser MAYOR que lo pagado.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "precioAntesDescuento",
               "valorObtenido": 2880,
               "mensaje": "Calculaste el 20% de lo pagado, no el precio original. Fíjate además en el tamaño: el precio antes del descuento no puede ser menor que lo que se pagó.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             }
           ],
           "feedbackPorDefecto": "Identifica el factor del descuento del 20% —¿qué parte del precio queda?— y divide los $14.400 por él. Control de sensatez: el resultado tiene que ser mayor que $14.400."
@@ -345,21 +345,21 @@
               "texto": "El consumo fue $19.800, porque hay que quitarle el 10% a la cuenta.",
               "esCorrecta": false,
               "feedback": "Compruébalo: a $19.800 súmale su 10% y obtienes $21.780, no $22.000. El 10% que quitaste se calculó sobre la cuenta completa, que ya incluye la propina, así que es mayor que la propina real.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "id": "c",
               "texto": "El consumo fue $2.200, porque ese es el 10% de la cuenta.",
               "esCorrecta": false,
               "feedback": "$2.200 es el 10% de la cuenta total, y ni siquiera es la propina: la propina real fue $2.000, porque se calculó sobre el consumo y no sobre la cuenta con propina incluida. La pregunta pide el consumo, que es la parte grande de la cuenta.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             },
             {
               "id": "d",
               "texto": "El consumo fue $24.200, porque hay que agregarle el 10% de propina a la cuenta.",
               "esCorrecta": false,
               "feedback": "Fuiste en la dirección contraria: la propina ya está incluida en los $22.000, así que sumarla otra vez aleja del consumo en vez de acercarlo. Y el consumo tiene que ser menor que la cuenta total, no mayor.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             }
           ]
         }
@@ -397,19 +397,19 @@
               "campoId": "precioNeto",
               "valorObtenido": 38556,
               "mensaje": "Le quitaste el 19% al total de la boleta. Compruébalo: a $38.556 súmale su 19% y no llegas a $47.600, te quedas bastante corto. El IVA se calculó sobre el neto, no sobre el total, así que quitárselo al total descuenta de más.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             },
             {
               "campoId": "precioNeto",
               "valorObtenido": 9044,
               "mensaje": "Calculaste el 19% del total de la boleta. Eso no es el IVA: el IVA de esta boleta fue $7.600, porque se calculó sobre el neto y no sobre el total. Y la pregunta pide el neto, que es la parte grande.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-descuento-en-vez-de-resto"
             },
             {
               "campoId": "precioNeto",
               "valorObtenido": 56644,
               "mensaje": "Volviste a aplicar el IVA en vez de deshacerlo. El total de la boleta ya lo incluye, así que el neto tiene que ser MENOR que $47.600, no mayor.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
             }
           ],
           "feedbackPorDefecto": "Usa la operación que escribiste en la parte 1: divide los $47.600 por 1,19. Comprueba el resultado multiplicándolo por 1,19; tiene que devolverte los $47.600 exactos."
@@ -465,21 +465,21 @@
           "texto": "$62.400",
           "esCorrecta": false,
           "feedback": "Le sumaste un 20% al precio pagado (52.000 × 1,20). Es el error más frecuente en este tipo de ítem. Compruébalo: a $62.400 quítale su 20% y obtienes $49.920, no $52.000. El 20% de ida y el 20% de vuelta no se calculan sobre la misma base.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
         },
         {
           "clave": "C",
           "texto": "$41.600",
           "esCorrecta": false,
           "feedback": "Volviste a aplicar el descuento en vez de deshacerlo (52.000 × 0,80). El precio antes del descuento tiene que ser MAYOR que lo que se pagó, nunca menor.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
         },
         {
           "clave": "D",
           "texto": "$10.400",
           "esCorrecta": false,
           "feedback": "Calculaste el 20% de lo pagado. Eso no es el descuento: el descuento real fue $13.000, porque el 20% se aplicó sobre el precio original y no sobre el pagado. Y la pregunta pide el precio de partida, no el descuento.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto"
         }
       ],
       "solucion": "Un descuento del 20% multiplica el precio por 1 − 0,20 = 0,80. Si P es el precio original, entonces P × 0,80 = 52.000, de donde P = 52.000 ÷ 0,80 = $65.000. Verificación hacia adelante: 65.000 × 0,80 = 52.000. ✓ Control de sensatez: el precio original ($65.000) es mayor que el pagado ($52.000), como corresponde a un descuento."
@@ -501,21 +501,21 @@
           "texto": "P × 1,20",
           "esCorrecta": false,
           "feedback": "Esta expresión aplica un alza del 20% al precio pagado, que es la intuición de «deshacer el porcentaje con el porcentaje». No funciona: 0,80 × 1,20 = 0,96, así que no devuelve el precio original sino el 96% de él.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
         },
         {
           "clave": "C",
           "texto": "P ÷ 0,20",
           "esCorrecta": false,
           "feedback": "Dividir es la operación correcta, pero el divisor no es el porcentaje suelto: es el factor. Un descuento del 20% no multiplica por 0,20, multiplica por 1 − 0,20 = 0,80.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
         },
         {
           "clave": "D",
           "texto": "P × 0,20",
           "esCorrecta": false,
           "feedback": "Esta expresión toma el 20% de lo pagado, que ni siquiera es el descuento: el descuento se calculó sobre el precio original, así que equivale a P × 0,25. Y en todo caso produce un valor menor que P, cuando el precio antes de un descuento tiene que ser mayor que el pagado.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "responde-otra-magnitud-porcentaje"
         }
       ],
       "solucion": "Un descuento del 20% multiplica por 1 − 20/100 = 0,80. Si V es el precio original, el precio pagado es P = V × 0,80. Despejando V se obtiene V = P ÷ 0,80. Verificación con una cifra concreta: si V fuera 10.000, entonces P = 8.000, y 8.000 ÷ 0,80 = 10.000. ✓"
@@ -537,21 +537,21 @@
           "texto": "El año pasado costaba $52.800, porque basta quitarle el 20% al precio de este año.",
           "esCorrecta": false,
           "feedback": "Quitar el mismo porcentaje no deshace el alza, porque el 20% de este año se calcula sobre un valor mayor que el del año pasado. Compruébalo: $52.800 subido un 20% da $63.360, no $66.000.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje"
         },
         {
           "clave": "C",
           "texto": "El año pasado costaba $13.200, porque ese es el monto en que subió la entrada.",
           "esCorrecta": false,
           "feedback": "$13.200 es el 20% del precio actual, no el precio del año pasado. Y aunque fuera el alza exacta, la pregunta pide el valor de partida, no cuánto aumentó.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto"
         },
         {
           "clave": "D",
           "texto": "El año pasado costaba $330.000, porque el precio actual es el 20% del anterior.",
           "esCorrecta": false,
           "feedback": "Cambiaste «subió UN 20%» por «quedó A un 20%». La primera expresión dice cuánto creció el precio; la segunda diría que el precio se desplomó hasta la quinta parte. Además el enunciado dice que subió, así que el valor anterior tiene que ser menor que $66.000.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "confunde-aumento-un-con-aumento-a"
         }
       ],
       "solucion": "Un alza del 20% multiplica el valor por 1 + 20/100 = 1,20. Si V es el precio del año pasado, entonces V × 1,20 = 66.000, de donde V = 66.000 ÷ 1,20 = $55.000. Verificación hacia adelante: 55.000 × 1,20 = 66.000. ✓ Control de sensatez: como el precio subió, el valor anterior ($55.000) debe ser menor que el actual ($66.000)."

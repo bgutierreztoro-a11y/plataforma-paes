@@ -19,14 +19,14 @@
   ],
   "_notasInternas": [
     "L2 del módulo cuerpos-geometricos (eje Geometría, módulo #11). Descriptor DEMRE / docs/mapa-modulos-m1.md: 'Volumen de paralelepípedos, cubos y cilindros'. Descubrimiento fijado por docs/diseno-modulo-cuerpos-geometricos.md: el volumen es una capa (el área de la base) repetida a lo alto (la altura). Un descubrimiento, tres casos: base rectángulo → a·b·c; base cuadrado → a³; base círculo → π·r²·h.",
-    "catalogoErrores de L2: error-7, error-8, error-9, error-10. TODOS nacen en este archivo. Ningún id de L1 se embebe: los seis ids de L1 (error-1..error-6) son mecanismos de área de superficie (contar caras, 2(a+b+c), 4a², una tapa, πr²·h en el manto, radio/diámetro en fórmulas de superficie) y ningún distractor de L2 usa un mecanismo de superficie. Por regla 5 de docs/reglas-modulo.md se embebe solo el subconjunto que los propios distractores usan; ese subconjunto no incluye ningún id de L1.",
-    "Mapeo desde la propuesta P1..P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): error-7 ← P8 (sumar las tres dimensiones en vez de multiplicarlas); error-8 ← P9 (en el cubo, arista × 3 en vez de arista³); error-9 ← P10 (en el cilindro, circunferencia 2πr como si fuera el área de la base al calcular el volumen). error-10 NO viene de P1..P12: es un mecanismo nuevo detectado al redactar (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por Benjamín en el chat de esta sesión antes de escribir ningún distractor (SKILL §1 regla 4). Se cataloga porque aparece en ~12 distractores del archivo; dejarlo como feedback artesanal repetido sería peor. P11 (magnitud equivocada) y P12 (conversión m³↔litros) son de L3 y no se catalogan acá.",
-    "error-9 es el espejo de error-5 de L1: error-5 usa πr²·h donde va 2πr·h (el manto, superficie); error-9 usa 2πr·h donde va πr²·h (la base, volumen). Dirección opuesta, contexto opuesto, ids distintos.",
-    "Identidad evitada: el distractor de error-9 (2πrh) iguala la respuesta correcta (πr²h) cuando r = 2. Todos los cilindros del archivo tienen radio ≥ 3, así que 2πrh ≠ πr²h en todos los casos (verificado node -e).",
-    "error-7 y error-8 producen el mismo número en un cubo (a+b+c = 3a). error-7 se usa solo en distractores de caja/paralelepípedo; error-8 solo en distractores de cubo. Nunca los dos en el mismo ítem. El cubo del ejemplo de generalizacion se fijó en arista 2 (no 3) para que error-8 (2×3=6), error-10 (2×2=4) y la respuesta (2³=8) sean tres números distintos.",
+    "catalogoErrores de L2: suma-dimensiones-como-volumen, triplica-arista-como-volumen, usa-circunferencia-en-volumen, entrega-area-base-como-volumen. TODOS nacen en este archivo. Ningún id de L1 se embebe: los seis ids de L1 (cuenta-solo-caras-visibles..confunde-radio-con-diametro-cilindro) son mecanismos de área de superficie (contar caras, 2(a+b+c), 4a², una tapa, πr²·h en el manto, radio/diámetro en fórmulas de superficie) y ningún distractor de L2 usa un mecanismo de superficie. Por regla 5 de docs/reglas-modulo.md se embebe solo el subconjunto que los propios distractores usan; ese subconjunto no incluye ningún id de L1.",
+    "Mapeo desde la propuesta P1..P12 firmada el 2026-08-26 (docs/diseno-modulo-cuerpos-geometricos.md): suma-dimensiones-como-volumen ← P8 (sumar las tres dimensiones en vez de multiplicarlas); triplica-arista-como-volumen ← P9 (en el cubo, arista × 3 en vez de arista³); usa-circunferencia-en-volumen ← P10 (en el cilindro, circunferencia 2πr como si fuera el área de la base al calcular el volumen). entrega-area-base-como-volumen NO viene de P1..P12: es un mecanismo nuevo detectado al redactar (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por Benjamín en el chat de esta sesión antes de escribir ningún distractor (SKILL §1 regla 4). Se cataloga porque aparece en ~12 distractores del archivo; dejarlo como feedback artesanal repetido sería peor. P11 (magnitud equivocada) y P12 (conversión m³↔litros) son de L3 y no se catalogan acá.",
+    "usa-circunferencia-en-volumen es el espejo de usa-area-base-en-manto de L1: usa-area-base-en-manto usa πr²·h donde va 2πr·h (el manto, superficie); usa-circunferencia-en-volumen usa 2πr·h donde va πr²·h (la base, volumen). Dirección opuesta, contexto opuesto, ids distintos.",
+    "Identidad evitada: el distractor de usa-circunferencia-en-volumen (2πrh) iguala la respuesta correcta (πr²h) cuando r = 2. Todos los cilindros del archivo tienen radio ≥ 3, así que 2πrh ≠ πr²h en todos los casos (verificado node -e).",
+    "suma-dimensiones-como-volumen y triplica-arista-como-volumen producen el mismo número en un cubo (a+b+c = 3a). suma-dimensiones-como-volumen se usa solo en distractores de caja/paralelepípedo; triplica-arista-como-volumen solo en distractores de cubo. Nunca los dos en el mismo ítem. El cubo del ejemplo de generalizacion se fijó en arista 2 (no 3) para que triplica-arista-como-volumen (2×3=6), entrega-area-base-como-volumen (2×2=4) y la respuesta (2³=8) sean tres números distintos.",
     "Unidad: decímetros (dm) en toda la lección. 1 dm³ = 1 litro, lo que prepara la conversión de unidades de L3 sin hacerla acá. Las medidas son independientes del dominio (un cuerpo mide 5 × 4 × 3 sea un arenero o un acuario); el dominio fija la unidad y la plausibilidad del objeto.",
     "Cuerpos y cifras por paso (todo dm, verificado con node -e, π = 3,14 exacto): pensar/pistas/descubrimiento caja-arenero 5×4×3 (fondo 20, 3 capas, V 60); generalizacion caja-arenero 5×4×3 (V 60) + cubo-caja de arena 2×2×2 (V 8) + cilindro-acuario r=3 h=5 (base π·9 = 28,26, V 141,3) + ejercicio caja 5×2×4 (V 40); practica caja-arenero 6×2×3 (fondo 12, 3 capas, V 36) → cilindro-acuario r=3 h=10 (V 282,6) → cilindro-acuario r=5 h=4 (base sin dar, 78,5; V 314); aplicacion acuario rectangular 4×3×2 (V 24) + acuario cilíndrico r=4 h=5 (base 50,24, V 251,2). itemsPAES: caja 6×3×5 (V 90, resolver); cilindro r=5 h=8 (modelar, alternativas son expresiones); cubo 11×11×11 (V 1331, argumentar, afirmación 11×3 = 33).",
-    "Barrido regla 3b (docs/reglas-modulo.md, 🔴 intra-archivo) con node -e sobre todos los respuestaCorrecta de campos numéricos y alternativas esCorrecta del archivo: sin colisiones distractor/correcta. Las áreas de base intermedias que sí se citan en prosa (28,26 y 50,24) no son respuestaCorrecta; el distractor de error-10 igual al área de la base es la trampa intencional del mecanismo, no una contradicción. El valor 12 aparece como distractor tres veces con mecanismos distintos: error-7 en el arenero de descubrimiento (5+4+3), error-10 en el arenero de practica ex1 (6×2) y error-10 en el acuario rectangular de aplicacion (4×3); ítems y pasos distintos. El valor 11 aparece dos veces: error-7 en el ejercicio de generalizacion (5+2+4) y error-7 en practica ex1 (6+2+3).",
+    "Barrido regla 3b (docs/reglas-modulo.md, 🔴 intra-archivo) con node -e sobre todos los respuestaCorrecta de campos numéricos y alternativas esCorrecta del archivo: sin colisiones distractor/correcta. Las áreas de base intermedias que sí se citan en prosa (28,26 y 50,24) no son respuestaCorrecta; el distractor de entrega-area-base-como-volumen igual al área de la base es la trampa intencional del mecanismo, no una contradicción. El valor 12 aparece como distractor tres veces con mecanismos distintos: suma-dimensiones-como-volumen en el arenero de descubrimiento (5+4+3), entrega-area-base-como-volumen en el arenero de practica ex1 (6×2) y entrega-area-base-como-volumen en el acuario rectangular de aplicacion (4×3); ítems y pasos distintos. El valor 11 aparece dos veces: suma-dimensiones-como-volumen en el ejercicio de generalizacion (5+2+4) y suma-dimensiones-como-volumen en practica ex1 (6+2+3).",
     "El mecanismo 'calculó la superficie completa en vez del volumen' (P11, que L3 cataloga) aparece en 2 distractores (item-2 alternativa D y item-3 alternativa D) con feedback artesanal y SIN errorCatalogado, por debajo del umbral de 3 que obligaría a proponer id. Se nombra en reflexion en lenguaje llano, sin id.",
     "Sin interactivoSlider (docs/reglas-modulo.md regla 1: no hay magnitud continua que mover; el descubrimiento es una tabla de capas). Sin auditoria.constante declarada: L2 no tiene una única constante numérica cuya circulación previa haya que vigilar — el volumen del arenero (60) y el área de su fondo (20) no aparecen en ningún paso anterior a descubrimiento, y la notación formal ((a×b)×c, a³, π·r²·h) aparece por primera vez en generalizacion. auditoria.colisionesPermitidas vacío: ninguna colisión distractor/correcta deliberada.",
     "Solo vista: 'solido' en todas las visualizaciones (docs/diseno-modulo-cuerpos-geometricos.md: una red no dice nada sobre cuánto cabe adentro; las 3 celdas volumen × desarrollo no se usan). Las 3 cotas siempre rotuladas (regla 6). Ningún ítem pide comparar aristas a ojo.",
@@ -114,7 +114,7 @@
       "tipo": "pensar",
       "titulo": "Prueba con el arenero",
       "_notasInternas": [
-        "Arenero-caja 5×4×3, V = (5×4)×3 = 60 (verificado node -e). Distractor error-7: 5+4+3 = 12. Distractor error-10: 5×4 = 20 (el fondo, una capa). vista 'solido' con las tres cotas (regla 6). Campo con id neutro sin cifra (regla 4). El 60 y el 20 no se entregan como texto: son la respuesta que el estudiante intenta alcanzar."
+        "Arenero-caja 5×4×3, V = (5×4)×3 = 60 (verificado node -e). Distractor suma-dimensiones-como-volumen: 5+4+3 = 12. Distractor entrega-area-base-como-volumen: 5×4 = 20 (el fondo, una capa). vista 'solido' con las tres cotas (regla 6). Campo con id neutro sin cifra (regla 4). El 60 y el 20 no se entregan como texto: son la respuesta que el estudiante intenta alcanzar."
       ],
       "bloques": [
         {
@@ -149,13 +149,13 @@
               "campoId": "volumenDelArenero",
               "valorObtenido": 12,
               "mensaje": "12 es 5 + 4 + 3: sumaste las tres medidas. La arena llena el arenero en tres direcciones a la vez, y eso se multiplica. Empieza por el fondo: 5 × 4.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "campoId": "volumenDelArenero",
               "valorObtenido": 20,
               "mensaje": "20 es 5 × 4, el área del fondo: una sola capa de arena de 1 dm de alto. Faltan las demás capas: el arenero tiene 3 dm de altura, así que caben 3 capas iguales.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "El fondo del arenero es un rectángulo de 5 × 4. Sobre él caben capas de arena de 1 dm de alto, todas iguales. ¿Cuántas capas, y cuánto suman en total?"
@@ -193,7 +193,7 @@
       "tipo": "descubrimiento",
       "titulo": "El volumen es una capa repetida",
       "_notasInternas": [
-        "CORAZÓN DE LA LECCIÓN. Mismo arenero 5×4×3, V = 60 (verificado node -e). seleccion y pregunta comparten el set: 60 (correcta), 12 (error-7), 20 (error-10, una capa). La pregunta agrega un cuarto distractor, 23 = 5×4 + 3 (calculó el fondo pero sumó la altura en vez de multiplicarla). La notación formal (a×b)×c NO aparece aquí: se deja para generalizacion. Una sola visualizacion (solido); el módulo no usa 'desarrollo' para volumen. verdaderoFalso metacognitivo = el check '¿tiene sentido?' del SKILL."
+        "CORAZÓN DE LA LECCIÓN. Mismo arenero 5×4×3, V = 60 (verificado node -e). seleccion y pregunta comparten el set: 60 (correcta), 12 (suma-dimensiones-como-volumen), 20 (entrega-area-base-como-volumen, una capa). La pregunta agrega un cuarto distractor, 23 = 5×4 + 3 (calculó el fondo pero sumó la altura en vez de multiplicarla). La notación formal (a×b)×c NO aparece aquí: se deja para generalizacion. Una sola visualizacion (solido); el módulo no usa 'desarrollo' para volumen. verdaderoFalso metacognitivo = el check '¿tiene sentido?' del SKILL."
       ],
       "bloques": [
         {
@@ -231,14 +231,14 @@
               "texto": "12 dm³",
               "esCorrecta": false,
               "feedback": "12 es 5 + 4 + 3: la suma de las tres medidas, que es una longitud. La arena llena un espacio: el fondo (5 × 4 = 20) repetido por las 3 capas de alto.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "id": "c",
               "texto": "20 dm³",
               "esCorrecta": false,
               "feedback": "20 es una sola capa: la que cubre el fondo. El arenero tiene 3 dm de altura, así que hay 3 capas iguales. Falta multiplicar por 3.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ]
         },
@@ -257,14 +257,14 @@
               "texto": "12 dm³",
               "esCorrecta": false,
               "feedback": "12 dm³ es 5 + 4 + 3, la suma de las medidas. El volumen se obtiene multiplicando: el área del fondo (20) por la altura (3).",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "clave": "C",
               "texto": "20 dm³",
               "esCorrecta": false,
               "feedback": "20 dm³ es el área del fondo, una sola capa de arena. El arenero tiene 3 dm de alto: caben 3 capas iguales, 20 × 3 = 60.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             },
             {
               "clave": "D",
@@ -273,7 +273,7 @@
               "feedback": "23 es 5 × 4 + 3: calculaste bien el fondo (20) pero después le sumaste la altura en vez de multiplicarla. Cada dm de altura agrega una capa entera de 20, no una unidad."
             }
           ],
-          "notaVerificacionMatematica": "Fondo: 5×4 = 20. Volumen = 20 × 3 = 60. Distractores: 5+4+3 = 12 (error-7); 5×4 = 20 (error-10, una capa); 5×4 + 3 = 23 (ad-hoc, sumó la altura). Verificado con node -e."
+          "notaVerificacionMatematica": "Fondo: 5×4 = 20. Volumen = 20 × 3 = 60. Distractores: 5+4+3 = 12 (suma-dimensiones-como-volumen); 5×4 = 20 (entrega-area-base-como-volumen, una capa); 5×4 + 3 = 23 (ad-hoc, sumó la altura). Verificado con node -e."
         },
         {
           "tipo": "verdaderoFalso",
@@ -292,7 +292,7 @@
       "tipo": "generalizacion",
       "titulo": "La fórmula, y los otros dos cuerpos",
       "_notasInternas": [
-        "PRIMERA aparición de la notación formal V = área de la base × altura, y sus tres casos: (a×b)×c, a³, (π×r²)×h. Ejemplo caja sobre el arenero 5×4×3 (V 60, ya conocido). Cubo: caja de arena de repuesto de arista 2, V = 2² × 2 = 8. Distractor error-8: 2 × 3 = 6. Distractor error-10: 2 × 2 = 4. Cilindro: acuario cilíndrico r=3, h=5; base π×3² = 28,26; V = 28,26 × 5 = 141,3 (verificado node -e, π = 3,14). Distractor error-9: 2×π×3×5 = 94,2. Distractor error-10: 28,26. Ejercicio numérico: caja 5×2×4, V = 40; feedbackPorError 11 (error-7), 10 (error-10, 5×2). Arista 2 del cubo: 3a=6 ≠ a²=4 ≠ a³=8; aristas 4-10 evitadas (usadas/reservadas por L1 o riesgo P3)."
+        "PRIMERA aparición de la notación formal V = área de la base × altura, y sus tres casos: (a×b)×c, a³, (π×r²)×h. Ejemplo caja sobre el arenero 5×4×3 (V 60, ya conocido). Cubo: caja de arena de repuesto de arista 2, V = 2² × 2 = 8. Distractor triplica-arista-como-volumen: 2 × 3 = 6. Distractor entrega-area-base-como-volumen: 2 × 2 = 4. Cilindro: acuario cilíndrico r=3, h=5; base π×3² = 28,26; V = 28,26 × 5 = 141,3 (verificado node -e, π = 3,14). Distractor usa-circunferencia-en-volumen: 2×π×3×5 = 94,2. Distractor entrega-area-base-como-volumen: 28,26. Ejercicio numérico: caja 5×2×4, V = 40; feedbackPorError 11 (suma-dimensiones-como-volumen), 10 (entrega-area-base-como-volumen, 5×2). Arista 2 del cubo: 3a=6 ≠ a²=4 ≠ a³=8; aristas 4-10 evitadas (usadas/reservadas por L1 o riesgo P3)."
       ],
       "bloques": [
         {
@@ -334,14 +334,14 @@
               "texto": "6 dm³",
               "esCorrecta": false,
               "feedback": "6 es 2 × 3: multiplicaste la arista por 3, la cantidad de dimensiones. Pero cada dimensión aporta un factor 2, no un sumando: hay que multiplicar 2 × 2 × 2.",
-              "errorCatalogado": "error-8"
+              "errorCatalogado": "triplica-arista-como-volumen"
             },
             {
               "id": "c",
               "texto": "4 dm³",
               "esCorrecta": false,
               "feedback": "4 es 2 × 2, el área de la base: una sola capa. El cubo tiene 2 dm de altura, así que hay 2 capas: 4 × 2 = 8.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ]
         },
@@ -378,14 +378,14 @@
               "texto": "94,2 dm³",
               "esCorrecta": false,
               "feedback": "94,2 es 2 × π × 3 × 5: usaste la circunferencia de la base (2 × π × radio = 18,84) en vez de su área (π × radio² = 28,26). La circunferencia es el contorno del círculo, una longitud; el agua se apoya sobre el área.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "usa-circunferencia-en-volumen"
             },
             {
               "id": "c",
               "texto": "28,26 dm³",
               "esCorrecta": false,
               "feedback": "28,26 es el área de la base: una sola capa de agua de 1 dm de alto. Falta repetirla por los 5 dm de altura del acuario: 28,26 × 5.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ]
         },
@@ -405,13 +405,13 @@
               "campoId": "volumenAreneroChico",
               "valorObtenido": 11,
               "mensaje": "11 es 5 + 2 + 4: sumaste las tres medidas. El volumen las multiplica: (5 × 2) × 4.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "campoId": "volumenAreneroChico",
               "valorObtenido": 10,
               "mensaje": "10 es 5 × 2, el área del fondo: una capa. El arenero tiene 4 dm de alto, así que son 4 capas: 10 × 4 = 40.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "La base es 5 × 2 = 10. Caben 4 capas de alto: 10 × 4."
@@ -422,7 +422,7 @@
       "tipo": "practica",
       "titulo": "Tres para practicar",
       "_notasInternas": [
-        "Dificultad creciente baja → media → media/alta (docs/calibracion §5). ex1 caja-arenero 6×2×3, fondo 6×2 = 12, 3 capas, V = 36; feedbackPorError 11 (error-7, 6+2+3) y 12 (error-10, 6×2). ex2 acuario cilíndrico r=3 h=10 con el área de base dada, V = 28,26 × 10 = 282,6; feedbackPorError 188,4 (error-9), 28,26 (error-10). ex3 acuario cilíndrico r=5 h=4 SIN el área de base dada (el estudiante calcula π×5²=78,5), V = 78,5 × 4 = 314; feedbackPorError 125,6 (error-9), 78,5 (error-10). Todo verificado node -e con π = 3,14. El distractor 12 de ex1 coincide en valor con el distractor error-7 del arenero de descubrimiento (5+4+3) y con el error-10 del acuario rectangular de aplicacion (4×3); mecanismos e ítems distintos, ninguno es respuestaCorrecta."
+        "Dificultad creciente baja → media → media/alta (docs/calibracion §5). ex1 caja-arenero 6×2×3, fondo 6×2 = 12, 3 capas, V = 36; feedbackPorError 11 (suma-dimensiones-como-volumen, 6+2+3) y 12 (entrega-area-base-como-volumen, 6×2). ex2 acuario cilíndrico r=3 h=10 con el área de base dada, V = 28,26 × 10 = 282,6; feedbackPorError 188,4 (usa-circunferencia-en-volumen), 28,26 (entrega-area-base-como-volumen). ex3 acuario cilíndrico r=5 h=4 SIN el área de base dada (el estudiante calcula π×5²=78,5), V = 78,5 × 4 = 314; feedbackPorError 125,6 (usa-circunferencia-en-volumen), 78,5 (entrega-area-base-como-volumen). Todo verificado node -e con π = 3,14. El distractor 12 de ex1 coincide en valor con el distractor suma-dimensiones-como-volumen del arenero de descubrimiento (5+4+3) y con el entrega-area-base-como-volumen del acuario rectangular de aplicacion (4×3); mecanismos e ítems distintos, ninguno es respuestaCorrecta."
       ],
       "bloques": [
         {
@@ -461,13 +461,13 @@
               "campoId": "volumenPracticaUno",
               "valorObtenido": 11,
               "mensaje": "11 es 6 + 2 + 3: sumaste las tres medidas. El volumen las multiplica: (6 × 2) × 3.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "campoId": "volumenPracticaUno",
               "valorObtenido": 12,
               "mensaje": "12 es 6 × 2, el área del fondo: una sola capa. Multiplícala por los 3 dm de altura: 12 × 3 = 36.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "Base: 6 × 2 = 12. Altura: 3 capas. Volumen: 12 × 3."
@@ -488,13 +488,13 @@
               "campoId": "volumenPracticaDos",
               "valorObtenido": 188.4,
               "mensaje": "188,4 es 2 × π × 3 × 10: usaste la circunferencia de la base en vez de su área. El agua se apoya sobre el área del círculo (π × 3² = 28,26), no sobre su contorno.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "usa-circunferencia-en-volumen"
             },
             {
               "campoId": "volumenPracticaDos",
               "valorObtenido": 28.26,
               "mensaje": "28,26 es solo el área de la base: una capa de agua de 1 dm. El acuario tiene 10 dm de altura, así que son 10 capas: 28,26 × 10.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "Base: π × 3² = 28,26 dm². Altura: 10 dm. Volumen: 28,26 × 10."
@@ -515,13 +515,13 @@
               "campoId": "volumenPracticaTres",
               "valorObtenido": 125.6,
               "mensaje": "125,6 es 2 × π × 5 × 4: la circunferencia de la base por la altura. La base del agua es el área del círculo, π × 5² = 78,5, no su contorno.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "usa-circunferencia-en-volumen"
             },
             {
               "campoId": "volumenPracticaTres",
               "valorObtenido": 78.5,
               "mensaje": "78,5 es π × 5², el área de la base: una capa de agua. Falta multiplicarla por los 4 dm de altura: 78,5 × 4 = 314.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "Área de la base: π × 5² = 3,14 × 25 = 78,5 dm². Volumen: 78,5 × 4 = 314 dm³."
@@ -532,7 +532,7 @@
       "tipo": "aplicacion",
       "titulo": "El acuario del laboratorio",
       "_notasInternas": [
-        "Dominio de aplicación firmado: acuario del laboratorio de biología. Escena nueva, distinta del arenero del descubrimiento. Acuario rectangular 4×3×2 (base 4×3 = 12, altura 2), V = 24; feedbackPorError 9 (error-7, 4+3+2) y 12 (error-10, 4×3). Acuario cilíndrico r=4 h=5, base π×4² = 50,24, V = 50,24 × 5 = 251,2; feedbackPorError 125,6 (error-9, 2×π×4×5) y 50,24 (error-10). Cierra con abierta de síntesis de las tres fórmulas. Verificado node -e, π = 3,14."
+        "Dominio de aplicación firmado: acuario del laboratorio de biología. Escena nueva, distinta del arenero del descubrimiento. Acuario rectangular 4×3×2 (base 4×3 = 12, altura 2), V = 24; feedbackPorError 9 (suma-dimensiones-como-volumen, 4+3+2) y 12 (entrega-area-base-como-volumen, 4×3). Acuario cilíndrico r=4 h=5, base π×4² = 50,24, V = 50,24 × 5 = 251,2; feedbackPorError 125,6 (usa-circunferencia-en-volumen, 2×π×4×5) y 50,24 (entrega-area-base-como-volumen). Cierra con abierta de síntesis de las tres fórmulas. Verificado node -e, π = 3,14."
       ],
       "bloques": [
         {
@@ -571,13 +571,13 @@
               "campoId": "volumenAcuarioRectangular",
               "valorObtenido": 9,
               "mensaje": "9 es 4 + 3 + 2: sumaste las tres medidas. El agua llena un espacio en tres direcciones: (4 × 3) × 2.",
-              "errorCatalogado": "error-7"
+              "errorCatalogado": "suma-dimensiones-como-volumen"
             },
             {
               "campoId": "volumenAcuarioRectangular",
               "valorObtenido": 12,
               "mensaje": "12 es 4 × 3, el área del fondo del acuario: una capa de agua de 1 dm. Falta repetirla por los 2 dm de altura: 12 × 2 = 24.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "Base: 4 × 3 = 12. Altura: 2. Volumen: 12 × 2 = 24 dm³, o 24 litros."
@@ -612,13 +612,13 @@
               "campoId": "volumenAcuarioCilindrico",
               "valorObtenido": 125.6,
               "mensaje": "125,6 es 2 × π × 4 × 5: la circunferencia de la base por la altura. La base es el área del círculo, π × 4² = 50,24; su contorno (la circunferencia) no sostiene el agua.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "usa-circunferencia-en-volumen"
             },
             {
               "campoId": "volumenAcuarioCilindrico",
               "valorObtenido": 50.24,
               "mensaje": "50,24 es π × 4², el área de la base: una capa de agua. El acuario tiene 5 dm de altura: 50,24 × 5 = 251,2.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "entrega-area-base-como-volumen"
             }
           ],
           "feedbackPorDefecto": "Área de la base: π × 4² = 50,24 dm². Volumen: 50,24 × 5 = 251,2 dm³."
@@ -686,14 +686,14 @@
           "texto": "14 litros",
           "esCorrecta": false,
           "feedback": "14 es 6 + 3 + 5, la suma de las tres medidas. El volumen las multiplica: el área de la base (18) por la altura (5).",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "suma-dimensiones-como-volumen"
         },
         {
           "clave": "C",
           "texto": "18 litros",
           "esCorrecta": false,
           "feedback": "18 es 6 × 3, el área del fondo del acuario: una sola capa de agua. Falta multiplicarla por los 5 dm de altura: 18 × 5 = 90.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "entrega-area-base-como-volumen"
         },
         {
           "clave": "D",
@@ -702,7 +702,7 @@
           "feedback": "15 es 3 × 5, una de las caras laterales del acuario. El volumen se apoya en el fondo completo (6 × 3 = 18), repetido por las 5 capas de altura."
         }
       ],
-      "solucion": "Volumen de un paralelepípedo = (largo × ancho) × alto. Con 6, 3 y 5: (6 × 3) × 5 = 18 × 5 = 90 dm³. Como 1 dm³ = 1 litro, son 90 litros. Distractores: 6 + 3 + 5 = 14 (error-7); 6 × 3 = 18, solo la base (error-10); 3 × 5 = 15, una cara lateral. Verificado con node -e."
+      "solucion": "Volumen de un paralelepípedo = (largo × ancho) × alto. Con 6, 3 y 5: (6 × 3) × 5 = 18 × 5 = 90 dm³. Como 1 dm³ = 1 litro, son 90 litros. Distractores: 6 + 3 + 5 = 14 (suma-dimensiones-como-volumen); 6 × 3 = 18, solo la base (entrega-area-base-como-volumen); 3 × 5 = 15, una cara lateral. Verificado con node -e."
     },
     {
       "id": "l2-item-2",
@@ -721,14 +721,14 @@
           "texto": "(2 × π × 5) × 8",
           "esCorrecta": false,
           "feedback": "2 × π × 5 es la circunferencia de la base (su contorno), no su área. Multiplicarla por la altura da la superficie lateral del cilindro, no el agua que cabe.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "usa-circunferencia-en-volumen"
         },
         {
           "clave": "C",
           "texto": "π × 5²",
           "esCorrecta": false,
           "feedback": "π × 5² es solo el área de la base: una capa de agua de 1 dm de alto. Falta multiplicarla por los 8 dm de altura.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "entrega-area-base-como-volumen"
         },
         {
           "clave": "D",
@@ -737,7 +737,7 @@
           "feedback": "Esa es la fórmula de la superficie del cilindro: las dos tapas más el manto. Responde cuánto vidrio forma el acuario, no cuánta agua cabe adentro."
         }
       ],
-      "solucion": "El volumen de un cilindro es el área de la base por la altura: (π × radio²) × altura = (π × 5²) × 8. La alternativa B usa la circunferencia (2πr) en vez del área (πr²) — error-9. La C se queda en el área de la base sin multiplicar por la altura — error-10. La D es la superficie total del cilindro (2πr² + 2πrh), otra magnitud. La expresión correcta es A."
+      "solucion": "El volumen de un cilindro es el área de la base por la altura: (π × radio²) × altura = (π × 5²) × 8. La alternativa B usa la circunferencia (2πr) en vez del área (πr²) — usa-circunferencia-en-volumen. La C se queda en el área de la base sin multiplicar por la altura — entrega-area-base-como-volumen. La D es la superficie total del cilindro (2πr² + 2πrh), otra magnitud. La expresión correcta es A."
     },
     {
       "id": "l2-item-3",
@@ -756,14 +756,14 @@
           "texto": "Sí es correcto: 33 litros.",
           "esCorrecta": false,
           "feedback": "11 × 3 = 33 trata las tres dimensiones como un sumando repetido. Cada dimensión aporta un factor 11: 11 × 11 × 11 = 1331.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "triplica-arista-como-volumen"
         },
         {
           "clave": "C",
           "texto": "No es correcto: es 11 × 11 = 121 litros, la arista al cuadrado.",
           "esCorrecta": false,
           "feedback": "121 es el área de una cara del cubo —la base, una capa—. Falta la tercera dimensión: multiplicar por los 11 dm de altura, 121 × 11 = 1331.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "entrega-area-base-como-volumen"
         },
         {
           "clave": "D",
@@ -772,14 +772,14 @@
           "feedback": "6 × 11² = 726 es la superficie del cubo: sus seis caras. Eso mide cuánto vidrio lo forma, no cuánta agua cabe. El volumen es 11³ = 1331."
         }
       ],
-      "solucion": "El volumen de un cubo es a³. Con a = 11: 11 × 11 × 11 = 1331 dm³ = 1331 litros. El cálculo del estudiante, 11 × 3 = 33, multiplica la arista por 3 (la cantidad de dimensiones) en vez de elevarla al cubo — error-8. La alternativa C (121 = 11²) se queda en el área de la base — error-10. La D (726 = 6 × 11²) es la superficie del cubo, otra magnitud. La respuesta es A. Verificado con node -e."
+      "solucion": "El volumen de un cubo es a³. Con a = 11: 11 × 11 × 11 = 1331 dm³ = 1331 litros. El cálculo del estudiante, 11 × 3 = 33, multiplica la arista por 3 (la cantidad de dimensiones) en vez de elevarla al cubo — triplica-arista-como-volumen. La alternativa C (121 = 11²) se queda en el área de la base — entrega-area-base-como-volumen. La D (726 = 6 × 11²) es la superficie del cubo, otra magnitud. La respuesta es A. Verificado con node -e."
     }
   ],
   "proveniencia": {
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE) — solo para calibrar alcance (eje Geometría: volumen de paralelepípedos, cubos y cilindros), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (arenero techado de un jardín infantil, en sus formas de caja y cubo; acuario del laboratorio de biología, en sus formas rectangular, cúbica y cilíndrica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'arenero', 'arena', 'acuario', 'pecera', 'laboratorio de biología', 'silo', 'granos' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md, dos ítems DEMRE con fórmula de volumen) y 'piscina' quedó descartada como dominio de esta lección, reemplazada por 'arenero techado'. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. El catálogo de errores (error-7, error-8, error-9, error-10) nace en este archivo: error-7, error-8 y error-9 provienen de la propuesta P8, P9 y P10 firmada el 2026-08-26; error-10 es un mecanismo nuevo, no incluido en la propuesta P1..P12 original (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por el autor en el chat de la sesión de redacción antes de escribir los distractores. Ningún id de L1 (error-1 a error-6, todos de área de superficie) se embebe, porque ningún distractor de esta lección usa un mecanismo de superficie. Auditoría matemática (Ronda 1): corrida el 2026-08-27, sin hallazgos — aritmética, unidades (dm, 1dm³=1L) y catalogoErrores (error-7 a error-10) verificados ítem por ítem, sin solape con L1. Auditoría de originalidad (Ronda 2): corrida el 2026-08-27 contra MA-22_Cuerpos_Geometricos.md, PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md, fuentes-demre-liberadas/paes-m1-2026-forma113.md y 618-JMA-M1-01-2024.md — sin coincidencias ALTA en ítems de cierre ni en escenarios (arenero/acuario no aparecen en ninguna fuente).",
+    "declaracionOriginalidad": "Enunciados, contextos (arenero techado de un jardín infantil, en sus formas de caja y cubo; acuario del laboratorio de biología, en sus formas rectangular, cúbica y cilíndrica) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Colisión de dominio verificada por Benjamín Gutiérrez vía node scripts/consultar-fuentes.mjs (mecanismo 2 de CLAUDE.md), corrida manual fuera de la sesión de redacción, el 2026-08-27, sobre la frase compuesta y las palabras clave sueltas de cada candidato: 'arenero', 'arena', 'acuario', 'pecera', 'laboratorio de biología', 'silo', 'granos' — todas LIMPIO (sin coincidencias). En una tanda previa, 'piscina' / 'piscina inflable' dieron COLISIÓN (MA-22_Cuerpos_Geometricos.md, dos ítems DEMRE con fórmula de volumen) y 'piscina' quedó descartada como dominio de esta lección, reemplazada por 'arenero techado'. Ver docs/diseno-modulo-cuerpos-geometricos.md, sección 'Estado de las firmas'. El catálogo de errores (suma-dimensiones-como-volumen, triplica-arista-como-volumen, usa-circunferencia-en-volumen, entrega-area-base-como-volumen) nace en este archivo: suma-dimensiones-como-volumen, triplica-arista-como-volumen y usa-circunferencia-en-volumen provienen de la propuesta P8, P9 y P10 firmada el 2026-08-26; entrega-area-base-como-volumen es un mecanismo nuevo, no incluido en la propuesta P1..P12 original (entregar el área de la base como si fuera el volumen, por no multiplicar por la altura), propuesto y firmado por el autor en el chat de la sesión de redacción antes de escribir los distractores. Ningún id de L1 (cuenta-solo-caras-visibles a confunde-radio-con-diametro-cilindro, todos de área de superficie) se embebe, porque ningún distractor de esta lección usa un mecanismo de superficie. Auditoría matemática (Ronda 1): corrida el 2026-08-27, sin hallazgos — aritmética, unidades (dm, 1dm³=1L) y catalogoErrores (suma-dimensiones-como-volumen a entrega-area-base-como-volumen) verificados ítem por ítem, sin solape con L1. Auditoría de originalidad (Ronda 2): corrida el 2026-08-27 contra MA-22_Cuerpos_Geometricos.md, PAES-2026-Forma113-M1-Seleccion-Preguntas-DEMRE.md, fuentes-demre-liberadas/paes-m1-2026-forma113.md y 618-JMA-M1-01-2024.md — sin coincidencias ALTA en ítems de cierre ni en escenarios (arenero/acuario no aparecen en ninguna fuente).",
     "autor": "Benjamín Gutiérrez"
   }
 }

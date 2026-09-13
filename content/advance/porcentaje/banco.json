@@ -17,7 +17,7 @@
           "clave": "A",
           "texto": "962",
           "esCorrecta": false,
-          "errorCatalogado": "error-7",
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje",
           "feedbackDescarte": "Esa sale de 650 × 1,48: le suma el 48% al valor final. Bajar un 48% no se deshace subiendo un 48%; hay que dividir por 0,52."
         },
         {
@@ -30,14 +30,14 @@
           "clave": "C",
           "texto": "312",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa es 650 × 0,48: el 48% del valor final, bien calculado, pero no es lo que se pregunta. Se pide el valor original."
         },
         {
           "clave": "D",
           "texto": "698",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa es 650 + 48: trata el 48% como 48 unidades. El porcentaje es una parte del total, no una cantidad fija."
         }
       ],
@@ -59,14 +59,14 @@
           "clave": "A",
           "texto": "9.135 kg",
           "esCorrecta": false,
-          "errorCatalogado": "error-6",
+          "errorCatalogado": "suma-porcentajes-sucesivos",
           "feedbackDescarte": "Esa sale de sumar 85% y 76% como si fuera un único 161%: 3.500 × 2,61. El segundo aumento se aplica sobre la producción ya aumentada, no sobre la inicial."
         },
         {
           "clave": "B",
           "texto": "7.896 kg",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa es 11.396 − 3.500: cuánto aumentó la producción en total. Está bien calculado, pero se pide la producción del tercer año, no el aumento."
         },
         {
@@ -79,7 +79,7 @@
           "clave": "D",
           "texto": "2.261 kg",
           "esCorrecta": false,
-          "errorCatalogado": "error-4",
+          "errorCatalogado": "confunde-aumento-un-con-aumento-a",
           "feedbackDescarte": "Esa es 3.500 × 0,85 × 0,76: lee «subió un 85%» como «bajó al 85%». Subir un 85% multiplica por 1,85, no por 0,85."
         }
       ],
@@ -101,21 +101,21 @@
           "clave": "A",
           "texto": "M + 22",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa suma 22 pesos, como si el 22% fuera una cantidad fija. El aumento depende de M: es el 22% de M, no 22."
         },
         {
           "clave": "B",
           "texto": "M × 0,22",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa expresión da solo el aumento, el 22% de M. Falta sumarle el precio que ya había para llegar al nuevo precio."
         },
         {
           "clave": "C",
           "texto": "M × 1,022",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "Esa convierte 22% en 0,022, corriendo la coma un lugar de más. 22% es 22 ÷ 100 = 0,22, así que el factor es 1,22."
         },
         {
@@ -143,14 +143,14 @@
           "clave": "A",
           "texto": "1.363",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Esa es 1.450 × 0,94: los que sí completaron la postulación. Se pide la parte que no la completó, el 6%, no su complemento."
         },
         {
           "clave": "B",
           "texto": "6",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa trata el 6% como 6 personas. Un porcentaje es una parte del total: el 6% de 1.450 no son 6, son 1.450 × 0,06."
         },
         {
@@ -163,7 +163,7 @@
           "clave": "D",
           "texto": "8.700",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "Esa es 1.450 × 6, sin dividir el porcentaje por 100. Una parte de 1.450 no puede ser mayor que 1.450."
         }
       ],
@@ -185,7 +185,7 @@
           "clave": "A",
           "texto": "El precio subió un 13,8%, porque 304 ÷ 2.204 ≈ 0,138.",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Esa divide el alza por el precio nuevo. La base de un cambio porcentual es el valor inicial: 304 ÷ 1.900, no 304 ÷ 2.204."
         },
         {
@@ -198,14 +198,14 @@
           "clave": "C",
           "texto": "El precio subió un 116%, porque 2.204 ÷ 1.900 = 1,16.",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "1,16 es el precio nuevo como fracción del viejo, bien calculado, pero el 116% incluye el precio completo. El alza es solo la parte que excede al 100%: 16%."
         },
         {
           "clave": "D",
           "texto": "El precio subió un 0,16%, porque 304 ÷ 1.900 = 0,16.",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 0,16 está bien, pero entregarlo como 0,16% salta el paso de multiplicar por 100. 0,16 equivale a un 16%."
         }
       ],
@@ -227,21 +227,21 @@
           "clave": "A",
           "texto": "$410.000",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Esa es 73.800 ÷ 0,18: lee «18% de descuento» como «se pagó el 18%». Con un 18% de descuento se paga el 82%, así que se divide por 0,82."
         },
         {
           "clave": "B",
           "texto": "$13.284",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa es 73.800 × 0,18: el 18% del precio pagado, bien calculado, pero no es lo que se pregunta. Se pide el precio sin descuento."
         },
         {
           "clave": "C",
           "texto": "$87.084",
           "esCorrecta": false,
-          "errorCatalogado": "error-7",
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje",
           "feedbackDescarte": "Esa es 73.800 × 1,18: le suma el 18% al precio pagado. Un descuento del 18% no se deshace sumando un 18%; hay que dividir por 0,82."
         },
         {
@@ -275,21 +275,21 @@
           "clave": "B",
           "texto": "A × 1,37",
           "esCorrecta": false,
-          "errorCatalogado": "error-6",
+          "errorCatalogado": "suma-porcentajes-sucesivos",
           "feedbackDescarte": "Esa suma 9% y 28% como si fuera un único 37%. El 28% de julio se aplica sobre la cuota ya subida, así que el factor total es 1,09 × 1,28, mayor que 1,37."
         },
         {
           "clave": "C",
           "texto": "A × 0,09 × 0,28",
           "esCorrecta": false,
-          "errorCatalogado": "error-4",
+          "errorCatalogado": "confunde-aumento-un-con-aumento-a",
           "feedbackDescarte": "Esa lee «sube un 9%» como «queda en un 9%». Subir un 9% multiplica por 1,09, no por 0,09; lo mismo con el 28%."
         },
         {
           "clave": "D",
           "texto": "A × 1,09 × 1,28 − A",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa expresión da cuánto subió la cuota en total, no la cuota final. Al restar A queda solo el aumento acumulado."
         }
       ],
@@ -311,7 +311,7 @@
           "clave": "A",
           "texto": "Libre: 58% · Ocupado: 42%",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Ese par tiene los porcentajes invertidos: 2.184 ÷ 5.200 = 0,42 es lo libre, no lo ocupado. El complemento, 58%, es lo ocupado."
         },
         {
@@ -324,14 +324,14 @@
           "clave": "C",
           "texto": "Libre: 4,2% · Ocupado: 95,8%",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 2.184 ÷ 5.200 = 0,42 está bien, pero pasado a porcentaje es 42%, no 4,2%. Falta multiplicar por 100 sin correr la coma."
         },
         {
           "clave": "D",
           "texto": "Libre: 238% · Ocupado: 172%",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Ese par divide la capacidad por cada parte (5.200 ÷ 2.184 y 5.200 ÷ 3.016). La base es la capacidad total: se divide cada parte por 5.200."
         }
       ],
@@ -359,21 +359,21 @@
           "clave": "B",
           "texto": "Aumentó un 9,9%, porque 451 ÷ 4.551 ≈ 0,099.",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Esa divide la diferencia por el valor final. La base de un cambio porcentual es el valor inicial, 4.100."
         },
         {
           "clave": "C",
           "texto": "Aumentó un 111%, porque 4.551 ÷ 4.100 = 1,11.",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "1,11 es el valor final como fracción del inicial, bien calculado, pero el 111% incluye el 100% de partida. El aumento es solo el 11% que sobra."
         },
         {
           "clave": "D",
           "texto": "Aumentó un 0,11%, porque 451 ÷ 4.100 = 0,11.",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 0,11 está bien, pero entregarlo como 0,11% salta el paso de multiplicar por 100. 0,11 equivale a un 11%."
         }
       ],
@@ -395,21 +395,21 @@
           "clave": "A",
           "texto": "$45.220",
           "esCorrecta": false,
-          "errorCatalogado": "error-6",
+          "errorCatalogado": "suma-porcentajes-sucesivos",
           "feedbackDescarte": "Esa resta 5% de 24% como si el cambio total fuera un 19%: 38.000 × 1,19. La baja del 5% se aplica sobre el precio ya subido, no sobre el original."
         },
         {
           "clave": "B",
           "texto": "$8.664",
           "esCorrecta": false,
-          "errorCatalogado": "error-4",
+          "errorCatalogado": "confunde-aumento-un-con-aumento-a",
           "feedbackDescarte": "Esa es 38.000 × 0,24 × 0,95: lee «sube un 24%» como «queda en un 24%». Subir un 24% multiplica por 1,24."
         },
         {
           "clave": "C",
           "texto": "$6.764",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa es 44.764 − 38.000: cuánto subió el precio en total. Está bien calculado, pero se pide el precio final, no el aumento."
         },
         {
@@ -437,7 +437,7 @@
           "clave": "A",
           "texto": "74%",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Ese es el complemento: 100% − 26%, o sea las obras que NO son fotografía. Se pide la parte que sí lo es."
         },
         {
@@ -450,14 +450,14 @@
           "clave": "C",
           "texto": "385%",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Ese sale de 1.750 ÷ 455 ≈ 3,85: divide el total por la parte. La base es el total: 455 ÷ 1.750."
         },
         {
           "clave": "D",
           "texto": "2,6%",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 455 ÷ 1.750 = 0,26 está bien, pero pasado a porcentaje es 26%, no 2,6%. Falta multiplicar por 100 sin correr la coma."
         }
       ],
@@ -485,21 +485,21 @@
           "clave": "B",
           "texto": "(3.302 − 2.600) ÷ 2.600 × 100",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Esa divide la baja por las visitas del martes, el valor final. La base de un cambio porcentual es el valor inicial: 3.302."
         },
         {
           "clave": "C",
           "texto": "3.302 − 2.600",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa expresión da 702, la baja en cantidad de visitas. Está bien calculada, pero se pide la baja porcentual, no la diferencia."
         },
         {
           "clave": "D",
           "texto": "2.600 ÷ 3.302 × 100",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Esa expresión da cerca de 78,7%: lo que quedó del lunes, no lo que bajó. Se pide el porcentaje del cambio, no el del resto."
         }
       ],
@@ -521,14 +521,14 @@
           "clave": "A",
           "texto": "La ocupación subió un 21%, porque 51 − 30 = 21.",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa entrega 21, la diferencia en puntos porcentuales entre 51% y 30%. El cálculo está bien hecho, pero es otra magnitud: la pregunta pide el cambio relativo, que se obtiene dividiendo esa diferencia por el valor inicial, no la resta sola."
         },
         {
           "clave": "B",
           "texto": "La ocupación subió un 41,2%, porque 21 ÷ 51 ≈ 0,412.",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Esa divide el aumento por la ocupación final. La base de un cambio porcentual es el valor inicial: 21 ÷ 30."
         },
         {
@@ -541,7 +541,7 @@
           "clave": "D",
           "texto": "La ocupación subió un 0,7%, porque 21 ÷ 30 = 0,7.",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 0,7 está bien, pero entregarlo como 0,7% salta el paso de multiplicar por 100. 0,7 equivale a un 70%."
         }
       ],
@@ -563,14 +563,14 @@
           "clave": "A",
           "texto": "78 × 0,62 × 0,97",
           "esCorrecta": false,
-          "errorCatalogado": "error-7",
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje",
           "feedbackDescarte": "Esa deshace los aumentos restando los porcentajes: baja un 38% y un 3%. Para volver atrás no se multiplica por 0,62 y 0,97; se divide por 1,38 y 1,03."
         },
         {
           "clave": "B",
           "texto": "78 ÷ 1,41",
           "esCorrecta": false,
-          "errorCatalogado": "error-6",
+          "errorCatalogado": "suma-porcentajes-sucesivos",
           "feedbackDescarte": "Esa suma 38% y 3% como un único 41%. El 3% se aplicó sobre la altura ya crecida, así que el factor total es 1,38 × 1,03, no 1,41."
         },
         {
@@ -583,7 +583,7 @@
           "clave": "D",
           "texto": "78 ÷ (0,38 × 0,03)",
           "esCorrecta": false,
-          "errorCatalogado": "error-4",
+          "errorCatalogado": "confunde-aumento-un-con-aumento-a",
           "feedbackDescarte": "Esa lee «creció un 38%» como «quedó en un 38%». Crecer un 38% multiplica por 1,38, no por 0,38; lo mismo con el 3%."
         }
       ],
@@ -605,14 +605,14 @@
           "clave": "A",
           "texto": "363 litros",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa es 825 × 0,44: los litros usados. El cálculo está bien, pero falta el paso de restarlos a los 825 para llegar a lo que queda."
         },
         {
           "clave": "B",
           "texto": "781 litros",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa es 825 − 44: resta 44 litros como si el 44% fuera una cantidad fija. El 44% de 825 no son 44 litros."
         },
         {
@@ -625,7 +625,7 @@
           "clave": "D",
           "texto": "36.300 litros",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "Esa es 825 × 44, sin dividir el porcentaje por 100. Lo que queda no puede ser mayor que los 825 litros comprados."
         }
       ],
@@ -647,21 +647,21 @@
           "clave": "A",
           "texto": "C × 1,32",
           "esCorrecta": false,
-          "errorCatalogado": "error-7",
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje",
           "feedbackDescarte": "Esa le suma el 32% al precio pagado. Un descuento del 32% no se deshace sumando un 32%: hay que dividir por 0,68."
         },
         {
           "clave": "B",
           "texto": "C ÷ 0,32",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Esa lee «32% de descuento» como «se pagó el 32%». Con un 32% de descuento se paga el 68%, así que se divide por 0,68."
         },
         {
           "clave": "C",
           "texto": "C × 0,32",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa expresión da el 32% del precio pagado, bien calculado, pero no es lo que se pregunta. Se pide el precio sin descuento."
         },
         {
@@ -695,21 +695,21 @@
           "clave": "B",
           "texto": "114%",
           "esCorrecta": false,
-          "errorCatalogado": "error-9",
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
           "feedbackDescarte": "Ese sale de 850 ÷ 748 ≈ 1,14: divide el total por la parte. Como 748 es menor que 850, el porcentaje no puede pasar de 100%."
         },
         {
           "clave": "C",
           "texto": "8,8%",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "El cociente 748 ÷ 850 = 0,88 está bien, pero pasado a porcentaje es 88%, no 8,8%. Falta multiplicar por 100 sin correr la coma."
         },
         {
           "clave": "D",
           "texto": "12%",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Ese es el complemento: 850 − 748 = 102, y 102 ÷ 850 = 0,12. Es el porcentaje que falta para llegar a 850, no el que representa 748."
         }
       ],
@@ -731,14 +731,14 @@
           "clave": "A",
           "texto": "$3.307",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa es 3.300 + 7: suma 7 pesos como si el 7% fuera una cantidad fija. El aumento es el 7% de 3.300, o sea 231 pesos."
         },
         {
           "clave": "B",
           "texto": "$231",
           "esCorrecta": false,
-          "errorCatalogado": "error-5",
+          "errorCatalogado": "responde-parte-en-vez-de-total",
           "feedbackDescarte": "Esa es 3.300 × 0,07: cuánto subió el pasaje. El cálculo está bien, pero se pide el nuevo precio, así que falta sumarle los 3.300."
         },
         {
@@ -751,7 +751,7 @@
           "clave": "D",
           "texto": "$26.400",
           "esCorrecta": false,
-          "errorCatalogado": "error-3",
+          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
           "feedbackDescarte": "Esa es 3.300 + 3.300 × 7: multiplica por 7 sin dividir el porcentaje por 100. Un alza del 7% no puede multiplicar el precio por ocho."
         }
       ],
@@ -773,14 +773,14 @@
           "clave": "A",
           "texto": "$15.477",
           "esCorrecta": false,
-          "errorCatalogado": "error-7",
+          "errorCatalogado": "deshace-porcentaje-con-mismo-porcentaje",
           "feedbackDescarte": "Esa es 23.450 × 0,66: le quita el 34% al precio actual. Un alza del 34% no se deshace bajando un 34%; hay que dividir por 1,34."
         },
         {
           "clave": "B",
           "texto": "$7.973",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Esa es 23.450 × 0,34: el 34% del precio actual, bien calculado, pero no es lo que se pregunta. Se pide el precio anterior."
         },
         {
@@ -793,7 +793,7 @@
           "clave": "D",
           "texto": "$23.416",
           "esCorrecta": false,
-          "errorCatalogado": "error-2",
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
           "feedbackDescarte": "Esa es 23.450 − 34: resta 34 pesos como si el 34% fuera una cantidad fija. El alza fue el 34% del precio anterior."
         }
       ],
@@ -815,7 +815,7 @@
           "clave": "A",
           "texto": "0,86 + 0,92",
           "esCorrecta": false,
-          "errorCatalogado": "error-6",
+          "errorCatalogado": "suma-porcentajes-sucesivos",
           "feedbackDescarte": "Esa suma los porcentajes y daría 178%, más que el total. El 92% se toma de las plantas de interior, no del total: los factores se multiplican."
         },
         {
@@ -828,14 +828,14 @@
           "clave": "C",
           "texto": "0,92",
           "esCorrecta": false,
-          "errorCatalogado": "error-8",
+          "errorCatalogado": "responde-otra-magnitud-porcentaje",
           "feedbackDescarte": "Ese es el porcentaje de plantas con flor entre las de interior, no entre todas las plantas. Se pide la fracción del total."
         },
         {
           "clave": "D",
           "texto": "0,86 × 0,08",
           "esCorrecta": false,
-          "errorCatalogado": "error-1",
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
           "feedbackDescarte": "Esa expresión da las plantas de interior que NO tienen flor (el 8% del 86%). Se pide la parte con flor, no su complemento."
         }
       ],
@@ -871,6 +871,6 @@
     "fuentesAnalisis": [
       "temario DEMRE M1"
     ],
-    "declaracionOriginalidad": "Ronda 1 (matemática): APROBADO. 19/20 ítems verificados directos; adv-porcentaje-013 alternativa A quedó mal mapeada (error-2 en vez de error-8, con cierre-porcentaje-5 B como precedente aparente) y se corrigió en este mismo commit, con feedbackDescarte reescrito y confirmado por node -e (20/20 ítems, 60 distractores, 9 errores distintos, sin ítem con menos de 3 errores distintos). El JSON reportado como inválido en adv-porcentaje-009 y adv-porcentaje-013 durante la auditoría externa fue corrupción de copiado al pegar el archivo en ese hilo, no un defecto del contenido: verificado con node -e y JSON.parse contra el archivo real en HEAD antes de esta corrección, que parseó sin error con ambos ítems bien formados. Ronda 2 (originalidad): APROBADO, sin hallazgos de colisión con material privado. Observación registrada en docs/fobos-advance.md, sin cambio de contenido por ese motivo: adv-porcentaje-013 A y cierre-porcentaje-5 B comparten la forma de distractor \"resta directa de dos porcentajes-magnitud\", patrón genérico de error también documentado en material de terceros, no copia de enunciado ni de cifras. Proveniencia por fuente: 20 propia, 0 temario-demre, 0 demre-liberada."
+    "declaracionOriginalidad": "Ronda 1 (matemática): APROBADO. 19/20 ítems verificados directos; adv-porcentaje-013 alternativa A quedó mal mapeada (trata-porcentaje-como-cantidad-fija en vez de responde-otra-magnitud-porcentaje, con cierre-porcentaje-5 B como precedente aparente) y se corrigió en este mismo commit, con feedbackDescarte reescrito y confirmado por node -e (20/20 ítems, 60 distractores, 9 errores distintos, sin ítem con menos de 3 errores distintos). El JSON reportado como inválido en adv-porcentaje-009 y adv-porcentaje-013 durante la auditoría externa fue corrupción de copiado al pegar el archivo en ese hilo, no un defecto del contenido: verificado con node -e y JSON.parse contra el archivo real en HEAD antes de esta corrección, que parseó sin error con ambos ítems bien formados. Ronda 2 (originalidad): APROBADO, sin hallazgos de colisión con material privado. Observación registrada en docs/fobos-advance.md, sin cambio de contenido por ese motivo: adv-porcentaje-013 A y cierre-porcentaje-5 B comparten la forma de distractor \"resta directa de dos porcentajes-magnitud\", patrón genérico de error también documentado en material de terceros, no copia de enunciado ni de cifras. Proveniencia por fuente: 20 propia, 0 temario-demre, 0 demre-liberada."
   }
 }

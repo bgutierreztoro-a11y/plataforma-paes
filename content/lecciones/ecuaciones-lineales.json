@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "ecuaciones-lineales",
-  "moduloId": "ecuaciones-inecuaciones",
+  "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
   "titulo": "Resolución de ecuaciones lineales",
   "objetivo": "Resolver ecuaciones lineales de una incógnita aplicando la misma operación a ambos lados para conservar la igualdad, hasta despejar la incógnita; traducir situaciones a una ecuación y resolverla; y justificar cuándo una transformación conserva (o no) la solución.",
   "tiempoEstimadoMin": 22,
@@ -69,7 +69,7 @@
               "texto": "Quitar las 6 bolitas sueltas solo del platillo izquierdo, para dejar las bolsas solas.",
               "esCorrecta": false,
               "feedback": "Si sacas 6 bolitas de un solo platillo, ese lado se aliviana y la balanza se desnivela: ya no es la misma situación. Para que siga valiendo, todo lo que le hagas a un platillo tienes que hacérselo también al otro. ¿Qué pasaría si quitaras 6 de cada lado?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "opera-un-solo-lado"
             },
             {
               "id": "b",
@@ -99,8 +99,8 @@
       "titulo": "Encuentra el contenido de la bolsa",
       "_notasInternas": [
         "Registrar el intento antes de ayudar. Misma situación del Paso 2: 3x + 6 = 21 → x = 5.",
-        "Verificación de cada distractor numérico (campo bolitasPorBolsa): 15 = quitó las 6 pero no repartió entre las 3 bolsas (error-4). 7 = repartió las 21 entre 3 sin quitar antes las 6 sueltas: 21/3 (error-3). 9 = sumó las 6 en vez de restarlas: (21+6)/3 (error-2).",
-        "REESCRITURA 2026-07-27 (palanca G — campo de verificación, aprobada por el autor): se agregó un segundo campo 'comprobacion' al bloque numérico. A diferencia de L1 (Paso 3), donde el segundo campo es una SEGUNDA INSTANCIA del mismo cálculo (semana 3 y semana 8, mismo tipo de pregunta repetida), aquí el segundo campo es un tipo de tarea distinto: sustituir la respuesta en la ecuación original y comprobar que devuelve el total. Objetivo: instalar visiblemente para el estudiante el hábito de 'comprobar siempre', que hasta ahora solo aparecía en las 'solucion' internas de los itemsPAES, nunca como tarea del estudiante. Verificación: 3×5+6 = 21 ✓. Los dos feedbackPorError del campo 'comprobacion' (valorObtenido 15 y 5) no llevan errorCatalogado: son errores específicos del acto de comprobar (olvidar volver a sumar la constante; confundir 'comprobar' con 'repetir la respuesta de la Parte 1'), distintos en naturaleza de error-1..5, que catalogan errores del acto de RESOLVER, no de verificar. No se introduce dominio ni cifra nueva: mismos números de siempre (3, 6, 21, 5)."
+        "Verificación de cada distractor numérico (campo bolitasPorBolsa): 15 = quitó las 6 pero no repartió entre las 3 bolsas (omite-dividir-por-coeficiente). 7 = repartió las 21 entre 3 sin quitar antes las 6 sueltas: 21/3 (divide-antes-de-quitar-constante). 9 = sumó las 6 en vez de restarlas: (21+6)/3 (invierte-signo-al-transponer).",
+        "REESCRITURA 2026-07-27 (palanca G — campo de verificación, aprobada por el autor): se agregó un segundo campo 'comprobacion' al bloque numérico. A diferencia de L1 (Paso 3), donde el segundo campo es una SEGUNDA INSTANCIA del mismo cálculo (semana 3 y semana 8, mismo tipo de pregunta repetida), aquí el segundo campo es un tipo de tarea distinto: sustituir la respuesta en la ecuación original y comprobar que devuelve el total. Objetivo: instalar visiblemente para el estudiante el hábito de 'comprobar siempre', que hasta ahora solo aparecía en las 'solucion' internas de los itemsPAES, nunca como tarea del estudiante. Verificación: 3×5+6 = 21 ✓. Los dos feedbackPorError del campo 'comprobacion' (valorObtenido 15 y 5) no llevan errorCatalogado: son errores específicos del acto de comprobar (olvidar volver a sumar la constante; confundir 'comprobar' con 'repetir la respuesta de la Parte 1'), distintos en naturaleza de opera-un-solo-lado..5, que catalogan errores del acto de RESOLVER, no de verificar. No se introduce dominio ni cifra nueva: mismos números de siempre (3, 6, 21, 5)."
       ],
       "bloques": [
         {
@@ -125,19 +125,19 @@
               "campoId": "bolitasPorBolsa",
               "valorObtenido": 15,
               "mensaje": "Vas por buen camino: quitaste bien las 6 bolitas sueltas de ambos lados y llegaste a que 3 bolsas equilibran 15 bolitas. Pero 15 es el peso de las TRES bolsas juntas, no de una. Todavía falta repartir entre las 3 bolsas.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "bolitasPorBolsa",
               "valorObtenido": 7,
               "mensaje": "Repartiste las 21 bolitas entre las 3 bolsas (21 ÷ 3 = 7), pero saltaste un paso: en la izquierda no hay solo bolsas, hay 3 bolsas MÁS 6 bolitas sueltas. Primero quita esas 6 de ambos lados; recién ahí puedes repartir.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "divide-antes-de-quitar-constante"
             },
             {
               "campoId": "bolitasPorBolsa",
               "valorObtenido": 9,
               "mensaje": "Sumaste las 6 bolitas en vez de quitarlas: usaste 21 + 6 = 27 y repartiste. Pero las 6 sueltas están del lado de las bolsas, así que para dejar las bolsas solas hay que RESTARLAS de ambos lados, no sumarlas.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             },
             {
               "campoId": "comprobacion",
@@ -247,21 +247,21 @@
               "texto": "Agregar 5 bolitas solo al platillo derecho.",
               "esCorrecta": false,
               "feedback": "Piénsalo con el peso en las manos: si le agregas a un solo lado, ese lado baja. La balanza se desnivela y ya no dice lo mismo que decía. ¿Qué habría que hacerle al otro platillo para compensar?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "opera-un-solo-lado"
             },
             {
               "clave": "C",
               "texto": "Quitar 6 bolitas del platillo izquierdo y agregar 6 al derecho.",
               "esCorrecta": false,
               "feedback": "Esto suena a 'lo que está sumando pasa al otro lado restando', pero cuenta los pesos: le sacaste 6 a un platillo Y le pusiste 6 al otro. La diferencia entre los dos lados no cambió en 6, cambió en 12. ¿Es lo mismo mover una bolita de lado que quitar una en cada lado?",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             },
             {
               "clave": "D",
               "texto": "Duplicar el contenido del platillo izquierdo.",
               "esCorrecta": false,
               "feedback": "Multiplicar también es una operación, y también hay que hacerla en los dos lados. Duplicaste uno solo: ese platillo ahora pesa el doble y el otro sigue igual. ¿Qué le faltó al platillo derecho?",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "opera-un-solo-lado"
             }
           ],
           "notaVerificacionMatematica": "Balanza 3x + 6 = 21, x = 5. A: +5 a ambos lados → 3x + 11 = 26; en x = 5, 15 + 11 = 26 ✓ (equilibrio y solución intactos). B: 3x + 6 = 26 → x = 20/3 ≠ 5 ✗. C: 3x = 27 → x = 9 ≠ 5 ✗. D: 6x + 12 = 21 → x = 1,5 ≠ 5 ✗. Única correcta: A."
@@ -280,7 +280,7 @@
         "Ejemplo trabajado: 2x + 10 = 4 → 2x = 4 − 10 = −6 → x = −6 ÷ 2 = −3. Comprobación: 2·(−3) + 10 = −6 + 10 = 4. ✓",
         "Corrección 2026-07-20: el bloque numérico usaba originalmente la MISMA ecuación del ejemplo trabajado (2x + 10 = 4), lo que permitía copiar el procedimiento recién mostrado sin razonar. Se cambió el ejercicio (no el ejemplo trabajado, para no tocar la prosa pedagógica del salto a negativos, que está entretejida con el límite de la balanza) a 2x + 7 = −1 (x = −4): misma estructura (ax + b = c, un solo paso de resta seguido de división, coeficiente 2, solución negativa), números y resultado distintos del ejemplo.",
         "Verificación del ejercicio corregido (2x + 7 = −1, x = −4): 2x = −1 − 7 = −8 → x = −8 ÷ 2 = −4. Comprobación: 2·(−4) + 7 = −8 + 7 = −1. ✓",
-        "Verificación de distractores del bloque numérico corregido: −8 = quedó en 2x = −8 sin dividir por 2 (error-4). 3 = sumó 7 en vez de restarlo: (−1+7)/2 (error-2). 4 = obtuvo el tamaño correcto pero con signo cambiado, como si fuera (7−(−1))/2 (error-2)."
+        "Verificación de distractores del bloque numérico corregido: −8 = quedó en 2x = −8 sin dividir por 2 (omite-dividir-por-coeficiente). 3 = sumó 7 en vez de restarlo: (−1+7)/2 (invierte-signo-al-transponer). 4 = obtuvo el tamaño correcto pero con signo cambiado, como si fuera (7−(−1))/2 (invierte-signo-al-transponer)."
       ],
       "bloques": [
         {
@@ -307,19 +307,19 @@
               "campoId": "valorX",
               "valorObtenido": -8,
               "mensaje": "Casi: llegaste bien a 2x = −8, pero ahí te detuviste. Todavía falta repartir: hay 2 equis, así que divide ambos lados por 2. x = −8 ÷ 2.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "valorX",
               "valorObtenido": 3,
               "mensaje": "Sumaste el 7 en vez de restarlo: hiciste (−1 + 7) ÷ 2 = 3. Pero el +7 está acompañando a la x, así que para dejarla sola hay que restar 7 en ambos lados: −1 − 7.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             },
             {
               "campoId": "valorX",
               "valorObtenido": 4,
               "mensaje": "El tamaño (4) está bien, pero te falló el signo: calculaste 7 − (−1) en vez de −1 − 7. Al restar 7 de ambos lados queda −1 − 7 = −8, que es negativo. Por eso x sale negativo.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             }
           ],
           "feedbackPorDefecto": "Dos pasos: primero resta 7 en ambos lados (ojo con el signo: −1 − 7 es negativo), y después divide ambos lados por 2."
@@ -330,9 +330,9 @@
       "tipo": "practica",
       "titulo": "Tres ejercicios, un solo principio",
       "_notasInternas": [
-        "P1 (numérica): 4x − 8 = 16 → 4x = 24 → x = 6. Comprobación: 4·6 − 8 = 16. ✓ Distractores: 2 = restó 8 en vez de sumarlo, (16−8)/4 (error-2). 24 = llegó a 4x = 24 y no dividió (error-4).",
+        "P1 (numérica): 4x − 8 = 16 → 4x = 24 → x = 6. Comprobación: 4·6 − 8 = 16. ✓ Distractores: 2 = restó 8 en vez de sumarlo, (16−8)/4 (invierte-signo-al-transponer). 24 = llegó a 4x = 24 y no dividió (omite-dividir-por-coeficiente).",
         "P2 (verdadero/falso): sumar el mismo número a ambos lados NO cambia la solución → la afirmación 'sí la cambia' es Falsa.",
-        "P3 (selección): en 2x + 3 = 11, el paso que NO conserva el equilibrio es restar 3 a un solo lado (error-1).",
+        "P3 (selección): en 2x + 3 = 11, el paso que NO conserva el equilibrio es restar 3 a un solo lado (opera-un-solo-lado).",
         "REESCRITURA 2026-07-27 (palanca — rampa ascendente + ángulo procedimiento-no-dato, aprobada por el autor): se reordenaron los 3 bloques de seleccion→verdaderoFalso→numerica (antes: numerica→verdaderoFalso→seleccion), terminando en el cálculo abierto más exigente en vez de empezar por él — L1 mantiene el mismo orden plano en su Paso 7 equivalente. Además, el feedback del bloque verdaderoFalso ahora nombra explícitamente que la afirmación es sobre el PROCEDIMIENTO en general, no sobre un dato de un ejercicio puntual — matiz que antes quedaba implícito. No cambian los ejercicios ni las cifras, solo el orden y ese matiz de feedback."
       ],
       "bloques": [
@@ -351,7 +351,7 @@
               "texto": "Restar 3 solo al lado izquierdo, quedando 2x = 11.",
               "esCorrecta": true,
               "feedback": "Ese es el que rompe el equilibrio: quitaste 3 de la izquierda pero no de la derecha, así que los dos lados dejan de pesar lo mismo. 2x = 11 ya no tiene la misma solución que la ecuación original.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "opera-un-solo-lado"
             },
             {
               "id": "c",
@@ -384,13 +384,13 @@
               "campoId": "valorX",
               "valorObtenido": 2,
               "mensaje": "Restaste el 8 cuando había que sumarlo. Aquí el término es −8, así que para eliminarlo se suma 8 en ambos lados: 4x = 16 + 8 = 24. Revisa esa dirección.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             },
             {
               "campoId": "valorX",
               "valorObtenido": 24,
               "mensaje": "Llegaste bien a 4x = 24, pero eso es el peso de las 4 equis juntas. Falta repartir: divide ambos lados por 4.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             }
           ],
           "feedbackPorDefecto": "Primero suma 8 en ambos lados (porque el término es −8), llegando a 4x = 24. Después divide ambos lados por 4."
@@ -403,7 +403,7 @@
       "_notasInternas": [
         "Contexto NO transaccional (sin dinero, sin tarifa): reparto en partes iguales. Distinto del contexto del descubrimiento (bolsas/bolitas).",
         "Ecuación de la situación: 6x + 3 = 63 → x = 10. Comprobación: 6·10 + 3 = 63. ✓",
-        "Verificación de distractores (6x + 3 = 63, x = 10): 60 = llegó a 6x = 60 y no dividió por 6 (error-4). 11 = sumó los 3 en vez de restarlos: (63+3)/6 (error-2).",
+        "Verificación de distractores (6x + 3 = 63, x = 10): 60 = llegó a 6x = 60 y no dividió por 6 (omite-dividir-por-coeficiente). 11 = sumó los 3 en vez de restarlos: (63+3)/6 (invierte-signo-al-transponer).",
         "REESCRITURA 2026-07-27 (palanca A — actuar antes de nombrar, aprobada por el autor): se invirtió el orden de los dos bloques. Antes: abierta (formalizar la ecuación) → numerica (resolverla) — formalización PROSPECTIVA. Ahora: numerica (resolver el caso usando el método de la balanza ya interiorizado, sin que se le pida escribir nada simbólico todavía) → abierta (recién ahí, formalizar en retrospectiva: 'escribe el método que usaste'). Aplica el mismo principio que ya usan Paso 1 y Paso 5 de esta lección ('actuar antes de nombrar'), que L1 no usa en su Paso 8 equivalente (estampillas de Martina), donde la receta se pide siempre antes de calcular. No cambian los números ni el contexto (gatos/jaulas), solo el orden y el enunciado de cada bloque."
       ],
       "bloques": [
@@ -423,13 +423,13 @@
               "campoId": "gatosPorJaula",
               "valorObtenido": 60,
               "mensaje": "Quitaste bien los 3 de enfermería de ambos lados y llegaste a 6x = 60. Pero 60 es el total de gatos que están en jaulas, no los de UNA jaula. Falta repartir entre las 6 jaulas: 60 ÷ 6.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "gatosPorJaula",
               "valorObtenido": 11,
               "mensaje": "Sumaste los 3 de enfermería en vez de restarlos: usaste (63 + 3) ÷ 6 = 11. Pero esos 3 gatos ya están contados dentro de los 63, así que para aislar las jaulas hay que restarlos: 63 − 3.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             }
           ],
           "feedbackPorDefecto": "Piensa en la balanza: 6 grupos iguales (las jaulas) más 3 sueltos (los de enfermería) equilibran 63. Primero resta los 3 sueltos de ambos lados, y después reparte entre las 6 jaulas."
@@ -494,21 +494,21 @@
           "texto": "x = −12",
           "esCorrecta": false,
           "feedback": "Llegaste bien a 4x = −12, pero te quedaste ahí: falta dividir ambos lados por 4. La x está multiplicada por 4, así que x = −12 ÷ 4, no −12.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "omite-dividir-por-coeficiente"
         },
         {
           "clave": "C",
           "texto": "x = −2",
           "esCorrecta": false,
           "feedback": "Al juntar las equis de los dos lados las sumaste (5x + x = 6x) en vez de restarlas. La x de la derecha se pasa a la izquierda restando: 5x − x = 4x, no 6x. Con 4x llegas a otro resultado.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar"
         },
         {
           "clave": "D",
           "texto": "x = 3",
           "esCorrecta": false,
           "feedback": "Acertaste el tamaño (3) pero no el signo. Al despejar queda 4x = −12: el lado derecho es negativo (−4 − 8 = −12), así que x tiene que ser negativo. Revisa los signos al mover el 8 y el −4.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-signo-al-transponer"
         }
       ],
       "solucion": "Se reúnen las incógnitas restando x en ambos lados: 5x − x + 8 = −4, es decir 4x + 8 = −4. Se resta 8 en ambos lados: 4x = −4 − 8 = −12. Se divide por 4: x = −3. Comprobación: 5·(−3) + 8 = −15 + 8 = −7; (−3) − 4 = −7. Ambos lados dan −7. ✓"
@@ -530,21 +530,21 @@
           "texto": "10 cuentos",
           "esCorrecta": false,
           "feedback": "Repartiste los 40 cuentos entre las 4 salas (40 ÷ 4 = 10) sin apartar primero los 8 de la sala de lectura. Esos 8 no se reparten; hay que restarlos antes: 40 − 8 = 32, y recién ahí dividir por 4.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "divide-antes-de-quitar-constante"
         },
         {
           "clave": "C",
           "texto": "12 cuentos",
           "esCorrecta": false,
           "feedback": "Sumaste los 8 en vez de restarlos: (40 + 8) ÷ 4 = 12. Pero los 8 apartados ya están incluidos en los 40 del total, así que para saber lo que va a las salas hay que quitarlos: 40 − 8.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-signo-al-transponer"
         },
         {
           "clave": "D",
           "texto": "32 cuentos",
           "esCorrecta": false,
           "feedback": "Restaste bien los 8 apartados (40 − 8 = 32), pero 32 es el total de cuentos que se reparten entre TODAS las salas, no lo que recibe una. Falta dividir por las 4 salas: 32 ÷ 4.",
-          "errorCatalogado": "error-4"
+          "errorCatalogado": "omite-dividir-por-coeficiente"
         }
       ],
       "solucion": "Si x es la cantidad de cuentos por sala: 4 salas iguales más 8 apartados suman 40, es decir 4x + 8 = 40. Se resta 8 en ambos lados: 4x = 32. Se divide por 4: x = 8. Comprobación: 4·8 + 8 = 32 + 8 = 40. ✓"
@@ -566,21 +566,21 @@
           "texto": "Restar 5 solo al lado izquierdo, obteniendo 3x = 20.",
           "esCorrecta": false,
           "feedback": "Restaste solo en un lado y rompiste el equilibrio: la igualdad deja de valer. 3x = 20 tiene otra solución (x = 20/3), distinta de la original. Para eliminar el +5 hay que restar 5 en AMBOS lados.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "opera-un-solo-lado"
         },
         {
           "clave": "C",
           "texto": "Dividir por 3 solo el término 3x y dejar el 5 igual, obteniendo x + 5 = 20.",
           "esCorrecta": false,
           "feedback": "Dividiste solo una parte del lado izquierdo. Para dividir por 3 hay que dividir todo cada lado (los tres términos), no solo el 3x. Al hacerlo a medias cambias la solución: x + 5 = 20 no equivale a la original.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "divide-antes-de-quitar-constante"
         },
         {
           "clave": "D",
           "texto": "Sumar 5 en ambos lados para eliminar el +5, obteniendo 3x = 25.",
           "esCorrecta": false,
           "feedback": "Para eliminar un +5 se resta 5, no se suma. Además, sumar 5 a ambos lados daría 3x + 10 = 25, no 3x = 25: ni siquiera elimina el término. La operación correcta para cancelar un +5 es −5 en ambos lados.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-signo-al-transponer"
         }
       ],
       "solucion": "Transformar sin cambiar la solución exige aplicar la misma operación a ambos lados. Restar 5 a ambos lados de 3x + 5 = 20 da 3x = 15 (alternativa A), que conserva la solución x = 5. B rompe el equilibrio (opera un solo lado). C divide solo un término en vez del lado completo. D usa la operación equivocada (suma en vez de resta) y ni siquiera cancela el término. Respuesta: A."
@@ -602,7 +602,7 @@
       },
       {
         "valor": 10,
-        "motivo": "El 10 es la respuesta correcta de gatosPorJaula en el paso 8 (aplicacion: 6 jaulas iguales con el mismo numero de gatos + 3 en enfermeria = 63, o sea 10 por jaula). Reaparece como distractor de la alternativa B del item PAES l3-item-2 (repartir los 40 cuentos entre las 4 salas sin descontar antes los 8 apartados: 40 / 4 = 10, error-3). El orden es favorable: el 10 se confirma correcto en el paso 8 antes de reaparecer como distractor en los itemsPAES, que van despues de los diez pasos, asi que el estudiante no vive la contradiccion que la regla 3b evita. Ver docs/reglas-modulo.md seccion 3b."
+        "motivo": "El 10 es la respuesta correcta de gatosPorJaula en el paso 8 (aplicacion: 6 jaulas iguales con el mismo numero de gatos + 3 en enfermeria = 63, o sea 10 por jaula). Reaparece como distractor de la alternativa B del item PAES l3-item-2 (repartir los 40 cuentos entre las 4 salas sin descontar antes los 8 apartados: 40 / 4 = 10, divide-antes-de-quitar-constante). El orden es favorable: el 10 se confirma correcto en el paso 8 antes de reaparecer como distractor en los itemsPAES, que van despues de los diez pasos, asi que el estudiante no vive la contradiccion que la regla 3b evita. Ver docs/reglas-modulo.md seccion 3b."
       }
     ],
     "camposAdimensionales": {

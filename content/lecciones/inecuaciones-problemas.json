@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "inecuaciones-problemas",
-  "moduloId": "ecuaciones-inecuaciones",
+  "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
   "titulo": "Problemas que involucren inecuaciones lineales en diversos contextos",
   "objetivo": "Traducir enunciados en lenguaje natural a una inecuación lineal, distinguiendo la dirección (techo o piso) de la inclusión del extremo; resolverla con el método de la lección anterior; e interpretar el conjunto solución de vuelta en el contexto, incluyendo decidir cuándo la respuesta debe ser entera y en qué dirección se redondea.",
   "tiempoEstimadoMin": 26,
@@ -21,10 +21,10 @@
     "Convertida desde docs/guion-inecuaciones-2-problemas.md. Tercera lección del módulo 'Ecuaciones e inecuaciones de primer grado'; sucede a inecuaciones-resolucion.json y cierra el módulo. Asume que esa lección ya se hizo: el paso 3 y el paso 7 dan por sabido resolver y el criterio de borde.",
     "DÓNDE ESTÁ LA DIFICULTAD, Y POR QUÉ LA LECCIÓN SE ESTRUCTURA ASÍ. Acá la matemática es MÁS FÁCIL que en la lección anterior: casi todas las inecuaciones se resuelven en dos pasos y sin inversión de sentido. El error no está en resolver, está en los dos extremos. (1) Entrada: el castellano codifica DOS decisiones independientes en una sola frase y las esconde — la dirección (¿techo o piso?) y el borde (¿el número mencionado pertenece?). 'A lo más 30' y 'menos de 30' apuntan igual y difieren en el borde; 'al menos 30' y 'a lo más 30' comparten borde y difieren en dirección. Quien trata la traducción como una sola decisión acierta la mitad de las veces por azar. Por eso el paso 5 separa explícitamente las dos decisiones en una tabla de dos entradas, y el estudiante la construye antes de recibirla. (2) Salida: el conjunto solución es continuo, pero el contexto casi siempre exige un entero, y la dirección del redondeo la decide el contexto, no la matemática.",
     "EL 10,5 DEL PASO 8 ES DELIBERADO — NO CAMBIAR SIN CONSERVAR LA PROPIEDAD. Los números 126 y 12 se eligieron para que 126 ÷ 12 dé exactamente 10,5, o sea un decimal justo en el medio. Con 10,3 o 10,8 el estudiante puede acertar por instinto de 'redondeo al entero más cercano' sin haber entendido nada; con 10,5 el redondeo escolar es ambiguo y la ÚNICA forma de decidir es releer qué se está contando. Las dos partes del paso salen de esa misma división y redondean para lados opuestos (11 tarros hacia arriba, 10 murales hacia abajo), que es la demostración más dura posible de que ninguna regla mecánica de redondeo sobrevive. Si en revisión se cambian los números, CONSERVAR que el decimal sea 0,5 exacto o el paso pierde su filo.",
-    "ERRORES USADOS Y EL CRITERIO PARA ASIGNARLOS. error-9 (traducir mal: inclusión del extremo o dirección) es el error propio de esta lección y el más frecuente: cubre todos los distractores donde el estudiante lee mal una frase. error-10 (no devolver la solución al contexto) cubre los de redondeo y decimal. error-3 y error-4 se usan SOLO donde calzan con su descripción canónica literal en content/errores/ecuaciones-inecuaciones.json: error-4 en el distractor 56 del paso 3 (se queda en '7d ≥ 56' y entrega 56, que es exactamente 'quedarse en a·x = c y entregar c'), y error-3 en el distractor 13 del mismo paso (divide 90 ÷ 7 sin haber quitado antes los 34, que es exactamente 'dividir por el coeficiente antes de haber quitado la constante'). error-2 en el distractor 372 del paso 7 (suma los 72 kg cuando corresponde restarlos). error-11 (omitir la cantidad inicial al modelar) en los tres distractores que lo encarnan; ver la nota siguiente.",
-    "ERROR-11, RESUELTO (2026-08-03). Tres distractores —paso 2 opción d, paso 7 distractor 300 e ítem PAES 1 alternativa D— son todos la misma cosa: OMITIR LA CANTIDAD INICIAL AL MODELAR (escribir '7d ≥ 90' en vez de '34 + 7d ≥ 90'). Nacieron sin id porque no calzaban con error-3: en error-3 la constante ESTÁ en la inecuación y se ignora al dividir —es un error de procedimiento—, mientras que acá la constante nunca llega a escribirse —es un error de modelado—. En vez de forzar error-3 se creó error-11 en el artefacto canónico, y los tres quedan etiquetados con él.",
-    "DISTRACTORES QUE SIGUEN SIN errorCatalogado, Y POR QUÉ. Cuatro quedan deliberadamente sin id, mismo criterio que en inecuaciones-resolucion.json: etiquetar con un error que no describe lo que el estudiante hizo le daría señal falsa al motor de diagnóstico. (1) Ítem PAES 2 alternativa D (estimar con 50 g en vez de 45) es un atajo aritmético de estimación, no un error de redondeo ni de contexto: no calza con error-10 ni con ningún otro. (2) Ítem PAES 3 alternativa C atribuye el error a la aritmética cuando la aritmética está bien; quien la elige no comete ese error, lo diagnostica mal. (3) Paso 3 distractor 7: no proviene de ningún error catalogado —56 ÷ 7 da 8 exacto, no hay redondeo de por medio— sino de no haber comprobado que 34 + 49 = 83 no llega a 90; es una falla de verificación. (4) Paso 3 distractor 56 del campo puntajeFinal: responder el aporte de los desafíos (7 × 8) en vez del puntaje total; es leer mal qué pide la pregunta, no un error de método.",
-    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json, que desde el 2026-08-03 es la ÚNICA fuente para esta unidad (se sacó 'ecuaciones-lineales' de MAPEO_LECCION_UNIDAD en scripts/validar-contenido.mjs). Los distractores referencian los ids locales pelados (error-3, error-9, …); el prefijo namespaced vive solo en el artefacto.",
+    "ERRORES USADOS Y EL CRITERIO PARA ASIGNARLOS. traduce-mal-desigualdad-verbal (traducir mal: inclusión del extremo o dirección) es el error propio de esta lección y el más frecuente: cubre todos los distractores donde el estudiante lee mal una frase. redondea-contra-el-contexto (no devolver la solución al contexto) cubre los de redondeo y decimal. divide-antes-de-quitar-constante y omite-dividir-por-coeficiente se usan SOLO donde calzan con su descripción canónica literal en content/errores/ecuaciones-inecuaciones.json: omite-dividir-por-coeficiente en el distractor 56 del paso 3 (se queda en '7d ≥ 56' y entrega 56, que es exactamente 'quedarse en a·x = c y entregar c'), y divide-antes-de-quitar-constante en el distractor 13 del mismo paso (divide 90 ÷ 7 sin haber quitado antes los 34, que es exactamente 'dividir por el coeficiente antes de haber quitado la constante'). invierte-signo-al-transponer en el distractor 372 del paso 7 (suma los 72 kg cuando corresponde restarlos). omite-cantidad-inicial-en-inecuacion (omitir la cantidad inicial al modelar) en los tres distractores que lo encarnan; ver la nota siguiente.",
+    "omite-cantidad-inicial-en-inecuacion, RESUELTO (2026-08-03). Tres distractores —paso 2 opción d, paso 7 distractor 300 e ítem PAES 1 alternativa D— son todos la misma cosa: OMITIR LA CANTIDAD INICIAL AL MODELAR (escribir '7d ≥ 90' en vez de '34 + 7d ≥ 90'). Nacieron sin id porque no calzaban con divide-antes-de-quitar-constante: en divide-antes-de-quitar-constante la constante ESTÁ en la inecuación y se ignora al dividir —es un error de procedimiento—, mientras que acá la constante nunca llega a escribirse —es un error de modelado—. En vez de forzar divide-antes-de-quitar-constante se creó omite-cantidad-inicial-en-inecuacion en el artefacto canónico, y los tres quedan etiquetados con él.",
+    "DISTRACTORES QUE SIGUEN SIN errorCatalogado, Y POR QUÉ. Cuatro quedan deliberadamente sin id, mismo criterio que en inecuaciones-resolucion.json: etiquetar con un error que no describe lo que el estudiante hizo le daría señal falsa al motor de diagnóstico. (1) Ítem PAES 2 alternativa D (estimar con 50 g en vez de 45) es un atajo aritmético de estimación, no un error de redondeo ni de contexto: no calza con redondea-contra-el-contexto ni con ningún otro. (2) Ítem PAES 3 alternativa C atribuye el error a la aritmética cuando la aritmética está bien; quien la elige no comete ese error, lo diagnostica mal. (3) Paso 3 distractor 7: no proviene de ningún error catalogado —56 ÷ 7 da 8 exacto, no hay redondeo de por medio— sino de no haber comprobado que 34 + 49 = 83 no llega a 90; es una falla de verificación. (4) Paso 3 distractor 56 del campo puntajeFinal: responder el aporte de los desafíos (7 × 8) en vez del puntaje total; es leer mal qué pide la pregunta, no un error de método.",
+    "CATÁLOGO DE ERRORES: este archivo NO incluye el array catalogoErrores. La fuente canónica es content/errores/ecuaciones-inecuaciones.json, que desde el 2026-08-03 es la ÚNICA fuente para esta unidad (se sacó 'ecuaciones-lineales' de MAPEO_LECCION_UNIDAD en scripts/validar-contenido.mjs). Los distractores referencian los ids locales pelados (divide-antes-de-quitar-constante, traduce-mal-desigualdad-verbal, …); el prefijo namespaced vive solo en el artefacto.",
     "DOMINIOS: los 10 candidatos de este guion (ascensor de carga, torneo escolar de robótica, desafío de robótica, impresora 3D, filamento, taller de colegio, mural comunitario, tarro de pintura, bote de remos, cupo máximo) pasaron consultar-fuentes.mjs sin colisión, corrido por Benja fuera de la sesión de redacción. Se evitaron deliberadamente la familia 'cargo fijo + tarifa variable' (ningún escenario cobra dinero por unidad de tiempo o consumo), los dominios del propio módulo (balanza y bolsas de bolitas, gatos por jaula, cuentos por sala) y los del módulo de funciones lineales (bidón, ahorro semanal, planes de datos, huerta). El torneo usa PUNTOS, no pesos, justamente para tener la estructura 'acumulado inicial + aporte por unidad' sin caer en la familia comercial saturada.",
     "VERIFICACIÓN MATEMÁTICA: toda la aritmética fue recalculada desde cero con un script independiente antes de escribir el JSON, incluidas las sustituciones en los dos enteros vecinos de cada borde y las dos direcciones de redondeo del paso 8. Eso NO reemplaza la revisión matemática humana: revisionMatematica.aprobada queda en false y la firma la pone Benja con el profesor, nunca Claude Code.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
@@ -70,21 +70,21 @@
               "texto": "34 + 7d > 90",
               "esCorrecta": false,
               "feedback": "La dirección está bien: necesitan llegar arriba de cierta cantidad. Pero fíjate en el borde: si terminan con exactamente 90 puntos, ¿clasifican o no? 'Al menos 90' significa 90 o más, así que 90 sirve. Tu expresión los dejaría fuera por un punto que sí tenían.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "c",
               "texto": "34 + 7d ≤ 90",
               "esCorrecta": false,
               "feedback": "Diste vuelta la dirección. Tu expresión dice que clasifican los que sacan 90 **o menos**, o sea que un equipo con 20 puntos clasificaría y uno con 100 no. Vuelve a leer: ¿qué lado del 90 es el bueno?",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "d",
               "texto": "7d ≥ 90",
               "esCorrecta": false,
               "feedback": "El ritmo está bien (7 puntos por desafío), pero perdiste el punto de partida: el equipo no arranca de cero, ya lleva 34 puntos acumulados. Esos 34 tienen que estar en la expresión.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "omite-cantidad-inicial-en-inecuacion"
             }
           ]
         }
@@ -116,7 +116,7 @@
               "campoId": "desafiosMinimos",
               "valorObtenido": 9,
               "mensaje": "Estás a un desafío de distancia, y el motivo es el borde. Con 8 desafíos llegan a 34 + 56 = 90 puntos exactos. Como la condición dice 'al menos 90', esos 90 justos **sí** clasifican. El 9 sería necesario solo si pidieran superar los 90.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "campoId": "desafiosMinimos",
@@ -127,13 +127,13 @@
               "campoId": "desafiosMinimos",
               "valorObtenido": 56,
               "mensaje": "Llegaste bien a 7d ≥ 56, pero ese 56 son los puntos que faltan, no los desafíos. Todavía falta repartir: cada desafío aporta 7 puntos.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "omite-dividir-por-coeficiente"
             },
             {
               "campoId": "desafiosMinimos",
               "valorObtenido": 13,
               "mensaje": "Repartiste los 90 puntos entre los 7 de cada desafío sin descontar antes los 34 que el equipo ya tenía. Esos 34 no hay que ganarlos de nuevo: quítalos primero, y recién ahí divide.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "divide-antes-de-quitar-constante"
             },
             {
               "campoId": "puntajeFinal",
@@ -188,21 +188,21 @@
               "texto": "En los carteles 1 y 4 el número sí cumple; en los carteles 2 y 3, no.",
               "esCorrecta": false,
               "feedback": "Agrupaste por dirección, no por borde. Es cierto que 1 y 4 ponen un techo, y que 2 y 3 ponen un piso — pero esa no era la pregunta. La pregunta era si el 30 mismo cumple. Vuelve a leer solo el cartel 2: 'al menos 30 firmas', y juntaron 30. ¿Les falta alguna?",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "c",
               "texto": "El número nunca cumple: si el cartel lo menciona como límite, es porque queda afuera.",
               "esCorrecta": false,
               "feedback": "El cartel 1 dice 'cupo máximo 30'. Si entran 30 personas exactas, ¿se pasaron del cupo? No: llegaron justo al límite, y el límite está permitido. Un máximo es un valor alcanzable, no prohibido.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "d",
               "texto": "El número siempre cumple: mencionarlo significa que está permitido.",
               "esCorrecta": false,
               "feedback": "El cartel 3 dice 'más de 30 votos', y obtuvieron 30. ¿Es 30 más que 30? No: es igual que 30. Ahí el número mencionado queda afuera.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             }
           ]
         },
@@ -245,21 +245,21 @@
               "texto": "p < 8",
               "esCorrecta": false,
               "feedback": "La dirección está bien, el borde no. Tu expresión deja fuera a las 8 personas justas, pero el letrero solo prohíbe llevar **más** de 8. Ocho personas no son más de ocho.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "c",
               "texto": "p ≥ 8",
               "esCorrecta": false,
               "feedback": "Diste vuelta la dirección. Tu expresión dice que el bote debe llevar 8 personas **o más**, o sea que con 3 personas estaría infringiendo el letrero. Es al revés: 8 es un techo, no un piso.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "id": "d",
               "texto": "p > 8",
               "esCorrecta": false,
               "feedback": "Escribiste justo lo que el letrero **prohíbe**. 'Más de 8' es la situación no permitida; lo que se pide es la condición que sí se cumple.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             }
           ]
         },
@@ -292,25 +292,25 @@
               "campoId": "cargaMaxAbierto",
               "valorObtenido": 228,
               "mensaje": "Las dos partes no pueden dar lo mismo: en eso consiste el ejercicio. Con 228 kg de carga el total es 72 + 228 = 300 exactos, y la Parte 2 exige que el total sea **menor** que 300. Ese kilo de más te deja afuera.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "campoId": "cargaMaxCerrado",
               "valorObtenido": 227,
               "mensaje": "Te sobró cautela. En la Parte 1 la condición es 'no puede superar 300', y 300 no supera a 300: el total de 300 kg justos está permitido, así que la carga puede llegar a 228 kg.",
-              "errorCatalogado": "error-9"
+              "errorCatalogado": "traduce-mal-desigualdad-verbal"
             },
             {
               "campoId": "cargaMaxCerrado",
               "valorObtenido": 300,
               "mensaje": "Ese es el límite del **total**, no de la carga. El operario también va arriba y pesa 72 kg: esos 72 ocupan parte del límite.",
-              "errorCatalogado": "error-11"
+              "errorCatalogado": "omite-cantidad-inicial-en-inecuacion"
             },
             {
               "campoId": "cargaMaxCerrado",
               "valorObtenido": 372,
               "mensaje": "Sumaste los 72 kg del operario en vez de restarlos. Su peso consume parte de los 300 disponibles, no los amplía.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-signo-al-transponer"
             }
           ],
           "feedbackPorDefecto": "Llama c a la carga. El peso total es 72 + c, y ese total es el que tiene el límite. Arma la inecuación, resuélvela restando 72 a ambos lados, y después mira con cuidado si el valor del borde entra o no según cómo esté escrita la condición."
@@ -343,25 +343,25 @@
               "campoId": "tarrosMinimos",
               "valorObtenido": 10,
               "mensaje": "Con 10 tarros cubres 10 × 12 = 120 m², y el mural tiene 126. Te quedan 6 m² sin pintar. Cuando el resultado da 10,5 y lo que necesitas es **cubrir**, quedarse en 10 deja el trabajo a medias.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "redondea-contra-el-contexto"
             },
             {
               "campoId": "tarrosMinimos",
               "valorObtenido": 10.5,
               "mensaje": "Matemáticamente 10,5 es correcto, pero la pregunta es cuántos tarros **comprar**, y no venden medio tarro. Falta el último paso: decidir hacia qué lado se redondea, y para eso hay que mirar qué pasa si te quedas corto.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "redondea-contra-el-contexto"
             },
             {
               "campoId": "muralesCompletos",
               "valorObtenido": 11,
               "mensaje": "Ojo: acá la respuesta va para el otro lado. Con pintura para 126 m², once murales necesitarían 11 × 12 = 132 m², y no tienes tanta. El undécimo quedaría incompleto, y la pregunta pide murales **completos**.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "redondea-contra-el-contexto"
             },
             {
               "campoId": "muralesCompletos",
               "valorObtenido": 10.5,
               "mensaje": "Mismo dato que en la Parte 1, misma división, pero acá tampoco puede quedar en decimal: no existe medio mural completo. Piensa qué significa el 0,5 sobrante en esta pregunta y si te sirve de algo.",
-              "errorCatalogado": "error-10"
+              "errorCatalogado": "redondea-contra-el-contexto"
             }
           ],
           "feedbackPorDefecto": "Las dos partes salen de la misma división: 126 ÷ 12. Pero una pregunta cuántos tarros hacen falta para CUBRIR el mural, y la otra cuántos murales ALCANZAN con la pintura que hay. Arma la inecuación de cada una (una lleva `≥`, la otra `≤`) y fíjate qué le pasa al decimal en cada caso."
@@ -419,21 +419,21 @@
           "texto": "120 + 25c < 450",
           "esCorrecta": false,
           "feedback": "La dirección y los términos están bien; falla el borde. 'No puede superar 450' prohíbe pasar de 450, no llegar a 450. Un total de exactamente 450 kg cumple el letrero, y tu expresión lo dejaría fuera.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "traduce-mal-desigualdad-verbal"
         },
         {
           "clave": "C",
           "texto": "120 + 25c ≥ 450",
           "esCorrecta": false,
           "feedback": "Diste vuelta la dirección. Tu expresión pide que el peso total sea 450 kg **o más**, o sea que subir una sola caja sería una infracción y llenar el ascensor sería lo correcto. El letrero dice lo contrario: 450 es un techo.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "traduce-mal-desigualdad-verbal"
         },
         {
           "clave": "D",
           "texto": "25c ≤ 450",
           "esCorrecta": false,
           "feedback": "Modelaste bien las cajas, pero dejaste fuera los 120 kg de herramientas, que ya están arriba y también pesan. El límite de 450 es para el **total**, no solo para lo que se sube después.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion"
         }
       ],
       "solucion": "El peso total es 120 + 25c. La condición 'no puede superar 450' se traduce como total ≤ 450, con borde cerrado, porque superar significa estrictamente pasar. Luego la inecuación es 120 + 25c ≤ 450. Resolviéndola, aunque el ítem pide el modelo y no el valor: 25c ≤ 330, luego c ≤ 13,2, y como c es entero, c ≤ 13. Comprobación: c = 13 → 120 + 325 = 445, y 445 ≤ 450 ✓ permitido; c = 14 → 120 + 350 = 470, y 470 ≤ 450 es falso ✓ excluido."
@@ -455,14 +455,14 @@
           "texto": "16",
           "esCorrecta": false,
           "feedback": "Redondeaste hacia arriba, pero acá el filamento es lo que te **limita**: no puedes usar más del que tienes. Comprueba 16 piezas: 16 × 45 = 720 g, y solo quedan 700. Te faltarían 20 g.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "redondea-contra-el-contexto"
         },
         {
           "clave": "C",
           "texto": "15,5",
           "esCorrecta": false,
           "feedback": "El cálculo está bien (700 ÷ 45 ≈ 15,55), pero la respuesta todavía no está aterrizada: media pieza no es una pieza completa, y el enunciado pide piezas completas. Falta decidir hacia qué lado se redondea, mirando si el filamento te limita o si tienes que cubrir algo.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "redondea-contra-el-contexto"
         },
         {
           "clave": "D",
@@ -490,7 +490,7 @@
           "texto": "Sí: \"al menos 100\" exige pasar de 100, así que se necesitan 8 desafíos.",
           "esCorrecta": false,
           "feedback": "Esa es exactamente la lectura que hace fallar el ítem. 'Al menos 100' incluye el 100: si tuviera que superarlo, la frase sería 'más de 100'. Comprueba: con 7 desafíos el total es 100, y 100 ≥ 100 es verdadero.",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "traduce-mal-desigualdad-verbal"
         },
         {
           "clave": "C",
@@ -503,7 +503,7 @@
           "texto": "Sí, pero por otra razón: cuando el resultado no es exacto siempre hay que redondear hacia arriba.",
           "esCorrecta": false,
           "feedback": "Acá no hay nada que redondear: 7 desafíos dan exactamente 100 puntos, sin decimales. Y aunque los hubiera, la dirección del redondeo no es siempre hacia arriba: depende de si hay que cubrir una exigencia o si un recurso te limita.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "redondea-contra-el-contexto"
         }
       ],
       "solucion": "La condición de clasificación es 58 + 6d ≥ 100, con d entero no negativo. Restando 58 a ambos lados: 6d ≥ 42. Dividiendo por 6, que es positivo, el sentido se conserva: d ≥ 7. El mínimo entero es 7, así que el razonamiento de Sofía es incorrecto. Comprobación del borde: d = 7 → 58 + 6·7 = 58 + 42 = 100, y 100 ≥ 100 es verdadero ✓ clasifica. Comprobación del anterior: d = 6 → 58 + 36 = 94, y 94 ≥ 100 es falso ✓ no clasifica — y ese 94 es justamente el número que aparece en la alternativa C, que es lo que la vuelve creíble para quien recalcula apurado. Respuesta: A."

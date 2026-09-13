@@ -1,7 +1,7 @@
 {
   "tipo": "leccion",
   "id": "enteros-operar-y-ordenar",
-  "moduloId": "enteros-racionales",
+  "moduloId": "enteros-y-racionales",
   "titulo": "Operatoria y orden en los números enteros",
   "objetivo": "Sumar y restar números enteros, incluyendo restar un negativo, entendiendo la resta como diferencia de profundidad entre dos puntos, y ordenar enteros en la recta numérica sin comparar los signos como si no existieran.",
   "tiempoEstimadoMin": 22,
@@ -18,7 +18,7 @@
   "_notasInternas": [
     "Diseño aprobado en docs/diseno-modulo-enteros-racionales.md (firmado 2026-07-29). Contexto (buceo, profundidades −5/−12/−27 m) y secuencia de tipos de bloque por paso siguen exactamente la tabla (d) de ese documento; no se cambiaron sobre la marcha.",
     "Verificación de colisión de escena concreta contra Material/MA-34_Potencia_Ecuacion_Exponencial.md ejecutada manualmente por Benja (mecanismo (2) de CLAUDE.md, fuera de este hilo) el 2026-07-29. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md.",
-    "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo 'Enteros y racionales' (error-1 a error-7, ver docs/diseno-modulo-enteros-racionales.md §b), para mantener ids consistentes entre los tres archivos del módulo. Esta lección usa activamente error-1, error-2, error-3 y error-5. error-4, error-6 y error-7 son específicos de operatoria con fracciones (Lección 2, racionales) y quedan declarados aquí sin uso, a la espera de esa lección.",
+    "catalogoErrores incluye el catálogo COMPLETO y compartido del módulo 'Enteros y racionales' (pierde-signo-al-restar-negativo a rechaza-division-que-agranda, ver docs/diseno-modulo-enteros-racionales.md §b), para mantener ids consistentes entre los tres archivos del módulo. Esta lección usa activamente pierde-signo-al-restar-negativo, invierte-orden-de-la-diferencia, trata-negativo-como-distancia y compara-negativos-como-positivos. compara-fracciones-solo-por-numerador, suma-denominadores y rechaza-division-que-agranda son específicos de operatoria con fracciones (Lección 2, racionales) y quedan declarados aquí sin uso, a la espera de esa lección.",
     "Paso 10 (consolidación) incluye un bloque 'pregunta' (ítem formato PAES embebido, con notaVerificacionMatematica) ADEMÁS del arreglo itemsPAES del cierre, por diseño explícito de diferenciación estructural (tabla (d) del doc: consolidación = texto + pregunta). Es un cuarto chequeo formato PAES antes del cierre formal, con números propios distintos de los tres itemsPAES.",
     "ESTADO: publicable (2026-08-04). checklistOriginalidad y revisionMatematica firmados por Benjamín Gutiérrez."
   ],
@@ -54,7 +54,7 @@
       "tipo": "problema",
       "titulo": "El registro del día de buceo",
       "_notasInternas": [
-        "Intento de cálculo antes de enseñar el método formal con signos. Correcto: 27 − 12 = 15. feedbackPorError anticipa sumar en vez de restar (error-3) y restar en el orden que da un signo no pedido (error-2)."
+        "Intento de cálculo antes de enseñar el método formal con signos. Correcto: 27 − 12 = 15. feedbackPorError anticipa sumar en vez de restar (trata-negativo-como-distancia) y restar en el orden que da un signo no pedido (invierte-orden-de-la-diferencia)."
       ],
       "bloques": [
         {
@@ -73,13 +73,13 @@
               "campoId": "diferencia",
               "valorObtenido": 39,
               "mensaje": "Sumaste las dos profundidades (12 + 27) en vez de encontrar la diferencia entre ellas. La pregunta busca cuánto más profundo llegó un grupo respecto al otro, no la suma de ambas profundidades.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "trata-negativo-como-distancia"
             },
             {
               "campoId": "diferencia",
               "valorObtenido": -15,
               "mensaje": "El tamaño de la diferencia está bien, pero se pidió como número positivo. Fíjate en cuál profundidad restaste de cuál: si restas la más profunda de la menos profunda, el resultado sale con signo negativo.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             }
           ],
           "feedbackPorDefecto": "La diferencia de profundidad se calcula restando la profundidad menor de la mayor, sin importar el signo por ahora: 27 − 12 = 15 metros. En los próximos pasos vamos a ver cómo hacer este cálculo directamente con los números negativos, sin tener que 'quitar el signo' primero."
@@ -150,7 +150,7 @@
       "tipo": "generalizacion",
       "titulo": "La regla, en general",
       "_notasInternas": [
-        "Regla general en palabras + chequeo verdaderoFalso sobre orden de negativos (error-5, sin campo errorCatalogado disponible en este tipo de bloque según schema; se explica en el texto de feedback)."
+        "Regla general en palabras + chequeo verdaderoFalso sobre orden de negativos (compara-negativos-como-positivos, sin campo errorCatalogado disponible en este tipo de bloque según schema; se explica en el texto de feedback)."
       ],
       "bloques": [
         {
@@ -170,7 +170,7 @@
       "tipo": "practica",
       "titulo": "Practica: calcula la diferencia",
       "_notasInternas": [
-        "Reutiliza los puntos ya establecidos (Grupo C −5 m, Grupo B −27 m) para practicar la resta formal. Correcto: (−5) − (−27) = 22. feedbackPorError cubre error-1 (olvida invertir el signo) y error-2 (invierte el orden)."
+        "Reutiliza los puntos ya establecidos (Grupo C −5 m, Grupo B −27 m) para practicar la resta formal. Correcto: (−5) − (−27) = 22. feedbackPorError cubre pierde-signo-al-restar-negativo (olvida invertir el signo) y invierte-orden-de-la-diferencia (invierte el orden)."
       ],
       "bloques": [
         {
@@ -189,13 +189,13 @@
               "campoId": "resultado",
               "valorObtenido": -32,
               "mensaje": "Trataste −(−27) como si fuera −27, sin invertir el signo. Restar un negativo equivale a sumar su opuesto: (−5) − (−27) = −5 + 27, no −5 − 27.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "pierde-signo-al-restar-negativo"
             },
             {
               "campoId": "resultado",
               "valorObtenido": -22,
               "mensaje": "El tamaño está bien, pero calculaste (−27) − (−5) en vez de (−5) − (−27). Fíjate en cuál profundidad va primero en la resta que pide el enunciado.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             }
           ],
           "feedbackPorDefecto": "(−5) − (−27) = −5 + 27 = 22. Comprueba con el dibujo del Paso 5: la distancia entre −5 y −27 es 22 metros."
@@ -206,7 +206,7 @@
       "tipo": "aplicacion",
       "titulo": "Ordena las tres inmersiones",
       "_notasInternas": [
-        "Retoma los tres puntos del escenario (−5, −12, −27) para ordenar. Correcto: −27, −12, −5 (de menor a mayor). Los tres distractores repiten variantes de error-5 (comparar negativos como si fueran positivos), con feedback distinto para cada una."
+        "Retoma los tres puntos del escenario (−5, −12, −27) para ordenar. Correcto: −27, −12, −5 (de menor a mayor). Los tres distractores repiten variantes de compara-negativos-como-positivos (comparar negativos como si fueran positivos), con feedback distinto para cada una."
       ],
       "bloques": [
         {
@@ -224,21 +224,21 @@
               "texto": "−5, −12, −27",
               "esCorrecta": false,
               "feedback": "Este es exactamente el orden al revés. Ordenaste como si el número 'sin signo' más chico (5) fuera el menor, pero con negativos pasa lo contrario: −5 es el MAYOR de los tres, no el menor.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             },
             {
               "id": "c",
               "texto": "−12, −27, −5",
               "esCorrecta": false,
               "feedback": "El extremo −5 quedó bien ubicado, pero invertiste −12 y −27. ¿Cuál de los dos está más a la izquierda en la recta numérica: el que tiene 12 o el que tiene 27?",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             },
             {
               "id": "d",
               "texto": "−27, −5, −12",
               "esCorrecta": false,
               "feedback": "Identificaste bien que −27 es el menor, pero invertiste el orden entre −5 y −12. Compara solo esos dos: ¿cuál está más lejos de 0 hacia la izquierda?",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "compara-negativos-como-positivos"
             }
           ]
         }
@@ -285,21 +285,21 @@
               "texto": "-11",
               "esCorrecta": false,
               "feedback": "El tamaño está bien, pero calculaste (−21) − (−10) en vez de (−10) − (−21). Revisa cuál profundidad va primero en la resta.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "invierte-orden-de-la-diferencia"
             },
             {
               "clave": "C",
               "texto": "-31",
               "esCorrecta": false,
               "feedback": "Trataste −(−21) como −21 en vez de +21, sin invertir el signo del segundo negativo. Restar un negativo equivale a sumar su opuesto.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "pierde-signo-al-restar-negativo"
             },
             {
               "clave": "D",
               "texto": "31",
               "esCorrecta": false,
               "feedback": "Sumaste las dos profundidades como si fueran distancias que se acumulan (10 + 21), en vez de restarlas con su signo para encontrar la diferencia entre los dos puntos.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "trata-negativo-como-distancia"
             }
           ],
           "notaVerificacionMatematica": "(−10) − (−21) = −10 + 21 = 11. Comprobación con distancia: entre −21 y −10 hay 11 unidades en la recta numérica. ✓"
@@ -325,21 +325,21 @@
           "texto": "30",
           "esCorrecta": false,
           "feedback": "Sumaste las dos profundidades (7 + 23) como si fueran distancias que se acumulan, en vez de restarlas para encontrar cuánto cambió la posición del buzo.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         },
         {
           "clave": "C",
           "texto": "-16",
           "esCorrecta": false,
           "feedback": "El tamaño está bien, pero calculaste (−7) − (−23) en vez de (−23) − (−7). Además, la pregunta pide 'cuántos metros descendió', que siempre es un número positivo.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-orden-de-la-diferencia"
         },
         {
           "clave": "D",
           "texto": "-30",
           "esCorrecta": false,
           "feedback": "Trataste −(−23) como −23, sin invertir el signo del segundo negativo. Restar un negativo equivale a sumar su opuesto: (−23) − (−7) = −23 + 7, no −23 − 7.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "pierde-signo-al-restar-negativo"
         }
       ],
       "solucion": "Descenso = |(−23) − (−7)| = |−23 + 7| = |−16| = 16 metros. Comprobación: partió en −7 y llegó a −23, una diferencia de posición de 16 metros más profundo. ✓"
@@ -361,21 +361,21 @@
           "texto": "−17 está más a la derecha que −6, porque 17 es mayor que 6.",
           "esCorrecta": false,
           "feedback": "Estás comparando los números como si no tuvieran signo. Con negativos, el de mayor valor absoluto (17) es en realidad el MENOR: −17 queda a la izquierda de −6, no a la derecha.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "compara-negativos-como-positivos"
         },
         {
           "clave": "C",
           "texto": "−6 está más a la izquierda que −17, porque la inmersión de −6 es menos profunda.",
           "esCorrecta": false,
           "feedback": "Es al revés: como −6 > −17, −6 se ubica más a la DERECHA (más cerca del cero), no más a la izquierda. 'Menos profunda' significa más cerca de la superficie, o sea más a la derecha en esta recta.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "invierte-orden-de-la-diferencia"
         },
         {
           "clave": "D",
           "texto": "−17 está a la derecha de −6 porque el buzo de −17 recorrió una distancia mayor desde la superficie.",
           "esCorrecta": false,
           "feedback": "Estás usando la distancia recorrida (17 metros) para decidir la posición, en vez del valor con signo del número. En la recta numérica la posición la da el número −17 tal como es, no cuánto 'viajó' el buzo.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         }
       ],
       "solucion": "Como −17 < −6 (más lejos del cero hacia la izquierda = número menor), −17 se ubica más a la izquierda que −6 en la recta numérica. Comprobación: −17 corresponde a la inmersión más profunda, coherente con estar más a la izquierda del cero. ✓"
@@ -397,21 +397,21 @@
           "texto": "Sí: (−8) − (−20) = −8 − 20 = −28, y −28 es menor que −8.",
           "esCorrecta": false,
           "feedback": "Restaste 20 en vez de sumarlo: (−8) − (−20) no es −8 − 20. Restar un negativo cambia de signo el segundo término, así que la operación real es −8 + 20 = 12, no −8 − 20 = −28.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "pierde-signo-al-restar-negativo"
         },
         {
           "clave": "C",
           "texto": "Sí: tomando las profundidades como distancias, 8 − 20 = −12, y −12 es menor que −8.",
           "esCorrecta": false,
           "feedback": "Trataste −8 y −20 como distancias (8 y 20) y las restaste sin signo, perdiendo la información de que ambas son negativas. La resta con signo es (−8) − (−20) = 12, no 8 − 20 = −12.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "trata-negativo-como-distancia"
         },
         {
           "clave": "D",
           "texto": "No: el resultado es −28, pero −28 no es menor que −8, porque entre negativos el de mayor valor absoluto es el mayor.",
           "esCorrecta": false,
           "feedback": "Dos fallas encadenadas: (−8) − (−20) no es −8 − 20 (eso da −28; el cálculo correcto es −8 + 20 = 12), y además entre dos negativos el de MAYOR valor absoluto es el MENOR, no el mayor: −28 sería menor que −8, no al revés.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "compara-negativos-como-positivos"
         }
       ],
       "solucion": "(−8) − (−20) = −8 + 20 = 12. Como 12 > −8, la afirmación general 'restar siempre da un resultado menor' es falsa para este caso: restar un negativo equivale a sumar su valor absoluto, lo que puede aumentar el resultado. La alternativa correcta es A. ✓"
@@ -431,7 +431,7 @@
       "Temario oficial PAES M1 (DEMRE/UCE), eje Números, módulo 'Conjunto de enteros y racionales' — alcance y formato de ítems (ver docs/calibracion-lecciones-e-items.md §4).",
       "Verificación de colisión de la escena concreta de buceo contra Material/MA-34_Potencia_Ecuacion_Exponencial.md, ejecutada manualmente por Benja fuera de este hilo (mecanismo (2) de CLAUDE.md 'Aislamiento de fuentes externas') el 2026-07-29. Keywords y frases corridas: 12, -12, 27, -27, 15, -15, 5, -5, 'desciende a 12 metros', '27 metros bajo la superficie', 'diferencia de profundidad' = NO en todas. Los números sueltos (12, 15, 27) pegaron en 80-90 archivos, calificado por Benja como ruido de substring sin valor de señal, no colisión real. Veredicto: LIMPIO. Detalle completo en el Apéndice de verificación de docs/diseno-modulo-enteros-racionales.md."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `l1-item-3` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l3-item-2` de enteros-problemas-en-contexto.json y con `cierre-enteros-6` de cierre-enteros-racionales.json (mismo molde error-5/error-2/error-1) es reutilización del propio patrón del proyecto, no coincidencia con terceros. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
+    "declaracionOriginalidad": "Enunciados, contexto y diagramas creados desde cero por el autor del proyecto. El temario PAES M1 se usó solo para calibrar alcance y formato (proceso clean-room MOS §7.2); ningún texto, ejemplo ni diagrama de fuentes de terceros fue reproducido ni parafraseado. AUDITORÍA DE ORIGINALIDAD RONDA 2 (2026-09-11, hilo separado, solo sobre `l1-item-3` tras el rediseño del split de veredicto, commit d9576dc): sin lectura de fuentes-analisis-aisladas/, evaluación por lectura del enunciado y las cuatro alternativas contra los patrones DEMRE conocidos y contra el resto del corpus — sin coincidencia sospechosa. Ningún distractor de este ítem duplica literalmente (misma redacción) un distractor de otro ítem del módulo ni de otro módulo (verificado por comparación de texto exacto contra las 1.308 alternativas de content/). El paralelo estructural con `l3-item-2` de enteros-problemas-en-contexto.json y con `cierre-enteros-6` de cierre-enteros-racionales.json (mismo molde compara-negativos-como-positivos/invierte-orden-de-la-diferencia/pierde-signo-al-restar-negativo) es reutilización del propio patrón del proyecto, no coincidencia con terceros. No se corrió consultar-fuentes.mjs en esta ronda. Veredicto: LIMPIO.",
     "autor": "Benjamín Gutiérrez",
     "fecha": "2026-08-04"
   }

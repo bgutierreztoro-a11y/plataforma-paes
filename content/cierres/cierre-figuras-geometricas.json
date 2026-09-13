@@ -8,10 +8,10 @@
     "Cobertura por lección: L1 (figuras-triangulo-no-se-rompe, Pitágoras) = items 1,2,3. L2 (figuras-borde-y-superficie, perímetro y área) = items 4,5. L3 (figuras-problemas-con-forma, techos e invernaderos) = items 6,7,8. Cobertura por habilidad: resolver = items 1,4. modelar = items 2,6. representar = items 5,7. argumentar = items 3,8 (2 de cada una de las 4).",
     "Contextos reutilizados del módulo, todos ya verificados como limpios en las 3 lecciones y con cifras NUEVAS respecto de ellas (verificado contra los contextosNumericos de cada archivo de lección antes de fijar los números): cancha/terreno rectangular y su diagonal (items 1,2,3 — 20×50→√2.900 ≈ 53,9, diagonal 89 con lado 39→80, diagonal 53 con lado 28→45; las lecciones usaron 3-4-5, 6-8-10, 5-12-13, 8-15-17, 9-40-41, 7-24-25, 12-35-37, 33-56-65, 16-30-34, 18-24-30, 11-60-61, 9-12-15), ollao circular de una vela (item 4, radio 12 cm — las lecciones usaron radios 15, 10, 8 y 25), paño de vela trapezoidal (item 5, pujamen 16 / pena 9 / altura 12 — las lecciones usaron 8/4/5, 10/6/7 y 14/10/6), techo triangular de bodega (item 6, ancho 30 / cumbrera 39 / altura 36 — las lecciones usaron 6/5/4, 10/13/12, 18/41/40, 40/29/21, 14/25/24), techo trapezoidal de galpón (item 7, bases 44 y 14 / altura 9 / desplazamiento 15 / lado √306 ≈ 17,5 — las lecciones usaron 18-8/13/12, 26-12/25/24, 27-11/17/15), invernadero compuesto muro+techo (item 8, muro 64×7 / cumbrera 40 / altura 24 — las lecciones usaron muro 24×6 con cumbrera 37, y muro 42×4 con cumbrera 75). No se necesitó ningún dominio nuevo, así que no hubo que correr scripts/consultar-fuentes.mjs.",
     "El item 8 es el integrador: obliga a usar los tres sub-temas en una sola respuesta —Pitágoras para sacar la altura del techo desde la cumbrera (L1), la fórmula del área con el factor 1/2 (L2) y el criterio de borde exterior de una figura compuesta (L3)— juzgando DOS resultados del estudiante a la vez (el marco y la lona). Deliberadamente no repite la plantilla del l3-item-3 de figuras-problemas-con-forma, que juzgaba solo el marco. Mismo rol que el item 8 de cierre-sistemas-2x2.json y cierre-funcion-cuadratica.json.",
-    "catalogoErrores: subconjunto EXACTO de los errores del módulo referenciados por los distractores de este cierre, copiado carácter a carácter desde el archivo que define cada uno (error-1, error-2, error-3, error-5 y error-12 desde figuras-triangulo-no-se-rompe.json; error-7, error-8 y error-9 desde figuras-borde-y-superficie.json; error-10 y error-11 desde figuras-problemas-con-forma.json). No se creó ningún id nuevo. error-6 (sumar los catetos antes de elevar al cuadrado) SALIÓ del catálogo el 2026-08-29: su único uso era el distractor 4.624 del item 1, reemplazado por el distractor de error-12 en la reescritura de ese ítem. Ojo: ningún script valida esto — npm run validar solo cruza errorCatalogado contra el catálogo en los ítems de diagnóstico (scripts/validar-contenido.mjs, reglas 6d/6e) y npm run auditar recorre itemsPAES, no el campo items de un cierre. La correspondencia entre el catálogo y los tags de este archivo se sostiene a mano.",
-    "Reescritura del 2026-08-29 (ítems 1 y 7): el cierre no tenía NINGÚN caso de hipotenusa irracional —sus 6 ternas daban entero— así que nunca ponía al estudiante frente al caso donde el atajo de los tríos falla, que es justo la habilidad que L1, L2 y L3 entrenan desde el commit 84a3bbb. Reparto final de las 6 ternas del archivo: items[0]/cierre-figuras-1 IRRACIONAL (20 y 50), items[1]/cierre-figuras-2 primitiva no-base 39-80-89, items[2]/cierre-figuras-3 primitiva no-base 28-45-53, items[5]/cierre-figuras-6 escalado 5-12-13 ×3, items[6]/cierre-figuras-7 IRRACIONAL (15 y 9), items[7]/cierre-figuras-8 escalado 3-4-5 ×8. Ninguna familia de trío se repite como respuesta —5-12-13 sí aparece además como distractor en items[0] (20-48-52, el escalado ×4 que fuerza error-12)—. Los dos irracionales quedaron en esos ítems y no en otros porque son los únicos donde la respuesta soporta un número no entero sin ensuciarse: el item 1 pide una longitud (admite ≈) y el item 7 pide ELEGIR LA EXPRESIÓN, así que la raíz queda indicada y no obliga a ningún decimal. Los ítems 6 y 8 piden áreas y un resultado integrador; ahí un irracional dejaría distractores separados por unidades sobre respuestas de tres cifras. El cierre no usa ningún trío base en crudo, a propósito: los cuatro ya se usan sin escalar en L1 (3-4, 5-12, 8-15, 7-24) y en L3, y la regla de cifras nuevas de este archivo lo impide; los escalados ejercitan el atajo en su forma más difícil (\"¿es múltiplo de un trío?\"). Como consecuencia, las familias 8-15-17 y 7-24-25 no aparecen como respuesta en el cierre —solo como el trío que los distractores de error-12 fuerzan mal.",
+    "catalogoErrores: subconjunto EXACTO de los errores del módulo referenciados por los distractores de este cierre, copiado carácter a carácter desde el archivo que define cada uno (suma-lados-en-vez-de-cuadrados, omite-raiz-final-pitagoras, suma-cuadrados-al-buscar-cateto, duplica-en-vez-de-elevar-al-cuadrado y asume-trio-pitagorico desde figuras-triangulo-no-se-rompe.json; omite-mitad-en-area, usa-altura-como-lado-inclinado y confunde-circunferencia-con-area desde figuras-borde-y-superficie.json; usa-lado-inclinado-como-altura y cuenta-borde-interior-en-figura-compuesta desde figuras-problemas-con-forma.json). No se creó ningún id nuevo. eleva-suma-de-catetos (sumar los catetos antes de elevar al cuadrado) SALIÓ del catálogo el 2026-08-29: su único uso era el distractor 4.624 del item 1, reemplazado por el distractor de asume-trio-pitagorico en la reescritura de ese ítem. Ojo: ningún script valida esto — npm run validar solo cruza errorCatalogado contra el catálogo en los ítems de diagnóstico (scripts/validar-contenido.mjs, reglas 6d/6e) y npm run auditar recorre itemsPAES, no el campo items de un cierre. La correspondencia entre el catálogo y los tags de este archivo se sostiene a mano.",
+    "Reescritura del 2026-08-29 (ítems 1 y 7): el cierre no tenía NINGÚN caso de hipotenusa irracional —sus 6 ternas daban entero— así que nunca ponía al estudiante frente al caso donde el atajo de los tríos falla, que es justo la habilidad que L1, L2 y L3 entrenan desde el commit 84a3bbb. Reparto final de las 6 ternas del archivo: items[0]/cierre-figuras-1 IRRACIONAL (20 y 50), items[1]/cierre-figuras-2 primitiva no-base 39-80-89, items[2]/cierre-figuras-3 primitiva no-base 28-45-53, items[5]/cierre-figuras-6 escalado 5-12-13 ×3, items[6]/cierre-figuras-7 IRRACIONAL (15 y 9), items[7]/cierre-figuras-8 escalado 3-4-5 ×8. Ninguna familia de trío se repite como respuesta —5-12-13 sí aparece además como distractor en items[0] (20-48-52, el escalado ×4 que fuerza asume-trio-pitagorico)—. Los dos irracionales quedaron en esos ítems y no en otros porque son los únicos donde la respuesta soporta un número no entero sin ensuciarse: el item 1 pide una longitud (admite ≈) y el item 7 pide ELEGIR LA EXPRESIÓN, así que la raíz queda indicada y no obliga a ningún decimal. Los ítems 6 y 8 piden áreas y un resultado integrador; ahí un irracional dejaría distractores separados por unidades sobre respuestas de tres cifras. El cierre no usa ningún trío base en crudo, a propósito: los cuatro ya se usan sin escalar en L1 (3-4, 5-12, 8-15, 7-24) y en L3, y la regla de cifras nuevas de este archivo lo impide; los escalados ejercitan el atajo en su forma más difícil (\"¿es múltiplo de un trío?\"). Como consecuencia, las familias 8-15-17 y 7-24-25 no aparecen como respuesta en el cierre —solo como el trío que los distractores de asume-trio-pitagorico fuerzan mal.",
     "cierre-figuras-7 reusa a propósito el stem de l3-item-2 de figuras-problemas-con-forma (techo trapezoidal de galpón, cinta de sellado del contorno): mismo contexto, distinta tarea —l3-item-2 da el lado inclinado y pide el número; el cierre da la altura, pide ELEGIR LA EXPRESIÓN y obliga a construir el lado inclinado con Pitágoras sobre catetos que no calzan con ningún trío. Mismo criterio que la relación item 8 ↔ l3-item-3.",
-    "error-4 (tratar el cateto conocido como si fuera la hipotenusa) NO se usa, a propósito. Para que produzca un distractor con cifra entera hacen falta dos catetos a<b tales que a²+b² y b²−a² sean cuadrados perfectos a la vez —el problema de las formas concordantes—, cuyas soluciones mínimas son de cuatro cifras: una búsqueda exhaustiva con node sobre todas las ternas con a≤60 y b≤200 no devolvió ninguna. En cualquier otra configuración el cálculo pide la raíz de un número negativo, o sea un distractor imposible que ningún estudiante marcaría. Se deja fuera en vez de forzar la reutilización, mismo criterio que el error-4 sin usar de cierre-funcion-cuadratica.json.",
+    "trata-cateto-como-hipotenusa (tratar el cateto conocido como si fuera la hipotenusa) NO se usa, a propósito. Para que produzca un distractor con cifra entera hacen falta dos catetos a<b tales que a²+b² y b²−a² sean cuadrados perfectos a la vez —el problema de las formas concordantes—, cuyas soluciones mínimas son de cuatro cifras: una búsqueda exhaustiva con node sobre todas las ternas con a≤60 y b≤200 no devolvió ninguna. En cualquier otra configuración el cálculo pide la raíz de un número negativo, o sea un distractor imposible que ningún estudiante marcaría. Se deja fuera en vez de forzar la reutilización, mismo criterio que el trata-cateto-como-hipotenusa sin usar de cierre-funcion-cuadratica.json.",
     "Toda la aritmética de los 8 items y de sus 24 distractores fue recalculada desde cero con node -e a partir de los números propios de cada item, nunca por ingeniería inversa desde una alternativa deseada."
   ],
   "items": [
@@ -32,21 +32,21 @@
           "texto": "70 m",
           "esCorrecta": false,
           "feedback": "70 es 20 + 50, la suma directa de los dos lados. Pitágoras no suma los lados: eleva cada uno al cuadrado, los suma, y recién ahí saca la raíz. Además, ir por el borde (70 m) siempre es más largo que cruzar en diagonal.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         },
         {
           "clave": "C",
           "texto": "2.900 m",
           "esCorrecta": false,
           "feedback": "2.900 es 20² + 50², que es correcto hasta ahí, pero es el cuadrado de la diagonal, no la diagonal. Falta el último paso: sacar la raíz cuadrada, √2.900 ≈ 53,9 m. Que la raíz no dé un número redondo no significa que el paso sobre: significa que la respuesta es aproximada.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "omite-raiz-final-pitagoras"
         },
         {
           "clave": "D",
           "texto": "52 m",
           "esCorrecta": false,
           "feedback": "52 sale de forzar el trío 20-48-52 (el 5-12-13 multiplicado por 4) sobre unos catetos que no son esos: acá el segundo lado mide 50, no 48. El atajo del trío solo sirve cuando los dos catetos calzan exactamente; si uno se mueve, hay que volver al teorema: 20² + 50² = 2.900, y √2.900 ≈ 53,9 m, no 52.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "asume-trio-pitagorico"
         }
       ],
       "solucion": "Los dos lados de la cancha son los catetos de un triángulo rectángulo y la diagonal es su hipotenusa. Entonces d² = 20² + 50² = 400 + 2.500 = 2.900, y d = √2.900 ≈ 53,9 m. Conviene revisar primero si el atajo de los tríos aplica: 20 y 50 se parecen al trío 20-48-52, pero 50 no es 48, así que el atajo queda descartado y se calcula con el teorema. Comprobación: 53,9² = 2.905,21, muy cerca de 2.900 —la diferencia es solo el redondeo, porque √2.900 = 53,8516… no es un número entero."
@@ -68,21 +68,21 @@
           "texto": "50 m",
           "esCorrecta": false,
           "feedback": "50 es 89 − 39, la resta directa entre la diagonal y el lado conocido. Pitágoras trabaja con los cuadrados, no con los lados: hay que restar 89² − 39² y después sacar la raíz.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         },
         {
           "clave": "C",
           "texto": "6.400 m",
           "esCorrecta": false,
           "feedback": "6.400 es 89² − 39², y esa resta está bien planteada, pero es el cuadrado del lado buscado, no el lado. Falta sacar la raíz cuadrada: √6.400 = 80 m.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "omite-raiz-final-pitagoras"
         },
         {
           "clave": "D",
           "texto": "10 m",
           "esCorrecta": false,
           "feedback": "10 sale de calcular √(2×89 − 2×39) = √100. Elevar al cuadrado no es multiplicar por 2: 89² es 89×89 = 7.921, no 178. Ese atajo subestima muchísimo el resultado.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado"
         }
       ],
       "solucion": "La diagonal de 89 m es la hipotenusa y los dos lados son los catetos. Si x es el lado que falta, 39² + x² = 89², así que x² = 89² − 39² = 7.921 − 1.521 = 6.400 y x = √6.400 = 80 m. Comprobación: 39² + 80² = 1.521 + 6.400 = 7.921 = 89². ✓"
@@ -104,21 +104,21 @@
           "texto": "Sí es correcto: el teorema de Pitágoras suma los cuadrados de los dos datos conocidos, sea cual sea el lado que falta.",
           "esCorrecta": false,
           "feedback": "Ese es justamente el error. Sumar los cuadrados da un resultado MAYOR que los dos datos, y el lado que falta tiene que ser menor que la diagonal de 53 m, no mayor. La suma solo sirve cuando lo que falta es la hipotenusa.",
-          "errorCatalogado": "error-3"
+          "errorCatalogado": "suma-cuadrados-al-buscar-cateto"
         },
         {
           "clave": "C",
           "texto": "No es correcto: el otro lado mide 25 metros, porque basta restar 53 − 28.",
           "esCorrecta": false,
           "feedback": "La conclusión de que hay que restar es correcta, pero se resta mal: Pitágoras resta los CUADRADOS, no los lados. Con 53 − 28 = 25 el triángulo no cierra, porque 28² + 25² = 1.409, muy lejos de 53² = 2.809.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         },
         {
           "clave": "D",
           "texto": "No es correcto: el otro lado mide 2.025 metros, que es 53² − 28².",
           "esCorrecta": false,
           "feedback": "2.025 es el cuadrado del lado buscado, no el lado. La resta de cuadrados está bien hecha, pero falta el último paso: √2.025 = 45 m. Un patio con un lado de 2.025 m tampoco calza con una diagonal de 53 m.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "omite-raiz-final-pitagoras"
         }
       ],
       "solucion": "En el triángulo rectángulo que forma la diagonal, la hipotenusa es la diagonal (53 m) y los catetos son los dos lados del patio. Como el lado desconocido es un cateto, se despeja restando: x² = 53² − 28² = 2.809 − 784 = 2.025, así que x = √2.025 = 45 m. El método del estudiante habría dado √(2.809 + 784) = √3.593 ≈ 59,9 m, un valor mayor que la propia diagonal, que es imposible: en un triángulo rectángulo la hipotenusa siempre es el lado más largo. Comprobación: 28² + 45² = 784 + 2.025 = 2.809 = 53². ✓"
@@ -140,7 +140,7 @@
           "texto": "75,36 cm²",
           "esCorrecta": false,
           "feedback": "75,36 es 2 × 3,14 × 12, la circunferencia del ollao: mide su borde, una longitud en centímetros. La pregunta es por el área, la superficie que ocupa, y esa es π × radio².",
-          "errorCatalogado": "error-9"
+          "errorCatalogado": "confunde-circunferencia-con-area"
         },
         {
           "clave": "C",
@@ -174,7 +174,7 @@
           "texto": "(16 + 9) × 12",
           "esCorrecta": false,
           "feedback": "Esa expresión da 300 m² y olvida dividir por 2. Sin ese factor estás calculando el área de un paralelogramo de base 25 m, que es exactamente el doble del trapecio: la tela te sobraría al doble.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "omite-mitad-en-area"
         },
         {
           "clave": "C",
@@ -208,21 +208,21 @@
           "texto": "585 m²",
           "esCorrecta": false,
           "feedback": "585 sale de usar 30 × 39 ÷ 2, o sea la cumbrera como si fuera la altura. La cumbrera es el lado inclinado del techo y siempre mide más que la altura vertical: la altura real es 36 m, no 39 m.",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "usa-lado-inclinado-como-altura"
         },
         {
           "clave": "C",
           "texto": "1.080 m²",
           "esCorrecta": false,
           "feedback": "1.080 es 30 × 36, con la altura correcta pero sin dividir por 2. Ese es el área de un rectángulo de 30 m por 36 m; el techo triangular es exactamente la mitad de él.",
-          "errorCatalogado": "error-7"
+          "errorCatalogado": "omite-mitad-en-area"
         },
         {
           "clave": "D",
           "texto": "360 m²",
           "esCorrecta": false,
           "feedback": "360 sale de tomar la altura como 39 − 15 = 24 m y calcular 30 × 24 ÷ 2. La altura no se obtiene restando los lados: hay que restar sus cuadrados y sacar la raíz, √(39² − 15²) = 36 m.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         }
       ],
       "solucion": "La altura del techo divide el triángulo en dos triángulos rectángulos cuya base es la mitad del ancho: 30 ÷ 2 = 15 m. Cada cumbrera de 39 m es la hipotenusa, así que la altura es h = √(39² − 15²) = √(1.521 − 225) = √1.296 = 36 m. El área del techo completo es base × altura ÷ 2 = 30 × 36 ÷ 2 = 540 m². Comprobación: 15² + 36² = 225 + 1.296 = 1.521 = 39². ✓"
@@ -244,21 +244,21 @@
           "texto": "44 + 14 + 2 × 9",
           "esCorrecta": false,
           "feedback": "Esa expresión usa 9 m, que es la altura vertical del techo, como si fuera la medida del lado inclinado. La cinta se pega sobre el lado inclinado, que es más largo que la altura porque además avanza 15 m en horizontal: mide √(15² + 9²) ≈ 17,5 m, no 9 m.",
-          "errorCatalogado": "error-8"
+          "errorCatalogado": "usa-altura-como-lado-inclinado"
         },
         {
           "clave": "C",
           "texto": "44 + 14 + 2 × 17",
           "esCorrecta": false,
           "feedback": "Esa expresión da el lado inclinado por 17 m, que es la hipotenusa del trío 8-15-17. El 15 calza, pero el otro cateto acá es 9, no 8: el atajo del trío solo sirve cuando los dos catetos coinciden exactamente. Con 15 y 9 el resultado es √(225 + 81) = √306 ≈ 17,5 m, y no es un número entero.",
-          "errorCatalogado": "error-12"
+          "errorCatalogado": "asume-trio-pitagorico"
         },
         {
           "clave": "D",
           "texto": "44 + 14 + 2 × (15 + 9)",
           "esCorrecta": false,
           "feedback": "Esa expresión calcula el lado inclinado como 15 + 9 = 24 m, sumando directamente el desplazamiento horizontal y la altura. Pitágoras no suma los catetos: hay que elevarlos al cuadrado, sumarlos y sacar la raíz, √(15² + 9²) = √306 ≈ 17,5 m, no 24 m.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados"
         }
       ],
       "solucion": "El perímetro de un trapecio es la suma de sus cuatro lados: las dos bases más los dos lados inclinados. Acá los lados inclinados no vienen dados. Cada uno es la hipotenusa de un triángulo rectángulo cuyo desplazamiento horizontal es (44 − 14) ÷ 2 = 15 m y cuya altura es 9 m. Antes de calcular conviene mirar si el atajo de los tríos aplica: el 15 aparece en el trío 8-15-17, pero el otro cateto es 9, no 8, así que el atajo queda descartado. Por el teorema, el lado inclinado mide √(15² + 9²) = √(225 + 81) = √306 ≈ 17,5 m —un número irracional, porque 306 no es un cuadrado perfecto (17² = 289 y 18² = 324)—, y el contorno es 44 + 14 + 2 × √306 ≈ 93 m. La expresión correcta deja la raíz indicada en vez de redondear."
@@ -280,14 +280,14 @@
           "texto": "Solo el marco (286 m) está bien; la lona está mal calculada.",
           "esCorrecta": false,
           "feedback": "El marco también está mal. Al sumar el contorno del muro y el del techo por separado, el ancho de 64 m se cuenta dos veces —una como techo del muro, otra como base del techo—, pero ese borde es interior y no lleva marco. El contorno real es 64 + 2 × 7 + 2 × 40 = 158 m.",
-          "errorCatalogado": "error-11"
+          "errorCatalogado": "cuenta-borde-interior-en-figura-compuesta"
         },
         {
           "clave": "C",
           "texto": "Solo la lona (1.280 m²) está bien; el marco está mal calculado.",
           "esCorrecta": false,
           "feedback": "La lona también está mal. Usar 64 × 40 ÷ 2 toma la cumbrera como si fuera la altura del techo, pero la cumbrera es el lado inclinado y siempre mide más: la altura real es √(40² − 32²) = √576 = 24 m, y la lona son 64 × 24 ÷ 2 = 768 m².",
-          "errorCatalogado": "error-10"
+          "errorCatalogado": "usa-lado-inclinado-como-altura"
         },
         {
           "clave": "D",
@@ -300,13 +300,13 @@
     }
   ],
   "contextosNumericos": [
-    "cierre-figuras-1 (cancha rectangular, resolver): 20 m × 50 m → diagonal √2.900 ≈ 53,9 m (IRRACIONAL: el atajo del trío no aplica; 20 y 50 son un near-miss de 20-48-52 = 5-12-13 ×4, que da el distractor de error-12)",
+    "cierre-figuras-1 (cancha rectangular, resolver): 20 m × 50 m → diagonal √2.900 ≈ 53,9 m (IRRACIONAL: el atajo del trío no aplica; 20 y 50 son un near-miss de 20-48-52 = 5-12-13 ×4, que da el distractor de asume-trio-pitagorico)",
     "cierre-figuras-2 (terreno rectangular, modelar): diagonal 89 m, lado 39 m → otro lado 80 m",
     "cierre-figuras-3 (patio rectangular, argumentar): diagonal 53 m, lado 28 m → otro lado 45 m (método erróneo del estudiante: √(53²+28²) ≈ 59,9 m, mayor que la propia diagonal)",
     "cierre-figuras-4 (ollao circular de una vela, resolver): radio 12 cm, π = 3,14 → área 452,16 cm² (circunferencia de referencia 75,36 cm)",
     "cierre-figuras-5 (paño de vela trapezoidal, representar): pujamen 16 m, pena 9 m, altura 12 m → área 150 m²",
     "cierre-figuras-6 (techo triangular de bodega, modelar): ancho 30 m (semiancho 15 m), cumbrera 39 m → altura 36 m, área 540 m²",
-    "cierre-figuras-7 (techo trapezoidal de galpón, representar): base mayor 44 m, base menor 14 m, altura 9 m (desplazamiento 15 m) → lado inclinado √306 ≈ 17,5 m, perímetro ≈ 93 m (IRRACIONAL: el atajo del trío no aplica; 15 y 9 son un near-miss de 8-15-17, que da el distractor de error-12)",
+    "cierre-figuras-7 (techo trapezoidal de galpón, representar): base mayor 44 m, base menor 14 m, altura 9 m (desplazamiento 15 m) → lado inclinado √306 ≈ 17,5 m, perímetro ≈ 93 m (IRRACIONAL: el atajo del trío no aplica; 15 y 9 son un near-miss de 8-15-17, que da el distractor de asume-trio-pitagorico)",
     "cierre-figuras-8 (invernadero compuesto — integrador L1+L2+L3, argumentar): muro 64 m × 7 m, techo con semiancho 32 m y cumbrera 40 m → altura 24 m, marco 158 m, lona 768 m²"
   ],
   "proveniencia": {

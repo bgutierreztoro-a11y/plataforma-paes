@@ -50,7 +50,7 @@
       "titulo": "Dos números pares, uno al lado del otro",
       "_notasInternas": [
         "Producto 48: n=6, n+2=8. Verificado con node -e: 6*8=48. Gancho de predicción libre, sin método todavía.",
-        "El bloque de texto contrasta con el error-3 (sumar en vez de multiplicar) usando 23+25=48 pero 23×25=575≠48, sin nombrar el error todavía — mismo patrón que la palanca B de ecuaciones-lineales.json (contraste con respuesta errónea plausible)."
+        "El bloque de texto contrasta con el plantea-suma-en-vez-de-producto (sumar en vez de multiplicar) usando 23+25=48 pero 23×25=575≠48, sin nombrar el error todavía — mismo patrón que la palanca B de ecuaciones-lineales.json (contraste con respuesta errónea plausible)."
       ],
       "bloques": [
         {
@@ -69,7 +69,7 @@
       "titulo": "Ahora el producto es mucho más difícil de adivinar",
       "_notasInternas": [
         "Producto 168: n=12, n+2=14. Verificado con node -e: 12*14=168.",
-        "Bloque seleccion: opción (a) plantea la suma en vez del producto -> error-3. Opción (c) es 'adivinar', sin errorCatalogado (mismo patrón que la opción de tanteo en ecuaciones-lineales, que tampoco lleva id).",
+        "Bloque seleccion: opción (a) plantea la suma en vez del producto -> plantea-suma-en-vez-de-producto. Opción (c) es 'adivinar', sin errorCatalogado (mismo patrón que la opción de tanteo en ecuaciones-lineales, que tampoco lleva id).",
         "Bloque verdaderoFalso usa 15.180 como número puramente ilustrativo de 'feo/grande', sin resolverlo ni registrarlo como ejercicio nuevo — mismo patrón que 137 y 1.943 en ecuaciones-lineales.json (palanca F)."
       ],
       "bloques": [
@@ -82,7 +82,7 @@
               "texto": "Llamar n al menor y buscar una pareja de números que SUMEN 168.",
               "esCorrecta": false,
               "feedback": "168 es el PRODUCTO de los dos números, no su suma. Si buscas una pareja que sume 168 vas a terminar resolviendo un problema distinto, con otra respuesta. El dato que tienes exige plantear una multiplicación, no una suma.",
-              "errorCatalogado": "error-3"
+              "errorCatalogado": "plantea-suma-en-vez-de-producto"
             },
             {
               "id": "b",
@@ -111,7 +111,7 @@
       "tipo": "pensar",
       "titulo": "Encuentra los dos números",
       "_notasInternas": [
-        "Producto 288: n=16, n+2=18. Verificado con node -e: raices de n^2+2n-288=0 son 16 y -18. Raiz espuria: si un estudiante reporta la pareja negativa (-18 y -16, que tambien multiplican 288), corresponde a error-1 en ambos campos.",
+        "Producto 288: n=16, n+2=18. Verificado con node -e: raices de n^2+2n-288=0 son 16 y -18. Raiz espuria: si un estudiante reporta la pareja negativa (-18 y -16, que tambien multiplican 288), corresponde a reporta-raiz-fuera-del-contexto en ambos campos.",
         "Distractor de campo cruzado (18 en numeroMenor, 16 en numeroMayor invertido) no lleva errorCatalogado: es un error de lectura de la pregunta (cuál campo es cuál), no un error de método de los 5 catalogados."
       ],
       "bloques": [
@@ -135,13 +135,13 @@
               "campoId": "numeroMenor",
               "valorObtenido": -18,
               "mensaje": "−18 SÍ es parte de una solución matemática: −18 × −16 = 288 también. Pero el problema pide números pares POSITIVOS, y −18 no lo es. Esa pareja negativa hay que descartarla, no reportarla.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "campoId": "numeroMayor",
               "valorObtenido": -16,
               "mensaje": "−16 SÍ es parte de una solución matemática: −18 × −16 = 288. Pero el problema exige números positivos, así que esta pareja negativa no es la respuesta que se pide.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "campoId": "numeroMenor",
@@ -185,8 +185,8 @@
       "titulo": "El producto nulo: por qué aparecen dos soluciones",
       "_notasInternas": [
         "CORAZÓN DE LA LECCIÓN. Producto 120: n=10, n+2=12. Verificado con node -e: raices de n^2+2n-120=0 son 10 y -12; factorizacion (n-10)(n+12).",
-        "Bloque seleccion 'soluciones completas' houses error-2 (opcion a, reporta solo n=10) y error-5 (opcion c, signos invertidos -10 y 12). Opcion d (solo -12) sin id: descarta la unica solucion positiva por completo, error distinto de los 5 catalogados (mas cercano a una lectura invertida del filtro, no a un mecanismo algebraico especifico).",
-        "Bloque pregunta (formato PAES embebido) houses error-1 (opcion B, -12 sin filtrar) y error-5 (opcion C, -10 por inversion de signo). Opcion D (12) sin id: confunde mayor con menor.",
+        "Bloque seleccion 'soluciones completas' houses reporta-una-sola-raiz (opcion a, reporta solo n=10) y invierte-signo-de-las-raices (opcion c, signos invertidos -10 y 12). Opcion d (solo -12) sin id: descarta la unica solucion positiva por completo, error distinto de los 5 catalogados (mas cercano a una lectura invertida del filtro, no a un mecanismo algebraico especifico).",
+        "Bloque pregunta (formato PAES embebido) houses reporta-raiz-fuera-del-contexto (opcion B, -12 sin filtrar) y invierte-signo-de-las-raices (opcion C, -10 por inversion de signo). Opcion D (12) sin id: confunde mayor con menor.",
         "Verificacion notaVerificacionMatematica: (n-10)(n+12) expandido = n^2 + 12n - 10n - 120 = n^2 + 2n - 120. Correcto."
       ],
       "bloques": [
@@ -242,7 +242,7 @@
               "texto": "n = 10",
               "esCorrecta": false,
               "feedback": "10 es una de las soluciones, pero no la única: la ecuación se factoriza en dos factores, (n − 10) y (n + 12), y CUALQUIERA de los dos puede anularse. Falta la otra solución.",
-              "errorCatalogado": "error-2"
+              "errorCatalogado": "reporta-una-sola-raiz"
             },
             {
               "id": "b",
@@ -255,7 +255,7 @@
               "texto": "n = −10 y n = 12",
               "esCorrecta": false,
               "feedback": "Invertiste los signos: el factor (n − 10) se anula en n = 10 (no en n = −10), y el factor (n + 12) se anula en n = −12 (no en n = 12). El signo dentro del factor es el opuesto del signo de la raíz.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             },
             {
               "id": "d",
@@ -280,14 +280,14 @@
               "texto": "−12",
               "esCorrecta": false,
               "feedback": "−12 es, en efecto, una solución matemática de la ecuación n² + 2n − 120 = 0. Pero el problema pide números pares POSITIVOS, y −12 no lo es: hay que descartarla y quedarse con la otra.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "clave": "C",
               "texto": "−10",
               "esCorrecta": false,
               "feedback": "Invertiste el signo del factor: (n − 10) se anula en n = 10, no en n = −10. −10 ni siquiera es una solución de la ecuación.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             },
             {
               "clave": "D",
@@ -308,8 +308,8 @@
       "tipo": "generalizacion",
       "titulo": "La regla: factorizar, aplicar el producto nulo, filtrar por el contexto",
       "_notasInternas": [
-        "Bloque seleccion de expansion (FOIL) con K=224: (n-14)(n+16). Verificado con node -e: expandido correcto = n^2+2n-224. Opcion b (n^2-224) = error-4 (solo multiplica los extremos, omite los terminos cruzados 16n y -14n). Opcion c (n^2+30n-224) sin id (sumo 14+16 en vez de restar). Opcion d (n^2+2n+224) = error-5 (signo del termino independiente invertido).",
-        "Bloque numerica con K=224: n=14, n+2=16. Raiz espuria -16 (error-1). Distractor -14 (error-5, invierte el signo de la raiz que sale del factor (n-14))."
+        "Bloque seleccion de expansion (FOIL) con K=224: (n-14)(n+16). Verificado con node -e: expandido correcto = n^2+2n-224. Opcion b (n^2-224) = distribuye-sobre-un-solo-termino (solo multiplica los extremos, omite los terminos cruzados 16n y -14n). Opcion c (n^2+30n-224) sin id (sumo 14+16 en vez de restar). Opcion d (n^2+2n+224) = invierte-signo-de-las-raices (signo del termino independiente invertido).",
+        "Bloque numerica con K=224: n=14, n+2=16. Raiz espuria -16 (reporta-raiz-fuera-del-contexto). Distractor -14 (invierte-signo-de-las-raices, invierte el signo de la raiz que sale del factor (n-14))."
       ],
       "bloques": [
         {
@@ -335,7 +335,7 @@
               "texto": "n² − 224",
               "esCorrecta": false,
               "feedback": "Multiplicaste solo los términos de los extremos (n × n y −14 × 16) y te saltaste los dos términos cruzados (n × 16 y −14 × n). Un producto de binomios tiene CUATRO productos parciales, no dos: sin los cruzados, pierdes el término en n.",
-              "errorCatalogado": "error-4"
+              "errorCatalogado": "distribuye-sobre-un-solo-termino"
             },
             {
               "id": "c",
@@ -348,7 +348,7 @@
               "texto": "n² + 2n + 224",
               "esCorrecta": false,
               "feedback": "El término en n está bien, pero el término independiente tiene el signo invertido: −14 × 16 = −224 (negativo), no +224.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             }
           ]
         },
@@ -367,13 +367,13 @@
               "campoId": "numeroMenor",
               "valorObtenido": -16,
               "mensaje": "−16 es, junto con −14, una solución matemática de n² + 2n − 224 = 0 (−16 × −14 = 224). Pero el problema pide números positivos, así que esa pareja negativa no sirve como respuesta.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "campoId": "numeroMenor",
               "valorObtenido": -14,
               "mensaje": "Invertiste el signo: el factor que corresponde a esta solución es (n − 14), que se anula en n = 14 (no en n = −14).",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             }
           ],
           "feedbackPorDefecto": "Plantea n(n + 2) = 224, es decir n² + 2n − 224 = 0. Busca dos números que sumen 2 y multiplicados den −224 para factorizar, y quédate con la raíz que sea un número par positivo."
@@ -434,13 +434,13 @@
               "campoId": "numeroMenor",
               "valorObtenido": -24,
               "mensaje": "−24 es parte de la otra solución matemática de la ecuación (−24 × −22 = 528), pero el problema pide números positivos. Descarta esa pareja negativa.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "campoId": "numeroMenor",
               "valorObtenido": -22,
               "mensaje": "Invertiste el signo de la raíz: el factor correspondiente se anula en n = 22 (positivo), no en n = −22.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             }
           ],
           "feedbackPorDefecto": "Plantea n(n + 2) = 528, es decir n² + 2n − 528 = 0, y resuélvela factorizando como en los ejercicios anteriores."
@@ -452,7 +452,7 @@
       "titulo": "Una caja de cartón para manualidades",
       "_notasInternas": [
         "Contexto de transferencia (descriptor 4, problemas en contexto): caja de carton, ancho w, largo w+3, area 88. Verificado con node -e: raices de w^2+3w-88=0 son 8 y -11; factorizacion (w-8)(w+11).",
-        "Distractor 11 = error-5 (toma la magnitud del factor con signo invertido: el factor es (w+11), que se anula en w=-11, no en w=11). Distractor -11 = error-1 (raiz matematicamente valida pero negativa, invalida para un ancho).",
+        "Distractor 11 = invierte-signo-de-las-raices (toma la magnitud del factor con signo invertido: el factor es (w+11), que se anula en w=-11, no en w=11). Distractor -11 = reporta-raiz-fuera-del-contexto (raiz matematicamente valida pero negativa, invalida para un ancho).",
         "Estructura actuar-antes-de-nombrar (numerica primero, abierta despues), mismo criterio que el paso 8 de ecuaciones-lineales.json."
       ],
       "bloques": [
@@ -472,13 +472,13 @@
               "campoId": "anchoCm",
               "valorObtenido": -11,
               "mensaje": "−11 es, matemáticamente, una solución de la ecuación w² + 3w − 88 = 0. Pero un ancho no puede ser negativo: esa raíz no sirve para este problema, aunque sea válida en la ecuación pura.",
-              "errorCatalogado": "error-1"
+              "errorCatalogado": "reporta-raiz-fuera-del-contexto"
             },
             {
               "campoId": "anchoCm",
               "valorObtenido": 11,
               "mensaje": "11 cm es el LARGO de la caja (8 + 3), no el ancho. Si llegaste a 11 tomando el factor (w + 11) con el signo cambiado, revisa: ese factor se anula en w = −11, no en w = 11.",
-              "errorCatalogado": "error-5"
+              "errorCatalogado": "invierte-signo-de-las-raices"
             }
           ],
           "feedbackPorDefecto": "Si w es el ancho, el largo es w + 3 y el área es w(w + 3) = 88, es decir w² + 3w − 88 = 0. Factoriza buscando dos números que sumen 3 y multiplicados den −88."
@@ -548,7 +548,7 @@
           "texto": "−9",
           "esCorrecta": false,
           "feedback": "−9 es, matemáticamente, la otra raíz de n² − n − 90 = 0. Pero una cantidad de participantes no puede ser negativa: esa solución no tiene sentido en este problema y hay que descartarla.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto"
         },
         {
           "clave": "D",
@@ -582,14 +582,14 @@
           "texto": "−28",
           "esCorrecta": false,
           "feedback": "−28 es, junto con −26, la otra solución matemática de la ecuación (−28 × −26 = 728). Pero el problema pide números positivos, así que esa pareja negativa no es la respuesta.",
-          "errorCatalogado": "error-1"
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto"
         },
         {
           "clave": "D",
           "texto": "−26",
           "esCorrecta": false,
           "feedback": "−26 no es una solución de la ecuación n² + 2n − 728 = 0: el factor correspondiente, (n − 26), se anula en n = 26 (positivo), no en n = −26. Invertiste el signo al leer la raíz desde el factor.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-signo-de-las-raices"
         }
       ],
       "solucion": "Si n es el menor de los dos números, el mayor es n + 2, y su producto es n(n + 2) = 728, es decir n² + 2n − 728 = 0. Factorizando: se buscan dos números que sumen 2 y multiplicados den −728: esos números son 28 y −26. La ecuación queda (n − 26)(n + 28) = 0, así que n = 26 o n = −28. Como se piden números positivos, la respuesta es n = 26. Comprobación: 26 × 28 = 728. ✓"
@@ -611,14 +611,14 @@
           "texto": "Es correcto: en una multiplicación el primer factor escrito es el que determina la solución, así que solo importa (n − 7).",
           "esCorrecta": false,
           "feedback": "El orden en que se escriben los factores no tiene ningún efecto matemático: (n−7)(n+9) es exactamente lo mismo que (n+9)(n−7). El estudiante se quedó con una sola solución y omitió la segunda, que es igual de válida.",
-          "errorCatalogado": "error-2"
+          "errorCatalogado": "reporta-una-sola-raiz"
         },
         {
           "clave": "C",
           "texto": "No es correcto: la solución correcta es n = 9, porque el factor (n + 9) es el que determina el signo de la respuesta.",
           "esCorrecta": false,
           "feedback": "El factor (n + 9) se anula en n = −9, no en n = 9: para que n + 9 valga cero, n tiene que ser el opuesto de 9. Invertiste el signo al leer la raíz desde el factor.",
-          "errorCatalogado": "error-5"
+          "errorCatalogado": "invierte-signo-de-las-raices"
         },
         {
           "clave": "D",
