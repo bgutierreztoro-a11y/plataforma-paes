@@ -183,6 +183,26 @@ const VISUALES: Record<string, EntradaVisual> = {
       ejemploEnganoso: true,
     },
   },
+  /* Inscritos por mes en la escuela de surf: la variación no está escrita. */
+  "cierre-datos-5": {
+    grafico: {
+      tipo: "graficoLineas",
+      categorias: ["Dic", "Ene", "Feb", "Mar"],
+      series: [{ nombre: "Inscritos", valores: [28, 36, 44, 32] }],
+      ejeVertical: "Inscritos",
+    },
+  },
+  /* El afiche engañoso de la palta, con el eje desde 3.850. */
+  "cierre-datos-8": {
+    grafico: {
+      tipo: "graficoBarras",
+      categorias: ["Verd. A", "Verd. B", "Verd. C", "Verd. D"],
+      series: [{ nombre: "Precio", valores: [3900, 4000, 4100, 4200] }],
+      ejeVertical: "Pesos por kilo",
+      ejeTruncado: true,
+      ejemploEnganoso: true,
+    },
+  },
 };
 
 /**

@@ -1,0 +1,323 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-tablas-y-graficos",
+  "moduloId": "tablas-y-graficos",
+  "titulo": "Cierre del módulo: Representación de datos a través de tablas y gráficos",
+  "_notasInternas": [
+    "Cierre del módulo 'Representación de datos a través de tablas y gráficos', construido después de que las 3 lecciones (datos-leer-antes-de-calcular, datos-grafico-puede-mentir, datos-numero-que-representa) pasaran npm run validar y npm run auditar sin bloqueantes. Diseño: docs/diseno-modulo-tablas-y-graficos.md, sección 'Cierre'.",
+    "Cobertura por lección: L1 (tablas, relativas, comparar grupos) = ítems 1, 2 y 6. L2 (sector, cantidad desde sector, líneas, eje truncado) = ítems 3, 4, 5 y 8. L3 (promedio desde tabla, dato faltante) = ítems 6 y 7. Cobertura por habilidad: resolver = ítems 1, 6. representar = ítems 3, 5. modelar = ítems 4, 7. argumentar = ítems 2, 8 (2 de cada una). Dificultad: baja = ítems 1, 3; media = ítems 2, 4, 5, 6; alta = ítems 7, 8.",
+    "Catálogo canónico: content/errores/tablas-y-graficos.json. Ids referenciados: olvida-el-factor-cien (1A, 4D, 8C), divide-por-total-equivocado (1B, 2C), divide-por-categorias-en-vez-de-n (1D, 2D, 6D), compara-absolutas-de-grupos-distintos (2B), calcula-angulo-con-cien (3A), lee-sector-como-cantidad-sin-total (3B, 4C), usa-complemento-del-sector (3D, 4B), toma-valor-final-como-variacion (5B), resta-periodos-al-reves (5C), acumula-en-vez-de-variar (5D), confunde-frecuencia-con-valor (6A), promedia-valores-distintos-sin-ponderar (6C), deja-un-dato-fuera-del-conteo (7A), promedia-promedios-sin-ponderar (7B), entrega-promedio-como-dato-faltante (7C), lee-altura-en-eje-truncado (8B), elige-circular-para-comparar-totales (8D). Los 24 distractores llevan errorCatalogado. usa-lineas-para-categorias y cree-que-extremo-no-afecta-promedio no aparecen en el cierre: los ejercitan L2 (práctica, consolidación e ítem 3) y L3 (práctica, consolidación e ítem 3), y los 19 ids quedan cubiertos entre L1, L2, L3 y cierre.",
+    "Dominios nuevos, distintos de las tres lecciones: pescado descargado por especie en dos caletas; calefacción de los hogares de un pueblo; consulta vecinal de un presupuesto participativo; inscritos por mes en una escuela de surf; cajas de uva por cuadrilla en una vendimia; puntos por ronda en tiro con arco; precio del kilo de palta en cuatro verdulerías.",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (tablaFrecuencias, frecuenciaRelativa, anguloSector, mediaDesdeTabla, datoFaltante, escalaDeValores): caleta A n = 24 (merluza 9 → 9/24 = 3/8 = 37,5 %; reineta 6 → 25 %), caleta B n = 40 (reineta 8 → 20 %); calefacción n = 40 (leña 18, gas 12, eléctrica 6, parafina 4 → gas 108°); consulta vecinal 40 votos, áreas verdes 35 % → 14; escuela de surf 28, 36, 44, 32 (diciembre a marzo), febrero → marzo = 32 − 44 = −12; vendimia 12 ×3, 14 ×5, 15 ×6, 18 ×2 → 232/16 = 14,5; tiro con arco 6 rondas a 9 con 9, 7, 10, 8, 9 → 54 − 43 = 11; palta 3.900, 4.000, 4.100, 4.200 con eje truncado: escala 3.850 a 4.250 de 50 en 50, D mide 7 escalones y A 1, y 300/3.900 = 7,7 %.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {37,5; 108; 14; 14,5; 11} y de texto (A en 2, bajó 12 en 5, No en 8); distractores numéricos {0,375; 22,5; 225; 30; 43,2; 252; 26; 35; 1.400; 4; 14,75; 58; 2; 8,8; 9}; sin intersección. Cotejo contra los contextosNumericos de L1, L2 y L3: ninguna escena ni conjunto de números de este cierre se repite en las lecciones (la vendimia y la caleta son dominios propios del cierre; 108° reaparece como ángulo de otro sector de otra tabla, 12 de 40, con la misma fracción a propósito: es el mismo ejercicio de sector con otro dominio).",
+    "Ítems con visual en lib/visualesItems.tsx: cierre-datos-5 (líneas de inscritos por mes, el gráfico es el estímulo y la variación no está escrita) y cierre-datos-8 (barras de precios de palta con eje truncado, marcadas ejemploEnganoso: el ítem pide detectar el engaño). En ningún caso el gráfico rotula la respuesta pedida.",
+    "Toda la aritmética de los 8 ítems y sus 24 alternativas fue recalculada desde cero a partir de los números propios de cada ítem, nunca por ingeniería inversa desde una alternativa deseada. Pendientes las dos auditorías en hilos aislados y la consulta de colisión de Benja antes de cualquier git push."
+  ],
+  "contextosNumericos": [
+    "cierre-datos-1 (dos caletas, resolver, baja): caleta A descargó 24 pescados (merluza 9, reineta 6, jurel 6, congrio 3) y la B 40; merluza en A = 9/24 = 37,5 %",
+    "cierre-datos-2 (dos caletas, argumentar, media): reineta 6 de 24 en A (25 %) contra 8 de 40 en B (20 %); pesa más en A",
+    "cierre-datos-3 (calefacción de un pueblo, representar, baja): 40 hogares, leña 18, gas 12, eléctrica 6, parafina 4; sector de gas 12/40 · 360 = 108°",
+    "cierre-datos-4 (consulta vecinal, modelar, media): 40 votos, sector de áreas verdes 35 % → 14 votos",
+    "cierre-datos-5 (escuela de surf, representar, media): inscritos diciembre 28, enero 36, febrero 44, marzo 32; febrero → marzo bajó 12",
+    "cierre-datos-6 (vendimia, resolver, media): cajas por cuadrilla 12 ×3, 14 ×5, 15 ×6, 18 ×2 (16 cuadrillas) → promedio 14,5",
+    "cierre-datos-7 (tiro con arco, modelar, alta): 6 rondas para promediar 9 puntos, conocidas 9, 7, 10, 8, 9 → la sexta debe dar 11",
+    "cierre-datos-8 (palta en cuatro verdulerías, argumentar, alta): 3.900, 4.000, 4.100, 4.200 pesos con eje truncado desde 3.850; veredicto sobre 'el doble' (es un 7,7 %)"
+  ],
+  "items": [
+    {
+      "id": "cierre-datos-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una mañana, la caleta A descargó 24 pescados: merluza 9, reineta 6, jurel 6 y congrio 3. La caleta B descargó 40 pescados esa misma mañana. ¿Cuál es la frecuencia relativa de la merluza en la caleta A?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,375 %",
+          "esCorrecta": false,
+          "feedback": "0,375 es el decimal, 9 ÷ 24. El porcentaje es el decimal por 100: 37,5 %. Escribir 0,375 % deja el número 100 veces más chico.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        },
+        {
+          "clave": "B",
+          "texto": "22,5 %",
+          "esCorrecta": false,
+          "feedback": "22,5 % es 9 ÷ 40: divide las merluzas de la caleta A por el total de la caleta B. La frecuencia relativa va sobre el total propio, los 24 pescados de A: 9 ÷ 24 = 37,5 %.",
+          "errorCatalogado": "divide-por-total-equivocado"
+        },
+        {
+          "clave": "C",
+          "texto": "37,5 %",
+          "esCorrecta": true,
+          "feedback": "Correcto. 9 de 24 pescados: 9 ÷ 24 = 3/8 = 0,375 = 37,5 %. El total de la caleta B no interviene."
+        },
+        {
+          "clave": "D",
+          "texto": "225 %",
+          "esCorrecta": false,
+          "feedback": "225 % es 9 ÷ 4, dividiendo por la cantidad de especies en vez de por los pescados. Ninguna especie puede ser más del 100 % de la descarga. Se divide por n = 24.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Frecuencia relativa = frecuencia absoluta ÷ total del mismo grupo. Merluza en la caleta A: 9 ÷ 24 = 3/8 = 0,375, y como porcentaje 37,5 %. Comprobación: las cuatro relativas de A son 9/24 = 37,5 %, 6/24 = 25 %, 6/24 = 25 % y 3/24 = 12,5 %, que suman 100 %. ✓"
+    },
+    {
+      "id": "cierre-datos-2",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "enunciado": "Esa mañana la caleta A descargó 24 pescados, 6 de ellos reinetas, y la caleta B descargó 40 pescados, 8 de ellos reinetas. ¿En cuál caleta la reineta representa una parte mayor de la descarga?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "En la caleta A: 6/24 = 25 %, contra 8/40 = 20 % en la B.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada conteo sobre su propio total: 6 de 24 es un cuarto, 8 de 40 es un quinto. Más reinetas en B, pero menos parte."
+        },
+        {
+          "clave": "B",
+          "texto": "En la caleta B: descargó 8 reinetas y la A solo 6.",
+          "esCorrecta": false,
+          "feedback": "8 contra 6 compara conteos de caletas con distinto total (40 y 24). Sobre sus propios totales, 8/40 = 20 % y 6/24 = 25 %: la reineta pesa más en la caleta A.",
+          "errorCatalogado": "compara-absolutas-de-grupos-distintos"
+        },
+        {
+          "clave": "C",
+          "texto": "En la caleta B: la A llega a 6/40 = 15 %, menos que el 20 % de la B.",
+          "esCorrecta": false,
+          "feedback": "6/40 divide las reinetas de la caleta A por el total de la caleta B. Cada frecuencia relativa va sobre su propio total: 6 de los 24 pescados de A, que es 25 %.",
+          "errorCatalogado": "divide-por-total-equivocado"
+        },
+        {
+          "clave": "D",
+          "texto": "En las dos igual: en ambas la reineta es 1 de 4 especies, un 25 %.",
+          "esCorrecta": false,
+          "feedback": "«1 de 4 especies» divide por la cantidad de categorías, no por los pescados. La frecuencia relativa se calcula sobre n: 6 de 24 y 8 de 40, que no dan lo mismo.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Para comparar grupos de distinto tamaño se usan frecuencias relativas sobre el total propio. Caleta A: 6/24 = 1/4 = 25 %. Caleta B: 8/40 = 1/5 = 20 %. Como 25 % > 20 %, la reineta representa una parte mayor en la caleta A, aunque la caleta B haya descargado más reinetas. La alternativa correcta es A."
+    },
+    {
+      "id": "cierre-datos-3",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "enunciado": "En un pueblo se encuestó a 40 hogares sobre su calefacción: leña 18, gas 12, eléctrica 6 y parafina 4. Para representar los datos en un gráfico circular, ¿cuántos grados debe medir el sector correspondiente al gas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "30°",
+          "esCorrecta": false,
+          "feedback": "30 es el porcentaje del gas (12 de 40), no su ángulo. El círculo completo mide 360°, no 100: la fracción 12/40 se multiplica por 360, y da 108°.",
+          "errorCatalogado": "calcula-angulo-con-cien"
+        },
+        {
+          "clave": "B",
+          "texto": "43,2°",
+          "esCorrecta": false,
+          "feedback": "43,2 es 12 · 3,6, como si los 12 hogares fueran un 12 %. Pero 12 hogares de 40 son un 30 %, y ese 30 % del círculo es 0,3 · 360 = 108°.",
+          "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+        },
+        {
+          "clave": "C",
+          "texto": "108°",
+          "esCorrecta": true,
+          "feedback": "Correcto. Frecuencia relativa del gas: 12/40 = 3/10. Ángulo: 3/10 · 360 = 108°."
+        },
+        {
+          "clave": "D",
+          "texto": "252°",
+          "esCorrecta": false,
+          "feedback": "252° es el sector de todos los hogares que NO usan gas: 28 de 40 por 360. El sector del gas es 12 de 40, la parte que sí cumple: 108°.",
+          "errorCatalogado": "usa-complemento-del-sector"
+        }
+      ],
+      "solucion": "Ángulo del sector = frecuencia relativa · 360°. Gas: 12/40 = 3/10, y 3/10 · 360 = 108°. Comprobación: los cuatro sectores miden 18/40 · 360 = 162°, 108°, 6/40 · 360 = 54° y 4/40 · 360 = 36°, que suman 360°. ✓"
+    },
+    {
+      "id": "cierre-datos-4",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En una consulta vecinal para repartir un presupuesto participativo votaron 40 personas. El gráfico circular de los resultados muestra que el sector de «áreas verdes» corresponde al 35 %. ¿Cuántas personas votaron por áreas verdes?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "14",
+          "esCorrecta": true,
+          "feedback": "Correcto. 35 % de 40 = 0,35 · 40 = 14 personas. El sector da la parte; el total de votos la convierte en personas."
+        },
+        {
+          "clave": "B",
+          "texto": "26",
+          "esCorrecta": false,
+          "feedback": "26 son las personas que votaron por otras cosas: el 65 % de 40. Se pedía el sector de 35 %: 0,35 · 40 = 14.",
+          "errorCatalogado": "usa-complemento-del-sector"
+        },
+        {
+          "clave": "C",
+          "texto": "35",
+          "esCorrecta": false,
+          "feedback": "35 es el porcentaje del sector, no una cantidad de personas. Con 40 votos en total, el 35 % son 14. Solo si hubieran votado 100 personas el 35 % serían 35.",
+          "errorCatalogado": "lee-sector-como-cantidad-sin-total"
+        },
+        {
+          "clave": "D",
+          "texto": "1.400",
+          "esCorrecta": false,
+          "feedback": "40 · 35 multiplica por el porcentaje sin dividir por 100. El 35 % es 0,35, y ninguna parte puede superar los 40 votos.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        }
+      ],
+      "solucion": "Cantidad = porcentaje · total ÷ 100 = 35 · 40 ÷ 100 = 14 personas. Comprobación: 14 de 40 es 14/40 = 7/20 = 35 %, el sector del gráfico. ✓"
+    },
+    {
+      "id": "cierre-datos-5",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "El gráfico de líneas muestra los inscritos por mes en una escuela de surf durante el verano: diciembre 28, enero 36, febrero 44 y marzo 32. ¿Cuál fue la variación de inscritos entre febrero y marzo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Bajó 12",
+          "esCorrecta": true,
+          "feedback": "Correcto. Variación = marzo − febrero = 32 − 44 = −12: doce inscritos menos de un mes al otro."
+        },
+        {
+          "clave": "B",
+          "texto": "Bajó 32",
+          "esCorrecta": false,
+          "feedback": "32 son los inscritos de marzo, no cuánto cambió. La variación es la diferencia entre los dos meses: 32 − 44 = −12.",
+          "errorCatalogado": "toma-valor-final-como-variacion"
+        },
+        {
+          "clave": "C",
+          "texto": "Subió 12",
+          "esCorrecta": false,
+          "feedback": "El tamaño es correcto pero el sentido no: de 44 en febrero a 32 en marzo los inscritos bajaron. La variación es final menos inicial, 32 − 44 = −12, una baja.",
+          "errorCatalogado": "resta-periodos-al-reves"
+        },
+        {
+          "clave": "D",
+          "texto": "Subió 76",
+          "esCorrecta": false,
+          "feedback": "76 es febrero más marzo, el acumulado de los dos meses. La variación pregunta cuánto cambió de un mes al otro, y eso se resta: 32 − 44 = −12.",
+          "errorCatalogado": "acumula-en-vez-de-variar"
+        }
+      ],
+      "solucion": "En el gráfico, febrero vale 44 y marzo 32. Variación = valor final − valor inicial = 32 − 44 = −12: bajó 12 inscritos. Comprobación con el trazo: de diciembre a febrero la línea sube (28 → 36 → 44) y de febrero a marzo baja. ✓"
+    },
+    {
+      "id": "cierre-datos-6",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "En una vendimia, 16 cuadrillas cosecharon cajas de uva según esta tabla de frecuencias: 12 cajas, 3 cuadrillas; 14 cajas, 5 cuadrillas; 15 cajas, 6 cuadrillas; 18 cajas, 2 cuadrillas. ¿Cuál es el promedio de cajas por cuadrilla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4",
+          "esCorrecta": false,
+          "feedback": "4 es el promedio de las frecuencias (3 + 5 + 6 + 2) ÷ 4, que cuentan cuadrillas, no cajas. Lo que se promedia son las cajas: 12 · 3 + 14 · 5 + 15 · 6 + 18 · 2 = 232 cajas en 16 cuadrillas.",
+          "errorCatalogado": "confunde-frecuencia-con-valor"
+        },
+        {
+          "clave": "B",
+          "texto": "14,5",
+          "esCorrecta": true,
+          "feedback": "Correcto. Σ valor · frecuencia = 36 + 70 + 90 + 36 = 232 cajas; n = 3 + 5 + 6 + 2 = 16 cuadrillas; 232 ÷ 16 = 14,5."
+        },
+        {
+          "clave": "C",
+          "texto": "14,75",
+          "esCorrecta": false,
+          "feedback": "14,75 es (12 + 14 + 15 + 18) ÷ 4: promedia los valores como si cada uno correspondiera a una sola cuadrilla. El 15 lo cosecharon 6 cuadrillas y el 18 solo 2; ponderando, 232 ÷ 16 = 14,5.",
+          "errorCatalogado": "promedia-valores-distintos-sin-ponderar"
+        },
+        {
+          "clave": "D",
+          "texto": "58",
+          "esCorrecta": false,
+          "feedback": "58 es 232 ÷ 4: la suma de cajas dividida por las filas de la tabla. Los datos son 16 cuadrillas, y ninguna cosechó 58 cajas: se divide por 16.",
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n"
+        }
+      ],
+      "solucion": "Promedio desde la tabla = Σ valor · frecuencia ÷ n. Suma: 12 · 3 + 14 · 5 + 15 · 6 + 18 · 2 = 36 + 70 + 90 + 36 = 232 cajas. n = 3 + 5 + 6 + 2 = 16 cuadrillas. Promedio = 232 ÷ 16 = 14,5 cajas por cuadrilla. Comprobación: queda entre el menor (12) y el mayor (18) valor. ✓"
+    },
+    {
+      "id": "cierre-datos-7",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "enunciado": "En una competencia de tiro con arco, una arquera quiere terminar seis rondas con un promedio de 9 puntos por ronda. En las cinco primeras obtuvo 9, 7, 10, 8 y 9 puntos. ¿Cuántos puntos necesita en la sexta ronda?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2",
+          "esCorrecta": false,
+          "feedback": "2 sale de 9 · 5 − 43: multiplica el promedio por las cinco rondas conocidas. Pero el promedio de 9 es sobre las seis rondas, contando la que falta: el total tiene que ser 9 · 6 = 54, y 54 − 43 = 11.",
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo"
+        },
+        {
+          "clave": "B",
+          "texto": "8,8",
+          "esCorrecta": false,
+          "feedback": "8,8 promedia el promedio de las cinco rondas (43 ÷ 5 = 8,6) con el objetivo 9, como si pesaran igual. La sexta ronda es un solo dato que debe compensar lo que falta: 54 − 43 = 11.",
+          "errorCatalogado": "promedia-promedios-sin-ponderar"
+        },
+        {
+          "clave": "C",
+          "texto": "9",
+          "esCorrecta": false,
+          "feedback": "9 es el promedio que quiere, no lo que necesita en la sexta ronda. Las cinco primeras suman 43, menos que 9 · 5 = 45: la sexta tiene que compensar esos 2 puntos y además aportar sus 9, o sea 11.",
+          "errorCatalogado": "entrega-promedio-como-dato-faltante"
+        },
+        {
+          "clave": "D",
+          "texto": "11",
+          "esCorrecta": true,
+          "feedback": "Correcto. Total necesario: 9 · 6 = 54. Suma de las cinco rondas: 9 + 7 + 10 + 8 + 9 = 43. Sexta ronda: 54 − 43 = 11."
+        }
+      ],
+      "solucion": "Suma total necesaria = promedio objetivo · n = 9 · 6 = 54 puntos. Suma de las rondas conocidas: 9 + 7 + 10 + 8 + 9 = 43. Puntos de la sexta ronda: 54 − 43 = 11. Comprobación: (43 + 11) ÷ 6 = 54 ÷ 6 = 9. ✓"
+    },
+    {
+      "id": "cierre-datos-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un afiche compara el precio del kilo de palta en cuatro verdulerías, A, B, C y D, con un gráfico de barras cuyo eje vertical parte de 3.850 pesos: los precios son 3.900, 4.000, 4.100 y 4.200. Un vecino afirma: «en la verdulería D la palta cuesta el doble que en la A». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: D cobra 300 pesos más sobre 3.900, cerca de un 8 % más; la barra parece mucho más alta porque el eje no parte de 0.",
+          "esCorrecta": true,
+          "feedback": "Correcto. 4.200 ÷ 3.900 ≈ 1,08. En el afiche la barra de A mide un escalón sobre 3.850 y la de D siete, pero esas alturas miden la distancia a 3.850, no el precio. Con el eje desde 0, las cuatro barras son casi iguales."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: la barra de D es siete veces más alta que la de A, así que cobra muchísimo más.",
+          "esCorrecta": false,
+          "feedback": "Siete veces más alta solo porque el eje parte de 3.850. La altura de una barra representa la cantidad únicamente cuando el eje parte de 0; acá representa lo que sobra de 3.850. Los precios reales, 4.200 y 3.900, difieren en un 7,7 %.",
+          "errorCatalogado": "lee-altura-en-eje-truncado"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, pero por una diferencia aún menor: D cobra apenas un 0,077 % más que A.",
+          "esCorrecta": false,
+          "feedback": "300 ÷ 3.900 = 0,077, y eso es un 7,7 %, no un 0,077 %: falta multiplicar el decimal por 100. El veredicto de que no es el doble es correcto, pero la diferencia es cerca de un 8 %.",
+          "errorCatalogado": "olvida-el-factor-cien"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, y el error del afiche es otro: para comparar cuánto cobra cada verdulería debió usar un gráfico circular.",
+          "esCorrecta": false,
+          "feedback": "Un circular reparte el 100 % entre las cuatro verdulerías y esconde los precios: serviría para ver qué parte de la suma de los cuatro precios es cada uno, no para comparar cuánto cobra cada una. El problema del afiche es el eje que no parte de 0, no el tipo de gráfico.",
+          "errorCatalogado": "elige-circular-para-comparar-totales"
+        }
+      ],
+      "solucion": "Los precios están rotulados: A cobra 3.900 y D 4.200. La diferencia es 300 pesos, y 300 ÷ 3.900 ≈ 0,077, o sea un 7,7 % más, lejos del doble (que sería 7.800). El afiche engaña con el eje: al partir de 3.850 en escalones de 50, la barra de A mide 1 escalón y la de D 7, y esa razón de 7 a 1 compara distancias a 3.850, no precios. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Representación de datos a través de tablas y gráficos: solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Los 8 ítems, sus contextos (dos caletas y su descarga por especie, la calefacción de los hogares de un pueblo, una consulta vecinal de presupuesto participativo, una escuela de surf, una vendimia por cuadrillas, una competencia de tiro con arco y el precio de la palta en cuatro verdulerías) y sus números fueron creados desde cero por el autor del proyecto, elegidos para que las relativas, ángulos y promedios salgan enteros o con un decimal, para no repetir ninguna escena ni conjunto de números de las tres lecciones del módulo ni de los contextosNumericos de content/, y verificados con node -e sobre lib/estadistica.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-tablas-y-graficos.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
