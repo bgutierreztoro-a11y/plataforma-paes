@@ -23,7 +23,7 @@ import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
 import { RepasoError } from "@/components/advance/RepasoError";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
-import { CATALOGO_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE, REPASO_MUESTRA } from "./muestraDescarte";
+import { COPY_MUESTRA, GRUPOS_ERRORES_MUESTRA, MUESTRA_DESCARTE, REPASO_MUESTRA } from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import {
   LINEAS,
@@ -876,7 +876,7 @@ export default function PaginaDiseno() {
 
         <Seccion
           titulo="Resultado del descarte"
-          nota="La pantalla final de una sesión (§6.1): cómo te fue, qué error apareció más, qué hacer ahora. Sin gráficos ni porcentajes. Dos estados: con error dominante (TarjetaError con el rótulo y la descripción del catálogo de muestra) y sin descartes acertados. Sin el botón de otra sesión, que solo existe en la ruta real."
+          nota="La pantalla final de una sesión (§6.1): cómo te fue, qué error apareció más, qué hacer ahora. Sin gráficos ni porcentajes. Desde F4c la tarjeta muestra titulo + apoyo del catálogo y es un enlace al repaso de ese error. Tres estados: con error dominante (TarjetaError con el rótulo, el título y el apoyo de la muestra), con error dominante sin copy todavía (cae a descripcion, sin apoyo: todo catálogo que no sea porcentaje, hoy) y sin descartes acertados. Sin el botón de otra sesión, que solo existe en la ruta real."
         >
           <div className="flex flex-col gap-6">
             {RESULTADOS_MUESTRA.map(({ id, rotulo, registros }) => (
@@ -892,7 +892,7 @@ export default function PaginaDiseno() {
                       data-resultado={id}
                       className="rounded-sm border border-hairline bg-[var(--color-bg)]"
                     >
-                      <ResultadoDescarte registros={registros} catalogo={CATALOGO_MUESTRA} />
+                      <ResultadoDescarte registros={registros} catalogo={COPY_MUESTRA} unidadId="muestra" />
                     </div>
                   )}
                 </PorLinea>
@@ -962,7 +962,9 @@ export default function PaginaDiseno() {
 }
 
 /* Registros de MUESTRA para la pantalla final: una sesión con error dominante
-   (error-7 aparece tres veces) y una sin ningún descarte acertado. */
+   (error-7 aparece tres veces), una con dominante sin copy (error-6, el único
+   de COPY_MUESTRA sin titulo: la caída a descripcion de F4c) y una sin ningún
+   descarte acertado. */
 const RESULTADOS_MUESTRA: { id: string; rotulo: string; registros: RegistroItem[] }[] = [
   {
     id: "con-dominante",
@@ -971,6 +973,14 @@ const RESULTADOS_MUESTRA: { id: string; rotulo: string; registros: RegistroItem[
       { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D", "B"], erroresIdentificados: ["error-3", "error-7", "error-1"], descarteFatal: null, tiempoMs: 41000 },
       { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B", "A"], erroresIdentificados: ["error-7"], descarteFatal: "A", tiempoMs: 12000 },
       { itemId: "adv-muestra-galeria-003", ordenDescartes: ["D", "A"], erroresIdentificados: ["error-7"], descarteFatal: "B", tiempoMs: 9000 },
+    ],
+  },
+  {
+    id: "sin-copy",
+    rotulo: "Con error dominante sin copy · 2 ítems, 3 descartes acertados, Error 06 dos veces: cae a descripcion",
+    registros: [
+      { itemId: "adv-muestra-galeria-001", ordenDescartes: ["C", "D"], erroresIdentificados: ["error-6", "error-1"], descarteFatal: "B", tiempoMs: 15000 },
+      { itemId: "adv-muestra-galeria-002", ordenDescartes: ["B"], erroresIdentificados: ["error-6"], descarteFatal: "A", tiempoMs: 8000 },
     ],
   },
   {

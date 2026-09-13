@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { EjecutorDescarte } from "@/components/advance/EjecutorDescarte";
 import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
+import type { CopyDeError } from "@/lib/advance/copyDeError";
 import { cuerpoSesionDescarte, type CuerpoSesionDescarte, type ItemAdvance } from "@/lib/advance/descarte";
 import { registrarEvento } from "@/lib/eventos";
 
@@ -11,8 +12,8 @@ interface SesionDescarteProps {
   unidadId: string;
   /* Nombre técnico DEMRE de la unidad, lo único que ve el estudiante. */
   titulo: string;
-  /* Id local del catálogo → descripción, resuelto en el servidor. */
-  catalogo: Record<string, string>;
+  /* Id local del catálogo → titulo + apoyo, resuelto en el servidor (F4c). */
+  catalogo: Record<string, CopyDeError>;
   /* La ruta de esta misma sesión, para "Otra sesión". */
   ruta: string;
 }
@@ -70,7 +71,7 @@ export function SesionDescarte({ items, unidadId, titulo, catalogo, ruta }: Sesi
           : undefined
       }
       renderFinal={(registros) => (
-        <ResultadoDescarte registros={registros} catalogo={catalogo} rutaOtraSesion={ruta} />
+        <ResultadoDescarte registros={registros} catalogo={catalogo} unidadId={unidadId} rutaOtraSesion={ruta} />
       )}
     />
   );

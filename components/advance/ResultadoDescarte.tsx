@@ -1,19 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import { PantallaCentrada } from "@/components/ui/PantallaCentrada";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BotonVolver } from "@/components/ui/linea/BotonVolver";
 import { FranjaDeItems } from "@/components/ui/linea/FranjaDeItems";
 import { TarjetaError } from "@/components/ui/linea/TarjetaError";
+import type { CopyDeError } from "@/lib/advance/copyDeError";
 import { resumenDeSesion, type RegistroItem } from "@/lib/advance/descarte";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
 import { rotuloDeError } from "@/lib/progresoSesion";
 
 interface ResultadoDescarteProps {
   registros: RegistroItem[];
-  /* Id local del catálogo → descripción, resuelto en el servidor con
-     `catalogoDelModulo`. Solo se lee la entrada del error más frecuente. */
-  catalogo: Record<string, string>;
+  /* Id local del catálogo → titulo + apoyo, resuelto en el servidor con
+     `copyDelCatalogo(catalogoCompletoDelModulo(...))`. Solo se lee la entrada
+     del error más frecuente. */
+  catalogo: Record<string, CopyDeError>;
+  /* La unidad de la sesión: arma el enlace de la tarjeta al repaso del error. */
+  unidadId: string;
   /* La ruta de la sesión. Si está, aparece "Otra sesión", que la vuelve a pedir
      al servidor con una navegación completa: un `Link` a la misma ruta puede
      servir el payload cacheado y repetir los mismos cinco ítems. Sin ella (la
@@ -28,18 +33,27 @@ interface ResultadoDescarteProps {
  * celebración. `FranjaDeItems` es el eco visual de la sesión, igual que en el
  * cierre de una lección.
  *
- * "Nombre del error" es el rótulo de `rotuloDeError` ("Error 07") más la
- * descripción del catálogo canónico, en `TarjetaError`: la misma pieza que ve
- * el estudiante cuando falla un ítem en la capa gratis.
+ * "Nombre del error" es el rótulo de `rotuloDeError` ("Error 07") más el
+ * `titulo` del catálogo canónico y, debajo, su `apoyo`, en `TarjetaError`: la
+ * misma pieza que ve el estudiante cuando falla un ítem en la capa gratis.
+ * Desde F4c es el copy para el estudiante y no la ficha de autor; un catálogo
+ * sin `titulo` todavía cae a `descripcion` (`copyDeError`, resuelto en el
+ * servidor). Un error que no está en el catálogo muestra su id, como antes.
+ *
+ * **Tocable desde F4c**: la tarjeta entera es un `<Link>` a
+ * `/advance/errores/<unidadId>/<errorId>`, la pantalla de repaso de ese error,
+ * con las mismas clases de foco y `min-h-11` que `TarjetaEstadoError`. Sin
+ * hover de borde: la superficie oscura no tiene borde. Sin botón nuevo:
+ * `queHacerDetalle` ya dice "vuelve a leer el error de arriba".
  *
  * Todo texto sobre el fondo de página va en `text-primary` (deuda-contraste-
  * etiquetas.md §1); la jerarquía la dan tamaño y peso.
  */
-export function ResultadoDescarte({ registros, catalogo, rutaOtraSesion }: ResultadoDescarteProps) {
+export function ResultadoDescarte({ registros, catalogo, unidadId, rutaOtraSesion }: ResultadoDescarteProps) {
   const { resultado } = TEXTOS_ADVANCE;
   const resumen = resumenDeSesion(registros);
   const error = resumen.errorMasFrecuente;
-  const descripcion = error ? catalogo[error] : undefined;
+  const copy = error ? catalogo[error] : undefined;
 
   return (
     <PantallaCentrada className="gap-8">
@@ -59,7 +73,17 @@ export function ResultadoDescarte({ registros, catalogo, rutaOtraSesion }: Resul
         <section className="space-y-3" data-que-error>
           <h2 className="text-etiqueta uppercase text-primary">{resultado.queError}</h2>
           {error ? (
-            <TarjetaError clave={rotuloDeError(error, 1)} diagnostico={descripcion ?? error} />
+            <Link
+              href={`/advance/errores/${unidadId}/${error}`}
+              data-error-id={error}
+              className="block min-h-11 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strong"
+            >
+              <TarjetaError
+                clave={rotuloDeError(error, 1)}
+                diagnostico={copy?.titulo ?? error}
+                detalle={copy?.apoyo}
+              />
+            </Link>
           ) : (
             <p className="text-cuerpo-m text-primary">{resultado.sinDescartes}</p>
           )}

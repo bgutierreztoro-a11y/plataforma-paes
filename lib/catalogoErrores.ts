@@ -33,7 +33,9 @@ import path from "node:path";
 export function catalogoDelModulo(moduloId: string | undefined): Map<string, string> {
   /* Proyección de `catalogoCompletoDelModulo` (F4b): una sola lectura de disco
      para las dos vistas del catálogo, y la firma de esta se queda como está para
-     que `SesionDescarte`, `ResultadoDescarte` y `lib/sanitizar.ts` no cambien. */
+     que `lib/sanitizar.ts` no cambie. Desde F4c la sesión de descarte ya no la
+     usa: `SesionDescarte` y `ResultadoDescarte` reciben titulo + apoyo por
+     `copyDelCatalogo` (`lib/advance/copyDeError.ts`). */
   const catalogo = new Map<string, string>();
   for (const [local, entrada] of catalogoCompletoDelModulo(moduloId)) {
     catalogo.set(local, entrada.descripcion);

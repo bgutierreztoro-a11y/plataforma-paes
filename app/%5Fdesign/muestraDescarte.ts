@@ -1,6 +1,7 @@
+import { copyDelCatalogo } from "@/lib/advance/copyDeError";
 import type { ItemAdvance } from "@/lib/advance/descarte";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
-import type { RepasoDeError } from "@/lib/catalogoErrores";
+import type { EntradaError, RepasoDeError } from "@/lib/catalogoErrores";
 
 /**
  * Ítems de MUESTRA para la galería del modo descarte. Texto obviamente de
@@ -111,6 +112,20 @@ export const CATALOGO_MUESTRA: Record<string, string> = {
   "error-6": "Muestra: descripción del sexto error del catálogo.",
   "error-7": "Muestra: descripción del séptimo error del catálogo, el que más se repite en la muestra.",
 };
+
+/* El catálogo completo de MUESTRA, con la forma de `catalogoCompletoDelModulo`
+   (F4c): tres errores con titulo + apoyo y error-6 solo con descripcion, el
+   mismo que va sin apoyo en `TARJETAS_UNA_UNIDAD`, para ver la caída de
+   `copyDeError` en la pantalla final. */
+const CATALOGO_COMPLETO_MUESTRA = new Map<string, EntradaError>([
+  ["error-1", { id: "error-1", descripcion: CATALOGO_MUESTRA["error-1"], titulo: "Muestra: título del primer error", apoyo: "Muestra: apoyo del primer error." }],
+  ["error-3", { id: "error-3", descripcion: CATALOGO_MUESTRA["error-3"], titulo: "Muestra: título del tercer error", apoyo: "Muestra: apoyo del tercer error." }],
+  ["error-6", { id: "error-6", descripcion: CATALOGO_MUESTRA["error-6"] }],
+  ["error-7", { id: "error-7", descripcion: CATALOGO_MUESTRA["error-7"], titulo: "Muestra: título del séptimo error", apoyo: "Muestra: apoyo del séptimo error, el que más se repite." }],
+]);
+
+/** Lo que recibe `ResultadoDescarte` en la galería: el mismo camino que la ruta real. */
+export const COPY_MUESTRA = copyDelCatalogo(CATALOGO_COMPLETO_MUESTRA);
 
 /* Grupos de MUESTRA para /advance/errores (§6.3, F4b): los estados que hoy no
    existen en Neon. `ejeId: null` en el primero para que la galería instale la

@@ -4,9 +4,10 @@ import { SesionDescarte } from "@/components/advance/SesionDescarte";
 import { estiloDeLinea, lineaDeEje } from "@/components/ui/linea/colores";
 import { advanceVisible, estadoAdvance, type EstadoAdvance } from "@/lib/advance/acceso";
 import { obtenerBanco } from "@/lib/advance/banco";
+import { copyDelCatalogo } from "@/lib/advance/copyDeError";
 import { seleccionarSesion } from "@/lib/advance/seleccion";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
-import { catalogoDelModulo } from "@/lib/catalogoErrores";
+import { catalogoCompletoDelModulo } from "@/lib/catalogoErrores";
 
 export async function generateMetadata({
   params,
@@ -65,7 +66,9 @@ export default async function PaginaDescarte({
   }
 
   const items = seleccionarSesion(banco.items, ITEMS_POR_SESION);
-  const catalogo = Object.fromEntries(catalogoDelModulo(banco.moduloId));
+  /* F4c: titulo + apoyo por error, con la caída a descripcion resuelta acá, en
+     el servidor; al cliente viaja solo el copy. */
+  const catalogo = copyDelCatalogo(catalogoCompletoDelModulo(banco.moduloId));
   const ruta = ejeId ? `/advance/descarte/${unidadId}?eje=${ejeId}` : `/advance/descarte/${unidadId}`;
 
   return (

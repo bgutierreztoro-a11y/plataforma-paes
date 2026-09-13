@@ -2,7 +2,7 @@
 
 import { EjecutorDescarte } from "@/components/advance/EjecutorDescarte";
 import { ResultadoDescarte } from "@/components/advance/ResultadoDescarte";
-import { CATALOGO_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
+import { COPY_MUESTRA, MUESTRA_DESCARTE } from "./muestraDescarte";
 
 /**
  * El ejecutor con la muestra, para el clic real en la galería. Sin callbacks a
@@ -16,7 +16,7 @@ export function MuestraDescarteInteractiva() {
       items={MUESTRA_DESCARTE}
       unidadId="muestra"
       renderFinal={(registros) => (
-        <ResultadoDescarte registros={registros} catalogo={CATALOGO_MUESTRA} />
+        <ResultadoDescarte registros={registros} catalogo={COPY_MUESTRA} unidadId="muestra" />
       )}
     />
   );

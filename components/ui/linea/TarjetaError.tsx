@@ -5,11 +5,11 @@ interface TarjetaErrorProps {
   /* Qué se hizo mal, en una línea. */
   diagnostico: string;
   /* Por qué pasa y cómo se ve la próxima vez.
-     **Opcional, y hoy nadie se lo pasa desde el flujo real.** El desarrollo
-     numérico que corrige el error no existe como campo de contenido: el schema
-     define `catalogoErrores` como `{id, descripcion}` y cerrado. Ver
-     `docs/deuda-banner-error-desarrollo.md`. La tarjeta sale con dos párrafos
-     mientras tanto, que es una unidad completa por sí sola — no un hueco. */
+     Opcional. En la capa gratis nadie se lo pasa: el desarrollo numérico que
+     corrige el error no existe como campo de contenido (ver
+     `docs/deuda-banner-error-desarrollo.md`) y la tarjeta sale con dos
+     párrafos, que es una unidad completa por sí sola — no un hueco. Desde F4c
+     `ResultadoDescarte` sí lo pasa: el `apoyo` del catálogo de Advance. */
   detalle?: string;
   className?: string;
 }
