@@ -371,7 +371,7 @@
       "tipo": "practica",
       "titulo": "Escalas, un salto y una prueba",
       "_notasInternas": [
-        "P1: los dos cajones en bloques separados, cada uno con su propia escala (norte 300 a 450, sur 320 a 440, calculadas por escalaDeCajon), a propósito: la caja de sur (26) se ve casi tan ancha como la de norte (46). Selección con compara-cajones-en-escalas-distintas y lee-bigote-largo-como-mas-datos. P2: cajón de sur con el salto 374 marcado; numérica: 374 está en la posición 10 de 16, percentil 62,5; feedbackPorError 37,5 cuenta-datos-sobre-en-vez-de-bajo, 10 confunde-percentil-con-valor. P3 verdaderoFalso: percentil 90 de una prueba de 40 preguntas no son 36 aciertos (lee-percentil-como-porcentaje-de-aciertos en el feedback). Verificado con node -e (porcentajeBajo(sur, 374) = 62,5)."
+        "P1: los dos cajones en bloques separados, cada uno con su propia escala (norte 250 a 500, sur 320 a 440, calculadas por escalaDeCajon), a propósito: la caja de sur (26) se ve casi tan ancha como la de norte (46). Selección con compara-cajones-en-escalas-distintas y lee-bigote-largo-como-mas-datos. P2: cajón de sur con el salto 374 marcado; numérica: 374 está en la posición 10 de 16, percentil 62,5; feedbackPorError 37,5 cuenta-datos-sobre-en-vez-de-bajo, 10 confunde-percentil-con-valor. P3 verdaderoFalso: percentil 90 de una prueba de 40 preguntas no son 36 aciertos (lee-percentil-como-porcentaje-de-aciertos en el feedback). Verificado con node -e (porcentajeBajo(sur, 374) = 62,5; escalaDeCajon de cada cajón por separado)."
       ],
       "bloques": [
         {
@@ -381,7 +381,7 @@
         {
           "tipo": "visualizacion",
           "variante": "grafico",
-          "descripcion": "Diagrama de cajón de la sede norte solo, con su propia escala de 300 a 450 cm: 312, 347, 370, 393, 433.",
+          "descripcion": "Diagrama de cajón de la sede norte solo, con su propia escala de 250 a 500 cm: 312, 347, 370, 393, 433.",
           "datos": {
             "tipo": "diagramaCajon",
             "ejeHorizontal": "Salto largo en cm (sede norte)",
@@ -416,7 +416,7 @@
               "id": "b",
               "texto": "Que tiene razón: en el cartel las cajas se ven casi iguales, y el cajón se lee mirándolo.",
               "esCorrecta": false,
-              "feedback": "El cajón se lee mirándolo solo cuando los dos están sobre la misma escala. Acá la recta de sur va de 320 a 440 y la de norte de 300 a 450: un centímetro de dibujo vale distinto en cada una. Los rótulos dicen 46 contra 26.",
+              "feedback": "El cajón se lee mirándolo solo cuando los dos están sobre la misma escala. Acá la recta de sur va de 320 a 440 y la de norte de 250 a 500: un centímetro de dibujo vale distinto en cada una. Los rótulos dicen 46 contra 26.",
               "errorCatalogado": "compara-cajones-en-escalas-distintas"
             },
             {
@@ -732,7 +732,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Medidas de posición: solo para calibrar alcance (cuartiles y percentiles de uno o más grupos, problemas en contexto), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contexto (un club de atletismo con dos sedes, el salto largo de 16 atletas por sede, una prueba física con puntaje y una carrera de 100 metros) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los conjuntos de datos (norte y sur con 16 valores cada uno y la misma mediana, los 12 saltos del ítem 1 y los 8 tiempos de la carrera) se construyeron con n par y percentiles de posición no entera para que las dos convenciones coincidan, con posiciones que dan percentiles enteros o con un decimal, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts (resumenCincoNumeros, percentil, percentilAlternativo, porcentajeBajo, rangoIntercuartil). La prueba con puntaje existe solo para nombrar el error de leer el percentil como porcentaje de aciertos y no entrega datos de ningún curso. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-medidas-de-posicion.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "declaracionOriginalidad": "Enunciados, contexto (un club de atletismo con dos sedes, el salto largo de 16 atletas por sede, una prueba física con puntaje y una carrera de 100 metros) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los conjuntos de datos (norte y sur con 16 valores cada uno y la misma mediana, los 12 saltos del ítem 1 y los 8 tiempos de la carrera) se construyeron con n par y percentiles de posición no entera para que las dos convenciones coincidan, con posiciones que dan percentiles enteros o con un decimal, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts (resumenCincoNumeros, percentil, percentilAlternativo, porcentajeBajo, rangoIntercuartil). La prueba con puntaje existe solo para nombrar el error de leer el percentil como porcentaje de aciertos y no entrega datos de ningún curso. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-medidas-de-posicion.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados. Ronda 1 de verificación matemática (2026-09-13, hilo aislado): cada percentil, resumen de cinco números y porcentaje bajo un dato se recalculó con node -e sobre lib/estadistica.ts. Se corrigió un error de descripción (no de contenido pedagógico): la escala propia del cajón de la sede norte en práctica decía '300 a 450 cm' en tres lugares (nota interna, descripcion del bloque y feedback de la opción b), cuando escalaDeCajon calcula 250 a 500 cm para ese cajón aislado (mínimo 312, máximo 433); corregido a 250 a 500 en los tres. El resto, sin errores matemáticos.",
     "autor": "Benjamín Gutiérrez"
   }
 }
