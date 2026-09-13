@@ -1,0 +1,65 @@
+{
+  "unidad": "medidas-de-posicion",
+  "errores": [
+    {
+      "id": "medidas-de-posicion/calcula-cuartiles-sin-ordenar",
+      "descripcion": "Calcular la mediana o los cuartiles sobre la lista en el orden en que viene, sin ordenarla de menor a mayor: tomar los datos del medio de la lista bruta, o partir la lista bruta en mitades. El dato central de una lista desordenada es cualquiera."
+    },
+    {
+      "id": "medidas-de-posicion/confunde-mediana-con-promedio",
+      "descripcion": "Entregar el promedio (la suma dividida por n) donde se pide la mediana o un cuartil, o al revés. Con 12 tiempos que suman 348, responder 29 en vez de la mediana 28,5."
+    },
+    {
+      "id": "medidas-de-posicion/toma-cuartil-como-fraccion-del-rango",
+      "descripcion": "Tomar un cuartil o un percentil como una fracción del rango de valores, mínimo + k % de (máximo − mínimo), en vez de como una posición en la lista ordenada de datos: Q1 = 22 + 0,25 · 16 = 26 en vez de 25,5. Los cuartiles cortan los datos, no la escala."
+    },
+    {
+      "id": "medidas-de-posicion/toma-dato-central-sin-promediar",
+      "descripcion": "Con n par, tomar uno de los dos datos centrales como mediana en vez de promediarlos: 28 (o 29) en vez de 28,5 para doce datos cuyos centrales son 28 y 29."
+    },
+    {
+      "id": "medidas-de-posicion/confunde-rango-con-intercuartil",
+      "descripcion": "Entregar el rango (máximo − mínimo) donde se pide el rango intercuartil (Q3 − Q1), o al revés: 16 en vez de 6,5."
+    },
+    {
+      "id": "medidas-de-posicion/lee-cuartil-como-posicion-entera",
+      "descripcion": "Tomar el dato que está en la posición k · n / 100 truncada hacia abajo (n / 4 para Q1, 3n / 4 para Q3, 14 para P90 con n = 16) sin promediar con el siguiente cuando la convención lo pide: Q1 = 25 (la posición 3) en vez de 25,5, o P90 leído en la posición 14 en vez de la 15."
+    },
+    {
+      "id": "medidas-de-posicion/lee-bigote-largo-como-mas-datos",
+      "descripcion": "Leer el largo de un tramo del diagrama de cajón como cantidad de datos: un bigote largo como 'más datos', una caja angosta como 'menos datos'. Cada tramo del cajón tiene el 25 % de los datos; el largo mide cuán repartidos están, no cuántos son."
+    },
+    {
+      "id": "medidas-de-posicion/lee-caja-como-valores-posibles",
+      "descripcion": "Leer la caja (o un tramo) del cajón como porcentaje de la escala de valores en vez del porcentaje de los datos: la caja de 6.200 a 7.700 sobre un rango de 5.000 leída como 'el 30 %', cuando contiene el 50 % de los datos."
+    },
+    {
+      "id": "medidas-de-posicion/ubica-mediana-en-centro-de-caja",
+      "descripcion": "Ubicar la mediana en el punto medio geométrico de la caja, (Q1 + Q3) / 2, o afirmar que siempre está al centro: (6.200 + 7.700) / 2 = 6.950 en vez de la mediana real 6.900. La mediana está donde caiga el dato central, y la caja puede ser asimétrica."
+    },
+    {
+      "id": "medidas-de-posicion/cuenta-datos-sobre-en-vez-de-bajo",
+      "descripcion": "Al calcular el percentil de un dato, contar los datos que quedan sobre él en vez de bajo él (entrega 100 − p: 25 en vez de 75); o leer el percentil k contando desde el mayor, con lo que P90 se toma como P10."
+    },
+    {
+      "id": "medidas-de-posicion/confunde-percentil-con-valor",
+      "descripcion": "Confundir el número del percentil con el valor del dato o con su posición en la lista: leer 'percentil 90' como 90 centímetros o como el lugar 90, o responder 'percentil 9' para el dato que ocupa la posición 9 de 12 (que es el percentil 75)."
+    },
+    {
+      "id": "medidas-de-posicion/lee-percentil-como-porcentaje-de-aciertos",
+      "descripcion": "Leer 'percentil 90' como 90 % de aciertos, 90 puntos o el 90 % del máximo: concluir que quien está en el percentil 90 de una prueba de 40 preguntas acertó al menos 36. El percentil dice qué parte del grupo quedó abajo, no cuánto se obtuvo."
+    },
+    {
+      "id": "medidas-de-posicion/concluye-promedio-desde-mediana",
+      "descripcion": "Concluir sobre el promedio a partir de la mediana o del diagrama de cajón: 'las dos sedes tienen el mismo promedio porque tienen la misma mediana', o 'el promedio es mayor porque la caja está más a la derecha'. El cajón no muestra el promedio."
+    },
+    {
+      "id": "medidas-de-posicion/compara-cajones-en-escalas-distintas",
+      "descripcion": "Comparar dos diagramas de cajón dibujados en escalas distintas por su largo visual: 'la caja de la sede sur es más ancha' cuando su rango intercuartil es 26 contra 46, solo porque cada dibujo estiró su propia escala. Dos cajones se comparan sobre la misma escala."
+    },
+    {
+      "id": "medidas-de-posicion/invierte-lectura-cuando-menor-es-mejor",
+      "descripcion": "Con una variable donde menor es mejor (tiempos de una carrera), leer un percentil bajo como mal desempeño o uno alto como bueno: 'percentil 20 de los tiempos, quedó entre los más lentos', cuando el 20 % fue más rápido y el 80 % más lento."
+    }
+  ]
+}
