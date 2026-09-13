@@ -1,0 +1,738 @@
+{
+  "tipo": "leccion",
+  "id": "posicion-donde-quedaste-tu",
+  "moduloId": "medidas-de-posicion",
+  "titulo": "Problemas que involucren medidas de posición en diversos contextos",
+  "objetivo": "Comparar dos grupos por sus diagramas de cajón sobre la misma escala, decidir con evidencia (mediana, rango intercuartil, extremos), ubicar un dato dentro de un grupo por su percentil (estar sobre el percentil 90 significa que el 90 % quedó bajo él) y calcular el percentil de un dato, incluso cuando menor es mejor.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Mediana, cuartiles y rango intercuartil (Lección 1 de este módulo)",
+    "Percentiles y lectura del diagrama de cajón (Lección 2 de este módulo)",
+    "Promedio de un conjunto de datos (Lección 3 del módulo Representación de datos)"
+  ],
+  "conceptos": [
+    "dos grupos se comparan con sus cajones sobre la misma escala: mediana, rango intercuartil y extremos son la evidencia",
+    "el cajón no muestra el promedio ni la cantidad de datos",
+    "el percentil de un dato es su posición relativa en el grupo: el porcentaje de datos que quedan en o bajo él",
+    "estar sobre el percentil 90 significa que el 90 % del grupo quedó abajo; no dice cuánto se obtuvo",
+    "cuando menor es mejor (tiempos), un percentil bajo es un buen resultado",
+    "dos cajones dibujados en escalas distintas no se comparan por su largo visual"
+  ],
+  "_notasInternas": [
+    "L3 del módulo medidas-de-posicion (módulo #15). moduloId = medidas-de-posicion. Descriptores DEMRE (docs/temario-demre-m1-2027.md:124-126): 'Cuartiles y percentiles de uno o más grupos de datos' y 'Problemas que involucren medidas de posición en diversos contextos'. Diseño: docs/diseno-modulo-medidas-de-posicion.md.",
+    "Catálogo canónico: content/errores/medidas-de-posicion.json. Ids que este archivo referencia: lee-percentil-como-porcentaje-de-aciertos, concluye-promedio-desde-mediana, compara-cajones-en-escalas-distintas, invierte-lectura-cuando-menor-es-mejor (nacen acá), cuenta-datos-sobre-en-vez-de-bajo, confunde-percentil-con-valor, lee-bigote-largo-como-mas-datos, lee-caja-como-valores-posibles (nacen en L2), confunde-rango-con-intercuartil, lee-cuartil-como-posicion-entera y toma-cuartil-como-fraccion-del-rango (nacen en L1).",
+    "Dominio: club de atletismo con dos sedes (norte y sur), salto largo en centímetros de 16 atletas por sede; una prueba física con puntaje sobre 40 preguntas; una carrera de 100 metros con 8 tiempos. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (resumenCincoNumeros, cuartiles, cuartilesIncluyendo, percentil, percentilAlternativo, porcentajeBajo, rangoIntercuartil): norte = 312, 325, 338, 344, 350, 357, 362, 368, 372, 377, 383, 390, 396, 405, 418, 433 → mín 312, Q1 347, mediana 370, Q3 393, máx 433; rango intercuartil 46; rango 121; P90 = 418 (posición 15); P10 = 325 (posición 2); percentil de 344 (posición 4) = 25, de 368 (posición 8) = 50, de 390 (posición 12) = 75, de 405 (posición 14) = 87,5. Sur = 330, 341, 349, 355, 359, 363, 366, 369, 371, 374, 378, 381, 385, 392, 401, 415 → mín 330, Q1 357, mediana 370, Q3 383, máx 415; rango intercuartil 26; rango 85; percentil de 374 (posición 10) = 62,5; de 381 (posición 12) = 75; (381 − 330) / 85 = 60 %. Carrera de 100 m, 8 tiempos 12,4, 12,9, 13,3, 13,8, 14,0, 14,5, 14,9, 15,3 s: 13,3 está en la posición 3, percentil 37,5, y el 62,5 % corrió más lento. Escala común de norte y sur: 250 a 500 de 50 en 50. Las dos convenciones de cuartil coinciden (n = 16) y percentil() = percentilAlternativo() en P90 de norte (p = 14,4).",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {75; 87,5; 46; 26; 418; 62,5; 62,5; 75; 75} y de texto (a en problema, práctica P1 y aplicación; veredictos de ítems 2 y 3); distractores numéricos {25; 12; 12,5; 14; 121; 85; 405; 325; 37,5; 10; 3; 60; 9; 65}; sin intersección. 75 se repite como correcta en pensar (norte, 390), consolidación (sur, 381) e ítem 1 (367 en la posición 9 de 12): es la misma posición relativa en tres grupos distintos, a propósito.",
+    "Visuales: dos cajones sobre la misma escala (curiosidad, generalización); los mismos dos cajones en dos bloques separados, cada uno con su propia escala (práctica), que es el único uso deliberado de escalas distintas en el módulo y existe para nombrar el error; cajón de sur con el salto 374 marcado (práctica P2, el percentil no está escrito). Ítem 2 con visual en lib/visualesItems.tsx (los dos cajones norte y sur sobre la misma escala): el cajón es el estímulo y la afirmación correcta no está escrita en él.",
+    "Sin auditoria.constante: no hay una constante única. La lectura 'sobre el percentil 90 significa que el 90 % quedó abajo' aparece por primera vez en descubrimiento, después de que el estudiante calculó el percentil de tres saltos concretos por su posición.",
+    "P2: el paso consolidación nombra los caminos equivocados de lee-percentil-como-porcentaje-de-aciertos, concluye-promedio-desde-mediana y compara-cajones-en-escalas-distintas antes del correcto, y su bloque pregunta lleva confunde-percentil-con-valor, cuenta-datos-sobre-en-vez-de-bajo y toma-cuartil-como-fraccion-del-rango en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: dos cajones sobre la misma escala; sede norte 312, 347, 370, 393, 433 y sede sur 330, 357, 370, 383, 415 cm, 16 atletas cada una",
+    "problema: qué se puede decir del promedio de cada sede desde el cajón (nada: no está)",
+    "pensar/pistas: los 16 saltos de la sede norte ordenados; un salto de 390 cm está en la posición 12, percentil 75",
+    "descubrimiento: saltos de 344, 368 y 405 cm en norte (posiciones 4, 8 y 14): percentiles 25, 50 y 87,5",
+    "generalizacion: rango intercuartil norte 46 y sur 26; percentil 90 de norte, 418",
+    "practica: los mismos dos cajones en escalas distintas; salto de 374 cm en sur, posición 10, percentil 62,5; prueba física de 40 preguntas y percentil 90",
+    "aplicacion: carrera de 100 m con 8 tiempos 12,4, 12,9, 13,3, 13,8, 14,0, 14,5, 14,9, 15,3 s; 13,3 s es el percentil 37,5, y el 62,5 % corrió más lento",
+    "consolidacion: salto de 381 cm en sur, posición 12 de 16, percentil 75",
+    "itemsPAES: salto de 367 cm en 302, 318, 326, 335, 342, 349, 356, 361, 367, 374, 388, 402 (posición 9 de 12, percentil 75); afirmaciones con evidencia sobre los cajones de norte y sur; veredicto sobre 'percentil 90 en 40 preguntas, al menos 36 aciertos'"
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "percentilSaltoNorte": "percentil: porcentaje de datos en o bajo el valor, adimensional",
+      "percentilCuatroCientosCinco": "percentil: porcentaje de datos en o bajo el valor, adimensional",
+      "percentilSaltoSur": "percentil: porcentaje de datos en o bajo el valor, adimensional",
+      "porcentajeMasLentos": "porcentaje de los tiempos mayores que el propio, adimensional"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Dos sedes, un dibujo",
+      "_notasInternas": [
+        "Sin regla: los dos cajones sobre la misma escala y la pregunta de qué sede 'salta más'. La predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un **club de atletismo** tiene dos sedes, norte y sur. En la última medición de **salto largo**, 16 atletas de cada sede registraron su mejor salto en centímetros. Aquí están los dos resúmenes, sobre la misma recta:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Dos diagramas de cajón sobre la misma escala de centímetros. Sede norte: mínimo 312, Q1 347, mediana 370, Q3 393, máximo 433. Sede sur: mínimo 330, Q1 357, mediana 370, Q3 383, máximo 415. Las medianas coinciden; la caja y los bigotes de la sede sur son más cortos.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Salto largo en cm",
+            "cajones": [
+              { "nombre": "Sede norte", "min": 312, "q1": 347, "mediana": 370, "q3": 393, "max": 433 },
+              { "nombre": "Sede sur", "min": 330, "q1": 357, "mediana": 370, "q3": 383, "max": 415 }
+            ]
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Si tuvieras que decir cuál sede «salta más», ¿qué dirías?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Norte: su mejor salto es más largo",
+            "Sur: sus saltos están más concentrados",
+            "Ninguna: la mitad de cada sede salta más de 370"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Las tres respuestas dicen algo verdadero y ninguna cierra la pregunta, porque «saltar más» no está definido. Esta lección es sobre cómo se compara con evidencia, y sobre cómo se dice, con un número, dónde quedó un atleta dentro de su sede."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Lo que el cajón no muestra",
+      "_notasInternas": [
+        "Selección: el cajón no muestra el promedio (correcto, sin cálculo); 'misma mediana, mismo promedio' concluye-promedio-desde-mediana; 'sur concentra más atletas arriba porque su caja es más angosta' lee-bigote-largo-como-mas-datos. Verdadero/falso sobre la cantidad de atletas."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "El entrenador pregunta cuál sede tiene el mayor **promedio** de salto. Con solo los dos cajones, ¿qué se puede responder?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Nada seguro: el cajón muestra mediana, cuartiles y extremos, y el promedio no está entre ellos.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El promedio se calcula sumando todos los saltos, y el cajón no los trae. Dos grupos con cajones iguales pueden tener promedios distintos, y con la misma mediana también."
+            },
+            {
+              "id": "b",
+              "texto": "Que tienen el mismo promedio, porque las dos medianas son 370.",
+              "esCorrecta": false,
+              "feedback": "La mediana dice que la mitad de cada sede saltó más de 370; no dice cuánto suman los saltos. Norte tiene extremos más lejanos (312 y 433), y eso puede mover el promedio sin mover la mediana. Para saber cuál promedio es mayor hay que sumar los 16 saltos de cada sede: el cajón no lo trae.",
+              "errorCatalogado": "concluye-promedio-desde-mediana"
+            },
+            {
+              "id": "c",
+              "texto": "Que el de sur es mayor, porque su caja angosta concentra a más atletas arriba de 357.",
+              "esCorrecta": false,
+              "feedback": "Una caja angosta no tiene más atletas: tiene el 50 % de ellos, como cualquier caja. Sobre 357 (Q1 de sur) queda el 75 % de sur, y sobre 347 (Q1 de norte) queda el 75 % de norte: el mismo porcentaje.",
+              "errorCatalogado": "lee-bigote-largo-como-mas-datos"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Con los dos cajones se puede saber cuántos atletas de cada sede saltaron más de 393 cm.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso a medias: en norte, 393 es Q3, así que sobre él queda el 25 %, cuatro atletas. Pero en sur 393 no es ninguno de los cinco números del cajón: cae en el bigote derecho, y cuántos de esos cuatro atletas están sobre 393 no se puede saber sin la lista.",
+          "feedbackFalso": "Exacto. Para norte sí (393 es su Q3, y sobre Q3 queda el 25 %: cuatro atletas), pero para sur no: 393 cae dentro de su bigote derecho y el cajón no dice cómo se reparten esos cuatro atletas. Solo los cinco números del cajón dan porcentajes exactos."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Dónde quedó un salto",
+      "_notasInternas": [
+        "Norte ordenado (16 saltos). Un salto de 390 está en la posición 12: 12 de 16 en o bajo él, percentil 75. feedbackPorError: 25 cuenta-datos-sobre-en-vez-de-bajo (los 4 que quedaron sobre él); 12 confunde-percentil-con-valor (respondió la posición como percentil). Verificado con node -e (porcentajeBajo(norte, 390) = 75)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Los 16 saltos de la sede norte, ordenados: 312, 325, 338, 344, 350, 357, 362, 368, 372, 377, 383, 390, 396, 405, 418, 433. Un atleta saltó **390 cm**. ¿Qué porcentaje de los saltos de su sede quedó en o bajo el suyo? Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "percentilSaltoNorte",
+              "etiqueta": "Porcentaje de saltos en o bajo 390",
+              "respuestaCorrecta": 75
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "percentilSaltoNorte",
+              "valorObtenido": 25,
+              "mensaje": "25 % son los 4 saltos que quedaron SOBRE 390 (396, 405, 418, 433). Se pedían los que quedaron en o bajo él: cuenta desde el 312 hasta el 390.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            },
+            {
+              "campoId": "percentilSaltoNorte",
+              "valorObtenido": 12,
+              "mensaje": "12 es la posición del salto en la fila, no un porcentaje. Para pasar a porcentaje, 12 de 16 se divide por 16 y se multiplica por 100.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Cuenta cuántos saltos hay desde el menor hasta el 390, incluido. Divide ese conteo por 16 y multiplica por 100."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para ubicar el salto",
+      "_notasInternas": [
+        "Mismo salto de 390. El nivel 3 dice que es el número 12 de 16 y deja la fracción al estudiante."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "La fila ya está ordenada. La pregunta es cuántos saltos hay desde el primero hasta el 390, contándolo a él."
+            },
+            {
+              "nivel": 2,
+              "texto": "Ese conteo es la posición del 390 en la fila. Lo que queda por abajo, más él mismo, es una parte de los 16."
+            },
+            {
+              "nivel": 3,
+              "texto": "El 390 es el salto número 12 de 16. Escribe 12 de 16 como porcentaje."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El percentil de un dato",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Tabla de tres saltos de norte con su posición y el porcentaje en o bajo ellos: 344 (posición 4) 25 %, 368 (posición 8) 50 %, 390 (posición 12) 75 %. El estudiante descubre que el percentil de un dato es su posición relativa, y que 'estar sobre el percentil 90' habla del grupo, no del salto. Numérica: 405 (posición 14) → 87,5; feedbackPorError 12,5 cuenta-datos-sobre-en-vez-de-bajo, 14 confunde-percentil-con-valor. Verificado con node -e (porcentajeBajo)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ese porcentaje, 75, se llama el **percentil del dato**: el salto de 390 cm está en el percentil 75 de su sede. Mira tres saltos más de la sede norte:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con tres saltos de la sede norte, su posición en la fila ordenada de 16 y el porcentaje de saltos en o bajo cada uno: 344 cm, posición 4, 25 %; 368 cm, posición 8, 50 %; 390 cm, posición 12, 75 %.",
+          "datos": {
+            "columnas": ["Salto", "Posición en la fila (de 16)", "Saltos en o bajo él", "Percentil"],
+            "filas": [
+              ["344 cm", "4", "4 de 16", "25"],
+              ["368 cm", "8", "8 de 16", "50"],
+              ["390 cm", "12", "12 de 16", "75"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira la tabla. ¿Qué es el percentil de un salto?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Su posición relativa en el grupo: el porcentaje de saltos que quedaron en o bajo él. No dice cuánto midió el salto.",
+              "esCorrecta": true,
+              "feedback": "Correcto. 344, 368 y 390 son los cuartiles de norte (posiciones 4, 8 y 12 de 16), y por eso sus percentiles son 25, 50 y 75. **Estar sobre el percentil 90 significa que el 90 % del grupo quedó abajo**, sea cual sea la medida del salto."
+            },
+            {
+              "id": "b",
+              "texto": "El porcentaje del salto máximo que alcanzó: 390 es cerca del 90 % de 433, así que es percentil 90.",
+              "esCorrecta": false,
+              "feedback": "390 / 433 compara centímetros con centímetros, no posiciones. El percentil cuenta atletas: bajo 390 hay 12 de 16, el 75 %. Un salto puede ser el 90 % del máximo y estar en el percentil 75, como acá.",
+              "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos"
+            },
+            {
+              "id": "c",
+              "texto": "Su posición en la fila: el salto de 368 está en el percentil 8.",
+              "esCorrecta": false,
+              "feedback": "8 es la posición, y el percentil es esa posición convertida en porcentaje del grupo: 8 de 16 es el 50 %. Con 32 atletas la misma posición 8 sería el percentil 25.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un salto de **405 cm** en la sede norte: ¿en qué percentil está?",
+          "campos": [
+            {
+              "id": "percentilCuatroCientosCinco",
+              "etiqueta": "Percentil del salto de 405 cm",
+              "respuestaCorrecta": 87.5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "percentilCuatroCientosCinco",
+              "valorObtenido": 12.5,
+              "mensaje": "12,5 % son los 2 saltos que quedaron SOBRE 405 (418 y 433). El percentil cuenta los que quedaron en o bajo él: 14 de 16.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            },
+            {
+              "campoId": "percentilCuatroCientosCinco",
+              "valorObtenido": 14,
+              "mensaje": "14 es la posición del salto en la fila, no su percentil. 14 de 16, como porcentaje, es el percentil buscado.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Ubica el 405 en la fila ordenada de norte: es el salto número 14 de 16. Ese 14 de 16, en porcentaje, es su percentil."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que un salto de 390 cm pueda estar en el percentil 75 en la sede norte y en otro percentil en la sede sur?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido. El percentil mide la posición dentro de un grupo, y cada sede es un grupo distinto. En sur, 390 quedaría entre 385 y 392, con 13 de 16 saltos en o bajo él: percentil 81,25. Mismo salto, otra posición.",
+          "feedbackFalso": "En realidad sí: el percentil depende del grupo. En norte hay 12 saltos en o bajo 390; en sur habría 13 (todos hasta 385). Mismo salto, distinto percentil, porque cambia contra quiénes se compara."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **el percentil de un dato es su posición relativa en el grupo, y no dice cuánto vale el dato.** En el próximo paso, cómo se compara con evidencia y qué pasa cuando menor es mejor."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Comparar con evidencia",
+      "_notasInternas": [
+        "PRIMERA aparición de la lista de evidencia (mediana, rango intercuartil, extremos) y de la regla 'el cajón no muestra el promedio ni cuántos datos hay'. Dos cajones sobre la misma escala. Numérica 1: rango intercuartil norte 393 − 347 = 46 y sur 383 − 357 = 26; feedbackPorError 121 y 85 confunde-rango-con-intercuartil (rangos). Numérica 2: P90 de norte = 418 (p = 14,4 → posición 15); feedbackPorError 405 lee-cuartil-como-posicion-entera (posición 14), 325 cuenta-datos-sobre-en-vez-de-bajo (P10, posición 2). Verificado con node -e (percentil = percentilAlternativo = 418)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres. Para comparar dos grupos con sus cajones **sobre la misma escala**, la evidencia son tres cosas:\n\n1. **Mediana:** dónde está el centro de cada grupo. Norte y sur: 370 en ambos.\n2. **Rango intercuartil (Q3 − Q1):** cuán concentrado está el 50 % central. Una caja corta es un grupo más parejo.\n3. **Extremos** (mínimo y máximo): hasta dónde llegan los casos más altos y más bajos.\n\n> El cajón **no muestra el promedio** ni **cuántos datos** hay. Nada de eso se concluye desde el dibujo.\n\n**Percentil de un dato:** el porcentaje de datos del grupo en o bajo él. «Está sobre el percentil 90» dice que el 90 % quedó abajo; no dice cuánto midió."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Los dos diagramas de cajón sobre la misma escala: sede norte 312, 347, 370, 393, 433 y sede sur 330, 357, 370, 383, 415 cm.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Salto largo en cm",
+            "cajones": [
+              { "nombre": "Sede norte", "min": 312, "q1": 347, "mediana": 370, "q3": 393, "max": 433, "datos": [312, 325, 338, 344, 350, 357, 362, 368, 372, 377, 383, 390, 396, 405, 418, 433] },
+              { "nombre": "Sede sur", "min": 330, "q1": 357, "mediana": 370, "q3": 383, "max": 415, "datos": [330, 341, 349, 355, 359, 363, 366, 369, 371, 374, 378, 381, 385, 392, 401, 415] }
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 1.** Calcula el rango intercuartil de cada sede, para decir con un número cuál es más pareja.",
+          "campos": [
+            {
+              "id": "intercuartilNorte",
+              "etiqueta": "Rango intercuartil de norte",
+              "respuestaCorrecta": 46,
+              "unidad": "cm"
+            },
+            {
+              "id": "intercuartilSur",
+              "etiqueta": "Rango intercuartil de sur",
+              "respuestaCorrecta": 26,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "intercuartilNorte",
+              "valorObtenido": 121,
+              "mensaje": "121 es el rango de norte, 433 − 312: el ancho de todos los saltos. El rango intercuartil es el ancho de la caja, Q3 − Q1.",
+              "errorCatalogado": "confunde-rango-con-intercuartil"
+            },
+            {
+              "campoId": "intercuartilSur",
+              "valorObtenido": 85,
+              "mensaje": "85 es el rango de sur, 415 − 330. El rango intercuartil es Q3 − Q1, el ancho de la caja: 383 − 357.",
+              "errorCatalogado": "confunde-rango-con-intercuartil"
+            }
+          ],
+          "feedbackPorDefecto": "Rango intercuartil = Q3 − Q1. Lee Q1 y Q3 de cada cajón y resta. La sede con el rango intercuartil menor es la más pareja."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 2.** Con la fila ordenada de norte (312, 325, 338, 344, 350, 357, 362, 368, 372, 377, 383, 390, 396, 405, 418, 433), ¿cuál es el percentil 90 de la sede?",
+          "campos": [
+            {
+              "id": "percentilNoventaNorte",
+              "etiqueta": "P90 de norte",
+              "respuestaCorrecta": 418,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "percentilNoventaNorte",
+              "valorObtenido": 405,
+              "mensaje": "405 es el salto número 14. Como 0,9 · 16 = 14,4 no es entero, P90 es el dato de la posición siguiente, la 15.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "percentilNoventaNorte",
+              "valorObtenido": 325,
+              "mensaje": "325 es el segundo salto: deja el 90 % por ARRIBA. El percentil 90 deja el 90 % por abajo y está cerca del final de la fila.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            }
+          ],
+          "feedbackPorDefecto": "p = 0,9 · 16 = 14,4. No es entero: P90 es el salto en la posición 15 de la fila ordenada."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Escalas, un salto y una prueba",
+      "_notasInternas": [
+        "P1: los dos cajones en bloques separados, cada uno con su propia escala (norte 300 a 450, sur 320 a 440, calculadas por escalaDeCajon), a propósito: la caja de sur (26) se ve casi tan ancha como la de norte (46). Selección con compara-cajones-en-escalas-distintas y lee-bigote-largo-como-mas-datos. P2: cajón de sur con el salto 374 marcado; numérica: 374 está en la posición 10 de 16, percentil 62,5; feedbackPorError 37,5 cuenta-datos-sobre-en-vez-de-bajo, 10 confunde-percentil-con-valor. P3 verdaderoFalso: percentil 90 de una prueba de 40 preguntas no son 36 aciertos (lee-percentil-como-porcentaje-de-aciertos en el feedback). Verificado con node -e (porcentajeBajo(sur, 374) = 62,5)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un cartel del club muestra las dos sedes en **dos dibujos separados**, cada uno con su propia escala:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Diagrama de cajón de la sede norte solo, con su propia escala de 300 a 450 cm: 312, 347, 370, 393, 433.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Salto largo en cm (sede norte)",
+            "cajones": [
+              { "nombre": "Sede norte", "min": 312, "q1": 347, "mediana": 370, "q3": 393, "max": 433 }
+            ]
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Diagrama de cajón de la sede sur solo, con su propia escala de 320 a 440 cm: 330, 357, 370, 383, 415. Como la escala está estirada, la caja se ve casi tan ancha como la de norte.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Salto largo en cm (sede sur)",
+            "cajones": [
+              { "nombre": "Sede sur", "min": 330, "q1": 357, "mediana": 370, "q3": 383, "max": 415 }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Un estudiante mira el cartel y dice: «las dos cajas son casi igual de anchas, así que las dos sedes son igual de parejas». ¿Qué se puede decir?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que se equivoca: los dos dibujos tienen escalas distintas. Con los números, la caja de norte mide 46 cm y la de sur 26; sur es bastante más pareja.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Cada dibujo estiró su propia recta para llenar el cuadro, así que los largos no se comparan entre dibujos. Se comparan los números rotulados, o se ponen los dos cajones sobre la misma escala, como al principio de la lección."
+            },
+            {
+              "id": "b",
+              "texto": "Que tiene razón: en el cartel las cajas se ven casi iguales, y el cajón se lee mirándolo.",
+              "esCorrecta": false,
+              "feedback": "El cajón se lee mirándolo solo cuando los dos están sobre la misma escala. Acá la recta de sur va de 320 a 440 y la de norte de 300 a 450: un centímetro de dibujo vale distinto en cada una. Los rótulos dicen 46 contra 26.",
+              "errorCatalogado": "compara-cajones-en-escalas-distintas"
+            },
+            {
+              "id": "c",
+              "texto": "Que se equivoca, porque una caja más ancha tiene más atletas, y norte tiene 16 igual que sur.",
+              "esCorrecta": false,
+              "feedback": "Una caja más ancha no tiene más atletas: toda caja tiene el 50 % de su grupo. El error del estudiante no está en la cantidad de atletas sino en comparar largos de dibujos con escalas distintas.",
+              "errorCatalogado": "lee-bigote-largo-como-mas-datos"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Ahora un salto concreto en la sede sur. Sus 16 saltos ordenados: 330, 341, 349, 355, 359, 363, 366, 369, 371, 374, 378, 381, 385, 392, 401, 415. Una atleta saltó **374 cm**:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Diagrama de cajón de la sede sur (330, 357, 370, 383, 415) con una línea vertical marcada 'ella' en 374 cm, dentro de la caja, a la derecha de la mediana.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Salto largo en cm",
+            "cajones": [
+              { "nombre": "Sede sur", "min": 330, "q1": 357, "mediana": 370, "q3": 383, "max": 415 }
+            ],
+            "marcas": [{ "valor": 374, "rotulo": "ella" }]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿En qué percentil de su sede está ese salto de 374 cm?",
+          "campos": [
+            {
+              "id": "percentilSaltoSur",
+              "etiqueta": "Percentil del salto de 374 cm",
+              "respuestaCorrecta": 62.5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "percentilSaltoSur",
+              "valorObtenido": 37.5,
+              "mensaje": "37,5 % son los 6 saltos que quedaron SOBRE 374. El percentil cuenta los que quedaron en o bajo él: 10 de 16.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            },
+            {
+              "campoId": "percentilSaltoSur",
+              "valorObtenido": 10,
+              "mensaje": "10 es la posición del salto en la fila, no su percentil. 10 de 16, en porcentaje, es el percentil.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Ubica el 374 en la fila ordenada de sur: es el salto número 10 de 16. Ese 10 de 16, en porcentaje, es su percentil."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "En la prueba física del club, de 40 preguntas, un atleta quedó en el percentil 90. Entonces acertó al menos 36 preguntas (el 90 % de 40).",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso. El percentil 90 dice que el 90 % de los atletas del club obtuvo un puntaje igual o menor que el suyo; no dice cuántas preguntas acertó. Si la prueba fue difícil, pudo estar en el percentil 90 con 25 aciertos.",
+          "feedbackFalso": "Exacto. El percentil habla del grupo (el 90 % quedó en o bajo él), no del puntaje. Con 40 preguntas, el 90 % de aciertos serían 36, pero eso es otra cosa: cuántas acertó depende de la prueba, no del percentil."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Cuando menor es mejor",
+      "_notasInternas": [
+        "Carrera de 100 m: 8 tiempos ordenados 12,4, 12,9, 13,3, 13,8, 14,0, 14,5, 14,9, 15,3 s. Una atleta corrió en 13,3 s: posición 3, percentil 37,5 (3 de 8 tiempos en o bajo el suyo). Selección sobre qué significa el percentil 20 de los tiempos: distractores invierte-lectura-cuando-menor-es-mejor y confunde-percentil-con-valor. Numérica: porcentaje que corrió más lento que 13,3 = 5 de 8 = 62,5; feedbackPorError 37,5 invierte-lectura-cuando-menor-es-mejor (leyó su percentil como los más lentos), 3 confunde-percentil-con-valor (la posición). Verificado con node -e (porcentajeBajo(tiempos, 13.3) = 37,5)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En la carrera de **100 metros** del club, el percentil se calcula igual, sobre los tiempos ordenados de menor a mayor. Pero acá **menor es mejor**: el percentil 20 de los tiempos es un tiempo que solo el 20 % igualó o bajó."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Una atleta dice: «mi tiempo quedó en el percentil 20 de la carrera». ¿Qué significa?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que solo el 20 % de los tiempos fue igual o menor que el suyo: corrió más rápido que el 80 % restante.",
+              "esCorrecta": true,
+              "feedback": "Correcto. El percentil siempre cuenta los datos en o bajo el propio. Con tiempos, quedar abajo es ser más rápido: el percentil 20 es un muy buen resultado."
+            },
+            {
+              "id": "b",
+              "texto": "Que quedó entre las más lentas: solo superó al 20 % de las corredoras.",
+              "esCorrecta": false,
+              "feedback": "Con tiempos, «quedar abajo» es correr más rápido, no peor. Percentil 20 significa que el 20 % de los tiempos fue igual o menor que el suyo, así que ella superó al 80 %, no al 20 %.",
+              "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor"
+            },
+            {
+              "id": "c",
+              "texto": "Que llegó en el lugar 20 de la carrera.",
+              "esCorrecta": false,
+              "feedback": "El percentil no es un lugar sino un porcentaje del grupo: 20 % de los tiempos en o bajo el suyo. Si corrieron 8 personas, el percentil 20 no puede ser el lugar 20.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Los ocho tiempos de la carrera, ordenados: 12,4; 12,9; 13,3; 13,8; 14,0; 14,5; 14,9; 15,3 segundos. Otra atleta corrió en **13,3 s**. ¿Qué porcentaje de las corredoras fue más lento que ella?",
+          "campos": [
+            {
+              "id": "porcentajeMasLentos",
+              "etiqueta": "Porcentaje de tiempos mayores que 13,3 s",
+              "respuestaCorrecta": 62.5
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeMasLentos",
+              "valorObtenido": 37.5,
+              "mensaje": "37,5 % es su percentil: los 3 tiempos en o bajo 13,3 (el suyo incluido). Los más lentos son los que quedaron SOBRE 13,3: los otros 5 de 8.",
+              "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor"
+            },
+            {
+              "campoId": "porcentajeMasLentos",
+              "valorObtenido": 3,
+              "mensaje": "3 es la posición de su tiempo en la fila, no un porcentaje. Los tiempos mayores que 13,3 son 5 de 8; ese 5 de 8, en porcentaje, es la respuesta.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            }
+          ],
+          "feedbackPorDefecto": "Cuenta los tiempos mayores que 13,3 en la fila ordenada y divide por 8. Más lento es más segundos."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Explica por qué el percentil de un dato se calcula igual con saltos y con tiempos, pero se interpreta al revés.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "El cálculo es el mismo: el porcentaje de datos en o bajo el propio en la fila ordenada de menor a mayor. La interpretación cambia porque en el salto largo un dato alto es mejor (percentil alto = buen salto) y en una carrera un dato bajo es mejor (percentil bajo = tiempo corto, buen resultado). El percentil dice dónde quedó el dato; qué significa quedar ahí depende de la variable."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Contra quién te comparas",
+      "_notasInternas": [
+        "Metacognición sobre la posición relativa. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve el módulo siguiente: qué tan probable es un resultado."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: si te dicen que quedaste sobre el percentil 90 de una prueba, ¿qué sabes y qué no sabes? ¿Y qué le pedirías a dos cajones antes de compararlos?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que diga que el 90 % del grupo quedó abajo, que no se sabe el puntaje, y que los cajones deben estar sobre la misma escala, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten al comparar grupos y ubicarse en uno, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Leer el percentil como porcentaje de aciertos:** percentil 90 no son 90 puntos ni el 90 % de las preguntas.\n2. **Concluir sobre el promedio desde la mediana o el cajón:** el cajón no lo muestra.\n3. **Comparar cajones en escalas distintas:** el largo solo se compara sobre la misma recta.\n4. **Contar del lado equivocado**, o leer un percentil bajo como mal resultado cuando menor es mejor.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: si eliges un atleta de la sede norte al azar, ¿qué tan probable es que salte más de 393? Esa es la próxima unidad."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de lee-percentil-como-porcentaje-de-aciertos, concluye-promedio-desde-mediana y compara-cajones-en-escalas-distintas, seguido de un bloque pregunta: salto de 381 cm en sur, posición 12 de 16 → percentil 75. Distractores: 12 confunde-percentil-con-valor (la posición); 25 cuenta-datos-sobre-en-vez-de-bajo (los 4 saltos sobre 381); 60 toma-cuartil-como-fraccion-del-rango ((381 − 330) / 85 · 100, la posición en la escala). Alternativas numéricas en orden creciente. Verificado con node -e (porcentajeBajo(sur, 381) = 75)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Dos grupos se comparan con sus cajones **sobre la misma escala**: mediana, rango intercuartil y extremos.\n- El cajón **no muestra el promedio** ni cuántos datos hay.\n- **Percentil de un dato:** el porcentaje del grupo en o bajo él. Estar sobre el percentil 90 significa que el 90 % quedó abajo.\n- Cuando **menor es mejor**, un percentil bajo es un buen resultado.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente lee «percentil 90» como **90 % de aciertos o 90 puntos**. Falla porque el percentil no mide cuánto sacaste sino cuántos quedaron bajo ti. Lo que funciona es **preguntarse qué porcentaje del grupo está abajo**.\n\nMucha gente **concluye sobre el promedio desde la mediana** o desde el cajón. Falla porque el promedio suma todos los datos y el cajón no los trae: dos grupos con la misma mediana pueden tener promedios distintos. Lo que funciona es **decir solo lo que el cajón muestra**.\n\nMucha gente **compara cajones en escalas distintas** por su largo. Falla porque cada dibujo estira su propia recta. Lo que funciona es **leer los números rotulados** o ponerlos sobre la misma escala.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "En la sede sur (saltos ordenados 330, 341, 349, 355, 359, 363, 366, 369, 371, 374, 378, 381, 385, 392, 401, 415), un atleta saltó 381 cm. ¿En qué percentil de su sede está?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "Percentil 12",
+              "esCorrecta": false,
+              "feedback": "12 es la posición del salto en la fila de 16, no su percentil. La posición se convierte en porcentaje del grupo: 12 de 16 es 75 %.",
+              "errorCatalogado": "confunde-percentil-con-valor"
+            },
+            {
+              "clave": "B",
+              "texto": "Percentil 25",
+              "esCorrecta": false,
+              "feedback": "25 % son los 4 saltos que quedaron SOBRE 381 (385, 392, 401, 415). El percentil cuenta los que quedaron en o bajo él: 12 de 16.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            },
+            {
+              "clave": "C",
+              "texto": "Percentil 60",
+              "esCorrecta": false,
+              "feedback": "60 es (381 − 330) / 85: la posición del salto en la escala de valores, de 330 a 415. El percentil se cuenta en la fila de atletas, no en la recta de centímetros: 12 de 16.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            },
+            {
+              "clave": "D",
+              "texto": "Percentil 75",
+              "esCorrecta": true,
+              "feedback": "Correcto. 381 es el salto número 12 de la fila de 16: 12 de 16 en o bajo él, y 12 / 16 = 75 %. Es exactamente Q3 de la sede sur, y por eso su percentil es 75."
+            }
+          ],
+          "notaVerificacionMatematica": "porcentajeBajo(sur, 381) = 75 con lib/estadistica.ts; 381 es el dato 12 de 16 y coincide con Q3 de sur (cuartiles y cuartilesIncluyendo dan 383 como promedio de 381 y 385: el cajón rotula 383, y el percentil del dato 381 es 75). Distractores: posición 12 (confunde-percentil-con-valor); 100 − 75 = 25 (cuenta-datos-sobre-en-vez-de-bajo); (381 − 330) / 85 = 0,6 (toma-cuartil-como-fraccion-del-rango). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "posicion-l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una medición de salto largo, los 12 saltos de un grupo, ordenados, fueron 302, 318, 326, 335, 342, 349, 356, 361, 367, 374, 388 y 402 cm. ¿En qué percentil del grupo está un salto de 367 cm?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Percentil 9",
+          "esCorrecta": false,
+          "feedback": "9 es la posición del salto en la fila de 12, no su percentil. La posición se convierte en porcentaje del grupo: 9 de 12 es 75 %.",
+          "errorCatalogado": "confunde-percentil-con-valor"
+        },
+        {
+          "clave": "B",
+          "texto": "Percentil 25",
+          "esCorrecta": false,
+          "feedback": "25 % son los 3 saltos que quedaron SOBRE 367 (374, 388, 402). El percentil cuenta los que quedaron en o bajo él: 9 de 12.",
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+        },
+        {
+          "clave": "C",
+          "texto": "Percentil 65",
+          "esCorrecta": false,
+          "feedback": "65 es (367 − 302) / 100: la posición del salto en la escala de centímetros, de 302 a 402. El percentil se cuenta en la fila de saltos: 9 de 12, el 75 %.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        },
+        {
+          "clave": "D",
+          "texto": "Percentil 75",
+          "esCorrecta": true,
+          "feedback": "Correcto. 367 es el salto número 9 de 12: 9 de 12 saltos quedan en o bajo él, y 9 / 12 = 75 %."
+        }
+      ],
+      "solucion": "El percentil de un dato es el porcentaje de datos del grupo que quedan en o bajo él. En la fila ordenada, 367 ocupa la posición 9 de 12: hay 9 saltos en o bajo 367. 9 / 12 = 0,75 = 75 %. El salto está en el percentil 75. Comprobación: sobre 367 quedan 3 saltos, 3 / 12 = 25 %, que completa el 100 %. ✓"
+    },
+    {
+      "id": "posicion-l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Los diagramas de cajón, sobre la misma escala, muestran el salto largo de dos sedes de un club, con 16 atletas cada una: norte con mínimo 312, Q1 347, mediana 370, Q3 393 y máximo 433 cm; sur con mínimo 330, Q1 357, mediana 370, Q3 383 y máximo 415 cm. ¿Cuál de estas afirmaciones tiene respaldo en los cajones?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Las dos sedes tienen la misma mediana, y la sede sur es más pareja: su rango intercuartil es 26 cm contra 46 cm de la norte.",
+          "esCorrecta": true,
+          "feedback": "Correcto. La mediana está rotulada en ambos (370), y el rango intercuartil se calcula desde los cuartiles rotulados: 383 − 357 = 26 y 393 − 347 = 46. Es lo que el cajón sí muestra."
+        },
+        {
+          "clave": "B",
+          "texto": "La sede norte tiene mayor promedio, porque su bigote derecho llega más lejos.",
+          "esCorrecta": false,
+          "feedback": "El cajón no muestra el promedio: solo mediana, cuartiles y extremos. Un máximo más alto no asegura un promedio mayor, porque el mínimo de norte también es más bajo. Sobre el promedio no se puede afirmar nada desde el dibujo.",
+          "errorCatalogado": "concluye-promedio-desde-mediana"
+        },
+        {
+          "clave": "C",
+          "texto": "La sede norte tiene más atletas sobre su Q3 que la sur sobre el suyo, porque su bigote derecho es más largo.",
+          "esCorrecta": false,
+          "feedback": "Sobre Q3 queda el 25 % de cada grupo: 4 atletas en norte y 4 en sur. El bigote más largo de norte dice que sus 4 atletas están más repartidos (de 393 a 433), no que sean más.",
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos"
+        },
+        {
+          "clave": "D",
+          "texto": "La caja de la sede norte contiene cerca del 38 % de sus atletas, porque mide 46 cm de un rango de 121.",
+          "esCorrecta": false,
+          "feedback": "46 / 121 es la parte de la escala de valores que ocupa la caja, no la parte de los atletas. La caja contiene el 50 % de los atletas en cualquier cajón: 8 de 16 en norte.",
+          "errorCatalogado": "lee-caja-como-valores-posibles"
+        }
+      ],
+      "solucion": "Lo que un diagrama de cajón permite afirmar es lo que rotula: mediana, cuartiles y extremos, y lo que se deduce de ellos (el rango intercuartil y el 25 % de datos por tramo). Medianas: 370 en las dos sedes. Rango intercuartil: norte 393 − 347 = 46 cm; sur 383 − 357 = 26 cm, así que sur es más pareja. El promedio no está en el cajón (B), cada bigote tiene el 25 % de los atletas sin importar su largo (C), y la caja tiene el 50 % de los datos aunque ocupe el 38 % de la escala (D). La alternativa con respaldo es A."
+    },
+    {
+      "id": "posicion-l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un atleta quedó sobre el percentil 90 en la prueba física de su club, que tiene 40 preguntas. Un compañero concluye: «entonces acertó al menos 36 preguntas, el 90 % de 40». ¿Qué se puede decir de su conclusión?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: el percentil 90 dice que el 90 % de los atletas obtuvo un puntaje igual o menor que el suyo; cuántas preguntas acertó no se puede saber desde el percentil.",
+          "esCorrecta": true,
+          "feedback": "Correcto. El percentil es una posición dentro del grupo, no un puntaje. En una prueba difícil, 25 aciertos pueden estar sobre el percentil 90; en una fácil, 36 aciertos pueden estar bajo la mediana."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: percentil 90 significa 90 % de aciertos, y el 90 % de 40 preguntas son 36.",
+          "esCorrecta": false,
+          "feedback": "Percentil 90 no es 90 % de aciertos. Mide cuántos atletas quedaron en o bajo su puntaje (el 90 %), no qué parte de la prueba respondió bien. Los dos números no tienen relación fija.",
+          "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, porque el percentil 90 quiere decir que sacó 90 puntos, y la prueba solo tiene 40 preguntas.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto pero la razón no: el percentil no es un puntaje ni una cantidad de puntos. Es el porcentaje del grupo que quedó en o bajo su puntaje, sea cual sea ese puntaje.",
+          "errorCatalogado": "confunde-percentil-con-valor"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, porque estar sobre el percentil 90 significa que el 90 % del club lo superó.",
+          "esCorrecta": false,
+          "feedback": "Es al revés: el percentil cuenta a los que quedaron en o bajo él. Sobre el percentil 90, el 90 % del club obtuvo un puntaje igual o menor; lo superó a lo más el 10 %.",
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+        }
+      ],
+      "solucion": "El percentil de un dato es el porcentaje de datos del grupo en o bajo él. «Sobre el percentil 90» dice que al menos el 90 % de los atletas del club obtuvo un puntaje igual o menor que el de este atleta. No dice cuál fue ese puntaje: depende de cómo le fue al resto. Con una prueba difícil, un puntaje de 25 sobre 40 puede quedar sobre el percentil 90. La conclusión del compañero no es correcta, y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Medidas de posición: solo para calibrar alcance (cuartiles y percentiles de uno o más grupos, problemas en contexto), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (un club de atletismo con dos sedes, el salto largo de 16 atletas por sede, una prueba física con puntaje y una carrera de 100 metros) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los conjuntos de datos (norte y sur con 16 valores cada uno y la misma mediana, los 12 saltos del ítem 1 y los 8 tiempos de la carrera) se construyeron con n par y percentiles de posición no entera para que las dos convenciones coincidan, con posiciones que dan percentiles enteros o con un decimal, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts (resumenCincoNumeros, percentil, percentilAlternativo, porcentajeBajo, rangoIntercuartil). La prueba con puntaje existe solo para nombrar el error de leer el percentil como porcentaje de aciertos y no entrega datos de ningún curso. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-medidas-de-posicion.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

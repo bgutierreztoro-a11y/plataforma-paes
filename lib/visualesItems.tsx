@@ -203,6 +203,31 @@ const VISUALES: Record<string, EntradaVisual> = {
       ejemploEnganoso: true,
     },
   },
+
+  /* ---- medidas de posición: el cajón es el estímulo, nunca la respuesta ---- */
+
+  /* Pasos diarios de A y B sobre la misma escala: se juzga el bigote largo. */
+  "posicion-l2-item-3": {
+    grafico: {
+      tipo: "diagramaCajon",
+      ejeHorizontal: "Pasos por día",
+      cajones: [
+        { nombre: "Persona A", min: 4200, q1: 6200, mediana: 6900, q3: 7700, max: 9200 },
+        { nombre: "Persona B", min: 3300, q1: 6500, mediana: 6900, q3: 7300, max: 9700 },
+      ],
+    },
+  },
+  /* Salto largo de las dos sedes sobre la misma escala: se elige la afirmación con respaldo. */
+  "posicion-l3-item-2": {
+    grafico: {
+      tipo: "diagramaCajon",
+      ejeHorizontal: "Salto largo en cm",
+      cajones: [
+        { nombre: "Sede norte", min: 312, q1: 347, mediana: 370, q3: 393, max: 433 },
+        { nombre: "Sede sur", min: 330, q1: 357, mediana: 370, q3: 383, max: 415 },
+      ],
+    },
+  },
 };
 
 /**

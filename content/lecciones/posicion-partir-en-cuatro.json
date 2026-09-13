@@ -1,0 +1,700 @@
+{
+  "tipo": "leccion",
+  "id": "posicion-partir-en-cuatro",
+  "moduloId": "medidas-de-posicion",
+  "titulo": "Cálculo de cuartiles en conjuntos de datos",
+  "objetivo": "Ordenar un conjunto de datos, encontrar la mediana con n par e impar, calcular Q1 y Q3 como las medianas de las dos mitades con la convención de este curso, interpretar que bajo Q1 queda el 25 % de los datos, y calcular el rango intercuartil como el ancho del 50 % central.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Ordenar números (Lección 1 del módulo Enteros y racionales)",
+    "Frecuencia relativa como porcentaje del total (Lección 1 del módulo Representación de datos)",
+    "Promedio de un conjunto de datos (Lección 3 del módulo Representación de datos)"
+  ],
+  "conceptos": [
+    "antes de cualquier medida de posición, los datos se ordenan de menor a mayor",
+    "mediana: el dato central; con n par, el promedio de los dos centrales",
+    "cuartiles: Q2 es la mediana; Q1 y Q3 son las medianas de la mitad inferior y de la mitad superior (con n impar, la mediana no entra en ninguna mitad)",
+    "bajo Q1 queda el 25 % de los datos; bajo Q3, el 75 %",
+    "rango intercuartil = Q3 − Q1: el ancho del 50 % central de los datos",
+    "los cuartiles son cortes en la lista de datos, no fracciones del rango de valores"
+  ],
+  "_notasInternas": [
+    "L1 del módulo medidas-de-posicion (eje Probabilidad y estadística, módulo #15). moduloId = medidas-de-posicion (id de tema; el slug del DAG quedó fuera de la migración del 2026-09-13). Descriptor DEMRE (docs/temario-demre-m1-2027.md:124): 'Cuartiles y percentiles de uno o más grupos de datos'. Diseño: docs/diseno-modulo-medidas-de-posicion.md.",
+    "Catálogo canónico: content/errores/medidas-de-posicion.json. Ids que este archivo referencia: calcula-cuartiles-sin-ordenar, confunde-mediana-con-promedio, toma-cuartil-como-fraccion-del-rango, toma-dato-central-sin-promediar, confunde-rango-con-intercuartil, lee-cuartil-como-posicion-entera (nacen acá) y cuenta-datos-sobre-en-vez-de-bajo (nace en L2, se usa acá en aplicación para contar los datos bajo Q1).",
+    "Dominio: tiempos, en segundos, de resolver un cubo de tres por tres, registrados por una persona intento a intento. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "CONVENCIÓN DEL CURSO, fijada en lib/estadistica.ts (cuartiles): Q2 = mediana; Q1 = mediana de la mitad inferior y Q3 de la superior, excluyendo la mediana con n impar. Todos los conjuntos de esta lección tienen n par (8, 10, 12, 16, 20), donde cuartiles() y cuartilesIncluyendo() coinciden; verificado con node -e para los seis conjuntos.",
+    "Todas las cifras verificadas con node -e sobre lib/estadistica.ts (ordenar, mediana, cuartiles, cuartilesIncluyendo, rangoIntercuartil, media): 12 tiempos 31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38 → ordenados 22, 24, 25, 26, 27, 28, 29, 30, 31, 33, 35, 38; mediana 28,5; Q1 25,5; Q3 32; rango intercuartil 6,5; rango 16; promedio 29. 8 tiempos 41, 36, 45, 39, 50, 38, 43, 48 → 36, 38, 39, 41, 43, 45, 48, 50; mediana 42; Q1 38,5; Q3 46,5; rango intercuartil 8; rango 14; promedio 42,5. 20 tiempos ordenados 24, 25, 26, 27, 27, 28, 29, 29, 30, 30, 31, 31, 32, 33, 34, 35, 36, 37, 38, 40 → Q1 27,5; mediana 30,5; Q3 34,5; rango 16; promedio 31,1. 16 tiempos 33, 41, 28, 37, 45, 31, 39, 35, 48, 34, 30, 42, 36, 52, 38, 44 → 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 41, 42, 44, 45, 48, 52; Q1 33,5; mediana 37,5; Q3 43; rango 24; 4 datos bajo Q1. 8 tiempos 26, 33, 22, 36, 30, 24, 28, 25 → 22, 24, 25, 26, 28, 30, 33, 36; Q3 31,5; rango 14.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {28,5; 25,5; 32; 6,5; 38,5; 8; 30,5; 34,5; 33,5; 4; 31,5; 43,5; 22,5}; distractores numéricos {30; 29; 28; 25; 26; 31; 34; 16; 38; 39,5; 14; 31,1; 36; 33; 12; 32,5; 43; 44,5; 47; 22; 23}; sin intersección. Por eso el conjunto de consolidación es 22, 24, 25, 26, 28, 30, 33, 36 (Q3 = 31,5): con 22 … 34 el Q3 daba 30, que es el distractor de 'sin ordenar' de pensar, y con 22 … 35 daba 31, que es el distractor de posición entera de descubrimiento.",
+    "Visuales: tabla de los cuatro grupos de 3 (descubrimiento) y el primer diagrama de cajón del módulo, sin nombrarlo como tal todavía, con los cinco valores del conjunto de 12 (generalización). El cajón rotula 22, 25,5, 28,5, 32 y 38, que ya se calcularon en descubrimiento; el ejercicio de generalización es sobre otro conjunto (el de 8). Ningún bloque rotula el valor que su propio campo pide.",
+    "Sin auditoria.constante: no hay una constante única. La palabra 'cuartil' aparece por primera vez en descubrimiento, después de que el estudiante repartió los 12 datos en cuatro grupos y encontró los tres cortes.",
+    "P2: el paso consolidación nombra los caminos equivocados de calcula-cuartiles-sin-ordenar, confunde-mediana-con-promedio y toma-cuartil-como-fraccion-del-rango antes del correcto, y su bloque pregunta lleva calcula-cuartiles-sin-ordenar, lee-cuartil-como-posicion-entera y toma-cuartil-como-fraccion-del-rango en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: 12 tiempos en segundos, 31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38",
+    "problema: los mismos 12 tiempos, cómo encontrar el que deja la mitad abajo (sin cifra nueva)",
+    "pensar/pistas: mediana de los 12 tiempos, 28,5",
+    "descubrimiento: los 12 tiempos ordenados en cuatro grupos de 3; cortes 25,5, 28,5 y 32",
+    "generalizacion: rango intercuartil de los 12 tiempos, 32 − 25,5 = 6,5; 8 tiempos 41, 36, 45, 39, 50, 38, 43, 48 con Q1 38,5 y rango intercuartil 8",
+    "practica: 20 tiempos ordenados de 24 a 40 (24, 25, 26, 27, 27, 28, 29, 29, 30, 30, 31, 31, 32, 33, 34, 35, 36, 37, 38, 40), mediana 30,5 y Q3 34,5",
+    "aplicacion: competencia de 16 tiempos 33, 41, 28, 37, 45, 31, 39, 35, 48, 34, 30, 42, 36, 52, 38, 44; Q1 33,5 y 4 competidores bajo Q1",
+    "consolidacion: 8 tiempos 26, 33, 22, 36, 30, 24, 28, 25; Q3 31,5",
+    "itemsPAES: mediana de 44, 37, 51, 40, 55, 39, 46, 42, 48, 43 → 43,5; Q1 de 19, 26, 22, 31, 24, 28, 20, 35, 23, 29, 27, 33 → 22,5; veredicto sobre Q1 = mínimo + un cuarto del rango con 36, 38, 39, 41, 43, 45, 48, 50 (Q1 = 38,5; la fracción del rango daría 39,5)"
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "bajoPrimerCuartil": "cantidad de datos (competidores) que quedan bajo Q1: un conteo, sin magnitud"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Doce intentos, en desorden",
+      "_notasInternas": [
+        "Sin regla: la lista bruta y la pregunta del tiempo 'del medio'. La predicción no se corrige. Los datos vienen desordenados a propósito: la lección todavía no pasó por 'ordenar'."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una persona que resuelve el **cubo de tres por tres** anota el tiempo, en segundos, de cada intento. Sus últimos doce intentos, en el orden en que los hizo:\n\n**31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38**\n\nQuiere saber cuál es su tiempo «del medio»: el que deja la mitad de sus intentos por abajo y la otra mitad por arriba."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular nada todavía, ¿cuál crees que es ese tiempo del medio?",
+          "tipoRespuesta": "numero"
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Con doce números sueltos cuesta decirlo. Esta lección es sobre cómo se encuentra ese tiempo del medio, y cómo se encuentran también los que dejan un cuarto y tres cuartos de los intentos por abajo."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Primero, en fila",
+      "_notasInternas": [
+        "Selección sobre el procedimiento: ordenar y tomar el centro (correcto); tomar el sexto y el séptimo de la lista tal como viene, (27 + 33) / 2 = 30 (calcula-cuartiles-sin-ordenar); sumar y dividir por 12, 29 (confunde-mediana-con-promedio). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cómo encontrarías el tiempo que deja la mitad de los doce intentos por abajo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Ordenando los doce tiempos de menor a mayor y mirando los del centro de esa fila.",
+              "esCorrecta": true,
+              "feedback": "Correcto. «La mitad por abajo» solo tiene sentido con los datos en fila de menor a mayor: ahí el centro de la fila deja seis a cada lado."
+            },
+            {
+              "id": "b",
+              "texto": "Tomando los dos tiempos del medio de la lista tal como está, 27 y 33, y promediándolos.",
+              "esCorrecta": false,
+              "feedback": "27 y 33 están al medio de la lista, pero la lista está en orden de intento, no de tamaño: 27 no deja la mitad por abajo, ni 33 la mitad por arriba. Primero hay que ordenar.",
+              "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+            },
+            {
+              "id": "c",
+              "texto": "Sumando los doce tiempos y dividiendo por 12.",
+              "esCorrecta": false,
+              "feedback": "Eso es el promedio, y el promedio no separa mitades: un solo tiempo muy largo lo mueve sin cambiar cuántos intentos quedan a cada lado. El tiempo del medio se busca en la fila ordenada.",
+              "errorCatalogado": "confunde-mediana-con-promedio"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Si los doce tiempos se hubieran anotado en otro orden, el tiempo del medio sería otro.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso: el tiempo del medio depende de cuáles son los doce valores, no del orden en que se anotaron. Ordenados de menor a mayor quedan siempre igual.",
+          "feedbackFalso": "Exacto. Ordenar borra el orden de llegada: la fila de menor a mayor es la misma aunque los intentos se hayan anotado en cualquier orden. Por eso se ordena primero."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "El tiempo del medio",
+      "_notasInternas": [
+        "Ordenados: 22, 24, 25, 26, 27, 28, 29, 30, 31, 33, 35, 38. Mediana = (28 + 29) / 2 = 28,5. feedbackPorError: 30 calcula-cuartiles-sin-ordenar ((27 + 33) / 2 de la lista bruta); 29 confunde-mediana-con-promedio (348 / 12); 28 toma-dato-central-sin-promediar. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Ordena los doce tiempos (31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38) de menor a mayor y encuentra el tiempo que deja seis intentos por abajo y seis por arriba. Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "medianaDoce",
+              "etiqueta": "Tiempo del medio",
+              "respuestaCorrecta": 28.5,
+              "unidad": "s"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "medianaDoce",
+              "valorObtenido": 30,
+              "mensaje": "Ese valor promedia el sexto y el séptimo tiempo de la lista tal como venía (27 y 33). Pero esa lista no está ordenada: 27 no deja seis tiempos por abajo. Ordena primero y recién mira el centro.",
+              "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+            },
+            {
+              "campoId": "medianaDoce",
+              "valorObtenido": 29,
+              "mensaje": "Ese valor es el promedio, 348 dividido por 12. El promedio no deja necesariamente la mitad a cada lado: acá hay siete tiempos bajo 29 y cinco sobre él. Mira los dos del centro de la fila ordenada.",
+              "errorCatalogado": "confunde-mediana-con-promedio"
+            },
+            {
+              "campoId": "medianaDoce",
+              "valorObtenido": 28,
+              "mensaje": "28 es uno de los dos tiempos del centro, pero con doce datos hay dos centrales, el sexto y el séptimo. El tiempo del medio es el promedio de los dos.",
+              "errorCatalogado": "toma-dato-central-sin-promediar"
+            }
+          ],
+          "feedbackPorDefecto": "Escribe los doce tiempos de menor a mayor. Con doce datos, los del centro son el sexto y el séptimo: el tiempo del medio es su promedio."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el tiempo del medio",
+      "_notasInternas": [
+        "Misma mediana. El nivel 3 nombra el sexto y el séptimo de la fila ordenada sin decir sus valores ni promediarlos."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Empieza por el menor tiempo (22) y sigue con el que le sigue, hasta llegar al mayor (38). Esa fila es la que se mira."
+            },
+            {
+              "nivel": 2,
+              "texto": "Con doce tiempos en fila, seis quedan a cada lado del centro. El centro no es un tiempo, sino el espacio entre el sexto y el séptimo."
+            },
+            {
+              "nivel": 3,
+              "texto": "Toma el sexto y el séptimo tiempo de la fila ordenada y promédialos: ese promedio deja exactamente seis por abajo y seis por arriba."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Cuatro grupos de tres",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Los 12 tiempos ordenados repartidos en cuatro grupos de 3 (tabla). El estudiante ubica los tres cortes: entre 25 y 26 (25,5), entre 28 y 29 (28,5) y entre 31 y 33 (32), cada uno como promedio de los vecinos. Recién después se los llama cuartiles. Numérica con dos campos: Q1 = 25,5 y Q3 = 32; feedbackPorError 25 y 31 lee-cuartil-como-posicion-entera (tercer y noveno dato sin promediar), 26 y 34 toma-cuartil-como-fraccion-del-rango (22 + 0,25 · 16 y 22 + 0,75 · 16). Verificado con node -e (cuartiles y cuartilesIncluyendo coinciden: n par)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Los doce tiempos en fila, de menor a mayor, y repartidos en **cuatro grupos de tres**:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Los doce tiempos ordenados en cuatro grupos de tres: primer grupo 22, 24, 25; segundo grupo 26, 27, 28; tercer grupo 29, 30, 31; cuarto grupo 33, 35, 38. Entre grupo y grupo hay un corte.",
+          "datos": {
+            "columnas": ["Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"],
+            "filas": [
+              ["22, 24, 25", "26, 27, 28", "29, 30, 31", "33, 35, 38"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El tiempo del medio, 28,5, es el corte entre el grupo 2 y el grupo 3. ¿Dónde cae el corte entre el grupo 1 y el grupo 2, y qué deja por abajo?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Entre 25 y 26, así que en 25,5: deja tres de los doce tiempos por abajo, un cuarto de los intentos.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Ese corte es la mediana de la mitad inferior (22, 24, 25, 26, 27, 28), o sea el promedio de 25 y 26. Se llama **primer cuartil**, Q1: bajo él queda el 25 % de los datos."
+            },
+            {
+              "id": "b",
+              "texto": "En 26, el cuarto tiempo de la fila: deja tres por abajo y basta con eso.",
+              "esCorrecta": false,
+              "feedback": "26 deja tres por abajo, pero también 25,9 o 25,1 los dejan: el corte no es un dato, es el espacio entre el tercero y el cuarto. Se toma el promedio de los dos vecinos, 25 y 26.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "id": "c",
+              "texto": "En 26, porque un cuarto del recorrido de 22 a 38 es 4, y 22 + 4 = 26.",
+              "esCorrecta": false,
+              "feedback": "Eso reparte la escala de valores en cuartos, no los datos. Los cuartiles cortan la fila de intentos: tres a un lado, nueve al otro. Que dé cerca de 26 es coincidencia de estos números; con tiempos más repartidos daría otra cosa.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora escribe los dos cortes de los extremos: el que separa el grupo 1 del grupo 2 (el primer cuartil, Q1) y el que separa el grupo 3 del grupo 4 (el tercer cuartil, Q3).",
+          "campos": [
+            {
+              "id": "primerCuartilDoce",
+              "etiqueta": "Q1",
+              "respuestaCorrecta": 25.5,
+              "unidad": "s"
+            },
+            {
+              "id": "tercerCuartilDoce",
+              "etiqueta": "Q3",
+              "respuestaCorrecta": 32,
+              "unidad": "s"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "primerCuartilDoce",
+              "valorObtenido": 25,
+              "mensaje": "25 es el tercer tiempo de la fila, no el corte. Con doce datos, la mitad inferior tiene seis y su centro está entre el tercero y el cuarto: se promedian 25 y 26.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "primerCuartilDoce",
+              "valorObtenido": 26,
+              "mensaje": "26 es 22 más un cuarto del recorrido hasta 38. Eso parte la escala, no los datos. Q1 es la mediana de la mitad inferior: el promedio de 25 y 26.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            },
+            {
+              "campoId": "tercerCuartilDoce",
+              "valorObtenido": 31,
+              "mensaje": "31 es el noveno tiempo de la fila, no el corte. La mitad superior (29, 30, 31, 33, 35, 38) tiene su centro entre 31 y 33: se promedian.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "tercerCuartilDoce",
+              "valorObtenido": 34,
+              "mensaje": "34 es 22 más tres cuartos del recorrido hasta 38. Eso parte la escala de valores, no la fila de intentos. Q3 es la mediana de la mitad superior: el promedio de 31 y 33.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            }
+          ],
+          "feedbackPorDefecto": "Q1 es el promedio del tercer y el cuarto tiempo de la fila ordenada; Q3, el promedio del noveno y el décimo. Cada uno deja tres tiempos de un lado."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que bajo Q1 = 25,5 queden exactamente tres de los doce tiempos, o sea el 25 %?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí, tiene sentido: 22, 24 y 25 están bajo 25,5, y son 3 de 12, un cuarto. Los tres cortes dejan 25 %, 50 % y 75 % de los intentos por abajo. De ahí el nombre: cuartiles.",
+          "feedbackFalso": "En realidad sí: bajo 25,5 están 22, 24 y 25, tres de doce, que es el 25 %. Cada corte deja un cuarto más por abajo: 25 %, 50 % y 75 %."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: **ordenados los datos, los cuartiles son los tres cortes que dejan un cuarto, la mitad y tres cuartos de los datos por abajo.** En el próximo paso, la definición, la convención que usa este curso y un dibujo que los resume."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La definición, y el ancho del medio",
+      "_notasInternas": [
+        "PRIMERA aparición de la definición formal y de la convención del curso (n impar: la mediana no entra en las mitades). Diagrama de cajón de los 12 tiempos con los cinco valores rotulados (22, 25,5, 28,5, 32, 38), presentado como 'el resumen dibujado', sin llamarlo diagrama de cajón todavía (eso es L2). Numérica 1: rango intercuartil 32 − 25,5 = 6,5; feedbackPorError 16 confunde-rango-con-intercuartil (38 − 22). Numérica 2, otro conjunto: 41, 36, 45, 39, 50, 38, 43, 48 → 36, 38, 39, 41, 43, 45, 48, 50; Q1 = (38 + 39) / 2 = 38,5, rango intercuartil = 46,5 − 38,5 = 8; feedbackPorError 38 lee-cuartil-como-posicion-entera, 39,5 toma-cuartil-como-fraccion-del-rango (36 + 0,25 · 14), 14 confunde-rango-con-intercuartil. Verificado con node -e (cuartiles = cuartilesIncluyendo, n = 8)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres, y con la **convención que usa este curso** (hay otras; en la PAES los datos vienen elegidos para que no importe):\n\n1. Se **ordenan** los datos de menor a mayor.\n2. **Mediana (Q2):** el dato central. Con n par, el promedio de los dos centrales.\n3. **Primer cuartil (Q1):** la mediana de la mitad inferior. **Tercer cuartil (Q3):** la mediana de la mitad superior. Con n impar, la mediana **no entra** en ninguna de las dos mitades.\n4. Bajo Q1 queda el **25 %** de los datos; bajo Q2, el 50 %; bajo Q3, el 75 %.\n\n> **Rango intercuartil = Q3 − Q1**: el ancho que ocupa el **50 % central** de los datos. No confundir con el **rango**, que es máximo − mínimo.\n\nLos cinco números que resumen un conjunto (mínimo, Q1, mediana, Q3, máximo) se pueden dibujar sobre una recta. Así se ven los doce tiempos:"
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Los doce tiempos resumidos sobre una recta de segundos: una caja desde Q1 = 25,5 hasta Q3 = 32, con la mediana 28,5 marcada dentro, y dos líneas que salen de la caja hasta el mínimo 22 y el máximo 38. Los cinco valores están rotulados.",
+          "datos": {
+            "tipo": "diagramaCajon",
+            "ejeHorizontal": "Segundos",
+            "cajones": [
+              { "nombre": "12 intentos", "min": 22, "q1": 25.5, "mediana": 28.5, "q3": 32, "max": 38, "datos": [31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38] }
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 1.** ¿Cuánto mide el rango intercuartil de los doce tiempos?",
+          "campos": [
+            {
+              "id": "intercuartilDoce",
+              "etiqueta": "Rango intercuartil",
+              "respuestaCorrecta": 6.5,
+              "unidad": "s"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "intercuartilDoce",
+              "valorObtenido": 16,
+              "mensaje": "16 es el rango completo, 38 − 22: el ancho de todos los datos. El rango intercuartil es el ancho de la caja, Q3 − Q1, donde vive el 50 % central.",
+              "errorCatalogado": "confunde-rango-con-intercuartil"
+            }
+          ],
+          "feedbackPorDefecto": "Rango intercuartil = Q3 − Q1. Lee los dos cuartiles del dibujo y resta."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio 2.** Otra persona registró ocho tiempos: 41, 36, 45, 39, 50, 38, 43, 48. Calcula su primer cuartil y su rango intercuartil.",
+          "campos": [
+            {
+              "id": "primerCuartilOcho",
+              "etiqueta": "Q1",
+              "respuestaCorrecta": 38.5,
+              "unidad": "s"
+            },
+            {
+              "id": "intercuartilOcho",
+              "etiqueta": "Rango intercuartil",
+              "respuestaCorrecta": 8,
+              "unidad": "s"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "primerCuartilOcho",
+              "valorObtenido": 38,
+              "mensaje": "38 es el segundo tiempo de la fila ordenada. Con ocho datos, la mitad inferior tiene cuatro (36, 38, 39, 41) y su mediana es el promedio del segundo y el tercero: 38 y 39.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "primerCuartilOcho",
+              "valorObtenido": 39.5,
+              "mensaje": "39,5 es 36 más un cuarto del recorrido hasta 50. Eso parte la escala de valores. Q1 es la mediana de la mitad inferior de la fila ordenada: el promedio de 38 y 39.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            },
+            {
+              "campoId": "intercuartilOcho",
+              "valorObtenido": 14,
+              "mensaje": "14 es el rango, 50 − 36. El rango intercuartil es Q3 − Q1: la mediana de la mitad superior (45 y 48 promediados) menos la de la inferior.",
+              "errorCatalogado": "confunde-rango-con-intercuartil"
+            }
+          ],
+          "feedbackPorDefecto": "Ordena los ocho tiempos. Q1 es la mediana de los cuatro menores; Q3, la de los cuatro mayores; el rango intercuartil es la diferencia entre los dos."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Veinte intentos",
+      "_notasInternas": [
+        "P1 numérica, 20 tiempos ya ordenados: mediana = (30 + 31) / 2 = 30,5, Q3 = mediana de los 10 mayores = (34 + 35) / 2 = 34,5. feedbackPorError: mediana 30 toma-dato-central-sin-promediar, 31,1 confunde-mediana-con-promedio (622 / 20); Q3 34 lee-cuartil-como-posicion-entera (posición 15), 36 toma-cuartil-como-fraccion-del-rango (24 + 0,75 · 16). P2 selección sobre qué significa Q1 = 27,5. P3 verdaderoFalso sobre n impar. Verificado con node -e (cuartiles = cuartilesIncluyendo, n = 20)."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "En una semana la persona del cubo registró veinte tiempos, que ya ordenó: 24, 25, 26, 27, 27, 28, 29, 29, 30, 30, 31, 31, 32, 33, 34, 35, 36, 37, 38, 40. Calcula la mediana y el tercer cuartil.",
+          "campos": [
+            {
+              "id": "medianaVeinte",
+              "etiqueta": "Mediana",
+              "respuestaCorrecta": 30.5,
+              "unidad": "s"
+            },
+            {
+              "id": "tercerCuartilVeinte",
+              "etiqueta": "Q3",
+              "respuestaCorrecta": 34.5,
+              "unidad": "s"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "medianaVeinte",
+              "valorObtenido": 30,
+              "mensaje": "30 es el décimo tiempo, uno de los dos centrales. Con veinte datos los centrales son el décimo y el undécimo (30 y 31): la mediana es su promedio.",
+              "errorCatalogado": "toma-dato-central-sin-promediar"
+            },
+            {
+              "campoId": "medianaVeinte",
+              "valorObtenido": 31.1,
+              "mensaje": "31,1 es el promedio de los veinte tiempos. La mediana es el centro de la fila ordenada, el promedio del décimo y el undécimo dato, no la suma dividida por 20.",
+              "errorCatalogado": "confunde-mediana-con-promedio"
+            },
+            {
+              "campoId": "tercerCuartilVeinte",
+              "valorObtenido": 34,
+              "mensaje": "34 es el decimoquinto tiempo. La mitad superior tiene diez datos (del undécimo al vigésimo) y su centro está entre el quinto y el sexto de esos diez: 34 y 35, promediados.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "tercerCuartilVeinte",
+              "valorObtenido": 36,
+              "mensaje": "36 es 24 más tres cuartos del recorrido hasta 40. Eso parte la escala, no los datos. Q3 es la mediana de los diez tiempos mayores: el promedio de 34 y 35.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            }
+          ],
+          "feedbackPorDefecto": "Mediana: promedio del décimo y el undécimo tiempo. Q3: mediana de los diez tiempos mayores, o sea el promedio del decimoquinto y el decimosexto."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Para esos veinte tiempos, Q1 = 27,5 segundos. ¿Qué quiere decir eso?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Que un cuarto de los intentos, cinco de veinte, duró menos de 27,5 segundos.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Q1 deja el 25 % de los datos por abajo: 24, 25, 26, 27 y 27 son los cinco intentos más rápidos, todos bajo 27,5."
+            },
+            {
+              "id": "b",
+              "texto": "Que 27,5 está a un cuarto del camino entre el tiempo menor y el mayor.",
+              "esCorrecta": false,
+              "feedback": "Un cuarto del camino de 24 a 40 sería 28, no 27,5. Q1 no reparte la escala de valores: reparte los intentos, cinco por abajo y quince por arriba.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            },
+            {
+              "id": "c",
+              "texto": "Que el 25 % del tiempo total de la semana se gastó antes de llegar a 27,5 segundos.",
+              "esCorrecta": false,
+              "feedback": "Q1 no habla de tiempo acumulado sino de cuántos intentos: el 25 % de los intentos (cinco) duraron menos de 27,5 segundos. La suma de tiempos no interviene."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Con 13 tiempos, la mediana es el séptimo de la fila ordenada, y para calcular Q1 y Q3 (con la convención de este curso) ese séptimo tiempo se deja fuera de las dos mitades.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Con n impar hay un dato central (el séptimo de trece, que deja seis a cada lado), y las dos mitades son los seis de abajo y los seis de arriba. Es la convención del curso; los datos de la PAES vienen elegidos para que no importe.",
+          "feedbackFalso": "En realidad es verdadero: con 13 datos el central es el séptimo, y la convención de este curso lo deja fuera de las mitades, que quedan de seis datos cada una. Q1 es la mediana de los seis menores y Q3 la de los seis mayores."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "La competencia",
+      "_notasInternas": [
+        "Competencia de 16 tiempos: 33, 41, 28, 37, 45, 31, 39, 35, 48, 34, 30, 42, 36, 52, 38, 44 → ordenados 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 41, 42, 44, 45, 48, 52; Q1 = (33 + 34) / 2 = 33,5; bajo Q1 quedan 4 (28, 30, 31, 33). feedbackPorError: Q1 33 lee-cuartil-como-posicion-entera (cuarto dato), 34 toma-cuartil-como-fraccion-del-rango (28 + 0,25 · 24); conteo 12 cuenta-datos-sobre-en-vez-de-bajo (los que quedan sobre Q1). Verificado con node -e (cuartiles = cuartilesIncluyendo, n = 16)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En una competencia local participaron 16 personas. Sus tiempos, en segundos y en orden de llegada al registro: **33, 41, 28, 37, 45, 31, 39, 35, 48, 34, 30, 42, 36, 52, 38, 44**. Pasan a la final quienes quedaron **bajo el primer cuartil**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Calcula Q1 y cuántas personas pasan a la final.",
+          "campos": [
+            {
+              "id": "primerCuartilCompetencia",
+              "etiqueta": "Q1",
+              "respuestaCorrecta": 33.5,
+              "unidad": "s"
+            },
+            {
+              "id": "bajoPrimerCuartil",
+              "etiqueta": "Personas que pasan a la final",
+              "respuestaCorrecta": 4
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "primerCuartilCompetencia",
+              "valorObtenido": 33,
+              "mensaje": "33 es el cuarto tiempo de la fila ordenada. La mitad inferior tiene ocho datos y su centro está entre el cuarto y el quinto (33 y 34): Q1 es su promedio.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "campoId": "primerCuartilCompetencia",
+              "valorObtenido": 34,
+              "mensaje": "34 es 28 más un cuarto del recorrido hasta 52. Eso parte la escala. Q1 es la mediana de los ocho tiempos menores: el promedio de 33 y 34.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            },
+            {
+              "campoId": "bajoPrimerCuartil",
+              "valorObtenido": 12,
+              "mensaje": "12 son las personas que quedaron sobre Q1, las tres cuartas partes. A la final pasan las que quedaron bajo Q1: el cuarto de abajo, cuatro de dieciséis.",
+              "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo"
+            }
+          ],
+          "feedbackPorDefecto": "Ordena los dieciséis tiempos. Q1 es la mediana de los ocho menores (promedio del cuarto y el quinto). Cuenta cuántos tiempos son menores que Q1: tiene que ser un cuarto de dieciséis."
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Si a la final pasaran quienes quedaron bajo la mediana en vez de bajo Q1, ¿cuántas personas pasarían? Explica sin calcular la mediana.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Pasarían ocho: la mediana deja la mitad de los datos por abajo, y la mitad de dieciséis es ocho. No hace falta calcularla, porque la pregunta es cuántos quedan abajo, y eso es lo que la mediana fija por definición."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Cortar la fila, no la escala",
+      "_notasInternas": [
+        "Metacognición sobre la diferencia entre repartir datos y repartir valores. El texto de cierre nombra los errores en lenguaje llano, sin ids. Pregunta abierta que resuelve L2: ¿y el 90 %? ¿y se puede dibujar?"
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: ¿por qué Q1 no es «el mínimo más un cuarto del rango»? ¿Qué reparte un cuartil, y qué no reparte?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que diga que el cuartil reparte los datos (un cuarto de ellos por abajo) y no la escala de valores, y que por eso hay que ordenar y contar posiciones, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten con la mediana y los cuartiles, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **No ordenar antes:** el dato del medio de una lista desordenada es cualquiera.\n2. **Confundir la mediana con el promedio:** el promedio suma y reparte; la mediana corta la fila.\n3. **Tomar un cuartil como fracción del rango:** mínimo + 25 % del recorrido no es Q1. Los cuartiles cortan los datos, no la escala.\n4. **Olvidar el promedio de los dos centrales** cuando n es par, o confundir el rango con el rango intercuartil.\n\nYa los viste por dentro. Cuando aparezcan disfrazados de alternativa, los vas a reconocer.\n\nQueda una pregunta abierta: los cuartiles cortan en 25 %, 50 % y 75 %. ¿Y si quisieras saber dónde queda el 90 % de los intentos? ¿Y qué le falta al dibujo de los cinco números para leerlo de un vistazo? Esa es la próxima lección."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de calcula-cuartiles-sin-ordenar, confunde-mediana-con-promedio y toma-cuartil-como-fraccion-del-rango, seguido de un bloque pregunta: 8 tiempos 26, 33, 22, 36, 30, 24, 28, 25 → ordenados 22, 24, 25, 26, 28, 30, 33, 36; Q3 = (30 + 33) / 2 = 31,5. Distractores: 26 calcula-cuartiles-sin-ordenar ((24 + 28) / 2, sexto y séptimo de la lista bruta); 30 lee-cuartil-como-posicion-entera (sexto dato); 32,5 toma-cuartil-como-fraccion-del-rango (22 + 0,75 · 14). Alternativas numéricas en orden creciente. Verificado con node -e (cuartiles = cuartilesIncluyendo, n = 8)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **Primero se ordena.** Sin fila de menor a mayor no hay medida de posición.\n- **Mediana:** el centro de la fila; con n par, el promedio de los dos centrales.\n- **Q1 y Q3:** las medianas de las dos mitades; con n impar, la mediana queda fuera de ambas (convención del curso).\n- Bajo Q1 queda el **25 %** de los datos; bajo Q3, el **75 %**.\n- **Rango intercuartil = Q3 − Q1**, el ancho del 50 % central. El **rango** es máximo − mínimo.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente calcula la mediana **con la lista tal como viene**. Falla porque el dato del medio de una lista desordenada no deja la mitad a cada lado. Lo que funciona es **ordenar primero** y recién mirar el centro.\n\nMucha gente entrega **el promedio** donde se pide la mediana. Falla porque el promedio reparte la suma, y un solo dato grande lo mueve sin cambiar cuántos quedan a cada lado. Lo que funciona es **contar posiciones en la fila**.\n\nMucha gente toma Q1 como **el mínimo más un cuarto del rango**. Falla porque eso reparte la escala de valores, no los datos: puede dejar dos o cinco datos por abajo en vez de un cuarto. Lo que funciona es **la mediana de la mitad inferior**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Ocho tiempos, en segundos y en el orden en que se registraron: 26, 33, 22, 36, 30, 24, 28, 25. ¿Cuál es el tercer cuartil?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "26 s",
+              "esCorrecta": false,
+              "feedback": "26 promedia el sexto y el séptimo tiempo de la lista tal como venía (24 y 28). Esa lista no está ordenada. Ordenada es 22, 24, 25, 26, 28, 30, 33, 36, y Q3 es la mediana de los cuatro mayores.",
+              "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+            },
+            {
+              "clave": "B",
+              "texto": "30 s",
+              "esCorrecta": false,
+              "feedback": "30 es el sexto tiempo de la fila ordenada, no el corte. La mitad superior es 28, 30, 33, 36, y su mediana es el promedio de 30 y 33.",
+              "errorCatalogado": "lee-cuartil-como-posicion-entera"
+            },
+            {
+              "clave": "C",
+              "texto": "31,5 s",
+              "esCorrecta": true,
+              "feedback": "Correcto. Ordenados: 22, 24, 25, 26, 28, 30, 33, 36. Mitad superior: 28, 30, 33, 36; su mediana es (30 + 33) / 2 = 31,5. Bajo 31,5 quedan seis de los ocho tiempos, el 75 %."
+            },
+            {
+              "clave": "D",
+              "texto": "32,5 s",
+              "esCorrecta": false,
+              "feedback": "32,5 es 22 más tres cuartos del recorrido hasta 36. Eso parte la escala de valores, no la fila de datos. Q3 es la mediana de la mitad superior: (30 + 33) / 2.",
+              "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+            }
+          ],
+          "notaVerificacionMatematica": "Ordenados 22, 24, 25, 26, 28, 30, 33, 36; cuartiles() y cuartilesIncluyendo() de lib/estadistica.ts dan Q3 = 31,5 (n par). Distractores: (24 + 28) / 2 = 26 sobre la lista bruta (calcula-cuartiles-sin-ordenar); sexto dato 30 (lee-cuartil-como-posicion-entera); 22 + 0,75 · 14 = 32,5 (toma-cuartil-como-fraccion-del-rango). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "posicion-l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una persona registró, en segundos y en el orden en que los hizo, sus últimos diez tiempos resolviendo un cubo: 44, 37, 51, 40, 55, 39, 46, 42, 48, 43. ¿Cuál es la mediana de esos tiempos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "43 s",
+          "esCorrecta": false,
+          "feedback": "43 es el quinto tiempo de la fila ordenada, uno de los dos centrales. Con diez datos los centrales son el quinto y el sexto (43 y 44), y la mediana es su promedio.",
+          "errorCatalogado": "toma-dato-central-sin-promediar"
+        },
+        {
+          "clave": "B",
+          "texto": "43,5 s",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ordenados: 37, 39, 40, 42, 43, 44, 46, 48, 51, 55. Los centrales son 43 y 44, y (43 + 44) / 2 = 43,5."
+        },
+        {
+          "clave": "C",
+          "texto": "44,5 s",
+          "esCorrecta": false,
+          "feedback": "44,5 es el promedio de los diez tiempos (445 / 10). La mediana es el centro de la fila ordenada, el promedio del quinto y el sexto dato, no la suma dividida por 10.",
+          "errorCatalogado": "confunde-mediana-con-promedio"
+        },
+        {
+          "clave": "D",
+          "texto": "47 s",
+          "esCorrecta": false,
+          "feedback": "47 promedia el quinto y el sexto tiempo de la lista tal como venía (55 y 39). Esa lista está en orden de intento, no de tamaño. Ordenada, los centrales son 43 y 44.",
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+        }
+      ],
+      "solucion": "Se ordenan los diez tiempos de menor a mayor: 37, 39, 40, 42, 43, 44, 46, 48, 51, 55. Con n = 10 (par), la mediana es el promedio de los dos centrales, el quinto y el sexto: (43 + 44) / 2 = 43,5 segundos. Comprobación: cinco tiempos quedan bajo 43,5 (37, 39, 40, 42, 43) y cinco sobre él. ✓"
+    },
+    {
+      "id": "posicion-l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Los tiempos, en segundos, de doce intentos de resolver un cubo fueron: 19, 26, 22, 31, 24, 28, 20, 35, 23, 29, 27, 33. Con la convención de que Q1 es la mediana de la mitad inferior de los datos ordenados, ¿cuál es el primer cuartil?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "22 s",
+          "esCorrecta": false,
+          "feedback": "22 es el tercer tiempo de la fila ordenada. La mitad inferior tiene seis datos (19, 20, 22, 23, 24, 26) y su mediana es el promedio del tercero y el cuarto: 22 y 23.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "B",
+          "texto": "22,5 s",
+          "esCorrecta": true,
+          "feedback": "Correcto. Ordenados: 19, 20, 22, 23, 24, 26, 27, 28, 29, 31, 33, 35. Mitad inferior: 19, 20, 22, 23, 24, 26; su mediana es (22 + 23) / 2 = 22,5."
+        },
+        {
+          "clave": "C",
+          "texto": "23 s",
+          "esCorrecta": false,
+          "feedback": "23 es 19 más un cuarto del recorrido hasta 35 (19 + 4). Eso parte la escala de valores, no la fila de datos. Q1 es la mediana de los seis tiempos menores: (22 + 23) / 2.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        },
+        {
+          "clave": "D",
+          "texto": "25 s",
+          "esCorrecta": false,
+          "feedback": "25 es la mediana de los seis primeros tiempos de la lista tal como venía (19, 26, 22, 31, 24, 28). Pero esa mitad no es la mitad inferior: hay que ordenar los doce antes de partirlos.",
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar"
+        }
+      ],
+      "solucion": "Se ordenan los doce tiempos: 19, 20, 22, 23, 24, 26, 27, 28, 29, 31, 33, 35. Con n = 12, la mitad inferior son los seis primeros: 19, 20, 22, 23, 24, 26. Su mediana es el promedio del tercero y el cuarto: (22 + 23) / 2 = 22,5 segundos. Comprobación: bajo 22,5 quedan exactamente tres de los doce tiempos (19, 20, 22), el 25 %. ✓"
+    },
+    {
+      "id": "posicion-l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Los tiempos ordenados de ocho intentos son 36, 38, 39, 41, 43, 45, 48 y 50 segundos. Un estudiante afirma: «el primer cuartil es el mínimo más un cuarto del rango, o sea 36 + 0,25 · 14 = 39,5». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcta: Q1 es la mediana de la mitad inferior (36, 38, 39, 41), o sea (38 + 39) / 2 = 38,5; la fracción del rango no reparte los datos.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Bajo 38,5 quedan exactamente dos de los ocho tiempos, el 25 %. Bajo 39,5 quedarían tres, que no es un cuarto de ocho. El cuartil corta la fila de datos, no la escala de valores."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: un cuarto del rango a partir del mínimo es justamente lo que separa el primer cuarto de los datos.",
+          "esCorrecta": false,
+          "feedback": "Un cuarto del rango reparte la escala de 36 a 50 en partes iguales de valor, no de cantidad de datos. Bajo 39,5 quedan tres tiempos, no dos. Q1 es la mediana de la mitad inferior: 38,5.",
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango"
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, porque Q1 es el segundo dato de la fila: 38.",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto, pero el valor no: con ocho datos la mitad inferior tiene cuatro (36, 38, 39, 41) y su mediana es el promedio del segundo y el tercero, (38 + 39) / 2 = 38,5, no el segundo dato solo.",
+          "errorCatalogado": "lee-cuartil-como-posicion-entera"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, porque Q1 es el promedio de los ocho tiempos: 42,5.",
+          "esCorrecta": false,
+          "feedback": "42,5 es el promedio de todos los tiempos, y el promedio no es una medida de posición: no dice cuántos datos quedan a cada lado. Q1 es la mediana de la mitad inferior, 38,5.",
+          "errorCatalogado": "confunde-mediana-con-promedio"
+        }
+      ],
+      "solucion": "Con n = 8 y la convención del curso, Q1 es la mediana de la mitad inferior de los datos ordenados: 36, 38, 39, 41, cuya mediana es (38 + 39) / 2 = 38,5. El cálculo del estudiante, 36 + 0,25 · (50 − 36) = 39,5, reparte el rango de valores en cuartos, no los datos: bajo 39,5 quedan tres tiempos (36, 38, 39), que es el 37,5 % y no el 25 %. Bajo 38,5 quedan dos, el 25 % exacto. La afirmación no es correcta y la alternativa que lo explica es A."
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Medidas de posición: solo para calibrar alcance (cuartiles), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contexto (los tiempos en segundos de resolver un cubo de tres por tres, registrados intento a intento, y una competencia local) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los conjuntos de datos (12 tiempos 31, 24, 28, 35, 22, 27, 33, 26, 30, 25, 29, 38; 8 tiempos 41, 36, 45, 39, 50, 38, 43, 48; 20 tiempos de 24 a 40; 16 tiempos de la competencia; 8 tiempos 26, 33, 22, 36, 30, 24, 28, 25; y los de los tres ítems) se eligieron con n par para que las dos convenciones de cuartil coincidan, con datos enteros, para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/, y se verificaron con node -e sobre lib/estadistica.ts (cuartiles y cuartilesIncluyendo). La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-medidas-de-posicion.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados, y no se usan notas, edades, estaturas ni goles.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
