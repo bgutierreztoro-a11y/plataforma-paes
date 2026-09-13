@@ -172,11 +172,11 @@ export interface BloqueVisualizacion {
   tipo: "visualizacion";
   variante: "tabla" | "grafico" | "diagrama" | "regla-signos";
   descripcion: string;
-  /* Libre salvo seis formas con contrato cerrado, discriminadas por `datos.tipo`:
-     `DatosTransformacion`, `DatosSemejanza` y los cuatro `DatosGraficoEstadistico`
-     (abajo). Sigue siendo `unknown` porque el resto de las variantes (tabla,
-     bandas, figuras, cuerpos) se discrimina por forma en
-     `BloqueVisualizacion.tsx`, no por un campo. */
+  /* Libre salvo ocho formas con contrato cerrado, discriminadas por `datos.tipo`:
+     `DatosTransformacion`, `DatosSemejanza`, los cuatro `DatosGraficoEstadistico`
+     y los dos `DatosVisualProbabilidad` (abajo). Sigue siendo `unknown` porque
+     el resto de las variantes (tabla, bandas, figuras, cuerpos) se discrimina
+     por forma en `BloqueVisualizacion.tsx`, no por un campo. */
   datos?: unknown;
 }
 
@@ -301,6 +301,45 @@ export type DatosGraficoEstadistico =
   | DatosGraficoLineas
   | DatosGraficoCircular
   | DatosDiagramaCajon;
+
+/**
+ * Espejo de `ramaArbol`: el resultado que rotula el nodo y la probabilidad de
+ * la rama como texto, que es lo que se dibuja (nada se calcula en el
+ * componente). Sin `ramas` es una hoja; solo una hoja lleva `id` y
+ * `probabilidadCamino`. El contrato vivo es `motivoRechazoDatosProbabilidad`
+ * en lib/probabilidad.ts.
+ */
+export interface RamaArbolDatos {
+  resultado: string;
+  probabilidad: string;
+  id?: string;
+  probabilidadCamino?: string;
+  ramas?: RamaArbolDatos[];
+}
+
+/** Espejo de `datosDiagramaArbol`: una columna por etapa, hasta 3 ramas por nodo y 12 hojas. */
+export interface DatosDiagramaArbol {
+  tipo: "diagramaArbol";
+  etapas: string[];
+  ramas: RamaArbolDatos[];
+  resaltar?: string[];
+  raiz?: string;
+}
+
+/** Espejo de `datosCuadriculaEspacioMuestral`: filas × columnas de pares, celdas marcadas y contador declarado. */
+export interface DatosCuadriculaEspacioMuestral {
+  tipo: "cuadriculaEspacioMuestral";
+  filas: string[];
+  columnas: string[];
+  rotuloFilas?: string;
+  rotuloColumnas?: string;
+  celdas?: string[][];
+  marcadas?: [number, number][];
+  contador?: { marcadas: number; total: number };
+  rotuloEvento?: string;
+}
+
+export type DatosVisualProbabilidad = DatosDiagramaArbol | DatosCuadriculaEspacioMuestral;
 
 export type Bloque =
   | BloqueTexto

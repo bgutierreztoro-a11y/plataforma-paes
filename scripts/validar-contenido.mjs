@@ -24,6 +24,7 @@ import { construirDag, ancestros } from '../lib/diagnostico/dag.ts';
 import { motivoRechazoDatosTransformacion } from '../lib/transformacionesIsometricas.ts';
 import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
 import { esTipoGraficoEstadistico, motivoRechazoDatosGrafico } from '../lib/estadistica.ts';
+import { esTipoVisualProbabilidad, motivoRechazoDatosProbabilidad } from '../lib/probabilidad.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -112,9 +113,9 @@ function validarBloqueInteractivoSlider(bloque, donde, errores) {
 /**
  * Contrato de los `datos` de `visualizacion` que sí tienen forma cerrada
  * (schema: `datosTransformacion`, `datosSemejanza`, `datosGraficoBarras`,
- * `datosGraficoLineas`, `datosGraficoCircular`, `datosDiagramaCajon`),
- * discriminados por `datos.tipo`. Los datos sin `tipo` siguen siendo libres y
- * no se tocan.
+ * `datosGraficoLineas`, `datosGraficoCircular`, `datosDiagramaCajon`,
+ * `datosDiagramaArbol`, `datosCuadriculaEspacioMuestral`), discriminados por
+ * `datos.tipo`. Los datos sin `tipo` siguen siendo libres y no se tocan.
  *
  * El motivo lo produce la misma función que usa el type guard del bloque en
  * `components/bloques/BloqueVisualizacion.tsx`: un JSON que pasa por acá se
@@ -124,7 +125,13 @@ function validarBloqueInteractivoSlider(bloque, donde, errores) {
  * `<figure>` de texto. Para los gráficos de datos el contrato exige además que
  * `ejeTruncado` venga solo en un bloque marcado `ejemploEnganoso` (el gráfico
  * que enseña a desconfiar) y que un cajón con datos crudos coincida con
- * `resumenCincoNumeros` de lib/estadistica.ts.
+ * `resumenCincoNumeros` de lib/estadistica.ts. Para los bloques de
+ * probabilidad (lib/probabilidad.ts): en el árbol, las probabilidades de las
+ * ramas hermanas de cada nodo suman exactamente 1 sobre racionales, toda hoja
+ * está en la etapa declarada y su `probabilidadCamino`, si viene, es el
+ * producto de las ramas; en la cuadrícula, cada celda marcada cae dentro de
+ * filas × columnas sin repetirse y el `contador` declarado coincide con las
+ * marcadas y con filas × columnas.
  */
 function validarBloqueVisualizacion(bloque, donde, errores) {
   const datos = bloque?.datos;
@@ -138,6 +145,9 @@ function validarBloqueVisualizacion(bloque, donde, errores) {
     if (motivo) errores.push(`${donde}.datos (semejanza): ${motivo}`);
   } else if (esTipoGraficoEstadistico(tipo)) {
     const motivo = motivoRechazoDatosGrafico(datos);
+    if (motivo) errores.push(`${donde}.datos (${tipo}): ${motivo}`);
+  } else if (esTipoVisualProbabilidad(tipo)) {
+    const motivo = motivoRechazoDatosProbabilidad(datos);
     if (motivo) errores.push(`${donde}.datos (${tipo}): ${motivo}`);
   }
 }

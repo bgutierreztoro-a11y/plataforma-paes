@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { validarDatos } from "../scripts/validar-contenido.mjs";
 import {
   CERO,
   UNO,
@@ -351,4 +352,23 @@ test("ramasDesdeComposicion produce un árbol que el contrato acepta, con y sin 
   assert.equal(sin[0].ramas![0].probabilidad, "2/7");
   assert.equal(sin[0].ramas![0].id, "roja-roja");
   assert.equal(sin[0].ramas![0].probabilidadCamino, "3/28");
+});
+
+// ---------- el validador de contenido usa el mismo contrato ----------
+
+test("npm run validar rechaza un árbol cuyas ramas hermanas no suman 1 y una cuadrícula con el contador mal", () => {
+  const pasos = [
+    "curiosidad", "problema", "pensar", "pistas", "descubrimiento",
+    "generalizacion", "practica", "aplicacion", "reflexion", "consolidacion",
+  ].map((tipo) => ({ tipo, titulo: tipo, bloques: [{ tipo: "texto", contenido: "x" }] }));
+  const arbolMalo = { ...ARBOL, ramas: [{ ...ARBOL.ramas[0], probabilidad: "1/2" }, ARBOL.ramas[1]] };
+  pasos[4].bloques.push({ tipo: "visualizacion", variante: "diagrama", descripcion: "d", datos: arbolMalo } as never);
+  pasos[5].bloques.push({ tipo: "visualizacion", variante: "grafico", descripcion: "d", datos: { ...CUADRICULA, contador: { marcadas: 5, total: 36 } } } as never);
+  const errores = validarDatos({ tipo: "leccion", pasos });
+  assert.ok(errores.some((e) => /pasos\[4\]\.bloques\[1\]\.datos \(diagramaArbol\): ramas: las ramas hermanas suman 9\/8, no 1/.test(e)), errores.join("\n"));
+  assert.ok(errores.some((e) => /pasos\[5\]\.bloques\[1\]\.datos \(cuadriculaEspacioMuestral\): contador\.marcadas = 5/.test(e)), errores.join("\n"));
+
+  pasos[4].bloques[1] = { tipo: "visualizacion", variante: "diagrama", descripcion: "d", datos: ARBOL } as never;
+  pasos[5].bloques[1] = { tipo: "visualizacion", variante: "grafico", descripcion: "d", datos: CUADRICULA } as never;
+  assert.ok(!validarDatos({ tipo: "leccion", pasos }).some((e) => e.includes("diagramaArbol") || e.includes("cuadriculaEspacioMuestral")));
 });

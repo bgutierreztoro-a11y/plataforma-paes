@@ -350,7 +350,7 @@
         "variante": { "enum": ["tabla", "grafico", "diagrama", "regla-signos"] },
         "descripcion": { "type": "string", "minLength": 1, "description": "Qué debe mostrarse, en términos suficientes para que diseño/desarrollo lo construya." },
         "datos": {
-          "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante. Seis formas sí tienen contrato cerrado, discriminadas por `datos.tipo`: \"transformacion\" (lib/transformacionesIsometricas.ts), \"semejanza\" (lib/semejanza.ts) y los cuatro gráficos de datos \"graficoBarras\", \"graficoLineas\", \"graficoCircular\" y \"diagramaCajon\" (lib/estadistica.ts). Los datos sin `tipo` siguen siendo libres; el `allOf` de abajo no los toca.",
+          "description": "Estructura de datos libre (filas de tabla, puntos de gráfico, etc.) según variante. Ocho formas sí tienen contrato cerrado, discriminadas por `datos.tipo`: \"transformacion\" (lib/transformacionesIsometricas.ts), \"semejanza\" (lib/semejanza.ts), los cuatro gráficos de datos \"graficoBarras\", \"graficoLineas\", \"graficoCircular\" y \"diagramaCajon\" (lib/estadistica.ts), y los dos bloques de probabilidad \"diagramaArbol\" y \"cuadriculaEspacioMuestral\" (lib/probabilidad.ts). Los datos sin `tipo` siguen siendo libres; el `allOf` de abajo no los toca.",
           "allOf": [
             {
               "if": { "type": "object", "properties": { "tipo": { "const": "transformacion" } }, "required": ["tipo"] },
@@ -375,6 +375,14 @@
             {
               "if": { "type": "object", "properties": { "tipo": { "const": "diagramaCajon" } }, "required": ["tipo"] },
               "then": { "$ref": "#/definitions/datosDiagramaCajon" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "diagramaArbol" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosDiagramaArbol" }
+            },
+            {
+              "if": { "type": "object", "properties": { "tipo": { "const": "cuadriculaEspacioMuestral" } }, "required": ["tipo"] },
+              "then": { "$ref": "#/definitions/datosCuadriculaEspacioMuestral" }
             }
           ]
         }
@@ -595,6 +603,60 @@
         "cajones": { "type": "array", "minItems": 1, "maxItems": 2, "items": { "$ref": "#/definitions/cajonResumen" } },
         "ejeHorizontal": { "type": "string", "minLength": 1, "description": "Rótulo del eje horizontal con su unidad." },
         "marcas": { "type": "array", "maxItems": 2, "items": { "$ref": "#/definitions/marcaCajon" } }
+      },
+      "additionalProperties": false
+    },
+
+    "ramaArbol": {
+      "type": "object",
+      "description": "Una rama del diagrama de árbol: el resultado que rotula el nodo al que llega y la probabilidad de la rama escrita como texto (\"3/8\", \"0,25\", \"25 %\"), que es lo que se dibuja. Un nodo con `ramas` sigue a la etapa siguiente; sin `ramas` es una hoja, y solo una hoja puede llevar `id` (para `resaltar`) y `probabilidadCamino`, que tiene que ser exactamente el producto de las ramas del camino. Las ramas hermanas de cada nodo suman exactamente 1 sobre racionales (motivoRechazoDatosProbabilidad, lib/probabilidad.ts).",
+      "required": ["resultado", "probabilidad"],
+      "properties": {
+        "resultado": { "type": "string", "minLength": 1, "maxLength": 14 },
+        "probabilidad": { "type": "string", "minLength": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "probabilidadCamino": { "type": "string", "minLength": 1 },
+        "ramas": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "$ref": "#/definitions/ramaArbol" } }
+      },
+      "additionalProperties": false
+    },
+
+    "datosDiagramaArbol": {
+      "type": "object",
+      "description": "Árbol horizontal, raíz a la izquierda, con una columna por etapa (`etapas` rotula cada columna y fija la profundidad: toda hoja está en la última etapa), hasta 3 ramas por nodo y hasta 12 hojas. SOLO los valores rotulados son autoritativos: ningún ítem pide leer una probabilidad que no esté escrita en su rama. `resaltar` lista ids de hojas cuyos caminos se dibujan con trazo grueso y acento.",
+      "required": ["tipo", "etapas", "ramas"],
+      "properties": {
+        "tipo": { "const": "diagramaArbol" },
+        "etapas": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "type": "string", "minLength": 1, "maxLength": 14 } },
+        "ramas": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "$ref": "#/definitions/ramaArbol" } },
+        "resaltar": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "raiz": { "type": "string", "minLength": 1, "maxLength": 14, "description": "Rótulo de la raíz; ausente = un punto sin texto." }
+      },
+      "additionalProperties": false
+    },
+
+    "datosCuadriculaEspacioMuestral": {
+      "type": "object",
+      "description": "Cuadrícula de pares de dos experimentos: las filas son los resultados del primero y las columnas los del segundo (2 a 6 cada uno). `marcadas` son las celdas [fila, columna] (desde 0) del evento, dibujadas con trama y trazo, nunca solo color; `contador` es el \"marcadas de total\" escrito abajo, declarado desde el contenido y verificado contra `marcadas` y filas × columnas; `celdas` es el texto de cada celda (por ejemplo la suma) y sin él la celda muestra el par cuando los rótulos son cortos.",
+      "required": ["tipo", "filas", "columnas"],
+      "properties": {
+        "tipo": { "const": "cuadriculaEspacioMuestral" },
+        "filas": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "string", "minLength": 1, "maxLength": 14 } },
+        "columnas": { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "string", "minLength": 1, "maxLength": 14 } },
+        "rotuloFilas": { "type": "string", "minLength": 1 },
+        "rotuloColumnas": { "type": "string", "minLength": 1 },
+        "celdas": { "type": "array", "items": { "type": "array", "items": { "type": "string", "maxLength": 6 } } },
+        "marcadas": { "type": "array", "items": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer", "minimum": 0, "maximum": 5 } } },
+        "contador": {
+          "type": "object",
+          "required": ["marcadas", "total"],
+          "properties": {
+            "marcadas": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 4, "maximum": 36 }
+          },
+          "additionalProperties": false
+        },
+        "rotuloEvento": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": false
     },
