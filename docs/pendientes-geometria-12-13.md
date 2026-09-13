@@ -94,7 +94,7 @@ final de la sesión.
   quedan cubiertos entre L1, L2, L3 y cierre (verificado con `node -e`, informe
   final).
 - **"63 🔴 preexistentes" del brief.** `npm run auditar` sobre todo `content/`
-  da hoy **0 bloqueantes** en los 39 archivos de lecciones; solo hay 🟡 de colisión
+  da hoy **0 bloqueantes** en los 40 archivos de lecciones (39 + `l0-demo`); solo hay 🟡 de colisión
   entre archivos. La cifra 63 no corresponde al estado del repo en esta sesión
   (puede venir de una corrida con `--estricto`, donde los 🟡 cuentan como falla).
 - **`/camino/[unidad]` no existe.** La ruta por tema es `/tema/[id]`. Se midieron
@@ -125,8 +125,8 @@ Las salidas completas están en el informe final de la sesión (Fase 5). Resumen
 node scripts/validar-contenido.mjs <cada uno de los 3 archivos nuevos> → OK
 node scripts/auditar-leccion.mjs content/lecciones/semejanza-medir-sin-acercarse.json → 🟡 0 bloqueante(s), 2 advertencia(s)
 node scripts/auditar-leccion.mjs content/lecciones/semejanza-plano-y-realidad.json  → 🟡 0 bloqueante(s), 12 advertencia(s)
-npm run validar → todo OK (68 archivos), exit 0
-npm run auditar → 0 🔴 en los 39 archivos de lecciones
+npm run validar → 69 OK, 0 FALLA, exit 0
+npm run auditar → 0 🔴 en los 40 archivos de lecciones (39 + l0-demo), 166 líneas 🟡 en el corpus
 npm run test:unit → 402 pass, 0 fail
 npx tsc --noEmit → exit 0 · npm run lint → exit 0
 next dev (puerto 3117): 11 rutas medidas con curl, todas 200; proceso bajado
