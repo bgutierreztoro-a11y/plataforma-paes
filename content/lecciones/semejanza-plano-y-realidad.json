@@ -1,0 +1,705 @@
+{
+  "tipo": "leccion",
+  "id": "semejanza-plano-y-realidad",
+  "moduloId": "semejanza-proporcionalidad",
+  "titulo": "Problemas de semejanza en contexto",
+  "objetivo": "Resolver problemas de sombras y alturas, distancias inaccesibles, ampliaciones al 150 % y planos de vivienda con área real, armando la proporción con cantidades homólogas (altura con altura, sombra con sombra) y con las unidades coherentes.",
+  "tiempoEstimadoMin": 35,
+  "prerrequisitos": [
+    "Razón de semejanza k y lados homólogos (Lección 1 de este módulo)",
+    "Escalas 1:n, factor k para longitudes y k² para áreas, conversión de unidades (Lección 2 de este módulo)",
+    "Tríos pitagóricos y sus múltiplos (Lección 1 del módulo Figuras geométricas)"
+  ],
+  "conceptos": [
+    "dos triángulos rectángulos con el mismo ángulo agudo son semejantes, aunque uno sea un poste y el otro una persona: el sol pega con el mismo ángulo a los dos",
+    "la proporción se arma con cantidades homólogas: altura con altura y sombra con sombra, nunca la altura de uno con la sombra del otro",
+    "altura ÷ sombra es la misma razón en los dos triángulos; y sombra grande ÷ sombra chica es la razón de semejanza k",
+    "una distancia que no se puede medir directamente (el ancho de una laguna) se calcula con dos triángulos semejantes que comparten un vértice",
+    "una ampliación al 150 % es una semejanza con k = 1,5: cada longitud se multiplica por 1,5 y el área por 1,5² = 2,25",
+    "antes de armar una proporción, todas las cantidades van en la misma unidad: 165 cm son 1,65 m"
+  ],
+  "_notasInternas": [
+    "L3 del módulo semejanza-y-proporcionalidad (eje Geometría, módulo #13). moduloId = semejanza-proporcionalidad. Diseño: docs/diseno-modulo-semejanza-y-proporcionalidad.md, sección L3. Descriptor DEMRE (docs/temario-demre-m1-2027.md:109): 'Aplicar propiedades de semejanza y de proporcionalidad a modelos a escala y otras situaciones de la vida diaria y otras asignaturas'.",
+    "Catálogo canónico: content/errores/semejanza-proporcionalidad.json. Ids que este archivo referencia: error-1, error-2, error-3, error-5, error-6, error-7, error-8, error-9, error-10. error-9 y error-10 nacen acá; los demás se reutilizan con los mecanismos de L1 y L2.",
+    "Dominios: (núcleo) poste de alumbrado y una persona con sus sombras; (descubrimiento) ancho de una laguna medido con estacas en la orilla; (generalización) árbol y persona con unidades mezcladas; (práctica) fotocopia al 150 % de un dibujo triangular; (aplicación) plano de vivienda 1:100 con el área real de un dormitorio; (ítems) mástil con su sombra, quincho en un plano 1:100. Verificación de colisión pendiente (Benja corre consultar-fuentes.mjs con las palabras clave del doc de diseño).",
+    "Cambios respecto de los números reservados en el doc de diseño: persona 1,65 m con sombra 2,2 m y sombra del poste 6,6 m → 4,95 m (en vez de 1,6 m, 2 m, 7,5 m → 6 m: 1,6 choca con enteros y 7,5 con L1); laguna CD = 9 m, DE = 12 m, CB = 36 m → AB = 48 m (tríos 9-12-15 y 36-48-60, k = 4); árbol con persona de 165 cm, sombra 2,2 m y sombra del árbol 12 m → 9 m; fotocopia de un dibujo triangular 6-8-10 cm → 9-12-15 cm, área 24 → 54 cm² (en vez de un rectángulo, para que el área quede bajo 100 y no colisione con ningún contexto); ítem 1 con persona 1,95 m, sombra 2,6 m y sombra del mástil 7,8 m → 5,85 m (en vez de 1,8, 2,4 y 6 → 4,5: 4,5 choca con L1 y 1,8-2,4 se reserva para cierre-semejanza-7); ítem 2 quincho 6 cm × 7 cm → 42 m² (en vez de sala 4,5 cm × 6 cm → 27 m²: 27 es distractor de error-3 en la laguna).",
+    "Hilo de tríos pitagóricos escalados: persona 1,65-2,2-2,75 (3-4-5 × 0,55) y poste 4,95-6,6-8,25 (3-4-5 × 1,65, k = 3); laguna 9-12-15 y 36-48-60 (k = 4); fotocopia 6-8-10 → 9-12-15 (k = 3/2); dormitorio 3-4-5 (diagonal 5 cm → 5 m); mástil 1,95-2,6-3,25 y 5,85-7,8-9,75 (k = 3).",
+    "Todas las cifras verificadas con node -e sobre lib/semejanza.ts (fraccion, mismaFraccion, factores, motivoRechazoDatosSemejanza): 1,65/2,2 = 4,95/6,6 = 3/4 exacto; h = 1,65 · 6,6 ÷ 2,2 = 4,95; AB = 12 · 36 ÷ 9 = 48; árbol 1,65 · 12 ÷ 2,2 = 9; fotocopia 8 · 1,5 = 12, 10 · 1,5 = 15, 24 · 2,25 = 54; dormitorio 3 m · 4 m = 12 m²; 30 · 1,5 = 45; mástil 1,95 · 7,8 ÷ 2,6 = 5,85; quincho 6 m · 7 m = 42 m²; factores(1,5) = { perimetro: 1,5, area: 2,25 }. Las tres visuales anidadas pasan motivoRechazoDatosSemejanza (null).",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4,95; 48; 9; 12; 15; 54; 5; 45; 5,85; 42}, distractores numéricos {0,55; 8,8; 6,05; 0,25; 3; 27; 39; 900; 0,3025; 16; 20; 158; 25; 14; 36; 60; 0,12; 0,0012; 120.000; 0,05; 500; 67,5; 75; 0,65; 7,15; 10,4; 0,42; 0,0042; 420.000}; sin intersección. 36 y 60 son datos (CB = 36 m; CA = 60 m en la solución de la laguna), no respuestas correctas, así que pueden ser distractores del área de la fotocopia sin violar la regla.",
+    "Visuales: tres bloques { tipo: 'semejanza', disposicion: 'anidada' } con todas las cotas rotuladas: curiosidad (poste 6,6 m con altura h y persona 2,2 m con 1,65 m), descubrimiento (laguna: CB = 36 m con AB = x y CD = 9 m con DE = 12 m), generalizacion (árbol: sombra 12 m con altura h y persona 2,2 m con 165 cm). En las tres la incógnita va con letra. Los ítems no llevan visual.",
+    "Sin auditoria.constante: no hay una constante única (0,75 es la razón altura ÷ sombra de la escena del poste, no de la lección). Sin campos adimensionales: todos los campos numéricos llevan unidad.",
+    "P2: el paso consolidacion nombra los caminos equivocados de error-9, error-8 y error-10 antes del correcto, y su bloque pregunta lleva error-2, error-6 y error-10 en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: poste de alumbrado con sombra de 6,6 m; persona de 1,65 m con sombra de 2,2 m; altura del poste 4,95 m (predicción sin corregir)",
+    "problema: por qué se puede calcular la altura sin subir (mismo ángulo del sol, triángulos semejantes); sin cifras nuevas",
+    "pensar/pistas: altura del poste 4,95 m con k = 6,6 ÷ 2,2 = 3",
+    "descubrimiento: tabla altura ÷ sombra = 0,75 en la persona (1,65 ÷ 2,2) y en el poste (4,95 ÷ 6,6), razón adimensional que es 3/4; laguna con estacas: CD = 9 m, DE = 12 m, CB = 36 m → ancho AB = 48 m (CE = 15 m, CA = 60 m, k = 4)",
+    "generalizacion: árbol con sombra de 12 m y persona de 165 cm con sombra de 2,2 m → altura del árbol 9 m",
+    "practica: fotocopia al 150 % de un dibujo triangular de lados 6 cm, 8 cm y 10 cm → 9 cm, 12 cm y 15 cm; área 24 cm² → 54 cm² (factor 2,25)",
+    "aplicacion: plano de vivienda 1:100; dormitorio de 3 cm × 4 cm → 3 m × 4 m, área 12 m², diagonal 5 cm → 5 m",
+    "consolidacion: dibujo de 30 cm de largo fotocopiado al 150 % → 45 cm",
+    "itemsPAES: mástil con sombra de 7,8 m y persona de 1,95 m con sombra de 2,6 m → 5,85 m; quincho de 6 cm × 7 cm en un plano 1:100 → 42 m²; afirmación 'al 150 % el área se multiplica por 1,5' (es 2,25)",
+    "Los valores de cada distractor (ledger completo) están en _notasInternas: contextosNumericos registra los datos y las respuestas correctas de cada escena, como en L1, L2 y el cierre."
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Medir un poste sin subirse",
+      "_notasInternas": [
+        "Sin regla. Visual anidada con h como incógnita. La predicción no se corrige: 4,95 m es lo correcto; 8,8 m es la proporción invertida (error-2); la tercera opción es la duda razonable."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Es media tarde y un **poste de alumbrado** proyecta una sombra de **6,6 m** en el suelo. Al lado, una persona de **1,65 m** de estatura proyecta una sombra de **2,2 m**.\n\nNadie va a subirse al poste con una huincha. Y sin embargo, con esos tres números se puede saber cuánto mide."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Dos triángulos rectángulos apoyados en el mismo suelo y con el mismo vértice en el extremo de las sombras: el grande tiene base 6,6 m (sombra del poste) y altura h (el poste); el chico, base 2,2 m (sombra de la persona) y altura 1,65 m (la persona). El rayo de sol va de la punta del poste al extremo de las sombras pasando por la cabeza de la persona.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "anidada",
+            "grande": { "horizontal": 6.6, "vertical": 4.95, "etiquetaHorizontal": "6,6 m", "etiquetaVertical": "h" },
+            "chica": { "horizontal": 2.2, "vertical": 1.65, "etiquetaHorizontal": "2,2 m", "etiquetaVertical": "1,65 m" }
+          }
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular todavía, ¿cuánto crees que mide el poste?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "4,95 m: la sombra del poste es 3 veces la de la persona, así que el poste es 3 veces la persona",
+            "8,8 m: 6,6 por 2,2 dividido por 1,65",
+            "No se puede saber sin medirlo directamente"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El poste con su sombra y la persona con la suya forman **dos triángulos rectángulos**. Los dos tienen un ángulo recto (con el suelo) y los dos reciben el sol con **el mismo ángulo**, porque el sol está lejísimos. Dos ángulos iguales: son **semejantes**. Esta lección es sobre usar eso para medir lo que no se puede medir."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "¿Por qué se puede?",
+      "_notasInternas": [
+        "Seleccion conceptual sin cifras nuevas: la razón de que los triángulos sean semejantes es el ángulo del sol. Las opciones incorrectas son concepciones erróneas sin id (no producen número). El V/F fija que la proporción va con cantidades que se corresponden, sin dar todavía la cuenta."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Por qué el triángulo del poste y el de la persona son semejantes?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Porque los dos tienen un ángulo recto con el suelo y el sol los ilumina con el mismo ángulo: dos ángulos iguales bastan.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Es el atajo de los triángulos de la Lección 1: con dos ángulos iguales, el tercero también lo es, y las figuras tienen la misma forma. Por eso sus lados son proporcionales."
+            },
+            {
+              "id": "b",
+              "texto": "Porque el poste y la persona están parados en el mismo suelo, a la misma hora.",
+              "esCorrecta": false,
+              "feedback": "Estar en el mismo suelo a la misma hora es lo que garantiza que el sol pegue con el mismo ángulo, pero la razón matemática es esa: dos ángulos iguales (el recto y el del sol). Sin ángulos iguales, mismo suelo y misma hora no bastarían."
+            },
+            {
+              "id": "c",
+              "texto": "No son semejantes: el poste es mucho más alto que la persona y sus formas no tienen nada que ver.",
+              "esCorrecta": false,
+              "feedback": "Ser más alto es cambiar de tamaño, no de forma. Semejante significa justamente eso: misma forma, otro tamaño. Los dos triángulos tienen los mismos ángulos, así que son semejantes aunque uno mida 6,6 m de base y el otro 2,2 m."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Para calcular la altura del poste se puede comparar la altura de la persona con la sombra del poste, porque las dos son medidas de la misma escena.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "En realidad es falso. La altura de la persona y la sombra del poste están en triángulos distintos y no se corresponden: una es un lado vertical y la otra un lado horizontal. Se compara altura con altura y sombra con sombra.",
+          "feedbackFalso": "Exacto. Cada lado tiene su homólogo en el otro triángulo: la altura del poste corresponde a la altura de la persona, y la sombra del poste a la sombra de la persona. Cruzarlas arma una proporción entre cantidades que no se corresponden."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "La altura del poste",
+      "_notasInternas": [
+        "h = 1,65 · 6,6 ÷ 2,2 = 4,95 m (k = 3). feedbackPorError: 0,55 es error-9 (1,65 · 2,2 ÷ 6,6, altura de la persona con sombra del poste cruzadas); 8,8 es error-2 (6,6 · 2,2 ÷ 1,65, proporción invertida); 6,05 es error-1 (1,65 + 4,4, sumó lo que creció la sombra). Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Sombra del poste: 6,6 m. Persona: 1,65 m de altura y 2,2 m de sombra. ¿Cuánto mide el poste? Intenta antes de pedir pistas.",
+          "campos": [
+            {
+              "id": "alturaPoste",
+              "etiqueta": "Altura del poste",
+              "respuestaCorrecta": 4.95,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaPoste",
+              "valorObtenido": 0.55,
+              "mensaje": "Ese valor cruza la altura de la persona con la sombra del poste (1,65 · 2,2 ÷ 6,6) y da un poste más bajo que la persona. Empareja lo que se corresponde: la sombra del poste con la sombra de la persona, y la altura del poste con la de la persona.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "alturaPoste",
+              "valorObtenido": 8.8,
+              "mensaje": "Ese valor arma la proporción al revés: 6,6 · 2,2 ÷ 1,65. La sombra del poste es 3 veces la de la persona, así que el poste es 3 veces la persona, no más. Comprueba: 6,6 ÷ 2,2 = 3, y 3 · 1,65 no da 8,8.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "alturaPoste",
+              "valorObtenido": 6.05,
+              "mensaje": "Ese valor suma a la altura de la persona los 4,4 m que la sombra del poste tiene de más. Las figuras semejantes no crecen sumando: la sombra se multiplicó por 3 (6,6 ÷ 2,2), y la altura también se multiplica por 3.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Los dos triángulos son semejantes. Calcula la razón de semejanza con las dos sombras (la del poste dividida por la de la persona) y multiplica la altura de la persona por esa razón."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el poste",
+      "_notasInternas": [
+        "Misma escena. Las pistas usan la herramienta de L1 (k entre lados homólogos: las dos sombras); el nivel 3 entrega k = 3 y deja la multiplicación sin ejecutar. La razón altura ÷ sombra (0,75) no se nombra: es el descubrimiento del paso 5."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Son dos triángulos semejantes. En la Lección 1 calculabas k dividiendo un lado de la figura grande por su homólogo de la chica. ¿Qué par de lados homólogos conoces completo?"
+            },
+            {
+              "nivel": 2,
+              "texto": "Las dos sombras: 6,6 m del poste y 2,2 m de la persona. Son lados homólogos (los dos son la sombra). Divide la grande por la chica."
+            },
+            {
+              "nivel": 3,
+              "texto": "k = 6,6 ÷ 2,2 = 3. La altura del poste es la altura de la persona multiplicada por 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Homólogo con homólogo",
+      "_notasInternas": [
+        "CORAZÓN DE LA LECCIÓN. Tabla altura, sombra y altura ÷ sombra: persona 1,65 ÷ 2,2 = 0,75; poste 4,95 ÷ 6,6 = 0,75. Seleccion: la razón se repite (correcto); 'distinto porque el poste es más alto' sin id; 1,65 ÷ 6,6 = 0,25 es error-9. Luego se traslada el esquema a la laguna: visual anidada con CB = 36 m (base grande), AB = x, CD = 9 m, DE = 12 m. numerica AB = 12 · 36 ÷ 9 = 48; feedbackPorError 3 es error-2 (12 · 9 ÷ 36); 27 es error-3 (9 · 36 ÷ 12, emparejó CD con AB); 39 es error-1 (12 + 27). V/F metacognitivo. Verificado con node -e; la anidada de la laguna pasa motivoRechazoDatosSemejanza."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ya sabes que el poste mide 4,95 m. Ahora mira los dos triángulos de otra manera: en vez de comparar el grande con el chico, compara **dentro de cada uno** la altura con su propia sombra."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla con la altura, la sombra y el cociente altura ÷ sombra, para la persona y para el poste.",
+          "datos": {
+            "columnas": ["", "Altura", "Sombra", "Altura ÷ sombra"],
+            "filas": [
+              ["Persona", "1,65 m", "2,2 m", "1,65 ÷ 2,2 = 0,75"],
+              ["Poste", "4,95 m", "6,6 m", "4,95 ÷ 6,6 = 0,75"]
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Mira la última columna. ¿Qué observas?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Altura ÷ sombra da lo mismo en los dos, 0,75: por cada metro de sombra hay 0,75 m de altura, y eso no depende del tamaño porque el sol pega con el mismo ángulo.",
+              "esCorrecta": true,
+              "feedback": "Correcto. Esa es la segunda forma de armar la proporción: **altura ÷ sombra** es la misma razón en los dos triángulos. Las dos formas (comparar grande con chico, o altura con sombra dentro de cada uno) dan lo mismo, y las dos emparejan **homólogo con homólogo**."
+            },
+            {
+              "id": "b",
+              "texto": "Dan distinto, porque el poste es más alto y su cociente tendría que ser mayor.",
+              "esCorrecta": false,
+              "feedback": "La tabla dice que dan igual: 0,75 las dos veces. El poste es más alto, pero su sombra es más larga en la misma proporción, así que el cociente no cambia. Eso es lo que significa que los triángulos sean semejantes."
+            },
+            {
+              "id": "c",
+              "texto": "Para el poste habría que dividir la altura de la persona por la sombra del poste: 1,65 ÷ 6,6 = 0,25.",
+              "esCorrecta": false,
+              "feedback": "Esa cuenta mezcla la altura de un triángulo con la sombra del otro, y 0,25 no describe a ninguno de los dos. Cada cociente se arma dentro de su propio triángulo: 4,95 ÷ 6,6 para el poste, 1,65 ÷ 2,2 para la persona. Y da 0,75 en los dos.",
+              "errorCatalogado": "error-9"
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "El mismo esquema sirve sin sol. Para medir el **ancho de una laguna**, un grupo clava estacas en la orilla: desde un punto C caminan **36 m** por la orilla hasta B, justo frente a la estaca A del otro lado (AB es el ancho, perpendicular a la orilla). A **9 m** de C, en el punto D, levantan una estaca perpendicular a la orilla y la corren hasta que su extremo E queda alineado con C y con A: mide **12 m**. Los triángulos CDE y CBA comparten el vértice C y tienen ángulo recto en D y en B: son semejantes."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Dos triángulos rectángulos con el vértice C en común: el grande tiene base CB = 36 m sobre la orilla y altura AB = x (el ancho de la laguna); el chico, base CD = 9 m y altura DE = 12 m. La visual desde C hasta A pasa por E.",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "anidada",
+            "grande": { "horizontal": 36, "vertical": 48, "etiquetaHorizontal": "36 m", "etiquetaVertical": "x" },
+            "chica": { "horizontal": 9, "vertical": 12, "etiquetaHorizontal": "9 m", "etiquetaVertical": "12 m" }
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "¿Cuánto mide el ancho AB de la laguna?",
+          "campos": [
+            {
+              "id": "anchoLaguna",
+              "etiqueta": "Ancho AB",
+              "respuestaCorrecta": 48,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "anchoLaguna",
+              "valorObtenido": 3,
+              "mensaje": "Ese valor arma la proporción al revés (12 · 9 ÷ 36) y da una laguna más angosta que la estaca. El triángulo grande es 36 ÷ 9 = 4 veces el chico: el ancho es 4 veces la estaca.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "campoId": "anchoLaguna",
+              "valorObtenido": 27,
+              "mensaje": "Ese valor empareja CD (9 m) con AB, pero CD es la base del triángulo chico y su homólogo es CB, la base del grande. AB, la altura del grande, se corresponde con DE, la altura del chico: AB ÷ DE = CB ÷ CD.",
+              "errorCatalogado": "error-3"
+            },
+            {
+              "campoId": "anchoLaguna",
+              "valorObtenido": 39,
+              "mensaje": "Ese valor suma a los 12 m de la estaca los 27 m que la base grande tiene de más. Los triángulos semejantes no crecen sumando: la base se multiplicó por 4 (36 ÷ 9), y la altura también se multiplica por 4.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Base con base: CB ÷ CD = 36 ÷ 9 = 4 es la razón de semejanza. Altura con altura: AB = 4 · DE."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "¿Tiene sentido que 12 ÷ 9 (altura ÷ base del triángulo chico) y 48 ÷ 36 (altura ÷ base del grande) den lo mismo?",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Sí: las dos dan 4/3. Es lo mismo que pasaba con altura ÷ sombra en el poste. Dentro de cada triángulo, altura ÷ base es la misma razón, porque los triángulos tienen la misma forma.",
+          "feedbackFalso": "En realidad sí tiene sentido: 12 ÷ 9 = 4/3 y 48 ÷ 36 = 4/3. Es la misma idea que altura ÷ sombra = 0,75 en el poste y en la persona: en figuras semejantes, el cociente entre dos lados de una figura se repite en la otra."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir: la proporción se arma **homólogo con homólogo**, y hay dos formas de hacerlo que dan lo mismo: comparar la figura grande con la chica (k = 36 ÷ 9), o comparar dos lados dentro de cada figura (altura ÷ base). Lo que nunca funciona es cruzar la altura de una con la base de la otra. En el próximo paso lo escribes como regla."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "La regla, y las unidades",
+      "_notasInternas": [
+        "PRIMERA aparición de la regla completa (dos formas de armar la proporción, homólogo con homólogo, misma unidad). Ejercicio con unidades mezcladas: persona 165 cm con sombra 2,2 m, sombra del árbol 12 m → 1,65 · 12 ÷ 2,2 = 9 m. feedbackPorError: 900 es error-8 (165 · 12 ÷ 2,2 sin convertir cm a m); 0,3025 es error-9 (1,65 · 2,2 ÷ 12); 16 es error-2 (12 · 2,2 ÷ 1,65). Visual anidada con la etiqueta '165 cm' a propósito. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con nombres:\n\nCuando dos triángulos rectángulos comparten el ángulo agudo (el del sol, o el de la visual desde C), son **semejantes**, y la proporción se arma **homólogo con homólogo**:\n\n- **Forma 1, grande con chico:** altura grande ÷ altura chica = sombra grande ÷ sombra chica = k.\n- **Forma 2, dentro de cada uno:** altura grande ÷ sombra grande = altura chica ÷ sombra chica.\n\nLas dos dan lo mismo. Lo que **no** funciona es cruzar: altura de uno con sombra del otro.\n\nY una condición más: **todas las cantidades en la misma unidad** antes de armar la proporción. Si la persona mide 165 cm y la sombra 2,2 m, primero 165 cm = 1,65 m."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Dos triángulos rectángulos con el vértice común en el extremo de las sombras: el grande tiene base 12 m (sombra del árbol) y altura h (el árbol); el chico, base 2,2 m (sombra de la persona) y altura 165 cm (la persona, rotulada en centímetros a propósito).",
+          "datos": {
+            "tipo": "semejanza",
+            "disposicion": "anidada",
+            "grande": { "horizontal": 12, "vertical": 9, "etiquetaHorizontal": "12 m", "etiquetaVertical": "h" },
+            "chica": { "horizontal": 2.2, "vertical": 1.65, "etiquetaHorizontal": "2,2 m", "etiquetaVertical": "165 cm" }
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "**Ejercicio.** Un árbol proyecta una sombra de 12 m. A la misma hora, una persona de 165 cm de estatura proyecta una sombra de 2,2 m. ¿Cuánto mide el árbol, en metros?",
+          "campos": [
+            {
+              "id": "alturaArbol",
+              "etiqueta": "Altura del árbol",
+              "respuestaCorrecta": 9,
+              "unidad": "m"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "alturaArbol",
+              "valorObtenido": 900,
+              "mensaje": "Ese valor usa 165 sin convertir: mezcla centímetros con metros en la misma proporción, y sale un árbol de 900 m. Primero 165 cm = 1,65 m; después la proporción.",
+              "errorCatalogado": "error-8"
+            },
+            {
+              "campoId": "alturaArbol",
+              "valorObtenido": 0.3025,
+              "mensaje": "Ese valor cruza la altura de la persona con su sombra y divide por la sombra del árbol (1,65 · 2,2 ÷ 12): sale un árbol de 30 cm. Homólogo con homólogo: altura del árbol ÷ altura de la persona = sombra del árbol ÷ sombra de la persona.",
+              "errorCatalogado": "error-9"
+            },
+            {
+              "campoId": "alturaArbol",
+              "valorObtenido": 16,
+              "mensaje": "Ese valor arma la proporción al revés (12 · 2,2 ÷ 1,65). La sombra del árbol es 12 ÷ 2,2 veces la de la persona, y el árbol es esa misma cantidad de veces la persona: 1,65 · 12 ÷ 2,2.",
+              "errorCatalogado": "error-2"
+            }
+          ],
+          "feedbackPorDefecto": "Convierte 165 cm a metros. Después: altura del árbol ÷ 1,65 = 12 ÷ 2,2. Despeja la altura del árbol."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Al 150 %",
+      "_notasInternas": [
+        "Fotocopia al 150 % de un dibujo triangular 6-8-10 cm: k = 1,5 → 9-12-15. numerica con dos campos: lado de 8 → 12; hipotenusa 10 → 15. feedbackPorError: 20 es error-10 (8 · 2,5); 158 es error-10 (8 + 150); 25 es error-10 (10 · 2,5); 14 es error-1 (10 + 4, lo que creció el lado de 8). seleccion sobre el área: 24 cm² → 54 cm² (× 2,25) correcto; 36 es error-5 (24 · 1,5); 60 es error-10 (24 · 2,5). 36 y 60 son datos en la laguna (CB y CA), no respuestas correctas. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una **fotocopia al 150 %** también es una semejanza: cada longitud de la copia es **1,5 veces** la del original (150 % = 150/100 = 1,5). No es «un 150 % más», ni «150 cm más»: es una vez y media."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Un dibujo con forma de triángulo rectángulo tiene lados de 6 cm, 8 cm y 10 cm. Se fotocopia al 150 %. ¿Cuánto miden en la copia el lado de 8 cm y el lado de 10 cm?",
+          "campos": [
+            {
+              "id": "ladoMedioCopia",
+              "etiqueta": "El lado que en el original mide 8 cm",
+              "respuestaCorrecta": 12,
+              "unidad": "cm"
+            },
+            {
+              "id": "ladoMayorCopia",
+              "etiqueta": "El lado que en el original mide 10 cm",
+              "respuestaCorrecta": 15,
+              "unidad": "cm"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "ladoMedioCopia",
+              "valorObtenido": 20,
+              "mensaje": "Ese valor multiplica por 2,5, como si «al 150 %» fuera «un 150 % más». Al 150 % la copia mide el 150 % del original, o sea 1,5 veces: 8 · 1,5.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "campoId": "ladoMedioCopia",
+              "valorObtenido": 158,
+              "mensaje": "Ese valor suma 150 al lado, como si el 150 fueran centímetros. Es un porcentaje: la copia mide el 150 % del original, 8 · 1,5.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "campoId": "ladoMayorCopia",
+              "valorObtenido": 25,
+              "mensaje": "Ese valor multiplica 10 por 2,5. Al 150 % se multiplica por 1,5: la copia es una vez y media el original, no dos veces y media.",
+              "errorCatalogado": "error-10"
+            },
+            {
+              "campoId": "ladoMayorCopia",
+              "valorObtenido": 14,
+              "mensaje": "Ese valor suma 4 al lado de 10, porque el lado de 8 creció 4. Sumar lo mismo a cada lado deforma la figura: cada lado se multiplica por 1,5, y 10 · 1,5 no es 14.",
+              "errorCatalogado": "error-1"
+            }
+          ],
+          "feedbackPorDefecto": "Al 150 %, k = 1,5. Multiplica cada lado por 1,5. Comprobación: la copia tiene que seguir siendo un trío pitagórico."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "El dibujo original tiene 24 cm² de área (6 · 8 ÷ 2). ¿Cuál es el área de la copia al 150 %?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "54 cm²",
+              "esCorrecta": true,
+              "feedback": "Correcto. El área se multiplica por k² = 1,5² = 2,25: 24 · 2,25 = 54 cm². Comprobación con la copia: 9 · 12 ÷ 2 = 54. ✓"
+            },
+            {
+              "id": "b",
+              "texto": "36 cm²",
+              "esCorrecta": false,
+              "feedback": "36 es 24 · 1,5: multiplica el área por k una sola vez. El área crece en dos direcciones y se multiplica por k² = 2,25 (Lección 2). Comprueba con los lados de la copia: 9 · 12 ÷ 2.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "id": "c",
+              "texto": "60 cm²",
+              "esCorrecta": false,
+              "feedback": "60 es 24 · 2,5: lee «al 150 %» como k = 2,5. Al 150 %, k = 1,5, y el área se multiplica por 1,5² = 2,25.",
+              "errorCatalogado": "error-10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "El plano de la casa",
+      "_notasInternas": [
+        "Plano de vivienda 1:100. Dormitorio 3 cm × 4 cm → 3 m × 4 m = 12 m² (numerica); feedbackPorError 0,12 es error-5 (12 cm² · 100 = 1.200 cm² = 0,12 m²); 0,0012 es error-7 (12 ÷ 10.000); 120.000 es error-8 (12 · 10.000 cm² reportados como m²). seleccion: diagonal 5 cm (3-4-5) → 5 m; 0,05 m es error-7 (5 ÷ 100); 500 m es error-8 (cm sin convertir). Verificado con node -e. La abierta integra sombras y plano."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un plano de vivienda a escala **1:100** también es una figura semejante a la casa real, con k = 100. Lo de la Lección 2 aplica entero: longitudes por 100, áreas por 100², y después convertir."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "En el plano, un dormitorio mide 3 cm × 4 cm. ¿Cuál es su área real?",
+          "campos": [
+            {
+              "id": "areaDormitorio",
+              "etiqueta": "Área real del dormitorio",
+              "respuestaCorrecta": 12,
+              "unidad": "m²"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "areaDormitorio",
+              "valorObtenido": 0.12,
+              "mensaje": "Ese valor multiplica el área del plano (12 cm²) por 100 una sola vez. El área se multiplica por 100², o mejor: los lados reales son 3 m y 4 m, y el área es 3 · 4.",
+              "errorCatalogado": "error-5"
+            },
+            {
+              "campoId": "areaDormitorio",
+              "valorObtenido": 0.0012,
+              "mensaje": "Ese valor divide por 100² en vez de multiplicar. La escala 1:100 agranda: la casa es 100 veces el plano. Lados reales: 3 · 100 = 300 cm = 3 m y 4 · 100 = 400 cm = 4 m.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "campoId": "areaDormitorio",
+              "valorObtenido": 120000,
+              "mensaje": "Ese valor es el área real en cm²: 12 · 10.000 = 120.000 cm². Como 1 m² = 10.000 cm², son 12 m². Un dormitorio de 120.000 m² sería una cancha de fútbol veinte veces.",
+              "errorCatalogado": "error-8"
+            }
+          ],
+          "feedbackPorDefecto": "Convierte cada lado: 3 cm · 100 = 3 m y 4 cm · 100 = 4 m. El área real es el producto, en m²."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "En el plano, la diagonal del dormitorio mide 5 cm (3-4-5). ¿Cuánto mide la diagonal real?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "5 m",
+              "esCorrecta": true,
+              "feedback": "Correcto. 5 cm · 100 = 500 cm = 5 m. Y es coherente: el dormitorio real es 3-4-5 en metros, un trío pitagórico escalado por 100."
+            },
+            {
+              "id": "b",
+              "texto": "0,05 m",
+              "esCorrecta": false,
+              "feedback": "0,05 es 5 ÷ 100: divide el plano por la escala, y una diagonal de 5 cm no puede ser real. En 1:100 se multiplica: 5 · 100 = 500 cm = 5 m.",
+              "errorCatalogado": "error-7"
+            },
+            {
+              "id": "c",
+              "texto": "500 m",
+              "esCorrecta": false,
+              "feedback": "500 es la cuenta correcta en centímetros: 5 · 100 = 500 cm. Convierte: 500 cm = 5 m. Una diagonal de 500 m sería más larga que cinco cuadras.",
+              "errorCatalogado": "error-8"
+            }
+          ]
+        },
+        {
+          "tipo": "abierta",
+          "enunciado": "Inventa una situación de tu barrio (un edificio, una antena, un cerro) cuya altura se pueda calcular con una sombra y una persona, y escribe la proporción que armarías, diciendo qué va con qué.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Por ejemplo, una antena con sombra de 15 m y una persona de 1,5 m con sombra de 2,5 m. Proporción homólogo con homólogo: altura de la antena ÷ 1,5 = 15 ÷ 2,5, o bien altura de la antena ÷ 15 = 1,5 ÷ 2,5. Las dos dan 9 m. Lo que no vale es 1,5 ÷ 15 igualado con algo de la antena: eso cruza la altura de la persona con la sombra de la antena."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Lo que se corresponde con lo que se corresponde",
+      "_notasInternas": [
+        "Metacognición sobre cómo armar la proporción. El texto de cierre nombra los errores en lenguaje llano, sin ids, e integra el módulo (L1 multiplicar, L2 k², L3 homólogo con homólogo). Es la última lección: no deja pregunta abierta, anuncia el cierre."
+      ],
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En tus palabras: cuando te dan un problema de sombras, ¿cómo decides qué cantidad va con cuál al armar la proporción? ¿Y qué revisas antes de calcular?",
+          "mostrarRespuestaModelo": false,
+          "notaDiseno": "Sin corrección automática. Se guarda (anonimizada) para el piloto. Una respuesta que empareje altura con altura y sombra con sombra (o altura con sombra dentro de cada figura), y que diga que revisa las unidades antes de calcular, indica que tiene el concepto."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Los errores que más se repiten en problemas de semejanza, y que la PAES usa para armar las alternativas incorrectas, son:\n\n1. **Cruzar cantidades que no se corresponden:** altura de uno con sombra del otro. Se empareja homólogo con homólogo.\n2. **Mezclar unidades:** 165 cm y 2,2 m no pueden entrar juntos a una proporción. Se convierte primero.\n3. **Leer «al 150 %» como 2,5 o como sumar 150:** al 150 % es k = 1,5.\n4. **Olvidar que el área va con k²:** si la copia es 1,5 veces más larga, su área es 2,25 veces más grande.\n\nCon esto cierra el módulo: en la Lección 1 aprendiste que la forma se conserva **multiplicando**; en la Lección 2, que las longitudes van con **k** y las áreas con **k²**; y ahora, que la proporción se arma **homólogo con homólogo, en la misma unidad**. El cierre del módulo junta las tres cosas."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de error-9, error-8 y error-10, seguido de un bloque pregunta: dibujo de 30 cm al 150 % → 45 cm; 20 es error-2 (30 ÷ 1,5, la razón al revés); 67,5 es error-6 (30 · 2,25, el factor del área en una longitud); 75 es error-10 (30 · 2,5). Alternativas numéricas en orden creciente. Verificado con node -e."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- Dos triángulos rectángulos que comparten el ángulo agudo (el sol, la visual desde un punto) son **semejantes**.\n- La proporción se arma **homólogo con homólogo**: altura con altura y sombra con sombra, o altura ÷ sombra dentro de cada figura. Las dos formas dan lo mismo.\n- **Misma unidad** antes de calcular.\n- **Al 150 %** es k = 1,5: longitudes por 1,5 y áreas por 2,25.\n- Un plano 1:100 es una semejanza con k = 100: todo lo de la Lección 2 aplica.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **arma la proporción cruzando** la altura de la persona con la sombra del poste. Falla porque compara cosas que no se corresponden: son dos triángulos, y cada lado tiene su homólogo en el otro. Lo que funciona es **altura con altura y sombra con sombra**.\n\nMucha gente **mezcla centímetros con metros** dentro de la misma proporción y le sale un árbol de 900 m. Falla porque los números no hablan el mismo idioma. Lo que funciona es **convertir todo a la misma unidad antes de empezar**.\n\nMucha gente **lee «al 150 %» como k = 2,5**, un 150 % más. Falla porque 150 % del original es una vez y media, no dos y media. Lo que funciona es **150 % = 1,5**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "Un dibujo de 30 cm de largo se fotocopia al 150 %. ¿Cuánto mide de largo la copia?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "20 cm",
+              "esCorrecta": false,
+              "feedback": "20 es 30 ÷ 1,5: divide en vez de multiplicar, y la copia sale más chica que el original. Al 150 % la copia es más grande: k = 1,5 y se multiplica, 30 · 1,5.",
+              "errorCatalogado": "error-2"
+            },
+            {
+              "clave": "B",
+              "texto": "45 cm",
+              "esCorrecta": true,
+              "feedback": "Correcto. Al 150 %, k = 1,5: 30 · 1,5 = 45 cm."
+            },
+            {
+              "clave": "C",
+              "texto": "67,5 cm",
+              "esCorrecta": false,
+              "feedback": "67,5 es 30 · 2,25: aplica el factor del área (1,5²) a una longitud. El largo es una longitud y se multiplica por k = 1,5: 30 · 1,5 = 45 cm.",
+              "errorCatalogado": "error-6"
+            },
+            {
+              "clave": "D",
+              "texto": "75 cm",
+              "esCorrecta": false,
+              "feedback": "75 es 30 · 2,5: lee «al 150 %» como «un 150 % más». Al 150 % significa que la copia mide el 150 % del original, o sea 1,5 veces: 30 · 1,5 = 45 cm.",
+              "errorCatalogado": "error-10"
+            }
+          ],
+          "notaVerificacionMatematica": "k = 150/100 = 1,5. Largo de la copia: 30 · 1,5 = 45. Distractores: 30 ÷ 1,5 = 20 (error-2); 30 · 2,25 = 67,5 (error-6); 30 · 2,5 = 75 (error-10). Verificado con node -e."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "semejanza-l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Un mástil proyecta una sombra de 7,8 m. A la misma hora, una persona de 1,95 m de estatura proyecta una sombra de 2,6 m. ¿Cuánto mide el mástil?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,65 m",
+          "esCorrecta": false,
+          "feedback": "0,65 es 1,95 · 2,6 ÷ 7,8: cruza la altura de la persona con las sombras al revés y da un mástil más bajo que una persona. Homólogo con homólogo: altura del mástil ÷ 1,95 = 7,8 ÷ 2,6 = 3, y el mástil mide 3 · 1,95 = 5,85 m.",
+          "errorCatalogado": "error-9"
+        },
+        {
+          "clave": "B",
+          "texto": "5,85 m",
+          "esCorrecta": true,
+          "feedback": "Correcto. La sombra del mástil es 7,8 ÷ 2,6 = 3 veces la de la persona, así que el mástil es 3 veces la persona: 3 · 1,95 = 5,85 m."
+        },
+        {
+          "clave": "C",
+          "texto": "7,15 m",
+          "esCorrecta": false,
+          "feedback": "7,15 es 1,95 + 5,2: le suma a la altura de la persona lo que la sombra del mástil tiene de más. Los triángulos semejantes crecen multiplicando: la sombra se triplicó (7,8 ÷ 2,6 = 3) y la altura también se triplica: 5,85 m.",
+          "errorCatalogado": "error-1"
+        },
+        {
+          "clave": "D",
+          "texto": "10,4 m",
+          "esCorrecta": false,
+          "feedback": "10,4 es 7,8 · 2,6 ÷ 1,95: la proporción invertida. La razón de semejanza es sombra grande ÷ sombra chica = 3, y el mástil es 3 veces la persona, 5,85 m, no 10,4.",
+          "errorCatalogado": "error-2"
+        }
+      ],
+      "solucion": "Los dos triángulos (mástil con su sombra, persona con su sombra) son semejantes: ángulo recto con el suelo y el mismo ángulo del sol. Razón de semejanza con los lados homólogos conocidos: sombra del mástil ÷ sombra de la persona = 7,8 ÷ 2,6 = 3. Altura del mástil = 3 · 1,95 = 5,85 m. Comprobación por la otra forma: altura ÷ sombra = 1,95 ÷ 2,6 = 0,75 en la persona y 5,85 ÷ 7,8 = 0,75 en el mástil. ✓ (Los triángulos son 3-4-5 escalados: 1,95-2,6-3,25 y 5,85-7,8-9,75.)"
+    },
+    {
+      "id": "semejanza-l3-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "En el plano de una casa a escala 1:100, el quincho mide 6 cm × 7 cm. ¿Cuál es el área real del quincho?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,0042 m²",
+          "esCorrecta": false,
+          "feedback": "0,0042 es 42 ÷ 10.000: divide en vez de multiplicar, como si la casa fuera más chica que su plano. La escala 1:100 agranda: los lados reales son 6 m y 7 m, y el área es 6 · 7 = 42 m².",
+          "errorCatalogado": "error-7"
+        },
+        {
+          "clave": "B",
+          "texto": "0,42 m²",
+          "esCorrecta": false,
+          "feedback": "0,42 m² es 42 cm² · 100 = 4.200 cm²: multiplica el área por 100 una sola vez. El área se multiplica por 100² porque cada lado se multiplica por 100: 6 m · 7 m = 42 m².",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "C",
+          "texto": "42 m²",
+          "esCorrecta": true,
+          "feedback": "Correcto. Lados reales: 6 cm · 100 = 600 cm = 6 m y 7 cm · 100 = 700 cm = 7 m. Área real: 6 · 7 = 42 m²."
+        },
+        {
+          "clave": "D",
+          "texto": "420.000 m²",
+          "esCorrecta": false,
+          "feedback": "420.000 es el área real en cm²: 42 cm² · 10.000 = 420.000 cm². Como 1 m² = 10.000 cm², son 42 m². Un quincho de 420.000 m² sería más grande que cuarenta canchas.",
+          "errorCatalogado": "error-8"
+        }
+      ],
+      "solucion": "Camino 1, por los lados: 6 cm · 100 = 600 cm = 6 m; 7 cm · 100 = 700 cm = 7 m; área real = 6 · 7 = 42 m². Camino 2, por el factor de área: área en el plano = 6 · 7 = 42 cm²; factor = 100² = 10.000; 42 · 10.000 = 420.000 cm² = 42 m². Los dos caminos coinciden. ✓"
+    },
+    {
+      "id": "semejanza-l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un estudiante afirma que, al fotocopiar una figura al 150 %, «el área de la copia es 1,5 veces el área del original, porque todo se multiplica por 1,5». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcta: al 150 % todas las medidas de la figura, incluida el área, se multiplican por 1,5.",
+          "esCorrecta": false,
+          "feedback": "Las longitudes sí se multiplican por 1,5, pero el área crece en dos direcciones: largo por 1,5 y ancho por 1,5. El área se multiplica por 1,5² = 2,25. Comprueba con un rectángulo de 2 × 2: la copia es 3 × 3, y 9 no es 1,5 veces 4.",
+          "errorCatalogado": "error-5"
+        },
+        {
+          "clave": "B",
+          "texto": "No es correcta: las longitudes se multiplican por 1,5, pero el área se multiplica por 1,5² = 2,25.",
+          "esCorrecta": true,
+          "feedback": "Correcto. Al 150 %, k = 1,5 para toda longitud, y k² = 2,25 para el área, porque el área crece en las dos direcciones a la vez."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta: al 150 % la copia es un 150 % más grande, así que las longitudes se multiplican por 2,5 y el área por 2,5².",
+          "esCorrecta": false,
+          "feedback": "El veredicto es correcto pero la razón no. «Al 150 %» significa que la copia mide el 150 % del original, o sea 1,5 veces, no 2,5. Con k = 1,5, el área se multiplica por 1,5² = 2,25.",
+          "errorCatalogado": "error-10"
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: el área se multiplica por 2,25, y el perímetro también se multiplica por 2,25, porque los dos son medidas de toda la figura.",
+          "esCorrecta": false,
+          "feedback": "El área sí va por 2,25, pero el perímetro es una longitud (una suma de lados) y se multiplica por k = 1,5, no por k². Solo el área lleva el cuadrado.",
+          "errorCatalogado": "error-6"
+        }
+      ],
+      "solucion": "Una fotocopia al 150 % es una semejanza con k = 150/100 = 1,5. Toda longitud (lados, diagonales, perímetro) se multiplica por k = 1,5. El área se multiplica por k² = 1,5 · 1,5 = 2,25, porque el largo y el ancho crecen a la vez. La afirmación confunde el factor de las longitudes con el de las áreas: no es correcta, y la alternativa que lo explica es B. Comprobación con el triángulo 6-8-10 de la lección: área 24 cm², copia 9-12-15 con área 54 cm², y 54 ÷ 24 = 2,25. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Geometría, unidad Semejanza y proporcionalidad de figuras: solo para calibrar alcance (situaciones de la vida diaria), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (poste de alumbrado y persona con sus sombras, ancho de una laguna medido con estacas alineadas desde un punto de la orilla, árbol con unidades mezcladas, fotocopia al 150 % de un dibujo triangular, plano de vivienda 1:100 con un dormitorio y un quincho, mástil con su sombra) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. El descubrimiento por tabulación de altura ÷ sombra en los dos triángulos es un diseño propio. Los números (1,65-2,2-2,75 y 4,95-6,6-8,25; 9-12-15 y 36-48-60; 165 cm, 2,2 m y 12 m → 9 m; 6-8-10 → 9-12-15 con áreas 24 y 54; 3-4-5 cm → 3-4-5 m; 30 → 45; 1,95-2,6-3,25 y 5,85-7,8-9,75; 6 cm × 7 cm → 42 m²) se eligieron para no repetir ninguna cifra distintiva de los contextosNumericos de content/ y se verificaron con node -e sobre lib/semejanza.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-semejanza-y-proporcionalidad.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados. Pendientes las auditorías matemática y de originalidad en hilos aislados antes de cualquier git push.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
