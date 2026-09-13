@@ -48,9 +48,17 @@ const fases = (f1: FaseError, f2: FaseError, f3: FaseError): FasesPorError => ({
 });
 
 describe("veredicto (D17)", () => {
-  it("marco es siempre sin-veredicto, aunque los tres errores estén abiertos", () => {
-    assert.equal(veredicto("marco", ITEM, fases("abierto", "abierto", "abierto")), "sin-veredicto");
-    assert.equal(veredicto("marco", ITEM, fases("cerrado", "cerrado", "cerrado")), "sin-veredicto");
+  it("marco con los tres cerrados es punto-regalado (F5a2: toma la regla que tenía dejo)", () => {
+    assert.equal(veredicto("marco", ITEM, fases("cerrado", "cerrado", "cerrado")), "punto-regalado");
+  });
+
+  it("marco con un abierto es lectura-buena: pasar fue una lectura correcta", () => {
+    assert.equal(veredicto("marco", ITEM, fases("abierto", "abierto", "abierto")), "lectura-buena");
+    assert.equal(veredicto("marco", ITEM, fases("abierto", "cerrado", "observacion")), "lectura-buena");
+  });
+
+  it("marco con un sin-datos es sin-veredicto, incluso con los otros dos cerrados", () => {
+    assert.equal(veredicto("marco", ITEM, fases("cerrado", "sin-datos", "cerrado")), "sin-veredicto");
   });
 
   it("sin-decision es siempre sin-veredicto", () => {
@@ -74,7 +82,7 @@ describe("veredicto (D17)", () => {
     assert.equal(veredicto("resuelvo", ITEM, fases("sin-datos", "cerrado", "cerrado")), "sin-veredicto");
   });
 
-  it("dejo con los tres cerrados es punto-regalado", () => {
+  it("dejo (sin emisor desde F5a2, filas viejas) con los tres cerrados sigue siendo punto-regalado", () => {
     assert.equal(veredicto("dejo", ITEM, fases("cerrado", "cerrado", "cerrado")), "punto-regalado");
   });
 
@@ -160,13 +168,13 @@ describe("resumenTriage (D18)", () => {
       f,
     );
     assert.equal(resumen.total, 4);
-    assert.equal(resumen.conVeredicto, 2);
+    assert.equal(resumen.conVeredicto, 3);
     assert.deepEqual(
       resumen.filas.map((x) => [x.itemId, x.veredicto, x.erroresAbiertos]),
       [
         ["i-1", "lectura-a-revisar", ["error-1"]],
         ["i-2", "lectura-buena", []],
-        ["i-3", "sin-veredicto", []],
+        ["i-3", "lectura-buena", []],
         ["i-4", "sin-veredicto", []],
       ],
     );

@@ -7,10 +7,16 @@ import { seleccionarSesion } from "./seleccion.ts";
  * sin React, sin reloj propio, sin disco. Quien lo monta le pasa los instantes
  * (D4) y decide qué hacer con los registros.
  *
- * Se muestra un ítem, 20 segundos, tres decisiones: la resuelvo, la dejo, la
- * marco y sigo. No se resuelve nada. Si el tiempo se acaba sin tocar, se
- * registra `sin-decision` con `ms = LIMITE_MS` y no se convierte en "dejo"
- * (D16).
+ * Se muestra un ítem, 20 segundos, dos decisiones desde F5a2: la resuelvo o
+ * paso a la siguiente (`marco`). No se resuelve nada. Si el tiempo se acaba
+ * sin tocar, se registra `sin-decision` con `ms = LIMITE_MS` (D16).
+ *
+ * `dejo` fue la tercera decisión de F5a ("La dejo") y quedó sin emisor en
+ * F5a2: ningún botón la produce. Se conserva en `Decision`, en `DECISIONES`
+ * (el validador la sigue aceptando) y en el CHECK de la 010, que no se toca
+ * porque ya está aplicada y `scripts/migrar.mjs` rechaza una migración
+ * aplicada cuyo contenido cambió. Las filas viejas con `dejo` siguen siendo
+ * válidas y `veredicto` las sigue evaluando con la regla que tenían.
  *
  * El veredicto (D17) se calcula en runtime contra el historial propio, es
  * decir contra la fase de cada error del catálogo que `dominio.ts` deriva de
@@ -101,21 +107,22 @@ function fasesDelItem(item: ItemAdvance, fases: FasesPorError): FaseError[] {
 
 /**
  * Orden de evaluación, escrito así para que cada rama sea un test:
- * 1. `marco` no se evalúa: es una decisión de administración, no de lectura.
- * 2. `sin-decision` tampoco: no hubo lectura que juzgar.
- * 3. `resuelvo` con un error abierto entre los distractores: basta un dato
+ * 1. `sin-decision` no se evalúa: no hubo lectura que juzgar.
+ * 2. `resuelvo` con un error abierto entre los distractores: basta un dato
  *    firme para decir que la lectura fue mala, aunque el resto no tenga datos.
- * 4. `dejo` con los tres errores cerrados: regaló un punto.
- * 5. Algún distractor sin datos: no se puede decir "lectura buena" sobre lo
+ * 3. `marco` (o `dejo`, sin emisor desde F5a2) con los tres errores cerrados:
+ *    regaló un punto. Hasta F5a `marco` era sin-veredicto siempre; desde F5a2
+ *    es la única forma de pasar y toma la regla que tenía `dejo`.
+ * 4. Algún distractor sin datos: no se puede decir "lectura buena" sobre lo
  *    que no se sabe.
- * 6. Lo demás es lectura buena.
+ * 5. Lo demás es lectura buena.
  */
 export function veredicto(decision: Decision, item: ItemAdvance, fases: FasesPorError): Veredicto {
-  if (decision === "marco" || decision === "sin-decision") return "sin-veredicto";
+  if (decision === "sin-decision") return "sin-veredicto";
   const delItem = fasesDelItem(item, fases);
   if (delItem.length === 0) return "sin-veredicto";
   if (decision === "resuelvo" && delItem.includes("abierto")) return "lectura-a-revisar";
-  if (decision === "dejo" && delItem.every((f) => f === "cerrado")) return "punto-regalado";
+  if ((decision === "marco" || decision === "dejo") && delItem.every((f) => f === "cerrado")) return "punto-regalado";
   if (delItem.includes("sin-datos")) return "sin-veredicto";
   return "lectura-buena";
 }
