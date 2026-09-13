@@ -161,6 +161,36 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Traduce un problema en palabras a un sistema de dos ecuaciones, incluyendo condiciones de 'hace n años' o 'dentro de n años', y resuélvelo.",
     Ilustracion: IlustracionBalanza,
   },
+  "isometrias-mover-sin-deformar": {
+    descripcion:
+      "Distingue un punto de un vector, calcula el desplazamiento entre dos puntos como llegada menos partida y mide distancias con Pitágoras.",
+    Ilustracion: IlustracionPlano,
+  },
+  "isometrias-girar-reflejar-trasladar": {
+    descripcion:
+      "Descubre, tabulando coordenadas, las reglas para trasladar, reflejar y rotar una figura, y qué se conserva en cada movimiento.",
+    Ilustracion: IlustracionPlano,
+  },
+  "isometrias-figura-y-su-imagen": {
+    descripcion:
+      "Compone dos transformaciones respetando el orden, reconoce cuál llevó una figura a su imagen y recupera el vector o el eje que la produjo.",
+    Ilustracion: IlustracionPlano,
+  },
+  "semejanza-misma-forma-otro-tamano": {
+    descripcion:
+      "Descubre que dos figuras tienen la misma forma cuando sus lados se multiplican por la misma razón, y calcula el lado que falta.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "semejanza-medir-sin-acercarse": {
+    descripcion:
+      "Lee una escala 1:n en planos, mapas y maquetas, y descubre por qué el área crece con el cuadrado de la razón y no con la razón.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "semejanza-plano-y-realidad": {
+    descripcion:
+      "Calcula alturas y distancias que no puedes medir, con sombras y triángulos semejantes, emparejando siempre lo que se corresponde.",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

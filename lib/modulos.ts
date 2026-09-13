@@ -122,6 +122,8 @@ export const IDS_CIERRE = [
   "cierre-funcion-cuadratica",
   "cierre-figuras-geometricas",
   "cierre-cuerpos-geometricos",
+  "cierre-transformaciones-isometricas",
+  "cierre-semejanza-y-proporcionalidad",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -366,6 +368,7 @@ export const EJES = [
           "isometrias-girar-reflejar-trasladar",
           "isometrias-figura-y-su-imagen",
         ],
+        cierreId: "cierre-transformaciones-isometricas",
       },
       {
         id: "semejanza-y-proporcionalidad",
@@ -379,6 +382,7 @@ export const EJES = [
           "semejanza-medir-sin-acercarse",
           "semejanza-plano-y-realidad",
         ],
+        cierreId: "cierre-semejanza-y-proporcionalidad",
       },
     ],
   },
