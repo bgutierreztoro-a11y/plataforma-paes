@@ -131,7 +131,7 @@ la sesión.
 ## Verificaciones crudas al cierre
 
 ```
-npm run validar → 75 OK, 0 FALLA, exit 0 (tablas-y-graficos 60/60 y medidas-de-posicion 60/60 en cobertura de errorCatalogado)
+npm run validar → 79 OK, 0 FALLA, exit 0 (tablas-y-graficos 60/60 y medidas-de-posicion 60/60 en cobertura de errorCatalogado)
 npm run auditar → 0 🔴 en los 46 archivos de lecciones, exit 0
 npm run test:unit → 424 pass, 0 fail (402 previos + 22 de lib/estadistica.test.ts)
 npx tsc --noEmit → exit 0 · npm run lint → exit 0 · npm run build → exit 0
