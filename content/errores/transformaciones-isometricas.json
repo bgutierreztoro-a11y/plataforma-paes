@@ -1,0 +1,69 @@
+{
+  "unidad": "transformaciones-isometricas",
+  "errores": [
+    {
+      "id": "transformaciones-isometricas/error-1",
+      "descripcion": "Confundir un punto con un vector: entregar las coordenadas de un punto (una posición) donde se pide un desplazamiento, o tratar un vector como si fuera un lugar del plano. Por ejemplo, dar como vector de A a B las coordenadas de B, o calcular una distancia con las coordenadas del punto de llegada en vez de con las diferencias entre los dos puntos."
+    },
+    {
+      "id": "transformaciones-isometricas/error-2",
+      "descripcion": "Calcular el vector de A a B como A − B (partida menos llegada) en vez de B − A (llegada menos partida): las dos componentes quedan con el signo cambiado y el vector apunta al revés."
+    },
+    {
+      "id": "transformaciones-isometricas/error-3",
+      "descripcion": "Operar vectores o puntos cruzando componentes: sumar o restar la primera componente de uno con la segunda del otro, en vez de x con x e y con y."
+    },
+    {
+      "id": "transformaciones-isometricas/error-4",
+      "descripcion": "Calcular la distancia entre dos puntos sumando los valores absolutos de las diferencias de coordenadas, |Δx| + |Δy|, como si se caminara por la cuadrícula, en vez de aplicar Pitágoras, √(Δx² + Δy²)."
+    },
+    {
+      "id": "transformaciones-isometricas/error-5",
+      "descripcion": "Al multiplicar un vector por un escalar, multiplicar solo una de las dos componentes (o sumar el escalar en vez de multiplicar): el escalar afecta a las dos componentes por igual."
+    },
+    {
+      "id": "transformaciones-isometricas/error-6",
+      "descripcion": "Trasladar en sentido contrario: restar el vector a las coordenadas en vez de sumarlo, con lo que la imagen queda del lado opuesto al que indica la flecha."
+    },
+    {
+      "id": "transformaciones-isometricas/error-7",
+      "descripcion": "Al reflejar respecto de un eje coordenado, cambiar el signo de la coordenada equivocada: cambiar la x al reflejar respecto del eje x (donde cambia la y), o cambiar la y al reflejar respecto del eje y (donde cambia la x)."
+    },
+    {
+      "id": "transformaciones-isometricas/error-8",
+      "descripcion": "Rotar 90° en el sentido contrario al pedido: aplicar (x, y) → (y, −x), que es el giro horario, donde se pedía antihorario, (x, y) → (−y, x), o al revés."
+    },
+    {
+      "id": "transformaciones-isometricas/error-9",
+      "descripcion": "Confundir la reflexión respecto del origen con la reflexión respecto de un eje: cambiar el signo de una sola coordenada donde corresponde cambiar las dos (origen, que equivale a girar 180°), o cambiar las dos donde corresponde una sola (eje)."
+    },
+    {
+      "id": "transformaciones-isometricas/error-10",
+      "descripcion": "Creer que una isometría cambia las medidas de la figura: afirmar que la imagen tiene otros lados, otro perímetro u otra área que la original, o que una reflexión la achica o la agranda. Traslación, rotación y reflexión conservan distancias, ángulos y área."
+    },
+    {
+      "id": "transformaciones-isometricas/error-11",
+      "descripcion": "Componer las transformaciones en el orden contrario al indicado: aplicar primero la segunda y después la primera. El orden importa, y en general trasladar y luego reflejar no da lo mismo que reflejar y luego trasladar."
+    },
+    {
+      "id": "transformaciones-isometricas/error-12",
+      "descripcion": "Mirar solo dónde quedó la figura y no cómo quedó: llamar traslación a una reflexión o a una rotación porque la imagen 'se corrió', sin notar que quedó volteada o girada; o, al reflejar, mover la figura al otro lado del eje sin voltearla."
+    },
+    {
+      "id": "transformaciones-isometricas/error-13",
+      "descripcion": "Al hallar el vector de traslación (o el eje) a partir de una figura y su imagen, emparejar un vértice con la imagen de otro vértice (A con B') en vez de con su propia imagen (A con A')."
+    },
+    {
+      "id": "transformaciones-isometricas/error-14",
+      "descripcion": "Ubicar mal el eje de reflexión entre una figura y su imagen: ponerlo sobre la figura, sobre la imagen o a la distancia que las separa, en vez de a mitad de camino. El eje pasa por el punto medio entre cada punto y su imagen."
+    },
+    {
+      "id": "transformaciones-isometricas/error-15",
+      "descripcion": "Olvidar la raíz cuadrada al calcular una distancia: entregar Δx² + Δy², la suma de los cuadrados de las diferencias, como si fuera la distancia."
+    },
+    {
+      "id": "transformaciones-isometricas/error-16",
+      "descripcion": "Aplicar a una transformación la regla de otra: intercambiar las coordenadas donde solo cambia un signo (tratar una reflexión como un giro de 90°), o cambiar signos sin intercambiar donde corresponde intercambiar (tratar un giro de 90° como una reflexión o como un giro de 180°)."
+    }
+  ]
+}
