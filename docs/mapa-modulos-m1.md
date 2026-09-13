@@ -69,14 +69,14 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 9 | Álgebra y funciones | Función cuadrática | `funcion-cuadratica` | **completo** |
 | 10 | Geometría | Figuras geométricas | `figuras-geometricas` | **completo** |
 | 11 | Geometría | Cuerpos geométricos | `cuerpos-geometricos` | **completo** |
-| 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | sin contenido |
-| 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | sin contenido |
+| 12 | Geometría | Transformaciones isométricas | `transformaciones-isometricas` | **completo** |
+| 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | **completo** |
 | 14 | Probabilidad y estadística | Representación de datos a través de tablas y gráficos | `tablas-y-graficos` | sin contenido |
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | sin contenido |
 | 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
 
-11 completos · 5 sin contenido · 33 de 48 lecciones escritas (verificado el
-2026-08-28 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
+13 completos · 3 sin contenido · 39 de 48 lecciones escritas (verificado el
+2026-09-13 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
 
 El conteo decía 31 hasta el 2026-08-26. El comando que citaba
 (`ls content/lecciones | grep -v l0-demo | wc -l`) contaba también
@@ -268,17 +268,34 @@ El título también se alineó con el descriptor literal del temario
 
 | id | Título | Archivo |
 |---|---|---|
-| `isometrias-mover-sin-deformar` | Puntos y vectores en el plano cartesiano | no |
-| `isometrias-girar-reflejar-trasladar` | Rotación, traslación y reflexión de figuras | no |
-| `isometrias-figura-y-su-imagen` | Problemas con transformaciones isométricas | no |
+| `isometrias-mover-sin-deformar` | Puntos y vectores en el plano cartesiano | sí |
+| `isometrias-girar-reflejar-trasladar` | Rotación, traslación y reflexión de figuras | sí |
+| `isometrias-figura-y-su-imagen` | Problemas con transformaciones isométricas | sí |
+
+Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-transformaciones-isometricas.json` está conectado como
+`cierreId` en `lib/modulos.ts`. Catálogo canónico en
+`content/errores/transformaciones-isometricas.json` (16 ids). Diseño en
+`docs/diseno-modulo-transformaciones-isometricas.md`. Pendientes de Benja: la
+consulta de colisión (`consultar-fuentes.mjs`) y las dos auditorías en hilos
+aislados antes de cualquier `git push`; ver `docs/pendientes-geometria-12-13.md`.
 
 ### 13. Semejanza y proporcionalidad de figuras — `semejanza-y-proporcionalidad`
 
 | id | Título | Archivo |
 |---|---|---|
-| `semejanza-misma-forma-otro-tamano` | Concepto de semejanza de figuras | no |
-| `semejanza-medir-sin-acercarse` | Semejanza aplicada a escalas y modelos | no |
-| `semejanza-plano-y-realidad` | Problemas de semejanza en contexto | no |
+| `semejanza-misma-forma-otro-tamano` | Concepto de semejanza de figuras | sí |
+| `semejanza-medir-sin-acercarse` | Semejanza aplicada a escalas y modelos | sí |
+| `semejanza-plano-y-realidad` | Problemas de semejanza en contexto | sí |
+
+Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-semejanza-y-proporcionalidad.json` está conectado como
+`cierreId` en `lib/modulos.ts`. El `moduloId` de sus archivos de contenido es
+`semejanza-proporcionalidad` (la unidad del DAG), distinto del id de tema, igual
+que `enteros-y-racionales` / `enteros-racionales`; catálogo canónico en
+`content/errores/semejanza-proporcionalidad.json` (11 ids). Diseño en
+`docs/diseno-modulo-semejanza-y-proporcionalidad.md`. Mismos pendientes de
+Benja que el módulo 12; ver `docs/pendientes-geometria-12-13.md`.
 
 ---
 
