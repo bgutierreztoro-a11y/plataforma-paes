@@ -4,6 +4,8 @@ import type { ItemAdvance } from "./descarte.ts";
 import { estadoSinDatos, type EstadoDeError, type FaseError } from "./dominio.ts";
 import {
   ITEMS_POR_TRIAGE,
+  cuerpoSesionTriage,
+  validarCuerpoTriage,
   LIMITE_MS,
   erroresAbiertosDe,
   fasesDe,
@@ -202,5 +204,67 @@ describe("seleccionarItems", () => {
     n = 0;
     const b = seleccionarItems(banco, secuencia);
     assert.deepEqual(a, b);
+  });
+});
+
+describe("cuerpoSesionTriage y validarCuerpoTriage (D15)", () => {
+  const SESION = "6f1c2d3e-4a5b-4c6d-8e7f-90a1b2c3d4e5";
+  const cuerpo = () => ({
+    sesionId: SESION,
+    unidadId: "porcentaje",
+    registros: [
+      { itemId: "adv-porcentaje-001", decision: "resuelvo", ms: 1234 },
+      { itemId: "adv-porcentaje-002", decision: "sin-decision", ms: LIMITE_MS },
+    ],
+  });
+
+  it("cuerpoSesionTriage copia los registros y redondea ms", () => {
+    const original = [{ itemId: "x", decision: "dejo" as const, ms: 1234.6 }];
+    const c = cuerpoSesionTriage(SESION, "porcentaje", original);
+    assert.deepEqual(c, { sesionId: SESION, unidadId: "porcentaje", registros: [{ itemId: "x", decision: "dejo", ms: 1235 }] });
+    assert.notEqual(c.registros[0], original[0]);
+  });
+
+  it("acepta un cuerpo bien formado y devuelve solo los campos conocidos", () => {
+    const entrada = { ...cuerpo(), extra: 1, registros: [{ ...cuerpo().registros[0], sobra: true }] };
+    const v = validarCuerpoTriage(entrada);
+    assert.deepEqual(v, {
+      sesionId: SESION,
+      unidadId: "porcentaje",
+      registros: [{ itemId: "adv-porcentaje-001", decision: "resuelvo", ms: 1234 }],
+    });
+  });
+
+  it("rechaza sesionId que no es uuid, unidadId vacío y registros vacíos", () => {
+    assert.equal(validarCuerpoTriage({ ...cuerpo(), sesionId: "abc" }), null);
+    assert.equal(validarCuerpoTriage({ ...cuerpo(), unidadId: "" }), null);
+    assert.equal(validarCuerpoTriage({ ...cuerpo(), registros: [] }), null);
+    assert.equal(validarCuerpoTriage(null), null);
+    assert.equal(validarCuerpoTriage("texto"), null);
+  });
+
+  it("rechaza una decision fuera del alfabeto", () => {
+    const c = cuerpo();
+    c.registros[0].decision = "quizas";
+    assert.equal(validarCuerpoTriage(c), null);
+  });
+
+  it("rechaza ms negativo, no entero o fuera de integer", () => {
+    for (const ms of [-1, 1.5, 2_147_483_648, "12", null]) {
+      const c = cuerpo();
+      (c.registros[0] as { ms: unknown }).ms = ms;
+      assert.equal(validarCuerpoTriage(c), null, `ms=${String(ms)}`);
+    }
+  });
+
+  it("rechaza itemId repetido y más de 50 registros", () => {
+    const c = cuerpo();
+    c.registros[1].itemId = c.registros[0].itemId;
+    assert.equal(validarCuerpoTriage(c), null);
+    const largo = {
+      ...cuerpo(),
+      registros: Array.from({ length: 51 }, (_, i) => ({ itemId: `i-${i}`, decision: "marco", ms: 1 })),
+    };
+    assert.equal(validarCuerpoTriage(largo), null);
   });
 });

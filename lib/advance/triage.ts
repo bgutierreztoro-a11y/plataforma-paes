@@ -185,3 +185,78 @@ export interface PayloadTriageDecision {
 export function payloadTriageDecision(registro: RegistroTriage): PayloadTriageDecision {
   return { item_id: registro.itemId, decision: registro.decision, ms: registro.ms };
 }
+
+/* ---------- cuerpo de persistencia (D15) ---------- */
+/* Lo que viaja de SesionTriage a POST /api/advance/triage. Mismo criterio que
+   `CuerpoSesionDescarte` en descarte.ts: tipo, armado y validación acá, puros
+   y con test; la ruta solo los llama. `validarCuerpoTriage` es forma y tipos
+   más el alfabeto de `decision`, que sí es del esquema (CHECK de la 010). */
+
+export interface CuerpoSesionTriage {
+  /* uuid generado en el cliente al montar la sesión. Con usuario e ítem forma
+     la clave única de la tabla: un reenvío del mismo cierre no duplica nada. */
+  sesionId: string;
+  unidadId: string;
+  registros: RegistroTriage[];
+}
+
+/** Cliente. Copia los registros y redondea `ms`: la columna es integer. */
+export function cuerpoSesionTriage(
+  sesionId: string,
+  unidadId: string,
+  registros: readonly RegistroTriage[],
+): CuerpoSesionTriage {
+  return {
+    sesionId,
+    unidadId,
+    registros: registros.map((r) => ({ itemId: r.itemId, decision: r.decision, ms: Math.round(r.ms) })),
+  };
+}
+
+const FORMA_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const MAX_LARGO = 100;
+const MAX_REGISTROS = 50;
+/* Tope de `integer` en Postgres: lo que pase de ahí sería un 500, no un 400. */
+const MAX_MS = 2_147_483_647;
+
+function textoCorto(valor: unknown): valor is string {
+  return typeof valor === "string" && valor.length > 0 && valor.length <= MAX_LARGO;
+}
+
+function esDecision(valor: unknown): valor is Decision {
+  return typeof valor === "string" && (DECISIONES as readonly string[]).includes(valor);
+}
+
+function registroValido(cruda: unknown): RegistroTriage | null {
+  if (typeof cruda !== "object" || cruda === null) return null;
+  const r = cruda as Record<string, unknown>;
+  if (!textoCorto(r.itemId)) return null;
+  if (!esDecision(r.decision)) return null;
+  if (typeof r.ms !== "number" || !Number.isInteger(r.ms)) return null;
+  if (r.ms < 0 || r.ms > MAX_MS) return null;
+  return { itemId: r.itemId, decision: r.decision, ms: r.ms };
+}
+
+/**
+ * Servidor. Devuelve un objeto nuevo solo con los campos conocidos, o null si
+ * la forma o los tipos no cuadran (la ruta responde 400). Un `itemId` repetido
+ * dentro del cuerpo también es null: nuestro cliente nunca lo manda.
+ */
+export function validarCuerpoTriage(entrada: unknown): CuerpoSesionTriage | null {
+  if (typeof entrada !== "object" || entrada === null) return null;
+  const c = entrada as Record<string, unknown>;
+  if (typeof c.sesionId !== "string" || !FORMA_UUID.test(c.sesionId)) return null;
+  if (!textoCorto(c.unidadId)) return null;
+  if (!Array.isArray(c.registros) || c.registros.length === 0) return null;
+  if (c.registros.length > MAX_REGISTROS) return null;
+
+  const vistos = new Set<string>();
+  const registros: RegistroTriage[] = [];
+  for (const cruda of c.registros) {
+    const registro = registroValido(cruda);
+    if (!registro || vistos.has(registro.itemId)) return null;
+    vistos.add(registro.itemId);
+    registros.push(registro);
+  }
+  return { sesionId: c.sesionId, unidadId: c.unidadId, registros };
+}
