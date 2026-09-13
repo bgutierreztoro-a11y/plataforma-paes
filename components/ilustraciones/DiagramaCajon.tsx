@@ -27,7 +27,7 @@ import {
 const IZQ = 76;
 const DER = 14;
 const ARRIBA = 30;
-const ALTO_FILA = 64;
+const ALTO_FILA = 72;
 const ZONA_EJE = 42;
 const MEDIA_CAJA = 11;
 const SEPARACION_MINIMA = 26;
@@ -38,12 +38,22 @@ function partirNombre(nombre: string): string[] {
   return corte > 0 ? [nombre.slice(0, corte), nombre.slice(corte + 1)] : [nombre];
 }
 
-/** Nivel (0 o 1) de cada rótulo superior para que dos vecinos no se pisen. */
+/**
+ * Nivel (0, 1 o 2) de cada rótulo superior para que ninguno pise a otro: de
+ * izquierda a derecha, cada rótulo toma el nivel más bajo cuyo último ocupante
+ * quede a SEPARACION_MINIMA o más. Con una caja muy angosta (Q1, mediana y Q3
+ * a menos de 26 px entre sí) hacen falta los tres niveles, y ALTO_FILA deja
+ * sitio para ellos sin invadir la fila de arriba.
+ */
 function niveles(xs: number[]): number[] {
   const orden = xs.map((x, i) => ({ x, i })).sort((a, b) => a.x - b.x);
   const nivel = new Array<number>(xs.length).fill(0);
-  for (let k = 1; k < orden.length; k++) {
-    if (orden[k].x - orden[k - 1].x < SEPARACION_MINIMA) nivel[orden[k].i] = nivel[orden[k - 1].i] === 0 ? 1 : 0;
+  const ultimoEnNivel: number[] = [];
+  for (const { x, i } of orden) {
+    let n = 0;
+    while (ultimoEnNivel[n] !== undefined && x - ultimoEnNivel[n] < SEPARACION_MINIMA) n++;
+    nivel[i] = n;
+    ultimoEnNivel[n] = x;
   }
   return nivel;
 }
@@ -91,7 +101,7 @@ export function DiagramaCajon(datos: DatosDiagramaCajon) {
         const estilo = ESTILO_SERIE[i];
         const xs = [xDe(c.q1), xDe(c.mediana), xDe(c.q3)];
         const nivel = niveles(xs);
-        const yArriba = (n: number) => cy - MEDIA_CAJA - 8 - n * 11;
+        const yArriba = (n: number) => cy - MEDIA_CAJA - 8 - n * 10;
         const lineasNombre = partirNombre(c.nombre);
         return (
           <g key={c.nombre}>
