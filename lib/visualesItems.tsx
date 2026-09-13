@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { PlanoItem } from "@/components/grafico/PlanoItem";
 import { IlustracionTransformacion } from "@/components/ilustraciones/IlustracionTransformacion";
 import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
-import type { DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
+import { GraficoEstadistico } from "@/components/ilustraciones/GraficoEstadistico";
+import type { DatosGraficoEstadistico, DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
 
 /* Apoyo visual por ítem (capa de UI, no de contenido): plano cartesiano para
    ítems cuyo enunciado entrega puntos concretos. Solo se agrega donde el
@@ -17,7 +18,15 @@ import type { DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
    gráfico permite leer la respuesta numérica pedida (pedir las coordenadas de
    A' y dibujar A'). En esos casos la escena va con `mostrarImagen: false`, y
    en semejanza la incógnita se rotula con una letra. Las claves son los ids de
-   ítem, así que llevan el prefijo del módulo para no chocar entre lecciones. */
+   ítem, así que llevan el prefijo del módulo para no chocar entre lecciones.
+
+   Para los módulos de datos (tablas y gráficos, medidas de posición) la misma
+   regla: un gráfico de barras, de líneas, circular o un cajón se dibuja cuando
+   ES el estímulo (leer una variación entre dos periodos, comparar dos cajones,
+   decidir qué representación corresponde) y NUNCA cuando entrega directo el
+   valor pedido (pedir la mediana y rotularla en el cajón, pedir el porcentaje
+   de un sector y escribirlo en el sector). Todo valor visible es un dato del
+   enunciado. */
 
 interface EntradaRecta {
   puntos: [number, number][];
@@ -41,7 +50,8 @@ interface EntradaRecta {
 type EntradaVisual =
   | EntradaRecta
   | { transformacion: DatosTransformacion }
-  | { semejanza: DatosSemejanza };
+  | { semejanza: DatosSemejanza }
+  | { grafico: DatosGraficoEstadistico };
 
 const VISUALES: Record<string, EntradaVisual> = {
   /* "Una recta pasa por los puntos (1, 2) y (3, 8)" — pide la pendiente */
@@ -163,6 +173,7 @@ export function visualDeItem(itemId: string, textoTentativo?: string | null): Re
 
   if ("transformacion" in entrada) return <IlustracionTransformacion {...entrada.transformacion} />;
   if ("semejanza" in entrada) return <IlustracionSemejanza {...entrada.semejanza} />;
+  if ("grafico" in entrada) return <GraficoEstadistico datos={entrada.grafico} />;
 
   const m =
     textoTentativo && entrada.pendientePorTexto

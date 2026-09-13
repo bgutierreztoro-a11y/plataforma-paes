@@ -28,10 +28,12 @@ import {
 import { TablaReglaSigno } from "@/components/ilustraciones/TablaReglaSigno";
 import { IlustracionTransformacion } from "@/components/ilustraciones/IlustracionTransformacion";
 import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
+import { GraficoEstadistico } from "@/components/ilustraciones/GraficoEstadistico";
 import { motivoRechazoCilindro, motivoRechazoParalelepipedo } from "@/lib/cuerposGeometricos";
 import { motivoRechazoDatosTransformacion } from "@/lib/transformacionesIsometricas";
 import { motivoRechazoDatosSemejanza } from "@/lib/semejanza";
-import type { DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
+import { motivoRechazoDatosGrafico } from "@/lib/estadistica";
+import type { DatosGraficoEstadistico, DatosSemejanza, DatosTransformacion } from "@/lib/tipos";
 import { conEnfasis, esNumeroPuro } from "@/lib/markdownSimple";
 
 interface DatosTabla {
@@ -294,6 +296,11 @@ function esDatosSemejanza(datos: unknown): datos is DatosSemejanza {
   return motivoRechazoDatosSemejanza(datos) === null;
 }
 
+/** Los cuatro gráficos de datos (barras, líneas, circular, cajón), mismo guard que el validador. */
+function esDatosGraficoEstadistico(datos: unknown): datos is DatosGraficoEstadistico {
+  return motivoRechazoDatosGrafico(datos) === null;
+}
+
 function esDatosBandas(datos: unknown): datos is DatosBandas {
   const bandas = (datos as DatosBandas | null)?.bandas;
   return (
@@ -455,6 +462,15 @@ export function BloqueVisualizacion({ bloque }: { bloque: BloqueVisualizacionTip
       <figure className={TARJETA_VISUAL}>
         <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
         <IlustracionSemejanza {...bloque.datos} />
+      </figure>
+    );
+  }
+
+  if (esDatosGraficoEstadistico(bloque.datos)) {
+    return (
+      <figure className={TARJETA_VISUAL}>
+        <figcaption className="solo-lector">{bloque.descripcion}</figcaption>
+        <GraficoEstadistico datos={bloque.datos} />
       </figure>
     );
   }
