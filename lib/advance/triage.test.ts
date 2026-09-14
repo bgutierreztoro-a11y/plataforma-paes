@@ -109,12 +109,36 @@ describe("veredicto (D17)", () => {
     const soloCorrecta: ItemAdvance = { ...ITEM, alternativas: [ITEM.alternativas[2]] };
     assert.equal(veredicto("resuelvo", soloCorrecta, fases("cerrado", "cerrado", "cerrado")), "sin-veredicto");
   });
+
+  it("un distractor con errorCatalogado null no cuenta como sin-datos: se juzga sobre los mapeados", () => {
+    /* falla-2 (visible D) pasa a null; quedan falla-1 y falla-3. */
+    const conNull: ItemAdvance = {
+      ...ITEM,
+      alternativas: ITEM.alternativas.map((a) =>
+        !a.esCorrecta && a.errorCatalogado === "falla-2" ? { ...a, errorCatalogado: null } : a,
+      ),
+    };
+    const dosCerrados: FasesPorError = { "falla-1": "cerrado", "falla-3": "cerrado" };
+    assert.equal(veredicto("marco", conNull, dosCerrados), "punto-regalado");
+    assert.equal(veredicto("resuelvo", conNull, dosCerrados), "lectura-buena");
+    assert.equal(veredicto("resuelvo", conNull, { "falla-1": "abierto", "falla-3": "cerrado" }), "lectura-a-revisar");
+  });
 });
 
 describe("erroresAbiertosDe", () => {
   it("devuelve los abiertos en el orden de las alternativas", () => {
     assert.deepEqual(erroresAbiertosDe(ITEM, fases("abierto", "abierto", "cerrado")), ["falla-1", "falla-2"]);
     assert.deepEqual(erroresAbiertosDe(ITEM, fases("cerrado", "sin-datos", "observacion")), []);
+  });
+
+  it("un distractor con errorCatalogado null nunca aparece entre los abiertos", () => {
+    const conNull: ItemAdvance = {
+      ...ITEM,
+      alternativas: ITEM.alternativas.map((a) =>
+        !a.esCorrecta && a.errorCatalogado === "falla-2" ? { ...a, errorCatalogado: null } : a,
+      ),
+    };
+    assert.deepEqual(erroresAbiertosDe(conNull, fases("abierto", "abierto", "abierto")), ["falla-1", "falla-3"]);
   });
 });
 

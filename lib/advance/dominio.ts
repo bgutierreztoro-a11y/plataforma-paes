@@ -78,8 +78,10 @@ export function actualizarPL(
 export interface DistractorResuelto {
   /** Clave del JSON, la misma que guarda `orden_descartes`. */
   claveOriginal: string;
-  /** Id local del catálogo (`error-N`); la unidad la pone quien llama. */
-  errorId: string;
+  /** Id local del catálogo (slug); la unidad la pone quien llama. Null es un
+      distractor sin error mapeado: cuenta como descarte pero no produce
+      observación, ni acierto ni fracaso, y nunca tiene estado BKT. */
+  errorId: string | null;
 }
 
 /** Una fila de `advance_descartes` cruzada con su ítem del banco. */
@@ -103,15 +105,18 @@ export interface ObservacionesDeItem {
 export function observacionesDeItem(item: ItemResuelto): ObservacionesDeItem {
   const aciertos: string[] = [];
   for (const clave of item.ordenDescartes) {
-    /* La clave correcta (última de un ítem con fatal) no es distractor: se salta sola. */
+    /* La clave correcta (última de un ítem con fatal) no es distractor: se salta sola.
+       Un distractor con errorId null tampoco observa nada. */
     const distractor = item.distractores.find((d) => d.claveOriginal === clave);
-    if (distractor && !aciertos.includes(distractor.errorId)) aciertos.push(distractor.errorId);
+    const errorId = distractor?.errorId ?? null;
+    if (errorId !== null && !aciertos.includes(errorId)) aciertos.push(errorId);
   }
 
   const fracasos: string[] = [];
   if (item.descarteFatal !== null) {
     const descartadas = new Set(item.ordenDescartes);
     for (const distractor of item.distractores) {
+      if (distractor.errorId === null) continue;
       if (descartadas.has(distractor.claveOriginal)) continue;
       /* El acierto gana: un error acertado en este ítem no recibe además fracaso. */
       if (aciertos.includes(distractor.errorId) || fracasos.includes(distractor.errorId)) continue;

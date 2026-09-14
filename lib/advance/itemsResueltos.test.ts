@@ -6,7 +6,10 @@ import { itemsResueltosDe } from "./itemsResueltos.ts";
 
 /* Banco en memoria, sin mezclar (claveOriginal = clave, como lo entrega
    obtenerBanco). Correcta C; A → falla-1, B → falla-2, D → falla-3. */
-function item(id: string, errores: [string, string, string] = ["falla-1", "falla-2", "falla-3"]): ItemAdvance {
+function item(
+  id: string,
+  errores: [string | null, string | null, string | null] = ["falla-1", "falla-2", "falla-3"],
+): ItemAdvance {
   return {
     id,
     unidadId: "prueba",
@@ -97,6 +100,17 @@ describe("itemsResueltosDe", () => {
       r.distractores.map((d) => d.errorId),
       ["falla-1", "error-fantasma", "falla-3"],
     );
+  });
+
+  it("un distractor con errorCatalogado null no se emite: ni errorId vacío ni null en distractores", () => {
+    const banco = [item("adv-prueba-004", ["falla-1", null, "falla-3"])];
+    const [r] = itemsResueltosDe([fila("adv-prueba-004", ["B", "A"], null)], banco);
+    assert.deepEqual(r.distractores, [
+      { claveOriginal: "A", errorId: "falla-1" },
+      { claveOriginal: "D", errorId: "falla-3" },
+    ]);
+    /* El descarte de B sigue en ordenDescartes: el null quita el error, no el descarte. */
+    assert.deepEqual(r.ordenDescartes, ["B", "A"]);
   });
 
   it("filas de dos sesiones conservan el orden de entrada, que es el cronológico de la consulta", () => {

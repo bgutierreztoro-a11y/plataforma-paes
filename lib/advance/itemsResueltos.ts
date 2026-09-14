@@ -20,6 +20,10 @@ import type { DistractorResuelto, ItemResuelto } from "./dominio.ts";
  * Un `errorCatalogado` que no esté en el catálogo de la unidad se conserva tal
  * cual: acá no se sabe del catálogo, y dominio.ts lo devuelve como estado
  * propio. Omitirlo de la pantalla es decisión de presentación (D12).
+ *
+ * Un distractor con `errorCatalogado` null no se emite: no hay error que
+ * observar, así que para dominio.ts ese descarte es como si la clave no
+ * fuera distractor. Emitirlo con un id vacío crearía un estado fantasma.
  */
 export function itemsResueltosDe(
   filas: readonly FilaAdvanceDescarte[],
@@ -30,7 +34,9 @@ export function itemsResueltosDe(
     distractoresPorItem.set(
       item.id,
       item.alternativas.flatMap((a) =>
-        a.esCorrecta ? [] : [{ claveOriginal: a.claveOriginal, errorId: a.errorCatalogado }],
+        a.esCorrecta || a.errorCatalogado === null
+          ? []
+          : [{ claveOriginal: a.claveOriginal, errorId: a.errorCatalogado }],
       ),
     );
   }

@@ -76,6 +76,20 @@ describe("tabla de transiciones", () => {
     assert.equal(e.estados.C, "intacta");
   });
 
+  it("distractor con errorCatalogado null: cuenta en ordenDescartes pero no entra a erroresIdentificados", () => {
+    const conNull: ItemAdvance = {
+      ...ITEM,
+      alternativas: ITEM.alternativas.map((a) =>
+        a.clave === "B" && !a.esCorrecta ? { ...a, errorCatalogado: null } : a,
+      ),
+    };
+    const e = descartar(descartar(estadoInicialItem(conNull, T0), "B", T0 + 100), "A", T0 + 200);
+    assert.equal(e.fase, "descartando");
+    assert.deepEqual(e.ordenDescartes, ["D", "B"]);
+    assert.deepEqual(e.erroresIdentificados, ["falla-1"]);
+    assert.ok(!e.erroresIdentificados.includes(""), "un null nunca se registra como id vacío");
+  });
+
   it("tres distractores descartados → la correcta pasa a sobreviviente y la fase a confirmar", () => {
     const e = descartar(descartar(descartar(inicial(), "D", T0 + 100), "A", T0 + 200), "B", T0 + 300);
     assert.equal(e.fase, "confirmar");

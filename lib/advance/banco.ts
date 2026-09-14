@@ -30,7 +30,8 @@ interface ItemEnDisco {
     clave: ClaveAlternativa;
     texto: string;
     esCorrecta: boolean;
-    errorCatalogado?: string;
+    errorCatalogado?: string | null;
+    sinErrorCatalogado?: { motivo: string; nota: string };
     feedbackDescarte?: string;
     feedbackDescarteIncorrecto?: string;
   }[];
@@ -104,7 +105,11 @@ export function obtenerBanco(unidadId: string): Banco | null {
   };
 }
 
-/** Quita lo que no viaja al cliente y fija `claveOriginal`. La solución sí viaja (§6.1, descarte fatal). */
+/**
+ * Quita lo que no viaja al cliente y fija `claveOriginal`. La solución sí
+ * viaja (§6.1, descarte fatal). `sinErrorCatalogado` no viaja: es para el
+ * revisor, y el cliente solo necesita saber que `errorCatalogado` es null.
+ */
 function itemParaCliente(item: ItemEnDisco): ItemAdvance {
   return {
     id: item.id,
@@ -117,7 +122,8 @@ function itemParaCliente(item: ItemEnDisco): ItemAdvance {
     solucion: item.solucion,
     alternativas: item.alternativas.map((a): AlternativaAdvance => {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
-         satisfacen al tipo. */
+         satisfacen al tipo. `errorCatalogado` es la excepción: null es un
+         valor del contrato y se propaga tal cual, nunca como "". */
       if (a.esCorrecta) {
         return {
           clave: a.clave,
@@ -132,7 +138,7 @@ function itemParaCliente(item: ItemEnDisco): ItemAdvance {
         claveOriginal: a.clave,
         texto: a.texto,
         esCorrecta: false,
-        errorCatalogado: a.errorCatalogado ?? "",
+        errorCatalogado: a.errorCatalogado ?? null,
         feedbackDescarte: a.feedbackDescarte ?? "",
       };
     }),

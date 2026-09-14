@@ -94,8 +94,13 @@ export function AlternativaDescartable({
 
       {estado === "descartada-correcta" && !alternativa.esCorrecta && (
         <span className="basis-full pl-10">
+          {/* Sin error mapeado (errorCatalogado null) el estado es solo
+              "Descartada": no hay rótulo que anunciar y el feedbackDescarte,
+              obligatorio siempre, es lo que explica el descarte. */}
           <span className="block text-etiqueta uppercase text-primary" data-estado-texto>
-            {descarte.descartada}: {rotuloError ?? alternativa.errorCatalogado}
+            {(rotuloError ?? alternativa.errorCatalogado) !== null
+              ? `${descarte.descartada}: ${rotuloError ?? alternativa.errorCatalogado}`
+              : descarte.descartada}
           </span>
           <span className="mt-1 block text-cuerpo-s text-primary" data-feedback>
             {alternativa.feedbackDescarte}

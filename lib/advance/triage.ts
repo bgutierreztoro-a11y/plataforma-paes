@@ -99,9 +99,12 @@ export function registroSinDecision(item: ItemAdvance): RegistroTriage {
 
 /* ---------- veredicto (D17) ---------- */
 
+/* Un distractor con errorCatalogado null no entra: no es un error sin datos,
+   es la ausencia de error. El veredicto se juzga sobre los distractores
+   mapeados; el piso por ítem del validador garantiza al menos uno. */
 function fasesDelItem(item: ItemAdvance, fases: FasesPorError): FaseError[] {
   return item.alternativas.flatMap((a) =>
-    a.esCorrecta ? [] : [fases[a.errorCatalogado] ?? "sin-datos"],
+    a.esCorrecta || a.errorCatalogado === null ? [] : [fases[a.errorCatalogado] ?? "sin-datos"],
   );
 }
 
@@ -130,7 +133,9 @@ export function veredicto(decision: Decision, item: ItemAdvance, fases: FasesPor
 /** Ids de error abiertos entre los distractores del ítem, en el orden de las alternativas. */
 export function erroresAbiertosDe(item: ItemAdvance, fases: FasesPorError): string[] {
   return item.alternativas.flatMap((a) =>
-    !a.esCorrecta && fases[a.errorCatalogado] === "abierto" ? [a.errorCatalogado] : [],
+    !a.esCorrecta && a.errorCatalogado !== null && fases[a.errorCatalogado] === "abierto"
+      ? [a.errorCatalogado]
+      : [],
   );
 }
 

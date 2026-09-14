@@ -27,7 +27,10 @@ interface AlternativaBase {
 
 export interface DistractorAdvance extends AlternativaBase {
   esCorrecta: false;
-  errorCatalogado: string;
+  /** Id local del catálogo del módulo, o null si el distractor no deriva de
+      ningún error catalogable (el banco lo declara con `sinErrorCatalogado`,
+      que no viaja al cliente). Un null no produce observación de diagnóstico. */
+  errorCatalogado: string | null;
   feedbackDescarte: string;
 }
 
@@ -128,7 +131,12 @@ export function reducerItem(estado: EstadoItem, accion: AccionItem): EstadoItem 
         [alt.clave]: "descartada-correcta",
       };
       const ordenDescartes = [...estado.ordenDescartes, alt.claveOriginal];
-      const erroresIdentificados = [...estado.erroresIdentificados, alt.errorCatalogado];
+      /* El descarte se registra siempre (ordenDescartes); el error solo si el
+         distractor lo tiene. Un null no es un error identificado. */
+      const erroresIdentificados =
+        alt.errorCatalogado === null
+          ? estado.erroresIdentificados
+          : [...estado.erroresIdentificados, alt.errorCatalogado];
 
       const quedaUna = ordenDescartes.length === estado.item.alternativas.length - 1;
       if (!quedaUna) return { ...estado, estados, ordenDescartes, erroresIdentificados };

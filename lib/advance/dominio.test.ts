@@ -9,6 +9,7 @@ import {
   estadoDeErrores,
   estadoSinDatos,
   observacionesDeItem,
+  type DistractorResuelto,
   type EstadoDeError,
   type ItemResuelto,
 } from "./dominio.ts";
@@ -24,7 +25,7 @@ const DIA_3 = DIA_1 + 2 * SEPARACION_MINIMA_MS;
 const DIA_5 = DIA_3 + 2 * SEPARACION_MINIMA_MS;
 
 /* Ítem estándar: correcta C; A → falla-1, B → falla-2, D → falla-3. */
-const DISTRACTORES = [
+const DISTRACTORES: DistractorResuelto[] = [
   { claveOriginal: "A", errorId: "falla-1" },
   { claveOriginal: "B", errorId: "falla-2" },
   { claveOriginal: "D", errorId: "falla-3" },
@@ -34,7 +35,7 @@ function item(
   ordenDescartes: string[],
   descarteFatal: string | null,
   enMs: number,
-  distractores = DISTRACTORES,
+  distractores: DistractorResuelto[] = DISTRACTORES,
 ): ItemResuelto {
   return { itemId: `adv-prueba-${enMs}`, distractores, ordenDescartes, descarteFatal, enMs };
 }
@@ -101,6 +102,41 @@ describe("observacionesDeItem (D5)", () => {
     const { aciertos, fracasos } = observacionesDeItem(item(["A", "C"], "C", DIA_1, repetido));
     assert.deepEqual(aciertos, ["falla-1"]);
     assert.deepEqual(fracasos, ["falla-3"]);
+  });
+
+  it("distractor con errorId null: descartado no acierta, en pie al fatal no fracasa", () => {
+    const conNull = [
+      { claveOriginal: "A", errorId: "falla-1" },
+      { claveOriginal: "B", errorId: null },
+      { claveOriginal: "D", errorId: "falla-3" },
+    ];
+    /* B descartado antes del fatal: no hay error que acertar. */
+    const descartado = observacionesDeItem(item(["B", "A", "C"], "C", DIA_1, conNull));
+    assert.deepEqual(descartado.aciertos, ["falla-1"]);
+    assert.deepEqual(descartado.fracasos, ["falla-3"]);
+    /* B en pie al fatal: no hay error que fracasar. */
+    const enPie = observacionesDeItem(item(["A", "C"], "C", DIA_1, conNull));
+    assert.deepEqual(enPie.aciertos, ["falla-1"]);
+    assert.deepEqual(enPie.fracasos, ["falla-3"]);
+  });
+});
+
+describe("estadoDeErrores: distractor sin error", () => {
+  it("un errorId null nunca crea estado BKT: ni null ni cadena vacía entre los estados", () => {
+    const conNull = [
+      { claveOriginal: "A", errorId: "falla-1" },
+      { claveOriginal: "B", errorId: null },
+      { claveOriginal: "D", errorId: "falla-3" },
+    ];
+    const estados = estadoDeErrores(
+      ["falla-1", "falla-3"],
+      [item(["B", "A", "D"], null, DIA_1, conNull), item(["A", "C"], "C", DIA_3, conNull)],
+    );
+    assert.deepEqual(
+      estados.map((e) => e.errorId).sort(),
+      ["falla-1", "falla-3"],
+    );
+    assert.ok(estados.every((e) => e.errorId !== "" && e.errorId !== null));
   });
 });
 

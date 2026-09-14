@@ -170,7 +170,11 @@ export function EjecutorDescarte({
               key={alt.clave}
               alternativa={alt}
               estado={estado.estados[alt.clave]}
-              rotuloError={alt.esCorrecta ? undefined : rotuloDeError(alt.errorCatalogado, 1)}
+              rotuloError={
+                alt.esCorrecta || alt.errorCatalogado === null
+                  ? undefined
+                  : rotuloDeError(alt.errorCatalogado, 1)
+              }
               deshabilitada={cerrado}
               onDescartar={descartar}
             />
