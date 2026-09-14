@@ -98,12 +98,17 @@ Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, docu
   evalúa, con qué formato y a qué profundidad.
 - Uso permitido: el material DEMRE liberado (temario y formas de
   aplicaciones anteriores) puede usarse como base directa de ítems
-  del producto pago Fobos Advance, incluidos enunciado y datos, con
-  atribución de forma y año en `proveniencia.fuenteOrigen`. Criterio
-  legal entregado por el abogado del proyecto el <FECHA>: es material
-  de acceso público liberado por DEMRE, distinto del material de
-  privados. Este bullet reemplaza la restricción anterior, que trataba
-  todo ítem DEMRE como intocable.
+  del producto pago Fobos Advance, incluidos enunciado y datos,
+  declarando `proveniencia.fuenteOrigen: "demre-liberada"` más
+  `referencia` (año, forma y número de pregunta) y
+  `notaAdaptacion` (qué se cambió respecto del original: contexto,
+  números, alternativas). Los tres campos son obligatorios y el
+  validador rechaza el ítem sin ellos, ver
+  content/advance/schema/item-advance.schema.json. Criterio legal
+  entregado por el abogado del proyecto el <FECHA>: es material de
+  acceso público liberado por DEMRE, distinto del material de
+  privados. Este bullet reemplaza la restricción anterior, que
+  trataba todo ítem DEMRE como intocable. [B]
 - En Fobos gratis, DEMRE sigue usándose solo para calibrar temario y
   formato, sin copiar ítems: la capa gratis se sostiene en pedagogía
   de descubrimiento, no en ítems de examen.
@@ -128,8 +133,9 @@ Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, docu
    aunque cambien palabras o números? El material DEMRE liberado
    usado en Fobos Advance queda fuera de esta pregunta cuando su
    origen está declarado en `proveniencia.fuenteOrigen` (ver §7.1);
-   no se audita como riesgo de originalidad, solo se verifica que la
-   atribución exista.
+   no se audita como riesgo de originalidad, solo se verifica que
+   `referencia` y `notaAdaptacion` existan y que la adaptación
+   declarada sea real.
 2. ¿Algún diagrama o visualización replica la composición de uno existente?
 3. ¿La secuencia interna copia la estructura expresiva de una guía específica, más allá del orden lógico natural del contenido?
 4. ¿Queda registrada la proveniencia?
