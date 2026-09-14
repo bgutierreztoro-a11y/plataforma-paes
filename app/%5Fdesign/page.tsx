@@ -24,12 +24,14 @@ import { ResultadoTriage } from "@/components/advance/ResultadoTriage";
 import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
 import { RepasoError } from "@/components/advance/RepasoError";
+import { PanelDosPorDos } from "@/components/advance/PanelDosPorDos";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
   COPY_MUESTRA,
   GRUPOS_ERRORES_MUESTRA,
   MUESTRA_DESCARTE,
   MUESTRA_TRIAGE,
+  PANEL_MUESTRA,
   REPASO_MUESTRA,
   RESULTADOS_TRIAGE_MUESTRA,
 } from "./muestraDescarte";
@@ -1016,6 +1018,32 @@ export default function PaginaDiseno() {
               <Rotulo>Sin repaso: el catálogo todavía no tiene el copy</Rotulo>
               <div data-repaso-muestra="sin-repaso" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
                 <RepasoError unidadId="muestra" ejeId={null} titulo={REPASO_MUESTRA.titulo} />
+              </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Panel 2×2"
+          nota="El panel de acierto por tiempo (docs/fobos-advance.md §6.2, F4 4.1): una tabla por habilidad con el conteo de intentos en cada cuadrante y el que predomina dicho con texto. Sin llamador en producción: requiere modo clásico y ninguna tabla de hoy produce un intento clásico, así que esto es la pieza y la función pura, montadas con intentos de MUESTRA (app/%5Fdesign/muestraDescarte.ts) por el mismo camino que tendría la ruta (panelPorHabilidad). Arriba, la habilidad con Frágil predominante sobre las cuatro líneas: el rótulo va en --linea-nav sobre bg-card, se mide acá. Abajo, las cuatro habilidades juntas: Error conceptual, sin clasificar con 2 de 3 intentos (los dos lentos: un ítem lento no hace a nadie frágil) y sin intentos."
+        >
+          <div className="flex flex-col gap-6">
+            <div>
+              <Rotulo>Resolver · 5 intentos, Frágil predomina</Rotulo>
+              <PorLinea>
+                {() => (
+                  <div data-panel-muestra="fragil">
+                    <PanelDosPorDos habilidad="resolver" panel={PANEL_MUESTRA.resolver} />
+                  </div>
+                )}
+              </PorLinea>
+            </div>
+            <div style={estiloDeLinea("01")}>
+              <Rotulo>Línea 01 · las cuatro habilidades: Frágil, Error conceptual, sin clasificar con 2 de 3, sin intentos</Rotulo>
+              <div className="grid gap-3 sm:grid-cols-2" data-panel-muestra="cuatro">
+                {(["resolver", "modelar", "representar", "argumentar"] as const).map((habilidad) => (
+                  <PanelDosPorDos key={habilidad} habilidad={habilidad} panel={PANEL_MUESTRA[habilidad]} />
+                ))}
               </div>
             </div>
           </div>

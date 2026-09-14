@@ -2,6 +2,7 @@ import { copyDelCatalogo } from "@/lib/advance/copyDeError";
 import type { ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
+import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
 import type { EntradaError, RepasoDeError } from "@/lib/catalogoErrores";
 
 /**
@@ -250,3 +251,27 @@ export const RESULTADOS_TRIAGE_MUESTRA: { id: string; rotulo: string; fases: Fas
     registros: REGISTROS_TRIAGE,
   },
 ];
+
+/* ---------- panel 2×2 (§6.2, F4 4.1) ---------- */
+
+/* Intentos de MUESTRA del modo clásico, que hoy no existe: ninguna tabla los
+   produce y por eso el panel solo vive acá. Por habilidad: resolver clasifica
+   con Frágil (3 correctos lentos de 5); modelar con Error conceptual (2
+   incorrectos rápidos de 3); representar queda sin clasificar con 2 intentos,
+   los dos lentos (un ítem lento no hace a nadie frágil); argumentar sin
+   intentos. Referencias de 80/120/160 s por dificultad (§5.2). */
+export const INTENTOS_CLASICOS_MUESTRA: IntentoConHabilidad[] = [
+  { habilidad: "resolver", correcto: true, tiempoMs: 64_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "resolver", correcto: true, tiempoMs: 151_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "resolver", correcto: true, tiempoMs: 98_000, tiempoReferenciaSeg: 80 },
+  { habilidad: "resolver", correcto: true, tiempoMs: 172_000, tiempoReferenciaSeg: 160 },
+  { habilidad: "resolver", correcto: false, tiempoMs: 210_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "modelar", correcto: false, tiempoMs: 31_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "modelar", correcto: false, tiempoMs: 47_000, tiempoReferenciaSeg: 160 },
+  { habilidad: "modelar", correcto: true, tiempoMs: 88_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "representar", correcto: true, tiempoMs: 190_000, tiempoReferenciaSeg: 120 },
+  { habilidad: "representar", correcto: true, tiempoMs: 205_000, tiempoReferenciaSeg: 160 },
+];
+
+/** Lo que recibe `PanelDosPorDos` en la galería: el mismo camino que tendría la ruta. */
+export const PANEL_MUESTRA = panelPorHabilidad(INTENTOS_CLASICOS_MUESTRA);

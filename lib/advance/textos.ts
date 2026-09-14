@@ -190,4 +190,44 @@ export const TEXTOS_ADVANCE = {
     ingresoCuerpo:
       "El triage se lee contra tus sesiones de descarte, que se guardan en tu cuenta. Ingresa y vuelve.",
   },
+
+  /* Panel 2×2 (docs/fobos-advance.md §6.2, F4 4.1). Sin llamador en
+     producción: requiere modo clásico y solo lo monta /_design. Los rótulos
+     de los cuadrantes y de los ejes son los de la tabla de §6.2, tal cual; la
+     explicación de cada cuadrante parafrasea el mismo párrafo. El estado sin
+     clasificar dice cuántos intentos faltan: la regla de honestidad de §6.2
+     se muestra, no se esconde. */
+  panel: {
+    habilidad: {
+      resolver: "Resolver",
+      modelar: "Modelar",
+      representar: "Representar",
+      argumentar: "Argumentar",
+    },
+    columna: {
+      dentro: "Dentro del tiempo",
+      sobre: "Sobre el tiempo",
+    },
+    fila: {
+      correcto: "Correcto",
+      incorrecto: "Incorrecto",
+    },
+    cuadrante: {
+      dominado: "Dominado",
+      fragil: "Frágil",
+      "error-conceptual": "Error conceptual",
+      bloqueo: "Bloqueo",
+    },
+    explicacion: {
+      dominado: "Correcto y a tiempo.",
+      fragil: "Correcto pero lento. En la prueba, con el reloj encima, esto es lo que se cae.",
+      "error-conceptual": "Incorrecto y rápido. Se respondió con seguridad y estaba mal: el error que no se nota.",
+      bloqueo: "Incorrecto y lento. Sin procedimiento para esto todavía.",
+    },
+    predomina: "Predomina",
+    intentos: (n: number) => (n === 1 ? "intento" : "intentos"),
+    /* Menos de `MINIMO_INTENTOS` en la habilidad: no se clasifica nada. */
+    sinClasificar: (n: number, minimo: number) =>
+      `Todavía sin clasificar: ${n} de ${minimo} intentos necesarios.`,
+  },
 } as const;
