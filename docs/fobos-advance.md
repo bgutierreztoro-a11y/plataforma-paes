@@ -121,7 +121,8 @@ lib/advance/                     motor
   descarte.ts                    lógica de la mecánica
   dominio.ts                     p(L), ciclo de vida del error
   seleccion.ts                   armado de sesiones
-  repositorio.ts                 acceso a datos (fase 3+)
+  repositorio.ts                 no existe: el SQL vive en lib/datos/ (F3, 2026-09-11);
+                                 temporada.ts es la parte pura del acceso (F3, 2026-09-14)
 
 content/advance/                 banco de ítems Advance
   schema/item-advance.schema.json
@@ -350,6 +351,13 @@ temporada
 *Desvíos respecto del boceto de 3.4 y 3.5.* La tabla se llama `advance_descartes`, no `intento_advance`; no lleva `modo` ni `correcto` (se derivan de `descarte_fatal`) y sí `sesion_id`, `orden_descartes` y `descarte_fatal`. `estado_error` y `temporada` no se crean en este bloque. El acceso a datos va en `lib/datos/advanceDescartes.ts`, no en `lib/advance/repositorio.ts`: `lib/datos/` es el único directorio del proyecto con SQL. La tabla entra al inventario de datos de 3.3.
 
 Piezas: `lib/advance/descarte.ts` (tipo `CuerpoSesionDescarte`, armado con `Math.round` de `tiempoMs` y validador de forma y tipos, con test), `lib/datos/advanceDescartes.ts` (escritura en lote), `app/api/advance/sesion/route.ts` (404 sin flag, 401 sin sesión, 403 sin acceso, 400 con cuerpo inválido o unidad e ítems que no están en el banco, 204 al escribir), `components/advance/EjecutorDescarte.tsx` (callback `alCerrarSesion` con los registros completos, una vez) y `components/advance/SesionDescarte.tsx` (`sesion_id` en el inicializador de estado, envío sin bloquear la UI).
+
+**Registro F3, bloque de inventario y temporada (2026-09-14).** Cierra lo que 3.3, 3.4 y 3.5 tenían pendiente sin depender de 3.1 ni 3.2. Un commit `advance:` (`7201a09`), uno `docs:` con el inventario y el de este registro, sin push. Lo que el boceto de arriba dibujaba y ya estaba resuelto de otra forma no se volvió a construir: `intento_advance` es `advance_descartes` (008, bloque de escritura) y `estado_error` no existe por decisión del bloque A de F4 (el estado se calcula al vuelo).
+
+- *3.3, inventario de datos.* `docs/inventario-datos.md`: qué se guarda, dónde, para qué y por cuánto tiempo, para el dispositivo, las nueve tablas de Neon, Clerk, Vercel y PostHog, verificado contra migraciones y `lib/datos/`. Deja cuatro cosas pendientes de firma, todas de Benja: el plazo de conservación del desempeño (hoy es "hasta la baja"), la 007, `usuarios.fecha_nacimiento` (existe nula y sin escritor) y los plazos reales de logs y eventos en los planes contratados.
+- *3.4, `temporada`.* **No se crea la tabla.** El boceto (`usuario_id, inicio, fin, estado`) es una fila de `entitlements` (004): producto de Advance, `vigencia_desde` al contratar, `vigencia_hasta` al terminar, con su rastro en `entitlements_auditoria`. Una tabla aparte duplicaría el control de acceso, que por la 004 pasa solo por `lib/datos/entitlements.ts`, y un `estado` guardado quedaría viejo al pasar `fin`, el mismo motivo por el que no se persisten el veredicto del triage ni la fase de un error. Sin migración nueva: el SELECT sobre `entitlements` lo otorga la 006. Alternativa descartada: tabla `temporada` propia con GRANT y auditoría propios, más una función paralela a `tieneAcceso()`.
+- *3.5, acceso a datos.* `lib/advance/temporada.ts`, puro y sin reloj: `estadoTemporada(vigencias, ahoraMs)` traduce las vigencias a `EstadoAdvance` con los bordes de `tieneAcceso()` (desde inclusive, hasta exclusive): una vigente da `activo` aunque otra haya vencido; sin vigente, una vencida da `temporada-terminada`; nunca contrató o solo tiene una futura, `sin-acceso`. 8 tests con instantes falsos. `lib/datos/entitlements.ts` suma `vigenciasDe(usuarioId, producto)`, solo fechas, sin filtro por instante en el SQL para que el corte se pruebe en la función pura. No se crea `lib/advance/repositorio.ts`: la decisión del bloque de escritura sigue en pie, el SQL vive en `lib/datos/`.
+- *Lo que este bloque no hace.* `estadoAdvance()` sigue leyendo `NEXT_PUBLIC_ADVANCE_DEMO`. Cablearlo a Clerk más `vigenciasDe` exige 3.1 y el id del producto de Advance (§11, punto 2), y además haría dinámica `app/linea/[ejeId]/page.tsx`, que monta `TramoAdvance` con `estadoAdvance()`: eso toca la capa gratis y se decide aparte. Hasta entonces `vigenciasDe` y `estadoTemporada` no tienen llamador, como `listarTriageDeUsuario` en F5a.
 
 **Criterio de salida:** un estudiante inicia sesión, hace una sesión de descarte, cierra el navegador, vuelve, y su historial está ahí. Política de privacidad publicada y accesible.
 
@@ -760,7 +768,7 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 ## 11. Decisiones pendientes de firma
 
 1. Unidad piloto para F2. Decisión tomada: porcentaje. Banco piloto construido y cerrado en F2 el 2026-09-11 (§4 F2, registro del bloque B).
-2. Precio exacto y estructura de la temporada. Depende de la respuesta del abogado sobre 21.719.
+2. Precio exacto y estructura de la temporada. Depende de la respuesta del abogado sobre 21.719. Incluye el id del producto de Advance en `entitlements` (la 004 nombra `m1-2027` como curso completo, anterior a Advance), que es lo que `estadoAdvance()` necesita para leer `vigenciasDe` (§4 F3, 2026-09-14).
 3. Fecha de compra del dominio propio, que destraba Clerk.
 4. `tiempoReferenciaSeg` se declara por ítem desde ahora. Decisión tomada: verificado en los 20 ítems del banco piloto y exigido por `content/advance/schema/item-advance.schema.json`.
 
