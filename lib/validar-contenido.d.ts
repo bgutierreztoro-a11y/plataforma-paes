@@ -27,6 +27,18 @@ declare module "../scripts/validar-contenido.mjs" {
     erroresCatalogados?: Map<string, string>,
   ): string[];
   /**
+   * Cobertura de `errorCatalogado` sobre los distractores de un banco
+   * Advance: `mapeados/total`, el porcentaje, y los declarados con
+   * `sinErrorCatalogado` agrupados por motivo (`sin-declarar` si falta).
+   * Es el mismo número que la regla (9) del contrato usa para el piso.
+   */
+  export function coberturaErrorCatalogadoBanco(data: unknown): {
+    total: number;
+    mapeados: number;
+    porcentaje: number;
+    porMotivo: Record<string, number>;
+  };
+  /**
    * Contrato de forma de un catálogo canónico (content/errores/<unidad>.json),
    * sobre datos ya parseados: `{ unidad, errores[{ id, descripcion, titulo?,
    * apoyo?, repaso? }] }`. `validarCatalogoErrores` es el mismo contrato leyendo

@@ -570,7 +570,7 @@ function idsReferenciadosPorUnidad(dirContent) {
 //
 // Contrato: content/advance/schema/item-advance.schema.json. Igual que con
 // leccion.schema.json, el schema no se lee: este bloque lo implementa a mano,
-// campo por campo, más las reglas (1) a (5) y (7) de su $comment. La (6),
+// campo por campo, más las reglas (1) a (5) y (7) a (9) de su $comment. La (6),
 // colisión de valores contra content/lecciones/ y el resto de content/advance/,
 // es del auditor (scripts/auditar-leccion.mjs), no de este gate.
 //
@@ -583,6 +583,20 @@ const ID_ITEM_ADVANCE = /^adv-[a-z0-9]+(-[a-z0-9]+)*$/;
 // Id local del catálogo: slug descriptivo kebab-case (desde la migración del 2026-09-13,
 // docs/analisis/mapa-migracion-ids.json). Ya no se admite la forma posicional error-N.
 const ERROR_LOCAL = /^(?!error-[0-9]+$)[a-z0-9]+(-[a-z0-9]+)+$/;
+// Desde el 2026-09-13 errorCatalogado es nullable, pero la ausencia se declara:
+// null obliga a sinErrorCatalogado { motivo, nota }. Los cuatro motivos son las
+// categorías del análisis de formas DEMRE (docs/analisis/propuesta-catalogo-transversal.md).
+const MOTIVOS_SIN_ERROR_CATALOGADO = [
+  'valor-plausible-no-derivable',
+  'creencia-sobre-un-paso',
+  'error-transversal-pendiente',
+  'sin-mecanismo-identificado',
+];
+// Pisos de cobertura, reglas (8) y (9) del $comment del schema. Los dos son
+// error, no advertencia: un ítem sin mapeos no alimenta el diagnóstico y un
+// banco bajo el piso no sostiene la mecánica.
+const PISO_MAPEOS_POR_ITEM = 1; // de 3 distractores
+const PISO_COBERTURA_BANCO = 0.6; // fracción de los distractores del banco
 const FUENTES_ORIGEN = ['propia', 'demre-liberada', 'temario-demre'];
 const TIEMPO_REFERENCIA_SEG = [20, 600];
 // §5.4: volumen mínimo para que el descarte tenga sentido en una unidad.
@@ -592,7 +606,8 @@ const MIN_ERRORES_DISTINTOS_ADVANCE = 12;
 
 const CLAVES_BANCO = ['tipo', 'unidadId', 'moduloId', 'titulo', 'items', 'contextosNumericos', 'auditoria', 'proveniencia'];
 const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'proveniencia'];
-const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'feedbackDescarte', 'feedback'];
+const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
+const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
 const CLAVES_PROVENIENCIA_ITEM = ['fuenteOrigen', 'referencia', 'notaAdaptacion', 'autor', 'fecha'];
 const CLAVES_PROVENIENCIA_BANCO = ['fuentesAnalisis', 'declaracionOriginalidad', 'autor', 'fecha'];
@@ -685,14 +700,9 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
       if (a.feedback !== undefined && !esTexto(a.feedback)) errores.push(`${q}: feedback, si está, es texto no vacío`);
     } else {
       clavesSobrantes(a, CLAVES_DISTRACTOR, q, errores);
-      if (!esTexto(a.errorCatalogado)) {
-        errores.push(`${q}: distractor sin errorCatalogado; en Advance es obligatorio en los tres (sin él el modo descarte no funciona)`);
-      } else if (!ERROR_LOCAL.test(a.errorCatalogado)) {
-        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no es un slug kebab-case (la forma posicional error-N dejó de existir el 2026-09-13)`);
-      } else if (erroresCatalogados && esTexto(banco?.moduloId) && !erroresCatalogados.has(`${banco.moduloId}/${a.errorCatalogado}`)) {
-        // Regla (3): todo errorCatalogado existe en el catálogo canónico del módulo.
-        errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no está en content/errores/${banco.moduloId}.json`);
-      }
+      validarDeclaracionErrorCatalogado(a, q, banco, erroresCatalogados, errores);
+      /* feedbackDescarte: obligatorio con o sin mapeo. Es la pieza de la que
+         depende la mecánica de descarte, no el catálogo. */
       if (!esTexto(a.feedbackDescarte)) {
         errores.push(`${q}: distractor sin feedbackDescarte (lo que se muestra al descartarlo correctamente)`);
       } else if (a.feedbackDescarte.trim().length < MIN_FEEDBACK_PUBLICABLE) {
@@ -702,6 +712,65 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
         errores.push(`${q}: feedback, si está, tiene al menos ${MIN_FEEDBACK_PUBLICABLE} caracteres (mismo umbral que en lecciones)`);
       }
     }
+  }
+
+  // Regla (8): piso por ítem. Un ítem con cero distractores mapeados no
+  // alimenta el diagnóstico, así que no entra al banco.
+  const mapeados = alts.filter((a) => a?.esCorrecta === false && esTexto(a.errorCatalogado)).length;
+  if (mapeados < PISO_MAPEOS_POR_ITEM) {
+    errores.push(
+      `${donde}: ${mapeados} de 3 distractores con errorCatalogado; el piso por ítem es ${PISO_MAPEOS_POR_ITEM} (un ítem sin mapeos no alimenta el diagnóstico)`,
+    );
+  }
+}
+
+/**
+ * Contrato de `errorCatalogado` en un distractor: la clave siempre está; el
+ * valor es un slug del catálogo del módulo o null. Si es null, la ausencia se
+ * declara con `sinErrorCatalogado { motivo, nota }`; si tiene valor,
+ * `sinErrorCatalogado` sobra. Las dos direcciones son error.
+ */
+function validarDeclaracionErrorCatalogado(a, q, banco, erroresCatalogados, errores) {
+  const declaracion = a.sinErrorCatalogado;
+
+  if (a.errorCatalogado === undefined) {
+    errores.push(`${q}: distractor sin la clave errorCatalogado; si no hay error mapeado va null con sinErrorCatalogado { motivo, nota }, nunca se omite`);
+    return;
+  }
+
+  if (a.errorCatalogado === null) {
+    if (declaracion === undefined) {
+      errores.push(`${q}: errorCatalogado null sin sinErrorCatalogado; la ausencia de mapeo se declara con { motivo, nota }`);
+      return;
+    }
+    if (!declaracion || typeof declaracion !== 'object' || Array.isArray(declaracion)) {
+      errores.push(`${q}.sinErrorCatalogado: debe ser un objeto { motivo, nota }`);
+      return;
+    }
+    clavesSobrantes(declaracion, CLAVES_SIN_ERROR_CATALOGADO, `${q}.sinErrorCatalogado`, errores);
+    if (!MOTIVOS_SIN_ERROR_CATALOGADO.includes(declaracion.motivo)) {
+      errores.push(`${q}.sinErrorCatalogado.motivo: debe ser uno de: ${MOTIVOS_SIN_ERROR_CATALOGADO.join(', ')} (recibido: ${JSON.stringify(declaracion.motivo)})`);
+    }
+    if (!esTexto(declaracion.nota)) {
+      errores.push(`${q}.sinErrorCatalogado.nota: falta la nota (una línea: qué se intentó derivar y por qué no cierra)`);
+    } else if (/[\r\n]/.test(declaracion.nota)) {
+      errores.push(`${q}.sinErrorCatalogado.nota: es una sola línea, sin saltos de línea`);
+    }
+    return;
+  }
+
+  if (!esTexto(a.errorCatalogado)) {
+    errores.push(`${q}: errorCatalogado debe ser un slug del catálogo o null (recibido: ${JSON.stringify(a.errorCatalogado)})`);
+    return;
+  }
+  if (declaracion !== undefined) {
+    errores.push(`${q}: tiene errorCatalogado "${a.errorCatalogado}" y sinErrorCatalogado a la vez; sinErrorCatalogado va solo con errorCatalogado null`);
+  }
+  if (!ERROR_LOCAL.test(a.errorCatalogado)) {
+    errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no es un slug kebab-case (la forma posicional error-N dejó de existir el 2026-09-13)`);
+  } else if (erroresCatalogados && esTexto(banco?.moduloId) && !erroresCatalogados.has(`${banco.moduloId}/${a.errorCatalogado}`)) {
+    // Regla (3): todo errorCatalogado no nulo existe en el catálogo canónico del módulo.
+    errores.push(`${q}: errorCatalogado "${a.errorCatalogado}" no está en content/errores/${banco.moduloId}.json`);
   }
 }
 
@@ -798,6 +867,14 @@ export function validarDatosBancoAdvance(data, unidadDelDirectorio, dirContent, 
       if (vistos.has(it.id)) errores.push(`items[${i}]: id "${it.id}" repetido dentro del banco`);
       vistos.add(it.id);
     });
+    // Regla (9): piso por banco. Se mide sobre todos los distractores del
+    // banco, mapeados o declarados; el porcentaje se reporta siempre (CLI).
+    const { total, mapeados, porcentaje } = coberturaErrorCatalogadoBanco(data);
+    if (total > 0 && mapeados / total < PISO_COBERTURA_BANCO) {
+      errores.push(
+        `cobertura de errorCatalogado ${mapeados}/${total} (${porcentaje.toFixed(1)}%) bajo el piso del ${Math.round(PISO_COBERTURA_BANCO * 100)}% por banco`,
+      );
+    }
   }
 
   const prov = data.proveniencia;
@@ -832,6 +909,43 @@ export function validarBancoAdvance(ruta, erroresCatalogados) {
   }
   const unidadDelDirectorio = basename(dirname(resolve(ruta)));
   return validarDatosBancoAdvance(data, unidadDelDirectorio, raizContentDe(ruta), erroresCatalogados);
+}
+
+/**
+ * Cobertura de `errorCatalogado` sobre los distractores de un banco Advance:
+ * cuántos hay, cuántos mapean a un error del catálogo y, de los declarados
+ * con `sinErrorCatalogado`, cuántos por motivo. Sobre datos en memoria, sin
+ * disco. La usan la regla (9) del contrato y el reporte del CLI, para que el
+ * número que bloquea y el que se imprime sean el mismo.
+ */
+export function coberturaErrorCatalogadoBanco(data) {
+  let total = 0;
+  let mapeados = 0;
+  const porMotivo = {};
+  for (const it of Array.isArray(data?.items) ? data.items : []) {
+    for (const a of Array.isArray(it?.alternativas) ? it.alternativas : []) {
+      if (a?.esCorrecta !== false) continue;
+      total++;
+      if (esTexto(a.errorCatalogado)) {
+        mapeados++;
+      } else {
+        const motivo = esTexto(a.sinErrorCatalogado?.motivo) ? a.sinErrorCatalogado.motivo : 'sin-declarar';
+        porMotivo[motivo] = (porMotivo[motivo] ?? 0) + 1;
+      }
+    }
+  }
+  return { total, mapeados, porcentaje: total ? (100 * mapeados) / total : 0, porMotivo };
+}
+
+/** Fila del reporte de cobertura por banco, siempre, aunque el banco pase el piso. */
+function filaCoberturaBanco(unidadId, data) {
+  const { total, mapeados, porcentaje, porMotivo } = coberturaErrorCatalogadoBanco(data);
+  const pct = total ? `${porcentaje.toFixed(1)}%` : 'n/a';
+  const motivos = Object.entries(porMotivo)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([m, n]) => `${m} ${n}`)
+    .join(', ');
+  return `   ${unidadId}: ${mapeados}/${total} (${pct})${motivos ? `; sin mapear por motivo: ${motivos}` : ''}`;
 }
 
 /** Regla (5), §5.4: 20 ítems y al menos 12 errores distintos. Advertencia, no error. */
@@ -1267,7 +1381,10 @@ if (arg === '--hook') {
     for (const a of advertencias) console.warn(`   ⚠ ${a}`);
   }
   if (esBanco) {
-    for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(filePath, 'utf8')))) console.warn(`   ⚠ ${a}`);
+    const data = JSON.parse(readFileSync(filePath, 'utf8'));
+    for (const a of advertenciasBancoAdvance(data)) console.warn(`   ⚠ ${a}`);
+    console.log(`Cobertura de errorCatalogado (piso ${Math.round(PISO_COBERTURA_BANCO * 100)}% por banco):`);
+    console.log(filaCoberturaBanco(basename(dirname(resolve(filePath))), data));
   }
   process.exit(0);
 }
@@ -1301,7 +1418,10 @@ if (arg) {
     for (const a of advertencias) console.warn(`   ⚠ ${a}`);
   }
   if (esBanco && errores.length === 0) {
-    for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(ruta, 'utf8')))) console.warn(`   ⚠ ${a}`);
+    const data = JSON.parse(readFileSync(ruta, 'utf8'));
+    for (const a of advertenciasBancoAdvance(data)) console.warn(`   ⚠ ${a}`);
+    console.log(`Cobertura de errorCatalogado (piso ${Math.round(PISO_COBERTURA_BANCO * 100)}% por banco):`);
+    console.log(filaCoberturaBanco(basename(dirname(ruta)), data));
   }
   process.exit(paso ? 0 : 1);
 }
@@ -1371,11 +1491,25 @@ for (const ruta of archivosDeItemDiagnostico(raiz)) {
   if (!reportar(ruta, porRutaItems.get(ruta) ?? [])) ok = false;
 }
 
+const filasCoberturaBancos = [];
 for (const ruta of archivosDeBancoAdvance(raiz)) {
   n++;
   const errores = validarBancoAdvance(ruta, erroresCatalogados);
   if (!reportar(ruta, errores)) ok = false;
-  else for (const a of advertenciasBancoAdvance(JSON.parse(readFileSync(ruta, 'utf8')))) console.warn(`   ⚠ ${a}`);
+  try {
+    const data = JSON.parse(readFileSync(ruta, 'utf8'));
+    if (errores.length === 0) for (const a of advertenciasBancoAdvance(data)) console.warn(`   ⚠ ${a}`);
+    // El porcentaje se reporta siempre, pase o no el piso: es el dato que
+    // dice cuánto del banco alimenta el diagnóstico.
+    filasCoberturaBancos.push(filaCoberturaBanco(basename(dirname(ruta)), data));
+  } catch {
+    /* JSON inválido: validarBancoAdvance ya lo reportó arriba como FALLA */
+  }
+}
+
+if (filasCoberturaBancos.length > 0) {
+  console.log(`\nCobertura de errorCatalogado por banco Advance (piso ${Math.round(PISO_COBERTURA_BANCO * 100)}%, error bajo el piso):`);
+  for (const fila of filasCoberturaBancos) console.log(fila);
 }
 
 if (n === 0) console.log('Sin archivos de contenido que validar (los que empiezan con "_" son plantillas y se omiten).');

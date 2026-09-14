@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "item-advance.schema.json",
   "title": "Banco de ítems Fobos Advance",
-  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: errorCatalogado y feedbackDescarte son obligatorios en los tres distractores, feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. Sin errorCatalogado en los tres distractores el modo descarte no puede funcionar, por eso el validador rechaza el archivo en vez de advertir. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id.",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase.",
   "type": "object",
   "required": ["tipo", "unidadId", "moduloId", "titulo", "items", "proveniencia"],
   "properties": {
@@ -123,7 +123,7 @@
       "type": "array",
       "minItems": 4,
       "maxItems": 4,
-      "description": "Formato PAES M1: exactamente 4 alternativas A-D, una correcta y tres distractores. Cada distractor codifica un error catalogado distinto.",
+      "description": "Formato PAES M1: exactamente 4 alternativas A-D, una correcta y tres distractores. Cada distractor mapeado codifica un error catalogado distinto; el que no tiene error mapeado lo declara con errorCatalogado null y sinErrorCatalogado. Al menos uno de los tres va mapeado (regla 8 del validador).",
       "contains": { "$ref": "#/definitions/alternativaCorrecta" },
       "items": {
         "oneOf": [
@@ -135,16 +135,39 @@
 
     "alternativaDistractor": {
       "type": "object",
-      "description": "Alternativa incorrecta. En Advance el mapeo al catálogo es obligatorio: es la pieza que hace posible el diagnóstico por distractor.",
+      "description": "Alternativa incorrecta. El mapeo al catálogo es lo que hace posible el diagnóstico por distractor; cuando no existe, se declara con errorCatalogado null y sinErrorCatalogado, nunca se omite la clave. feedbackDescarte es obligatorio siempre, con o sin mapeo.",
       "required": ["clave", "texto", "esCorrecta", "errorCatalogado", "feedbackDescarte"],
       "properties": {
         "clave": { "enum": ["A", "B", "C", "D"] },
         "texto": { "type": "string", "minLength": 1 },
         "esCorrecta": { "const": false },
         "errorCatalogado": {
-          "type": "string",
+          "type": ["string", "null"],
           "pattern": "^(?!error-[0-9]+$)[a-z0-9]+(-[a-z0-9]+)+$",
-          "description": "Id local (slug descriptivo, ver docs/analisis/mapa-migracion-ids.json) del catálogo canónico del módulo, content/errores/<moduloId>.json. Obligatorio en los tres distractores. Si el ítem necesita un error que no existe, CC se detiene y propone el texto a Benja antes de asignarle id."
+          "description": "Id local (slug descriptivo, ver docs/analisis/mapa-migracion-ids.json) del catálogo canónico del módulo, content/errores/<moduloId>.json, o null si el distractor no deriva de ningún error catalogable. La clave es obligatoria en los tres distractores; el valor null obliga a sinErrorCatalogado. Si el ítem necesita un error que no existe, CC se detiene y propone el texto a Benja antes de asignarle id: null no es el atajo para saltarse ese paso (para eso está el motivo error-transversal-pendiente, que deja rastro)."
+        },
+        "sinErrorCatalogado": {
+          "type": "object",
+          "description": "Solo cuando errorCatalogado es null, y entonces obligatorio. Declara por qué este distractor no mapea a ningún error del catálogo. Con errorCatalogado no nulo, su presencia es error.",
+          "required": ["motivo", "nota"],
+          "properties": {
+            "motivo": {
+              "enum": [
+                "valor-plausible-no-derivable",
+                "creencia-sobre-un-paso",
+                "error-transversal-pendiente",
+                "sin-mecanismo-identificado"
+              ],
+              "description": "valor-plausible-no-derivable: el número es verosímil pero no sale de ningún procedimiento errado escribible (categoría D del análisis DEMRE). creencia-sobre-un-paso: el distractor no es un valor sino una afirmación o la elección de un paso (categoría C). error-transversal-pendiente: el mecanismo existe pero pertenece al catálogo transversal propuesto y todavía no firmado (categoría B). sin-mecanismo-identificado: no se pudo clasificar en ninguno de los anteriores; queda visible para revisarlo."
+            },
+            "nota": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[^\\r\\n]+$",
+              "description": "Una línea, sin saltos de línea: qué se intentó derivar y por qué no cierra, o qué error transversal esperaría. Es para el revisor, no para el estudiante."
+            }
+          },
+          "additionalProperties": false
         },
         "feedbackDescarte": {
           "type": "string",
@@ -157,7 +180,14 @@
           "description": "Opcional. Feedback de modo clásico, para cuando el ítem se sirve en una sesión de entrenamiento dirigido en vez de descarte. Si está, mismo mínimo de 40 caracteres que el feedback de distractores en lecciones."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "$comment": "Exclusión mutua: errorCatalogado null exige sinErrorCatalogado; errorCatalogado con valor prohíbe sinErrorCatalogado. Las dos direcciones son error, no advertencia.",
+      "if": {
+        "properties": { "errorCatalogado": { "type": "null" } },
+        "required": ["errorCatalogado"]
+      },
+      "then": { "required": ["sinErrorCatalogado"] },
+      "else": { "not": { "required": ["sinErrorCatalogado"] } }
     },
 
     "alternativaCorrecta": {
