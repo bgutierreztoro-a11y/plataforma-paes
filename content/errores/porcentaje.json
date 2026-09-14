@@ -99,6 +99,42 @@
         "correcto": "La base es siempre la cantidad que representa el 100%: el valor inicial en una variación, el total cuando se pregunta qué parte es.",
         "ejemplo": "De 40 a 46: 6 ÷ 40 = 0,15, o sea 15%. Y 9 de 60: 9 ÷ 60 = 0,15, también 15%."
       }
+    },
+    {
+      "id": "porcentaje/multiplica-porcentajes-en-vez-de-factores",
+      "descripcion": "Componer dos cambios porcentuales multiplicando los PORCENTAJES entre sí en vez de multiplicar los factores: leer «35% y luego 40% de descuento» como 0,35 × 0,40 = 0,14, es decir un descuento total del 14%, menor que cualquiera de los dos. El estudiante sabe que dos cambios sucesivos se multiplican, pero multiplica el número equivocado: la parte que cambia en lugar de la parte que queda. Distinto de suma-porcentajes-sucesivos, donde la composición es aditiva; acá es multiplicativa pero sobre los porcentajes, no sobre los factores.",
+      "titulo": "Multiplicar los porcentajes, no los factores",
+      "apoyo": "Se multiplican los factores (0,65 × 0,60), nunca los porcentajes (0,35 × 0,40).",
+      "repaso": {
+        "camino": "Dos descuentos, 35% y 40%, los multiplicas como 0,35 × 0,40 y dices que el descuento total es 14%.",
+        "correcto": "Cada cambio es un factor sobre lo que queda: un descuento del p% es el factor 1 − p/100. Se multiplican esos factores, y el descuento total sale del complemento del producto.",
+        "ejemplo": "Descuento del 35% y luego del 40%: factores 0,65 y 0,60, y 0,65 × 0,60 = 0,39. Se paga el 39%, el descuento total es 61%. Multiplicar 0,35 × 0,40 = 0,14 daría un descuento del 14%, menor que el primero solo."
+      },
+      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
+    },
+    {
+      "id": "porcentaje/aplica-una-vez-cambio-repetido",
+      "descripcion": "No repetir un cambio porcentual las veces que el enunciado indica: cuando un valor sube un p% cada periodo durante n periodos, aplicar el p% una sola vez, o sumar n veces el p% (n·p%) en vez de componer el factor n veces ((1 + p/100)ⁿ). La lectura «cada año», «cada mes», «por periodo» se pierde y el cambio se trata como único. Distinto de suma-porcentajes-sucesivos, que compone mal dos porcentajes distintos dados explícitamente; acá el enunciado da un solo porcentaje y la cantidad de veces que se repite.",
+      "titulo": "Aplicar una sola vez lo que se repite",
+      "apoyo": "Un 20% cada año durante 3 años es 1,20³, no 1,20 ni 1,60.",
+      "repaso": {
+        "camino": "Lees «sube un 20% cada año durante 3 años» y aplicas el 20% una vez, o sumas 60% de una vez.",
+        "correcto": "Cada periodo multiplica por el mismo factor. Con n periodos el factor total es (1 + p/100)ⁿ: se aplica una vez por periodo, sobre el valor ya modificado.",
+        "ejemplo": "Un ahorro de 5.000 crece un 20% cada año durante 3 años: 5.000 × 1,20 × 1,20 × 1,20 = 5.000 × 1,728 = 8.640. Aplicar el 20% una sola vez da 6.000; sumar 60% de una vez da 8.000. Ninguno de los dos es el valor final."
+      },
+      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
+    },
+    {
+      "id": "porcentaje/ignora-termino-fijo-al-comparar",
+      "descripcion": "Calcular un porcentaje sobre la parte variable de un modelo e ignorar su término fijo: si una cuenta es cargo fijo más un monto por unidad consumida, comparar las unidades consumidas (15/20) en vez de comparar los totales que incluyen el cargo fijo (7.000/8.500). El estudiante toma el dato que varía como si fuera el total, y el porcentaje que obtiene describe el consumo, no la cuenta. Distinto de elige-mal-base-del-porcentaje: allá la base equivocada es otro total del enunciado; acá el total correcto ni siquiera se calcula porque se salta el término fijo.",
+      "titulo": "Olvidar el cargo fijo al sacar el porcentaje",
+      "apoyo": "Si hay un cargo fijo, el porcentaje se calcula sobre el total, no sobre lo consumido.",
+      "repaso": {
+        "camino": "Una cuenta tiene cargo fijo más un valor por unidad, te piden qué porcentaje es una cuenta de otra y divides las unidades consumidas.",
+        "correcto": "Primero se calcula cada total con el término fijo incluido; recién ahí se compara. El porcentaje entre totales no coincide con el porcentaje entre las partes variables cuando hay un término fijo.",
+        "ejemplo": "Cuenta de agua: 2.500 fijos más 300 por m³. Con 15 m³ son 2.500 + 4.500 = 7.000; con 20 m³ son 2.500 + 6.000 = 8.500. La primera es 7.000 ÷ 8.500 ≈ 82,4% de la segunda. Dividir 15 ÷ 20 = 75% compara consumos, no cuentas."
+      },
+      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
     }
   ]
 }
