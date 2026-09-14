@@ -688,14 +688,14 @@
         },
         {
           "clave": "B",
-          "texto": "Si la tapa fuera equilibrada habría caído exactamente 100 veces boca arriba, así que la tapa está defectuosa",
+          "texto": "Si la tapa fuera equilibrada habría caído justo 100 veces boca arriba, así que está defectuosa",
           "esCorrecta": false,
           "feedback": "Ni siquiera una moneda equilibrada cae exactamente 100 de 200 veces: la frecuencia se acerca a la probabilidad, no calza justo. Lo que sí dicen los 200 lanzamientos es que la mejor estimación es 130/200, sea o no «defectuosa».",
           "errorCatalogado": "espera-frecuencia-igual-a-teorica"
         },
         {
           "clave": "C",
-          "texto": "La mejor estimación de la probabilidad de que caiga boca arriba es 13/20, porque la tapa no es simétrica y solo la frecuencia relativa puede estimarla",
+          "texto": "La mejor estimación es 13/20, porque la tapa no es simétrica y solo la frecuencia la estima",
           "esCorrecta": true,
           "feedback": "Correcto. No hay casos igual de probables que contar, así que la probabilidad se estima con la frecuencia relativa: 130/200 = 13/20, y con 200 lanzamientos es una estimación razonable."
         },

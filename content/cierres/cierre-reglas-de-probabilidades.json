@@ -183,7 +183,7 @@
         },
         {
           "clave": "B",
-          "texto": "No, porque es 26/40: los 6 menores de 30 con licencia se contaron dos veces y hay que restarlos una vez",
+          "texto": "No, porque es 26/40: los 6 menores de 30 con licencia se contaron dos veces",
           "esCorrecta": true,
           "feedback": "Correcto. P(menor de 30 o con licencia) = 14/40 + 18/40 − 6/40 = 26/40. Con la tabla: 6 + 8 + 12 = 26 voluntarios cumplen al menos una de las dos condiciones."
         },
@@ -298,7 +298,7 @@
         },
         {
           "clave": "C",
-          "texto": "No, porque la probabilidad de que llegue al menos uno es 1 − 1/10 · 1/10 = 99/100",
+          "texto": "No, porque la probabilidad de que llegue al menos uno es 1 − 1/100 = 99/100",
           "esCorrecta": true,
           "feedback": "Correcto. «Ninguno llega» es un solo camino: 1/10 · 1/10 = 1/100. Entonces P(al menos uno) = 1 − 1/100 = 99/100: muy alta, pero no segura."
         },

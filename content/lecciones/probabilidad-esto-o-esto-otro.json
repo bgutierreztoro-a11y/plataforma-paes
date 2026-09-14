@@ -653,7 +653,7 @@
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Sí, porque 0,6 + 0,5 supera 1, y una probabilidad mayor que 1 significa que el evento es seguro",
+          "texto": "Sí, porque 0,6 + 0,5 supera 1, y una probabilidad mayor que 1 significa que es seguro",
           "esCorrecta": false,
           "feedback": "Una probabilidad nunca supera 1: que la suma dé 1,1 no significa «seguro», significa que algo se contó dos veces. Los fines de semana en que llueve los dos días entraron en las dos probabilidades.",
           "errorCatalogado": "suma-sin-restar-interseccion"
@@ -667,7 +667,7 @@
         },
         {
           "clave": "C",
-          "texto": "No, porque hay que restar la probabilidad de que llueva los dos días, y en todo caso ninguna probabilidad supera 1",
+          "texto": "No, porque hay que restar la probabilidad de que llueva ambos días, y ninguna supera 1",
           "esCorrecta": true,
           "feedback": "Correcto. P(sábado o domingo) = 0,6 + 0,5 − P(los dos días). Sin conocer esa última probabilidad no se puede dar el número exacto, pero sí se sabe que el resultado no supera 1 y que la conclusión de «seguro» no está justificada."
         },

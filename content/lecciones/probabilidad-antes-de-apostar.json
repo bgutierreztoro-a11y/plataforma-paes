@@ -751,7 +751,7 @@
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Sí, porque en cada sorteo hay 2 delegados de primero medio entre 8, y las chances no cambian",
+          "texto": "Sí, porque en cada sorteo hay 2 de primero medio entre 8, y las chances no cambian",
           "esCorrecta": false,
           "feedback": "Las chances sí cambian: el primer delegado sorteado no participa del segundo sorteo. Si era de primero medio, para el segundo quedan 7 delegados y solo 1 de primero medio.",
           "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
@@ -765,13 +765,13 @@
         },
         {
           "clave": "C",
-          "texto": "No, porque es 2/8 · 1/7 = 1/28: en el segundo sorteo quedan 7 delegados y solo 1 de primero medio",
+          "texto": "No, porque es 2/8 · 1/7 = 1/28: quedan 7 delegados y solo 1 de primero medio",
           "esCorrecta": true,
           "feedback": "Correcto. Sin repetir, la segunda etapa se escribe con lo que queda: 7 delegados en total y 1 de primero medio, porque el otro ya salió. 2/8 · 1/7 = 2/56 = 1/28."
         },
         {
           "clave": "D",
-          "texto": "No, porque es 2/8 · 1/8 = 1/32: queda 1 de primero medio, pero el sorteo sigue siendo entre 8",
+          "texto": "No, porque es 2/8 · 1/8 = 1/32: queda 1 de primero medio, pero se sortea entre 8",
           "esCorrecta": false,
           "feedback": "Queda 1 de primero medio, pero el sorteo ya no es entre 8: el primer delegado sorteado no vuelve a entrar, así que el segundo sorteo es entre 7.",
           "errorCatalogado": "mantiene-denominador-sin-reposicion"
