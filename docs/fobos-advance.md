@@ -256,7 +256,7 @@ Contraste medido en render sobre `/_design` (colores computados en el navegador,
 
 Desvíos respecto de lo planificado. Se agregó `advanceVisible()` con `NEXT_PUBLIC_ADVANCE_VISIBLE`, de modo que Advance queda invisible en producción hasta que se decida activarlo, y `/advance/*` responde 404 sin el flag. Existe la ruta `/advance/puerta`, que no estaba en el árbol de §2.1. El orden de ejecución fue 1.1, 1.4, 1.2, 1.5 y 1.3, distinto de la numeración, porque la portada redirige a la puerta y el tramo se mide en la galería antes de montarse. El montaje en el riel no fue directo en `RielEstaciones` ni en `page.tsx`, porque el riel vive dentro de la isla de cliente `components/camino/LineaDelEje.tsx`: esa isla ganó una prop opcional `despuesDelRiel` que se rinde justo después del riel, envuelta en la secuencia de entrada con el escalón siguiente a la última estación y con el CTA corrido un escalón, solo cuando hay algo montado (commits `abd75c8` y `461e99f`); `RielEstaciones.tsx` quedó sin diff. La galería vive en `app/%5Fdesign/page.tsx`, no en `app/_design/`, y los tokens reales son `--line-01` a `--line-04` con los roles `--linea` y `--linea-nav`, no `--e1` a `--e4` como decía este manual. Todo texto de Advance que cae sobre el fondo de página va en `text-primary`, porque `text-secondary` da 4,42 sobre el `body` y no llega a AA (`docs/deuda-contraste-etiquetas.md` §1); la jerarquía la dan tamaño y peso. El disclaimer de §7.3 lo cubre el pie del layout en todas las pantallas, así que la puerta no lo repite y la clave salió de `textos.ts`. Las constantes de geometría del riel (`CANALETA`, `EJE_DEL_RIEL`, `CENTRO_DEL_DISCO`) están duplicadas en `TramoAdvance.tsx` con referencia al origen, para no exportarlas desde la capa gratis. El ítem de `NavInferior` de §3.2 queda fuera de F1: no hay nada que entrenar todavía.
 
-Pendientes que F1 deja abiertos. El texto de precio y el CTA de pago de la puerta (§7.1, §11.2, respuesta pendiente sobre la Ley 21.719): hoy la puerta no tiene ningún texto de precio ni marcador. El estado `temporada-terminada` existe en el tipo y se rinde como `sin-acceso` en el tramo y en la portada, sin interfaz propia. `npm run auditar` no imprime resumen por categoría; el criterio de F0 se verificó igual sobre la salida cruda, con cero 🔴 y 128 🟡 de `colision-entre-archivos`.
+Pendientes que F1 deja abiertos. El texto de precio y el CTA de pago de la puerta (§7.1, §11.2): hoy la puerta no tiene ningún texto de precio ni marcador. La Ley 21.719 ya no es dependencia (MOS §7.5, art. 16 quáter): no obliga a un adulto en el medio para adolescentes de 14 a 17. El estado `temporada-terminada` existe en el tipo y se rinde como `sin-acceso` en el tramo y en la portada, sin interfaz propia. `npm run auditar` no imprime resumen por categoría; el criterio de F0 se verificó igual sobre la salida cruda, con cero 🔴 y 128 🟡 de `colision-entre-archivos`.
 
 Commits de F1: `5b0422b`, `85151e1`, `290a738`, `87cf755`, `abd75c8`, `3375687`, `b72c0cc`, `461e99f`.
 
@@ -472,7 +472,7 @@ Requiere el conteo real de frecuencia por unidad sobre formas liberadas de DEMRE
 
 ### F6 — Reporte al apoderado
 
-La palanca comercial más grande y la que menos código nueva necesita, porque consume lo construido en F4. El adulto es quien paga y hoy no recibe nada.
+La palanca comercial más grande y la que menos código nueva necesita, porque consume lo construido en F4. El adulto suele pagar, pero no siempre: el pagador puede ser el estudiante (MOS §3, art. 3° ter). En cualquier caso, el apoderado hoy no recibe nada.
 
 Fuera de V1, pero la arquitectura de F4 tiene que dejarlo posible: todo dato que se calcule para el panel debe poder renderizarse en un resumen legible por un adulto que no usa la plataforma.
 
@@ -699,7 +699,7 @@ Lo que sigue prohibido, y no es negociable:
 - Cláusulas abusivas: suspender el servicio a voluntad, limitar responsabilidad, renuncia anticipada de derechos.
 - Prometer puntaje.
 
-**Pendiente:** la pregunta sobre Ley 21.719 sigue sin respuesta y está redactada al final de ese archivo. Define si el flujo de pago necesita un adulto en el medio. Mandarla antes de escribir el texto definitivo de la puerta.
+**Respondida.** La Ley 21.719 no obliga a un adulto en el medio del flujo de pago: el art. 16 quáter trata los datos personales de adolescentes de 14 a 17 con las mismas normas de autorización que los de un adulto (MOS §7.5). El texto definitivo de la puerta queda libre para escribirse.
 
 ### 7.2 Retracto
 
@@ -770,7 +770,7 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 ## 11. Decisiones pendientes de firma
 
 1. Unidad piloto para F2. Decisión tomada: porcentaje. Banco piloto construido y cerrado en F2 el 2026-09-11 (§4 F2, registro del bloque B).
-2. Precio exacto y estructura de la temporada. Depende de la respuesta del abogado sobre 21.719. Incluye el id del producto de Advance en `entitlements` (la 004 nombra `m1-2027` como curso completo, anterior a Advance), que es lo que `estadoAdvance()` necesita para leer `vigenciasDe` (§4 F3, 2026-09-14).
+2. Precio exacto y estructura de la temporada. La 21.719 ya no es dependencia (MOS §7.5); la que sí queda es la pregunta 3 de `docs/modelo-negocio.md` (retracto y devolución). Incluye el id del producto de Advance en `entitlements` (la 004 nombra `m1-2027` como curso completo, anterior a Advance), que es lo que `estadoAdvance()` necesita para leer `vigenciasDe` (§4 F3, 2026-09-14).
 3. Fecha de compra del dominio propio, que destraba Clerk.
 4. `tiempoReferenciaSeg` se declara por ítem desde ahora. Decisión tomada: verificado en los 20 ítems del banco piloto y exigido por `content/advance/schema/item-advance.schema.json`.
 
