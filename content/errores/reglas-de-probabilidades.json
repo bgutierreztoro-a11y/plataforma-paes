@@ -7,7 +7,7 @@
     },
     {
       "id": "reglas-de-probabilidades/asume-equiprobables-sin-enumerar",
-      "descripcion": "Tratar como igualmente probables resultados que no lo son, sin enumerar los pares que los producen: 1/3 para 'exactamente 1 punto' con dos monedas (hay 4 pares y 2 lo dan: 1/2), 1/11 para 'suma 7' con dos dados (6 de 36 pares: 1/6), o 2/3 para 'pregunta o castigo' porque son 2 de 3 tipos de tarjeta, sin mirar cuántas hay de cada tipo."
+      "descripcion": "Tratar como igualmente probables resultados que no lo son, sin enumerar los pares que los producen: 1/3 para 'exactamente 1 punto' con dos monedas (hay 4 pares y 2 lo dan: 1/2), 1/11 para 'suma 7' con dos dados (6 de 36 pares: 1/6), o 2/3 para 'verde o naranja' porque son 2 de 3 colores de pulsera, sin mirar cuántas hay de cada color."
     },
     {
       "id": "reglas-de-probabilidades/suma-resultados-en-vez-de-multiplicar-total",
@@ -43,7 +43,7 @@
     },
     {
       "id": "reglas-de-probabilidades/usa-producto-como-interseccion",
-      "descripcion": "Restar P(A) · P(B) como si fuera 'A y B' en la regla aditiva, aunque los eventos sean excluyentes o dependan uno del otro: P(pregunta o castigo) = 6/20 + 5/20 − 6/20 · 5/20 = 19/40 (una tarjeta no puede ser las dos cosas, es 11/20); P(múltiplo de 3 o de 4) = 10/30 + 7/30 − 10/30 · 7/30 = 22/45 en vez de 15/30."
+      "descripcion": "Restar P(A) · P(B) como si fuera 'A y B' en la regla aditiva, aunque los eventos sean excluyentes o dependan uno del otro: P(verde o naranja) = 7/24 + 5/24 − 7/24 · 5/24 = 253/576 (una pulsera no puede ser de los dos colores, es 12/24 = 1/2); P(múltiplo de 3 o de 4) = 10/30 + 7/30 − 10/30 · 7/30 = 22/45 en vez de 15/30."
     },
     {
       "id": "reglas-de-probabilidades/multiplica-en-vez-de-sumar",
