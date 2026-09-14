@@ -221,6 +221,21 @@ const CATALOGO: Partial<Record<LeccionId, PresentacionLeccion>> = {
       "Compara dos grupos por sus cajones sobre la misma escala y ubica un dato por su percentil, también cuando menor es mejor.",
     Ilustracion: IlustracionPlano,
   },
+  "probabilidad-posible-y-probable": {
+    descripcion:
+      "Enumera los pares de dos experimentos y descubre que sus sumas no son igual de probables; después cuenta favorables sobre posibles, usa el complemento y estima con la frecuencia.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "probabilidad-esto-o-esto-otro": {
+    descripcion:
+      "Suma dos conteos de una tabla, obtén más que el total y descubre lo contado dos veces: la regla aditiva con y sin casos comunes.",
+    Ilustracion: IlustracionPatrones,
+  },
+  "probabilidad-antes-de-apostar": {
+    descripcion:
+      "Arma el árbol del mismo sorteo con y sin reposición y descubre que la segunda etapa se escribe con lo que queda: multiplica, suma caminos y usa el complemento para «al menos uno».",
+    Ilustracion: IlustracionPlano,
+  },
 };
 
 const RESPALDO: PresentacionLeccion = {

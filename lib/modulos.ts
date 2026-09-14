@@ -126,6 +126,7 @@ export const IDS_CIERRE = [
   "cierre-semejanza-y-proporcionalidad",
   "cierre-tablas-y-graficos",
   "cierre-medidas-de-posicion",
+  "cierre-reglas-de-probabilidades",
 ] as const;
 
 export type CierreId = (typeof IDS_CIERRE)[number];
@@ -443,11 +444,18 @@ export const EJES = [
           "Ya puedes calcular probabilidades de eventos combinados sin fiarte de la intuición.",
         objetivo:
           "Calcular la probabilidad de eventos combinados sin caer en las trampas de la intuición.",
+        /**
+         * Orden de la carga masiva, que coincide con el diseño pedagógico:
+         * probabilidad de un evento, regla aditiva, regla multiplicativa. Los
+         * títulos del JSON son los nombres técnicos de cada regla; ver
+         * docs/diseno-modulo-reglas-de-probabilidades.md.
+         */
         lecciones: [
           "probabilidad-posible-y-probable",
           "probabilidad-esto-o-esto-otro",
           "probabilidad-antes-de-apostar",
         ],
+        cierreId: "cierre-reglas-de-probabilidades",
       },
     ],
   },
