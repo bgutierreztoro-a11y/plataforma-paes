@@ -11,7 +11,7 @@
 
 Vendemos puntaje. Entregamos comprensión.
 
-La comprensión es el mecanismo, no la promesa. El estudiante y su familia compran una sola cosa: más puntos en la PAES de fin de año. Nuestro método para lograrlo es el aprendizaje por descubrimiento, porque la PAES actual evalúa competencias (resolver problemas, modelar, representar, argumentar) y no memorización. Eso alinea comprensión con puntaje mucho más que en la era PSU, y es la razón por la que esta tesis puede funcionar hoy y no hace diez años.
+La comprensión es el mecanismo, no la promesa. El estudiante y su familia compran una sola cosa: más puntos en la PAES de fin de año. Nuestro método para lograrlo es el aprendizaje por descubrimiento, porque la PAES actual evalúa competencias (resolver problemas, modelar, representar, argumentar) y no memorización. Eso alinea comprensión con puntaje mucho más que en la era PSU, y es la razón por la que esta tesis puede funcionar hoy y no hace diez años. Vendemos el objetivo, no un resultado. Los números que mostramos describen la prueba, nunca al estudiante: "este contenido aparece en 6 de 65 preguntas" es un hecho verificable; "vas a subir X puntos" o "vas a mejorar un X%" es promesa de resultado y no se hace, en ninguna unidad. Criterio en `docs/fobos-advance.md` §6.4. [A, Ley 19.496]
 
 Consecuencia de producto: el puente entre comprensión y puntaje debe ser visible en cada lección. Toda lección cierra con 2 o 3 ítems originales en formato PAES. El estudiante tiene que ver la transferencia, no creerla por fe.
 
@@ -75,7 +75,7 @@ Cobro en fase piloto: transferencia manual. Automatizar pagos antes de 30 client
 
 Dos tests en paralelo, no en secuencia. El orden real de riesgo es distribución, luego pago, luego eficacia, y el plan anterior lo testeaba al revés.
 
-**Test A. Preventa (apuesta comercial).** Oferta: "Curso intensivo Funciones M1, cohorte fundadora, cupos limitados, parte el [fecha], $19.990". Un párrafo, un precio, un link o número para reservar. Canal de confianza. Duración: 3 semanas.
+**Test A. Preventa (apuesta comercial).** Oferta: "Curso intensivo Funciones M1, cohorte fundadora, parte el [fecha], $19.990". Los cupos son ilimitados: ninguna forma de "cupos limitados" ni "quedan X cupos" aparece en la oferta (urgencia falsa, prohibida en `docs/fobos-advance.md` §7.1 y en §11 regla 6). [C] Un párrafo, un precio, un link o número para reservar. Canal de confianza. Duración: 3 semanas.
 - 10 o más pagos reales: continuar y construir con urgencia.
 - Entre 5 y 9: reposicionar oferta o precio y repetir una vez.
 - Menos de 5: detenerse y revisar la tesis antes de escribir una línea más de código.
@@ -160,7 +160,7 @@ Si alguna respuesta es dudosa, el contenido no se publica.
 
 **7.9 Marco del consumidor.** Somos educación no formal: la LPDC aplica en toda
 su extensión, sin la limitación que tienen los colegios formales. Obligaciones
-reales, todas [A]:
+reales, todas [A] salvo la cita del retracto, marcada [D]:
 - Informar el precio de forma detallada, transparente y sin inducir a error,
   antes de cobrar. La obligación es mostrarlo bien, no esconderlo.
 - Publicidad adecuada al público objetivo. SERNAC trata a este segmento como
@@ -172,7 +172,14 @@ reales, todas [A]:
   que habilite un uso abusivo de los datos, ni trabas para reclamar.
 - Se cumple literalmente lo prometido en el contrato y en la publicidad.
   Corolario: no se anuncia una unidad que no esté publicada.
-- Derecho a retracto, con devolución de lo no prestado.
+- Derecho a retracto, con devolución de lo no prestado. La cita exacta queda
+  abierta: el art. 3° ter de la Ley 19.496 es el retracto específico de
+  educación superior (10 días desde los resultados del proceso de admisión);
+  para un servicio contratado en línea el que aplica es el art. 3° bis
+  (10 días desde la contratación o la recepción). [D: cuál rige nuestro caso.
+  Pregunta al abogado: ¿un preuniversitario en línea cae en el 3° bis, en el
+  3° ter o en ambos? Postura provisional: se opera con el 3° bis, que es el
+  más exigente para nosotros, y se devuelve lo no prestado en cualquier caso.]
 - Libertad total para fijar precio y modalidad de cobro. Lo único obligatorio
   es informarlo con claridad.
 

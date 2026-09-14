@@ -33,8 +33,28 @@ volumen y reloj (65 preguntas en 2h20), no en contenido.
 Sin decidir. Se fija con datos de preventa, no antes.
 
 ## Pendiente legal
-Ocho preguntas para el abogado, sin responder aún: contratante adulto vs
-menor, nulidad si paga el menor, retracto Ley 19.496, formalización SII
-con fundador menor, Ley 21.719 datos de menores, urgencia comercial
-dirigida a menores, redacción de la promesa de puntaje, cláusula de
-devolución.
+Ocho preguntas para el abogado. Estado al 2026-09-14, con la
+clasificación A/B/C/D del MOS §11 regla 6:
+
+1. Contratante adulto vs menor. Respondida: el alumno puede contratar y
+   pagar directamente (Ley 19.496 art. 3° ter). MOS §3. [A]
+2. Nulidad si paga el menor. Respondida por la misma cita: la ley
+   contempla al alumno como pagador. MOS §3 y §7.9. [A]
+3. Retracto Ley 19.496. Parcial: el derecho existe y se devuelve lo no
+   prestado; la cita exacta (3° bis, contratación en línea, vs 3° ter,
+   educación superior) sigue abierta. MOS §7.9. [D]
+4. Formalización SII con fundador menor. Abierta: el principio es de
+   capacidad civil, el mecanismo concreto no está resuelto. Postura
+   provisional: adulto responsable firma. MOS §7.6. [D]
+5. Ley 21.719 datos de menores. Respondida: para adolescentes de 14 a 17
+   no se exige consentimiento del apoderado (art. 16 quáter). MOS §7.5. [A]
+6. Urgencia comercial dirigida a menores. Respondida: SERNAC trata al
+   segmento como consumidor hipervulnerable; prohibidas la presión y la
+   urgencia fabricada. MOS §7.9. Las reglas de esta página (§Urgencia)
+   siguen íntegras como elección propia. [A y C]
+7. Redacción de la promesa de puntaje. Respondida: se vende el objetivo,
+   no un resultado; los números describen la prueba, nunca al estudiante.
+   MOS §1 y `docs/fobos-advance.md` §6.4. [A]
+8. Cláusula de devolución. Abierta: depende de la respuesta a la
+   pregunta 3. Postura provisional: devolución proporcional de lo no
+   prestado, sin condiciones. [D]
