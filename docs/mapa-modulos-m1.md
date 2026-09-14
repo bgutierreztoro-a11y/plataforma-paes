@@ -80,9 +80,9 @@ muestra como `sin-contenido` ("Pronto") en `/camino`, fuera de
 `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`) · 16 cierres
 en `content/cierres/`. **El free tier está completo en construcción**: los 16
 módulos tienen sus 3 lecciones y su cierre conectado en `lib/modulos.ts`.
-Del módulo 16 quedan pendientes de Benja, fuera de sesión, la consulta de
-colisión y las dos Rondas de verificación (matemática y de originalidad, en
-hilos aislados) antes de cualquier `git push`; ver
+El módulo 16 ya tiene su consulta de colisión y sus dos Rondas de verificación
+(matemática y de originalidad, en hilos aislados) cerradas el 2026-09-13; solo
+queda de Benja, fuera de sesión, el `git push`. Ver
 `docs/pendientes-probabilidad-16.md`. El estado de esas Rondas en los módulos
 anteriores está en sus propios docs de pendientes.
 
@@ -378,9 +378,10 @@ Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
 `content/cierres/cierre-reglas-de-probabilidades.json` está conectado como
 `cierreId` en `lib/modulos.ts`. Catálogo canónico en
 `content/errores/reglas-de-probabilidades.json` (23 ids). Diseño en
-`docs/diseno-modulo-reglas-de-probabilidades.md`. Pendientes de Benja: la
-consulta de colisión (`consultar-fuentes.mjs`) y las dos auditorías en hilos
-aislados antes de cualquier `git push`; ver `docs/pendientes-probabilidad-16.md`.
+`docs/diseno-modulo-reglas-de-probabilidades.md`. Consulta de colisión
+(`consultar-fuentes.mjs`) y las dos auditorías en hilos aislados, cerradas el
+2026-09-13; solo queda de Benja el `git push`. Ver
+`docs/pendientes-probabilidad-16.md`.
 
 Los ids se conservaron en el orden de la carga masiva, que coincide con el
 diseño pedagógico (probabilidad de un evento, regla aditiva, regla

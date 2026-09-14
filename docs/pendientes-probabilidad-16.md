@@ -1,10 +1,10 @@
 # Pendientes: módulo 16 (reglas de las probabilidades)
 
-Estado al cierre de la sesión de producción del 2026-09-13 (brief de Benja,
-firmas por adelantado, sin PARADA). Todo en commits locales sobre `master`,
-**sin push**. El módulo está completo en contenido y registrado en
-`lib/modulos.ts`; con él, los 16 módulos del free tier tienen sus 3 lecciones
-y su cierre. Lo que queda es de Benja, fuera de sesión.
+Estado al 2026-09-13 tras cerrar las dos Rondas de verificación. Todo en
+commits locales sobre `master`, **sin push**. El módulo está completo en
+contenido y registrado en `lib/modulos.ts`; con él, los 16 módulos del free
+tier tienen sus 3 lecciones y su cierre. Lo único que queda es de Benja,
+fuera de sesión: el `git push`.
 
 ## Hecho (commits locales, en orden, sobre `6d55258`)
 
@@ -37,17 +37,28 @@ y su cierre. Lo que queda es de Benja, fuera de sesión.
 Los hashes exactos están en `git log --oneline origin/master..HEAD` del informe
 final de la sesión.
 
-## Para Benja, fuera de sesión (en este orden, antes de cualquier `git push`)
+## Hecho por Benja y en sesiones posteriores
 
-1. **Consulta de colisión.** `node scripts/consultar-fuentes.mjs` con las palabras
-   clave de la sección "Palabras clave" del doc de diseño (están completas ahí,
-   incluidas las de los dominios del cierre). Un dominio con SI se reemplaza entero,
-   nunca se ajusta.
-2. **Auditoría matemática** (hilo `/clear`, `.claude/agents/revisor-matematico.md`)
-   sobre los 4 archivos de contenido (3 lecciones + cierre), recalculando con
-   `node -e` sobre `lib/probabilidad.ts`.
-3. **Auditoría de originalidad** (hilo `/clear`) sobre los mismos 4.
-4. Recién ahí `git push`.
+1. **Consulta de colisión** (mecanismo 2, `node scripts/consultar-fuentes.mjs`,
+   corrida por Benja fuera de sesión el 2026-09-13, 10 tandas sobre los 25
+   dominios del módulo). Dio NO en 23 y SI en 2, investigados a fondo y
+   reemplazados enteros: 20 tarjetas de actividad de curso → pulseras de una
+   jornada deportiva escolar en `probabilidad-l2-item-1` (colisión con el ítem
+   64 de la forma 113 de 2026, commit `bb3b0fb`); rifa de 50 números → sorteo
+   de 48 casilleros en `probabilidad-l1-item-1` (colisión con el ítem 63 de la
+   forma 111 de 2024 y el ítem 65 de la forma 113 de 2024, commit `694ee2f`).
+2. **Ronda 1, auditoría matemática** (hilo `/clear`, 2026-09-13): los 4
+   archivos de contenido (3 lecciones + cierre), sin errores.
+3. **Arreglo de pista por forma** (commit `cfc1c38`): se homogeneizó el largo
+   de las alternativas en los ítems `argumentar` del módulo, para que la
+   correcta no se distinga de los distractores por su extensión.
+4. **Ronda 2, auditoría de originalidad** (hilo `/clear`, 2026-09-13): los
+   mismos 4 archivos, LIMPIO. Detalle y evidencia en
+   `proveniencia.declaracionOriginalidad` de cada archivo.
+
+## Para Benja, fuera de sesión
+
+1. `git push`.
 
 ## Discrepancias entre el brief y el repo, y qué se decidió
 
