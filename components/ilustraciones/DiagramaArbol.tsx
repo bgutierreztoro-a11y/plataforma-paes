@@ -17,6 +17,7 @@ import { LIENZO, Rotulo, TRAZO_ACENTO, TRAZO_INK } from "./graficosComunes";
  * └──────────────────────────────────────────────────────────────────────────┘
  */
 
+/** Margen izquierdo sin rótulo de raíz; con rótulo, la raíz se corre para dejarlo a su izquierda. */
 const IZQ = 18;
 const COLUMNA = 96;
 const ALTO_FILA = 26;
@@ -39,12 +40,12 @@ interface Nodo {
  * cada nodo interno se centra entre sus hijos. `resaltado` sube desde las
  * hojas de `resaltar` hasta la raíz por el camino que las produce.
  */
-function distribuir(ramas: readonly RamaArbolDatos[], resaltar: ReadonlySet<string>): { nodos: Nodo[]; hojas: number; yRaiz: number } {
+function distribuir(ramas: readonly RamaArbolDatos[], resaltar: ReadonlySet<string>, izq: number): { nodos: Nodo[]; hojas: number; yRaiz: number } {
   const nodos: Nodo[] = [];
   let fila = 0;
   const colocar = (rama: RamaArbolDatos, etapa: number, padre: Nodo | null): Nodo => {
     const hijos = rama.ramas ?? [];
-    const nodo: Nodo = { x: IZQ + COLUMNA * etapa, y: 0, rama, padre, resaltado: false, esHoja: hijos.length === 0 };
+    const nodo: Nodo = { x: izq + COLUMNA * etapa, y: 0, rama, padre, resaltado: false, esHoja: hijos.length === 0 };
     if (nodo.esHoja) {
       nodo.y = ARRIBA + ALTO_FILA * (fila + 0.5);
       fila += 1;
@@ -112,7 +113,9 @@ function describirCaminos(ramas: readonly RamaArbolDatos[], prefijo: string[] = 
 export function DiagramaArbol(datos: DatosDiagramaArbol) {
   const { etapas, ramas, raiz } = datos;
   const resaltar = new Set(datos.resaltar ?? []);
-  const { nodos, hojas, yRaiz } = distribuir(ramas, resaltar);
+  // Con rótulo de raíz, la raíz se corre a la derecha y el rótulo queda a su izquierda, en su misma línea.
+  const izq = raiz ? anchoDe(raiz) + 14 : IZQ;
+  const { nodos, hojas, yRaiz } = distribuir(ramas, resaltar, izq);
 
   const hojasNodos = nodos.filter((n) => n.esHoja);
   const anchoHoja = Math.max(
@@ -120,7 +123,7 @@ export function DiagramaArbol(datos: DatosDiagramaArbol) {
       (n) => anchoDe(n.rama.resultado) / 2 + (n.rama.probabilidadCamino ? 6 + anchoDe(`= ${n.rama.probabilidadCamino}`) : 0),
     ),
   );
-  const ancho = Math.max(LIENZO.ancho, IZQ + COLUMNA * etapas.length + anchoHoja + 6);
+  const ancho = Math.max(LIENZO.ancho, izq + COLUMNA * etapas.length + anchoHoja + 6);
   const alto = ARRIBA + ALTO_FILA * hojas + ABAJO;
 
   const caminos = describirCaminos(ramas);
@@ -129,14 +132,14 @@ export function DiagramaArbol(datos: DatosDiagramaArbol) {
   return (
     <svg viewBox={`0 0 ${ancho} ${alto}`} className="h-auto w-full" role="img" aria-label={etiqueta}>
       {etapas.map((nombre, k) => (
-        <Rotulo key={nombre} x={IZQ + COLUMNA * (k + 1)} y={10} tamano={9} suave>
+        <Rotulo key={nombre} x={izq + COLUMNA * (k + 1)} y={10} tamano={9} suave>
           {nombre}
         </Rotulo>
       ))}
 
       {/* Ramas primero, rótulos encima. */}
       {nodos.map((n, i) => {
-        const desde = n.padre ?? { x: IZQ, y: yRaiz };
+        const desde = n.padre ?? { x: izq, y: yRaiz };
         return (
           <line
             key={`r${i}`}
@@ -151,9 +154,9 @@ export function DiagramaArbol(datos: DatosDiagramaArbol) {
         );
       })}
 
-      <circle cx={IZQ} cy={yRaiz} r={3} fill={TRAZO_INK} />
+      <circle cx={izq} cy={yRaiz} r={3} fill={TRAZO_INK} />
       {raiz && (
-        <Rotulo x={IZQ} y={yRaiz - 11} tamano={9} suave>
+        <Rotulo x={izq - 7} y={yRaiz} anclaje="end" tamano={9} suave>
           {raiz}
         </Rotulo>
       )}
@@ -163,7 +166,7 @@ export function DiagramaArbol(datos: DatosDiagramaArbol) {
           que las de dos hermanas no se junten en el medio. Todas antes que los
           rótulos de los nodos, que van encima. */}
       {nodos.map((n, i) => {
-        const desde = n.padre ?? { x: IZQ, y: yRaiz };
+        const desde = n.padre ?? { x: izq, y: yRaiz };
         const xm = (desde.x + n.x) / 2;
         const ym = (desde.y + n.y) / 2;
         const yProb = ym + (n.y > desde.y ? 8 : -8);

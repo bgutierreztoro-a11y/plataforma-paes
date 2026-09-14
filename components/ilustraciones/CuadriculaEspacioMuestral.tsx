@@ -13,7 +13,8 @@ import { CUADRICULA, LIENZO, Rotulo, TRAMA_DIAGONAL, TRAZO_ACENTO, TRAZO_INK, Tr
  * escrito (los ejes, el texto de las celdas y el contador).
  */
 
-const IZQ = 46;
+/** Ancho estimado de un carácter a 9 px, mismo criterio que la leyenda de graficosComunes. */
+const PX_POR_CARACTER = 5.6;
 const ARRIBA = 32;
 const DER = 8;
 const CELDA_MAX = 42;
@@ -30,10 +31,12 @@ export function CuadriculaEspacioMuestral(datos: DatosCuadriculaEspacioMuestral)
   const { filas, columnas, rotuloFilas, rotuloColumnas, contador, rotuloEvento } = datos;
   const marcadas = datos.marcadas ?? [];
   const marcadasSet = new Set(marcadas.map(([f, c]) => `${f},${c}`));
-  const celda = Math.min(CELDA_MAX, (LIENZO.ancho - IZQ - DER) / columnas.length);
+  // El margen izquierdo se ajusta al rótulo de fila más largo (y al título del eje, si lo hay).
+  const anchoRotulosFila = Math.max(...filas.map((f) => f.length)) * PX_POR_CARACTER + 10;
+  const x0 = (rotuloFilas ? 16 : 4) + anchoRotulosFila;
+  const celda = Math.min(CELDA_MAX, (LIENZO.ancho - x0 - DER) / columnas.length);
   const anchoRejilla = celda * columnas.length;
   const altoRejilla = celda * filas.length;
-  const x0 = IZQ;
   const y0 = ARRIBA;
   const hayLeyenda = contador !== undefined || (marcadas.length > 0 && rotuloEvento !== undefined);
   const alto = y0 + altoRejilla + (hayLeyenda ? ZONA_CONTADOR : 8);
