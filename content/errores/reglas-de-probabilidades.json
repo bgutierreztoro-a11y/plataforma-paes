@@ -3,7 +3,7 @@
   "errores": [
     {
       "id": "reglas-de-probabilidades/divide-por-desfavorables",
-      "descripcion": "Calcular la probabilidad como casos favorables sobre casos desfavorables (posibles menos favorables) en vez de sobre el total de casos posibles: 12/38 en vez de 12/50 para 12 números ganadores de 50, 8/32 en vez de 8/40 para 8 cupones premiados de 40. La razón favorables : desfavorables no es una probabilidad."
+      "descripcion": "Calcular la probabilidad como casos favorables sobre casos desfavorables (posibles menos favorables) en vez de sobre el total de casos posibles: 12/36 en vez de 12/48 para 12 casilleros del segundo piso entre 48, 8/32 en vez de 8/40 para 8 cupones premiados de 40. La razón favorables : desfavorables no es una probabilidad."
     },
     {
       "id": "reglas-de-probabilidades/asume-equiprobables-sin-enumerar",
@@ -31,11 +31,11 @@
     },
     {
       "id": "reglas-de-probabilidades/cuenta-rango-restando-extremos",
-      "descripcion": "Contar los números de un tramo restando los extremos sin sumar uno: del 13 al 24 hay 24 − 13 = 11 en vez de 12; del 5 al 9 hay 9 − 5 = 4 en vez de 5."
+      "descripcion": "Contar los números de un tramo restando los extremos sin sumar uno: del 25 al 36 hay 36 − 25 = 11 en vez de 12; del 5 al 9 hay 9 − 5 = 4 en vez de 5."
     },
     {
       "id": "reglas-de-probabilidades/confunde-evento-con-su-complemento",
-      "descripcion": "Entregar P(A) donde se pide P(no A), o al revés: 1/5 para 'que el audífono funcione' cuando 5 de 25 fallan (es 4/5), 5/8 para 'punta arriba' cuando 150 de 400 cayeron así (es 3/8), 19/25 para 'que gane' cuando gana con 12 de los 50 números (es 6/25)."
+      "descripcion": "Entregar P(A) donde se pide P(no A), o al revés: 1/5 para 'que el audífono funcione' cuando 5 de 25 fallan (es 4/5), 5/8 para 'punta arriba' cuando 150 de 400 cayeron así (es 3/8), 3/4 para 'que le toque un casillero del segundo piso' cuando son 12 de los 48 (es 1/4)."
     },
     {
       "id": "reglas-de-probabilidades/suma-sin-restar-interseccion",

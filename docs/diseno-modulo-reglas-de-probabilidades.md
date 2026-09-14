@@ -107,18 +107,18 @@ Cierre: `cierre-reglas-de-probabilidades` (el mapa no declaraba cierre para el #
 
 ## Catálogo de errores (definitivo, `content/errores/reglas-de-probabilidades.json`, 23 ids)
 
-Caso base de L1: 12 papeles numerados; 12 números ganadores de 50 en una rifa (del 13 al 24); 8 cupones con premio de 40; semáforo en verde 26 de 40 días; tapa de bebida boca arriba 130 de 200. Caso base de L2: edificio de 30 departamentos (norte 16: 9 alto, 7 bajo; sur 14: 6 alto, 8 bajo; balcón 18: 11 norte, 7 sur); 24 pulseras de entrada (verde 7, azul 12, naranja 5); lluvia 0,6 y 0,5. Caso base de L3: banda de 9 (3 vientos, 6 percusión); 4 colores × 5 figuras; 10 cápsulas (4 adhesivo, 6 figura); 8 delegados (2 de primero medio).
+Caso base de L1: 12 papeles numerados; 12 casilleros del segundo piso (del 25 al 36) entre 48 sorteados; 8 cupones con premio de 40; semáforo en verde 26 de 40 días; tapa de bebida boca arriba 130 de 200. Caso base de L2: edificio de 30 departamentos (norte 16: 9 alto, 7 bajo; sur 14: 6 alto, 8 bajo; balcón 18: 11 norte, 7 sur); 24 pulseras de entrada (verde 7, azul 12, naranja 5); lluvia 0,6 y 0,5. Caso base de L3: banda de 9 (3 vientos, 6 percusión); 4 colores × 5 figuras; 10 cápsulas (4 adhesivo, 6 figura); 8 delegados (2 de primero medio).
 
 | id | Nace en | Mecanismo | Produce sobre el caso base |
 |---|---|---|---|
-| `divide-por-desfavorables` | L1 | Favorables sobre desfavorables (posibles − favorables) en vez de sobre los posibles. | 12/38 en vez de 12/50; 8/32 en vez de 8/40. |
+| `divide-por-desfavorables` | L1 | Favorables sobre desfavorables (posibles − favorables) en vez de sobre los posibles. | 12/36 en vez de 12/48; 8/32 en vez de 8/40. |
 | `asume-equiprobables-sin-enumerar` | L1 | Tratar como igualmente probables resultados que no lo son, sin enumerar los pares. | 1/3 para "1 punto" con dos monedas (es 1/2); 1/11 para suma 7 (es 1/6); 2/3 para "2 de 3 colores". |
 | `suma-resultados-en-vez-de-multiplicar-total` | L1 | Total de pares = suma de los resultados de cada experimento en vez del producto. | 6/12 para suma 7 (6 + 6 = 12 en vez de 36); 1/8 para "viernes y C" (5 + 3). |
 | `resta-conteo-a-uno-en-complemento` | L1 | P(no A) = 1 − conteo favorable en vez de 1 − P(A). | 1 − 4 = −3 para "no mayor que 8" (es 8/12). |
 | `lee-conteo-como-porcentaje` | L1 | El conteo favorable escrito como porcentaje. | 8 % para 8 de 40 (20 %); 26 % para 26 de 40 días (65 %). |
 | `usa-laplace-sin-equiprobabilidad` | L1 | 1/2 a cada uno de dos resultados solo porque son dos, en un objeto asimétrico. | 1/2 para la tapa (frecuencia 13/20); 1/2 para la chinche (3/8). |
 | `espera-frecuencia-igual-a-teorica` | L1 | Exigir que pocos ensayos calcen exactamente con la probabilidad y concluir que el objeto está cargado. | 13 verdes justos en 20 días; 100 boca arriba justas en 200. |
-| `cuenta-rango-restando-extremos` | L1 | Contar un tramo restando los extremos sin sumar uno. | 24 − 13 = 11 en vez de 12; 9 − 5 = 4 en vez de 5. |
+| `cuenta-rango-restando-extremos` | L1 | Contar un tramo restando los extremos sin sumar uno. | 36 − 25 = 11 en vez de 12; 9 − 5 = 4 en vez de 5. |
 | `confunde-evento-con-su-complemento` | L1 | Entregar P(A) donde se pide P(no A), o al revés. | 1/5 para "funciona" con 5 de 25 fallados (4/5); 5/8 para punta arriba (3/8). |
 | `suma-sin-restar-interseccion` | L2 | P(A) + P(B) para "A o B" con casos comunes, sin restarlos. | 31 de 30 departamentos; 0,6 + 0,5 = 1,1. |
 | `usa-producto-como-interseccion` | L2 | Restar P(A) · P(B) como "A y B", aunque los eventos sean excluyentes o dependan. | 253/576 para "verde o naranja" (es 1/2); 22/45 para "múltiplo de 3 o de 4" (es 1/2). |
@@ -145,11 +145,11 @@ Caso base de L1: 12 papeles numerados; 12 números ganadores de 50 en una rifa (
 
 ### L1, `probabilidad-posible-y-probable`
 
-Números reservados: papeles 1 a 12 (par 6, mayor que 8: 4, múltiplo de 4: 3, del 5 al 9: 5, 13: 0, hasta 12: 12); dos monedas (4 pares: 0 puntos 1, 1 punto 2, 2 puntos 1); dos dados (36 pares: suma 7 en 6, ambos pares 9, suma par 18); semáforo 26 verdes de 40 días (65 %), 3 de 4 días en la muestra chica; rifa de 50 números, del 13 al 24; 40 cupones, 8 con premio; tapa de bebida 130 boca arriba de 200.
+Números reservados: papeles 1 a 12 (par 6, mayor que 8: 4, múltiplo de 4: 3, del 5 al 9: 5, 13: 0, hasta 12: 12); dos monedas (4 pares: 0 puntos 1, 1 punto 2, 2 puntos 1); dos dados (36 pares: suma 7 en 6, ambos pares 9, suma par 18); semáforo 26 verdes de 40 días (65 %), 3 de 4 días en la muestra chica; 48 casilleros numerados, los del segundo piso del 25 al 36 (la rifa de 50 números original se reemplazó el 2026-09-13 por COLISIÓN de vestido con los ítems 63 de la forma 111 de 2024 y 65 de la forma 113 de 2024); 40 cupones, 8 con premio; tapa de bebida 130 boca arriba de 200.
 
 | ítem | habilidad | dificultad | qué pide | correcta | distractores (id) |
 |---|---|---|---|---|---|
-| `probabilidad-l1-item-1` | resolver | baja | rifa de 50 números, se tienen del 13 al 24: P(ganar) | 6/25 | 11/50 `cuenta-rango-restando-extremos`; 6/19 `divide-por-desfavorables`; 19/25 `confunde-evento-con-su-complemento` |
+| `probabilidad-l1-item-1` | resolver | baja | sorteo de 48 casilleros numerados, los del segundo piso del 25 al 36: P(segundo piso) | 1/4 | 11/48 `cuenta-rango-restando-extremos`; 1/3 `divide-por-desfavorables`; 3/4 `confunde-evento-con-su-complemento` |
 | `probabilidad-l1-item-2` | representar | media | 40 cupones, 8 con premio: P(premio) como porcentaje | 20 % | 8 % `lee-conteo-como-porcentaje`; 25 % `divide-por-desfavorables`; 80 % `confunde-evento-con-su-complemento` |
 | `probabilidad-l1-item-3` | argumentar | alta | tapa lanzada 200 veces, 130 boca arriba: qué afirmación está justificada | la mejor estimación es 13/20, porque la tapa no es simétrica | 1/2 por ser dos resultados `usa-laplace-sin-equiprobabilidad`; debieron salir 100 justas, la tapa está defectuosa `espera-frecuencia-igual-a-teorica`; 7/20 porque 70 cayeron boca abajo `confunde-evento-con-su-complemento` |
 
@@ -206,7 +206,7 @@ Verificación de valores, con `node -e` sobre `lib/probabilidad.ts` (`laplace`, 
 ## Palabras clave para `consultar-fuentes.mjs` (las corre Benja)
 
 ```
-node scripts/consultar-fuentes.mjs "fotografia" "curso de fotografia" "exposicion" "papel numerado" "papeles" "sorteo" "semaforo" "peatonal" "verde" "rifa" "numeros ganadores" "cupon" "cupones" "premio" "tapa" "tapa de bebida" "boca arriba" "edificio" "departamentos" "piso alto" "orientacion norte" "balcon" "inspeccion" "app" "pulsera de entrada" "pulseras" "jornada deportiva" "zona verde" "naranja" "serigrafia" "taller de serigrafia" "turno manana" "nivel avanzado" "lluvia" "llueve" "sabado" "domingo" "banda" "banda escolar" "vientos" "percusion" "ensayo" "sala" "acto" "cargadores" "cargador" "colores" "figuras" "estrella" "capsulas" "maquina de capsulas" "adhesivo" "delegados" "primero medio" "letras" "audifonos" "prestamo" "chinche" "punta arriba" "canciones" "instrumental" "en espanol" "bomberos" "voluntarios" "licencia de conducir" "compania" "supermercado" "cajas" "caja registradora" "scout" "patrulla" "recien llegados" "aviso" "recordatorio" "correo" "mensaje" "probabilidad" "arbol" "espacio muestral" "con reposicion" "sin reposicion" "al menos uno"
+node scripts/consultar-fuentes.mjs "fotografia" "curso de fotografia" "exposicion" "papel numerado" "papeles" "sorteo" "semaforo" "peatonal" "verde" "casillero" "casilleros numerados" "segundo piso" "pasillo" "cupon" "cupones" "premio" "tapa" "tapa de bebida" "boca arriba" "edificio" "departamentos" "piso alto" "orientacion norte" "balcon" "inspeccion" "app" "pulsera de entrada" "pulseras" "jornada deportiva" "zona verde" "naranja" "serigrafia" "taller de serigrafia" "turno manana" "nivel avanzado" "lluvia" "llueve" "sabado" "domingo" "banda" "banda escolar" "vientos" "percusion" "ensayo" "sala" "acto" "cargadores" "cargador" "colores" "figuras" "estrella" "capsulas" "maquina de capsulas" "adhesivo" "delegados" "primero medio" "letras" "audifonos" "prestamo" "chinche" "punta arriba" "canciones" "instrumental" "en espanol" "bomberos" "voluntarios" "licencia de conducir" "compania" "supermercado" "cajas" "caja registradora" "scout" "patrulla" "recien llegados" "aviso" "recordatorio" "correo" "mensaje" "probabilidad" "arbol" "espacio muestral" "con reposicion" "sin reposicion" "al menos uno"
 ```
 
 ## Estado de las firmas

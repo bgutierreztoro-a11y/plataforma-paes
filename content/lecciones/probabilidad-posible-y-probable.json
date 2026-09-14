@@ -21,9 +21,9 @@
   "_notasInternas": [
     "L1 del módulo reglas-de-probabilidades (módulo #16). moduloId = reglas-de-probabilidades. Descriptor DEMRE (docs/temario-demre-m1-2027.md:130): 'Problemas que involucren probabilidad de un evento en diversos contextos'. Diseño: docs/diseno-modulo-reglas-de-probabilidades.md.",
     "Catálogo canónico: content/errores/reglas-de-probabilidades.json. Ids que este archivo referencia: divide-por-desfavorables, asume-equiprobables-sin-enumerar, suma-resultados-en-vez-de-multiplicar-total, resta-conteo-a-uno-en-complemento, lee-conteo-como-porcentaje, usa-laplace-sin-equiprobabilidad, espera-frecuencia-igual-a-teorica, cuenta-rango-restando-extremos, confunde-evento-con-su-complemento (nacen acá) y olvida-camino-simetrico (nace en L3, se usa en el feedbackPorError de la práctica: contar 3 pares para suma 7).",
-    "Dominio: un curso de fotografía de 12 personas que sortea el orden de exposición con papeles numerados del 1 al 12; dos monedas con puntaje (descubrimiento, mecanismo canónico permitido en pasos de lección); dos dados (práctica, mismo permiso); un semáforo peatonal observado 40 días (frecuencial). Ítems: rifa de 50 números, 40 cupones de una app, tapa de bebida lanzada 200 veces. Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
-    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (laplace, complemento, probEvento, espacioProducto, espacioDadoDoble, frecuenciaRelativa, distintosEnValor): papeles 1 a 12: par 6/12 = 1/2 = 50 %; mayor que 8: 4 (9, 10, 11, 12); múltiplo de 4: 3/12 = 1/4; no mayor que 8: 8/12 = 2/3; del 5 al 9: 5/12; 13: 0; hasta 12: 1. Dos monedas: 4 pares, 1 punto en 2 (1/2), 0 y 2 puntos en 1 cada uno (1/4). Dos dados: 36 pares, suma 7 en 6 (1/6), ambos pares 9, suma par 18 (50 %). Semáforo: 26/40 = 13/20 = 65 %; 4 días con 3 en verde = 75 %; 65 % de 20 días = 13. Rifa: del 13 al 24 son 12 números, 12/50 = 6/25; 24 − 13 = 11 → 11/50; 12/38 = 6/19; complemento 38/50 = 19/25. Cupones: 8/40 = 20 %; 8 %; 8/32 = 25 %; 80 %. Tapa: 130/200 = 13/20; 70/200 = 7/20.",
-    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4; 50; 4; 2; 6; 9; 50; 65} y de fracción (1/4, 1/2 en el descubrimiento, 2/3, 1/6, 5/12, 6/25) y de texto (13/20 en el ítem 3); distractores numéricos {3; 100; 3; 18; 100; 26; 8; 20; 25; 80} y de fracción (1/3, 1/2 como 'múltiplo de 4 o no' en problema, 1/3 como 'tres totales' en descubrimiento, −3, 1/3, 1/2 en generalización, 1/11, 1/2 en práctica, 1/3, 7/12, 5/7 en consolidación, 11/50, 6/19, 19/25, 7/20 en ítems). La fracción 1/2 es respuesta correcta en el descubrimiento (exactamente 1 punto) y distractor en problema (múltiplo de 4 o no) y en generalización (1 − 4/8): son preguntas distintas con eventos distintos y el auditor no parsea fracciones; se deja registrado. Ningún valor numérico parseable se repite entre distractor y correcta.",
+    "Dominio: un curso de fotografía de 12 personas que sortea el orden de exposición con papeles numerados del 1 al 12; dos monedas con puntaje (descubrimiento, mecanismo canónico permitido en pasos de lección); dos dados (práctica, mismo permiso); un semáforo peatonal observado 40 días (frecuencial). Ítems: sorteo de 48 casilleros numerados de un colegio (reemplazo del 2026-09-13 de la rifa de 50 números: COLISIÓN de vestido con dos ítems DEMRE liberados de rifa de curso, ítem 63 de la forma 111 de 2024 e ítem 65 de la forma 113 de 2024), 40 cupones de una app, tapa de bebida lanzada 200 veces. Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (laplace, complemento, probEvento, espacioProducto, espacioDadoDoble, frecuenciaRelativa, distintosEnValor): papeles 1 a 12: par 6/12 = 1/2 = 50 %; mayor que 8: 4 (9, 10, 11, 12); múltiplo de 4: 3/12 = 1/4; no mayor que 8: 8/12 = 2/3; del 5 al 9: 5/12; 13: 0; hasta 12: 1. Dos monedas: 4 pares, 1 punto en 2 (1/2), 0 y 2 puntos en 1 cada uno (1/4). Dos dados: 36 pares, suma 7 en 6 (1/6), ambos pares 9, suma par 18 (50 %). Semáforo: 26/40 = 13/20 = 65 %; 4 días con 3 en verde = 75 %; 65 % de 20 días = 13. Casilleros: del 25 al 36 son 12, 12/48 = 1/4; 36 − 25 = 11 → 11/48; 12/36 = 1/3; complemento 36/48 = 3/4. Cupones: 8/40 = 20 %; 8 %; 8/32 = 25 %; 80 %. Tapa: 130/200 = 13/20; 70/200 = 7/20.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4; 50; 4; 2; 6; 9; 50; 65} y de fracción (1/4, 1/2 en el descubrimiento, 2/3, 1/6, 5/12, 1/4 en el ítem 1) y de texto (13/20 en el ítem 3); distractores numéricos {3; 100; 3; 18; 100; 26; 8; 20; 25; 80} y de fracción (1/3, 1/2 como 'múltiplo de 4 o no' en problema, 1/3 como 'tres totales' en descubrimiento, −3, 1/3, 1/2 en generalización, 1/11, 1/2 en práctica, 1/3, 7/12, 5/7 en consolidación, 11/48, 1/3, 3/4, 7/20 en ítems). La fracción 1/4 es correcta en problema (múltiplo de 4) y en el ítem 1 (casillero del segundo piso), nunca distractor; 3/4 es distractor en el ítem 1 y no es correcta en ningún bloque (el complemento de generalización es 2/3); 1/3 es distractor en problema, generalización, consolidación e ítem 1, siempre con mecanismo catalogado y nunca correcta. Registro para la auditoría: el distractor 25 % del ítem 2 (8/32, divide-por-desfavorables) vale lo mismo que 1/4, correcta en problema y en el ítem 1; son ítems distintos, formatos distintos (porcentaje frente a fracción) y preguntas distintas, y el auditor no los cruza porque no parsea fracciones. Se deja registrado y no se cambia en esta corrección. La fracción 1/2 es respuesta correcta en el descubrimiento (exactamente 1 punto) y distractor en problema (múltiplo de 4 o no) y en generalización (1 − 4/8): son preguntas distintas con eventos distintos y el auditor no parsea fracciones; se deja registrado. Ningún valor numérico parseable se repite entre distractor y correcta.",
     "Visuales: cuadrícula 2 × 2 de las dos monedas con la suma en cada celda (descubrimiento, primero sin marcas y después con las dos celdas de 1 punto marcadas, contador 2 de 4) y cuadrícula 6 × 6 de dos dados con la suma en cada celda y sin marcas (práctica). Ningún ítem lleva visual: la cuadrícula rotularía lo que se pide.",
     "Sin auditoria.constante: no hay una cifra única. Las palabras 'casos favorables', 'casos posibles' y 'espacio muestral' aparecen por primera vez en generalización, después de que el estudiante enumeró los cuatro pares de las monedas.",
     "P2: el paso consolidación nombra los caminos equivocados de asume-equiprobables-sin-enumerar, divide-por-desfavorables y resta-conteo-a-uno-en-complemento antes del correcto, y su bloque pregunta lleva cuenta-rango-restando-extremos, confunde-evento-con-su-complemento y divide-por-desfavorables en los distractores."
@@ -37,7 +37,7 @@
     "practica: dos dados, 36 pares; suma 7 en 6 pares (1/6); ambos pares en 9; suma par en 18 (50 %)",
     "aplicacion: semáforo peatonal, 26 días en verde de 40 (65 %); muestra chica de 4 días con 3 en verde (75 %); 65 % de 20 días = 13",
     "consolidacion: probabilidad de un papel del 5 al 9 entre 12, 5/12",
-    "itemsPAES: rifa de 50 números con los del 13 al 24 (12 números, 6/25); 40 cupones con 8 premiados (20 %); tapa de bebida, 130 boca arriba de 200 lanzamientos (13/20)"
+    "itemsPAES: sorteo de 48 casilleros numerados del 1 al 48, los del segundo piso del 25 al 36 (12 casilleros, 12/48 = 1/4); 40 cupones con 8 premiados (20 %); tapa de bebida, 130 boca arriba de 200 lanzamientos (13/20)"
   ],
   "pasos": [
     {
@@ -605,37 +605,37 @@
       "id": "probabilidad-l1-item-1",
       "habilidad": "resolver",
       "dificultad": "baja",
-      "enunciado": "En una rifa se vendieron los 50 números, del 1 al 50, y todos tienen la misma probabilidad de salir premiados. Una persona compró los números del 13 al 24, incluidos los dos. ¿Cuál es la probabilidad de que el número premiado sea uno de los suyos?",
+      "enunciado": "Un colegio sortea al azar entre sus estudiantes los 48 casilleros numerados del 1 al 48, todos con la misma probabilidad. Los casilleros del pasillo del segundo piso son los numerados del 25 al 36, incluidos los dos. ¿Cuál es la probabilidad de que a una persona le toque un casillero del segundo piso?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "11/50",
+          "texto": "11/48",
           "esCorrecta": false,
-          "feedback": "Del 13 al 24 no hay 11 números: 24 − 13 = 11 deja fuera uno de los extremos. Contando los dos, del 13 al 24 hay 12 números.",
+          "feedback": "Del 25 al 36 no hay 11 casilleros: 36 − 25 = 11 deja fuera uno de los extremos. Contando los dos, del 25 al 36 hay 12 casilleros.",
           "errorCatalogado": "cuenta-rango-restando-extremos"
         },
         {
           "clave": "B",
-          "texto": "6/25",
+          "texto": "1/4",
           "esCorrecta": true,
-          "feedback": "Correcto. Del 13 al 24 hay 12 números, y los casos posibles son los 50: 12/50 = 6/25."
+          "feedback": "Correcto. Del 25 al 36 hay 12 casilleros, y los casos posibles son los 48: 12/48 = 1/4."
         },
         {
           "clave": "C",
-          "texto": "6/19",
+          "texto": "1/3",
           "esCorrecta": false,
-          "feedback": "6/19 es 12/38: los 12 números de la persona comparados con los 38 que no compró. La probabilidad compara los favorables con TODOS los números de la rifa, que son 50.",
+          "feedback": "1/3 es 12/36: los 12 casilleros del segundo piso comparados con los 36 que no lo son. La probabilidad compara los favorables con TODOS los casilleros del sorteo, que son 48.",
           "errorCatalogado": "divide-por-desfavorables"
         },
         {
           "clave": "D",
-          "texto": "19/25",
+          "texto": "3/4",
           "esCorrecta": false,
-          "feedback": "19/25 es 38/50, la probabilidad de que el premiado sea uno de los 38 números que la persona NO tiene. Se pedía la de que gane: 12 de 50.",
+          "feedback": "3/4 es 36/48, la probabilidad de que le toque uno de los 36 casilleros que NO están en el segundo piso. Se pedía la de que sí le toque uno del segundo piso: 12 de 48.",
           "errorCatalogado": "confunde-evento-con-su-complemento"
         }
       ],
-      "solucion": "Casos posibles: los 50 números, todos igual de probables. Casos favorables: los que la persona compró, del 13 al 24 incluidos los dos: 13, 14, ..., 24, que son 24 − 13 + 1 = 12 números. P(gane) = 12/50 = 6/25. Comprobación: 6/25 = 0,24, entre 0 y 1, y el complemento 1 − 6/25 = 19/25 corresponde a los 38 números restantes (38/50 = 19/25). ✓"
+      "solucion": "Casos posibles: los 48 casilleros, todos igual de probables. Casos favorables: los del segundo piso, del 25 al 36 incluidos los dos: 25, 26, ..., 36, que son 36 − 25 + 1 = 12 casilleros. P(segundo piso) = 12/48 = 1/4. Comprobación: 1/4 = 0,25, entre 0 y 1, y el complemento 1 − 1/4 = 3/4 corresponde a los 36 casilleros restantes (36/48 = 3/4). De dónde sale cada distractor: 11/48 cuenta el tramo como 36 − 25 = 11 sin sumar uno; 1/3 es 12/36, favorables sobre desfavorables; 3/4 es el complemento entregado en vez del evento. ✓"
     },
     {
       "id": "probabilidad-l1-item-2",
@@ -714,7 +714,7 @@
     "fuentesAnalisis": [
       "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Reglas de las probabilidades: solo para calibrar alcance (probabilidad de un evento), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
     ],
-    "declaracionOriginalidad": "Enunciados, contextos (un curso de fotografía que sortea el orden de exposición con papeles numerados, un semáforo peatonal observado durante 40 días, una rifa de 50 números, los cupones de una app y una tapa de bebida lanzada 200 veces) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Las dos monedas con puntaje y los dos dados se usan solo en pasos de la lección como mecanismo canónico de enumeración, con la cuadrícula del espacio muestral construida para este módulo. Los números se eligieron para que cada distractor salga de un mecanismo del catálogo, para que ninguna alternativa repita el valor de otra ni el de una respuesta correcta del archivo, y para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/; todos se verificaron con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "declaracionOriginalidad": "Enunciados, contextos (un curso de fotografía que sortea el orden de exposición con papeles numerados, un semáforo peatonal observado durante 40 días, el sorteo de los casilleros numerados de un colegio, los cupones de una app y una tapa de bebida lanzada 200 veces) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Las dos monedas con puntaje y los dos dados se usan solo en pasos de la lección como mecanismo canónico de enumeración, con la cuadrícula del espacio muestral construida para este módulo. Los números se eligieron para que cada distractor salga de un mecanismo del catálogo, para que ninguna alternativa repita el valor de otra ni el de una respuesta correcta del archivo, y para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/; todos se verificaron con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
     "autor": "Benjamín Gutiérrez"
   }
 }
