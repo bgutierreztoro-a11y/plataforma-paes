@@ -1,0 +1,790 @@
+{
+  "tipo": "leccion",
+  "id": "probabilidad-antes-de-apostar",
+  "moduloId": "reglas-de-probabilidades",
+  "titulo": "Regla multiplicativa de probabilidades",
+  "objetivo": "Calcular la probabilidad de que ocurran dos etapas seguidas, «A y luego B»: multiplicando P(A) · P(B) cuando la primera no cambia a la segunda (independientes o con reposición), y multiplicando por lo que queda cuando sí la cambia (sin reposición); construir y leer un diagrama de árbol, combinar caminos («uno de cada») y resolver «al menos uno» con el complemento de «ninguno».",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Probabilidad como casos favorables sobre casos posibles, cuadrícula de pares y complemento (Lección 1 de este módulo)",
+    "Regla aditiva, «al menos uno» y «ninguno» como complementos (Lección 2 de este módulo)"
+  ],
+  "conceptos": [
+    "dos etapas independientes (o con reposición): P(A y luego B) = P(A) · P(B); la cuadrícula de pares lo confirma",
+    "sin reposición: en la segunda etapa el total baja en uno y los favorables de la clase extraída bajan en uno",
+    "diagrama de árbol: una columna por etapa, la probabilidad de cada rama escrita, la de un camino es el producto de sus ramas",
+    "las ramas que salen de un mismo nodo suman 1; todos los caminos suman 1",
+    "«uno de cada»: se suman los caminos que sirven (los dos órdenes)",
+    "«al menos uno» = 1 − P(ninguno), o la suma de todos los caminos menos el de «ninguno»"
+  ],
+  "_notasInternas": [
+    "L3 del módulo reglas-de-probabilidades (módulo #16). moduloId = reglas-de-probabilidades. Descriptor DEMRE (docs/temario-demre-m1-2027.md:131): 'Problemas que involucren la regla aditiva y multiplicativa de probabilidades en diversos contextos' (esta lección cubre la multiplicativa). Diseño: docs/diseno-modulo-reglas-de-probabilidades.md. Fuera de alcance, a propósito: no se nombra 'probabilidad condicional' ni se escribe P(A|B); lo sin reposición se trabaja solo como árbol donde el total y los favorables cambian de etapa a etapa.",
+    "Catálogo canónico: content/errores/reglas-de-probabilidades.json. Ids que este archivo referencia: suma-en-vez-de-multiplicar-etapas, multiplica-como-independientes-sin-reposicion, baja-total-pero-no-favorables, olvida-camino-simetrico, entrega-ninguno-en-vez-de-al-menos-uno, mantiene-denominador-sin-reposicion, usa-una-sola-etapa (nacen acá), suma-resultados-en-vez-de-multiplicar-total (nace en L1), omite-ambos-en-al-menos-uno y resta-a-uno-un-solo-evento (nacen en L2).",
+    "Dominio: una banda escolar de 9 integrantes (3 de vientos, 6 de percusión) cuya app sortea el día de ensayo (lunes a viernes) y la sala (A, B, C), y sortea dos integrantes para tocar en un acto, con y sin repetir persona; tres días de ensayo con la sección elegida al azar (práctica); una caja de 7 cargadores con 2 malos (consolidación). Ítems: app de 4 colores y 5 figuras, máquina de 10 cápsulas, 8 delegados. Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (multiplicar, sumar, ramasArbol, ramasDesdeComposicion, probSecuencia, complemento, distintosEnValor): día y sala: 5 · 3 = 15 pares, P(viernes y C) = 1/5 · 1/3 = 1/15; 1/5 + 1/3 = 8/15; 1/8 = 1/(5 + 3). Banda con reposición: VV 3/9 · 3/9 = 1/9, VP 2/9, PV 2/9, PP 4/9. Sin reposición: VV 3/9 · 2/8 = 6/72 = 1/12, VP 3/9 · 6/8 = 18/72 = 1/4, PV 6/9 · 3/8 = 18/72 = 1/4, PP 6/9 · 5/8 = 30/72 = 5/12; suman 72/72. Una de cada = 1/4 + 1/4 = 1/2; olvidar un orden = 1/4; con reposición 2/9 + 2/9 = 4/9. Errores sobre VV: 3/9 · 3/9 = 1/9; 3/9 · 3/8 = 1/8; 3/9 · 2/9 = 2/27. Al menos un vientos = 1 − 5/12 = 7/12 = 1/12 + 1/4 + 1/4; 1 − 3/9 = 2/3. Tres días: (1/2)³ = 1/8 = 0,125; al menos un día de percusión = 7/8; exactamente uno = 3/8; 1 − 1/2 = 1/2. Cargadores: 5/7 · 4/6 = 20/42 = 10/21; 5/7 · 5/7 = 25/49; 5/7 · 5/6 = 25/42; 5/7 · 4/7 = 20/49. Colores y figuras: 1/4 · 1/5 = 1/20; 1/4 + 1/5 = 9/20; 1/9; 1/4. Cápsulas: 6/10 · 5/9 = 1/3; 6/10 · 5/10 = 3/10; 6/10 · 6/10 = 9/25; 6/10 · 6/9 = 2/5. Delegados: 2/8 · 1/7 = 1/28; 2/8 · 2/8 = 1/16; 2/8 · 2/7 = 1/14; 2/8 · 1/8 = 1/32.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {8; 2; 4; 0,125} y de fracción (1/15, 1/12, 1/2, 7/8, 7/12, 10/21, 1/20) y de expresión (6/10 · 5/9) y de veredicto (ítem 3); distractores numéricos {9; 3; 1,5; 0,5} y de fracción (8/15, 1/8, 1/9, 2/27, 1/4, 4/9, 3/8, 1/2, 5/12, 2/3, 20/49, 25/49, 25/42, 1/9, 9/20). La fracción 1/2 es correcta en generalización (una de cada) y distractor en práctica (1 − 1/2 para 'al menos un día de percusión'); 1/4 es distractor en generalización (un solo orden) y aparece como probabilidad de camino rotulada en el árbol de aplicación; 1/8 es distractor en descubrimiento (3/9 · 3/8) y en práctica (P(ninguno)), donde además P(tres de vientos) = 1/8 es el valor que el campo pide como decimal (0,125). Son preguntas distintas y el auditor no parsea fracciones; se deja registrado. Ningún valor numérico parseable se repite entre distractor y correcta.",
+    "Visuales: cuadrícula 5 × 3 día por sala sin marcas (problema); dos árboles de dos etapas, con y sin reposición, sin probabilidad de camino (descubrimiento); árbol sin reposición con los caminos 'una de cada' resaltados y la probabilidad de cada camino escrita como fracción sobre 72 (generalización); árbol de tres etapas con dos ramas por nodo y sin probabilidad de camino (práctica); árbol sin reposición con las probabilidades de camino reducidas (aplicación). Ningún ítem lleva visual: el árbol rotularía las razones que el ítem pide escribir.",
+    "Sin auditoria.constante: no hay una cifra única. Las palabras 'independientes', 'con reposición' y 'sin reposición' se nombran en descubrimiento, después de que el estudiante contó que quedan 8 y no 9; la regla P(A y luego B) = P(A) · P(B) aparece en generalización, aunque el producto ya se comprobó en la cuadrícula del problema.",
+    "P2: el paso consolidación nombra los caminos equivocados de multiplica-como-independientes-sin-reposicion, suma-en-vez-de-multiplicar-etapas, baja-total-pero-no-favorables y olvida-camino-simetrico antes del correcto, y su bloque pregunta lleva mantiene-denominador-sin-reposicion, multiplica-como-independientes-sin-reposicion y baja-total-pero-no-favorables en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: banda escolar de 9 integrantes; la app elige día (lunes a viernes, 1/5) y sala (A, B, C, 1/3); predicción sobre cómo se combinan",
+    "problema: cuadrícula de 5 días por 3 salas, 15 pares; P(viernes y sala C) = 1/15",
+    "pensar/pistas: sorteo de 2 de 9 sin repetir; si la primera persona es de vientos, quedan 8 integrantes y 2 de vientos",
+    "descubrimiento: dos árboles de 3 vientos y 6 percusión; con reposición 3/9 y 6/9 en las dos etapas; sin reposición 2/8, 6/8, 3/8, 5/8 en la segunda; P(dos de vientos) sin reposición 3/9 · 2/8 = 1/12",
+    "generalizacion: caminos sin reposición 6/72, 18/72, 18/72, 30/72; 'uno de cada' 18/72 + 18/72 = 1/2",
+    "practica: tres días con sección al azar (1/2 cada día); P(tres de vientos) = 1/8 = 0,125; P(al menos un día de percusión) = 7/8",
+    "aplicacion: sorteo de 2 de 9 sin repetir; P(al menos uno de vientos) = 1 − 5/12 = 7/12",
+    "consolidacion: caja de 7 cargadores con 2 malos; P(dos buenos) = 5/7 · 4/6 = 10/21",
+    "itemsPAES: app con 4 colores y 5 figuras (1/20); máquina de 10 cápsulas, 4 con adhesivo y 6 con figura, dos compras (6/10 · 5/9); 8 delegados con 2 de primero medio, dos sorteados sin repetir (1/28)"
+  ],
+  "auditoria": {
+    "camposAdimensionales": {
+      "probabilidadTresVientos": "probabilidad escrita como decimal entre 0 y 1: adimensional"
+    }
+  },
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Día y sala",
+      "_notasInternas": [
+        "Sin regla: predicción sobre cómo combinar 1/5 y 1/3 para 'viernes y sala C'. Sumar (8/15) es la respuesta esperable y no se corrige acá: la corrige la cuadrícula del problema."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Una **banda escolar** de 9 integrantes usa una app para organizarse. Cada semana la app elige **al azar** el día del ensayo, de **lunes a viernes**, y también al azar la sala, entre la **A, la B y la C**. Las dos elecciones son independientes: el día no influye en la sala.\n\nLa probabilidad de que toque el viernes es 1/5, y la de que toque la sala C es 1/3."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "¿Cómo crees que se combinan 1/5 y 1/3 para saber la probabilidad de que el ensayo sea **el viernes y en la sala C**?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Se suman: 1/5 + 1/3",
+            "Se multiplican: 1/5 · 1/3",
+            "Queda 1/5, la más chica de las dos",
+            "No se puede saber sin más datos"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "En la lección anterior la palabra clave era «o». Ahora es **«y luego»**: que pase una cosa **y** después otra. Esta lección es sobre cómo se combinan esas probabilidades, y sobre lo que cambia cuando la primera etapa **le quita opciones** a la segunda."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Quince pares",
+      "_notasInternas": [
+        "Cuadrícula 5 × 3 sin marcas (las celdas van vacías porque los rótulos son largos; cada celda es un par día-sala). Seleccion: P(viernes y C) = 1/15; distractores 8/15 (suma-en-vez-de-multiplicar-etapas) y 1/8 = 1/(5 + 3) (suma-resultados-en-vez-de-multiplicar-total). VerdaderoFalso: 1/15 = 1/5 · 1/3."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Igual que con las dos monedas de la primera lección, se pueden enumerar todos los pares (día, sala) en una cuadrícula. Cada celda es un par, y todos los pares son igual de probables."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Cuadrícula de 5 filas (lunes a viernes) por 3 columnas (salas A, B y C): 15 celdas, una por cada par día y sala, ninguna marcada.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"],
+            "columnas": ["Sala A", "Sala B", "Sala C"],
+            "rotuloFilas": "Día",
+            "rotuloColumnas": "Sala"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la probabilidad de que el ensayo sea el viernes **y** en la sala C?",
+          "opciones": [
+            {
+              "id": "un-quinceavo",
+              "texto": "1/15",
+              "esCorrecta": true,
+              "feedback": "Correcto. Hay 5 · 3 = 15 pares y solo uno es (viernes, C). Fíjate que 1/15 = 1/5 · 1/3: la probabilidad del viernes por la de la sala C."
+            },
+            {
+              "id": "ocho-quinceavos",
+              "texto": "1/5 + 1/3 = 8/15",
+              "esCorrecta": false,
+              "feedback": "Sumar responde a «viernes o sala C»: 3 celdas del viernes más 5 celdas de la sala C, menos la común, 7 de 15. Acá se piden las dos cosas a la vez, y eso es una sola celda de las 15.",
+              "errorCatalogado": "suma-en-vez-de-multiplicar-etapas"
+            },
+            {
+              "id": "un-octavo",
+              "texto": "1/8",
+              "esCorrecta": false,
+              "feedback": "8 es 5 + 3, pero los pares no se suman: cada día se combina con cada sala, 5 · 3 = 15 celdas. Cuéntalas en la cuadrícula.",
+              "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "La probabilidad de «viernes y sala C» es el producto de la probabilidad del viernes por la de la sala C: 1/5 · 1/3.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. De las 15 celdas, la fila del viernes tiene 3 (1/5 del total) y, dentro de esa fila, la sala C es 1 de 3. Un quinto de un tercio: 1/5 · 1/3 = 1/15.",
+          "feedbackFalso": "Cuenta en la cuadrícula: la fila del viernes es 1/5 de las celdas, y dentro de ella la sala C es 1/3. Un tercio de un quinto es 1/15, y eso es multiplicar."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Dos sorteados, sin repetir",
+      "_notasInternas": [
+        "Numerica: sorteo de 2 de 9 sin repetir; si el primero es de vientos, quedan 8 integrantes (feedbackPorError 9, mantiene-denominador-sin-reposicion) y 2 de vientos (feedbackPorError 3, baja-total-pero-no-favorables). Los dos campos llevan unidad."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Para un acto, la app sortea **dos integrantes** de la banda para tocar un solo, uno después del otro y **sin repetir** persona. De los 9, **3 son de vientos** y **6 de percusión**. Supón que la primera persona sorteada es de vientos.",
+          "campos": [
+            {
+              "id": "quedanParaSegundoSorteo",
+              "etiqueta": "¿Entre cuántos integrantes se hace el segundo sorteo?",
+              "respuestaCorrecta": 8,
+              "unidad": "integrantes"
+            },
+            {
+              "id": "vientosQueQuedan",
+              "etiqueta": "¿Cuántos de ellos son de vientos?",
+              "respuestaCorrecta": 2,
+              "unidad": "integrantes"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "quedanParaSegundoSorteo",
+              "valorObtenido": 9,
+              "mensaje": "La primera persona ya salió sorteada y no vuelve a entrar: para el segundo sorteo quedan los 9 menos esa persona.",
+              "errorCatalogado": "mantiene-denominador-sin-reposicion"
+            },
+            {
+              "campoId": "vientosQueQuedan",
+              "valorObtenido": 3,
+              "mensaje": "La persona que salió primero era de vientos, así que los de vientos también bajaron: eran 3 y queda uno menos.",
+              "errorCatalogado": "baja-total-pero-no-favorables"
+            }
+          ],
+          "feedbackPorDefecto": "Piensa en la fila de 9 personas. Sale una de vientos y se va. ¿Cuántas quedan en la fila? ¿Cuántas de las que quedan son de vientos?"
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para el segundo sorteo",
+      "_notasInternas": [
+        "Mismos dos campos del paso 3. El nivel 3 nombra las dos bajas sin dar los números finales."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "«Sin repetir» significa que la persona que ya salió no participa del segundo sorteo. El grupo del segundo sorteo es más chico que el del primero."
+            },
+            {
+              "nivel": 2,
+              "texto": "Si la que salió es de vientos, no solo baja el total del grupo: también baja la cantidad de personas de vientos que quedan."
+            },
+            {
+              "nivel": 3,
+              "texto": "Total: los 9 menos la que ya salió. Vientos: los 3 menos la que ya salió, porque era de vientos. Las dos cantidades bajan en uno."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "El mismo sorteo, dos árboles",
+      "_notasInternas": [
+        "Descubrimiento del módulo: el sorteo con reposición (la app puede repetir persona) y sin reposición, con los dos árboles a la vista y sin probabilidades de camino. Ramas con reposición: 3/9 y 6/9 en las dos etapas. Sin reposición: tras vientos, 2/8 y 6/8; tras percusión, 3/8 y 5/8 (hermanas suman 1, verificado por el validador). Numerica: cada árbol tiene 4 caminos. Seleccion: P(dos de vientos) sin reposición = 3/9 · 2/8 = 6/72 = 1/12; distractores 1/9 (multiplica-como-independientes-sin-reposicion), 1/8 = 3/9 · 3/8 (baja-total-pero-no-favorables), 2/27 = 3/9 · 2/9 (mantiene-denominador-sin-reposicion). VerdaderoFalso: con reposición la segunda etapa repite la primera."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Compara dos versiones del sorteo. En la primera, la app **puede repetir** a la misma persona (sortea el solo del lunes y el del martes, y podría salir la misma): eso se llama **con reposición**. En la segunda, la persona que salió **no vuelve a entrar**: **sin reposición**.\n\nCada dibujo es un **diagrama de árbol**: una columna por etapa, y en cada rama está escrita la probabilidad de esa rama."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Árbol de dos etapas con reposición: en la primera etapa, vientos con 3/9 y percusión con 6/9; en la segunda etapa, desde cualquiera de las dos, otra vez vientos con 3/9 y percusión con 6/9. Cuatro caminos, sin probabilidad de camino escrita.",
+          "datos": {
+            "tipo": "diagramaArbol",
+            "raiz": "Con reposición",
+            "etapas": ["Primer sorteo", "Segundo"],
+            "ramas": [
+              {
+                "resultado": "Vientos",
+                "probabilidad": "3/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "3/9" },
+                  { "resultado": "Percusión", "probabilidad": "6/9" }
+                ]
+              },
+              {
+                "resultado": "Percusión",
+                "probabilidad": "6/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "3/9" },
+                  { "resultado": "Percusión", "probabilidad": "6/9" }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Árbol de dos etapas sin reposición: en la primera etapa, vientos con 3/9 y percusión con 6/9; en la segunda, después de vientos quedan 2/8 de vientos y 6/8 de percusión, y después de percusión quedan 3/8 de vientos y 5/8 de percusión. Cuatro caminos, sin probabilidad de camino escrita.",
+          "datos": {
+            "tipo": "diagramaArbol",
+            "raiz": "Sin reposición",
+            "etapas": ["Primer sorteo", "Segundo"],
+            "ramas": [
+              {
+                "resultado": "Vientos",
+                "probabilidad": "3/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "2/8" },
+                  { "resultado": "Percusión", "probabilidad": "6/8" }
+                ]
+              },
+              {
+                "resultado": "Percusión",
+                "probabilidad": "6/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "3/8" },
+                  { "resultado": "Percusión", "probabilidad": "5/8" }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Mira los dos árboles de izquierda a derecha.",
+          "campos": [
+            {
+              "id": "caminosDelArbol",
+              "etiqueta": "¿Cuántos caminos completos (de la raíz a la última columna) tiene cada árbol?",
+              "respuestaCorrecta": 4,
+              "unidad": "caminos"
+            }
+          ],
+          "feedbackPorDefecto": "Un camino es una secuencia de ramas desde el punto de la izquierda hasta un resultado de la última columna. Cuenta los resultados de la última columna: cada uno es el final de un camino."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "En el sorteo **sin reposición**, ¿cuál es la probabilidad de que los dos sorteados sean de vientos?",
+          "opciones": [
+            {
+              "id": "un-doceavo",
+              "texto": "3/9 · 2/8 = 6/72 = 1/12",
+              "esCorrecta": true,
+              "feedback": "Correcto. Se sigue el camino vientos y luego vientos y se multiplican sus ramas: 3/9 en la primera etapa y 2/8 en la segunda, porque quedan 8 personas y 2 de vientos."
+            },
+            {
+              "id": "un-noveno",
+              "texto": "3/9 · 3/9 = 1/9",
+              "esCorrecta": false,
+              "feedback": "Ese es el camino del árbol CON reposición. Sin reposición, la segunda rama de vientos dice 2/8: ya salió una persona de vientos y el grupo bajó a 8.",
+              "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+            },
+            {
+              "id": "un-octavo",
+              "texto": "3/9 · 3/8 = 1/8",
+              "esCorrecta": false,
+              "feedback": "El 8 está bien, pero el 3 no: la persona que salió primero era de vientos, así que quedan 2 de vientos, no 3. Lee la rama del árbol sin reposición.",
+              "errorCatalogado": "baja-total-pero-no-favorables"
+            },
+            {
+              "id": "dos-veintisieteavos",
+              "texto": "3/9 · 2/9 = 2/27",
+              "esCorrecta": false,
+              "feedback": "El 2 está bien, pero el 9 no: en el segundo sorteo ya no participan 9 personas, sino 8. El árbol sin reposición lo muestra en cada rama de la segunda columna.",
+              "errorCatalogado": "mantiene-denominador-sin-reposicion"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Con reposición, las ramas de la segunda etapa son iguales a las de la primera, porque el grupo no cambia.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Con reposición, cada sorteo se hace sobre las mismas 9 personas: 3/9 y 6/9 en las dos etapas. Sin reposición, la segunda etapa depende de lo que salió primero: 8 en el denominador, y un vientos menos o un percusión menos.",
+          "feedbackFalso": "Mira el primer árbol: las ramas de la segunda columna dicen 3/9 y 6/9, las mismas de la primera. Con reposición nada cambia entre un sorteo y el otro."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Eso es el descubrimiento de la lección: **sin reposición, la segunda etapa se escribe con lo que queda**. El denominador baja de 9 a 8, y la cantidad de la sección que ya salió baja en uno. Cuando las etapas no se afectan (con reposición, o dos experimentos distintos como el día y la sala), se dice que son **independientes**."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Multiplicar por lo que queda",
+      "_notasInternas": [
+        "Regla multiplicativa en las dos versiones; propiedades del árbol (hermanas suman 1, caminos suman 1). Árbol sin reposición con probabilidad de camino sobre 72 y los caminos 'una de cada' resaltados: 6/72, 18/72, 18/72, 30/72. Seleccion: P(uno de vientos y uno de percusión) = 18/72 + 18/72 = 1/2; distractores 1/4 (olvida-camino-simetrico) y 4/9 = 2/9 + 2/9 (multiplica-como-independientes-sin-reposicion). Texto final sobre 'al menos uno' como complemento de 'ninguno'."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La regla, en sus dos versiones.\n\n- Si la primera etapa **no cambia** a la segunda (etapas **independientes**, o sorteo **con reposición**):\n\n**P(A y luego B) = P(A) · P(B)**\n\n- Si la primera etapa **sí cambia** a la segunda (sorteo **sin reposición**), se multiplica igual, pero la segunda probabilidad se escribe **con lo que queda**: el total baja en uno, y los favorables de la clase que salió bajan en uno.\n\nEn un árbol:\n- las ramas que salen de un mismo punto **suman 1** (3/9 + 6/9, 2/8 + 6/8);\n- la probabilidad de un **camino** es el **producto** de sus ramas;\n- todos los caminos juntos **suman 1**.\n\nCuando el evento se cumple por **varios caminos**, se **suman** esos caminos. Por ejemplo, «uno de vientos y uno de percusión» se cumple en dos órdenes: vientos y luego percusión, o percusión y luego vientos."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Árbol de dos etapas sin reposición con la probabilidad de cada camino escrita sobre 72: vientos y vientos 6/72, vientos y percusión 18/72, percusión y vientos 18/72, percusión y percusión 30/72. Los dos caminos con uno de cada sección van resaltados.",
+          "datos": {
+            "tipo": "diagramaArbol",
+            "raiz": "Sin reposición",
+            "etapas": ["Primer sorteo", "Segundo"],
+            "ramas": [
+              {
+                "resultado": "Vientos",
+                "probabilidad": "3/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "2/8", "id": "vientos-vientos", "probabilidadCamino": "6/72" },
+                  { "resultado": "Percusión", "probabilidad": "6/8", "id": "vientos-percusion", "probabilidadCamino": "18/72" }
+                ]
+              },
+              {
+                "resultado": "Percusión",
+                "probabilidad": "6/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "3/8", "id": "percusion-vientos", "probabilidadCamino": "18/72" },
+                  { "resultado": "Percusión", "probabilidad": "5/8", "id": "percusion-percusion", "probabilidadCamino": "30/72" }
+                ]
+              }
+            ],
+            "resaltar": ["vientos-percusion", "percusion-vientos"]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Sin reposición, ¿cuál es la probabilidad de que salga **uno de vientos y uno de percusión**, en cualquier orden?",
+          "opciones": [
+            {
+              "id": "un-cuarto",
+              "texto": "3/9 · 6/8 = 18/72 = 1/4",
+              "esCorrecta": false,
+              "feedback": "Ese es solo el camino vientos y luego percusión. El evento también se cumple con percusión y luego vientos, que es otro camino resaltado del árbol: hay que sumar los dos.",
+              "errorCatalogado": "olvida-camino-simetrico"
+            },
+            {
+              "id": "cuatro-novenos",
+              "texto": "3/9 · 6/9 + 6/9 · 3/9 = 4/9",
+              "esCorrecta": false,
+              "feedback": "Esos son los dos caminos, pero con las ramas de la segunda etapa sin cambiar (6/9 y 3/9). Sin reposición, la segunda etapa se escribe con 8 en el denominador: 6/8 y 3/8.",
+              "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+            },
+            {
+              "id": "un-medio",
+              "texto": "18/72 + 18/72 = 36/72 = 1/2",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los dos caminos resaltados valen 18/72 cada uno y se suman: 36/72 = 1/2. Comprobación: los cuatro caminos suman 6 + 18 + 18 + 30 = 72, o sea 1."
+            }
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Una última herramienta. **«Al menos uno»** se puede calcular de dos formas: sumando todos los caminos que sirven, o con el **complemento**: 1 − P(ninguno). Casi siempre «ninguno» es un solo camino, y por eso el complemento es más corto."
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tres días seguidos",
+      "_notasInternas": [
+        "Tres etapas independientes con dos ramas de 1/2 por nodo (único árbol de tres etapas del módulo). Numerica: P(tres días de vientos) = (1/2)³ = 1/8 = 0,125 (campo adimensional declarado; feedbackPorError 1,5 = 1/2 + 1/2 + 1/2, suma-en-vez-de-multiplicar-etapas; 0,5 = la de un solo día, usa-una-sola-etapa). Seleccion: P(al menos un día de percusión) = 1 − 1/8 = 7/8; distractores 1/8 (entrega-ninguno-en-vez-de-al-menos-uno), 3/8 = exactamente un día (omite-ambos-en-al-menos-uno), 1/2 = 1 − 1/2 (resta-a-uno-un-solo-evento). Opciones en orden creciente."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Durante tres días seguidos, la app elige al azar qué sección ensaya: **vientos o percusión**, con la misma probabilidad cada día, y sin que un día influya en el siguiente. El árbol tiene tres etapas."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Árbol de tres etapas (lunes, martes, miércoles) con dos ramas por nodo, vientos y percusión, cada una con probabilidad 1/2; ocho caminos, sin probabilidad de camino escrita.",
+          "datos": {
+            "tipo": "diagramaArbol",
+            "etapas": ["Lunes", "Martes", "Miércoles"],
+            "ramas": [
+              {
+                "resultado": "Vientos",
+                "probabilidad": "1/2",
+                "ramas": [
+                  {
+                    "resultado": "Vientos",
+                    "probabilidad": "1/2",
+                    "ramas": [
+                      { "resultado": "Vientos", "probabilidad": "1/2" },
+                      { "resultado": "Percusión", "probabilidad": "1/2" }
+                    ]
+                  },
+                  {
+                    "resultado": "Percusión",
+                    "probabilidad": "1/2",
+                    "ramas": [
+                      { "resultado": "Vientos", "probabilidad": "1/2" },
+                      { "resultado": "Percusión", "probabilidad": "1/2" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "resultado": "Percusión",
+                "probabilidad": "1/2",
+                "ramas": [
+                  {
+                    "resultado": "Vientos",
+                    "probabilidad": "1/2",
+                    "ramas": [
+                      { "resultado": "Vientos", "probabilidad": "1/2" },
+                      { "resultado": "Percusión", "probabilidad": "1/2" }
+                    ]
+                  },
+                  {
+                    "resultado": "Percusión",
+                    "probabilidad": "1/2",
+                    "ramas": [
+                      { "resultado": "Vientos", "probabilidad": "1/2" },
+                      { "resultado": "Percusión", "probabilidad": "1/2" }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Sigue el camino de arriba del árbol.",
+          "campos": [
+            {
+              "id": "probabilidadTresVientos",
+              "etiqueta": "¿Cuál es la probabilidad de que los tres días ensaye vientos? Escríbela como decimal",
+              "respuestaCorrecta": 0.125
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "probabilidadTresVientos",
+              "valorObtenido": 1.5,
+              "mensaje": "1,5 es 1/2 + 1/2 + 1/2, y una probabilidad no puede pasar de 1. Las tres etapas tienen que ocurrir, y eso se multiplica, no se suma.",
+              "errorCatalogado": "suma-en-vez-de-multiplicar-etapas"
+            },
+            {
+              "campoId": "probabilidadTresVientos",
+              "valorObtenido": 0.5,
+              "mensaje": "0,5 es la probabilidad de que UN día ensaye vientos. Para que sean los tres días hay que multiplicar las tres ramas del camino.",
+              "errorCatalogado": "usa-una-sola-etapa"
+            }
+          ],
+          "feedbackPorDefecto": "El camino vientos, vientos, vientos tiene tres ramas de 1/2. Multiplícalas: 1/2 · 1/2 · 1/2, y escribe esa fracción como decimal."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la probabilidad de que **al menos un día** ensaye percusión?",
+          "opciones": [
+            {
+              "id": "un-octavo",
+              "texto": "1/8",
+              "esCorrecta": false,
+              "feedback": "1/8 es la probabilidad de que NINGÚN día ensaye percusión (los tres de vientos). «Al menos uno» es lo contrario: 1 − 1/8.",
+              "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno"
+            },
+            {
+              "id": "tres-octavos",
+              "texto": "3/8",
+              "esCorrecta": false,
+              "feedback": "3/8 son los tres caminos con EXACTAMENTE un día de percusión. «Al menos uno» también incluye dos días y tres días de percusión: son 7 caminos de 8.",
+              "errorCatalogado": "omite-ambos-en-al-menos-uno"
+            },
+            {
+              "id": "un-medio",
+              "texto": "1/2",
+              "esCorrecta": false,
+              "feedback": "1 − 1/2 descuenta solo un día. «Ninguno» son tres días seguidos de vientos, 1/8, y el complemento se toma sobre eso: 1 − 1/8.",
+              "errorCatalogado": "resta-a-uno-un-solo-evento"
+            },
+            {
+              "id": "siete-octavos",
+              "texto": "7/8",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Ninguno» es el único camino con vientos los tres días, 1/8. Entonces P(al menos un día de percusión) = 1 − 1/8 = 7/8. Comprobación: son 7 de los 8 caminos, todos de 1/8."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Al menos uno de vientos",
+      "_notasInternas": [
+        "Árbol sin reposición con las probabilidades de camino reducidas: 1/12, 1/4, 1/4, 5/12. Seleccion: P(al menos uno de vientos) = 1 − 5/12 = 7/12 (= 1/12 + 1/4 + 1/4); distractores 5/12 (entrega-ninguno-en-vez-de-al-menos-uno), 1/2 = 1/4 + 1/4 (omite-ambos-en-al-menos-uno: deja fuera el camino vientos-vientos), 2/3 = 1 − 3/9 (resta-a-uno-un-solo-evento). Opciones en orden creciente. VerdaderoFalso: 7/12 + 5/12 = 1."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "De vuelta al acto: la app sortea **dos integrantes sin repetir** entre los 3 de vientos y los 6 de percusión. Esta vez el árbol trae la probabilidad de cada camino, ya simplificada."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "diagrama",
+          "descripcion": "Árbol de dos etapas sin reposición con la probabilidad de cada camino simplificada: vientos y vientos 1/12, vientos y percusión 1/4, percusión y vientos 1/4, percusión y percusión 5/12.",
+          "datos": {
+            "tipo": "diagramaArbol",
+            "raiz": "Sin reposición",
+            "etapas": ["Primer sorteo", "Segundo"],
+            "ramas": [
+              {
+                "resultado": "Vientos",
+                "probabilidad": "3/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "2/8", "id": "vientos-vientos", "probabilidadCamino": "1/12" },
+                  { "resultado": "Percusión", "probabilidad": "6/8", "id": "vientos-percusion", "probabilidadCamino": "1/4" }
+                ]
+              },
+              {
+                "resultado": "Percusión",
+                "probabilidad": "6/9",
+                "ramas": [
+                  { "resultado": "Vientos", "probabilidad": "3/8", "id": "percusion-vientos", "probabilidadCamino": "1/4" },
+                  { "resultado": "Percusión", "probabilidad": "5/8", "id": "percusion-percusion", "probabilidadCamino": "5/12" }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la probabilidad de que **al menos uno** de los dos sorteados sea de vientos?",
+          "opciones": [
+            {
+              "id": "cinco-doceavos",
+              "texto": "5/12",
+              "esCorrecta": false,
+              "feedback": "5/12 es el camino percusión y percusión: NINGÚN vientos. «Al menos uno» es lo contrario, 1 − 5/12.",
+              "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno"
+            },
+            {
+              "id": "un-medio",
+              "texto": "1/2",
+              "esCorrecta": false,
+              "feedback": "1/4 + 1/4 son los dos caminos con exactamente uno de vientos. El camino vientos y vientos también tiene «al menos uno»: hay que sumar 1/12.",
+              "errorCatalogado": "omite-ambos-en-al-menos-uno"
+            },
+            {
+              "id": "siete-doceavos",
+              "texto": "7/12",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Ninguno de vientos» es un solo camino, 5/12, y 1 − 5/12 = 7/12. Por el otro lado: 1/12 + 1/4 + 1/4 = 1/12 + 3/12 + 3/12 = 7/12."
+            },
+            {
+              "id": "dos-tercios",
+              "texto": "2/3",
+              "esCorrecta": false,
+              "feedback": "1 − 3/9 descuenta solo el primer sorteo. «Ninguno» son DOS sorteos seguidos de percusión, 6/9 · 5/8 = 5/12, y el complemento se toma sobre ese camino.",
+              "errorCatalogado": "resta-a-uno-un-solo-evento"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "P(al menos uno de vientos) + P(ninguno de vientos) = 1.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. 7/12 + 5/12 = 12/12. Los cuatro caminos del árbol suman 1, y «ninguno» es un camino, así que «al menos uno» son los otros tres.",
+          "feedbackFalso": "Suma los caminos: 1/12 + 1/4 + 1/4 + 5/12 = 1. «Al menos uno» son tres caminos (7/12) y «ninguno» es el cuarto (5/12): juntos completan el 1."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Con lo que queda",
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Explica con tus palabras cómo decides, antes de escribir la segunda rama de un árbol, si va con el mismo denominador que la primera o con uno más chico.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Me pregunto si lo que salió en la primera etapa sigue estando disponible en la segunda. Si la app puede repetir a la persona, o si son dos experimentos distintos como el día y la sala, el grupo no cambia y la segunda rama se escribe igual. Si la persona que salió ya no participa, el grupo tiene uno menos y también hay uno menos de su sección: la segunda rama se escribe con lo que queda.",
+          "notaDiseno": "Busca que el estudiante verbalice la pregunta '¿la primera etapa le quita opciones a la segunda?' como el criterio para elegir entre las dos versiones de la regla."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Con esta lección se cierra el módulo: contar resultados igual de probables, combinar con «o» y combinar con «y luego». Las tres cosas se mezclan en el cierre, y en la mayoría de los problemas la parte difícil no es multiplicar, sino decidir **qué camino** describe el problema."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de multiplica-como-independientes-sin-reposicion, suma-en-vez-de-multiplicar-etapas, baja-total-pero-no-favorables y olvida-camino-simetrico, seguido de un bloque pregunta: caja de 7 cargadores con 2 malos, se prueban dos sin devolver; P(los dos buenos) = 5/7 · 4/6 = 20/42 = 10/21; distractores 20/49 = 5/7 · 4/7 (mantiene-denominador-sin-reposicion), 25/49 = 5/7 · 5/7 (multiplica-como-independientes-sin-reposicion), 25/42 = 5/7 · 5/6 (baja-total-pero-no-favorables). Orden creciente 20/49 < 10/21 < 25/49 < 25/42. Verificado con node -e (distintosEnValor true)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **«Y luego» se multiplica.** Independientes o con reposición: P(A y luego B) = P(A) · P(B).\n- **Sin reposición, la segunda etapa se escribe con lo que queda:** el total baja en uno, y la clase que salió baja en uno.\n- En el **árbol**, las ramas de un mismo punto suman 1, un camino es el producto de sus ramas, y los caminos que sirven se **suman**.\n- **«Al menos uno»** = 1 − P(ninguno).\n\nAntes de los ítems, cuatro caminos equivocados que conviene tener nombrados.\n\nMucha gente **multiplica dos veces la misma razón** aunque el primer sorteo saque a alguien del grupo. Falla porque en la segunda etapa quedan 8 y no 9, y de la sección que salió queda uno menos. Lo que funciona es **escribir la segunda etapa con lo que queda**.\n\nMucha gente **suma las etapas** en vez de multiplicarlas. Falla porque sumar responde a «una cosa o la otra», y hasta puede pasar de 1. Lo que funciona es **multiplicar cuando tienen que pasar las dos**.\n\nMucha gente **baja el total pero no los favorables**: 3/9 · 3/8. Falla porque la persona que salió era de vientos, y los de vientos también son uno menos. Lo que funciona es **bajar las dos cantidades**.\n\nMucha gente cuenta **un solo camino** para «uno de cada». Falla porque el evento se cumple en dos órdenes distintos, y el árbol los muestra como dos caminos. Lo que funciona es **sumar todos los caminos que sirven**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "En una caja hay 7 cargadores de celular iguales por fuera; 5 funcionan y 2 no. Se saca uno al azar, se prueba, se deja fuera de la caja, y se saca un segundo al azar. ¿Cuál es la probabilidad de que los dos funcionen?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "20/49",
+              "esCorrecta": false,
+              "feedback": "20/49 es 5/7 · 4/7: se bajó a 4 los que funcionan, pero el total se dejó en 7. El primer cargador quedó fuera de la caja, así que el segundo se saca entre 6.",
+              "errorCatalogado": "mantiene-denominador-sin-reposicion"
+            },
+            {
+              "clave": "B",
+              "texto": "10/21",
+              "esCorrecta": true,
+              "feedback": "Correcto. Primer cargador bueno: 5/7. Quedan 6 en la caja y 4 buenos: segundo bueno, 4/6. Producto: 5/7 · 4/6 = 20/42 = 10/21."
+            },
+            {
+              "clave": "C",
+              "texto": "25/49",
+              "esCorrecta": false,
+              "feedback": "25/49 es 5/7 · 5/7, como si el primer cargador volviera a la caja. No vuelve: en la segunda sacada quedan 6 cargadores y 4 buenos.",
+              "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+            },
+            {
+              "clave": "D",
+              "texto": "25/42",
+              "esCorrecta": false,
+              "feedback": "25/42 es 5/7 · 5/6: el total bajó a 6, pero los que funcionan siguen en 5. El primero que salió funcionaba, así que quedan 4 buenos entre los 6.",
+              "errorCatalogado": "baja-total-pero-no-favorables"
+            }
+          ],
+          "notaVerificacionMatematica": "probSecuencia({buenos: 5, malos: 2}, [buenos, buenos], sin reposición) = 5/7 · 4/6 = 20/42 = 10/21. Distractores: 5/7 · 4/7 = 20/49; 5/7 · 5/7 = 25/49; 5/7 · 5/6 = 25/42. distintosEnValor true; orden creciente 20/49 < 10/21 < 25/49 < 25/42. Verificado con node -e sobre lib/probabilidad.ts."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "probabilidad-l3-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "Una app de dibujo elige al azar un color entre 4 (rojo, azul, verde y amarillo) y, de forma independiente, una figura entre 5 (círculo, cuadrado, triángulo, estrella y rombo), todas con la misma probabilidad. ¿Cuál es la probabilidad de que elija el color rojo y la figura estrella?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/20",
+          "esCorrecta": true,
+          "feedback": "Correcto. Las elecciones son independientes: P(rojo y estrella) = 1/4 · 1/5 = 1/20. En la cuadrícula de 4 colores por 5 figuras hay 20 pares y solo uno es (rojo, estrella)."
+        },
+        {
+          "clave": "B",
+          "texto": "1/9",
+          "esCorrecta": false,
+          "feedback": "9 es 4 + 5, pero los pares no se suman: cada color se combina con cada figura, 4 · 5 = 20 pares. Uno de esos 20 es rojo y estrella.",
+          "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total"
+        },
+        {
+          "clave": "C",
+          "texto": "1/4",
+          "esCorrecta": false,
+          "feedback": "1/4 es la probabilidad del rojo, una sola etapa. También tiene que salir la estrella, con probabilidad 1/5: se multiplican, 1/4 · 1/5.",
+          "errorCatalogado": "usa-una-sola-etapa"
+        },
+        {
+          "clave": "D",
+          "texto": "9/20",
+          "esCorrecta": false,
+          "feedback": "9/20 es 1/4 + 1/5. Sumar responde a «rojo o estrella»; para que salgan las dos cosas se multiplica: 1/4 · 1/5.",
+          "errorCatalogado": "suma-en-vez-de-multiplicar-etapas"
+        }
+      ],
+      "solucion": "Las dos elecciones son independientes, así que P(rojo y estrella) = P(rojo) · P(estrella) = 1/4 · 1/5 = 1/20. Comprobación por enumeración: 4 colores por 5 figuras dan 4 · 5 = 20 pares igual de probables, y exactamente uno es (rojo, estrella): 1/20. ✓"
+    },
+    {
+      "id": "probabilidad-l3-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Una máquina de cápsulas tiene 10 cápsulas iguales por fuera: 4 traen un adhesivo y 6 traen una figura. Una persona compra dos cápsulas, una después de la otra, y cada una sale al azar entre las que quedan. ¿Cuál expresión representa la probabilidad de que las dos cápsulas traigan una figura?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6/10 · 5/10",
+          "esCorrecta": false,
+          "feedback": "El 5 está bien (queda una figura menos), pero el 10 no: la primera cápsula ya salió de la máquina y la segunda se elige entre 9.",
+          "errorCatalogado": "mantiene-denominador-sin-reposicion"
+        },
+        {
+          "clave": "B",
+          "texto": "6/10 · 5/9",
+          "esCorrecta": true,
+          "feedback": "Correcto. Primera con figura: 6/10. Quedan 9 cápsulas y 5 con figura: segunda con figura, 5/9. El producto de las dos ramas es la probabilidad del camino."
+        },
+        {
+          "clave": "C",
+          "texto": "6/10 · 6/10",
+          "esCorrecta": false,
+          "feedback": "Eso supone que la máquina vuelve a tener 10 cápsulas con 6 figuras para la segunda compra, y no: la primera cápsula ya salió. Quedan 9, y si la primera traía figura, quedan 5 figuras.",
+          "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+        },
+        {
+          "clave": "D",
+          "texto": "6/10 · 6/9",
+          "esCorrecta": false,
+          "feedback": "El 9 está bien, pero el 6 no: si la primera cápsula traía figura, quedan 5 figuras entre las 9, no 6.",
+          "errorCatalogado": "baja-total-pero-no-favorables"
+        }
+      ],
+      "solucion": "Es un sorteo sin reposición: la segunda cápsula se elige entre las que quedan. Primera etapa: P(figura) = 6/10. Si salió figura, quedan 9 cápsulas y 5 con figura: segunda etapa, 5/9. La probabilidad del camino figura y luego figura es el producto de sus ramas: 6/10 · 5/9 (que vale 30/90 = 1/3). ✓"
+    },
+    {
+      "id": "probabilidad-l3-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Un centro de estudiantes tiene 8 delegados, de los cuales 2 son de primero medio. Para una reunión se sortean dos delegados, uno después del otro y sin repetir. Una persona afirma: «la probabilidad de que los dos sorteados sean de primero medio es 2/8 · 2/8 = 1/16, porque cada sorteo se hace con las mismas chances». ¿Es correcta su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque en cada sorteo hay 2 delegados de primero medio entre 8, y las chances no cambian",
+          "esCorrecta": false,
+          "feedback": "Las chances sí cambian: el primer delegado sorteado no participa del segundo sorteo. Si era de primero medio, para el segundo quedan 7 delegados y solo 1 de primero medio.",
+          "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque es 2/8 · 2/7 = 1/14: en el segundo sorteo participan 7 delegados",
+          "esCorrecta": false,
+          "feedback": "El total baja a 7, pero también bajan los de primero medio: el primero sorteado era uno de ellos, así que queda 1 de primero medio entre los 7, no 2.",
+          "errorCatalogado": "baja-total-pero-no-favorables"
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque es 2/8 · 1/7 = 1/28: en el segundo sorteo quedan 7 delegados y solo 1 de primero medio",
+          "esCorrecta": true,
+          "feedback": "Correcto. Sin repetir, la segunda etapa se escribe con lo que queda: 7 delegados en total y 1 de primero medio, porque el otro ya salió. 2/8 · 1/7 = 2/56 = 1/28."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque es 2/8 · 1/8 = 1/32: queda 1 de primero medio, pero el sorteo sigue siendo entre 8",
+          "esCorrecta": false,
+          "feedback": "Queda 1 de primero medio, pero el sorteo ya no es entre 8: el primer delegado sorteado no vuelve a entrar, así que el segundo sorteo es entre 7.",
+          "errorCatalogado": "mantiene-denominador-sin-reposicion"
+        }
+      ],
+      "solucion": "Como no se repite persona, el segundo sorteo se hace entre los delegados que quedan. Primer sorteo: P(primero medio) = 2/8. Si salió uno de primero medio, quedan 7 delegados y 1 de primero medio: P = 1/7. La probabilidad del camino es 2/8 · 1/7 = 2/56 = 1/28, no 1/16. La afirmación es incorrecta porque trata el segundo sorteo como si tuviera las mismas 8 personas y los mismos 2 de primero medio; la alternativa justificada es la C. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Reglas de las probabilidades: solo para calibrar alcance (regla multiplicativa, sin probabilidad condicional ni combinatoria), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (una banda escolar organizada por una app que sortea día, sala e integrantes, una caja de cargadores, una app de dibujo con colores y figuras, una máquina de cápsulas y el sorteo de delegados de un centro de estudiantes) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los árboles se construyeron con ramasDesdeComposicion de lib/probabilidad.ts y el validador comprueba que las ramas hermanas suman 1 y que cada probabilidad de camino es el producto de sus ramas. Los números se eligieron para que las tres formas de equivocar la segunda etapa (repetir la razón, bajar solo el total, bajar solo los favorables) den valores distintos entre sí y de la correcta, y para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/; todos se verificaron con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

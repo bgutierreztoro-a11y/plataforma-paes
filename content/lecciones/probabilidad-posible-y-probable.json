@@ -1,0 +1,720 @@
+{
+  "tipo": "leccion",
+  "id": "probabilidad-posible-y-probable",
+  "moduloId": "reglas-de-probabilidades",
+  "titulo": "Probabilidad de un evento",
+  "objetivo": "Reconocer un experimento aleatorio y sus resultados posibles, calcular la probabilidad de un evento como casos favorables sobre casos posibles cuando los resultados son igualmente probables, expresarla como fracción, decimal o porcentaje entre 0 y 1, usar el complemento, y distinguir la probabilidad frecuencial (estimada con muchos ensayos) de la teórica.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Fracciones: simplificar, comparar por valor, sumar y restar (Lección 2 del módulo Enteros y racionales)",
+    "Fracción, decimal y porcentaje como escrituras del mismo número (Lección 1 del módulo Porcentaje)"
+  ],
+  "conceptos": [
+    "experimento aleatorio: se sabe qué puede pasar, no qué va a pasar",
+    "espacio muestral: la lista de todos los resultados posibles; evento: una parte de esa lista",
+    "P(A) = casos favorables ÷ casos posibles, solo cuando los resultados son igualmente probables",
+    "escala de 0 a 1: evento imposible (0), evento seguro (1); la misma probabilidad se escribe como fracción, decimal o porcentaje",
+    "complemento: P(no A) = 1 − P(A)",
+    "cuando los resultados no son igualmente probables (sumas, objetos asimétricos) hay que enumerar los pares o medir la frecuencia relativa",
+    "probabilidad frecuencial: la frecuencia relativa tras muchos ensayos estima la probabilidad; con pocos ensayos no tiene por qué calzar"
+  ],
+  "_notasInternas": [
+    "L1 del módulo reglas-de-probabilidades (módulo #16). moduloId = reglas-de-probabilidades. Descriptor DEMRE (docs/temario-demre-m1-2027.md:130): 'Problemas que involucren probabilidad de un evento en diversos contextos'. Diseño: docs/diseno-modulo-reglas-de-probabilidades.md.",
+    "Catálogo canónico: content/errores/reglas-de-probabilidades.json. Ids que este archivo referencia: divide-por-desfavorables, asume-equiprobables-sin-enumerar, suma-resultados-en-vez-de-multiplicar-total, resta-conteo-a-uno-en-complemento, lee-conteo-como-porcentaje, usa-laplace-sin-equiprobabilidad, espera-frecuencia-igual-a-teorica, cuenta-rango-restando-extremos, confunde-evento-con-su-complemento (nacen acá) y olvida-camino-simetrico (nace en L3, se usa en el feedbackPorError de la práctica: contar 3 pares para suma 7).",
+    "Dominio: un curso de fotografía de 12 personas que sortea el orden de exposición con papeles numerados del 1 al 12; dos monedas con puntaje (descubrimiento, mecanismo canónico permitido en pasos de lección); dos dados (práctica, mismo permiso); un semáforo peatonal observado 40 días (frecuencial). Ítems: rifa de 50 números, 40 cupones de una app, tapa de bebida lanzada 200 veces. Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (laplace, complemento, probEvento, espacioProducto, espacioDadoDoble, frecuenciaRelativa, distintosEnValor): papeles 1 a 12: par 6/12 = 1/2 = 50 %; mayor que 8: 4 (9, 10, 11, 12); múltiplo de 4: 3/12 = 1/4; no mayor que 8: 8/12 = 2/3; del 5 al 9: 5/12; 13: 0; hasta 12: 1. Dos monedas: 4 pares, 1 punto en 2 (1/2), 0 y 2 puntos en 1 cada uno (1/4). Dos dados: 36 pares, suma 7 en 6 (1/6), ambos pares 9, suma par 18 (50 %). Semáforo: 26/40 = 13/20 = 65 %; 4 días con 3 en verde = 75 %; 65 % de 20 días = 13. Rifa: del 13 al 24 son 12 números, 12/50 = 6/25; 24 − 13 = 11 → 11/50; 12/38 = 6/19; complemento 38/50 = 19/25. Cupones: 8/40 = 20 %; 8 %; 8/32 = 25 %; 80 %. Tapa: 130/200 = 13/20; 70/200 = 7/20.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {4; 50; 4; 2; 6; 9; 50; 65} y de fracción (1/4, 1/2 en el descubrimiento, 2/3, 1/6, 5/12, 6/25) y de texto (13/20 en el ítem 3); distractores numéricos {3; 100; 3; 18; 100; 26; 8; 20; 25; 80} y de fracción (1/3, 1/2 como 'múltiplo de 4 o no' en problema, 1/3 como 'tres totales' en descubrimiento, −3, 1/3, 1/2 en generalización, 1/11, 1/2 en práctica, 1/3, 7/12, 5/7 en consolidación, 11/50, 6/19, 19/25, 7/20 en ítems). La fracción 1/2 es respuesta correcta en el descubrimiento (exactamente 1 punto) y distractor en problema (múltiplo de 4 o no) y en generalización (1 − 4/8): son preguntas distintas con eventos distintos y el auditor no parsea fracciones; se deja registrado. Ningún valor numérico parseable se repite entre distractor y correcta.",
+    "Visuales: cuadrícula 2 × 2 de las dos monedas con la suma en cada celda (descubrimiento, primero sin marcas y después con las dos celdas de 1 punto marcadas, contador 2 de 4) y cuadrícula 6 × 6 de dos dados con la suma en cada celda y sin marcas (práctica). Ningún ítem lleva visual: la cuadrícula rotularía lo que se pide.",
+    "Sin auditoria.constante: no hay una cifra única. Las palabras 'casos favorables', 'casos posibles' y 'espacio muestral' aparecen por primera vez en generalización, después de que el estudiante enumeró los cuatro pares de las monedas.",
+    "P2: el paso consolidación nombra los caminos equivocados de asume-equiprobables-sin-enumerar, divide-por-desfavorables y resta-conteo-a-uno-en-complemento antes del correcto, y su bloque pregunta lleva cuenta-rango-restando-extremos, confunde-evento-con-su-complemento y divide-por-desfavorables en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: curso de fotografía de 12 personas, papeles numerados del 1 al 12; comparar 'par' (6 papeles) con 'mayor que 8' (4 papeles)",
+    "problema: probabilidad de sacar un múltiplo de 4 entre 12 papeles, 3/12 = 1/4; el papel 13 es imposible",
+    "pensar/pistas: papeles mayores que 8, 4 de 12; probabilidad de par como porcentaje, 50 %",
+    "descubrimiento: dos monedas, cara 1 punto y sello 0; 4 pares, 1 punto en 2 pares (1/2), 0 y 2 puntos en 1 par cada uno (1/4)",
+    "generalizacion: par 6/12 = 1/2 = 0,5 = 50 %; papel 13, 0; papel del 1 al 12, 1; complemento de 'mayor que 8', 1 − 4/12 = 2/3",
+    "practica: dos dados, 36 pares; suma 7 en 6 pares (1/6); ambos pares en 9; suma par en 18 (50 %)",
+    "aplicacion: semáforo peatonal, 26 días en verde de 40 (65 %); muestra chica de 4 días con 3 en verde (75 %); 65 % de 20 días = 13",
+    "consolidacion: probabilidad de un papel del 5 al 9 entre 12, 5/12",
+    "itemsPAES: rifa de 50 números con los del 13 al 24 (12 números, 6/25); 40 cupones con 8 premiados (20 %); tapa de bebida, 130 boca arriba de 200 lanzamientos (13/20)"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Un sorteo antes de exponer",
+      "_notasInternas": [
+        "Sin regla: predicción sobre cuál de dos eventos es más probable. Se puede resolver contando o por intuición; la predicción no se corrige."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En un curso de fotografía de **12 personas** hay que decidir el orden en que cada una expone su trabajo. Para que nadie reclame, se escriben los números del **1 al 12** en papeles iguales, se meten en una caja y cada persona saca uno sin mirar. El número que saca es su turno.\n\nTú sacas primero. Antes de meter la mano, piensa en dos cosas que podrían pasar: que te salga un **número par**, o que te salga un **número mayor que 8**."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "Sin calcular nada todavía, ¿cuál de las dos te parece más probable?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "Que salga un número par",
+            "Que salga un número mayor que 8",
+            "Da lo mismo: las dos son igual de probables"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Este sorteo es un **experimento aleatorio**: se sabe exactamente qué puede pasar (cualquier número del 1 al 12) pero no qué va a pasar. Esta lección es sobre cómo se mide «qué tan probable» es cada cosa que puede pasar, y sobre una trampa que aparece apenas se combinan dos experimentos."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "Múltiplos de 4 y un papel que no existe",
+      "_notasInternas": [
+        "Seleccion: P(múltiplo de 4) = 3/12 = 1/4. Distractores: 1/3 = 3/9 (divide-por-desfavorables), 1/2 (asume-equiprobables-sin-enumerar: 'o es múltiplo de 4 o no lo es'). VerdaderoFalso: el papel 13 no es un resultado posible (probabilidad 0), no 'poco probable'."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Los 12 papeles son iguales, así que cada número tiene la misma chance de salir. ¿Qué tan probable es que el papel que saques sea un **múltiplo de 4**?",
+          "opciones": [
+            {
+              "id": "un-cuarto",
+              "texto": "3 de 12, o sea 1/4",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los múltiplos de 4 entre 1 y 12 son 4, 8 y 12: tres papeles de doce. Como los doce son igual de probables, la chance es 3/12 = 1/4."
+            },
+            {
+              "id": "un-tercio",
+              "texto": "3 de 9, o sea 1/3",
+              "esCorrecta": false,
+              "feedback": "Contaste bien los tres múltiplos de 4, pero los comparaste con los 9 que no lo son. La probabilidad compara los que cumplen con TODOS los papeles que pueden salir, que son 12.",
+              "errorCatalogado": "divide-por-desfavorables"
+            },
+            {
+              "id": "un-medio",
+              "texto": "1/2, porque o es múltiplo de 4 o no lo es",
+              "esCorrecta": false,
+              "feedback": "Que haya dos posibilidades (es múltiplo o no lo es) no las hace igual de probables: hay 3 papeles que son múltiplos de 4 y 9 que no. Lo que es igual de probable es cada papel, y hay que contarlos.",
+              "errorCatalogado": "asume-equiprobables-sin-enumerar"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Sacar el papel con el número 13 es un evento posible, pero poco probable.",
+          "respuestaCorrecta": false,
+          "feedbackVerdadero": "No hay ningún papel con el 13: no es que sea poco probable, es que no puede pasar. Es un evento imposible, y su probabilidad es 0.",
+          "feedbackFalso": "Exacto. En la caja solo hay números del 1 al 12. El 13 no está entre los resultados posibles, así que sacarlo es un evento imposible: probabilidad 0."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Contar lo que cumple",
+      "_notasInternas": [
+        "Numerica: mayores que 8 son 9, 10, 11 y 12: 4 papeles (feedbackPorError 3 = 12 − 9, cuenta-rango-restando-extremos). P(par) = 6/12 = 50 % (feedbackPorError 100 = 6/6, divide-por-desfavorables). Los dos campos llevan unidad."
+        ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Vuelve a la predicción del inicio. Cuenta con los papeles del 1 al 12 a la vista.",
+          "campos": [
+            {
+              "id": "papelesMayoresQueOcho",
+              "etiqueta": "¿Cuántos papeles tienen un número mayor que 8?",
+              "respuestaCorrecta": 4,
+              "unidad": "papeles"
+            },
+            {
+              "id": "porcentajePar",
+              "etiqueta": "¿Qué porcentaje de los papeles tiene un número par?",
+              "respuestaCorrecta": 50,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "papelesMayoresQueOcho",
+              "valorObtenido": 3,
+              "mensaje": "Restaste 12 − 9 y te dio 3, pero el tramo del 9 al 12 incluye los dos extremos. Escríbelos uno por uno: 9, 10, 11, 12.",
+              "errorCatalogado": "cuenta-rango-restando-extremos"
+            },
+            {
+              "campoId": "porcentajePar",
+              "valorObtenido": 100,
+              "mensaje": "100 % significaría que es seguro sacar un par, y no lo es: hay 6 impares. Compara los 6 pares con los 12 papeles, no con los otros 6.",
+              "errorCatalogado": "divide-por-desfavorables"
+            }
+          ],
+          "feedbackPorDefecto": "Escribe los doce números y marca los que cumplen. Mayores que 8: cuenta desde el 9 hasta el 12, incluidos los dos. Pares: son la mitad de los doce, y esa mitad, escrita como porcentaje del total, es lo que se pide."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para contar",
+      "_notasInternas": [
+        "Mismos dos campos del paso 3. El nivel 3 deja el porcentaje sin calcular: nombra la fracción 6 de 12."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Escribe los doce números en una fila: 1, 2, 3, ..., 12. Marca los que cumplen cada condición y cuenta las marcas, no restes de memoria."
+            },
+            {
+              "nivel": 2,
+              "texto": "«Mayor que 8» empieza en el 9, no en el 8. Los pares son 2, 4, 6, 8, 10 y 12."
+            },
+            {
+              "nivel": 3,
+              "texto": "Hay 6 pares entre 12 papeles. Para pasar 6 de 12 a porcentaje, piensa qué parte del total es, y escríbela sobre 100."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Dos monedas y tres totales",
+      "_notasInternas": [
+        "Descubrimiento del módulo: dos monedas, cara 1 punto y sello 0; totales 0, 1 y 2. Predicción evaluada antes de enumerar (1/3 es asume-equiprobables-sin-enumerar), después la cuadrícula 2 × 2 sin marcas, el conteo de pares (4 y 2), la cuadrícula con las celdas de 1 punto marcadas (2 de 4) y el verdaderoFalso que fija que 1 punto es el doble de probable que 2. Los nombres 'casos favorables' y 'casos posibles' no aparecen todavía."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Deja el sorteo un momento. Ahora lanzas **dos monedas** a la vez y anotas puntos: cada **cara vale 1 punto** y cada **sello vale 0**. El total puede ser **0, 1 o 2 puntos**.\n\nAntes de mirar los casos, decide."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Qué tan probable es que el total sea **exactamente 1 punto**?",
+          "opciones": [
+            {
+              "id": "un-tercio",
+              "texto": "1/3: hay tres totales posibles (0, 1 y 2) y cada uno tiene la misma chance",
+              "esCorrecta": false,
+              "feedback": "Es la respuesta más común, y es la trampa de esta lección. Los tres totales existen, pero no salen con la misma frecuencia. Mira la cuadrícula de abajo: cada moneda tiene dos resultados, y son los PARES los que son igual de probables.",
+              "errorCatalogado": "asume-equiprobables-sin-enumerar"
+            },
+            {
+              "id": "un-medio",
+              "texto": "1/2: sale la mitad de las veces",
+              "esCorrecta": true,
+              "feedback": "Correcto, y ahora viene lo importante: por qué. De los cuatro pares posibles (cara-cara, cara-sello, sello-cara, sello-sello), dos dan 1 punto. Compruébalo en la cuadrícula."
+            },
+            {
+              "id": "un-cuarto",
+              "texto": "1/4: es el total más difícil de conseguir",
+              "esCorrecta": false,
+              "feedback": "Al revés: es el más fácil. Hay dos maneras de sumar 1 punto (cara en la primera moneda o cara en la segunda) y solo una de sumar 0 o de sumar 2. Cuéntalo en la cuadrícula."
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Cuadrícula de 2 por 2 con los resultados de la primera moneda en las filas (cara, sello) y los de la segunda en las columnas (cara, sello); en cada celda, el total de puntos: 2, 1, 1 y 0.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["Cara", "Sello"],
+            "columnas": ["Cara", "Sello"],
+            "rotuloFilas": "Primera moneda",
+            "rotuloColumnas": "Segunda moneda",
+            "celdas": [
+              ["2", "1"],
+              ["1", "0"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Cada celda de la cuadrícula es un par (lo que muestra la primera moneda, lo que muestra la segunda) y todos los pares son igual de probables. Cuenta.",
+          "campos": [
+            {
+              "id": "paresPosibles",
+              "etiqueta": "¿Cuántos pares posibles hay?",
+              "respuestaCorrecta": 4,
+              "unidad": "pares"
+            },
+            {
+              "id": "paresConUnPunto",
+              "etiqueta": "¿Cuántos de esos pares suman exactamente 1 punto?",
+              "respuestaCorrecta": 2,
+              "unidad": "pares"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "paresConUnPunto",
+              "valorObtenido": 1,
+              "mensaje": "Hay más de una manera de sumar 1 punto: cara en la primera moneda y sello en la segunda, o sello en la primera y cara en la segunda. Son dos celdas distintas de la cuadrícula."
+            }
+          ],
+          "feedbackPorDefecto": "Recorre la cuadrícula celda por celda. Son 2 filas por 2 columnas. Las celdas que dicen 1 son las que suman exactamente 1 punto."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "La misma cuadrícula de 2 por 2 con las dos celdas que suman 1 punto marcadas con trama: 2 de 4.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["Cara", "Sello"],
+            "columnas": ["Cara", "Sello"],
+            "rotuloFilas": "Primera moneda",
+            "rotuloColumnas": "Segunda moneda",
+            "celdas": [
+              ["2", "1"],
+              ["1", "0"]
+            ],
+            "marcadas": [[0, 1], [1, 0]],
+            "contador": { "marcadas": 2, "total": 4 },
+            "rotuloEvento": "Exactamente 1 punto"
+          }
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "Sumar exactamente 1 punto es el doble de probable que sumar 2 puntos.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Dos de los cuatro pares suman 1 punto (2/4) y solo uno suma 2 puntos (1/4). Los tres totales NO son igual de probables, aunque sean tres.",
+          "feedbackFalso": "Mira la cuadrícula: 1 punto aparece en dos celdas y 2 puntos en una sola. 2 de 4 es el doble de 1 de 4."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Lo que acabas de descubrir es el corazón de la lección: **lo que se cuenta son los resultados igual de probables**, y a veces esos resultados no son los que uno nombra primero (0, 1 o 2 puntos), sino los pares que los producen. Cuando hay dos experimentos, la cuadrícula los enumera todos sin olvidar ninguno."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Favorables sobre posibles",
+      "_notasInternas": [
+        "Formalización: espacio muestral, evento, P(A) = favorables ÷ posibles, escala de 0 a 1 en tres escrituras, imposible y seguro, complemento. Seleccion: P(no mayor que 8) = 1 − 4/12 = 8/12 = 2/3; distractores: '1 − 4 = −3' (resta-conteo-a-uno-en-complemento), 1/3 (confunde-evento-con-su-complemento, entrega P(mayor que 8)), 1/2 (divide-por-desfavorables y luego complemento: 1 − 4/8)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Ahora los nombres.\n\n- El **espacio muestral** es la lista de todos los resultados posibles del experimento: los 12 papeles, o los 4 pares de las monedas.\n- Un **evento** es una parte de esa lista: «sale un par», «suman 1 punto».\n- Cuando todos los resultados son **igual de probables**, la probabilidad de un evento es\n\n**P(A) = casos favorables ÷ casos posibles**\n\ndonde los favorables son los resultados que cumplen el evento y los posibles son todos.\n\nCon los papeles: P(par) = 6 ÷ 12 = **1/2 = 0,5 = 50 %**. Las tres escrituras dicen lo mismo; en esta lección usamos las tres.\n\n- Una probabilidad siempre está entre **0 y 1**. Un evento **imposible** tiene probabilidad 0 (sacar el 13); un evento **seguro** tiene probabilidad 1 (sacar un número del 1 al 12).\n- Si un evento tiene probabilidad P(A), que **no** ocurra tiene probabilidad **1 − P(A)**. Se llama el **complemento**. Por ejemplo, «sale un impar» es el complemento de «sale un par»: 1 − 1/2 = 1/2.\n\nUna aclaración que cuesta: la fórmula pide **casos posibles**, o sea todos, no solo los que no cumplen. Y lo que se resta a 1 es la **probabilidad**, no la cantidad de casos."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Con los papeles del 1 al 12, ¿cuál es la probabilidad de que el número que saques **no** sea mayor que 8?",
+          "opciones": [
+            {
+              "id": "dos-tercios",
+              "texto": "1 − 4/12 = 8/12 = 2/3",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Mayor que 8» son 4 papeles, así que P(mayor que 8) = 4/12, y el complemento es 1 − 4/12 = 8/12 = 2/3. Comprobación directa: del 1 al 8 hay 8 papeles, 8/12."
+            },
+            {
+              "id": "resta-conteo",
+              "texto": "1 − 4 = −3",
+              "esCorrecta": false,
+              "feedback": "Una probabilidad nunca es negativa: ahí está la señal. Lo que se resta a 1 es la probabilidad de «mayor que 8», que es 4/12, no la cantidad de papeles.",
+              "errorCatalogado": "resta-conteo-a-uno-en-complemento"
+            },
+            {
+              "id": "un-tercio",
+              "texto": "4/12 = 1/3",
+              "esCorrecta": false,
+              "feedback": "4/12 es la probabilidad de que SÍ sea mayor que 8. Se pedía lo contrario: el complemento, 1 − 4/12.",
+              "errorCatalogado": "confunde-evento-con-su-complemento"
+            },
+            {
+              "id": "un-medio",
+              "texto": "1 − 4/8 = 1/2",
+              "esCorrecta": false,
+              "feedback": "4/8 compara los 4 que cumplen con los 8 que no cumplen, y esa razón no es una probabilidad. Los casos posibles son los 12 papeles: P(mayor que 8) = 4/12, y el complemento es 1 − 4/12.",
+              "errorCatalogado": "divide-por-desfavorables"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Treinta y seis pares",
+      "_notasInternas": [
+        "Dos dados, cuadrícula 6 × 6 con la suma en cada celda y sin marcas. Numerica: suma 7 en 6 pares (feedbackPorError 3: cuenta (1,6), (2,5), (3,4) sin los simétricos, olvida-camino-simetrico); ambos pares en 9 (sin feedbackPorError catalogado). Seleccion: P(suma 7) = 6/36 = 1/6; distractores 1/11 (asume-equiprobables-sin-enumerar, once sumas) y 1/2 (suma-resultados-en-vez-de-multiplicar-total, 6/12). Numerica: P(suma par) = 18/36 = 50 % (feedbackPorError 18, lee-conteo-como-porcentaje; 100, divide-por-desfavorables: 18/18)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Con dos dados pasa lo mismo que con las monedas, pero más grande. La cuadrícula de abajo enumera los **36 pares** (primer dado, segundo dado) y escribe en cada celda la **suma** de los dos números."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Cuadrícula de 6 por 6 con las caras del primer dado en las filas y las del segundo en las columnas; en cada celda, la suma de los dos: de 2 en la esquina superior izquierda a 12 en la inferior derecha. Sin celdas marcadas.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["1", "2", "3", "4", "5", "6"],
+            "columnas": ["1", "2", "3", "4", "5", "6"],
+            "rotuloFilas": "Primer dado",
+            "rotuloColumnas": "Segundo dado",
+            "celdas": [
+              ["2", "3", "4", "5", "6", "7"],
+              ["3", "4", "5", "6", "7", "8"],
+              ["4", "5", "6", "7", "8", "9"],
+              ["5", "6", "7", "8", "9", "10"],
+              ["6", "7", "8", "9", "10", "11"],
+              ["7", "8", "9", "10", "11", "12"]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Cuenta en la cuadrícula.",
+          "campos": [
+            {
+              "id": "paresSumaSiete",
+              "etiqueta": "¿Cuántos pares suman 7?",
+              "respuestaCorrecta": 6,
+              "unidad": "pares"
+            },
+            {
+              "id": "paresAmbosPares",
+              "etiqueta": "¿En cuántos pares los dos dados muestran un número par?",
+              "respuestaCorrecta": 9,
+              "unidad": "pares"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "paresSumaSiete",
+              "valorObtenido": 3,
+              "mensaje": "Contaste (1, 6), (2, 5) y (3, 4), pero (6, 1), (5, 2) y (4, 3) son pares distintos: el primer dado y el segundo no son el mismo dado. Mira la diagonal de la cuadrícula que va de 7 en 7.",
+              "errorCatalogado": "olvida-camino-simetrico"
+            }
+          ],
+          "feedbackPorDefecto": "Los pares que suman 7 forman una diagonal en la cuadrícula: búscala. Para «ambos pares» quédate con las filas 2, 4 y 6 y, dentro de ellas, con las columnas 2, 4 y 6."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la probabilidad de que la suma sea 7?",
+          "opciones": [
+            {
+              "id": "un-onceavo",
+              "texto": "1/11, porque hay once sumas posibles (de 2 a 12)",
+              "esCorrecta": false,
+              "feedback": "Las once sumas existen, pero no son igual de probables: el 7 sale en seis celdas y el 2 en una sola. Lo que es igual de probable son los 36 pares, y hay que contar cuántos suman 7.",
+              "errorCatalogado": "asume-equiprobables-sin-enumerar"
+            },
+            {
+              "id": "un-sexto",
+              "texto": "6/36 = 1/6",
+              "esCorrecta": true,
+              "feedback": "Correcto. Seis pares suman 7 y hay 36 pares igual de probables: 6/36 = 1/6."
+            },
+            {
+              "id": "un-medio",
+              "texto": "6/12 = 1/2",
+              "esCorrecta": false,
+              "feedback": "Los resultados posibles no son 6 + 6 = 12. Cada cara del primer dado se combina con cada cara del segundo: 6 · 6 = 36 pares, que son las 36 celdas de la cuadrícula.",
+              "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total"
+            }
+          ]
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Una más, ahora en porcentaje.",
+          "campos": [
+            {
+              "id": "porcentajeSumaPar",
+              "etiqueta": "¿Qué porcentaje de los 36 pares tiene suma par?",
+              "respuestaCorrecta": 50,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeSumaPar",
+              "valorObtenido": 18,
+              "mensaje": "18 es la cantidad de pares con suma par, no el porcentaje. Compáralos con los 36: 18 de 36 es la mitad, y la mitad, sobre 100, es otro número.",
+              "errorCatalogado": "lee-conteo-como-porcentaje"
+            },
+            {
+              "campoId": "porcentajeSumaPar",
+              "valorObtenido": 100,
+              "mensaje": "100 % diría que la suma es par siempre, y no: la mitad de las celdas tiene suma impar. Compara los 18 pares con suma par con los 36 pares, no con los 18 restantes.",
+              "errorCatalogado": "divide-por-desfavorables"
+            }
+          ],
+          "feedbackPorDefecto": "Cuenta las celdas con número par en la cuadrícula: en cada fila hay 3 de 6. Ese conteo, dividido por 36 y escrito sobre 100, es el porcentaje."
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Un semáforo sin manual",
+      "_notasInternas": [
+        "Frecuencial: no hay casos igual de probables que contar, se estima con la frecuencia relativa. 26 de 40 días en verde = 65 % (feedbackPorError 26, lee-conteo-como-porcentaje). Muestra chica de 4 días con 3 en verde (75 %) solo en el texto. Seleccion 1: con 40 días la estimación es mejor (sin ids: opciones conceptuales). Seleccion 2: 65 % de 20 días = 13 es lo esperado, no lo seguro (espera-frecuencia-igual-a-teorica), y 'dos resultados, 10 veces' es usa-laplace-sin-equiprobabilidad."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "En la esquina del colegio hay un **semáforo peatonal**. Nadie sabe cuánto dura el verde ni el rojo, así que no hay «casos igual de probables» que contar. Una persona anotó, durante **40 días**, si al llegar a la esquina el semáforo estaba en verde: **26 veces** estaba en verde.\n\nCuando no se pueden contar los casos, la probabilidad se **estima** con la frecuencia relativa: veces que pasó, dividido por veces que se probó. Se llama **probabilidad frecuencial**."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Estima la probabilidad de llegar con el semáforo en verde.",
+          "campos": [
+            {
+              "id": "porcentajeVerde",
+              "etiqueta": "Probabilidad de verde, en porcentaje",
+              "respuestaCorrecta": 65,
+              "unidad": "%"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "porcentajeVerde",
+              "valorObtenido": 26,
+              "mensaje": "26 es la cantidad de días en verde, no el porcentaje. Hay que compararla con los 40 días: 26 de 40, y eso escrito sobre 100.",
+              "errorCatalogado": "lee-conteo-como-porcentaje"
+            }
+          ],
+          "feedbackPorDefecto": "Frecuencia relativa: 26 dividido por 40. Para pasarla a porcentaje, multiplica por 100."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Una amiga hizo lo mismo, pero solo **4 días**: 3 veces estaba en verde, o sea un **75 %**. Los dos números son distintos. ¿Cuál conviene usar?"
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál de las dos estimaciones es más confiable?",
+          "opciones": [
+            {
+              "id": "cuarenta-dias",
+              "texto": "La de 40 días: con más ensayos, la frecuencia se acerca más a la probabilidad real",
+              "esCorrecta": true,
+              "feedback": "Correcto. Con pocos ensayos la frecuencia salta mucho (con 4 días, un solo día cambia el resultado en 25 puntos). Con muchos, se estabiliza cerca de la probabilidad real."
+            },
+            {
+              "id": "cuatro-dias",
+              "texto": "La de 4 días: es más reciente y da un número más redondo",
+              "esCorrecta": false,
+              "feedback": "Que el número sea redondo no lo hace mejor. Con 4 días, cambiar un solo día mueve la estimación en 25 puntos; con 40 días la mueve en 2,5. Más ensayos, menos salto."
+            },
+            {
+              "id": "ninguna",
+              "texto": "Ninguna: sin saber cuánto dura cada luz no se puede decir nada",
+              "esCorrecta": false,
+              "feedback": "Justamente cuando no se conocen los casos, la frecuencia relativa es la herramienta: no da la probabilidad exacta, pero la estima, y estima mejor mientras más ensayos hay."
+            }
+          ]
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Supón que la probabilidad de verde es 65 %. En los próximos 20 días, ¿cuántas veces estará en verde al llegar?",
+          "opciones": [
+            {
+              "id": "exacto",
+              "texto": "Exactamente 13 veces, porque el 65 % de 20 es 13",
+              "esCorrecta": false,
+              "feedback": "13 es lo más probable, pero no está garantizado: 20 días son pocos, y 11, 12, 14 o 15 verdes también pueden pasar sin que la probabilidad esté mal. La frecuencia se acerca al 65 % con muchos días, no calza justo en cada tanda.",
+              "errorCatalogado": "espera-frecuencia-igual-a-teorica"
+            },
+            {
+              "id": "cerca",
+              "texto": "Probablemente cerca de 13, pero podrían ser 10 o 16 sin que el 65 % esté mal",
+              "esCorrecta": true,
+              "feedback": "Correcto. La probabilidad describe la tendencia a la larga; una tanda de 20 días puede alejarse de ella y aun así ser normal."
+            },
+            {
+              "id": "mitad",
+              "texto": "10 veces, porque hay dos resultados posibles, verde y rojo",
+              "esCorrecta": false,
+              "feedback": "Dos resultados no significan mitad y mitad: la luz verde y la roja no duran lo mismo. Por eso se midió la frecuencia (65 %) en vez de suponer 50 %.",
+              "errorCatalogado": "usa-laplace-sin-equiprobabilidad"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Contar o medir",
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "En el sorteo de los papeles calculaste la probabilidad contando; en el semáforo la estimaste midiendo. Explica con tus palabras cuándo se puede contar y cuándo hay que medir.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Se puede contar cuando todos los resultados son igual de probables y se conocen: papeles iguales, pares de monedas, pares de dados. Ahí P = favorables ÷ posibles. Cuando no se sabe si los resultados son igual de probables (un semáforo, una tapa de bebida), no hay casos que contar y la probabilidad se estima con la frecuencia relativa de muchos ensayos.",
+          "notaDiseno": "Busca que el estudiante conecte la condición 'igualmente probables' con la posibilidad de contar, que es la idea que separa la probabilidad teórica de la frecuencial."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Queda una pregunta abierta. Con los papeles, «par» tiene probabilidad 1/2 y «múltiplo de 4» tiene 1/4. ¿Cuánto vale «par **o** múltiplo de 4»? ¿Se suman? La próxima lección parte de ahí."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de asume-equiprobables-sin-enumerar, divide-por-desfavorables y resta-conteo-a-uno-en-complemento, seguido de un bloque pregunta: P(papel del 5 al 9) = 5/12; distractores 1/3 = 4/12 (cuenta-rango-restando-extremos, 9 − 5 = 4), 7/12 (confunde-evento-con-su-complemento), 5/7 (divide-por-desfavorables). Alternativas en orden creciente por valor: 1/3 < 5/12 < 7/12 < 5/7. Verificado con node -e (distintosEnValor true)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **Experimento aleatorio:** se sabe qué puede pasar, no qué va a pasar. El **espacio muestral** es la lista de todo lo que puede pasar; un **evento** es una parte de esa lista.\n- **P(A) = casos favorables ÷ casos posibles**, solo cuando los resultados son igual de probables.\n- Escala de **0 a 1**: imposible es 0, seguro es 1. Fracción, decimal y porcentaje son la misma probabilidad escrita de tres formas.\n- **Complemento:** P(no A) = 1 − P(A).\n- Si no se pueden contar casos igual de probables, se **mide**: la frecuencia relativa de muchos ensayos estima la probabilidad.\n\nAntes de los ítems, tres caminos equivocados que conviene tener nombrados.\n\nMucha gente **reparte la probabilidad en partes iguales entre los resultados que puede nombrar**: 0, 1 o 2 puntos, un tercio cada uno. Falla porque lo que es igual de probable son los pares de monedas, y 1 punto sale en dos pares. Lo que funciona es **enumerar los pares antes de contar**.\n\nMucha gente **divide los que cumplen por los que no cumplen**: 3 múltiplos de 4 contra 9 que no. Falla porque esa razón no está entre 0 y 1 cuando los favorables son muchos, y no dice qué parte del total cumple. Lo que funciona es **dividir por todos los casos posibles**.\n\nMucha gente calcula el complemento **restando a 1 la cantidad de casos**: 1 − 4. Falla porque da un número negativo, y una probabilidad nunca lo es. Lo que funciona es **restar a 1 la probabilidad**, 1 − 4/12.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "En el sorteo de los papeles del 1 al 12, ¿cuál es la probabilidad de sacar un número del 5 al 9, incluidos los dos?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "1/3",
+              "esCorrecta": false,
+              "feedback": "1/3 es 4/12, y del 5 al 9 no hay 4 papeles: 9 − 5 = 4 deja fuera uno de los extremos. Escríbelos: 5, 6, 7, 8, 9.",
+              "errorCatalogado": "cuenta-rango-restando-extremos"
+            },
+            {
+              "clave": "B",
+              "texto": "5/12",
+              "esCorrecta": true,
+              "feedback": "Correcto. Del 5 al 9 hay cinco papeles (5, 6, 7, 8 y 9) entre doce igual de probables: 5/12."
+            },
+            {
+              "clave": "C",
+              "texto": "7/12",
+              "esCorrecta": false,
+              "feedback": "7/12 es la probabilidad de que el número NO esté entre el 5 y el 9 (los otros siete papeles). Se pedía la de que sí lo esté: 5 de 12.",
+              "errorCatalogado": "confunde-evento-con-su-complemento"
+            },
+            {
+              "clave": "D",
+              "texto": "5/7",
+              "esCorrecta": false,
+              "feedback": "5/7 compara los 5 que cumplen con los 7 que no. Los casos posibles son los 12 papeles, y la probabilidad es 5 de 12.",
+              "errorCatalogado": "divide-por-desfavorables"
+            }
+          ],
+          "notaVerificacionMatematica": "Del 5 al 9 inclusive: 5, 6, 7, 8, 9 = 5 papeles; laplace(5, 12) = 5/12. Distractores: laplace(4, 12) = 1/3 (9 − 5 = 4); complemento(5/12) = 7/12; laplace(5, 7) = 5/7. distintosEnValor true; orden creciente 1/3 < 5/12 < 7/12 < 5/7. Verificado con node -e sobre lib/probabilidad.ts."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "probabilidad-l1-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una rifa se vendieron los 50 números, del 1 al 50, y todos tienen la misma probabilidad de salir premiados. Una persona compró los números del 13 al 24, incluidos los dos. ¿Cuál es la probabilidad de que el número premiado sea uno de los suyos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "11/50",
+          "esCorrecta": false,
+          "feedback": "Del 13 al 24 no hay 11 números: 24 − 13 = 11 deja fuera uno de los extremos. Contando los dos, del 13 al 24 hay 12 números.",
+          "errorCatalogado": "cuenta-rango-restando-extremos"
+        },
+        {
+          "clave": "B",
+          "texto": "6/25",
+          "esCorrecta": true,
+          "feedback": "Correcto. Del 13 al 24 hay 12 números, y los casos posibles son los 50: 12/50 = 6/25."
+        },
+        {
+          "clave": "C",
+          "texto": "6/19",
+          "esCorrecta": false,
+          "feedback": "6/19 es 12/38: los 12 números de la persona comparados con los 38 que no compró. La probabilidad compara los favorables con TODOS los números de la rifa, que son 50.",
+          "errorCatalogado": "divide-por-desfavorables"
+        },
+        {
+          "clave": "D",
+          "texto": "19/25",
+          "esCorrecta": false,
+          "feedback": "19/25 es 38/50, la probabilidad de que el premiado sea uno de los 38 números que la persona NO tiene. Se pedía la de que gane: 12 de 50.",
+          "errorCatalogado": "confunde-evento-con-su-complemento"
+        }
+      ],
+      "solucion": "Casos posibles: los 50 números, todos igual de probables. Casos favorables: los que la persona compró, del 13 al 24 incluidos los dos: 13, 14, ..., 24, que son 24 − 13 + 1 = 12 números. P(gane) = 12/50 = 6/25. Comprobación: 6/25 = 0,24, entre 0 y 1, y el complemento 1 − 6/25 = 19/25 corresponde a los 38 números restantes (38/50 = 19/25). ✓"
+    },
+    {
+      "id": "probabilidad-l1-item-2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Una app reparte al azar uno de sus 40 cupones a cada persona que la abre por primera vez. De los 40 cupones, 8 tienen premio y el resto no. ¿Cuál es la probabilidad de recibir un cupón con premio, expresada como porcentaje?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8 %",
+          "esCorrecta": false,
+          "feedback": "8 es la cantidad de cupones con premio, no el porcentaje. Un porcentaje compara con 100: hay que ver qué parte de los 40 cupones son los 8, y escribir esa parte sobre 100.",
+          "errorCatalogado": "lee-conteo-como-porcentaje"
+        },
+        {
+          "clave": "B",
+          "texto": "20 %",
+          "esCorrecta": true,
+          "feedback": "Correcto. P(premio) = 8/40 = 1/5 = 0,2, y 0,2 escrito como porcentaje es 20 %."
+        },
+        {
+          "clave": "C",
+          "texto": "25 %",
+          "esCorrecta": false,
+          "feedback": "25 % es 8/32: los 8 con premio comparados con los 32 sin premio. Los casos posibles son los 40 cupones, y 8/40 es otra fracción.",
+          "errorCatalogado": "divide-por-desfavorables"
+        },
+        {
+          "clave": "D",
+          "texto": "80 %",
+          "esCorrecta": false,
+          "feedback": "80 % es 32/40, la probabilidad de recibir un cupón SIN premio. Se pedía la probabilidad de que tenga premio: 8 de 40.",
+          "errorCatalogado": "confunde-evento-con-su-complemento"
+        }
+      ],
+      "solucion": "Casos posibles: 40 cupones, igual de probables. Casos favorables: 8 con premio. P(premio) = 8/40 = 1/5. Para escribirla como porcentaje: 1/5 = 0,2 = 20/100 = 20 %. Comprobación: 20 % de 40 cupones son 8 cupones, los que tienen premio. ✓"
+    },
+    {
+      "id": "probabilidad-l1-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Una persona lanza una tapa de bebida 200 veces y anota cómo cae: 130 veces boca arriba y 70 veces boca abajo. Con esa información, ¿cuál de las siguientes afirmaciones está justificada?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La probabilidad de que caiga boca arriba es 1/2, porque hay solo dos resultados posibles",
+          "esCorrecta": false,
+          "feedback": "Dos resultados no son necesariamente igual de probables: una tapa no es simétrica como una moneda. La regla «favorables sobre posibles» exige resultados igual de probables, y acá no se cumple; por eso se midió.",
+          "errorCatalogado": "usa-laplace-sin-equiprobabilidad"
+        },
+        {
+          "clave": "B",
+          "texto": "Si la tapa fuera equilibrada habría caído exactamente 100 veces boca arriba, así que la tapa está defectuosa",
+          "esCorrecta": false,
+          "feedback": "Ni siquiera una moneda equilibrada cae exactamente 100 de 200 veces: la frecuencia se acerca a la probabilidad, no calza justo. Lo que sí dicen los 200 lanzamientos es que la mejor estimación es 130/200, sea o no «defectuosa».",
+          "errorCatalogado": "espera-frecuencia-igual-a-teorica"
+        },
+        {
+          "clave": "C",
+          "texto": "La mejor estimación de la probabilidad de que caiga boca arriba es 13/20, porque la tapa no es simétrica y solo la frecuencia relativa puede estimarla",
+          "esCorrecta": true,
+          "feedback": "Correcto. No hay casos igual de probables que contar, así que la probabilidad se estima con la frecuencia relativa: 130/200 = 13/20, y con 200 lanzamientos es una estimación razonable."
+        },
+        {
+          "clave": "D",
+          "texto": "La probabilidad de que caiga boca arriba es 7/20, porque 70 de las 200 veces cayó boca abajo",
+          "esCorrecta": false,
+          "feedback": "70/200 = 7/20 es la frecuencia de boca ABAJO. La de boca arriba es la otra: 130/200 = 13/20. Las dos suman 1.",
+          "errorCatalogado": "confunde-evento-con-su-complemento"
+        }
+      ],
+      "solucion": "La tapa no es un objeto simétrico, así que sus dos resultados no tienen por qué ser igual de probables y no se puede usar «favorables sobre posibles». Lo que hay es un experimento repetido 200 veces: la probabilidad de boca arriba se estima con la frecuencia relativa, 130/200 = 13/20 = 0,65. La de boca abajo es 70/200 = 7/20 = 0,35, y 0,65 + 0,35 = 1. Que no haya caído 100 veces de cada lado no prueba nada: con pocos ensayos la frecuencia no calza exactamente con la probabilidad, ni siquiera para una moneda. La afirmación justificada es la C. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Reglas de las probabilidades: solo para calibrar alcance (probabilidad de un evento), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (un curso de fotografía que sortea el orden de exposición con papeles numerados, un semáforo peatonal observado durante 40 días, una rifa de 50 números, los cupones de una app y una tapa de bebida lanzada 200 veces) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Las dos monedas con puntaje y los dos dados se usan solo en pasos de la lección como mecanismo canónico de enumeración, con la cuadrícula del espacio muestral construida para este módulo. Los números se eligieron para que cada distractor salga de un mecanismo del catálogo, para que ninguna alternativa repita el valor de otra ni el de una respuesta correcta del archivo, y para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/; todos se verificaron con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

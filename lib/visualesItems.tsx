@@ -4,6 +4,7 @@ import { IlustracionTransformacion } from "@/components/ilustraciones/Ilustracio
 import { IlustracionSemejanza } from "@/components/ilustraciones/IlustracionSemejanza";
 import { GraficoEstadistico } from "@/components/ilustraciones/GraficoEstadistico";
 import { VisualProbabilidad } from "@/components/ilustraciones/VisualProbabilidad";
+import { BloqueVisualizacion } from "@/components/bloques/BloqueVisualizacion";
 import type {
   DatosGraficoEstadistico,
   DatosSemejanza,
@@ -66,7 +67,10 @@ type EntradaVisual =
   | { transformacion: DatosTransformacion }
   | { semejanza: DatosSemejanza }
   | { grafico: DatosGraficoEstadistico }
-  | { probabilidad: DatosVisualProbabilidad };
+  | { probabilidad: DatosVisualProbabilidad }
+  /* Tabla de doble entrada con totales, dibujada por la variante `tabla` de
+     BloqueVisualizacion: no hay componente de tabla aparte. */
+  | { tabla: { descripcion: string; columnas: string[]; filas: (string | number)[][] } };
 
 const VISUALES: Record<string, EntradaVisual> = {
   /* "Una recta pasa por los puntos (1, 2) y (3, 8)" — pide la pendiente */
@@ -262,6 +266,23 @@ const VISUALES: Record<string, EntradaVisual> = {
       ],
     },
   },
+
+  /* ---- reglas de probabilidades: el árbol, la tabla o la cuadrícula es el estímulo ---- */
+
+  /* Taller de serigrafía por turno y nivel, con totales: se pide «mañana o
+     avanzado», que no está escrito; el enunciado trae los mismos números. */
+  "probabilidad-l2-item-2": {
+    tabla: {
+      descripcion:
+        "Tabla de doble entrada del taller de serigrafía: turno mañana 12 inicial y 8 avanzado (20); turno tarde 10 inicial y 6 avanzado (16); totales 22 inicial, 14 avanzado, 36 en total.",
+      columnas: ["", "Nivel inicial", "Nivel avanzado", "Total"],
+      filas: [
+        ["Mañana", 12, 8, 20],
+        ["Tarde", 10, 6, 16],
+        ["Total", 22, 14, 36],
+      ],
+    },
+  },
 };
 
 /**
@@ -280,6 +301,14 @@ export function visualDeItem(itemId: string, textoTentativo?: string | null): Re
   if ("semejanza" in entrada) return <IlustracionSemejanza {...entrada.semejanza} />;
   if ("grafico" in entrada) return <GraficoEstadistico datos={entrada.grafico} />;
   if ("probabilidad" in entrada) return <VisualProbabilidad datos={entrada.probabilidad} />;
+  if ("tabla" in entrada) {
+    const { descripcion, columnas, filas } = entrada.tabla;
+    return (
+      <BloqueVisualizacion
+        bloque={{ tipo: "visualizacion", variante: "tabla", descripcion, datos: { columnas, filas } }}
+      />
+    );
+  }
 
   const m =
     textoTentativo && entrada.pendientePorTexto

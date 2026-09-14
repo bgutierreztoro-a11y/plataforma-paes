@@ -1,0 +1,692 @@
+{
+  "tipo": "leccion",
+  "id": "probabilidad-esto-o-esto-otro",
+  "moduloId": "reglas-de-probabilidades",
+  "titulo": "Regla aditiva de probabilidades",
+  "objetivo": "Calcular la probabilidad de «A o B»: sumando cuando los eventos no pueden ocurrir a la vez, y sumando y restando lo contado dos veces cuando sí pueden; usar la tabla de doble entrada para contar, y resolver «al menos uno» y «ninguno» como complementos.",
+  "tiempoEstimadoMin": 30,
+  "prerrequisitos": [
+    "Probabilidad como casos favorables sobre casos posibles, y complemento (Lección 1 de este módulo)",
+    "Tabla de doble entrada como conteo de dos características (Lección 1 del módulo Tablas y gráficos)"
+  ],
+  "conceptos": [
+    "eventos excluyentes: no pueden ocurrir a la vez; P(A o B) = P(A) + P(B)",
+    "eventos no excluyentes: pueden ocurrir a la vez; P(A o B) = P(A) + P(B) − P(A y B), porque lo común se contó dos veces",
+    "«A y B» (intersección): los casos que cumplen las dos condiciones",
+    "tabla de doble entrada: las celdas cuentan «A y B», los totales de fila y columna cuentan A y B",
+    "«ninguno de los dos» es el complemento de «A o B»; «al menos uno» es «A o B»",
+    "una probabilidad nunca supera 1: una suma que se pasa de 1 avisa que algo se contó dos veces"
+  ],
+  "_notasInternas": [
+    "L2 del módulo reglas-de-probabilidades (módulo #16). moduloId = reglas-de-probabilidades. Descriptor DEMRE (docs/temario-demre-m1-2027.md:131): 'Problemas que involucren la regla aditiva y multiplicativa de probabilidades en diversos contextos' (esta lección cubre la aditiva; la multiplicativa va en L3). Diseño: docs/diseno-modulo-reglas-de-probabilidades.md.",
+    "Catálogo canónico: content/errores/reglas-de-probabilidades.json. Ids que este archivo referencia: suma-sin-restar-interseccion, usa-producto-como-interseccion, multiplica-en-vez-de-sumar, lee-fila-equivocada-en-tabla, divide-por-total-de-fila, omite-ambos-en-al-menos-uno, resta-a-uno-un-solo-evento (nacen acá) y divide-por-desfavorables, asume-equiprobables-sin-enumerar (nacen en L1).",
+    "Dominio: un edificio de 30 departamentos (orientación norte o sur, piso alto o bajo; en la práctica, con balcón o sin balcón) del que una app elige uno al azar para la inspección mensual; los números del 1 al 30 de esa app (aplicación y consolidación); dos dados en la generalización (mecanismo canónico permitido en pasos de lección). Ítems: 20 tarjetas de una actividad de curso, un taller de serigrafía de 36 inscritos, lluvia de un fin de semana. Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas. Verificación de colisión pendiente (palabras clave en el doc de diseño).",
+    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (tablaDobleEntrada, probDesdeTabla, probUnionDesdeTabla, union, unionExcluyentes, complemento, probEvento, espacioDadoDoble, distintosEnValor): edificio: norte 16 (alto 9, bajo 7), sur 14 (alto 6, bajo 8), alto 15, bajo 15; norte o alto = 16 + 15 − 9 = 22 (22/30 = 11/15); ni norte ni alto = sur y bajo = 8 (8/30 = 4/15); 12 o 25 = 2/30 = 1/15. Balcón: norte 11 con y 5 sin, sur 7 con y 7 sin; con balcón 18, sin 12; balcón o sur = 18 + 14 − 7 = 25; ni balcón ni sur = norte sin balcón = 5 (5/30 = 1/6). Números 1 a 30: pares 15, múltiplos de 5: 6, ambos 3, par o múltiplo de 5: 18, ninguno 12; múltiplos de 3: 10, de 4: 7, de 12: 2, de 3 o de 4: 15 (1/2). Dados: suma 5 en 4 pares y suma 9 en 4 (8/36 = 2/9); 6 en el primero 6, en el segundo 6, en ambos 1: 11/36. Tarjetas: 6 + 5 = 11 de 20; 6/20 · 5/20 = 3/40; 11/20 − 3/40 = 19/40. Serigrafía: mañana 20 (inicial 12, avanzado 8), tarde 16 (inicial 10, avanzado 6), avanzado 14: mañana o avanzado = 20 + 14 − 8 = 26 (26/36 = 13/18); 34/36 = 17/18; 20 + 14 − 6 = 28 (7/9); 8/20 = 2/5. Lluvia: 0,6 + 0,5 = 1,1; 0,6 · 0,5 = 0,3; 1 − 0,6 = 0,4.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas numéricas {22; 9; 25; 18; 12} y de fracción (1/15, 11/36, 4/15, 1/6, 1/2, 11/20, 13/18) y de veredicto (ítem 3); distractores numéricos {31; 16; 1; 32; 21; 15} y de fracción (1/900, 1/14, 1/3, 1/36, 5/18, 7/15, 17/30, 7/30, 5/16, 2/5, 7/90, 22/45, 17/30, 3/40, 19/40, 2/3, 7/9, 17/18). Ningún distractor numérico coincide con una respuesta correcta; 2/5 aparece como distractor en la práctica (1 − 18/30) y en el ítem 2 (8/20) con mecanismos distintos y nunca como correcta.",
+    "Visuales: tabla de doble entrada con totales (descubrimiento y práctica, variante tabla existente), cuadrícula 6 × 6 con 'suma 5 o suma 9' marcado (8 de 36) y con '6 en el primer dado o en el segundo' marcado (11 de 36) en generalización; la segunda va después de la seleccion que pregunta ese valor. Ítem 2 con visual en lib/visualesItems.tsx (la tabla del taller de serigrafía, con totales): la tabla es el estímulo y el enunciado trae los mismos números en prosa; la probabilidad pedida no está escrita.",
+    "Sin auditoria.constante: no hay una cifra única. La palabra 'intersección' y la escritura 'A y B' aparecen en descubrimiento, después de que el estudiante encontró los 9 contados dos veces; 'excluyentes' aparece en generalización.",
+    "P2: el paso consolidación nombra los caminos equivocados de suma-sin-restar-interseccion, usa-producto-como-interseccion, multiplica-en-vez-de-sumar y lee-fila-equivocada-en-tabla antes del correcto, y su bloque pregunta lleva multiplica-en-vez-de-sumar, usa-producto-como-interseccion y suma-sin-restar-interseccion en los distractores."
+  ],
+  "contextosNumericos": [
+    "curiosidad: edificio de 30 departamentos; 16 miran al norte (P = 16/30) y 15 están en piso alto (P = 15/30); predicción sobre 'norte o alto'",
+    "problema: la app elige uno de 30; probabilidad de que sea el 12 o el 25, 2/30 = 1/15",
+    "pensar/pistas: norte 16 (9 alto, 7 bajo), sur 14 (6 alto, 8 bajo); departamentos 'al norte o en piso alto', 22",
+    "descubrimiento: tabla de doble entrada del edificio; 16 + 15 = 31 contra 30; contados dos veces, 9; 16/30 + 15/30 − 9/30 = 22/30",
+    "generalizacion: dos dados, suma 5 o suma 9 en 8 de 36; 6 en el primer dado o en el segundo, 6 + 6 − 1 = 11 de 36; ni norte ni alto, 8/30 = 4/15",
+    "practica: balcón 18 (11 norte, 7 sur), sin balcón 12 (5 norte, 7 sur); 'balcón o sur' 25; 'ni balcón ni sur' 5/30 = 1/6",
+    "aplicacion: números del 1 al 30; pares 15, múltiplos de 5: 6, ambos 3; 'par o múltiplo de 5' 18; ninguno 12",
+    "consolidacion: números del 1 al 30; múltiplos de 3: 10, de 4: 7, de 12: 2; 'múltiplo de 3 o de 4' 15/30 = 1/2",
+    "itemsPAES: 20 tarjetas de una actividad de curso, 6 de pregunta, 9 de reto y 5 de castigo (11/20); taller de serigrafía de 36 con mañana 20 (12 inicial, 8 avanzado) y tarde 16 (10 inicial, 6 avanzado) (13/18); lluvia 0,6 el sábado y 0,5 el domingo"
+  ],
+  "pasos": [
+    {
+      "tipo": "curiosidad",
+      "titulo": "Norte o piso alto",
+      "_notasInternas": [
+        "Sin regla: predicción sobre P(norte o alto) a partir de P(norte) = 16/30 y P(alto) = 15/30. La suma 31/30 es la respuesta esperable y no se corrige acá: la corrige el descubrimiento."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Un edificio tiene **30 departamentos**. Cada mes, una app elige **uno al azar** para una inspección, y todos tienen la misma chance.\n\nDe los 30, **16 miran al norte** y **15 están en piso alto**. Así que la probabilidad de que el elegido mire al norte es 16/30, y la de que esté en piso alto es 15/30."
+        },
+        {
+          "tipo": "prediccion",
+          "enunciado": "¿Cuál te parece que es la probabilidad de que el departamento elegido mire al norte **o** esté en piso alto?",
+          "tipoRespuesta": "seleccionSimple",
+          "opciones": [
+            "16/30 + 15/30 = 31/30",
+            "1, porque casi todos cumplen alguna de las dos",
+            "Menos que 31/30, porque hay departamentos que son las dos cosas",
+            "No se puede saber sin más datos"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esta lección es sobre la palabra **«o»**: qué pasa con las probabilidades cuando un evento se cumple si pasa una cosa **o** la otra. Hay un caso fácil y un caso con trampa, y la tabla de abajo los separa."
+        }
+      ]
+    },
+    {
+      "tipo": "problema",
+      "titulo": "El 12 o el 25",
+      "_notasInternas": [
+        "Seleccion: P(12 o 25) = 2/30 = 1/15. Distractores: 1/900 = 1/30 · 1/30 (multiplica-en-vez-de-sumar), 1/14 = 2/28 (divide-por-desfavorables). VerdaderoFalso: los dos eventos no pueden ocurrir a la vez (un solo departamento elegido)."
+      ],
+      "bloques": [
+        {
+          "tipo": "seleccion",
+          "enunciado": "Los departamentos están numerados del 1 al 30. ¿Cuál es la probabilidad de que la app elija **el 12 o el 25**?",
+          "opciones": [
+            {
+              "id": "un-quinceavo",
+              "texto": "2/30 = 1/15",
+              "esCorrecta": true,
+              "feedback": "Correcto. Dos departamentos cumplen (el 12 y el 25) entre 30 igual de probables: 2/30. También se puede ver como 1/30 + 1/30: la probabilidad del 12 más la del 25."
+            },
+            {
+              "id": "producto",
+              "texto": "1/30 · 1/30 = 1/900",
+              "esCorrecta": false,
+              "feedback": "Multiplicar da la probabilidad de que salga el 12 Y el 25 en dos elecciones distintas. Acá se elige un solo departamento, y sirve cualquiera de los dos: se suman, no se multiplican.",
+              "errorCatalogado": "multiplica-en-vez-de-sumar"
+            },
+            {
+              "id": "desfavorables",
+              "texto": "2/28 = 1/14",
+              "esCorrecta": false,
+              "feedback": "28 son los departamentos que NO sirven. La probabilidad compara los 2 que sirven con los 30 posibles, no con los 28 restantes.",
+              "errorCatalogado": "divide-por-desfavorables"
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "«Sale el 12» y «sale el 25» no pueden ocurrir a la vez, porque la app elige un solo departamento.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Cuando dos eventos no pueden pasar juntos, «uno o el otro» se cuenta sumando y no hay nada que se cuente dos veces. Guarda esa idea para el caso con trampa.",
+          "feedbackFalso": "La app elige un solo departamento por mes: no puede ser el 12 y el 25 al mismo tiempo. Los dos eventos no pueden ocurrir a la vez."
+        }
+      ]
+    },
+    {
+      "tipo": "pensar",
+      "titulo": "Norte o alto, contando",
+      "_notasInternas": [
+        "Numerica: departamentos 'al norte o en piso alto' = 9 + 7 + 6 = 22 (feedbackPorError 31 = 16 + 15, suma-sin-restar-interseccion; 16 = solo los del norte, sin id). Los datos van en prosa; la tabla aparece en el descubrimiento."
+      ],
+      "bloques": [
+        {
+          "tipo": "numerica",
+          "enunciado": "Ahora con todos los datos. De los 16 departamentos que miran al norte, 9 están en piso alto y 7 en piso bajo. De los 14 que miran al sur, 6 están en piso alto y 8 en piso bajo.",
+          "campos": [
+            {
+              "id": "departamentosNorteOAlto",
+              "etiqueta": "¿Cuántos departamentos miran al norte o están en piso alto (o las dos cosas)?",
+              "respuestaCorrecta": 22,
+              "unidad": "departamentos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "departamentosNorteOAlto",
+              "valorObtenido": 31,
+              "mensaje": "16 + 15 = 31, pero el edificio tiene 30 departamentos: es imposible que 31 cumplan. Algunos se contaron dos veces. ¿Cuáles?",
+              "errorCatalogado": "suma-sin-restar-interseccion"
+            },
+            {
+              "campoId": "departamentosNorteOAlto",
+              "valorObtenido": 16,
+              "mensaje": "16 son solo los que miran al norte. También cumplen los que están en piso alto aunque miren al sur: hay 6 de esos."
+            }
+          ],
+          "feedbackPorDefecto": "Cumplen los que miran al norte (en piso alto o bajo) y además los del sur que están en piso alto. Cuenta grupo por grupo: norte alto, norte bajo, sur alto."
+        }
+      ]
+    },
+    {
+      "tipo": "pistas",
+      "titulo": "Pistas para no contar dos veces",
+      "_notasInternas": [
+        "Mismo campo del paso 3. El nivel 3 nombra los tres grupos sin sumarlos."
+      ],
+      "bloques": [
+        {
+          "tipo": "pistas",
+          "condicionActivacion": "ambos",
+          "niveles": [
+            {
+              "nivel": 1,
+              "texto": "Un departamento cumple si mira al norte, o si está en piso alto, o si tiene las dos cosas. Pero cada departamento se cuenta una sola vez."
+            },
+            {
+              "nivel": 2,
+              "texto": "Separa los 30 en cuatro grupos: norte alto (9), norte bajo (7), sur alto (6) y sur bajo (8). Suman 30. ¿Cuáles de los cuatro grupos cumplen?"
+            },
+            {
+              "nivel": 3,
+              "texto": "Cumplen norte alto, norte bajo y sur alto. El único grupo que no cumple es sur bajo. Suma los tres que cumplen, o resta el que no cumple a 30."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "descubrimiento",
+      "titulo": "Los contados dos veces",
+      "_notasInternas": [
+        "Descubrimiento del módulo: 16 + 15 = 31 > 30; los 9 del norte en piso alto se contaron dos veces; 16 + 15 − 9 = 22. Tabla de doble entrada con totales (variante tabla existente). Numerica: contados dos veces = 9 (feedbackPorError 1 = 31 − 30, sin id). Seleccion sobre cómo corregir (opciones conceptuales sin id). VerdaderoFalso: 16/30 + 15/30 − 9/30 = 22/30. El nombre 'A y B' aparece al final."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Los 30 departamentos, ordenados en una tabla: cada fila es una orientación, cada columna un tipo de piso, y los totales están en el borde."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de doble entrada de los 30 departamentos: filas norte y sur, columnas piso alto y piso bajo, con totales. Norte: 9 alto, 7 bajo, total 16. Sur: 6 alto, 8 bajo, total 14. Totales por columna: 15 alto, 15 bajo; total general 30.",
+          "datos": {
+            "columnas": ["", "Piso alto", "Piso bajo", "Total"],
+            "filas": [
+              ["Norte", 9, 7, 16],
+              ["Sur", 6, 8, 14],
+              ["Total", 15, 15, 30]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Si sumas el total de la fila «Norte» (16) con el total de la columna «Piso alto» (15) da 31, uno más que el edificio. Mira la tabla y encuentra la celda que entró en las dos sumas.",
+          "campos": [
+            {
+              "id": "contadosDosVeces",
+              "etiqueta": "¿Cuántos departamentos se contaron dos veces?",
+              "respuestaCorrecta": 9,
+              "unidad": "departamentos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "contadosDosVeces",
+              "valorObtenido": 1,
+              "mensaje": "31 − 30 = 1 dice cuánto se pasó la suma del total del edificio, no cuántos se contaron dos veces. Los contados dos veces son una celda completa de la tabla: la que está en la fila Norte y en la columna Piso alto a la vez."
+            }
+          ],
+          "feedbackPorDefecto": "La fila Norte suma 9 + 7. La columna Piso alto suma 9 + 6. El 9 está en las dos sumas: esa celda son los departamentos que miran al norte Y están en piso alto."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cómo se corrige la suma 16 + 15 para contar cada departamento una sola vez?",
+          "opciones": [
+            {
+              "id": "restar-nueve",
+              "texto": "Restando los 9 que están en las dos sumas: 16 + 15 − 9 = 22",
+              "esCorrecta": true,
+              "feedback": "Correcto. Los 9 del norte en piso alto entraron una vez por la fila y otra por la columna; se restan una vez y quedan contados una sola vez. Comprobación: 9 + 7 + 6 = 22."
+            },
+            {
+              "id": "restar-uno",
+              "texto": "Restando 1, porque la suma se pasó de 30 por 1",
+              "esCorrecta": false,
+              "feedback": "Que se pase por 1 es una casualidad de estos números. Lo que sobra son los 9 contados dos veces, no la diferencia con el total: 16 + 15 − 9 = 22, y 22 sí es menor que 30."
+            },
+            {
+              "id": "dividir",
+              "texto": "Dividiendo 31 por 2, porque todo se contó dos veces",
+              "esCorrecta": false,
+              "feedback": "No todo se contó dos veces: solo los 9 que miran al norte y están en piso alto. Los 7 del norte en piso bajo y los 6 del sur en piso alto se contaron una vez cada uno."
+            }
+          ]
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "La probabilidad de que el departamento elegido mire al norte o esté en piso alto es 16/30 + 15/30 − 9/30 = 22/30.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. Es lo mismo que contaste, dividido por 30: se suman las dos probabilidades y se resta la de los que cumplen las dos cosas.",
+          "feedbackFalso": "Vuelve al conteo: 22 departamentos cumplen entre 30, o sea 22/30. Y 22 = 16 + 15 − 9, así que 22/30 = 16/30 + 15/30 − 9/30."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Esa celda del medio, los departamentos que cumplen **las dos condiciones a la vez**, se escribe **«A y B»** (también se dice **intersección**). Es lo que la suma cuenta dos veces, y por eso se resta una vez."
+        }
+      ]
+    },
+    {
+      "tipo": "generalizacion",
+      "titulo": "Sumar, y restar lo común",
+      "_notasInternas": [
+        "Regla aditiva en las dos versiones, con dos dados como ilustración canónica. Cuadrícula 1: suma 5 o suma 9 (excluyentes, 8 de 36). Seleccion: P(6 en el primero o en el segundo) = 11/36; distractores 1/3 = 12/36 (suma-sin-restar-interseccion), 5/18 = 10/36 (omite-ambos-en-al-menos-uno), 1/36 (multiplica-en-vez-de-sumar). Cuadrícula 2 con los 11 marcados va después de la seleccion. Seleccion: ni norte ni alto = 8/30 = 4/15; distractores 7/15 = 1 − 16/30 (resta-a-uno-un-solo-evento), 17/30 = 1 − 13/30 (omite-ambos-en-al-menos-uno)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La regla, en sus dos versiones.\n\n- Si A y B **no pueden ocurrir a la vez** (se dice que son **excluyentes**), nada se cuenta dos veces:\n\n**P(A o B) = P(A) + P(B)**\n\n- Si A y B **sí pueden ocurrir a la vez**, lo común entra en las dos sumas y se resta una vez:\n\n**P(A o B) = P(A) + P(B) − P(A y B)**\n\nLa segunda sirve siempre: cuando son excluyentes, P(A y B) = 0 y queda la primera.\n\nCon dos dados se ve en la cuadrícula. «Suma 5» y «suma 9» son excluyentes (ninguna celda suma las dos cosas): 4 celdas + 4 celdas = 8 celdas, 8/36."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "Cuadrícula de 6 por 6 de dos dados con la suma en cada celda; marcadas las cuatro celdas que suman 5 y las cuatro que suman 9, sin superposición: 8 de 36.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["1", "2", "3", "4", "5", "6"],
+            "columnas": ["1", "2", "3", "4", "5", "6"],
+            "rotuloFilas": "Primer dado",
+            "rotuloColumnas": "Segundo dado",
+            "celdas": [
+              ["2", "3", "4", "5", "6", "7"],
+              ["3", "4", "5", "6", "7", "8"],
+              ["4", "5", "6", "7", "8", "9"],
+              ["5", "6", "7", "8", "9", "10"],
+              ["6", "7", "8", "9", "10", "11"],
+              ["7", "8", "9", "10", "11", "12"]
+            ],
+            "marcadas": [[0, 3], [1, 2], [2, 1], [3, 0], [2, 5], [3, 4], [4, 3], [5, 2]],
+            "contador": { "marcadas": 8, "total": 36 },
+            "rotuloEvento": "Suma 5 o suma 9"
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Ahora dos eventos que sí pueden ocurrir a la vez: «el primer dado muestra 6» y «el segundo dado muestra 6». ¿Cuál es la probabilidad de que el primero muestre 6 **o** el segundo muestre 6?",
+          "opciones": [
+            {
+              "id": "un-tercio",
+              "texto": "6/36 + 6/36 = 12/36 = 1/3",
+              "esCorrecta": false,
+              "feedback": "La fila del 6 tiene 6 celdas y la columna del 6 tiene 6 celdas, pero la celda (6, 6) está en las dos: se contó dos veces. Hay que restarla una vez.",
+              "errorCatalogado": "suma-sin-restar-interseccion"
+            },
+            {
+              "id": "once-treintaiseisavos",
+              "texto": "6/36 + 6/36 − 1/36 = 11/36",
+              "esCorrecta": true,
+              "feedback": "Correcto. 6 celdas en la fila del 6, 6 en la columna del 6, y (6, 6) está en las dos: 6 + 6 − 1 = 11 celdas de 36. Mira la cuadrícula de abajo."
+            },
+            {
+              "id": "cinco-dieciochoavos",
+              "texto": "5/36 + 5/36 = 10/36 = 5/18",
+              "esCorrecta": false,
+              "feedback": "Contaste las celdas donde solo uno de los dados muestra 6 (5 en la fila y 5 en la columna) y dejaste fuera la (6, 6). Pero «el primero o el segundo» también se cumple cuando los dos muestran 6: son 11 celdas.",
+              "errorCatalogado": "omite-ambos-en-al-menos-uno"
+            },
+            {
+              "id": "un-treintaiseisavo",
+              "texto": "1/6 · 1/6 = 1/36",
+              "esCorrecta": false,
+              "feedback": "1/36 es la probabilidad de que los DOS dados muestren 6 (una sola celda). Con «o» sirve cualquiera de los dos: hay que sumar, no multiplicar.",
+              "errorCatalogado": "multiplica-en-vez-de-sumar"
+            }
+          ]
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "grafico",
+          "descripcion": "La misma cuadrícula de dos dados con la fila del 6 y la columna del 6 marcadas; la celda (6, 6) pertenece a las dos y se marca una sola vez: 11 de 36.",
+          "datos": {
+            "tipo": "cuadriculaEspacioMuestral",
+            "filas": ["1", "2", "3", "4", "5", "6"],
+            "columnas": ["1", "2", "3", "4", "5", "6"],
+            "rotuloFilas": "Primer dado",
+            "rotuloColumnas": "Segundo dado",
+            "celdas": [
+              ["2", "3", "4", "5", "6", "7"],
+              ["3", "4", "5", "6", "7", "8"],
+              ["4", "5", "6", "7", "8", "9"],
+              ["5", "6", "7", "8", "9", "10"],
+              ["6", "7", "8", "9", "10", "11"],
+              ["7", "8", "9", "10", "11", "12"]
+            ],
+            "marcadas": [[5, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [0, 5], [1, 5], [2, 5], [3, 5], [4, 5]],
+            "contador": { "marcadas": 11, "total": 36 },
+            "rotuloEvento": "Un 6 en el primero o en el segundo"
+          }
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Dos frases que aparecen mucho:\n\n- **«Al menos uno»** de los dos eventos es lo mismo que **«A o B»**.\n- **«Ninguno de los dos»** es el **complemento** de «A o B»: P(ninguno) = 1 − P(A o B).\n\nY una señal de alarma: si al sumar te da **más que 1**, algo se contó dos veces. Una probabilidad nunca supera 1."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "Volviendo al edificio: ¿cuál es la probabilidad de que el departamento elegido **no** mire al norte **ni** esté en piso alto?",
+          "opciones": [
+            {
+              "id": "cuatro-quinceavos",
+              "texto": "1 − 22/30 = 8/30 = 4/15",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Ni norte ni alto» es el complemento de «norte o alto»: 1 − 22/30 = 8/30. En la tabla son los 8 del sur en piso bajo."
+            },
+            {
+              "id": "siete-quinceavos",
+              "texto": "1 − 16/30 = 14/30 = 7/15",
+              "esCorrecta": false,
+              "feedback": "1 − 16/30 solo descuenta los que miran al norte: quedan los 14 del sur, pero 6 de ellos están en piso alto y también hay que descontarlos. El complemento se toma sobre «norte o alto» completo, 22/30.",
+              "errorCatalogado": "resta-a-uno-un-solo-evento"
+            },
+            {
+              "id": "diecisiete-treintavos",
+              "texto": "1 − 13/30 = 17/30",
+              "esCorrecta": false,
+              "feedback": "13 son los que cumplen exactamente una de las dos (7 norte bajo + 6 sur alto), pero los 9 que cumplen las dos también cumplen «norte o alto». Son 22, y el complemento es 1 − 22/30.",
+              "errorCatalogado": "omite-ambos-en-al-menos-uno"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Con balcón o al sur",
+      "_notasInternas": [
+        "Segunda tabla del edificio: balcón. Norte 11 con y 5 sin; sur 7 con y 7 sin; con balcón 18, sin 12. Numerica: 'balcón o sur' = 18 + 14 − 7 = 25 (feedbackPorError 32 = 18 + 14, suma-sin-restar-interseccion). Seleccion: 'ni balcón ni sur' = norte sin balcón = 5/30 = 1/6; distractores 7/30 (lee-fila-equivocada-en-tabla: sur sin balcón), 5/16 (divide-por-total-de-fila), 2/5 = 1 − 18/30 (resta-a-uno-un-solo-evento). Opciones en orden creciente por valor."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "El mismo edificio, ahora clasificado por otra característica: si el departamento tiene **balcón**."
+        },
+        {
+          "tipo": "visualizacion",
+          "variante": "tabla",
+          "descripcion": "Tabla de doble entrada de los 30 departamentos: filas norte y sur, columnas con balcón y sin balcón, con totales. Norte: 11 con balcón, 5 sin, total 16. Sur: 7 con balcón, 7 sin, total 14. Totales por columna: 18 con balcón, 12 sin; total general 30.",
+          "datos": {
+            "columnas": ["", "Con balcón", "Sin balcón", "Total"],
+            "filas": [
+              ["Norte", 11, 5, 16],
+              ["Sur", 7, 7, 14],
+              ["Total", 18, 12, 30]
+            ]
+          }
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Cuenta con la tabla.",
+          "campos": [
+            {
+              "id": "departamentosBalconOSur",
+              "etiqueta": "¿Cuántos departamentos tienen balcón o miran al sur?",
+              "respuestaCorrecta": 25,
+              "unidad": "departamentos"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "departamentosBalconOSur",
+              "valorObtenido": 32,
+              "mensaje": "18 + 14 = 32 supera los 30 departamentos: los 7 del sur con balcón entraron en las dos sumas. Réstalos una vez.",
+              "errorCatalogado": "suma-sin-restar-interseccion"
+            }
+          ],
+          "feedbackPorDefecto": "Total con balcón (18) más total del sur (14), menos la celda que está en los dos (sur con balcón, 7). O al revés: todos menos los que no cumplen, que son los del norte sin balcón."
+        },
+        {
+          "tipo": "seleccion",
+          "enunciado": "¿Cuál es la probabilidad de que el departamento elegido **no** tenga balcón **ni** mire al sur?",
+          "opciones": [
+            {
+              "id": "un-sexto",
+              "texto": "5/30 = 1/6",
+              "esCorrecta": true,
+              "feedback": "Correcto. «Ni balcón ni sur» son los del norte sin balcón: la celda 5, sobre los 30 del edificio. También: 1 − 25/30 = 5/30."
+            },
+            {
+              "id": "siete-treintavos",
+              "texto": "7/30",
+              "esCorrecta": false,
+              "feedback": "7 es la celda «sur sin balcón», pero esos departamentos SÍ miran al sur. Los que no tienen balcón ni miran al sur están en la fila Norte: 5.",
+              "errorCatalogado": "lee-fila-equivocada-en-tabla"
+            },
+            {
+              "id": "cinco-dieciseisavos",
+              "texto": "5/16",
+              "esCorrecta": false,
+              "feedback": "La celda es la correcta (5), pero se dividió por los 16 del norte. La app elige entre los 30 departamentos del edificio, así que el total es 30.",
+              "errorCatalogado": "divide-por-total-de-fila"
+            },
+            {
+              "id": "dos-quintos",
+              "texto": "1 − 18/30 = 12/30 = 2/5",
+              "esCorrecta": false,
+              "feedback": "1 − 18/30 descuenta solo los que tienen balcón. De los 12 que quedan, 7 miran al sur y también hay que descontarlos: el complemento se toma sobre «balcón o sur» completo, 25/30.",
+              "errorCatalogado": "resta-a-uno-un-solo-evento"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "aplicacion",
+      "titulo": "Par o múltiplo de 5",
+      "_notasInternas": [
+        "Números del 1 al 30: pares 15, múltiplos de 5: 6, ambos (10, 20, 30): 3. 'Par o múltiplo de 5' = 15 + 6 − 3 = 18 (feedbackPorError 21, suma-sin-restar-interseccion); 'ni par ni múltiplo de 5' = 30 − 18 = 12 (feedbackPorError 15 = 30 − 15, resta-a-uno-un-solo-evento). VerdaderoFalso: las dos probabilidades suman 1."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "La misma app, pero ahora solo importa el **número** del departamento elegido, del 1 al 30. Dos eventos: «el número es **par**» (15 números) y «el número es **múltiplo de 5**» (5, 10, 15, 20, 25 y 30: 6 números). Algunos números son las dos cosas."
+        },
+        {
+          "tipo": "numerica",
+          "enunciado": "Cuenta.",
+          "campos": [
+            {
+              "id": "numerosParOMultiploCinco",
+              "etiqueta": "¿Cuántos números del 1 al 30 son pares o múltiplos de 5?",
+              "respuestaCorrecta": 18,
+              "unidad": "números"
+            },
+            {
+              "id": "numerosNiParNiMultiploCinco",
+              "etiqueta": "¿Cuántos no son ni pares ni múltiplos de 5?",
+              "respuestaCorrecta": 12,
+              "unidad": "números"
+            }
+          ],
+          "feedbackPorError": [
+            {
+              "campoId": "numerosParOMultiploCinco",
+              "valorObtenido": 21,
+              "mensaje": "15 + 6 = 21 cuenta dos veces los múltiplos de 5 que son pares: 10, 20 y 30. Réstalos una vez.",
+              "errorCatalogado": "suma-sin-restar-interseccion"
+            },
+            {
+              "campoId": "numerosNiParNiMultiploCinco",
+              "valorObtenido": 15,
+              "mensaje": "30 − 15 descuenta solo los pares. De los 15 impares que quedan, 5, 15 y 25 son múltiplos de 5 y también hay que descontarlos.",
+              "errorCatalogado": "resta-a-uno-un-solo-evento"
+            }
+          ],
+          "feedbackPorDefecto": "Pares o múltiplos de 5: suma los 15 pares y los 6 múltiplos de 5, y resta los que están en las dos listas (10, 20 y 30). Ni lo uno ni lo otro: lo que falta para llegar a 30."
+        },
+        {
+          "tipo": "verdaderoFalso",
+          "enunciado": "P(par o múltiplo de 5) + P(ni par ni múltiplo de 5) = 1.",
+          "respuestaCorrecta": true,
+          "feedbackVerdadero": "Exacto. 18/30 + 12/30 = 30/30 = 1. «Ninguno de los dos» es el complemento de «al menos uno de los dos», y un complemento siempre completa el 1.",
+          "feedbackFalso": "Cada número del 1 al 30 cumple «par o múltiplo de 5» o no lo cumple: 18 + 12 = 30. Las dos probabilidades suman 30/30 = 1."
+        }
+      ]
+    },
+    {
+      "tipo": "reflexion",
+      "titulo": "Cuándo restar",
+      "bloques": [
+        {
+          "tipo": "abierta",
+          "enunciado": "Explica con tus palabras cómo decides, antes de calcular P(A o B), si vas a restar algo después de sumar.",
+          "mostrarRespuestaModelo": true,
+          "respuestaModelo": "Me pregunto si hay casos que cumplen A y B al mismo tiempo. Si no puede haber (el 12 y el 25, suma 5 y suma 9), sumo y listo. Si puede haber (norte y piso alto, par y múltiplo de 5), esos casos entran en las dos sumas y los resto una vez. Una pista rápida: si la suma da más que 1, seguro hay que restar.",
+          "notaDiseno": "Busca que el estudiante verbalice la pregunta '¿pueden pasar las dos a la vez?' como el paso previo a elegir la versión de la regla."
+        },
+        {
+          "tipo": "texto",
+          "contenido": "Queda una pregunta abierta. Hasta acá, «o» dentro de un solo experimento. ¿Y si son **dos experimentos seguidos**: primero se elige un departamento, y después otro? ¿Se multiplican las probabilidades? La próxima lección parte de ahí."
+        }
+      ]
+    },
+    {
+      "tipo": "consolidacion",
+      "titulo": "Lo que te llevas",
+      "_notasInternas": [
+        "Síntesis + contraste P2 explícito con los caminos de suma-sin-restar-interseccion, usa-producto-como-interseccion, multiplica-en-vez-de-sumar y lee-fila-equivocada-en-tabla, seguido de un bloque pregunta: P(múltiplo de 3 o de 4) entre 1 y 30 = (10 + 7 − 2)/30 = 15/30 = 1/2; distractores 7/90 = 10/30 · 7/30 (multiplica-en-vez-de-sumar), 22/45 = 17/30 − 7/90 (usa-producto-como-interseccion), 17/30 (suma-sin-restar-interseccion). Orden creciente 7/90 < 22/45 < 1/2 < 17/30. Verificado con node -e (distintosEnValor true)."
+      ],
+      "bloques": [
+        {
+          "tipo": "texto",
+          "contenido": "Lo que te llevas:\n- **Excluyentes** (no pueden pasar a la vez): P(A o B) = P(A) + P(B).\n- **No excluyentes** (sí pueden): P(A o B) = P(A) + P(B) − P(A y B). Lo común se contó dos veces y se resta una.\n- La **tabla de doble entrada** cuenta por ti: las celdas son «A y B», los totales de fila y columna son A y B, y el total general es el denominador.\n- **«Al menos uno»** es «A o B»; **«ninguno»** es 1 − P(A o B).\n- Una probabilidad **nunca supera 1**.\n\nAntes de los ítems, cuatro caminos equivocados que conviene tener nombrados.\n\nMucha gente **suma P(A) + P(B) sin mirar si algo está en los dos**. Falla porque lo común se cuenta dos veces, y hasta puede dar más que 1. Lo que funciona es **sumar y restar lo que cumple las dos condiciones**.\n\nMucha gente, cuando ve la resta, **resta el producto P(A) · P(B)**, incluso si los eventos no pueden pasar a la vez. Falla porque lo que se resta es lo que está en las dos listas, y eso se cuenta, no se multiplica; si no hay nada común, no se resta nada. Lo que funciona es **contar «A y B» en la tabla o en la cuadrícula**.\n\nMucha gente **multiplica para «o»**. Falla porque el producto responde otra pregunta, la de que pasen las dos cosas. Lo que funciona es **sumar para «o»**.\n\nMucha gente **lee la celda equivocada de la tabla**. Falla porque cada celda es una combinación precisa de fila y columna, y la del lado cuenta otra cosa. Lo que funciona es **ubicar primero la fila y después la columna, y decir en palabras qué cuenta esa celda**.\n\nAhora, una pregunta para comprobarlo y tres ítems formato PAES para cerrar."
+        },
+        {
+          "tipo": "pregunta",
+          "enunciado": "La app elige al azar un número del 1 al 30. ¿Cuál es la probabilidad de que sea múltiplo de 3 o múltiplo de 4?",
+          "alternativas": [
+            {
+              "clave": "A",
+              "texto": "7/90",
+              "esCorrecta": false,
+              "feedback": "7/90 es 10/30 · 7/30: el producto responde a que el número sea múltiplo de 3 Y de 4 en dos elecciones distintas. Con «o» en una sola elección, se suman las probabilidades.",
+              "errorCatalogado": "multiplica-en-vez-de-sumar"
+            },
+            {
+              "clave": "B",
+              "texto": "22/45",
+              "esCorrecta": false,
+              "feedback": "22/45 sale de restar 10/30 · 7/30 como si fuera «múltiplo de 3 y de 4». Lo común no se multiplica, se cuenta: los múltiplos de 3 y de 4 a la vez son los múltiplos de 12, que entre 1 y 30 son dos (12 y 24).",
+              "errorCatalogado": "usa-producto-como-interseccion"
+            },
+            {
+              "clave": "C",
+              "texto": "1/2",
+              "esCorrecta": true,
+              "feedback": "Correcto. Múltiplos de 3: 10; múltiplos de 4: 7; de los dos (múltiplos de 12): 2. Entonces 10 + 7 − 2 = 15 números de 30, o sea 15/30 = 1/2."
+            },
+            {
+              "clave": "D",
+              "texto": "17/30",
+              "esCorrecta": false,
+              "feedback": "10 + 7 = 17 cuenta dos veces el 12 y el 24, que son múltiplos de 3 y de 4 a la vez. Hay que restarlos una vez: 17 − 2 = 15.",
+              "errorCatalogado": "suma-sin-restar-interseccion"
+            }
+          ],
+          "notaVerificacionMatematica": "Entre 1 y 30: múltiplos de 3 = 10, de 4 = 7, de 12 = 2; probEvento(1..30, m3 o m4) = 15/30 = 1/2 = union(10/30, 7/30, 2/30). Distractores: 10/30 · 7/30 = 7/90; 17/30 − 7/90 = 22/45; 17/30. distintosEnValor true; orden creciente 7/90 < 22/45 < 1/2 < 17/30. Verificado con node -e sobre lib/probabilidad.ts."
+        }
+      ]
+    }
+  ],
+  "itemsPAES": [
+    {
+      "id": "probabilidad-l2-item-1",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En una actividad de curso hay 20 tarjetas iguales boca abajo: 6 tienen una pregunta, 9 tienen un reto y 5 tienen un castigo. Se saca una tarjeta al azar. ¿Cuál es la probabilidad de que tenga una pregunta o un castigo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3/40",
+          "esCorrecta": false,
+          "feedback": "3/40 es 6/20 · 5/20. Multiplicar responde a sacar una pregunta Y un castigo en dos sacadas. Acá se saca una sola tarjeta y sirve cualquiera de los dos tipos: se suman.",
+          "errorCatalogado": "multiplica-en-vez-de-sumar"
+        },
+        {
+          "clave": "B",
+          "texto": "19/40",
+          "esCorrecta": false,
+          "feedback": "19/40 es 6/20 + 5/20 − 6/20 · 5/20. Se restó un producto como si una tarjeta pudiera tener pregunta y castigo a la vez, y no puede: cada tarjeta es de un solo tipo. No hay nada que restar.",
+          "errorCatalogado": "usa-producto-como-interseccion"
+        },
+        {
+          "clave": "C",
+          "texto": "11/20",
+          "esCorrecta": true,
+          "feedback": "Correcto. Pregunta y castigo no pueden salir en la misma tarjeta, así que P(pregunta o castigo) = 6/20 + 5/20 = 11/20."
+        },
+        {
+          "clave": "D",
+          "texto": "2/3",
+          "esCorrecta": false,
+          "feedback": "2/3 supone que los tres tipos de tarjeta son igual de probables (dos tipos de tres). No lo son: hay 6, 9 y 5 tarjetas. Lo igual de probable es cada tarjeta, y hay que contarlas: 6 + 5 de 20.",
+          "errorCatalogado": "asume-equiprobables-sin-enumerar"
+        }
+      ],
+      "solucion": "Casos posibles: las 20 tarjetas, igual de probables. «Pregunta» y «castigo» son excluyentes: una tarjeta es de un solo tipo, así que ninguna se cuenta dos veces. P(pregunta o castigo) = P(pregunta) + P(castigo) = 6/20 + 5/20 = 11/20. Comprobación por conteo: 6 + 5 = 11 tarjetas de 20. ✓"
+    },
+    {
+      "id": "probabilidad-l2-item-2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un taller de serigrafía tiene 36 personas inscritas, repartidas en dos turnos y dos niveles. Turno de la mañana: 12 de nivel inicial y 8 de nivel avanzado, 20 en total. Turno de la tarde: 10 de nivel inicial y 6 de nivel avanzado, 16 en total. En total hay 22 de nivel inicial y 14 de nivel avanzado. Se elige una persona inscrita al azar. ¿Cuál es la probabilidad de que sea del turno de la mañana o de nivel avanzado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2/5",
+          "esCorrecta": false,
+          "feedback": "2/5 es 8/20: los 8 de la mañana avanzados divididos por los 20 de la mañana. Pero se elige entre las 36 personas del taller, y además se pide «mañana o avanzado», no solo la celda de los que cumplen las dos.",
+          "errorCatalogado": "divide-por-total-de-fila"
+        },
+        {
+          "clave": "B",
+          "texto": "13/18",
+          "esCorrecta": true,
+          "feedback": "Correcto. Mañana 20 más avanzados 14 son 34, pero los 8 de la mañana avanzados están en las dos sumas: 20 + 14 − 8 = 26 personas de 36, o sea 26/36 = 13/18."
+        },
+        {
+          "clave": "C",
+          "texto": "7/9",
+          "esCorrecta": false,
+          "feedback": "7/9 es 28/36, y 28 = 20 + 14 − 6: se restaron los 6 avanzados de la TARDE. Los que entraron dos veces en la suma son los avanzados de la mañana, que son 8.",
+          "errorCatalogado": "lee-fila-equivocada-en-tabla"
+        },
+        {
+          "clave": "D",
+          "texto": "17/18",
+          "esCorrecta": false,
+          "feedback": "17/18 es 34/36, o sea 20 + 14 sin restar. Los 8 de la mañana que son avanzados se contaron dos veces: una en el turno y otra en el nivel. Hay que restarlos una vez.",
+          "errorCatalogado": "suma-sin-restar-interseccion"
+        }
+      ],
+      "solucion": "Sea A «turno de la mañana» (20 personas) y B «nivel avanzado» (14 personas). Pueden cumplirse a la vez: los 8 de la mañana de nivel avanzado son «A y B». Entonces A o B = 20 + 14 − 8 = 26 personas (o contando celdas: 12 + 8 + 6 = 26), y P(A o B) = 26/36 = 13/18. Comprobación por complemento: los que no cumplen son los de la tarde de nivel inicial, 10, y 1 − 10/36 = 26/36. ✓"
+    },
+    {
+      "id": "probabilidad-l2-item-3",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Según un pronóstico, la probabilidad de que llueva el sábado en una ciudad es 0,6 y la de que llueva el domingo es 0,5. Una persona concluye: «la probabilidad de que llueva el sábado o el domingo es 0,6 + 0,5 = 1,1, así que es seguro que llueve al menos uno de los dos días». ¿Es correcta su conclusión?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque 0,6 + 0,5 supera 1, y una probabilidad mayor que 1 significa que el evento es seguro",
+          "esCorrecta": false,
+          "feedback": "Una probabilidad nunca supera 1: que la suma dé 1,1 no significa «seguro», significa que algo se contó dos veces. Los fines de semana en que llueve los dos días entraron en las dos probabilidades.",
+          "errorCatalogado": "suma-sin-restar-interseccion"
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque la probabilidad de que llueva al menos uno de los dos días es 0,6 · 0,5 = 0,3",
+          "esCorrecta": false,
+          "feedback": "El producto 0,6 · 0,5 responde a otra pregunta: que llueva los DOS días (si fueran independientes). «Al menos uno» es «sábado o domingo», y para «o» se suma y se resta lo común, no se multiplica.",
+          "errorCatalogado": "multiplica-en-vez-de-sumar"
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque hay que restar la probabilidad de que llueva los dos días, y en todo caso ninguna probabilidad supera 1",
+          "esCorrecta": true,
+          "feedback": "Correcto. P(sábado o domingo) = 0,6 + 0,5 − P(los dos días). Sin conocer esa última probabilidad no se puede dar el número exacto, pero sí se sabe que el resultado no supera 1 y que la conclusión de «seguro» no está justificada."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque la probabilidad de que llueva al menos un día es 1 − 0,6 = 0,4",
+          "esCorrecta": false,
+          "feedback": "1 − 0,6 es la probabilidad de que NO llueva el sábado, un solo día. «Al menos un día» no es el complemento de un solo evento; su complemento es que no llueva ninguno de los dos días.",
+          "errorCatalogado": "resta-a-uno-un-solo-evento"
+        }
+      ],
+      "solucion": "«Llueve el sábado» y «llueve el domingo» pueden ocurrir a la vez, así que P(sábado o domingo) = P(sábado) + P(domingo) − P(sábado y domingo) = 0,6 + 0,5 − P(los dos días) = 1,1 − P(los dos días). Como P(los dos días) es al menos 0,1 (de lo contrario la unión superaría 1, lo que es imposible), la probabilidad de que llueva al menos un día es como mucho 1 y no se puede afirmar que sea seguro sin conocer P(los dos días). La conclusión no es correcta: la alternativa justificada es la C. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Reglas de las probabilidades: solo para calibrar alcance (regla aditiva), habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Enunciados, contextos (un edificio de 30 departamentos inspeccionado por una app, las tarjetas de una actividad de curso, un taller de serigrafía y el pronóstico de lluvia de un fin de semana) y la secuencia didáctica fueron creados desde cero por el autor del proyecto. Los dos dados se usan solo en el paso de generalización como mecanismo canónico, con la cuadrícula del espacio muestral construida para este módulo. Las tablas y los conjuntos de números se construyeron para que la suma de dos totales supere el total general (16 + 15 = 31 sobre 30), para que cada distractor salga de un mecanismo del catálogo con un valor distinto del de la correcta y de los otros distractores, y para no repetir ninguna escena ni conjunto de números de los contextosNumericos de content/; todos se verificaron con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}
