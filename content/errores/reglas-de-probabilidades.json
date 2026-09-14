@@ -1,0 +1,97 @@
+{
+  "unidad": "reglas-de-probabilidades",
+  "errores": [
+    {
+      "id": "reglas-de-probabilidades/divide-por-desfavorables",
+      "descripcion": "Calcular la probabilidad como casos favorables sobre casos desfavorables (posibles menos favorables) en vez de sobre el total de casos posibles: 12/38 en vez de 12/50 para 12 números ganadores de 50, 8/32 en vez de 8/40 para 8 cupones premiados de 40. La razón favorables : desfavorables no es una probabilidad."
+    },
+    {
+      "id": "reglas-de-probabilidades/asume-equiprobables-sin-enumerar",
+      "descripcion": "Tratar como igualmente probables resultados que no lo son, sin enumerar los pares que los producen: 1/3 para 'exactamente 1 punto' con dos monedas (hay 4 pares y 2 lo dan: 1/2), 1/11 para 'suma 7' con dos dados (6 de 36 pares: 1/6), o 2/3 para 'pregunta o castigo' porque son 2 de 3 tipos de tarjeta, sin mirar cuántas hay de cada tipo."
+    },
+    {
+      "id": "reglas-de-probabilidades/suma-resultados-en-vez-de-multiplicar-total",
+      "descripcion": "Tomar como total de resultados de dos experimentos la suma de los resultados de cada uno (6 + 6 = 12 pares con dos dados, 5 + 3 = 8 con día y sala, 4 + 4 = 8 con dos letras) en vez del producto (36, 15, 16): P(suma 7) = 6/12 en vez de 6/36."
+    },
+    {
+      "id": "reglas-de-probabilidades/resta-conteo-a-uno-en-complemento",
+      "descripcion": "Calcular P(no A) restando a 1 el número de casos favorables de A (1 − 4 = −3 para 'no mayor que 8' entre 12 papeles) en vez de restar la probabilidad (1 − 4/12 = 8/12). Una probabilidad nunca es negativa: lo que se resta a 1 es una fracción, no un conteo."
+    },
+    {
+      "id": "reglas-de-probabilidades/lee-conteo-como-porcentaje",
+      "descripcion": "Escribir el número de casos favorables como si fuera el porcentaje: 8 % para 8 cupones premiados de 40 (8/40 = 20 %), 26 % para 26 días en verde de 40 (65 %), 5 % para 5 audífonos fallados de 25 (20 %)."
+    },
+    {
+      "id": "reglas-de-probabilidades/usa-laplace-sin-equiprobabilidad",
+      "descripcion": "Asignar 1/2 a cada uno de dos resultados solo porque son dos (una tapa que cae boca arriba o boca abajo, una chinche que cae con la punta arriba o abajo), cuando el objeto no es simétrico y la probabilidad solo se estima con la frecuencia relativa de muchos ensayos: 130 de 200 lanzamientos dan 13/20, no 1/2."
+    },
+    {
+      "id": "reglas-de-probabilidades/espera-frecuencia-igual-a-teorica",
+      "descripcion": "Esperar que en pocos ensayos la frecuencia calce exactamente con la probabilidad (13 verdes justos en 20 días con un 65 %, 100 boca arriba justas en 200 lanzamientos con 1/2) y concluir que el objeto está cargado o que la probabilidad está mal cuando no calza. La frecuencia se acerca a la probabilidad con muchos ensayos, no la iguala en cada tanda."
+    },
+    {
+      "id": "reglas-de-probabilidades/cuenta-rango-restando-extremos",
+      "descripcion": "Contar los números de un tramo restando los extremos sin sumar uno: del 13 al 24 hay 24 − 13 = 11 en vez de 12; del 5 al 9 hay 9 − 5 = 4 en vez de 5."
+    },
+    {
+      "id": "reglas-de-probabilidades/confunde-evento-con-su-complemento",
+      "descripcion": "Entregar P(A) donde se pide P(no A), o al revés: 1/5 para 'que el audífono funcione' cuando 5 de 25 fallan (es 4/5), 5/8 para 'punta arriba' cuando 150 de 400 cayeron así (es 3/8), 19/25 para 'que gane' cuando gana con 12 de los 50 números (es 6/25)."
+    },
+    {
+      "id": "reglas-de-probabilidades/suma-sin-restar-interseccion",
+      "descripcion": "Sumar P(A) + P(B) para 'A o B' cuando A y B pueden ocurrir a la vez, sin restar los casos que están en los dos: 16 + 15 = 31 departamentos 'al norte o en piso alto' en un edificio de 30 (son 22, porque 9 se contaron dos veces); 0,6 + 0,5 = 1,1 para 'llueve el sábado o el domingo'; 14/40 + 18/40 = 32/40 para 'menor de 30 o con licencia' (es 26/40)."
+    },
+    {
+      "id": "reglas-de-probabilidades/usa-producto-como-interseccion",
+      "descripcion": "Restar P(A) · P(B) como si fuera 'A y B' en la regla aditiva, aunque los eventos sean excluyentes o dependan uno del otro: P(pregunta o castigo) = 6/20 + 5/20 − 6/20 · 5/20 = 19/40 (una tarjeta no puede ser las dos cosas, es 11/20); P(múltiplo de 3 o de 4) = 10/30 + 7/30 − 10/30 · 7/30 = 22/45 en vez de 15/30."
+    },
+    {
+      "id": "reglas-de-probabilidades/multiplica-en-vez-de-sumar",
+      "descripcion": "Multiplicar P(A) · P(B) donde se pide 'A o B': 1/30 · 1/30 = 1/900 para 'el departamento 12 o el 25' (es 2/30); 0,6 · 0,5 = 0,3 para 'llueve el sábado o el domingo'; 9/10 · 9/10 = 81/100 para 'al menos un aviso llega' (es 99/100)."
+    },
+    {
+      "id": "reglas-de-probabilidades/lee-fila-equivocada-en-tabla",
+      "descripcion": "Tomar de una tabla de doble entrada la celda o el total de la fila o columna que no corresponde al evento: entregar 7/30 (sur sin balcón) para 'ni balcón ni sur' (es norte sin balcón, 5/30); restar 12 (30 o más con licencia) como 'contados dos veces' en vez de 6 (menores de 30 con licencia); restar 6 (tarde avanzado) en vez de 8 (mañana avanzado)."
+    },
+    {
+      "id": "reglas-de-probabilidades/divide-por-total-de-fila",
+      "descripcion": "Dividir una celda por el total de su fila o columna en vez del total general de la tabla: 5/16 (norte sin balcón sobre los 16 del norte) para 'ni balcón ni sur' entre los 30 departamentos (es 5/30); 8/20 (mañana avanzado sobre los 20 de la mañana) para 'mañana y avanzado' entre 36 inscritos (es 8/36)."
+    },
+    {
+      "id": "reglas-de-probabilidades/omite-ambos-en-al-menos-uno",
+      "descripcion": "Contar en 'al menos uno' solo los casos con exactamente uno, dejando fuera los que cumplen los dos: 5 + 5 = 10 pares para 'un 6 en el primer dado o en el segundo' (son 11, el (6, 6) también cuenta); 3/8 para 'al menos un día de percusión en tres días' (es 7/8); 1/2 para 'al menos uno de vientos' entre dos sorteados (es 7/12)."
+    },
+    {
+      "id": "reglas-de-probabilidades/resta-a-uno-un-solo-evento",
+      "descripcion": "Calcular 'ninguno' (o 'al menos uno') como el complemento de uno solo de los eventos: 1 − 16/30 = 14/30 para 'ni al norte ni en piso alto' (es 8/30); 1 − 0,6 = 0,4 para 'llueve el sábado o el domingo'; 1 − 3/9 = 2/3 para 'al menos uno de vientos' entre dos sorteados (es 7/12)."
+    },
+    {
+      "id": "reglas-de-probabilidades/suma-en-vez-de-multiplicar-etapas",
+      "descripcion": "Sumar las probabilidades de dos etapas donde se pide que ocurran las dos: 1/5 + 1/3 = 8/15 para 'viernes y sala C' (es 1/15); 1/4 + 1/5 = 9/20 para 'rojo y estrella' (es 1/20); 1/5 + 1/5 = 2/5 para 'dos días seguidos la caja 3' (es 1/25)."
+    },
+    {
+      "id": "reglas-de-probabilidades/multiplica-como-independientes-sin-reposicion",
+      "descripcion": "Multiplicar dos veces la razón de la primera etapa en un sorteo sin reposición, como si la segunda etapa no cambiara: 3/9 · 3/9 = 1/9 para 'dos de vientos' entre 9 integrantes (es 3/9 · 2/8 = 1/12); 2/8 · 2/8 = 1/16 para 'dos de primero medio' entre 8 (es 1/28); 3/10 · 3/10 = 9/100 (es 1/15)."
+    },
+    {
+      "id": "reglas-de-probabilidades/baja-total-pero-no-favorables",
+      "descripcion": "Bajar en uno el total de la segunda etapa sin bajar los favorables de la clase ya extraída: 3/9 · 3/8 = 1/8 para 'dos de vientos' (es 3/9 · 2/8 = 1/12); 6/10 · 6/9 = 2/5 para 'dos con figura' entre 10 cápsulas (es 6/10 · 5/9 = 1/3); 2/8 · 2/7 = 1/14 (es 1/28)."
+    },
+    {
+      "id": "reglas-de-probabilidades/olvida-camino-simetrico",
+      "descripcion": "Contar un solo camino del árbol o de la cuadrícula cuando varios producen el evento: 3/9 · 6/8 = 1/4 para 'uno de vientos y uno de percusión' sin contar el orden inverso (es 1/2); 1/16 para 'las dos letras iguales' contando solo AA (son AA, BB, CC y DD: 4/16); 3 pares para 'suma 7' sin los simétricos (son 6)."
+    },
+    {
+      "id": "reglas-de-probabilidades/entrega-ninguno-en-vez-de-al-menos-uno",
+      "descripcion": "Entregar P(ninguno) donde se pide P(al menos uno), olvidando el 1 −: 1/8 para 'al menos un día de percusión en tres' (es 1 − 1/8 = 7/8); 5/12 para 'al menos uno de vientos' entre dos sorteados (es 7/12); 1/100 para 'al menos un aviso llega' (es 99/100)."
+    },
+    {
+      "id": "reglas-de-probabilidades/mantiene-denominador-sin-reposicion",
+      "descripcion": "Bajar en uno los favorables de la clase extraída pero dejar el total original en la segunda etapa: 3/9 · 2/9 = 2/27 para 'dos de vientos' (es 3/9 · 2/8 = 1/12); 3/10 · 2/10 = 3/50 para 'dos recién llegados' entre 10 (es 1/15); 5/7 · 4/7 = 20/49 para 'dos cargadores buenos' entre 7 (es 5/7 · 4/6 = 10/21)."
+    },
+    {
+      "id": "reglas-de-probabilidades/usa-una-sola-etapa",
+      "descripcion": "Entregar la probabilidad de una sola etapa como si fuera la de las dos: 1/4 para 'rojo y estrella' con 4 colores y 5 figuras (es 1/4 · 1/5 = 1/20); 1/5 para 'dos días seguidos la caja 3' entre 5 cajas (es 1/25)."
+    }
+  ]
+}
