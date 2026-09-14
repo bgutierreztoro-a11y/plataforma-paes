@@ -206,7 +206,7 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
 
 **0.4** En el schema de lecciones, `errorCatalogado` sube de opcional a **advertencia** del validador (no error), con reporte de cobertura. Sube a obligatorio solo cuando la cobertura llegue a 100%. Si se hace obligatorio antes, se rompen los 11 módulos publicados.
 
-**0.5** (Benja) Actualizar MOS §7.1. Hoy dice literal que ningún ítem DEMRE se copia al producto. Con el criterio del abogado, el material liberado de DEMRE es utilizable y el material de privados (preuniversitarios) no. Mientras el texto viejo siga ahí, CC y el auditor van a bloquear todo ítem proveniente de forma liberada.
+**0.5** (Benja) CERRADA 2026-09-14. MOS §7.1 y §7.3 actualizados, commit `b94bf14`. El material DEMRE liberado es utilizable como base directa de ítems de Advance declarando `fuenteOrigen: "demre-liberada"` + `referencia` + `notaAdaptacion`, los tres obligatorios por schema. La pregunta 1 del checklist de originalidad deja fuera a esos ítems y verifica atribución y adaptación real en vez de similitud. El material de privados sigue prohibido sin excepciones. Queda abierto el `<FECHA>` del criterio del abogado en la línea 103 del MOS.
 
 **Criterio de salida:** `npm run auditar` reporta cero hallazgos 🔴 en las categorías `colision-distractor-correcta` y `catalogo-divergente`. Reporte de cobertura de `errorCatalogado` disponible por módulo.
 
@@ -231,6 +231,8 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
    | funcion-cuadratica | 25.0% |
 
 **Deuda diferida, NO bloqueante de este cierre:** `cierre-v0.json` (cierre en producción de `funcion-lineal-afin` vía `lib/modulos.ts`) está en 0/24 distractores mapeados, y `l0-demo.json` en 0/9. Sin fecha de resolución todavía; queda como ítem abierto.
+
+Recuento del 2026-09-14: `npm run auditar` da 0 🔴 y 242 🟡, todos `colision-entre-archivos`. Inventario completo en `docs/analisis/hallazgos-f0.md` (commit fb20927).
 
 ---
 
