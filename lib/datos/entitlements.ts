@@ -57,6 +57,33 @@ export async function tieneAcceso(
 }
 
 /**
+ * Todas las vigencias de un estudiante para un producto, para que
+ * `lib/advance/temporada.ts` distinga "nunca contrató" de "su temporada
+ * terminó" (`EstadoAdvance`), cosa que el booleano de `tieneAcceso()` no puede
+ * decir. Solo fechas: el resto de la fila no hace falta y no se lee.
+ *
+ * Es la segunda lectura de la tabla y respeta la misma regla: quien pregunte
+ * por acceso lo hace acá, nunca con SQL propio. No hay filtro por fecha en la
+ * consulta a propósito, el corte por instante lo hace la función pura con un
+ * `ahora` inyectado, para que se pruebe sin reloj. Usa el SELECT que la 006
+ * ya otorga; sin migración nueva.
+ */
+export async function vigenciasDe(
+  usuarioId: string,
+  producto: string,
+): Promise<Pick<FilaEntitlement, "vigencia_desde" | "vigencia_hasta">[]> {
+  return consultar<Pick<FilaEntitlement, "vigencia_desde" | "vigencia_hasta">>(
+    "vigenciasDe",
+    `SELECT vigencia_desde, vigencia_hasta
+       FROM entitlements
+      WHERE usuario_id = $1
+        AND producto   = $2
+      ORDER BY vigencia_desde ASC`,
+    [usuarioId, producto],
+  );
+}
+
+/**
  * Otorga el acceso gratuito y deja su rastro en la bitácora. Lo llama el
  * webhook en `user.created` (PASO 3). Devuelve true solo si creó un
  * entitlement nuevo.
