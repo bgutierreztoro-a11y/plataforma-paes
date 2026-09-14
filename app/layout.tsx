@@ -4,6 +4,7 @@ import { Archivo } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/PostHogProvider";
 import { PieLegal } from "@/components/ui/PieLegal";
+import { enlacesLegales } from "@/lib/legal/cargar";
 import "./globals.css";
 
 /**
@@ -247,8 +248,12 @@ export default function RootLayout({
         </ClerkProvider>
         {/* Se oculta a sí mismo dentro de /leccion/[id] — modo foco, el mismo
             criterio que aplicaba la Navegacion que vivía acá. El texto vive en
-            un solo archivo: ver components/ui/PieLegal.tsx. */}
-        <PieLegal />
+            un solo archivo: ver components/ui/PieLegal.tsx.
+
+            Los enlaces legales se resuelven acá, en el servidor, porque salen
+            de disco (content/legal/) y PieLegal es cliente. Es una lectura
+            síncrona en build, no cambia el prerender de ninguna ruta. */}
+        <PieLegal enlaces={enlacesLegales()} />
       </body>
     </html>
   );

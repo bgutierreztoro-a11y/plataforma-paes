@@ -34,11 +34,18 @@ export default function PaginaTerminos() {
     <main className="mx-auto w-full max-w-prose px-4 py-12 sm:py-16">
       <header className="border-b border-strong pb-6">
         <h1 className="text-display-l text-primary">{documento.titulo}</h1>
+        {/* Sin fecha firmada no hay "Vigente desde": no se inventa una. */}
         <p className="mt-4 text-cuerpo-s text-secondary">
-          Versión {documento.version}. Vigente desde{" "}
-          <time dateTime={documento.vigenteDesde}>
-            {formatearVigencia(documento.vigenteDesde)}
-          </time>
+          Versión {documento.version}.
+          {documento.vigenteDesde !== null && (
+            <>
+              {" "}
+              Vigente desde{" "}
+              <time dateTime={documento.vigenteDesde}>
+                {formatearVigencia(documento.vigenteDesde)}
+              </time>
+            </>
+          )}
         </p>
       </header>
 

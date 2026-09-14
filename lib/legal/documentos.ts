@@ -3,8 +3,9 @@
  * y no en el markdown: el texto lo firma un abogado y no debería tener que
  * saber de front-matter para que la fecha o la versión cambien.
  *
- * `version` y `vigenteDesde` son provisorias hasta la firma del texto: se
- * corrigen a mano en este archivo, no en el .md.
+ * `publicado` es el gate: mientras sea false, la ruta responde 404 y el pie no
+ * enlaza el documento, exista o no el archivo. `version` y `vigenteDesde` se
+ * corrigen a mano en este archivo al firmar el texto, no en el .md.
  */
 export type SlugLegal = "terminos" | "privacidad";
 
@@ -12,26 +13,38 @@ export type DocumentoLegal = {
   slug: SlugLegal;
   titulo: string;
   version: string;
-  /** ISO yyyy-mm-dd. */
-  vigenteDesde: string;
+  /** ISO yyyy-mm-dd, o null si todavía no hay fecha de vigencia firmada. */
+  vigenteDesde: string | null;
   /** Ruta relativa a la raíz del proyecto. */
   archivo: string;
+  /** false: la ruta responde 404 y el pie no lo enlaza, aunque el archivo exista. */
+  publicado: boolean;
 };
 
 export const DOCUMENTOS_LEGALES: readonly DocumentoLegal[] = [
   {
     slug: "terminos",
     titulo: "Términos y condiciones",
-    version: "1.0",
-    vigenteDesde: "2026-09-14",
+    // La que declara la última línea del .md; no se inventa otra.
+    version: "5.0",
+    vigenteDesde: null,
     archivo: "content/legal/terminos.md",
+    // false mientras content/legal/terminos.md sea el borrador: trae el
+    // blockquote de revisión legal, 2 notas y 16 campos entre corchetes.
+    // Se pone en true en el mismo commit que reemplaza el .md por el texto
+    // firmado.
+    publicado: false,
   },
   {
     slug: "privacidad",
     titulo: "Política de privacidad",
     version: "1.0",
-    vigenteDesde: "2026-09-14",
+    vigenteDesde: null,
     archivo: "content/legal/privacidad.md",
+    // No tiene .md: /privacidad hoy es app/privacidad/page.tsx en JSX. El
+    // enlace fijo del pie sale de lib/legal/cargar.ts (enlacesLegales), no
+    // de este gate.
+    publicado: false,
   },
 ];
 
