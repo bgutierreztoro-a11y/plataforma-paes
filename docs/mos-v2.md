@@ -26,15 +26,15 @@ El proyecto son cuatro apuestas apiladas. Confundirlas es la fuente de casi todo
 3. **De producción:** podemos fabricar contenido de calidad Brilliant a costo viable. No se valida ahora. Es un problema real, pero de una empresa que ya vendió.
 4. **De sistema:** grafo de conocimiento, variantes generativas, multi-materia. No se valida ahora. Pertenece a los gates 3 en adelante.
 
-El MVP existe para las apuestas 1 y 2. Cualquier trabajo que sirva a las apuestas 3 o 4 antes del Gate 2 se rechaza por defecto.
+El MVP existe para las apuestas 1 y 2. Cualquier trabajo que sirva a las apuestas 3 o 4 antes del Gate 2 se rechaza por defecto. [C]
 
 ## 3. Cliente y segmento del piloto
 
-Usuario: estudiante de 4° medio que rinde la PAES a fines de 2026. Quedan menos de cinco meses; la temporada es ahora. Comprador frecuente: el apoderado. El mensaje de venta habla de puntaje y le sirve a ambos.
+Usuario: estudiante de 4° medio que rinde la PAES a fines de 2026. Quedan menos de cinco meses; la temporada es ahora. Pagador: el estudiante o el apoderado. El art. 3° ter de la Ley 19.496 contempla al alumno como pagador directo ("el alumno o quien efectúe el pago en su representación"). El mensaje de venta le sirve a ambos. [A]
 
 Decisión de segmento: la preventa apunta a 4° medio porque es quien paga y quien define el mercado real. El piloto de aprendizaje puede incluir 3° medio, pero un resultado positivo solo con 3° medio no valida la apuesta comercial. Si el método no funciona con estudiantes a cinco meses del examen, el problema es del método, no de los estudiantes.
 
-Canal inicial: confianza física. Colegio propio, compañeros de otros colegios, 2 o 3 profesores como puente. Es el canal que ya demostró convertir. TikTok e Instagram quedan para después: construir audiencia desde cero es una segunda startup y no se emprende ahora.
+Canal inicial: confianza física. Colegio propio, compañeros de otros colegios, 2 o 3 profesores como puente. Es el canal que ya demostró convertir. TikTok e Instagram quedan para después: construir audiencia desde cero es una segunda startup y no se emprende ahora. [C: elección de foco, no impedimento legal. La publicidad, pagada u orgánica, está permitida bajo las condiciones de §7.9]
 
 ## 4. Producto: especificación del MVP v1
 
@@ -63,13 +63,13 @@ Cada lección sigue la secuencia de 10 pasos (curiosidad, problema, pensar, pist
 
 ## 5. Modelo de negocio
 
-Pase de temporada, pago único: ~~"Plan PAES 2027"~~ **"Modo PAES"** (nombre reemplazado el 2026-08-02; el detalle del modelo —corte gratis/pago, momento de conversión, reglas de urgencia— vive en `docs/modelo-negocio.md`, que manda sobre esta sección en lo que ahí esté decidido). Sin suscripción mensual.
+Pase de temporada, pago único: ~~"Plan PAES 2027"~~ **"Modo PAES"** (nombre reemplazado el 2026-08-02; el detalle del modelo —corte gratis/pago, momento de conversión, reglas de urgencia— vive en `docs/modelo-negocio.md`, que manda sobre esta sección en lo que ahí esté decidido). Sin suscripción mensual. [C]
 
 Razones: (a) el churn es del 100% por diseño, todos rinden y se van; (b) los ingresos se concentran entre marzo y noviembre; (c) la única evidencia de pago que tenemos son transferencias únicas por acceso, no suscripciones. La matemática SaaS mensual no aplica a este mercado y se elimina del vocabulario del proyecto.
 
 Precio hipótesis para la cohorte fundadora: $19.990 CLP por el curso completo de funciones M1. Mínimo aceptable como señal: $15.000. Un precio simbólico no valida nada; ya lo comprobamos. Referencia de mercado: las familias gastan cientos de miles de pesos al año en preuniversitario, así que el precio no es la barrera, la confianza sí.
 
-Cobro en fase piloto: transferencia manual. Automatizar pagos antes de 30 clientes viola la prioridad 5 (simplicidad).
+Cobro en fase piloto: transferencia manual. Automatizar pagos antes de 30 clientes viola la prioridad 5 (simplicidad). [C]
 
 ## 6. Plan de validación
 
@@ -86,7 +86,7 @@ Dos tests en paralelo, no en secuencia. El orden real de riesgo es distribución
 - Una pregunta abierta al final: "¿qué cambiarías?".
 - Limitaciones asumidas: sin grupo de control y con N chico. El resultado es direccional, no una prueba científica, y así se reporta.
 
-Ninguna funcionalidad nueva entra al backlog sin responder: qué incertidumbre elimina, cómo se mide, y qué umbral la mataría.
+Ninguna funcionalidad nueva entra al backlog sin responder: qué incertidumbre elimina, cómo se mide, y qué umbral la mataría. [C]
 
 ## 7. Protocolo legal
 
@@ -110,19 +110,19 @@ Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, docu
 - Uso prohibido, sin excepciones: material de preuniversitarios y
   otros privados (Pedro de Valdivia, Cpech, SimplePAES, editoriales).
   No se copia, no se adapta, no se "retoca". Si se analiza, se aplica
-  el clean-room de 7.2 y se crea de nuevo.
+  el clean-room de 7.2 y se crea de nuevo. [A: Ley 17.336]
 - Un ítem DEMRE liberado usado en Fobos Advance entra como enunciado
   base, nunca como pieza terminada: el mapeo de cada distractor contra
   `catalogoErrores`, el `feedbackDescarte` y el `tiempoReferenciaSeg`
-  son creación propia y obligatoria.
+  son creación propia y obligatoria. [C]
 
-**7.2 Proceso clean-room en dos fases.**
+**7.2 Proceso clean-room en dos fases.** [C: la ley protege la expresión; el proceso es la forma propia de no cruzar esa línea]
 - Fase de análisis: de cualquier material de terceros se extrae solo la capa abstracta a un schema estructurado: conceptos, prerrequisitos, secuencia, habilidades, errores frecuentes, nivel de dificultad. Nunca texto, enunciados, ejemplos numéricos, diagramas ni soluciones.
 - Fase de creación: quien escribe contenido trabaja únicamente desde el schema y el temario DEMRE, sin el material original a la vista.
 - Registro de proveniencia: cada lección lleva una nota de qué fuentes de análisis se usaron y una declaración de originalidad.
-- La ley chilena de propiedad intelectual (17.336) protege la expresión, no las ideas, los métodos ni las secuencias pedagógicas. Aun así, sus excepciones son más estrechas que el fair use estadounidense, por eso la regla operativa es la del documento original: ante duda razonable, se descarta y se crea de nuevo.
+- La ley chilena de propiedad intelectual (17.336) protege la expresión, no las ideas, los métodos ni las secuencias pedagógicas. [A] Aun así, sus excepciones son más estrechas que el fair use estadounidense, por eso la regla operativa es la del documento original: ante duda razonable, se descarta y se crea de nuevo. [C]
 
-**7.3 Checklist de originalidad por lección, antes de publicar.**
+**7.3 Checklist de originalidad por lección, antes de publicar.** [C]
 1. ¿Algún enunciado o ejercicio es sustancialmente similar a una
    fuente **privada** (preuniversitario, editorial, competidor),
    aunque cambien palabras o números? El material DEMRE liberado
@@ -135,39 +135,64 @@ Objetivo honesto: no existe el riesgo legal cero. Existe riesgo minimizado, docu
 4. ¿Queda registrada la proveniencia?
 Si alguna respuesta es dudosa, el contenido no se publica.
 
-**7.4 Marcas.** "PAES" y "DEMRE" se usan solo de forma descriptiva ("preparación para la PAES"), nunca en el nombre del producto ni sugiriendo afiliación. Disclaimer permanente en el sitio: producto independiente, sin vínculo con DEMRE, la Universidad de Chile ni ningún preuniversitario.
+**7.4 Marcas.** "PAES" y "DEMRE" se usan solo de forma descriptiva ("preparación para la PAES"), nunca en el nombre del producto ni sugiriendo afiliación. [A: Ley 19.039] Disclaimer permanente en el sitio: producto independiente, sin vínculo con DEMRE, la Universidad de Chile ni ningún preuniversitario. [C]
 
 **7.5 Datos personales.** Los usuarios serán en su mayoría menores de 18. Reglas desde el día uno:
-- Minimización: para el piloto no se recolectan nombres completos, RUT ni datos sensibles. Analítica anonimizada.
+- Minimización: para el piloto no se recolectan nombres completos, RUT ni datos sensibles. Analítica anonimizada. [C: más estricto que lo que exige la ley]
 - Persistencia de progreso pedagógico (permitida desde la fase de cuentas, 2026-07-23). Se puede guardar el avance de aprendizaje del estudiante: id de lección, índice de paso, respuestas por item id, si la respuesta fue correcta, número de intento, tiempo por ítem y timestamps. Son datos de desempeño, no de identidad. Guardarlos es lo que permite medir el delta pre/post de la sección 6 más allá de una sola sesión, y es la razón por la que se levanta la restricción anterior. Sin cuenta se guardan en el dispositivo, en localStorage, bajo una única clave versionada. Con cuenta se guardan en el servidor asociados al user id opaco del proveedor de identidad. Si el almacenamiento local no está disponible, la aplicación funciona igual, sin persistir y sin romperse.
-- Frontera exacta de lo que se persiste: desempeño sí, identidad no. Queda prohibido guardar, tanto en el dispositivo como en el servidor de progreso, cualquiera de estos campos: nombre, apellido, email, RUT, fecha de nacimiento, colegio, curso, y cualquier texto libre escrito por el estudiante. Email y nombre existen únicamente en la tabla de usuarios que sincroniza el proveedor de identidad, y nunca salen de ahí hacia el dispositivo, la analítica ni los logs.
-- La analítica no cambia. Autocapture y session recording siguen desactivados. PostHog se mantiene en persistencia en memoria: la persistencia de progreso es de la aplicación, no de la analítica, y las dos no se mezclan. Si en algún momento se llama a identify(), es solo con el user id opaco del proveedor de identidad, nunca con email, nombre ni ninguna propiedad que permita identificar a la persona.
-- Consentimiento del apoderado para participantes menores de edad, por escrito aunque sea simple.
-- La nueva ley de protección de datos (21.719) entra en vigencia el 1 de diciembre de 2026, justo en nuestra primera temporada de venta, con una agencia fiscalizadora ya operativa y multas altas. Las empresas pequeñas reciben amonestación en el primer año en vez de multa, pero diseñamos como si aplicara completa: inventario de qué datos guardamos, dónde, para qué y por cuánto tiempo, más política de privacidad y términos publicados antes de cobrar a desconocidos.
+- Frontera exacta de lo que se persiste: desempeño sí, identidad no. Queda prohibido guardar, tanto en el dispositivo como en el servidor de progreso, cualquiera de estos campos: nombre, apellido, email, RUT, fecha de nacimiento, colegio, curso, y cualquier texto libre escrito por el estudiante. Email y nombre existen únicamente en la tabla de usuarios que sincroniza el proveedor de identidad, y nunca salen de ahí hacia el dispositivo, la analítica ni los logs. [C]
+- La analítica no cambia. Autocapture y session recording siguen desactivados. PostHog se mantiene en persistencia en memoria: la persistencia de progreso es de la aplicación, no de la analítica, y las dos no se mezclan. Si en algún momento se llama a identify(), es solo con el user id opaco del proveedor de identidad, nunca con email, nombre ni ninguna propiedad que permita identificar a la persona. [C]
+- Consentimiento del apoderado: no se exige. La Ley 21.719 art. 16 quáter trata
+  los datos personales de adolescentes de 14 a 17 con las mismas normas de
+  autorización que los de un adulto. Solo lo requieren los menores de 14, y los
+  datos sensibles de menores de 16, que no recolectamos. [A — ley citada.
+  Corrige el supuesto de la versión anterior de este documento.]
+- Lo que sí se mantiene: interés superior del adolescente, autonomía progresiva
+  y deber especial de cuidado. Las sanciones se agravan cuando hay datos de
+  menores de por medio. [A]
+- La nueva ley de protección de datos (21.719) entra en vigencia el 1 de diciembre de 2026, justo en nuestra primera temporada de venta, con una agencia fiscalizadora ya operativa y multas altas. Las empresas pequeñas reciben amonestación en el primer año en vez de multa, pero diseñamos como si aplicara completa: inventario de qué datos guardamos, dónde, para qué y por cuánto tiempo, más política de privacidad y términos publicados antes de cobrar a desconocidos. [A]
 
-**7.6 Formalización.** Antes de cobrar fuera del círculo cercano: inicio de actividades ante el SII y boleta por cada venta. Si algún fundador es menor de 18 años, los actos legales (cuentas, contratos, formalización) requieren la participación de un adulto responsable; resolver esto es parte del Gate 1, no un detalle para después.
+**7.6 Formalización.** Antes de cobrar fuera del círculo cercano: inicio de actividades ante el SII y boleta por cada venta. [A] Si algún fundador es menor de 18 años, los actos legales (cuentas, contratos, formalización) requieren la participación de un adulto responsable; resolver esto es parte del Gate 1, no un detalle para después. [D: el principio es de capacidad civil, pero el mecanismo concreto (SII con fundador menor) sigue en la lista de preguntas al abogado de `docs/modelo-negocio.md`; postura provisional: adulto responsable firma]
 
-**7.7 Contenido asistido por IA.** El contenido se crea con asistencia de IA pero con autoría y curaduría humana documentada (borradores, decisiones, revisiones). Eso fortalece nuestra posición de titularidad y de originalidad.
+**7.7 Contenido asistido por IA.** El contenido se crea con asistencia de IA pero con autoría y curaduría humana documentada (borradores, decisiones, revisiones). Eso fortalece nuestra posición de titularidad y de originalidad. [C]
 
-**7.8 Hito obligatorio.** Revisión con abogado o abogada de propiedad intelectual en Chile antes del lanzamiento público. No es requisito para el piloto por canal de confianza, sí para vender abierto. Una consulta acotada con este protocolo ya preparado es un gasto chico.
+**7.8 Hito obligatorio.** Revisión con abogado o abogada de propiedad intelectual en Chile antes del lanzamiento público. No es requisito para el piloto por canal de confianza, sí para vender abierto. Una consulta acotada con este protocolo ya preparado es un gasto chico. [C]
+
+**7.9 Marco del consumidor.** Somos educación no formal: la LPDC aplica en toda
+su extensión, sin la limitación que tienen los colegios formales. Obligaciones
+reales, todas [A]:
+- Informar el precio de forma detallada, transparente y sin inducir a error,
+  antes de cobrar. La obligación es mostrarlo bien, no esconderlo.
+- Publicidad adecuada al público objetivo. SERNAC trata a este segmento como
+  consumidor hipervulnerable: prohibida la presión, la urgencia fabricada y
+  las técnicas agresivas.
+- Cero cláusulas abusivas en los términos: nada de modificar, suspender o
+  terminar el servicio a discreción, ni renuncias anticipadas de derechos, ni
+  limitación de responsabilidad propia, ni mandatos en blanco, ni letra chica
+  que habilite un uso abusivo de los datos, ni trabas para reclamar.
+- Se cumple literalmente lo prometido en el contrato y en la publicidad.
+  Corolario: no se anuncia una unidad que no esté publicada.
+- Derecho a retracto, con devolución de lo no prestado.
+- Libertad total para fijar precio y modalidad de cobro. Lo único obligatorio
+  es informarlo con claridad.
 
 ## 8. Métricas e instrumentación
 
-PostHog con eventos por pantalla: inicio, respuesta por ítem, uso de pistas, abandono por paso, tiempo por lección. Métricas que importan en esta fase: delta pre/post, tasa de término, punto exacto de abandono, y solicitudes espontáneas de la lección siguiente. Métricas prohibidas por ahora: MRR, DAU, retención mensual. Miden un negocio que todavía no existe y contaminan las decisiones.
+PostHog con eventos por pantalla: inicio, respuesta por ítem, uso de pistas, abandono por paso, tiempo por lección. Métricas que importan en esta fase: delta pre/post, tasa de término, punto exacto de abandono, y solicitudes espontáneas de la lección siguiente. Métricas prohibidas por ahora: MRR, DAU, retención mensual. Miden un negocio que todavía no existe y contaminan las decisiones. [C]
 
 ## 9. Lo que no se construye todavía
 
-Pipeline industrial de descomposición de guías, grafo de conocimiento, motor de variantes, tutor LLM, pagos automatizados, dashboard del estudiante, repetición espaciada, gamificación, app móvil, M2 y otras materias, contenido en video. Cada uno de estos ítems necesita pasar un gate y justificar qué incertidumbre elimina.
+Pipeline industrial de descomposición de guías, grafo de conocimiento, motor de variantes, tutor LLM, pagos automatizados, dashboard del estudiante, repetición espaciada, gamificación, app móvil, M2 y otras materias, contenido en video. Cada uno de estos ítems necesita pasar un gate y justificar qué incertidumbre elimina. [C]
 
 **Excepción acotada: autenticación (gate cruzado el 2026-07-23).** El login sale de esta lista, pero solo en la forma acotada que se describe acá. Se permite una cuenta opcional, con email y código de verificación, sin login social, cuyo único propósito es (a) que el progreso pedagógico del estudiante sobreviva al cambio de dispositivo o al borrado del navegador, y (b) sostener una tabla de entitlements que distinga acceso gratuito, de cortesía y comprado. La incertidumbre que elimina es comercial: sin entitlements no se puede vender el ciclo PAES, y sin persistencia entre sesiones no se puede medir si un estudiante realmente completó el módulo o solo una sesión suelta.
 
-Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del login; nunca se muestra un muro de registro al entrar; la cuenta es opcional en todo momento y la aplicación completa debe funcionar sin ella. Los pagos automatizados siguen en la lista negra y esta excepción no los toca.
+Lo que la excepción NO autoriza: ningún contenido gratuito queda detrás del login; nunca se muestra un muro de registro al entrar; la cuenta es opcional en todo momento y la aplicación completa debe funcionar sin ella. Los pagos automatizados siguen en la lista negra y esta excepción no los toca. [C]
 
 **Excepción acotada: grafo de conocimiento (gate cruzado el 2026-08-02).** Se autoriza construir `lib/diagnostico/` como motor puro, sin UI, sin ítems reales y con el DAG de aristas vacías.
 
 Qué incertidumbre elimina: si el diagnóstico adaptativo es implementable como código determinista, con los casos límite resueltos, antes de comprometer semanas en escribir 48 ítems que dependen de él. Construir los ítems primero y descubrir después que el motor no los clasifica bien es el orden caro.
 
-Qué NO autoriza: aristas reales del DAG, ítems de diagnóstico, integración con `/camino`, cualquier UI. Cada una de esas necesita su propia firma.
+Qué NO autoriza: aristas reales del DAG, ítems de diagnóstico, integración con `/camino`, cualquier UI. Cada una de esas necesita su propia firma. [C]
 
 Condición de reversión: si al llegar a Gate 3 el motor no está integrado, se borra `lib/diagnostico/` completo. No se arrastra código muerto.
 
@@ -184,11 +209,16 @@ Condición de reversión: si al llegar a Gate 3 el motor no está integrado, se 
 
 ## 11. Reglas de trabajo
 
-1. Toda decisión debe reducir incertidumbre; si no la reduce, no se toma todavía.
-2. Orden de prioridades intacto: legal, validación, aprendizaje, UX, simplicidad, iteración, escalabilidad, optimización.
-3. Ninguna sesión de estrategia sin datos nuevos.
+1. Toda decisión debe reducir incertidumbre; si no la reduce, no se toma todavía. [C]
+2. Orden de prioridades intacto: legal, validación, aprendizaje, UX, simplicidad, iteración, escalabilidad, optimización. [C]
+3. Ninguna sesión de estrategia sin datos nuevos. [C]
 4. La evidencia previa no se borra con un reset de proyecto: lo único que la gente nos ha pagado hasta hoy fue material curado cercano al examen. Esa señal se respeta y por eso cada lección conecta con formato PAES.
-5. Este documento se actualiza solo cuando un gate se cruza o un test entrega resultados. No se reescribe por inquietud.
+5. Este documento se actualiza solo cuando un gate se cruza o un test entrega resultados. No se reescribe por inquietud. [C]
+6. Toda restricción se clasifica: A ley citada, B regla de plataforma, C elección
+   propia declarada, D supuesto sin verificar. Un D nunca bloquea: genera una
+   pregunta al abogado y una postura provisional. Lo prohibido por elección propia
+   (urgencia fabricada, culpa, vergüenza, mensajes directos en frío, promesas de
+   puntaje) se mantiene íntegro y se declara como C, no como impedimento legal.
 
 ## 12. Enmienda 1 (julio 2026) — gatillada por test de usuario
 
@@ -200,15 +230,15 @@ Se libera de §9:
 - Autenticación (ya construida; §9 quedó obsoleto).
 - Señales de progreso intra-lección y resumen de cierre.
 
-Sigue bloqueado (requiere Gate 3):
+Sigue bloqueado (requiere Gate 3): [C]
 - Ligas, ranking entre estudiantes, monedas, vidas, tiendas.
 - Rachas diarias y notificaciones de retención.
 - Dashboard del estudiante. Tutor IA. Repetición espaciada.
 
 Innegociable, sin cambios:
-- Ítems PAES = 4 alternativas A–D, respuesta única. La fidelidad al examen ES el producto.
-- Originalidad, revisión matemática, proveniencia, firma manual.
-- localStorage solo desempeño, nunca identidad.
+- Ítems PAES = 4 alternativas A–D, respuesta única. La fidelidad al examen ES el producto. [C]
+- Originalidad, revisión matemática, proveniencia, firma manual. [A en originalidad (17.336), C en el resto]
+- localStorage solo desempeño, nunca identidad. [C]
 
 ## 13. Enmienda 2 (28 de julio de 2026) — decisión de alcance de Benja, gatillada por la discrepancia de l3
 
