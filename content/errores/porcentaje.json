@@ -109,8 +109,7 @@
         "camino": "Dos descuentos, 35% y 40%, los multiplicas como 0,35 × 0,40 y dices que el descuento total es 14%.",
         "correcto": "Cada cambio es un factor sobre lo que queda: un descuento del p% es el factor 1 − p/100. Se multiplican esos factores, y el descuento total sale del complemento del producto.",
         "ejemplo": "Descuento del 35% y luego del 40%: factores 0,65 y 0,60, y 0,65 × 0,60 = 0,39. Se paga el 39%, el descuento total es 61%. Multiplicar 0,35 × 0,40 = 0,14 daría un descuento del 14%, menor que el primero solo."
-      },
-      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
+      }
     },
     {
       "id": "porcentaje/aplica-una-vez-cambio-repetido",
@@ -121,8 +120,7 @@
         "camino": "Lees «sube un 20% cada año durante 3 años» y aplicas el 20% una vez, o sumas 60% de una vez.",
         "correcto": "Cada periodo multiplica por el mismo factor. Con n periodos el factor total es (1 + p/100)ⁿ: se aplica una vez por periodo, sobre el valor ya modificado.",
         "ejemplo": "Un ahorro de 5.000 crece un 20% cada año durante 3 años: 5.000 × 1,20 × 1,20 × 1,20 = 5.000 × 1,728 = 8.640. Aplicar el 20% una sola vez da 6.000; sumar 60% de una vez da 8.000. Ninguno de los dos es el valor final."
-      },
-      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
+      }
     },
     {
       "id": "porcentaje/ignora-termino-fijo-al-comparar",
@@ -133,8 +131,7 @@
         "camino": "Una cuenta tiene cargo fijo más un valor por unidad, te piden qué porcentaje es una cuenta de otra y divides las unidades consumidas.",
         "correcto": "Primero se calcula cada total con el término fijo incluido; recién ahí se compara. El porcentaje entre totales no coincide con el porcentaje entre las partes variables cuando hay un término fijo.",
         "ejemplo": "Cuenta de agua: 2.500 fijos más 300 por m³. Con 15 m³ son 2.500 + 4.500 = 7.000; con 20 m³ son 2.500 + 6.000 = 8.500. La primera es 7.000 ÷ 8.500 ≈ 82,4% de la segunda. Dividir 15 ÷ 20 = 75% compara consumos, no cuentas."
-      },
-      "reservado": "Pendiente de uso en banco Advance de porcentaje, F2.1"
+      }
     }
   ]
 }

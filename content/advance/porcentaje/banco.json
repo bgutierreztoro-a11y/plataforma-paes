@@ -280,10 +280,10 @@
         },
         {
           "clave": "C",
-          "texto": "A × 0,09 × 0,28",
+          "texto": "A × 1,0252",
           "esCorrecta": false,
-          "errorCatalogado": "confunde-aumento-un-con-aumento-a",
-          "feedbackDescarte": "Esa lee «sube un 9%» como «queda en un 9%». Subir un 9% multiplica por 1,09, no por 0,09; lo mismo con el 28%."
+          "errorCatalogado": "multiplica-porcentajes-en-vez-de-factores",
+          "feedbackDescarte": "Esa multiplica los porcentajes, 0,09 × 0,28 = 0,0252, y lo lee como un alza total de 2,52%, menor que cualquiera de las dos. Lo que se multiplica son los factores, 1,09 × 1,28, no las partes que cambian."
         },
         {
           "clave": "D",
@@ -344,42 +344,44 @@
       "id": "adv-porcentaje-009",
       "unidadId": "porcentaje",
       "moduloId": "porcentaje",
-      "habilidad": "argumentar",
-      "dificultad": "media",
-      "tiempoReferenciaSeg": 120,
-      "enunciado": "Una cantidad pasó de 4.100 a 4.551. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una cuenta en una red social tenía 9.000 seguidores y subió un 30% al mes durante 3 meses. ¿Cuántos seguidores tiene al terminar el tercer mes?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Aumentó un 11%, porque 451 ÷ 4.100 = 0,11.",
-          "esCorrecta": true,
-          "feedbackDescarteIncorrecto": "Esta sí podía ser: la diferencia es 4.551 − 4.100 = 451, y 451 sobre el valor inicial de 4.100 da 0,11, o sea un 11%."
+          "texto": "11.700",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-una-vez-cambio-repetido",
+          "feedbackDescarte": "Esa es 9.000 × 1,3: aplica el 30% una sola vez. El alza se repite 3 meses, y cada una se aplica sobre el valor ya subido: 9.000 × 1,3 × 1,3 × 1,3."
         },
         {
           "clave": "B",
-          "texto": "Aumentó un 9,9%, porque 451 ÷ 4.551 ≈ 0,099.",
-          "esCorrecta": false,
-          "errorCatalogado": "elige-mal-base-del-porcentaje",
-          "feedbackDescarte": "Esa divide la diferencia por el valor final. La base de un cambio porcentual es el valor inicial, 4.100."
+          "texto": "19.773",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 9.000 × 1,3 = 11.700 tras el primer mes, 11.700 × 1,3 = 15.210 tras el segundo y 15.210 × 1,3 = 19.773 tras el tercero."
         },
         {
           "clave": "C",
-          "texto": "Aumentó un 111%, porque 4.551 ÷ 4.100 = 1,11.",
+          "texto": "10.773",
           "esCorrecta": false,
-          "errorCatalogado": "responde-otra-magnitud-porcentaje",
-          "feedbackDescarte": "1,11 es el valor final como fracción del inicial, bien calculado, pero el 111% incluye el 100% de partida. El aumento es solo el 11% que sobra."
+          "errorCatalogado": "responde-parte-en-vez-de-total",
+          "feedbackDescarte": "Esa es 19.773 − 9.000: cuántos seguidores ganó en los 3 meses. Está bien calculado, pero se pide el total de seguidores al final, no el aumento."
         },
         {
           "clave": "D",
-          "texto": "Aumentó un 0,11%, porque 451 ÷ 4.100 = 0,11.",
+          "texto": "9.090",
           "esCorrecta": false,
-          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
-          "feedbackDescarte": "El cociente 0,11 está bien, pero entregarlo como 0,11% salta el paso de multiplicar por 100. 0,11 equivale a un 11%."
+          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
+          "feedbackDescarte": "Esa es 9.000 + 30 × 3: suma 30 seguidores por mes como si el 30% fuera una cantidad fija. El 30% de 9.000 no son 30 seguidores: es 9.000 × 0,3."
         }
       ],
-      "solucion": "La diferencia es 4.551 − 4.100 = 451. Se compara con el valor inicial: 451 ÷ 4.100 = 0,11, o sea un aumento de 11%. Comprobación: 4.100 × 1,11 = 4.551.",
+      "solucion": "Subir un 30% multiplica por 1,3, y el alza se aplica una vez por mes sobre el valor ya subido. Primer mes: 9.000 × 1,3 = 11.700. Segundo mes: 11.700 × 1,3 = 15.210. Tercer mes: 15.210 × 1,3 = 19.773 seguidores. El factor total es 1,3³ = 2,197, no 1,3 ni 1,9.",
       "proveniencia": {
-        "fuenteOrigen": "propia"
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2027-invierno-111, pregunta 10, distractor C",
+        "notaAdaptacion": "Del original se conserva solo el error del distractor C: aplicar una sola vez un cambio porcentual que el enunciado repite por periodo. Contexto, cifras, mecánica (composición multiplicativa, no interés simple) y las cuatro alternativas son nuevas."
       }
     },
     {
@@ -723,41 +725,43 @@
       "unidadId": "porcentaje",
       "moduloId": "porcentaje",
       "habilidad": "resolver",
-      "dificultad": "baja",
-      "tiempoReferenciaSeg": 80,
-      "enunciado": "El pasaje de un bus interurbano costaba $3.300 y subió un 7%. ¿Cuál es el nuevo precio del pasaje?",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Todos los episodios de un podcast empiezan con la misma intro, que dura 4 minutos. El contenido del episodio 1 dura 23 minutos y el del episodio 2 dura 46 minutos. ¿Qué porcentaje de la duración total del episodio 2 representa la duración total del episodio 1?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "$3.307",
+          "texto": "50%",
           "esCorrecta": false,
-          "errorCatalogado": "trata-porcentaje-como-cantidad-fija",
-          "feedbackDescarte": "Esa es 3.300 + 7: suma 7 pesos como si el 7% fuera una cantidad fija. El aumento es el 7% de 3.300, o sea 231 pesos."
+          "errorCatalogado": "ignora-termino-fijo-al-comparar",
+          "feedbackDescarte": "Esa es 23 ÷ 46: compara solo los minutos de contenido. La intro está en los dos episodios y dura lo mismo en ambos, así que la duración total de cada uno es contenido más intro, y el porcentaje entre totales no coincide con el porcentaje entre contenidos."
         },
         {
           "clave": "B",
-          "texto": "$231",
+          "texto": "46%",
           "esCorrecta": false,
-          "errorCatalogado": "responde-parte-en-vez-de-total",
-          "feedbackDescarte": "Esa es 3.300 × 0,07: cuánto subió el pasaje. El cálculo está bien, pero se pide el nuevo precio, así que falta sumarle los 3.300."
+          "errorCatalogado": "reporta-descuento-en-vez-de-resto",
+          "feedbackDescarte": "Ese es el complemento: 100% − 54%, lo que le falta al episodio 1 para durar lo mismo que el episodio 2. Se pide qué parte del episodio largo es el corto, no lo que falta."
         },
         {
           "clave": "C",
-          "texto": "$3.531",
+          "texto": "54%",
           "esCorrecta": true,
-          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3.300 × 1,07 = 3.531. Subir un 7% es multiplicar por 1,07, o sumar 231 a 3.300."
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el episodio 1 dura 4 + 23 = 27 minutos y el episodio 2 dura 4 + 46 = 50 minutos, y 27 ÷ 50 = 0,54."
         },
         {
           "clave": "D",
-          "texto": "$26.400",
+          "texto": "185%",
           "esCorrecta": false,
-          "errorCatalogado": "convierte-mal-porcentaje-a-decimal",
-          "feedbackDescarte": "Esa es 3.300 + 3.300 × 7: multiplica por 7 sin dividir el porcentaje por 100. Un alza del 7% no puede multiplicar el precio por ocho."
+          "errorCatalogado": "elige-mal-base-del-porcentaje",
+          "feedbackDescarte": "Ese sale de 50 ÷ 27 ≈ 1,852: divide la duración mayor por la menor. La base es la duración total del episodio 2, así que se divide 27 ÷ 50, y el resultado tiene que ser menor que 100%."
         }
       ],
-      "solucion": "Subir un 7% multiplica por 1,07: 3.300 × 1,07 = 3.531. Otra vía: el aumento es 3.300 × 0,07 = 231, y 3.300 + 231 = 3.531.",
+      "solucion": "La duración total de cada episodio es la intro más el contenido. Episodio 1: 4 + 23 = 27 minutos. Episodio 2: 4 + 46 = 50 minutos. El corto sobre el largo: 27 ÷ 50 = 0,54, es decir, un 54%. Comparar solo los contenidos (23 ÷ 46 = 50%) deja fuera la intro, que pesa más en el episodio corto. Comprobación: 50 × 0,54 = 27.",
       "proveniencia": {
-        "fuenteOrigen": "propia"
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2027-invierno-111, pregunta 21, distractor C",
+        "notaAdaptacion": "Del original se conserva el mecanismo: un total con término fijo más parte variable, y el error del distractor C de comparar solo las partes variables. Cambian el contexto (podcast con intro fija y contenido variable), las cifras y las cuatro alternativas."
       }
     },
     {
@@ -852,9 +856,9 @@
     "adv-porcentaje-004: postulantes a una beca, parte pedida; 1.450, 6%, 87, 0,06, 1.363, 0,94, 8.700, control 145",
     "adv-porcentaje-005: precio de una empanada en un kiosco, variación porcentual; 1.900, 2.204, 304, 16%, 0,16, 13,8, 0,138, 116, 1,16",
     "adv-porcentaje-006: audífonos con descuento, volver al original; 18%, 73.800, 90.000, 0,82, 87.084, 1,18, 13.284, 0,18, 410.000, 16.200",
-    "adv-porcentaje-007: cuota mensual de un gimnasio, expresión de dos alzas; A, 9%, 28%, 1,09, 1,28, 1,37, 0,09, 0,28, 1,3952, 39,52",
+    "adv-porcentaje-007: cuota mensual de un gimnasio, expresión de dos alzas; A, 9%, 28%, 1,09, 1,28, 1,37, 0,09, 0,28, 0,0252, 1,0252, 2,52, 1,3952, 39,52",
     "adv-porcentaje-008: memoria de un pendrive, MB, parte y complemento; 5.200, 2.184, 3.016, 42%, 58%, 0,42, 0,58, 4,2, 95,8, 238, 2,38, 172, 1,72",
-    "adv-porcentaje-009: abstracto, variación porcentual; 4.100, 4.551, 451, 11%, 0,11, 9,9, 0,099, 111, 1,11",
+    "adv-porcentaje-009: seguidores de una cuenta en una red social, misma alza mensual repetida 3 meses; 9.000, 30%, 3 meses, 19.773, 1,3, 2,197, 11.700, 15.210, 10.773, 9.090",
     "adv-porcentaje-010: parlante, alza y baja sucesivas; 38.000, 24%, 5%, 44.764, 1,24, 0,95, 47.120, 45.220, 19, 1,19, 8.664, 0,24, 6.764, 1,178, 17,8",
     "adv-porcentaje-011: obras de una galería de arte por técnica, tabla; 455, 805, 490, 1.750, 26%, 0,26, 74, 385, 3,85, 2,6, 437,5",
     "adv-porcentaje-012: visitas a un sitio web, tabla lunes y martes, baja porcentual; 3.302, 2.600, 702, 21,3, 0,213, 27, 78,7",
@@ -863,7 +867,7 @@
     "adv-porcentaje-015: leche de una fábrica de helados, litros, lo que queda; 825, 44%, 462, 0,56, 363, 0,44, 781, 36.300",
     "adv-porcentaje-016: polera con descuento, expresión de volver al original; C, 32%, 0,68, 1,32, 0,32, ejemplo 3.740 → 5.500",
     "adv-porcentaje-017: abstracto, qué porcentaje es; 850, 748, 88%, 0,88, 114, 1,14, 8,8, 12, 102",
-    "adv-porcentaje-018: pasaje de bus interurbano, alza simple; 3.300, 7%, 3.531, 1,07, 231, 0,07, 3.307, 26.400",
+    "adv-porcentaje-018: podcast con intro fija y contenido variable, porcentaje entre las duraciones totales de dos episodios; 4 min, 23 min, 46 min, 27 min, 50 min, 54%, 0,54, 50%, 46%, 185%, 1,852",
     "adv-porcentaje-019: plan de datos móviles, volver al original desde un alza; 34%, 23.450, 17.500, 1,34, 15.477, 0,66, 7.973, 0,34, 23.416, 5.950",
     "adv-porcentaje-020: plantas de un vivero, porcentaje de porcentaje; 86%, 92%, 0,86, 0,92, 0,7912, 79,1, 178, 0,08"
   ],
@@ -871,6 +875,6 @@
     "fuentesAnalisis": [
       "temario DEMRE M1"
     ],
-    "declaracionOriginalidad": "Ronda 1 (matemática): APROBADO. 19/20 ítems verificados directos; adv-porcentaje-013 alternativa A quedó mal mapeada (trata-porcentaje-como-cantidad-fija en vez de responde-otra-magnitud-porcentaje, con cierre-porcentaje-5 B como precedente aparente) y se corrigió en este mismo commit, con feedbackDescarte reescrito y confirmado por node -e (20/20 ítems, 60 distractores, 9 errores distintos, sin ítem con menos de 3 errores distintos). El JSON reportado como inválido en adv-porcentaje-009 y adv-porcentaje-013 durante la auditoría externa fue corrupción de copiado al pegar el archivo en ese hilo, no un defecto del contenido: verificado con node -e y JSON.parse contra el archivo real en HEAD antes de esta corrección, que parseó sin error con ambos ítems bien formados. Ronda 2 (originalidad): APROBADO, sin hallazgos de colisión con material privado. Observación registrada en docs/fobos-advance.md, sin cambio de contenido por ese motivo: adv-porcentaje-013 A y cierre-porcentaje-5 B comparten la forma de distractor \"resta directa de dos porcentajes-magnitud\", patrón genérico de error también documentado en material de terceros, no copia de enunciado ni de cifras. Proveniencia por fuente: 20 propia, 0 temario-demre, 0 demre-liberada."
+    "declaracionOriginalidad": "Banco piloto de porcentaje: 20 ítems, 60 distractores, 12 errores distintos del catálogo content/errores/porcentaje.json, todos los distractores con errorCatalogado (cobertura 60/60). Proveniencia por fuente: 18 propia, 2 demre-liberada (adv-porcentaje-009, basado en el distractor C de la pregunta 10 de la forma 2027-invierno-111, y adv-porcentaje-018, basado en el distractor C de la pregunta 21 de la misma forma); en ambos se conserva solo el mecanismo del error y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem. 0 temario-demre. Ronda 1 (matemática): APROBADO, 2026-09-14, en hilo aislado, con toda la aritmética recalculada desde cero y cada distractor alcanzable por el error que declara. Ronda 2 (originalidad): APROBADO, 2026-09-14, en hilo aislado, sin colisión con material privado; contextos y cifras registrados en contextosNumericos y verificados contra content/ y contra las formas DEMRE liberadas. Historial: adv-porcentaje-013 A se corrigió de trata-porcentaje-como-cantidad-fija a responde-otra-magnitud-porcentaje en la primera revisión del banco; en F2.1 (2026-09-13 y 2026-09-14) se reemplazaron los ítems 009 y 018 para cubrir aplica-una-vez-cambio-repetido e ignora-termino-fijo-al-comparar, y el distractor C de 007 pasó a multiplica-porcentajes-en-vez-de-factores, con lo que el banco alcanzó los 12 errores distintos que exige §5.4."
   }
 }
