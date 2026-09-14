@@ -1,0 +1,323 @@
+{
+  "tipo": "cierre",
+  "id": "cierre-reglas-de-probabilidades",
+  "moduloId": "reglas-de-probabilidades",
+  "titulo": "Cierre del módulo: Reglas de las probabilidades",
+  "_notasInternas": [
+    "Cierre del módulo 'Reglas de las probabilidades', construido después de que las 3 lecciones (probabilidad-posible-y-probable, probabilidad-esto-o-esto-otro, probabilidad-antes-de-apostar) pasaran npm run validar y npm run auditar sin bloqueantes. Diseño: docs/diseno-modulo-reglas-de-probabilidades.md, sección 'Cierre'.",
+    "Cobertura por lección: L1 (Laplace con enumeración, complemento, frecuencial frente a teórica) = ítems 1, 2 y 3. L2 (aditiva excluyente, aditiva no excluyente desde tabla, al menos uno) = ítems 4, 5 y 8. L3 (multiplicativa independiente, sin reposición con árbol, al menos uno por complemento) = ítems 6, 7 y 8. Cobertura por habilidad: representar = ítems 1, 3. resolver = ítems 2, 4. modelar = ítems 6, 7. argumentar = ítems 5, 8 (2 de cada una). Dificultad: baja = ítems 1, 2; media = ítems 3, 4, 6, 7; alta = ítems 5, 8.",
+    "Catálogo canónico: content/errores/reglas-de-probabilidades.json. Ids referenciados: olvida-camino-simetrico (1A), divide-por-desfavorables (1C, 2C, 3C), suma-resultados-en-vez-de-multiplicar-total (1D, 6B), confunde-evento-con-su-complemento (2A, 3D), lee-conteo-como-porcentaje (2D), usa-laplace-sin-equiprobabilidad (3B), multiplica-en-vez-de-sumar (4A, 5D, 8B), usa-producto-como-interseccion (4B), asume-equiprobables-sin-enumerar (4D), suma-sin-restar-interseccion (5A, 8A), lee-fila-equivocada-en-tabla (5C), usa-una-sola-etapa (6C), suma-en-vez-de-multiplicar-etapas (6D), mantiene-denominador-sin-reposicion (7A), multiplica-como-independientes-sin-reposicion (7C), baja-total-pero-no-favorables (7D), entrega-ninguno-en-vez-de-al-menos-uno (8D). Los 24 distractores llevan errorCatalogado. Los 23 ids del catálogo quedan cubiertos entre L1, L2, L3 y cierre (los que no aparecen acá están en el doc de diseño con su ubicación).",
+    "Dominios: app que elige dos letras entre A, B, C y D (ítem 1, cuadrícula dibujada sin marcas); 25 audífonos de préstamo con 5 que fallan (ítem 2); una chinche lanzada 400 veces (ítem 3); app de música con 24 canciones (ítem 4); 40 voluntarios de una compañía de bomberos (ítem 5, tabla dibujada con totales); 5 cajas de un supermercado asignadas al azar dos días seguidos (ítem 6); patrulla scout de 10 con 3 recién llegados (ítem 7, árbol dibujado sin probabilidades de camino); dos avisos de una app que llegan con 9/10 cada uno (ítem 8). Ningún ítem usa dado, moneda, naipe, ruleta ni bolitas.",
+    "Todas las cifras verificadas con node -e sobre lib/probabilidad.ts (probEvento, espacioProducto, laplace, complemento, frecuenciaRelativa, unionExcluyentes, union, tablaDobleEntrada, probUnionDesdeTabla, multiplicar, probSecuencia, distintosEnValor, enOrdenCreciente): ítem 1, 4 · 4 = 16 pares, iguales AA, BB, CC, DD: 4/16 = 1/4; 1/16 (solo AA); 4/12 = 1/3; 4/8 = 1/2. Ítem 2, 5 de 25 fallan: P(funciona) = 20/25 = 0,8; 0,2; 1 − 5/20 = 0,75; 1 − 5 % = 0,95. Ítem 3, 150/400 = 3/8; 1/2; 150/250 = 3/5; 250/400 = 5/8. Ítem 4, español 8, inglés 12, instrumental 4 de 24: 12/24 = 1/2; 8/24 · 4/24 = 1/18; 1/2 − 1/18 = 4/9; 2/3. Ítem 5, menores de 30: 6 con licencia y 8 sin (14); 30 o más: 12 con y 14 sin (26); con licencia 18, sin 22: P(menor de 30 o con licencia) = (14 + 18 − 6)/40 = 26/40 = 13/20; 32/40; (14 + 18 − 12)/40 = 20/40; 14/40 · 18/40 = 63/400. Ítem 6, 1/5 · 1/5 = 1/25; 1/(5 + 5) = 1/10; 1/5; 1/5 + 1/5 = 2/5. Ítem 7, 3 recién llegados de 10: 3/10 · 2/9 = 6/90 = 1/15; 3/10 · 2/10 = 3/50; 3/10 · 3/10 = 9/100; 3/10 · 3/9 = 1/10; árbol: 3/10 y 7/10, luego 2/9 y 7/9 tras recién llegado, 3/9 y 6/9 tras antiguo. Ítem 8, P(ninguno llega) = 1/10 · 1/10 = 1/100; P(al menos uno) = 99/100; 9/10 + 9/10 = 18/10; 9/10 · 9/10 = 81/100.",
+    "Barrido de colisión distractor/correcta (docs/reglas-modulo.md regla 3b): correctas de fracción {1/4; 3/8; 1/2; 1/25; 1/15}, decimal {0,8} y de veredicto (ítems 5 y 8); distractores de fracción {1/16; 1/3; 1/2 (ítem 1, 4/8); 1/2 (ítem 3, Laplace); 3/5; 5/8; 1/18; 4/9; 2/3; 1/10; 1/5; 2/5; 3/50; 9/100; 1/10 (ítem 7)} y decimales {0,2; 0,75; 0,95}. La fracción 1/2 es correcta en el ítem 4 y distractor en los ítems 1 y 3, con mecanismos distintos (total 4 + 4 y Laplace sin equiprobabilidad) y en ítems distintos; 1/10 es distractor en los ítems 6 y 7 con mecanismos distintos. El auditor no parsea fracciones; se deja registrado. Cotejo contra los contextosNumericos de L1, L2 y L3: ninguna escena ni conjunto de números de este cierre se repite en las lecciones.",
+    "Ítems con visual en lib/visualesItems.tsx: cierre-probabilidad-1 (cuadrícula 4 × 4 de letras sin marcas ni contador; se pide P(las dos iguales), que hay que contar), cierre-probabilidad-5 (tabla de doble entrada de los voluntarios con totales, misma que trae el enunciado en prosa; la unión no está escrita) y cierre-probabilidad-7 (árbol sin reposición con las ramas rotuladas y sin probabilidad de camino; el producto hay que hacerlo). Los ítems 2, 3, 4, 6 y 8 no llevan visual.",
+    "Toda la aritmética de los 8 ítems y sus 24 alternativas fue recalculada desde cero a partir de los números propios de cada ítem, nunca por ingeniería inversa desde una alternativa deseada. Pendientes las dos auditorías en hilos aislados y la consulta de colisión de Benja antes de cualquier git push."
+  ],
+  "contextosNumericos": [
+    "cierre-probabilidad-1 (app que elige dos letras entre A, B, C y D, representar, baja): 16 pares, las dos iguales en 4 → 1/4",
+    "cierre-probabilidad-2 (25 audífonos de préstamo, 5 fallan, resolver, baja): P(funcione) = 0,8",
+    "cierre-probabilidad-3 (chinche lanzada 400 veces, 150 con la punta arriba, representar, media): estimación 3/8",
+    "cierre-probabilidad-4 (app de música, 24 canciones: 8 en español, 12 en inglés, 4 instrumentales, resolver, media): P(en español o instrumental) = 1/2",
+    "cierre-probabilidad-5 (40 voluntarios de bomberos: menores de 30 con 6 con licencia y 8 sin, 30 o más con 12 con licencia y 14 sin, argumentar, alta): P(menor de 30 o con licencia) = 26/40",
+    "cierre-probabilidad-6 (5 cajas de un supermercado asignadas al azar dos días, modelar, media): P(dos veces la caja 3) = 1/25",
+    "cierre-probabilidad-7 (patrulla scout de 10 con 3 recién llegados, dos sorteados sin repetir, modelar, media): P(los dos recién llegados) = 3/10 · 2/9 = 1/15",
+    "cierre-probabilidad-8 (dos avisos de una app, correo y mensaje, 9/10 cada uno e independientes, argumentar, alta): P(al menos uno llega) = 99/100"
+  ],
+  "items": [
+    {
+      "id": "cierre-probabilidad-1",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "enunciado": "Una app genera un código de dos letras eligiendo al azar, de forma independiente, cada letra entre A, B, C y D (una letra puede repetirse). Los 16 pares posibles están en la cuadrícula: la fila es la primera letra y la columna, la segunda. ¿Cuál es la probabilidad de que las dos letras del código sean iguales?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/16",
+          "esCorrecta": false,
+          "feedback": "1/16 es la probabilidad de UN par concreto, por ejemplo AA. Pero «las dos iguales» se cumple también con BB, CC y DD: son cuatro celdas de la diagonal, no una.",
+          "errorCatalogado": "olvida-camino-simetrico"
+        },
+        {
+          "clave": "B",
+          "texto": "1/4",
+          "esCorrecta": true,
+          "feedback": "Correcto. De los 16 pares igual de probables, 4 tienen las dos letras iguales (AA, BB, CC, DD): 4/16 = 1/4."
+        },
+        {
+          "clave": "C",
+          "texto": "1/3",
+          "esCorrecta": false,
+          "feedback": "1/3 es 4/12: los 4 pares iguales comparados con los 12 que no lo son. La probabilidad compara con todos los pares posibles, que son 16.",
+          "errorCatalogado": "divide-por-desfavorables"
+        },
+        {
+          "clave": "D",
+          "texto": "1/2",
+          "esCorrecta": false,
+          "feedback": "1/2 es 4/8, con 8 = 4 + 4 como si los pares fueran la suma de las letras. Cada primera letra se combina con cada segunda: 4 · 4 = 16 pares, que son las 16 celdas.",
+          "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total"
+        }
+      ],
+      "solucion": "Casos posibles: 4 · 4 = 16 pares (primera letra, segunda letra), todos igual de probables porque cada elección es al azar e independiente. Casos favorables: los pares con las dos letras iguales, AA, BB, CC y DD, la diagonal de la cuadrícula: 4 pares. P(iguales) = 4/16 = 1/4. Comprobación: también se puede pensar que cualquiera sea la primera letra, la segunda tiene que coincidir con ella, 1 de 4. ✓"
+    },
+    {
+      "id": "cierre-probabilidad-2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "enunciado": "En un carro de préstamo hay 25 audífonos iguales por fuera, y se sabe que 5 de ellos fallan. Una persona toma uno al azar. ¿Cuál es la probabilidad de que el audífono que tomó funcione?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,2",
+          "esCorrecta": false,
+          "feedback": "0,2 es 5/25, la probabilidad de que el audífono FALLE. Se pedía la de que funcione, que es el complemento: 1 − 0,2.",
+          "errorCatalogado": "confunde-evento-con-su-complemento"
+        },
+        {
+          "clave": "B",
+          "texto": "0,75",
+          "esCorrecta": false,
+          "feedback": "0,75 es 1 − 5/20: se comparó los 5 que fallan con los 20 que funcionan, y esa razón no es una probabilidad. Los casos posibles son los 25 audífonos: P(falla) = 5/25.",
+          "errorCatalogado": "divide-por-desfavorables"
+        },
+        {
+          "clave": "C",
+          "texto": "0,8",
+          "esCorrecta": true,
+          "feedback": "Correcto. Funcionan 25 − 5 = 20 audífonos: P(funcione) = 20/25 = 0,8. También por complemento: 1 − 5/25 = 1 − 0,2 = 0,8."
+        },
+        {
+          "clave": "D",
+          "texto": "0,95",
+          "esCorrecta": false,
+          "feedback": "0,95 es 1 − 0,05, como si 5 audífonos fueran el 5 %. 5 es la cantidad que falla, no el porcentaje: 5 de 25 es el 20 %, y el complemento es 80 %.",
+          "errorCatalogado": "lee-conteo-como-porcentaje"
+        }
+      ],
+      "solucion": "Casos posibles: 25 audífonos, igual de probables. Fallan 5, así que funcionan 20. P(funcione) = 20/25 = 4/5 = 0,8. Comprobación por complemento: P(falle) = 5/25 = 0,2 y 1 − 0,2 = 0,8. ✓"
+    },
+    {
+      "id": "cierre-probabilidad-3",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "enunciado": "Una chinche puede caer con la punta hacia arriba o apoyada de lado. Se lanzó 400 veces y cayó con la punta hacia arriba 150 veces. ¿Cuál es la mejor estimación de la probabilidad de que, en un nuevo lanzamiento, caiga con la punta hacia arriba, escrita como fracción irreducible?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3/8",
+          "esCorrecta": true,
+          "feedback": "Correcto. No hay casos igual de probables que contar (la chinche no es simétrica), así que se estima con la frecuencia relativa: 150/400 = 3/8."
+        },
+        {
+          "clave": "B",
+          "texto": "1/2",
+          "esCorrecta": false,
+          "feedback": "Que haya dos resultados no los hace igual de probables: la chinche no es simétrica. Por eso se midió: 150 de 400 no es la mitad, y esa frecuencia es la estimación.",
+          "errorCatalogado": "usa-laplace-sin-equiprobabilidad"
+        },
+        {
+          "clave": "C",
+          "texto": "3/5",
+          "esCorrecta": false,
+          "feedback": "3/5 es 150/250: las veces con la punta arriba comparadas con las veces de lado. La frecuencia relativa compara con TODOS los lanzamientos, que son 400.",
+          "errorCatalogado": "divide-por-desfavorables"
+        },
+        {
+          "clave": "D",
+          "texto": "5/8",
+          "esCorrecta": false,
+          "feedback": "5/8 es 250/400, la frecuencia con que cayó DE LADO. Se pedía la de punta arriba: 150 de 400.",
+          "errorCatalogado": "confunde-evento-con-su-complemento"
+        }
+      ],
+      "solucion": "La chinche no es un objeto simétrico, así que sus dos resultados no tienen por qué ser igual de probables y no se puede usar «favorables sobre posibles». La probabilidad se estima con la frecuencia relativa de los 400 lanzamientos: 150/400 = 15/40 = 3/8. Comprobación: la frecuencia de «de lado» es 250/400 = 5/8, y 3/8 + 5/8 = 1. ✓"
+    },
+    {
+      "id": "cierre-probabilidad-4",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "enunciado": "Una app de música tiene 24 canciones en una lista: 8 en español, 12 en inglés y 4 instrumentales (sin letra). Al presionar «aleatorio», la app elige una canción al azar y todas tienen la misma probabilidad. ¿Cuál es la probabilidad de que la canción elegida sea en español o instrumental?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/18",
+          "esCorrecta": false,
+          "feedback": "1/18 es 8/24 · 4/24. Multiplicar responde a elegir una en español Y luego una instrumental en dos elecciones. Acá se elige una sola canción y sirve cualquiera de los dos tipos: se suman.",
+          "errorCatalogado": "multiplica-en-vez-de-sumar"
+        },
+        {
+          "clave": "B",
+          "texto": "4/9",
+          "esCorrecta": false,
+          "feedback": "4/9 es 8/24 + 4/24 − 8/24 · 4/24: se restó un producto como si una canción pudiera ser en español e instrumental a la vez. No puede (la instrumental no tiene letra): son excluyentes y no hay nada que restar.",
+          "errorCatalogado": "usa-producto-como-interseccion"
+        },
+        {
+          "clave": "C",
+          "texto": "1/2",
+          "esCorrecta": true,
+          "feedback": "Correcto. Una canción no puede ser en español e instrumental a la vez: P(español o instrumental) = 8/24 + 4/24 = 12/24 = 1/2."
+        },
+        {
+          "clave": "D",
+          "texto": "2/3",
+          "esCorrecta": false,
+          "feedback": "2/3 supone que los tres tipos de canción son igual de probables (dos tipos de tres). No lo son: hay 8, 12 y 4 canciones. Lo igual de probable es cada canción: 8 + 4 de 24.",
+          "errorCatalogado": "asume-equiprobables-sin-enumerar"
+        }
+      ],
+      "solucion": "Casos posibles: 24 canciones, igual de probables. «En español» y «instrumental» son excluyentes: una canción instrumental no tiene letra, así que no puede ser en español. P(español o instrumental) = P(español) + P(instrumental) = 8/24 + 4/24 = 12/24 = 1/2. Comprobación por conteo: 8 + 4 = 12 canciones de 24. ✓"
+    },
+    {
+      "id": "cierre-probabilidad-5",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Una compañía de bomberos tiene 40 voluntarios. De los 14 menores de 30 años, 6 tienen licencia de conducir y 8 no; de los 26 de 30 años o más, 12 tienen licencia y 14 no. En total, 18 tienen licencia y 22 no. Se elige un voluntario al azar. Una persona afirma: «la probabilidad de que sea menor de 30 o tenga licencia es 14/40 + 18/40 = 32/40». ¿Es correcta su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque para «menor de 30 o con licencia» se suman los dos grupos, 14 y 18",
+          "esCorrecta": false,
+          "feedback": "Los 6 voluntarios menores de 30 que tienen licencia están en los dos grupos y se contaron dos veces al sumar 14 + 18. Hay que restarlos una vez.",
+          "errorCatalogado": "suma-sin-restar-interseccion"
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque es 26/40: los 6 menores de 30 con licencia se contaron dos veces y hay que restarlos una vez",
+          "esCorrecta": true,
+          "feedback": "Correcto. P(menor de 30 o con licencia) = 14/40 + 18/40 − 6/40 = 26/40. Con la tabla: 6 + 8 + 12 = 26 voluntarios cumplen al menos una de las dos condiciones."
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque es 20/40: hay que restar los 12 que tienen licencia y 30 años o más",
+          "esCorrecta": false,
+          "feedback": "Lo que se restan son los que cumplen LAS DOS condiciones, menor de 30 y con licencia: la celda de 6. Los 12 con licencia de 30 años o más cumplen solo una condición y se cuentan una sola vez.",
+          "errorCatalogado": "lee-fila-equivocada-en-tabla"
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque es 14/40 · 18/40 = 63/400: son dos condiciones y se multiplican",
+          "esCorrecta": false,
+          "feedback": "Multiplicar responde a otra pregunta (que se cumplan las dos cosas en dos elecciones independientes). Con «o» en una sola elección se suma, y se resta lo que está en los dos grupos.",
+          "errorCatalogado": "multiplica-en-vez-de-sumar"
+        }
+      ],
+      "solucion": "Sea A «menor de 30» (14 voluntarios) y B «tiene licencia» (18 voluntarios). Pueden cumplirse a la vez: los 6 menores de 30 con licencia son «A y B», y al sumar 14 + 18 se cuentan dos veces. P(A o B) = 14/40 + 18/40 − 6/40 = 26/40 = 13/20. Comprobación con las celdas: 6 (menores con licencia) + 8 (menores sin licencia) + 12 (30 o más con licencia) = 26. La afirmación es incorrecta; la alternativa justificada es la B. ✓"
+    },
+    {
+      "id": "cierre-probabilidad-6",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Un supermercado tiene 5 cajas numeradas del 1 al 5. Cada día, una app le asigna al azar una caja a cada cajero, y la asignación de un día no influye en la del siguiente. Para un cajero, ¿cuál es la probabilidad de que le toque la caja 3 dos días seguidos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/25",
+          "esCorrecta": true,
+          "feedback": "Correcto. Cada día la caja 3 tiene probabilidad 1/5 y los días son independientes: P(caja 3 y luego caja 3) = 1/5 · 1/5 = 1/25."
+        },
+        {
+          "clave": "B",
+          "texto": "1/10",
+          "esCorrecta": false,
+          "feedback": "10 es 5 + 5, pero los pares (caja del primer día, caja del segundo) no se suman: cada caja del primer día se combina con cada caja del segundo, 5 · 5 = 25 pares, y uno es (3, 3).",
+          "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total"
+        },
+        {
+          "clave": "C",
+          "texto": "1/5",
+          "esCorrecta": false,
+          "feedback": "1/5 es la probabilidad de la caja 3 en UN día. Para que sea dos días seguidos, el segundo día también tiene que dar la caja 3: se multiplica por otro 1/5.",
+          "errorCatalogado": "usa-una-sola-etapa"
+        },
+        {
+          "clave": "D",
+          "texto": "2/5",
+          "esCorrecta": false,
+          "feedback": "2/5 es 1/5 + 1/5. Sumar responde a «caja 3 el primer día o el segundo». Para que ocurran las dos cosas se multiplica: 1/5 · 1/5.",
+          "errorCatalogado": "suma-en-vez-de-multiplicar-etapas"
+        }
+      ],
+      "solucion": "Cada día, P(caja 3) = 1/5, y la asignación de un día no cambia la del otro: son etapas independientes. P(caja 3 el primer día y caja 3 el segundo) = 1/5 · 1/5 = 1/25. Comprobación por enumeración: 5 · 5 = 25 pares (caja del día 1, caja del día 2) igual de probables, y solo uno es (3, 3). ✓"
+    },
+    {
+      "id": "cierre-probabilidad-7",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "enunciado": "Una patrulla scout tiene 10 integrantes, de los cuales 3 son recién llegados. Para el turno de cocina se sortean dos integrantes, uno después del otro y sin repetir persona. El árbol muestra la probabilidad de cada rama. ¿Cuál es la probabilidad de que los dos sorteados sean recién llegados?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3/50",
+          "esCorrecta": false,
+          "feedback": "3/50 es 3/10 · 2/10: se bajó a 2 los recién llegados, pero el total quedó en 10. La primera persona ya salió: el segundo sorteo es entre 9, como dice la rama del árbol.",
+          "errorCatalogado": "mantiene-denominador-sin-reposicion"
+        },
+        {
+          "clave": "B",
+          "texto": "1/15",
+          "esCorrecta": true,
+          "feedback": "Correcto. Primer sorteo: 3/10. Si salió un recién llegado, quedan 9 integrantes y 2 recién llegados: 2/9. El camino vale 3/10 · 2/9 = 6/90 = 1/15."
+        },
+        {
+          "clave": "C",
+          "texto": "9/100",
+          "esCorrecta": false,
+          "feedback": "9/100 es 3/10 · 3/10, como si el segundo sorteo se hiciera con las mismas 10 personas y los mismos 3 recién llegados. Sin repetir, el árbol dice 2/9 en la segunda rama.",
+          "errorCatalogado": "multiplica-como-independientes-sin-reposicion"
+        },
+        {
+          "clave": "D",
+          "texto": "1/10",
+          "esCorrecta": false,
+          "feedback": "1/10 es 3/10 · 3/9: el total bajó a 9, pero los recién llegados siguen en 3. El primero sorteado era recién llegado, así que quedan 2 de ellos entre los 9.",
+          "errorCatalogado": "baja-total-pero-no-favorables"
+        }
+      ],
+      "solucion": "Es un sorteo sin reposición. Primera etapa: P(recién llegado) = 3/10. Si salió un recién llegado, para el segundo sorteo quedan 9 integrantes y 2 recién llegados: P = 2/9. La probabilidad del camino recién llegado y luego recién llegado es el producto de sus ramas: 3/10 · 2/9 = 6/90 = 1/15. Comprobación: las ramas hermanas del árbol suman 1 en cada nodo (3/10 + 7/10, 2/9 + 7/9, 3/9 + 6/9). ✓"
+    },
+    {
+      "id": "cierre-probabilidad-8",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "enunciado": "Una app manda un recordatorio por dos vías independientes: un correo, que llega con probabilidad 9/10, y un mensaje al celular, que también llega con probabilidad 9/10. Una persona afirma: «la probabilidad de que llegue al menos uno de los dos es 9/10 + 9/10 = 18/10, o sea, es seguro que llega alguno». ¿Es correcta su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque 9/10 + 9/10 es mayor que 1, y eso significa que el evento es seguro",
+          "esCorrecta": false,
+          "feedback": "Una probabilidad nunca supera 1: que la suma dé 18/10 no significa «seguro», significa que los casos en que llegan los dos avisos se contaron dos veces.",
+          "errorCatalogado": "suma-sin-restar-interseccion"
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque la probabilidad de que llegue al menos uno es 9/10 · 9/10 = 81/100",
+          "esCorrecta": false,
+          "feedback": "81/100 es la probabilidad de que lleguen LOS DOS avisos. «Al menos uno» incluye además los casos en que llega solo uno de ellos: es más que 81/100.",
+          "errorCatalogado": "multiplica-en-vez-de-sumar"
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque la probabilidad de que llegue al menos uno es 1 − 1/10 · 1/10 = 99/100",
+          "esCorrecta": true,
+          "feedback": "Correcto. «Ninguno llega» es un solo camino: 1/10 · 1/10 = 1/100. Entonces P(al menos uno) = 1 − 1/100 = 99/100: muy alta, pero no segura."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque la probabilidad de que llegue al menos uno es 1/10 · 1/10 = 1/100",
+          "esCorrecta": false,
+          "feedback": "1/100 es la probabilidad de que NO llegue ninguno. «Al menos uno» es lo contrario, y falta el 1 −: 1 − 1/100.",
+          "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno"
+        }
+      ],
+      "solucion": "«Llega el correo» y «llega el mensaje» pueden ocurrir a la vez, así que sumar 9/10 + 9/10 cuenta dos veces los casos en que llegan ambos, y por eso se pasa de 1. Lo más corto es el complemento: «al menos uno llega» es lo contrario de «ninguno llega», y como las vías son independientes, P(ninguno) = 1/10 · 1/10 = 1/100. Entonces P(al menos uno) = 1 − 1/100 = 99/100. Por la regla aditiva da lo mismo: 9/10 + 9/10 − 9/10 · 9/10 = 90/100 + 90/100 − 81/100 = 99/100. La afirmación es incorrecta; la alternativa justificada es la C. ✓"
+    }
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "Temario oficial PAES M1 (DEMRE/UCE), eje Probabilidad y estadística, unidad Reglas de las probabilidades: solo para calibrar alcance, habilidades y formato de ítems. No se usó como origen de texto, contextos ni ejemplos."
+    ],
+    "declaracionOriginalidad": "Los 8 ítems, sus contextos (una app que genera códigos de dos letras, un carro de audífonos de préstamo, una chinche lanzada 400 veces, una app de música, una compañía de bomberos, las cajas de un supermercado, una patrulla scout y los avisos de una app) y sus números fueron creados desde cero por el autor del proyecto, elegidos para que cada distractor salga de un mecanismo del catálogo con un valor distinto del de la correcta y de los otros distractores, para no repetir ninguna escena ni conjunto de números de las tres lecciones del módulo ni de los contextosNumericos de content/, y verificados con node -e sobre lib/probabilidad.ts. La consulta de colisión de dominio con scripts/consultar-fuentes.mjs queda pendiente de Benja fuera de sesión, con las palabras clave listadas en docs/diseno-modulo-reglas-de-probabilidades.md; ningún dominio se toma de material de terceros ni de ítems DEMRE liberados.",
+    "autor": "Benjamín Gutiérrez"
+  }
+}

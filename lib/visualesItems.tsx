@@ -283,6 +283,58 @@ const VISUALES: Record<string, EntradaVisual> = {
       ],
     },
   },
+  /* Código de dos letras entre A, B, C y D: los 16 pares sin marcas ni
+     contador; se pide P(las dos iguales), que hay que contar. */
+  "cierre-probabilidad-1": {
+    probabilidad: {
+      tipo: "cuadriculaEspacioMuestral",
+      filas: ["A", "B", "C", "D"],
+      columnas: ["A", "B", "C", "D"],
+      rotuloFilas: "Primera letra",
+      rotuloColumnas: "Segunda letra",
+    },
+  },
+  /* Voluntarios de bomberos por edad y licencia, con totales: se juzga la
+     afirmación sobre «menor de 30 o con licencia»; el enunciado trae los
+     mismos números. */
+  "cierre-probabilidad-5": {
+    tabla: {
+      descripcion:
+        "Tabla de doble entrada de los 40 voluntarios: menores de 30 con 6 con licencia y 8 sin (14); 30 años o más con 12 con licencia y 14 sin (26); totales 18 con licencia, 22 sin, 40 en total.",
+      columnas: ["", "Con licencia", "Sin licencia", "Total"],
+      filas: [
+        ["Menores de 30", 6, 8, 14],
+        ["30 o más", 12, 14, 26],
+        ["Total", 18, 22, 40],
+      ],
+    },
+  },
+  /* Patrulla scout de 10 con 3 recién llegados, dos sorteados sin repetir:
+     las ramas rotuladas, sin probabilidad de camino (es lo que se pide). */
+  "cierre-probabilidad-7": {
+    probabilidad: {
+      tipo: "diagramaArbol",
+      etapas: ["Primer sorteo", "Segundo"],
+      ramas: [
+        {
+          resultado: "Recién llegado",
+          probabilidad: "3/10",
+          ramas: [
+            { resultado: "Recién llegado", probabilidad: "2/9" },
+            { resultado: "Antiguo", probabilidad: "7/9" },
+          ],
+        },
+        {
+          resultado: "Antiguo",
+          probabilidad: "7/10",
+          ramas: [
+            { resultado: "Recién llegado", probabilidad: "3/9" },
+            { resultado: "Antiguo", probabilidad: "6/9" },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 /**
