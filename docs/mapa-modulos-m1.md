@@ -47,10 +47,11 @@ un profesor puede auditar contra el temario.
 > pasó de tercera a segunda posición y los tres títulos se alinearon con los
 > descriptores del temario.
 
-**Declarar no es escribir.** Los 48 ids están en el registro; 24 tienen archivo.
-Un id sin archivo no rompe nada: `verificarRegistroDeTemas()` lo deja pasar como
-lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
-`/camino`, fuera de `generateStaticParams`. Ver `lib/estadoModulo.ts`.
+**Declarar no es escribir.** Los 48 ids están en el registro, y desde el
+2026-09-13 los 48 tienen archivo. Un id sin archivo no rompe nada:
+`verificarRegistroDeTemas()` lo deja pasar como lección planeada y su módulo se
+muestra como `sin-contenido` ("Pronto") en `/camino`, fuera de
+`generateStaticParams`. Ver `lib/estadoModulo.ts`.
 
 ---
 
@@ -73,10 +74,17 @@ lección planeada y su módulo se muestra como `sin-contenido` ("Pronto") en
 | 13 | Geometría | Semejanza y proporcionalidad de figuras | `semejanza-y-proporcionalidad` | **completo** |
 | 14 | Probabilidad y estadística | Representación de datos a través de tablas y gráficos | `tablas-y-graficos` | **completo** |
 | 15 | Probabilidad y estadística | Medidas de posición | `medidas-de-posicion` | **completo** |
-| 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | sin contenido |
+| 16 | Probabilidad y estadística | Reglas de las probabilidades | `reglas-de-probabilidades` | **completo** |
 
-15 completos · 1 sin contenido · 45 de 48 lecciones escritas (verificado el
-2026-09-13 con `ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`).
+16 completos · 48 de 48 lecciones escritas (verificado el 2026-09-13 con
+`ls content/lecciones | grep -v l0-demo | grep -v '^_' | wc -l`) · 16 cierres
+en `content/cierres/`. **El free tier está completo en construcción**: los 16
+módulos tienen sus 3 lecciones y su cierre conectado en `lib/modulos.ts`.
+Del módulo 16 quedan pendientes de Benja, fuera de sesión, la consulta de
+colisión y las dos Rondas de verificación (matemática y de originalidad, en
+hilos aislados) antes de cualquier `git push`; ver
+`docs/pendientes-probabilidad-16.md`. El estado de esas Rondas en los módulos
+anteriores está en sus propios docs de pendientes.
 
 El conteo decía 31 hasta el 2026-08-26. El comando que citaba
 (`ls content/lecciones | grep -v l0-demo | wc -l`) contaba también
@@ -360,9 +368,29 @@ del temario (`docs/temario-demre-m1-2027.md:124-126`).
 
 | id | Título | Archivo |
 |---|---|---|
-| `probabilidad-posible-y-probable` | Probabilidad de un evento | no |
-| `probabilidad-esto-o-esto-otro` | Regla aditiva y multiplicativa | no |
-| `probabilidad-antes-de-apostar` | Problemas con reglas de probabilidad en contexto | no |
+| `probabilidad-posible-y-probable` | Probabilidad de un evento | sí |
+| `probabilidad-esto-o-esto-otro` | Regla aditiva de probabilidades | sí |
+| `probabilidad-antes-de-apostar` | Regla multiplicativa de probabilidades | sí |
+
+Cierre: `cierre-reglas-de-probabilidades`.
+
+Módulo completo desde el 2026-09-13: sus 3 lecciones tienen archivo y
+`content/cierres/cierre-reglas-de-probabilidades.json` está conectado como
+`cierreId` en `lib/modulos.ts`. Catálogo canónico en
+`content/errores/reglas-de-probabilidades.json` (23 ids). Diseño en
+`docs/diseno-modulo-reglas-de-probabilidades.md`. Pendientes de Benja: la
+consulta de colisión (`consultar-fuentes.mjs`) y las dos auditorías en hilos
+aislados antes de cualquier `git push`; ver `docs/pendientes-probabilidad-16.md`.
+
+Los ids se conservaron en el orden de la carga masiva, que coincide con el
+diseño pedagógico (probabilidad de un evento, regla aditiva, regla
+multiplicativa). Los títulos de la segunda y la tercera cambian respecto de la
+carga masiva («Regla aditiva y multiplicativa» y «Problemas con reglas de
+probabilidad en contexto»): el segundo descriptor del temario
+(`docs/temario-demre-m1-2027.md:131`) se reparte en dos lecciones, una por
+regla, y el título de cada una nombra la regla que enseña, mismo criterio que
+los módulos 14 y 15. «Problemas en diversos contextos» se cubre en las tres
+lecciones y en el cierre, no con una lección propia.
 
 ---
 
