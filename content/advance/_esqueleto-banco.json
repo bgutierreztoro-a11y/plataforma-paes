@@ -35,10 +35,14 @@
         },
         {
           "clave": "D",
-          "texto": "PLANTILLA. Valor que produce un tercer error del catálogo.",
+          "texto": "PLANTILLA. Valor plausible que no deriva de ningún error catalogable.",
           "esCorrecta": false,
-          "errorCatalogado": "plantilla-error-tres",
-          "feedbackDescarte": "PLANTILLA. Texto del descarte acertado, nombra el error."
+          "errorCatalogado": null,
+          "sinErrorCatalogado": {
+            "motivo": "valor-plausible-no-derivable",
+            "nota": "PLANTILLA. Una línea: qué se intentó derivar y por qué no cierra. Motivos: valor-plausible-no-derivable, creencia-sobre-un-paso, error-transversal-pendiente, sin-mecanismo-identificado."
+          },
+          "feedbackDescarte": "PLANTILLA. Obligatorio también sin error mapeado: por qué ese valor no podía ser."
         }
       ],
       "solucion": "PLANTILLA. Resolución paso a paso, recalculada desde cero.",

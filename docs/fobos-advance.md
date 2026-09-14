@@ -155,7 +155,11 @@ La firma de la función no cambia entre fases. Eso es deliberado: cuando llegue 
 
 Advance tiene banco propio en `content/advance/`, con schema propio que es más estricto que el de lecciones.
 
-Diferencia clave con el schema de lecciones: en Advance, **`errorCatalogado` es obligatorio en los tres distractores**. Sin eso el modo descarte no puede funcionar. El validador lo rechaza.
+Diferencia clave con el schema de lecciones: en Advance, **`feedbackDescarte` es obligatorio en los tres distractores, sin excepción**. Esa es la pieza de la que depende la mecánica de descarte, no el catálogo. El validador lo rechaza.
+
+`errorCatalogado`, en cambio, es nullable desde el 2026-09-13, con la ausencia **declarada, nunca omitida**. Hasta ese día el schema lo exigía en los tres distractores; `docs/analisis/propuesta-catalogo-transversal.md` (sobre `frecuencia-demre-v2.json`) mostró que el 26,6 % de los distractores de las formas liberadas de DEMRE son valores plausibles que no derivan de ningún procedimiento errado escribible, así que el requisito era inalcanzable, no estricto. Un distractor sin error mapeado lleva `"errorCatalogado": null` y `"sinErrorCatalogado": { "motivo", "nota" }`, con `motivo` en `valor-plausible-no-derivable`, `creencia-sobre-un-paso`, `error-transversal-pendiente` o `sin-mecanismo-identificado`, y `nota` de una línea para el revisor. Null sin declaración es error; declaración con un `errorCatalogado` no nulo también.
+
+Dos pisos de cobertura, los dos error y no advertencia: por ítem, al menos 1 de los 3 distractores con `errorCatalogado` (un ítem sin mapeos no alimenta el diagnóstico); por banco, al menos el 60 % de los distractores. `npm run validar` reporta el porcentaje real de cada banco siempre, aunque pase. En runtime, un distractor con `errorCatalogado` null cuenta como descarte pero no produce observación de diagnóstico ni estado en el ciclo de vida del error (§6.3), y el triage lo juzga solo sobre los distractores mapeados.
 
 El banco Advance referencia el `catalogoErrores` del módulo correspondiente por id. No lo duplica y no inventa errores nuevos. Si un ítem Advance necesita un error que no está en el catálogo del módulo, CC se detiene y propone el texto del error nuevo a Benja antes de asignarle id.
 
@@ -197,7 +201,7 @@ Sin esto, Advance es una carcasa. El modo descarte no funciona si un distractor 
 
 **0.2** Resolver los 41 hallazgos con decisión pedagógica: `colision-distractor-correcta`, `catalogo-divergente`, `campo-sin-unidad`, `dificultad`, `habilidades`. Cada uno necesita decisión de Benja. Propuesta de método: CC agrupa los 41 por tipo y presenta lotes de decisión, no uno por uno.
 
-**0.3** Crear `content/advance/schema/item-advance.schema.json` con `errorCatalogado` obligatorio en distractores.
+**0.3** Crear `content/advance/schema/item-advance.schema.json` con `errorCatalogado` obligatorio en distractores (contrato superado el 2026-09-13, ver §2.3).
 
 **0.4** En el schema de lecciones, `errorCatalogado` sube de opcional a **advertencia** del validador (no error), con reporte de cobertura. Sube a obligatorio solo cuando la cobertura llegue a 100%. Si se hace obligatorio antes, se rompen los 11 módulos publicados.
 
@@ -508,7 +512,7 @@ El enunciado es la parte barata. El trabajo real es el mapeo.
 Campos nuevos respecto del schema de lecciones:
 
 - `tiempoReferenciaSeg`: obligatorio. Valores por defecto según dificultad: baja 80, media 120, alta 160. Base: 140 minutos para 65 preguntas da 129 segundos promedio. Se calibra con datos reales cuando exista F3. Queda escrito en el banco piloto sin consumidor a propósito: su consumidor es el panel 2×2 (§6.2), que exige modo clásico. No es un campo muerto y no se retira.
-- `errorCatalogado`: obligatorio en los tres distractores.
+- `errorCatalogado`: la clave va en los tres distractores; el valor es un id del catálogo o `null`. Con `null` es obligatorio `sinErrorCatalogado: { motivo, nota }` (contrato completo en §2.3). Pisos: al menos 1 mapeado por ítem y 60 % por banco.
 - `feedbackDescarte`: el texto que aparece cuando el estudiante descarta **correctamente** esa alternativa. No es el feedback de haberla elegido. Es distinto y hay que escribirlo aparte.
 - `feedbackDescarteIncorrecto`: en la correcta. Aparece cuando el estudiante la descarta por error.
 
