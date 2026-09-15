@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "item-advance.schema.json",
   "title": "Banco de ítems Fobos Advance",
-  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase.",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase; (10) figura, si está: xMin < xMax e yMin < yMax, todo vértice de poligono existe como punto de la misma figura, todo punto, vector y centro cae dentro del plano, nombres de punto únicos y descripcion presente. Todo error, no advertencia.",
   "type": "object",
   "required": ["tipo", "unidadId", "moduloId", "titulo", "items", "proveniencia"],
   "properties": {
@@ -114,7 +114,114 @@
           "minLength": 1,
           "description": "Resolución paso a paso, recalculada desde cero. Se muestra al cerrar el ítem por descarte fatal."
         },
+        "figura": { "$ref": "#/definitions/figuraPlano" },
         "proveniencia": { "$ref": "#/definitions/provenienciaItem" }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraPlano": {
+      "type": "object",
+      "description": "Opcional. Figura declarativa sobre el plano cartesiano que se renderiza entre el enunciado y las alternativas (components/advance/PlanoIsometrias.tsx). Muestra los DATOS del ítem, nunca la transformación pedida: si el enunciado pide la imagen de un triángulo bajo una traslación, la figura lleva el triángulo y el vector, y jamás el triángulo trasladado. Vocabulario cerrado a cinco elementos; coordenadas enteras. Reglas del validador, no del schema: todo vértice de poligono existe como punto; todo punto, vector y centro cae dentro del plano; nombres de punto únicos.",
+      "required": ["plano", "descripcion", "elementos"],
+      "properties": {
+        "plano": {
+          "type": "object",
+          "description": "Ventana visible, en unidades. xMin < xMax e yMin < yMax quedan a cargo del validador.",
+          "required": ["xMin", "xMax", "yMin", "yMax"],
+          "properties": {
+            "xMin": { "type": "integer" },
+            "xMax": { "type": "integer" },
+            "yMin": { "type": "integer" },
+            "yMax": { "type": "integer" }
+          },
+          "additionalProperties": false
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 30,
+          "description": "Qué muestra la figura, en palabras. Es el <title> del SVG para lector de pantalla y lo que Ronda 1 verifica contra los elementos."
+        },
+        "elementos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              { "$ref": "#/definitions/figuraPunto" },
+              { "$ref": "#/definitions/figuraPoligono" },
+              { "$ref": "#/definitions/figuraRecta" },
+              { "$ref": "#/definitions/figuraVector" },
+              { "$ref": "#/definitions/figuraCentro" }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraPunto": {
+      "type": "object",
+      "required": ["tipo", "nombre", "x", "y"],
+      "properties": {
+        "tipo": { "const": "punto" },
+        "nombre": { "type": "string", "minLength": 1 },
+        "x": { "type": "integer" },
+        "y": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraPoligono": {
+      "type": "object",
+      "required": ["tipo", "vertices"],
+      "properties": {
+        "tipo": { "const": "poligono" },
+        "nombre": { "type": "string", "minLength": 1 },
+        "vertices": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Nombres de puntos declarados en la misma figura, en orden de recorrido."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraRecta": {
+      "type": "object",
+      "required": ["tipo", "etiqueta", "forma"],
+      "properties": {
+        "tipo": { "const": "recta" },
+        "etiqueta": { "type": "string", "minLength": 1 },
+        "forma": { "enum": ["x=c", "y=c", "y=x", "y=-x"] },
+        "c": { "type": "integer", "description": "Obligatorio con forma x=c o y=c; prohibido con y=x e y=-x." }
+      },
+      "additionalProperties": false,
+      "if": { "properties": { "forma": { "enum": ["x=c", "y=c"] } }, "required": ["forma"] },
+      "then": { "required": ["c"] },
+      "else": { "not": { "required": ["c"] } }
+    },
+
+    "figuraVector": {
+      "type": "object",
+      "required": ["tipo", "etiqueta", "desde", "hasta"],
+      "properties": {
+        "tipo": { "const": "vector" },
+        "etiqueta": { "type": "string", "minLength": 1 },
+        "desde": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer" } },
+        "hasta": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer" } }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraCentro": {
+      "type": "object",
+      "required": ["tipo", "etiqueta", "x", "y"],
+      "properties": {
+        "tipo": { "const": "centro" },
+        "etiqueta": { "type": "string", "minLength": 1 },
+        "x": { "type": "integer" },
+        "y": { "type": "integer" }
       },
       "additionalProperties": false
     },

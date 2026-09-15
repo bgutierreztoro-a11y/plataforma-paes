@@ -605,7 +605,20 @@ const MIN_ITEMS_BANCO_ADVANCE = 20;
 const MIN_ERRORES_DISTINTOS_ADVANCE = 12;
 
 const CLAVES_BANCO = ['tipo', 'unidadId', 'moduloId', 'titulo', 'items', 'contextosNumericos', 'auditoria', 'proveniencia'];
-const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'proveniencia'];
+const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'figura', 'proveniencia'];
+// Figura declarativa (regla (10) del $comment del schema). Vocabulario cerrado:
+// la figura muestra los datos del ítem y nunca la transformación pedida.
+const CLAVES_FIGURA = ['plano', 'descripcion', 'elementos'];
+const CLAVES_PLANO = ['xMin', 'xMax', 'yMin', 'yMax'];
+const MIN_DESCRIPCION_FIGURA = 30;
+const FORMAS_RECTA = ['x=c', 'y=c', 'y=x', 'y=-x'];
+const CLAVES_POR_TIPO_FIGURA = {
+  punto: ['tipo', 'nombre', 'x', 'y'],
+  poligono: ['tipo', 'nombre', 'vertices'],
+  recta: ['tipo', 'etiqueta', 'forma', 'c'],
+  vector: ['tipo', 'etiqueta', 'desde', 'hasta'],
+  centro: ['tipo', 'etiqueta', 'x', 'y'],
+};
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -774,6 +787,115 @@ function validarDeclaracionErrorCatalogado(a, q, banco, erroresCatalogados, erro
   }
 }
 
+/**
+ * Regla (10): figura declarativa de un ítem Advance. Cada elemento se valida
+ * por su `tipo`; después se cruzan: vértices contra puntos, coordenadas contra
+ * el plano, nombres sin repetir. Todo es error.
+ */
+function validarFiguraItem(figura, donde, errores) {
+  if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
+    return errores.push(`${donde}: figura debe ser un objeto { plano, descripcion, elementos }`);
+  }
+  clavesSobrantes(figura, CLAVES_FIGURA, donde, errores);
+
+  const plano = figura.plano;
+  let planoValido = false;
+  if (!plano || typeof plano !== 'object' || Array.isArray(plano)) {
+    errores.push(`${donde}.plano: falta { xMin, xMax, yMin, yMax }`);
+  } else {
+    clavesSobrantes(plano, CLAVES_PLANO, `${donde}.plano`, errores);
+    const enteros = CLAVES_PLANO.every((k) => Number.isInteger(plano[k]));
+    if (!enteros) errores.push(`${donde}.plano: xMin, xMax, yMin e yMax deben ser enteros`);
+    else {
+      if (plano.xMin >= plano.xMax) errores.push(`${donde}.plano: xMin (${plano.xMin}) debe ser menor que xMax (${plano.xMax})`);
+      if (plano.yMin >= plano.yMax) errores.push(`${donde}.plano: yMin (${plano.yMin}) debe ser menor que yMax (${plano.yMax})`);
+      planoValido = plano.xMin < plano.xMax && plano.yMin < plano.yMax;
+    }
+  }
+
+  if (!esTexto(figura.descripcion)) {
+    errores.push(`${donde}.descripcion: falta (qué muestra la figura, en palabras, para lector de pantalla y Ronda 1)`);
+  } else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) {
+    errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+  }
+
+  const elementos = figura.elementos;
+  if (!Array.isArray(elementos) || elementos.length === 0) {
+    return errores.push(`${donde}.elementos: se espera un array con al menos un elemento`);
+  }
+
+  const dentro = (x, y) => !planoValido || (x >= plano.xMin && x <= plano.xMax && y >= plano.yMin && y <= plano.yMax);
+  const nombresPunto = new Set();
+  const poligonos = [];
+
+  elementos.forEach((el, j) => {
+    const q = `${donde}.elementos[${j}]`;
+    if (!el || typeof el !== 'object' || Array.isArray(el)) return errores.push(`${q}: debe ser un objeto con tipo`);
+    const permitidas = CLAVES_POR_TIPO_FIGURA[el.tipo];
+    if (!permitidas) {
+      return errores.push(`${q}: tipo debe ser uno de: ${Object.keys(CLAVES_POR_TIPO_FIGURA).join(', ')} (recibido: ${JSON.stringify(el.tipo)})`);
+    }
+    clavesSobrantes(el, permitidas, q, errores);
+
+    if (el.tipo === 'punto') {
+      if (!esTexto(el.nombre)) errores.push(`${q}: punto sin nombre`);
+      else if (nombresPunto.has(el.nombre)) errores.push(`${q}: nombre de punto "${el.nombre}" repetido dentro de la figura`);
+      else nombresPunto.add(el.nombre);
+      if (!Number.isInteger(el.x) || !Number.isInteger(el.y)) errores.push(`${q}: x e y deben ser enteros`);
+      else if (!dentro(el.x, el.y)) errores.push(`${q}: punto "${el.nombre}" (${el.x}, ${el.y}) fuera del plano`);
+      return;
+    }
+
+    if (el.tipo === 'poligono') {
+      if (el.nombre !== undefined && !esTexto(el.nombre)) errores.push(`${q}: nombre, si está, es texto no vacío`);
+      if (!Array.isArray(el.vertices) || el.vertices.length < 3 || !el.vertices.every(esTexto)) {
+        errores.push(`${q}: vertices debe ser un array de al menos 3 nombres de punto`);
+      } else poligonos.push({ q, vertices: el.vertices });
+      return;
+    }
+
+    if (el.tipo === 'recta') {
+      if (!esTexto(el.etiqueta)) errores.push(`${q}: recta sin etiqueta`);
+      if (!FORMAS_RECTA.includes(el.forma)) {
+        errores.push(`${q}: forma debe ser una de: ${FORMAS_RECTA.join(', ')} (recibido: ${JSON.stringify(el.forma)})`);
+      } else if (el.forma === 'x=c' || el.forma === 'y=c') {
+        if (!Number.isInteger(el.c)) errores.push(`${q}: con forma ${el.forma} es obligatorio c entero`);
+        else if (planoValido) {
+          const [lo, hi] = el.forma === 'x=c' ? [plano.xMin, plano.xMax] : [plano.yMin, plano.yMax];
+          if (el.c < lo || el.c > hi) errores.push(`${q}: recta ${el.forma} con c = ${el.c} fuera del plano`);
+        }
+      } else if (el.c !== undefined) {
+        errores.push(`${q}: con forma ${el.forma} no va c`);
+      }
+      return;
+    }
+
+    if (el.tipo === 'vector') {
+      if (!esTexto(el.etiqueta)) errores.push(`${q}: vector sin etiqueta`);
+      for (const extremo of ['desde', 'hasta']) {
+        const par = el[extremo];
+        if (!Array.isArray(par) || par.length !== 2 || !par.every(Number.isInteger)) {
+          errores.push(`${q}: ${extremo} debe ser [x, y] con enteros`);
+        } else if (!dentro(par[0], par[1])) {
+          errores.push(`${q}: vector "${el.etiqueta}" con ${extremo} (${par[0]}, ${par[1]}) fuera del plano`);
+        }
+      }
+      return;
+    }
+
+    // centro
+    if (!esTexto(el.etiqueta)) errores.push(`${q}: centro sin etiqueta`);
+    if (!Number.isInteger(el.x) || !Number.isInteger(el.y)) errores.push(`${q}: x e y deben ser enteros`);
+    else if (!dentro(el.x, el.y)) errores.push(`${q}: centro "${el.etiqueta}" (${el.x}, ${el.y}) fuera del plano`);
+  });
+
+  for (const { q, vertices } of poligonos) {
+    for (const v of vertices) {
+      if (!nombresPunto.has(v)) errores.push(`${q}: vértice "${v}" no existe como punto de la figura`);
+    }
+  }
+}
+
 function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {
   const p = `items[${i}]`;
   if (!item || typeof item !== 'object' || Array.isArray(item)) return errores.push(`${p}: el ítem debe ser un objeto`);
@@ -801,6 +923,7 @@ function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {
 
   if (!esTexto(item.enunciado)) errores.push(`${p}: falta enunciado`);
   if (!esTexto(item.solucion)) errores.push(`${p}: falta la solución paso a paso`);
+  if (item.figura !== undefined) validarFiguraItem(item.figura, `${p}.figura`, errores);
 
   validarAlternativasDescarte(item.alternativas, p, banco, erroresCatalogados, errores);
   validarProvenienciaItem(item.proveniencia, p, errores);

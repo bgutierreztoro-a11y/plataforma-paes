@@ -185,6 +185,113 @@ describe("piso por banco (regla 9)", () => {
   });
 });
 
+/* Regla (10): figura declarativa. Se prueba con un ítem que lleva la figura
+   completa y válida, variando un solo campo por caso. */
+const FIGURA_VALIDA = {
+  plano: { xMin: -4, xMax: 6, yMin: -3, yMax: 5 },
+  descripcion: "Triángulo ABC y el vector v que va de (1, 1) a (4, 3), datos del ítem.",
+  elementos: [
+    { tipo: "punto", nombre: "A", x: -3, y: -1 },
+    { tipo: "punto", nombre: "B", x: 0, y: -2 },
+    { tipo: "punto", nombre: "C", x: -1, y: 2 },
+    { tipo: "poligono", vertices: ["A", "B", "C"] },
+    { tipo: "vector", etiqueta: "v", desde: [1, 1], hasta: [4, 3] },
+    { tipo: "centro", etiqueta: "O", x: 0, y: 0 },
+    { tipo: "recta", etiqueta: "L", forma: "x=c", c: 1 },
+  ],
+};
+
+function conFigura(figura: unknown) {
+  /* Por variable y no como literal: `item` no declara figura, y el chequeo de
+     propiedades sobrantes solo corre sobre literales. */
+  const conLaFigura = { ...item(1, TRES), figura };
+  return banco(conLaFigura);
+}
+/** Errores de la figura del primer ítem. */
+const deLaFigura = (errores: string[]) => errores.filter((e) => e.startsWith("items[0].figura"));
+
+describe("figura: regla (10)", () => {
+  it("una figura completa y válida pasa, y sin figura también", () => {
+    assert.deepEqual(validar(conFigura(FIGURA_VALIDA)), []);
+    assert.deepEqual(validar(banco(item(1, TRES))), []);
+  });
+
+  it("vértice de poligono que no existe como punto falla nombrando el vértice", () => {
+    const figura = {
+      ...FIGURA_VALIDA,
+      elementos: FIGURA_VALIDA.elementos.map((el) =>
+        el.tipo === "poligono" ? { ...el, vertices: ["A", "B", "Z"] } : el,
+      ),
+    };
+    const errores = deLaFigura(validar(conFigura(figura)));
+    assert.equal(errores.length, 1);
+    assert.match(errores[0], /^items\[0\]\.figura\.elementos\[3\]: vértice "Z" no existe como punto/);
+  });
+
+  it("punto, vector y centro fuera del plano fallan, cada uno con sus coordenadas", () => {
+    const figura = {
+      ...FIGURA_VALIDA,
+      elementos: [
+        { tipo: "punto", nombre: "A", x: 7, y: 0 },
+        { tipo: "vector", etiqueta: "v", desde: [0, 0], hasta: [2, 9] },
+        { tipo: "centro", etiqueta: "O", x: -5, y: 0 },
+      ],
+    };
+    const errores = deLaFigura(validar(conFigura(figura)));
+    assert.equal(errores.length, 3);
+    assert.match(errores[0], /elementos\[0\]: punto "A" \(7, 0\) fuera del plano/);
+    assert.match(errores[1], /elementos\[1\]: vector "v" con hasta \(2, 9\) fuera del plano/);
+    assert.match(errores[2], /elementos\[2\]: centro "O" \(-5, 0\) fuera del plano/);
+  });
+
+  it("nombre de punto repetido falla en el segundo punto", () => {
+    const figura = {
+      ...FIGURA_VALIDA,
+      elementos: [
+        { tipo: "punto", nombre: "A", x: 0, y: 0 },
+        { tipo: "punto", nombre: "A", x: 1, y: 1 },
+      ],
+    };
+    const errores = deLaFigura(validar(conFigura(figura)));
+    assert.equal(errores.length, 1);
+    assert.match(errores[0], /^items\[0\]\.figura\.elementos\[1\]: nombre de punto "A" repetido/);
+  });
+
+  it("figura sin descripcion falla, y con descripcion corta también", () => {
+    const errores = deLaFigura(validar(conFigura({ ...FIGURA_VALIDA, descripcion: undefined })));
+    assert.equal(errores.length, 1);
+    assert.match(errores[0], /^items\[0\]\.figura\.descripcion: falta/);
+
+    const corta = deLaFigura(validar(conFigura({ ...FIGURA_VALIDA, descripcion: "Un triángulo." })));
+    assert.equal(corta.length, 1);
+    assert.match(corta[0], /descripcion: demasiado corta \(<30 caracteres\)/);
+  });
+
+  it("plano con xMin >= xMax o yMin >= yMax falla", () => {
+    const errores = deLaFigura(validar(conFigura({ ...FIGURA_VALIDA, plano: { xMin: 3, xMax: 3, yMin: 2, yMax: -1 } })));
+    assert.deepEqual(errores, [
+      "items[0].figura.plano: xMin (3) debe ser menor que xMax (3)",
+      "items[0].figura.plano: yMin (2) debe ser menor que yMax (-1)",
+    ]);
+  });
+
+  it("recta x=c sin c, y=x con c, y tipo fuera del vocabulario fallan", () => {
+    const figura = {
+      ...FIGURA_VALIDA,
+      elementos: [
+        { tipo: "recta", etiqueta: "L", forma: "x=c" },
+        { tipo: "recta", etiqueta: "M", forma: "y=x", c: 2 },
+        { tipo: "circulo", etiqueta: "K" },
+      ],
+    };
+    const errores = deLaFigura(validar(conFigura(figura)));
+    assert.equal(errores.length, 3);
+    assert.match(errores[0], /elementos\[0\]: con forma x=c es obligatorio c entero/);
+    assert.match(errores[1], /elementos\[1\]: con forma y=x no va c/);
+    assert.match(errores[2], /elementos\[2\]: tipo debe ser uno de: punto, poligono, recta, vector, centro/);
+  });
+});
+
 describe("coberturaErrorCatalogadoBanco", () => {
   it("cuenta distractores, mapeados y los declarados por motivo", () => {
     const b = banco(

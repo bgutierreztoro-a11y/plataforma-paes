@@ -41,6 +41,30 @@ export interface CorrectaAdvance extends AlternativaBase {
 
 export type AlternativaAdvance = DistractorAdvance | CorrectaAdvance;
 
+/* ---------- figura declarativa (item-advance.schema.json, figuraPlano) ---------- */
+
+export interface PlanoFigura {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+}
+
+export type ElementoFigura =
+  | { tipo: "punto"; nombre: string; x: number; y: number }
+  | { tipo: "poligono"; nombre?: string; vertices: string[] }
+  | { tipo: "recta"; etiqueta: string; forma: "x=c" | "y=c"; c: number }
+  | { tipo: "recta"; etiqueta: string; forma: "y=x" | "y=-x"; c?: undefined }
+  | { tipo: "vector"; etiqueta: string; desde: [number, number]; hasta: [number, number] }
+  | { tipo: "centro"; etiqueta: string; x: number; y: number };
+
+/** Muestra los datos del ítem y nunca la transformación pedida. Viaja al cliente tal cual. */
+export interface FiguraItem {
+  plano: PlanoFigura;
+  descripcion: string;
+  elementos: ElementoFigura[];
+}
+
 /** Sin `proveniencia`: no viaja al cliente. `solucion` sí, porque el descarte fatal la muestra al instante. */
 export interface ItemAdvance {
   id: string;
@@ -52,6 +76,7 @@ export interface ItemAdvance {
   enunciado: string;
   alternativas: AlternativaAdvance[];
   solucion: string;
+  figura?: FiguraItem;
 }
 
 /* ---------- estado de un ítem ---------- */

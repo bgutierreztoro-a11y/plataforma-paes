@@ -3,7 +3,7 @@ import path from "node:path";
 import { validarDatosBancoAdvance } from "../../scripts/validar-contenido.mjs";
 import { ContenidoInvalidoError } from "../errores.ts";
 import type { ClaveAlternativa, Dificultad, Habilidad } from "../tipos.ts";
-import type { AlternativaAdvance, ItemAdvance } from "./descarte.ts";
+import type { AlternativaAdvance, FiguraItem, ItemAdvance } from "./descarte.ts";
 
 /**
  * Acceso a los bancos Advance en disco (`content/advance/<unidadId>/banco.json`).
@@ -36,6 +36,7 @@ interface ItemEnDisco {
     feedbackDescarteIncorrecto?: string;
   }[];
   solucion: string;
+  figura?: FiguraItem;
 }
 
 export interface Banco {
@@ -109,6 +110,8 @@ export function obtenerBanco(unidadId: string): Banco | null {
  * Quita lo que no viaja al cliente y fija `claveOriginal`. La solución sí
  * viaja (§6.1, descarte fatal). `sinErrorCatalogado` no viaja: es para el
  * revisor, y el cliente solo necesita saber que `errorCatalogado` es null.
+ * `figura` viaja tal cual: solo muestra datos del enunciado, nunca la
+ * transformación pedida, así que no revela nada.
  */
 function itemParaCliente(item: ItemEnDisco): ItemAdvance {
   return {
@@ -120,6 +123,7 @@ function itemParaCliente(item: ItemEnDisco): ItemAdvance {
     tiempoReferenciaSeg: item.tiempoReferenciaSeg,
     enunciado: item.enunciado,
     solucion: item.solucion,
+    ...(item.figura ? { figura: item.figura } : {}),
     alternativas: item.alternativas.map((a): AlternativaAdvance => {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
          satisfacen al tipo. `errorCatalogado` es la excepción: null es un
