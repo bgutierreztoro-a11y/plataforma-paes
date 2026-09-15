@@ -349,14 +349,14 @@
       "habilidad": "argumentar",
       "dificultad": "alta",
       "tiempoReferenciaSeg": 160,
-      "enunciado": "Un estante con frascos de mermelada se pesa con distinta cantidad de frascos:\n\n| Frascos | Masa (kg) |\n|---|---|\n| 3 | 4,85 |\n| 9 | 8,15 |\n| 11 | 9,25 |\n\n¿Es la masa directamente proporcional al número de frascos?",
+      "enunciado": "Una caja de herramientas se pesa con distinta cantidad de llaves iguales adentro:\n\n| Llaves | Masa (kg) |\n|---|---|\n| 3 | 4,85 |\n| 9 | 8,15 |\n| 11 | 9,25 |\n\n¿Es la masa directamente proporcional al número de llaves?",
       "alternativas": [
         {
           "clave": "A",
-          "texto": "Sí, porque la masa sube parejo cada vez que suben los frascos.",
+          "texto": "Sí, porque la masa sube parejo cada vez que suben las llaves.",
           "esCorrecta": false,
           "errorCatalogado": "trata-afin-como-proporcional",
-          "feedbackDescarte": "Que las dos columnas suban juntas y de forma regular no basta: el estante vacío ya pesa algo, y por eso el cociente masa ÷ frascos cambia de fila en fila."
+          "feedbackDescarte": "Que las dos columnas suban juntas y de forma regular no basta: la caja vacía ya pesa algo, y por eso el cociente masa ÷ llaves cambia de fila en fila."
         },
         {
           "clave": "B",
@@ -374,12 +374,12 @@
         },
         {
           "clave": "D",
-          "texto": "No: el cociente masa ÷ frascos cambia (1,62; 0,91; 0,84), así que no es directamente proporcional.",
+          "texto": "No: el cociente masa ÷ llaves cambia (1,62; 0,91; 0,84), así que no es directamente proporcional.",
           "esCorrecta": true,
           "feedbackDescarteIncorrecto": "Esta sí podía ser: 4,85 ÷ 3 ≈ 1,62, 8,15 ÷ 9 ≈ 0,91 y 9,25 ÷ 11 ≈ 0,84. Si el cociente cambia, no hay proporción directa."
         }
       ],
-      "solucion": "Cocientes: 4,85 ÷ 3 ≈ 1,62; 8,15 ÷ 9 ≈ 0,91; 9,25 ÷ 11 ≈ 0,84. Cambian: no es directa. Productos: 3 × 4,85 = 14,55; 9 × 8,15 = 73,35; 11 × 9,25 = 101,75. Cambian: tampoco es inversa. La masa tiene un valor inicial, el estante vacío, más una parte fija por frasco.",
+      "solucion": "Cocientes: 4,85 ÷ 3 ≈ 1,62; 8,15 ÷ 9 ≈ 0,91; 9,25 ÷ 11 ≈ 0,84. Cambian: no es directa. Productos: 3 × 4,85 = 14,55; 9 × 8,15 = 73,35; 11 × 9,25 = 101,75. Cambian: tampoco es inversa. La masa tiene un valor inicial, la caja vacía, más una parte fija por llave.",
       "proveniencia": {
         "fuenteOrigen": "propia"
       }
@@ -475,37 +475,37 @@
       "habilidad": "resolver",
       "dificultad": "media",
       "tiempoReferenciaSeg": 120,
-      "enunciado": "Una torta de 2.160 g se reparte en partes iguales: con 36 invitados, cada porción es de 60 g. Llegan 9 invitados más y la torta se reparte de nuevo entre todos, en partes iguales. ¿De cuántos gramos es cada porción?",
+      "enunciado": "Una paella de 2.160 g se reparte en partes iguales: con 36 comensales, cada porción es de 60 g. Llegan 9 comensales más y la paella se reparte de nuevo entre todos, en partes iguales. ¿De cuántos gramos es cada porción?",
       "alternativas": [
         {
           "clave": "A",
           "texto": "75 g",
           "esCorrecta": false,
           "errorCatalogado": "aplica-directa-a-relacion-inversa",
-          "feedbackDescarte": "Esa es 60 × 45 ÷ 36: agranda la porción porque hay más invitados. Con más invitados la porción baja; lo que se conserva es el producto invitados × porción."
+          "feedbackDescarte": "Esa es 60 × 45 ÷ 36: agranda la porción porque hay más comensales. Con más comensales la porción baja; lo que se conserva es el producto comensales × porción."
         },
         {
           "clave": "B",
           "texto": "51 g",
           "esCorrecta": false,
           "errorCatalogado": "compensa-con-resta",
-          "feedbackDescarte": "Esa es 60 − 9: le quita a la porción los 9 invitados que llegaron. La diferencia no se conserva; se conserva el producto 2.160."
+          "feedbackDescarte": "Esa es 60 − 9: le quita a la porción los 9 comensales que llegaron. La diferencia no se conserva; se conserva el producto 2.160."
         },
         {
           "clave": "C",
           "texto": "48 g",
           "esCorrecta": true,
-          "feedbackDescarteIncorrecto": "Esta sí podía ser: 36 + 9 = 45 invitados, y 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160."
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 36 + 9 = 45 comensales, y 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160."
         },
         {
           "clave": "D",
           "texto": "60 g",
           "esCorrecta": false,
           "errorCatalogado": "confunde-constante-con-valor-de-tabla",
-          "feedbackDescarte": "Esa deja la porción de los 36 invitados. Es el dato inicial, no lo que corresponde a 45: con más invitados, cada porción es menor."
+          "feedbackDescarte": "Esa deja la porción de los 36 comensales. Es el dato inicial, no lo que corresponde a 45: con más comensales, cada porción es menor."
         }
       ],
-      "solucion": "Invitados: 36 + 9 = 45. Producto constante: 36 × 60 = 2.160 g. Porción: 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160.",
+      "solucion": "Comensales: 36 + 9 = 45. Producto constante: 36 × 60 = 2.160 g. Porción: 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160.",
       "proveniencia": {
         "fuenteOrigen": "propia"
       }
@@ -858,10 +858,10 @@
     "adv-proporcionalidad-006: pluviómetro, horas y mm de lluvia, significado de k en la directa; filas 2 → 7, 4 → 14, 7 → 24,5, k 3,5; distractores total, 0,29 (2 ÷ 7), 7",
     "adv-proporcionalidad-007: álbum de 594 fotos, fotos por página y páginas, significado de k en la inversa; filas 6 → 99, 9 → 66, 22 → 27",
     "adv-proporcionalidad-008: cloro para una piscina, m³ de agua y g de cloro, tabla directa con decimales; filas 3,6 → 9, 5,2 → 13, 9,5 → 23,75, k 2,5",
-    "adv-proporcionalidad-009: estante con frascos de mermelada, frascos y kg, tabla afín masa = 3,2 + 0,55·f; filas 3 → 4,85, 9 → 8,15, 11 → 9,25; cocientes 1,62, 0,91, 0,84; productos 14,55, 73,35, 101,75",
+    "adv-proporcionalidad-009: caja de herramientas con llaves iguales, llaves y kg, tabla afín masa = 3,2 + 0,55·n; filas 3 → 4,85, 9 → 8,15, 11 → 9,25; cocientes 1,62, 0,91, 0,84; productos 14,55, 73,35, 101,75",
     "adv-proporcionalidad-010: rollo de alambre de 234 m cortado en tramos iguales, tramos y m por tramo, tabla inversa; filas 4 → 58,5, 6 → 39, 9 → 26",
     "adv-proporcionalidad-011: llave que gotea, horas y mL, constante no exacta; 3 h → 205 mL, k 68,33..., pedido 24 h → 1.640; distractores 1.632 (68 × 24), 273, 4.920",
-    "adv-proporcionalidad-012: torta de 2.160 g repartida entre invitados, invitados y g por porción, inversa; 36 → 60 g, llegan 9 → 45 invitados → 48 g; distractores 75, 51, 60",
+    "adv-proporcionalidad-012: paella de 2.160 g repartida entre comensales, comensales y g por porción, inversa; 36 → 60 g, llegan 9 → 45 comensales → 48 g; distractores 75, 51, 60",
     "adv-proporcionalidad-013: página de 63 cm de ancho en columnas iguales, columnas y cm por columna, expresión de la inversa; a = 63 ÷ c, comprobación c = 7 → 9; distractores 63·c, c ÷ 63, 63 − c",
     "adv-proporcionalidad-014: barniz para un deck, mL y m², expresión de la directa en el sentido inverso; 4,5 m² → 427,5 mL, k 95, a = v ÷ 95; distractores 95·v, 427,5·v, 95 ÷ v",
     "adv-proporcionalidad-015: sonido de un trueno, segundos y metros, directa, del total a la cantidad; 3 s → 1.029 m, k 343, 1.715 m → 5 s; distractores 588.245, 0,2, 1.372",
@@ -875,6 +875,6 @@
     "fuentesAnalisis": [
       "temario DEMRE M1"
     ],
-    "declaracionOriginalidad": "Banco de proporcionalidad: 20 ítems, 60 distractores, 16 errores distintos del catálogo content/errores/proporcionalidad.json, todos los distractores con errorCatalogado (cobertura 60/60). Proveniencia por fuente: 18 propia, 2 demre-liberada (adv-proporcionalidad-003, sobre la pregunta 28 de la forma 2024-regular-113, y adv-proporcionalidad-020, sobre la pregunta 28 de la forma 2026-regular-113; en los dos se conserva solo el mecanismo de los distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem; los 20 ítems se redactaron como propia antes de leer esas dos preguntas), 0 temario-demre. Contextos, cifras núcleo y distractores elegidos con node contra los contextosNumericos de content/lecciones/, content/advance/porcentaje/banco.json y content/cierres/cierre-proporcionalidad.json (criterio de dos niveles firmado el 2026-09-14: cifras de 100 o más y con dos decimales contra todo el set, constantes contra los archivos de proporcionalidad), sin repetición dentro del banco de ninguna cifra de 10 o más ni decimal. Ronda 1 (matemática): ejecutada y aprobada el 2026-09-14 en hilo aislado sobre el commit a6839d9. Los 20 ítems se recalcularon desde cero con node: constante o producto de cada ítem, valor de la alternativa correcta y cada uno de los 60 distractores derivado desde el mecanismo que declara su errorCatalogado (no desde el valor escrito); en los 20 la solucion llega al valor de la correcta, ningún ítem tiene textos de alternativa repetidos y tiempoReferenciaSeg calza con la dificultad (baja 80, media 120, alta 160) en 20 de 20. Resultado 20/20 sin correcciones al archivo. Ronda 2 (originalidad): NO EJECUTADA todavía; se corre en hilo aislado y su resultado se escribe acá."
+    "declaracionOriginalidad": "Banco de proporcionalidad: 20 ítems, 60 distractores, 16 errores distintos del catálogo content/errores/proporcionalidad.json, todos los distractores con errorCatalogado (cobertura 60/60). Proveniencia por fuente: 18 propia, 2 demre-liberada (adv-proporcionalidad-003, sobre la pregunta 28 de la forma 2024-regular-113, y adv-proporcionalidad-020, sobre la pregunta 28 de la forma 2026-regular-113; en los dos se conserva solo el mecanismo de los distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem; los 20 ítems se redactaron como propia antes de leer esas dos preguntas), 0 temario-demre. Contextos, cifras núcleo y distractores elegidos con node contra los contextosNumericos de content/lecciones/, content/advance/porcentaje/banco.json y content/cierres/cierre-proporcionalidad.json (criterio de dos niveles firmado el 2026-09-14: cifras de 100 o más y con dos decimales contra todo el set, constantes contra los archivos de proporcionalidad), sin repetición dentro del banco de ninguna cifra de 10 o más ni decimal. Ronda 1 (matemática): ejecutada y aprobada el 2026-09-14 en hilo aislado sobre el commit a6839d9. Los 20 ítems se recalcularon desde cero con node: constante o producto de cada ítem, valor de la alternativa correcta y cada uno de los 60 distractores derivado desde el mecanismo que declara su errorCatalogado (no desde el valor escrito); en los 20 la solucion llega al valor de la correcta, ningún ítem tiene textos de alternativa repetidos y tiempoReferenciaSeg calza con la dificultad (baja 80, media 120, alta 160) en 20 de 20. Resultado 20/20 sin correcciones al archivo. Ronda 2 (originalidad): ejecutada y aprobada el 2026-09-14 en hilo aislado sobre el commit d2ae5c1. Checklist MOS §7.3 completo en los 20 ítems: ningún enunciado sustancialmente similar a una fuente privada, ningún ítem lleva diagrama ni visualización, la secuencia del banco no copia la estructura de ninguna guía y la proveniencia queda registrada en los 20 (los dos demre-liberada con referencia y notaAdaptacion). Sin colisión de dominio contra los contextos de las lecciones y el cierre de proporcionalidad (esmaltes, auditorio, hielo): ninguna de las tres palabras aparece en el banco. Contextos verificados con scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión, salida cruda sin reformular, dos palabras clave por ítem. Dos cambios de dominio preventivos, sin hallazgo de copia, hechos al cierre de la ronda: adv-proporcionalidad-012 pasó de torta entre invitados a paella entre comensales, porque las dos palabras dieron SI (torta en MA-05 Porcentajes de pdv-terceros y en la forma DEMRE de invierno 2024; invitados en esa misma forma); adv-proporcionalidad-009 pasó de estante con frascos de mermelada a caja de herramientas con llaves iguales, porque estante dio SI (618-JMA y las formas DEMRE de invierno y regular 2024) y mermelada dio SI (MOD-05 de pdv-terceros). En los dos se tomó el primer respaldo declarado en el plan de redacción y solo cambió el texto: cifras, mecanismos, errorCatalogado, habilidad, dificultad y tiempoReferenciaSeg quedaron idénticos, y el barrido de cifras volvió a dar 0 repetidas entre ítems sobre las mismas 109 cifras de 10 o más o con decimal. adv-proporcionalidad-020 se mantiene: la forma 113 existe en 2024, 2025 y 2026 en docs/analisis/frecuencia-demre-v2.json, así que la referencia 2026-regular-113 no es un error de año."
   }
 }
