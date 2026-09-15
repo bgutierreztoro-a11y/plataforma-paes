@@ -64,6 +64,16 @@
     {
       "id": "expresiones-algebraicas/omite-descontar-cuadrado-del-desvio",
       "descripcion": "Entrega el cuadrado del número central sin descontar nada, olvidando que los dos factores se apartan de él y que ese apartamiento cuesta exactamente el cuadrado del desvío."
+    },
+    {
+      "id": "expresiones-algebraicas/confunde-coeficiente-elevado",
+      "descripcion": "Confunde 2x² con (2x)²: al elevar un término con coeficiente, deja el coeficiente sin elevar cuando está dentro del paréntesis o lo eleva cuando está fuera. Desarrolla (2x − 3)² como 2x² − 12x + 9 en vez de 4x² − 12x + 9, o traduce el doble del cubo de un número como (2x)³ en vez de 2x³.",
+      "reservado": "Banco Advance de expresiones-algebraicas: distractores DEMRE 2024-regular-113/24A y 26A; mismo mecanismo en funcion-cuadratica 2027-invierno-111/39D"
+    },
+    {
+      "id": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
+      "descripcion": "Reparte un factor o una división sobre un solo término de la suma en vez de sobre todos: escribe (a − 1600)/4 como a/4 − 1600, o resuelve b − 3(b − 1) como b − 3b − 1 = −2b − 1, con el −1 sin multiplicar por 3. Distinto de funcion-cuadratica/distribuye-sobre-un-solo-termino, que es sobre expandir productos de binomios. Mismo mecanismo que sistemas-2x2/distribuye-sobre-parte-de-expresion, que lo recoge al despejar dentro de un sistema.",
+      "reservado": "Banco Advance de expresiones-algebraicas: distractores DEMRE 2024-invierno-111/26B, 2027-invierno-111/4D, 2025-regular-113/25B y 25C"
     }
   ]
 }
