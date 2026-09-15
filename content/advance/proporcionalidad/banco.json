@@ -1,0 +1,880 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "proporcionalidad",
+  "moduloId": "proporcionalidad",
+  "titulo": "Proporcionalidad",
+  "items": [
+    {
+      "id": "adv-proporcionalidad-001",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En un telar, una bufanda de 25 cm de largo usó 35 g de lana. La lana usada es directamente proporcional al largo. ¿Cuántos gramos de lana se necesitan para una bufanda de 55 cm?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "65 g",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diferencia-constante",
+          "feedbackDescarte": "Esa es 35 + 30: le suma a los gramos los 30 cm que subió el largo. Lo que se conserva es el cociente gramos ÷ cm, que vale 1,4, no la diferencia entre las dos columnas."
+        },
+        {
+          "clave": "B",
+          "texto": "77 g",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 35 ÷ 25 = 1,4 g por cm, y 1,4 × 55 = 77 g. Comprobar hacia adelante con la constante la confirma."
+        },
+        {
+          "clave": "C",
+          "texto": "1.925 g",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa es 35 × 55: multiplica los gramos completos de la primera bufanda por el largo nuevo. El largo nuevo se multiplica por la constante 1,4, no por los 35 g de otra fila."
+        },
+        {
+          "clave": "D",
+          "texto": "35 g",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "Esa repite los gramos de la bufanda de 25 cm. Es un valor de la tabla, no lo que le corresponde a 55 cm: una bufanda más larga necesita más lana."
+        }
+      ],
+      "solucion": "Constante: 35 ÷ 25 = 1,4 g por cm. Para 55 cm: 1,4 × 55 = 77 g. Comprobación: 77 ÷ 55 = 1,4, el mismo cociente de la primera bufanda.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-002",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un vivero, para sembrar 6 m² de pasto se usaron 348 g de semilla, y la semilla es directamente proporcional a la superficie. Con 986 g de semilla, ¿cuántos metros cuadrados se pueden sembrar?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "57.188 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-al-volver-del-total",
+          "feedbackDescarte": "Esa es 986 × 58: multiplica el total de semilla por la constante. Para ir del total a la cantidad que lo produce hay que dividir: 986 ÷ 58."
+        },
+        {
+          "clave": "B",
+          "texto": "928 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa es 986 − 58: le resta la constante al total en vez de dividir por ella. Los 58 g por m² no se descuentan una vez; el total se reparte en porciones de 58."
+        },
+        {
+          "clave": "C",
+          "texto": "17 m²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 348 ÷ 6 = 58 g por m², y 986 ÷ 58 = 17 m². Comprobación: 17 × 58 = 986."
+        },
+        {
+          "clave": "D",
+          "texto": "644 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diferencia-constante",
+          "feedbackDescarte": "Esa es 6 + (986 − 348): le suma a los metros cuadrados los gramos que subió la semilla. Lo que se conserva es el cociente, no la diferencia entre columnas."
+        }
+      ],
+      "solucion": "Constante: 348 ÷ 6 = 58 g por m². Del total a la cantidad: 986 ÷ 58 = 17 m². Comprobación: 17 × 58 = 986.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-003",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una impresora de etiquetas trabaja a ritmo constante: en 3 minutos imprime 171 etiquetas. ¿Cuál de las siguientes expresiones representa la cantidad n de etiquetas que imprime en t minutos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "n = 57 · t",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 171 ÷ 3 = 57 etiquetas por minuto, y en t minutos imprime 57 veces t. Con t = 3 da 171."
+        },
+        {
+          "clave": "B",
+          "texto": "n = t ÷ 57",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa divide los minutos por la constante y daría menos de una etiqueta por minuto. La constante 57 multiplica al tiempo, no lo divide."
+        },
+        {
+          "clave": "C",
+          "texto": "n = 57 + t",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-constante-en-vez-de-multiplicar",
+          "feedbackDescarte": "Esa suma la constante una sola vez, como si en t minutos se agregaran 57 etiquetas en total. Cada minuto aporta 57, así que la constante se multiplica por t."
+        },
+        {
+          "clave": "D",
+          "texto": "n = 171 · t",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa multiplica las 171 etiquetas de los 3 minutos por cada minuto, como si 171 fuera la constante. La constante es lo que sale en 1 minuto: 171 ÷ 3 = 57."
+        }
+      ],
+      "solucion": "En 1 minuto imprime 171 ÷ 3 = 57 etiquetas. En t minutos: n = 57 · t. Comprobación: con t = 3, 57 × 3 = 171.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 28, distractores B, C y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (expresión de una proporción directa a partir de una sola fila cantidad → resultado) y los tres mecanismos de sus distractores: multiplicar por el valor completo de la fila, sumar la constante en vez de multiplicarla e invertir el cociente. Cambian el contexto (impresora de etiquetas en vez de receta), las cifras (171 en 3 minutos, constante 57) y las cuatro alternativas. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-004",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un mecanismo, una rueda dentada gira engranada con otra fija. El número de vueltas por minuto que da la rueda es inversamente proporcional a su número de dientes: una rueda de 20 dientes da 38 vueltas por minuto. ¿Cuántas vueltas por minuto da una rueda de 40 dientes en el mismo mecanismo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "76",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa es 38 × 40 ÷ 20: duplica las vueltas porque se duplicaron los dientes. Acá una cantidad crece cuando la otra decrece: con el doble de dientes, la mitad de vueltas."
+        },
+        {
+          "clave": "B",
+          "texto": "18",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa es 38 − 20: le quita a las vueltas los 20 dientes que se agregaron. Lo que se conserva es el producto dientes × vueltas, no la diferencia entre las dos columnas."
+        },
+        {
+          "clave": "C",
+          "texto": "19",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el producto 20 × 38 = 760 se conserva, y 760 ÷ 40 = 19 vueltas por minuto."
+        },
+        {
+          "clave": "D",
+          "texto": "38",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "Esa deja las vueltas de la rueda de 20 dientes. Es el dato de la tabla, no lo que le corresponde a 40 dientes: con más dientes, menos vueltas."
+        }
+      ],
+      "solucion": "Producto constante: 20 × 38 = 760. Para 40 dientes: 760 ÷ 40 = 19 vueltas por minuto. Comprobación: 40 × 19 = 760.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-005",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un archivo de 1.380 MB se descarga a velocidad constante: a 3 MB/s tarda 460 s; a 10 MB/s, 138 s; a 30 MB/s, 46 s. Si se grafica el tiempo de descarga (eje vertical) según la velocidad (eje horizontal), ¿cuál de las siguientes descripciones corresponde al gráfico?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que baja de forma uniforme hasta cortar el eje horizontal.",
+          "esCorrecta": false,
+          "errorCatalogado": "grafica-mal-la-inversa",
+          "feedbackDescarte": "Una recta de bajada uniforme llegaría a tiempo cero con una velocidad finita y seguiría hacia tiempos negativos. En una proporción inversa el tiempo baja cada vez más despacio y nunca llega a cero."
+        },
+        {
+          "clave": "B",
+          "texto": "Una recta que sube desde el origen: a más velocidad, más tiempo.",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa recta es la de una proporción directa. La tabla muestra lo contrario: cuando la velocidad sube, el tiempo baja."
+        },
+        {
+          "clave": "C",
+          "texto": "Una curva que baja rápido al principio y cada vez más despacio, acercándose a los dos ejes sin tocarlos.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: velocidad × tiempo = 1.380 en las tres filas, así que el tiempo baja cada vez más despacio y nunca llega a cero, ni existe descarga con velocidad cero."
+        },
+        {
+          "clave": "D",
+          "texto": "Una curva que baja rápido y luego cruza el eje horizontal, quedando bajo cero.",
+          "esCorrecta": false,
+          "errorCatalogado": "grafica-mal-la-inversa",
+          "feedbackDescarte": "Un tiempo de descarga negativo no existe. Como velocidad × tiempo se mantiene en 1.380, el tiempo se acerca a cero sin cruzarlo."
+        }
+      ],
+      "solucion": "Velocidad × tiempo: 3 × 460 = 1.380; 10 × 138 = 1.380; 30 × 46 = 1.380. Producto constante: proporción inversa. Su gráfico es una curva decreciente que se acerca a los dos ejes sin tocarlos ni cruzarlos.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-006",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un pluviómetro registró lluvia a ritmo constante: en 2 horas, 7 mm; en 4 horas, 14 mm; en 7 horas, 24,5 mm. Con la primera fila se calcula la constante k = 7 ÷ 2 = 3,5. ¿Cuál de las siguientes afirmaciones sobre k es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "k = 3,5 significa que cada hora cayeron 3,5 mm de lluvia.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: mm ÷ horas da los milímetros que le corresponden a una hora, y 14 ÷ 4 y 24,5 ÷ 7 dan el mismo 3,5."
+        },
+        {
+          "clave": "B",
+          "texto": "k = 3,5 es el total de milímetros que cayó en toda la jornada.",
+          "esCorrecta": false,
+          "errorCatalogado": "nombra-mal-la-constante",
+          "feedbackDescarte": "La constante no es un total: es lo que le corresponde a una unidad de tiempo. Solo en las primeras 2 horas ya cayeron 7 mm, más que 3,5."
+        },
+        {
+          "clave": "C",
+          "texto": "La constante es 2 ÷ 7 ≈ 0,29 y representa las horas por cada milímetro.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa invierte el cociente: divide las horas por los milímetros. La relación que se pide es mm ÷ horas, que da 3,5, la lluvia por hora."
+        },
+        {
+          "clave": "D",
+          "texto": "La constante es 7, la lluvia de la primera fila.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "7 mm es un valor de la tabla, la lluvia de 2 horas. La constante es el cociente que se repite en todas las filas: 3,5."
+        }
+      ],
+      "solucion": "7 ÷ 2 = 3,5; 14 ÷ 4 = 3,5; 24,5 ÷ 7 = 3,5. El cociente mm ÷ horas se repite, y su significado es la lluvia que le corresponde a una hora: cada hora cayeron 3,5 mm.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-007",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un álbum tiene 594 fotos. Si se ponen 6 fotos por página se usan 99 páginas; con 9 fotos por página, 66 páginas; con 22 fotos por página, 27 páginas. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La constante 594 indica cuántas fotos van en cada página.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-constante-inversa-como-unitaria",
+          "feedbackDescarte": "Esa lee 594 como lo que le corresponde a una página, que es la lectura de una proporción directa. Acá 594 es el total de fotos, y ese total se reparte entre páginas y fotos por página."
+        },
+        {
+          "clave": "B",
+          "texto": "Si se duplican las fotos por página, se duplica el número de páginas.",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa razona como en una proporción directa. Con el doble de fotos por página se necesita la mitad de las páginas: el producto se conserva, así que si una cantidad se duplica la otra se reduce a la mitad."
+        },
+        {
+          "clave": "C",
+          "texto": "Con 2 fotos más por página se necesitan 2 páginas menos.",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa conserva la diferencia entre las columnas. Lo que se conserva es el producto 594: quitar 2 páginas no compensa 2 fotos más por página, y la tabla lo muestra al pasar de 6 a 9 fotos por página."
+        },
+        {
+          "clave": "D",
+          "texto": "El producto fotos por página × páginas es siempre 594, el total de fotos del álbum.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 6 × 99 = 594, 9 × 66 = 594 y 22 × 27 = 594. La constante de una proporción inversa es ese producto, y acá es el total que se reparte."
+        }
+      ],
+      "solucion": "6 × 99 = 594; 9 × 66 = 594; 22 × 27 = 594. El producto se conserva: proporción inversa con constante 594, que es el total de fotos y se reparte. A más fotos por página, menos páginas, sin conservar la diferencia ni duplicarse juntas.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-008",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra el cloro que se agrega al agua de una piscina según el volumen tratado:\n\n| Agua (m³) | Cloro (g) |\n|---|---|\n| 3,6 | 9 |\n| 5,2 | 13 |\n| 9,5 | 23,75 |\n\n¿Es el cloro directamente proporcional al agua?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No, porque las cantidades de agua tienen decimales.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-por-criterio-irrelevante",
+          "feedbackDescarte": "Que los datos sean decimales no dice nada: la prueba es si el cociente se repite. 9 ÷ 3,6, 13 ÷ 5,2 y 23,75 ÷ 9,5 dan 2,5 las tres veces."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, porque 9 ÷ 3,6 = 2,5 y con esa fila basta para saberlo.",
+          "esCorrecta": false,
+          "errorCatalogado": "verifica-un-solo-par",
+          "feedbackDescarte": "Un solo par no basta para saberlo: la constante tiene que repetirse en todas las filas. Acá sí se repite, pero la afirmación no lo comprobó, y con otra tabla ese mismo argumento habría fallado."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: 9 ÷ 3,6, 13 ÷ 5,2 y 23,75 ÷ 9,5 dan 2,5, el cociente se repite en las tres filas.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las tres divisiones dan 2,5 g por m³, y que el cociente se repita en todas las filas es exactamente la prueba de la proporción directa."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque de una fila a la siguiente el cloro no sube siempre lo mismo.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diferencia-constante",
+          "feedbackDescarte": "La proporción directa no exige saltos iguales entre filas, sino cociente constante. Los saltos dependen de cuánto cambia el agua; el cociente 2,5 es el que no cambia."
+        }
+      ],
+      "solucion": "9 ÷ 3,6 = 2,5; 13 ÷ 5,2 = 2,5; 23,75 ÷ 9,5 = 2,5. El cociente cloro ÷ agua se repite en las tres filas: es proporción directa con constante 2,5 g por m³. Ni los decimales ni los saltos entre filas son criterio.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-009",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un estante con frascos de mermelada se pesa con distinta cantidad de frascos:\n\n| Frascos | Masa (kg) |\n|---|---|\n| 3 | 4,85 |\n| 9 | 8,15 |\n| 11 | 9,25 |\n\n¿Es la masa directamente proporcional al número de frascos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque la masa sube parejo cada vez que suben los frascos.",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-afin-como-proporcional",
+          "feedbackDescarte": "Que las dos columnas suban juntas y de forma regular no basta: el estante vacío ya pesa algo, y por eso el cociente masa ÷ frascos cambia de fila en fila."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, y la constante es 4,85 ÷ 3 ≈ 1,62.",
+          "esCorrecta": false,
+          "errorCatalogado": "verifica-un-solo-par",
+          "feedbackDescarte": "Esa calcula la constante con una sola fila y no revisa las demás. En la segunda, 8,15 ÷ 9 ≈ 0,91, distinto: el cociente no se repite."
+        },
+        {
+          "clave": "C",
+          "texto": "No es directa, así que tiene que ser inversamente proporcional.",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-una-sola-prueba",
+          "feedbackDescarte": "Descartar la directa no prueba la inversa: falta la prueba del producto, y 3 × 4,85, 9 × 8,15 y 11 × 9,25 tampoco coinciden. No es ninguna de las dos."
+        },
+        {
+          "clave": "D",
+          "texto": "No: el cociente masa ÷ frascos cambia (1,62; 0,91; 0,84), así que no es directamente proporcional.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 4,85 ÷ 3 ≈ 1,62, 8,15 ÷ 9 ≈ 0,91 y 9,25 ÷ 11 ≈ 0,84. Si el cociente cambia, no hay proporción directa."
+        }
+      ],
+      "solucion": "Cocientes: 4,85 ÷ 3 ≈ 1,62; 8,15 ÷ 9 ≈ 0,91; 9,25 ÷ 11 ≈ 0,84. Cambian: no es directa. Productos: 3 × 4,85 = 14,55; 9 × 8,15 = 73,35; 11 × 9,25 = 101,75. Cambian: tampoco es inversa. La masa tiene un valor inicial, el estante vacío, más una parte fija por frasco.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-010",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un rollo de alambre de 234 m se corta en tramos iguales:\n\n| Tramos | Largo de cada tramo (m) |\n|---|---|\n| 4 | 58,5 |\n| 6 | 39 |\n| 9 | 26 |\n\n¿Qué se puede afirmar sobre la relación entre el número de tramos y el largo de cada uno?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No hay proporcionalidad, porque 58,5 ÷ 4 y 39 ÷ 6 no dan lo mismo.",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-una-sola-prueba",
+          "feedbackDescarte": "Que el cociente falle solo descarta la proporción directa. Falta probar el producto: 4 × 58,5, 6 × 39 y 9 × 26 dan 234 las tres veces."
+        },
+        {
+          "clave": "B",
+          "texto": "No puede ser proporcional, porque 58,5 no es un número entero.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-por-criterio-irrelevante",
+          "feedbackDescarte": "Los decimales no deciden nada. La prueba es si el producto se repite, y 4 × 58,5 = 234, igual que en las otras filas."
+        },
+        {
+          "clave": "C",
+          "texto": "Son inversamente proporcionales: tramos × largo es siempre 234.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 4 × 58,5 = 234, 6 × 39 = 234 y 9 × 26 = 234. Producto constante: proporción inversa."
+        },
+        {
+          "clave": "D",
+          "texto": "Son inversamente proporcionales y la constante 234 es el largo que le toca a cada tramo.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-constante-inversa-como-unitaria",
+          "feedbackDescarte": "La conclusión es correcta, pero 234 no es lo que le toca a un tramo: es el largo total del rollo, que se reparte. A un solo tramo le tocarían 234 m únicamente si el rollo no se corta."
+        }
+      ],
+      "solucion": "Cociente: 58,5 ÷ 4 y 39 ÷ 6 no coinciden, así que no es directa. Producto: 4 × 58,5 = 234; 6 × 39 = 234; 9 × 26 = 234, constante: es inversa. La constante 234 es el largo total del rollo, que se reparte entre los tramos.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-011",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una llave que gotea juntó 205 mL de agua en 3 horas, a ritmo constante. ¿Cuántos mililitros junta en 24 horas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.632 mL",
+          "esCorrecta": false,
+          "errorCatalogado": "redondea-constante-antes-de-tiempo",
+          "feedbackDescarte": "Esa sale de redondear la constante a 68 mL por hora antes de multiplicar: 68 × 24. La constante exacta es 205 ÷ 3 = 68,33..., y el redondeo se arrastra 24 veces. Conviene escalar: 205 × 8."
+        },
+        {
+          "clave": "B",
+          "texto": "1.640 mL",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 24 horas son 8 veces 3 horas, y 205 × 8 = 1.640 mL, sin redondear la constante."
+        },
+        {
+          "clave": "C",
+          "texto": "273 mL",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-constante-en-vez-de-multiplicar",
+          "feedbackDescarte": "Esa es 205 + 68: le suma la constante una sola vez. Cada hora aporta 68,33... mL, y después de las 3 primeras faltan 21 horas de goteo."
+        },
+        {
+          "clave": "D",
+          "texto": "4.920 mL",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa es 205 × 24: multiplica los mililitros de las 3 horas por 24, como si 205 fuera la constante por hora. La constante es 205 ÷ 3."
+        }
+      ],
+      "solucion": "La constante 205 ÷ 3 = 68,33... no es exacta, así que conviene escalar: 24 h = 8 × 3 h, y 205 × 8 = 1.640 mL. Con la constante redondeada a 68 saldría 68 × 24 = 1.632, ocho mililitros menos por arrastrar el redondeo.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-012",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una torta de 2.160 g se reparte en partes iguales: con 36 invitados, cada porción es de 60 g. Llegan 9 invitados más y la torta se reparte de nuevo entre todos, en partes iguales. ¿De cuántos gramos es cada porción?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "75 g",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa es 60 × 45 ÷ 36: agranda la porción porque hay más invitados. Con más invitados la porción baja; lo que se conserva es el producto invitados × porción."
+        },
+        {
+          "clave": "B",
+          "texto": "51 g",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa es 60 − 9: le quita a la porción los 9 invitados que llegaron. La diferencia no se conserva; se conserva el producto 2.160."
+        },
+        {
+          "clave": "C",
+          "texto": "48 g",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 36 + 9 = 45 invitados, y 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160."
+        },
+        {
+          "clave": "D",
+          "texto": "60 g",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "Esa deja la porción de los 36 invitados. Es el dato inicial, no lo que corresponde a 45: con más invitados, cada porción es menor."
+        }
+      ],
+      "solucion": "Invitados: 36 + 9 = 45. Producto constante: 36 × 60 = 2.160 g. Porción: 2.160 ÷ 45 = 48 g. Comprobación: 45 × 48 = 2.160.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-013",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una página de 63 cm de ancho se divide en c columnas del mismo ancho, sin espacio entre ellas. ¿Cuál de las siguientes expresiones representa el ancho a, en cm, de cada columna?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "a = 63 · c",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa hace crecer el ancho de cada columna cuando hay más columnas. Con más columnas en el mismo ancho, cada una es más angosta: el ancho se divide."
+        },
+        {
+          "clave": "B",
+          "texto": "a = c ÷ 63",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa divide el número de columnas por el ancho de la página. El ancho de cada columna es la página repartida entre las columnas: 63 ÷ c."
+        },
+        {
+          "clave": "C",
+          "texto": "a = 63 − c",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa le resta el número de columnas al ancho, como si cada columna quitara un centímetro. El ancho se reparte entre las columnas, no se descuenta."
+        },
+        {
+          "clave": "D",
+          "texto": "a = 63 ÷ c",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el ancho total se reparte en partes iguales entre las c columnas, y a × c = 63 siempre."
+        }
+      ],
+      "solucion": "Para cualquier número de columnas, a × c = 63, así que a = 63 ÷ c. Comprobación con c = 7: 63 ÷ 7 = 9 cm por columna, y 7 × 9 = 63.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-014",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un barniz para deck rinde de forma proporcional a la superficie: con 427,5 mL se cubren 4,5 m². ¿Cuál de las siguientes expresiones permite calcular el área a, en m², que cubre un volumen v de barniz, en mL?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "a = v ÷ 95",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 427,5 ÷ 4,5 = 95 mL por m², y el área es el volumen repartido en porciones de 95 mL: v ÷ 95."
+        },
+        {
+          "clave": "B",
+          "texto": "a = 95 · v",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-al-volver-del-total",
+          "feedbackDescarte": "Esa multiplica el volumen por la constante. Se conoce el total de barniz y se busca la cantidad que lo consume: hay que dividir por 95, no multiplicar."
+        },
+        {
+          "clave": "C",
+          "texto": "a = 427,5 · v",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa multiplica por los 427,5 mL de la fila completa, como si fueran la constante. La constante es lo que gasta 1 m²: 427,5 ÷ 4,5 = 95."
+        },
+        {
+          "clave": "D",
+          "texto": "a = 95 ÷ v",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa divide la constante por el volumen, y a más barniz daría menos área. El área crece con el volumen: es v ÷ 95."
+        }
+      ],
+      "solucion": "Constante: 427,5 ÷ 4,5 = 95 mL por m². Como v = 95 · a, entonces a = v ÷ 95. Comprobación: con v = 427,5, 427,5 ÷ 95 = 4,5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-015",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El sonido de un trueno avanza a velocidad constante: en 3 segundos recorre 1.029 m. ¿Cuántos segundos tarda en recorrer 1.715 m?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "588.245 s",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-al-volver-del-total",
+          "feedbackDescarte": "Esa es 1.715 × 343: multiplica la distancia por la constante. Se conoce el total recorrido y se busca el tiempo: se divide, 1.715 ÷ 343."
+        },
+        {
+          "clave": "B",
+          "texto": "0,2 s",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa es 343 ÷ 1.715: divide la constante por la distancia. Es la distancia la que se divide por la constante, y da más de un segundo."
+        },
+        {
+          "clave": "C",
+          "texto": "5 s",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 1.029 ÷ 3 = 343 m por segundo, y 1.715 ÷ 343 = 5 s. Comprobación: 343 × 5 = 1.715."
+        },
+        {
+          "clave": "D",
+          "texto": "1.372 s",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa es 1.715 − 343: le resta la constante a la distancia en vez de dividir por ella. Cada segundo son 343 m, y caben 5 veces en 1.715."
+        }
+      ],
+      "solucion": "Constante: 1.029 ÷ 3 = 343 m por segundo. Tiempo: 1.715 ÷ 343 = 5 s. Comprobación: 343 × 5 = 1.715.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-016",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Para armar 3 collares iguales se usan 123 mostacillas. Si se grafica el número de mostacillas (eje vertical) según el número de collares (eje horizontal), ¿cuál de las siguientes descripciones corresponde al gráfico?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que pasa por el origen y sube 41 por cada collar.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 123 ÷ 3 = 41 mostacillas por collar, cero collares son cero mostacillas, y cada collar suma 41."
+        },
+        {
+          "clave": "B",
+          "texto": "Una recta que pasa por el origen y sube 1/41 por cada collar.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa pendiente sale de 3 ÷ 123: divide los collares por las mostacillas. La pendiente es mostacillas por collar, 123 ÷ 3 = 41."
+        },
+        {
+          "clave": "C",
+          "texto": "Una recta que sube 41 por cada collar, pero corta el eje vertical por encima del origen.",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-afin-como-proporcional",
+          "feedbackDescarte": "Una recta que no pasa por el origen tiene un valor inicial distinto de cero: mostacillas sin ningún collar. En una proporción directa, cero collares son cero mostacillas."
+        },
+        {
+          "clave": "D",
+          "texto": "Una recta que pasa por el origen y sube 123 por cada collar.",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa usa las 123 mostacillas de los 3 collares como si fueran la constante por collar. Por collar son 123 ÷ 3 = 41."
+        }
+      ],
+      "solucion": "Constante: 123 ÷ 3 = 41 mostacillas por collar. El gráfico de una proporción directa es una recta que pasa por el origen con pendiente igual a la constante, 41.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-017",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "El campamento base de una expedición tiene víveres para 12 personas durante 21 días, con la misma ración diaria por persona. Llegan 16 personas más y los víveres se reparten entre todas con la misma ración. ¿Para cuántos días alcanzan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "49 días",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-directa-a-relacion-inversa",
+          "feedbackDescarte": "Esa es 21 × 28 ÷ 12: agranda los días porque hay más personas. Con más personas los mismos víveres duran menos; lo que se conserva es el producto personas × días."
+        },
+        {
+          "clave": "B",
+          "texto": "5 días",
+          "esCorrecta": false,
+          "errorCatalogado": "compensa-con-resta",
+          "feedbackDescarte": "Esa es 21 − 16: le quita a los días las 16 personas que llegaron. La diferencia no se conserva; se conserva el producto 252."
+        },
+        {
+          "clave": "C",
+          "texto": "9 días",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 12 × 21 = 252 raciones diarias en total, 12 + 16 = 28 personas, y 252 ÷ 28 = 9 días."
+        },
+        {
+          "clave": "D",
+          "texto": "21 días",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "Esa deja los días de las 12 personas. Es el dato inicial, no lo que corresponde a 28 personas: con más gente, los víveres duran menos."
+        }
+      ],
+      "solucion": "Raciones diarias totales: 12 × 21 = 252. Personas: 12 + 16 = 28. Días: 252 ÷ 28 = 9. Comprobación: 28 × 9 = 252.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-018",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una compostera, 8 kg de residuos producen 2,8 kg de compost, y el compost es directamente proporcional a los residuos. ¿Cuál de las siguientes expresiones representa los kilos c de compost que producen r kilos de residuos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "c = r ÷ 0,35",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-cociente",
+          "feedbackDescarte": "Esa divide por la constante en vez de multiplicar, y daría más compost que residuos. La constante 0,35, el compost por cada kilo de residuos, multiplica a r."
+        },
+        {
+          "clave": "B",
+          "texto": "c = 0,35 · r",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2,8 ÷ 8 = 0,35 kg de compost por kilo de residuos, y con r kilos se obtiene 0,35 veces r."
+        },
+        {
+          "clave": "C",
+          "texto": "c = 0,35 + r",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-constante-en-vez-de-multiplicar",
+          "feedbackDescarte": "Esa suma la constante una sola vez, como si el compost fuera casi igual a los residuos. Cada kilo de residuos da 0,35 kg: la constante se multiplica por r."
+        },
+        {
+          "clave": "D",
+          "texto": "c = 2,8 · r",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa usa los 2,8 kg de compost de los 8 kg como si fueran la constante por kilo. Por kilo de residuos son 2,8 ÷ 8 = 0,35."
+        }
+      ],
+      "solucion": "Constante: 2,8 ÷ 8 = 0,35 kg de compost por kilo de residuos. Expresión: c = 0,35 · r. Comprobación: con r = 8, 0,35 × 8 = 2,8.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-019",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una máquina de coser da 83 puntadas en 7 segundos, a ritmo constante. ¿Cuántas puntadas da en 42 segundos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "500",
+          "esCorrecta": false,
+          "errorCatalogado": "redondea-constante-antes-de-tiempo",
+          "feedbackDescarte": "Esa sale de redondear la constante a 11,9 puntadas por segundo y multiplicar por 42, que da casi 500. La constante exacta es 83 ÷ 7 = 11,857..., y 42 s son 6 veces 7 s: 83 × 6 = 498."
+        },
+        {
+          "clave": "B",
+          "texto": "498",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 42 segundos son 6 veces 7 segundos, y 83 × 6 = 498, sin redondear nada."
+        },
+        {
+          "clave": "C",
+          "texto": "118",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diferencia-constante",
+          "feedbackDescarte": "Esa es 83 + 35: le suma a las puntadas los 35 segundos que subió el tiempo. Lo que se conserva es el cociente puntadas ÷ segundos, no la diferencia."
+        },
+        {
+          "clave": "D",
+          "texto": "3.486",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-una-sola-cantidad",
+          "feedbackDescarte": "Esa es 83 × 42: multiplica las puntadas de los 7 segundos por el tiempo nuevo, como si 83 fuera la constante por segundo. La constante es 83 ÷ 7."
+        }
+      ],
+      "solucion": "La constante 83 ÷ 7 = 11,857... no es exacta, así que conviene escalar: 42 = 6 × 7, y 83 × 6 = 498 puntadas. Con la constante redondeada a 11,9 saldría 11,9 × 42 = 499,8, que se lee como 500: dos puntadas de más por arrastrar el redondeo.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-proporcionalidad-020",
+      "unidadId": "proporcionalidad",
+      "moduloId": "proporcionalidad",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Para preparar café se usa siempre la misma cantidad de café molido por taza:\n\n| Tazas | Café molido (g) |\n|---|---|\n| 3 | 17,4 |\n| 6 | 34,8 |\n| 9 | 52,2 |\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La constante es 17,4, el café de la primera fila.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-constante-con-valor-de-tabla",
+          "feedbackDescarte": "17,4 g es el café de 3 tazas, un valor de la tabla. La constante es el cociente que se repite en todas las filas: 17,4 ÷ 3 = 5,8 g por taza."
+        },
+        {
+          "clave": "B",
+          "texto": "La constante 5,8 significa 5,8 tazas por cada gramo de café.",
+          "esCorrecta": false,
+          "errorCatalogado": "nombra-mal-la-constante",
+          "feedbackDescarte": "Esa intercambia las magnitudes: 5,8 sale de gramos ÷ tazas, así que son gramos por taza, no tazas por gramo."
+        },
+        {
+          "clave": "C",
+          "texto": "Para 15 tazas se necesitan 52,2 + 6 = 58,2 g.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diferencia-constante",
+          "feedbackDescarte": "Esa le suma al café las 6 tazas que subió la cantidad. Lo que se conserva es el cociente, 5,8 g por taza, así que 15 tazas son 15 × 5,8 = 87 g."
+        },
+        {
+          "clave": "D",
+          "texto": "La constante es 5,8 g por taza, y para 15 tazas se necesitan 87 g.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 17,4 ÷ 3 = 5,8, 34,8 ÷ 6 = 5,8, 52,2 ÷ 9 = 5,8, y 15 × 5,8 = 87 g."
+        }
+      ],
+      "solucion": "Cocientes: 17,4 ÷ 3 = 5,8; 34,8 ÷ 6 = 5,8; 52,2 ÷ 9 = 5,8 g por taza. Para 15 tazas: 15 × 5,8 = 87 g. Comprobación: 87 ÷ 15 = 5,8.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 28, distractores B y D",
+        "notaAdaptacion": "Del original se conserva solo el mecanismo de sus distractores B y D: conservar la diferencia entre las dos cantidades en vez de la razón (sumar o restar a una columna lo que cambió la otra). El original es un ítem de resolver sobre una razón entre dos ingredientes; acá el mismo mecanismo aparece como la afirmación del distractor C de un ítem de argumentar sobre una tabla de tres filas. Cambian el contexto (café molido por taza en vez de colorantes), las cifras (constante 5,8, pedido 15 tazas) y las cuatro alternativas. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia del mecanismo."
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-proporcionalidad-001: bufanda tejida a telar, cm de largo y g de lana, directa; 25 cm → 35 g, k 1,4, pedido 55 cm → 77 g; distractores 65, 1.925, 35",
+    "adv-proporcionalidad-002: semilla de pasto en un vivero, m² y g, directa, del total a la cantidad; 6 m² → 348 g, k 58, 986 g → 17 m²; distractores 57.188, 928, 644",
+    "adv-proporcionalidad-003: impresora de etiquetas, minutos y etiquetas, expresión de la directa; 3 min → 171, k 57, n = 57·t; distractores t ÷ 57, 57 + t, 171·t",
+    "adv-proporcionalidad-004: ruedas dentadas engranadas, dientes y vueltas por minuto, inversa; 20 dientes → 38 vueltas, k 760, pedido 40 dientes → 19; distractores 76, 18, 38",
+    "adv-proporcionalidad-005: descarga de un archivo de 1.380 MB, MB/s y segundos, gráfico de la inversa en descripciones verbales; filas 3 → 460, 10 → 138, 30 → 46",
+    "adv-proporcionalidad-006: pluviómetro, horas y mm de lluvia, significado de k en la directa; filas 2 → 7, 4 → 14, 7 → 24,5, k 3,5; distractores total, 0,29 (2 ÷ 7), 7",
+    "adv-proporcionalidad-007: álbum de 594 fotos, fotos por página y páginas, significado de k en la inversa; filas 6 → 99, 9 → 66, 22 → 27",
+    "adv-proporcionalidad-008: cloro para una piscina, m³ de agua y g de cloro, tabla directa con decimales; filas 3,6 → 9, 5,2 → 13, 9,5 → 23,75, k 2,5",
+    "adv-proporcionalidad-009: estante con frascos de mermelada, frascos y kg, tabla afín masa = 3,2 + 0,55·f; filas 3 → 4,85, 9 → 8,15, 11 → 9,25; cocientes 1,62, 0,91, 0,84; productos 14,55, 73,35, 101,75",
+    "adv-proporcionalidad-010: rollo de alambre de 234 m cortado en tramos iguales, tramos y m por tramo, tabla inversa; filas 4 → 58,5, 6 → 39, 9 → 26",
+    "adv-proporcionalidad-011: llave que gotea, horas y mL, constante no exacta; 3 h → 205 mL, k 68,33..., pedido 24 h → 1.640; distractores 1.632 (68 × 24), 273, 4.920",
+    "adv-proporcionalidad-012: torta de 2.160 g repartida entre invitados, invitados y g por porción, inversa; 36 → 60 g, llegan 9 → 45 invitados → 48 g; distractores 75, 51, 60",
+    "adv-proporcionalidad-013: página de 63 cm de ancho en columnas iguales, columnas y cm por columna, expresión de la inversa; a = 63 ÷ c, comprobación c = 7 → 9; distractores 63·c, c ÷ 63, 63 − c",
+    "adv-proporcionalidad-014: barniz para un deck, mL y m², expresión de la directa en el sentido inverso; 4,5 m² → 427,5 mL, k 95, a = v ÷ 95; distractores 95·v, 427,5·v, 95 ÷ v",
+    "adv-proporcionalidad-015: sonido de un trueno, segundos y metros, directa, del total a la cantidad; 3 s → 1.029 m, k 343, 1.715 m → 5 s; distractores 588.245, 0,2, 1.372",
+    "adv-proporcionalidad-016: collares de mostacillas, collares y mostacillas, gráfico de la directa en descripciones verbales; 3 → 123, k 41; distractores pendiente 1/41, recta que no pasa por el origen, pendiente 123",
+    "adv-proporcionalidad-017: víveres del campamento base de una expedición, personas y días, inversa con dos pasos; 12 personas → 21 días, k 252, llegan 16 → 28 personas → 9 días; distractores 49, 5, 21",
+    "adv-proporcionalidad-018: compostera, kg de residuos y kg de compost, expresión de la directa; 8 → 2,8, k 0,35, c = 0,35·r; distractores r ÷ 0,35, 0,35 + r, 2,8·r",
+    "adv-proporcionalidad-019: máquina de coser, segundos y puntadas, constante no exacta; 7 s → 83, k 11,857..., pedido 42 s → 498; distractores 500 (11,9 × 42 = 499,8), 118, 3.486",
+    "adv-proporcionalidad-020: café molido por taza, tazas y g, tabla directa y pedido; filas 3 → 17,4, 6 → 34,8, 9 → 52,2, k 5,8, 15 tazas → 87; distractores 17,4, tazas por gramo, 58,2"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
+    "declaracionOriginalidad": "Banco de proporcionalidad: 20 ítems, 60 distractores, 16 errores distintos del catálogo content/errores/proporcionalidad.json, todos los distractores con errorCatalogado (cobertura 60/60). Proveniencia por fuente: 18 propia, 2 demre-liberada (adv-proporcionalidad-003, sobre la pregunta 28 de la forma 2024-regular-113, y adv-proporcionalidad-020, sobre la pregunta 28 de la forma 2026-regular-113; en los dos se conserva solo el mecanismo de los distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem; los 20 ítems se redactaron como propia antes de leer esas dos preguntas), 0 temario-demre. Contextos, cifras núcleo y distractores elegidos con node contra los contextosNumericos de content/lecciones/, content/advance/porcentaje/banco.json y content/cierres/cierre-proporcionalidad.json (criterio de dos niveles firmado el 2026-09-14: cifras de 100 o más y con dos decimales contra todo el set, constantes contra los archivos de proporcionalidad), sin repetición dentro del banco de ninguna cifra de 10 o más ni decimal. Ronda 1 (matemática): NO EJECUTADA todavía. Ronda 2 (originalidad): NO EJECUTADA todavía. Las dos se corren en hilos aislados después del commit inicial y su resultado se escribe acá."
+  }
+}
