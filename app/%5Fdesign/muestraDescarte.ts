@@ -1,5 +1,5 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
-import type { ItemAdvance } from "@/lib/advance/descarte";
+import type { FiguraItem, ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
@@ -275,3 +275,58 @@ export const INTENTOS_CLASICOS_MUESTRA: IntentoConHabilidad[] = [
 
 /** Lo que recibe `PanelDosPorDos` en la galería: el mismo camino que tendría la ruta. */
 export const PANEL_MUESTRA = panelPorHabilidad(INTENTOS_CLASICOS_MUESTRA);
+
+/* ---------- figura declarativa (PlanoIsometrias) ---------- */
+
+/* Tres figuras de MUESTRA para el plano de isometrías, una por transformación.
+   Cada una lleva solo los datos: la figura original y el objeto que define la
+   transformación (vector, centro o recta), nunca la imagen. No viven en
+   content/ y ningún banco las importa. */
+export const FIGURAS_MUESTRA: { id: string; rotulo: string; figura: FiguraItem }[] = [
+  {
+    id: "traslacion",
+    rotulo: "Traslación · triángulo ABC y vector v",
+    figura: {
+      plano: { xMin: -4, xMax: 6, yMin: -3, yMax: 5 },
+      descripcion: "Triángulo ABC con vértices A(-3, -1), B(0, -2) y C(-1, 2), y el vector v que va de (1, 1) a (4, 3).",
+      elementos: [
+        { tipo: "punto", nombre: "A", x: -3, y: -1 },
+        { tipo: "punto", nombre: "B", x: 0, y: -2 },
+        { tipo: "punto", nombre: "C", x: -1, y: 2 },
+        { tipo: "poligono", vertices: ["A", "B", "C"] },
+        { tipo: "vector", etiqueta: "v", desde: [1, 1], hasta: [4, 3] },
+      ],
+    },
+  },
+  {
+    id: "rotacion",
+    rotulo: "Rotación · cuadrilátero PQRS y centro O",
+    figura: {
+      plano: { xMin: -5, xMax: 5, yMin: -4, yMax: 4 },
+      descripcion: "Cuadrilátero PQRS con vértices P(1, 1), Q(4, 1), R(4, 3) y S(2, 3), y el centro de rotación O en el origen.",
+      elementos: [
+        { tipo: "punto", nombre: "P", x: 1, y: 1 },
+        { tipo: "punto", nombre: "Q", x: 4, y: 1 },
+        { tipo: "punto", nombre: "R", x: 4, y: 3 },
+        { tipo: "punto", nombre: "S", x: 2, y: 3 },
+        { tipo: "poligono", nombre: "PQRS", vertices: ["P", "Q", "R", "S"] },
+        { tipo: "centro", etiqueta: "O", x: 0, y: 0 },
+      ],
+    },
+  },
+  {
+    id: "reflexion",
+    rotulo: "Reflexión · triángulo DEF y recta x = 1",
+    figura: {
+      plano: { xMin: -4, xMax: 6, yMin: -2, yMax: 5 },
+      descripcion: "Triángulo DEF con vértices D(-3, 1), E(-1, 4) y F(0, 2), y la recta L de ecuación x = 1, eje de la reflexión.",
+      elementos: [
+        { tipo: "punto", nombre: "D", x: -3, y: 1 },
+        { tipo: "punto", nombre: "E", x: -1, y: 4 },
+        { tipo: "punto", nombre: "F", x: 0, y: 2 },
+        { tipo: "poligono", vertices: ["D", "E", "F"] },
+        { tipo: "recta", etiqueta: "L", forma: "x=c", c: 1 },
+      ],
+    },
+  },
+];

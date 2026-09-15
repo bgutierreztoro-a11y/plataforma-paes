@@ -1,6 +1,7 @@
 "use client";
 
 import { ALTERNATIVA_BASE, CHIP_BASE } from "@/components/ui/alternativa";
+import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import type { ItemAdvance } from "@/lib/advance/descarte";
@@ -92,6 +93,8 @@ export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }:
         <div className="text-base font-medium text-primary">
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
+
+        {item.figura && <PlanoIsometrias figura={item.figura} />}
 
         <ul className="space-y-2.5" aria-label="Alternativas">
           {item.alternativas.map((alt) => (

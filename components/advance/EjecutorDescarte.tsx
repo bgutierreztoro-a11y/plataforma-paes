@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
+import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
@@ -161,6 +162,8 @@ export function EjecutorDescarte({
         <div className="text-base font-medium text-primary">
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
+
+        {item.figura && <PlanoIsometrias figura={item.figura} />}
 
         <p className="text-cuerpo-s text-primary">{descarte.instruccion}</p>
 

@@ -25,9 +25,11 @@ import { IngresoErrores } from "@/components/advance/IngresoErrores";
 import { ListaErrores } from "@/components/advance/ListaErrores";
 import { RepasoError } from "@/components/advance/RepasoError";
 import { PanelDosPorDos } from "@/components/advance/PanelDosPorDos";
+import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
   COPY_MUESTRA,
+  FIGURAS_MUESTRA,
   GRUPOS_ERRORES_MUESTRA,
   MUESTRA_DESCARTE,
   MUESTRA_TRIAGE,
@@ -890,6 +892,26 @@ export default function PaginaDiseno() {
                 <MuestraDescarteInteractiva />
               </div>
             </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Plano de isometrías"
+          nota="La figura declarativa de un ítem Advance (item-advance.schema.json, figuraPlano), tal como se monta entre el enunciado y las alternativas en descarte y en triage. SVG estático: cuatro cuadrantes, cuadrícula unitaria, ejes numerados en cada entero, escala desde el plano, ancho 100% con viewBox y sin animación ni hover. Muestra los datos y nunca la transformación pedida: el triángulo y el vector, el cuadrilátero y el centro, el triángulo y la recta; la imagen no aparece. Figura y vector en --linea-nav (la 02 cae a tinta), relleno en --linea-tinte, recta y centro en tinta. Datos de MUESTRA en app/%5Fdesign/muestraDescarte.ts. Sobre --color-bg, el fondo real del body: acá se mide el ancho del SVG, la letra de los nombres de punto y el contraste del trazo."
+        >
+          <div className="flex flex-col gap-6">
+            {FIGURAS_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                <PorLinea>
+                  {() => (
+                    <div data-figura-muestra={id} className="rounded-sm border border-hairline bg-[var(--color-bg)] p-4">
+                      <PlanoIsometrias figura={figura} />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
           </div>
         </Seccion>
 
