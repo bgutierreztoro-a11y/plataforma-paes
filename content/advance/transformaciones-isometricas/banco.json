@@ -1,0 +1,1538 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "transformaciones-isometricas",
+  "moduloId": "transformaciones-isometricas",
+  "titulo": "Transformaciones isométricas",
+  "items": [
+    {
+      "id": "adv-transformaciones-isometricas-001",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En el plano cartesiano, A = (6, 7) y B = (−2, −2). ¿Cuál es el vector que va de A a B?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(8, 9)",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-vector-al-reves",
+          "feedbackDescarte": "Esa es A − B, partida menos llegada: el vector queda apuntando de B hacia A. El vector de A a B es llegada menos partida, B − A = (−2 − 6, −2 − 7) = (−8, −9)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−8, −9)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: B − A = (−2 − 6, −2 − 7) = (−8, −9). Comprobación: A + (−8, −9) = (−2, −2) = B."
+        },
+        {
+          "clave": "C",
+          "texto": "(−2, −2)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-punto-con-vector",
+          "feedbackDescarte": "Esas son las coordenadas de B, el lugar donde termina, no el desplazamiento. Como A no es el origen, el vector es la diferencia B − A, no el punto de llegada."
+        },
+        {
+          "clave": "D",
+          "texto": "(−9, −8)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa es (−2 − 7, −2 − 6): resta la x de B con la y de A y la y de B con la x de A. Cada componente se resta con la suya: x con x e y con y."
+        }
+      ],
+      "solucion": "Vector de A a B = B − A = (−2 − 6, −2 − 7) = (−8, −9). Comprobación: A + (−8, −9) = (6 + (−8), 7 + (−9)) = (−2, −2) = B.",
+      "figura": {
+        "plano": {
+          "xMin": -3,
+          "xMax": 7,
+          "yMin": -3,
+          "yMax": 8
+        },
+        "descripcion": "Puntos A en (6, 7) y B en (−2, −2) en el plano cartesiano; el vector de A a B no está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": 6,
+            "y": 7
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": -2,
+            "y": -2
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-002",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El punto P = (6, 6) se traslada según el vector v = (3, −2). ¿Cuáles son las coordenadas de la imagen de P?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(9, 4)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: P + v = (6 + 3, 6 + (−2)) = (9, 4). La imagen queda 3 unidades a la derecha y 2 hacia abajo de P, como indica la flecha."
+        },
+        {
+          "clave": "B",
+          "texto": "(3, 8)",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa es P − v = (6 − 3, 6 − (−2)): resta el vector y deja la imagen del lado opuesto al que apunta la flecha. Trasladar es sumar el vector a las coordenadas."
+        },
+        {
+          "clave": "C",
+          "texto": "(3, −2)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-punto-con-vector",
+          "feedbackDescarte": "Esas son las componentes del vector, tratadas como si fueran un lugar del plano. El vector dice cuánto se mueve P, no dónde queda: la imagen es P + v."
+        },
+        {
+          "clave": "D",
+          "texto": "(4, 9)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa es (6 + (−2), 6 + 3): suma la x de P con la y del vector y la y de P con la x del vector. Cada componente se suma con la suya: x con x e y con y."
+        }
+      ],
+      "solucion": "Imagen = P + v = (6 + 3, 6 + (−2)) = (9, 4). Comprobación: de P a la imagen hay (9 − 6, 4 − 6) = (3, −2), el vector dado.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 7,
+          "yMin": -1,
+          "yMax": 8
+        },
+        "descripcion": "Punto P en (6, 6) y el vector v = (3, −2) dibujado como flecha suelta; la imagen de P no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 6,
+            "y": 6
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              3,
+              7
+            ],
+            "hasta": [
+              6,
+              5
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-003",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es la distancia entre los puntos P = (−3, 7) y Q = (4, 5)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-distancias-por-cuadricula",
+          "feedbackDescarte": "Esa es 7 + 2, los dos tramos sumados como si se caminara por la cuadrícula. La distancia es en línea recta y sale de Pitágoras: √(7² + (−2)²)."
+        },
+        {
+          "clave": "B",
+          "texto": "53",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-raiz-en-distancia",
+          "feedbackDescarte": "Esa es 7² + (−2)², la suma de los cuadrados sin sacar la raíz. Falta el último paso: la distancia es √53, no 53."
+        },
+        {
+          "clave": "C",
+          "texto": "√53",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: Δx = 4 − (−3) = 7, Δy = 5 − 7 = −2, y la distancia es √(7² + (−2)²) = √(49 + 4) = √53."
+        },
+        {
+          "clave": "D",
+          "texto": "√73",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa sale de restar cruzado, (4 − 7, 5 − (−3)) = (−3, 8), y aplicar Pitágoras a esas diferencias. Las diferencias son x con x e y con y: (7, −2)."
+        }
+      ],
+      "solucion": "Diferencias: Δx = 4 − (−3) = 7 y Δy = 5 − 7 = −2. Distancia: √(7² + (−2)²) = √(49 + 4) = √53. Como 49 < 53 < 64, la distancia está entre 7 y 8, coherente con un tramo de 2 y otro de 7.",
+      "figura": {
+        "plano": {
+          "xMin": -4,
+          "xMax": 5,
+          "yMin": -1,
+          "yMax": 8
+        },
+        "descripcion": "Puntos P en (−3, 7) y Q en (4, 5); el segmento que los une no está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": -3,
+            "y": 7
+          },
+          {
+            "tipo": "punto",
+            "nombre": "Q",
+            "x": 4,
+            "y": 5
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-004",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El punto P = (4, −7) se refleja respecto del eje y. ¿Cuáles son las coordenadas de su imagen?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(4, 7)",
+          "esCorrecta": false,
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
+          "feedbackDescarte": "Esa cambia el signo de la y, que es lo que hace la reflexión respecto del eje x. Al reflejar respecto del eje y el punto cruza al otro lado de ese eje: cambia la x y la y se conserva."
+        },
+        {
+          "clave": "B",
+          "texto": "(−4, 7)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-reflexion-origen-con-eje",
+          "feedbackDescarte": "Esa cambia los dos signos, que es la reflexión respecto del origen (un giro de 180°). Respecto de un eje cambia solo una coordenada: la x, porque el eje y es vertical."
+        },
+        {
+          "clave": "C",
+          "texto": "(7, 4)",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-regla-de-otra-transformacion",
+          "feedbackDescarte": "Esa intercambia las coordenadas y cambia un signo: es la regla del giro de 90°, no de una reflexión. Reflejar respecto del eje y solo cambia el signo de la x."
+        },
+        {
+          "clave": "D",
+          "texto": "(−4, −7)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al reflejar respecto del eje y, la x cambia de signo y la y se conserva, (4, −7) → (−4, −7). El punto queda a la misma altura, al otro lado del eje."
+        }
+      ],
+      "solucion": "Reflexión respecto del eje y: (x, y) → (−x, y). Entonces (4, −7) → (−4, −7). Comprobación: P y su imagen están a 4 unidades del eje y, uno a cada lado, y a la misma altura y = −7.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 5,
+          "yMin": -8,
+          "yMax": 1
+        },
+        "descripcion": "Punto P en (4, −7) con los dos ejes coordenados a la vista; la imagen no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 4,
+            "y": -7
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-005",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El punto P = (3, 2) se gira 90° en sentido antihorario en torno al origen. ¿Cuáles son las coordenadas de su imagen?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−2, 3)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el giro de 90° antihorario lleva (x, y) a (−y, x), y con (3, 2) da (−2, 3) = (−2, 3). P está en el primer cuadrante y la imagen queda en el segundo cuadrante, un cuarto de vuelta más adelante."
+        },
+        {
+          "clave": "B",
+          "texto": "(2, −3)",
+          "esCorrecta": false,
+          "errorCatalogado": "rota-en-sentido-contrario",
+          "feedbackDescarte": "Esa es (y, −x), el giro de 90° en sentido horario: deja el punto en el cuarto cuadrante. Antihorario es (−y, x), un cuarto de vuelta en el sentido contrario al reloj."
+        },
+        {
+          "clave": "C",
+          "texto": "(−3, −2)",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-regla-de-otra-transformacion",
+          "feedbackDescarte": "Esa cambia los dos signos sin intercambiar las coordenadas: es el giro de 180°, media vuelta. Un cuarto de vuelta intercambia las coordenadas, (−y, x)."
+        },
+        {
+          "clave": "D",
+          "texto": "(2, 3)",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-regla-de-otra-transformacion",
+          "feedbackDescarte": "Esa intercambia las coordenadas sin cambiar ningún signo, (y, x), que es la reflexión respecto de la recta y = x. El giro de 90° antihorario intercambia y además cambia el signo de la nueva x: (−y, x)."
+        }
+      ],
+      "solucion": "Giro de 90° antihorario en torno al origen: (x, y) → (−y, x). Con P = (3, 2): (−2, 3) = (−2, 3). Comprobación: P y su imagen están a la misma distancia del origen, √(9 + 4) = √13, y OP = (3, 2) es perpendicular a OP′ = (−2, 3) porque 3 · (−2) + 2 · 3 = 0.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 4,
+          "yMin": -1,
+          "yMax": 3
+        },
+        "descripcion": "Punto P en (3, 2) y el centro de giro O en el origen; la imagen no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 3,
+            "y": 2
+          },
+          {
+            "tipo": "centro",
+            "etiqueta": "O",
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-006",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El triángulo ABC de la figura, con A = (5, −1), B = (8, −1) y C = (8, −5), se refleja respecto del eje y. ¿Cuáles son las coordenadas de A′, B′ y C′, los vértices de la imagen?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "A′ = (5, 1), B′ = (8, 1), C′ = (8, 5)",
+          "esCorrecta": false,
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
+          "feedbackDescarte": "Esa cambia el signo de la y en los tres vértices: es la reflexión respecto del eje x, que voltea el triángulo hacia arriba. Respecto del eje y el triángulo cruza hacia la izquierda: cambia la x."
+        },
+        {
+          "clave": "B",
+          "texto": "A′ = (−5, −1), B′ = (−8, −1), C′ = (−8, −5)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al reflejar respecto del eje y cada vértice conserva su y y cambia el signo de su x. El triángulo queda a la izquierda del eje, a la misma altura, volteado."
+        },
+        {
+          "clave": "C",
+          "texto": "A′ = (−5, 1), B′ = (−8, 1), C′ = (−8, 5)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-reflexion-origen-con-eje",
+          "feedbackDescarte": "Esa cambia los dos signos en cada vértice: es la reflexión respecto del origen, que deja el triángulo arriba y a la izquierda. Respecto del eje y solo cambia el signo de la x."
+        },
+        {
+          "clave": "D",
+          "texto": "A′ = (1, 5), B′ = (1, 8), C′ = (5, 8)",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-regla-de-otra-transformacion",
+          "feedbackDescarte": "Esa intercambia las coordenadas y cambia un signo, (−y, x): es la regla del giro de 90° antihorario, no de una reflexión. Reflejar respecto del eje y solo cambia el signo de la x."
+        }
+      ],
+      "solucion": "Reflexión respecto del eje y: (x, y) → (−x, y). A = (5, −1) → A′ = (−5, −1); B = (8, −1) → B′ = (−8, −1); C = (8, −5) → C′ = (−8, −5). Comprobación: el lado AB mide 3 y A′B′ también mide 3; el triángulo queda a la izquierda del eje y, a la misma altura, con la orientación invertida.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 9,
+          "yMin": -6,
+          "yMax": 1
+        },
+        "descripcion": "Triángulo ABC con A en (5, −1), B en (8, −1) y C en (8, −5), a la derecha del eje y y bajo el eje x; la imagen no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": 5,
+            "y": -1
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": 8,
+            "y": -1
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C",
+            "x": 8,
+            "y": -5
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F",
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-007",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En la figura, F es el triángulo de vértices A = (−6, 5), B = (−4, 5) y C = (−4, 9), y F′ es su imagen, de vértices A′ = (−5, −6), B′ = (−5, −4) y C′ = (−9, −4). ¿Qué transformación lleva F a F′?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una rotación de 90° en sentido horario en torno al origen.",
+          "esCorrecta": false,
+          "errorCatalogado": "rota-en-sentido-contrario",
+          "feedbackDescarte": "El giro horario, (x, y) → (y, −x), llevaría A a (5, 6), en el primer cuadrante. A′ = (−5, −6) está en el tercer cuadrante: el giro fue antihorario."
+        },
+        {
+          "clave": "B",
+          "texto": "Una traslación hacia abajo y hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura",
+          "feedbackDescarte": "Esa mira solo dónde quedó la figura. Una traslación mueve todos los vértices por el mismo vector, y aquí A → A′ es (1, −11) mientras B → B′ es (−1, −9): F′ está girada, no corrida."
+        },
+        {
+          "clave": "C",
+          "texto": "Una rotación de 90° en sentido antihorario en torno al origen.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (x, y) → (−y, x) lleva A = (−6, 5) a (−5, −6) = A′, B = (−4, 5) a (−5, −4) = B′ y C = (−4, 9) a (−9, −4) = C′. Los tres vértices calzan."
+        },
+        {
+          "clave": "D",
+          "texto": "Una reflexión respecto del eje x.",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-regla-de-otra-transformacion",
+          "feedbackDescarte": "Esa cambia solo el signo de la y: A iría a (−6, −5), no a (−5, −6). En F′ las coordenadas aparecen intercambiadas, y eso es lo que hace un giro de 90°, no una reflexión."
+        }
+      ],
+      "solucion": "Se prueba la regla del giro de 90° antihorario, (x, y) → (−y, x): A = (−6, 5) → (−5, −6) = A′; B = (−4, 5) → (−5, −4) = B′; C = (−4, 9) → (−9, −4) = C′. Los tres vértices coinciden con los de F′, así que la transformación es la rotación de 90° en sentido antihorario en torno al origen. No es una traslación, porque A → A′ = (1, −11) y B → B′ = (−1, −9) son vectores distintos.",
+      "figura": {
+        "plano": {
+          "xMin": -10,
+          "xMax": 1,
+          "yMin": -7,
+          "yMax": 10
+        },
+        "descripcion": "Figura F con vértices A(−6, 5), B(−4, 5), C(−4, 9) y su imagen F′ con vértices A′(−5, −6), B′(−5, −4), C′(−9, −4).",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": -6,
+            "y": 5
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": -4,
+            "y": 5
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C",
+            "x": -4,
+            "y": 9
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F",
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "tipo": "punto",
+            "nombre": "A′",
+            "x": -5,
+            "y": -6
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B′",
+            "x": -5,
+            "y": -4
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C′",
+            "x": -9,
+            "y": -4
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F′",
+            "vertices": [
+              "A′",
+              "B′",
+              "C′"
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-008",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En el programa de una cortadora láser, una pieza de acrílico se copió por traslación. El vértice A = (3, −7) quedó en A′ = (−4, −6) y el vértice B = (4, −9) quedó en B′ = (−3, −8). ¿Cuál es el vector de la traslación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(7, −1)",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-vector-al-reves",
+          "feedbackDescarte": "Esa es A − A′, original menos imagen: el vector al revés, el que devolvería la copia a su lugar. La traslación va del original a la imagen: A′ − A = (−7, 1)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−6, −1)",
+          "esCorrecta": false,
+          "errorCatalogado": "empareja-vertice-con-imagen-ajena",
+          "feedbackDescarte": "Esa es B′ − A: empareja el vértice A con la imagen de B. Cada vértice se compara con su propia imagen, A con A′ y B con B′, y los dos dan (−7, 1)."
+        },
+        {
+          "clave": "C",
+          "texto": "(3, −9)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa es (−4 − (−7), −6 − 3): resta la x de A′ con la y de A y la y de A′ con la x de A. Las componentes se restan con las suyas: (−4 − 3, −6 − (−7))."
+        },
+        {
+          "clave": "D",
+          "texto": "(−7, 1)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: A′ − A = (−4 − 3, −6 − (−7)) = (−7, 1), y B′ − B = (−3 − 4, −8 − (−9)) = (−7, 1). Los dos vértices se movieron por el mismo vector, como corresponde a una traslación."
+        }
+      ],
+      "solucion": "En una traslación todos los vértices se mueven por el mismo vector, que es imagen menos original. Con A: A′ − A = (−4 − 3, −6 − (−7)) = (−7, 1). Con B: B′ − B = (−3 − 4, −8 − (−9)) = (−7, 1). Coinciden: el vector es (−7, 1). Comprobación: A + (−7, 1) = (−4, −6) = A′.",
+      "figura": {
+        "plano": {
+          "xMin": -5,
+          "xMax": 5,
+          "yMin": -10,
+          "yMax": 1
+        },
+        "descripcion": "Vértices A en (3, −7) y B en (4, −9) de la pieza, y sus imágenes A′ en (−4, −6) y B′ en (−3, −8); el vector no está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": 3,
+            "y": -7
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": 4,
+            "y": -9
+          },
+          {
+            "tipo": "punto",
+            "nombre": "A′",
+            "x": -4,
+            "y": -6
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B′",
+            "x": -3,
+            "y": -8
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-009",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En un simulador para ubicar muebles, una lámpara está en el punto (−7, −6). Primero se gira 90° en sentido horario en torno al origen y después se traslada según el vector (−1, −2). ¿En qué punto queda la lámpara?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−7, 5)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el giro horario lleva (x, y) a (y, −x), así que (−7, −6) → (−6, 7); luego (−6, 7) + (−1, −2) = (−7, 5)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−8, 8)",
+          "esCorrecta": false,
+          "errorCatalogado": "compone-en-orden-contrario",
+          "feedbackDescarte": "Esa traslada primero, (−7, −6) + (−1, −2) = (−8, −8), y gira después, (−8, −8) → (−8, 8). El orden importa: el enunciado gira primero y traslada después, y eso da (−7, 5)."
+        },
+        {
+          "clave": "C",
+          "texto": "(5, −9)",
+          "esCorrecta": false,
+          "errorCatalogado": "rota-en-sentido-contrario",
+          "feedbackDescarte": "Esa gira en sentido antihorario, (−7, −6) → (6, −7), y luego suma el vector: (6, −7) + (−1, −2) = (5, −9). El giro pedido es horario, (x, y) → (y, −x), que da (−6, 7) antes de trasladar."
+        },
+        {
+          "clave": "D",
+          "texto": "(−5, 9)",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa gira bien, (−6, 7), pero resta el vector en vez de sumarlo: (−6, 7) − (−1, −2) = (−5, 9). Trasladar según (−1, −2) es sumar −1 a la x y −2 a la y."
+        }
+      ],
+      "solucion": "Paso 1, giro de 90° horario en torno al origen: (x, y) → (y, −x), así que (−7, −6) → (−6, 7). Paso 2, traslación: (−6, 7) + (−1, −2) = (−7, 5). La lámpara queda en (−7, 5). Si se invirtiera el orden se llegaría a (−8, 8), un punto distinto: el orden de las transformaciones importa.",
+      "figura": {
+        "plano": {
+          "xMin": -8,
+          "xMax": 1,
+          "yMin": -7,
+          "yMax": 1
+        },
+        "descripcion": "Lámpara L en (−7, −6), centro de giro O en el origen y el vector (−1, −2) como flecha suelta; la posición final no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "L",
+            "x": -7,
+            "y": -6
+          },
+          {
+            "tipo": "centro",
+            "etiqueta": "O",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              -6,
+              -3
+            ],
+            "hasta": [
+              -7,
+              -5
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-010",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una pista de kayak, dos boyas están ancladas en P = (5, −7) y Q = (9, −4), en un plano donde cada unidad es 1 metro. ¿Cuántos metros hay en línea recta entre las dos boyas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7 m",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-distancias-por-cuadricula",
+          "feedbackDescarte": "Esa es 4 + 3, los dos tramos sumados como si el kayak fuera por la cuadrícula. En línea recta la distancia sale de Pitágoras: √(4² + 3²)."
+        },
+        {
+          "clave": "B",
+          "texto": "5 m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: Δx = 9 − 5 = 4, Δy = −4 − (−7) = 3, y √(4² + 3²) = √(16 + 9) = √25 = 5 m."
+        },
+        {
+          "clave": "C",
+          "texto": "25 m",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-raiz-en-distancia",
+          "feedbackDescarte": "Esa es 4² + 3², la suma de los cuadrados sin sacar la raíz. La distancia es √25 = 5 m, no 25."
+        },
+        {
+          "clave": "D",
+          "texto": "√97 m",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-punto-con-vector",
+          "feedbackDescarte": "Esa usa las coordenadas de Q, √(9² + (−4)²), como si Q fuera el desplazamiento. Las coordenadas dicen dónde está cada boya; la distancia se calcula con las diferencias entre P y Q: (4, 3)."
+        }
+      ],
+      "solucion": "Diferencias: Δx = 9 − 5 = 4 m y Δy = −4 − (−7) = 3 m. Distancia: √(4² + 3²) = √(16 + 9) = √25 = 5 m. Comprobación: 3, 4 y 5 forman un triángulo rectángulo, 9 + 16 = 25.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 10,
+          "yMin": -8,
+          "yMax": 1
+        },
+        "descripcion": "Boyas P en (5, −7) y Q en (9, −4) con la flecha del recorrido de P a Q.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 5,
+            "y": -7
+          },
+          {
+            "tipo": "punto",
+            "nombre": "Q",
+            "x": 9,
+            "y": -4
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "recorrido",
+            "desde": [
+              5,
+              -7
+            ],
+            "hasta": [
+              9,
+              -4
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-011",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El punto P = (7, 1) se reflejó respecto de una recta horizontal y su imagen es P′ = (7, 7). Un estudiante afirma: «La recta de reflexión es y = 1, porque pasa por P». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: la recta es y = 1, porque la reflexión parte desde P.",
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mal-eje-de-reflexion",
+          "feedbackDescarte": "Esa pone la recta sobre el punto P. Si la recta pasara por P, P sería su propia imagen y no se movería. La recta está a mitad de camino entre P y P′."
+        },
+        {
+          "clave": "B",
+          "texto": "No: la recta es y = 6, porque 7 − 1 = 6.",
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mal-eje-de-reflexion",
+          "feedbackDescarte": "Esa toma la distancia entre P y P′ como si fuera la altura de la recta. La recta no está en y = 6: está en el punto medio, a 3 de cada uno, en y = 4."
+        },
+        {
+          "clave": "C",
+          "texto": "No: la recta es y = 4, porque está a la misma distancia de P y de P′.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la recta de reflexión pasa por el punto medio entre P y P′, y (1 + 7) ÷ 2 = 4. P está 3 unidades abajo de y = 4 y P′ 3 unidades arriba."
+        },
+        {
+          "clave": "D",
+          "texto": "No: la recta es x = 7, porque pasa por P y por P′.",
+          "esCorrecta": false,
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
+          "feedbackDescarte": "Esa confunde qué coordenada cambia. Al reflejar respecto de una recta horizontal cambia la y y se conserva la x; una recta vertical por P y P′ no los intercambia, los deja donde están."
+        }
+      ],
+      "solucion": "P y P′ tienen la misma x y distinta y, así que la recta de reflexión es horizontal, de la forma y = c, y pasa por el punto medio entre 1 y 7: c = (1 + 7) ÷ 2 = 4. Comprobación: P está a 3 unidades bajo la recta y = 4 y P′ a 3 unidades sobre ella. La afirmación es falsa: la recta y = 1 pasa por P, y un punto sobre la recta de reflexión queda fijo, no se mueve a (7, 7).",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 8,
+          "yMin": -1,
+          "yMax": 8
+        },
+        "descripcion": "Puntos P en (7, 1) y P′ en (7, 7), uno sobre el otro; la recta de reflexión no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 7,
+            "y": 1
+          },
+          {
+            "tipo": "punto",
+            "nombre": "P′",
+            "x": 7,
+            "y": 7
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-012",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Se pide girar el punto P = (5, −2) en 90° en sentido antihorario en torno al origen y después trasladarlo según el vector (−7, −2). Un estudiante obtiene (4, −2) y explica: «Primero sumé el vector y después giré». ¿Es correcto su resultado?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: (4, −2) es correcto, porque el orden de las dos transformaciones no cambia el resultado.",
+          "esCorrecta": false,
+          "errorCatalogado": "compone-en-orden-contrario",
+          "feedbackDescarte": "Esa acepta el orden cambiado. Trasladar primero da (5, −2) + (−7, −2) = (−2, −4), y girar eso da (4, −2); pero el enunciado gira primero y traslada después, y eso da (−5, 3). El orden importa."
+        },
+        {
+          "clave": "B",
+          "texto": "No: el resultado es (−9, −7), porque el giro da (−2, −5).",
+          "esCorrecta": false,
+          "errorCatalogado": "rota-en-sentido-contrario",
+          "feedbackDescarte": "Esa gira en sentido horario, (x, y) → (y, −x), que da (−2, −5), y luego suma el vector: (−9, −7). El giro pedido es antihorario, (−y, x) = (2, 5)."
+        },
+        {
+          "clave": "C",
+          "texto": "No: el resultado es (9, 7), porque después del giro se resta el vector.",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa gira bien, (2, 5), pero resta el vector: (2, 5) − (−7, −2) = (9, 7). Trasladar según (−7, −2) es sumar el vector, no restarlo."
+        },
+        {
+          "clave": "D",
+          "texto": "No: el resultado es (−5, 3), porque el giro da (2, 5) y la traslación suma (−7, −2).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en el orden pedido, el giro antihorario lleva (5, −2) a (−(−2), 5) = (2, 5), y la traslación da (2, 5) + (−7, −2) = (−5, 3). El estudiante invirtió el orden."
+        }
+      ],
+      "solucion": "Orden pedido: primero el giro, después la traslación. Giro de 90° antihorario: (x, y) → (−y, x), así que (5, −2) → (2, 5). Traslación: (2, 5) + (−7, −2) = (−5, 3). El estudiante trasladó primero, (5, −2) + (−7, −2) = (−2, −4), y giró después, (−2, −4) → (4, −2): llegó a otro punto porque el orden de una composición importa. Su resultado no es correcto; el correcto es (−5, 3).",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 8,
+          "yMin": -8,
+          "yMax": 1
+        },
+        "descripcion": "Punto P en (5, −2), centro de giro O en el origen y el vector (−7, −2) como flecha suelta; ninguna imagen está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 5,
+            "y": -2
+          },
+          {
+            "tipo": "centro",
+            "etiqueta": "O",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              7,
+              -5
+            ],
+            "hasta": [
+              0,
+              -7
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-013",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El triángulo de vértices A = (−4, 4), B = (5, 4) y C = (−3, 6) tiene área 9. Se refleja respecto del eje x. ¿Cuál de las siguientes afirmaciones sobre la imagen es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tiene área 9 y sus vértices son (−4, −4), (5, −4) y (−3, −6): queda volteada hacia abajo.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la reflexión respecto del eje x cambia el signo de la y en cada vértice y conserva todas las medidas, así que el área sigue siendo 9 y el triángulo queda bajo el eje, invertido."
+        },
+        {
+          "clave": "B",
+          "texto": "Tiene área menor que 9, porque al voltearla se achica.",
+          "esCorrecta": false,
+          "errorCatalogado": "cree-que-isometria-cambia-medidas",
+          "feedbackDescarte": "Esa cree que reflejar cambia el tamaño. Una reflexión es una isometría: conserva distancias, ángulos y área. La base sigue midiendo 9 y la altura 2."
+        },
+        {
+          "clave": "C",
+          "texto": "Es la misma figura corrida hacia abajo: una traslación.",
+          "esCorrecta": false,
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura",
+          "feedbackDescarte": "Esa mira solo dónde quedó la figura. Al reflejar, C = (−3, 6) baja 12 unidades y A = (−4, 4) baja 8: no se movieron por el mismo vector, la figura se volteó."
+        },
+        {
+          "clave": "D",
+          "texto": "Sus vértices son (4, 4), (−5, 4) y (3, 6), porque cambia la x.",
+          "esCorrecta": false,
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
+          "feedbackDescarte": "Esa cambia el signo de la x, que es lo que hace la reflexión respecto del eje y. Respecto del eje x el triángulo cruza hacia abajo: cambia el signo de la y."
+        }
+      ],
+      "solucion": "Reflexión respecto del eje x: (x, y) → (x, −y). A′ = (−4, −4), B′ = (5, −4), C′ = (−3, −6). La base A′B′ sigue midiendo 9 y la altura desde C′ sigue siendo 2, así que el área es (9 · 2) ÷ 2 = 9, igual que antes: una isometría conserva las medidas. No es una traslación, porque A bajó 8 unidades y C bajó 12; la figura quedó volteada.",
+      "figura": {
+        "plano": {
+          "xMin": -5,
+          "xMax": 6,
+          "yMin": -1,
+          "yMax": 7
+        },
+        "descripcion": "Triángulo ABC con A en (−4, 4), B en (5, 4) y C en (−3, 6), sobre el eje x; la imagen no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": -4,
+            "y": 4
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": 5,
+            "y": 4
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C",
+            "x": -3,
+            "y": 6
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F",
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-014",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El triángulo de vértices A = (−5, −8), B = (−1, −8) y C = (−1, −5) se traslada según el vector v = (2, −1). ¿Cuáles son las coordenadas de A′, B′ y C′?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "A′ = (−7, −7), B′ = (−3, −7), C′ = (−3, −4)",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa resta el vector a cada vértice y deja el triángulo hacia arriba y hacia la izquierda, al lado opuesto de la flecha. Trasladar según (2, −1) es sumar 2 a cada x y −1 a cada y."
+        },
+        {
+          "clave": "B",
+          "texto": "A′ = (−3, −9), B′ = (1, −9), C′ = (1, −6)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cada vértice suma (2, −1): A′ = (−5 + 2, −8 + (−1)) = (−3, −9), B′ = (1, −9), C′ = (1, −6). El triángulo se corre 2 hacia la derecha y 1 hacia abajo."
+        },
+        {
+          "clave": "C",
+          "texto": "A′ = (−6, −6), B′ = (−2, −6), C′ = (−2, −3)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa suma −1 a las x y 2 a las y: cruza las componentes del vector. La primera componente del vector va con la x y la segunda con la y."
+        },
+        {
+          "clave": "D",
+          "texto": "A′ = (2, −1), B′ = (6, −1), C′ = (6, 2)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-punto-con-vector",
+          "feedbackDescarte": "Esa pone A′ en (2, −1), como si el vector fuera el lugar donde queda A, y arrastra B y C desde ahí. El vector es un desplazamiento: se suma a cada vértice, no reemplaza a A."
+        }
+      ],
+      "solucion": "Traslación: se suma v = (2, −1) a cada vértice. A′ = (−5 + 2, −8 + (−1)) = (−3, −9); B′ = (−1 + 2, −8 + (−1)) = (1, −9); C′ = (−1 + 2, −5 + (−1)) = (1, −6). Comprobación: el lado AB mide 4 y A′B′ también mide 4; los tres vértices se movieron por el mismo vector.",
+      "figura": {
+        "plano": {
+          "xMin": -6,
+          "xMax": 3,
+          "yMin": -9,
+          "yMax": 1
+        },
+        "descripcion": "Triángulo ABC con A en (−5, −8), B en (−1, −8) y C en (−1, −5), y el vector v = (2, −1) como flecha suelta; la imagen no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": -5,
+            "y": -8
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": -1,
+            "y": -8
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C",
+            "x": -1,
+            "y": -5
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F",
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              0,
+              -5
+            ],
+            "hasta": [
+              2,
+              -6
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-015",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Sean u = (−6, −2) y v = (1, 2). ¿Cuál es el vector u − 2v?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−8, −4)",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-una-sola-componente",
+          "feedbackDescarte": "Esa multiplica por 2 solo la primera componente de v, (2, 2), y luego resta. El escalar multiplica las dos componentes: 2v = (2, 4)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−9, −6)",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-una-sola-componente",
+          "feedbackDescarte": "Esa suma el 2 a las componentes de v en vez de multiplicar, v + 2 = (3, 4), y después resta. 2v es el doble de cada componente: (2, 4)."
+        },
+        {
+          "clave": "C",
+          "texto": "(−4, 2)",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa suma 2v en vez de restarlo: (−6, −2) + (2, 4) = (−4, 2). El signo de la operación cambia el sentido: u − 2v = (−6, −2) − (2, 4)."
+        },
+        {
+          "clave": "D",
+          "texto": "(−8, −6)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2v = (2, 4) y u − 2v = (−6 − 2, −2 − 4) = (−8, −6)."
+        }
+      ],
+      "solucion": "Primero el múltiplo: 2v = 2 · (1, 2) = (2, 4). Después la resta, componente a componente: u − 2v = (−6 − 2, −2 − 4) = (−8, −6). Comprobación: (−8, −6) + (2, 4) = (−6, −2) = u.",
+      "figura": {
+        "plano": {
+          "xMin": -6,
+          "xMax": 4,
+          "yMin": -8,
+          "yMax": 1
+        },
+        "descripcion": "Vectores u = (−6, −2) y v = (1, 2) dibujados como flechas sueltas, cada uno desde un punto cualquiera.",
+        "elementos": [
+          {
+            "tipo": "vector",
+            "etiqueta": "u",
+            "desde": [
+              1,
+              -5
+            ],
+            "hasta": [
+              -5,
+              -7
+            ]
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              2,
+              -2
+            ],
+            "hasta": [
+              3,
+              0
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-016",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Se quiere obtener la imagen del punto P = (−7, 3) aplicando tres transformaciones en este orden: una reflexión respecto del eje x, una traslación según el vector (−1, −4) y una rotación de 90° en sentido antihorario en torno al origen. Un estudiante escribió estos pasos, cometiendo un error en uno de ellos.\nPaso 1: reflexión respecto del eje x, obtiene (−7, −3).\nPaso 2: traslación según (−1, −4), obtiene (−8, −7).\nPaso 3: rotación de 90° antihorario, obtiene (−7, 8).\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El error está en el Paso 1: debía obtener (7, 3).",
+          "esCorrecta": false,
+          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
+          "feedbackDescarte": "Esa cree que reflejar respecto del eje x cambia la x. Respecto del eje x cambia el signo de la y: (−7, 3) → (−7, −3), y el Paso 1 está bien."
+        },
+        {
+          "clave": "B",
+          "texto": "El error está en el Paso 2: debía obtener (−6, 1).",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa resta el vector, (−7, −3) − (−1, −4) = (−6, 1). Trasladar es sumar el vector: (−7 + (−1), −3 + (−4)) = (−8, −7), y el Paso 2 está bien."
+        },
+        {
+          "clave": "C",
+          "texto": "El error está en el Paso 3: debía obtener (7, −8).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el giro de 90° antihorario lleva (x, y) a (−y, x), así que (−8, −7) → (7, −8). El estudiante obtuvo (−7, 8), que es el giro horario, (y, −x)."
+        },
+        {
+          "clave": "D",
+          "texto": "No hay error: los tres pasos están bien.",
+          "esCorrecta": false,
+          "errorCatalogado": "rota-en-sentido-contrario",
+          "feedbackDescarte": "Esa acepta (−7, 8) como giro antihorario, pero (−7, 8) es (y, −x), el giro horario de (−8, −7). El antihorario es (−y, x) = (7, −8): el Paso 3 está mal."
+        }
+      ],
+      "solucion": "Se recalcula cada paso. Paso 1, reflexión respecto del eje x, (x, y) → (x, −y): (−7, 3) → (−7, −3), correcto. Paso 2, traslación: (−7 + (−1), −3 + (−4)) = (−8, −7), correcto. Paso 3, giro de 90° antihorario, (x, y) → (−y, x): (−8, −7) → (7, −8). El estudiante escribió (−7, 8), que es (y, −x), el giro en sentido horario. El error está en el Paso 3 y la imagen correcta de P es (7, −8).",
+      "figura": {
+        "plano": {
+          "xMin": -8,
+          "xMax": 1,
+          "yMin": -5,
+          "yMax": 4
+        },
+        "descripcion": "Punto P en (−7, 3), centro de giro O en el origen y el vector (−1, −4) como flecha suelta; ningún paso está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": -7,
+            "y": 3
+          },
+          {
+            "tipo": "centro",
+            "etiqueta": "O",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "tipo": "vector",
+            "etiqueta": "v",
+            "desde": [
+              -6,
+              0
+            ],
+            "hasta": [
+              -7,
+              -4
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 49, distractores A, B y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una secuencia de transformaciones isométricas aplicadas a un punto, con los pasos escritos y un error en uno de ellos, donde el paso errado es una rotación de 90° hecha en el sentido contrario al pedido) y los mecanismos de sus distractores: creer que la reflexión cambia la coordenada equivocada y creer que la traslación se resta. Cambian el punto de partida ((−7, 3) en vez de (−3, 5)), el número de pasos (tres en vez de cuatro), el vector y el orden de las transformaciones, y las alternativas pasan de «En el Paso N» a afirmaciones que dicen qué debía obtenerse en cada paso, más la opción de que no haya error. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-017",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "El segmento de extremos A = (−6, −7) y B = (−7, −1) se gira 90° en sentido antihorario en torno al origen. Un estudiante afirma: «El segmento A′B′ mide 7, porque entre A y B hay 1 unidad en x y 6 en y». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: AB mide √37 y el giro conserva la longitud, así que A′B′ también mide √37.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: Δx = −1 y Δy = 6 dan AB = √(1 + 36) = √37, y una rotación es una isometría: A′ = (7, −6), B′ = (1, −7) y A′B′ = √(36 + 1) = √37."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: 1 + 6 = 7, y el giro no cambia la longitud.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-distancias-por-cuadricula",
+          "feedbackDescarte": "Esa suma los tramos 1 y 6 como si la longitud se midiera por la cuadrícula. La longitud de un segmento inclinado sale de Pitágoras: √((−1)² + 6²) = √37, no 7."
+        },
+        {
+          "clave": "C",
+          "texto": "No: A′B′ mide 37, porque (−1)² + 6² = 37.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-raiz-en-distancia",
+          "feedbackDescarte": "Esa deja la suma de los cuadrados sin sacar la raíz. (−1)² + 6² = 37 es el cuadrado de la longitud; el segmento mide √37."
+        },
+        {
+          "clave": "D",
+          "texto": "No: A′B′ mide más que AB, porque al girar el segmento se estira.",
+          "esCorrecta": false,
+          "errorCatalogado": "cree-que-isometria-cambia-medidas",
+          "feedbackDescarte": "Esa cree que girar cambia las medidas. Una rotación es una isometría: A′B′ mide exactamente lo mismo que AB, √37."
+        }
+      ],
+      "solucion": "Longitud de AB: Δx = −7 − (−6) = −1, Δy = −1 − (−7) = 6, así que AB = √((−1)² + 6²) = √37, no 1 + 6. El giro de 90° antihorario, (x, y) → (−y, x), da A′ = (7, −6) y B′ = (1, −7); entonces A′B′ = √((1 − 7)² + (−7 − (−6))²) = √(36 + 1) = √37. La rotación conserva la longitud. La afirmación es falsa por dos razones: AB no mide 7, y A′B′ mide lo mismo que AB, √37.",
+      "figura": {
+        "plano": {
+          "xMin": -8,
+          "xMax": 1,
+          "yMin": -8,
+          "yMax": 1
+        },
+        "descripcion": "Puntos A en (−6, −7) y B en (−7, −1) y el centro de giro O en el origen; el segmento girado no está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": -6,
+            "y": -7
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": -7,
+            "y": -1
+          },
+          {
+            "tipo": "centro",
+            "etiqueta": "O",
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-018",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un robot aspirador parte desde su base, ubicada en el punto (−1, −1) del plano de una casa, y hace tres tramos rectos seguidos: primero se desplaza según el vector (−4, −5), luego según (−5, −5) y por último según (5, 2). ¿Según qué vector debe desplazarse para volver a la base?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−4, −8)",
+          "esCorrecta": false,
+          "errorCatalogado": "traslada-en-sentido-contrario",
+          "feedbackDescarte": "Esa es la suma de los tres tramos, (−4 − 5 + 5, −5 − 5 + 2) = (−4, −8): el desplazamiento total de ida. Para volver hay que recorrer ese vector al revés, (4, 8)."
+        },
+        {
+          "clave": "B",
+          "texto": "(4, 8)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los tres tramos suman (−4, −8), así que el robot queda en (−1, −1) + (−4, −8) = (−5, −9), y de ahí a la base va (−1 − (−5), −1 − (−9)) = (4, 8), el opuesto de la suma."
+        },
+        {
+          "clave": "C",
+          "texto": "(−5, −9)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-punto-con-vector",
+          "feedbackDescarte": "Esa es la posición final del robot, (−1, −1) + (−4, −8) = (−5, −9), tomada como si fuera un vector. Un punto dice dónde está; el vector de vuelta es base menos posición final: (4, 8)."
+        },
+        {
+          "clave": "D",
+          "texto": "(8, 4)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa resta cruzado: la x de la base con la y de la posición final y la y de la base con la x de la posición final, (−1 − (−9), −1 − (−5)). Las componentes se restan con las suyas: (−1 − (−5), −1 − (−9)) = (4, 8)."
+        }
+      ],
+      "solucion": "Suma de los tramos: (−4, −5) + (−5, −5) + (5, 2) = (−4 − 5 + 5, −5 − 5 + 2) = (−4, −8). Posición final: (−1, −1) + (−4, −8) = (−5, −9). Vector de vuelta: base menos posición final = (−1 − (−5), −1 − (−9)) = (4, 8), que es el opuesto de la suma de los tramos. Comprobación: (−5, −9) + (4, 8) = (−1, −1), la base.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 51, distractor B",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una ficha parte de una casilla inicial, hace tres desplazamientos dados como pares de movimientos y se pregunta por el cuarto desplazamiento que la devuelve al inicio; el vector de vuelta es el opuesto de la suma de los tres) y el mecanismo de su distractor B: entregar la suma de los desplazamientos sin invertirla. Cambian el contexto (robot aspirador en el plano de una casa en vez de ficha y tarjetas con puntos cardinales), los tramos se dan como vectores en coordenadas y no como tarjetas dibujadas, la base es (−1, −1) y no el centro del tablero, y las alternativas son cuatro vectores en vez de cuatro tarjetas. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-019",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una excavación arqueológica se divide en casillas cuadradas de 2 metros de lado y cada hallazgo se registra por la casilla en que apareció. Una vasija está en la casilla (−4, −1) y una hebilla en la casilla (−3, −5). ¿Cuál es el vector, en metros, que va desde la vasija hasta la hebilla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(2, −4)",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-una-sola-componente",
+          "feedbackDescarte": "Esa multiplica por 2 solo la primera componente. Las dos componentes están en casillas de 2 metros: 2 · (1, −4) = (2, −8)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−2, 8)",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-vector-al-reves",
+          "feedbackDescarte": "Esa va desde la hebilla hasta la vasija: V − H = (−1, 4), por 2. El vector pedido va desde la vasija hasta la hebilla, H − V = (1, −4), por 2: (2, −8)."
+        },
+        {
+          "clave": "C",
+          "texto": "(2, −8)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en casillas, H − V = (−3 − (−4), −5 − (−1)) = (1, −4); cada casilla mide 2 m, así que en metros es 2 · (1, −4) = (2, −8)."
+        },
+        {
+          "clave": "D",
+          "texto": "(−4, −2)",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-componentes",
+          "feedbackDescarte": "Esa resta cruzado, (−3 − (−1), −5 − (−4)) = (−2, −1), y luego multiplica por 2. Las componentes se restan con las suyas: (−3 − (−4), −5 − (−1)) = (1, −4), y en metros (2, −8)."
+        }
+      ],
+      "solucion": "En casillas, el vector de la vasija a la hebilla es H − V = (−3 − (−4), −5 − (−1)) = (1, −4). Como cada casilla mide 2 metros, en metros el vector es 2 · (1, −4) = (2, −8). Comprobación: 2 m hacia la derecha son 1 casillas y 8 m hacia abajo son 4 casillas, que llevan de (−4, −1) a (−3, −5).",
+      "figura": {
+        "plano": {
+          "xMin": -5,
+          "xMax": 1,
+          "yMin": -6,
+          "yMax": 1
+        },
+        "descripcion": "Vasija V en (−4, −1) y hebilla H en (−3, −5) sobre la cuadrícula de la excavación; el vector no está dibujado.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "V",
+            "x": -4,
+            "y": -1
+          },
+          {
+            "tipo": "punto",
+            "nombre": "H",
+            "x": -3,
+            "y": -5
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 52, distractor B",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (vector entre dos casillas de una cuadrícula cuyo lado mide 2 unidades, con la respuesta expresada en unidades y no en casillas) y el mecanismo de su distractor B: el vector en sentido contrario. Cambian el contexto (excavación arqueológica con una vasija y una hebilla en vez de plano de videojuego con una persona y un tesoro), las posiciones se dan como coordenadas de casilla en el enunciado y no solo en la figura, las cifras (de (−4, −1) a (−3, −5), 1 y 4 casillas) y las cuatro alternativas. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-transformaciones-isometricas-020",
+      "unidadId": "transformaciones-isometricas",
+      "moduloId": "transformaciones-isometricas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En un mosaico de azulejos, la pieza F tiene vértices A = (−5, −3), B = (−3, −3) y C = (−3, −1), y su copia F′ tiene vértices A′ = (5, −3), B′ = (3, −3) y C′ = (3, −1). Un aprendiz afirma: «F′ es una traslación de F según (8, 0), porque A quedó en (3, −3) y B quedó en (5, −3)». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: tanto A como B se movieron 8 unidades hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "empareja-vertice-con-imagen-ajena",
+          "feedbackDescarte": "Esa empareja A con B′ y B con A′: (3 − (−5), 0) y (5 − (−3), 0) dan (8, 0) los dos, pero son parejas cruzadas. Con cada vértice y su propia imagen, A → A′ es (10, 0) y B → B′ es (6, 0): no hay un vector común."
+        },
+        {
+          "clave": "B",
+          "texto": "No: es una traslación según (10, 0), que es el vector de A a A′.",
+          "esCorrecta": false,
+          "errorCatalogado": "mira-solo-donde-quedo-la-figura",
+          "feedbackDescarte": "Esa mira solo un vértice. A → A′ es (10, 0), pero B → B′ es (6, 0): los vértices no se movieron por el mismo vector, así que no es una traslación. F′ quedó volteada."
+        },
+        {
+          "clave": "C",
+          "texto": "No: es una reflexión respecto del origen.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-reflexion-origen-con-eje",
+          "feedbackDescarte": "Esa cambiaría los dos signos: A iría a (5, 3), sobre el eje x. F′ tiene los mismos valores de y que F y solo cambió el signo de la x: es una reflexión respecto del eje y."
+        },
+        {
+          "clave": "D",
+          "texto": "No: es una reflexión respecto del eje y, porque cada vértice conserva su y y cambia el signo de su x.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: A = (−5, −3) → (5, −3) = A′, B = (−3, −3) → (3, −3) = B′, C = (−3, −1) → (3, −1) = C′. Cada imagen tiene la misma y y la x con el signo cambiado; además A → A′ = (10, 0) y B → B′ = (6, 0) son distintos, así que no es traslación."
+        }
+      ],
+      "solucion": "Se compara cada vértice con su propia imagen: A → A′ = (5 − (−5), −3 − (−3)) = (10, 0) y B → B′ = (3 − (−3), −3 − (−3)) = (6, 0). Como los vectores son distintos, F′ no es una traslación de F. El aprendiz emparejó A con B′ y B con A′, y por eso le dio (8, 0) en los dos casos. En cambio, los tres vértices cumplen (x, y) → (−x, y): (−5, −3) → (5, −3), (−3, −3) → (3, −3), (−3, −1) → (3, −1). Esa es la reflexión respecto del eje y. La afirmación es falsa.",
+      "figura": {
+        "plano": {
+          "xMin": -6,
+          "xMax": 6,
+          "yMin": -4,
+          "yMax": 1
+        },
+        "descripcion": "Pieza F con vértices A(−5, −3), B(−3, −3), C(−3, −1) y su copia F′ con vértices A′(5, −3), B′(3, −3), C′(3, −1), a ambos lados del eje y.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "A",
+            "x": -5,
+            "y": -3
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B",
+            "x": -3,
+            "y": -3
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C",
+            "x": -3,
+            "y": -1
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F",
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "tipo": "punto",
+            "nombre": "A′",
+            "x": 5,
+            "y": -3
+          },
+          {
+            "tipo": "punto",
+            "nombre": "B′",
+            "x": 3,
+            "y": -3
+          },
+          {
+            "tipo": "punto",
+            "nombre": "C′",
+            "x": 3,
+            "y": -1
+          },
+          {
+            "tipo": "poligono",
+            "nombre": "F′",
+            "vertices": [
+              "A′",
+              "B′",
+              "C′"
+            ]
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-transformaciones-isometricas-001: plano abstracto, vector de A(6, 7) a B(−2, −2) = (−8, −9); distractores (8, 9), (−2, −2), (−9, −8)",
+    "adv-transformaciones-isometricas-002: plano abstracto, P(6, 6) trasladado por v = (3, −2) = (9, 4); distractores (3, 8), (3, −2), (4, 9)",
+    "adv-transformaciones-isometricas-003: plano abstracto, distancia de P(−3, 7) a Q(4, 5), Δ = (7, −2), √53; distractores 9, 53, √73",
+    "adv-transformaciones-isometricas-004: plano abstracto, P(4, −7) reflejado respecto del eje y = (−4, −7); distractores (4, 7), (−4, 7), (7, 4)",
+    "adv-transformaciones-isometricas-005: plano abstracto, P(3, 2) girado 90° antihorario = (−2, 3); distractores (2, −3), (−3, −2), (2, 3)",
+    "adv-transformaciones-isometricas-006: triángulo abstracto A(5, −1), B(8, −1), C(8, −5) reflejado respecto del eje y = (−5, −1), (−8, −1), (−8, −5); distractores (5, 1), (8, 1), (8, 5); (−5, 1), (−8, 1), (−8, 5); (1, 5), (1, 8), (5, 8)",
+    "adv-transformaciones-isometricas-007: figura abstracta F(−6, 5), (−4, 5), (−4, 9) y F′(−5, −6), (−5, −4), (−9, −4), rotación de 90° antihorario; distractores rotación de 90° horario, traslación, reflexión respecto del eje x",
+    "adv-transformaciones-isometricas-008: cortadora láser y pieza de acrílico, traslación A(3, −7) → A′(−4, −6), B(4, −9) → B′(−3, −8), vector (−7, 1); distractores (7, −1), (−6, −1), (3, −9)",
+    "adv-transformaciones-isometricas-009: simulador de muebles, lámpara en (−7, −6) girada 90° horario = (−6, 7) y trasladada por (−1, −2) = (−7, 5); distractores (−8, 8), (5, −9), (−5, 9)",
+    "adv-transformaciones-isometricas-010: pista de kayak, boyas P(5, −7) y Q(9, −4), 1 unidad = 1 m, Δ = (4, 3), distancia 5 m (trío 3-4-5); distractores 7, 25, √97",
+    "adv-transformaciones-isometricas-011: plano abstracto, P(7, 1) → P′(7, 7) por una recta horizontal, recta y = 4 (afirmación errónea y = 1); distractores y = 1, y = 6, x = 7",
+    "adv-transformaciones-isometricas-012: plano abstracto, P(5, −2) girado 90° antihorario = (2, 5) y trasladado por (−7, −2) = (−5, 3); resultado del estudiante (4, −2) vía (−2, −4); distractores (4, −2), (−9, −7), (9, 7)",
+    "adv-transformaciones-isometricas-013: triángulo abstracto A(−4, 4), B(5, 4), C(−3, 6), área 9, reflejado respecto del eje x = (−4, −4), (5, −4), (−3, −6); distractores área menor, traslación, (4, 4), (−5, 4), (3, 6)",
+    "adv-transformaciones-isometricas-014: triángulo abstracto A(−5, −8), B(−1, −8), C(−1, −5) trasladado por v = (2, −1) = (−3, −9), (1, −9), (1, −6); distractores (−7, −7), (−3, −7), (−3, −4); (−6, −6), (−2, −6), (−2, −3); (2, −1), (6, −1), (6, 2)",
+    "adv-transformaciones-isometricas-015: vectores abstractos u = (−6, −2), v = (1, 2), 2v = (2, 4), u − 2v = (−8, −6); distractores (−8, −4), (−9, −6), (−4, 2)",
+    "adv-transformaciones-isometricas-016: plano abstracto, P(−7, 3) reflejado respecto del eje x = (−7, −3), trasladado por (−1, −4) = (−8, −7), girado 90° antihorario = (7, −8); paso errado (−7, 8); distractores (7, 3), (−6, 1), sin error",
+    "adv-transformaciones-isometricas-017: segmento abstracto A(−6, −7), B(−7, −1), Δ = (−1, 6), AB = √37, girado 90° antihorario a A′(7, −6), B′(1, −7); distractores 7, 37, se estira",
+    "adv-transformaciones-isometricas-018: robot aspirador, base (−1, −1), tramos (−4, −5), (−5, −5), (5, 2), suma (−4, −8), posición final (−5, −9), vector de vuelta (4, 8); distractores (−4, −8), (−5, −9), (8, 4)",
+    "adv-transformaciones-isometricas-019: excavación arqueológica, casilla de 2 m, vasija (−4, −1) y hebilla (−3, −5), Δ = (1, −4), vector en metros (2, −8); distractores (2, −4), (−2, 8), (−4, −2)",
+    "adv-transformaciones-isometricas-020: mosaico de azulejos, F(−5, −3), (−3, −3), (−3, −1) y F′(5, −3), (3, −3), (3, −1), reflexión respecto del eje y (afirmación errónea: traslación por (8, 0)); A → A′ = (10, 0), B → B′ = (6, 0); distractores (8, 0), (10, 0), reflexión respecto del origen"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
+    "declaracionOriginalidad": "Banco de transformaciones isométricas: 20 ítems, 60 distractores, 16 errores distintos del catálogo content/errores/transformaciones-isometricas.json, todos los distractores con errorCatalogado (cobertura 60/60); 19 ítems llevan figura declarativa (adv-transformaciones-isometricas-018 no la lleva: encadenar los tramos dibujaría la posición final y una base suelta con tres flechas no aporta nada). Proveniencia por fuente: 17 propia, 3 demre-liberada (adv-transformaciones-isometricas-016, sobre la pregunta 49 de la forma 2024-invierno-111; adv-transformaciones-isometricas-018, sobre la pregunta 51 de la forma 2024-invierno-111; adv-transformaciones-isometricas-019, sobre la pregunta 52 de la forma 2026-regular-113; en los tres se conserva solo la estructura y el mecanismo de los distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem; los 20 ítems se diseñaron como propia en el plan firmado antes de leer esas tres preguntas, y ningún par ordenado de los originales se reutiliza), 0 temario-demre. Barrido de pares ordenados hecho con node sobre este archivo el 2026-09-15: se extrajeron todos los pares (x, y) y vectores de los 20 enunciados, las 19 figuras (puntos, centros, extremos y valor de cada flecha), las 80 alternativas y las 20 soluciones (156 pares distintos) y se cruzaron entre ítems y contra content/lecciones/isometrias-*.json, content/cierres/cierre-transformaciones-isometricas.json y los bancos de porcentaje y proporcionalidad. Resultado: ningún par se repite entre dos ítems del banco, salvo (0, 0) como centro de giro en 5 ítems, que se trata como vocabulario de la rotación igual que 90°; 0 pares en común con los otros dos bancos; 50 pares del banco aparecen también en las lecciones o el cierre, todos solo por el par y no por el contexto (ningún dato de enunciado ni respuesta correcta coincide con un par que la lección o el cierre usen en el mismo rol: mismo tipo de transformación, mismo vector o misma figura), la tabla completa, par por par, se pegó en el chat de la sesión del 2026-09-15. Cifras de 10 o más o con decimal (sin contar 90° y 180°, vocabulario del giro): 0 repetidas entre ítems; 0 cifras de 100 o más presentes en content/ (criterio de dos niveles firmado el 2026-09-14). Magnitud de los distractores: la razón |distractor| / |correcta| no mide descarte por tamaño en respuestas de par ordenado, así que se aplica solo a los tres ítems de respuesta escalar, 003, 010 y 017, los tres con omite-raiz-en-distancia, donde la razón es igual a la distancia (n frente a √n) y bajarla rompería el mecanismo; se aceptan como excepción declarada: 003 B 53 frente a √53: 7,3x; 010 C 25 frente a √25 = 5: 5,0x; 017 C 37 frente a √37: 6,1x. Ronda 1 (matemática) y Ronda 2 (originalidad): NO ejecutadas; este archivo se escribió con cada valor de alternativa derivado con node desde el mecanismo de su errorCatalogado y verificado con assert antes de escribir el texto, pero eso no reemplaza a las rondas, que se corren en hilos aislados después del commit. Contextos con dominio (láser y acrílico, simulador de muebles y lámpara, kayak y boyas, robot aspirador, excavación arqueológica y vasija, mosaico de azulejos) pendientes de scripts/consultar-fuentes.mjs, que corre Benja fuera de la sesión, con los respaldos declarados en el plan; los 14 restantes son abstractos."
+  }
+}
