@@ -52,6 +52,11 @@
     {
       "id": "potencias-y-raices/responde-otra-magnitud-potencias",
       "descripcion": "Calcular bien y responder otra magnitud: entregar el área cuando la pregunta pide el lado, el total cuando pide el factor, o quedarse en la potencia cuando lo que se pedía era deshacerla. El procedimiento está completo y sin errores de operatoria; lo que falla es la lectura de qué está pidiendo el enunciado."
+    },
+    {
+      "id": "potencias-y-raices/eleva-negativo-sin-parentesis",
+      "descripcion": "Perder el signo al elevar una base negativa, o darle un paréntesis que no tiene: tomar (−1)² = −1 y llegar a 1² + (−1)² + (0,1)² = 0,01 en vez de 2,01, o evaluar −t² con t = −3 como (−3)² = 9 en vez de −9. Una potencia par de base negativa es positiva, y el signo menos que queda fuera del paréntesis no entra en la potencia. Distinto de lee-exponente-negativo-como-signo, donde el signo mal leído es el del exponente, no el de la base.",
+      "reservado": "Banco Advance de potencias-y-raices: distractor DEMRE 2024-invierno-111/3A; mismo mecanismo en funcion-cuadratica 2024-invierno-111/40D y 2027-invierno-111/39B"
     }
   ]
 }
