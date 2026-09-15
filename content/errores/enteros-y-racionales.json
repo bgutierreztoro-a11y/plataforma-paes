@@ -36,6 +36,21 @@
     {
       "id": "enteros-y-racionales/invierte-conclusion-entre-negativos",
       "descripcion": "Calcula correctamente la diferencia entre dos negativos (o su valor absoluto) pero invierte la conclusión sobre cuál de los dos es mayor."
+    },
+    {
+      "id": "enteros-y-racionales/rompe-orden-de-operaciones",
+      "descripcion": "Resolver las operaciones en el orden equivocado: restar o duplicar antes de operar el paréntesis, o multiplicar antes de resolver lo que está adentro (calcula (3 − (−1)) · (−1 − 5) = −24 donde corresponde 3 − (−1)(−1 − 5) = −3, o 2 · 200 − 99 = 301 donde corresponde 2 · (200 − 99) = 202).",
+      "reservado": "Banco Advance de enteros-y-racionales: distractores DEMRE 2024-regular-113/1A y 1D, 2024-invierno-111/1B"
+    },
+    {
+      "id": "enteros-y-racionales/corre-la-coma-al-operar-decimales",
+      "descripcion": "Correr la coma al multiplicar o dividir decimales y entregar un resultado con la posición decimal equivocada (calcula 0,09 · 3 y entrega 2,7 en vez de 0,27, o entrega 0,0004 ÷ 0,01 con la coma corrida una o dos posiciones respecto de 0,04).",
+      "reservado": "Banco Advance de enteros-y-racionales: distractores DEMRE 2024-invierno-111/2A, 2C y 2D, 2026-regular-113/4A"
+    },
+    {
+      "id": "enteros-y-racionales/omite-el-valor-de-partida",
+      "descripcion": "Omitir el valor inicial en una cadena de sumas y restas, o tomar una variación como si partiera de cero (toma la bajada de 12 °C a −36 °C como 36 grados en vez de 12 − (−36) = 48, o calcula 23 − 37 = −14 omitiendo la carta inicial del enunciado). Distinto de funcion-lineal-y-afin/olvida-valor-inicial: acá no hay modelo lineal, es una cadena de sumas y restas.",
+      "reservado": "Banco Advance de enteros-y-racionales: distractores DEMRE 2026-regular-113/1A, 2024-invierno-111/8C"
     }
   ]
 }
