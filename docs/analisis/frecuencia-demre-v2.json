@@ -169,9 +169,9 @@
         },
         {
           "clave": "B",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/rompe-orden-de-operaciones",
           "razonamiento": "Duplica 200 antes de restar y usa 99: 2·200 − 99 = 301. Error de orden de operaciones, sin id en el catálogo.",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "D",
@@ -194,21 +194,21 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/corre-la-coma-al-operar-decimales",
           "razonamiento": "Corre la coma una posición al multiplicar decimales (0,0004/0,01). Sin id: el catálogo no tiene error de posición decimal.",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/corre-la-coma-al-operar-decimales",
           "razonamiento": "Se queda en el numerador 0,00004 corrido una posición, o no divide. Sin id.",
-          "confianza": "baja"
+          "confianza": "media"
         },
         {
           "clave": "D",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/corre-la-coma-al-operar-decimales",
           "razonamiento": "Corre la coma dos posiciones. Sin id.",
-          "confianza": "baja"
+          "confianza": "alta"
         }
       ]
     },
@@ -226,9 +226,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "potencias-y-raices/eleva-negativo-sin-parentesis",
           "razonamiento": "Toma (−1)² = −1: 1 + (−1) + 0,01 = 0,01. Signo de potencia par de base negativa; sin id (error-4 es exponente negativo).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "B",
@@ -387,9 +387,9 @@
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/omite-el-valor-de-partida",
           "razonamiento": "36/3·5 = 60: toma la variación como 36 en vez de 12 − (−36) = 48, ignorando el punto de partida. Sin id.",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "D",
@@ -598,9 +598,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "porcentaje/multiplica-porcentajes-en-vez-de-factores",
           "razonamiento": "1500·(1 − 0,2·0,3) = 1410: multiplica los dos porcentajes para obtener un descuento total del 6 %. Sin id (candidato).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
@@ -793,9 +793,9 @@
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "potencias-y-raices/responde-otra-magnitud-potencias",
           "razonamiento": "Reporta n = 10000. Sin id.",
-          "confianza": "baja"
+          "confianza": "media"
         },
         {
           "clave": "D",
@@ -893,9 +893,9 @@
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "p + 1/3: aplica la tercera parte solo al 1. Sin id.",
-          "confianza": "baja"
+          "confianza": "media"
         }
       ]
     },
@@ -943,9 +943,9 @@
       "distractores": [
         {
           "clave": "B",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "Reparte el 1/4 solo sobre a: a/4 − 1600. Distribución parcial, sin id en expresiones-algebraicas.",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
@@ -2007,9 +2007,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/rompe-orden-de-operaciones",
           "razonamiento": "Resuelve (−1)(−1) = 1 antes que el paréntesis y luego 3 − (1 − 5)… llega a −1 por precedencia rota. Sin id (candidato transversal: orden de operaciones).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
@@ -2019,9 +2019,9 @@
         },
         {
           "clave": "D",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/rompe-orden-de-operaciones",
           "razonamiento": "−24 = (3 − (−1))·(−1 − 5): resta antes de multiplicar. Sin id (candidato transversal: orden de operaciones).",
-          "confianza": "baja"
+          "confianza": "alta"
         }
       ]
     },
@@ -2731,9 +2731,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/confunde-coeficiente-elevado",
           "razonamiento": "2x² − 12x + 9: no eleva el coeficiente 2 al cuadrado. Sin id (candidato).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "B",
@@ -2795,9 +2795,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/confunde-coeficiente-elevado",
           "razonamiento": "(2x)³ − x/3: eleva el doble al cubo en vez del número. Traducción, sin id (candidato (2x)³ vs 2x³).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "B",
@@ -4243,9 +4243,9 @@
         },
         {
           "clave": "B",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "x² − 6: divide solo el término libre. Sin id.",
-          "confianza": "baja"
+          "confianza": "media"
         },
         {
           "clave": "C",
@@ -4269,15 +4269,15 @@
       "distractores": [
         {
           "clave": "B",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "−2b − 1: distribuye el 3 solo sobre b y deja el −1 sin multiplicar. Sin id (candidato: distribución parcial).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "−2b + 1: distribuye el 3 solo sobre b y cambia el signo del 1. Sin id.",
-          "confianza": "baja"
+          "confianza": "media"
         },
         {
           "clave": "D",
@@ -5076,9 +5076,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/omite-el-valor-de-partida",
           "razonamiento": "Omite la carta inicial: 23 − 37 = −14. Sin id en enteros (candidato: omitir el valor inicial).",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "C",
@@ -5170,9 +5170,9 @@
       "distractores": [
         {
           "clave": "A",
-          "errorId": null,
+          "errorId": "enteros-y-racionales/corre-la-coma-al-operar-decimales",
           "razonamiento": "0,09·30 = 2,7: corre la coma. Sin id.",
-          "confianza": "baja"
+          "confianza": "alta"
         },
         {
           "clave": "B",
@@ -6398,9 +6398,9 @@
         },
         {
           "clave": "D",
-          "errorId": null,
+          "errorId": "expresiones-algebraicas/reparte-factor-a-un-solo-termino",
           "razonamiento": "(168 + 159)/2 + 13 = 176,5: no divide el 13 por 2. Sin id (candidato: distribuir la división a un solo sumando).",
-          "confianza": "baja"
+          "confianza": "alta"
         }
       ]
     },
@@ -6587,9 +6587,9 @@
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "porcentaje/aplica-una-vez-cambio-repetido",
           "razonamiento": "100000·1,2 = 120000: aplica el 20 % una sola vez, ignorando los 5 meses. Sin id (candidato).",
-          "confianza": "baja"
+          "confianza": "alta"
         }
       ]
     },
@@ -6912,9 +6912,9 @@
         },
         {
           "clave": "C",
-          "errorId": null,
+          "errorId": "porcentaje/ignora-termino-fijo-al-comparar",
           "razonamiento": "16/20 = 80 %: ignora el pago fijo de 10000. Sin id en porcentaje (candidato: omitir el valor inicial).",
-          "confianza": "baja"
+          "confianza": "alta"
         }
       ]
     },
