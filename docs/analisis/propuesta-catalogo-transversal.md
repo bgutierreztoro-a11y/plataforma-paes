@@ -1,5 +1,10 @@
 # Propuesta: catálogo transversal de errores
 
+> **ESTADO: CERRADA, NO FIRMADA (2026-09-15). Ver docs/decisiones/ADR-001.** Correcciones de
+> datos: la lista B suma 160 refs (159 nulos + 2024-regular-113/31C ya mapeado a
+> ecuaciones-e-inecuaciones-primer-grado/confunde-borde-abierto-y-cerrado); los 3 "sin figura"
+> son 2026-regular-113/49A/C/D, no forma 2027.
+
 Generado el 2026-09-13 a partir de `docs/analisis/frecuencia-demre-v2.json` (285 preguntas, 657 distractores mapeables, 464 en `null`). Es una propuesta: nada de esto existe en `content/`. Los ids van marcados como provisionales; el texto lo propone CC y el id lo fija Benja (regla vigente).
 
 ## Por qué un catálogo aparte
