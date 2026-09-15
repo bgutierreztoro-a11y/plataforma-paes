@@ -715,7 +715,7 @@
           "yMin": -8,
           "yMax": 1
         },
-        "descripcion": "Boyas P en (5, −7) y Q en (9, −4) con la flecha del recorrido de P a Q.",
+        "descripcion": "Boyas P en (5, −7) y Q en (9, −4) en el plano de la pista; el segmento que las une no está dibujado.",
         "elementos": [
           {
             "tipo": "punto",
@@ -728,18 +728,6 @@
             "nombre": "Q",
             "x": 9,
             "y": -4
-          },
-          {
-            "tipo": "vector",
-            "etiqueta": "recorrido",
-            "desde": [
-              5,
-              -7
-            ],
-            "hasta": [
-              9,
-              -4
-            ]
           }
         ]
       },
@@ -780,8 +768,8 @@
           "clave": "D",
           "texto": "No: la recta es x = 7, porque pasa por P y por P′.",
           "esCorrecta": false,
-          "errorCatalogado": "cambia-coordenada-equivocada-al-reflejar",
-          "feedbackDescarte": "Esa confunde qué coordenada cambia. Al reflejar respecto de una recta horizontal cambia la y y se conserva la x; una recta vertical por P y P′ no los intercambia, los deja donde están."
+          "errorCatalogado": "ubica-mal-eje-de-reflexion",
+          "feedbackDescarte": "Esa pone la recta sobre P y sobre P′ a la vez: la recta que los une. Un punto sobre la recta de reflexión queda fijo, y P sí se movió. La recta es perpendicular al segmento PP′ y pasa por su punto medio: y = 4."
         }
       ],
       "solucion": "P y P′ tienen la misma x y distinta y, así que la recta de reflexión es horizontal, de la forma y = c, y pasa por el punto medio entre 1 y 7: c = (1 + 7) ÷ 2 = 4. Comprobación: P está a 3 unidades bajo la recta y = 4 y P′ a 3 unidades sobre ella. La afirmación es falsa: la recta y = 1 pasa por P, y un punto sobre la recta de reflexión queda fijo, no se mueve a (7, 7).",
