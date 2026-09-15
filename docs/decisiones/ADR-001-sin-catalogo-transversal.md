@@ -52,5 +52,7 @@ De los 12 ids propuestos, 6 tenían n ≤ 4 o el 100 % de sus ocurrencias en una
 ## Action Items
 1. [x] ADR
 2. [x] Propuesta marcada CERRADA
-3. [ ] 6 ids nuevos de módulo (fase 2 de este prompt)
+3. [x] 6 ids nuevos de módulo (fase 2 de este prompt)
 4. [ ] Pendiente separado: ids de dag-m1.json (enteros-racionales) no coinciden con nombres de catálogo (enteros-y-racionales); sin tabla de equivalencia en código. No romper ahora.
+5. [ ] 19 grupos candidatos con ≥3 distractores en docs/analisis/candidatos-ids-por-unidad.md;
+   enteros-y-racionales (4 grupos, 15 distractores) y cuerpos-geometricos (3 grupos, 11) son los de mayor volumen; por candidatos (B) totales, enteros-y-racionales y potencias-y-raices (23 cada uno).
