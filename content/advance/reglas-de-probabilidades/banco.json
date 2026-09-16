@@ -1,0 +1,896 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "reglas-de-probabilidades",
+  "moduloId": "reglas-de-probabilidades",
+  "titulo": "Reglas de las probabilidades",
+  "items": [
+    {
+      "id": "adv-reglas-de-probabilidades-001",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una escuela de danza tiene 25 personas inscritas, cada una en un solo estilo: 11 en ballet, 6 en folclor, 5 en jazz y 3 en tango. Se elige al azar una persona inscrita, todas con la misma probabilidad. ¿Cuál es la probabilidad de que esté inscrita en ballet, expresada como porcentaje?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "11 %",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-conteo-como-porcentaje",
+          "feedbackDescarte": "Esa toma el conteo 11 como si fuera el porcentaje. 11 es la cantidad de inscritos en ballet; el porcentaje es 11 de 25, o sea 11/25 = 44 %."
+        },
+        {
+          "clave": "B",
+          "texto": "44 %",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 11 de los 25 inscritos están en ballet, y 11/25 = 44 %."
+        },
+        {
+          "clave": "C",
+          "texto": "25 %",
+          "esCorrecta": false,
+          "errorCatalogado": "asume-equiprobables-sin-enumerar",
+          "feedbackDescarte": "Esa reparte la probabilidad en partes iguales entre los cuatro estilos, como si cada uno tuviera la misma cantidad de inscritos. Ballet tiene 11 de 25, no uno de cuatro."
+        },
+        {
+          "clave": "D",
+          "texto": "56 %",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la probabilidad de que no esté en ballet: 100 % − 44 % = 56 %. Se pide la de ballet, 44 %."
+        }
+      ],
+      "solucion": "Total de inscritos: 11 + 6 + 5 + 3 = 25. En ballet hay 11 de 25: 11/25 = 44 %.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 51, distractor C",
+        "notaAdaptacion": "Del original (tabla de estilo musical preferido de 20 personas, se pide P(rock) como fracción) se conservan la estructura, una tabla de frecuencias de una sola variable y la probabilidad de una categoría, y el mecanismo de su distractor C (entregar el complemento). El distractor B del original (favorables sobre desfavorables) no se conserva porque con las cifras nuevas no da un porcentaje terminante; entran lee-conteo-como-porcentaje y asume-equiprobables-sin-enumerar. Cambian el contexto (escuela de danza), las cifras (25 inscritos, 11 en ballet), el formato de la respuesta (porcentaje) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-002",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un refugio tiene 85 animales en adopción: 41 perros, 28 gatos, 7 conejos, 5 hámsteres y 4 tortugas. Para una campaña se elige al azar uno de los 85, todos con la misma probabilidad. ¿Cuál es la probabilidad de que el animal elegido sea un hámster o una tortuga?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4/1.445",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-en-vez-de-sumar",
+          "feedbackDescarte": "Esa multiplica las dos probabilidades, 5/85 · 4/85 = 20/7.225 = 4/1.445, como si se pidiera hámster y tortuga a la vez. Con «o» entre eventos que no pueden ocurrir juntos, se suman: 9/85."
+        },
+        {
+          "clave": "B",
+          "texto": "9/76",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide los 9 favorables por los 85 − 9 = 76 desfavorables. La probabilidad se calcula sobre el total de casos posibles, 85: 9/85."
+        },
+        {
+          "clave": "C",
+          "texto": "149/1.445",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-producto-como-interseccion",
+          "feedbackDescarte": "Esa resta el producto 5/85 · 4/85 = 4/1.445 como si fuera la probabilidad de hámster y tortuga: 153/1.445 − 4/1.445 = 149/1.445. Un animal no puede ser las dos cosas: no hay nada que restar, es 9/85."
+        },
+        {
+          "clave": "D",
+          "texto": "9/85",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: hámster o tortuga son 5 + 4 = 9 casos favorables de 85, y 9/85 no se puede simplificar."
+        }
+      ],
+      "solucion": "Total: 41 + 28 + 7 + 5 + 4 = 85. Hámster o tortuga no pueden ocurrir a la vez, así que se suman los casos: 5 + 4 = 9 favorables de 85. P = 9/85, que es irreducible.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 54, solo la estructura",
+        "notaAdaptacion": "Del original (encuesta de fruta preferida a 50 personas con cinco frutas, se pide P(pera o naranja)) se conserva la estructura: cinco categorías excluyentes y la probabilidad de «A o B» con dos de ellas. Ninguno de sus tres distractores tiene mecanismo derivable, así que los tres se reemplazan por multiplica-en-vez-de-sumar, divide-por-desfavorables y usa-producto-como-interseccion. Cambian el contexto (refugio de animales), las cifras (85 animales, 5 hámsteres y 4 tortugas) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-003",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Para el sorteo de una kermesse se vendieron completos 95 talonarios de 39 boletos cada uno, y se sortea al azar un solo boleto ganador entre todos los vendidos, todos con la misma probabilidad. Una persona compró 7 boletos, todos de un mismo talonario. ¿Cuál es la probabilidad de que gane el sorteo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7/3.705",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: hay 95 · 39 = 3.705 boletos y 7 son de la persona: 7/3.705."
+        },
+        {
+          "clave": "B",
+          "texto": "7/134",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total",
+          "feedbackDescarte": "Esa toma como total la suma 95 + 39 = 134 en vez del producto. Cada uno de los 95 talonarios tiene 39 boletos, así que el total es 95 · 39 = 3.705."
+        },
+        {
+          "clave": "C",
+          "texto": "7/39",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-de-fila",
+          "feedbackDescarte": "Esa divide por los 39 boletos de su talonario, como si el sorteo fuera solo dentro de ese talonario. El boleto ganador se sortea entre los 3.705 vendidos: 7/3.705."
+        },
+        {
+          "clave": "D",
+          "texto": "7/3.698",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide los 7 favorables por los 3.705 − 7 = 3.698 boletos que no son suyos. La probabilidad va sobre el total de boletos, 3.705."
+        }
+      ],
+      "solucion": "Boletos vendidos: 95 · 39 = 3.705, todos con la misma probabilidad. La persona tiene 7 de ellos: 7/3.705, irreducible.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 63, distractores A y C",
+        "notaAdaptacion": "Del original (rifa de curso: 8 números de una lista de 20 y 100 listas, se pide la probabilidad de ganar) se conservan la estructura, total igual a grupos por elementos con los favorables dentro de un solo grupo, y los mecanismos de sus distractores A (total como suma en vez de producto) y C (dividir por el tamaño del grupo). El distractor B del original no tiene mecanismo y se reemplaza por divide-por-desfavorables. Cambian el contexto (kermesse con talonarios de boletos, en vez de rifa de curso), las cifras (95 talonarios de 39, 7 boletos) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-004",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una app de clases de yoga hizo una encuesta en línea y cada persona eligió una sola clase favorita: 66 eligieron spinning, 930 eligieron pilates y n eligieron yoga aéreo. Si se elige al azar a una de las personas encuestadas, todas con la misma probabilidad, la probabilidad de que su clase favorita no sea pilates es 60 %. ¿Cuál es el valor de n?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "554",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa usa el 60 % como si fuera la probabilidad de pilates: 930 · 100 ÷ 60 = 1.550 y n = 1.550 − 996 = 554. El 60 % es la probabilidad de no pilates; pilates es el 40 %."
+        },
+        {
+          "clave": "B",
+          "texto": "492",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa plantea (66 + n)/930 = 60 %, favorables sobre desfavorables: 60 % de 930 = 558 y n = 558 − 66 = 492. La probabilidad se calcula sobre el total de encuestados, no sobre los de pilates."
+        },
+        {
+          "clave": "C",
+          "texto": "1.329",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: pilates es el 40 %, 930 · 100 ÷ 40 = 2.325 encuestados, y 2.325 − 66 − 930 = 1.329."
+        },
+        {
+          "clave": "D",
+          "texto": "664",
+          "esCorrecta": false,
+          "errorCatalogado": null,
+          "sinErrorCatalogado": {
+            "motivo": "valor-plausible-no-derivable",
+            "nota": "Toma a las 996 personas conocidas como el 60 % (996 · 100 ÷ 60 = 1.660, n = 664), el mismo patrón que el distractor C del original DEMRE; ningún id del catálogo lo produce (lee-conteo-como-porcentaje cubre solo la dirección conteo escrito como porcentaje)."
+          },
+          "feedbackDescarte": "Esa toma a las 996 personas conocidas como el 60 %: 996 · 100 ÷ 60 = 1.660 y n = 1.660 − 996 = 664. Pero las 996 incluyen a las 930 de pilates, que no están en el 60 %: el 60 % son solo las 66 de spinning y las n de yoga aéreo."
+        }
+      ],
+      "solucion": "Si P(no pilates) = 60 %, entonces P(pilates) = 100 % − 60 % = 40 %. Las 930 personas de pilates son el 40 % del total, así que el total es 930 · 100 ÷ 40 = 2.325. Las conocidas son 66 + 930 = 996, y n = 2.325 − 996 = 1.329.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 64, distractor C (patrón, sin id)",
+        "notaAdaptacion": "Del original (encuesta de pasatiempos con un conteo desconocido y P(no deporte) = 0,6, se pide n) se conserva la estructura: conteo desconocido con la probabilidad del complemento dada y respuesta entera. Los distractores son confunde-evento-con-su-complemento (usar el 60 % como P(pilates)), divide-por-desfavorables y, en D, el patrón de su distractor C (tomar la suma de los conteos conocidos como el porcentaje dado), que no produce ningún id del catálogo y va declarado con sinErrorCatalogado. Cambian el contexto (encuesta en línea de una app de clases de yoga), las cifras (66, 930 y 60 %, escaladas a una encuesta grande para que la resolución no muestre respuestas de la unidad) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-005",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un juego de mesa tiene dos cofres: el cofre rojo contiene 7 medallas iguales numeradas del 1 al 7 y el cofre azul contiene 5 medallas iguales numeradas del 8 al 12. Se saca al azar una medalla de cada cofre: dentro de cada cofre todas las medallas tienen la misma probabilidad de salir, y lo que sale de un cofre no influye en lo que sale del otro. ¿Cuál es la probabilidad de que la suma de los dos números sea par?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8/35",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-camino-simetrico",
+          "feedbackDescarte": "Esa cuenta solo el camino de las dos impares, 4 · 2 = 8 pares, y deja fuera el de las dos pares, 3 · 3 = 9. La suma es par en los dos caminos: 8 + 9 = 17 de 35."
+        },
+        {
+          "clave": "B",
+          "texto": "18/35",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la probabilidad de que la suma sea impar: 35 − 17 = 18 pares de 35. Se pide suma par, 17/35."
+        },
+        {
+          "clave": "C",
+          "texto": "17/18",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide los 17 pares favorables por los 35 − 17 = 18 desfavorables. La probabilidad se calcula sobre los 35 pares posibles: 17/35."
+        },
+        {
+          "clave": "D",
+          "texto": "17/35",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: de los 7 · 5 = 35 pares, dan suma par los 4 · 2 = 8 con las dos impares y los 3 · 3 = 9 con las dos pares: 17/35."
+        }
+      ],
+      "solucion": "Pares posibles: 7 · 5 = 35, todos con la misma probabilidad. La suma es par cuando las dos medallas son impares o las dos son pares. Impares: 4 en el cofre rojo y 2 en el azul, 4 · 2 = 8 pares. Pares: 3 en el rojo y 3 en el azul, 3 · 3 = 9 pares. Favorables: 8 + 9 = 17, y P = 17/35.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 63, solo la estructura",
+        "notaAdaptacion": "Del original (dos cajas con fichas numeradas del 1 al 5 y del 6 al 10, se pide P(suma par)) se conserva la estructura: dos grupos numerados, una extracción de cada uno y la paridad de la suma. Ninguno de sus tres distractores tiene mecanismo derivable; entran olvida-camino-simetrico, confunde-evento-con-su-complemento y divide-por-desfavorables (17 favorables sobre 35 − 17 = 18 desfavorables). Cambian el contexto (cofres con medallas numeradas del 1 al 7 y del 8 al 12), las cifras (35 pares, 17/35) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-006",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una bolsa hay 27 pares de guantes de jardinería, 54 guantes en total, todos iguales por fuera; cada guante forma pareja con uno solo de los otros. Una persona saca un guante al azar, lo deja fuera de la bolsa y saca un segundo guante al azar entre los que quedan. ¿Cuál es la probabilidad de que el segundo guante sea la pareja del primero?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/54",
+          "esCorrecta": false,
+          "errorCatalogado": "mantiene-denominador-sin-reposicion",
+          "feedbackDescarte": "Esa deja el total en 54 como si el primer guante siguiera en la bolsa. Ya salió y no vuelve: en la segunda extracción quedan 53."
+        },
+        {
+          "clave": "B",
+          "texto": "1/53",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: sacado el primer guante quedan 53 y exactamente 1 es su pareja: 1/53."
+        },
+        {
+          "clave": "C",
+          "texto": "2/53",
+          "esCorrecta": false,
+          "errorCatalogado": "baja-total-pero-no-favorables",
+          "feedbackDescarte": "Esa baja el total a 53 pero cuenta 2 favorables, como si la pareja completa siguiera en la bolsa. Uno de los dos ya salió: queda 1 favorable de 53."
+        },
+        {
+          "clave": "D",
+          "texto": "52/53",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la probabilidad de que el segundo guante no sea la pareja: 52 de 53. Se pide que sí lo sea, 1/53."
+        }
+      ],
+      "solucion": "Hay 2 · 27 = 54 guantes. Después de sacar el primero quedan 53, todos con la misma probabilidad, y solo 1 de ellos es su pareja: 1/53.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 64, distractores A y D",
+        "notaAdaptacion": "Del original (memorice de 20 tarjetas: destapada una con rayo, se pide P(segunda con rayo)) se conservan la estructura, objetos en pares, uno revelado y la probabilidad de que el segundo sea su pareja, y los mecanismos de sus distractores A (mantener el total original) y D (bajar el total sin bajar los favorables). El distractor C del original no tiene mecanismo y se reemplaza por confunde-evento-con-su-complemento. Cambian el contexto (27 pares de guantes de jardinería en una bolsa), las cifras (54 guantes, 1/53) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-007",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una app de cocina arma un menú al azar: elige uno de sus 45 platos principales y, de forma independiente, una de sus 47 salsas, todos con la misma probabilidad. ¿Cuál es la probabilidad de que elija el plato de risotto y la salsa de tomate?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1/2.115",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 45 · 47 = 2.115 menús igual de probables y uno solo es el pedido, 1/2.115."
+        },
+        {
+          "clave": "B",
+          "texto": "1/92",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-resultados-en-vez-de-multiplicar-total",
+          "feedbackDescarte": "Esa toma como total la suma 45 + 47 = 92. Cada plato se combina con cada salsa: los menús son 45 · 47 = 2.115, no 92."
+        },
+        {
+          "clave": "C",
+          "texto": "1/45",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-una-sola-etapa",
+          "feedbackDescarte": "Esa es solo la probabilidad de que salga el risotto, 1/45, sin la salsa. Se piden las dos cosas a la vez: 1/45 · 1/47 = 1/2.115."
+        },
+        {
+          "clave": "D",
+          "texto": "92/2.115",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-en-vez-de-multiplicar-etapas",
+          "feedbackDescarte": "Esa suma las dos probabilidades, 1/45 + 1/47 = 92/2.115, como si bastara con que ocurriera una de las dos. Se necesita que ocurran ambas: se multiplican, 1/2.115."
+        }
+      ],
+      "solucion": "Las dos elecciones son independientes, así que los menús posibles son 45 · 47 = 2.115, todos con la misma probabilidad, y solo uno es risotto con salsa de tomate: 1/2.115. También: 1/45 · 1/47 = 1/2.115.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-008",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Dos arqueros tiran una flecha cada uno a la misma diana, y el resultado de uno no influye en el del otro. La probabilidad de que el primero dé en el centro de la diana es 9/19 y la de que el segundo dé en el centro es 19/29. ¿Cuál es la probabilidad de que al menos uno de los dos dé en el centro?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "100/551",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno",
+          "feedbackDescarte": "Esa es P(ninguno) = 10/19 · 10/29 = 100/551 y le falta el 1 −. Se pide al menos uno: 1 − 100/551 = 451/551."
+        },
+        {
+          "clave": "B",
+          "texto": "10/19",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-a-uno-un-solo-evento",
+          "feedbackDescarte": "Esa es 1 − 9/19 = 10/19, el complemento de un solo arquero. «Ninguno» exige que fallen los dos: 10/19 · 10/29, y al menos uno es 1 − 100/551."
+        },
+        {
+          "clave": "C",
+          "texto": "451/551",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: fallan los dos con 10/19 · 10/29 = 100/551, y al menos uno acierta con 1 − 100/551 = 451/551."
+        },
+        {
+          "clave": "D",
+          "texto": "9/29",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-en-vez-de-sumar",
+          "feedbackDescarte": "Esa multiplica 9/19 · 19/29 = 9/29, que es la probabilidad de que los dos den en el centro. Al menos uno incluye también los casos en que acierta uno solo: 451/551."
+        }
+      ],
+      "solucion": "P(al menos uno) = 1 − P(ninguno). Que el primero falle tiene probabilidad 1 − 9/19 = 10/19 y que el segundo falle, 1 − 19/29 = 10/29. Como son independientes, P(ninguno) = 10/19 · 10/29 = 100/551, y P(al menos uno) = 1 − 100/551 = 451/551.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-009",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un crucero pequeño tiene 55 camarotes numerados del 1 al 55, y los camarotes con ventana son los numerados del 38 al 46, incluidos los dos. A cada pasajero se le asigna al azar un camarote, todos con la misma probabilidad. ¿Cuál es la probabilidad de que a una persona le toque un camarote con ventana?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8/55",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-rango-restando-extremos",
+          "feedbackDescarte": "Esa cuenta 46 − 38 = 8 camarotes, pero al restar los extremos se pierde uno: del 38 al 46 hay 46 − 38 + 1 = 9."
+        },
+        {
+          "clave": "B",
+          "texto": "46/55",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la probabilidad de un camarote sin ventana: 55 − 9 = 46 de 55. Se pide con ventana, 9/55."
+        },
+        {
+          "clave": "C",
+          "texto": "9/46",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide los 9 con ventana por los 55 − 9 = 46 sin ventana. La probabilidad va sobre los 55 camarotes: 9/55."
+        },
+        {
+          "clave": "D",
+          "texto": "9/55",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los camarotes del 38 al 46 son 46 − 38 + 1 = 9, de un total de 55."
+        }
+      ],
+      "solucion": "Del 38 al 46, incluidos los dos, hay 46 − 38 + 1 = 9 camarotes con ventana, de 55 igual de probables: 9/55.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-010",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una librería vendió 2.030 ejemplares en un mes, cada uno de un solo género: 495 de novela, 305 de poesía, 485 de crónica, 380 de biografía y 365 de cómic. Se elige al azar una de las boletas de venta, todas con la misma probabilidad. ¿Cuál de las siguientes expresiones permite calcular la probabilidad de que el ejemplar vendido sea una crónica o una biografía?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(485 + 380)/2.030",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los 485 de crónica y los 380 de biografía se suman y se dividen por los 2.030 vendidos."
+        },
+        {
+          "clave": "B",
+          "texto": "485/2.030 · 380/2.030",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-en-vez-de-sumar",
+          "feedbackDescarte": "Esa multiplica 485/2.030 · 380/2.030, que correspondería a crónica y biografía a la vez. Con «o» entre géneros que no se dan juntos, las probabilidades se suman."
+        },
+        {
+          "clave": "C",
+          "texto": "(485 + 380)/2.030 − 485/2.030 · 380/2.030",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-producto-como-interseccion",
+          "feedbackDescarte": "Esa resta 485/2.030 · 380/2.030 como si fuera la probabilidad de que el ejemplar sea crónica y biografía. Cada ejemplar es de un solo género: esa intersección es 0 y no hay nada que restar."
+        },
+        {
+          "clave": "D",
+          "texto": "(485 + 380)/1.165",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide por 2.030 − 865 = 1.165, los ejemplares que no son crónica ni biografía. El denominador es el total de ejemplares vendidos, 2.030."
+        }
+      ],
+      "solucion": "Total: 495 + 305 + 485 + 380 + 365 = 2.030. Crónica y biografía no pueden darse en un mismo ejemplar, así que los casos favorables se suman: 485 + 380 = 865 de 2.030, o sea (485 + 380)/2.030.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 52, solo la estructura",
+        "notaAdaptacion": "Del original (estudiantes por carrera en cuatro categorías con frecuencias en los cientos, se pide la expresión de P(A o B)) se conserva la estructura: expresión para «A o B» con categorías excluyentes. El distractor con complemento del original no se conserva porque confunde-evento-con-su-complemento ya está en el tope de usos del banco; entran multiplica-en-vez-de-sumar, usa-producto-como-interseccion y divide-por-desfavorables. Cambian el contexto (librería, géneros), las cifras (2.030 ejemplares en cinco géneros) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-011",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En un club deportivo, 37 socios practican solo esgrima, 57 practican solo remo, 5 practican esgrima, remo y judo, y x socios practican solo judo; ningún socio practica exactamente dos disciplinas. Se elige al azar un socio del club, todos con la misma probabilidad. ¿Cuál de las siguientes expresiones permite calcular la probabilidad de que practique judo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x/(99 + x)",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-ambos-en-al-menos-uno",
+          "feedbackDescarte": "Esa cuenta solo a los x que practican únicamente judo y deja fuera a los 5 que practican esgrima, remo y judo, que también practican judo. Los favorables son x + 5."
+        },
+        {
+          "clave": "B",
+          "texto": "(x + 5)/94",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide por los 37 + 57 = 94 socios que no practican judo. El denominador es el total de socios, 99 + x."
+        },
+        {
+          "clave": "C",
+          "texto": "94/(99 + x)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la probabilidad de que el socio no practique judo: 94 de 99 + x. Se pide que sí practique, (x + 5)/(99 + x)."
+        },
+        {
+          "clave": "D",
+          "texto": "(x + 5)/(99 + x)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: practican judo x + 5 socios de un total de 37 + 57 + 5 + x = 99 + x."
+        }
+      ],
+      "solucion": "Socios del club: 37 + 57 + 5 + x = 99 + x. Practican judo los x de solo judo y los 5 que practican las tres disciplinas: x + 5. P = (x + 5)/(99 + x).",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 64, distractor A",
+        "notaAdaptacion": "Del original (reunión con tres idiomas: 6 solo francés, 10 solo inglés, 3 los tres y x solo español, se pide la expresión de P(hable español)) se conservan la estructura, expresión con incógnita x y un grupo que cuenta en las tres categorías, y el mecanismo de su distractor A (contar solo a los exclusivos). Los distractores B y C del original no tienen mecanismo y se reemplazan por divide-por-desfavorables y confunde-evento-con-su-complemento. Cambian el contexto (club deportivo con esgrima, remo y judo), las cifras (37, 57, 5) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-012",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "A una función de un planetario entraron 461 visitantes. De los 454 adultos, 449 usaron audioguía y 5 no; de los 7 estudiantes, 3 usaron audioguía y 4 no. En total, 452 visitantes usaron audioguía y 9 no. Se elige al azar uno de los 461 visitantes, todos con la misma probabilidad. ¿Cuál de las siguientes expresiones representa la probabilidad de que sea un estudiante que usó audioguía?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3/7",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-de-fila",
+          "feedbackDescarte": "Esa divide los 3 estudiantes con audioguía por los 7 estudiantes, el total de su fila. Se elige entre los 461 visitantes de la función, así que el denominador es 461."
+        },
+        {
+          "clave": "B",
+          "texto": "3/461",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los estudiantes que usaron audioguía son 3 de los 461 visitantes."
+        },
+        {
+          "clave": "C",
+          "texto": "449/461",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-fila-equivocada-en-tabla",
+          "feedbackDescarte": "Esa toma la celda equivocada: 449 son los adultos que usaron audioguía. Los estudiantes con audioguía son 3."
+        },
+        {
+          "clave": "D",
+          "texto": "3/452",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-de-fila",
+          "feedbackDescarte": "Esa divide los 3 estudiantes con audioguía por los 452 que usaron audioguía, el total de su columna. El total general es 461."
+        }
+      ],
+      "solucion": "Total de visitantes: 454 + 7 = 461. La celda pedida, estudiantes que usaron audioguía, tiene 3 casos, y se divide por el total de la función: 3/461.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-013",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En un buzón hay 89 sobres cerrados, iguales por fuera; 30 de ellos contienen una invitación y los otros 59 no. Se sacan al azar dos sobres, uno después del otro y sin devolver el primero. ¿Cuál de las siguientes expresiones representa la probabilidad de que al menos uno de los dos sobres contenga una invitación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "59/89 · 58/88",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno",
+          "feedbackDescarte": "Esa es la probabilidad de que ninguno de los dos sobres tenga invitación, y le falta el 1 −. Al menos uno es lo contrario de ninguno."
+        },
+        {
+          "clave": "B",
+          "texto": "1 − 59/89",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-a-uno-un-solo-evento",
+          "feedbackDescarte": "Esa resta a 1 la probabilidad de que el primer sobre no tenga invitación, como si se sacara uno solo. Ninguno exige dos sobres sin invitación: 59/89 · 58/88."
+        },
+        {
+          "clave": "C",
+          "texto": "1 − 59/89 · 58/88",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: ninguno tiene invitación con 59/89 · 58/88, y al menos uno es 1 menos eso."
+        },
+        {
+          "clave": "D",
+          "texto": "30/89 · 59/88 + 59/89 · 30/88",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-ambos-en-al-menos-uno",
+          "feedbackDescarte": "Esa suma los dos caminos con exactamente un sobre con invitación y deja fuera el caso en que los dos la tienen. Al menos uno incluye ese caso: 1 − 59/89 · 58/88."
+        }
+      ],
+      "solucion": "Sin invitación hay 89 − 30 = 59 sobres. Al menos uno con invitación es el complemento de ninguno: P(ninguno) = 59/89 · 58/88, porque después de sacar un sobre sin invitación quedan 88 sobres y 58 sin invitación. P(al menos uno) = 1 − 59/89 · 58/88.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-014",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un dedal de metal, sacado de un costurero, puede caer de pie o acostado. Una persona lo lanzó 884 veces y anotó cómo cayó: 91 veces de pie y 793 veces acostado. ¿Cuál es la mejor estimación de la probabilidad de que, en un nuevo lanzamiento, el dedal caiga de pie, escrita como fracción irreducible?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7/68",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 91 de 884 lanzamientos de pie, y 91/884 se simplifica a 7/68."
+        },
+        {
+          "clave": "B",
+          "texto": "91/100",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-conteo-como-porcentaje",
+          "feedbackDescarte": "Esa toma el conteo 91 como si fuera un porcentaje, 91 % = 91/100. Cayó de pie 91 veces de 884, no de 100: 91/884 = 7/68."
+        },
+        {
+          "clave": "C",
+          "texto": "61/68",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa es la estimación de que caiga acostado: 793/884 = 61/68. Se pide de pie, 91/884 = 7/68."
+        },
+        {
+          "clave": "D",
+          "texto": "7/61",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-desfavorables",
+          "feedbackDescarte": "Esa divide las 91 veces de pie por las 793 acostado: 91/793 = 7/61. La frecuencia relativa va sobre el total de lanzamientos, 884."
+        }
+      ],
+      "solucion": "El dedal no es simétrico, así que la probabilidad se estima con la frecuencia relativa: cayó de pie 91 de 884 lanzamientos. 91/884 = 7/68, que es irreducible.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-015",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una bandeja hay 63 medialunas iguales por fuera: 32 son saladas y 31 son dulces. Una persona saca una medialuna al azar, se la come, y saca una segunda al azar entre las que quedan. ¿Cuál de las siguientes expresiones representa la probabilidad de que las dos medialunas sean saladas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "32/63 · 32/63",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-como-independientes-sin-reposicion",
+          "feedbackDescarte": "Esa repite 32/63 en la segunda etapa, como si la primera medialuna volviera a la bandeja. Se la comió: quedan 62 medialunas y 31 saladas."
+        },
+        {
+          "clave": "B",
+          "texto": "32/63 · 32/62",
+          "esCorrecta": false,
+          "errorCatalogado": "baja-total-pero-no-favorables",
+          "feedbackDescarte": "Esa baja el total a 62 pero mantiene 32 saladas. La que salió era salada, así que quedan 31 saladas de 62."
+        },
+        {
+          "clave": "C",
+          "texto": "32/63 · 31/62",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 32/63 en la primera etapa y, sin la medialuna que se comió, 31/62 en la segunda."
+        },
+        {
+          "clave": "D",
+          "texto": "32/63 · 31/63",
+          "esCorrecta": false,
+          "errorCatalogado": "mantiene-denominador-sin-reposicion",
+          "feedbackDescarte": "Esa baja las saladas a 31 pero deja el total en 63. Después de comer la primera quedan 62 medialunas en la bandeja."
+        }
+      ],
+      "solucion": "Total: 32 + 31 = 63. La primera medialuna es salada con probabilidad 32/63. Como se la come, en la segunda etapa quedan 62 medialunas y 31 saladas: 31/62. Las dos saladas: 32/63 · 31/62.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-016",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una pinza de madera, de las que se usan para colgar ropa, puede caer con el resorte hacia arriba o con el resorte hacia abajo. Una persona la lanzó 534 veces: cayó con el resorte hacia arriba 98 veces y hacia abajo 436 veces. Con esa información, ¿cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Como la pinza solo puede caer de dos formas, las dos formas tienen la misma probabilidad, y los 534 lanzamientos no cambian eso.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-laplace-sin-equiprobabilidad",
+          "feedbackDescarte": "Esa asigna la misma probabilidad a las dos formas solo porque son dos. Eso vale para objetos simétricos; la pinza no lo es, y los 534 lanzamientos muestran que cae mucho más con el resorte hacia abajo."
+        },
+        {
+          "clave": "B",
+          "texto": "La probabilidad de que caiga con el resorte hacia arriba se estima en 98/534 = 49/267, y con más lanzamientos la frecuencia relativa se acercará a la probabilidad.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con un objeto no simétrico la probabilidad se estima con la frecuencia relativa, 98/534 = 49/267, y mejora con más lanzamientos."
+        },
+        {
+          "clave": "C",
+          "texto": "Como no cayó 267 veces de cada forma, la pinza está cargada y no se puede estimar ninguna probabilidad.",
+          "esCorrecta": false,
+          "errorCatalogado": "espera-frecuencia-igual-a-teorica",
+          "feedbackDescarte": "Esa espera que en 534 lanzamientos salgan exactamente 267 de cada forma y, como no pasa, concluye que no se puede estimar. Al revés: la frecuencia relativa de muchos lanzamientos es justamente la estimación, 98/534 = 49/267."
+        },
+        {
+          "clave": "D",
+          "texto": "La probabilidad de que caiga con el resorte hacia arriba es 98 %.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-conteo-como-porcentaje",
+          "feedbackDescarte": "Esa escribe el conteo 98 como si fuera el porcentaje. Cayó con el resorte hacia arriba 98 veces de 534, no de 100: la estimación es 98/534 = 49/267."
+        }
+      ],
+      "solucion": "Total de lanzamientos: 98 + 436 = 534. La pinza no es simétrica, así que la probabilidad de cada forma de caer no se asigna contando formas: se estima con la frecuencia relativa, 98/534 = 49/267 para resorte hacia arriba, y con más lanzamientos la frecuencia relativa se acerca a la probabilidad.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-017",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un club de vóleibol tiene 78 jugadoras, de las cuales 8 son zurdas. Para un torneo se sortean al azar dos capitanas, una después de la otra y sin repetir persona, todas con la misma probabilidad en cada sorteo. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La probabilidad de que las dos capitanas sean zurdas es 8/78 · 7/77, porque en el segundo sorteo quedan 77 jugadoras y 7 zurdas.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 8/78 para la primera y, sin repetir persona, 7/77 para la segunda: 8/78 · 7/77."
+        },
+        {
+          "clave": "B",
+          "texto": "La probabilidad de que las dos capitanas sean zurdas es 8/78 · 8/78, porque cada sorteo se hace con las mismas chances.",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-como-independientes-sin-reposicion",
+          "feedbackDescarte": "Esa repite 8/78 en el segundo sorteo, como si la primera capitana pudiera volver a salir. Sin repetir persona quedan 77 jugadoras y 7 zurdas: 8/78 · 7/77, no 8/78 · 8/78 = 16/1.521."
+        },
+        {
+          "clave": "C",
+          "texto": "La probabilidad de que las dos capitanas sean zurdas es 8/78 + 7/77.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-en-vez-de-multiplicar-etapas",
+          "feedbackDescarte": "Esa suma las dos etapas, 8/78 + 7/77 = 83/429, como si bastara con que una de las dos fuera zurda. Se pide que las dos lo sean: se multiplican, 8/78 · 7/77."
+        },
+        {
+          "clave": "D",
+          "texto": "La probabilidad de que las dos capitanas sean zurdas es 8/78, la misma que la de que la primera sea zurda.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-una-sola-etapa",
+          "feedbackDescarte": "Esa es solo la probabilidad de que la primera capitana sea zurda, 8/78. Para que las dos lo sean hay que multiplicar por la segunda etapa, 7/77."
+        }
+      ],
+      "solucion": "En el primer sorteo la probabilidad de zurda es 8/78. Como no se repite persona, en el segundo quedan 77 jugadoras y 7 zurdas: 7/77. Las dos zurdas: 8/78 · 7/77 = 4/429.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-018",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un aeropuerto, para un vuelo elegido al azar, la probabilidad de que salga con retraso es 43 %, la de que llegue con retraso es 36 % y la de que salga y llegue con retraso es 8 %. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La probabilidad de que salga o llegue con retraso es 43 % + 36 %.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-sin-restar-interseccion",
+          "feedbackDescarte": "Esa suma 43 % + 36 % sin restar el 8 % de los vuelos que salen y llegan con retraso, que quedan contados dos veces. Hay que restarlo: 43 % + 36 % − 8 %."
+        },
+        {
+          "clave": "B",
+          "texto": "La probabilidad de que salga o llegue con retraso es 43 % · 36 %.",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-en-vez-de-sumar",
+          "feedbackDescarte": "Esa multiplica 43 % · 36 %, que no es la probabilidad de «salga o llegue con retraso». Con «o» se suman las probabilidades y se resta la intersección."
+        },
+        {
+          "clave": "C",
+          "texto": "La probabilidad de que salga o llegue con retraso es 43 % + 36 % − 43 % · 36 %.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-producto-como-interseccion",
+          "feedbackDescarte": "Esa resta el producto 43 % · 36 % como si fuera la probabilidad de que salga y llegue con retraso. Esa probabilidad no se calcula multiplicando: el enunciado la da, 8 %."
+        },
+        {
+          "clave": "D",
+          "texto": "La probabilidad de que salga o llegue con retraso es 43 % + 36 % − 8 %.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: se suman 43 % y 36 % y se resta el 8 % que está en los dos grupos."
+        }
+      ],
+      "solucion": "Salir con retraso y llegar con retraso pueden ocurrir en el mismo vuelo, y el enunciado da esa intersección: 8 %. P(salga o llegue con retraso) = P(salga) + P(llegue) − P(ambas) = 43 % + 36 % − 8 % = 71 %.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-019",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un pescador instala dos cañas en un muelle, y lo que pasa en una no influye en la otra. En una hora, la probabilidad de que pique un pez en la primera caña es 8/21 y en la segunda es 21/26. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La probabilidad de que pique en al menos una de las dos cañas es 1 menos la probabilidad de que pique en la primera.",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-a-uno-un-solo-evento",
+          "feedbackDescarte": "Esa resta a 1 solo la probabilidad de la primera caña, 1 − 8/21 = 13/21, que es la probabilidad de que no pique en la primera. Ninguna exige que no pique en las dos: 13/21 · 5/26."
+        },
+        {
+          "clave": "B",
+          "texto": "La probabilidad de que pique en al menos una de las dos cañas es 1 menos la probabilidad de que no pique en ninguna de las dos.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: no pica en ninguna con 13/21 · 5/26 = 5/42, y al menos una es 1 − 5/42 = 37/42."
+        },
+        {
+          "clave": "C",
+          "texto": "La probabilidad de que pique en al menos una de las dos cañas es la probabilidad de que pique en exactamente una de las dos.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-ambos-en-al-menos-uno",
+          "feedbackDescarte": "Esa cuenta solo los casos en que pica en exactamente una caña y deja fuera el caso en que pica en las dos. Al menos una incluye ese caso."
+        },
+        {
+          "clave": "D",
+          "texto": "La probabilidad de que pique en al menos una de las dos cañas es la probabilidad de que no pique en ninguna de las dos.",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-ninguno-en-vez-de-al-menos-uno",
+          "feedbackDescarte": "Esa entrega la probabilidad de que no pique en ninguna, 5/42, y olvida el 1 −. Al menos una es 1 − 5/42 = 37/42."
+        }
+      ],
+      "solucion": "«Al menos una» es lo contrario de «ninguna». Como las cañas son independientes, P(ninguna) = (1 − 8/21) · (1 − 21/26) = 13/21 · 5/26 = 5/42, y P(al menos una) = 1 − 5/42 = 37/42. La afirmación correcta describe ese procedimiento: 1 menos la probabilidad de que no pique en ninguna.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-reglas-de-probabilidades-020",
+      "unidadId": "reglas-de-probabilidades",
+      "moduloId": "reglas-de-probabilidades",
+      "habilidad": "argumentar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En un perchero hay 67 corbatas guardadas en fundas iguales por fuera: 34 son lisas y 33 son estampadas. Se elige una al azar, todas con la misma probabilidad. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La probabilidad de que la corbata elegida sea lisa es 33/67.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-evento-con-su-complemento",
+          "feedbackDescarte": "Esa afirma que P(lisa) = 33/67, pero 33/67 es la probabilidad de que no sea lisa. Lisas hay 34 de 67: P(lisa) = 34/67."
+        },
+        {
+          "clave": "B",
+          "texto": "La probabilidad de que la corbata elegida no sea lisa es 1 − 34 = −33.",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-conteo-a-uno-en-complemento",
+          "feedbackDescarte": "Esa resta a 1 el conteo de corbatas lisas, 1 − 34 = −33, en vez de restar la probabilidad: 1 − 34/67 = 33/67. Una probabilidad nunca es negativa."
+        },
+        {
+          "clave": "C",
+          "texto": "La probabilidad de que la corbata elegida no sea lisa es 33/67.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las que no son lisas son las 33 estampadas de 67, o 1 − 34/67 = 33/67."
+        },
+        {
+          "clave": "D",
+          "texto": "Como hay solo dos tipos de corbatas, sacar una lisa y sacar una estampada tienen la misma probabilidad.",
+          "esCorrecta": false,
+          "errorCatalogado": "asume-equiprobables-sin-enumerar",
+          "feedbackDescarte": "Esa trata los dos tipos como igualmente probables solo porque son dos, sin mirar cuántas corbatas hay de cada tipo: 34 lisas y 33 estampadas no dan la misma probabilidad."
+        }
+      ],
+      "solucion": "No lisa significa estampada: 67 − 34 = 33 corbatas de 67, todas con la misma probabilidad. P(no lisa) = 33/67. También: 1 − 34/67 = 33/67.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-reglas-de-probabilidades-001: escuela de danza, 25 inscritos (11 ballet, 6 folclor, 5 jazz, 3 tango); P(ballet) = 11/25 = 44 %; distractores 11 %, 25 %, 56 %",
+    "adv-reglas-de-probabilidades-002: refugio de animales, 85 en adopción (41 perros, 28 gatos, 7 conejos, 5 hámsteres, 4 tortugas); P(hámster o tortuga) = 9/85; distractores 4/1.445, 9/76, 149/1.445; intermedios 20/7.225, 153/1.445",
+    "adv-reglas-de-probabilidades-003: kermesse, 95 talonarios de 39 boletos, 7 boletos de un talonario; P(ganar) = 7/3.705; distractores 7/134, 7/39, 7/3.698",
+    "adv-reglas-de-probabilidades-004: encuesta en línea de una app de yoga, 66 spinning, 930 pilates, n yoga aéreo, P(no pilates) = 60 %; total 2.325, n = 1.329; distractores 554, 492, 664; intermedios 40, 996, 1.550, 558, 1.660",
+    "adv-reglas-de-probabilidades-005: juego de mesa, cofre rojo con 7 medallas (1 a 7) y cofre azul con 5 (8 a 12), 35 pares; P(suma par) = 17/35; distractores 8/35, 18/35, 17/18; intermedios 8, 9, 18",
+    "adv-reglas-de-probabilidades-006: bolsa con 27 pares de guantes de jardinería, 54 guantes, se saca uno y otro sin reposición; P(pareja) = 1/53; distractores 1/54, 2/53, 52/53",
+    "adv-reglas-de-probabilidades-007: app de cocina, 45 platos y 47 salsas independientes, 2.115 menús; P(risotto y tomate) = 1/2.115; distractores 1/92, 1/45, 92/2.115",
+    "adv-reglas-de-probabilidades-008: dos arqueros independientes, P(centro) = 9/19 y 19/29; P(al menos uno) = 1 − 100/551 = 451/551; distractores 100/551, 10/19, 9/29; intermedios 10/29",
+    "adv-reglas-de-probabilidades-009: crucero, 55 camarotes, con ventana del 38 al 46 (9); P(ventana) = 9/55; distractores 8/55, 46/55, 9/46",
+    "adv-reglas-de-probabilidades-010: librería, 2.030 ejemplares (495 novela, 305 poesía, 485 crónica, 380 biografía, 365 cómic); P(crónica o biografía) = (485 + 380)/2.030; distractores producto, suma menos producto, /1.165; intermedio 865",
+    "adv-reglas-de-probabilidades-011: club deportivo, 37 solo esgrima, 57 solo remo, 5 las tres, x solo judo, total 99 + x; P(judo) = (x + 5)/(99 + x); distractores x/(99 + x), (x + 5)/94, 94/(99 + x)",
+    "adv-reglas-de-probabilidades-012: planetario, 461 visitantes (454 adultos: 449 con audioguía y 5 sin; 7 estudiantes: 3 con y 4 sin; columnas 452 y 9); P(estudiante con audioguía) = 3/461; distractores 3/7, 449/461, 3/452",
+    "adv-reglas-de-probabilidades-013: buzón con 89 sobres, 30 con invitación y 59 sin, dos extracciones sin reposición; P(al menos uno) = 1 − 59/89 · 58/88; distractores 59/89 · 58/88, 1 − 59/89, 30/89 · 59/88 + 59/89 · 30/88",
+    "adv-reglas-de-probabilidades-014: dedal de costurero lanzado 884 veces, 91 de pie y 793 acostado; estimación 91/884 = 7/68; distractores 91/100, 61/68, 7/61",
+    "adv-reglas-de-probabilidades-015: bandeja con 63 medialunas, 32 saladas y 31 dulces, dos extracciones sin reposición; P(dos saladas) = 32/63 · 31/62; distractores 32/63 · 32/63, 32/63 · 32/62, 32/63 · 31/63",
+    "adv-reglas-de-probabilidades-016: pinza de colgar ropa lanzada 534 veces, 98 con el resorte hacia arriba y 436 hacia abajo; estimación 98/534 = 49/267; distractores misma probabilidad (Laplace), 267 de cada forma, 98 %",
+    "adv-reglas-de-probabilidades-017: club de vóleibol, 78 jugadoras y 8 zurdas, dos capitanas sin repetir; P(dos zurdas) = 8/78 · 7/77 = 4/429; distractores 8/78 · 8/78 (16/1.521), 8/78 + 7/77 (83/429), 8/78",
+    "adv-reglas-de-probabilidades-018: aeropuerto, P(sale con retraso) = 43 %, P(llega con retraso) = 36 %, P(ambas) = 8 %; P(sale o llega con retraso) = 43 % + 36 % − 8 % = 71 %; distractores sin restar, producto, suma menos producto",
+    "adv-reglas-de-probabilidades-019: pescador con dos cañas independientes, P(pique) = 8/21 y 21/26; P(al menos una) = 1 − 13/21 · 5/26 = 1 − 5/42 = 37/42; distractores 1 menos la primera, exactamente una, ninguna",
+    "adv-reglas-de-probabilidades-020: perchero con 67 corbatas en fundas, 34 lisas y 33 estampadas; P(no lisa) = 33/67; distractores P(lisa) = 33/67, 1 − 34 = −33, misma probabilidad (equiprobables)"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
+    "declaracionOriginalidad": "Banco de reglas de las probabilidades: 20 ítems, 60 distractores, 23 errores distintos del catálogo content/errores/reglas-de-probabilidades.json (los 23 del catálogo, sin ids nuevos), 59 distractores con errorCatalogado y 1 declarado con sinErrorCatalogado (adv-reglas-de-probabilidades-004-D, valor-plausible-no-derivable: toma los conteos conocidos como el porcentaje dado, patrón del distractor C de su pregunta fuente que ningún id produce; cobertura 59/60, medida con node el 2026-09-16 sobre el archivo final). Reparto: 9 resolver, 5 modelar, 1 representar, 5 argumentar; 5 baja, 8 media, 7 alta; letra correcta 5/5/5/5; tiempo 80/120/160 por dificultad; máximo 8 usos por id (divide-por-desfavorables y confunde-evento-con-su-complemento); divide-por-total-de-fila va dos veces en 012 (celda sobre el total de su fila en A y sobre el total de su columna en D, precedente 018 de funcion-lineal-y-afin). Proveniencia por fuente: 12 propia, 8 demre-liberada decididas antes de escribir las filas (001 sobre la pregunta 51, 002 sobre la 54 y 010 sobre la 52 de la forma 2025-regular-113; 003 sobre la 63 y 004 sobre la 64 de 2024-invierno-111; 005 sobre la 63 y 011 sobre la 64 de 2024-regular-113; 006 sobre la 64 de 2026-regular-113; claves de 003, 004 y 006 verificadas con el clavijero de la carpeta y las de 001, 002, 005, 010 y 011 recalculadas con node porque esas formas no tienen clavijero, todas coinciden con docs/analisis/frecuencia-demre-v2.json; en cada cupo se conserva la estructura y solo los mecanismos de distractor que dice su notaAdaptacion, y cambian contexto, cifras y las cuatro alternativas; las tres preguntas de 2027-invierno-111 quedaron fuera por no verificables sin PDF ni clavijero, 2025-regular-113 p. 53 por figura, p. 55 por cifras solo en la nota del análisis, 2024-invierno-111 p. 65 porque sus alternativas son pasos y 2024-regular-113 p. 65 por rifa de curso), 0 temario-demre. Sin figura y sin tabla: los datos de doble entrada van en prosa (001, 002, 010, 012). Convenciones de mapeo declaradas para Ronda 1: (1) P(ninguno) donde se pide P(al menos uno) es entrega-ninguno-en-vez-de-al-menos-uno con dos o más etapas (008-A, 013-A, 019-D) y confunde-evento-con-su-complemento con un solo evento; (2) 1 − P(A) con dos eventos es resta-a-uno-un-solo-evento (008-B, 013-B, 019-A) y con un evento es confunde-evento-con-su-complemento; (3) la suma P(A) + P(B) es suma-en-vez-de-multiplicar-etapas con conector «y» (007-D, 017-C) y suma-sin-restar-interseccion con «o» (018-A); (4) el producto P(A) · P(B) es multiplica-en-vez-de-sumar si se pide «o» o «al menos uno» (002-A, 008-D, 010-B, 018-B), multiplica-como-independientes-sin-reposicion si repite la razón de la primera etapa en un sorteo sin reposición (015-A, 017-B) y usa-una-sola-etapa si es el valor de una sola etapa (007-C, 017-D); (5) multiplica-como-independientes-sin-reposicion, baja-total-pero-no-favorables y mantiene-denominador-sin-reposicion nunca coinciden numéricamente (015 y 017 los muestran juntos); (6) lee-fila-equivocada-en-tabla es celda equivocada sobre el total general y divide-por-total-de-fila es celda correcta sobre el total de su fila o de su columna (012); (7) divide-por-total-de-fila y divide-por-desfavorables coinciden solo si la fila mide T − f, y no pasa en 003 ni en 012; (8) 1/k «porque son k resultados» es usa-laplace-sin-equiprobabilidad solo en ítems frecuenciales con objeto asimétrico (016-A) y asume-equiprobables-sin-enumerar en lo demás (001-C, 020-D); (9) suma-resultados-en-vez-de-multiplicar-total y divide-por-total-de-fila dan valores distintos en 003; (10) cuenta-rango-restando-extremos, divide-por-desfavorables y confunde-evento-con-su-complemento dan valores distintos en 009; (11) lee-conteo-como-porcentaje se muestra como «k %» (001-A, 016-D) o, si el ítem pide fracción irreducible, como k/100 (014-B); (12) en probabilidad, «otra magnitud» se mide como valor fuera de [0, 1]: 1 distractor, 020-B, la afirmación «1 − 34 = −33» de resta-conteo-a-uno-en-complemento, único caso del banco; (13) omite-ambos-en-al-menos-uno cubre también contar solo a los exclusivos cuando el evento incluye a quienes están en varias categorías (011-A). Chequeos sobre el archivo final con node el 2026-09-16: las cuatro alternativas parsean en el formato declarado, son distintas como racional y ninguna equivale a la clave en los 20 ítems; fracciones irreducibles en los 8 ítems que las piden; «al azar» explícito en 16 de los 20 enunciados (008 y 019 dan las probabilidades como dato con la independencia explícita; 014 y 016 son frecuenciales, se lanza un objeto, no se elige); equiprobabilidad explícita en los 15 ítems con elección de casos; reposición o independencia escrita en los 8 ítems de dos etapas. Cifras elegidas con node contra las respuestas de las tres lecciones, l0-demo, el diagnóstico y el cierre de la unidad, las cifras de las 12 preguntas DEMRE de la unidad y de la pregunta fuente de cada cupo, y todo content/ para las fracciones, las cifras de 100 o más y los decimales (criterio de dos niveles firmado el 2026-09-14); barrido sobre el archivo final en tres categorías (fracciones de enunciado, alternativas, solución y feedbacks; conjuntos de conteos del espacio muestral; cifras sueltas más las partes de las fracciones de enunciado y alternativas, con 1 y 100 exentos): 74 fracciones distintas, 0 repetidas entre ítems, 0 iguales a fracciones de las preguntas DEMRE de la unidad y 1 presente en content/, 17/18 (005-C, divide-por-desfavorables, fijada en el plan firmado del 2026-09-16), que es también un distractor de probabilidad-l2-item-2 con otro mecanismo (34/36 sin restar la intersección); no se sustituyó porque ningún par de cofres con divide-por-desfavorables cabe en el presupuesto de cifras de 10 a 99, y queda declarada para las rondas. 93 cifras distintas de 10 o más o con decimal, 0 repetidas entre ítems, 0 respuestas de la unidad, 0 claves DEMRE; las 35 de 100 o más no están en content/; las 58 de 10 a 99 aparecen todas en content/ en otro rol, 23 de ellas en archivos de la unidad en otro rol; por cupo, la única cifra de la pregunta fuente que reaparece es el 12 de 005, solo como etiqueta de la última medalla. Conjuntos de conteos: 17, 0 repetidos, 2 coinciden con una cadena de content/ por aritmética y no por escena (005 {7, 5, 35} con dos soluciones de cierres de otras unidades y con el feedback 35/576 = 7/24 · 5/24 de probabilidad-l2-item-1; 006 {27, 54} con una solución del banco de porcentaje y un feedback del cierre de cuadrática). Totales del espacio muestral, de fila o columna y de segunda etapa de 10 o más: 27 en el banco, cruzados contra los 18 totales de las lecciones y el cierre de la unidad; 0 coincidencias salvo 001 (25 inscritos, excepción firmada: lee-conteo-como-porcentaje exige un total menor que 100 que divida a 100, y 10, 20, 40 y 50 están ocupados); para eso 002 pasó de 48 a 85 animales, 012 de 269 visitantes (fila de 14 estudiantes, columna de 15 sin audioguía) a 461 (fila de 7, columna de 9) y 017 de 23 jugadoras (quedan 22) a 78 (quedan 77), con los mismos ids y mecanismos; el 18 de 005-C es un denominador erróneo (desfavorables), no un total, y coincide con el 18 de balcón de L2 y el 18 con licencia del cierre. Regla de este banco: la solución y los feedbacks solo muestran cifras de la fila (enunciado, alternativas y derivación): 0 ítems con números nuevos, medido. Contextos: 20 ítems con dominio, ninguno abstracto; las dos palabras de cada dominio están en su enunciado (20 de 20, medido) y ninguna de las 40 aparece en el resto de content/; 016 pregunta «¿cuál de las siguientes afirmaciones es verdadera?» y no «está justificada» (pregunta de probabilidad-l1-item-3); 014 usa dedal y costurero (el tapón de corcho era la tapa de bebida de probabilidad-l1-item-3 con otro nombre) y 020 usa perchero y corbatas en fundas iguales por fuera (novelas y cómics repetía el dominio de librería de 010). Ronda 1 NO ejecutada. Ronda 2 con el resultado del punto 10 del plan firmado: scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-16 sobre las 80 palabras del plan (20 dominios, dos palabras principales y dos de respaldo cada uno); ningún dominio con sus dos palabras principales en SI a la vez, 0 recambios por el script; SI sueltos en principales, cada uno con su pareja en NO: danza (001), diana (008), remo (011, en 2024-invierno-111 y no en la forma de su cupo, 2024-regular-113), vóleibol (017), aeropuerto (018) y repisa (020, que salió por la decisión editorial anterior y no por el SI); SI en respaldos que no se usan: candado, duraznos, coro; los respaldos que sí entraron, dedal, costurero, perchero y corbatas, dieron NO. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}
