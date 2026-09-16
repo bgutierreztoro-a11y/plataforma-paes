@@ -1,0 +1,892 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+  "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+  "titulo": "Ecuaciones e inecuaciones de primer grado",
+  "items": [
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-001",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un estudiante afirma que la solución de la ecuación 4x − 212 = 2x + 394 es x = 101, porque 4x + 2x = 606. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcto: 4x + 2x = 606, y 606 ÷ 6 = 101.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar",
+          "feedbackDescarte": "Esa reúne las incógnitas sumando: 4x + 2x. El 2x está al otro lado y pasa restando, 4x − 2x = 2x, así que la ecuación reunida es 2x = 606, no 6x = 606."
+        },
+        {
+          "clave": "B",
+          "texto": "No es correcto: al reunir queda 4x − 2x = 394 + 212, es decir 2x = 606, y x = 303.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el 2x pasa restando y el −212 pasa sumando, 2x = 394 + 212 = 606, y 606 ÷ 2 = 303. Comprobación: 4 · 303 − 212 y 2 · 303 + 394 dan el mismo valor, porque 1.212 − 212 = 606 + 394."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: la solución es x = 197, porque 4x − 2x = 394.",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-un-solo-lado",
+          "feedbackDescarte": "Esa borra el −212 del lado izquierdo sin sumarlo a la derecha, y queda 2x = 394, x = 197. Lo que se quita de un lado se quita del otro: 2x = 394 + 212 = 606."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: la solución es x = 606, porque al reunir queda 2x = 606.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 2x = 606 y entrega 606 como solución, sin dividir por el coeficiente 2. Falta el último paso: x = 606 ÷ 2 = 303."
+        }
+      ],
+      "solucion": "Se reúnen las incógnitas a la izquierda y los números a la derecha: 4x − 2x = 394 + 212, es decir 2x = 606. Se divide por 2: x = 303. El estudiante sumó las incógnitas (4x + 2x) en vez de restarlas, por eso obtuvo 101. Comprobación: 4 · 303 − 212 = 1.212 − 212 y 2 · 303 + 394 = 606 + 394, y los dos lados dan el mismo valor.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-002",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una carretilla vacía pesa 26 kg. Se carga con ladrillos iguales de 2 kg cada uno y, cargada, pesa 60 kg. ¿Cuántos ladrillos se cargaron?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "30 ladrillos",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa sale de 2n = 60, como si los 60 kg fueran solo ladrillos. Los 26 kg de la carretilla vacía están dentro del total: 2n + 26 = 60."
+        },
+        {
+          "clave": "B",
+          "texto": "43 ladrillos",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa suma el 26 al pasarlo al otro lado: 2n = 60 + 26 = 86, n = 43. El +26 pasa restando: 2n = 60 − 26 = 34."
+        },
+        {
+          "clave": "C",
+          "texto": "17 ladrillos",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2n + 26 = 60, 2n = 34, n = 17. Comprobación: 17 · 2 = 34 kg de ladrillos, más 26 kg de carretilla, 60 kg."
+        },
+        {
+          "clave": "D",
+          "texto": "34 ladrillos",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 2n = 34 y entrega 34 sin dividir por el coeficiente 2. Los 34 kg son de ladrillos; cada uno pesa 2 kg, así que son 34 ÷ 2 = 17."
+        }
+      ],
+      "solucion": "Con n ladrillos, el peso total es 2n + 26 = 60. Se resta 26 a ambos lados: 2n = 34. Se divide por 2: n = 17. Comprobación: 17 · 2 + 26 = 34 + 26 = 60.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 31, distractores C y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una cantidad fija más n unidades iguales suman un total, se pide n) y los mecanismos de sus distractores C (omite la cantidad fija) y D (suma la constante al transponerla). Cambian el contexto (carretilla y ladrillos en vez de galletas y jugo), las cifras (2n + 26 = 60) y las cuatro alternativas; se agrega el distractor de omitir la división por el coeficiente. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-003",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Dos cocineros reciben la misma cantidad de masa. El primero hace 4 pizzas iguales y le sobran 220 g de masa; el segundo hace 2 pizzas iguales, de la misma masa que las del primero, y le sobran 790 g. ¿Cuántos gramos de masa lleva cada pizza?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "95 g",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar",
+          "feedbackDescarte": "Esa reúne las incógnitas sumando: 4p + 2p = 6p. El 2p está al otro lado y pasa restando: 4p − 2p = 2p, y 2p = 570, no 6p = 570."
+        },
+        {
+          "clave": "B",
+          "texto": "505 g",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa suma el 220 al pasarlo: 2p = 790 + 220 = 1.010, p = 505. El +220 pasa restando: 2p = 790 − 220 = 570."
+        },
+        {
+          "clave": "C",
+          "texto": "570 g",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 2p = 570 y entrega 570 sin dividir por 2. Esos 570 g son la masa de dos pizzas; cada una lleva 570 ÷ 2 = 285 g."
+        },
+        {
+          "clave": "D",
+          "texto": "285 g",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 4p + 220 = 2p + 790, 2p = 570, p = 285. Comprobación: 4 · 285 + 220 = 1.360 y 2 · 285 + 790 = 1.360."
+        }
+      ],
+      "solucion": "Los dos recibieron la misma masa: 4p + 220 = 2p + 790. Se pasa el 2p restando y el 220 restando: 4p − 2p = 790 − 220, es decir 2p = 570. Se divide por 2: p = 285. Comprobación: 4 · 285 + 220 = 1.140 + 220 = 1.360, y 2 · 285 + 790 = 570 + 790 = 1.360.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 32, distractores A y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (dos personas con la misma cantidad, expresada como n unidades iguales más un sobrante, se pide el valor de la unidad) y los mecanismos de sus distractores A (suma las incógnitas en vez de restarlas) y D (suma la constante al transponerla). Cambian el contexto (masa de pizza en vez de lápices y dinero), las cifras (4p + 220 = 2p + 790) y las cuatro alternativas; se agrega el distractor de omitir la división por el coeficiente. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-004",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una trivia, cada pregunta de geografía vale 4 puntos y cada pregunta de historia vale 6 puntos. Un equipo respondió correctamente 8 preguntas de geografía y x preguntas de historia, y obtuvo 74 puntos en total. ¿Cuál de las siguientes ecuaciones permite determinar x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6x + 32 = 74",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las 8 preguntas de geografía aportan 8 · 4 = 32 puntos y las x de historia aportan 6x; el total es 6x + 32 = 74, que da x = 7."
+        },
+        {
+          "clave": "B",
+          "texto": "x + 32 = 74",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-coeficientes-y-cantidades",
+          "feedbackDescarte": "Esa deja las x preguntas de historia sin su coeficiente: cada una vale 6 puntos, así que aportan 6x, no x. Con esa ecuación saldrían 42 preguntas."
+        },
+        {
+          "clave": "C",
+          "texto": "6x + 4 = 74",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-coeficientes-y-cantidades",
+          "feedbackDescarte": "Esa cuenta una sola pregunta de geografía en vez de las 8: son 8 · 4 = 32 puntos, no 4. Con esa ecuación x no sería entero (11,67)."
+        },
+        {
+          "clave": "D",
+          "texto": "6x = 74",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los puntos de geografía, que son fijos: 8 · 4 = 32. Sin ese término, x tampoco sería entero (12,33)."
+        }
+      ],
+      "solucion": "Los puntos de geografía son fijos: 8 · 4 = 32. Los de historia dependen de x: 6x. El total es 6x + 32 = 74. Resolviendo: 6x = 42, x = 7. Comprobación: 8 · 4 + 7 · 6 = 32 + 42 = 74.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 33, distractores A y B",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (k unidades de un valor más x unidades de otro valor suman un total; se pide la ecuación, no la solución) y los mecanismos de sus distractores A y B (omitir el coeficiente de un término). Cambian el contexto (trivia con preguntas de dos puntajes en vez de anotaciones de básquetbol), las cifras (6x + 32 = 74) y las cuatro alternativas; el tercer distractor pasa a omitir el término constante. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-005",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un montacargas puede subir como máximo 2.150 kg. Se van a subir pallets de dos tipos: cada pallet del primer tipo pesa M kg y cada pallet del segundo tipo pesa P kg, y se sube la misma cantidad x de pallets de cada tipo. ¿Cuál de las siguientes inecuaciones permite determinar la cantidad máxima x de pallets de cada tipo que se pueden subir?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(M + P) · x ≤ 2.150",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x pallets de M kg y x de P kg pesan M · x + P · x = (M + P) · x, y ese peso puede ser 2.150 como máximo, así que va ≤."
+        },
+        {
+          "clave": "B",
+          "texto": "(M + P) · x < 2.150",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa excluye el borde: \"como máximo 2.150 kg\" admite exactamente 2.150 kg, así que la desigualdad lleva ≤, no <."
+        },
+        {
+          "clave": "C",
+          "texto": "(M + P) · x ≥ 2.150",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-desigualdad-verbal",
+          "feedbackDescarte": "Esa pone un piso donde va un techo: el peso no puede superar los 2.150 kg, así que la carga es menor o igual que 2.150, no mayor o igual."
+        },
+        {
+          "clave": "D",
+          "texto": "M · x + P ≤ 2.150",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-coeficientes-y-cantidades",
+          "feedbackDescarte": "Esa cuenta un solo pallet del segundo tipo: se suben x pallets de P kg, que pesan P · x, no P. Ambos tipos llevan la cantidad x."
+        }
+      ],
+      "solucion": "Los x pallets del primer tipo pesan M · x y los x del segundo tipo pesan P · x. El peso total es M · x + P · x = (M + P) · x. Como el montacargas sube como máximo 2.150 kg, ese peso puede ser igual o menor que 2.150: (M + P) · x ≤ 2.150.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 31, distractor C",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (dos tipos de carga con pesos literales M y P, la misma cantidad x de cada tipo y una capacidad máxima, se pide la inecuación) y el mecanismo de su distractor C (borde estricto donde el enunciado admite la igualdad). Cambian el contexto (montacargas y pallets en vez de camión y cajas de fruta), la capacidad (2.150) y los distractores B y D. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-006",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un carrito de sopaipillas ya se vendieron 50 sopaipillas a $950 cada una. Las que quedan se venderán a $1.150 cada una. El dueño quiere que lo recaudado en el día sea más de $118.000. ¿Cuál de las siguientes inecuaciones permite determinar la cantidad x de sopaipillas que tiene que vender a $1.150 para lograrlo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "50 · 950 + 1.150x < 118.000",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-desigualdad-verbal",
+          "feedbackDescarte": "Esa invierte la dirección: \"más de $118.000\" es un piso, lo recaudado tiene que superar 118.000, así que va >, no <."
+        },
+        {
+          "clave": "B",
+          "texto": "50 · 950 + 1.150x ≥ 118.000",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa incluye el borde: recaudar exactamente $118.000 no es \"más de $118.000\". La desigualdad es estricta, >."
+        },
+        {
+          "clave": "C",
+          "texto": "50 · 1.150 + 950x > 118.000",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-coeficientes-y-cantidades",
+          "feedbackDescarte": "Esa intercambia los precios: cobra $1.150 a las 50 ya vendidas (50 · 1.150 = 57.500) y $950 a las que faltan. Con los precios al revés, 118.000 − 57.500 = 60.500 y 60.500 ÷ 950 = 63,68, es decir 64 sopaipillas, y no 62. Las 50 se vendieron a $950 y las que faltan van a $1.150."
+        },
+        {
+          "clave": "D",
+          "texto": "50 · 950 + 1.150x > 118.000",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: lo ya recaudado es 50 · 950 = 47.500, lo que falta es 1.150x, y la suma tiene que superar 118.000. Da x > 61,3, es decir, al menos 62 sopaipillas."
+        }
+      ],
+      "solucion": "Lo ya recaudado es 50 · 950 = 47.500. Cada sopaipilla que falta aporta 1.150, así que x de ellas aportan 1.150x. \"Más de $118.000\" se traduce con >: 50 · 950 + 1.150x > 118.000. Resolviendo: 1.150x > 70.500, x > 61,3, así que tiene que vender al menos 62.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 36, distractor C",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una cantidad ya vendida a un precio más x unidades a otro precio, con una meta expresada como \"más de\", se pide la inecuación) y el mecanismo de su distractor C (dirección de la desigualdad invertida). Cambian el contexto (carrito de sopaipillas en vez de venta de plantas por internet), las cifras (50 · 950 + 1.150x > 118.000) y los distractores B y C. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-007",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La dosis d de un jarabe, en mL, se calcula a partir de la masa m de la persona, en kg, con la fórmula d = 5 + (m − 19) ÷ 6. Si a una persona le corresponde una dosis de 14 mL, ¿cuál es su masa?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "35 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa resta el 19 en vez de sumarlo: de (m − 19) ÷ 6 = 9 sale m − 19 = 54, y el −19 pasa sumando: m = 54 + 19 = 73, no 54 − 19."
+        },
+        {
+          "clave": "B",
+          "texto": "98 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-antes-de-quitar-constante",
+          "feedbackDescarte": "Esa multiplica por 6 antes de quitar el 5: 14 · 6 = 84, y después 84 − 5 + 19 = 98. Primero se quita el 5 que está sumado aparte: 14 − 5 = 9, y recién ahí se multiplica por 6."
+        },
+        {
+          "clave": "C",
+          "texto": "73 kg",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 14 − 5 = 9, luego (m − 19) ÷ 6 = 9, m − 19 = 54, m = 73. Comprobación: 5 + (73 − 19) ÷ 6 = 5 + 9 = 14."
+        },
+        {
+          "clave": "D",
+          "texto": "28 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa no multiplica por 6: de (m − 19) ÷ 6 = 9 pasa directo a m − 19 = 9, m = 28. El ÷ 6 se deshace multiplicando: m − 19 = 9 · 6 = 54."
+        }
+      ],
+      "solucion": "Se reemplaza d = 14: 14 = 5 + (m − 19) ÷ 6. Se resta 5: (m − 19) ÷ 6 = 9. Se multiplica por 6: m − 19 = 54. Se suma 19: m = 73. Comprobación: 5 + (73 − 19) ÷ 6 = 5 + 54 ÷ 6 = 5 + 9 = 14.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 35, distractores B y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una fórmula con una constante sumada y un cociente, se da el resultado y se pide la variable interior) y los mecanismos de sus distractores B (resta la constante en vez de sumarla) y D (multiplica antes de quitar la constante sumada). Cambian el contexto (dosis de jarabe según la masa en vez de chirridos de grillo según la temperatura), las cifras (d = 5 + (m − 19) ÷ 6, d = 14) y las cuatro alternativas; se agrega el distractor de omitir la multiplicación por el divisor. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-008",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Cuatro guardaparques registraron en total 287 avistamientos de cóndores durante una temporada. Ana registró 81. Bruno registró 3 avistamientos más que Carla, y Diego registró 2 más que Bruno. ¿Cuántos avistamientos registró Carla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "93",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los 81 de Ana: resuelve 3C + 8 = 287 y obtiene (287 − 8) ÷ 3 = 93. Los 81 de Ana están dentro del total: 81 + 3C + 8 = 287."
+        },
+        {
+          "clave": "B",
+          "texto": "66",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: Ana 81, Carla C, Bruno C + 3, Diego C + 5, así que 81 + 3C + 8 = 287, 3C = 198, C = 66. Comprobación: 81 + 66 + 69 + 71 = 287."
+        },
+        {
+          "clave": "C",
+          "texto": "99",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar",
+          "feedbackDescarte": "Esa cuenta a Carla dos veces en vez de tres: toma a Diego como 2 + 3 más y se olvida de que también parte de C. Con 2C queda (287 − 81 − 8) ÷ 2 = 99. Bruno y Diego llevan cada uno una C: 3C en total."
+        },
+        {
+          "clave": "D",
+          "texto": "198",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 3C = 198 y entrega 198 sin dividir por 3. Los 198 avistamientos son los de Carla, Bruno y Diego juntos sin los extras; Carla registró 198 ÷ 3 = 66."
+        }
+      ],
+      "solucion": "Si Carla registró C avistamientos, Bruno registró C + 3 y Diego (C + 3) + 2 = C + 5. El total: 81 + C + (C + 3) + (C + 5) = 287, es decir 3C + 89 = 287. Se resta 89: 3C = 198. Se divide por 3: C = 66. Comprobación: 81 + 66 + 69 + 71 = 287.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-009",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un estudiante resuelve la ecuación 2x + 222 = 620 de esta forma:\n\nPaso 1: divide el término 2x por 2 y obtiene x + 222 = 310.\nPaso 2: resta 222 y obtiene x = 88.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La solución es x = 199: en el Paso 1 dividió por 2 solo una parte del lado izquierdo.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al dividir por 2 hay que dividir el lado izquierdo completo, (2x + 222) ÷ 2 = x + 111, no solo el 2x. El camino limpio es 2x = 620 − 222 = 398, x = 199."
+        },
+        {
+          "clave": "B",
+          "texto": "El desarrollo es válido y la solución es x = 88.",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-antes-de-quitar-constante",
+          "feedbackDescarte": "Esa acepta dividir por 2 solo el 2x y dejar el 222 igual. Al dividir un lado por 2 se divide todo el lado: x + 111 = 310, no x + 222 = 310. Con x = 88, 2 · 88 + 222 = 398 y no 620."
+        },
+        {
+          "clave": "C",
+          "texto": "La solución es x = 421, porque 2x = 620 + 222 = 842.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa pasa el +222 sumando al otro lado. El +222 pasa restando: 2x = 620 − 222 = 398, y x = 199."
+        },
+        {
+          "clave": "D",
+          "texto": "La solución es x = 398, porque al quitar el 222 queda 2x = 398.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 2x = 398 y entrega 398 sin dividir por 2. Falta el último paso: x = 398 ÷ 2 = 199."
+        }
+      ],
+      "solucion": "El Paso 1 está mal: dividir por 2 se hace sobre el lado completo, así que 2x + 222 = 620 se convierte en x + 111 = 310, no en x + 222 = 310. Camino limpio: se resta 222 a ambos lados, 2x = 398, y se divide por 2, x = 199. Comprobación: 2 · 199 + 222 = 398 + 222 = 620. Con el x = 88 del estudiante, 2 · 88 + 222 = 398, que no es 620.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-010",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál de las siguientes ecuaciones tiene la misma solución que la ecuación 8x + 80 = 536?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8x = 616",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa pasa el +80 sumando al otro lado: 536 + 80 = 616, y su solución es x = 77. El +80 pasa restando: 8x = 536 − 80 = 456."
+        },
+        {
+          "clave": "B",
+          "texto": "4x + 80 = 268",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-antes-de-quitar-constante",
+          "feedbackDescarte": "Esa divide por 2 el 8x y el 536, pero deja el 80 sin dividir; su solución es x = 47. Al dividir por 2 se divide el lado completo: 4x + 40 = 268."
+        },
+        {
+          "clave": "C",
+          "texto": "8x = 536",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-un-solo-lado",
+          "feedbackDescarte": "Esa borra el +80 del lado izquierdo sin restarlo a la derecha; su solución es x = 67. Lo que se quita de un lado se quita del otro: 8x = 536 − 80."
+        },
+        {
+          "clave": "D",
+          "texto": "4x + 40 = 268",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: es la ecuación original con los dos lados divididos por 2, y las dos tienen solución x = 57. Comprobación: 8 · 57 + 80 = 536 y 4 · 57 + 40 = 268."
+        }
+      ],
+      "solucion": "Dos ecuaciones tienen la misma solución si una se obtiene de la otra aplicando la misma operación a los dos lados completos. Dividir 8x + 80 = 536 por 2, lado por lado, da 4x + 40 = 268. Las dos tienen solución x = 57: 8 · 57 + 80 = 536 y 4 · 57 + 40 = 268. Las otras tres tienen soluciones 77, 47 y 67.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-011",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es el conjunto solución de la inecuación −2x + 9 > 27?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x < −9",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: −2x > 18 y, al dividir por −2, el sentido se invierte: x < −9. Comprobación: con x = −20, −2 · (−20) + 9 = 49 > 27."
+        },
+        {
+          "clave": "B",
+          "texto": "x > −9",
+          "esCorrecta": false,
+          "errorCatalogado": "maneja-mal-sentido-desigualdad",
+          "feedbackDescarte": "Esa divide −2x > 18 por −2 sin invertir el sentido. Al dividir por un número negativo la desigualdad cambia de sentido: x < −9. Con x = 0, −2 · 0 + 9 = 9, que no es mayor que 27."
+        },
+        {
+          "clave": "C",
+          "texto": "x < −18",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa suma el 9 al pasarlo: −2x > 27 + 9 = 36, x < −18. El +9 pasa restando: −2x > 27 − 9 = 18."
+        },
+        {
+          "clave": "D",
+          "texto": "x < 18",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa invierte el sentido pero no divide por el coeficiente: de −2x > 18 pasa a x < 18, con el 18 intacto. Al dividir por −2 el sentido se invierte y el valor cambia: x < 18 ÷ (−2) = −9."
+        }
+      ],
+      "solucion": "Se resta 9 a ambos lados: −2x > 18. Se divide por −2 y, como es negativo, se invierte el sentido: x < −9. Comprobación: x = −20 da −2 · (−20) + 9 = 49, que es mayor que 27; x = 0 da 9, que no lo es.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-012",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una recta numérica, el conjunto solución de una inecuación se representa con un punto vacío en 29 y la recta sombreada hacia la izquierda. ¿Cuál de las siguientes inecuaciones tiene ese conjunto solución?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3x − 5 ≤ 82",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa tiene solución x ≤ 29, que incluye el 29: se representa con un punto relleno. El punto vacío indica que el 29 no pertenece al conjunto."
+        },
+        {
+          "clave": "B",
+          "texto": "3x − 5 < 82",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3x < 87, x < 29. El 29 no pertenece al conjunto (punto vacío) y la solución son los números menores que 29 (sombreado a la izquierda)."
+        },
+        {
+          "clave": "C",
+          "texto": "3x − 5 > 82",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-direccion-en-recta-numerica",
+          "feedbackDescarte": "Esa tiene solución x > 29: los números mayores que 29, es decir, la recta sombreada hacia la derecha, no hacia la izquierda."
+        },
+        {
+          "clave": "D",
+          "texto": "−3x + 5 < −82",
+          "esCorrecta": false,
+          "errorCatalogado": "maneja-mal-sentido-desigualdad",
+          "feedbackDescarte": "Esa parece dar x < 29, pero de −3x < −87 se divide por −3 y el sentido se invierte: x > 29, sombreado hacia la derecha. Solo da x < 29 si no se invierte el sentido."
+        }
+      ],
+      "solucion": "Punto vacío en 29 y sombreado a la izquierda es el conjunto x < 29. De 3x − 5 < 82 se suma 5: 3x < 87, y se divide por 3: x < 29. Las otras dan x ≤ 29 (punto relleno), x > 29 (hacia la derecha) y, en −3x + 5 < −82, −3x < −87 y al dividir por −3 se invierte: x > 29.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-013",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál de las siguientes representaciones en la recta numérica corresponde al conjunto solución de 3x + 96 ≤ 24?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Un punto vacío en −24, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa excluye el −24, pero la desigualdad es ≤: el −24 cumple 3 · (−24) + 96 = 24 y pertenece al conjunto. El punto va relleno."
+        },
+        {
+          "clave": "B",
+          "texto": "Un punto relleno en −24, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-direccion-en-recta-numerica",
+          "feedbackDescarte": "Esa sombrea los números mayores que −24. La solución es x ≤ −24, los menores o iguales: hacia la izquierda. Con x = 0, 3 · 0 + 96 = 96, que no es menor o igual que 24."
+        },
+        {
+          "clave": "C",
+          "texto": "Un punto relleno en −24, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3x ≤ −72, x ≤ −24; el −24 está incluido (punto relleno) y el conjunto son los menores o iguales (hacia la izquierda)."
+        },
+        {
+          "clave": "D",
+          "texto": "Un punto relleno en 8, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-un-solo-lado",
+          "feedbackDescarte": "Esa borra el +96 del lado izquierdo sin restarlo a la derecha: 3x ≤ 24, x ≤ 8. Lo que se quita de un lado se quita del otro: 3x ≤ 24 − 96 = −72."
+        }
+      ],
+      "solucion": "Se resta 96 a ambos lados: 3x ≤ −72. Se divide por 3 (positivo, el sentido se mantiene): x ≤ −24. Como es ≤, el −24 pertenece al conjunto: punto relleno; y los números que cumplen son los menores o iguales que −24: sombreado hacia la izquierda. Comprobación: x = −24 da 3 · (−24) + 96 = 24, que cumple ≤ 24.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-014",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál de las siguientes representaciones en la recta numérica corresponde al conjunto solución de −2x + 8 < 16?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Un punto vacío en −4, con la recta sombreada hacia la izquierda.",
+          "esCorrecta": false,
+          "errorCatalogado": "maneja-mal-sentido-desigualdad",
+          "feedbackDescarte": "Esa divide −2x < 8 por −2 sin invertir el sentido y queda x < −4. Al dividir por un negativo el sentido cambia: x > −4, hacia la derecha. Con x = 0, −2 · 0 + 8 = 8 < 16 cumple."
+        },
+        {
+          "clave": "B",
+          "texto": "Un punto relleno en −4, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa incluye el −4, pero la desigualdad es estricta: −2 · (−4) + 8 = 16, que no es menor que 16. El punto va vacío."
+        },
+        {
+          "clave": "C",
+          "texto": "Un punto vacío en −8, con la recta sombreada hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-un-solo-lado",
+          "feedbackDescarte": "Esa borra el +8 del lado izquierdo sin restarlo a la derecha: −2x < 16, x > −8. Lo que se quita de un lado se quita del otro: −2x < 16 − 8 = 8."
+        },
+        {
+          "clave": "D",
+          "texto": "Un punto vacío en −4, con la recta sombreada hacia la derecha.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: −2x < 8 y, al dividir por −2, se invierte: x > −4. El −4 no cumple (punto vacío) y los que cumplen son los mayores que −4 (hacia la derecha)."
+        }
+      ],
+      "solucion": "Se resta 8 a ambos lados: −2x < 8. Se divide por −2 y se invierte el sentido: x > −4. Como es estricta, el −4 no pertenece al conjunto: punto vacío; y los números que cumplen son los mayores que −4: sombreado hacia la derecha. Comprobación: x = 0 da 8 < 16; x = −4 da 16, que no es menor que 16.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-015",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La góndola de un teleférico de carga soporta como máximo 345 kg. Ya va subiendo un instructor con su equipo, que juntos pesan 75 kg, y se quieren subir fardos iguales de 45 kg cada uno. Si b es la cantidad de fardos, ¿cuál de las siguientes inecuaciones representa la condición de carga?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "75 + 45b ≥ 345",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-desigualdad-verbal",
+          "feedbackDescarte": "Esa pone un piso donde va un techo: la carga no puede superar los 345 kg, así que es menor o igual que 345, no mayor o igual."
+        },
+        {
+          "clave": "B",
+          "texto": "75 + 45b < 345",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-borde-abierto-y-cerrado",
+          "feedbackDescarte": "Esa excluye el borde: \"como máximo 345 kg\" admite exactamente 345 kg, así que la desigualdad lleva ≤, no <."
+        },
+        {
+          "clave": "C",
+          "texto": "75 + 45b ≤ 345",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los 75 kg fijos más 45 kg por fardo no pueden superar 345, y 345 está permitido. Da 45b ≤ 270, b ≤ 6."
+        },
+        {
+          "clave": "D",
+          "texto": "45b ≤ 345",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los 75 kg del instructor y su equipo, que ya están en la góndola. Sin ese término daría b ≤ 7,67, es decir 7 fardos, pero con los 75 kg solo caben 6."
+        }
+      ],
+      "solucion": "La carga es lo fijo más lo variable: 75 + 45b. Como la góndola soporta como máximo 345 kg, esa carga puede ser igual o menor que 345: 75 + 45b ≤ 345. Resolviendo: 45b ≤ 270, b ≤ 6. Comprobación: 75 + 45 · 6 = 345.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-016",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una ferretería hay dos cajas de clavos. La caja grande tiene 48 clavos más que la caja chica, y entre las dos hay a lo más 598 clavos. ¿Cuál es la máxima cantidad de clavos que puede tener la caja chica?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "274",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-desigualdad-verbal",
+          "feedbackDescarte": "Esa lee \"a lo más 598\" como si 598 estuviera prohibido y se queda en 274. \"A lo más\" incluye el 598: con 275 y 323 clavos hay exactamente 598, que está permitido."
+        },
+        {
+          "clave": "B",
+          "texto": "275",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: c + (c + 48) ≤ 598, 2c ≤ 550, c ≤ 275. Comprobación: 275 + 323 = 598, que cumple \"a lo más 598\"."
+        },
+        {
+          "clave": "C",
+          "texto": "323",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa suma el 48 al pasarlo: 2c ≤ 598 + 48 = 646, c ≤ 323. El +48 pasa restando: 2c ≤ 598 − 48 = 550. Además, 323 es la cantidad de la caja grande, no de la chica."
+        },
+        {
+          "clave": "D",
+          "texto": "550",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-dividir-por-coeficiente",
+          "feedbackDescarte": "Esa se queda en 2c ≤ 550 y entrega 550 sin dividir por 2. Los 550 son los clavos de las dos cajas sin los 48 extra; la chica tiene a lo más 550 ÷ 2 = 275."
+        }
+      ],
+      "solucion": "Si la caja chica tiene c clavos, la grande tiene c + 48. Entre las dos, a lo más 598: c + (c + 48) ≤ 598, es decir 2c + 48 ≤ 598. Se resta 48: 2c ≤ 550. Se divide por 2: c ≤ 275. El máximo es 275. Comprobación: 275 + (275 + 48) = 275 + 323 = 598.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 30, distractores A, C y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (una cantidad supera a la otra en k y la suma es a lo más S, se pide el máximo de la menor) y los mecanismos de sus distractores A (lee \"a lo más\" como estricto), C y D (suma k al transponerlo). Cambian el contexto (cajas de clavos en vez de lápices de dos personas), las cifras (c + (c + 48) ≤ 598) y las cuatro alternativas; se agrega el distractor de omitir la división por el coeficiente. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-017",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una tienda instala una barra de exhibición de 910 cm de largo. Los dos soportes de los extremos ocupan en total 78 cm de la barra, y cada colgador con su prenda ocupa 22 cm. Un vendedor afirma que en la barra caben 38 colgadores, porque (910 − 78) ÷ 22 = 37,82 y eso se redondea a 38. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No es correcto: caben 37 colgadores, porque con 38 se ocuparían 836 cm y solo hay 832 cm disponibles.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el espacio libre es 910 − 78 = 832 cm, y 22g ≤ 832 da g ≤ 37,82. Como no cabe un colgador parcial, se redondea hacia abajo: 37. Con 38 serían 836 cm, 4 cm más que el espacio."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcto: 37,82 se redondea a 38, que es el entero más cercano.",
+          "esCorrecta": false,
+          "errorCatalogado": "redondea-contra-el-contexto",
+          "feedbackDescarte": "Esa redondea hacia arriba porque 37,82 está más cerca de 38, pero el contexto no lo permite: 38 colgadores ocupan 22 · 38 = 836 cm, más que los 832 cm libres. Cuando el resultado es un máximo de objetos enteros, se redondea hacia abajo."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcto: caben 41 colgadores, porque 910 ÷ 22 = 41,36.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los 78 cm de los soportes y reparte los 910 cm completos. El espacio disponible para colgadores es 910 − 78 = 832 cm."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcto: caben 44 colgadores, porque (910 + 78) ÷ 22 = 44,91.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa suma los 78 cm de los soportes en vez de restarlos. Los soportes ocupan espacio de la barra: el espacio libre es 910 − 78 = 832 cm, no 988 cm."
+        }
+      ],
+      "solucion": "El espacio libre para colgadores es 910 − 78 = 832 cm. Con g colgadores: 22g ≤ 832, g ≤ 37,82. Como los colgadores son enteros y no pueden pasarse del espacio, se redondea hacia abajo: 37. Comprobación: 22 · 37 = 814 ≤ 832, y 22 · 38 = 836 > 832, así que el vendedor se equivoca al redondear hacia arriba.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-018",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un curso junta tapitas plásticas para una campaña de reciclaje. Ya lleva 127 kg y junta 8 kg cada semana. La campaña premia a los cursos que junten más de 183 kg.\n\nUna estudiante razona así: \"Con 7 semanas más llegamos a 183 kg justos. Pero como piden MÁS DE 183, con 183 justos no basta: necesitamos 8 semanas.\"\n\n¿Es correcto su razonamiento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: \"más de 183\" se cumple con 183 kg justos, así que bastan 7 semanas.",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-desigualdad-verbal",
+          "feedbackDescarte": "Esa lee \"más de 183\" como si incluyera el 183. \"Más de\" es estricto: 183 kg justos no son más de 183 kg. La condición es 127 + 8s > 183, con >, y s = 7 da exactamente 183."
+        },
+        {
+          "clave": "B",
+          "texto": "No: la inecuación es 8s > 183, que da s > 22,88, así que se necesitan 23 semanas.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los 127 kg que el curso ya juntó y modela solo lo que se junta por semana. La condición completa es 127 + 8s > 183: 8s > 56, s > 7."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí, pero por otra razón: como 56 ÷ 8 = 7 es exacto, siempre hay que sumar una semana más cuando la división es exacta.",
+          "esCorrecta": false,
+          "errorCatalogado": "redondea-contra-el-contexto",
+          "feedbackDescarte": "Esa acierta el 8 con una regla falsa: no se suma una semana por ser exacta la división, sino porque la desigualdad es estricta. Si la campaña pidiera \"al menos 183 kg\", con 7 semanas bastaría aunque 56 ÷ 8 siga siendo exacto."
+        },
+        {
+          "clave": "D",
+          "texto": "Sí: 127 + 8s > 183 da s > 7, y como 7 semanas dejan exactamente 183 kg, que no es más de 183, se necesitan 8.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 127 + 8s > 183, 8s > 56, s > 7. Con 7 semanas se llega a 183 kg justos, que no cumple \"más de 183\"; con 8 semanas, 191 kg, sí."
+        }
+      ],
+      "solucion": "La condición es 127 + 8s > 183. Se resta 127: 8s > 56. Se divide por 8: s > 7. Como es estricta, s = 7 no sirve: 127 + 8 · 7 = 183 kg justos, y \"más de 183\" exige superar esa cantidad. El primer entero que cumple es s = 8: 127 + 8 · 8 = 191 kg. El razonamiento de la estudiante es correcto.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-019",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Si x + 5 < 2x − 58, ¿cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x < 63, porque al pasar el 2x queda −x < −63 y se divide por −1 sin cambiar el sentido.",
+          "esCorrecta": false,
+          "errorCatalogado": "maneja-mal-sentido-desigualdad",
+          "feedbackDescarte": "Esa divide −x < −63 por −1 sin invertir el sentido. Al dividir por un negativo la desigualdad cambia de sentido: x > 63. Con x = 0, 0 + 5 < 0 − 58 es falso."
+        },
+        {
+          "clave": "B",
+          "texto": "x > 63, porque 5 + 58 < 2x − x.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: se pasa el x restando y el −58 sumando, 5 + 58 < 2x − x, es decir 63 < x. Con x mayor que 63, el lado derecho supera al izquierdo en x − 63."
+        },
+        {
+          "clave": "C",
+          "texto": "x > 53, porque 58 − 5 < x.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-al-transponer",
+          "feedbackDescarte": "Esa resta el 5 al pasarlo en vez de sumarlo: 58 − 5 = 53. El +5 del lado izquierdo pasa restando a la derecha, o bien el −58 pasa sumando a la izquierda: 5 + 58 < x, x > 63. Con x = 63 los dos lados valen lo mismo, así que 63 es el borde, no 53."
+        },
+        {
+          "clave": "D",
+          "texto": "x < −21, porque x + 2x = 3x y 3x < −63.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-incognitas-en-vez-de-restar",
+          "feedbackDescarte": "Esa reúne las incógnitas sumando: x + 2x. El 2x está al otro lado y pasa restando: x − 2x = −x, no 3x. Con x negativo, 2x − 58 queda por debajo de x + 5, así que ningún x < −21 cumple."
+        }
+      ],
+      "solucion": "Se reúnen las incógnitas a un lado y los números al otro: x − 2x < −58 − 5, es decir −x < −63. Se divide por −1 y se invierte el sentido: x > 63. Equivalente: 5 + 58 < 2x − x, 63 < x. Comprobación: 2x − 58 supera a x + 5 exactamente en x − 63, que es positivo solo cuando x > 63.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-ecuaciones-e-inecuaciones-primer-grado-020",
+      "unidadId": "ecuaciones-e-inecuaciones-primer-grado",
+      "moduloId": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un cerco se arma alternando pilares y paneles: cada pilar mide 68 cm de ancho y cada panel 230 cm, y el cerco empieza y termina con un pilar, de modo que hay un pilar más que paneles. El largo total del cerco puede ser a lo más 2.280 cm. ¿Cuántos paneles como máximo puede tener el cerco?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8",
+          "esCorrecta": false,
+          "errorCatalogado": "redondea-contra-el-contexto",
+          "feedbackDescarte": "Esa redondea 7,42 hacia arriba. Con 8 paneles y 9 pilares el cerco mide 68 · 9 + 230 · 8 = 612 + 1.840 = 2.452 cm, más que los 2.280 permitidos. Cuando se pide un máximo de piezas enteras, se redondea hacia abajo."
+        },
+        {
+          "clave": "B",
+          "texto": "9",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cantidad-inicial-en-inecuacion",
+          "feedbackDescarte": "Esa omite los pilares y reparte los 2.280 cm solo entre paneles: 2.280 ÷ 230 = 9,91. Los pilares ocupan 68 cm cada uno y hay n + 1: 68(n + 1) + 230n ≤ 2.280."
+        },
+        {
+          "clave": "C",
+          "texto": "7",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con n paneles hay n + 1 pilares, 68(n + 1) + 230n ≤ 2.280, 298n ≤ 2.212, n ≤ 7,42, así que 7. Comprobación: 68 · 8 + 230 · 7 = 544 + 1.610 = 2.154 ≤ 2.280."
+        },
+        {
+          "clave": "D",
+          "texto": "6",
+          "esCorrecta": false,
+          "errorCatalogado": "traduce-mal-coeficientes-y-cantidades",
+          "feedbackDescarte": "Esa intercambia las cantidades: cuenta n pilares y n + 1 paneles, 68n + 230(n + 1) ≤ 2.280, 298n ≤ 2.050, n ≤ 6,88. Son los pilares los que van de más, porque el cerco empieza y termina con pilar."
+        }
+      ],
+      "solucion": "Con n paneles hay n + 1 pilares. El largo es 68(n + 1) + 230n = 68n + 68 + 230n = 298n + 68. La condición: 298n + 68 ≤ 2.280, 298n ≤ 2.212, n ≤ 7,42. Como los paneles son enteros, el máximo es 7. Comprobación: 7 paneles y 8 pilares miden 230 · 7 + 68 · 8 = 1.610 + 544 = 2.154 cm ≤ 2.280; con 8 paneles y 9 pilares serían 1.840 + 612 = 2.452 cm, que se pasa.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 32, distractores C y D",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (dos piezas alternadas con la primera en ambos extremos, un tope para el total y se pide el máximo de la segunda pieza) y los mecanismos de sus distractores C (omite la pieza fija) y D (redondea hacia arriba contra el contexto). Cambian el contexto (cerco de pilares y paneles en vez de torta de capas de bizcocho y manjar), las cifras (68(n + 1) + 230n ≤ 2.280) y las cuatro alternativas; se agrega el distractor de intercambiar las cantidades de cada pieza. El ítem se redactó como propia antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de mecanismos."
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-ecuaciones-e-inecuaciones-primer-grado-001: abstracto, afirmación sobre 4x − 212 = 2x + 394, x = 303; afirmación errónea x = 101 vía 6x = 606; distractores 101, 197, 606; intermedios 1.212",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-002: carretilla y ladrillos, kg; carretilla vacía 26, ladrillos de 2, cargada 60, 2n + 26 = 60, n = 17; distractores 30, 43, 34; intermedios 86",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-003: masa de pizza, g; 4 pizzas sobran 220, 2 pizzas sobran 790, 4p + 220 = 2p + 790, p = 285; distractores 95, 505, 570; intermedios 1.010, 1.140, 1.360",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-004: trivia, puntos; 8 preguntas de geografía de 4 puntos y x de historia de 6 puntos, total 74, 6x + 32 = 74, x = 7; distractores x + 32 = 74 (42), 6x + 4 = 74 (11,67), 6x = 74 (12,33)",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-005: montacargas y pallets, kg, literales M y P; capacidad 2.150; distractores <, ≥, M·x + P",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-006: carrito de sopaipillas, pesos; 50 vendidas a 950, resto a 1.150, meta más de 118.000, 50·950 + 1.150x > 118.000, x > 61,3 → 62; intermedios 47.500, 70.500; distractor con precios cruzados 57.500, 60.500, 63,68 → 64",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-007: jarabe, dosis en mL según masa en kg; d = 5 + (m − 19) ÷ 6, d = 14, m = 73; distractores 35, 98, 28; intermedios 54, 84, 79",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-008: guardaparques y avistamientos de cóndores; total 287, Ana 81, Bruno C + 3, Diego C + 5, 3C + 89 = 287, C = 66; distractores 93, 99, 198; intermedios 69, 71, 279",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-009: abstracto, desarrollo errado de 2x + 222 = 620, x = 199; pasos del estudiante x + 222 = 310 y x = 88; distractores 88, 421, 398; intermedios 111, 842",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-010: abstracto, ecuación equivalente a 8x + 80 = 536, x = 57, correcta 4x + 40 = 268; distractores 8x = 616 (77), 4x + 80 = 268 (47), 8x = 536 (67); intermedios 188, 456",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-011: abstracto, −2x + 9 > 27, x < −9; distractores x > −9, x < −18, x < 18; intermedios 36, 49",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-012: abstracto, recta con punto vacío en 29 hacia la izquierda, 3x − 5 < 82, x < 29; distractores ≤, >, −3x + 5 < −82; intermedios 87",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-013: abstracto, 3x + 96 ≤ 24, x ≤ −24, punto relleno hacia la izquierda; distractores vacío, derecha, relleno en 8; intermedios 72",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-014: abstracto, −2x + 8 < 16, x > −4, punto vacío hacia la derecha; distractores izquierda, relleno, vacío en −8; intermedios 16",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-015: góndola de teleférico y fardos, kg; capacidad 345, instructor con equipo 75, fardos de 45, 75 + 45b ≤ 345, b ≤ 6; distractores ≥, <, 45b ≤ 345 (7,67 → 7); intermedios 270",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-016: cajas de clavos de una ferretería; grande 48 más que la chica, a lo más 598, c + (c + 48) ≤ 598, c ≤ 275; distractores 274, 323, 550; intermedios 646",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-017: barra de exhibición, cm; barra 910, soportes 78, colgador 22, afirmación errónea 38, 22g ≤ 832, g ≤ 37,82 → 37; distractores 38, 41 (41,36), 44 (44,91); intermedios 814, 832, 836, 988",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-018: tapitas y campaña de reciclaje, kg; lleva 127, 8 por semana, más de 183, 127 + 8s > 183, s > 7 → 8; distractores 7, 23 (22,88), 8 con razón falsa; intermedios 56, 191",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-019: abstracto, x + 5 < 2x − 58, x > 63; distractores x < 63, x > 53, x < −21",
+    "adv-ecuaciones-e-inecuaciones-primer-grado-020: cerco de pilares y paneles, cm; pilar 68, panel 230, a lo más 2.280, 68(n + 1) + 230n ≤ 2.280, n ≤ 7,42 → 7; distractores 8, 9 (9,91), 6 (6,88); intermedios 298, 2.212, 2.154, 2.452, 2.050, 544, 1.610, 612, 1.840"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
+    "declaracionOriginalidad": "Banco de ecuaciones e inecuaciones de primer grado: 20 ítems, 60 distractores, 12 errores distintos del catálogo content/errores/ecuaciones-e-inecuaciones-primer-grado.json, todos los distractores con errorCatalogado (cobertura 60/60). Proveniencia por fuente: 12 propia, 8 demre-liberada (adv-ecuaciones-e-inecuaciones-primer-grado-002 sobre la pregunta 31 y 003 sobre la pregunta 32 de la forma 2026-regular-113; 004 sobre la pregunta 33, 006 sobre la pregunta 36 y 007 sobre la pregunta 35 de la forma 2025-regular-113; 005 sobre la pregunta 31 y 016 sobre la pregunta 30 de la forma 2024-regular-113; 020 sobre la pregunta 32 de la forma 2024-invierno-111; en los ocho se conserva solo la estructura del ítem y el mecanismo de sus distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem; los 20 ítems se diseñaron como propia en el plan firmado antes de leer esas preguntas), 0 temario-demre. Contextos verificados con scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-15 sobre los 12 dominios con contexto, dos palabras por dominio más dos respaldos por dominio (72 palabras): ningún dominio con sus dos palabras en un mismo documento, cero recambios. Cifras elegidas con node el 2026-09-15 contra los contextosNumericos de las tres lecciones y el cierre de la unidad, de los bancos de porcentaje, proporcionalidad y transformaciones-isometricas y de todo content/ (criterio de dos niveles firmado el 2026-09-14: cifras de 100 o más y decimales contra todo content/, respuestas de la unidad bloqueadas), incluyendo los intermedios que muestra el feedback de cada uno de los 60 distractores: 140 cifras distintas de 10 o más o con decimal, 0 repetidas entre ítems, 0 colisiones de 100 o más contra content/. Magnitud: la razón entre cada distractor numérico y la correcta está entre 1/3 y 3 en los 60, sin excepciones. Ronda 1 (matemática): NO ejecutada. Ronda 2 (originalidad): NO ejecutada. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}
