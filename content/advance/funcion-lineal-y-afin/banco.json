@@ -1,0 +1,917 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "funcion-lineal-y-afin",
+  "moduloId": "funcion-lineal-y-afin",
+  "titulo": "Función lineal y afín",
+  "items": [
+    {
+      "id": "adv-funcion-lineal-y-afin-001",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Sea f(x) = 9x − 4. ¿Cuál es el valor de f(−8)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−72",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa es 9·(−8) = −72 sin el −4: olvida el valor inicial de la función. f(−8) = −72 − 4 = −76."
+        },
+        {
+          "clave": "B",
+          "texto": "−76",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: f(−8) = 9·(−8) − 4 = −72 − 4 = −76."
+        },
+        {
+          "clave": "C",
+          "texto": "68",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa cambia el signo de la pendiente: −9·(−8) − 4 = 72 − 4 = 68. La pendiente es 9, positiva, y 9·(−8) = −72."
+        },
+        {
+          "clave": "D",
+          "texto": "41",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa lee la ecuación con m y n intercambiados: −4·(−8) + 9 = 32 + 9 = 41. En 9x − 4 la pendiente es 9 y el coeficiente de posición es −4."
+        }
+      ],
+      "solucion": "f(−8) = 9·(−8) − 4 = −72 − 4 = −76.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-002",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Al abrir un segundo torniquete ya habían entrado 22 personas por él, y desde entonces pasan 7 personas por minuto, siempre las mismas. ¿Cuántas personas habrán entrado por ese torniquete 3 minutos después?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "21 personas",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa es 7·3 = 21, solo las que pasan en los 3 minutos: olvida las 22 que ya habían entrado. Total: 22 + 21 = 43."
+        },
+        {
+          "clave": "B",
+          "texto": "29 personas",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-cambio-una-sola-vez",
+          "feedbackDescarte": "Esa suma el cambio de un solo minuto: 22 + 7 = 29. En 3 minutos pasan 7·3 = 21 personas, no 7."
+        },
+        {
+          "clave": "C",
+          "texto": "43 personas",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 22 + 7·3 = 22 + 21 = 43."
+        },
+        {
+          "clave": "D",
+          "texto": "87 personas",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos",
+          "feedbackDescarte": "Esa multiplica también las 22 por los minutos: (22 + 7)·3 = 29·3 = 87. Las 22 entraron una sola vez; solo las 7 por minuto se multiplican por 3."
+        }
+      ],
+      "solucion": "Personas que han entrado tras t minutos: 22 + 7t. Con t = 3: 22 + 7·3 = 22 + 21 = 43.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-003",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La cantidad R de kilos de forraje que quedan en la bodega de una caballeriza está dada por R = 416 − 8d, donde 416 es lo que había al llenarla, d son los días transcurridos y 8 es el consumo diario en kilos. ¿Después de cuántos días quedan 152 kilos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "71 días",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-direccion-al-despejar",
+          "feedbackDescarte": "Esa suma 152 en vez de restarlo al despejar: (416 + 152) ÷ 8 = 568 ÷ 8 = 71. Los 152 kilos quedan, así que lo consumido es 416 − 152 = 264."
+        },
+        {
+          "clave": "B",
+          "texto": "19 días",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa divide 152 ÷ 8 = 19: usa solo lo que queda y olvida el valor inicial de 416 kilos. Lo consumido es 416 − 152 = 264 kilos."
+        },
+        {
+          "clave": "C",
+          "texto": "34 días",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-mal-los-saltos",
+          "feedbackDescarte": "Esa cuenta un día de más: entre 416 y 152 hay 264 kilos, y 264 ÷ 8 = 33 saltos de 8 kilos exactos, no 34."
+        },
+        {
+          "clave": "D",
+          "texto": "33 días",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 416 − 8d = 152, 8d = 264, d = 33. Comprobación: 8·33 = 264 y 416 − 264 = 152."
+        }
+      ],
+      "solucion": "416 − 8d = 152. Lo consumido es 416 − 152 = 264 kilos, así que 8d = 264. Se divide por 8: d = 33. Comprobación: 8·33 = 264 y 416 − 264 = 152.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 31, distractor A",
+        "notaAdaptacion": "Del original (combustible que queda en el estanque de un vehículo, L = c − 0,1x, se pide la cantidad de kilómetros) se conserva la estructura del ítem (modelo decreciente dado en el enunciado con el valor inicial y la tasa, se pide la variable para un valor final) y el mecanismo de su distractor A (suma el valor final en vez de restarlo al despejar). Cambian el contexto (forraje de una caballeriza por días en vez de combustible por kilómetros), las cifras (416 − 8d = 152) y las cuatro alternativas; el distractor D del original (multiplica por la tasa en vez de dividir) rompería la magnitud con tasa entera y se reemplaza por omitir el valor inicial y contar un día de más. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-004",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En una planta de acopio, la tolva A tiene 90 toneladas y se carga a 5 toneladas por hora; la tolva B tiene 186 toneladas y se descarga a 1 tonelada por hora. Si t son las horas desde ese momento, ¿para qué valor de t las dos tolvas tienen la misma carga?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "t = 16",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 90 + 5t = 186 − t, 6t = 96, t = 16. A las 16 horas las dos tienen 170 toneladas: 90 + 80 = 170 y 186 − 16 = 170."
+        },
+        {
+          "clave": "B",
+          "texto": "t = 24",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-tasa",
+          "feedbackDescarte": "Esa toma la descarga de B como si fuera carga: 90 + 5t = 186 + t, 4t = 96, t = 24. B baja 1 tonelada por hora, así que su modelo es 186 − t."
+        },
+        {
+          "clave": "C",
+          "texto": "t = 46",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-direccion-al-despejar",
+          "feedbackDescarte": "Esa pasa el 90 al otro lado sumando: 5t + t = 186 + 90 = 276, t = 46. El 90 pasa restando: 6t = 186 − 90 = 96."
+        },
+        {
+          "clave": "D",
+          "texto": "t = 31",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa omite las 90 toneladas que A ya tiene: 5t = 186 − t, 6t = 186, t = 31. A parte de 90 toneladas, no de 0."
+        }
+      ],
+      "solucion": "Carga de A: 90 + 5t. Carga de B: 186 − t. Se igualan: 90 + 5t = 186 − t; 6t = 96; t = 16. Comprobación: 90 + 5·16 = 90 + 80 = 170 y 186 − 16 = 170.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 35, distractor A",
+        "notaAdaptacion": "Del original (dos empresas de transporte con cobros (4000/3)t + 4000 y 2000t, se pide el tiempo en que cuestan lo mismo) se conserva la estructura del ítem (dos modelos lineales, se pide el valor de t en que coinciden) y el mecanismo de su distractor A (equivoca el signo al reunir las pendientes: en el original suma en vez de restar, aquí resta en vez de sumar porque una de las dos cantidades baja). El contexto original está en la zona saturada de comparación de dos empresas de servicio (docs/calibracion-lecciones-e-items.md, sección 6), así que cambia a dos tolvas físicas, una que se carga y otra que se descarga; cambian también las cifras (90 + 5t = 186 − t) y las cuatro alternativas, y se agregan los distractores de pasar la constante sumando y de omitir el valor inicial. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-005",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un cachorro de una camada pesaba 685 gramos en la semana 2 y 1.975 gramos en la semana 7, y cada semana sube lo mismo. Si sigue así, ¿cuántos gramos pesará en la semana 9?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2.405 gramos",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-mal-los-saltos",
+          "feedbackDescarte": "Esa cuenta 6 saltos entre la semana 2 y la 7: 1.290 ÷ 6 = 215 por semana y 1.975 + 215·2 = 1.975 + 430 = 2.405. De la semana 2 a la 7 hay 5 saltos: 1.290 ÷ 5 = 258."
+        },
+        {
+          "clave": "B",
+          "texto": "2.491 gramos",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: sube 1.290 gramos en 5 semanas, 258 por semana; de la semana 7 a la 9 pasan 2 semanas: 1.975 + 516 = 2.491."
+        },
+        {
+          "clave": "C",
+          "texto": "2.233 gramos",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-cambio-una-sola-vez",
+          "feedbackDescarte": "Esa suma el cambio de una sola semana: 1.975 + 258 = 2.233. De la semana 7 a la 9 pasan 2 semanas: 258·2 = 516."
+        },
+        {
+          "clave": "D",
+          "texto": "2.322 gramos",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa es 258·9 = 2.322, como si en la semana 0 pesara 0 gramos: olvida que la recta no parte del origen. Hay que partir de los 1.975 gramos de la semana 7."
+        }
+      ],
+      "solucion": "Entre la semana 2 y la 7 sube 1.975 − 685 = 1.290 gramos en 5 semanas: 1.290 ÷ 5 = 258 gramos por semana. De la semana 7 a la 9 pasan 2 semanas: 1.975 + 258·2 = 1.975 + 516 = 2.491.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-006",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una función afín f cumple f(3) = 182 y f(7) = 218. ¿Cuál es el valor de f(0)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "209",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-direccion-al-despejar",
+          "feedbackDescarte": "Esa suma en vez de restar al volver a x = 0: 182 + 27 = 209. De x = 3 a x = 0 se retrocede 3 unidades y se restan 3·9 = 27."
+        },
+        {
+          "clave": "B",
+          "texto": "173",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-cambio-una-sola-vez",
+          "feedbackDescarte": "Esa resta el cambio una sola vez: 182 − 9 = 173. De x = 3 a x = 0 hay 3 pasos: se restan 27, no 9."
+        },
+        {
+          "clave": "C",
+          "texto": "155",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: pendiente (218 − 182) ÷ 4 = 9; f(0) = 182 − 9·3 = 182 − 27 = 155."
+        },
+        {
+          "clave": "D",
+          "texto": "9",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa entrega la pendiente 9 como si fuera el coeficiente de posición. La pendiente es cuánto cambia f por unidad; f(0) se obtiene retrocediendo desde f(3) = 182: 182 − 27 = 155."
+        }
+      ],
+      "solucion": "Pendiente: (218 − 182) ÷ (7 − 3) = 36 ÷ 4 = 9. De x = 3 a x = 0 se retrocede 3 unidades: f(0) = 182 − 9·3 = 182 − 27 = 155. Comprobación: f(3) = 155 + 27 = 182.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-007",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Cuando un montañista enciende su registro está a 3.312 metros de altitud y desde ahí sube 5 metros por minuto, siempre al mismo ritmo. Si t son los minutos de registro y h la altitud en metros, ¿qué modelo representa h?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "h = 3.312 + 5t",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en t = 0 la altitud es 3.312 y cada minuto suma 5: h = 3.312 + 5t."
+        },
+        {
+          "clave": "B",
+          "texto": "h = 5 + 3.312t",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial",
+          "feedbackDescarte": "Esa pone la altitud inicial multiplicando a t y la tasa suelta: describe un montañista que parte a 5 metros y sube 3.312 por minuto. Lo que se repite cada minuto son los 5 metros."
+        },
+        {
+          "clave": "C",
+          "texto": "h = 5t",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-coeficiente-de-posicion",
+          "feedbackDescarte": "Esa omite el coeficiente de posición: en t = 0 daría altitud 0, y el montañista ya estaba a 3.312 metros."
+        },
+        {
+          "clave": "D",
+          "texto": "h = 3.317t",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos",
+          "feedbackDescarte": "Esa suma 3.312 + 5 = 3.317 y multiplica todo por t: la altitud inicial entra una sola vez, no una vez por minuto."
+        }
+      ],
+      "solucion": "Valor en t = 0: 3.312 metros (coeficiente de posición). Cambio por minuto: 5 metros (pendiente). Modelo: h = 3.312 + 5t.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-008",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El espesor de un glaciar es hoy de 262 metros y disminuye 3 metros por año, siempre lo mismo. Si t son los años desde hoy y E el espesor en metros, ¿qué modelo representa E?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "E = 262 + 3t",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-tasa",
+          "feedbackDescarte": "Esa usa la tasa con signo positivo: describiría un glaciar que gana 3 metros por año. El espesor disminuye, así que la tasa es −3."
+        },
+        {
+          "clave": "B",
+          "texto": "E = 3 − 262t",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial",
+          "feedbackDescarte": "Esa intercambia el espesor inicial y la tasa: partiría de 3 metros y perdería 262 por año."
+        },
+        {
+          "clave": "C",
+          "texto": "E = −3t",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-coeficiente-de-posicion",
+          "feedbackDescarte": "Esa omite el coeficiente de posición: en t = 0 daría espesor 0, y hoy el glaciar mide 262 metros."
+        },
+        {
+          "clave": "D",
+          "texto": "E = 262 − 3t",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en t = 0 el espesor es 262 y cada año baja 3: E = 262 − 3t."
+        }
+      ],
+      "solucion": "En t = 0 el espesor es 262 (coeficiente de posición) y cada año baja 3 (pendiente −3): E = 262 − 3t.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-009",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un paracaidista abre su paracaídas a 845 metros de altura y desde ese instante desciende a razón de 6 metros por segundo. ¿Cuál función modela la altura, en metros, a la que está t segundos después de abrir el paracaídas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "g(t) = 6t − 845",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa invierte los dos signos: describe una recta que sube 6 por segundo desde −845. El paracaidista parte de 845 y baja 6 por segundo."
+        },
+        {
+          "clave": "B",
+          "texto": "h(t) = −6t + 845",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: altura inicial 845 y cambio −6 por segundo: h(t) = −6t + 845."
+        },
+        {
+          "clave": "C",
+          "texto": "p(t) = 845 + 6t",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-tasa",
+          "feedbackDescarte": "Esa usa la tasa de descenso con signo positivo: la altura subiría 6 metros por segundo. Desciende, así que la tasa es −6."
+        },
+        {
+          "clave": "D",
+          "texto": "q(t) = 6 − 845t",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial",
+          "feedbackDescarte": "Esa intercambia altura inicial y tasa: partiría de 6 metros y bajaría 845 por segundo."
+        }
+      ],
+      "solucion": "Altura en t = 0: 845 metros. Cambio por segundo: −6 metros. h(t) = 845 − 6t, que es lo mismo que −6t + 845.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 40, distractor B",
+        "notaAdaptacion": "Del original (estanque de 720 litros que se vacía a 3 litros por minuto, se pide la función) se conserva la estructura del ítem (cantidad inicial y tasa de descenso dadas, se pide la función) y el mecanismo de su distractor B (invierte los dos signos, 3x − 720). Cambian el contexto (paracaidista que desciende, en vez de un estanque, que además es dominio de la lección l0-demo de esta unidad), las cifras (845 y 6) y las cuatro alternativas; los distractores C y D del original (dividen por la tasa) no tienen id en el catálogo y se reemplazan por la tasa con signo positivo y el intercambio de tasa y valor inicial. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-010",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una línea de riego, el primer aspersor está a 179 cm de la válvula, y cada aspersor siguiente está 84 cm más lejos de la válvula que el anterior. ¿Cuál función da la distancia d, en cm, entre la válvula y el aspersor número x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "f(x) = 84x",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa trata al primer aspersor como uno más y omite el primer tramo: en x = 1 daría 84 cm, pero el primer aspersor está a 179 cm de la válvula."
+        },
+        {
+          "clave": "B",
+          "texto": "g(x) = 84x + 179",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-mal-los-saltos",
+          "feedbackDescarte": "Esa cuenta x saltos de 84 cm en vez de x − 1: en x = 1 daría 179 + 84 = 263, que es la distancia del segundo aspersor."
+        },
+        {
+          "clave": "C",
+          "texto": "d(x) = 84x + 95",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: d = 179 + 84(x − 1) = 84x + 95. Comprobación: x = 2 da 84·2 + 95 = 263, igual que 179 + 84."
+        },
+        {
+          "clave": "D",
+          "texto": "h(x) = 179x − 95",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial",
+          "feedbackDescarte": "Esa usa 179 como paso entre aspersores y 84 como primer tramo: 84 + 179(x − 1) = 179x − 95. Es al revés: el primer tramo mide 179 y el paso 84."
+        }
+      ],
+      "solucion": "El aspersor 1 está a 179 cm; cada uno de los siguientes agrega 84 cm, así que el aspersor x está a d = 179 + 84(x − 1) = 179 + 84x − 84 = 84x + 95. Comprobación: x = 2 da 84·2 + 95 = 263, igual que 179 + 84.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 38, distractor A",
+        "notaAdaptacion": "Del original (psicóloga con cobro 30000x que pasa a tarifa fija más sesiones con un 20 % de rebaja desde la segunda; clave B = 24000x + 6000, comprobada por cálculo: 30000 + 24000(x − 1) = 24000x + 6000, porque esa forma no tiene clavijero en la carpeta) se conserva la estructura del ítem (el primer elemento vale a y cada uno de los siguientes agrega b, modelo a + b(x − 1) presentado simplificado) y el mecanismo de su distractor A (omite el primer tramo distinto y usa solo b·x). El contexto original está en la zona saturada de cargo fijo más tarifa variable (docs/calibracion-lecciones-e-items.md, sección 6), así que cambia a distancias físicas de aspersores en una línea de riego; cambian también las cifras (179 y 84) y las cuatro alternativas, y los distractores C y D del original (otro porcentaje e intercambio de valores) no tienen id y se reemplazan por contar x saltos en vez de x − 1 y por intercambiar tasa y valor inicial. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-011",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Al apagar el fuego, el agua de una tetera está a 93 °C y 7 minutos después está a 51 °C. Suponiendo que se enfría a ritmo constante, ¿qué modelo da la temperatura T, en °C, a los t minutos de apagar el fuego?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "T = 93 − 6t",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: baja 93 − 51 = 42 °C en 7 minutos, 6 °C por minuto: T = 93 − 6t."
+        },
+        {
+          "clave": "B",
+          "texto": "T = 93 + 6t",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-tasa",
+          "feedbackDescarte": "Esa usa la tasa con signo positivo: el agua se calentaría 6 °C por minuto. Se enfría, así que la tasa es −6."
+        },
+        {
+          "clave": "C",
+          "texto": "T = 93 − 7t",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-mal-los-saltos",
+          "feedbackDescarte": "Esa cuenta 6 saltos entre el minuto 0 y el 7: 42 ÷ 6 = 7. Del minuto 0 al 7 hay 7 saltos, y 42 ÷ 7 = 6."
+        },
+        {
+          "clave": "D",
+          "texto": "T = 6 − 93t",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-tasa-y-valor-inicial",
+          "feedbackDescarte": "Esa intercambia temperatura inicial y tasa: partiría de 6 °C y bajaría 93 por minuto."
+        }
+      ],
+      "solucion": "Cambio total: 93 − 51 = 42 °C en 7 minutos, 42 ÷ 7 = 6 °C por minuto hacia abajo. Valor inicial 93: T = 93 − 6t. Comprobación: t = 7 da 93 − 42 = 51.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-012",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un archivador tiene 139 cm de ancho útil. Las carpetas que ya están guardadas ocupan 53 cm, y cada carpeta nueva ocupa 9 cm. ¿Qué modelo da el espacio libre L, en cm, después de guardar x carpetas nuevas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "L = 86 + 9x",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-tasa",
+          "feedbackDescarte": "Esa usa la tasa con signo positivo: el espacio libre crecería con cada carpeta. Cada carpeta ocupa 9 cm, así que la tasa es −9."
+        },
+        {
+          "clave": "B",
+          "texto": "L = 139 − 9x",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa olvida los 53 cm que ya están ocupados: parte de los 139 cm del archivador vacío. El espacio libre inicial es 139 − 53 = 86."
+        },
+        {
+          "clave": "C",
+          "texto": "L = 77x",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-valor-inicial-por-pasos",
+          "feedbackDescarte": "Esa resta también los 9 al inicio y multiplica todo por x: (86 − 9)·x = 77x. El espacio libre inicial entra una sola vez, no una vez por carpeta."
+        },
+        {
+          "clave": "D",
+          "texto": "L = 86 − 9x",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: libre al inicio 139 − 53 = 86 cm; cada carpeta nueva quita 9: L = 86 − 9x."
+        }
+      ],
+      "solucion": "Espacio libre inicial: 139 − 53 = 86 cm. Cada carpeta nueva resta 9 cm: L = 86 − 9x.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-013",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra valores de una función afín: x = 0, 1, 2, 3 con y = 97, 88, 79, 70. ¿Cuál ecuación representa esta relación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = 9x + 97",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa usa la pendiente con signo positivo, pero y baja: de 97 a 88 el cambio es −9."
+        },
+        {
+          "clave": "B",
+          "texto": "y = −9x + 97",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en x = 0, y = 97; cada paso baja 9 (88 − 97 = −9): y = −9x + 97."
+        },
+        {
+          "clave": "C",
+          "texto": "y = 97x − 9",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa toma el valor en x = 0 como pendiente y el salto como coeficiente de posición. El 97 es y cuando x = 0; el −9 es cuánto cambia y por unidad."
+        },
+        {
+          "clave": "D",
+          "texto": "y = −9x",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-coeficiente-de-posicion",
+          "feedbackDescarte": "Esa omite el coeficiente de posición: en x = 0 daría 0, y la tabla dice 97."
+        }
+      ],
+      "solucion": "Pendiente: 88 − 97 = −9 (y también 79 − 88 = −9 y 70 − 79 = −9). Coeficiente de posición: y = 97 cuando x = 0. Ecuación: y = −9x + 97.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-014",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Los puntos P(0, 9), Q(1, 6) y R(3, 0) de la figura pertenecen a una misma recta. ¿Cuál es la ecuación de esa recta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = 9x − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa intercambia pendiente y coeficiente de posición: 9 es el cruce con el eje Y (punto P), no cuánto baja la recta por unidad."
+        },
+        {
+          "clave": "B",
+          "texto": "y = −3x + 3",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-intercepto-en-eje-equivocado",
+          "feedbackDescarte": "Esa lee el cruce con el eje X, R(3, 0), como coeficiente de posición. El coeficiente de posición es el cruce con el eje Y: P(0, 9)."
+        },
+        {
+          "clave": "C",
+          "texto": "y = 3x + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa usa pendiente positiva, pero la recta baja: de P(0, 9) a Q(1, 6) pierde 3 por unidad."
+        },
+        {
+          "clave": "D",
+          "texto": "y = −3x + 9",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: pendiente (6 − 9) ÷ (1 − 0) = −3 y P(0, 9) da el coeficiente de posición 9."
+        }
+      ],
+      "solucion": "Pendiente entre P y Q: (6 − 9) ÷ (1 − 0) = −3; entre P y R: (0 − 9) ÷ (3 − 0) = −3. P(0, 9) está sobre el eje Y, así que el coeficiente de posición es 9. Ecuación: y = −3x + 9. Comprobación: x = 3 da −9 + 9 = 0.",
+      "figura": {
+        "plano": {
+          "xMin": -1,
+          "xMax": 4,
+          "yMin": -1,
+          "yMax": 9
+        },
+        "descripcion": "Tres puntos P(0, 9), Q(1, 6) y R(3, 0) de una misma recta en el plano cartesiano; la recta no está dibujada.",
+        "elementos": [
+          {
+            "tipo": "punto",
+            "nombre": "P",
+            "x": 0,
+            "y": 9
+          },
+          {
+            "tipo": "punto",
+            "nombre": "Q",
+            "x": 1,
+            "y": 6
+          },
+          {
+            "tipo": "punto",
+            "nombre": "R",
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-015",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál de las siguientes descripciones corresponde al gráfico de y = −4x + 57?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Una recta que sube y corta el eje Y en el punto (0, 57).",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa lee la pendiente −4 como si la recta subiera. El signo negativo de la pendiente dice que baja."
+        },
+        {
+          "clave": "B",
+          "texto": "Una recta que baja y corta el eje Y en el punto (0, −4).",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa toma la pendiente como coeficiente de posición. El −4 es cuánto cambia y por unidad; el cruce con el eje Y es (0, 57)."
+        },
+        {
+          "clave": "C",
+          "texto": "Una recta que baja y corta el eje Y en el punto (0, 57).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: pendiente −4 (baja) y coeficiente de posición 57, así que pasa por (0, 57)."
+        },
+        {
+          "clave": "D",
+          "texto": "Una recta que baja y corta el eje X en el punto (57, 0).",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-intercepto-en-eje-equivocado",
+          "feedbackDescarte": "Esa pone el coeficiente de posición sobre el eje X. El 57 es el valor de y cuando x = 0: el cruce es con el eje Y, en (0, 57)."
+        }
+      ],
+      "solucion": "En y = −4x + 57 la pendiente es −4: la recta baja. El coeficiente de posición es 57: en x = 0, y = 57, así que corta el eje Y en (0, 57).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-016",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra x = 0, 1, 2, 3 con y = 56, 58, 60, 62. ¿Cuál afirmación sobre la función que representa es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es afín: el cambio es constante (2 por unidad) y en x = 0 vale 56, así que f(x) = 2x + 56 y no pasa por el origen.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los saltos son 2, 2 y 2, y f(0) = 56 ≠ 0: es afín, f(x) = 2x + 56."
+        },
+        {
+          "clave": "B",
+          "texto": "Es lineal: basta con que el cambio sea constante, f(x) = 2x.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-coeficiente-de-posicion",
+          "feedbackDescarte": "Esa omite el coeficiente de posición: f(x) = 2x daría 0 en x = 0, y la tabla dice 56. Con cambio constante y f(0) ≠ 0 la función es afín."
+        },
+        {
+          "clave": "C",
+          "texto": "Es afín, con pendiente 56 y coeficiente de posición 2.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa intercambia los papeles: 56 es el valor en x = 0 (coeficiente de posición) y 2 es el cambio por unidad (pendiente)."
+        },
+        {
+          "clave": "D",
+          "texto": "Es afín, f(x) = 3x + 56, porque de 56 a 62 sube 6 en dos saltos.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-mal-los-saltos",
+          "feedbackDescarte": "Esa cuenta 2 saltos entre x = 0 y x = 3, pero hay 3: 6 ÷ 3 = 2, no 6 ÷ 2 = 3."
+        }
+      ],
+      "solucion": "Saltos: 58 − 56 = 2, 60 − 58 = 2, 62 − 60 = 2: cambio constante, pendiente 2. En x = 0 vale 56, distinto de 0: no pasa por el origen. Es afín: f(x) = 2x + 56.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-017",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Sea f(x) = x/9 + 4, con x ≥ 0. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "f(45) = 5",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-valor-inicial",
+          "feedbackDescarte": "Esa calcula 45 ÷ 9 = 5 sin sumar el 4: olvida el valor inicial. f(45) = 5 + 4 = 9."
+        },
+        {
+          "clave": "B",
+          "texto": "Cuando x aumenta en 1, f(x) aumenta en 4.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa toma el coeficiente de posición 4 como la variación por unidad. La pendiente es 1/9: por cada unidad de x, f sube 1/9."
+        },
+        {
+          "clave": "C",
+          "texto": "Para que f(x) = 5 se necesita x = 81.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-direccion-al-despejar",
+          "feedbackDescarte": "Esa despeja sumando el 4 en vez de restarlo: (5 + 4)·9 = 81. Lo correcto es (5 − 4)·9 = 9: f(9) = 1 + 4 = 5."
+        },
+        {
+          "clave": "D",
+          "texto": "El menor valor que puede tomar f(x) es 4.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: como x ≥ 0, x/9 ≥ 0 y el menor valor es f(0) = 0 + 4 = 4."
+        }
+      ],
+      "solucion": "f es afín con pendiente 1/9 y coeficiente de posición 4. Con x ≥ 0 el término x/9 es 0 o positivo, así que el menor valor es f(0) = 4. Las otras afirmaciones: f(45) = 45/9 + 4 = 9; por cada unidad f aumenta 1/9; f(x) = 5 se logra con x = 9.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 39, distractor C",
+        "notaAdaptacion": "Del original (NOTA = puntaje/14 + 2, cuatro afirmaciones, la verdadera es que la mínima nota es 2) se conserva la estructura del ítem (modelo afín con pendiente fraccionaria y cuatro afirmaciones, la verdadera es el valor mínimo en x = 0) y el mecanismo de su distractor C (toma el coeficiente de posición como la variación por unidad). Cambian el contexto (función abstracta f(x) = x/9 + 4 en vez de puntaje y nota), las cifras y las tres afirmaciones falsas; los distractores A y B del original no tienen id en el catálogo y se reemplazan por evaluar sin sumar el coeficiente de posición y por despejar sumando en vez de restar. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-018",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "En una pista de patinaje, el patinador A ya lleva 94 m de ventaja y avanza a 5 m por segundo, y el patinador B parte desde la línea de salida a 7 m por segundo. Las distancias a la línea de salida son dA = 94 + 5t y dB = 7t, con t en segundos. ¿Qué representa el punto donde las dos rectas se intersecan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El instante en que A alcanza su mayor distancia a la línea de salida.",
+          "esCorrecta": false,
+          "errorCatalogado": "malinterpreta-punto-de-cruce",
+          "feedbackDescarte": "Esa le atribuye al cruce un máximo que no representa: A sigue avanzando 5 m por segundo después de t = 47; el cruce solo dice que ahí las distancias coinciden."
+        },
+        {
+          "clave": "B",
+          "texto": "El instante en que B alcanza a A: los dos están a la misma distancia de la línea de salida.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en el cruce dA = dB; 94 + 5t = 7t da t = 47 y los dos están a 329 m."
+        },
+        {
+          "clave": "C",
+          "texto": "El instante desde el cual A deja de avanzar.",
+          "esCorrecta": false,
+          "errorCatalogado": "malinterpreta-punto-de-cruce",
+          "feedbackDescarte": "Esa lee el cruce como fin del movimiento de A. Las dos rectas siguen subiendo después del cruce; lo que cambia es quién va adelante."
+        },
+        {
+          "clave": "D",
+          "texto": "El instante en que B ha recorrido los 94 m de ventaja que tenía A.",
+          "esCorrecta": false,
+          "errorCatalogado": "malinterpreta-punto-de-cruce",
+          "feedbackDescarte": "Esa compara con la ventaja inicial y no con la distancia acumulada de A. En el cruce B ha recorrido 329 m, no 94: A también avanzó, 235 m."
+        }
+      ],
+      "solucion": "Las rectas se intersecan cuando dA = dB: 94 + 5t = 7t, 2t = 94, t = 47. En ese instante dA = 94 + 235 = 329 y dB = 7·47 = 329: B alcanza a A y desde ahí queda adelante.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 34, distractores A, C y D",
+        "notaAdaptacion": "Del original (gráfico de gastos e ingresos acumulados de un emprendimiento de helados en 12 meses, se pregunta qué representa el punto donde las rectas se intersecan) se conserva la estructura del ítem (dos rectas con contexto, se pregunta qué representa el cruce) y los mecanismos de sus tres distractores: A le atribuye al cruce un máximo, C lo lee como fin de una de las dos cantidades y D compara con el valor inicial en vez de con el acumulado. Cambian el contexto (dos patinadores, uno con ventaja, en vez de gastos e ingresos), las cifras (94 + 5t y 7t) y la redacción de las cuatro alternativas; como la figura declarativa de los bancos no dibuja rectas generales, las dos rectas se dan como ecuaciones en el enunciado en vez de gráfico. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismos."
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-019",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Sean f(x) = 2x + 6 y g(x) = −2x + 6. ¿Cuál afirmación es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Se cruzan en (0, 6) y, para x > 0, f(x) > g(x).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2x + 6 = −2x + 6 da x = 0, cruce en (0, 6); en x = 1, f(1) = 8 y g(1) = 4."
+        },
+        {
+          "clave": "B",
+          "texto": "Se cruzan en (0, 6) y, para x > 0, g(x) > f(x).",
+          "esCorrecta": false,
+          "errorCatalogado": "malinterpreta-punto-de-cruce",
+          "feedbackDescarte": "Esa acierta el cruce pero se equivoca en cuál queda arriba después: para x > 0, f sube y g baja, así que f(x) > g(x); por ejemplo f(1) = 8 y g(1) = 4."
+        },
+        {
+          "clave": "C",
+          "texto": "Se cruzan en (6, 0), donde las dos cortan el eje X.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-intercepto-en-eje-equivocado",
+          "feedbackDescarte": "Esa pone el coeficiente de posición común sobre el eje X. El 6 es el valor de las dos en x = 0: el cruce es (0, 6), sobre el eje Y."
+        },
+        {
+          "clave": "D",
+          "texto": "No se cruzan: son paralelas porque las dos tienen pendiente 2 y el signo no cambia la inclinación.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa ignora el signo de la pendiente: 2 y −2 son pendientes distintas, una recta sube y la otra baja, así que se cruzan."
+        }
+      ],
+      "solucion": "Se igualan: 2x + 6 = −2x + 6, 4x = 0, x = 0, y ahí f(0) = g(0) = 6: cruce en (0, 6). Para x > 0, f crece y g decrece: f(1) = 8 > g(1) = 4.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-lineal-y-afin-020",
+      "unidadId": "funcion-lineal-y-afin",
+      "moduloId": "funcion-lineal-y-afin",
+      "habilidad": "argumentar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Para f(x) = 2x − 98, un estudiante afirma: \"por cada unidad que aumenta x, f disminuye 98\". ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: −98 es el cambio por unidad y 2 es el valor en x = 0.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-pendiente-con-intercepto",
+          "feedbackDescarte": "Esa intercambia pendiente y coeficiente de posición: el número que multiplica a x, 2, es el cambio por unidad; −98 es f(0)."
+        },
+        {
+          "clave": "B",
+          "texto": "No: f disminuye 2 por unidad, porque el signo negativo indica que la recta baja.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-signo-de-la-pendiente",
+          "feedbackDescarte": "Esa le pone a la pendiente el signo del coeficiente de posición. La pendiente es +2: la recta sube, aunque parta de −98."
+        },
+        {
+          "clave": "C",
+          "texto": "No: por cada unidad que aumenta x, f aumenta 2; el −98 es f(0).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la pendiente es 2 (cambio por unidad) y −98 es el coeficiente de posición, el valor en x = 0."
+        },
+        {
+          "clave": "D",
+          "texto": "No: f aumenta 2 por unidad y la recta pasa por el origen, porque el −98 no afecta la pendiente.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-coeficiente-de-posicion",
+          "feedbackDescarte": "Esa omite el coeficiente de posición: es cierto que no afecta la pendiente, pero f(0) = −98, así que la recta no pasa por el origen."
+        }
+      ],
+      "solucion": "En f(x) = 2x − 98 el coeficiente de x es 2: por cada unidad que aumenta x, f aumenta 2. El −98 es f(0), el cruce con el eje Y. La afirmación es incorrecta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-funcion-lineal-y-afin-001: abstracto, f(x) = 9x − 4 en x = −8, f(−8) = −76; distractores −72, 68, 41; intermedios 32",
+    "adv-funcion-lineal-y-afin-002: torniquete de un estadio, personas; ya entraron 22, pasan 7 por minuto, 3 minutos, 22 + 7·3 = 43; distractores 21, 29, 87",
+    "adv-funcion-lineal-y-afin-003: forraje de una caballeriza, kilos y días; R = 416 − 8d, quedan 152, d = 33; distractores 71, 19, 34; intermedios 264, 568",
+    "adv-funcion-lineal-y-afin-004: tolvas de una planta de acopio, toneladas y horas; A 90 + 5t, B 186 − t, t = 16, carga igual 170; distractores 24, 46, 31; intermedios 96, 80, 276",
+    "adv-funcion-lineal-y-afin-005: cachorro de una camada, gramos y semanas; 685 en la semana 2, 1.975 en la semana 7, 258 por semana, semana 9 = 2.491; distractores 2.405, 2.233, 2.322; intermedios 1.290, 516, 215, 430",
+    "adv-funcion-lineal-y-afin-006: abstracto, f(3) = 182 y f(7) = 218, pendiente 9, f(0) = 155; distractores 209, 173, 9; intermedios 36, 27",
+    "adv-funcion-lineal-y-afin-007: montañista, altitud en metros por minuto; 3.312 + 5t; distractores 5 + 3.312t, 5t, 3.317t",
+    "adv-funcion-lineal-y-afin-008: glaciar, espesor en metros por año; 262 − 3t; distractores 262 + 3t, 3 − 262t, −3t",
+    "adv-funcion-lineal-y-afin-009: paracaidista, altura en metros por segundo; −6t + 845; distractores 6t − 845, 845 + 6t, 6 − 845t",
+    "adv-funcion-lineal-y-afin-010: aspersores de una línea de riego, cm; primero a 179, paso 84, d = 84x + 95; distractores 84x, 84x + 179, 179x − 95; intermedios 263",
+    "adv-funcion-lineal-y-afin-011: tetera, °C por minuto; 93 en t = 0, 51 en t = 7, T = 93 − 6t; distractores 93 + 6t, 93 − 7t, 6 − 93t; intermedios 42",
+    "adv-funcion-lineal-y-afin-012: archivador, cm; ancho 139, ocupados 53, 9 por carpeta, L = 86 − 9x; distractores 86 + 9x, 139 − 9x, 77x",
+    "adv-funcion-lineal-y-afin-013: abstracto, tabla x = 0, 1, 2, 3 con y = 97, 88, 79, 70, y = −9x + 97; distractores 9x + 97, 97x − 9, −9x",
+    "adv-funcion-lineal-y-afin-014: abstracto con figura, puntos P(0, 9), Q(1, 6), R(3, 0), y = −3x + 9; distractores 9x − 3, −3x + 3, 3x + 9",
+    "adv-funcion-lineal-y-afin-015: abstracto, gráfico de y = −4x + 57, baja y corta el eje Y en (0, 57); distractores sube, corta en (0, −4), corta el eje X en (57, 0)",
+    "adv-funcion-lineal-y-afin-016: abstracto, tabla x = 0, 1, 2, 3 con y = 56, 58, 60, 62, afín f(x) = 2x + 56; distractores lineal 2x, pendiente 56 y coeficiente 2, 3x + 56",
+    "adv-funcion-lineal-y-afin-017: abstracto, f(x) = x/9 + 4 con x ≥ 0, mínimo 4; distractores f(45) = 5, aumenta 4 por unidad, x = 81 para f(x) = 5; intermedios 9",
+    "adv-funcion-lineal-y-afin-018: patinadores, metros y segundos; dA = 94 + 5t, dB = 7t, cruce t = 47 a 329 m; distractores afirmaciones sobre el cruce; intermedios 235",
+    "adv-funcion-lineal-y-afin-019: abstracto, f(x) = 2x + 6 y g(x) = −2x + 6, cruce (0, 6), f > g para x > 0; distractores g > f, (6, 0), paralelas; intermedios f(1) = 8, g(1) = 4",
+    "adv-funcion-lineal-y-afin-020: abstracto, f(x) = 2x − 98, afirmación sobre la pendiente, correcta: aumenta 2 por unidad y f(0) = −98; distractores intercambio, disminuye 2, pasa por el origen"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1"
+    ],
+    "declaracionOriginalidad": "Banco de función lineal y afín: 20 ítems, 60 distractores, 12 errores distintos del catálogo content/errores/funcion-lineal-y-afin.json (los 12 del catálogo, sin ids nuevos), todos los distractores con errorCatalogado (cobertura 60/60, medida con node el 2026-09-15 sobre el archivo final). Reparto: 6 resolver, 6 modelar, 3 representar, 5 argumentar; 3 baja, 11 media, 6 alta; letra correcta 5/5/5/5. Proveniencia por fuente: 14 propia, 6 demre-liberada (adv-funcion-lineal-y-afin-003 sobre la pregunta 31, 004 sobre la pregunta 35 y 017 sobre la pregunta 39 de la forma 2024-invierno-111; 010 sobre la pregunta 38 de la forma 2024-regular-113, cuya clave se comprobó por cálculo porque esa forma no tiene clavijero; 009 sobre la pregunta 40 y 018 sobre la pregunta 34 de la forma 2026-regular-113; en los seis se conserva solo la estructura del ítem y el mecanismo de los distractores que el análisis docs/analisis/frecuencia-demre-v2.json tiene mapeados, y cambian contexto, cifras y alternativas según la notaAdaptacion de cada ítem; los contextos originales de 004 y 010 estaban en la zona saturada de docs/calibracion-lecciones-e-items.md sección 6 y se reescribieron en dominios físicos; los 20 ítems se diseñaron como propia en el plan firmado antes de leer esas preguntas; las dos preguntas de la forma 2027-invierno-111 quedaron fuera por no verificable, sin PDF ni clavijero), 0 temario-demre. Convenciones de mapeo declaradas para Ronda 1: omitir el coeficiente de posición en un cálculo numérico es olvida-valor-inicial y omitirlo en la expresión del modelo es omite-coeficiente-de-posicion; intercambiar m y n al construir el modelo desde un enunciado es intercambia-tasa-y-valor-inicial y al leer una tabla, una figura o una ecuación ya escrita es confunde-pendiente-con-intercepto; el signo equivocado de la tasa en un cálculo o modelo con contexto es confunde-signo-de-la-tasa y el signo equivocado de la pendiente al leer o escribir una recta abstracta, o invertir los dos signos del modelo, es confunde-signo-de-la-pendiente. Contextos verificados con scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-15 sobre los 11 dominios con contexto, dos palabras por dominio más dos respaldos por dominio (66 palabras): ningún dominio con sus dos palabras en un mismo documento, cero recambios; los 9 ítems restantes son abstractos. Cifras elegidas con node el 2026-09-15 contra las respuestas de las tres lecciones, l0-demo, el diagnóstico y el cierre de la unidad, las cifras de las preguntas DEMRE de la unidad y de la pregunta fuente de cada cupo, y todo content/ para las cifras de 100 o más y decimales (criterio de dos niveles firmado el 2026-09-14), incluyendo los intermedios que muestran la solución y los feedbacks: barrido sobre el archivo final con node el 2026-09-15, 77 cifras distintas de 10 o más o con decimal, 0 repetidas entre ítems, 0 bloqueadas; 20 cifras de 10 a 99 coinciden con algún archivo de la unidad en otro rol (ninguna es respuesta de la unidad). Magnitud: la razón entre cada distractor numérico y la correcta está entre 1/3 y 3 en los 15 distractores escalares de los ítems 001 a 005; la única excepción es 006-D, que entrega la pendiente 9 cuando se pide f(0) = 155 (tope firmado de 2 excepciones, medido solo en respuestas escalares); los otros 14 ítems responden expresiones o afirmaciones. Figura solo en adv-funcion-lineal-y-afin-014 (tres puntos, la recta no se dibuja porque figuraRecta solo admite x=c, y=c, y=x e y=−x), montada en /_design con el plano xMin −1, xMax 4, yMin −1, yMax 9 y verificada a 390 px el 2026-09-15: el punto P(0, 9) y su nombre quedan dentro del SVG. Ronda 1 (matemática) NO ejecutada. Ronda 2 (originalidad), 2026-09-15: ejecutado node scripts/consultar-fuentes.mjs (corrido por Benja fuera de la sesión) sobre las 66 palabras de los 11 dominios con contexto de este banco. Verificación ítem por ítem de la salida cruda: ninguno de los 11 dominios tiene sus dos palabras principales en SI a la vez; de los 3 SI sueltos en palabras principales (estadio en 002, altitud en 007, patinaje en 018), cada uno tiene su palabra pareja en NO; los SI de respaldos (abejas, estufa, conejo, pozo, ampolletas, banca, paseo) no se usan. Caso 018: \"patinaje\" aparece en fuentes-demre-liberadas/2024-23-11-29-paes-regular-oficial-matematica1-p2024.md, que no es la fuente del ítem (2026-regular-113, pregunta 34), y \"patinador\" da NO; dominio mantenido. 0 hallazgos, 0 recambios. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}

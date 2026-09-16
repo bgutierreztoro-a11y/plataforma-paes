@@ -329,4 +329,17 @@ export const FIGURAS_MUESTRA: { id: string; rotulo: string; figura: FiguraItem }
       ],
     },
   },
+  {
+    id: "recta-por-puntos",
+    rotulo: "Función afín · puntos P, Q y R de una recta, P en el borde superior (yMax = 9)",
+    figura: {
+      plano: { xMin: -1, xMax: 4, yMin: -1, yMax: 9 },
+      descripcion: "Tres puntos P(0, 9), Q(1, 6) y R(3, 0) de una misma recta en el plano cartesiano; la recta no está dibujada.",
+      elementos: [
+        { tipo: "punto", nombre: "P", x: 0, y: 9 },
+        { tipo: "punto", nombre: "Q", x: 1, y: 6 },
+        { tipo: "punto", nombre: "R", x: 3, y: 0 },
+      ],
+    },
+  },
 ];
