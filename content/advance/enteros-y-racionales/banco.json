@@ -1,0 +1,889 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "enteros-y-racionales",
+  "moduloId": "enteros-y-racionales",
+  "titulo": "Enteros y racionales",
+  "items": [
+    {
+      "id": "adv-enteros-y-racionales-001",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es el resultado de 1 − (−2)(−1 − 2)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−9",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de restar 1 − (−2) = 3 antes de multiplicar, y luego 3 · (−3) = −9. El producto (−2)(−3) se resuelve antes que la resta: 1 − 6 = −5."
+        },
+        {
+          "clave": "B",
+          "texto": "−5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: primero el paréntesis, −1 − 2 = −3; luego el producto, (−2)(−3) = 6; al final la resta, 1 − 6 = −5."
+        },
+        {
+          "clave": "C",
+          "texto": "−3",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de multiplicar (−2)(−1) = 2 antes de resolver lo que está dentro del paréntesis, y seguir con 1 − 2 − 2 = −3. El paréntesis −1 − 2 = −3 va primero: 1 − (−2)(−3) = 1 − 6."
+        },
+        {
+          "clave": "D",
+          "texto": "7",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de leer \"− (−2)\" como \"− 2\": 1 − 2 · (−3) = 1 + 6 = 7. El factor es −2, y su signo se conserva dentro del producto: (−2)(−3) = 6, y 1 − 6 = −5."
+        }
+      ],
+      "solucion": "Se resuelve primero el paréntesis: −1 − 2 = −3. Luego el producto: (−2)(−3) = 6, porque el producto de dos negativos es positivo. Finalmente la resta: 1 − 6 = −5. Comprobación: −5 + 6 = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 1, distractores A y D",
+        "notaAdaptacion": "Del original se conserva la estructura de la expresión (un número menos el producto de un negativo por un paréntesis con dos negativos) y los mecanismos de sus distractores A (multiplica los dos primeros negativos antes de resolver el paréntesis) y D (resta antes de multiplicar). Cambian las cuatro cifras de la expresión, el resultado y las cuatro alternativas; se agrega el distractor de perder el signo del factor negativo. El ítem se redactó a partir de la forma después de verificar la clave por cálculo (el PDF no trae clavijero)."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-002",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Si al cuádruplo de −2 se le resta −1, ¿qué número se obtiene?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−9",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de restar 1 en vez de −1: −8 − 1 = −9. Restar un negativo equivale a sumar su opuesto: −8 − (−1) = −8 + 1."
+        },
+        {
+          "clave": "B",
+          "texto": "−4",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de restar antes de multiplicar: 4 · (−2 − (−1)) = 4 · (−1) = −4. El cuádruplo es solo de −2: primero 4 · (−2) = −8, y a eso se le resta −1."
+        },
+        {
+          "clave": "C",
+          "texto": "−7",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el cuádruplo de −2 es 4 · (−2) = −8, y −8 − (−1) = −8 + 1 = −7."
+        },
+        {
+          "clave": "D",
+          "texto": "7",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de invertir qué se resta de qué: (−1) − (−8) = −1 + 8 = 7. El enunciado resta −1 al cuádruplo, no al revés: −8 − (−1)."
+        }
+      ],
+      "solucion": "El cuádruplo de −2 es 4 · (−2) = −8. Restarle −1 es −8 − (−1) = −8 + 1 = −7. Comprobación: −7 + (−1) = −8, que es el cuádruplo de −2.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 3, distractor A",
+        "notaAdaptacion": "Del original se conserva la estructura (a un múltiplo de un entero negativo se le resta otro entero negativo) y el mecanismo de su distractor A (pierde el signo al restar el negativo). Cambian las cifras, el resultado y las cuatro alternativas; el segundo término se deja sin multiplicador para que los distractores de invertir el orden de la diferencia y de restar antes de multiplicar no coincidan en valor. El ítem se redactó después de verificar la clave por cálculo (el PDF no trae clavijero)."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-003",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un videojuego, una jugadora inicia una partida con 150 puntos. Durante la partida obtiene 255 puntos por monedas, pierde 565 puntos por un choque, obtiene 260 puntos por una llave y pierde 690 puntos por una caída. Al terminar, el juego le anula una penalización de 140 puntos que le habían aplicado antes, lo que equivale a restarle −140. ¿Con cuántos puntos termina la partida?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−730 puntos",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de tratar \"restar −140\" como \"restar 140\": −590 − 140 = −730. Anular una penalización es restar un negativo, y eso suma: −590 − (−140) = −590 + 140."
+        },
+        {
+          "clave": "B",
+          "texto": "−600 puntos",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-el-valor-de-partida",
+          "feedbackDescarte": "Esa sale de sumar solo los movimientos y omitir los 150 puntos iniciales: 255 − 565 + 260 − 690 + 140 = −600. La partida no parte de cero: parte de 150."
+        },
+        {
+          "clave": "C",
+          "texto": "750 puntos",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de invertir qué se resta de qué: calcula pérdidas menos ganancias, 150 + 1.255 − 655 = 750. Lo que se pierde se resta y lo que se gana se suma: 150 + 655 − 1.255."
+        },
+        {
+          "clave": "D",
+          "texto": "−450 puntos",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 150 + 255 = 405; 405 − 565 = −160; −160 + 260 = 100; 100 − 690 = −590; y −590 − (−140) = −590 + 140 = −450."
+        }
+      ],
+      "solucion": "Se parte de 150 y se aplican los movimientos en orden: 150 + 255 = 405; 405 − 565 = −160; −160 + 260 = 100; 100 − 690 = −590. Anular la penalización es restar −140, es decir, sumar 140: −590 + 140 = −450. Comprobación por totales: ganancias 255 + 260 + 140 = 655, pérdidas 565 + 690 = 1.255, y 150 + 655 − 1.255 = −450.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 1, distractor A",
+        "notaAdaptacion": "Del original se conserva la estructura del ítem (un valor inicial seguido de una cadena de sumas y restas cuyo resultado cruza el cero) y el mecanismo de su distractor A (omite el valor de partida y suma solo los movimientos). Cambian el contexto (videojuego en vez de cartas con estrellas y corazones), la cantidad de movimientos, todas las cifras y las cuatro alternativas; se agregan los distractores de invertir el orden de la diferencia y de perder el signo al restar el negativo (la penalización anulada). La clave del original se comprobó en el clavijero de la forma."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-004",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En golf, el resultado de un jugador se anota respecto del par del campo: +2 significa 2 golpes sobre el par, y cada birdie resta 1 golpe a ese resultado. Un jugador va en +2 y hace birdie en cada uno de los 3 hoyos siguientes. ¿En qué resultado queda?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−1 (1 golpe bajo el par)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3 birdies restan 3 · 1 = 3 golpes, y 2 − 3 = −1. Como el resultado cruza el cero, queda 1 golpe bajo el par."
+        },
+        {
+          "clave": "B",
+          "texto": "+1 (1 golpe sobre el par)",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de calcular 3 − 2 = 1, invirtiendo qué se resta de qué. Se parte de +2 y se le restan los 3 golpes de los birdies: 2 − 3 = −1."
+        },
+        {
+          "clave": "C",
+          "texto": "−3 (3 golpes bajo el par)",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-el-valor-de-partida",
+          "feedbackDescarte": "Esa sale de contar solo los 3 birdies, −3, como si el jugador hubiera partido en cero. Partía en +2: 2 − 3 = −1."
+        },
+        {
+          "clave": "D",
+          "texto": "+5 (5 golpes sobre el par)",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa sale de sumar 2 + 3 = 5, tomando cada birdie como un golpe más en vez de uno menos. Un birdie resta 1 golpe: el resultado baja de +2 a −1."
+        }
+      ],
+      "solucion": "Cada birdie resta 1 golpe, así que 3 birdies restan 3 · 1 = 3 golpes. Desde +2: 2 − 3 = −1. El resultado pasa de 2 golpes sobre el par a 1 golpe bajo el par. Comprobación: desde −1, sumar los 3 golpes devuelve +2.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 8, distractor C",
+        "notaAdaptacion": "Del original se conserva la estructura (un valor inicial positivo que baja una cantidad fija por etapa hasta cruzar el cero) y el mecanismo de su distractor C (omite el valor de partida y opera solo con la variación). Cambian el contexto (resultado de golf respecto del par en vez de temperatura de una cámara de frío), la pregunta (se pide el valor final en vez del tiempo transcurrido), todas las cifras y las cuatro alternativas; se agregan los distractores de tratar la baja como suma y de invertir el orden de la diferencia. La clave del original se comprobó en el clavijero de la forma."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-005",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es el valor de 0,1 ÷ (0,02 · 0,8)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,625",
+          "esCorrecta": false,
+          "errorCatalogado": "corre-la-coma-al-operar-decimales",
+          "feedbackDescarte": "Esa sale de correr la coma una posición al multiplicar: toma 0,02 · 0,8 como 0,16 en vez de 0,016, y 0,1 ÷ 0,16 = 0,625. El producto tiene tantos decimales como los dos factores juntos: 0,02 · 0,8 = 0,016."
+        },
+        {
+          "clave": "B",
+          "texto": "6,25",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: primero el paréntesis, 0,02 · 0,8 = 0,016; luego 0,1 ÷ 0,016 = 6,25. Comprobación: 6,25 · 0,016 = 0,1."
+        },
+        {
+          "clave": "C",
+          "texto": "4",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de ignorar el paréntesis y operar de izquierda a derecha: 0,1 ÷ 0,02 = 5 y luego 5 · 0,8 = 4. El paréntesis se resuelve primero: 0,1 ÷ (0,02 · 0,8) = 0,1 ÷ 0,016."
+        },
+        {
+          "clave": "D",
+          "texto": "62,5",
+          "esCorrecta": false,
+          "errorCatalogado": "corre-la-coma-al-operar-decimales",
+          "feedbackDescarte": "Esa sale de correr la coma una posición al multiplicar: toma 0,02 · 0,8 como 0,0016 en vez de 0,016, y 0,1 ÷ 0,0016 = 62,5. El producto 0,02 · 0,8 tiene tres decimales: 0,016."
+        }
+      ],
+      "solucion": "Primero el paréntesis: 0,02 · 0,8 = 0,016 (dos decimales más uno son tres decimales). Luego la división: 0,1 ÷ 0,016 = 6,25, porque 6,25 · 0,016 = 0,1. Dividir por un número menor que 1 entrega un resultado mayor que el dividendo.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 2, distractores A y D",
+        "notaAdaptacion": "Del original se conserva la estructura (un cociente de decimales cuya escritura mezcla un producto y una división) y el mecanismo de sus distractores A y D (la coma corrida una posición hacia cada lado en el producto). Cambian las tres cifras, la disposición (el producto pasa al divisor, entre paréntesis, en vez de ir en el dividendo), el resultado y las cuatro alternativas; se agrega el distractor de ignorar el paréntesis. La clave del original se comprobó en el clavijero de la forma."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-006",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una recta numérica horizontal, con los negativos a la izquierda del cero, ¿cuál de los siguientes procedimientos representa la operación (−2) − (−6)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Ubicarse en el −6 y desplazarse 2 unidades a la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Ese procedimiento representa (−6) − (−2), que termina en −4: invierte qué se resta de qué. La operación parte del −2, que es el primer término."
+        },
+        {
+          "clave": "B",
+          "texto": "Ubicarse en el −2 y desplazarse 6 unidades a la izquierda.",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Ese procedimiento representa (−2) − 6, que termina en −8: trata \"restar −6\" como \"restar 6\". Restar un negativo es sumar su opuesto, y sumar 6 se representa desplazándose a la derecha."
+        },
+        {
+          "clave": "C",
+          "texto": "Ubicarse en el −2 y desplazarse 6 unidades a la derecha.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (−2) − (−6) = −2 + 6. Se parte del −2 y sumar 6 es avanzar 6 unidades a la derecha, hasta el 4."
+        },
+        {
+          "clave": "D",
+          "texto": "Ubicarse en el 2 y desplazarse 6 unidades a la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Ese procedimiento representa 2 + 6, que termina en 8: toma el −2 como la distancia 2 y pierde su signo. El punto de partida es −2, a la izquierda del cero."
+        }
+      ],
+      "solucion": "Restar un negativo equivale a sumar su opuesto: (−2) − (−6) = −2 + 6. En la recta, el primer término indica dónde ubicarse (en el −2) y sumar 6 indica un desplazamiento de 6 unidades hacia la derecha. El procedimiento termina en −2 + 6 = 4. Comprobación: 4 + (−6) = −2.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 2, distractor B",
+        "notaAdaptacion": "Del original se conserva la estructura (representar en la recta numérica una operación entre dos enteros negativos eligiendo el punto de partida y el sentido del desplazamiento) y el mecanismo de su distractor B (trata el segundo negativo como una distancia y se desplaza hacia el lado contrario). Cambian la operación (una resta de negativos en vez de una suma), las dos cifras y las cuatro alternativas; se agregan los distractores de perder el signo al restar el negativo y de invertir el orden de la diferencia. El ítem se redactó después de verificar la clave por cálculo (el PDF no trae clavijero)."
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-007",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es el valor de 2/5 + 8/9 ÷ 5/9?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la división va primero, 8/9 ÷ 5/9 = 8/9 · 9/5 = 8/5; luego 2/5 + 8/5 = 10/5 = 2."
+        },
+        {
+          "clave": "B",
+          "texto": "41/40",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-division-fracciones",
+          "feedbackDescarte": "Esa sale de invertir el orden de la división: calcula 5/9 ÷ 8/9 = 5/8 y luego 2/5 + 5/8 = 41/40. La división es 8/9 ÷ 5/9, el dividendo es 8/9: 8/9 · 9/5 = 8/5."
+        },
+        {
+          "clave": "C",
+          "texto": "58/25",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de sumar antes de dividir: (2/5 + 8/9) ÷ 5/9 = 58/45 · 9/5 = 58/25. Sin paréntesis, la división se resuelve antes que la suma: 2/5 + (8/9 ÷ 5/9)."
+        },
+        {
+          "clave": "D",
+          "texto": "1",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-denominadores",
+          "feedbackDescarte": "Esa sale de sumar numeradores y denominadores por separado en el último paso: 2/5 + 8/5 = 10/10 = 1. Con el mismo denominador se suman solo los numeradores: 10/5 = 2."
+        }
+      ],
+      "solucion": "Sin paréntesis, la división se resuelve antes que la suma. Dividir por 5/9 es multiplicar por su recíproco 9/5: 8/9 ÷ 5/9 = 8/9 · 9/5 = 72/45 = 8/5. Luego la suma con igual denominador: 2/5 + 8/5 = 10/5 = 2. Comprobación: 2 − 8/5 = 2/5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-008",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En la cuenta regresiva de un lanzamiento, los instantes anteriores al despegue se anotan con números negativos: −8 s significa 8 segundos antes del despegue. ¿Cuál operación permite calcular cuántos segundos transcurren desde el instante −8 s hasta el instante −1 s?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−8) − (−1)",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa operación invierte qué se resta de qué: da −7, un tiempo negativo. Para el tiempo que transcurre se resta el instante inicial al final: (−1) − (−8)."
+        },
+        {
+          "clave": "B",
+          "texto": "(−1) + (−8)",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa operación suma los dos instantes como si fueran distancias y da −9. El tiempo transcurrido es una diferencia entre instantes: (−1) − (−8)."
+        },
+        {
+          "clave": "C",
+          "texto": "(−1) − (−8)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el tiempo transcurrido es el instante final menos el inicial, (−1) − (−8) = −1 + 8 = 7, y de −8 s a −1 s pasan efectivamente 7 segundos."
+        },
+        {
+          "clave": "D",
+          "texto": "(−1) − 8",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa operación resta 8 en vez de −8 y da −9: pierde el signo del instante inicial. El instante inicial es −8, y restarlo es (−1) − (−8) = −1 + 8."
+        }
+      ],
+      "solucion": "El tiempo transcurrido entre dos instantes es el instante final menos el instante inicial: (−1) − (−8). Como restar un negativo es sumar su opuesto, (−1) − (−8) = −1 + 8 = 7. Comprobación: contando en la recta desde −8 hasta −1 hay 7 unidades.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-009",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un tarro contiene 4 L de esmalte. Se quiere envasar todo el esmalte en frascos de 4/5 L cada uno. ¿Cuál operación permite calcular cuántos frascos se llenan?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4 · 4/5",
+          "esCorrecta": false,
+          "errorCatalogado": "rechaza-division-que-agranda",
+          "feedbackDescarte": "Esa operación multiplica y da 16/5, un valor menor que 4, como si el resultado tuviera que achicarse. Repartir 4 L en frascos de menos de 1 L da más de 4 frascos: la operación es 4 ÷ 4/5."
+        },
+        {
+          "clave": "B",
+          "texto": "4/5 ÷ 4",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-division-fracciones",
+          "feedbackDescarte": "Esa operación invierte el orden de la división y da 1/5, menos de un frasco. Lo que se reparte es el total, 4 L, y se divide por lo que cabe en cada frasco: 4 ÷ 4/5."
+        },
+        {
+          "clave": "C",
+          "texto": "4 + 4/5",
+          "esCorrecta": false,
+          "errorCatalogado": "rechaza-division-que-agranda",
+          "feedbackDescarte": "Esa operación suma la capacidad de un frasco al total y da 24/5, que no cuenta frascos. Contar cuántas veces cabe 4/5 L en 4 L es dividir: 4 ÷ 4/5."
+        },
+        {
+          "clave": "D",
+          "texto": "4 ÷ 4/5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cuántas veces cabe 4/5 L en 4 L se calcula dividiendo, 4 ÷ 4/5 = 4 · 5/4 = 5 frascos."
+        }
+      ],
+      "solucion": "Contar cuántos frascos de 4/5 L se llenan con 4 L es preguntar cuántas veces cabe 4/5 en 4: eso es la división 4 ÷ 4/5. Dividir por una fracción es multiplicar por su recíproco: 4 · 5/4 = 20/4 = 5. Comprobación: 5 frascos de 4/5 L suman 5 · 4/5 = 20/5 = 4 L.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-010",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un estudiante afirma que con 6 L de aceite se llenan exactamente 7 botellas de 6/7 L cada una. ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: 6 ÷ 6/7 = 6 · 7/6 = 7, y 7 botellas de 6/7 L suman exactamente 6 L.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: dividir por 6/7 es multiplicar por 7/6, 6 · 7/6 = 7, y la comprobación 7 · 6/7 = 6 cierra."
+        },
+        {
+          "clave": "B",
+          "texto": "No: al dividir 6 entre una fracción el resultado tiene que ser menor que 6, así que no alcanza para 7 botellas.",
+          "esCorrecta": false,
+          "errorCatalogado": "rechaza-division-que-agranda",
+          "feedbackDescarte": "Esa razón rechaza un resultado correcto porque es mayor que el dividendo. Dividir por un número menor que 1 agranda: en 6 L caben más de 6 botellas de menos de 1 L, y 6 ÷ 6/7 = 7."
+        },
+        {
+          "clave": "C",
+          "texto": "No: 6 ÷ 6/7 se calcula como 6/7 ÷ 6 = 1/7, así que ni siquiera se llena una botella.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-division-fracciones",
+          "feedbackDescarte": "Esa razón invierte el orden de la división: 6/7 ÷ 6 = 1/7 no es 6 ÷ 6/7. El dividendo es el total de aceite, 6 L, y 6 ÷ 6/7 = 7."
+        },
+        {
+          "clave": "D",
+          "texto": "No: 6 ÷ 6/7 = 6 · 6/7 = 36/7, así que se llenan 5 botellas y sobra aceite.",
+          "esCorrecta": false,
+          "errorCatalogado": "rechaza-division-que-agranda",
+          "feedbackDescarte": "Esa razón multiplica por 6/7 en vez de dividir, porque espera un resultado menor que 6. Dividir por 6/7 es multiplicar por el recíproco 7/6: 6 · 7/6 = 7."
+        }
+      ],
+      "solucion": "Cuántas botellas de 6/7 L se llenan con 6 L es 6 ÷ 6/7. Dividir por una fracción es multiplicar por su recíproco: 6 · 7/6 = 42/6 = 7. El resultado es mayor que 6 porque cada botella lleva menos de 1 L. Comprobación: 7 · 6/7 = 42/7 = 6. La afirmación es correcta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-011",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una tabla de posiciones de fútbol, la diferencia de goles de un equipo es −7 y la de otro equipo es −2. Un estudiante afirma: \"Como 7 es mayor que 2, la diferencia −7 es mayor que la diferencia −2, así que el primer equipo está mejor en ese criterio\". ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: entre dos negativos, el de mayor valor absoluto es el mayor, igual que ocurre con los positivos.",
+          "esCorrecta": false,
+          "errorCatalogado": "compara-negativos-como-positivos",
+          "feedbackDescarte": "Esa razón compara −7 y −2 como si fueran 7 y 2. El signo invierte el orden: −7 está más a la izquierda que −2 en la recta, así que −7 < −2."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: (−2) − (−7) = 5 es positivo, y una diferencia positiva confirma que el segundo término, −7, es el mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-conclusion-entre-negativos",
+          "feedbackDescarte": "Esa razón calcula bien la diferencia, (−2) − (−7) = 5, pero invierte la conclusión: si al restar −7 de −2 queda un positivo, el mayor es −2, el primero de la resta."
+        },
+        {
+          "clave": "C",
+          "texto": "No: (−7) − (−2) = −7 − 2 = −9, y un resultado negativo muestra que −7 es el menor.",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "La conclusión es correcta, pero el cálculo pierde el signo: (−7) − (−2) = −7 + 2 = −5, no −9. La comparación se decide con −5 < 0, es decir, −7 < −2."
+        },
+        {
+          "clave": "D",
+          "texto": "No: −7 está más a la izquierda que −2 en la recta numérica, así que −7 < −2; el primer equipo está peor en ese criterio.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: un negativo con mayor valor absoluto está más lejos del cero hacia la izquierda, y por eso es menor. Se confirma con (−7) − (−2) = −5, negativo."
+        }
+      ],
+      "solucion": "En la recta numérica, −7 está a la izquierda de −2, porque está más lejos del cero hacia el lado negativo; por lo tanto −7 < −2. Comprobación con la resta: (−7) − (−2) = −7 + 2 = −5, y un resultado negativo indica que el primer término es el menor. Una diferencia de goles de −7 es peor que una de −2: la afirmación no es correcta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-012",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un estudiante calcula 1,8 ÷ 0,45 y obtiene 4. Luego afirma: \"Ese resultado tiene que estar malo, porque al dividir 1,8 el resultado debe ser menor que 1,8\". ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: toda división entrega un número menor que el dividendo, así que el resultado debe ser menor que 1,8.",
+          "esCorrecta": false,
+          "errorCatalogado": "rechaza-division-que-agranda",
+          "feedbackDescarte": "Esa razón rechaza un resultado correcto porque es mayor que el dividendo. Dividir por un número menor que 1 agranda: 0,45 cabe 4 veces en 1,8, y 4 · 0,45 = 1,8."
+        },
+        {
+          "clave": "B",
+          "texto": "No: 4 es correcto, porque 4 · 0,45 = 1,8; al dividir por un número menor que 1 el resultado es mayor que el dividendo.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la comprobación 4 · 0,45 = 1,8 cierra, y como 0,45 es menor que 1, cabe más de una vez en 1,8: el cociente es mayor que 1,8."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: el resultado correcto es 0,4, porque al dividir hay que correr la coma una posición.",
+          "esCorrecta": false,
+          "errorCatalogado": "corre-la-coma-al-operar-decimales",
+          "feedbackDescarte": "Esa razón corre la coma: 0,4 · 0,45 no da 1,8, mientras que 4 · 0,45 = 1,8 sí. El cociente correcto es 4."
+        },
+        {
+          "clave": "D",
+          "texto": "Sí: el resultado correcto es 0,45 ÷ 1,8 = 0,25.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-division-fracciones",
+          "feedbackDescarte": "Esa razón invierte el orden de la división: 0,45 ÷ 1,8 = 0,25 responde cuántas veces cabe 1,8 en 0,45. La división pedida es 1,8 ÷ 0,45, y 0,45 cabe 4 veces en 1,8."
+        }
+      ],
+      "solucion": "1,8 ÷ 0,45 = 4, porque 4 · 0,45 = 1,8. El resultado es mayor que el dividendo porque el divisor es menor que 1: un número menor que 1 cabe más de una vez en 1,8. Dividir no siempre achica; achica solo cuando el divisor es mayor que 1. La afirmación no es correcta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-013",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es el resultado de (−2/9) − (−9/11)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−103/99",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de restar 9/11 en vez de −9/11: −2/9 − 9/11 = −22/99 − 81/99 = −103/99. Restar un negativo es sumar su opuesto: −2/9 + 9/11."
+        },
+        {
+          "clave": "B",
+          "texto": "−59/99",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de invertir qué se resta de qué: (−9/11) − (−2/9) = −81/99 + 22/99 = −59/99. El primer término es −2/9, y de él se resta −9/11."
+        },
+        {
+          "clave": "C",
+          "texto": "7/20",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-denominadores",
+          "feedbackDescarte": "Esa sale de sumar numeradores y denominadores por separado: −2/9 + 9/11 = 7/20. Para sumar fracciones se lleva a un denominador común: −22/99 + 81/99 = 59/99."
+        },
+        {
+          "clave": "D",
+          "texto": "59/99",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: restar −9/11 es sumar 9/11, y con denominador común, −22/99 + 81/99 = 59/99."
+        }
+      ],
+      "solucion": "Restar un negativo es sumar su opuesto: (−2/9) − (−9/11) = −2/9 + 9/11. Se llevan las dos fracciones al denominador común, el producto de los denominadores: −2/9 = −22/99 y 9/11 = 81/99. Entonces −22/99 + 81/99 = 59/99. El resultado es positivo porque 9/11 es mayor que 2/9. Comprobación: 59/99 + (−9/11) = −22/99 = −2/9.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-014",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una recta numérica horizontal, con los negativos a la izquierda del cero, se marcan los números −5,7 y −2,3. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−5,7 está a la derecha de −2,3, porque 5,7 es mayor que 2,3.",
+          "esCorrecta": false,
+          "errorCatalogado": "compara-negativos-como-positivos",
+          "feedbackDescarte": "Esa afirmación ordena −5,7 y −2,3 como si fueran 5,7 y 2,3. Con negativos el orden se invierte: el de mayor valor absoluto queda más a la izquierda."
+        },
+        {
+          "clave": "B",
+          "texto": "−5,7 está a la izquierda de −2,3, porque −5,7 es menor que −2,3.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en la recta, los negativos crecen hacia el cero. −5,7 está más lejos del cero que −2,3, hacia la izquierda, y por eso es menor."
+        },
+        {
+          "clave": "C",
+          "texto": "−5,7 está a la derecha de −2,3, porque (−2,3) − (−5,7) = 3,4 es positivo y eso indica que el segundo número, −5,7, es el mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-conclusion-entre-negativos",
+          "feedbackDescarte": "Esa afirmación calcula bien la diferencia, 3,4, pero invierte la conclusión: si −2,3 menos −5,7 da positivo, el mayor es −2,3, el primero de la resta, y −5,7 queda a la izquierda."
+        },
+        {
+          "clave": "D",
+          "texto": "−5,7 está a la derecha de −2,3, porque está a mayor distancia del cero y esa distancia se mide hacia la derecha.",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa afirmación toma −5,7 como la distancia 5,7 y pierde el signo. La distancia al cero es 5,7, pero el signo negativo la ubica hacia la izquierda: −5,7 queda a la izquierda de −2,3."
+        }
+      ],
+      "solucion": "En la recta numérica los números crecen hacia la derecha. −5,7 está a 5,7 unidades del cero hacia la izquierda y −2,3 está a 2,3 unidades del cero hacia la izquierda; como 5,7 > 2,3, −5,7 queda más a la izquierda, es decir, −5,7 < −2,3. Comprobación: (−2,3) − (−5,7) = −2,3 + 5,7 = 3,4 > 0, así que −2,3 es el mayor.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-015",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una carrera, el registro de cada atleta se anota como la diferencia respecto del tiempo de referencia de la prueba, con signo negativo si fue más rápido que la referencia. Una atleta registró −2,7 s y otra registró −0,3 s. ¿Cuál es el resultado de (−2,7) − (−0,3), la diferencia entre el primer registro y el segundo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−2,4 s",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (−2,7) − (−0,3) = −2,7 + 0,3 = −2,4. La primera atleta fue 2,4 s más rápida que la segunda."
+        },
+        {
+          "clave": "B",
+          "texto": "−3 s",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de restar 0,3 en vez de −0,3: −2,7 − 0,3 = −3. Restar un negativo es sumar su opuesto: −2,7 + 0,3 = −2,4."
+        },
+        {
+          "clave": "C",
+          "texto": "2,4 s",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de invertir qué se resta de qué: (−0,3) − (−2,7) = 2,4. La diferencia pedida parte del primer registro: (−2,7) − (−0,3) = −2,4."
+        },
+        {
+          "clave": "D",
+          "texto": "3 s",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa sale de sumar 2,7 + 0,3 tomando los registros como distancias sin signo. Los dos registros son negativos, y (−2,7) − (−0,3) = −2,7 + 0,3 = −2,4."
+        }
+      ],
+      "solucion": "Restar un negativo equivale a sumar su opuesto: (−2,7) − (−0,3) = −2,7 + 0,3 = −2,4. El resultado es negativo porque el primer registro, −2,7, es menor que el segundo, −0,3: la primera atleta fue 2,4 s más rápida. Comprobación: −2,4 + (−0,3) = −2,7.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-016",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un estudiante afirma que 9/14 es mayor que 5/7. ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: 9 es mayor que 5, y basta comparar los numeradores.",
+          "esCorrecta": false,
+          "errorCatalogado": "compara-fracciones-solo-por-numerador",
+          "feedbackDescarte": "Esa razón compara solo los numeradores e ignora que los denominadores son distintos. Con el mismo denominador, 5/7 = 10/14, y 9/14 < 10/14."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: 9/14 − 5/7 = 4/7 es positivo, así que 9/14 es el mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-denominadores",
+          "feedbackDescarte": "Esa razón resta los numeradores y resta los denominadores por separado y obtiene 4/7. Con el mismo denominador, 9/14 − 10/14 = −1/14, negativo: 9/14 es el menor."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: al dividir 9/14 entre 5/7 se obtiene 5/7 · 14/9 = 10/9, mayor que 1, así que 9/14 es el mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-division-fracciones",
+          "feedbackDescarte": "Esa razón invierte el orden de la división: 5/7 · 14/9 es 5/7 ÷ 9/14. La división 9/14 ÷ 5/7 = 9/14 · 7/5 = 9/10, menor que 1: 9/14 es el menor."
+        },
+        {
+          "clave": "D",
+          "texto": "No: 5/7 = 10/14, y 9/14 es menor que 10/14.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con el mismo denominador se comparan los numeradores, y el de 9/14 es menor que el de 10/14; por eso 9/14 < 5/7."
+        }
+      ],
+      "solucion": "Para comparar se lleva a denominador común: 5/7 = 10/14. Con el mismo denominador se comparan los numeradores, y el de 9/14 es menor que el de 10/14, así que 9/14 < 5/7. Comprobación por división: 9/14 ÷ 5/7 = 9/14 · 7/5 = 9/10, menor que 1. La afirmación no es correcta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-017",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es el doble de la diferencia entre −3 y −1?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−8",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de calcular la diferencia como −3 − 1 = −4, perdiendo el signo de −1, y luego 2 · (−4) = −8. Restar −1 es sumar 1: (−3) − (−1) = −2."
+        },
+        {
+          "clave": "B",
+          "texto": "4",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa sale de invertir el orden de la diferencia: (−1) − (−3) = 2, y 2 · 2 = 4. La diferencia entre −3 y −1 es (−3) − (−1) = −2."
+        },
+        {
+          "clave": "C",
+          "texto": "−4",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la diferencia es (−3) − (−1) = −3 + 1 = −2, y su doble es 2 · (−2) = −4."
+        },
+        {
+          "clave": "D",
+          "texto": "−5",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de duplicar antes de restar: 2 · (−3) − (−1) = −6 + 1 = −5. El doble es de la diferencia completa: 2 · [(−3) − (−1)] = 2 · (−2)."
+        }
+      ],
+      "solucion": "Primero la diferencia: (−3) − (−1) = −3 + 1 = −2. Luego el doble: 2 · (−2) = −4. Comprobación: la mitad de −4 es −2, y −2 + (−1) = −3.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-018",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es el resultado de (−2,2) · 0,05 − (−4,1)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3",
+          "esCorrecta": false,
+          "errorCatalogado": "corre-la-coma-al-operar-decimales",
+          "feedbackDescarte": "Esa sale de correr la coma en el producto: toma (−2,2) · 0,05 como −1,1 en vez de −0,11, y −1,1 + 4,1 = 3. El producto tiene tres decimales: 2,2 · 0,05 = 0,11."
+        },
+        {
+          "clave": "B",
+          "texto": "−4,21",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa sale de restar 4,1 en vez de −4,1: −0,11 − 4,1 = −4,21. Restar un negativo es sumar su opuesto: −0,11 + 4,1 = 3,99."
+        },
+        {
+          "clave": "C",
+          "texto": "3,99",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el producto va primero, (−2,2) · 0,05 = −0,11; luego −0,11 − (−4,1) = −0,11 + 4,1 = 3,99."
+        },
+        {
+          "clave": "D",
+          "texto": "−9,13",
+          "esCorrecta": false,
+          "errorCatalogado": "rompe-orden-de-operaciones",
+          "feedbackDescarte": "Esa sale de restar antes de multiplicar: 0,05 − (−4,1) = 4,15 y luego (−2,2) · 4,15 = −9,13. El producto (−2,2) · 0,05 se resuelve antes que la resta."
+        }
+      ],
+      "solucion": "Primero el producto: (−2,2) · 0,05 = −0,11 (un decimal más dos decimales son tres decimales, y el signo es negativo porque los factores tienen signos distintos). Luego la resta de un negativo, que equivale a sumar su opuesto: −0,11 − (−4,1) = −0,11 + 4,1 = 3,99. Comprobación: 3,99 − 4,1 = −0,11.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-019",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En el ranking de un club de tenis de mesa, una jugadora tiene 1.306 puntos. En un torneo gana 115 puntos en su primer partido, pierde 208 puntos en el segundo, gana 133 puntos en el tercero y pierde 176 puntos en el cuarto. ¿Cuál expresión permite calcular su puntaje en el ranking después del torneo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.306 + 115 + 208 + 133 + 176",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa expresión suma también los puntos perdidos, como si fueran cantidades sin signo, y da 1.938. Los partidos perdidos restan puntos: −208 y −176."
+        },
+        {
+          "clave": "B",
+          "texto": "1.306 + 115 − 208 + 133 − 176",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: se parte de los 1.306 puntos, se suma lo ganado y se resta lo perdido, en el orden de los partidos. Da 1.170 puntos."
+        },
+        {
+          "clave": "C",
+          "texto": "115 − 208 + 133 − 176",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-el-valor-de-partida",
+          "feedbackDescarte": "Esa expresión suma solo los movimientos del torneo y omite los 1.306 puntos con que la jugadora partía; da −136, que es la variación, no el puntaje. El ranking parte de 1.306."
+        },
+        {
+          "clave": "D",
+          "texto": "1.306 − 115 + 208 − 133 + 176",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-orden-de-la-diferencia",
+          "feedbackDescarte": "Esa expresión invierte qué se suma y qué se resta: resta lo ganado y suma lo perdido, y da 1.442. Lo ganado se suma y lo perdido se resta: 1.306 + 115 − 208 + 133 − 176."
+        }
+      ],
+      "solucion": "El puntaje después del torneo es el puntaje inicial más los puntos ganados menos los puntos perdidos: 1.306 + 115 − 208 + 133 − 176. Ganados: 115 + 133 = 248; perdidos: 208 + 176 = 384; 1.306 + 248 − 384 = 1.170. Comprobación: la variación del torneo es 248 − 384 = −136, y 1.306 + (−136) = 1.170.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-enteros-y-racionales-020",
+      "unidadId": "enteros-y-racionales",
+      "moduloId": "enteros-y-racionales",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un concurso de ortografía, un participante tiene −3 puntos. Luego gana 4 puntos y, después, el jurado le anula una penalización de 2 puntos que le había aplicado antes, lo que equivale a restarle −2. Un estudiante afirma que el participante queda con −1 punto. ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: −3 + 4 − 2 = −1.",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-restar-negativo",
+          "feedbackDescarte": "Esa cuenta trata \"restar −2\" como \"restar 2\". Anular la penalización es restar un negativo, y eso suma: −3 + 4 − (−2) = −3 + 4 + 2 = 3."
+        },
+        {
+          "clave": "B",
+          "texto": "No: queda con 6 puntos, porque solo cuentan los movimientos: 4 + 2 = 6.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-el-valor-de-partida",
+          "feedbackDescarte": "Esa cuenta omite el valor de partida: el participante no parte de cero, parte de −3. Con el punto de partida, −3 + 4 + 2 = 3."
+        },
+        {
+          "clave": "C",
+          "texto": "No: queda con 3 puntos, porque −3 + 4 − (−2) = −3 + 4 + 2 = 3.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: se parte de −3, ganar 4 lleva a 1, y restar −2 es sumar 2: 1 + 2 = 3."
+        },
+        {
+          "clave": "D",
+          "texto": "No: queda con 9 puntos, porque se suman todos los valores sin signo: 3 + 4 + 2 = 9.",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-negativo-como-distancia",
+          "feedbackDescarte": "Esa cuenta toma el −3 inicial como la distancia 3 y pierde su signo. El participante parte por debajo de cero: −3 + 4 + 2 = 3."
+        }
+      ],
+      "solucion": "Se parte de −3. Ganar 4 puntos: −3 + 4 = 1. Anular una penalización de 2 es restar −2, que equivale a sumar 2: 1 − (−2) = 1 + 2 = 3. El participante queda con 3 puntos, no con −1: la afirmación no es correcta.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-enteros-y-racionales-001: abstracto, 1 − (−2)(−1 − 2) = −5; distractores −9, −3, 7; intermedios −3, 6, 3",
+    "adv-enteros-y-racionales-002: abstracto, cuádruplo de −2 menos −1, −8 − (−1) = −7; distractores −9, −4, 7; intermedios −8, −1",
+    "adv-enteros-y-racionales-003: videojuego, puntos; inicio 150, +255, −565, +260, −690, penalización anulada 140; final −450; distractores −730, −600, 750; intermedios 405, −160, 100, −590, 655, 1.255",
+    "adv-enteros-y-racionales-004: golf, resultado respecto del par; +2, 3 birdies de −1, final −1; distractores 1, −3, 5; intermedio 3",
+    "adv-enteros-y-racionales-005: abstracto, 0,1 ÷ (0,02 · 0,8) = 6,25; distractores 0,625, 4, 62,5; intermedios 0,016, 5, 0,16, 0,0016",
+    "adv-enteros-y-racionales-006: recta numérica, (−2) − (−6) = 4, procedimientos; puntos de llegada de los distractores −4, −8, 8",
+    "adv-enteros-y-racionales-007: abstracto, 2/5 + 8/9 ÷ 5/9 = 2; distractores 41/40, 58/25, 1; intermedios 8/5, 72/45, 58/45, 5/8, 10/5, 10/10",
+    "adv-enteros-y-racionales-008: cuenta regresiva de un lanzamiento, segundos; instantes −8 s y −1 s, operación (−1) − (−8) = 7; valores de los distractores −7, −9, −9",
+    "adv-enteros-y-racionales-009: tarro de esmalte y frascos, litros; 4 L en frascos de 4/5 L, operación 4 ÷ 4/5 = 5; valores de los distractores 16/5, 1/5, 24/5; intermedios 20/4, 20/5",
+    "adv-enteros-y-racionales-010: aceite y botellas, litros; 6 L en botellas de 6/7 L, 6 ÷ 6/7 = 7, afirmación correcta; valores de los distractores 1/7, 36/7; intermedios 42/6, 42/7, 5 botellas",
+    "adv-enteros-y-racionales-011: tabla de posiciones de fútbol, diferencia de goles −7 y −2, afirmación falsa; (−7) − (−2) = −5; valores de los distractores 5, −9",
+    "adv-enteros-y-racionales-012: abstracto, 1,8 ÷ 0,45 = 4, afirmación falsa; valores de los distractores 0,4, 0,25",
+    "adv-enteros-y-racionales-013: abstracto, (−2/9) − (−9/11) = 59/99; distractores −103/99, −59/99, 7/20; intermedios −22/99, 81/99, −22/99",
+    "adv-enteros-y-racionales-014: recta numérica, −5,7 y −2,3, afirmaciones sobre su ubicación; diferencia (−2,3) − (−5,7) = 3,4",
+    "adv-enteros-y-racionales-015: carrera de atletismo, registros respecto del tiempo de referencia, segundos; −2,7 y −0,3, (−2,7) − (−0,3) = −2,4; distractores −3, 2,4, 3",
+    "adv-enteros-y-racionales-016: abstracto, afirmación falsa 9/14 > 5/7; 5/7 = 10/14; valores de los distractores 4/7, 10/9; intermedios 9/10, −1/14",
+    "adv-enteros-y-racionales-017: abstracto, doble de la diferencia entre −3 y −1, 2 · ((−3) − (−1)) = −4; distractores −8, 4, −5; intermedios −2, −4, −6",
+    "adv-enteros-y-racionales-018: abstracto, (−2,2) · 0,05 − (−4,1) = 3,99; distractores 3, −4,21, −9,13; intermedios −0,11, −1,1, 4,15",
+    "adv-enteros-y-racionales-019: ranking de un club de tenis de mesa, puntos; inicial 1.306, +115, −208, +133, −176, expresión 1.306 + 115 − 208 + 133 − 176 = 1.170; valores de los distractores 1.938, −136, 1.442; intermedios 248, 384",
+    "adv-enteros-y-racionales-020: concurso de ortografía, puntos; inicial −3, +4, penalización anulada 2; −3 + 4 − (−2) = 3, afirmación falsa (−1); valores de los distractores −1, 6, 9; intermedio 1"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-invierno-111, 2024-regular-113, 2025-regular-113 y 2026-regular-113 (solo para los seis ítems demre-liberada)"
+    ],
+    "declaracionOriginalidad": "PENDIENTE Ronda 1 y Ronda 2. Banco de enteros y racionales: 20 ítems, 60 distractores, 12 errores distintos del catálogo content/errores/enteros-y-racionales.json, 60/60 distractores con errorCatalogado (sin null). Proveniencia por fuente: 14 propia, 6 demre-liberada (001 sobre la pregunta 1 y 002 sobre la pregunta 3 de la forma 2024-regular-113; 004 sobre la pregunta 8 y 005 sobre la pregunta 2 de la forma 2024-invierno-111; 006 sobre la pregunta 2 de la forma 2025-regular-113; 003 sobre la pregunta 1 de la forma 2026-regular-113; en los seis se conserva solo la estructura del ítem y el mecanismo de sus distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem), 0 temario-demre. Las claves de 2024-invierno-111 y 2026-regular-113 se comprobaron en el clavijero de la forma; las de 2024-regular-113 y 2025-regular-113 por cálculo, porque el PDF no trae clavijero. La forma 2027-invierno-111 no tiene PDF en la carpeta de formas liberadas y quedó fuera. Convenciones de desempate entre ids parecidos, aplicadas en los 60 mapeos: (1) pierde-signo-al-restar-negativo (E1) solo cuando hay una resta de un negativo escrita, a − (−b), y el distractor la trata como a − b; si el enunciado no escribe esa resta, el signo perdido se mapea a trata-negativo-como-distancia. (2) invierte-orden-de-la-diferencia (E2) es calcular B − A donde corresponde A − B, con los signos bien tratados: su valor es el opuesto de la correcta; en las cadenas con valor inicial es calcular pérdidas menos ganancias. (3) trata-negativo-como-distancia (E3) es operar con el valor absoluto de un negativo (sumar magnitudes, partir desde a en vez de −a); cuando E1 y E3 producen el mismo valor en un ítem de expresiones (modelar 008), las dos operaciones se muestran como alternativas distintas, con precedente en enteros-problemas-en-contexto l3-item-1. (4) omite-el-valor-de-partida (E12) es sumar solo los movimientos y omitir el valor inicial, o contar la variación como si partiera de cero. (5) rompe-orden-de-operaciones (E10) cubre tres formas: multiplicar los dos primeros factores antes de resolver el paréntesis, restar o sumar antes de multiplicar o dividir, e ignorar un paréntesis operando de izquierda a derecha. (6) corre-la-coma-al-operar-decimales (E11) es un producto o cociente con la coma corrida una posición; los dos sentidos cuentan como el mismo id, con precedente en la forma 2024-invierno-111 pregunta 2. (7) rechaza-division-que-agranda (E7) tiene dos formas, ambas con precedente en enteros-operar-y-comparar l2-item-1 y l2-item-2: la creencia declarada de que el cociente debe ser menor que el dividendo, y la operación que la satisface (multiplicar o sumar en vez de dividir). (8) invierte-orden-division-fracciones (E8) es calcular divisor entre dividendo; se aplica también a decimales, que son racionales. (9) suma-denominadores (E6) es (a + c)/(b + d) o (a − c)/(b − d), aunque uno de los términos venga de un paso anterior. (10) compara-negativos-como-positivos (E5) e invierte-conclusion-entre-negativos (E9) van solo en argumentar y representar: E5 compara los valores absolutos, E9 calcula bien la diferencia y saca la conclusión al revés. (11) compara-fracciones-solo-por-numerador (E4) va solo en argumentar. Magnitud: la razón entre cada distractor numérico y la correcta se mide por ítem; se declaran aparte los distractores de coma corrida (E11), cuya razón es 10 o 100 por definición del error, y las excepciones de razón mayor que 3."
+  }
+}
