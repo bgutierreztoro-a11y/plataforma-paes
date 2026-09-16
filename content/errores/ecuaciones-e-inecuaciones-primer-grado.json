@@ -43,7 +43,12 @@
     },
     {
       "id": "ecuaciones-e-inecuaciones-primer-grado/omite-cantidad-inicial-en-inecuacion",
-      "descripcion": "Omitir la cantidad inicial (o el término constante) al traducir la situación a una inecuación, modelando solo la parte variable."
+      "descripcion": "Omitir la cantidad inicial (o el término constante) al traducir la situación a una ecuación o inecuación, modelando solo la parte variable."
+    },
+    {
+      "id": "ecuaciones-e-inecuaciones-primer-grado/traduce-mal-coeficientes-y-cantidades",
+      "descripcion": "Al traducir el enunciado a una ecuación o inecuación, poner en un término el coeficiente o la cantidad equivocada: omitir el factor que indica el doble o el triple, dejar sin multiplicar una cantidad que se repite, o asignar un precio a una cantidad de unidades distinta de la que dice el enunciado. Los términos están todos y los signos son los correctos; lo que falla es el número que acompaña a cada uno. Distinto de omite-cantidad-inicial-en-inecuacion, que deja fuera el término constante.",
+      "reservado": "Pendiente de uso en banco Advance de ecuaciones-e-inecuaciones-primer-grado, F2.1"
     }
   ]
 }
