@@ -1,0 +1,885 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "potencias-y-raices",
+  "moduloId": "potencias-y-raices",
+  "titulo": "Potencias y raíces enésimas",
+  "items": [
+    {
+      "id": "adv-potencias-y-raices-001",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es el valor de 1² + (−1)² + (4,9)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "24,01",
+          "esCorrecta": false,
+          "errorCatalogado": "eleva-negativo-sin-parentesis",
+          "feedbackDescarte": "Esa sale de tomar (−1)² = −1: 1 − 1 + 24,01 = 24,01. Una potencia par de base negativa es positiva: (−1)² = (−1) · (−1) = 1, así que la suma parte en 1 + 1 = 2."
+        },
+        {
+          "clave": "B",
+          "texto": "9,8",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa sale de leer cada potencia como base por exponente: 1 · 2 + (−1) · 2 + 4,9 · 2 = 2 − 2 + 9,8 = 9,8. El exponente 2 dice que la base se usa dos veces como factor: 4,9² = 4,9 · 4,9 = 24,01, no 9,8."
+        },
+        {
+          "clave": "C",
+          "texto": "26,01",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 1² = 1, (−1)² = 1 porque el producto de dos negativos es positivo, y 4,9² = 4,9 · 4,9 = 24,01. La suma es 1 + 1 + 24,01 = 26,01."
+        },
+        {
+          "clave": "D",
+          "texto": "242,1",
+          "esCorrecta": false,
+          "errorCatalogado": "conserva-decimales-al-elevar",
+          "feedbackDescarte": "Esa sale de elevar 4,9 dejando un solo decimal: 49 · 49 = 2401 y de ahí 240,1, con lo que 1 + 1 + 240,1 = 242,1. Al multiplicar 4,9 · 4,9 se suman los decimales de los dos factores: dos lugares, 24,01."
+        }
+      ],
+      "solucion": "Se calcula cada potencia por separado. 1² = 1. (−1)² = (−1) · (−1) = 1, porque el producto de dos negativos es positivo y el paréntesis incluye el signo en la base. 4,9² = 4,9 · 4,9 = 24,01, con dos decimales porque cada factor aporta uno. Suma: 1 + 1 + 24,01 = 26,01. Comprobación: 26,01 − 24,01 = 2 = 1 + 1.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 3, distractores A y D",
+        "notaAdaptacion": "Del original (1² + (−1)² + (0,1)² = 2,01, clave C confirmada en el clavijero y con los glifos del PDF, que muestran el tercer término como (0,1)² positivo) se conserva la estructura (suma de tres cuadrados: 1, −1 y un decimal) y los mecanismos de sus distractores A (pierde el signo de (−1)²) y D (eleva el decimal conservando un solo decimal). Cambia el decimal a 4,9 y las cuatro alternativas; el distractor B del original (0,2) no deriva de un procedimiento errado claro y se reemplaza por multiplica-base-por-exponente."
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-002",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál expresión es equivalente a 3⁷ ÷ 3⁸?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3⁻¹",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al dividir potencias de igual base se restan los exponentes en el orden dividendo menos divisor, 7 − 8 = −1, y 3⁻¹ es 1/3."
+        },
+        {
+          "clave": "B",
+          "texto": "3",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-orden-al-restar-exponentes",
+          "feedbackDescarte": "Esa sale de restar los exponentes al revés, 8 − 7 = 1, y quedarse con 3¹. La resta es del exponente del dividendo menos el del divisor: 7 − 8 = −1, y 3⁷ ÷ 3⁸ es menor que 1, no 3."
+        },
+        {
+          "clave": "C",
+          "texto": "−3",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa sale de llegar bien a 3⁻¹ y leer el exponente negativo como un signo menos en el resultado. El exponente −1 dice dividir por la base, no cambiar de signo: 3⁻¹ = 1/3, que es positivo."
+        },
+        {
+          "clave": "D",
+          "texto": "7/8",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa sale de leer cada potencia como base por exponente: (3 · 7) ÷ (3 · 8) = 21/24 = 7/8. El exponente no es un factor: 3⁷ es 3 usado siete veces como factor, y el cociente con 3⁸ deja un 3 en el denominador, 1/3."
+        }
+      ],
+      "solucion": "Al dividir potencias de la misma base se conserva la base y se restan los exponentes, dividendo menos divisor: 3⁷ ÷ 3⁸ = 3⁷⁻⁸ = 3⁻¹. Comprobación con la definición: 3⁷ tiene siete factores 3 y 3⁸ tiene ocho; al simplificar quedan siete factores arriba contra ocho abajo, sobra un 3 en el denominador: 1/3 = 3⁻¹.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 18, distractor D",
+        "notaAdaptacion": "Del original (2⁶/2⁸ con alternativas 1/2², 3/4, 2¹⁴ y 2², clave A confirmada en el clavijero) se conserva la estructura (cociente de potencias de igual base cuyo resultado tiene exponente negativo) y el mecanismo del distractor D (resta los exponentes en el orden invertido). Cambian la base y los exponentes (3⁷ ÷ 3⁸) y las cuatro alternativas; los distractores B y C del original (2^(6/8) y 2¹⁴, los dos por cruzar reglas de exponentes) quedan fuera de magnitud con esta base y se reemplazan por lee-exponente-negativo-como-signo y multiplica-base-por-exponente."
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-003",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una campaña de reforestación planta cada año el doble de árboles que el año anterior. El primer año plantó 105 árboles. ¿Cuántos árboles plantará el sexto año?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "630",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-crecimiento-exponencial-como-aditivo",
+          "feedbackDescarte": "Esa sale de sumar 105 seis veces, 105 · 6 = 630, como si cada año se agregara la misma cantidad. Duplicar no es sumar lo mismo: cada año se multiplica por 2, y del primer año al sexto hay cinco duplicaciones, 105 · 2⁵."
+        },
+        {
+          "clave": "B",
+          "texto": "1.050",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa sale de leer 2⁵ como 2 · 5 = 10 y calcular 105 · 10 = 1.050. El exponente 5 dice que el 2 se usa cinco veces como factor: 2⁵ = 32, y 105 · 32 = 3.360."
+        },
+        {
+          "clave": "C",
+          "texto": "3.360",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: del primer año al sexto hay cinco duplicaciones, así que el sexto año se plantan 105 · 2⁵ = 105 · 32 = 3.360 árboles."
+        },
+        {
+          "clave": "D",
+          "texto": "6.615",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es la cantidad total plantada en los seis años, 105 + 210 + 420 + 840 + 1.680 + 3.360 = 6.615. La pregunta pide lo que se planta el sexto año, no lo acumulado: 3.360."
+        }
+      ],
+      "solucion": "El primer año son 105 árboles y cada año siguiente multiplica por 2. Año 2: 105 · 2 = 210; año 3: 420; año 4: 840; año 5: 1.680; año 6: 3.360. En una sola expresión, el año n planta 105 · 2ⁿ⁻¹, y para n = 6 es 105 · 2⁵ = 105 · 32 = 3.360. Comprobación: 3.360 ÷ 32 = 105.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 20, distractor B",
+        "notaAdaptacion": "Del original (alcancía con $20 el primer día y el doble cada día, décimo día = 20 · 2⁹ = 10240, clave C confirmada en el clavijero) se conserva la estructura (cantidad inicial, factor 2 por período, valor en el período n) y el mecanismo del distractor B (crecimiento tratado como aditivo, inicial · n; node: 20 · 10 = 200). El distractor A del original (20 · 9 = 180) no deriva de una fórmula única y se reemplaza por multiplica-base-por-exponente; el D (20 · 2¹⁰, una duplicación de más) se reemplaza por responde-otra-magnitud-potencias con el total acumulado. Cambian el contexto (reforestación), las cifras (105, sexto año) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-004",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La potencia P, en watts, que disipa una resistencia de 4 ohms se modela con P = 4 · I², donde I es la corriente en amperes. Si la resistencia disipa 289 watts, ¿cuál es la corriente según este modelo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4,25 A",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion",
+          "feedbackDescarte": "Esa sale de sacar la raíz solo al numerador de 289/4: √289 ÷ 4 = 17 ÷ 4 = 4,25. La raíz se aplica a la fracción completa, arriba y abajo: √289 ÷ √4 = 17 ÷ 2 = 8,5."
+        },
+        {
+          "clave": "B",
+          "texto": "36,125 A",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa sale de despejar bien I² = 72,25 y luego dividir por 2 en vez de sacar la raíz cuadrada: 72,25 ÷ 2 = 36,125. La raíz busca el número que multiplicado por sí mismo da 72,25, y ese es 8,5."
+        },
+        {
+          "clave": "C",
+          "texto": "8,5 A",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: de P = 4 · I² se despeja I² = 289 ÷ 4 = 72,25, y la raíz cuadrada de 72,25 es 8,5, porque 8,5 · 8,5 = 72,25."
+        },
+        {
+          "clave": "D",
+          "texto": "72,25 A",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es I², no I: 289 ÷ 4 = 72,25 es el cuadrado de la corriente. Falta deshacer la potencia con la raíz cuadrada: √72,25 = 8,5."
+        }
+      ],
+      "solucion": "Se reemplaza P = 289 en el modelo: 289 = 4 · I². Se despeja el cuadrado: I² = 289 ÷ 4 = 72,25. Se deshace la potencia con la raíz cuadrada: I = √72,25 = 8,5, porque 8,5 · 8,5 = 72,25 (también √289 ÷ √4 = 17 ÷ 2). Comprobación: 4 · 8,5² = 4 · 72,25 = 289.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 36, distractores B y D",
+        "notaAdaptacion": "Del original (IMC = masa ÷ estatura², con masa 54 kg e IMC 24, estatura = √2,25 = 1,5 m, clave C confirmada en el clavijero) se conserva la estructura (un modelo y = k · x² del que se despeja x deshaciendo el cuadrado con una raíz) y los mecanismos de sus distractores B (divide por el índice en vez de sacar la raíz) y D (se queda en x² sin sacar la raíz). Cambian el modelo (P = 4 · I²), las cifras (289, 8,5) y las alternativas; el distractor A del original (1,05) no deriva de un procedimiento errado claro y se reemplaza por opera-una-sola-parte-de-la-fraccion."
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-005",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es el valor de √(5,29 · 4)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "10,58",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa sale de multiplicar bien, 5,29 · 4 = 21,16, y dividir por 2 en vez de sacar la raíz: 21,16 ÷ 2 = 10,58. La raíz cuadrada busca el número que multiplicado por sí mismo da 21,16, y ese es 4,6."
+        },
+        {
+          "clave": "B",
+          "texto": "4,6",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la raíz de un producto es el producto de las raíces, √5,29 · √4 = 2,3 · 2 = 4,6. Comprobación: 4,6 · 4,6 = 21,16 = 5,29 · 4."
+        },
+        {
+          "clave": "C",
+          "texto": "9,2",
+          "esCorrecta": false,
+          "errorCatalogado": "saca-factor-sin-su-raiz",
+          "feedbackDescarte": "Esa sale de sacar el 4 fuera de la raíz sin sacarle la raíz: 4 · √5,29 = 4 · 2,3 = 9,2. Lo que sale es la raíz del factor, √4 = 2, y queda 2 · 2,3 = 4,6."
+        },
+        {
+          "clave": "D",
+          "texto": "21,16",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es el radicando, 5,29 · 4 = 21,16, sin haber sacado la raíz. La pregunta pide la raíz cuadrada de ese producto, que es 4,6."
+        }
+      ],
+      "solucion": "La raíz de un producto se reparte en el producto de las raíces: √(5,29 · 4) = √5,29 · √4. Como 2,3 · 2,3 = 5,29, √5,29 = 2,3, y √4 = 2. El producto es 2,3 · 2 = 4,6. Comprobación por el otro camino: 5,29 · 4 = 21,16 y 4,6 · 4,6 = 21,16.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-006",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es el valor de √(8,41/4)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,725",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion",
+          "feedbackDescarte": "Esa sale de sacar la raíz solo al numerador: √8,41 ÷ 4 = 2,9 ÷ 4 = 0,725. El radicando es la fracción completa, y la raíz se aplica arriba y abajo: 2,9 ÷ 2 = 1,45."
+        },
+        {
+          "clave": "B",
+          "texto": "4,205",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion",
+          "feedbackDescarte": "Esa sale de sacar la raíz solo al denominador: 8,41 ÷ √4 = 8,41 ÷ 2 = 4,205. La raíz de una fracción se aplica al numerador y al denominador a la vez: √8,41 ÷ √4 = 2,9 ÷ 2 = 1,45."
+        },
+        {
+          "clave": "C",
+          "texto": "2,1025",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es el valor del radicando, 8,41 ÷ 4 = 2,1025, sin haber sacado la raíz. La pregunta pide la raíz cuadrada de esa fracción: 1,45, porque 1,45 · 1,45 = 2,1025."
+        },
+        {
+          "clave": "D",
+          "texto": "1,45",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la raíz de una fracción es la fracción de las raíces, √8,41 ÷ √4 = 2,9 ÷ 2 = 1,45. Comprobación: 1,45 · 1,45 = 2,1025 = 8,41 ÷ 4."
+        }
+      ],
+      "solucion": "La raíz de un cociente se reparte en el cociente de las raíces: √(8,41/4) = √8,41 ÷ √4. Como 2,9 · 2,9 = 8,41, √8,41 = 2,9, y √4 = 2. El cociente es 2,9 ÷ 2 = 1,45. Comprobación por el otro camino: 8,41 ÷ 4 = 2,1025 y 1,45 · 1,45 = 2,1025.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-007",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es el valor de 2⁵ − (−3,1)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "22,39",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2⁵ = 32 y (−3,1)² = (−3,1) · (−3,1) = 9,61, positivo por ser el producto de dos negativos. La resta es 32 − 9,61 = 22,39."
+        },
+        {
+          "clave": "B",
+          "texto": "41,61",
+          "esCorrecta": false,
+          "errorCatalogado": "eleva-negativo-sin-parentesis",
+          "feedbackDescarte": "Esa sale de tomar (−3,1)² = −9,61 y restar un negativo: 32 − (−9,61) = 41,61. Una potencia par de base negativa es positiva: (−3,1) · (−3,1) = 9,61, y la resta es 32 − 9,61 = 22,39."
+        },
+        {
+          "clave": "C",
+          "texto": "−64,1",
+          "esCorrecta": false,
+          "errorCatalogado": "conserva-decimales-al-elevar",
+          "feedbackDescarte": "Esa sale de elevar 3,1 dejando un solo decimal: 31 · 31 = 961 y de ahí 96,1, con lo que 32 − 96,1 = −64,1. Al multiplicar 3,1 · 3,1 se suman los decimales de los dos factores: dos lugares, 9,61."
+        },
+        {
+          "clave": "D",
+          "texto": "16,2",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa sale de leer cada potencia como base por exponente: 2 · 5 − (−3,1) · 2 = 10 + 6,2 = 16,2. El exponente cuenta cuántas veces aparece la base como factor: 2⁵ = 32 y (−3,1)² = 9,61."
+        }
+      ],
+      "solucion": "Primero cada potencia. 2⁵ = 2 · 2 · 2 · 2 · 2 = 32. (−3,1)² = (−3,1) · (−3,1) = 9,61: el paréntesis mete el signo en la base y el producto de dos negativos es positivo; los dos decimales vienen de un decimal por factor. Luego la resta: 32 − 9,61 = 22,39. Comprobación: 22,39 + 9,61 = 32.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-008",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3⁶ · 2⁶ = 6¹²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-exponentes-con-distinta-base",
+          "feedbackDescarte": "Esa suma los exponentes aunque las bases 3 y 2 sean distintas. Con bases distintas e igual exponente se multiplican las bases y se conserva el exponente: 3⁶ · 2⁶ = (3 · 2)⁶ = 6⁶, no 6¹²."
+        },
+        {
+          "clave": "B",
+          "texto": "(9³)² = 9⁵",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-reglas-de-exponentes",
+          "feedbackDescarte": "Esa suma los exponentes donde corresponde multiplicarlos: (9³)² es 9³ · 9³, que tiene 3 + 3 = 6 factores 9, es decir 9³·² = 9⁶. Sumar 3 + 2 es la regla del producto, no la de la potencia de una potencia."
+        },
+        {
+          "clave": "C",
+          "texto": "5² · 5⁵ = 5⁷",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al multiplicar potencias de la misma base se suman los exponentes, porque 5² · 5⁵ junta 2 + 5 = 7 factores 5."
+        },
+        {
+          "clave": "D",
+          "texto": "8⁰ = 0",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-exponente-cero-a-cero",
+          "feedbackDescarte": "Esa lee el exponente cero como «no queda nada». Bajar un escalón divide por la base: de 8¹ = 8 se pasa a 8 ÷ 8 = 1. Toda base distinta de 0 elevada a 0 vale 1, no 0."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación con la definición de potencia. 5² · 5⁵ tiene 2 + 5 = 7 factores 5, así que es 5⁷: verdadera. 3⁶ · 2⁶ = (3 · 2)⁶ = 6⁶ porque los exponentes son iguales y las bases distintas; 6¹² es otro número: falsa. (9³)² = 9³ · 9³ = 9⁶, los exponentes se multiplican: falsa. 8⁰ = 1, no 0, porque 8¹ ÷ 8 = 1: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-009",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "√7 · √7 = 7",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: √7 es el número que multiplicado por sí mismo da 7, así que √7 · √7 = √(7 · 7) = √49 = 7."
+        },
+        {
+          "clave": "B",
+          "texto": "√(4 + 9) = 2 + 3",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-raiz-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte la raíz sobre la suma. La raíz reparte sobre productos y cocientes, no sobre sumas: primero se suma, 4 + 9 = 13, y √13 no es 5, porque 5 · 5 = 25."
+        },
+        {
+          "clave": "C",
+          "texto": "√1,5 + √2,9 = 2√4,4",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-radicales-distintos",
+          "feedbackDescarte": "Esa suma dos radicales distintos como si fueran términos semejantes, juntando coeficientes y radicandos. √1,5 y √2,9 son dos números distintos que no se pueden agrupar; la suma queda como está, √1,5 + √2,9."
+        },
+        {
+          "clave": "D",
+          "texto": "√(4 · 7) = 4√7",
+          "esCorrecta": false,
+          "errorCatalogado": "saca-factor-sin-su-raiz",
+          "feedbackDescarte": "Esa saca el 4 de la raíz sin sacarle la raíz. Lo que sale afuera es √4 = 2: √(4 · 7) = √4 · √7 = 2√7, no 4√7."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. √7 · √7 = √(7 · 7) = √49 = 7: verdadera. √(4 + 9) = √13, y 2 + 3 = 5 es √25, distinto: falsa. √1,5 + √2,9 no se puede agrupar en un solo radical porque los radicandos son distintos: falsa. √(4 · 7) = √4 · √7 = 2√7, el factor sale con su raíz: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-010",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9⁻¹ = −9",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa lee el exponente negativo como un signo menos en el resultado. El exponente −1 dice dividir por la base: 9⁻¹ = 1/9, un número positivo menor que 1."
+        },
+        {
+          "clave": "B",
+          "texto": "(3/7)² = 9/7",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion",
+          "feedbackDescarte": "Esa eleva solo el numerador. La base es la fracción completa y el exponente se aplica arriba y abajo: (3/7)² = 3²/7² = 9/49."
+        },
+        {
+          "clave": "C",
+          "texto": "(−1,2)² = −1,44",
+          "esCorrecta": false,
+          "errorCatalogado": "eleva-negativo-sin-parentesis",
+          "feedbackDescarte": "Esa pierde el signo al elevar la base negativa. El paréntesis mete el signo en la base y el producto de dos negativos es positivo: (−1,2) · (−1,2) = 1,44."
+        },
+        {
+          "clave": "D",
+          "texto": "(2/7)⁻¹ = 7/2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: elevar a −1 es invertir la base, y el recíproco de 2/7 es 7/2."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. (2/7)⁻¹ es el recíproco de 2/7, es decir 7/2: verdadera. 9⁻¹ = 1/9, el exponente negativo divide y no cambia el signo: falsa. (3/7)² = 9/49, el exponente se aplica a numerador y denominador: falsa. (−1,2)² = 1,44, positivo porque es el producto de dos negativos: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-011",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "⁴√(7³) = ∛(7⁴)",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-indice-y-exponente",
+          "feedbackDescarte": "Esa cambia de lugar el índice de la raíz y el exponente del radicando. ⁴√(7³) es 7 elevado a 3/4, menor que 7; ∛(7⁴) es 7 elevado a 4/3, mayor que 7. Con base distinta de 1 solo coinciden cuando índice y exponente son iguales."
+        },
+        {
+          "clave": "B",
+          "texto": "√(9⁴) = 9²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 9⁴ = 9² · 9², así que el número que multiplicado por sí mismo da 9⁴ es 9²."
+        },
+        {
+          "clave": "C",
+          "texto": "La forma de √468 con el mayor factor posible extraído de la raíz es 2√117",
+          "esCorrecta": false,
+          "errorCatalogado": "descompone-raiz-a-medias",
+          "feedbackDescarte": "Esa extrae el 4 y se queda ahí, pero 117 = 9 · 13 todavía tiene un factor cuadrado. Siguiendo hasta el final: √468 = √(36 · 13) = 6√13."
+        },
+        {
+          "clave": "D",
+          "texto": "√1,69 = 0,845",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa divide el radicando por el índice 2 en vez de sacar la raíz. La raíz busca el número que multiplicado por sí mismo da 1,69, y ese es 1,3, porque 1,3 · 1,3 = 1,69."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. √(9⁴) = 9² porque 9² · 9² = 9⁴: verdadera. ⁴√(7³) y ∛(7⁴) son 7 elevado a 3/4 y a 4/3, dos números distintos: falsa. √468: 468 = 4 · 117 y 117 = 9 · 13, así que 468 = 36 · 13 y la forma con el mayor factor extraído es 6√13, no 2√117: falsa. √1,69 = 1,3, porque 1,3 · 1,3 = 1,69, y 0,845 es 1,69 ÷ 2: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-012",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(2⁹)² = 2¹⁸",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (2⁹)² = 2⁹ · 2⁹ junta 9 + 9 = 18 factores 2, que es lo mismo que multiplicar los exponentes, 9 · 2 = 18."
+        },
+        {
+          "clave": "B",
+          "texto": "2⁸ · 3³ = 6¹¹",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-exponentes-con-distinta-base",
+          "feedbackDescarte": "Esa suma los exponentes aunque las bases 2 y 3 sean distintas. La regla de sumar exponentes exige la misma base; 2⁸ · 3³ no se puede escribir como una sola potencia de exponente 11."
+        },
+        {
+          "clave": "C",
+          "texto": "8⁴ · 8⁶ = 8²⁴",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-reglas-de-exponentes",
+          "feedbackDescarte": "Esa multiplica los exponentes donde corresponde sumarlos: 8⁴ · 8⁶ junta 4 + 6 = 10 factores 8, es decir 8¹⁰. Multiplicar 4 · 6 es la regla de la potencia de una potencia, no la del producto."
+        },
+        {
+          "clave": "D",
+          "texto": "8⁵ ÷ 8⁸ = 8³",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-el-orden-al-restar-exponentes",
+          "feedbackDescarte": "Esa resta los exponentes al revés, 8 − 5 = 3. La resta es dividendo menos divisor: 5 − 8 = −3, y 8⁵ ÷ 8⁸ = 8⁻³, un número menor que 1."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. (2⁹)² = 2⁹·² = 2¹⁸: verdadera. 2⁸ · 3³ tiene bases distintas y no se combina en una sola potencia sumando exponentes: falsa. 8⁴ · 8⁶ = 8⁴⁺⁶ = 8¹⁰, no 8²⁴: falsa. 8⁵ ÷ 8⁸ = 8⁵⁻⁸ = 8⁻³, no 8³: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-013",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "√(9 · 6) = 9√6",
+          "esCorrecta": false,
+          "errorCatalogado": "saca-factor-sin-su-raiz",
+          "feedbackDescarte": "Esa saca el 9 de la raíz sin sacarle la raíz. Lo que sale afuera es √9 = 3: √(9 · 6) = √9 · √6 = 3√6."
+        },
+        {
+          "clave": "B",
+          "texto": "√(9 + 6) = 3 + √6",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-raiz-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte la raíz sobre la suma. Primero se suma, 9 + 6 = 15, y √15 no es 3 + √6: la raíz reparte sobre productos y cocientes, no sobre sumas."
+        },
+        {
+          "clave": "C",
+          "texto": "∛(6³ · 2) = 6∛2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la raíz cúbica reparte sobre el producto, ∛(6³) · ∛2, y ∛(6³) = 6 porque 6 · 6 · 6 = 6³."
+        },
+        {
+          "clave": "D",
+          "texto": "∛0,027 = 0,009",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa divide el radicando por el índice 3 en vez de sacar la raíz cúbica. La raíz cúbica busca el número que usado tres veces como factor da 0,027, y ese es 0,3, porque 0,3 · 0,3 · 0,3 = 0,027."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. ∛(6³ · 2) = ∛(6³) · ∛2 = 6∛2, porque la raíz reparte sobre el producto y ∛(6³) = 6: verdadera. √(9 · 6) = √9 · √6 = 3√6, el factor sale con su raíz: falsa. √(9 + 6) = √15, y la raíz no reparte sobre la suma: falsa. ∛0,027 = 0,3, porque 0,3³ = 0,027, y 0,009 es 0,027 ÷ 3: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-014",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9⁰ = 0",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-exponente-cero-a-cero",
+          "feedbackDescarte": "Esa lee el exponente cero como «no queda nada». Bajar un escalón divide por la base: de 9¹ = 9 se pasa a 9 ÷ 9 = 1. El escalón cero vale 1, no 0."
+        },
+        {
+          "clave": "B",
+          "texto": "2⁰ + 2⁰ = 2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2⁰ = 1, porque 2¹ ÷ 2 = 1, y 1 + 1 = 2."
+        },
+        {
+          "clave": "C",
+          "texto": "7⁻¹ = −7",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa lee el exponente negativo como un signo menos en el resultado. El exponente −1 dice dividir por la base: 7⁻¹ = 1/7, positivo."
+        },
+        {
+          "clave": "D",
+          "texto": "4² = 8",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa multiplica la base por el exponente, 4 · 2 = 8. El exponente 2 dice que la base se usa dos veces como factor: 4² = 4 · 4 = 16."
+        }
+      ],
+      "solucion": "Se revisa cada afirmación. 2⁰ = 1 para cualquier base distinta de 0, así que 2⁰ + 2⁰ = 1 + 1 = 2: verdadera. 9⁰ = 1, no 0: falsa. 7⁻¹ = 1/7, el exponente negativo divide y no cambia el signo: falsa. 4² = 4 · 4 = 16, no 4 · 2: falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-015",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un filtro deja pasar la quinta parte de la luz que recibe. Se ponen tres filtros iguales, uno tras otro. ¿Cuál expresión representa la fracción de la luz inicial que pasa los tres filtros?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−5³",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa lee el exponente negativo de 5⁻³ como un signo menos. El exponente −3 dice dividir por 5 tres veces, no cambiar de signo: una fracción de luz nunca es negativa."
+        },
+        {
+          "clave": "B",
+          "texto": "3/5",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-crecimiento-exponencial-como-aditivo",
+          "feedbackDescarte": "Esa suma tres veces la quinta parte, 1/5 · 3, como si cada filtro restara la misma cantidad. Cada filtro multiplica por 1/5 lo que le llega, así que tres filtros son (1/5)³ = 5⁻³."
+        },
+        {
+          "clave": "C",
+          "texto": "5³",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es la cantidad de veces que se reduce la luz, 5 · 5 · 5 = 125 veces, no la fracción que pasa. La fracción es 1 dividido por ese número: 1/5³ = 5⁻³."
+        },
+        {
+          "clave": "D",
+          "texto": "5⁻³",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cada filtro multiplica por 1/5, tres filtros multiplican por (1/5)³ = 1/5³, que con exponente negativo se escribe 5⁻³."
+        }
+      ],
+      "solucion": "Después del primer filtro pasa 1/5 de la luz; el segundo deja pasar 1/5 de eso, (1/5)²; el tercero, (1/5)³. Como (1/5)³ = 1/5³ y dividir por 5³ es lo mismo que multiplicar por 5⁻³, la fracción que pasa es 5⁻³ = 1/125. Comprobación: 125 · (1/125) = 1, la luz inicial completa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-016",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El valor de una máquina baja cada año en la misma fracción, es decir, cada año conserva una fracción fija r del valor del año anterior. Hace 3 años valía $375.000 y hoy vale $192.000. ¿Cuál expresión representa r?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "∛(192.000/375.000)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: tres años con la misma fracción r dejan 375.000 · r³ = 192.000, así que r³ = 192.000/375.000 y r es la raíz cúbica de ese cociente."
+        },
+        {
+          "clave": "B",
+          "texto": "(192.000/375.000)³",
+          "esCorrecta": false,
+          "errorCatalogado": "intercambia-indice-y-exponente",
+          "feedbackDescarte": "Esa eleva al cubo donde corresponde sacar raíz cúbica. El cociente 192.000/375.000 ya es r³, el resultado de tres años; para deshacer el cubo y recuperar r se saca la raíz cúbica, no se vuelve a elevar."
+        },
+        {
+          "clave": "C",
+          "texto": "(192.000/375.000) ÷ 3",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa divide por 3 en vez de sacar la raíz cúbica. Dividir por 3 no deshace un cubo: la raíz cúbica busca el número que usado tres veces como factor da el cociente."
+        },
+        {
+          "clave": "D",
+          "texto": "192.000/375.000",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es la fracción del valor que quedó después de los tres años, r³, no la fracción r de un año. Falta deshacer el cubo con la raíz cúbica."
+        }
+      ],
+      "solucion": "Cada año multiplica el valor por r, así que en tres años el valor se multiplica por r · r · r = r³: 375.000 · r³ = 192.000. Se despeja r³ = 192.000/375.000 y se deshace el cubo con la raíz cúbica: r = ∛(192.000/375.000). Comprobación numérica: 192.000/375.000 = 0,512 y 0,8 · 0,8 · 0,8 = 0,512, así que r = 0,8, y 375.000 · 0,8³ = 192.000.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-017",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un festival de cine tuvo 110 asistentes en su primera edición y en cada edición siguiente triplicó la asistencia de la edición anterior. ¿Cuál expresión representa la cantidad de asistentes en la edición n?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "110 · 3 · (n − 1)",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa usa el exponente n − 1 como un factor, 3 · (n − 1), en vez de repetir el 3 como factor n − 1 veces. Triplicar tres veces es multiplicar por 3 · 3 · 3 = 3³, no por 3 · 3 = 9."
+        },
+        {
+          "clave": "B",
+          "texto": "110 · 3ⁿ⁻¹",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: de la primera edición a la edición n hay n − 1 triplicaciones, así que la asistencia es 110 multiplicado por 3 tantas veces como n − 1, es decir 110 · 3ⁿ⁻¹."
+        },
+        {
+          "clave": "C",
+          "texto": "110 · n",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-crecimiento-exponencial-como-aditivo",
+          "feedbackDescarte": "Esa suma 110 en cada edición, como si la asistencia creciera en una cantidad fija. Triplicar es multiplicar por 3 cada vez: la edición n lleva 110 · 3ⁿ⁻¹, una potencia, no un múltiplo de 110."
+        },
+        {
+          "clave": "D",
+          "texto": "110 · (3ⁿ − 1) ÷ 2",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es la suma de los asistentes de todas las ediciones desde la primera hasta la n, no la asistencia de la edición n. La pregunta pide una sola edición: 110 · 3ⁿ⁻¹."
+        }
+      ],
+      "solucion": "Edición 1: 110. Edición 2: 110 · 3. Edición 3: 110 · 3 · 3 = 110 · 3². En general, la edición n tiene n − 1 triplicaciones acumuladas: 110 · 3ⁿ⁻¹. Comprobación con n = 4: 110 · 3³ = 110 · 27 = 2.970, que coincide con triplicar tres veces desde 110 (330, 990, 2.970).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-018",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál expresión es equivalente a (5/6)⁻², escrita con exponente positivo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−(5/6)²",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa lee el exponente negativo como un signo menos delante de la potencia. El exponente −2 dice invertir la base y elevar al cuadrado: (6/5)², un número positivo."
+        },
+        {
+          "clave": "B",
+          "texto": "−5/3",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa multiplica la base por el exponente, (5/6) · (−2) = −10/6 = −5/3. El exponente no es un factor: (5/6)⁻² es el recíproco de (5/6)², que es (6/5)²."
+        },
+        {
+          "clave": "C",
+          "texto": "(6/5)²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: un exponente negativo invierte la base y deja el exponente positivo, así que (5/6)⁻² = (6/5)² = 36/25."
+        },
+        {
+          "clave": "D",
+          "texto": "5 · 6²",
+          "esCorrecta": false,
+          "errorCatalogado": "opera-una-sola-parte-de-la-fraccion",
+          "feedbackDescarte": "Esa aplica el exponente −2 solo al denominador: 5/6⁻² = 5 · 6². La base es la fracción completa y el exponente actúa arriba y abajo: (5/6)⁻² = 5⁻²/6⁻² = 6²/5²."
+        }
+      ],
+      "solucion": "Un exponente negativo indica el recíproco de la potencia con exponente positivo: (5/6)⁻² = 1/(5/6)². Como (5/6)² = 25/36, su recíproco es 36/25, que es (6/5)². En una sola regla: invertir la base y cambiar el signo del exponente. Comprobación: (6/5)² = 36/25 = 1,44 y (5/6)² = 25/36, y 25/36 · 36/25 = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-019",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es el valor de √(0,49 · 9)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4,41",
+          "esCorrecta": false,
+          "errorCatalogado": "responde-otra-magnitud-potencias",
+          "feedbackDescarte": "Esa es el radicando, 0,49 · 9 = 4,41, sin haber sacado la raíz. La pregunta pide la raíz cuadrada de ese producto: 2,1, porque 2,1 · 2,1 = 4,41."
+        },
+        {
+          "clave": "B",
+          "texto": "2,205",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-el-indice-como-raiz",
+          "feedbackDescarte": "Esa sale de multiplicar bien, 0,49 · 9 = 4,41, y dividir por 2 en vez de sacar la raíz: 4,41 ÷ 2 = 2,205. La raíz cuadrada busca el número que multiplicado por sí mismo da 4,41, y ese es 2,1."
+        },
+        {
+          "clave": "C",
+          "texto": "6,3",
+          "esCorrecta": false,
+          "errorCatalogado": "saca-factor-sin-su-raiz",
+          "feedbackDescarte": "Esa saca el 9 de la raíz sin sacarle la raíz: 9 · √0,49 = 9 · 0,7 = 6,3. Lo que sale es √9 = 3, y queda 3 · 0,7 = 2,1."
+        },
+        {
+          "clave": "D",
+          "texto": "2,1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la raíz de un producto es el producto de las raíces, √0,49 · √9 = 0,7 · 3 = 2,1. Comprobación: 2,1 · 2,1 = 4,41 = 0,49 · 9."
+        }
+      ],
+      "solucion": "La raíz de un producto se reparte en el producto de las raíces: √(0,49 · 9) = √0,49 · √9. Como 0,7 · 0,7 = 0,49, √0,49 = 0,7, y √9 = 3. El producto es 0,7 · 3 = 2,1. Comprobación por el otro camino: 0,49 · 9 = 4,41 y 2,1 · 2,1 = 4,41.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-potencias-y-raices-020",
+      "unidadId": "potencias-y-raices",
+      "moduloId": "potencias-y-raices",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es el valor de 8 · 2⁻¹ + 1,7²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "32,9",
+          "esCorrecta": false,
+          "errorCatalogado": "conserva-decimales-al-elevar",
+          "feedbackDescarte": "Esa sale de elevar 1,7 dejando un solo decimal: 17 · 17 = 289 y de ahí 28,9, con lo que 4 + 28,9 = 32,9. Al multiplicar 1,7 · 1,7 se suman los decimales de los dos factores: dos lugares, 2,89."
+        },
+        {
+          "clave": "B",
+          "texto": "6,89",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2⁻¹ = 1/2, así que 8 · 2⁻¹ = 8 ÷ 2 = 4; y 1,7² = 1,7 · 1,7 = 2,89. La suma es 4 + 2,89 = 6,89."
+        },
+        {
+          "clave": "C",
+          "texto": "−13,11",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-exponente-negativo-como-signo",
+          "feedbackDescarte": "Esa sale de leer 2⁻¹ como −2: 8 · (−2) + 2,89 = −16 + 2,89 = −13,11. El exponente −1 dice dividir por la base, no cambiar de signo: 2⁻¹ = 1/2 y 8 · 1/2 = 4."
+        },
+        {
+          "clave": "D",
+          "texto": "−12,6",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-base-por-exponente",
+          "feedbackDescarte": "Esa sale de leer cada potencia como base por exponente: 8 · (2 · (−1)) + 1,7 · 2 = −16 + 3,4 = −12,6. El exponente no es un factor: 2⁻¹ = 1/2 y 1,7² = 1,7 · 1,7 = 2,89."
+        }
+      ],
+      "solucion": "Primero las potencias. 2⁻¹ = 1/2, porque el exponente negativo indica el recíproco; entonces 8 · 2⁻¹ = 8 · 1/2 = 4. 1,7² = 1,7 · 1,7 = 2,89, con dos decimales porque cada factor aporta uno. Luego la suma: 4 + 2,89 = 6,89. Comprobación: 6,89 − 2,89 = 4 = 8 ÷ 2.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-potencias-y-raices-001: abstracto, 1² + (−1)² + (4,9)² = 26,01; distractores 24,01, 242,1, 9,8",
+    "adv-potencias-y-raices-002: abstracto, 3⁷ ÷ 3⁸ = 3⁻¹; distractores 3, −3, 7/8",
+    "adv-potencias-y-raices-003: campaña de reforestación, árboles por año; 105 el primer año, el doble cada año, sexto año 105 · 2⁵ = 3.360; distractores 630, 1.050, 6.615; intermedios 210, 420, 840, 1.680",
+    "adv-potencias-y-raices-004: resistencia eléctrica, potencia en watts y corriente en amperes; P = 4 · I², P = 289, I² = 72,25, I = 8,5; distractores 36,125, 72,25, 4,25",
+    "adv-potencias-y-raices-005: abstracto, √(5,29 · 4) = 4,6; distractores 9,2, 10,58, 21,16; intermedio 2,3",
+    "adv-potencias-y-raices-006: abstracto, √(8,41/4) = 1,45; distractores 0,725, 4,205, 2,1025; intermedio 2,9",
+    "adv-potencias-y-raices-007: abstracto, 2⁵ − (−3,1)² = 22,39; distractores 41,61, −64,1, 16,2; intermedios 32, 9,61",
+    "adv-potencias-y-raices-008: abstracto, afirmaciones sobre potencias: 5² · 5⁵ = 5⁷ (verdadera), 3⁶ · 2⁶ = 6¹², (9³)² = 9⁵, 8⁰ = 0",
+    "adv-potencias-y-raices-009: abstracto, afirmaciones sobre raíces: √7 · √7 = 7 (verdadera), √(4 + 9) = 2 + 3, √1,5 + √2,9 = 2√4,4, √(4 · 7) = 4√7",
+    "adv-potencias-y-raices-010: abstracto, afirmaciones sobre potencias: (2/7)⁻¹ = 7/2 (verdadera), 9⁻¹ = −9, (3/7)² = 9/7, (−1,2)² = −1,44",
+    "adv-potencias-y-raices-011: abstracto, afirmaciones sobre raíces: √(9⁴) = 9² (verdadera), ⁴√(7³) = ∛(7⁴), √468 = 2√117 como forma maximal, √1,69 = 0,845; intermedios 6√13, 1,3",
+    "adv-potencias-y-raices-012: abstracto, afirmaciones sobre potencias: (2⁹)² = 2¹⁸ (verdadera), 2⁸ · 3³ = 6¹¹, 8⁴ · 8⁶ = 8²⁴, 8⁵ ÷ 8⁸ = 8³",
+    "adv-potencias-y-raices-013: abstracto, afirmaciones sobre raíces: ∛(6³ · 2) = 6∛2 (verdadera), √(9 · 6) = 9√6, √(9 + 6) = 3 + √6, ∛0,027 = 0,009; intermedios 3√6, 0,3",
+    "adv-potencias-y-raices-014: abstracto, afirmaciones sobre potencias: 2⁰ + 2⁰ = 2 (verdadera), 9⁰ = 0, 7⁻¹ = −7, 4² = 8",
+    "adv-potencias-y-raices-015: filtros de luz, quinta parte por filtro, tres filtros; fracción que pasa 5⁻³; distractores −5³, 3/5, 5³; intermedio 125",
+    "adv-potencias-y-raices-016: máquina que pierde valor, pesos; de 375.000 a 192.000 en 3 años, r = ∛(192.000/375.000) = 0,8; distractores (192.000/375.000)³, (192.000/375.000) ÷ 3, 192.000/375.000; intermedio 0,512",
+    "adv-potencias-y-raices-017: festival de cine, asistentes por edición; 110 en la primera, el triple cada edición, edición n = 110 · 3ⁿ⁻¹; distractores 110 · n, 110 · 3 · (n − 1), 110 · (3ⁿ − 1) ÷ 2; comprobación n = 4: 2.970, 330, 990",
+    "adv-potencias-y-raices-018: abstracto, (5/6)⁻² = (6/5)²; distractores −(5/6)², −5/3, 5 · 6²; intermedios 36/25, 25/36",
+    "adv-potencias-y-raices-019: abstracto, √(0,49 · 9) = 2,1; distractores 4,41, 2,205, 6,3; intermedio 0,7",
+    "adv-potencias-y-raices-020: abstracto, 8 · 2⁻¹ + 1,7² = 6,89; distractores 32,9, −13,11, −12,6; intermedios 4, 2,89"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "forma liberada DEMRE 2024-invierno-111 y su clavijero (solo para los cuatro ítems demre-liberada)"
+    ],
+    "declaracionOriginalidad": "PENDIENTE Ronda 1 y Ronda 2. Banco de potencias y raíces enésimas: 20 ítems, 60 distractores, 17 errores distintos del catálogo content/errores/potencias-y-raices.json (los 17 del catálogo están cubiertos), 60/60 distractores con errorCatalogado (sin null). Proveniencia por fuente: 16 propia, 4 demre-liberada (001 sobre la pregunta 3, 002 sobre la 18, 003 sobre la 20 y 004 sobre la 36 de la forma 2024-invierno-111; en los cuatro se conserva la estructura del ítem y el mecanismo de sus distractores y cambian contexto, cifras y alternativas, según la notaAdaptacion de cada ítem), 0 temario-demre. Las cuatro claves se comprobaron en el clavijero de la forma (3 → C, 18 → A, 20 → C, 36 → C). Las formas 2024-regular-113 y 2025-regular-113 no traen clavijero y sus cupos quedaron propios sin preguntar; 2026-regular-113 aportó solo ítems sin mecanismo catalogable o marcados requiereRevision; 2027-invierno-111 no tiene PDF en la carpeta de formas liberadas y quedó fuera. Convenciones de desempate entre ids parecidos, aplicadas en los 60 mapeos: (1) suma-exponentes-con-distinta-base es tratar aᵐ · bⁿ con a ≠ b como una sola potencia de exponente m + n; cruza-reglas-de-exponentes exige la misma base y es elegir la operación de exponentes que corresponde a la otra operación entre potencias (sumar donde va multiplicar o al revés). (2) lee-exponente-negativo-como-signo es pasar el signo del exponente al resultado, −aⁿ en vez de 1/aⁿ; iguala-exponente-cero-a-cero es solo a⁰ = 0; eleva-negativo-sin-parentesis es perder el signo de una base negativa, (−a)ⁿ tomado como −aⁿ con n par. (3) descompone-raiz-a-medias extrae un cuadrado que no es el mayor y deja un radicando todavía descomponible; su valor coincide con la clave en otra forma, así que va solo en afirmaciones (011) y nunca como alternativa numérica; saca-factor-sin-su-raiz saca el factor cuadrado sin su raíz, k²√r en vez de k√r. (4) invierte-el-orden-al-restar-exponentes es a^(n−m) donde corresponde a^(m−n): la operación es la correcta y falla el orden; cruza-reglas-de-exponentes en un cociente sería sumar, multiplicar o dividir los exponentes. (5) multiplica-base-por-exponente y trata-crecimiento-exponencial-como-aditivo pueden dar el mismo valor (inicial · n); gana trata-crecimiento-exponencial-como-aditivo cuando el enunciado describe pasos repetidos con una cantidad inicial (015; en 003 y 017 los dos ids producen valores distintos y van los dos) y multiplica-base-por-exponente cuando es una potencia escrita sin contexto de pasos. (6) responde-otra-magnitud-potencias es un cálculo correcto que entrega otra cosa: el radicando en vez de la raíz, el total acumulado en vez del término n, el cuadrado en vez de la base, las veces que se reduce en vez de la fracción que queda. (7) opera-una-sola-parte-de-la-fraccion aplica el exponente o la raíz solo al numerador o solo al denominador; las dos formas cuentan como el mismo id (006 usa las dos). (8) conserva-decimales-al-elevar es elevar un decimal dejando la cantidad de decimales de la base: su valor es 10 veces el correcto por definición y por eso va siempre dentro de una suma o resta (001, 007, 020), nunca como potencia sola. Convención de notación del banco, igual a la de las lecciones y el cierre del módulo: superíndices Unicode para los exponentes (², ³, ⁻¹, ⁿ⁻¹), √ y ∛ para las raíces con el índice en superíndice cuando es 4 o más (⁴√), paréntesis explícitos cuando la base o el radicando es compuesto ((−3,1)², (5/6)⁻², √(5,29 · 4)), coma decimal y punto de miles, y «·10» en notación científica (no se usa en este banco). Sin exponentes fraccionarios: la forma a^(m/n) no se lee sin ambigüedad en texto plano y queda fuera del banco. Sin negrita markdown en las alternativas, porque AlternativaDescartable las muestra como texto plano. Magnitud: en los 11 ítems de valor numérico, la razón entre cada distractor y la clave está entre 0,1 y 10 (0 casos de otra magnitud); en los ítems de expresión (002, 015, 016, 017, 018) y de afirmación (008 a 014) las alternativas son formas, no cantidades, y la magnitud no aplica."
+  }
+}
