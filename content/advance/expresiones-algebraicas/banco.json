@@ -1,0 +1,885 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "expresiones-algebraicas",
+  "moduloId": "expresiones-algebraicas",
+  "titulo": "Expresiones algebraicas",
+  "items": [
+    {
+      "id": "adv-expresiones-algebraicas-001",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es la expresión reducida de 4p + 6q − 3p − 2q?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7p + 4q",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa sale de tratar el −3p como si se sumara: 4p + 3p = 7p. El término se resta, así que 4p − 3p = p, y los términos en q dan 6q − 2q = 4q."
+        },
+        {
+          "clave": "B",
+          "texto": "p + 4q",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los términos en p dan 4p − 3p = p y los términos en q dan 6q − 2q = 4q; la expresión reducida es p + 4q."
+        },
+        {
+          "clave": "C",
+          "texto": "5pq",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-letras-al-sumar",
+          "feedbackDescarte": "Esa reduce a p + 4q y después junta las dos letras en un solo término, 1 + 4 = 5 con pq. Los términos con distinta parte literal no se juntan: p + 4q queda con dos términos."
+        },
+        {
+          "clave": "D",
+          "texto": "4p + q",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-coeficientes-entre-letras",
+          "feedbackDescarte": "Esa hace bien las dos cuentas, 4 − 3 = 1 y 6 − 2 = 4, pero cruza los resultados: el 1 le corresponde a p y el 4 a q, no al revés."
+        }
+      ],
+      "solucion": "Se agrupan los términos semejantes. En p: 4p − 3p = p. En q: 6q − 2q = 4q. La expresión reducida es p + 4q. Comprobación con p = 2 y q = 1: la expresión original da 8 + 6 − 6 − 2 = 6 y p + 4q da 2 + 4 = 6.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-002",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es la expresión reducida de 5m + 3n + 2m − n?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2m + 7n",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-coeficientes-entre-letras",
+          "feedbackDescarte": "Esa hace bien las dos cuentas, 5 + 2 = 7 y 3 − 1 = 2, pero cruza los resultados: el 7 le corresponde a m y el 2 a n, no al revés."
+        },
+        {
+          "clave": "B",
+          "texto": "7m + 4n",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el −n como si se sumara: 3n + n = 4n. El término se resta, así que 3n − n = 2n."
+        },
+        {
+          "clave": "C",
+          "texto": "7m + 2n",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 5m + 2m = 7m y 3n − n = 2n, y la expresión reducida es 7m + 2n."
+        },
+        {
+          "clave": "D",
+          "texto": "7m² + 2n²",
+          "esCorrecta": false,
+          "errorCatalogado": "agrega-exponente-al-sumar-semejantes",
+          "feedbackDescarte": "Esa suma los coeficientes de los semejantes y además multiplica las letras, como si 5m + 2m diera 7m². Al sumar semejantes la letra no cambia: 5m + 2m son 7 veces m, no 7 veces m²."
+        }
+      ],
+      "solucion": "Se agrupan los términos semejantes. En m: 5m + 2m = 7m. En n: 3n − n = 2n. La expresión reducida es 7m + 2n. Comprobación: los coeficientes de m suman 5 + 2 = 7 y los de n suman 3 − 1 = 2, y ninguna de las dos letras cambia.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-003",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es la expresión reducida de 3x² + 2x − x² + 4x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2x² + 6x",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3x² − x² = 2x² y 2x + 4x = 6x; los términos en x² y los términos en x no se juntan entre sí."
+        },
+        {
+          "clave": "B",
+          "texto": "8x²",
+          "esCorrecta": false,
+          "errorCatalogado": "reduce-distinto-exponente",
+          "feedbackDescarte": "Esa suma los cuatro coeficientes como si x² y x fueran la misma clase: 3 + 2 − 1 + 4 = 8. Solo se reducen los términos con la misma letra y el mismo exponente: 2x² y 6x quedan separados."
+        },
+        {
+          "clave": "C",
+          "texto": "4x² + 6x",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el −x² como si se sumara: 3x² + x² = 4x². El término se resta, así que 3x² − x² = 2x²."
+        },
+        {
+          "clave": "D",
+          "texto": "6x² + 2x",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-coeficientes-entre-letras",
+          "feedbackDescarte": "Esa hace bien las dos cuentas, 3 − 1 = 2 y 2 + 4 = 6, pero las cruza: el 2 acompaña a x² y el 6 acompaña a x."
+        }
+      ],
+      "solucion": "Se agrupan por clase. En x²: 3x² − x² = 2x². En x: 2x + 4x = 6x. Como x² y x no son semejantes, la expresión reducida es 2x² + 6x. Comprobación con x = 1: la expresión original da 3 + 2 − 1 + 4 = 8 y 2x² + 6x da 2 + 6 = 8.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-004",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a a − 2(a − 3)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−a − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-factor-a-un-solo-termino",
+          "feedbackDescarte": "Esa reparte el 2 solo sobre la a y copia el −3 sin multiplicar: a − 2a − 3. El 2 multiplica a los dos términos del paréntesis: 2(a − 3) = 2a − 6, y con el signo menos queda a − 2a + 6."
+        },
+        {
+          "clave": "B",
+          "texto": "3a − 6",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el 2(a − 3), que se resta, como si se sumara: a + 2a − 6. Al restar el paréntesis cambian los dos signos: a − 2a + 6 = −a + 6."
+        },
+        {
+          "clave": "C",
+          "texto": "−a² + 6",
+          "esCorrecta": false,
+          "errorCatalogado": "agrega-exponente-al-sumar-semejantes",
+          "feedbackDescarte": "Esa reduce a − 2a y además multiplica las letras, como si diera −a². Al sumar o restar semejantes la letra no cambia: a − 2a = −a."
+        },
+        {
+          "clave": "D",
+          "texto": "−a + 6",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2(a − 3) = 2a − 6, y al restarlo queda a − 2a + 6 = −a + 6."
+        }
+      ],
+      "solucion": "Se reparte el factor: 2(a − 3) = 2a − 6. Como ese producto se resta, cambian los dos signos: a − 2a + 6. Se reducen los semejantes: a − 2a = −a. La expresión es −a + 6. Comprobación con a = 3: la expresión original da 3 − 2 · 0 = 3 y −a + 6 da −3 + 6 = 3.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 25, distractor B",
+        "notaAdaptacion": "Del original (b − 3(b − 1), alternativas −2b + 3, −2b − 1, −2b + 1 y −2b − 3, clave A recalculada porque la forma no tiene clavijero) se conserva la estructura (una letra menos un factor que multiplica a un paréntesis con esa letra y un número) y el mecanismo del distractor B (reparte el factor solo al primer término del paréntesis). Cambian la letra, el factor y el número (a − 2(a − 3)) y las cuatro alternativas; los distractores C (signo del 1 cambiado) y D (−3 · (−1) leído como −3) del original no derivan de un mecanismo del catálogo y se reemplazan por pierde-signo-al-reducir (el paréntesis que se resta tratado como sumado) y agrega-exponente-al-sumar-semejantes."
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-005",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes expresiones corresponde al desarrollo de (k + 3)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "k² + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte el cuadrado entre los dos términos, k² + 3², y pierde el término del medio. El cuadrado de una suma es (k + 3)(k + 3), y el cruce k · 3 aparece dos veces: 6k."
+        },
+        {
+          "clave": "B",
+          "texto": "k² + 6k + 9",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: k² + 2 · k · 3 + 3² = k² + 6k + 9."
+        },
+        {
+          "clave": "C",
+          "texto": "k² + 3k + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa cuenta el cruce una sola vez: k · 3 = 3k. En (k + 3)(k + 3) el cruce ocurre dos veces, k · 3 y 3 · k, así que el término del medio es 6k."
+        },
+        {
+          "clave": "D",
+          "texto": "k² + 6k",
+          "esCorrecta": false,
+          "errorCatalogado": "abandona-cuadrado-del-segundo",
+          "feedbackDescarte": "Esa abandona el último término: falta 3² = 9. Los tres términos del desarrollo son k², 6k y 9."
+        }
+      ],
+      "solucion": "(k + 3)² = (k + 3)(k + 3) = k² + 3k + 3k + 9 = k² + 6k + 9. Con la forma del cuadrado de binomio, primer término k y segundo término 3: k² + 2 · k · 3 + 3². Comprobación con k = −1: (−1 + 3)² = 2² = 4 y k² + 6k + 9 da 1 − 6 + 9 = 4.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-006",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a (3a + 1)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9a² + 3a + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa cuenta el cruce una sola vez: 3a · 1 = 3a. En (3a + 1)(3a + 1) el cruce ocurre dos veces, así que el término del medio es 6a."
+        },
+        {
+          "clave": "B",
+          "texto": "9a² + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte el cuadrado entre los dos términos, (3a)² + 1², y pierde el término del medio. El cuadrado de una suma es (3a + 1)(3a + 1), y el cruce 3a · 1 aparece dos veces: 6a."
+        },
+        {
+          "clave": "C",
+          "texto": "9a² + 6a + 1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (3a)² + 2 · 3a · 1 + 1² = 9a² + 6a + 1."
+        },
+        {
+          "clave": "D",
+          "texto": "3a² + 6a + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa eleva la a pero no el 3: escribe (3a)² como 3a². El cuadrado toma el término completo: (3a)² = 3a · 3a = 9a²."
+        }
+      ],
+      "solucion": "El primer término es 3a y el segundo es 1. (3a)² = 3a · 3a = 9a², el doble del producto es 2 · 3a · 1 = 6a y 1² = 1. Desarrollo: 9a² + 6a + 1. Comprobación con a = −1: (−3 + 1)² = (−2)² = 4 y 9a² + 6a + 1 da 9 − 6 + 1 = 4.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 24, distractores A, B y D",
+        "notaAdaptacion": "Del original ((2x − 3)², alternativas 2x² − 12x + 9, 4x² − 6x − 9, 4x² − 12x + 9 y 4x² − 9, clave C recalculada porque la forma no tiene clavijero) se conserva la estructura (cuadrado de un binomio cuyo primer término lleva coeficiente) y los tres mecanismos: A deja el coeficiente sin elevar, B cuenta el cruce una sola vez (en el original además cambia el signo del 9, parte que no se conserva) y D reparte el cuadrado entre los dos términos. Cambian el binomio (3a + 1, con suma en vez de resta para que el reparto del cuadrado no dependa del signo) y las cuatro alternativas."
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-007",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál de las siguientes expresiones corresponde al desarrollo de (u + 2v)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "u² + 4uv + 4v²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: u² + 2 · u · 2v + (2v)² = u² + 4uv + 4v²."
+        },
+        {
+          "clave": "B",
+          "texto": "u² + 4v²",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte el cuadrado entre los dos términos y pierde el término del medio, 2 · u · 2v = 4uv. El cuadrado de una suma tiene tres términos."
+        },
+        {
+          "clave": "C",
+          "texto": "u² + 2uv + 4v²",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa cuenta el cruce una sola vez: u · 2v = 2uv. El cruce ocurre dos veces en (u + 2v)(u + 2v), así que el término del medio es 4uv."
+        },
+        {
+          "clave": "D",
+          "texto": "u² + 4uv + 2v²",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa eleva la v pero no el 2: escribe (2v)² como 2v². El cuadrado toma el término completo: (2v)² = 2v · 2v = 4v²."
+        }
+      ],
+      "solucion": "El primer término es u y el segundo es 2v. u² = u², el doble del producto es 2 · u · 2v = 4uv y (2v)² = 2v · 2v = 4v². Desarrollo: u² + 4uv + 4v². Comprobación con u = 1 y v = 1: (1 + 2)² = 9 y u² + 4uv + 4v² da 1 + 4 + 4 = 9.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-008",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál es la factorización de 4b² − 9?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(2b − 3)²",
+          "esCorrecta": false,
+          "errorCatalogado": "factoriza-diferencia-como-cuadrado-binomio",
+          "feedbackDescarte": "Esa escribe la diferencia de cuadrados como un cuadrado de binomio. (2b − 3)² tiene un término del medio, −2 · 2b · 3, que 4b² − 9 no tiene. Dos cuadrados restados dan dos factores distintos: (2b + 3)(2b − 3)."
+        },
+        {
+          "clave": "B",
+          "texto": "(2b + 9)(2b − 9)",
+          "esCorrecta": false,
+          "errorCatalogado": "aplica-forma-sin-verificar-condiciones",
+          "feedbackDescarte": "Esa extrae la raíz de 4b² pero copia el 9 sin extraer la suya. La forma exige las dos raíces: la de 9 es 3, y (2b + 9)(2b − 9) desarrolla a 4b² − 9 · 9, no a 4b² − 9."
+        },
+        {
+          "clave": "C",
+          "texto": "(4b + 3)(4b − 3)",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa extrae la raíz de b² pero deja el 4 sin extraer la suya, como si 4b² fuera (4b)². (4b)² = 4b · 4b, que es 4 · 4 · b² y no 4b². La raíz de 4b² es 2b."
+        },
+        {
+          "clave": "D",
+          "texto": "(2b + 3)(2b − 3)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 4b² = (2b)² y 9 = 3², y la diferencia de cuadrados factoriza como (2b + 3)(2b − 3)."
+        }
+      ],
+      "solucion": "4b² es el cuadrado de 2b y 9 es el cuadrado de 3, así que 4b² − 9 = (2b)² − 3² = (2b + 3)(2b − 3). Comprobación desarrollando: (2b + 3)(2b − 3) = 4b² − 6b + 6b − 9, los cruces se cancelan y queda 4b² − 9.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-009",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Si x = 7, ¿cuál es el valor de 2x² − 6x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "154",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa eleva al cuadrado el 2 junto con la x: (2 · 7)² − 6 · 7 = 196 − 42 = 154. En 2x² solo la x está elevada: 2 · 7 · 7 = 98, y 98 − 42 = 56."
+        },
+        {
+          "clave": "B",
+          "texto": "56",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2x² = 2 · 7 · 7 = 98 y 6x = 6 · 7 = 42, así que 98 − 42 = 56."
+        },
+        {
+          "clave": "C",
+          "texto": "38",
+          "esCorrecta": false,
+          "errorCatalogado": "separa-coeficiente-de-su-letra",
+          "feedbackDescarte": "Esa lee 2x² como 2 + x² y 6x como 6 + x, y calcula 2 + 7 · 7 − (6 + 7) = 38. El coeficiente multiplica a la letra, no se le suma: 2x² = 2 · 7 · 7 = 98."
+        },
+        {
+          "clave": "D",
+          "texto": "−4",
+          "esCorrecta": false,
+          "errorCatalogado": "asigna-valor-a-la-letra",
+          "feedbackDescarte": "Esa deja la x en 1 y calcula 2 − 6 = −4, sin usar el valor dado. Con x = 7, 2x² − 6x = 98 − 42 = 56."
+        }
+      ],
+      "solucion": "Se reemplaza x = 7. 2x² = 2 · 7 · 7 = 98 y 6x = 6 · 7 = 42. Entonces 2x² − 6x = 98 − 42 = 56. Comprobación por otro camino: 2x² − 6x = 2x(x − 3), y con x = 7 da 2 · 7 · 4 = 56.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-010",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a −k − 2(k − 1)²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−2k² + 3k − 2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (k − 1)² = k² − 2k + 1, el −2 lo multiplica completo, −2k² + 4k − 2, y con el −k queda −2k² + 3k − 2."
+        },
+        {
+          "clave": "B",
+          "texto": "−2k² − k + 2",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte el cuadrado entre los dos términos, (k − 1)² como k² − 1, y pierde el término del medio. (k − 1)² = (k − 1)(k − 1) = k² − 2k + 1."
+        },
+        {
+          "clave": "C",
+          "texto": "−2k² − 3k + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-factor-a-un-solo-termino",
+          "feedbackDescarte": "Esa desarrolla bien (k − 1)² = k² − 2k + 1, pero reparte el −2 solo sobre k² y copia −2k + 1 sin multiplicar. El −2 multiplica a los tres términos: −2k² + 4k − 2."
+        },
+        {
+          "clave": "D",
+          "texto": "−2k² + 3k",
+          "esCorrecta": false,
+          "errorCatalogado": "abandona-cuadrado-del-segundo",
+          "feedbackDescarte": "Esa desarrolla (k − 1)² como k² − 2k y abandona el cuadrado del segundo término, (−1)² = 1. Con los tres términos, −2(k² − 2k + 1) = −2k² + 4k − 2."
+        }
+      ],
+      "solucion": "Primero el cuadrado: (k − 1)² = k² − 2k + 1. Después el factor: −2(k² − 2k + 1) = −2k² + 4k − 2. Se agrega el −k y se reducen los semejantes: −2k² + 4k − k − 2 = −2k² + 3k − 2. Comprobación con k = 1: la expresión original da −1 − 2 · 0 = −1 y −2k² + 3k − 2 da −2 + 3 − 2 = −1.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 27, distractor C",
+        "notaAdaptacion": "Del original (−y − 2(y − 2)², alternativas −3y − 4, −2y² − y − 4, −2y² − y + 8 y −2y² + 7y − 8, clave D recalculada porque la forma no tiene clavijero) se conserva la estructura (menos la letra, menos un factor que multiplica al cuadrado de un binomio con esa letra) y el mecanismo del distractor C (desarrolla el cuadrado del binomio sin el término del medio, como diferencia de los cuadrados de sus términos). Cambian la letra y el número del binomio (k − 1) y las cuatro alternativas; los distractores A y B del original no derivan de un procedimiento errado claro y se reemplazan por reparte-factor-a-un-solo-termino y abandona-cuadrado-del-segundo."
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-011",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuál es el valor de 96 · 94?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9.024",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 96 · 94 = (95 + 1)(95 − 1) = 95² − 1² = 9.025 − 1 = 9.024."
+        },
+        {
+          "clave": "B",
+          "texto": "9.026",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-cuadrado-del-desvio",
+          "feedbackDescarte": "Esa suma el cuadrado del desvío en vez de restarlo: 9.025 + 1. Como un factor está 1 sobre 95 y el otro 1 bajo 95, el producto queda 1 por debajo de 95²: 9.024."
+        },
+        {
+          "clave": "C",
+          "texto": "9.025",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-descontar-cuadrado-del-desvio",
+          "feedbackDescarte": "Esa entrega 95² sin descontar nada. Los dos factores se apartan 1 de 95, y ese apartamiento cuesta 1² = 1: 9.025 − 1 = 9.024."
+        },
+        {
+          "clave": "D",
+          "texto": "9.214",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa desarrolla (95 + 1)(95 − 1) tratando el cruce que se resta como sumado: 9.025 + 95 + 95 − 1. Los cruces son −95 y +95 y se cancelan: 9.025 − 1 = 9.024."
+        }
+      ],
+      "solucion": "96 y 94 están a la misma distancia de 95: 96 = 95 + 1 y 94 = 95 − 1. Entonces 96 · 94 = (95 + 1)(95 − 1) = 95² − 1² = 9.025 − 1 = 9.024. Comprobación: 9.024 ÷ 96 = 94.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-012",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "¿Cuál de las siguientes expresiones es igual a (k + 1)² − k²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "k + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa desarrolla (k + 1)² como k² + k + 1, con el cruce contado una vez, y al restar k² queda k + 1. El cruce ocurre dos veces: (k + 1)² = k² + 2k + 1, y la diferencia es 2k + 1."
+        },
+        {
+          "clave": "B",
+          "texto": "2k",
+          "esCorrecta": false,
+          "errorCatalogado": "abandona-cuadrado-del-segundo",
+          "feedbackDescarte": "Esa desarrolla (k + 1)² como k² + 2k, sin el cuadrado del segundo término, 1² = 1. Con los tres términos, k² + 2k + 1 − k² = 2k + 1."
+        },
+        {
+          "clave": "C",
+          "texto": "2k² + 2k + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el k² que se resta como si se sumara: k² + 2k + 1 + k². Al restar, k² − k² se cancela y queda 2k + 1."
+        },
+        {
+          "clave": "D",
+          "texto": "2k + 1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (k + 1)² = k² + 2k + 1, y al restar k² queda 2k + 1."
+        }
+      ],
+      "solucion": "Se desarrolla el cuadrado: (k + 1)² = k² + 2k + 1. Se resta k²: k² + 2k + 1 − k² = 2k + 1. Otro camino: como diferencia de cuadrados, (k + 1)² − k² = (k + 1 + k)(k + 1 − k) = (2k + 1) · 1 = 2k + 1. Comprobación con k = 2: 3² − 2² = 9 − 4 = 5 y 2k + 1 da 4 + 1 = 5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-013",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una tienda de materiales de pintura arma sets de dos tamaños. El set grande trae 3 pinceles y 1 paleta; el set chico trae 1 pincel y 2 paletas. Si p es la masa de un pincel y q la masa de una paleta, ¿cuál de las siguientes expresiones representa la masa total de 2 sets grandes y 3 sets chicos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "9p + 3q",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-factor-a-un-solo-termino",
+          "feedbackDescarte": "Esa multiplica la cantidad de sets solo por el primer término de cada set: 2 · 3p + q y 3 · p + 2q. Los 2 sets grandes traen 2 paletas y los 3 chicos traen 6, en total 8q."
+        },
+        {
+          "clave": "B",
+          "texto": "9p + 8q",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2(3p + q) + 3(p + 2q) = 6p + 2q + 3p + 6q = 9p + 8q."
+        },
+        {
+          "clave": "C",
+          "texto": "17pq",
+          "esCorrecta": false,
+          "errorCatalogado": "multiplica-letras-al-sumar",
+          "feedbackDescarte": "Esa junta pinceles y paletas en un solo término multiplicando las letras: 9 + 8 = 17 con pq. La masa de 9 pinceles y 8 paletas se suma, no se multiplica: 9p + 8q."
+        },
+        {
+          "clave": "D",
+          "texto": "17 + p + q",
+          "esCorrecta": false,
+          "errorCatalogado": "separa-coeficiente-de-su-letra",
+          "feedbackDescarte": "Esa separa cada coeficiente de su letra: 9p como 9 + p y 8q como 8 + q. 9p es 9 veces la masa de un pincel, un producto y no una suma."
+        }
+      ],
+      "solucion": "Cada set grande pesa 3p + q y cada set chico pesa p + 2q. Dos sets grandes: 2(3p + q) = 6p + 2q. Tres sets chicos: 3(p + 2q) = 3p + 6q. Total: 6p + 2q + 3p + 6q = 9p + 8q. Comprobación contando: 2 · 3 + 3 · 1 = 9 pinceles y 2 · 1 + 3 · 2 = 8 paletas.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-014",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes expresiones representa el doble del cubo de un número x, disminuido en el triple del mismo número?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8x³ − 3x",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa escribe el doble del cubo como (2x)³, que es el cubo del doble y vale 8x³. El doble del cubo es 2 veces x³: 2x³."
+        },
+        {
+          "clave": "B",
+          "texto": "−x³",
+          "esCorrecta": false,
+          "errorCatalogado": "reduce-distinto-exponente",
+          "feedbackDescarte": "Esa reduce 2x³ − 3x como si x³ y x fueran semejantes: 2 − 3 = −1. Tienen distinto exponente y no se juntan: la expresión queda con dos términos."
+        },
+        {
+          "clave": "C",
+          "texto": "2x³ − 3x",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el cubo es x³, su doble es 2x³, y disminuido en el triple del número queda 2x³ − 3x."
+        },
+        {
+          "clave": "D",
+          "texto": "x³ − x − 1",
+          "esCorrecta": false,
+          "errorCatalogado": "separa-coeficiente-de-su-letra",
+          "feedbackDescarte": "Esa lee el doble del cubo como 2 + x³ y el triple del número como 3 + x. El doble y el triple multiplican: 2x³ y 3x."
+        }
+      ],
+      "solucion": "El cubo del número es x³. Su doble es 2x³. El triple del número es 3x. Disminuir en el triple es restar: 2x³ − 3x. Comprobación con x = −1: el cubo es −1, su doble es −2, el triple del número es −3, y −2 − (−3) = 1; la expresión 2x³ − 3x da −2 + 3 = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 26, distractor A",
+        "notaAdaptacion": "Del original (el doble del cubo de un número x, disminuido en un tercio del mismo número; alternativas (2x)³ − x/3, 2x³ − 1/3, 2(x³ − 1/3) y 2x³ − x/3, clave D recalculada porque la forma no tiene clavijero; el análisis la clasifica como representar y este banco la trata como modelar por ser traducción de enunciado a expresión) se conserva la estructura (el doble del cubo de un número disminuido en un múltiplo del número) y el mecanismo del distractor A (eleva el doble al cubo en vez del número). Cambia el múltiplo, un tercio por el triple, para que ninguna alternativa lleve fracción, y cambian las cuatro alternativas; los distractores B y C del original son lecturas erradas del enunciado sin id en el catálogo y se reemplazan por reduce-distinto-exponente y separa-coeficiente-de-su-letra."
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-015",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes expresiones representa el producto de la suma de dos números m y n por la diferencia entre el primero y el segundo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "m² − n²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (m + n)(m − n) = m² − mn + mn − n² = m² − n²."
+        },
+        {
+          "clave": "B",
+          "texto": "m² + n²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-cuadrado-del-desvio",
+          "feedbackDescarte": "Esa suma el cuadrado del segundo número en vez de restarlo. El último producto es n · (−n) = −n², así que queda m² − n²."
+        },
+        {
+          "clave": "C",
+          "texto": "m²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-descontar-cuadrado-del-desvio",
+          "feedbackDescarte": "Esa entrega el cuadrado del primer número sin descontar nada. El producto n · (−n) = −n² sí queda: m² − n²."
+        },
+        {
+          "clave": "D",
+          "texto": "m² + 2mn − n²",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el cruce −mn como si se sumara: −mn + mn se vuelve 2mn. Con su signo, los dos cruces se cancelan y no queda término en mn."
+        }
+      ],
+      "solucion": "La suma es m + n, la diferencia entre el primero y el segundo es m − n, y el producto es (m + n)(m − n). Al repartir: m · m − m · n + n · m − n · n = m² − mn + mn − n² = m² − n². Comprobación con m = 3 y n = 2: (3 + 2)(3 − 2) = 5 · 1 = 5 y m² − n² da 9 − 4 = 5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-016",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes expresiones representa el doble de la diferencia entre el cuadrado de un número h y 3?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2h² − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-factor-a-un-solo-termino",
+          "feedbackDescarte": "Esa duplica solo el cuadrado y copia el 3. El doble es de la diferencia completa: 2(h² − 3) = 2h² − 6."
+        },
+        {
+          "clave": "B",
+          "texto": "4h² − 6",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa toma el cuadrado del doble del número, (2h)² = 4h², en vez del doble del cuadrado, 2h². Lo que se duplica es h² − 3, no h."
+        },
+        {
+          "clave": "C",
+          "texto": "h² − 1",
+          "esCorrecta": false,
+          "errorCatalogado": "separa-coeficiente-de-su-letra",
+          "feedbackDescarte": "Esa lee el doble como 2 + (h² − 3), sumando el 2 en vez de multiplicar. El doble de una cantidad es 2 veces esa cantidad: 2(h² − 3)."
+        },
+        {
+          "clave": "D",
+          "texto": "2h² − 6",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la diferencia es h² − 3 y su doble es 2(h² − 3) = 2h² − 6."
+        }
+      ],
+      "solucion": "El cuadrado del número es h². La diferencia entre el cuadrado y 3 es h² − 3. El doble de esa diferencia es 2(h² − 3) = 2h² − 6. Comprobación con h = 2: la diferencia es 4 − 3 = 1 y su doble es 2; la expresión 2h² − 6 da 8 − 6 = 2.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-017",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes igualdades es verdadera para todo valor de las letras?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(v + 1)(v − 1) = v² − 1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: es la diferencia de cuadrados, (v + 1)(v − 1) = v² − v + v − 1 = v² − 1, válida para todo v."
+        },
+        {
+          "clave": "B",
+          "texto": "(r + s)² = r² + s²",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-cuadrado-sobre-la-suma",
+          "feedbackDescarte": "Esa reparte el cuadrado entre los dos sumandos y pierde el término del medio: (r + s)² = r² + 2rs + s². Con r = 1 y s = 1, el lado izquierdo da 4 y el derecho da 2."
+        },
+        {
+          "clave": "C",
+          "texto": "2p + 5q = 7(p + q)",
+          "esCorrecta": false,
+          "errorCatalogado": "junta-terminos-no-semejantes",
+          "feedbackDescarte": "Esa suma los dos coeficientes sin mirar la letra, 2 + 5 = 7, como si p y q contaran lo mismo. 2p + 5q no se reduce: con p = 1 y q = 0 el lado izquierdo da 2 y el derecho da 7."
+        },
+        {
+          "clave": "D",
+          "texto": "3g + 4g = 7g²",
+          "esCorrecta": false,
+          "errorCatalogado": "agrega-exponente-al-sumar-semejantes",
+          "feedbackDescarte": "Esa suma los coeficientes y además multiplica las letras. 3g + 4g = 7g, la letra no cambia al sumar semejantes: con g = −1 el lado izquierdo da −7 y el derecho da 7."
+        }
+      ],
+      "solucion": "Se revisa cada igualdad. (v + 1)(v − 1) = v² − v + v − 1 = v² − 1: verdadera para todo v. (r + s)² = r² + 2rs + s², no r² + s²: falsa (con r = 1 y s = 1 da 4 contra 2). 2p + 5q tiene dos partes literales distintas y no se reduce a 7(p + q): falsa (con p = 1 y q = 0 da 2 contra 7). 3g + 4g = 7g y no 7g²: falsa (con g = −1 da −7 contra 7).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-018",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un estudiante reduce la expresión 5w − 3(w + 2) de esta forma:\n\nPaso 1: reparte el 3 y obtiene 5w − 3w + 2.\nPaso 2: reduce los semejantes y obtiene 2w + 2.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El desarrollo es correcto y la expresión reducida es 2w + 2.",
+          "esCorrecta": false,
+          "errorCatalogado": "reparte-factor-a-un-solo-termino",
+          "feedbackDescarte": "Esa acepta el Paso 1, donde el 3 se repartió solo sobre la w. El 3 multiplica a los dos términos del paréntesis: 3(w + 2) = 3w + 6, y con el signo menos queda 5w − 3w − 6 = 2w − 6."
+        },
+        {
+          "clave": "B",
+          "texto": "El error está en el Paso 2: 5w − 3w = 8w, así que la expresión reducida es 8w + 2.",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-reducir",
+          "feedbackDescarte": "Esa trata el −3w como si se sumara: 5w + 3w = 8w. El término se resta, 5w − 3w = 2w; y el Paso 1 ya venía mal, porque 3(w + 2) = 3w + 6."
+        },
+        {
+          "clave": "C",
+          "texto": "El error está en el Paso 1: el 3 multiplica también al 2, y queda 2w − 6.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: −3(w + 2) = −3w − 6, así que 5w − 3w − 6 = 2w − 6; el Paso 1 dejó el 2 sin multiplicar."
+        },
+        {
+          "clave": "D",
+          "texto": "No se puede decidir si el desarrollo es correcto sin conocer el valor de w.",
+          "esCorrecta": false,
+          "errorCatalogado": "asigna-valor-a-la-letra",
+          "feedbackDescarte": "Esa cree que hace falta un valor para w. La reducción vale para todo w, porque solo reparte un factor y junta semejantes; con w = 0 la expresión original da −6 y el resultado del estudiante da 2, así que el desarrollo está mal sin necesidad de conocer w."
+        }
+      ],
+      "solucion": "El Paso 1 está mal: el 3 multiplica a los dos términos del paréntesis, 3(w + 2) = 3w + 6, y con el signo menos delante queda 5w − 3w − 6. Se reducen los semejantes: 5w − 3w = 2w, y la expresión reducida es 2w − 6. Comprobación con w = 0: la expresión original da −3 · 2 = −6 y 2w − 6 da −6; el resultado del estudiante, 2w + 2, daría 2.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-019",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál de las siguientes igualdades es verdadera para todo valor de n?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "n² − 9 = (n + 3)(n − 3)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: n² − 9 = n² − 3² es una diferencia de cuadrados y factoriza como (n + 3)(n − 3)."
+        },
+        {
+          "clave": "B",
+          "texto": "n² + 9 = (n + 3)(n − 3)",
+          "esCorrecta": false,
+          "errorCatalogado": "factoriza-suma-de-cuadrados",
+          "feedbackDescarte": "Esa aplica la forma de la diferencia de cuadrados a una suma. Basta multiplicar: (n + 3)(n − 3) = n² − 9, que no es n² + 9."
+        },
+        {
+          "clave": "C",
+          "texto": "n² − 9 = (n − 3)²",
+          "esCorrecta": false,
+          "errorCatalogado": "factoriza-diferencia-como-cuadrado-binomio",
+          "feedbackDescarte": "Esa escribe la diferencia de cuadrados como un cuadrado de binomio. (n − 3)² = n² − 6n + 9 tiene un término del medio que n² − 9 no tiene."
+        },
+        {
+          "clave": "D",
+          "texto": "(n + 3)² = n² + 3n + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa cuenta el cruce una sola vez. (n + 3)(n + 3) tiene el cruce n · 3 dos veces: n² + 6n + 9."
+        }
+      ],
+      "solucion": "Se revisa cada igualdad desarrollando el lado con producto. (n + 3)(n − 3) = n² − 3n + 3n − 9 = n² − 9: la igualdad A es verdadera. Ese mismo producto da n² − 9 y no n² + 9: B es falsa. (n − 3)² = n² − 6n + 9, no n² − 9: C es falsa. (n + 3)² = n² + 6n + 9, no n² + 3n + 9: D es falsa. Comprobación de A con n = 1: 1 − 9 = −8 y (1 + 3)(1 − 3) = 4 · (−2) = −8.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-expresiones-algebraicas-020",
+      "unidadId": "expresiones-algebraicas",
+      "moduloId": "expresiones-algebraicas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un estudiante desarrolla (2x + 1)² de esta forma:\n\nPaso 1: escribe (2x)² + 2 · 2x · 1 + 1².\nPaso 2: calcula y obtiene 2x² + 4x + 1.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcto: (2x + 1)² = 2x² + 4x + 1.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-coeficiente-elevado",
+          "feedbackDescarte": "Esa acepta (2x)² = 2x², con el 2 sin elevar. El cuadrado toma el término completo: (2x)² = 2x · 2x = 4x²."
+        },
+        {
+          "clave": "B",
+          "texto": "El error está en el Paso 1: el término del medio es 2x · 1, sin el 2, y queda 4x² + 2x + 1.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-una-vez-termino-cruzado",
+          "feedbackDescarte": "Esa cuenta el cruce una sola vez. En (2x + 1)(2x + 1) el cruce 2x · 1 aparece dos veces, así que el Paso 1 está bien y el término del medio es 4x."
+        },
+        {
+          "clave": "C",
+          "texto": "El error está en el Paso 1: sobra el 1² al final, y el desarrollo es 4x² + 4x.",
+          "esCorrecta": false,
+          "errorCatalogado": "abandona-cuadrado-del-segundo",
+          "feedbackDescarte": "Esa abandona el cuadrado del segundo término. (2x + 1)(2x + 1) termina en 1 · 1 = 1, así que el Paso 1 está bien y el desarrollo lleva tres términos."
+        },
+        {
+          "clave": "D",
+          "texto": "El error está en el Paso 2: (2x)² = 4x², y el desarrollo es 4x² + 4x + 1.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el Paso 1 aplica bien la forma y el Paso 2 se equivoca en (2x)², que es 4x² y no 2x²; el desarrollo correcto es 4x² + 4x + 1."
+        }
+      ],
+      "solucion": "El Paso 1 es correcto: (2x + 1)² = (2x)² + 2 · 2x · 1 + 1². El Paso 2 se equivoca en el primer término: (2x)² = 2x · 2x = 4x², no 2x². El desarrollo correcto es 4x² + 4x + 1. Comprobación con x = 1: (2 + 1)² = 9 y 4x² + 4x + 1 da 4 + 4 + 1 = 9; el resultado del estudiante daría 2 + 4 + 1 = 7.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-expresiones-algebraicas-001: sin contexto, 4p + 6q − 3p − 2q → p + 4q; distractores 7p + 4q, 5pq, 4p + q",
+    "adv-expresiones-algebraicas-002: sin contexto, 5m + 3n + 2m − n → 7m + 2n; distractores 2m + 7n, 7m + 4n, 7m² + 2n²",
+    "adv-expresiones-algebraicas-003: sin contexto, 3x² + 2x − x² + 4x → 2x² + 6x; distractores 8x², 4x² + 6x, 6x² + 2x",
+    "adv-expresiones-algebraicas-004: sin contexto, a − 2(a − 3) → −a + 6; distractores −a − 3, 3a − 6, −a² + 6",
+    "adv-expresiones-algebraicas-005: sin contexto, (k + 3)² → k² + 6k + 9; distractores k² + 9, k² + 3k + 9, k² + 6k",
+    "adv-expresiones-algebraicas-006: sin contexto, (3a + 1)² → 9a² + 6a + 1; distractores 9a² + 3a + 1, 9a² + 1, 3a² + 6a + 1",
+    "adv-expresiones-algebraicas-007: sin contexto, (u + 2v)² → u² + 4uv + 4v²; distractores u² + 4v², u² + 2uv + 4v², u² + 4uv + 2v²",
+    "adv-expresiones-algebraicas-008: sin contexto, 4b² − 9 → (2b + 3)(2b − 3); distractores (2b − 3)², (2b + 9)(2b − 9), (4b + 3)(4b − 3)",
+    "adv-expresiones-algebraicas-009: sin contexto, valorizar 2x² − 6x en x = 7, valor 56; distractores 154, 38, −4; intermedios 98, 42, 196",
+    "adv-expresiones-algebraicas-010: sin contexto, −k − 2(k − 1)² → −2k² + 3k − 2; distractores −2k² − k + 2, −2k² − 3k + 1, −2k² + 3k",
+    "adv-expresiones-algebraicas-011: sin contexto, 96 · 94 = 9.024 con centro 95; distractores 9.026, 9.025, 9.214",
+    "adv-expresiones-algebraicas-012: sin contexto, (k + 1)² − k² → 2k + 1; distractores k + 1, 2k, 2k² + 2k + 1",
+    "adv-expresiones-algebraicas-013: tienda de materiales de pintura: sets con pinceles y paletas, traducir a 9p + 8q; distractores 9p + 3q, 17pq, 17 + p + q",
+    "adv-expresiones-algebraicas-014: sin contexto, traducir a 2x³ − 3x; distractores 8x³ − 3x, −x³, x³ − x − 1",
+    "adv-expresiones-algebraicas-015: sin contexto, traducir a m² − n²; distractores m² + n², m², m² + 2mn − n²",
+    "adv-expresiones-algebraicas-016: sin contexto, traducir a 2h² − 6; distractores 2h² − 3, 4h² − 6, h² − 1",
+    "adv-expresiones-algebraicas-017: sin contexto, afirmaciones sobre (v + 1)(v − 1), (r + s)², 2p + 5q, 3g + 4g; clave A; distractores (r + s)² = r² + s²; 2p + 5q = 7(p + q); 3g + 4g = 7g²",
+    "adv-expresiones-algebraicas-018: sin contexto, afirmaciones sobre 5w − 3(w + 2); clave C; distractores El desarrollo es correcto y la expresión…; El error está en el Paso 2: 5w − 3w = 8w…; No se puede decidir si el desarrollo es …",
+    "adv-expresiones-algebraicas-019: sin contexto, afirmaciones sobre n² − 9, n² + 9, (n − 3)², (n + 3)²; clave A; distractores n² + 9 = (n + 3)(n − 3); n² − 9 = (n − 3)²; (n + 3)² = n² + 3n + 9",
+    "adv-expresiones-algebraicas-020: sin contexto, afirmaciones sobre (2x + 1)²; clave D; distractores Es correcto: (2x + 1)² = 2x² + 4x + 1.; El error está en el Paso 1: el término d…; El error está en el Paso 1: sobra el 1² …"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-regular-113 y 2025-regular-113, leídas del PDF de fuentes-demre-liberadas (solo para los cuatro ítems demre-liberada)"
+    ],
+    "declaracionOriginalidad": "PENDIENTE Ronda 1 y Ronda 2. Banco de expresiones algebraicas: 20 ítems, 60 distractores, 18 errores distintos del catálogo content/errores/expresiones-algebraicas.json (los 18 del catálogo, sin ids nuevos; este commit retira el reservado de confunde-coeficiente-elevado y de reparte-factor-a-un-solo-termino), 60 distractores con errorCatalogado y 0 declarados con sinErrorCatalogado. Reparto: 12 resolver, 4 modelar, 4 argumentar; 4 baja, 9 media, 7 alta; tiempos 80/120/160 por dificultad; máximo 8 usos por id (pierde-signo-al-reducir). Proveniencia: 16 propia y 4 demre-liberada decididas antes de escribir las filas (004 sobre la pregunta 25 de 2025-regular-113; 006, 010 y 014 sobre las preguntas 24, 27 y 26 de 2024-regular-113; las cuatro claves recalculadas con el parser del plan porque esas dos formas no tienen clavijero, y coinciden con docs/analisis/frecuencia-demre-v2.json; en cada cupo se conserva la estructura y solo los mecanismos que dice su notaAdaptacion, y cambian letra, cifras y las cuatro alternativas). Quedaron fuera: 2027-invierno-111 (sin PDF ni clavijero), 2024-invierno-111 preguntas 23, 24, 26 y 46 y 2025-regular-113 preguntas 24, 27 y 32 (fracciones algebraicas o distractores sin mecanismo de catálogo), 2024-regular-113 pregunta 25 y 2026-regular-113 pregunta 14 (sus distractores son pasos correctos sin mecanismo), 2026-regular-113 preguntas 26 y 27 (ingresos y gastos, perímetro: dominios vetados). Sin figura y sin tabla. Convención de notación de todo el archivo: superíndices Unicode (², ³), un solo carácter para el menos (U+2212) en unario y binario, espacios alrededor de + y − binarios, producto implícito sin punto entre coeficiente y letra y entre paréntesis (2x, 3(x + 1), (a + b)(a − b)), punto medio solo entre números (96 · 94, 2 · 7 · 7), paréntesis explícitos siempre que un signo o un exponente afecte a más de un término ((2x)², −(a − 3)), términos ordenados por grado descendente, y sin fracciones algebraicas: toda forma que no se lea sin ambigüedad en una línea quedó fuera (la pregunta 26 de 2024-regular-113 se adaptó cambiando un tercio por el triple). Convenciones de desempate para Ronda 1: (1) reparte-factor-a-un-solo-termino solo cuando un factor, un signo menos o un divisor precede a un paréntesis y se aplica al primer término (004-A, 010-C, 013-A, 016-A, 018-A); pierde-signo-al-reducir solo sobre términos ya sueltos donde uno que se resta se trata como sumado (001-A, 002-B, 003-C, 018-B) o sobre un paréntesis o cruce que se resta y se trata como sumado (004-B, 011-D, 012-C, 015-D); en un ítem con ambos, cada distractor deriva de un solo paso. (2) reparte-cuadrado-sobre-la-suma es solo desarrollar (a + b)² como a² + b² (005-A, 006-B, 007-B, 017-B) y, en un binomio con resta, como a² − b² (010-B, precedente DEMRE 2024-regular-113 preguntas 24D y 27C); factoriza-diferencia-como-cuadrado-binomio es solo factorizar a² − b² como (a − b)² (008-A, 019-C): la dirección del ítem fija el id. (3) suma-cuadrado-del-desvio es solo desarrollar (a + b)(a − b) como a² + b² (011-B, 015-B); factoriza-suma-de-cuadrados es solo factorizar a² + b² como (a + b)(a − b) (019-B). (4) En una factorización con coeficiente (008), aplica-forma-sin-verificar-condiciones copia el término numérico sin extraer su raíz ((2b + 9)(2b − 9)) y confunde-coeficiente-elevado deja el coeficiente de la letra sin extraer su raíz ((4b + 3)(4b − 3)); aplica-forma, factoriza-diferencia y factoriza-suma se excluyen entre sí por la forma de partida. (5) junta-terminos-no-semejantes suma todos los coeficientes y los entrega sobre la suma de las letras, N(m + n) (017-C, precedente 24(r + s) de expresiones-sumar-lo-que-se-parece-item-2); multiplica-letras-al-sumar los entrega sobre el producto de las letras, Nmn (001-C, 013-C); separa-coeficiente-de-su-letra lee cada c·letra como c + letra con el signo del término (009-C, 013-D, 014-D, 016-C). (6) agrega-exponente-al-sumar-semejantes sube el exponente de cada grupo de semejantes que se combina (002-D, 004-C, 017-D); reduce-distinto-exponente suma todos los coeficientes en un solo término con el mayor exponente (003-B, 014-B). (7) cruza-coeficientes-entre-letras hace bien las dos cuentas e intercambia los resultados entre las dos partes literales, incluidas x² y x (001-D, 002-A, 003-D). (8) En productos de la forma (a + b)(a − b): suma-cuadrado-del-desvio = a² + b², omite-descontar-cuadrado-del-desvio = a², pierde-signo-al-reducir = a² + 2ab − b² (011, 015). (9) En valorizar (009): confunde-coeficiente-elevado eleva c·v como (c·v)², separa-coeficiente-de-su-letra evalúa c + v² − (c + v), asigna-valor-a-la-letra deja la letra en 1; en argumentar, asigna-valor-a-la-letra es la afirmación de que no se puede decidir sin conocer la letra (018-D, precedente de los ítems 3 de las tres lecciones). (10) cuenta-una-vez-termino-cruzado y abandona-cuadrado-del-segundo se aplican al binomio y después se completa el resto del ítem con los pasos correctos (010-D, 012-A, 012-B)."
+  }
+}
