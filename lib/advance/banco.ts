@@ -4,6 +4,7 @@ import { validarDatosBancoAdvance } from "../../scripts/validar-contenido.mjs";
 import { ContenidoInvalidoError } from "../errores.ts";
 import type { ClaveAlternativa, Dificultad, Habilidad } from "../tipos.ts";
 import type { AlternativaAdvance, FiguraItem, ItemAdvance } from "./descarte.ts";
+import { protegerExpresiones } from "./protegerExpresiones.ts";
 
 /**
  * Acceso a los bancos Advance en disco (`content/advance/<unidadId>/banco.json`).
@@ -112,6 +113,10 @@ export function obtenerBanco(unidadId: string): Banco | null {
  * revisor, y el cliente solo necesita saber que `errorCatalogado` es null.
  * `figura` viaja tal cual: solo muestra datos del enunciado, nunca la
  * transformación pedida, así que no revela nada.
+ *
+ * Los cinco campos de texto pasan por `protegerExpresiones` (espacio duro
+ * dentro de cada expresión): es el único punto por el que el texto del banco
+ * llega a descarte y triage, así que ningún componente tiene que acordarse.
  */
 function itemParaCliente(item: ItemEnDisco): ItemAdvance {
   return {
@@ -121,8 +126,8 @@ function itemParaCliente(item: ItemEnDisco): ItemAdvance {
     habilidad: item.habilidad,
     dificultad: item.dificultad,
     tiempoReferenciaSeg: item.tiempoReferenciaSeg,
-    enunciado: item.enunciado,
-    solucion: item.solucion,
+    enunciado: protegerExpresiones(item.enunciado),
+    solucion: protegerExpresiones(item.solucion),
     ...(item.figura ? { figura: item.figura } : {}),
     alternativas: item.alternativas.map((a): AlternativaAdvance => {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
@@ -132,18 +137,18 @@ function itemParaCliente(item: ItemEnDisco): ItemAdvance {
         return {
           clave: a.clave,
           claveOriginal: a.clave,
-          texto: a.texto,
+          texto: protegerExpresiones(a.texto),
           esCorrecta: true,
-          feedbackDescarteIncorrecto: a.feedbackDescarteIncorrecto ?? "",
+          feedbackDescarteIncorrecto: protegerExpresiones(a.feedbackDescarteIncorrecto ?? ""),
         };
       }
       return {
         clave: a.clave,
         claveOriginal: a.clave,
-        texto: a.texto,
+        texto: protegerExpresiones(a.texto),
         esCorrecta: false,
         errorCatalogado: a.errorCatalogado ?? null,
-        feedbackDescarte: a.feedbackDescarte ?? "",
+        feedbackDescarte: protegerExpresiones(a.feedbackDescarte ?? ""),
       };
     }),
   };
