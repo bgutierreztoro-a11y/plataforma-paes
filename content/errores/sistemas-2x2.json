@@ -23,38 +23,31 @@
     },
     {
       "id": "sistemas-2x2/lee-coeficiente-como-cantidad",
-      "descripcion": "Leer un coeficiente o un número suelto del sistema como la cantidad de la incógnita o como un total, en vez del valor unitario que multiplica a la incógnita: en px + qy = M, concluir que hay p unidades de x y q de y.",
-      "reservado": "Banco Advance de sistemas-2x2: distractor DEMRE 2024-invierno-111/34B (lee los coeficientes como cantidades de monedas)"
+      "descripcion": "Leer un coeficiente o un número suelto del sistema como la cantidad de la incógnita o como un total, en vez del valor unitario que multiplica a la incógnita: en px + qy = M, concluir que hay p unidades de x y q de y."
     },
     {
       "id": "sistemas-2x2/cruza-incognita-y-coeficiente",
-      "descripcion": "Emparejar mal incógnita y coeficiente: al plantear, poner el precio (peso, puntaje) de una cantidad junto a la incógnita de la otra; al leer un sistema dado, tomar x por la otra cantidad o darle otra unidad (unidades donde son kilogramos).",
-      "reservado": "Banco Advance de sistemas-2x2: distractores DEMRE 2026-regular-113/35A, 35B y 35C (x por la otra fruta o en otra unidad)"
+      "descripcion": "Emparejar mal incógnita y coeficiente: al plantear, poner el precio (peso, puntaje) de una cantidad junto a la incógnita de la otra; al leer un sistema dado, tomar x por la otra cantidad o darle otra unidad (unidades donde son kilogramos)."
     },
     {
       "id": "sistemas-2x2/traspone-tabla-al-plantear",
-      "descripcion": "Armar el sistema con la tabla traspuesta: tomar como coeficientes de una ecuación los valores de una columna (un producto) en vez de una fila (un recurso), de modo que cada ecuación mezcla recursos distintos.",
-      "reservado": "Banco Advance de sistemas-2x2: distractores DEMRE 2024-regular-113/35B y 35C (sistema armado con la tabla traspuesta)"
+      "descripcion": "Armar el sistema con la tabla traspuesta: tomar como coeficientes de una ecuación los valores de una columna (un producto) en vez de una fila (un recurso), de modo que cada ecuación mezcla recursos distintos."
     },
     {
       "id": "sistemas-2x2/supone-incognitas-iguales",
-      "descripcion": "Suponer que las dos incógnitas valen lo mismo y resolver con una sola ecuación: repartir el total entre la suma de los coeficientes de esa ecuación (M entre p + q, o las unidades entre dos), ignorando la otra condición.",
-      "reservado": "Banco Advance de sistemas-2x2: distractor DEMRE 2024-regular-113/34C (reparte el total entre la suma de los coeficientes)"
+      "descripcion": "Suponer que las dos incógnitas valen lo mismo y resolver con una sola ecuación: repartir el total entre la suma de los coeficientes de esa ecuación (M entre p + q, o las unidades entre dos), ignorando la otra condición."
     },
     {
       "id": "sistemas-2x2/clasifica-soluciones-con-una-sola-razon",
-      "descripcion": "Decidir cuántas soluciones hay mirando una sola razón entre las ecuaciones: coeficientes proporcionales → infinitas (sin comparar los términos independientes), términos independientes distintos → ninguna, o coeficientes de x distintos → una sola.",
-      "reservado": "Banco Advance de sistemas-2x2: distractores sin id de sistemas-rectas-no-se-cruzan (paso ocho opción b, l2-item-1 C, l2-item-3 C)"
+      "descripcion": "Decidir cuántas soluciones hay mirando una sola razón entre las ecuaciones: coeficientes proporcionales → infinitas (sin comparar los términos independientes), términos independientes distintos → ninguna, o coeficientes de x distintos → una sola."
     },
     {
       "id": "sistemas-2x2/fuerza-solucion-al-cancelarse-la-incognita",
-      "descripcion": "Cuando al igualar coeficientes la incógnita se cancela, seguir operando como si fuera una ecuación normal: dividir la diferencia de los términos independientes por el coeficiente y entregar un valor de x para un sistema sin solución.",
-      "reservado": "Banco Advance de sistemas-2x2: distractor sin id de sistemas-rectas-no-se-cruzan (l2-item-1 D, divide la diferencia de cargos fijos por el coeficiente)"
+      "descripcion": "Cuando al igualar coeficientes la incógnita se cancela, seguir operando como si fuera una ecuación normal: dividir la diferencia de los términos independientes por el coeficiente y entregar un valor de x para un sistema sin solución."
     },
     {
       "id": "sistemas-2x2/desplaza-solo-una-cantidad",
-      "descripcion": "Al traducir una condición que compara dos cantidades tras un cambio común a ambas (se sacan n litros de cada una, hace n años), aplicar el cambio a una sola de las dos cantidades en vez de a cada una antes de comparar.",
-      "reservado": "Banco Advance de sistemas-2x2: distractores sin id de sistemas-plantear-antes-resolver (paso ocho opción b y feedback de la práctica: resta solo a una edad)"
+      "descripcion": "Al traducir una condición que compara dos cantidades tras un cambio común a ambas (se sacan n litros de cada una, hace n años), aplicar el cambio a una sola de las dos cantidades en vez de a cada una antes de comparar."
     }
   ]
 }

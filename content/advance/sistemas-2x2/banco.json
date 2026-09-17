@@ -1,0 +1,886 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "sistemas-2x2",
+  "moduloId": "sistemas-2x2",
+  "titulo": "Sistemas de ecuaciones lineales (2x2)",
+  "items": [
+    {
+      "id": "adv-sistemas-2x2-001",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una distribuidora recibe 497 blísteres de pilas: unos traen 3 pilas y otros 4. En total son 1.757 pilas. ¿Cuántos blísteres de 4 pilas recibió?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "231",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 231 son los blísteres de 3 pilas (x). Se pregunta por los de 4 pilas, que son y = 497 − 231 = 266."
+        },
+        {
+          "clave": "B",
+          "texto": "266",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 3 · 497 = 1.491 y 1.757 − 1.491 = 266 blísteres de 4 pilas; con 231 blísteres de 3 pilas se comprueba 693 + 1.064 = 1.757."
+        },
+        {
+          "clave": "C",
+          "texto": "251",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone que hay la misma cantidad de blísteres de cada tipo y reparte las pilas entre 3 + 4: 1.757 ÷ 7 = 251. Pero el enunciado no dice que sean iguales: con 251 de cada tipo el total de blísteres no daría 497. Las dos condiciones se resuelven juntas."
+        },
+        {
+          "clave": "D",
+          "texto": "464",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-eliminar",
+          "feedbackDescarte": "Esa pierde el signo al restar: al eliminar x con 3 · (x + y) = 1.491, la ecuación restada se suma en vez de restarse y queda (3 + 4)y = 1.757 + 1.491 = 3.248, y = 464. Al restar cambia el signo de los tres términos: (4 − 3)y = 1.757 − 1.491 = 266."
+        }
+      ],
+      "solucion": "Con x blísteres de 3 pilas e y blísteres de 4: x + y = 497 y 3x + 4y = 1.757. Por reducción, 3 · (x + y) = 3 · 497 = 1.491; restando de la segunda ecuación, (4 − 3)y = 1.757 − 1.491 = 266, así que y = 266 y x = 497 − 266 = 231. Comprobación: 3 · 231 = 693 y 4 · 266 = 1.064; 693 + 1.064 = 1.757.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 34, distractores C y D",
+        "notaAdaptacion": "Del original (2024-regular-113, pregunta 34: dos personas arman bolsas de tres y de cinco dulces, se conocen el total de bolsas y el de dulces y se pregunta cuántas bolsas armó una de ellas; clave A recalculada porque la forma no tiene clavijero) se conserva la estructura (envases con p y q unidades, total de envases y total de unidades) y los mecanismos de los distractores C (reparte el total entre la suma de los coeficientes, supone-incognitas-iguales) y D (la otra incógnita, invierte-valores-del-par). Cambian el contexto (blísteres de pilas), las cifras (3 y 4 por blíster, coeficientes distintos de los de la fuente, 497 blísteres y 1.757 pilas), la incógnita pedida (la fuente pregunta por los envases de menor coeficiente; el banco pregunta por los blísteres de 4 pilas, el de mayor coeficiente, para que el distractor pierde-signo-al-eliminar quede bajo el total de blísteres) y las alternativas; el distractor B del original no deriva de un mecanismo del catálogo y se reemplaza por pierde-signo-al-eliminar."
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-002",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una ferretería, un perno cuesta $1.590 y una golilla $530. Un cliente compra 96 piezas entre pernos y golillas y paga $112.360. ¿Cuántos pernos compró?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "38",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 38 son las golillas (y = 96 − 58), no los pernos. Se pregunta por x."
+        },
+        {
+          "clave": "B",
+          "texto": "29",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa despeja mal la primera ecuación: usa y = 96 + x en vez de y = 96 − x, y al sustituir queda 1.590x + 530x + 50.880 = 112.360, (1.590 + 530)x = 61.480, 2.120x = 61.480, x = 29. Con el despeje correcto, y = 96 − x, queda 1.060x = 61.480."
+        },
+        {
+          "clave": "C",
+          "texto": "53",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone que se compró la misma cantidad de pernos y de golillas y reparte el gasto entre 1.590 + 530: 112.360 ÷ 2.120 = 53. Pero con 53 de cada uno no se juntan 96 piezas: las dos condiciones se usan juntas."
+        },
+        {
+          "clave": "D",
+          "texto": "58",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con y = 96 − x queda 1.060x = 61.480, x = 58 pernos; 1.590 · 58 = 92.220 y 530 · 38 = 20.140 suman 112.360."
+        }
+      ],
+      "solucion": "Con x pernos e y golillas: x + y = 96 y 1.590x + 530y = 112.360. Se despeja y = 96 − x y se sustituye en la otra ecuación: 1.590x + 530 · (96 − x) = 112.360. Como 530 · 96 = 50.880, queda 1.590x − 530x + 50.880 = 112.360, (1.590 − 530)x = 112.360 − 50.880, 1.060x = 61.480 y x = 58. Luego y = 96 − 58 = 38. Comprobación: 1.590 · 58 = 92.220 y 530 · 38 = 20.140; 92.220 + 20.140 = 112.360.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-003",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una oficina de encomiendas cobra $3.050 por encomienda grande y $1.220 por encomienda chica. En un día despachó 167 encomiendas y recaudó $370.270. ¿Cuál es el par (grandes, chicas)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(91, 76)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con y = 167 − x queda 1.830x = 166.530, x = 91 grandes, y = 167 − 91 = 76 chicas; 277.550 + 92.720 = 370.270."
+        },
+        {
+          "clave": "B",
+          "texto": "(76, 91)",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa calcula bien los dos valores pero los reporta al revés: 91 son las grandes (x) y 76 las chicas (y). El par pedido es (grandes, chicas) = (91, 76)."
+        },
+        {
+          "clave": "C",
+          "texto": "(91, 167)",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-sustituir-de-vuelta",
+          "feedbackDescarte": "Esa encuentra x = 91 y no vuelve a sustituir para hallar la otra incógnita: pone 167, el total de encomiendas, en el lugar de las chicas. Falta y = 167 − 91 = 76."
+        },
+        {
+          "clave": "D",
+          "texto": "(39, 206)",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa despeja mal la primera ecuación: usa y = 167 + x en vez de y = 167 − x, y al sustituir queda (3.050 + 1.220)x = 370.270 − 203.740, 4.270x = 166.530, x = 39, con y = 167 + 39 = 206. Con el despeje correcto, 1.830x = 166.530 y x = 91."
+        }
+      ],
+      "solucion": "Con x grandes e y chicas: x + y = 167 y 3.050x + 1.220y = 370.270. Se sustituye y = 167 − x en la segunda: 1.220 · 167 = 203.740, así que (3.050 − 1.220)x = 370.270 − 203.740, 1.830x = 166.530 y x = 91; luego y = 167 − 91 = 76. Comprobación: 3.050 · 91 = 277.550 y 1.220 · 76 = 92.720; 277.550 + 92.720 = 370.270. El par es (91, 76).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-004",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una tienda vende ampolletas LED a $2.450 y halógenas a $980. Vendió 193 ampolletas por $328.790. ¿Cuál es el par (LED, halógenas)?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(98, 95)",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa reporta el par al revés: 95 son las LED (x) y 98 las halógenas (y). El par pedido es (LED, halógenas) = (95, 98)."
+        },
+        {
+          "clave": "B",
+          "texto": "(95, 193)",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-sustituir-de-vuelta",
+          "feedbackDescarte": "Esa llega a x = 95 y no sustituye de vuelta: pone 193, el total de ampolletas, como si fuera la cantidad de halógenas. Falta y = 193 − 95 = 98."
+        },
+        {
+          "clave": "C",
+          "texto": "(95, 98)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: eliminando y con 980 · (x + y) = 189.140 queda 1.470x = 139.650, x = 95 LED, y = 193 − 95 = 98 halógenas; 232.750 + 96.040 = 328.790."
+        },
+        {
+          "clave": "D",
+          "texto": "(151, 42)",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-eliminar",
+          "feedbackDescarte": "Esa pierde el signo al restar: en vez de restar 980 · (x + y) = 189.140, la suma, y queda (2.450 + 980)x = 328.790 + 189.140, 3.430x = 517.930, x = 151, con y = 193 − 151 = 42. Restando bien, (2.450 − 980)x = 328.790 − 189.140, 1.470x = 139.650 y x = 95."
+        }
+      ],
+      "solucion": "Con x LED e y halógenas: x + y = 193 y 2.450x + 980y = 328.790. Por reducción, 980 · (x + y) = 980 · 193 = 189.140; restando de la segunda ecuación, (2.450 − 980)x = 328.790 − 189.140, 1.470x = 139.650 y x = 95; luego y = 193 − 95 = 98. Comprobación: 2.450 · 95 = 232.750 y 980 · 98 = 96.040; 232.750 + 96.040 = 328.790. El par es (95, 98).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-005",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un taller de cerámica fabrica jarrones y cuencos. Tabla de consumo por pieza: arcilla (kg): jarrón 6, cuenco 1; horno (horas): jarrón 2, cuenco 1. En una temporada usó 2.856 kg de arcilla y 1.292 horas de horno, sin sobrantes. ¿Cuántos cuencos fabricó?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.224",
+          "esCorrecta": false,
+          "errorCatalogado": "traspone-tabla-al-plantear",
+          "feedbackDescarte": "Esa arma el sistema con la tabla traspuesta: toma la columna del jarrón (6 y 2) como coeficientes de la primera ecuación y la columna del cuenco (1 y 1) para la segunda: 6x + 2y = 2.856 ; x + y = 1.292, que da x = 68 e y = 1.224. Cada ecuación debe seguir una fila, es decir, un recurso: 6x + y = 2.856 para la arcilla y 2x + y = 1.292 para el horno."
+        },
+        {
+          "clave": "B",
+          "texto": "391",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 391 son los jarrones (x). Se pregunta por los cuencos, y = 510."
+        },
+        {
+          "clave": "C",
+          "texto": "408",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone que se hicieron tantos jarrones como cuencos y usa solo la fila de la arcilla: (6 + 1)x = 2.856, 2.856 ÷ 7 = 408. Pero la fila del horno no se cumple con 408 jarrones y 408 cuencos: las dos filas se resuelven juntas."
+        },
+        {
+          "clave": "D",
+          "texto": "510",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: como el cuenco lleva coeficiente 1 en las dos filas, al restar las ecuaciones queda 4x = 2.856 − 1.292 = 1.564, x = 391 jarrones, y entonces y = 1.292 − 782 = 510 cuencos; 2.346 + 510 = 2.856 kg."
+        }
+      ],
+      "solucion": "Con x jarrones e y cuencos, cada fila de la tabla da una ecuación: arcilla 6x + y = 2.856 y horno 2x + y = 1.292. Como y tiene coeficiente 1 en las dos, se resta la segunda de la primera: (6 − 2)x = 2.856 − 1.292, 4x = 1.564, x = 391. Luego, de la ecuación del horno, y = 1.292 − 2 · 391 = 1.292 − 782 = 510. Comprobación: 6 · 391 = 2.346 y 2.346 + 510 = 2.856 kg de arcilla; 782 + 510 = 1.292 horas de horno.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-regular-113, pregunta 35, distractores A y B",
+        "notaAdaptacion": "Del original (2024-regular-113, pregunta 35: fábrica de bicicletas con una tabla de kilogramos de aluminio y de titanio por modelo, totales de cada metal, se pregunta cuántas del segundo modelo; clave D recalculada porque la forma no tiene clavijero) se conserva la estructura (tabla recursos × productos de dos filas y dos columnas, totales por recurso, se pide el segundo producto) y los mecanismos de los distractores A (la otra incógnita, invierte-valores-del-par) y B (sistema armado con la tabla traspuesta, traspone-tabla-al-plantear). Cambian el contexto (taller de cerámica), la tabla (6 y 1, 2 y 1, distinta de la original), los totales (2.856 kg y 1.292 horas) y las alternativas; el distractor C del original (la otra incógnita del sistema traspuesto) se reemplaza por supone-incognitas-iguales. Como en la fuente, el sistema traspuesto tiene solución entera positiva."
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-006",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un taller de costura industrial fabrica mochilas y estuches. Tabla de consumo por unidad: tela (m): mochila 2, estuche 1; cierres: mochila 2, estuche 3. Un pedido usó 1.236 m de tela y 1.744 cierres, sin sobrantes. ¿Cuántos estuches incluyó el pedido?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "563",
+          "esCorrecta": false,
+          "errorCatalogado": "traspone-tabla-al-plantear",
+          "feedbackDescarte": "Esa arma el sistema con la tabla traspuesta: toma la columna de la mochila (2 y 2) como coeficientes de la primera ecuación y la columna del estuche (1 y 3) para la segunda: 2x + 2y = 1.236 ; x + 3y = 1.744, que da x = 55 e y = 563. Cada ecuación debe seguir una fila, es decir, un recurso: 2x + y = 1.236 para la tela y 2x + 3y = 1.744 para los cierres."
+        },
+        {
+          "clave": "B",
+          "texto": "254",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: como x tiene el mismo coeficiente en las dos filas, al restar queda 2y = 1.744 − 1.236 = 508, y = 254 estuches; con x = 491 mochilas, 982 + 254 = 1.236 m y 982 + 762 = 1.744 cierres."
+        },
+        {
+          "clave": "C",
+          "texto": "491",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 491 son las mochilas (x). Se pregunta por los estuches, y = 254."
+        },
+        {
+          "clave": "D",
+          "texto": "745",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-eliminar",
+          "feedbackDescarte": "Esa pierde el signo al restar: como x tiene el mismo coeficiente en las dos filas hay que restar una ecuación de la otra, pero cambia el signo solo del 2x y suma los otros términos: (3 + 1)y = 1.744 + 1.236 = 2.980, y = 745. Restando bien los tres términos, (3 − 1)y = 1.744 − 1.236 = 508 e y = 254."
+        }
+      ],
+      "solucion": "Con x mochilas e y estuches, cada fila de la tabla da una ecuación: tela 2x + y = 1.236 y cierres 2x + 3y = 1.744. Como x tiene el mismo coeficiente en las dos, se resta la primera de la segunda: (3 − 1)y = 1.744 − 1.236, 2y = 508, y = 254. Luego, de la ecuación de la tela, 2x = 1.236 − 254 = 982, x = 491. Comprobación: 982 + 254 = 1.236 m de tela; 3 · 254 = 762 y 982 + 762 = 1.744 cierres.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-007",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Dado el sistema 2x + y = 888 ; x + 3y = 1.249, ¿cuál es el valor de x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "559",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-eliminar",
+          "feedbackDescarte": "Esa pierde el signo al restar: para eliminar y multiplica la primera ecuación por 3, 6x + 3y = 2.664, y al restar x + 3y = 1.249 cambia el signo solo del 3y, sumando los otros términos: (6 + 1)x = 2.664 + 1.249 = 3.913, x = 559. Restando los tres términos, (6 − 1)x = 2.664 − 1.249 = 1.415 y x = 283."
+        },
+        {
+          "clave": "B",
+          "texto": "322",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 322 es el valor de y. Se pregunta por x, que vale 283."
+        },
+        {
+          "clave": "C",
+          "texto": "283",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con y = 888 − 2x, x + 2.664 − 6x = 1.249 da 5x = 1.415, x = 283; e y = 888 − 566 = 322 cumple 283 + 966 = 1.249."
+        },
+        {
+          "clave": "D",
+          "texto": "296",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone x = y y usa solo la primera ecuación: 2x + x = 888, 888 ÷ 3 = 296. Pero el par (296, 296) no cumple la segunda ecuación: las dos se resuelven juntas."
+        }
+      ],
+      "solucion": "De la primera ecuación, y = 888 − 2x. Se sustituye en la segunda: x + 3 · (888 − 2x) = 1.249, x + 2.664 − 6x = 1.249, −5x = 1.249 − 2.664 = −1.415, x = 283. Luego y = 888 − 2 · 283 = 888 − 566 = 322. Comprobación: 566 + 322 = 888 y 283 + 3 · 322 = 283 + 966 = 1.249.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-008",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Dado el sistema 2x + y = 1.128 ; 5x + y = 2.535, ¿cuál es el valor de x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "469",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: restando las ecuaciones, 3x = 2.535 − 1.128 = 1.407, x = 469; con y = 1.128 − 938 = 190 se cumple 2.345 + 190 = 2.535."
+        },
+        {
+          "clave": "B",
+          "texto": "201",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa despeja mal la primera ecuación: usa y = 1.128 + 2x en vez de y = 1.128 − 2x, y al sustituir en la segunda queda 5x + 1.128 + 2x = 2.535, 7x = 1.407, x = 201. Con el despeje correcto, 5x + 1.128 − 2x = 2.535, 3x = 1.407 y x = 469."
+        },
+        {
+          "clave": "C",
+          "texto": "190",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 190 es el valor de y. Se pregunta por x, que vale 469."
+        },
+        {
+          "clave": "D",
+          "texto": "376",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone x = y y usa solo la primera ecuación: 2x + x = 1.128, 1.128 ÷ 3 = 376. Pero el par (376, 376) no cumple la segunda ecuación: hay que usar las dos."
+        }
+      ],
+      "solucion": "Como y tiene coeficiente 1 en las dos ecuaciones, se resta la primera de la segunda: (5 − 2)x = 2.535 − 1.128, 3x = 1.407, x = 469. Luego y = 1.128 − 2 · 469 = 1.128 − 938 = 190. Comprobación: 938 + 190 = 1.128 y 5 · 469 + 190 = 2.345 + 190 = 2.535.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-009",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Dos cisternas contienen en total 1.896 litros de agua. Si de cada una se sacan 244 litros, la primera queda con el triple de lo que queda en la segunda. ¿Cuántos litros tiene la primera cisterna?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.483",
+          "esCorrecta": false,
+          "errorCatalogado": "desplaza-solo-una-cantidad",
+          "feedbackDescarte": "Esa aplica el cambio a una sola cantidad: resta los 244 litros solo a la primera cisterna, x − 244 = 3y, y con x = 1.896 − y queda 1.652 = 4y, y = 413, x = 1.483. Se sacan 244 litros de cada una, así que la segunda también cambia: x − 244 = 3 · (y − 244)."
+        },
+        {
+          "clave": "B",
+          "texto": "1.300",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con x = 1.896 − y, 1.652 − y = 3y − 732 da 4y = 2.384, y = 596 y x = 1.300; y en efecto 1.056 = 3 · 352."
+        },
+        {
+          "clave": "C",
+          "texto": "596",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa es la otra incógnita: 596 litros tiene la segunda cisterna. Se pregunta por la primera, x = 1.300."
+        },
+        {
+          "clave": "D",
+          "texto": "1.422",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa distribuye el 3 solo sobre el primer término del paréntesis: escribe 3 · (y − 244) como 3y − 244, y la ecuación queda x − 244 = 3y − 244, x = 3y; con x + y = 1.896, 4y = 1.896, y = 474, x = 1.422. El 3 multiplica a los dos términos: 3y − 732."
+        }
+      ],
+      "solucion": "Con x litros en la primera cisterna e y en la segunda: x + y = 1.896, y tras sacar 244 litros de cada una, x − 244 = 3 · (y − 244). Se sustituye x = 1.896 − y: 1.896 − y − 244 = 3y − 732, 1.652 + 732 = 4y, 2.384 = 4y, y = 596. Luego x = 1.896 − 596 = 1.300. Comprobación: 1.300 − 244 = 1.056 y 596 − 244 = 352; 3 · 352 = 1.056.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-010",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una persona gasta $44.200 en 5 kg de frutos secos entre nueces y almendras, pagando $6.050 por kilogramo de nueces y $10.700 por kilogramo de almendras. La situación se modela con el sistema 6.050x + 10.700y = 44.200 ; x + y = 5. ¿Qué representa la variable x?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "la cantidad de almendras compradas",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza la incógnita con el coeficiente y además la unidad: x va multiplicada por 6.050, que es el precio del kilogramo de nueces, así que x no puede ser de almendras; y como x + y = 5 kg, x cuenta kilogramos, no unidades."
+        },
+        {
+          "clave": "B",
+          "texto": "la cantidad de nueces compradas",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa acierta en la fruta pero cruza la unidad: la segunda ecuación x + y = 5 suma kilogramos (los 5 kg comprados), así que x son kilogramos de nueces, no la cantidad de nueces."
+        },
+        {
+          "clave": "C",
+          "texto": "los kilogramos de almendras comprados",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza la incógnita con el coeficiente: 6.050 es el precio del kilogramo de nueces y multiplica a x, así que x son los kilogramos de nueces; los kilogramos de almendras son y, con precio 10.700."
+        },
+        {
+          "clave": "D",
+          "texto": "los kilogramos de nueces comprados",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en 6.050x el precio por kilogramo de nueces multiplica a x, y x + y = 5 suma kilogramos; x son los kilogramos de nueces (la solución es x = 2 e y = 3: 12.100 + 32.100 = 44.200)."
+        }
+      ],
+      "solucion": "En la primera ecuación cada precio por kilogramo multiplica a su incógnita: 6.050 es el precio del kilogramo de nueces, así que x son los kilogramos de nueces, y 10.700 multiplica a y, los kilogramos de almendras. La segunda ecuación, x + y = 5, dice que entre las dos frutas se compraron 5 kg. Resolviendo, y = 5 − x y 6.050x + 10.700 · (5 − x) = 44.200, 53.500 − 4.650x = 44.200, 4.650x = 9.300, x = 2 e y = 3. Comprobación: 12.100 + 32.100 = 44.200.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 35, distractores A, B y C",
+        "notaAdaptacion": "Del original (2026-regular-113, pregunta 35, clave D verificada en el clavijero: compra de dos frutas por kilogramo con un gasto total, sistema dado en el enunciado, se pregunta qué representa la variable x) se conservan la estructura (sistema con precios por kilogramo y suma de kilogramos, pregunta por el significado de x) y los tres mecanismos de los distractores (cantidad de la otra fruta, cantidad en unidades de la misma fruta, kilogramos de la otra fruta: cruza-incognita-y-coeficiente). Cambian el contexto (nueces y almendras), los precios (6.050 y 10.700 por kilogramo), los totales (5 kg y 44.200) y el orden de las alternativas."
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-011",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una tienda de instrumentos hay violines (4 cuerdas cada uno) y guitarras (6 cuerdas cada una): 334 instrumentos y 1.850 cuerdas en total. Con x violines e y guitarras, la situación se modela con x + y = 334 ; 4x + 6y = 1.850. ¿Qué representa el 6 de la segunda ecuación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "las cuerdas que tiene cada guitarra",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en 4x + 6y cada coeficiente es la cantidad de cuerdas por instrumento y multiplica a la cantidad de instrumentos de ese tipo; el 6 acompaña a y, las guitarras, así que son las cuerdas de cada guitarra (con y = 257 guitarras, 6 · 257 = 1.542 cuerdas)."
+        },
+        {
+          "clave": "B",
+          "texto": "la cantidad de guitarras",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficiente-como-cantidad",
+          "feedbackDescarte": "Esa lee el coeficiente como si fuera la cantidad de guitarras. Si hubiera 6 guitarras, habría 334 − 6 = 328 violines y las cuerdas serían 4 · 328 + 6 · 6 = 1.348, no 1.850. El 6 multiplica a y: es lo que aporta cada guitarra, no cuántas hay."
+        },
+        {
+          "clave": "C",
+          "texto": "las cuerdas que tiene cada violín",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza el coeficiente con la incógnita: el 6 multiplica a y, que son las guitarras, no a x, los violines. Las cuerdas de cada violín son el 4 que acompaña a x."
+        },
+        {
+          "clave": "D",
+          "texto": "el total de cuerdas de las guitarras",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficiente-como-cantidad",
+          "feedbackDescarte": "Esa lee el coeficiente como un total: el total de cuerdas de las guitarras es 6 · y (con y = 257, son 1.542), no 6. El 6 es lo que aporta una sola guitarra."
+        }
+      ],
+      "solucion": "En la ecuación 4x + 6y = 1.850 cada término es el aporte de un tipo de instrumento al total de cuerdas: 4 cuerdas por cada uno de los x violines y 6 cuerdas por cada una de las y guitarras. El 6 es entonces la cantidad de cuerdas de cada guitarra, un valor unitario que multiplica a la cantidad de guitarras. La solución del sistema es x = 77 e y = 257: 4 · 77 = 308 y 6 · 257 = 1.542, y 308 + 1.542 = 1.850.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-012",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una pastelería vende alfajores a $610 y brownies a $920. En una tarde vendió 74 productos y recaudó $60.020. Con x alfajores e y brownies, el sistema es x + y = 74 ; 610x + 920y = 60.020. ¿Qué representa la ecuación x + y = 74?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "que en total se recaudaron $74",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-con-total-equivocado",
+          "feedbackDescarte": "Esa iguala con el total equivocado: lee el 74 como dinero, pero 74 es el total de unidades vendidas; la recaudación es 60.020 y va en la ecuación de los precios, 610x + 920y = 60.020."
+        },
+        {
+          "clave": "B",
+          "texto": "que se vendieron 74 alfajores y 74 brownies",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficiente-como-cantidad",
+          "feedbackDescarte": "Esa lee el 74 como la cantidad de cada producto. Si fueran 74 alfajores y 74 brownies, la recaudación sería (610 + 920) · 74 = 1.530 · 74 = 113.220, no 60.020. La ecuación x + y = 74 dice que las dos cantidades suman 74."
+        },
+        {
+          "clave": "C",
+          "texto": "que en total se vendieron 74 productos",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x + y suma la cantidad de alfajores y la de brownies, y esa suma es 74, los productos vendidos en la tarde (la solución es x = 26 e y = 48, que suman 74)."
+        },
+        {
+          "clave": "D",
+          "texto": "que se vendió la misma cantidad de alfajores que de brownies",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone que las dos incógnitas valen lo mismo: x + y = 74 solo dice que suman 74, no que sean iguales. Con x = y = 37 la recaudación sería 610 · 37 + 920 · 37 = 1.530 · 37 = 56.610, no 60.020."
+        }
+      ],
+      "solucion": "En el sistema, x cuenta alfajores e y cuenta brownies. La ecuación x + y = 74 suma unidades: entre alfajores y brownies se vendieron 74 productos, sin decir cuántos de cada uno. La otra ecuación, 610x + 920y = 60.020, suma dinero: cada alfajor aporta 610 y cada brownie 920, hasta los 60.020 recaudados. La solución del sistema es x = 26 e y = 48, que en efecto suman 74.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-013",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una juguetería vende peluches a $3.150 y puzzles a $4.050. En un día vendió 72 juguetes y recaudó $263.700. Si x es la cantidad de peluches e y la de puzzles, ¿qué sistema representa la situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x + y = 263.700 ; 3.150x + 4.050y = 72",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-con-total-equivocado",
+          "feedbackDescarte": "Esa cruza los totales: iguala la suma de unidades x + y con el dinero, 263.700, y la suma de precios con las 72 unidades. Las unidades suman 72 y el dinero suma 263.700."
+        },
+        {
+          "clave": "B",
+          "texto": "x + y = 72 ; 4.050x + 3.150y = 263.700",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza los precios con las incógnitas: 4.050 es el precio del puzzle y debe multiplicar a y, no a x; el peluche cuesta 3.150 y multiplica a x."
+        },
+        {
+          "clave": "C",
+          "texto": "x + y = 72 ; 3.150x + 4.050y = 72",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-con-total-equivocado",
+          "feedbackDescarte": "Esa iguala la ecuación del dinero con el total equivocado: 3.150x + 4.050y suma pesos y debe ser 263.700, la recaudación, no 72, que son las unidades."
+        },
+        {
+          "clave": "D",
+          "texto": "x + y = 72 ; 3.150x + 4.050y = 263.700",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x + y = 72 suma los juguetes vendidos y 3.150x + 4.050y = 263.700 suma el dinero, cada precio junto a su incógnita (la solución es x = 31 e y = 41)."
+        }
+      ],
+      "solucion": "Hay dos cantidades desconocidas, x peluches e y puzzles, y dos condiciones. Las unidades: x + y = 72. El dinero: cada peluche aporta 3.150 y cada puzzle 4.050, así que 3.150x + 4.050y = 263.700. Cada precio acompaña a la incógnita de su producto y cada total va en la ecuación de su magnitud. La solución del sistema es x = 31 e y = 41, que suman 72.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-014",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una empresa arma botiquines básicos (x) y completos (y). Tabla de contenido por botiquín: vendas: básico 2, completo 4; parches: básico 5, completo 8. Dispone de 316 vendas y 678 parches y los usa todos. ¿Qué sistema permite hallar x e y?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2x + 4y = 316 ; 5x + 8y = 678",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la fila de las vendas da 2x + 4y = 316 y la fila de los parches da 5x + 8y = 678; cada ecuación es un recurso y cada coeficiente, lo que usa un botiquín de ese tipo (la solución es x = 46 e y = 56)."
+        },
+        {
+          "clave": "B",
+          "texto": "2x + 5y = 316 ; 4x + 8y = 678",
+          "esCorrecta": false,
+          "errorCatalogado": "traspone-tabla-al-plantear",
+          "feedbackDescarte": "Esa arma el sistema con la tabla traspuesta: toma la columna del básico (2 y 5) como una ecuación y la del completo (4 y 8) como la otra, mezclando vendas con parches. Cada ecuación sigue una fila: las vendas, 2x + 4y = 316, y los parches, 5x + 8y = 678."
+        },
+        {
+          "clave": "C",
+          "texto": "4x + 2y = 316 ; 8x + 5y = 678",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza las columnas: pone los valores del completo junto a x y los del básico junto a y. Un básico usa 2 vendas y 5 parches, y esos son los coeficientes de x."
+        },
+        {
+          "clave": "D",
+          "texto": "2x + 4y = 678 ; 5x + 8y = 316",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-con-total-equivocado",
+          "feedbackDescarte": "Esa iguala cada ecuación con el total equivocado: 2x + 4y cuenta vendas y debe ser 316, y 5x + 8y cuenta parches y debe ser 678."
+        }
+      ],
+      "solucion": "Cada fila de la tabla es un recurso y da una ecuación. Vendas: 2 por básico y 4 por completo, 2x + 4y = 316. Parches: 5 por básico y 8 por completo, 5x + 8y = 678. Los coeficientes de x son los del botiquín básico (2 y 5) y los de y, los del completo (4 y 8); cada total va con su recurso. El sistema es 2x + 4y = 316 ; 5x + 8y = 678, cuya solución es x = 46 e y = 56.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-015",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Dos bobinas de cable suman 502 m. Si de cada bobina se cortan 47 m, la primera queda con el triple de lo que queda en la segunda. Con x e y los metros iniciales de la primera y la segunda bobina, ¿qué sistema representa la situación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x + y = 502 ; x − 47 = 3y",
+          "esCorrecta": false,
+          "errorCatalogado": "desplaza-solo-una-cantidad",
+          "feedbackDescarte": "Esa aplica el corte a una sola cantidad: resta los 47 m a la primera bobina y compara con la segunda entera, 3y. Se cortan 47 m de cada una, así que la segunda queda con y − 47 y la condición es x − 47 = 3(y − 47)."
+        },
+        {
+          "clave": "B",
+          "texto": "x + y = 502 ; x − 47 = 3(y − 47)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la suma inicial es x + y = 502 y, tras cortar 47 m de cada bobina, lo que queda es x − 47 y y − 47, con x − 47 = 3(y − 47) (la solución es x = 353 e y = 149)."
+        },
+        {
+          "clave": "C",
+          "texto": "x + y = 502 ; x − 47 = 3y − 47",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa distribuye el 3 solo sobre el primer término del paréntesis: 3(y − 47) multiplica por 3 a los dos términos, no solo a y. Escrito como 3y − 47, el corte de la segunda bobina queda sin triplicar y la ecuación equivale a x = 3y, que ignora el corte."
+        },
+        {
+          "clave": "D",
+          "texto": "x + y = 502 ; x = 3(y − 47)",
+          "esCorrecta": false,
+          "errorCatalogado": "desplaza-solo-una-cantidad",
+          "feedbackDescarte": "Esa aplica el corte solo a la segunda bobina: compara la primera entera, x, con 3(y − 47). También se cortan 47 m de la primera, así que a la izquierda va x − 47."
+        }
+      ],
+      "solucion": "Antes del corte las bobinas suman 502 m: x + y = 502. El corte se aplica a cada bobina: la primera queda con x − 47 y la segunda con y − 47, y la condición dice que x − 47 = 3(y − 47). El sistema es x + y = 502 ; x − 47 = 3(y − 47), cuya solución es x = 353 e y = 149.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-016",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Dado el sistema 2x + 3y = 435 ; 6x + 9y = 1.359, ¿cuál afirmación es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tiene infinitas soluciones, porque los coeficientes de la segunda ecuación son 3 veces los de la primera",
+          "esCorrecta": false,
+          "errorCatalogado": "clasifica-soluciones-con-una-sola-razon",
+          "feedbackDescarte": "Esa decide con una sola razón: mira que 6 = 3 · 2 y 9 = 3 · 3 y concluye infinitas soluciones sin comparar los términos independientes. Multiplicando la primera ecuación por 3 se obtiene 6x + 9y = 1.305, y 1.305 ≠ 1.359: las dos ecuaciones no pueden cumplirse a la vez."
+        },
+        {
+          "clave": "B",
+          "texto": "Tiene una única solución, con x = 9",
+          "esCorrecta": false,
+          "errorCatalogado": "fuerza-solucion-al-cancelarse-la-incognita",
+          "feedbackDescarte": "Esa sigue operando cuando la incógnita se cancela: al restar 3 · (primera) de la segunda desaparecen x e y y queda 1.359 − 1.305 = 54; dividir 54 ÷ 6 = 9 y llamarlo x no tiene sentido, porque la igualdad 0 = 54 es falsa para cualquier par. El sistema no tiene solución."
+        },
+        {
+          "clave": "C",
+          "texto": "No tiene solución: 3·(2x + 3y) = 6x + 9y, pero 3·435 = 1.305 ≠ 1.359",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la segunda ecuación tiene los coeficientes de la primera multiplicados por 3, pero 3 · 435 = 1.305 y el término independiente es 1.359; 6x + 9y no puede valer 1.305 y 1.359 a la vez, así que no hay solución."
+        },
+        {
+          "clave": "D",
+          "texto": "El par x = y = 87 es solución del sistema",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone x = y y usa solo la primera ecuación: (2 + 3)x = 435, 435 ÷ 5 = 87. El par (87, 87) cumple la primera ecuación, pero en la segunda 6x + 9y da 1.305, no 1.359: no es solución del sistema."
+        }
+      ],
+      "solucion": "Los coeficientes de la segunda ecuación son los de la primera multiplicados por 3: 3 · (2x + 3y) = 6x + 9y. Si la primera se cumple, 6x + 9y vale 3 · 435 = 1.305, y la segunda exige que valga 1.359. Como 1.305 ≠ 1.359, ningún par cumple las dos ecuaciones: el sistema no tiene solución (rectas paralelas). Al restar 3 · (primera) de la segunda, las incógnitas se cancelan y queda 0 = 54, una igualdad falsa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-017",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Dado el sistema x + 2y = 153 ; 3x + 6y = 459, ¿cuál afirmación es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tiene infinitas soluciones: la segunda ecuación es 3 veces la primera (3·153 = 459)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: multiplicando la primera ecuación por 3 se obtiene 3x + 6y = 459, exactamente la segunda; son la misma recta escrita de dos formas y todo par que cumple una cumple la otra."
+        },
+        {
+          "clave": "B",
+          "texto": "No tiene solución, porque los términos independientes son distintos (153 y 459)",
+          "esCorrecta": false,
+          "errorCatalogado": "clasifica-soluciones-con-una-sola-razon",
+          "feedbackDescarte": "Esa decide mirando solo los términos independientes: que 153 y 459 sean distintos no impide que las ecuaciones sean equivalentes, porque los coeficientes cambian en la misma razón: 3 · 153 = 459. La segunda ecuación es 3 veces la primera."
+        },
+        {
+          "clave": "C",
+          "texto": "Tiene una única solución, x = y = 51",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone x = y y resuelve la primera ecuación: (1 + 2)x = 153, 153 ÷ 3 = 51. El par (51, 51) sí cumple las dos ecuaciones (51 + 2 · 51 = 153 y 3 · 51 + 6 · 51 = 459), pero no es la única solución: la segunda ecuación es 3 veces la primera y hay infinitos pares que las cumplen."
+        },
+        {
+          "clave": "D",
+          "texto": "Tiene una única solución, porque los coeficientes de x son distintos (1 y 3)",
+          "esCorrecta": false,
+          "errorCatalogado": "clasifica-soluciones-con-una-sola-razon",
+          "feedbackDescarte": "Esa decide mirando solo los coeficientes de x: que sean 1 y 3 no basta, porque los de y (2 y 6) y los términos independientes (153 y 459) guardan la misma razón 3. Cuando toda la ecuación se multiplica por el mismo número, las rectas coinciden y hay infinitas soluciones."
+        }
+      ],
+      "solucion": "Se compara la razón entre todos los pares de coeficientes y términos independientes: 3 ÷ 1 = 3, 6 ÷ 2 = 3 y 459 ÷ 153 = 3. La segunda ecuación es exactamente 3 veces la primera, así que representan la misma recta y el sistema tiene infinitas soluciones. Al intentar eliminar x restando 3 · (primera) de la segunda, todo se cancela y queda 0 = 0, una igualdad siempre verdadera.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-018",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un torneo de dardos se lanzaron 458 dardos que cayeron en dos zonas, una de 5 puntos y otra de 2 puntos, sumando 1.549 puntos. La situación se modela con x + y = 458 ; 5x + 2y = 1.549. ¿Cuál afirmación es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Cayeron exactamente 5 dardos en la zona x y 2 dardos en la zona y",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficiente-como-cantidad",
+          "feedbackDescarte": "Esa lee los coeficientes como cantidades de dardos. El 5 y el 2 son los puntos que vale cada dardo según la zona; si fueran cantidades, 5 + 2 = 7 dardos, no 458. Las cantidades son x e y."
+        },
+        {
+          "clave": "B",
+          "texto": "Un dardo en cada zona suma 458 puntos en total",
+          "esCorrecta": false,
+          "errorCatalogado": "iguala-con-total-equivocado",
+          "feedbackDescarte": "Esa iguala con el total equivocado: 458 es el total de dardos (unidades), no puntos. Un dardo en cada zona suma 5 + 2 = 7 puntos; los puntos totales son 1.549, en la ecuación 5x + 2y = 1.549."
+        },
+        {
+          "clave": "C",
+          "texto": "x es la cantidad de dardos en la zona de 2 puntos e y la de la zona de 5 puntos",
+          "esCorrecta": false,
+          "errorCatalogado": "cruza-incognita-y-coeficiente",
+          "feedbackDescarte": "Esa cruza las incógnitas con los coeficientes: en 5x + 2y, x va multiplicada por 5, así que x cuenta los dardos de la zona de 5 puntos, e y, multiplicada por 2, los de la zona de 2 puntos."
+        },
+        {
+          "clave": "D",
+          "texto": "x e y son las cantidades de dardos que cayeron en la zona de 5 puntos y en la de 2 puntos, respectivamente",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x + y = 458 suma dardos y 5x + 2y = 1.549 suma puntos, con cada valor por dardo junto a la cantidad de su zona; x es la zona de 5 puntos e y la de 2 (la solución es x = 211 e y = 247: 1.055 + 494 = 1.549)."
+        }
+      ],
+      "solucion": "La primera ecuación suma unidades: x + y = 458 dardos. La segunda suma puntos: cada dardo de la zona de 5 puntos aporta 5 y cada uno de la zona de 2 aporta 2, así que 5x + 2y = 1.549; el coeficiente indica el valor de cada dardo y la incógnita, cuántos cayeron en esa zona. Resolviendo con y = 458 − x: 5x + 916 − 2x = 1.549, 3x = 633, x = 211 e y = 247. Comprobación: 5 · 211 = 1.055 y 2 · 247 = 494; 1.055 + 494 = 1.549.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 34, distractores B y C",
+        "notaAdaptacion": "Del original (2024-invierno-111, pregunta 34, clave A verificada en el clavijero: colecta con monedas de dos valores, sistema dado en el enunciado, se pregunta cuál afirmación es verdadera) se conservan la estructura (sistema de conteo y valor dado, cuatro afirmaciones sobre qué representan x, y y los coeficientes) y los mecanismos de los distractores B (lee los coeficientes como cantidades, lee-coeficiente-como-cantidad) y C (toma el total de unidades como valor, iguala-con-total-equivocado en su lectura inversa). Cambian el contexto (torneo de dardos con zonas de 5 y 2 puntos), las cifras (458 dardos y 1.549 puntos) y las alternativas; el distractor D del original (atribuye a una incógnita el aporte de la otra) se reemplaza por cruza-incognita-y-coeficiente."
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-019",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Para resolver x + y = 963 ; 4x + 2y = 3.210, un estudiante multiplica la primera ecuación por 2, la resta de la segunda y concluye que x = 856. ¿Es correcto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: x = 856",
+          "esCorrecta": false,
+          "errorCatalogado": "pierde-signo-al-eliminar",
+          "feedbackDescarte": "Esa pierde el signo al restar: 2 · (x + y) = 1.926, y al restar cambia el signo solo del 2y, sumando los otros términos: (4 + 2)x = 3.210 + 1.926 = 5.136, x = 856. El estudiante se equivocó: restando los tres términos, (4 − 2)x = 3.210 − 1.926 = 1.284 y x = 642."
+        },
+        {
+          "clave": "B",
+          "texto": "No: x = 214, con y = 963 + x",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-parte-de-expresion",
+          "feedbackDescarte": "Esa despeja mal la primera ecuación: y = 963 + x en vez de y = 963 − x, y al sustituir queda 4x + 2 · (963 + x) = 3.210, 6x = 3.210 − 1.926 = 1.284, x = 214. Con el despeje correcto, 4x + 1.926 − 2x = 3.210, 2x = 1.284 y x = 642."
+        },
+        {
+          "clave": "C",
+          "texto": "No: al restar cambian los tres signos y queda (4 − 2)x = 3.210 − 1.926, x = 642",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 2 · (x + y) = 1.926 y, restando bien, (4 − 2)x = 3.210 − 1.926 = 1.284, x = 642; el procedimiento del estudiante sumó donde había que restar."
+        },
+        {
+          "clave": "D",
+          "texto": "No: x = 321",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa entrega la otra incógnita: 321 es y = 963 − 642. La pregunta es por x, que vale 642, y el estudiante no acertó con 856."
+        }
+      ],
+      "solucion": "Multiplicar la primera ecuación por 2 da 2x + 2y = 1.926. Al restarla de la segunda hay que cambiar el signo de sus tres términos: 4x − 2x + 2y − 2y = 3.210 − 1.926, es decir, 2x = 1.284 y x = 642. Luego y = 963 − 642 = 321. Comprobación: 4 · 642 = 2.568 y 2 · 321 = 642; 2.568 + 642 = 3.210. El estudiante obtuvo 856 porque sumó 1.926 en vez de restarlo: 6x = 5.136.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-sistemas-2x2-020",
+      "unidadId": "sistemas-2x2",
+      "moduloId": "sistemas-2x2",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una verdulería tiene 626 mallas entre papas y cebollas: las mallas de papas pesan 5 kg y las de cebollas 3 kg, y en total suman 2.356 kg. ¿Cuál afirmación es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Hay 387 mallas de papas y 239 de cebollas",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-valores-del-par",
+          "feedbackDescarte": "Esa invierte los valores del par: la incógnita que acompaña al 5 (mallas de papas) vale 239 y la que acompaña al 3 (mallas de cebollas) vale 387, no al revés."
+        },
+        {
+          "clave": "B",
+          "texto": "Hay 239 mallas de papas y 387 de cebollas",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con y = 626 − x, 5x + 1.878 − 3x = 2.356 da 2x = 478, x = 239 mallas de papas e y = 387 de cebollas; 1.195 + 1.161 = 2.356 kg."
+        },
+        {
+          "clave": "C",
+          "texto": "Hay 239 mallas de papas y 626 de cebollas",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-sustituir-de-vuelta",
+          "feedbackDescarte": "Esa encuentra x = 239 y no sustituye de vuelta: pone 626, el total de mallas, como cantidad de cebollas. Las cebollas son y = 626 − 239 = 387."
+        },
+        {
+          "clave": "D",
+          "texto": "Hay 313 mallas de cada tipo",
+          "esCorrecta": false,
+          "errorCatalogado": "supone-incognitas-iguales",
+          "feedbackDescarte": "Esa supone que hay la misma cantidad de cada tipo: 626 ÷ 2 = 313. Pero el enunciado no dice que sean iguales, y con 313 y 313 el peso total no daría 2.356 kg: las dos condiciones se resuelven juntas."
+        }
+      ],
+      "solucion": "Con x mallas de papas e y de cebollas: x + y = 626 y 5x + 3y = 2.356. Se sustituye y = 626 − x: 5x + 3 · (626 − x) = 2.356; 3 · 626 = 1.878, así que 5x − 3x + 1.878 = 2.356, 2x = 478, x = 239. Luego y = 626 − 239 = 387. Comprobación: 5 · 239 = 1.195 y 3 · 387 = 1.161; 1.195 + 1.161 = 2.356 kg. Hay 239 mallas de papas y 387 de cebollas.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-sistemas-2x2-001: distribuidora, blísteres de 3 y de 4 pilas; 497 blísteres, 1.757 pilas → (231, 266), se pide y; intermedios 1.491, 693, 1.064; distractores 231, 251, 464 (3.248)",
+    "adv-sistemas-2x2-002: ferretería, pernos $1.590 y golillas $530; 96 piezas, $112.360 → (58, 38); intermedios 50.880, 61.480, 1.060, 92.220, 20.140; distractores 38, 29 (2.120), 53",
+    "adv-sistemas-2x2-003: encomiendas grandes $3.050 y chicas $1.220; 167 encomiendas, $370.270 → (91, 76) como par; intermedios 203.740, 166.530, 1.830, 277.550, 92.720; distractores (76, 91), (91, 167), (39, 206) con 4.270",
+    "adv-sistemas-2x2-004: ampolletas LED $2.450 y halógenas $980; 193 ampolletas, $328.790 → (95, 98) como par; intermedios 189.140, 139.650, 1.470, 232.750, 96.040; distractores (98, 95), (95, 193), (151, 42) con 3.430 y 517.930",
+    "adv-sistemas-2x2-005: taller de cerámica, jarrones y cuencos; tabla arcilla 6/1 y horno 2/1, totales 2.856 kg y 1.292 h → (391, 510), se pide y; intermedios 1.564, 782, 2.346; distractores 1.224 (traspuesto 68), 391, 408",
+    "adv-sistemas-2x2-006: taller de costura, mochilas y estuches; tabla tela 2/1 y cierres 2/3, totales 1.236 m y 1.744 cierres → (491, 254), se pide y; intermedios 508, 982, 762; distractores 563 (traspuesto 55), 491, 745 (2.980)",
+    "adv-sistemas-2x2-007: sin contexto, 2x + y = 888 ; x + 3y = 1.249 → (283, 322); intermedios 2.664, 1.415, 566, 966; distractores 559 (3.913), 322, 296",
+    "adv-sistemas-2x2-008: sin contexto, 2x + y = 1.128 ; 5x + y = 2.535 → (469, 190); intermedios 1.407, 938, 2.345; distractores 201, 190, 376",
+    "adv-sistemas-2x2-009: dos cisternas de agua, 1.896 litros en total, se sacan 244 de cada una, la primera queda con el triple → (1.300, 596), se pide x; intermedios 1.652, 732, 2.384, 1.056, 352; distractores 1.483 (413), 596, 1.422 (474)",
+    "adv-sistemas-2x2-010: frutos secos, nueces $6.050/kg y almendras $10.700/kg; 5 kg, $44.200 → (2, 3), se pregunta qué representa x; intermedios 53.500, 4.650, 9.300, 12.100, 32.100; distractores textuales (fruta o unidad cruzadas)",
+    "adv-sistemas-2x2-011: tienda de instrumentos, violines de 4 cuerdas y guitarras de 6; 334 instrumentos, 1.850 cuerdas → (77, 257), se pregunta qué representa el 6; intermedios 308, 1.542; distractor con y = 6: 328 y 1.348",
+    "adv-sistemas-2x2-012: pastelería, alfajores $610 y brownies $920; 74 productos, $60.020 → (26, 48), se pregunta qué representa x + y = 74; intermedios 1.530, 113.220, 37, 56.610; distractores textuales",
+    "adv-sistemas-2x2-013: juguetería, peluches $3.150 y puzzles $4.050; 72 juguetes, $263.700 → (31, 41), se pide el sistema; distractores totales cruzados, precios cruzados, mismo total 72 en las dos",
+    "adv-sistemas-2x2-014: botiquines básico y completo; tabla vendas 2/4 y parches 5/8, totales 316 y 678 → (46, 56), se pide el sistema; distractores tabla traspuesta, columnas cruzadas, totales cruzados",
+    "adv-sistemas-2x2-015: dos bobinas de cable, 502 m en total, se cortan 47 m de cada una, la primera queda con el triple → (353, 149), se pide el sistema; distractores corte solo en x, 3y − 47, corte solo en y",
+    "adv-sistemas-2x2-016: sin contexto, 2x + 3y = 435 ; 6x + 9y = 1.359, sin solución (1.305 ≠ 1.359); intermedios 54; distractores infinitas por coeficientes, x = 9 al forzar, (87, 87)",
+    "adv-sistemas-2x2-017: sin contexto, x + 2y = 153 ; 3x + 6y = 459, infinitas soluciones (3 · 153 = 459); distractores sin solución por términos distintos, única con (51, 51), única por coeficientes de x distintos",
+    "adv-sistemas-2x2-018: torneo de dardos, zonas de 5 y 2 puntos; 458 dardos, 1.549 puntos → (211, 247), se pide la afirmación verdadera; intermedios 916, 633, 1.055, 494; distractores textuales",
+    "adv-sistemas-2x2-019: sin contexto, x + y = 963 ; 4x + 2y = 3.210 → (642, 321), procedimiento de un estudiante con x = 856; intermedios 1.926, 1.284, 2.568, 5.136; distractores 856, 214, 321",
+    "adv-sistemas-2x2-020: verdulería, mallas de papas de 5 kg y de cebollas de 3 kg; 626 mallas, 2.356 kg → (239, 387), afirmaciones sobre el par; intermedios 1.878, 478, 1.195, 1.161; distractores (387, 239), (239, 626), 313 de cada tipo"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1 (resolución de sistemas de ecuaciones lineales 2x2 y problemas que involucren sistemas)",
+      "formas liberadas DEMRE 2024-invierno-111, 2024-regular-113 y 2026-regular-113, leídas del PDF de fuentes-demre-liberadas (solo para los cuatro ítems demre-liberada)",
+      "lecciones y cierre de la unidad sistemas-2x2 y los otros bancos Advance (solo para elegir dominios y cifras que no se repitan)"
+    ],
+    "declaracionOriginalidad": "Banco escrito el 2026-09-17 tras la PARADA 2 firmada por Benja (plan en scratchpad/plan-banco-sistemas-2x2.md, fuera del repo versionado). Rondas 1 y 2 NO ejecutadas: se corren en hilos /clear separados y este campo se reescribe con su resultado. Origen: 16 ítems propios creados desde cero a partir del temario DEMRE M1 (resolución de sistemas de ecuaciones lineales 2x2 y problemas que involucren sistemas) y 4 basados en formas liberadas DEMRE (001, 005, 010, 018), cada uno con referencia y notaAdaptacion; ningún material de preuniversitarios ni de terceros privados. Contextos con principal y dos respaldos pasados por consultar-fuentes.mjs fuera de la sesión (0 pares dobles en los 15 principales, 0 recambios). Habilidades 10 resolver / 4 modelar / 3 representar / 3 argumentar: el corpus (docs/analisis/frecuencia-demre-v2.json) etiqueta 2024-invierno-111 #34 y 2026-regular-113 #35 como argumentar; el banco etiqueta 018 y 010, basados en ellas, como modelar por el criterio literal del temario «interpreta los parámetros y supuestos de un modelo». Dificultad 5 baja / 8 media / 7 alta con tiempos 80/120/160 por estructura; misma estructura, misma dificultad. Los 60 distractores llevan errorCatalogado con 12 ids del catálogo de la unidad, 7 de ellos creados para este banco (cuatro con fuente en distractores DEMRE con PDF, tres con fuente en distractores sin id de las lecciones de la unidad) y iguala-con-total-equivocado ampliado a la lectura inversa. Cada distractor se deriva del texto literal de su id y se contrastó que ningún id existente produce el mismo valor. Cota de contexto: ningún distractor escalar de un ítem con contexto supera el total de la ecuación donde la incógnita pedida tiene coeficiente 1, ni es negativo o no entero; en 009 además el valor queda entre la cantidad que se saca y el total menos esa cantidad. Con la convención de pierde-signo-al-eliminar de más abajo, ese distractor supera siempre la cota estricta (la que multiplica por el coeficiente); se declara y se acepta en 001-D y 006-D. Magnitud: los 24 distractores escalares tienen razón entre 1/3 y 3 respecto de la clave; en el borde, 019-B (exactamente 1/3) y 006-D (2,93). Cifras: criterio de dos niveles (de 10 a 99 contra las lecciones, el cierre y las 5 preguntas DEMRE de la unidad; 100 o más contra todo content/), toda cifra mostrada incluidos los intermedios de solución y feedback, 0 repetidas entre ítems, totales del banco distintos de los totales de la unidad, sin tuplas repetidas contra pasos, ítems, preguntas DEMRE y los otros bancos; medido sobre este archivo con los scripts del plan: 182 cifras distintas, 0 bloqueadas, 0 repetidas. Convenciones de desempate entre ids: (1) distribuye-sobre-parte-de-expresion es el error al despejar (y = T + x en vez de T − x) o al distribuir un factor sobre un paréntesis (k(u − n) escrito como ku − n) y acompaña a la solución por sustitución; pierde-signo-al-eliminar es el error al restar en reducción (cambia el signo solo del término eliminado y suma los otros dos) y acompaña a la solución por reducción; coexisten solo en 019, donde cada alternativa nombra su procedimiento. (2) En respuesta escalar, la otra incógnita es siempre invierte-valores-del-par; omite-sustituir-de-vuelta va solo en pares o afirmaciones de par, con el total de la ecuación de suma en el lugar de la segunda incógnita. (3) Intercambiar qué cantidad representa x al leer o plantear es cruza-incognita-y-coeficiente; intercambiar los valores ya calculados es invierte-valores-del-par. (4) En tablas, el valor pedido del sistema traspuesto es traspone-tabla-al-plantear y la otra incógnita del sistema correcto es invierte-valores-del-par. (5) supone-incognitas-iguales usa la ecuación de valor o la primera del sistema en resolver y la de unidades (mitad del total) en afirmaciones de misma cantidad; la derivación de cada feedback lo dice. (6) lee-coeficiente-como-cantidad lee un número del sistema como cantidad o total de la incógnita; cruza-incognita-y-coeficiente cruza el pareo sin inventar cantidades. (7) iguala-con-total-equivocado cubre cruzar los totales y repetir el total de unidades donde iba el de dinero (013). (8) Su lectura inversa (012, 018) se apoya en la ampliación del catálogo. (9) clasifica-soluciones-con-una-sola-razon dos veces en 017 y desplaza-solo-una-cantidad dos veces en 015 son variantes de la misma descripción. (10) supone-incognitas-iguales en 016 y 017: en 016 el par igual no cumple la segunda ecuación; en 017 sí cumple ambas y la afirmación es falsa por decir «única». (11) k(y − n) escrito como ky − n es distribuye-sobre-parte-de-expresion; aplicar el cambio a una sola de las dos cantidades es desplaza-solo-una-cantidad. Notación: las dos ecuaciones de un sistema separadas por «;», producto con «·», signo menos Unicode (−), punto de miles, sin decimales. Los ítems 010 a 015 no muestran su solución en el enunciado y la solución del archivo la enuncia como comprobación."
+  }
+}
