@@ -57,6 +57,21 @@
       "id": "potencias-y-raices/eleva-negativo-sin-parentesis",
       "descripcion": "Perder el signo al elevar una base negativa, o darle un paréntesis que no tiene: tomar (−1)² = −1 y llegar a 1² + (−1)² + (0,1)² = 0,01 en vez de 2,01, o evaluar −t² con t = −3 como (−3)² = 9 en vez de −9. Una potencia par de base negativa es positiva, y el signo menos que queda fuera del paréntesis no entra en la potencia. Distinto de lee-exponente-negativo-como-signo, donde el signo mal leído es el del exponente, no el de la base.",
       "reservado": "Banco Advance de potencias-y-raices: distractor DEMRE 2024-invierno-111/3A; mismo mecanismo en funcion-cuadratica 2024-invierno-111/40D y 2027-invierno-111/39B"
+    },
+    {
+      "id": "potencias-y-raices/conserva-decimales-al-elevar",
+      "descripcion": "Elevar un decimal manteniendo la cantidad de decimales de la base: calcular 0,3² como 0,9 en vez de 0,09, o 0,1² como 0,1. Al multiplicar decimales se suman los lugares decimales de los factores: 0,3 · 0,3 tiene dos lugares, no uno. Se distingue de multiplica-base-por-exponente, donde el exponente se usa como factor.",
+      "reservado": "Banco Advance de potencias-y-raices: distractor DEMRE 2024-invierno-111/3D (0,1² tomado como 0,1) y usos propios con bases 4,9, 3,1 y 1,7"
+    },
+    {
+      "id": "potencias-y-raices/invierte-el-orden-al-restar-exponentes",
+      "descripcion": "Al dividir potencias de igual base, restar los exponentes en el orden invertido: calcular aᵐ ÷ aⁿ como a^(n−m) en vez de a^(m−n). La regla resta el exponente del divisor al del dividendo, no al revés: invertir el orden cambia el signo del exponente final y por lo tanto el resultado (queda el recíproco). Se distingue de cruza-reglas-de-exponentes, donde la operación elegida entre exponentes no corresponde a la operación entre potencias; acá la operación (restar) sí es correcta, lo que falla es el orden.",
+      "reservado": "Banco Advance de potencias-y-raices: distractor DEMRE 2024-invierno-111/18D (2² = 2^(8−6)) y una afirmación propia"
+    },
+    {
+      "id": "potencias-y-raices/trata-crecimiento-exponencial-como-aditivo",
+      "descripcion": "Confundir un crecimiento o decrecimiento por factor constante con uno por cantidad constante: calcular el valor del paso n como inicial · n, es decir, la cantidad inicial sumada n veces, en vez de multiplicarla por el factor una vez por paso. Duplicarse cada día no es sumar lo mismo cada día: es multiplicar por 2 cada vez, y el resultado tras varios días es una potencia del factor, no un múltiplo de la cantidad inicial.",
+      "reservado": "Banco Advance de potencias-y-raices: distractor DEMRE 2024-invierno-111/20B (20 · 10 = 200) y dos usos propios en contexto"
     }
   ]
 }
