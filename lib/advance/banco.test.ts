@@ -82,7 +82,8 @@ describe("itemParaCliente: la figura viaja íntegra", () => {
   }
 
   it("sin figura no aparece la clave", () => {
-    const { figura: _f, ...sinFigura } = itemCon(TABLA);
+    const sinFigura = itemCon(TABLA);
+    delete sinFigura.figura;
     const cliente = itemParaCliente(sinFigura);
     assert.equal("figura" in cliente, false);
   });
