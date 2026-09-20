@@ -42,6 +42,14 @@ export const TEXTOS_ADVANCE = {
     triage: (titulo: string) => `Triage: ${titulo}`,
   },
 
+  /* Figuras de función (docs/fobos-advance.md §12). El <title> corto del SVG
+     dice qué clase de gráfico es; el <desc> es la descripcion del banco. */
+  figura: {
+    planoUnaCurva: "Gráfico de una función",
+    planoVariasCurvas: (n: number) => `Gráfico de ${n === 2 ? "dos" : "tres"} funciones`,
+    tabla: "Tabla de valores",
+  },
+
   /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al
      instante y es irreversible; el copy lo dice una vez, en la instrucción, y
      no lo repite en cada alternativa. El descarte fatal se informa sin

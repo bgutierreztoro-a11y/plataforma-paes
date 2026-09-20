@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
-import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
+import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
@@ -163,7 +163,7 @@ export function EjecutorDescarte({
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
 
-        {item.figura && item.figura.tipo === undefined && <PlanoIsometrias figura={item.figura} />}
+        {item.figura && <FiguraDeItem figura={item.figura} />}
 
         <p className="text-cuerpo-s text-primary">{descarte.instruccion}</p>
 
