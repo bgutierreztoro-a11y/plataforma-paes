@@ -619,6 +619,31 @@ const CLAVES_POR_TIPO_FIGURA = {
   vector: ['tipo', 'etiqueta', 'desde', 'hasta'],
   centro: ['tipo', 'etiqueta', 'x', 'y'],
 };
+// Figuras de función (reglas (11) y (12) del $comment). Se distinguen del plano
+// de isometrías por la presencia de `tipo`: sin `tipo` la figura es la de arriba.
+const TIPOS_FIGURA_NUEVA = ['plano-funcion', 'tabla-valores'];
+const CLAVES_PLANO_FUNCION = ['tipo', 'ventana', 'curvas', 'puntos', 'segmentos', 'ejeSimetria', 'regiones', 'etiquetaEjeX', 'etiquetaEjeY', 'descripcion'];
+const CLAVES_POR_CLASE_CURVA = {
+  parabola: ['clase', 'a', 'b', 'c', 'desde', 'hasta', 'rotulo', 'trazo'],
+  recta: ['clase', 'm', 'b', 'por', 'desde', 'hasta', 'rotulo', 'trazo'],
+  'recta-vertical': ['clase', 'x', 'rotulo', 'trazo'],
+};
+const TRAZOS_CURVA = ['solido', 'segmentado', 'punteado'];
+const CLAVES_PUNTO_FUNCION = ['x', 'y', 'rotulo', 'estilo', 'mostrarCoordenadas'];
+const ESTILOS_PUNTO = ['relleno', 'hueco'];
+const CLAVES_SEGMENTO = ['desde', 'hasta', 'rotulo'];
+const CLAVES_EJE_SIMETRIA = ['x', 'rotulo'];
+const CLAVES_POR_CLASE_REGION = {
+  'entre-curva-y-eje': ['clase', 'curva', 'desde', 'hasta'],
+  'franja-x': ['clase', 'desde', 'hasta'],
+};
+const MAX_CURVAS = 3;
+const MAX_PUNTOS_FUNCION = 6;
+const MAX_SEGMENTOS = 4;
+const MAX_REGIONES = 2;
+const CLAVES_TABLA_VALORES = ['tipo', 'encabezados', 'filas', 'descripcion'];
+const MAX_COLUMNAS_TABLA = 6;
+const MAX_FILAS_TABLA = 8;
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -793,6 +818,11 @@ function validarDeclaracionErrorCatalogado(a, q, banco, erroresCatalogados, erro
  * el plano, nombres sin repetir. Todo es error.
  */
 function validarFiguraItem(figura, donde, errores) {
+  if (figura && typeof figura === 'object' && !Array.isArray(figura) && figura.tipo !== undefined) {
+    if (figura.tipo === 'plano-funcion') return validarPlanoFuncion(figura, donde, errores);
+    if (figura.tipo === 'tabla-valores') return validarTablaValores(figura, donde, errores);
+    return errores.push(`${donde}.tipo: debe ser uno de: ${TIPOS_FIGURA_NUEVA.join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
+  }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
     return errores.push(`${donde}: figura debe ser un objeto { plano, descripcion, elementos }`);
   }
@@ -893,6 +923,253 @@ function validarFiguraItem(figura, donde, errores) {
     for (const v of vertices) {
       if (!nombresPunto.has(v)) errores.push(`${q}: vértice "${v}" no existe como punto de la figura`);
     }
+  }
+}
+
+const esNumero = (v) => typeof v === 'number' && Number.isFinite(v);
+const esCoordenada = (p) => p && typeof p === 'object' && !Array.isArray(p) && esNumero(p.x) && esNumero(p.y);
+
+/** y de la curva en x. Solo parabola y recta: la vertical no es función de x. */
+function evaluarCurva(curva, x) {
+  if (curva.clase === 'parabola') return curva.a * x * x + curva.b * x + curva.c;
+  if (Array.isArray(curva.por)) {
+    const [p, q] = curva.por;
+    return p.y + ((q.y - p.y) / (q.x - p.x)) * (x - p.x);
+  }
+  return curva.m * x + curva.b;
+}
+
+/**
+ * Regla (11): figura `plano-funcion`. Todo error. La contención dentro de la
+ * ventana se comprueba solo cuando `ventana` viene declarada: la automática
+ * se construye desde estos mismos puntos y lo afirma un test del motor
+ * (lib/advance/planoFuncion.test.ts), no este validador.
+ */
+function validarPlanoFuncion(figura, donde, errores) {
+  clavesSobrantes(figura, CLAVES_PLANO_FUNCION, donde, errores);
+
+  let ventana = null;
+  if (figura.ventana !== undefined) {
+    const v = figura.ventana;
+    if (!v || typeof v !== 'object' || Array.isArray(v)) errores.push(`${donde}.ventana: debe ser { xMin, xMax, yMin, yMax }`);
+    else {
+      clavesSobrantes(v, CLAVES_PLANO, `${donde}.ventana`, errores);
+      if (!CLAVES_PLANO.every((k) => esNumero(v[k]))) errores.push(`${donde}.ventana: xMin, xMax, yMin e yMax deben ser números finitos`);
+      else {
+        if (v.xMin >= v.xMax) errores.push(`${donde}.ventana: xMin (${v.xMin}) debe ser menor que xMax (${v.xMax})`);
+        if (v.yMin >= v.yMax) errores.push(`${donde}.ventana: yMin (${v.yMin}) debe ser menor que yMax (${v.yMax})`);
+        if (v.xMin < v.xMax && v.yMin < v.yMax) ventana = v;
+      }
+    }
+  }
+  const dentro = (x, y) => !ventana || (x >= ventana.xMin && x <= ventana.xMax && y >= ventana.yMin && y <= ventana.yMax);
+  const dentroX = (x) => !ventana || (x >= ventana.xMin && x <= ventana.xMax);
+
+  if (!esTexto(figura.descripcion)) {
+    errores.push(`${donde}.descripcion: falta (texto alternativo del gráfico, es el <desc> del SVG)`);
+  } else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) {
+    errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+  }
+  for (const campo of ['etiquetaEjeX', 'etiquetaEjeY']) {
+    if (figura[campo] !== undefined && !esTexto(figura[campo])) errores.push(`${donde}.${campo}: si está, es texto no vacío`);
+  }
+
+  const rotulos = new Map();
+  const rotulo = (valor, q) => {
+    if (valor === undefined) return;
+    if (!esTexto(valor)) return errores.push(`${q}.rotulo: si está, es texto no vacío`);
+    if (rotulos.has(valor)) errores.push(`${q}.rotulo: "${valor}" repetido dentro de la figura (ya en ${rotulos.get(valor)})`);
+    else rotulos.set(valor, q);
+  };
+  const rango = (obj, q, obligatorio) => {
+    const tiene = obj.desde !== undefined || obj.hasta !== undefined;
+    if (obligatorio || tiene) {
+      for (const k of ['desde', 'hasta']) {
+        if (obj[k] === undefined) {
+          if (obligatorio) errores.push(`${q}: falta ${k}`);
+        } else if (!esNumero(obj[k])) errores.push(`${q}.${k}: debe ser número finito`);
+      }
+      if (esNumero(obj.desde) && esNumero(obj.hasta) && obj.desde >= obj.hasta) {
+        errores.push(`${q}: desde (${obj.desde}) debe ser menor que hasta (${obj.hasta})`);
+      }
+    }
+  };
+
+  // curvas
+  const curvas = figura.curvas;
+  const curvasValidas = [];
+  if (!Array.isArray(curvas) || curvas.length < 1 || curvas.length > MAX_CURVAS) {
+    errores.push(`${donde}.curvas: se esperan entre 1 y ${MAX_CURVAS} curvas (recibido: ${Array.isArray(curvas) ? curvas.length : JSON.stringify(curvas)})`);
+  } else {
+    curvas.forEach((cu, j) => {
+      const q = `${donde}.curvas[${j}]`;
+      curvasValidas.push(null);
+      if (!cu || typeof cu !== 'object' || Array.isArray(cu)) return errores.push(`${q}: debe ser un objeto con clase`);
+      const permitidas = CLAVES_POR_CLASE_CURVA[cu.clase];
+      if (!permitidas) {
+        return errores.push(`${q}: clase debe ser una de: ${Object.keys(CLAVES_POR_CLASE_CURVA).join(', ')} (recibido: ${JSON.stringify(cu.clase)})`);
+      }
+      clavesSobrantes(cu, permitidas, q, errores);
+      if (cu.trazo !== undefined && !TRAZOS_CURVA.includes(cu.trazo)) errores.push(`${q}.trazo: debe ser uno de: ${TRAZOS_CURVA.join(', ')}`);
+      rotulo(cu.rotulo, q);
+      if (curvas.length >= 2 && cu.rotulo === undefined) errores.push(`${q}: con 2 o más curvas cada una lleva rotulo (no se distinguen solo por color)`);
+
+      let valida = false;
+      if (cu.clase === 'parabola') {
+        if (!['a', 'b', 'c'].every((k) => esNumero(cu[k]))) errores.push(`${q}: a, b y c deben ser números finitos`);
+        else if (cu.a === 0) errores.push(`${q}: a debe ser distinto de 0 (con a = 0 no es una parábola)`);
+        else valida = true;
+        rango(cu, q, false);
+      } else if (cu.clase === 'recta') {
+        const conPendiente = cu.m !== undefined || cu.b !== undefined;
+        const conPuntos = cu.por !== undefined;
+        if (conPendiente && conPuntos) errores.push(`${q}: recta con m y b o con por, nunca ambas`);
+        else if (conPuntos) {
+          if (!Array.isArray(cu.por) || cu.por.length !== 2 || !cu.por.every(esCoordenada)) errores.push(`${q}.por: deben ser dos puntos { x, y }`);
+          else if (cu.por[0].x === cu.por[1].x) errores.push(`${q}.por: los dos puntos deben tener x distinto (recta vertical: usa clase recta-vertical)`);
+          else valida = true;
+        } else if (!esNumero(cu.m) || !esNumero(cu.b)) errores.push(`${q}: m y b deben ser números finitos`);
+        else valida = true;
+        rango(cu, q, false);
+      } else {
+        if (!esNumero(cu.x)) errores.push(`${q}: x debe ser número finito`);
+        else if (!dentroX(cu.x)) errores.push(`${q}: recta-vertical x = ${cu.x} fuera de la ventana`);
+        else valida = true;
+      }
+      if (!valida) return;
+      curvasValidas[j] = cu;
+      if (cu.clase === 'recta-vertical') return;
+
+      for (const k of ['desde', 'hasta']) {
+        if (!esNumero(cu[k])) continue;
+        const y = evaluarCurva(cu, cu[k]);
+        if (!dentro(cu[k], y)) errores.push(`${q}: extremo ${k} (${cu[k]}, ${y}) fuera de la ventana`);
+      }
+      if (cu.clase === 'parabola' && ventana) {
+        const xv = -cu.b / (2 * cu.a);
+        const visible = (cu.desde === undefined || xv >= cu.desde) && (cu.hasta === undefined || xv <= cu.hasta);
+        if (visible && dentroX(xv)) {
+          const yv = evaluarCurva(cu, xv);
+          if (!dentro(xv, yv)) errores.push(`${q}: vértice (${xv}, ${yv}) fuera de la ventana`);
+        }
+      }
+    });
+  }
+
+  // puntos
+  if (figura.puntos !== undefined) {
+    if (!Array.isArray(figura.puntos) || figura.puntos.length > MAX_PUNTOS_FUNCION) {
+      errores.push(`${donde}.puntos: se esperan hasta ${MAX_PUNTOS_FUNCION} puntos`);
+    } else {
+      figura.puntos.forEach((pt, j) => {
+        const q = `${donde}.puntos[${j}]`;
+        if (!pt || typeof pt !== 'object' || Array.isArray(pt)) return errores.push(`${q}: debe ser un objeto { x, y }`);
+        clavesSobrantes(pt, CLAVES_PUNTO_FUNCION, q, errores);
+        if (!esNumero(pt.x) || !esNumero(pt.y)) errores.push(`${q}: x e y deben ser números finitos`);
+        else if (!dentro(pt.x, pt.y)) errores.push(`${q}: punto (${pt.x}, ${pt.y}) fuera de la ventana`);
+        if (pt.estilo !== undefined && !ESTILOS_PUNTO.includes(pt.estilo)) errores.push(`${q}.estilo: debe ser uno de: ${ESTILOS_PUNTO.join(', ')}`);
+        if (pt.mostrarCoordenadas !== undefined && typeof pt.mostrarCoordenadas !== 'boolean') errores.push(`${q}.mostrarCoordenadas: debe ser booleano`);
+        rotulo(pt.rotulo, q);
+      });
+    }
+  }
+
+  // segmentos
+  if (figura.segmentos !== undefined) {
+    if (!Array.isArray(figura.segmentos) || figura.segmentos.length > MAX_SEGMENTOS) {
+      errores.push(`${donde}.segmentos: se esperan hasta ${MAX_SEGMENTOS} segmentos`);
+    } else {
+      figura.segmentos.forEach((s, j) => {
+        const q = `${donde}.segmentos[${j}]`;
+        if (!s || typeof s !== 'object' || Array.isArray(s)) return errores.push(`${q}: debe ser un objeto { desde, hasta }`);
+        clavesSobrantes(s, CLAVES_SEGMENTO, q, errores);
+        for (const k of ['desde', 'hasta']) {
+          if (!esCoordenada(s[k])) errores.push(`${q}.${k}: debe ser { x, y } con números finitos`);
+          else if (!dentro(s[k].x, s[k].y)) errores.push(`${q}: extremo ${k} (${s[k].x}, ${s[k].y}) fuera de la ventana`);
+        }
+        if (esCoordenada(s.desde) && esCoordenada(s.hasta) && s.desde.x === s.hasta.x && s.desde.y === s.hasta.y) {
+          errores.push(`${q}: desde y hasta son el mismo punto`);
+        }
+        rotulo(s.rotulo, q);
+      });
+    }
+  }
+
+  // eje de simetría
+  if (figura.ejeSimetria !== undefined) {
+    const e = figura.ejeSimetria;
+    const q = `${donde}.ejeSimetria`;
+    if (!e || typeof e !== 'object' || Array.isArray(e)) errores.push(`${q}: debe ser { x, rotulo? }`);
+    else {
+      clavesSobrantes(e, CLAVES_EJE_SIMETRIA, q, errores);
+      if (!esNumero(e.x)) errores.push(`${q}.x: debe ser número finito`);
+      else if (!dentroX(e.x)) errores.push(`${q}: x = ${e.x} fuera de la ventana`);
+      rotulo(e.rotulo, q);
+    }
+  }
+
+  // regiones
+  if (figura.regiones !== undefined) {
+    if (!Array.isArray(figura.regiones) || figura.regiones.length > MAX_REGIONES) {
+      errores.push(`${donde}.regiones: se esperan hasta ${MAX_REGIONES} regiones`);
+    } else {
+      figura.regiones.forEach((r, j) => {
+        const q = `${donde}.regiones[${j}]`;
+        if (!r || typeof r !== 'object' || Array.isArray(r)) return errores.push(`${q}: debe ser un objeto con clase`);
+        const permitidas = CLAVES_POR_CLASE_REGION[r.clase];
+        if (!permitidas) {
+          return errores.push(`${q}: clase debe ser una de: ${Object.keys(CLAVES_POR_CLASE_REGION).join(', ')} (recibido: ${JSON.stringify(r.clase)})`);
+        }
+        clavesSobrantes(r, permitidas, q, errores);
+        rango(r, q, true);
+        if (r.clase === 'entre-curva-y-eje') {
+          if (!Number.isInteger(r.curva) || r.curva < 0 || r.curva >= curvasValidas.length) {
+            errores.push(`${q}.curva: debe ser el índice de una curva existente (0 a ${Math.max(curvasValidas.length - 1, 0)})`);
+          } else if (curvasValidas[r.curva] && curvasValidas[r.curva].clase === 'recta-vertical') {
+            errores.push(`${q}.curva: una recta-vertical no encierra región con el eje x`);
+          }
+        }
+      });
+    }
+  }
+}
+
+/** Regla (12): figura `tabla-valores`. Todo error. */
+function validarTablaValores(figura, donde, errores) {
+  clavesSobrantes(figura, CLAVES_TABLA_VALORES, donde, errores);
+
+  if (!esTexto(figura.descripcion)) {
+    errores.push(`${donde}.descripcion: falta (qué muestra la tabla, en palabras)`);
+  } else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) {
+    errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+  }
+
+  const enc = figura.encabezados;
+  let columnas = null;
+  if (!Array.isArray(enc) || enc.length < 1 || enc.length > MAX_COLUMNAS_TABLA) {
+    errores.push(`${donde}.encabezados: se esperan entre 1 y ${MAX_COLUMNAS_TABLA} encabezados`);
+  } else {
+    columnas = enc.length;
+    const vistos = new Set();
+    enc.forEach((h, j) => {
+      if (!esTexto(h)) errores.push(`${donde}.encabezados[${j}]: texto no vacío`);
+      else if (vistos.has(h)) errores.push(`${donde}.encabezados[${j}]: "${h}" repetido`);
+      else vistos.add(h);
+    });
+  }
+
+  const filas = figura.filas;
+  if (!Array.isArray(filas) || filas.length < 1 || filas.length > MAX_FILAS_TABLA) {
+    errores.push(`${donde}.filas: se esperan entre 1 y ${MAX_FILAS_TABLA} filas`);
+  } else {
+    filas.forEach((f, j) => {
+      const q = `${donde}.filas[${j}]`;
+      if (!Array.isArray(f)) return errores.push(`${q}: debe ser un array de celdas`);
+      if (columnas !== null && f.length !== columnas) errores.push(`${q}: tiene ${f.length} celdas y encabezados tiene ${columnas}`);
+      f.forEach((celda, k) => {
+        if (!(typeof celda === 'string' || esNumero(celda))) errores.push(`${q}[${k}]: cada celda es texto o número finito`);
+      });
+    });
   }
 }
 

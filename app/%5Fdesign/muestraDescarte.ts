@@ -1,5 +1,5 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
-import type { FiguraItem, ItemAdvance } from "@/lib/advance/descarte";
+import type { FiguraIsometrias, ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
@@ -282,7 +282,7 @@ export const PANEL_MUESTRA = panelPorHabilidad(INTENTOS_CLASICOS_MUESTRA);
    Cada una lleva solo los datos: la figura original y el objeto que define la
    transformación (vector, centro o recta), nunca la imagen. No viven en
    content/ y ningún banco las importa. */
-export const FIGURAS_MUESTRA: { id: string; rotulo: string; figura: FiguraItem }[] = [
+export const FIGURAS_MUESTRA: { id: string; rotulo: string; figura: FiguraIsometrias }[] = [
   {
     id: "traslacion",
     rotulo: "Traslación · triángulo ABC y vector v",

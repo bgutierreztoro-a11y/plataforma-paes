@@ -19,7 +19,7 @@ import { protegerExpresiones } from "./protegerExpresiones.ts";
  */
 
 /** Forma en disco, espejo de item-advance.schema.json. Solo lo que este módulo necesita leer. */
-interface ItemEnDisco {
+export interface ItemEnDisco {
   id: string;
   unidadId: string;
   moduloId: string;
@@ -118,7 +118,7 @@ export function obtenerBanco(unidadId: string): Banco | null {
  * dentro de cada expresión): es el único punto por el que el texto del banco
  * llega a descarte y triage, así que ningún componente tiene que acordarse.
  */
-function itemParaCliente(item: ItemEnDisco): ItemAdvance {
+export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
   return {
     id: item.id,
     unidadId: item.unidadId,

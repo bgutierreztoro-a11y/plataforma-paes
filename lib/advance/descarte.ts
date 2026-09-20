@@ -58,12 +58,90 @@ export type ElementoFigura =
   | { tipo: "vector"; etiqueta: string; desde: [number, number]; hasta: [number, number] }
   | { tipo: "centro"; etiqueta: string; x: number; y: number };
 
-/** Muestra los datos del ítem y nunca la transformación pedida. Viaja al cliente tal cual. */
-export interface FiguraItem {
+/**
+ * Plano de isometrías. Muestra los datos del ítem y nunca la transformación
+ * pedida. Sin `tipo`: es la figura original y los bancos que la usan no
+ * cambian; las figuras de función se distinguen por llevar `tipo`.
+ */
+export interface FiguraIsometrias {
+  tipo?: undefined;
   plano: PlanoFigura;
   descripcion: string;
   elementos: ElementoFigura[];
 }
+
+/* ---------- figuras de función (figuraPlanoFuncion, figuraTablaValores) ---------- */
+
+export interface Coordenada {
+  x: number;
+  y: number;
+}
+
+export interface VentanaFuncion {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+}
+
+export type TrazoCurva = "solido" | "segmentado" | "punteado";
+
+interface CurvaBase {
+  rotulo?: string;
+  trazo?: TrazoCurva;
+}
+
+export type CurvaFuncion =
+  | (CurvaBase & { clase: "parabola"; a: number; b: number; c: number; desde?: number; hasta?: number })
+  | (CurvaBase & { clase: "recta"; m: number; b: number; por?: undefined; desde?: number; hasta?: number })
+  | (CurvaBase & { clase: "recta"; por: [Coordenada, Coordenada]; m?: undefined; b?: undefined; desde?: number; hasta?: number })
+  | (CurvaBase & { clase: "recta-vertical"; x: number });
+
+export interface PuntoFuncion extends Coordenada {
+  rotulo?: string;
+  /** Por defecto "relleno"; "hueco" solo para un punto excluido. */
+  estilo?: "relleno" | "hueco";
+  mostrarCoordenadas?: boolean;
+}
+
+export interface SegmentoFuncion {
+  desde: Coordenada;
+  hasta: Coordenada;
+  rotulo?: string;
+}
+
+export type RegionFuncion =
+  | { clase: "entre-curva-y-eje"; curva: number; desde: number; hasta: number }
+  | { clase: "franja-x"; desde: number; hasta: number };
+
+/**
+ * Plano de función. Muestra los datos del enunciado, nunca la respuesta
+ * pedida: si el ítem pregunta por el vértice, la figura no lo marca; si
+ * pregunta por los ceros, no se dibujan los puntos sobre el eje x.
+ */
+export interface FiguraPlanoFuncion {
+  tipo: "plano-funcion";
+  ventana?: VentanaFuncion;
+  curvas: CurvaFuncion[];
+  puntos?: PuntoFuncion[];
+  segmentos?: SegmentoFuncion[];
+  ejeSimetria?: { x: number; rotulo?: string };
+  regiones?: RegionFuncion[];
+  etiquetaEjeX?: string;
+  etiquetaEjeY?: string;
+  /** Texto alternativo real: el <desc> del SVG. */
+  descripcion: string;
+}
+
+export interface FiguraTablaValores {
+  tipo: "tabla-valores";
+  encabezados: string[];
+  filas: (string | number)[][];
+  descripcion: string;
+}
+
+/** Cualquier figura de un ítem. Viaja al cliente tal cual. */
+export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores;
 
 /** Sin `proveniencia`: no viaja al cliente. `solucion` sí, porque el descarte fatal la muestra al instante. */
 export interface ItemAdvance {

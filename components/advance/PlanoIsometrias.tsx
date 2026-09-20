@@ -1,4 +1,4 @@
-import type { ElementoFigura, FiguraItem, PlanoFigura } from "@/lib/advance/descarte";
+import type { ElementoFigura, FiguraIsometrias, PlanoFigura } from "@/lib/advance/descarte";
 
 /**
  * Plano cartesiano estático para la figura declarativa de un ítem Advance
@@ -27,7 +27,7 @@ import type { ElementoFigura, FiguraItem, PlanoFigura } from "@/lib/advance/desc
  */
 
 interface PlanoIsometriasProps {
-  figura: FiguraItem;
+  figura: FiguraIsometrias;
 }
 
 const ANCHO = 320;

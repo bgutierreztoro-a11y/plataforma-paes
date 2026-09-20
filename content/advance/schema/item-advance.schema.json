@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "item-advance.schema.json",
   "title": "Banco de ítems Fobos Advance",
-  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase; (10) figura, si está: xMin < xMax e yMin < yMax, todo vértice de poligono existe como punto de la misma figura, todo punto, vector y centro cae dentro del plano, nombres de punto únicos y descripcion presente. Todo error, no advertencia.",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase; (10) figura, si está: xMin < xMax e yMin < yMax, todo vértice de poligono existe como punto de la misma figura, todo punto, vector y centro cae dentro del plano, nombres de punto únicos y descripcion presente. (11) figura con tipo plano-funcion: a distinto de 0 en toda parabola; recta con m y b o con por (dos puntos de x distinto), nunca ambas; entre 1 y 3 curvas, hasta 6 puntos, 4 segmentos y 2 regiones; desde < hasta donde vengan; ventana con xMin < xMax e yMin < yMax; rótulos únicos en toda la figura; con 2 o más curvas cada una lleva rotulo; regiones[].curva apunta a una curva existente que no sea recta-vertical; con ventana declarada, todo punto, extremo de segmento, extremo de arco, vértice visible y ejeSimetria.x cae dentro de ella (sin ventana, la automática los contiene por construcción y lo afirma un test del motor). (12) figura con tipo tabla-valores: toda fila con el mismo largo que encabezados, encabezados no vacíos y únicos, hasta 6 columnas y 8 filas. Todo error, no advertencia.",
   "type": "object",
   "required": ["tipo", "unidadId", "moduloId", "titulo", "items", "proveniencia"],
   "properties": {
@@ -114,7 +114,14 @@
           "minLength": 1,
           "description": "Resolución paso a paso, recalculada desde cero. Se muestra al cerrar el ítem por descarte fatal."
         },
-        "figura": { "$ref": "#/definitions/figuraPlano" },
+        "figura": {
+          "description": "Opcional. Sin tipo es el plano de isometrías (figuraPlano, vocabulario cerrado). Con tipo plano-funcion o tabla-valores es una de las figuras de función. El validador despacha por la presencia de tipo; los bancos anteriores a plano-funcion no cambian.",
+          "oneOf": [
+            { "$ref": "#/definitions/figuraPlano" },
+            { "$ref": "#/definitions/figuraPlanoFuncion" },
+            { "$ref": "#/definitions/figuraTablaValores" }
+          ]
+        },
         "proveniencia": { "$ref": "#/definitions/provenienciaItem" }
       },
       "additionalProperties": false
@@ -222,6 +229,189 @@
         "etiqueta": { "type": "string", "minLength": 1 },
         "x": { "type": "integer" },
         "y": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+
+    "coordenada": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": { "x": { "type": "number" }, "y": { "type": "number" } },
+      "additionalProperties": false
+    },
+
+    "trazoCurva": { "enum": ["solido", "segmentado", "punteado"], "description": "Opcional, por defecto solido. Con 2 o más curvas el trazo y el rotulo son los canales que las distinguen; el color es solo refuerzo." },
+
+    "figuraPlanoFuncion": {
+      "type": "object",
+      "description": "Plano de función (components/advance/PlanoFuncion.tsx). Coordenadas reales, con decimales. La figura muestra los datos del enunciado, nunca la respuesta pedida. Si el ítem pregunta por el vértice, la figura no lo marca ni lo rotula. Si pregunta por los ceros, no se dibujan los puntos sobre el eje x. Reglas (11) del $comment a cargo del validador.",
+      "required": ["tipo", "curvas", "descripcion"],
+      "properties": {
+        "tipo": { "const": "plano-funcion" },
+        "ventana": {
+          "type": "object",
+          "description": "Opcional. Si falta, el motor la calcula desde vértices, ceros, interceptos y puntos declarados, redondeada con números redondos (Heckbert).",
+          "required": ["xMin", "xMax", "yMin", "yMax"],
+          "properties": {
+            "xMin": { "type": "number" },
+            "xMax": { "type": "number" },
+            "yMin": { "type": "number" },
+            "yMax": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "curvas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["clase", "a", "b", "c"],
+                "properties": {
+                  "clase": { "const": "parabola" },
+                  "a": { "type": "number", "not": { "const": 0 } },
+                  "b": { "type": "number" },
+                  "c": { "type": "number" },
+                  "desde": { "type": "number" },
+                  "hasta": { "type": "number" },
+                  "rotulo": { "type": "string", "minLength": 1 },
+                  "trazo": { "$ref": "#/definitions/trazoCurva" }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["clase", "m", "b"],
+                "properties": {
+                  "clase": { "const": "recta" },
+                  "m": { "type": "number" },
+                  "b": { "type": "number" },
+                  "desde": { "type": "number" },
+                  "hasta": { "type": "number" },
+                  "rotulo": { "type": "string", "minLength": 1 },
+                  "trazo": { "$ref": "#/definitions/trazoCurva" }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["clase", "por"],
+                "properties": {
+                  "clase": { "const": "recta" },
+                  "por": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/definitions/coordenada" }, "description": "Dos puntos de x distinto." },
+                  "desde": { "type": "number" },
+                  "hasta": { "type": "number" },
+                  "rotulo": { "type": "string", "minLength": 1 },
+                  "trazo": { "$ref": "#/definitions/trazoCurva" }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["clase", "x"],
+                "properties": {
+                  "clase": { "const": "recta-vertical" },
+                  "x": { "type": "number" },
+                  "rotulo": { "type": "string", "minLength": 1 },
+                  "trazo": { "$ref": "#/definitions/trazoCurva" }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "puntos": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" },
+              "rotulo": { "type": "string", "minLength": 1 },
+              "estilo": { "enum": ["relleno", "hueco"], "description": "Opcional, por defecto relleno. hueco solo para un punto excluido." },
+              "mostrarCoordenadas": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "segmentos": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["desde", "hasta"],
+            "properties": {
+              "desde": { "$ref": "#/definitions/coordenada" },
+              "hasta": { "$ref": "#/definitions/coordenada" },
+              "rotulo": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "ejeSimetria": {
+          "type": "object",
+          "required": ["x"],
+          "properties": { "x": { "type": "number" }, "rotulo": { "type": "string", "minLength": 1 } },
+          "additionalProperties": false
+        },
+        "regiones": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["clase", "curva", "desde", "hasta"],
+                "properties": {
+                  "clase": { "const": "entre-curva-y-eje" },
+                  "curva": { "type": "integer", "minimum": 0, "maximum": 2, "description": "Índice en curvas. No puede ser una recta-vertical." },
+                  "desde": { "type": "number" },
+                  "hasta": { "type": "number" }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["clase", "desde", "hasta"],
+                "properties": {
+                  "clase": { "const": "franja-x" },
+                  "desde": { "type": "number" },
+                  "hasta": { "type": "number" }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "etiquetaEjeX": { "type": "string", "minLength": 1 },
+        "etiquetaEjeY": { "type": "string", "minLength": 1 },
+        "descripcion": {
+          "type": "string",
+          "minLength": 30,
+          "description": "Texto alternativo real: es el <desc> del SVG. El <title> corto lo genera el componente."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraTablaValores": {
+      "type": "object",
+      "description": "Tabla de valores (components/advance/TablaValores.tsx). Se renderiza como <table> real: la tabla es su propio texto alternativo. Reglas (12) del $comment a cargo del validador.",
+      "required": ["tipo", "encabezados", "filas", "descripcion"],
+      "properties": {
+        "tipo": { "const": "tabla-valores" },
+        "encabezados": { "type": "array", "minItems": 1, "maxItems": 6, "items": { "type": "string", "minLength": 1 } },
+        "filas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "type": "array", "items": { "type": ["string", "number"] } }
+        },
+        "descripcion": { "type": "string", "minLength": 30 }
       },
       "additionalProperties": false
     },

@@ -94,7 +94,7 @@ export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }:
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
 
-        {item.figura && <PlanoIsometrias figura={item.figura} />}
+        {item.figura && item.figura.tipo === undefined && <PlanoIsometrias figura={item.figura} />}
 
         <ul className="space-y-2.5" aria-label="Alternativas">
           {item.alternativas.map((alt) => (

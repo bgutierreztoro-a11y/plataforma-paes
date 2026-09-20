@@ -163,7 +163,7 @@ export function EjecutorDescarte({
           <TextoEnriquecido contenido={item.enunciado} />
         </div>
 
-        {item.figura && <PlanoIsometrias figura={item.figura} />}
+        {item.figura && item.figura.tipo === undefined && <PlanoIsometrias figura={item.figura} />}
 
         <p className="text-cuerpo-s text-primary">{descarte.instruccion}</p>
 
