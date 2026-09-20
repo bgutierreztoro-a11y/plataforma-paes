@@ -1,5 +1,5 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
-import type { FiguraIsometrias, ItemAdvance } from "@/lib/advance/descarte";
+import type { FiguraIsometrias, FiguraPlanoFuncion, FiguraTablaValores, ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
@@ -343,3 +343,175 @@ export const FIGURAS_MUESTRA: { id: string; rotulo: string; figura: FiguraIsomet
     },
   },
 ];
+
+/* ---------- figuras de función (PlanoFuncion, TablaValores) ---------- */
+
+/* Casos de MUESTRA para el plano de función, uno por situación del temario de
+   función cuadrática (variación de parámetros y puntos especiales). Datos
+   inventados: no viven en content/ y ningún banco los importa. Las figuras
+   muestran datos, nunca una respuesta: acá se marcan vértices y ceros solo
+   para medir cómo se ven. */
+export const PLANOS_FUNCION_MUESTRA: { id: string; rotulo: string; figura: FiguraPlanoFuncion }[] = [
+  {
+    id: "dos-ceros",
+    rotulo: "a > 0 con dos ceros · f(x) = x² − 4x + 3, ventana automática",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 1, b: -4, c: 3 }],
+      descripcion: "MUESTRA. Parábola que abre hacia arriba, corta el eje x en 1 y en 3 y el eje y en 3.",
+    },
+  },
+  {
+    id: "vertice-alto",
+    rotulo: "a < 0 con vértice alto · f(x) = −x² + 12x + 4, vértice (6, 40)",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: -1, b: 12, c: 4 }],
+      descripcion: "MUESTRA. Parábola que abre hacia abajo con vértice en (6, 40) y que corta el eje y en 4.",
+    },
+  },
+  {
+    id: "estrecha",
+    rotulo: "|a| = 4, estrecha · f(x) = 4x² − 4",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 4, b: 0, c: -4 }],
+      descripcion: "MUESTRA. Parábola estrecha que abre hacia arriba, con vértice en (0, −4) y ceros en −1 y 1.",
+    },
+  },
+  {
+    id: "chata",
+    rotulo: "|a| = 0,25, chata · f(x) = 0,25x² − 1",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 0.25, b: 0, c: -1 }],
+      descripcion: "MUESTRA. Parábola chata que abre hacia arriba, con vértice en (0, −1) y ceros en −2 y 2.",
+    },
+  },
+  {
+    id: "sin-ceros",
+    rotulo: "sin ceros reales · f(x) = x² − 2x + 3, vértice (1, 2)",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 1, b: -2, c: 3 }],
+      descripcion: "MUESTRA. Parábola que abre hacia arriba, con vértice en (1, 2), que no corta el eje x.",
+    },
+  },
+  {
+    id: "cero-doble",
+    rotulo: "un cero doble · f(x) = x² − 4x + 4, vértice sobre el eje x en (2, 0)",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 1, b: -4, c: 4 }],
+      puntos: [{ x: 2, y: 0, rotulo: "V" }],
+      descripcion: "MUESTRA. Parábola que abre hacia arriba y toca el eje x en un solo punto, V(2, 0).",
+    },
+  },
+  {
+    id: "vertice-tercer-cuadrante",
+    rotulo: "vértice fuera del primer cuadrante · f(x) = x² + 6x + 5, vértice (−3, −4)",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 1, b: 6, c: 5 }],
+      descripcion: "MUESTRA. Parábola que abre hacia arriba con vértice en (−3, −4), ceros en −5 y −1 e intercepto y en 5.",
+    },
+  },
+  {
+    id: "parabola-y-recta",
+    rotulo: "parábola + recta que la corta en dos puntos · f y g, P y Q con coordenadas",
+    figura: {
+      tipo: "plano-funcion",
+      ventana: { xMin: -1, xMax: 6, yMin: -2, yMax: 6 },
+      curvas: [
+        { clase: "parabola", a: 1, b: -4, c: 3, rotulo: "f" },
+        { clase: "recta", m: 1, b: -1, rotulo: "g", trazo: "segmentado" },
+      ],
+      puntos: [
+        { x: 1, y: 0, rotulo: "P", mostrarCoordenadas: true },
+        { x: 4, y: 3, rotulo: "Q", mostrarCoordenadas: true },
+      ],
+      descripcion: "MUESTRA. Parábola f y recta g segmentada que se cortan en P(1, 0) y Q(4, 3).",
+    },
+  },
+  {
+    id: "tres-parabolas",
+    rotulo: "tres parábolas comparadas · variación de a: 0,25, 1 y 4, ventana declarada",
+    figura: {
+      tipo: "plano-funcion",
+      ventana: { xMin: -3, xMax: 3, yMin: -1, yMax: 6 },
+      curvas: [
+        { clase: "parabola", a: 0.25, b: 0, c: 0, rotulo: "a = 0,25", trazo: "punteado" },
+        { clase: "parabola", a: 1, b: 0, c: 0, rotulo: "a = 1", trazo: "segmentado" },
+        { clase: "parabola", a: 4, b: 0, c: 0, rotulo: "a = 4" },
+      ],
+      descripcion: "MUESTRA. Tres parábolas con vértice en el origen: a = 0,25 punteada, a = 1 segmentada y a = 4 sólida; a mayor a, más estrecha.",
+    },
+  },
+  {
+    id: "eje-de-simetria",
+    rotulo: "parábola con eje de simetría rotulado · f(x) = −0,5x² + 2x + 1, eje x = 2",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: -0.5, b: 2, c: 1 }],
+      ejeSimetria: { x: 2, rotulo: "x = 2" },
+      descripcion: "MUESTRA. Parábola que abre hacia abajo con su eje de simetría x = 2 dibujado punteado.",
+    },
+  },
+  {
+    id: "region",
+    rotulo: "parábola con región sombreada · f(x) < 0 entre los ceros 1 y 3, y franja en x",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 1, b: -4, c: 3 }],
+      regiones: [
+        { clase: "entre-curva-y-eje", curva: 0, desde: 1, hasta: 3 },
+        { clase: "franja-x", desde: 1, hasta: 3 },
+      ],
+      puntos: [
+        { x: 1, y: 0, estilo: "hueco" },
+        { x: 3, y: 0, estilo: "hueco" },
+      ],
+      descripcion: "MUESTRA. Parábola con la región entre la curva y el eje x sombreada para 1 < x < 3, extremos huecos.",
+    },
+  },
+  {
+    id: "contexto",
+    rotulo: "contexto con etiquetas de eje largas · h(t) = −5t² + 20t en [0, 4], altura (m) / tiempo (s)",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: -5, b: 20, c: 0, desde: 0, hasta: 4 }],
+      etiquetaEjeX: "tiempo (s)",
+      etiquetaEjeY: "altura (m)",
+      descripcion: "MUESTRA. Altura de un objeto en metros según el tiempo en segundos: sube desde 0, llega a 20 m a los 2 s y vuelve a 0 a los 4 s.",
+    },
+  },
+  {
+    id: "decimales",
+    rotulo: "valores decimales · f(x) = 0,5x² − 1,5x − 2, vértice (1,5; −3,125) con segmento acotado",
+    figura: {
+      tipo: "plano-funcion",
+      curvas: [{ clase: "parabola", a: 0.5, b: -1.5, c: -2 }],
+      puntos: [{ x: 1.5, y: -3.125, rotulo: "V", mostrarCoordenadas: true }],
+      segmentos: [{ desde: { x: 1.5, y: 0 }, hasta: { x: 1.5, y: -3.125 }, rotulo: "3,125" }],
+      descripcion: "MUESTRA. Parábola con ceros en −1 y 4 y vértice V(1,5; −3,125), con la distancia del vértice al eje x acotada.",
+    },
+  },
+];
+
+export const TABLA_MUESTRA: { id: string; rotulo: string; figura: FiguraTablaValores } = {
+  id: "tabla-cinco-columnas",
+  rotulo: "tabla de valores de 5 columnas · x, f(x), g(x), h(x) y f(x) − g(x)",
+  figura: {
+    tipo: "tabla-valores",
+    encabezados: ["x", "f(x)", "g(x)", "h(x)", "f(x) − g(x)"],
+    filas: [
+      [-2, 15, -3, 0.25, 18],
+      [-1, 8, -1, 1, 9],
+      [0, 3, 1, 4, 2],
+      [1, 0, 3, 16, -3],
+      [2, -1, 5, 64, -6],
+      [3, 0, 7, 256, -7],
+    ],
+    descripcion: "MUESTRA. Tabla de valores de tres funciones y de la diferencia f(x) − g(x) para x de −2 a 3.",
+  },
+};

@@ -26,6 +26,8 @@ import { ListaErrores } from "@/components/advance/ListaErrores";
 import { RepasoError } from "@/components/advance/RepasoError";
 import { PanelDosPorDos } from "@/components/advance/PanelDosPorDos";
 import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
+import { PlanoFuncion } from "@/components/advance/PlanoFuncion";
+import { TablaValores } from "@/components/advance/TablaValores";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
   COPY_MUESTRA,
@@ -34,8 +36,10 @@ import {
   MUESTRA_DESCARTE,
   MUESTRA_TRIAGE,
   PANEL_MUESTRA,
+  PLANOS_FUNCION_MUESTRA,
   REPASO_MUESTRA,
   RESULTADOS_TRIAGE_MUESTRA,
+  TABLA_MUESTRA,
 } from "./muestraDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import { MuestraTriageInteractiva } from "./MuestraTriageInteractiva";
@@ -912,6 +916,36 @@ export default function PaginaDiseno() {
                 </PorLinea>
               </div>
             ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Planos de función"
+          nota="Las figuras de función de un ítem Advance (item-advance.schema.json, figuraPlanoFuncion y figuraTablaValores; docs/fobos-advance.md §12), montadas por FiguraDeItem entre el enunciado y las alternativas. SVG estático de 320 × 240 con escalas independientes en x e y, ventana automática con números redondos cuando el banco no la declara, parábolas como Bézier cuadrática exacta recortada a la ventana, marcas como <text>, ejes con punta, grilla en hairline. Curvas en --linea-nav; con dos o más, trazo y rótulo al lado de la curva las distinguen, el color no. <title> generado corto y <desc> = descripcion. Datos de MUESTRA en app/%5Fdesign/muestraDescarte.ts, con vértices y ceros marcados solo para medir: en un banco la figura muestra los datos y nunca la respuesta pedida. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6">
+            {PLANOS_FUNCION_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-funcion={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                <PorLinea>
+                  {() => (
+                    <div data-figura-funcion={id} className="rounded-sm border border-hairline bg-[var(--color-bg)] p-4">
+                      <PlanoFuncion figura={figura} />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
+            <div data-caso-funcion={TABLA_MUESTRA.id}>
+              <Rotulo>{TABLA_MUESTRA.rotulo}</Rotulo>
+              <PorLinea>
+                {() => (
+                  <div data-figura-funcion={TABLA_MUESTRA.id} className="rounded-sm border border-hairline bg-[var(--color-bg)] p-4">
+                    <TablaValores figura={TABLA_MUESTRA.figura} />
+                  </div>
+                )}
+              </PorLinea>
+            </div>
           </div>
         </Seccion>
 
