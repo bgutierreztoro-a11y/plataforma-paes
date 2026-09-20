@@ -1,0 +1,1097 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "funcion-cuadratica",
+  "moduloId": "funcion-cuadratica",
+  "titulo": "Función cuadrática",
+  "items": [
+    {
+      "id": "adv-funcion-cuadratica-001",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "¿Cuáles son los ceros de la función f(x) = x² − x − 42?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x = −7 y x = 6",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-de-las-raices",
+          "feedbackDescarte": "Esa lee las raíces con el signo que aparece dentro de cada factor: (x − 7) se anula en x = 7, no en x = −7, y (x + 6) se anula en x = −6."
+        },
+        {
+          "clave": "B",
+          "texto": "x = 7 y x = −6",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: (x − 7)(x + 6) = x² − x − 42 y cada factor se anula en x = 7 y en x = −6."
+        },
+        {
+          "clave": "C",
+          "texto": "Solo x = 7",
+          "esCorrecta": false,
+          "errorCatalogado": "reporta-una-sola-raiz",
+          "feedbackDescarte": "Esa se queda con un solo factor: (x + 6) también puede anularse, en x = −6, y ese es el segundo cero."
+        },
+        {
+          "clave": "D",
+          "texto": "x = 7 y x = −7",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa supone que los ceros son opuestos, como si el eje de simetría fuera el eje Y. El eje de esta parábola está entre 7 y −6, a la derecha del origen."
+        }
+      ],
+      "solucion": "x² − x − 42 = (x − 7)(x + 6), porque (−7)·6 = −42 y −7 + 6 = −1. Por el producto nulo, x = 7 o x = −6. Comprobación: f(7) = 49 − 7 − 42 = 0.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-002",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "¿Cuál es el vértice de la parábola y = −3x² + 6x + 1?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(−1, −8)",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-signo",
+          "feedbackDescarte": "Esa usa x_v = b ÷ (2a) sin el signo menos: da −1. La fórmula es x_v = −b ÷ (2a) = −6 ÷ (−6) = 1."
+        },
+        {
+          "clave": "B",
+          "texto": "(2, 1)",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-2",
+          "feedbackDescarte": "Esa usa x_v = −b ÷ a, sin el 2: da 2, y en x = 2 la parábola vale 1, lo mismo que en x = 0. El vértice está en x = 1, a mitad de camino."
+        },
+        {
+          "clave": "C",
+          "texto": "(1, 1)",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa toma c = 1 como altura del vértice, pero c es el valor en x = 0. En x = 1 la parábola vale −3 + 6 + 1 = 4."
+        },
+        {
+          "clave": "D",
+          "texto": "(1, 4)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x_v = −6 ÷ (2·(−3)) = 1 e y = −3 + 6 + 1 = 4."
+        }
+      ],
+      "solucion": "x_v = −b ÷ (2a) = −6 ÷ (2·(−3)) = −6 ÷ (−6) = 1. y_v = −3·1 + 6·1 + 1 = 4. Vértice (1, 4). Comprobación por simetría: y(0) = 1 e y(2) = 2·(−3·2 + 6) + 1 = 1, iguales, así que el eje pasa por x = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-003",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra algunos valores de la función f(x) = −x² + 2x + 6. ¿Cuál es el valor de f(−3), el que falta en la tabla?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "−9",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: f(−3) = −(−3)² + 2·(−3) + 6 = −9 − 6 + 6 = −9."
+        },
+        {
+          "clave": "B",
+          "texto": "9",
+          "esCorrecta": false,
+          "errorCatalogado": "evalua-mal-el-cuadrado-de-un-negativo",
+          "feedbackDescarte": "Esa trata mal el cuadrado: (−3)² = 9, positivo, y el signo menos de −x² lo vuelve −9. Con −9 − 6 + 6 queda −9."
+        },
+        {
+          "clave": "C",
+          "texto": "3",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa copia f(3) = 3 de la tabla como si f(−3) valiera lo mismo. La parábola es simétrica respecto de x = 1, no del eje Y: el simétrico de 3 es −1, no −3."
+        },
+        {
+          "clave": "D",
+          "texto": "6",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa entrega c = 6, que es f(0), no f(−3). Hay que reemplazar x por −3 en la fórmula."
+        }
+      ],
+      "solucion": "f(−3) = −(−3)² + 2·(−3) + 6 = −9 − 6 + 6 = −9. Comprobación con la tabla: la parábola abre hacia abajo y f(−2) = −2, así que f(−3) tiene que ser menor que −2.",
+      "figura": {
+        "tipo": "tabla-valores",
+        "encabezados": [
+          "x",
+          "f(x)"
+        ],
+        "filas": [
+          [
+            "−3",
+            "?"
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -1,
+            3
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "descripcion": "Tabla de valores de f con x desde −3 hasta 3; f(−3) aparece como signo de interrogación y los demás valores son −2, 3, 6, 7, 6 y 3."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 40, distractores D y B",
+        "notaAdaptacion": "Del original (simulación de un lanzamiento desde 8 cm, f(t) = −t² + 2t + 8, altura a los 3 s; alternativas 5, 8, 13 y 23; clave A por clavijero y por cálculo) se conserva la estructura del ítem (evaluar una función cuadrática dada en un valor) y el mecanismo de sus distractores D (−t² evaluado como (−3)², que da 23) y B (f(0) = 8, el valor de c). Cambian el contexto (ninguno, con una tabla de valores como figura), la función (f(x) = −x² + 2x + 6) y el valor de evaluación, x = −3, donde el mismo error del cuadrado aparece como (−3)² = −9, la variante de 2027-invierno-111/39 B; el tercer distractor usa la simetría respecto del eje Y leída en la tabla. El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-004",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Para la función f(x) = x² − 6x + 7, ¿cuál es su vértice y qué tipo de extremo es?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(3, −2), y es un máximo",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa decide máximo sin mirar a: con a = 1 positivo la parábola abre hacia arriba y el vértice es el punto más bajo, un mínimo."
+        },
+        {
+          "clave": "B",
+          "texto": "(3, 7), y es un mínimo",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa toma c = 7 como altura del vértice, pero 7 es f(0). En x = 3: f(3) = 3·(3 − 6) + 7 = −2."
+        },
+        {
+          "clave": "C",
+          "texto": "(3, −2), y es un mínimo",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x_v = 6 ÷ 2 = 3, f(3) = −2 y, como a = 1 es positivo, la parábola abre hacia arriba: el vértice es el punto más bajo."
+        },
+        {
+          "clave": "D",
+          "texto": "(6, 7), y es un mínimo",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-2",
+          "feedbackDescarte": "Esa usa x_v = −b ÷ a, sin el 2, y da 6; en x = 6 la parábola vale 7, igual que en x = 0. El vértice está a mitad de camino, en x = 3."
+        }
+      ],
+      "solucion": "x_v = −b ÷ (2a) = 6 ÷ 2 = 3. f(3) = 3·(3 − 6) + 7 = −9 + 7 = −2. Como a = 1 > 0, la parábola abre hacia arriba y el vértice (3, −2) es un mínimo.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-005",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La rapidez de la brisa, en m/s, medida en una azotea se modela por V(t) = −2t² + 4t + 5, donde t son las horas transcurridas desde el mediodía. ¿En qué instante la rapidez es máxima y cuánto vale?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "A las 2 horas, con 5 m/s",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-2",
+          "feedbackDescarte": "Esa usa t = −b ÷ a, sin el 2, y da 2 horas; a esa hora la rapidez vuelve a ser 5 m/s, la misma del mediodía. El máximo está a mitad de camino, a la 1."
+        },
+        {
+          "clave": "B",
+          "texto": "A las 7 horas, con 1 m/s",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-abscisa-y-ordenada",
+          "feedbackDescarte": "Esa intercambia las coordenadas del vértice: 1 es la hora y 7 es la rapidez, no al revés."
+        },
+        {
+          "clave": "C",
+          "texto": "A la 1 hora, con 7 m/s",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: t_v = −4 ÷ (2·(−2)) = 1 y V(1) = −2 + 4 + 5 = 7."
+        },
+        {
+          "clave": "D",
+          "texto": "A la 1 hora, con 5 m/s",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa toma c = 5 como el máximo, pero 5 m/s es la rapidez del mediodía (t = 0). A la 1 hora: V(1) = −2 + 4 + 5 = 7."
+        }
+      ],
+      "solucion": "a = −2 < 0: el vértice es un máximo. t_v = −b ÷ (2a) = −4 ÷ (−4) = 1 hora. V(1) = −2·1 + 4·1 + 5 = 7 m/s. Comprobación: V(0) = 5 y V(2) = 2·(−2·2 + 4) + 5 = 5, simétricos respecto de t = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-006",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra las parábolas f(x) = x² − 2x + 5 y g, que tienen la misma forma. ¿Cuál es la ecuación de g?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "g(x) = x² − 2x + 1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: g está 4 unidades más abajo que f, así que g(x) = f(x) − 4 = x² − 2x + 1, con vértice (1, 0)."
+        },
+        {
+          "clave": "B",
+          "texto": "g(x) = x² − 6x + 5",
+          "esCorrecta": false,
+          "errorCatalogado": "atribuye-el-cambio-al-parametro-equivocado",
+          "feedbackDescarte": "Esa resta 4 en b, pero un desplazamiento vertical cambia c, no b. Con b = −6 el vértice se iría a x = 3, y en la figura g tiene su vértice en x = 1, igual que f."
+        },
+        {
+          "clave": "C",
+          "texto": "g(x) = x² − 2x",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa toma la altura del vértice de g, 0, como c. Pero c es el valor en x = 0, y en la figura g pasa por (0, 1), no por el origen."
+        },
+        {
+          "clave": "D",
+          "texto": "g(x) = −x² + 2x + 1",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa cambia el signo de a, pero en la figura g abre hacia arriba igual que f: a sigue siendo 1."
+        }
+      ],
+      "solucion": "f y g tienen la misma forma y el mismo eje x = 1: solo cambia c. El vértice de f es (1, 4) y el de g es (1, 0): g está 4 unidades más abajo, g(x) = f(x) − 4 = x² − 2x + 1. Comprobación: g(1) = 1 − 2 + 1 = 0 y g(0) = 1.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": -2,
+          "xMax": 4,
+          "yMin": -1,
+          "yMax": 9
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": -2,
+            "c": 5,
+            "desde": -1,
+            "hasta": 3,
+            "rotulo": "f"
+          },
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": -2,
+            "c": 1,
+            "desde": -2,
+            "hasta": 4,
+            "rotulo": "g",
+            "trazo": "segmentado"
+          }
+        ],
+        "descripcion": "Dos parábolas de la misma forma que abren hacia arriba: f, de trazo continuo, con punto más bajo en (1, 4), y g, de trazo segmentado, cuatro unidades más abajo, con punto más bajo en (1, 0)."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-007",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una parábola y = ax² + bx + c, con a = 1, tiene vértice (2, 5) y pasa por el punto (0, 9). ¿Cuál es su ecuación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = x² + 4x + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-signo",
+          "feedbackDescarte": "Esa despeja b desde x_v = b ÷ (2a), sin el signo menos, y da b = 4; así el vértice quedaría en x = −2. Con x_v = −b ÷ (2a) = 2 sale b = −4."
+        },
+        {
+          "clave": "B",
+          "texto": "y = x² − 2x + 9",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-2",
+          "feedbackDescarte": "Esa despeja b desde x_v = −b ÷ a, sin el 2, y da b = −2; así el vértice quedaría en x = 1. Con x_v = −b ÷ (2a) = 2 sale b = −4."
+        },
+        {
+          "clave": "C",
+          "texto": "y = x² − 4x + 5",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa usa la altura del vértice, 5, como c. Pero c es el valor en x = 0, y la parábola pasa por (0, 9): c = 9."
+        },
+        {
+          "clave": "D",
+          "texto": "y = x² − 4x + 9",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: c = 9 por el punto (0, 9), y de x_v = −b ÷ 2 = 2 sale b = −4. Comprobación: 4 − 8 + 9 = 5."
+        }
+      ],
+      "solucion": "El punto (0, 9) está sobre el eje Y, así que c = 9. Con a = 1, x_v = −b ÷ (2a) = −b ÷ 2 = 2, de donde b = −4. Ecuación: y = x² − 4x + 9. Comprobación: y(2) = 4 − 8 + 9 = 5, la ordenada del vértice.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-008",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "La tabla muestra cinco valores de una función cuadrática f. ¿Cuál es la ecuación de f?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "f(x) = −2x² + 4x − 1",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa pone a negativo, pero la tabla baja hasta −3 y vuelve a subir: hay un mínimo, así que a es positivo. Con a = −2, f(1) sería 1, no −3."
+        },
+        {
+          "clave": "B",
+          "texto": "f(x) = 2x² − 4x − 1",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: c = f(0) = −1, el eje pasa por x = 1 (f(0) = f(2)) y f(1) = −3 obliga a que a = 2 y b = −4."
+        },
+        {
+          "clave": "C",
+          "texto": "f(x) = 2x² − 4x − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa usa el mínimo −3 como c. Pero c es f(0), y la tabla dice f(0) = −1."
+        },
+        {
+          "clave": "D",
+          "texto": "f(x) = 2x² − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa supone el eje de simetría en el eje Y (b = 0) y pone el mínimo en x = 0, pero la tabla es simétrica alrededor de x = 1: f(0) = f(2) y f(−1) = f(3), y f(0) = −1, no −3."
+        }
+      ],
+      "solucion": "c = f(0) = −1. Como f(0) = f(2), el eje de simetría es x = 1: −b ÷ (2a) = 1, es decir b = −2a. Con f(1) = −3: a + b − 1 = −3, o sea a − 2a = −2, a = 2 y b = −4. Comprobación: f(3) = 3·(2·3 − 4) − 1 = 3·2 − 1 = 5, como en la tabla.",
+      "figura": {
+        "tipo": "tabla-valores",
+        "encabezados": [
+          "x",
+          "f(x)"
+        ],
+        "filas": [
+          [
+            -1,
+            5
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            -3
+          ],
+          [
+            2,
+            -1
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "descripcion": "Tabla con x igual a −1, 0, 1, 2 y 3 y los valores de f: 5, −1, −3, −1 y 5."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-009",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra la gráfica de una función cuadrática. ¿Cuál es su ecuación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = x² − 2x − 3",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: ceros −1 y 3 dan (x + 1)(x − 3) = x² − 2x − 3, y el corte con el eje Y en −3 confirma a = 1."
+        },
+        {
+          "clave": "B",
+          "texto": "y = x² + 2x − 3",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-de-las-raices",
+          "feedbackDescarte": "Esa escribe los factores con el signo de la raíz: (x − 1)(x + 3) tiene ceros 1 y −3, los opuestos de los de la figura. El cero −1 viene del factor (x + 1)."
+        },
+        {
+          "clave": "C",
+          "texto": "y = −x² + 2x + 3",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa tiene los ceros correctos pero a negativo: esa parábola abriría hacia abajo. La de la figura abre hacia arriba, así que a > 0."
+        },
+        {
+          "clave": "D",
+          "texto": "y = x² − 4",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa pone el vértice sobre el eje Y, pero en la figura el punto más bajo está en x = 1 y los ceros, −1 y 3, no son opuestos."
+        }
+      ],
+      "solucion": "Los ceros son −1 y 3, así que y = a(x + 1)(x − 3). La parábola corta al eje Y en −3: a·1·(−3) = −3, luego a = 1. Ecuación: y = (x + 1)(x − 3) = x² − 2x − 3. Comprobación: el vértice está en x = 1 e y(1) = 1 − 2 − 3 = −4, como en la figura.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": -3,
+          "xMax": 5,
+          "yMin": -5,
+          "yMax": 6
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": -2,
+            "c": -3,
+            "desde": -2,
+            "hasta": 4
+          }
+        ],
+        "descripcion": "Parábola que abre hacia arriba, corta al eje X en −1 y en 3, corta al eje Y en −3 y tiene su punto más bajo en (1, −4)."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-010",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "La figura muestra la gráfica de la función f. ¿Cuál afirmación es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El valor máximo de f es −1 y se alcanza en x = 2.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa llama máximo al vértice, pero la parábola abre hacia arriba: (2, −1) es su punto más bajo, un mínimo."
+        },
+        {
+          "clave": "B",
+          "texto": "El valor mínimo de f es 2 y se alcanza en x = −1.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-abscisa-y-ordenada",
+          "feedbackDescarte": "Esa intercambia las coordenadas del vértice: 2 es dónde ocurre el mínimo (x) y −1 es cuánto vale (y)."
+        },
+        {
+          "clave": "C",
+          "texto": "El valor mínimo de f es −1 y se alcanza en x = 2.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la parábola abre hacia arriba y su punto más bajo es (2, −1)."
+        },
+        {
+          "clave": "D",
+          "texto": "El eje de simetría de f es el eje Y.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa supone el eje de simetría sobre el eje Y, pero la figura es simétrica respecto de la recta vertical x = 2, la que pasa por el vértice."
+        }
+      ],
+      "solucion": "La parábola abre hacia arriba, así que su vértice es el punto más bajo: (2, −1). El valor mínimo es −1 y se alcanza en x = 2. El eje de simetría es la recta x = 2, no el eje Y.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": -2,
+          "xMax": 6,
+          "yMin": -2,
+          "yMax": 9
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": -4,
+            "c": 3,
+            "desde": -1,
+            "hasta": 5
+          }
+        ],
+        "descripcion": "Parábola que abre hacia arriba; corta al eje X en 1 y en 3, corta al eje Y en 3 y su punto más bajo queda bajo el eje X, a mitad de camino entre los dos cortes."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-011",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una parábola con a = 1 corta al eje X en x = −1 y en x = 4. ¿Cuál es su ecuación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "y = x² + 3x − 4",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-de-las-raices",
+          "feedbackDescarte": "Esa escribe (x − 1)(x + 4), cuyos ceros son 1 y −4, los opuestos de los pedidos. El cero −1 sale del factor (x + 1) y el cero 4, del factor (x − 4)."
+        },
+        {
+          "clave": "B",
+          "texto": "y = x² − 3x − 4",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con ceros −1 y 4 y a = 1, y = (x + 1)(x − 4) = x² − 3x − 4."
+        },
+        {
+          "clave": "C",
+          "texto": "y = x² − 4",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-un-solo-termino",
+          "feedbackDescarte": "Esa multiplica solo los extremos de (x + 1)(x − 4) y pierde los términos cruzados −4x y x. Sin ellos, los ceros serían 2 y −2, no −1 y 4."
+        },
+        {
+          "clave": "D",
+          "texto": "y = x² − x + 4",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa copia los ceros como coeficientes: b = −1 y c = 4. Pero los ceros dan los factores (x + 1) y (x − 4), que al multiplicarse producen b = −3 y c = −4."
+        }
+      ],
+      "solucion": "Con ceros −1 y 4 y a = 1: y = (x + 1)(x − 4) = x² − 4x + x − 4 = x² − 3x − 4. Comprobación: en x = −1, 1 + 3 − 4 = 0.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-012",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra la gráfica de f(x) = x² + 2x. Un estudiante afirma: «si se grafica g(x) = x² + 2x + 3, la parábola queda corrida 3 unidades hacia la derecha». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: c controla la posición horizontal de la parábola.",
+          "esCorrecta": false,
+          "errorCatalogado": "atribuye-el-cambio-al-parametro-equivocado",
+          "feedbackDescarte": "Esa le atribuye a c el corrimiento horizontal. c desplaza la parábola verticalmente; la posición horizontal del vértice depende de a y b, que no cambian."
+        },
+        {
+          "clave": "B",
+          "texto": "No: sumar 3 hace que la parábola pase a abrir hacia abajo.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa cambia la orientación sin mirar a: hacia dónde abre depende solo del signo de a, que sigue siendo 1. Sumar 3 no lo toca."
+        },
+        {
+          "clave": "C",
+          "texto": "No: sumar 3 la desplaza hacia arriba y su vértice queda en (0, 3), sobre el eje Y.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa pone el vértice de g sobre el eje Y, pero el eje de simetría sigue en x = −1: el vértice sube de (−1, −1) a (−1, 2). (0, 3) es el corte de g con el eje Y."
+        },
+        {
+          "clave": "D",
+          "texto": "No: sumar 3 desplaza la parábola 3 unidades hacia arriba; su vértice pasa de (−1, −1) a (−1, 2).",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: g(x) = f(x) + 3, así que cada punto sube 3 unidades y la posición horizontal no cambia."
+        }
+      ],
+      "solucion": "g(x) = f(x) + 3: cada punto de f sube 3 unidades. El vértice (−1, −1) pasa a (−1, 2); el signo de a no cambia y la abscisa del vértice, −b ÷ (2a) = −1, tampoco, porque a y b son los mismos.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": -5,
+          "xMax": 3,
+          "yMin": -2,
+          "yMax": 9
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": 2,
+            "c": 0,
+            "desde": -4,
+            "hasta": 2,
+            "rotulo": "f"
+          }
+        ],
+        "descripcion": "Parábola f que abre hacia arriba, con punto más bajo en (−1, −1); pasa por el origen y por (−2, 0)."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-013",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una tribuna, el número de localidades de cada fila supera en 35 al número de filas, y en total hay 2.244 localidades. ¿Cuántas filas tiene la tribuna?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "68",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-signo-de-las-raices",
+          "feedbackDescarte": "Esa lee las raíces con el signo que aparece dentro de los factores: (n − 33) se anula en 33 y (n + 68) en −68. 68 es la cantidad de localidades por fila, no de filas."
+        },
+        {
+          "clave": "B",
+          "texto": "33 o −68, porque la ecuación tiene dos soluciones",
+          "esCorrecta": false,
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto",
+          "feedbackDescarte": "Esa mantiene la raíz −68 como respuesta. Resuelve la ecuación, pero una cantidad de filas no puede ser negativa: se descarta."
+        },
+        {
+          "clave": "C",
+          "texto": "47",
+          "esCorrecta": false,
+          "errorCatalogado": "distribuye-sobre-un-solo-termino",
+          "feedbackDescarte": "Esa multiplica n solo por el primer término: n · n + 35 en vez de n · (n + 35) = n² + 35n. Con 47 filas de 82 localidades habría muchas más de 2.244."
+        },
+        {
+          "clave": "D",
+          "texto": "33",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 33 filas de 68 localidades son 33 · 68 = 2.244."
+        }
+      ],
+      "solucion": "Con n filas hay n + 35 localidades por fila: n(n + 35) = 2.244, es decir n² + 35n − 2.244 = 0. Factorizando: (n + 68)(n − 33) = 0, porque 68 · 33 = 2.244 y 68 − 33 = 35. Se descarta n = −68 y quedan 33 filas. Comprobación: 33 · 68 = 2.244.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 41, distractor A",
+        "notaAdaptacion": "Del original (terreno rectangular de 192 m² cuyo ancho mide 4 m menos que el largo, se pide el largo; clave B por clavijero y por cálculo, 16 · 12 = 192; A = 12 es la magnitud de la raíz negativa −12) se conserva la estructura (producto de dos cantidades que difieren en una constante igual a un total dado, se pide una de ellas) y el mecanismo de su distractor A (la raíz negativa reportada como respuesta: aquí 68 por invierte-signo-de-las-raices y \"33 o −68\" por reporta-raiz-fuera-del-contexto). Cambian el dominio (tribuna con filas de localidades; el terreno rectangular es la zona de cerco y área que la unidad ya usa), las cifras (n(n + 35) = 2.244), la incógnita pedida (la menor de las dos) y el tercer distractor (n² + 35 = 2.244 por distribuye-sobre-un-solo-termino). El ítem se diseñó como propia en el plan firmado antes de leer la pregunta y la atribución se declaró al comprobar la coincidencia de estructura y mecanismo."
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-014",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Durante una tormenta, el nivel de un estero, en metros, es 3 al inicio de la medición, sube hasta un máximo de 7 metros a las 2 horas y luego baja de forma simétrica, siguiendo una función cuadrática N(t). ¿Cuál es esa función?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "N(t) = t² − 4t + 3",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa tiene a positivo: esa parábola abre hacia arriba y en t = 2 tendría un mínimo de −1, no un máximo de 7."
+        },
+        {
+          "clave": "B",
+          "texto": "N(t) = −t² + 4t + 3",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: N(0) = 3, el vértice está en t = 2 y N(2) = −4 + 8 + 3 = 7."
+        },
+        {
+          "clave": "C",
+          "texto": "N(t) = −t² + 4t + 7",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-coeficientes-como-puntos-especiales",
+          "feedbackDescarte": "Esa usa el máximo 7 como c, pero c es el nivel en t = 0, que era 3. Con c = 7 el nivel inicial sería 7, no 3."
+        },
+        {
+          "clave": "D",
+          "texto": "N(t) = −t² + 7",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa pone el máximo en t = 0, como si el eje de simetría fuera el eje vertical. El máximo ocurre a las 2 horas y el nivel inicial es 3, no 7."
+        }
+      ],
+      "solucion": "N(0) = 3, así que c = 3. El vértice está en t = 2: −b ÷ (2a) = 2, o sea b = −4a. Con N(2) = 7: 4a + 2b + 3 = 4a − 8a + 3 = 7, luego −4a = 4 y a = −1, b = 4. N(t) = −t² + 4t + 3. Comprobación: N(4) = 4·(−4 + 4) + 3 = 3, simétrico de N(0).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-015",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra la temperatura, en °C, que registra el termómetro de un cobertizo durante la noche, según las horas t transcurridas desde la medianoche: T(t) = t² − 4t + 7. ¿Cuál es el vértice de la curva y qué representa?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(3, 2): la temperatura mínima, 2 °C, a las 3 horas.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-abscisa-y-ordenada",
+          "feedbackDescarte": "Esa intercambia las coordenadas: la hora es 2 y la temperatura es 3 °C. En la figura, a las 3 horas la curva ya va subiendo."
+        },
+        {
+          "clave": "B",
+          "texto": "(4, 7): la temperatura mínima, 7 °C, a las 4 horas.",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-2",
+          "feedbackDescarte": "Esa usa t = −b ÷ a, sin el 2, y da 4 horas; ahí la temperatura vuelve a ser 7 °C, la misma de la medianoche. El punto más bajo está a mitad de camino, a las 2."
+        },
+        {
+          "clave": "C",
+          "texto": "(2, 3): la temperatura mínima, 3 °C, a las 2 horas.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: t_v = 4 ÷ 2 = 2, T(2) = 3 y, como a = 1 es positivo, el vértice es el punto más bajo."
+        },
+        {
+          "clave": "D",
+          "texto": "(2, 3): la temperatura máxima, 3 °C, a las 2 horas.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa llama máximo al vértice sin mirar a: con a = 1 la curva abre hacia arriba y (2, 3) es su punto más bajo. En la figura, 3 °C es la menor temperatura de la noche."
+        }
+      ],
+      "solucion": "t_v = −b ÷ (2a) = 4 ÷ 2 = 2. T(2) = 2·(2 − 4) + 7 = −4 + 7 = 3. Como a = 1 > 0, el vértice (2, 3) es un mínimo: la temperatura más baja de la noche, 3 °C, a las 2 horas. Comprobación: T(0) = T(4) = 7, simétricos respecto de t = 2.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": 0,
+          "xMax": 4,
+          "yMin": 0,
+          "yMax": 8
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 1,
+            "b": -4,
+            "c": 7,
+            "desde": 0,
+            "hasta": 4
+          }
+        ],
+        "etiquetaEjeX": "horas desde la medianoche",
+        "etiquetaEjeY": "temperatura (°C)",
+        "descripcion": "Curva de la temperatura entre las 0 y las 4 horas: parte en 7 °C, baja y vuelve a subir hasta 7 °C a las 4 horas."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-016",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un organizador tiene n columnas de compartimentos y cada columna tiene 2 compartimentos más que el número de columnas; en total hay 63 compartimentos. Un estudiante plantea n(n + 2) = 63, obtiene n = 7 y n = −9, y concluye que el problema tiene dos respuestas. ¿Es correcta su conclusión?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: −9 no puede ser una cantidad de columnas; la única respuesta es 7.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las dos raíces resuelven la ecuación, pero n cuenta columnas y solo 7 tiene sentido."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: las dos soluciones de la ecuación son respuestas válidas del problema.",
+          "esCorrecta": false,
+          "errorCatalogado": "reporta-raiz-fuera-del-contexto",
+          "feedbackDescarte": "Esa acepta −9 como respuesta. Es solución de la ecuación, pero no del problema: no existen −9 columnas."
+        },
+        {
+          "clave": "C",
+          "texto": "No: debió plantear n + (n + 2) = 63, que tiene una sola solución.",
+          "esCorrecta": false,
+          "errorCatalogado": "plantea-suma-en-vez-de-producto",
+          "feedbackDescarte": "Esa suma en vez de multiplicar. El total de compartimentos es columnas por compartimentos en cada columna: n(n + 2), no n + (n + 2)."
+        },
+        {
+          "clave": "D",
+          "texto": "No: la ecuación tiene una sola solución, n = 7; el −9 es un error de cálculo.",
+          "esCorrecta": false,
+          "errorCatalogado": "reporta-una-sola-raiz",
+          "feedbackDescarte": "Esa niega la segunda raíz: (n − 7)(n + 9) = 0 se cumple con n = 7 y también con n = −9. Las dos son soluciones de la ecuación; la que se descarta por el contexto es −9."
+        }
+      ],
+      "solucion": "n(n + 2) = 63 equivale a n² + 2n − 63 = 0, que factoriza como (n + 9)(n − 7) = 0: n = 7 o n = −9. Ambas resuelven la ecuación, pero n cuenta columnas, así que se descarta −9. Comprobación: 7 columnas de 9 compartimentos son 63.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-017",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un estudiante afirma: «las parábolas y = x² + 6x + 5 e y = x² + 6x − 2 tienen el mismo eje de simetría, porque c no mueve la parábola horizontalmente». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: al cambiar c, el vértice también se corre hacia un lado.",
+          "esCorrecta": false,
+          "errorCatalogado": "atribuye-el-cambio-al-parametro-equivocado",
+          "feedbackDescarte": "Esa le atribuye a c un corrimiento horizontal. La abscisa del vértice es −b ÷ (2a): no depende de c. Cambiar c solo sube o baja la parábola."
+        },
+        {
+          "clave": "B",
+          "texto": "No: el eje de simetría de cada una es el eje Y, porque el vértice está en (0, c).",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa pone el vértice sobre el eje Y, pero (0, c) es el corte con el eje Y, no el vértice. Con b = 6 el vértice está en x = −3."
+        },
+        {
+          "clave": "C",
+          "texto": "Sí: en ambas el eje es x = −3, porque a y b son iguales y c solo desplaza la parábola verticalmente.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x_v = −b ÷ (2a) = −6 ÷ 2 = −3 en las dos, y c no aparece en esa fórmula."
+        },
+        {
+          "clave": "D",
+          "texto": "Sí, y ese eje común es x = 3.",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-signo",
+          "feedbackDescarte": "Esa calcula el eje con b ÷ (2a), sin el signo menos, y da 3. La fórmula es x_v = −b ÷ (2a) = −6 ÷ 2 = −3."
+        }
+      ],
+      "solucion": "La abscisa del vértice es x_v = −b ÷ (2a). En las dos parábolas a = 1 y b = 6, así que x_v = −6 ÷ 2 = −3 en ambas: el eje de simetría es x = −3. c cambia la ordenada del vértice, no su abscisa.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-018",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Para f(x) = x² − 2x − 7, un estudiante calcula el vértice, obtiene (1, −8) y afirma: «el valor mínimo de f es 1». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No: el valor mínimo es −8; x = 1 es donde se alcanza.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el mínimo es la ordenada del vértice, f(1) = −8, y 1 es la abscisa donde ocurre."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí: la primera coordenada del vértice es el valor mínimo.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-abscisa-y-ordenada",
+          "feedbackDescarte": "Esa toma la abscisa del vértice como el mínimo. El valor mínimo es lo que vale f, es decir la ordenada −8; 1 es el x donde se alcanza."
+        },
+        {
+          "clave": "C",
+          "texto": "No: f tiene un máximo, no un mínimo, porque el vértice es el punto más alto de toda parábola.",
+          "esCorrecta": false,
+          "errorCatalogado": "decide-la-orientacion-sin-el-signo-de-a",
+          "feedbackDescarte": "Esa decide máximo sin mirar a: con a = 1 positivo la parábola abre hacia arriba y el vértice es su punto más bajo."
+        },
+        {
+          "clave": "D",
+          "texto": "No: el mínimo es −8, pero se alcanza en x = −1.",
+          "esCorrecta": false,
+          "errorCatalogado": "altera-la-formula-del-vertice-omitiendo-el-signo",
+          "feedbackDescarte": "Esa calcula x_v = b ÷ (2a), sin el signo menos, y da −1. Con x_v = −b ÷ (2a) = 2 ÷ 2 = 1, y f(−1) = 1 + 2 − 7 = −4, no −8."
+        }
+      ],
+      "solucion": "x_v = −b ÷ (2a) = 2 ÷ 2 = 1 y f(1) = 1 − 2 − 7 = −8: el vértice es (1, −8). Como a = 1 > 0, es un mínimo. El valor mínimo de f es −8 y se alcanza en x = 1.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-019",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra la gráfica de una función cuadrática f, su eje de simetría x = 2 y el punto P(6, 5) de la curva. ¿Para qué otro valor de x se cumple f(x) = 5?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x = −6",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa refleja P respecto del eje Y y cambia el signo de 6. El eje de simetría es x = 2: el simétrico de 6 respecto de 2 es −2."
+        },
+        {
+          "clave": "B",
+          "texto": "x = −2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: P está 4 unidades a la derecha del eje x = 2, así que su simétrico está 4 a la izquierda: x = −2."
+        },
+        {
+          "clave": "C",
+          "texto": "x = 5",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-abscisa-y-ordenada",
+          "feedbackDescarte": "Esa entrega la ordenada de P, 5, que es el valor de f, no un x. Se pide la otra abscisa donde f vale 5."
+        },
+        {
+          "clave": "D",
+          "texto": "Ningún otro: f(x) = 5 solo se cumple en x = 6.",
+          "esCorrecta": false,
+          "errorCatalogado": "reporta-una-sola-raiz",
+          "feedbackDescarte": "Esa se queda con una sola solución. Una parábola toma cada valor por encima de su vértice en dos puntos simétricos: f vale 5 en x = 6 y también en x = −2."
+        }
+      ],
+      "solucion": "La parábola es simétrica respecto de x = 2. P(6, 5) está a 6 − 2 = 4 unidades a la derecha del eje, así que el otro punto con f(x) = 5 está 4 unidades a la izquierda: x = 2 − 4 = −2.",
+      "figura": {
+        "tipo": "plano-funcion",
+        "ventana": {
+          "xMin": -4,
+          "xMax": 8,
+          "yMin": 0,
+          "yMax": 8
+        },
+        "curvas": [
+          {
+            "clase": "parabola",
+            "a": 0.25,
+            "b": -1,
+            "c": 2,
+            "desde": -3,
+            "hasta": 7
+          }
+        ],
+        "ejeSimetria": {
+          "x": 2,
+          "rotulo": "x = 2"
+        },
+        "puntos": [
+          {
+            "x": 6,
+            "y": 5,
+            "rotulo": "P",
+            "mostrarCoordenadas": true
+          }
+        ],
+        "descripcion": "Parábola que abre hacia arriba, con su eje de simetría dibujado como recta punteada en x = 2 y el punto P(6, 5) marcado sobre la curva, a la derecha del eje."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 42, distractor D",
+        "notaAdaptacion": "Del original (gráfica de una función cuadrática con su eje de simetría x = 1 y un punto de la curva con f(5) = 7, se pide el otro x con f(x) = 7; clave B por clavijero y por simetría, 2 · 1 − 5 = −3; D = −5 refleja el punto respecto del eje Y) se conservan la estructura y el mecanismo de su distractor D (usa-el-eje-y-como-eje-de-simetria). Cambian el eje (x = 2), el punto (P(6, 5)), la respuesta (−2) y los otros dos distractores (la ordenada de P entregada como abscisa, y \"ningún otro\" por reporta-una-sola-raiz en su lectura gráfica). La fila que ocupaba este número en el plan era otra (eje de simetría por fórmula, sin figura) y se reemplazó al leer la pregunta, porque esta estructura permite una figura con ejeSimetria y punto rotulado."
+      }
+    },
+    {
+      "id": "adv-funcion-cuadratica-020",
+      "unidadId": "funcion-cuadratica",
+      "moduloId": "funcion-cuadratica",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "De una función cuadrática f se sabe que f(3) = 8. Un estudiante afirma: «entonces f(−3) = 8, porque toda parábola es simétrica». ¿Es correcta la afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí: toda parábola es simétrica respecto del eje Y.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-el-eje-y-como-eje-de-simetria",
+          "feedbackDescarte": "Esa supone que el eje de simetría siempre es el eje Y. El eje pasa por el vértice, en x = −b ÷ (2a), y solo coincide con el eje Y cuando b = 0."
+        },
+        {
+          "clave": "B",
+          "texto": "No: solo se cumple cuando c = 0, porque c es lo que corre la parábola hacia un lado.",
+          "esCorrecta": false,
+          "errorCatalogado": "atribuye-el-cambio-al-parametro-equivocado",
+          "feedbackDescarte": "Esa le atribuye a c la posición horizontal. La abscisa del vértice es −b ÷ (2a): lo que decide si el eje es el eje Y es b, no c."
+        },
+        {
+          "clave": "C",
+          "texto": "No: f(−3) = −8, porque al cambiar el signo de x cambia el signo del resultado.",
+          "esCorrecta": false,
+          "errorCatalogado": "evalua-mal-el-cuadrado-de-un-negativo",
+          "feedbackDescarte": "Esa cambia el signo del resultado al cambiar el signo de x, como si (−3)² fuera −9. El cuadrado de un negativo es positivo: f(−3) depende de b y no tiene por qué ser 8 ni −8."
+        },
+        {
+          "clave": "D",
+          "texto": "No: la parábola es simétrica respecto de la recta x = x_v, que pasa por el vértice y no tiene por qué ser el eje Y.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: f(−3) = f(3) solo si el eje de simetría es x = 0, y eso exige b = 0."
+        }
+      ],
+      "solucion": "Una parábola es simétrica respecto de la recta vertical x = −b ÷ (2a). f(−3) = f(3) solo si esa recta es x = 0, es decir, si b = 0. Contraejemplo: f(x) = x² + 2x − 7 cumple f(3) = 9 + 6 − 7 = 8, pero f(−3) = 9 − 6 − 7 = −4.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-funcion-cuadratica-001: abstracto; ceros de f(x) = x² − x − 42 (7 y −6); clave x = 7 y x = −6; distractores x = −7 y x = 6 | Solo x = 7 | x = 7 y x = −7",
+    "adv-funcion-cuadratica-002: abstracto; vértice de y = −3x² + 6x + 1 (1, 4); clave (1, 4); distractores (−1, −8) | (2, 1) | (1, 1)",
+    "adv-funcion-cuadratica-003: abstracto; f(x) = −x² + 2x + 6 evaluada en x = −3 con tabla de valores de −2 a 3 (−2, 3, 6, 7, 6, 3); clave −9; distractores 9 | 3 | 6",
+    "adv-funcion-cuadratica-004: abstracto; vértice y tipo de f(x) = x² − 6x + 7 (3, −2), mínimo; clave (3, −2), y es un mínimo; distractores (3, −2), y es un máximo | (3, 7), y es un mínimo | (6, 7), y es un mínimo",
+    "adv-funcion-cuadratica-005: brisa en una azotea; V(t) = −2t² + 4t + 5, m/s por hora desde el mediodía, máximo 7 a la 1; clave A la 1 hora, con 7 m/s; distractores A las 2 horas, con 5 m/s | A las 7 horas, con 1 m/s | A la 1 hora, con 5 m/s",
+    "adv-funcion-cuadratica-006: abstracto; f(x) = x² − 2x + 5 y g = f − 4 en la figura, ecuación de g; clave g(x) = x² − 2x + 1; distractores g(x) = x² − 6x + 5 | g(x) = x² − 2x | g(x) = −x² + 2x + 1",
+    "adv-funcion-cuadratica-007: abstracto; a = 1, vértice (2, 5), pasa por (0, 9), ecuación y = x² − 4x + 9; clave y = x² − 4x + 9; distractores y = x² + 4x + 9 | y = x² − 2x + 9 | y = x² − 4x + 5",
+    "adv-funcion-cuadratica-008: abstracto; tabla x = −1..3 con 5, −1, −3, −1, 5, ecuación f(x) = 2x² − 4x − 1; clave f(x) = 2x² − 4x − 1; distractores f(x) = −2x² + 4x − 1 | f(x) = 2x² − 4x − 3 | f(x) = 2x² − 3",
+    "adv-funcion-cuadratica-009: abstracto; gráfica de y = x² − 2x − 3, ecuación; clave y = x² − 2x − 3; distractores y = x² + 2x − 3 | y = −x² + 2x + 3 | y = x² − 4",
+    "adv-funcion-cuadratica-010: abstracto; gráfica de f(x) = x² − 4x + 3, afirmación sobre el mínimo (−1 en x = 2); clave El valor mínimo de f es −1 y se alcanza en x = 2.; distractores El valor máximo de f es −1 y se alcan… | El valor mínimo de f es 2 y se alcanz… | El eje de simetría de f es el eje Y.",
+    "adv-funcion-cuadratica-011: abstracto; a = 1, ceros −1 y 4, ecuación y = x² − 3x − 4; clave y = x² − 3x − 4; distractores y = x² + 3x − 4 | y = x² − 4 | y = x² − x + 4",
+    "adv-funcion-cuadratica-012: abstracto; gráfica de f(x) = x² + 2x, efecto de sumar 3; clave No: sumar 3 desplaza la parábola 3 unidades hacia arriba; su vértice pasa de (−1, −1) a (−1, 2).; distractores Sí: c controla la posición horizontal… | No: sumar 3 hace que la parábola pase… | No: sumar 3 la desplaza hacia arriba …",
+    "adv-funcion-cuadratica-013: tribuna con filas de localidades; n(n + 35) = 2.244 localidades, 33 filas de 68; clave 33; distractores 68 | 33 o −68, porque la ecuación tiene do… | 47",
+    "adv-funcion-cuadratica-014: nivel de un estero en una tormenta; nivel 3 al inicio, máximo 7 a las 2 horas, N(t) = −t² + 4t + 3; clave N(t) = −t² + 4t + 3; distractores N(t) = t² − 4t + 3 | N(t) = −t² + 4t + 7 | N(t) = −t² + 7",
+    "adv-funcion-cuadratica-015: termómetro de un cobertizo; T(t) = t² − 4t + 7, °C por horas desde la medianoche, mínimo 3 a las 2; clave (2, 3): la temperatura mínima, 3 °C, a las 2 horas.; distractores (3, 2): la temperatura mínima, 2 °C, … | (4, 7): la temperatura mínima, 7 °C, … | (2, 3): la temperatura máxima, 3 °C, …",
+    "adv-funcion-cuadratica-016: organizador con columnas de compartimentos; n(n + 2) = 63 compartimentos, 7 columnas de 9; conclusión sobre las dos raíces 7 y −9; clave No: −9 no puede ser una cantidad de columnas; la única respuesta es 7.; distractores Sí: las dos soluciones de la ecuación… | No: debió plantear n + (n + 2) = 63, … | No: la ecuación tiene una sola soluci…",
+    "adv-funcion-cuadratica-017: abstracto; y = x² + 6x + 5 e y = x² + 6x − 2, mismo eje x = −3; clave Sí: en ambas el eje es x = −3, porque a y b son iguales y c solo desplaza la parábola verticalmente.; distractores No: al cambiar c, el vértice también … | No: el eje de simetría de cada una es… | Sí, y ese eje común es x = 3.",
+    "adv-funcion-cuadratica-018: abstracto; f(x) = x² − 2x − 7, vértice (1, −8), mínimo −8; clave No: el valor mínimo es −8; x = 1 es donde se alcanza.; distractores Sí: la primera coordenada del vértice… | No: f tiene un máximo, no un mínimo, … | No: el mínimo es −8, pero se alcanza …",
+    "adv-funcion-cuadratica-019: abstracto; eje de simetría x = 2 y P(6, 5) en la figura, otro x con f(x) = 5 (−2); clave x = −2; distractores x = −6 | x = 5 | Ningún otro: f(x) = 5 solo se cumple …",
+    "adv-funcion-cuadratica-020: abstracto; f(3) = 8, simetría respecto de x = x_v y no del eje Y; clave No: la parábola es simétrica respecto de la recta x = x_v, que pasa por el vértice y no tiene por qué ser el eje Y.; distractores Sí: toda parábola es simétrica respec… | No: solo se cumple cuando c = 0, porq… | No: f(−3) = −8, porque al cambiar el …"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-invierno-111, 2024-regular-113, 2025-regular-113 y 2026-regular-113 (PDF en ../fuentes-demre-liberadas/)"
+    ],
+    "declaracionOriginalidad": "PENDIENTE Ronda 1 y Ronda 2. Banco de función cuadrática: 20 ítems, 60 distractores, 13 errores distintos del catálogo content/errores/funcion-cuadratica.json (los 5 preexistentes y los 8 firmados en la PARADA 1 del 2026-09-20: evalua-mal-el-cuadrado-de-un-negativo, altera-la-formula-del-vertice-omitiendo-el-signo, altera-la-formula-del-vertice-omitiendo-el-2, lee-coeficientes-como-puntos-especiales, confunde-abscisa-y-ordenada, usa-el-eje-y-como-eje-de-simetria, decide-la-orientacion-sin-el-signo-de-a y atribuye-el-cambio-al-parametro-equivocado; reporta-una-sola-raiz se amplió a la lectura en gráfica o tabla), todos los distractores con errorCatalogado (cobertura 60/60, medida con node el 2026-09-20 sobre el archivo final) y ningún ítem repite errorCatalogado entre sus tres distractores. Reparto: 6 resolver, 3 modelar, 6 representar, 5 argumentar; 3 baja, 10 media, 7 alta; letra correcta 5/5/5/5. Proveniencia por fuente: 17 propia, 3 demre-liberada (adv-funcion-cuadratica-003 sobre la pregunta 40 de la forma 2024-invierno-111 y 013 y 019 sobre las preguntas 41 y 42 de la forma 2026-regular-113, las tres verificadas en el PDF de la forma y con clave confirmada por clavijero y por cálculo; se conserva la estructura del ítem y el mecanismo de los distractores que indica la notaAdaptacion de cada uno, y cambian contexto, cifras y alternativas; los 20 ítems se diseñaron como propia en el plan firmado antes de leer esas preguntas; 010 queda propia aunque comparte la estructura de curva con afirmaciones con 2024-regular-113/42, porque ninguno de sus distractores reproduce uno de la fuente; las dos preguntas de la forma 2027-invierno-111 quedaron fuera por no verificable, sin PDF ni clavijero), 0 temario-demre. Convenciones de mapeo declaradas para Ronda 1: la fórmula del vértice alterada es un id por variante (omitir el signo, x_v = b/(2a); omitir el 2, x_v = −b/a); reporta-raiz-fuera-del-contexto nunca aparece como número negativo solo, sino como par \"33 o −68\" (013) o como afirmación (016); lee-coeficientes-como-puntos-especiales cubre las dos direcciones (c leído como ordenada del vértice o valor extremo, y la ordenada del vértice o los ceros escritos como coeficientes); usa-el-eje-y-como-eje-de-simetria cubre reflejar cambiando el signo de x, dar ceros opuestos, poner el vértice sobre el eje Y y afirmar f(−k) = f(k); distribuye-sobre-un-solo-termino sigue la convención de L1 (solo los productos de los extremos, sin términos cruzados). Figuras: 8 ítems (003 y 008 con tabla-valores; 006, 009, 010, 012, 015 y 019 con plano-funcion), todas con ventana declarada y arcos acotados con desde/hasta; la figura muestra los datos y nunca la respuesta (ni vértice ni ceros marcados o rotulados cuando se preguntan); la descripcion nombra el punto más bajo en 006 y 009, donde se pide la ecuación, y no lo nombra en 010 ni 015, donde se pregunta por el vértice. Medición a 390×844 en la ruta de descarte el 2026-09-20 con Playwright: 8 de 8 figuras vistas, 0 desbordes de página o contenedor, 0 rótulos recortados, svg de 358×269 px con marcas de 9,5 px, tablas de 86 px sin scroll y con th de columna y de fila. Contextos verificados con scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-20 sobre los 5 dominios con contexto (brisa y azotea en 005, tribuna y localidades en 013, estero y tormenta en 014, termómetro y cobertizo en 015, organizador y compartimentos en 016), dos palabras por dominio más dos respaldos por dominio (30 palabras): los 5 dominios principales dan NO en sus dos palabras; los únicos SI están en respaldos no usados (hotel en 3 archivos y habitaciones en 1, que coinciden en 2024-11-29-p2024.md; panal en 1 y celdillas en 4, sin archivo en común); cero recambios; los 15 ítems restantes son abstractos. Cifras elegidas con node el 2026-09-20 contra las tres lecciones y el cierre de la unidad más las cifras impresas en las 10 preguntas DEMRE de la unidad para las cifras de 10 a 99, y contra todo content/ para las de 100 o más y decimales (criterio de dos niveles firmado el 2026-09-14), sin repetir ninguna cifra de 10 o más dentro del banco: barrido sobre el archivo final con node el 2026-09-20 sobre enunciado, alternativas, feedbacks, solución, descripcion y filas de tabla, 9 cifras distintas de 10 o más (42 y 49 en 001; 35, 2244, 68, 33, 47 y 82 en 013; 63 en 016), 0 repetidas entre ítems, 0 bloqueadas; los totales 2244 y 63 no coinciden con ningún total de la unidad; las 23 funciones del banco son distintas entre sí y de las 41 de la unidad; las notas de adaptación citan cifras del original (13, 23, 192, 16, 12) que no aparecen en ningún ítem. Magnitud: la razón entre cada distractor numérico y la correcta está entre 1/3 y 3 en los 7 distractores escalares (003, 013 y 019; 003-C queda exactamente en 1/3), 0 excepciones; los otros 53 distractores son pares, ecuaciones o afirmaciones. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}
