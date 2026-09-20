@@ -1,5 +1,6 @@
 import { PlanoFuncion } from "@/components/advance/PlanoFuncion";
 import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
+import { TablaValores } from "@/components/advance/TablaValores";
 import type { FiguraItem } from "@/lib/advance/descarte";
 
 /**
@@ -15,6 +16,6 @@ export function FiguraDeItem({ figura }: { figura: FiguraItem }) {
     case "plano-funcion":
       return <PlanoFuncion figura={figura} />;
     case "tabla-valores":
-      return null;
+      return <TablaValores figura={figura} />;
   }
 }
