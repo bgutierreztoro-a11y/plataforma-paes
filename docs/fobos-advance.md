@@ -780,6 +780,101 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 
 ---
 
+## 12. Figuras de función (plano-funcion y tabla-valores)
+
+Infraestructura previa a la unidad 11 (funcion-cuadratica), construida el 2026-09-20 sin escribir ningún ítem. El temario DEMRE M1 pide, para función cuadrática, tablas y gráficos considerando la variación de parámetros y los puntos especiales de la gráfica (vértice, ceros, intersección con los ejes). El plano de isometrías (§2.3, `figuraPlano`) solo dibuja puntos, polígonos, vectores, centros y rectas del enum x=c | y=c | y=x | y=-x; una parábola no era dibujable.
+
+### 12.1 Regla de contenido
+
+La figura muestra los datos del enunciado, nunca la respuesta pedida. Si el ítem pregunta por el vértice, la figura no lo marca ni lo rotula. Si pregunta por los ceros, no se dibujan los puntos sobre el eje x.
+
+Es la misma regla del plano de isometrías (la figura lleva el triángulo y el vector, jamás el triángulo trasladado) aplicada a funciones. Quien escribe el banco es responsable; el validador no puede saber qué pregunta el ítem. Ronda 1 verifica `descripcion` contra los elementos y contra el enunciado.
+
+### 12.2 Cómo se distingue una figura de otra
+
+El campo `figura` del ítem es opcional y admite tres formas, discriminadas por `tipo` (schema: `oneOf` de `figuraPlano`, `figuraPlanoFuncion` y `figuraTablaValores`):
+
+| `figura.tipo` | Figura | Componente | Validador |
+|---|---|---|---|
+| ausente | plano de isometrías, §2.3 | `PlanoIsometrias.tsx` | regla (10), sin cambios |
+| `"plano-funcion"` | plano de función | `PlanoFuncion.tsx` | regla (11) |
+| `"tabla-valores"` | tabla de valores | `TablaValores.tsx` | regla (12) |
+
+Los bancos anteriores no llevan `tipo` y no cambian un byte: la rama sin `tipo` del validador es la función original, sin editar. `components/advance/FiguraDeItem.tsx` despacha por `tipo`; descarte y triage lo montan entre el enunciado y las alternativas y no saben cuál es cuál. `itemParaCliente` (`lib/advance/banco.ts`) pasa la figura íntegra al cliente, sin `protegerExpresiones` (los rótulos van en `<text>` y no se cortan); `lib/advance/banco.test.ts` afirma que ningún campo se pierde.
+
+### 12.3 Contrato de `plano-funcion`
+
+Coordenadas reales, con decimales (el plano de isometrías es entero). Todo error, nunca advertencia.
+
+```
+tipo: "plano-funcion"
+ventana?: { xMin, xMax, yMin, yMax }        si falta, se calcula (12.5)
+curvas: 1 a 3 de
+  { clase: "parabola", a, b, c, desde?, hasta?, rotulo?, trazo? }   a ≠ 0
+  { clase: "recta", m, b, desde?, hasta?, rotulo?, trazo? }
+  { clase: "recta", por: [{x,y},{x,y}], desde?, hasta?, rotulo?, trazo? }   x distinto
+  { clase: "recta-vertical", x, rotulo?, trazo? }
+  trazo: "solido" (default) | "segmentado" | "punteado"
+puntos?: 0 a 6 de { x, y, rotulo?, estilo?: "relleno" (default) | "hueco", mostrarCoordenadas?: bool }
+segmentos?: 0 a 4 de { desde: {x,y}, hasta: {x,y}, rotulo? }      para acotar distancias o alturas
+ejeSimetria?: { x, rotulo? }                                          se dibuja punteado
+regiones?: 0 a 2 de
+  { clase: "entre-curva-y-eje", curva: <índice en curvas>, desde, hasta }
+  { clase: "franja-x", desde, hasta }                                  banda vertical, inecuaciones
+etiquetaEjeX?, etiquetaEjeY?: string                                   "tiempo (s)", "altura (m)"
+descripcion: string, ≥ 30 caracteres                                   el <desc> del SVG, alternativo real
+```
+
+Reglas (11) del validador (`scripts/validar-contenido.mjs`, `validarPlanoFuncion`):
+
+1. `tipo` conocido y claves sobrantes por nivel.
+2. `a ≠ 0` en toda parábola; `m` y `b` finitos; `por` con dos puntos de x distinto; `m, b` y `por` excluyentes.
+3. Cotas: 1 a 3 curvas, hasta 6 puntos, 4 segmentos y 2 regiones (legibilidad a 390 px).
+4. `desde < hasta` donde vengan; ventana con `xMin < xMax` e `yMin < yMax`.
+5. Rótulos únicos en toda la figura (curvas, puntos, segmentos y eje comparten el espacio de nombres).
+6. Con 2 o más curvas, cada una lleva `rotulo`: no se distinguen solo por color.
+7. `regiones[].curva` apunta a una curva existente que no sea `recta-vertical`.
+8. Con `ventana` declarada, todo punto, extremo de segmento, extremo de arco, vértice visible, `recta-vertical.x` y `ejeSimetria.x` cae dentro. Sin ventana no se comprueba: la automática se construye desde esos mismos puntos y la contención la afirma `lib/advance/planoFuncion.test.ts`, no el validador.
+9. `descripcion` presente y de al menos 30 caracteres.
+
+`estilo: "hueco"` es solo para un punto excluido (extremo abierto de un intervalo). `mostrarCoordenadas` escribe el par al lado del punto, con `;` como separador cuando hay decimales: `(1,5; −3,125)`.
+
+### 12.4 Contrato de `tabla-valores`
+
+```
+tipo: "tabla-valores"
+encabezados: string[], 1 a 6, no vacíos y únicos
+filas: (string | number)[][], 1 a 8, cada fila con el largo de encabezados
+descripcion: string, ≥ 30 caracteres
+```
+
+Reglas (12): toda fila con el mismo largo que `encabezados`, encabezados no vacíos y únicos, hasta 6 columnas y 8 filas. Se renderiza como `<table>` real con `<th scope="col">` en la cabecera y `<th scope="row">` en la primera celda de cada fila: la tabla es su propio texto alternativo, no una imagen de una tabla. `descripcion` va en un `<caption>` solo para lector de pantalla. Números con `tabular-nums`, formato es-CL y signo menos Unicode. A 390 px entra completa o scrollea dentro de su contenedor; nunca empuja el ancho de la página.
+
+### 12.5 Motor geométrico (`lib/advance/planoFuncion.ts`)
+
+Puro y determinista: sin React, sin `Math.random`, sin `Date`, sin estado. Calcula la figura, no el contenido: los valores de un ítem se siguen calculando aparte con `node -e`.
+
+- `bezierParabola(a, b, c, x0, x1)` y `arcoParabola` (path `M … Q …`): el arco es una Bézier cuadrática exacta. El punto de control es la intersección de las tangentes en los extremos y cae en `x = (x0 + x1)/2`; con eso `x(t)` es lineal y `y(t)` coincide con `f(x(t))`. Test: 10 combinaciones de `(a, b, c, x0, x1)`, 200 valores de `t`, tolerancia 1e-9.
+- `recortarArco(arco, ventana)`: subdivisión de De Casteljau en los bordes; devuelve 0, 1 o 2 tramos exactos, nada se dibuja fuera y el corte no deforma la curva.
+- `ventanaAutomatica(curvas, puntos, segmentos, otrosX)`: vértices, ceros, interceptos y extremos de arco de cada curva, más todo punto y segmento declarado; 10 % de holgura por lado; incluye el origen si queda a menos de una holgura; extremos redondeados con números redondos. Sin dos ceros la parábola recibe un ancho propio (hasta donde sube tanto como dista el vértice del eje x). Con `desde`/`hasta` solo cuenta lo dibujado: el intercepto lejano no entra.
+- `marcasDeEje(min, max, objetivo = 6)`: algoritmo de Heckbert (Graphics Gems I, "Nice numbers for graph labels"), paso 1, 2 o 5 por potencia de 10. `formatoMarca(valor, paso)` escribe cada marca con los decimales que exige el paso (0,25 necesita 2), coma decimal y signo menos Unicode. `formatoDecimalChileno` de `lib/planoCartesiano.ts` no sirve acá porque redondea a un decimal.
+- `escalaDe(ventana, ancho, alto, margen)`: escalas independientes en x e y, porque la unidad de x y la de y no tienen por qué medir lo mismo.
+- `verticeDe`, `cerosDe` (0, 1 o 2 raíces, tolerancia declarada), `interceptoY`, `coeficientesRecta`, `segmentoRectaEnVentana`.
+
+### 12.6 Componente `PlanoFuncion.tsx`
+
+SVG estático de 320 × 240 unidades de viewBox, `width: 100%`. Jerarquía visual: curvas > puntos rotulados > ejes > grilla. Curvas en `--linea-nav` con trazo 2,25; ejes, marcas, rótulos y segmentos en `--text-primary`; grilla en `--border-hairline` solo en las marcas; regiones en `--linea-tinte`; puntos huecos rellenos con `--color-bg`. Cero colores fuera de los tokens. Con dos o más curvas, el trazo y el rótulo al lado de la curva las distinguen; el color es refuerzo.
+
+Accesibilidad: `role="img"`, `aria-labelledby` a un `<title>` corto generado desde `textos.ts` ("Gráfico de una función", "de dos funciones", "de tres funciones") y a un `<desc>` que es `figura.descripcion`; `focusable="false"`; marcas y rótulos como `<text>` real; halo del color de fondo (`paint-order: stroke`) detrás de cada texto para que una curva que cruza un número no lo tape; sin animación. Medido en `/_design` a 390 × 844 con colores computados sobre `--color-bg` (`scratchpad/planos-funcion/capturas-390.mjs`, 2026-09-20): texto 16,75:1, ejes 16,75:1, curvas 4,57 (01), 16,75 (02), 4,54 (03) y 6,48 (04), grilla 1,34 (decorativa, sin mínimo); 0 recortes de rótulo, 0 desborde horizontal, SVG de 324 × 243 px con letra de marca de 9,5 px.
+
+Lo que la galería deja a la vista y no se resuelve acá: sin `ventana` declarada, una parábola sin `desde`/`hasta` arrastra el intercepto con el eje y aunque quede lejos (es lo que pide el contrato: interceptos); un ítem con `c` grande declara `ventana` o `desde`/`hasta`. El rótulo de un punto sobre una curva que sube hacia la derecha se cruza con la curva; el halo lo mantiene legible.
+
+### 12.7 Galería
+
+`/_design`, sección "Planos de función": 13 planos y una tabla con datos de MUESTRA en `app/%5Fdesign/muestraDescarte.ts` (`PLANOS_FUNCION_MUESTRA`, `TABLA_MUESTRA`), con vértices y ceros marcados solo para medir. No viven en `content/` y ningún banco los importa.
+
+---
+
 ## Anexo A. Plantilla de arranque de sesión de CC
 
 ```
