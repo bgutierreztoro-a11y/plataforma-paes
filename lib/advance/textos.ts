@@ -48,6 +48,18 @@ export const TEXTOS_ADVANCE = {
     planoUnaCurva: "Gráfico de una función",
     planoVariasCurvas: (n: number) => `Gráfico de ${n === 2 ? "dos" : "tres"} funciones`,
     tabla: "Tabla de valores",
+    /* Figuras de datos: el aria-label se genera desde los datos en
+       lib/advance/figurasDatos.ts y empieza con una de estas cabezas. */
+    tablaDatos: "Tabla de datos",
+    barras: "Gráfico de barras",
+    histograma: "Histograma",
+    lineas: "Gráfico de líneas",
+    circular: "Gráfico circular",
+    /* Nombre de una serie sin nombre (solo existe con una serie). */
+    serieUnica: "Valores",
+    porCategoria: (y: string, x: string) => `${y} por ${x}`,
+    intervalo: (desde: string, hasta: string) => `de ${desde} a ${hasta}`,
+    total: (n: string) => `total ${n}`,
   },
 
   /* Modo descarte (docs/fobos-advance.md §6.1). Cada descarte se evalúa al
