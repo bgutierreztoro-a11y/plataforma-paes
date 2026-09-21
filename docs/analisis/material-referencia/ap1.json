@@ -1,0 +1,3145 @@
+{
+  "proveniencia": {
+    "fuente": "Material/profesora/AP1_MT_IV MEDIO_VB (2).md + SAP1_M1_FINAL_ONLINE (ACT. 30 de abril).md",
+    "fecha_analisis": "2026-09-21",
+    "tipo_fuente": "guia_terceros",
+    "licencia": "propietaria",
+    "nivel_riesgo": "alto"
+  },
+  "conceptos": [
+    {
+      "id": "conjuntos-y-orden-enteros",
+      "nombre": "Conjuntos numéricos enteros, paridad, consecutivos y opuestos",
+      "prerrequisitos": [],
+      "secuencia_sugerida": 1,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "enunciados breves, uno o dos pasos, sin representación gráfica",
+      "representaciones": [
+        "recta-numerica",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer naturales, enteros negativos, cero y sus uniones"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "contar enteros dentro de un intervalo con extremos incluidos o excluidos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "expresar pares e impares con una variable entera"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "escribir consecutivos a partir de uno dado y operar con ellos"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "usar el opuesto para despejar un número desconocido"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un intervalo de enteros en texto, obtener la cantidad de enteros de cierto tipo",
+        "dada la suma de enteros consecutivos en texto, obtener una propiedad siempre verdadera",
+        "dados dos enteros pares en texto, obtener la paridad de una combinación de sus vecinos",
+        "dado un impar en expresión algebraica, obtener la suma de sus vecinos impares",
+        "dada la suma de opuestos en texto, obtener el número desconocido"
+      ],
+      "dominios_vistos": [
+        "intervalo de enteros",
+        "números consecutivos",
+        "inversos aditivos"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "confunde no positivo con negativo y omite el cero",
+        "incluye el extremo excluido del intervalo al contar",
+        "confunde el antecesor par con el antecesor inmediato",
+        "toma un caso particular como prueba de una propiedad general",
+        "confunde el opuesto de un número con el número mismo al despejar"
+      ]
+    },
+    {
+      "id": "divisibilidad-mcm-mcd",
+      "nombre": "Primos, divisores, reglas de divisibilidad, mcm y MCD",
+      "prerrequisitos": [
+        "conjuntos-y-orden-enteros"
+      ],
+      "secuencia_sugerida": 2,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "exige combinar criterios o listar múltiplos y divisores antes de decidir",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "distinguir primo de compuesto y descomponer en factores primos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "listar divisores y múltiplos de un entero, incluidos los negativos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar reglas de divisibilidad y combinarlas para un divisor compuesto"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "elegir mcm o MCD según pida igualar totales o repartir en partes máximas"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un número con una cifra desconocida en texto, obtener las cifras que cumplen un criterio de divisibilidad",
+        "dadas dos longitudes en texto, obtener la mayor medida común de corte",
+        "dadas cantidades por paquete en tabla-doble-entrada, obtener el mínimo de paquetes para igualar totales",
+        "dado un número en texto, obtener la suma de sus divisores"
+      ],
+      "dominios_vistos": [
+        "trozos de madera",
+        "paquetes de jugo",
+        "divisores de un número"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "verifica solo una de las dos condiciones de divisibilidad requeridas",
+        "confunde mcm con MCD según el tipo de pregunta",
+        "olvida los divisores negativos o el propio número al listar divisores",
+        "responde el múltiplo común en lugar de la cantidad de paquetes"
+      ]
+    },
+    {
+      "id": "valor-absoluto-enteros",
+      "nombre": "Valor absoluto y distancia en la recta",
+      "prerrequisitos": [
+        "conjuntos-y-orden-enteros"
+      ],
+      "secuencia_sugerida": 3,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "definición directa; sube a medio cuando hay variable con signo condicionado",
+      "representaciones": [
+        "grafico-barras",
+        "recta-numerica"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer el valor absoluto como distancia al cero"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar la definición por casos según el signo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "comparar variaciones entre valores con signo mediante la diferencia absoluta"
+        }
+      ],
+      "tareas_tipo": [
+        "dados puntajes en grafico-barras, obtener la categoría con mayor variación absoluta",
+        "dada una expresión con valores absolutos y una condición de signo, obtener su forma simplificada"
+      ],
+      "dominios_vistos": [
+        "percepción de un candidato",
+        "atributos con puntaje"
+      ],
+      "conteo_problemas": 2,
+      "errores_frecuentes_patron": [
+        "compara solo el valor final e ignora la variación",
+        "aplica el caso incorrecto de la definición cuando la variable es negativa",
+        "cree que el valor absoluto de una expresión es la expresión sin signo"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "gráfico de barras dobles con puntajes negativos",
+          "razon": "composición visual propia del ítem"
+        }
+      ]
+    },
+    {
+      "id": "enteros-en-contexto",
+      "nombre": "Traducción de enunciados y patrones con enteros",
+      "prerrequisitos": [
+        "conjuntos-y-orden-enteros",
+        "divisibilidad-mcm-mcd"
+      ],
+      "secuencia_sugerida": 4,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados largos, traducción de frases y varios pasos encadenados",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "traducir frases con opuesto, doble, producto y suma a expresión numérica"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "repartir un total según consumos individuales y partes iguales"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "modelar una variación constante hasta alcanzar una meta"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "generalizar un patrón de figuras al término enésimo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "juzgar desarrollos ajenos y detectar el correcto"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una boleta en tabla-doble-entrada, obtener el monto que corresponde a una persona",
+        "dada una frase verbal en texto, obtener la expresión numérica equivalente",
+        "dada una variación constante en texto, obtener el tiempo para alcanzar un valor meta",
+        "dado un patrón de figuras en figura-plana, obtener el término enésimo",
+        "dados desarrollos de varios estudiantes en texto, obtener cuál es correcto",
+        "dado un movimiento repetido en texto, obtener la expresión de la distancia acumulada"
+      ],
+      "dominios_vistos": [
+        "boleta de restaurante",
+        "temperatura de frigorífico",
+        "lectura de historietas",
+        "entrenamiento con saltos",
+        "figuras con fósforos",
+        "número impar en posición"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "confunde la posición de un impar con su valor",
+        "omite el opuesto al traducir una frase",
+        "olvida un mes distinto al calcular un total anual",
+        "cuenta solo el avance neto sin restar el retroceso",
+        "aplica la regla del patrón a la figura equivocada"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "secuencia de figuras con fósforos",
+          "razon": "patrón visual propio del ítem"
+        }
+      ]
+    },
+    {
+      "id": "orden-y-operatoria-enteros",
+      "nombre": "Orden y operaciones con enteros",
+      "prerrequisitos": [
+        "conjuntos-y-orden-enteros",
+        "valor-absoluto-enteros"
+      ],
+      "secuencia_sugerida": 5,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "varios signos a controlar y tablas con datos negativos; argumentación con literales",
+      "representaciones": [
+        "recta-numerica",
+        "tabla-doble-entrada",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "ubicar y comparar enteros en la recta; tricotomía y transitividad"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "sumar enteros de igual signo y de distinto signo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "restar como suma del opuesto"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar la regla de signos en producto y cociente"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "evaluar expresiones con variables enteras negativas"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "deducir el valor inicial desde variaciones sucesivas"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "calcular promedio y amplitud con datos negativos"
+        }
+      ],
+      "tareas_tipo": [
+        "dados valores de variables en texto, obtener el valor de una expresión entera",
+        "dadas variaciones sucesivas en texto, obtener el valor inicial",
+        "dadas temperaturas en tabla-doble-entrada, obtener el promedio o la mayor amplitud",
+        "dados enteros negativos consecutivos en texto, obtener la relación siempre verdadera",
+        "dadas expresiones con una variable en texto, obtener su orden creciente",
+        "dada una pirámide de sumas en texto, obtener los valores faltantes",
+        "dado un número acotado en texto, obtener el máximo de una cadena de operaciones"
+      ],
+      "dominios_vistos": [
+        "masa en bodega",
+        "temperaturas mínimas semanales",
+        "oscilación térmica ciudades",
+        "tarjetas de juego",
+        "pirámide de casilleros",
+        "edades de dos personas",
+        "pack de yogures"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "ignora el signo al sumar enteros de distinto signo",
+        "resta en el orden inverso al indicado",
+        "olvida que restar un negativo aumenta el valor",
+        "suma las variaciones sin invertirlas para volver al inicio",
+        "divide el promedio por la cantidad incorrecta de datos",
+        "supone que un producto de negativos es negativo"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "pirámide de casilleros con regla de suma",
+          "razon": "estructura visual específica del ítem"
+        }
+      ]
+    },
+    {
+      "id": "prioridad-operaciones-combinadas",
+      "nombre": "Prioridad de operaciones y análisis de pasos",
+      "prerrequisitos": [
+        "orden-y-operatoria-enteros"
+      ],
+      "secuencia_sugerida": 6,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "cadenas largas de operaciones y revisión de procedimientos ajenos paso a paso",
+      "representaciones": [
+        "pictograma",
+        "tabla-doble-entrada",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "resolver paréntesis desde el más interno"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular potencias antes que productos y sumas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "operar productos y cocientes de izquierda a derecha"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "distinguir el cuadrado de un negativo del opuesto del cuadrado"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "interpretar el significado de una operación combinada con unidades"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "localizar el primer error en una secuencia de pasos"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una expresión numérica combinada en texto, obtener su valor respetando la prioridad",
+        "dada una secuencia de pasos de resolución en texto, obtener el paso con el primer error",
+        "dado un conteo de fichas en pictograma, obtener la expresión del puntaje total",
+        "dada una operación combinada con unidades en texto, obtener el significado del resultado",
+        "dada una tabla de masas atómicas en tabla-doble-entrada, obtener la expresión de la masa total",
+        "dado un crucigrama de operaciones en texto, obtener el valor más frecuente entre los faltantes"
+      ],
+      "dominios_vistos": [
+        "juego de fichas",
+        "dosis de medicamento",
+        "masa molar",
+        "inventario de leche",
+        "crucigrama numérico",
+        "veces que cabe"
+      ],
+      "conteo_problemas": 9,
+      "errores_frecuentes_patron": [
+        "confunde el cuadrado de un negativo con el opuesto del cuadrado",
+        "opera de izquierda a derecha ignorando la jerarquía",
+        "comete un error aritmético en la suma final aunque el planteo sea correcto",
+        "interpreta el cociente de dos razones con la unidad equivocada",
+        "representa fichas negativas con resta en lugar de sumar el valor negativo"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "imagen de fichas por partida",
+          "razon": "composición pictórica propia del ítem"
+        },
+        {
+          "elemento": "crucigrama de operaciones",
+          "razon": "diseño visual específico"
+        }
+      ]
+    },
+    {
+      "id": "fracciones-equivalencia-y-orden",
+      "nombre": "Fracciones: amplificación, equivalencia y orden",
+      "prerrequisitos": [
+        "divisibilidad-mcm-mcd",
+        "orden-y-operatoria-enteros"
+      ],
+      "secuencia_sugerida": 7,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "argumentar",
+        "representar",
+        "resolver"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "comparaciones con varias fracciones y argumentación sobre signos con literales",
+      "representaciones": [
+        "recta-numerica",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer un racional como cociente con denominador no nulo"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "amplificar y simplificar conservando el valor"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "verificar equivalencia por producto cruzado"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "ordenar fracciones por producto cruzado o denominador común"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "ubicar fracciones que dividen un trazo en la recta"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "deducir el signo de una fracción desde los signos de sus partes"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas varias fracciones en texto, obtener su orden creciente",
+        "dado un producto de fracciones en texto, obtener la condición que garantiza una desigualdad",
+        "dados puntos que dividen un trazo en recta-numerica, obtener la operación que da cierto resultado",
+        "dada una fracción con signos variables en texto, obtener la afirmación siempre verdadera"
+      ],
+      "dominios_vistos": [
+        "orden de racionales",
+        "puntos en un trazo",
+        "signo de una fracción"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "compara solo numeradores o solo denominadores",
+        "olvida que el numerador puede ser cero al juzgar el signo",
+        "cree que una fracción con denominador mayor es siempre menor",
+        "toma la condición de la desigualdad sobre la fracción incorrecta"
+      ]
+    },
+    {
+      "id": "operatoria-fracciones",
+      "nombre": "Operaciones con fracciones, recíproco y números mixtos",
+      "prerrequisitos": [
+        "fracciones-equivalencia-y-orden",
+        "prioridad-operaciones-combinadas"
+      ],
+      "secuencia_sugerida": 8,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "operaciones anidadas con signos, fracciones complejas y conversión de mixtos",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "sumar y restar igualando denominadores"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "multiplicar simplificando antes de operar"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "dividir multiplicando por el recíproco"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "convertir entre mixto e impropia en ambos sentidos"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "hallar el recíproco de un mixto o de una expresión"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "reducir una fracción compleja y revisar pasos ajenos"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una expresión combinada de fracciones en texto, obtener su valor",
+        "dado un número mixto en texto, obtener su inverso multiplicativo",
+        "dados tiempos en números mixtos en texto, obtener la diferencia en otra unidad",
+        "dada una fracción compleja en texto, obtener su inverso",
+        "dada una secuencia de pasos con fracciones en texto, obtener el paso con el primer error",
+        "dado un producto de diferencias unitarias en texto, obtener su valor simplificado"
+      ],
+      "dominios_vistos": [
+        "pavimentación de un camino",
+        "horas a minutos",
+        "fracción compleja"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "simplifica una fracción compleja como si fuera cociente directo",
+        "confunde opuesto con recíproco",
+        "suma numeradores y denominadores por separado",
+        "convierte la parte fraccionaria de hora a minutos con factor incorrecto",
+        "invierte la fracción equivocada al dividir"
+      ]
+    },
+    {
+      "id": "fracciones-en-contexto",
+      "nombre": "Fracción de una cantidad y de una fracción en problemas",
+      "prerrequisitos": [
+        "operatoria-fracciones"
+      ],
+      "secuencia_sugerida": 9,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "varias etapas encadenadas sobre un total y juicio de estrategias alternativas",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "calcular la fracción de una cantidad"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "encadenar fracciones sucesivas de un mismo total"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "pasar de la parte usada a la parte restante"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconstruir el total desde una parte y su fracción"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "escalar cantidades proporcionalmente"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "validar estrategias distintas que llegan al mismo resultado"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una fracción de una fracción de un total en texto, obtener la fracción del total",
+        "dada una parte leída en texto, obtener la parte restante en cantidad",
+        "dada una receta en texto, obtener las cantidades escaladas",
+        "dado un total y una capacidad fraccionaria en texto, obtener la cantidad de porciones",
+        "dadas fracciones sucesivas de un grupo en texto, obtener el subgrupo final",
+        "dada una regla de promedio por componentes en tabla-doble-entrada, obtener el elemento faltante",
+        "dadas dos estrategias de resolución en texto, obtener cuál es válida",
+        "dada una parte pintada y el resto en área en texto, obtener la superficie total"
+      ],
+      "dominios_vistos": [
+        "copas de cóctel",
+        "elección de directiva",
+        "mezcla de colores",
+        "préstamo estudiantil",
+        "receta de bizcocho",
+        "botellas y vasos",
+        "páginas de un libro",
+        "pintura de una casa"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "aplica la segunda fracción al total en vez del resto",
+        "confunde la fracción leída con la fracción que falta",
+        "escala solo un ingrediente al cambiar la cantidad de personas",
+        "olvida convertir unidades antes de multiplicar",
+        "reconstruye el total desde la parte pintada en lugar de la restante"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "imagen de copa con medidas",
+          "razon": "composición visual propia del ítem"
+        }
+      ]
+    },
+    {
+      "id": "decimales-tipos-y-transformacion",
+      "nombre": "Decimales finitos, periódicos, semiperiódicos y fracción generatriz",
+      "prerrequisitos": [
+        "fracciones-equivalencia-y-orden"
+      ],
+      "secuencia_sugerida": 10,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "reglas directas de transformación; sube a medio al combinar con operaciones o revisar pasos",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "nombrar posiciones decimales y leer la expansión"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "clasificar decimales en finito, periódico y semiperiódico"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "transformar decimal finito a fracción"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "transformar periódico a fracción restando la parte entera"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "transformar semiperiódico a fracción con anteperíodo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "predecir el tipo de decimal desde la fracción simplificada"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un decimal periódico en texto, obtener su fracción generatriz",
+        "dadas varias fracciones en texto, obtener la que genera un decimal periódico",
+        "dadas operaciones con decimales periódicos en texto, obtener cuál no da entero",
+        "dada una secuencia de pasos con un decimal periódico en texto, obtener el paso erróneo",
+        "dado un decimal periódico en texto, obtener una fracción de él"
+      ],
+      "dominios_vistos": [
+        "fracción generatriz",
+        "tipo de decimal"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "olvida restar la parte entera al transformar un periódico",
+        "usa nueves y ceros en cantidad equivocada según período y anteperíodo",
+        "trata un periódico como finito al operar",
+        "juzga el tipo de decimal sin simplificar la fracción"
+      ]
+    },
+    {
+      "id": "operatoria-decimales",
+      "nombre": "Operaciones y comparación con decimales",
+      "prerrequisitos": [
+        "decimales-tipos-y-transformacion",
+        "operatoria-fracciones"
+      ],
+      "secuencia_sugerida": 11,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "control de la coma en productos y cocientes, conversión de unidades y lectura de tablas",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "recta-numerica",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "comparar decimales alineando posiciones"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "sumar y restar alineando la coma"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "multiplicar contando cifras decimales"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "dividir amplificando por potencias de diez"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "convertir unidades con factor decimal"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "ubicar el resultado como distancia en la recta"
+        }
+      ],
+      "tareas_tipo": [
+        "dados tiempos decimales en tabla-doble-entrada, obtener el orden de llegada",
+        "dada una fórmula de conversión en texto, obtener el equivalente en otra unidad",
+        "dada una fracción de una unidad de masa en texto, obtener el equivalente decimal",
+        "dada una operación con decimales en texto, obtener la distancia en recta-numerica",
+        "dados registros decimales en tabla-doble-entrada, obtener la mayor diferencia",
+        "dada una equivalencia de unidades en texto, obtener la expresión de conversión",
+        "dado un total y una capacidad decimal en texto, obtener la cantidad de envases"
+      ],
+      "dominios_vistos": [
+        "carne en sándwich",
+        "tiempos de corredores",
+        "millas a kilómetros",
+        "botellas de jugo",
+        "onzas y gramos",
+        "tiempos de maratón",
+        "distancia en la recta"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "mueve la coma en la dirección equivocada al multiplicar",
+        "compara decimales por cantidad de cifras y no por valor posicional",
+        "divide en el orden inverso al convertir unidades",
+        "toma la diferencia entre valores consecutivos y no entre máximo y mínimo",
+        "amplifica solo el dividendo o solo el divisor"
+      ]
+    },
+    {
+      "id": "decimales-en-contexto",
+      "nombre": "Problemas con decimales y tablas de datos",
+      "prerrequisitos": [
+        "operatoria-decimales"
+      ],
+      "secuencia_sugerida": 12,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados largos con tablas, varias etapas y juicio de afirmaciones con justificación",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer el valor pertinente en una tabla de rangos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "plantear la expresión del gasto total desde precios unitarios"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "acumular consumos parciales con conversión de tiempo"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "comparar combinaciones para alcanzar una meta"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "juzgar afirmaciones con dato y justificación correctos"
+        }
+      ],
+      "tareas_tipo": [
+        "dados precios por kilo en tabla-doble-entrada, obtener la expresión del gasto total",
+        "dada una tabla de rangos en tabla-doble-entrada, obtener el valor mínimo requerido",
+        "dado un consumo por minuto en texto, obtener el total diario",
+        "dadas masas unitarias en tabla-doble-entrada, obtener qué agregar para alcanzar un total",
+        "dados tiempos en tabla-doble-entrada, obtener la afirmación correcta sobre el orden",
+        "dado un grosor unitario y tapas en texto, obtener el grosor total"
+      ],
+      "dominios_vistos": [
+        "compra de frutas",
+        "crianza de cerdos",
+        "contenedor de líquido",
+        "cepillado de dientes",
+        "grosor de enciclopedia",
+        "masa de frutas"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "interpreta el mayor tiempo como ganador de una carrera",
+        "elige el rango equivocado de la tabla",
+        "acepta una afirmación verdadera con justificación falsa",
+        "olvida sumar las partes adicionales como las tapas",
+        "confunde segundos con fracción decimal de minuto"
+      ]
+    },
+    {
+      "id": "porcentaje-concepto-y-calculo",
+      "nombre": "Porcentaje como fracción y porcentaje de una cantidad",
+      "prerrequisitos": [
+        "fracciones-en-contexto",
+        "operatoria-decimales"
+      ],
+      "secuencia_sugerida": 13,
+      "unidad_id": "porcentaje",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "complementos, reconstrucción del total y argumentación sobre gráficos; algunos con literales",
+      "representaciones": [
+        "grafico-circular",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer un porcentaje como fracción de denominador cien y como decimal"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular el porcentaje de una cantidad"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "obtener el porcentaje complementario"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "expresar una parte de un total como porcentaje"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "reconstruir el total desde un porcentaje conocido"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "juzgar afirmaciones porcentuales sobre un gráfico"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un porcentaje y una cantidad en texto, obtener el valor de la parte",
+        "dadas una parte y un total en texto, obtener el porcentaje complementario",
+        "dada una figura dividida en partes iguales en figura-plana, obtener el porcentaje sombreado",
+        "dado un grafico-circular con cantidades, obtener la afirmación verdadera sobre porcentajes",
+        "dado un porcentaje en texto, obtener operaciones equivalentes",
+        "dada una fracción de una fracción en texto, obtener el porcentaje equivalente",
+        "dada la diferencia de dos porcentajes de una cantidad en texto, obtener la diferencia de tasas",
+        "dados porcentajes parciales y un resto numérico en texto, obtener el total",
+        "dadas dos expresiones algebraicas en texto, obtener qué porcentaje es una de la otra"
+      ],
+      "dominios_vistos": [
+        "habitaciones de hotel",
+        "círculo dividido en partes",
+        "test de personalidad",
+        "precio de un artículo",
+        "deuda por pagar",
+        "encuesta de frutas",
+        "promedios de notas"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "toma el porcentaje pagado en vez del que resta",
+        "confunde la cantidad de personas con el porcentaje",
+        "aplica el porcentaje de un subgrupo al total",
+        "trata la diferencia de porcentajes como diferencia de cantidades",
+        "acepta una afirmación correcta con justificación incorrecta",
+        "olvida multiplicar por cien al expresar una razón como porcentaje"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "gráfico circular con cantidades por alternativa",
+          "razon": "composición del gráfico propia del ítem"
+        }
+      ]
+    },
+    {
+      "id": "porcentajes-sucesivos",
+      "nombre": "Porcentajes sucesivos y porcentaje del resto",
+      "prerrequisitos": [
+        "porcentaje-concepto-y-calculo"
+      ],
+      "secuencia_sugerida": 14,
+      "unidad_id": "porcentaje",
+      "habilidades_demre": [
+        "resolver",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "tres o más etapas encadenadas, a veces sobre una expresión algebraica",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "expresar porcentajes encadenados como producto de factores"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular el porcentaje del resto tras una primera partición"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "reducir la cadena a un único porcentaje equivalente"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar la cadena a un monto dado por una expresión"
+        }
+      ],
+      "tareas_tipo": [
+        "dados porcentajes encadenados de un número en texto, obtener el porcentaje equivalente",
+        "dado un porcentaje del resto en texto, obtener el porcentaje del total",
+        "dada una ganancia como expresión en texto, obtener el monto tras descuentos sucesivos"
+      ],
+      "dominios_vistos": [
+        "uso de una aplicación",
+        "ganancia de agricultor",
+        "porcentaje encadenado"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "suma los porcentajes sucesivos en lugar de multiplicarlos",
+        "aplica el segundo porcentaje al total y no al resto",
+        "olvida convertir el producto de fracciones de vuelta a porcentaje"
+      ]
+    },
+    {
+      "id": "porcentaje-de-cantidad-y-comparacion",
+      "nombre": "Porcentaje de una cantidad, porcentajes sucesivos y comparación de porcentajes desde tablas",
+      "prerrequisitos": [
+        "fracciones-y-decimales",
+        "proporcionalidad-directa"
+      ],
+      "secuencia_sugerida": 15,
+      "unidad_id": "porcentaje",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "componer porcentajes sucesivos como producto de factores decimales"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "recuperar el valor original a partir del valor con descuento"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular porcentaje de logro desde una tabla y comparar filas"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "juzgar procedimientos ajenos de cálculo de porcentajes"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "elegir el gráfico que representa correctamente porcentajes de una tabla"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar",
+        "representar"
+      ],
+      "errores_frecuentes_patron": [
+        "suma porcentajes sucesivos en vez de componerlos multiplicativamente",
+        "corre mal la coma al multiplicar factores decimales",
+        "aplica el descuento al precio rebajado en vez de al precio original",
+        "compara cantidades absolutas en vez de porcentajes cuando los totales difieren",
+        "lee un gráfico de porcentajes con los valores absolutos de la tabla"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados con tabla o procedimientos ajenos, dos o tres pasos, respuesta por análisis de alternativas",
+      "representaciones": [
+        "tabla-doble-entrada",
+        "grafico-barras",
+        "grafico-circular",
+        "pictograma",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dado un precio y una cadena de porcentajes sucesivos en texto, obtener la expresión del precio final",
+        "dado un precio con descuento y el porcentaje en texto, obtener el precio sin descuento",
+        "dada una tabla de aciertos y totales en tabla-doble-entrada, obtener la afirmación verdadera sobre porcentajes",
+        "dados varios procedimientos de cálculo de porcentaje en texto, obtener cuáles son correctos",
+        "dada una tabla de frecuencias en tabla-doble-entrada, obtener el grafico-circular o grafico-barras que la representa",
+        "dada una tabla de conteos incompleta en tabla-doble-entrada, obtener la afirmación verdadera sobre porcentajes"
+      ],
+      "dominios_vistos": [
+        "artículos para reventa",
+        "descuento en papelería",
+        "resultados de pruebas escolares",
+        "encuesta marcas de autos",
+        "campaña de vacunación"
+      ],
+      "conteo_problemas": 7,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "variacion-porcentual",
+      "nombre": "Variación porcentual, aumento y disminución con factor multiplicativo",
+      "prerrequisitos": [
+        "porcentaje-de-cantidad-y-comparacion",
+        "expresiones-algebraicas-basicas"
+      ],
+      "secuencia_sugerida": 16,
+      "unidad_id": "porcentaje",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "calcular la variación porcentual como cociente del cambio sobre el valor inicial"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "reconocer el signo de la variación como aumento o disminución"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "expresar un aumento como factor mayor que uno aplicado a la cantidad"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "expresar una disminución como factor menor que uno aplicado a la cantidad"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "encadenar aumentos y descuentos sucesivos como producto de factores"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "despejar la cantidad inicial conocido el valor final y el porcentaje"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "leer el porcentaje de cambio desde el factor de un modelo"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "expresar aumentos repetidos como potencia del factor"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "aplicar variaciones porcentuales a magnitudes dentro de una fórmula"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "errores_frecuentes_patron": [
+        "usa el valor final como base de la variación en vez del inicial",
+        "resta el porcentaje al valor en vez de multiplicar por el factor",
+        "suma descuentos sucesivos en vez de multiplicar sus factores",
+        "calcula el impuesto sobre el precio que ya lo incluye",
+        "confunde el factor de crecimiento con el porcentaje de aumento",
+        "multiplica el factor por la cantidad de repeticiones en vez de elevarlo",
+        "confunde el porcentaje del cambio con el porcentaje que queda",
+        "confunde ganancia como porcentaje del costo con porcentaje del precio de venta"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "mezcla de cálculo directo y expresiones literales; varios ítems encadenan tres cambios o despejan la base",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana"
+      ],
+      "tareas_tipo": [
+        "dados un valor inicial y uno final en texto, obtener el porcentaje de variación",
+        "dado un porcentaje de aumento en texto, obtener el factor por el que se multiplica la cantidad",
+        "dada una cadena de aumentos y descuentos en texto, obtener la expresión del valor final",
+        "dado un valor con impuesto incluido en texto, obtener la expresión del monto del impuesto",
+        "dados costo y precio de venta en texto, obtener el porcentaje de ganancia",
+        "dado un modelo con factor de crecimiento en texto, obtener el porcentaje de aumento por periodo",
+        "dado un aumento porcentual aplicado repetidas veces en texto, obtener la expresión con potencia del factor",
+        "dada una fórmula geométrica y variaciones de sus variables en texto, obtener el factor de cambio del resultado",
+        "dados precios literales inicial y final en texto, obtener la expresión del porcentaje de cambio",
+        "dado un procedimiento con descuentos sucesivos en texto, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "conserva de duraznos",
+        "área de cuadrado transformado",
+        "precio de bicicleta",
+        "centros de reciclaje",
+        "alimento para gatos",
+        "paquetes de alcohol gel",
+        "IVA de camioneta",
+        "producto comprado en cuotas",
+        "precio en electrodomésticos",
+        "ruedas dentadas",
+        "volumen de cono",
+        "descuento de refrigerador",
+        "terreno con desniveles",
+        "camisas con descuento",
+        "planchas de volcanita",
+        "población modelada por horas"
+      ],
+      "conteo_problemas": 20,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "puntos-porcentuales",
+      "nombre": "Puntos porcentuales y diferencia entre porcentajes",
+      "prerrequisitos": [
+        "variacion-porcentual"
+      ],
+      "secuencia_sugerida": 17,
+      "unidad_id": "porcentaje",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "distinguir la diferencia entre dos porcentajes de una variación porcentual"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "nombrar la diferencia entre porcentajes en puntos porcentuales"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "elegir la afirmación que interpreta correctamente un cambio entre porcentajes"
+        }
+      ],
+      "habilidades_demre": [
+        "argumentar",
+        "resolver"
+      ],
+      "errores_frecuentes_patron": [
+        "expresa la resta de dos porcentajes como un aumento porcentual",
+        "confunde cambio en la proporción con cambio en la cantidad absoluta",
+        "atribuye el cambio a una variable distinta de la medida en la encuesta"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "cálculo trivial, pero enunciados largos con contexto social y alternativas que se diferencian por interpretación",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dados dos porcentajes de distintos periodos en texto, obtener el cambio en puntos porcentuales",
+        "dados dos porcentajes de encuestas en texto, obtener la afirmación que interpreta correctamente el cambio"
+      ],
+      "dominios_vistos": [
+        "tasa de interés hipotecario",
+        "población mayor de edad",
+        "encuesta simulada de inseguridad",
+        "consumo de azúcar infantil"
+      ],
+      "conteo_problemas": 4,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "potencias-exponente-entero-y-propiedades",
+      "nombre": "Potencias de exponente entero y sus propiedades",
+      "prerrequisitos": [
+        "operatoria-con-enteros-y-racionales"
+      ],
+      "secuencia_sugerida": 18,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer una multiplicación iterada como potencia e identificar base y exponente"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar exponente cero con base distinta de cero"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "multiplicar y dividir potencias de igual base"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "determinar el signo según paridad del exponente con base negativa"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "aplicar potencia de una potencia"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "multiplicar y dividir potencias de igual exponente"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "interpretar exponente negativo como recíproco de la base"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "invertir una base racional al aplicar exponente negativo"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "descomponer bases en primos para simplificar expresiones"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "evaluar expresiones literales con potencias sustituyendo valores"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "detectar el paso erróneo en un desarrollo con propiedades"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "errores_frecuentes_patron": [
+        "suma exponentes al sumar potencias de igual base",
+        "confunde el opuesto de una potencia con la potencia de base negativa",
+        "multiplica base por exponente en vez de iterar el producto",
+        "suma exponentes en la potencia de una potencia en vez de multiplicarlos",
+        "asigna valor uno a cero elevado a cero",
+        "interpreta el exponente negativo como cambio de signo del resultado",
+        "divide potencias de exponente negativo con signo equivocado en la resta de exponentes",
+        "asume propiedades para todos los valores cuando dependen de la paridad"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "operatoria abstracta con exponentes negativos y literales; varios ítems de análisis de procedimientos o afirmaciones",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dada una expresión numérica con potencias en texto, obtener su valor",
+        "dada una lista de afirmaciones sobre propiedades en texto, obtener la verdadera",
+        "dada una expresión con varias bases en texto, obtener su forma como producto de potencias de primos",
+        "dado un procedimiento paso a paso con potencias en texto, obtener el paso erróneo",
+        "dados valores de dos variables en texto, obtener la expresión que cumple una condición numérica",
+        "dada una expresión con exponentes literales en texto, obtener la expresión equivalente",
+        "dados varios desarrollos de una misma expresión en texto, obtener el desarrollo correcto",
+        "dada una situación de repetición iterada en texto, obtener la potencia que la modela"
+      ],
+      "dominios_vistos": [
+        "reparto de frutas",
+        "descomposición en potencias",
+        "desarrollo en pizarrón"
+      ],
+      "conteo_problemas": 31,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "potencias-de-base-diez-y-notacion-cientifica",
+      "nombre": "Potencias de base diez, notación científica y su operatoria",
+      "prerrequisitos": [
+        "potencias-exponente-entero-y-propiedades",
+        "decimales"
+      ],
+      "secuencia_sugerida": 19,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "escribir potencias de base diez con exponente positivo y negativo"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "descomponer un número en potencias de base diez"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "convertir un número a notación científica corriendo la coma"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "igualar exponentes antes de sumar o restar en notación científica"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "multiplicar y dividir agrupando coeficientes y potencias de diez"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "normalizar el resultado para que el coeficiente quede en el rango válido"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "convertir unidades con prefijos usando potencias de diez"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "resolver problemas de magnitudes muy grandes o muy pequeñas"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar"
+      ],
+      "errores_frecuentes_patron": [
+        "corre la coma en la dirección equivocada al normalizar el coeficiente",
+        "suma coeficientes sin igualar los exponentes de diez",
+        "olvida convertir unidades antes de operar con notación científica",
+        "confunde la potencia de diez con la cantidad de ceros en decimales"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "operatoria de varios pasos con coeficientes decimales; contextos científicos con conversión de unidades",
+      "representaciones": [
+        "sin-representacion",
+        "tabla-doble-entrada"
+      ],
+      "tareas_tipo": [
+        "dado un número en texto, obtener su descomposición en potencias de base diez",
+        "dada una tabla de unidades con equivalencias en tabla-doble-entrada, obtener el resultado de una operación entre ellas",
+        "dados dos números en notación científica en texto, obtener su diferencia en notación científica",
+        "dada una expresión con productos y cocientes de potencias de diez en texto, obtener el valor normalizado",
+        "dada una escalera de prefijos en texto, obtener la conversión entre dos unidades",
+        "dada una tabla de nombres de potencias negativas en tabla-doble-entrada, obtener el valor de una frase operatoria",
+        "dados datos de una situación científica en texto, obtener una magnitud en notación científica",
+        "dado un procedimiento de división en notación científica en texto, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "unidades del Sistema Internacional",
+        "captura de dióxido de carbono",
+        "escalera de unidades",
+        "nombres de potencias negativas",
+        "masa del Sol",
+        "panel solar",
+        "glóbulos rojos",
+        "años luz",
+        "átomos de magnesio",
+        "granos de arroz"
+      ],
+      "conteo_problemas": 20,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "crecimiento-y-decrecimiento-exponencial",
+      "nombre": "Modelos de crecimiento y decrecimiento exponencial",
+      "prerrequisitos": [
+        "potencias-exponente-entero-y-propiedades",
+        "variacion-porcentual"
+      ],
+      "secuencia_sugerida": 20,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "tabular una cantidad que se multiplica por un factor fijo en cada periodo"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "reconocer cantidad inicial, factor y número de periodos en el modelo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "convertir tiempo transcurrido en cantidad de periodos para el exponente"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "escribir el decrecimiento con factor fraccionario o decimal menor que uno"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "pasar de una tasa porcentual al factor del modelo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "despejar la cantidad inicial o retroceder periodos con exponente negativo"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "interpretar el significado de cada parámetro en un modelo dado"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "reconocer un patrón exponencial en una tabla de valores"
+        }
+      ],
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "errores_frecuentes_patron": [
+        "multiplica el factor por la cantidad de periodos en vez de elevarlo",
+        "eleva la cantidad inicial junto con el factor",
+        "arma el exponente con las unidades de tiempo sin convertir a periodos",
+        "confunde el exponente cuando el conteo empieza en uno y no en cero",
+        "interpreta el crecimiento repetido como aumento aditivo constante",
+        "confunde veces respecto al inicial con incremento respecto al inicial",
+        "prolonga el patrón cuando el enunciado lo detiene en cierto momento"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados contextualizados de mediana extensión; la dificultad está en armar el exponente y el factor correctos",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana",
+        "tabla-doble-entrada"
+      ],
+      "tareas_tipo": [
+        "dada una cantidad inicial y una regla de duplicación por periodo en texto, obtener la expresión de la cantidad final",
+        "dado un modelo exponencial escrito en texto, obtener la afirmación verdadera sobre sus parámetros",
+        "dada una fracción de reducción por rebote en texto, obtener la altura tras cierto número de rebotes",
+        "dada una cantidad actual y una regla de reducción a la mitad en texto, obtener la expresión de la cantidad pasada",
+        "dada una tasa porcentual anual en texto, obtener el significado del exponente del modelo",
+        "dado un recorrido con duplicación en cada paso en figura-plana, obtener la potencia de la última posición",
+        "dado un periodo en minutos y un tiempo en horas en texto, obtener la expresión con el exponente correcto",
+        "dado un modelo con exponente negativo y un valor observado en texto, obtener la cantidad inicial",
+        "dada una tabla de valores año a año en tabla-doble-entrada, obtener la expresión del valor tras más periodos",
+        "dada una tabla de capital con interés por periodo en tabla-doble-entrada, obtener la expresión del capital final"
+      ],
+      "dominios_vistos": [
+        "fisión binaria de bacterias",
+        "enfriamiento de sustancia",
+        "cultivo de bacterias",
+        "rebote de pelota",
+        "especie en extinción",
+        "almacenamiento mundial de datos",
+        "caramelos en Halloween",
+        "medicamento intravenoso",
+        "lámparas en domo",
+        "cuadrado que triplica lado",
+        "depreciación de máquina",
+        "flores que duplican",
+        "isótopo radioactivo",
+        "capital con interés"
+      ],
+      "conteo_problemas": 17,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "raiz-enesima-y-propiedades",
+      "nombre": "Raíz enésima, exponente fraccionario y propiedades de las raíces",
+      "prerrequisitos": [
+        "potencias-exponente-entero-y-propiedades"
+      ],
+      "secuencia_sugerida": 21,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "definir la raíz enésima como inversa de la potencia con índice y radicando"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir índice impar con radicando cualquiera de índice par con radicando no negativo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar valor absoluto en raíz par de potencia par"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "convertir entre exponente fraccionario y raíz"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "multiplicar y dividir raíces de igual índice"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "aplicar raíz de una potencia y raíz de una raíz"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "amplificar índice y exponente para cambiar el índice"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "igualar índices con el mínimo común múltiplo para operar raíces distintas"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "usar exponentes fraccionarios cuando los radicandos coinciden"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "ordenar y comparar números irracionales expresados como raíces"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "errores_frecuentes_patron": [
+        "invierte índice y exponente al pasar de exponente fraccionario a raíz",
+        "interpreta el exponente negativo como signo negativo del resultado",
+        "introduce el signo negativo dentro de una raíz de índice par",
+        "multiplica índices al multiplicar raíces del mismo índice",
+        "opera raíces de distinto índice sin igualarlos",
+        "suma los radicandos al multiplicar raíces",
+        "omite el valor absoluto en raíz par de base negativa"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "expresiones numéricas cortas pero con varias propiedades encadenadas; algunos ítems con exponentes literales",
+      "representaciones": [
+        "sin-representacion",
+        "tabla-doble-entrada"
+      ],
+      "tareas_tipo": [
+        "dada una suma de raíces de distinto índice y radicando exacto en texto, obtener su valor",
+        "dada una expresión con raíces de potencias literales en texto, obtener la expresión simplificada",
+        "dada una lista de igualdades con exponentes fraccionarios en texto, obtener la verdadera",
+        "dada una raíz de raíz elevada a un exponente en texto, obtener la raíz equivalente",
+        "dado un producto y cociente de raíces de igual índice en texto, obtener el valor simplificado",
+        "dada una raíz de índice mayor que dos en texto, obtener el factor que la convierte en entero",
+        "dado un producto de raíces de índices distintos con base literal en texto, obtener el exponente fraccionario resultante",
+        "dada una lista de raíces en texto, obtener la que ocupa la posición central al ordenarlas",
+        "dada una tabla de aproximaciones de raíces en tabla-doble-entrada, obtener la expresión que aproxima otra raíz",
+        "dada una tabla de términos alternantes en tabla-doble-entrada, obtener la expresión del término general",
+        "dado un cociente de potencias con exponentes fraccionarios en texto, obtener el valor"
+      ],
+      "dominios_vistos": [
+        "raíces de primos aproximadas",
+        "sucesión alternante"
+      ],
+      "conteo_problemas": 26,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "descomposicion-de-raices",
+      "nombre": "Descomposición de raíces no exactas extrayendo factores",
+      "prerrequisitos": [
+        "raiz-enesima-y-propiedades",
+        "descomposicion-en-factores-primos"
+      ],
+      "secuencia_sugerida": 22,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "factorizar el radicando en una potencia exacta del índice por otro factor"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "extraer el factor con potencia exacta fuera de la raíz"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "respetar restricciones de signo según paridad del índice"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "introducir un factor externo dentro de la raíz"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "descomponer raíces de fracciones"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver"
+      ],
+      "errores_frecuentes_patron": [
+        "extrae un factor sin que su exponente iguale al índice",
+        "olvida el valor absoluto al extraer una base negativa con índice par",
+        "introduce un factor sin elevarlo al índice"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "ejemplos resueltos breves y un solo problema propuesto; paso previo a la suma de raíces",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dada una raíz no exacta en texto, obtener su forma con factor extraído",
+        "dado un producto de un entero por una raíz en texto, obtener la raíz única equivalente",
+        "dada una raíz de un número compuesto en texto, obtener el producto de raíces de sus factores"
+      ],
+      "dominios_vistos": [],
+      "conteo_problemas": 6,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "raices-en-formulas-y-contexto",
+      "nombre": "Evaluación de fórmulas con raíces en contextos físicos y geométricos",
+      "prerrequisitos": [
+        "raiz-enesima-y-propiedades",
+        "descomposicion-de-raices",
+        "evaluacion-de-formulas"
+      ],
+      "secuencia_sugerida": 23,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "sustituir valores en una fórmula que contiene una raíz"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "convertir unidades antes de sustituir"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "despejar una variable bajo la raíz elevando al cuadrado"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "expresar longitudes geométricas con raíces y operarlas"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "expresar el resultado como raíz simplificada o exponente fraccionario"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar"
+      ],
+      "errores_frecuentes_patron": [
+        "sustituye sin convertir centímetros a metros",
+        "eleva al cuadrado solo un lado al despejar bajo la raíz",
+        "confunde el radio con el diámetro al leer la figura",
+        "olvida el doble producto al elevar una diferencia con raíz"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados largos con fórmula dada; la dificultad está en unidades, despeje y presentación del resultado",
+      "representaciones": [
+        "figura-plana",
+        "cuerpo-geometrico",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dada una fórmula con raíz y valores en texto, obtener el valor numérico",
+        "dada la fórmula de la diagonal de un cuerpo-geometrico y su valor en texto, obtener la arista faltante",
+        "dada una fórmula física con raíz y unidades mixtas en texto, obtener el resultado en la unidad pedida",
+        "dado un lado con raíz en figura-plana, obtener el área del triángulo equilátero",
+        "dados masas expresadas con raíces en texto, obtener el porcentaje en masa simplificado"
+      ],
+      "dominios_vistos": [
+        "ordenar lista de nombres",
+        "diagonal de prisma",
+        "período de péndulo",
+        "triángulo equilátero",
+        "circunferencia sobre segmento",
+        "porcentaje masa de solución",
+        "ley de Torricelli"
+      ],
+      "conteo_problemas": 7,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "suma-resta-y-cuadrado-de-raices",
+      "nombre": "Suma, resta y cuadrado de binomios con raíces",
+      "prerrequisitos": [
+        "descomposicion-de-raices",
+        "productos-notables"
+      ],
+      "secuencia_sugerida": 24,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer que no existe propiedad directa para sumar raíces"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "descomponer cada raíz para hallar términos semejantes"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "reducir términos con igual índice e igual radicando"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar cuadrado de binomio a sumas o diferencias con raíces"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "aplicar suma por diferencia para obtener un racional"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "decidir si una expresión con raíces es racional o irracional"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "errores_frecuentes_patron": [
+        "suma radicandos distintos como si fueran semejantes",
+        "confunde la raíz de una suma con la suma de las raíces",
+        "omite el doble producto al elevar al cuadrado un binomio con raíces",
+        "reduce términos de igual radicando pero distinto índice",
+        "declara irracional toda expresión que contenga una raíz"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "expresiones cortas; requiere descomponer antes de reducir y reconocer productos notables",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana"
+      ],
+      "tareas_tipo": [
+        "dada una combinación lineal de raíces en texto, obtener su forma reducida",
+        "dado un producto de binomios conjugados con raíces en texto, obtener su valor",
+        "dada una lista de expresiones con raíces en texto, obtener la que es racional",
+        "dado un cuadrado de binomio con raíces en texto, obtener el desarrollo",
+        "dada una figura con cuadrados de áreas dadas en figura-plana, obtener el área de la región restante",
+        "dada una suma de raíces de distinto índice en texto, obtener la expresión equivalente con un solo índice"
+      ],
+      "dominios_vistos": [
+        "cuadrados con áreas marcadas"
+      ],
+      "conteo_problemas": 14,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "racionalizacion",
+      "nombre": "Racionalización de denominadores",
+      "prerrequisitos": [
+        "suma-resta-y-cuadrado-de-raices",
+        "raiz-enesima-y-propiedades"
+      ],
+      "secuencia_sugerida": 25,
+      "unidad_id": "potencias-y-raices",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "amplificar por la misma raíz cuadrada del denominador"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "amplificar por la raíz que completa el índice cuando este es mayor que dos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "amplificar por el conjugado cuando el denominador es un binomio"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "simplificar la fracción resultante"
+        }
+      ],
+      "habilidades_demre": [
+        "resolver"
+      ],
+      "errores_frecuentes_patron": [
+        "amplifica por la raíz cuadrada cuando el índice del denominador es mayor",
+        "amplifica por el mismo binomio en vez del conjugado",
+        "se equivoca en el signo al restar los cuadrados del conjugado",
+        "deja el resultado sin simplificar o cambia el signo de la fracción"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "procedimiento mecánico de pocos pasos; el caso con conjugado añade productos notables y manejo de signos",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "dada una fracción con raíz cuadrada en el denominador en texto, obtener la expresión racionalizada",
+        "dada una fracción con raíz de índice mayor en el denominador en texto, obtener la expresión racionalizada",
+        "dada una fracción con binomio con raíz en el denominador en texto, obtener la expresión racionalizada"
+      ],
+      "dominios_vistos": [],
+      "conteo_problemas": 8,
+      "omitido_por_riesgo_originalidad": []
+    },
+    {
+      "id": "racionalizacion-y-operatoria-con-raices",
+      "nombre": "Racionalización y operatoria con raíces (cierre de ejercicios propuestos)",
+      "prerrequisitos": [
+        "propiedades-de-raices",
+        "productos-notables"
+      ],
+      "secuencia_sugerida": 26,
+      "unidad_id": "potencias-y-raices",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar",
+        "representar",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "pasos múltiples con raíces y conjugados; enunciados breves salvo dos contextualizados; una figura y un análisis de pasos",
+      "representaciones": [
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "calcular área de una región en figura con lados irracionales"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "despejar un lado desde un área expresada con raíces"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "justificar el factor de racionalización para índices mayores que dos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "traducir una frase verbal a una expresión con raíces de distinto índice"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "racionalizar un denominador binomial usando el conjugado"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "simplificar una fracción algebraica y evaluarla en un valor irracional"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "evaluar una fórmula con un binomio irracional al cuadrado"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "despejar una medida geométrica con una aproximación irracional de una constante"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "detectar el paso erróneo en un desarrollo de racionalización"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "omite los paréntesis al elevar al cuadrado un binomio con raíz",
+        "multiplica por el radical equivocado al racionalizar raíces de índice mayor",
+        "confunde el conjugado con el mismo binomio del denominador",
+        "olvida el doble producto al elevar un binomio con raíz",
+        "confunde radio con diámetro después de despejar"
+      ],
+      "tareas_tipo": [
+        "dada una expresión con denominador irracional en texto, obtener su forma racionalizada",
+        "dados el área y un lado irracional de un rectángulo en texto, obtener el otro lado",
+        "dada una figura con lados irracionales en figura-plana, obtener el área de una región",
+        "dada una secuencia de pasos de racionalización en texto, obtener el paso erróneo",
+        "dada una frase verbal sobre raíces en texto, obtener la expresión simbólica",
+        "dada una fórmula geométrica con un dato irracional en texto, obtener una medida con raíces"
+      ],
+      "dominios_vistos": [
+        "área de círculo",
+        "cuaderno de un estudiante"
+      ],
+      "conteo_problemas": 9
+    },
+    {
+      "id": "repaso-enteros-y-racionales",
+      "nombre": "Repaso del eje números: enteros y racionales",
+      "prerrequisitos": [
+        "operatoria-enteros",
+        "fracciones-y-decimales"
+      ],
+      "secuencia_sugerida": 27,
+      "unidad_id": "enteros-y-racionales",
+      "habilidades_demre": [
+        "resolver",
+        "modelar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "contextos cotidianos con dos o tres operaciones; un ítem de operatoria combinada con decimales periódicos",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "comparar costos totales de dos alternativas y obtener el ahorro"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "operar con sumas de divisores y de múltiplos con condiciones"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "convertir decimales periódicos a fracción dentro de una operación combinada"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar fracciones sucesivas sobre el resto de un total"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "incluye el número excluido al sumar múltiplos",
+        "aplica la fracción del resto sobre el total original",
+        "convierte mal un decimal periódico a fracción"
+      ],
+      "tareas_tipo": [
+        "dado un enunciado de costos de dos alternativas en texto, obtener el ahorro",
+        "dada una operación combinada con decimales periódicos en texto, obtener su valor",
+        "dado un reparto en fracciones sucesivas en texto, obtener la parte restante",
+        "dadas condiciones sobre divisores y múltiplos en texto, obtener el resultado de una operación"
+      ],
+      "dominios_vistos": [
+        "viaje de curso en bus",
+        "divisores y múltiplos",
+        "distribución de ingreso mensual"
+      ],
+      "conteo_problemas": 4
+    },
+    {
+      "id": "repaso-porcentaje",
+      "nombre": "Repaso del eje números: porcentaje",
+      "prerrequisitos": [
+        "repaso-enteros-y-racionales"
+      ],
+      "secuencia_sugerida": 28,
+      "unidad_id": "porcentaje",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "un ítem con tabla y total implícito; otro pide la expresión general de variaciones sucesivas",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "calcular el porcentaje de una categoría a partir de una tabla con total implícito"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "expresar en forma literal un aumento seguido de una disminución porcentual"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "suma y resta los porcentajes en lugar de componer factores",
+        "usa un total incorrecto al calcular el porcentaje",
+        "aplica la baja sobre el precio original y no sobre el aumentado"
+      ],
+      "tareas_tipo": [
+        "dada una tabla de tiempos por actividad en tabla-frecuencias, obtener el porcentaje de una categoría",
+        "dados un aumento y una baja porcentual sucesivos en texto, obtener la expresión del precio final"
+      ],
+      "dominios_vistos": [
+        "actividades diarias de estudiante",
+        "precio con alza y baja"
+      ],
+      "conteo_problemas": 2
+    },
+    {
+      "id": "repaso-potencias-y-raices",
+      "nombre": "Repaso del eje números: potencias y raíces",
+      "prerrequisitos": [
+        "propiedades-de-potencias",
+        "propiedades-de-raices"
+      ],
+      "secuencia_sugerida": 29,
+      "unidad_id": "potencias-y-raices",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "operatoria con exponentes negativos y raíces no semejantes; dos ítems con modelo de contexto y fórmula",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "operar potencias de base fraccionaria con exponentes negativos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "reconocer un patrón exponencial en una tabla y cambiar la unidad de tiempo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "reducir sumas de raíces con radicandos distintos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "evaluar una fórmula con raíz tras convertir unidades del contexto"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "confunde el signo del exponente al cambiar la unidad de tiempo",
+        "suma exponentes al dividir potencias",
+        "suma radicandos de raíces distintas",
+        "olvida convertir la demanda mensual a anual antes de reemplazar"
+      ],
+      "tareas_tipo": [
+        "dada una operación con potencias de base fraccionaria en texto, obtener su valor simplificado",
+        "dada una tabla de desintegración por día en tabla-frecuencias, obtener el modelo exponencial por semana",
+        "dada una suma de raíces no semejantes en texto, obtener su forma reducida",
+        "dada una fórmula con raíz y datos de contexto en texto, obtener el valor simplificado"
+      ],
+      "dominios_vistos": [
+        "isótopo radioactivo",
+        "cantidad económica de pedido",
+        "neumáticos importados"
+      ],
+      "conteo_problemas": 4
+    },
+    {
+      "id": "algebra-basica",
+      "nombre": "Álgebra básica: términos, expresiones, operatoria y enunciados verbales",
+      "prerrequisitos": [
+        "repaso-enteros-y-racionales",
+        "propiedades-de-potencias"
+      ],
+      "secuencia_sugerida": 30,
+      "unidad_id": "expresiones-algebraicas",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "ejemplos oficiales de uno o dos pasos; los propuestos agregan contexto, tabla literal, análisis de pasos y evaluación",
+      "representaciones": [
+        "sin-representacion",
+        "tabla-doble-entrada"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "identificar coeficiente numérico y factor literal de un término"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "determinar el grado de un término algebraico"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "clasificar expresiones según cantidad de términos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "evaluar una expresión para valores dados de sus variables"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "reconocer términos semejantes"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "reducir términos semejantes"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "eliminar paréntesis según el signo que los precede"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "sumar expresiones algebraicas"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "restar expresiones como suma del opuesto"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "multiplicar polinomios por distributividad"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "traducir frases verbales a lenguaje simbólico"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "cambia solo el signo del primer término al eliminar un paréntesis precedido por menos",
+        "suma exponentes al reducir términos semejantes",
+        "invierte el orden en la semidiferencia o en el exceso",
+        "se equivoca de signo al reducir coeficientes fraccionarios",
+        "evalúa en un valor que anula el denominador sin notarlo",
+        "olvida aplicar el descuento sobre el total ya calculado"
+      ],
+      "tareas_tipo": [
+        "dada una expresión con varios términos en texto, obtener su forma reducida",
+        "dada una frase verbal en texto, obtener su expresión algebraica",
+        "dada una expresión algebraica y valores de sus variables en texto, obtener su valor numérico",
+        "dado un contexto de compra con precios literales en texto, obtener la expresión del total",
+        "dada una secuencia de pasos de reducción en texto, obtener el paso erróneo",
+        "dada una tabla de valores literales en tabla-doble-entrada, obtener la fila con mayor variación",
+        "dada una expresión racional en texto, obtener el valor de la variable que la hace positiva",
+        "dada una expresión algebraica con sustitución de variables en texto, obtener la expresión resultante",
+        "dado un modelo lineal de consumo en texto, obtener el total en un período"
+      ],
+      "dominios_vistos": [
+        "compra con precios literales",
+        "dulces entre amigos",
+        "edades actuales y pasadas",
+        "descuento de aniversario en supermercado",
+        "librería y útiles",
+        "reunión familiar y bebidas",
+        "costo de producción",
+        "temperaturas matinales por día",
+        "televisor en cuotas",
+        "alimento para gatos"
+      ],
+      "conteo_problemas": 20,
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "tabla de frases verbales y su traducción simbólica",
+          "razon": "lista concreta de expresiones de la fuente; solo se registra como subhabilidad"
+        }
+      ]
+    },
+    {
+      "id": "productos-notables",
+      "nombre": "Productos notables",
+      "prerrequisitos": [
+        "algebra-basica"
+      ],
+      "secuencia_sugerida": 31,
+      "unidad_id": "expresiones-algebraicas",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "dos o tres pasos algebraicos por ítem; varios piden comparar desarrollos de terceros; enunciados breves con alguna figura",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana",
+        "tabla-frecuencias"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "desarrollar el cuadrado de binomio de suma"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "desarrollar el cuadrado de binomio de resta"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar suma por diferencia"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "multiplicar binomios con un término común"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "desarrollar el cubo de binomio de suma"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "desarrollar el cubo de binomio de resta"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "combinar productos notables con reducción de términos"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "aplicar productos notables a áreas de figuras con medidas literales"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "traducir frases con cuadrados y cubos a expresiones"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "detectar errores en desarrollos hechos por terceros"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "olvida el doble producto en el término central",
+        "distribuye el cuadrado sobre la suma",
+        "confunde suma por diferencia con cuadrado de binomio",
+        "pierde el exponente de un término al copiar",
+        "error de signo al restar un paréntesis desarrollado",
+        "confunde perímetro con lado al calcular el área",
+        "toma el siguiente entero como impar consecutivo"
+      ],
+      "tareas_tipo": [
+        "dada una combinación de productos notables en texto, obtener la expresión desarrollada y reducida",
+        "dada una figura compuesta con lados literales en figura-plana, obtener la expresión del área sombreada",
+        "dado el perímetro literal de un cuadrado en texto, obtener la expresión de su área",
+        "dada una expresión cuadrática en texto, obtener la figura cuya área la representa",
+        "dados varios desarrollos de un mismo producto notable en texto, obtener cuáles contienen error",
+        "dada una frase verbal con cuadrados y cubos en texto, obtener la expresión simbólica",
+        "dada una tabla de áreas literales en tabla-frecuencias, obtener la diferencia entre sumas de áreas",
+        "dada una expresión con productos notables en texto, obtener los valores que producen un resultado dado",
+        "dado un contexto de crecimiento constante del lado en texto, obtener la expresión del área final"
+      ],
+      "dominios_vistos": [
+        "apuestas en casino",
+        "servilletas y vasos",
+        "cultivo de bacterias",
+        "áreas de rectángulos en tabla",
+        "tarjetas de estudiantes",
+        "números pares consecutivos"
+      ],
+      "conteo_problemas": 20
+    },
+    {
+      "id": "factorizacion",
+      "nombre": "Factorización",
+      "prerrequisitos": [
+        "productos-notables"
+      ],
+      "secuencia_sugerida": 32,
+      "unidad_id": "expresiones-algebraicas",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "factorizaciones encadenadas de dos o tres casos; varios ítems con figura o cuerpo; análisis de pasos y preguntas en negación",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana",
+        "cuerpo-geometrico"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "extraer factor común monomio"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "factorizar por agrupación de términos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "reconocer y factorizar trinomios cuadrados perfectos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "factorizar trinomios como producto de binomios con término común"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "factorizar diferencias de cuadrados"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "factorizar sumas y diferencias de cubos"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "encadenar varios casos hasta la factorización completa"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "hallar un factor faltante conocido el otro"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "usar la factorización para despejar una dimensión geométrica"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "simplificar fracciones algebraicas mediante factorización"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "detectar el paso erróneo en una factorización"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "extrae un factor común incompleto",
+        "factoriza una suma de cuadrados como si fuera diferencia",
+        "al sacar factor de un cuadrado olvida elevar el factor",
+        "confunde los signos de los binomios con término común",
+        "acepta como factor un binomio de signo contrario",
+        "aplica el cubo de binomio sin elevar los coeficientes"
+      ],
+      "tareas_tipo": [
+        "dada una expresión polinómica en texto, obtener su factorización completa",
+        "dada una lista de binomios en texto, obtener cuál no es factor de una expresión",
+        "dado un producto con un coeficiente desconocido en texto, obtener el valor del coeficiente",
+        "dada una figura con región sombreada de medidas literales en figura-plana, obtener su área factorizada",
+        "dados el área literal de un rombo y una diagonal en texto, obtener la otra diagonal",
+        "dado el volumen literal de un cuerpo en cuerpo-geometrico, obtener una arista desconocida",
+        "dada una secuencia de pasos de factorización en texto, obtener el paso erróneo",
+        "dado un cociente de fracciones algebraicas con cubos en texto, obtener su forma simplificada",
+        "dadas dos áreas literales que se unen en figura-plana, obtener las dimensiones del terreno total",
+        "dada una identidad algebraica en texto, obtener la factorización de una expresión que la sigue"
+      ],
+      "dominios_vistos": [
+        "reparto de dulces a sobrinos",
+        "módulo de exploración espacial",
+        "parcela y terreno contiguo",
+        "jardín con pileta cuadrada",
+        "paralelepípedo de volumen literal",
+        "rombo de área literal"
+      ],
+      "conteo_problemas": 20
+    },
+    {
+      "id": "proporcionalidad",
+      "nombre": "Razones, proporciones y proporcionalidad directa e inversa",
+      "prerrequisitos": [
+        "repaso-enteros-y-racionales",
+        "algebra-basica"
+      ],
+      "secuencia_sugerida": 33,
+      "unidad_id": "proporcionalidad",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "muchos ítems con tabla o gráfico; varios exigen decidir el tipo de proporcionalidad antes de calcular; fórmulas físicas con potencias",
+      "representaciones": [
+        "sin-representacion",
+        "tabla-frecuencias",
+        "grafico-puntos",
+        "plano-cartesiano",
+        "grafico-lineas"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "expresar y simplificar la razón entre dos cantidades"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer una proporción e identificar medios y extremos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar el teorema fundamental de las proporciones"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer proporcionalidad directa por cociente constante"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "calcular la constante de proporcionalidad directa"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "repartir un total en una razón dada"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "interpretar el gráfico de una relación directa como semirrecta"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "reconocer proporcionalidad inversa por producto constante"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "calcular la constante de proporcionalidad inversa"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "interpretar el gráfico de una relación inversa como hipérbola"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "distinguir directa e inversa en enunciados y fórmulas"
+        },
+        {
+          "orden": 12,
+          "subhabilidad": "trabajar proporcionalidad respecto del cuadrado de una variable"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "plantea proporción directa en una situación inversa",
+        "invierte el orden de los términos de la razón",
+        "toma la constante del primer par sin verificar los demás",
+        "confunde cuál variable se mantiene constante en una fórmula",
+        "reparte el total en partes iguales en vez de proporcionalmente",
+        "olvida convertir unidades antes de plantear la proporción"
+      ],
+      "tareas_tipo": [
+        "dada una razón entre dos ingredientes en texto, obtener la cantidad de uno conocida la otra",
+        "dado un segmento dividido en una razón en texto, obtener la medida de una parte",
+        "dados dos pares de valores inversamente proporcionales en texto, obtener el valor faltante",
+        "dados varios gráficos y tablas en grafico-puntos, obtener cuál muestra proporcionalidad inversa",
+        "dada una tabla con valores faltantes en tabla-frecuencias, obtener la afirmación verdadera",
+        "dada una tabla de valores en tabla-frecuencias, obtener la ecuación de la relación directa",
+        "dado un gráfico de hipérbola con puntos marcados en plano-cartesiano, obtener la ecuación de la relación",
+        "dada una fórmula con varias variables en texto, obtener qué proporcionalidad se cumple al fijar una",
+        "dada una secuencia de pasos con una proporción en texto, obtener el primer paso erróneo",
+        "dada una ley física con constante en texto, obtener la tabla de pares que la cumple",
+        "dada una proporcionalidad inversa al cuadrado en texto, obtener el valor asociado a otro dato",
+        "dado un problema de trabajadores y producción con literales en texto, obtener la expresión pedida",
+        "dada una razón de conversión entre unidades en texto, obtener la expresión de conversión"
+      ],
+      "dominios_vistos": [
+        "dosis por masa corporal",
+        "huincha con pulgadas y centímetros",
+        "índice de crecimiento y desempleo",
+        "premio de carrera repartido",
+        "tarifa de estacionamiento",
+        "receta de risotto",
+        "pintura de un puente",
+        "medida de la palma",
+        "obreros y pisos construidos",
+        "trabajadores y contratos",
+        "frutillas y papas",
+        "bono según sueldo",
+        "radio de un cono",
+        "rapidez media de vehículo",
+        "ganancia por artículos vendidos",
+        "pared y tarro de pintura"
+      ],
+      "conteo_problemas": 20
+    },
+    {
+      "id": "ecuaciones-de-primer-grado",
+      "nombre": "Ecuaciones de primer grado (inicio; el tramo corta a mitad de los propuestos)",
+      "prerrequisitos": [
+        "algebra-basica",
+        "proporcionalidad"
+      ],
+      "secuencia_sugerida": 34,
+      "unidad_id": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "ejemplos oficiales con contexto, gráfico y verificación de pasos; propuestos breves de uno o dos pasos",
+      "representaciones": [
+        "sin-representacion",
+        "grafico-circular",
+        "figura-plana"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer la forma general y el concepto de raíz"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir solución única, infinitas soluciones y conjunto vacío"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "resolver con coeficientes enteros"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "resolver con coeficientes fraccionarios amplificando por el mínimo común múltiplo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "resolver con la incógnita en el denominador"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "determinar un parámetro conocida la solución"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "plantear una ecuación desde un enunciado, gráfico o figura"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "verificar una solución y revisar pasos ajenos"
+        }
+      ],
+      "errores_frecuentes_patron": [
+        "confunde ecuación sin solución con solución cero",
+        "olvida amplificar todos los términos por el mínimo común múltiplo",
+        "resta el vuelto en lugar de sumarlo al plantear la igualdad",
+        "arrastra mal la coma decimal al dividir",
+        "confunde la ecuación que da el total con la que da una parte",
+        "cree que un paso es erróneo aunque todos sean correctos"
+      ],
+      "tareas_tipo": [
+        "dada una ecuación lineal con decimales en texto, obtener su solución",
+        "dado un contexto de compras con igual dinero en texto, obtener la ecuación que lo modela",
+        "dada una expresión lineal igualada a un valor en texto, obtener la incógnita",
+        "dada una ecuación con coeficiente fraccionario en texto, obtener su solución",
+        "dado un gráfico circular de fracciones y un dato en grafico-circular, obtener la ecuación del total",
+        "dado un modelo lineal con datos inicial y final en texto, obtener la variable desconocida",
+        "dada una secuencia de pasos de resolución en texto, obtener el paso erróneo o su ausencia",
+        "dado un esquema de medidas con incógnita en figura-plana, obtener el valor de la incógnita",
+        "dado un contexto de ingresos con aumento de usuarios en texto, obtener la expresión del nuevo total",
+        "dada una figura de tramos en fracciones de un total en figura-plana, obtener la ecuación del total"
+      ],
+      "dominios_vistos": [
+        "pasajeros del metro",
+        "combustible en el estanque",
+        "edades de madre e hijo",
+        "cuadro en una pared",
+        "aportes a fondo común",
+        "alfajores y vuelto",
+        "triatlón por tramos"
+      ],
+      "conteo_problemas": 10
+    },
+    {
+      "id": "ecuaciones-primer-grado-cola",
+      "nombre": "Ecuaciones de primer grado: cierre de ejercicios propuestos",
+      "prerrequisitos": [
+        "expresiones-algebraicas-basicas",
+        "operatoria-con-fracciones"
+      ],
+      "secuencia_sugerida": 35,
+      "unidad_id": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados de dos a cinco líneas, dos a cuatro pasos, sin gráfico; ítems con parámetros literales y discusión de casos elevan la exigencia",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "plantear una ecuación desde un contexto con descuento o reparto"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "resolver ecuaciones con paréntesis, fracciones y cuadrados de binomio que se cancelan"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "despejar una variable literal desde una fórmula"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "hallar un parámetro conocida la solución"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "discutir solución única, infinitas o ninguna según parámetros"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "detectar el paso erróneo en un procedimiento ajeno"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una situación en representación texto, obtener la ecuación que la modela",
+        "dada una situación en representación texto, obtener la cantidad pedida tras resolver la ecuación",
+        "dada una ecuación con fracciones algebraicas en representación sin-representacion, obtener su solución",
+        "dada una fórmula con variables literales en representación sin-representacion, obtener el despeje de una de ellas",
+        "dada una ecuación con parámetro y su solución en representación sin-representacion, obtener el valor del parámetro",
+        "dada una ecuación con dos parámetros en representación sin-representacion, obtener la condición de solución única o infinitas",
+        "dado un procedimiento de resolución paso a paso en representación sin-representacion, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "entradas de cine con descuento",
+        "sube y baja en equilibrio",
+        "conversión de escalas de temperatura",
+        "reparto de huevos entre familias",
+        "sacos de trigo repartidos",
+        "torta de tres pisos"
+      ],
+      "conteo_problemas": 12,
+      "errores_frecuentes_patron": [
+        "responde con el valor de la incógnita en vez de la cantidad derivada pedida",
+        "al amplificar por el mínimo común múltiplo, no distribuye en uno de los lados",
+        "arrastra un error previo hasta el resultado final",
+        "confunde la condición de infinitas soluciones con la de ninguna solución",
+        "invierte el sentido al despejar un parámetro que multiplica",
+        "olvida aplicar la fracción al modelar una parte de una cantidad"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ítem del sube y baja",
+          "razon": "diagrama y modelo de palanca específicos del ítem"
+        }
+      ]
+    },
+    {
+      "id": "desigualdades-e-inecuaciones-lineales",
+      "nombre": "Desigualdades e inecuaciones lineales",
+      "prerrequisitos": [
+        "ecuaciones-primer-grado-cola",
+        "orden-en-los-numeros-reales"
+      ],
+      "secuencia_sugerida": 36,
+      "unidad_id": "ecuaciones-e-inecuaciones-primer-grado",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "mezcla de inecuaciones directas de dos pasos con modelos contextuales largos y un modelo racional con doble cota que exige varios pasos",
+      "representaciones": [
+        "recta-numerica",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "comparar números por posición en la recta numérica"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "definir las relaciones de orden derivadas de mayor que"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "distinguir desigualdad absoluta de inecuación"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar propiedades aditiva, multiplicativa y de cambio de sentido"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "reconocer la forma reducida de una inecuación lineal"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "resolver aislando la incógnita con cambio de sentido por negativo"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "expresar la solución como conjunto, gráfico e intervalo"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "traducir frases de cota al símbolo de desigualdad correcto"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "modelar situaciones de costo, capacidad y perímetro con inecuaciones"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "intersecar soluciones de dos inecuaciones simultáneas"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "reconstruir parámetros desde el conjunto solución"
+        },
+        {
+          "orden": 12,
+          "subhabilidad": "detectar el primer error en un procedimiento ajeno"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una inecuación lineal en representación sin-representacion, obtener el intervalo solución",
+        "dada una inecuación lineal en representación sin-representacion, obtener su conjunto solución en recta-numerica",
+        "dado un intervalo en representación recta-numerica, obtener su notación de intervalo",
+        "dada una situación en representación texto, obtener la inecuación que la modela",
+        "dada una situación en representación texto, obtener el máximo valor entero admisible",
+        "dadas dos inecuaciones en representación sin-representacion, obtener la cantidad de enteros comunes",
+        "dado el conjunto solución en representación sin-representacion, obtener los parámetros de la inecuación",
+        "dadas varias representaciones de una solución en representación texto, obtener la representación correcta",
+        "dado un procedimiento paso a paso en representación sin-representacion, obtener el paso con el primer error",
+        "dada una fórmula racional con doble cota en representación texto, obtener el rango de la variable"
+      ],
+      "dominios_vistos": [
+        "lápices entre dos personas",
+        "dosis de medicamento por peso",
+        "cajas de fruta en camión",
+        "índice médico de insulina",
+        "nuevos empleados de planta",
+        "perímetro de triángulo isósceles",
+        "arriendo de bus por kilómetro",
+        "cerca de terreno rectangular",
+        "utilidad de empresa manufacturera",
+        "costo de descontaminar un río"
+      ],
+      "conteo_problemas": 22,
+      "errores_frecuentes_patron": [
+        "no invierte el sentido al multiplicar o dividir por un número negativo",
+        "invierte el sentido al trasponer un término aditivo",
+        "confunde intervalo abierto con cerrado en la representación gráfica",
+        "traduce a lo más o no más de como desigualdad estricta",
+        "toma el valor frontera como máximo entero cuando la desigualdad es estricta",
+        "restringe el conjunto solución a enteros cuando la incógnita es real",
+        "intercambia costo fijo y costo por unidad al modelar",
+        "no interseca ambos conjuntos al combinar dos inecuaciones",
+        "invierte el intervalo al confundir cota mínima con máxima"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ítem con índice médico real y su tabla de interpretación",
+          "razon": "fórmula y tabla específicas; describirlas reconstruye el enunciado"
+        }
+      ]
+    },
+    {
+      "id": "sistemas-ecuaciones-lineales-dos-incognitas",
+      "nombre": "Sistemas de dos ecuaciones lineales con dos incógnitas",
+      "prerrequisitos": [
+        "ecuaciones-primer-grado-cola",
+        "plano-cartesiano-basico"
+      ],
+      "secuencia_sugerida": 37,
+      "unidad_id": "sistemas-2x2",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "sistemas numéricos de tres a cinco pasos; modelos con edades, mezclas y dígitos requieren traducir dos condiciones; un ítem con coeficientes decimales es alto",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer la forma general del sistema"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "interpretar la solución como intersección de dos rectas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "resolver por sustitución"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "resolver por igualación"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "resolver por reducción"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "verificar si un punto es solución de un sistema"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "determinar parámetros conocida la solución"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "plantear el sistema desde un enunciado con dos condiciones"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "interpretar variables y coeficientes de un modelo dado"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "leer el sistema desde el gráfico de dos rectas"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "detectar errores en un planteamiento o resolución ajena"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un sistema en representación sin-representacion, obtener su solución",
+        "dado un sistema en representación sin-representacion, obtener una operación entre sus incógnitas",
+        "dada una situación en representación texto, obtener el sistema que la modela",
+        "dada una situación en representación texto, obtener una cantidad derivada de la solución",
+        "dado un punto solución en representación sin-representacion, obtener el sistema que lo admite",
+        "dado un sistema con parámetros y su solución en representación sin-representacion, obtener los parámetros o una relación entre ellos",
+        "dadas dos rectas en representación plano-cartesiano, obtener el sistema correspondiente",
+        "dado un sistema que modela una situación en representación texto, obtener el significado de una variable",
+        "dado un sistema que modela una situación en representación texto, obtener la afirmación verdadera",
+        "dado un procedimiento paso a paso en representación sin-representacion, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "billetes de dos valores",
+        "hombres y mujeres en academia",
+        "camisa y pantalón con descuento",
+        "colecta con monedas",
+        "monedas y billetes para deuda",
+        "edades de padre e hijo",
+        "minutos de bicicleta y trote",
+        "mezcla de vino y alcohol",
+        "número de dos cifras invertido",
+        "gallinas y perros por patas",
+        "entradas de niño y adulto"
+      ],
+      "conteo_problemas": 23,
+      "errores_frecuentes_patron": [
+        "asigna las variables al revés al leer coeficientes de un modelo",
+        "lee los coeficientes como cantidades de objetos",
+        "no cambia el signo de toda la ecuación al amplificar en reducción",
+        "desplaza el tiempo en sentido equivocado al modelar edades",
+        "trata un número de dos cifras como suma de sus dígitos",
+        "responde con el valor de una variable en vez de la diferencia pedida",
+        "invierte el orden de más que o menos que al modelar",
+        "confunde los cortes con los ejes con el punto solución"
+      ]
+    },
+    {
+      "id": "repaso-expresiones-algebraicas",
+      "nombre": "Repaso de expresiones algebraicas dentro de la guía de álgebra y funciones",
+      "prerrequisitos": [
+        "expresiones-algebraicas-basicas"
+      ],
+      "secuencia_sugerida": 38,
+      "unidad_id": "expresiones-algebraicas",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "tres ítems: reducción contextual, cubo de binomio con fracción y factorización en cuatro pasos con detección de error",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reducir términos semejantes desde un contexto y multiplicar por valor unitario"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "desarrollar un cubo de binomio"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "encadenar factor común, cuadrado de binomio y suma por diferencia"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una situación en representación texto, obtener la expresión algebraica simplificada",
+        "dado un cubo de binomio en representación sin-representacion, obtener su desarrollo",
+        "dado un procedimiento de factorización paso a paso en representación sin-representacion, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "alcancías con monedas"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "olvida multiplicar la cantidad de monedas por su valor",
+        "eleva al cubo cada término sin los términos cruzados",
+        "cambia el signo de un solo término al quitar paréntesis con menos"
+      ]
+    },
+    {
+      "id": "repaso-proporcionalidad",
+      "nombre": "Repaso de proporcionalidad dentro de la guía de álgebra y funciones",
+      "prerrequisitos": [
+        "razones-y-proporciones"
+      ],
+      "secuencia_sugerida": 39,
+      "unidad_id": "proporcionalidad",
+      "habilidades_demre": [
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "dos ítems de dos pasos: leer constante desde gráfico y aplicar producto constante en proporcionalidad inversa",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer la constante de proporcionalidad directa desde un gráfico"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar producto constante en proporcionalidad inversa"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un gráfico de proporcionalidad directa en representación plano-cartesiano, obtener el valor asociado a un dato nuevo",
+        "dada una situación de proporcionalidad inversa en representación texto, obtener el incremento necesario"
+      ],
+      "dominios_vistos": [
+        "precio de aros por radio",
+        "trabajadores y meses de túnel"
+      ],
+      "conteo_problemas": 2,
+      "errores_frecuentes_patron": [
+        "aplica proporcionalidad directa donde la relación es inversa",
+        "reporta el total nuevo en vez del incremento pedido",
+        "evalúa con un solo dato cuando la variable es una suma"
+      ]
+    },
+    {
+      "id": "concepto-de-funcion",
+      "nombre": "Conceptos fundamentales de funciones",
+      "prerrequisitos": [
+        "ecuaciones-primer-grado-cola",
+        "plano-cartesiano-basico"
+      ],
+      "secuencia_sugerida": 40,
+      "unidad_id": "funcion-lineal-y-afin",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "evaluaciones directas de un paso conviven con lectura de gráficos, argumentos compuestos y justificación de dominio; ítems con raíces o cuadráticas suben la exigencia",
+      "representaciones": [
+        "plano-cartesiano",
+        "grafico-lineas",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "definir función como correspondencia entre dominio y codominio"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir variable independiente y dependiente en la notación"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "identificar imagen y preimagen"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer dominio y recorrido"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "evaluar una función en un valor"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "construir tabla de valores y trazar el gráfico"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "decidir si un punto pertenece al gráfico"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "hallar intersecciones con los ejes"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "leer y comparar valores desde un gráfico"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "deducir la regla desde una tabla o un gráfico"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "evaluar en argumentos algebraicos y funciones definidas por argumento desplazado"
+        },
+        {
+          "orden": 12,
+          "subhabilidad": "elegir el gráfico que describe una situación y justificar restricciones de dominio"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una función en representación sin-representacion, obtener la imagen de un valor",
+        "dada una función y una imagen en representación sin-representacion, obtener la preimagen",
+        "dada una función con parámetro y un par preimagen imagen en representación sin-representacion, obtener el parámetro",
+        "dada una función en representación sin-representacion, obtener el punto que pertenece a su gráfico",
+        "dada una función en representación sin-representacion, obtener la intersección con un eje",
+        "dadas dos funciones en representación sin-representacion, obtener el valor donde coinciden",
+        "dada una función en representación sin-representacion, obtener la imagen de una expresión algebraica",
+        "dado el gráfico de una función en representación plano-cartesiano, obtener la afirmación verdadera sobre sus valores",
+        "dada una tabla de pares en representación texto, obtener la regla de la función",
+        "dado un gráfico en representación plano-cartesiano, obtener la función que lo genera",
+        "dada una situación en representación texto, obtener el gráfico que la describe",
+        "dado un gráfico de magnitud versus tiempo en representación grafico-lineas, obtener la afirmación deducible",
+        "dada una función definida por argumento desplazado en representación sin-representacion, obtener la imagen de un valor",
+        "dada una función con raíz en representación sin-representacion, obtener el argumento que justifica su dominio",
+        "dadas varias evaluaciones ajenas en representación sin-representacion, obtener la evaluación errónea"
+      ],
+      "dominios_vistos": [
+        "consumo de leche diario",
+        "auto a control remoto",
+        "estudiantes evaluando una función"
+      ],
+      "conteo_problemas": 24,
+      "errores_frecuentes_patron": [
+        "confunde imagen con preimagen",
+        "sustituye directamente el argumento en una función definida por argumento desplazado",
+        "confunde la intersección con el eje horizontal con la del eje vertical",
+        "error de signo al evaluar potencias y raíces en negativos",
+        "lee un gráfico de rapidez como si fuera de posición",
+        "confunde descensos escalonados con una recta continua",
+        "generaliza la restricción del radicando a raíces de índice impar",
+        "no distribuye al evaluar en un binomio"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ítem de cuatro estudiantes evaluando con raíces",
+          "razon": "los desarrollos por estudiante son expresión propia de la fuente"
+        }
+      ]
+    },
+    {
+      "id": "funcion-afin-y-lineal",
+      "nombre": "Función afín y lineal",
+      "prerrequisitos": [
+        "concepto-de-funcion",
+        "repaso-proporcionalidad",
+        "sistemas-ecuaciones-lineales-dos-incognitas"
+      ],
+      "secuencia_sugerida": 41,
+      "unidad_id": "funcion-lineal-y-afin",
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "predominan modelos de valor inicial más tasa en pocos pasos; dos puntos, porcentajes sobre parámetros o interpretación de pendiente alargan el ítem",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer la forma general y sus nombres alternativos en preguntas de modelar"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular la pendiente como razón de variaciones entre dos puntos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "relacionar signo de la pendiente con crecimiento, decrecimiento o constancia"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "distinguir función afín con intercepto de función lineal por el origen"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "vincular función lineal con proporcionalidad directa"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "leer dominio y recorrido acotados desde un gráfico"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "modelar desde dos puntos con desplazamiento de la variable"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "modelar desde valor inicial y tasa constante"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "transformar un modelo por porcentajes aplicados a cada parámetro"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "hallar un parámetro por igualdad de dos modelos"
+        },
+        {
+          "orden": 11,
+          "subhabilidad": "interpretar pendiente e intercepto en contexto"
+        },
+        {
+          "orden": 12,
+          "subhabilidad": "distinguir relaciones lineales de no lineales entre magnitudes"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una situación con valor fijo y tasa en representación texto, obtener la función que la modela",
+        "dados dos puntos de una relación lineal en representación texto, obtener la función o una proyección",
+        "dada una función afín y porcentajes de cambio en representación texto, obtener la nueva función",
+        "dadas dos funciones afines con parámetro en representación sin-representacion, obtener el parámetro que iguala sus valores",
+        "dada una función lineal y un par en representación sin-representacion, obtener la pendiente",
+        "dada una tabla de proporcionalidad en representación texto, obtener la imagen de un valor nuevo",
+        "dada una función afín con parámetro y una imagen en representación sin-representacion, obtener otra imagen",
+        "dado un gráfico de recta en representación plano-cartesiano, obtener la afirmación verdadera sobre pendiente e intercepto",
+        "dada una fórmula afín en representación sin-representacion, obtener la interpretación de la pendiente",
+        "dada una lista de pares de magnitudes en representación texto, obtener la que no es lineal",
+        "dada una función con parámetro en representación sin-representacion, obtener el valor que la hace lineal",
+        "dada una composición con desplazamiento en representación sin-representacion, obtener el parámetro de un punto",
+        "dada una situación de cambio constante en representación texto, obtener el valor inicial o el instante pedido",
+        "dada una tabla de valores diarios en representación texto, obtener la proyección acumulada"
+      ],
+      "dominios_vistos": [
+        "empresas de gasfitería",
+        "estacionamientos por minuto",
+        "costo de procesar leche",
+        "basura tecnológica anual",
+        "distancia de reacción de vehículo",
+        "represa que pierde agua",
+        "parque de diversiones con juegos",
+        "costo de fabricar sillas",
+        "estanque que se llena",
+        "caminata semanal creciente",
+        "costo de producción por unidades",
+        "caja con bloques de madera",
+        "colchón inflable que pierde aire",
+        "ventas diarias de un negocio",
+        "cuenta de ahorro mensual",
+        "escala de temperatura histórica"
+      ],
+      "conteo_problemas": 21,
+      "errores_frecuentes_patron": [
+        "confunde pendiente con coeficiente de posición",
+        "invierte la razón al calcular la pendiente",
+        "aplica el porcentaje a ambos parámetros cuando solo afecta a uno",
+        "confunde función lineal por el origen con función afín",
+        "interpreta la pendiente con las variables invertidas",
+        "no verifica que el parámetro hallado produzca una función lineal no nula",
+        "toma una relación cuadrática como lineal",
+        "olvida el valor inicial al modelar",
+        "confunde el valor inicial con la pendiente al leer un gráfico"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ítem sobre escala de temperatura histórica",
+          "razon": "contexto histórico único; cualquier descripción identifica el enunciado"
+        },
+        {
+          "elemento": "ejemplo resuelto de la represa",
+          "razon": "solución desarrollada con cambio de variable propio de la fuente"
+        }
+      ]
+    }
+  ],
+  "notas_para_humano": "[tramo a] Corta a mitad de propuestos porcentajes parte uno. DEMRE citado solo por proceso, sin forma ni número. Terceros: doble verificación, priorizar fuentes de riesgo bajo. [tramo b] Guía de terceros, doble verificación humana. Tramo corta secciones a mitad. DEMRE citado solo por proceso, algunos bajo mínimo del schema; sin forma completa. [tramo c] Guía de terceros: doble verificación; temario DEMRE y currículum siguen primarios. Tramo empieza y termina a mitad de concepto. Ejemplos DEMRE sin forma ni número. [tramo d] Guía de terceros: doble verificación. Tramo corta a mitad de concepto. DEMRE citado solo por proceso. Funciones exceden módulo uno. Tablas de valores sin enum."
+}

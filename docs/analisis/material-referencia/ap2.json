@@ -1,0 +1,3478 @@
+{
+  "proveniencia": {
+    "fuente": "Material/profesora/2026 - Ap2 - M1 - ONLINE.md + 2026 - S - Ap2 - M1.md",
+    "fecha_analisis": "2026-09-21",
+    "tipo_fuente": "guia_terceros",
+    "licencia": "propietaria",
+    "nivel_riesgo": "alto"
+  },
+  "conceptos": [
+    {
+      "id": "ecuacion-cuadratica-incompleta",
+      "nombre": "Ecuaciones cuadráticas incompletas: pura y binomial",
+      "prerrequisitos": [
+        "factorizacion-por-factor-comun",
+        "diferencia-de-cuadrados",
+        "raiz-cuadrada-con-ambos-signos",
+        "despeje-en-ecuaciones-lineales"
+      ],
+      "secuencia_sugerida": 1,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "Enunciados de una línea, dos o tres pasos algebraicos, sin contexto; sube a medio cuando se pide validar un procedimiento ajeno.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer la forma general y el rol de cada coeficiente"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "identificar cuál coeficiente falta para clasificar la ecuación"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "resolver la forma pura despejando el cuadrado y extrayendo raíz con ambos signos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "resolver la forma pura factorizando como diferencia de cuadrados"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "resolver la forma binomial por factor común y producto nulo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "juzgar cuándo la forma pura carece de soluciones reales según los signos"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una ecuación cuadrática sin término lineal en texto, obtener sus dos soluciones reales o su inexistencia",
+        "dada una ecuación cuadrática sin término independiente en texto, obtener sus soluciones por factor común",
+        "dado un despeje paso a paso de una ecuación pura con parámetros en texto, obtener el paso erróneo"
+      ],
+      "dominios_vistos": [
+        "procedimiento de despeje con error",
+        "ecuación con parámetros literales"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "olvida la raíz negativa al extraer raíz cuadrada y reporta una sola solución",
+        "asume que un discriminante negativo aparece solo en ecuaciones completas",
+        "divide por la incógnita y pierde la solución nula"
+      ]
+    },
+    {
+      "id": "ecuacion-cuadratica-completa-metodos",
+      "nombre": "Resolución de ecuaciones cuadráticas completas",
+      "prerrequisitos": [
+        "ecuacion-cuadratica-incompleta",
+        "factorizacion-de-trinomios",
+        "productos-notables",
+        "operatoria-con-fracciones-y-raices"
+      ],
+      "secuencia_sugerida": 2,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Mayoría sin contexto y con tres a cinco pasos; argumentar sobre existencia de soluciones y trabajar con coeficientes literales eleva la exigencia.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "factorizar el trinomio buscando dos números con suma y producto dados"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "igualar cada factor a cero y leer las soluciones"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "identificar coeficientes y aplicar la fórmula general"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer el trinomio cuadrado perfecto y la solución de multiplicidad doble"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "interpretar el signo de la cantidad subradical para decidir existencia de soluciones reales"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "usar una solución conocida para hallar un coeficiente desconocido"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "comparar coeficientes de dos expresiones idénticas para obtener parámetros"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "construir una ecuación nueva a partir de raíces transformadas"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una ecuación cuadrática completa en texto, obtener sus soluciones",
+        "dada una lista de ecuaciones cuadráticas en texto, obtener cuál carece de soluciones reales",
+        "dada una ecuación con un coeficiente desconocido y una solución conocida en texto, obtener la otra solución",
+        "dada una igualdad entre un producto de binomios y un trinomio en texto, obtener el valor de un parámetro",
+        "dada una ecuación cuadrática en texto, obtener la ecuación cuyas raíces son las originales multiplicadas por una constante",
+        "dado un cociente entre un trinomio y un binomio en texto, obtener el factor restante",
+        "dada una ecuación cuadrática sin soluciones reales en texto, obtener la justificación válida de ese hecho"
+      ],
+      "dominios_vistos": [
+        "ecuación con coeficiente desconocido",
+        "raíces transformadas",
+        "división de polinomio por binomio",
+        "justificación de ausencia de soluciones"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "invierte los signos de las raíces al pasar de los factores a las soluciones",
+        "confunde la suma de raíces con el producto al factorizar el trinomio",
+        "cree que discriminante cero significa ausencia de soluciones",
+        "confunde no poder factorizar con enteros con no tener soluciones reales",
+        "comete errores de signo al trasladar términos a un mismo lado",
+        "olvida que la solución de multiplicidad doble cuenta dos veces",
+        "al multiplicar las raíces por una constante negativa, cambia el signo de la suma pero no del producto"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "contraejemplos usados en el solucionario para refutar cada justificación",
+          "razon": "describirlos reproduciría el desarrollo específico de la fuente"
+        }
+      ]
+    },
+    {
+      "id": "planteamiento-ecuacion-cuadratica-contexto",
+      "nombre": "Planteamiento y resolución de ecuaciones cuadráticas en contexto",
+      "prerrequisitos": [
+        "ecuacion-cuadratica-completa-metodos",
+        "area-y-perimetro-de-figuras-planas",
+        "volumen-de-cuerpos-basicos",
+        "conversion-de-unidades",
+        "teorema-de-pitagoras"
+      ],
+      "secuencia_sugerida": 3,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "figura-plana",
+        "cuerpo-geometrico",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Enunciados de varias líneas con figura; exigen traducir relaciones geométricas, resolver y luego descartar la raíz sin sentido; algunos piden solo la ecuación.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer el enunciado y bosquejar la figura con la incógnita"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "elegir qué magnitud representa la incógnita y expresar las demás en función de ella"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "traducir la relación geométrica o física a una igualdad"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reordenar a la forma general"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "resolver y descartar la solución sin sentido en el contexto"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "responder la magnitud pedida, que puede no ser la incógnita"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "validar cuál de varias ecuaciones propuestas respeta restricciones del contexto"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "distinguir cuándo el modelo resulta lineal aunque las dimensiones sean literales"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un rectángulo con área conocida y relación entre lados en texto, obtener sus dimensiones o su perímetro",
+        "dado un triángulo rectángulo con lados expresados en la incógnita en figura plana, obtener la ecuación que la determina",
+        "dado un cuerpo geométrico con volumen conocido y una arista literal en cuerpo geométrico, obtener la ecuación para la arista",
+        "dada una región compuesta con medidas literales en figura plana, obtener la medida desconocida a partir del área total",
+        "dado un modelo cuadrático de altura o tiempo en texto, obtener el instante en que se alcanza un valor dado",
+        "dadas varias ecuaciones cuadráticas propuestas y un rango admisible para las soluciones en texto, obtener cuál cumple",
+        "dada una figura con dimensiones literales y un recurso limitado en texto, obtener la expresión del sobrante",
+        "dado un cilindro con volumen y altura conocidos en texto, obtener el radio"
+      ],
+      "dominios_vistos": [
+        "plaza rectangular",
+        "triángulo rectángulo con catetos",
+        "pista de baile",
+        "caja de base cuadrada",
+        "cortina rectangular",
+        "plaza de juegos cercada",
+        "piso flotante de departamento",
+        "lata de conserva cilíndrica",
+        "altura de avión de juguete",
+        "diseñadores de cartel"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "responde el valor de la incógnita en vez de la magnitud pedida",
+        "acepta la raíz negativa como medida válida",
+        "omite el medio en el área del triángulo",
+        "asigna la hipotenusa a un cateto al aplicar Pitágoras",
+        "confunde perímetro con área al plantear la igualdad",
+        "convierte mal las unidades de superficie al cambiar de metros a centímetros",
+        "plantea la ecuación con el largo cuando la incógnita definida es el ancho"
+      ]
+    },
+    {
+      "id": "funcion-cuadratica-forma-general-elementos",
+      "nombre": "Función cuadrática en forma general: concavidad, vértice, eje, recorrido e intersecciones",
+      "prerrequisitos": [
+        "ecuacion-cuadratica-completa-metodos",
+        "evaluacion-de-funciones",
+        "plano-cartesiano",
+        "funcion-lineal-y-afin"
+      ],
+      "secuencia_sugerida": 4,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Cálculos de pocos pasos con fórmulas del vértice; la lectura gráfica con parámetros literales y la detección de errores en procedimientos elevan la exigencia.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer la forma general y su dominio por defecto"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer la concavidad desde el signo del coeficiente principal"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular la abscisa del vértice y la ecuación del eje de simetría"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "calcular la ordenada del vértice evaluando o con la fórmula del discriminante"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "determinar el recorrido según la concavidad y la ordenada del vértice"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "obtener la intersección con el eje vertical desde el término independiente"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "obtener las intersecciones con el eje horizontal resolviendo la ecuación asociada"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "inferir signos de los coeficientes desde un gráfico"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "reconstruir la función desde vértice e intersección leídos en el gráfico"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "bosquejar la parábola que resulta del producto de dos funciones lineales"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una función cuadrática en texto, obtener cuál de varios puntos pertenece a su gráfica",
+        "dada una función cuadrática en texto, obtener el valor de una combinación de imágenes",
+        "dada una parábola en plano cartesiano con coeficientes literales, obtener los signos de los coeficientes",
+        "dada una función cuadrática en texto, obtener la ecuación de su eje de simetría",
+        "dado un procedimiento para hallar el recorrido en texto, obtener el paso erróneo",
+        "dada una función con parámetro y un punto de su gráfica en texto, obtener la intersección con el eje vertical",
+        "dada una parábola en plano cartesiano con vértice e intersección conocidos, obtener su expresión general",
+        "dada una función cuadrática en texto, obtener la afirmación verdadera sobre su gráfica",
+        "dadas dos funciones lineales en texto, obtener el bosquejo del gráfico de su producto",
+        "dadas condiciones de signo sobre los coeficientes en texto, obtener el bosquejo de la parábola en plano cartesiano"
+      ],
+      "dominios_vistos": [
+        "producto de dos funciones lineales",
+        "función con coeficientes literales",
+        "procedimiento de recorrido con error"
+      ],
+      "conteo_problemas": 12,
+      "errores_frecuentes_patron": [
+        "deduce el signo del coeficiente lineal sin considerar el signo del coeficiente principal",
+        "usa la fórmula del eje de simetría sin el dos en el denominador o con el signo cambiado",
+        "toma el vértice como mínimo aunque la concavidad sea negativa al escribir el recorrido",
+        "eleva mal al cuadrado un valor negativo al evaluar la función",
+        "confunde el valor máximo de la función con la abscisa donde se alcanza",
+        "asume que toda parábola corta el eje horizontal en dos puntos",
+        "confunde el intercepto con el eje vertical con la ordenada del vértice"
+      ]
+    },
+    {
+      "id": "modelado-con-funcion-cuadratica-general",
+      "nombre": "Modelado y lectura de situaciones con función cuadrática en forma general",
+      "prerrequisitos": [
+        "funcion-cuadratica-forma-general-elementos",
+        "planteamiento-ecuacion-cuadratica-contexto",
+        "lectura-de-graficos-en-plano-cartesiano"
+      ],
+      "secuencia_sugerida": 5,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "plano-cartesiano",
+        "cuerpo-geometrico",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Enunciados largos con gráfico o figura; requieren interpretar vértice e intersecciones en el contexto y a veces reconstruir la función desde datos leídos.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "evaluar un modelo cuadrático dado en un valor del contexto"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "despejar la variable independiente desde un valor dado de la función"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "construir la función de volumen o área en términos de una dimensión variable"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "interpretar vértice e intersecciones de un gráfico en unidades del contexto"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "usar la simetría para comparar imágenes equidistantes del eje"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "reconstruir el modelo desde el vértice leído en el gráfico y el paso por el origen"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "comparar dos modelos graficados y juzgar afirmaciones sobre sus intersecciones"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "hallar el valor de la variable que maximiza una capacidad o área"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un modelo cuadrático de altura o población en texto, obtener el valor de la función en un instante",
+        "dado un modelo cuadrático con parámetro físico en texto, obtener el instante en que se alcanza un valor",
+        "dado un cuerpo geométrico con una dimensión variable y otra dependiente, obtener la función de volumen",
+        "dada una trayectoria parabólica en plano cartesiano, obtener la afirmación verdadera sobre alturas y distancias",
+        "dada una parábola con vértice marcado en plano cartesiano que pasa por el origen, obtener su expresión",
+        "dadas dos parábolas que se cortan en plano cartesiano, obtener la afirmación siempre verdadera sobre ambas",
+        "dado un modelo cuadrático de altura en texto, obtener la afirmación verdadera sobre lanzamiento, máximo o caída",
+        "dado un perímetro fijo en texto, obtener la función que da el área según un lado",
+        "dada una plancha doblada en figura plana, obtener la medida del doblez que maximiza el volumen"
+      ],
+      "dominios_vistos": [
+        "paralelepípedo con largo variable",
+        "lanzamiento simulado en computador",
+        "móvil con aceleración",
+        "chorro de agua",
+        "asteroides acercándose",
+        "cohete casero",
+        "rectángulos de perímetro fijo",
+        "pelota lanzada",
+        "proyección de gaviotas",
+        "canaleta de plancha metálica"
+      ],
+      "conteo_problemas": 10,
+      "errores_frecuentes_patron": [
+        "confunde la altura máxima con la abscisa del vértice",
+        "interpreta la intersección de dos curvas de distancia como colisión de los objetos",
+        "convierte mal las unidades de tiempo antes de evaluar el modelo",
+        "al despejar el tiempo olvida extraer la raíz cuadrada",
+        "toma el alcance horizontal como el valor del vértice",
+        "expresa la dimensión dependiente sumando en vez de restar la diferencia dada"
+      ]
+    },
+    {
+      "id": "funcion-cuadratica-forma-canonica",
+      "nombre": "Forma canónica de la función cuadrática y traslaciones",
+      "prerrequisitos": [
+        "funcion-cuadratica-forma-general-elementos",
+        "cuadrado-de-binomio",
+        "vectores-y-traslaciones-en-el-plano"
+      ],
+      "secuencia_sugerida": 6,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Lectura directa del vértice es baja; construir la función desde vértice y un punto, o comparar procedimientos con tres formas, es media a alta.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer el vértice desde la forma canónica cuidando el signo del desplazamiento horizontal"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer eje de simetría, concavidad y recorrido desde la forma canónica"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "bosquejar la parábola desde vértice y concavidad"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "hallar el coeficiente principal usando un punto conocido de la gráfica"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "expandir la forma canónica para llegar a la forma general"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "trasladar la parábola según un vector y reescribir la función"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "usar la simetría respecto al eje para hallar preimágenes de igual imagen"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "contrastar los tres caminos para obtener el máximo y detectar el error de cada uno"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una función en forma canónica en texto, obtener su vértice, recorrido o bosquejo en plano cartesiano",
+        "dado un vértice y una intersección con el eje vertical en texto, obtener la expresión general de la función",
+        "dado un vértice y otro punto de la parábola en texto, obtener la función que la representa",
+        "dada una función cuadrática y un vector de traslación en texto, obtener el bosquejo de la parábola trasladada",
+        "dados los vértices de dos parábolas en forma canónica en texto, obtener el perímetro del triángulo que forman con el origen",
+        "dada una parábola con eje de simetría marcado en plano cartesiano, obtener otra preimagen de un valor dado",
+        "dados tres procedimientos para hallar el máximo en texto, obtener cuál es correcto",
+        "dado un mínimo y otro dato de producción en texto, obtener la función que modela la cantidad",
+        "dada una parábola en plano cartesiano con vértice y un punto leídos, obtener el valor aproximado en otra abscisa",
+        "dada una figura simétrica con dos parábolas en plano cartesiano, obtener la forma analítica de una de ellas"
+      ],
+      "dominios_vistos": [
+        "traslación de parábola",
+        "triángulo entre vértices",
+        "producción de comprimidos",
+        "presión de gas en tanque",
+        "diseño de bandera",
+        "comparación de procedimientos",
+        "ganancia por precio"
+      ],
+      "conteo_problemas": 13,
+      "errores_frecuentes_patron": [
+        "invierte el signo de la coordenada horizontal del vértice al leer la forma canónica",
+        "toma el vértice como mínimo aunque el coeficiente principal sea negativo",
+        "aplica el vector de traslación con signos cambiados",
+        "identifica mal los coeficientes cuando la función está escrita en orden no estándar",
+        "confunde la ordenada inicial con el desplazamiento horizontal al armar la forma canónica",
+        "confunde el precio óptimo con la ganancia máxima al leer el vértice"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "detalle de los tres procedimientos comparados para hallar el máximo",
+          "razon": "el error concreto de cada camino es parte de la expresión del ítem"
+        }
+      ]
+    },
+    {
+      "id": "funcion-cuadratica-forma-factorizada",
+      "nombre": "Forma factorizada de la función cuadrática y ceros",
+      "prerrequisitos": [
+        "funcion-cuadratica-forma-canonica",
+        "ecuacion-cuadratica-completa-metodos",
+        "suma-por-diferencia"
+      ],
+      "secuencia_sugerida": 7,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Leer ceros y eje desde los factores es rápido; hallar el coeficiente desde un vértice o punto, con dos parábolas graficadas, sube la exigencia.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer las intersecciones con el eje horizontal desde los factores"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular el eje de simetría como promedio de los ceros"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "evaluar en el eje para obtener el vértice y el valor extremo"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "escribir la función factorizada desde los ceros leídos en el gráfico y el signo de la concavidad"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "determinar el coeficiente principal con un punto adicional o con el vértice"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "expandir la forma factorizada a la forma general"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "interpretar ceros y vértice en un modelo de trayectoria"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una función en forma factorizada en texto, obtener su eje de simetría y su valor extremo",
+        "dada una parábola con ceros marcados en plano cartesiano, obtener su forma factorizada",
+        "dado un modelo de altura en forma factorizada en texto, obtener la afirmación verdadera sobre caída y máximo",
+        "dados el instante del máximo y un valor de altura en texto, obtener la función que modela la trayectoria",
+        "dado un arco simétrico con ancho y altura en plano cartesiano, obtener la función que lo modela",
+        "dadas dos parábolas con vértices marcados en plano cartesiano, obtener la afirmación verdadera sobre sus expresiones",
+        "dada una parábola desplazada verticalmente en texto, obtener la distancia entre sus ceros"
+      ],
+      "dominios_vistos": [
+        "arco de flores para matrimonio",
+        "proyectil simulado",
+        "juego de simulación con pelota",
+        "pelota que rebota",
+        "arco de puente"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "invierte los signos de los ceros al escribir los factores",
+        "olvida el coeficiente principal y asume que vale uno",
+        "confunde el instante del máximo con el instante de caída",
+        "escribe un factor con los signos invertidos y cambia la concavidad sin notarlo",
+        "toma la distancia entre ceros como la mitad del ancho real"
+      ]
+    },
+    {
+      "id": "repaso-funcion-lineal-y-afin",
+      "nombre": "Repaso integrado de función lineal y afín",
+      "prerrequisitos": [
+        "funcion-lineal-y-afin",
+        "porcentaje",
+        "lectura-de-tablas-y-graficos"
+      ],
+      "secuencia_sugerida": 8,
+      "unidad_id": "funcion-lineal-y-afin",
+      "representaciones": [
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "Ítems cortos de repaso; comparar dos funciones y leer un gráfico de varias rectas requiere pocos pasos; el modelo afín exige un despeje.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "comparar dos funciones lineales evaluando y buscando su punto de igualdad"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer y comparar pendientes en un gráfico con varias rectas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "pasar de una tabla de valores al bosquejo de la recta"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "construir un modelo afín desde una tasa de cambio y un punto"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "calcular el porcentaje de variación entre dos imágenes de una función lineal"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas dos funciones lineales en texto, obtener la afirmación siempre verdadera al compararlas",
+        "dado un gráfico de varias rectas de distancia contra tiempo en plano cartesiano, obtener la afirmación verdadera",
+        "dada una tabla de valores de una función afín en texto, obtener su gráfico en plano cartesiano",
+        "dada una tasa de cambio y un valor conocido en texto, obtener la función afín que modela la situación",
+        "dado un modelo lineal de costo y dos cantidades en texto, obtener el porcentaje de aumento"
+      ],
+      "dominios_vistos": [
+        "vehículos y distancia recorrida",
+        "temperatura según altitud",
+        "empresa de delivery"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "reporta el porcentaje total en vez del porcentaje de aumento",
+        "confunde la pendiente con la ordenada al origen al armar el modelo",
+        "asocia mayor distancia recorrida con menor rapidez",
+        "generaliza una desigualdad entre funciones a partir de un solo valor"
+      ]
+    },
+    {
+      "id": "repaso-funcion-cuadratica",
+      "nombre": "Repaso integrado de ecuación y función cuadrática",
+      "prerrequisitos": [
+        "planteamiento-ecuacion-cuadratica-contexto",
+        "funcion-cuadratica-forma-canonica",
+        "area-de-figuras-compuestas"
+      ],
+      "secuencia_sugerida": 9,
+      "unidad_id": "funcion-cuadratica",
+      "representaciones": [
+        "figura-plana",
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Ítems de repaso con figura compuesta o parámetro; combinan área, resolución y lectura del vértice en forma canónica en pocos pasos.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "plantear la ecuación de un área con una región descontada"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "encadenar la solución mayor de una ecuación como dato de otra"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "bosquejar una parábola sin término lineal desde sus coeficientes"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "modelar el área de una figura compuesta con semicírculos como función cuadrática"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "leer el máximo de una ganancia desde la forma canónica"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una pared con una ventana de medidas literales en figura plana, obtener la ecuación del área pintada",
+        "dada la solución mayor de una ecuación cuadrática en texto, obtener el parámetro de otra ecuación que la comparte",
+        "dada una función cuadrática sin término lineal en texto, obtener su bosquejo en plano cartesiano",
+        "dada una ganancia en forma canónica en texto, obtener el precio que la maximiza"
+      ],
+      "dominios_vistos": [
+        "pared con ventana",
+        "pista de carrera con semicírculos",
+        "ganancia por precio de audífonos"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "suma el área de la ventana en vez de restarla",
+        "usa el diámetro como radio al calcular los semicírculos",
+        "confunde la coordenada horizontal del vértice con el valor máximo",
+        "olvida que sin término lineal el eje de simetría es el eje vertical"
+      ]
+    },
+    {
+      "id": "tabla-de-frecuencias-y-tipos-de-datos",
+      "nombre": "Tipos de datos y tablas de frecuencias",
+      "prerrequisitos": [
+        "fracciones-decimales-y-porcentaje",
+        "intervalos-en-la-recta-numerica"
+      ],
+      "secuencia_sugerida": 10,
+      "unidad_id": "tablas-y-graficos",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "Tablas cortas con una o dos columnas incompletas; los ítems exigen sumar frecuencias, convertir relativa a absoluta y respetar límites de intervalos.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "clasificar datos en cualitativos nominales u ordinales y cuantitativos discretos o continuos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir frecuencia absoluta, acumulada, relativa y porcentual"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "completar una tabla usando que las relativas suman uno y el total es conocido"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "leer acumuladas en datos ordinales y discretos para responder preguntas de rango"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "interpretar intervalos semiabiertos y el último cerrado en datos agrupados"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "calcular la marca de clase y entender su papel como representante del intervalo"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una tabla de frecuencias con intervalos en tabla-frecuencias, obtener cuántos datos superan un umbral",
+        "dada una tabla incompleta con frecuencias absolutas y relativas en tabla-frecuencias, obtener la frecuencia faltante",
+        "dada una descripción de una variable en texto, obtener su tipo de dato",
+        "dada una tabla con frecuencia acumulada en tabla-frecuencias, obtener cuántos datos no superan una categoría"
+      ],
+      "dominios_vistos": [
+        "deporte escogido por deportistas",
+        "atención en restaurante",
+        "uso de transporte público",
+        "edad de ingreso universitario",
+        "tiempo de espera en oficina",
+        "días para leer un libro"
+      ],
+      "conteo_problemas": 2,
+      "errores_frecuentes_patron": [
+        "incluye el intervalo anterior al umbral por leer mal el límite cerrado",
+        "excluye el intervalo que contiene el umbral como si el límite fuera abierto",
+        "confunde frecuencia acumulada con frecuencia absoluta",
+        "no convierte la frecuencia relativa a absoluta antes de restar del total",
+        "usa un extremo del intervalo en lugar del punto medio como marca de clase"
+      ]
+    },
+    {
+      "id": "graficos-estadisticos-basicos",
+      "nombre": "Gráficos estadísticos: circular, barras, histograma, polígono y ojiva",
+      "prerrequisitos": [
+        "tabla-de-frecuencias-y-tipos-de-datos",
+        "porcentaje",
+        "proporcionalidad"
+      ],
+      "secuencia_sugerida": 11,
+      "unidad_id": "tablas-y-graficos",
+      "representaciones": [
+        "grafico-circular",
+        "grafico-barras",
+        "histograma",
+        "grafico-lineas",
+        "tabla-frecuencias"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "Un solo ítem en el tramo, pero combina dos gráficos con escalas distintas y exige convertir porcentajes a frecuencias antes de sumar.",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "asociar cada tipo de gráfico al tipo de dato que representa"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer un gráfico circular en porcentajes o cantidades y pasar a frecuencias"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "leer alturas de barras como frecuencias absolutas"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "distinguir histograma de gráfico de barras por intervalos y barras adyacentes"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "construir polígono de frecuencias desde marcas de clase"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "construir la ojiva desde frecuencias acumuladas"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "pasar de cualquier representación a la tabla y viceversa"
+        }
+      ],
+      "tareas_tipo": [
+        "dados un gráfico circular en porcentajes y un gráfico de barras en frecuencias, obtener la tabla combinada de ambos grupos",
+        "dada una tabla de frecuencias en tabla-frecuencias, obtener el gráfico que la representa",
+        "dado un histograma, obtener la tabla de intervalos y frecuencias",
+        "dada una tabla con marcas de clase en tabla-frecuencias, obtener el polígono de frecuencias o la ojiva"
+      ],
+      "dominios_vistos": [
+        "mascotas por familia",
+        "edades agrupadas en intervalos",
+        "elecciones de centro de estudiantes"
+      ],
+      "conteo_problemas": 1,
+      "errores_frecuentes_patron": [
+        "suma porcentajes con frecuencias absolutas sin convertir",
+        "asume que el total del grupo en porcentajes es cien personas",
+        "confunde el gráfico de barras con el histograma al leer intervalos",
+        "lee el polígono de frecuencias sobre los extremos en vez de las marcas de clase"
+      ]
+    },
+    {
+      "id": "lectura-y-construccion-de-graficos-estadisticos",
+      "nombre": "Lectura y construcción de gráficos estadísticos",
+      "prerrequisitos": [
+        "porcentaje",
+        "proporcionalidad directa",
+        "fracciones y decimales"
+      ],
+      "secuencia_sugerida": 12,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "afirmaciones múltiples por ítem, lectura combinada de dos representaciones y cálculo de porcentajes en un paso",
+      "representaciones": [
+        "grafico-barras",
+        "grafico-circular",
+        "grafico-lineas",
+        "tabla-frecuencias"
+      ],
+      "tareas_tipo": [
+        "Dado un gráfico de barras de una encuesta, obtener cuál afirmación que compara fracciones con porcentajes es verdadera",
+        "Dado un gráfico circular con porcentajes y la frecuencia de una categoría, obtener la frecuencia de otra categoría",
+        "Dada una tabla de frecuencias, obtener el ángulo del sector circular de la categoría más frecuente",
+        "Dada una tabla de frecuencias con categorías agrupables, obtener el gráfico circular que representa los porcentajes por grupo",
+        "Dado un gráfico de barras de frecuencia relativa, obtener cuál afirmación porcentual sobre la muestra es verdadera",
+        "Dado un gráfico de barras dobles por nivel, obtener cuál afirmación sobre la población encuestada es verdadera",
+        "Dado un gráfico circular con un porcentaje faltante y el total en texto, obtener cuál comparación de cantidades es verdadera",
+        "Dados un gráfico circular y un gráfico de barras encadenados, obtener la expresión del porcentaje de una subcategoría respecto al total",
+        "Dados un gráfico de barras y un gráfico circular con igual total, obtener cuál comparación de cantidades o porcentajes es verdadera",
+        "Dado un gráfico de líneas de frecuencia acumulada, obtener el paso erróneo de un procedimiento de lectura"
+      ],
+      "dominios_vistos": [
+        "encuesta taller literario",
+        "infografía adultos mayores región",
+        "asignaturas electivas matemática",
+        "aroma de perfume",
+        "ventas de food truck",
+        "premios por años de servicio",
+        "actividad deportiva en liceo",
+        "goles campeonato futbolito",
+        "archivos en disco duro",
+        "bebidas azucaradas en casino",
+        "inscritos en gimnasio"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "confunde el porcentaje de una subcategoría con su porcentaje respecto al total general",
+        "extrapola el gráfico a una población que no representa",
+        "compara porcentajes de grupos con totales distintos como si fueran cantidades",
+        "confunde n veces más con n veces",
+        "acepta como deducción una afirmación causal que el gráfico no sustenta",
+        "lee frecuencia acumulada como frecuencia del periodo",
+        "toma un promedio informado como valor de todos los individuos"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer frecuencia o porcentaje de una categoría en gráfico"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "convertir porcentaje en cantidad usando un total conocido"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "obtener el total a partir de una categoría y su porcentaje"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "calcular ángulo de sector a partir de una frecuencia"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "agrupar categorías de una tabla antes de graficar"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "comparar grupos con totales iguales o distintos"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "encadenar dos gráficos como porcentaje de un porcentaje"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "distinguir lo que el gráfico muestra de lo que se supone"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "validar pasos de un procedimiento de lectura"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplo DEMRE con infografía regional",
+          "razon": "figura compuesta sin categoría en el enum de representaciones"
+        }
+      ]
+    },
+    {
+      "id": "tablas-de-frecuencias-con-datos-agrupados",
+      "nombre": "Tablas de frecuencias con datos agrupados en intervalos",
+      "prerrequisitos": [
+        "lectura-y-construccion-de-graficos-estadisticos",
+        "intervalos y desigualdades"
+      ],
+      "secuencia_sugerida": 13,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "exige convertir entre representaciones y respetar la convención de intervalos; varias alternativas se descartan por indecidibilidad",
+      "representaciones": [
+        "tabla-frecuencias",
+        "histograma",
+        "grafico-lineas"
+      ],
+      "tareas_tipo": [
+        "Dada una tabla de frecuencias por intervalos, obtener cuál afirmación sobre porcentajes acumulados es verdadera",
+        "Dado un histograma de frecuencias acumuladas, obtener la tabla de frecuencias absolutas por intervalo",
+        "Dado un gráfico de ojiva con marcas de clase, obtener cuál afirmación sobre intervalos o rango es verdadera",
+        "Dado un histograma de frecuencias absolutas, obtener el porcentaje de datos en un tramo de intervalos",
+        "Dada una lista de datos y una regla de número de intervalos en texto, obtener la tabla de frecuencias correcta"
+      ],
+      "dominios_vistos": [
+        "horas en redes sociales",
+        "masa de estudiantes",
+        "edades de atletas",
+        "tiempo de espera pacientes",
+        "masas de recién nacidos"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "toma la frecuencia acumulada como frecuencia del intervalo",
+        "afirma un valor exacto que los datos agrupados no permiten conocer",
+        "clasifica mal un dato que coincide con un límite de intervalo",
+        "olvida que el último intervalo es cerrado"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer frecuencia absoluta y acumulada por intervalo"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "pasar de acumulada a absoluta restando consecutivas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular porcentaje de un tramo de intervalos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer afirmaciones indecidibles con datos agrupados"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "determinar cantidad de intervalos y amplitud desde una regla"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "clasificar datos en intervalos respetando límites"
+        }
+      ]
+    },
+    {
+      "id": "tabla-de-doble-entrada-y-porcentajes",
+      "nombre": "Tabla de doble entrada y porcentajes relativos",
+      "prerrequisitos": [
+        "porcentaje",
+        "lectura-y-construccion-de-graficos-estadisticos"
+      ],
+      "secuencia_sugerida": 14,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "un solo ítem con cuatro cálculos de porcentaje sobre bases distintas",
+      "representaciones": [
+        "tabla-doble-entrada"
+      ],
+      "tareas_tipo": [
+        "Dada una tabla de doble entrada con frecuencias, obtener cuál porcentaje relativo a fila, columna o total es correcto"
+      ],
+      "dominios_vistos": [
+        "regalos de fin de año"
+      ],
+      "conteo_problemas": 1,
+      "errores_frecuentes_patron": [
+        "confunde el porcentaje respecto a la fila con el porcentaje respecto al total",
+        "lee una frecuencia como si fuera un porcentaje"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "identificar totales marginales"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "elegir la base correcta del porcentaje"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "verificar cada afirmación con su propia base"
+        }
+      ]
+    },
+    {
+      "id": "media-aritmetica-datos-no-agrupados-y-agrupados",
+      "nombre": "Media aritmética para datos no agrupados y agrupados",
+      "prerrequisitos": [
+        "operatoria con decimales y fracciones",
+        "ecuaciones e inecuaciones de primer grado",
+        "tabla de frecuencias"
+      ],
+      "secuencia_sugerida": 15,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "un modelo lineal por ítem, uno o dos pasos de despeje, alternativas de expresiones que difieren en un detalle",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dada una secuencia de mediciones acumuladas en texto, obtener el promedio de los incrementos",
+        "Dadas notas conocidas y un promedio mínimo exigido en texto, obtener la nota mínima faltante",
+        "Dada una tabla de frecuencias con valores literales, obtener la expresión algebraica del promedio",
+        "Dado un procedimiento paso a paso para una nota mínima en texto, obtener el paso con el primer error",
+        "Dada una nota final definida como fracción del promedio en texto, obtener la nota mínima para aprobar"
+      ],
+      "dominios_vistos": [
+        "crecimiento de un brote",
+        "notas de pruebas",
+        "tabla con frecuencias literales"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "promedia los valores acumulados en lugar de los incrementos",
+        "usa desigualdad estricta donde se exige al menos",
+        "olvida ponderar cada valor por su frecuencia",
+        "divide por la cantidad de valores distintos en vez del total de datos",
+        "olvida que el promedio conserva la unidad de los datos"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "calcular promedio de una lista"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "reconocer que el promedio puede no ser un dato"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "promedio ponderado por frecuencias en tabla"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "marca de clase como representante de intervalo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "plantear ecuación o inecuación con el promedio"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "expresar promedio con símbolos literales"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "verificar pasos de un procedimiento ajeno"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplo DEMRE con fotografías de crecimiento",
+          "razon": "depende de una figura no reproducible"
+        }
+      ]
+    },
+    {
+      "id": "promedio-ponderado",
+      "nombre": "Promedio ponderado con pesos porcentuales",
+      "prerrequisitos": [
+        "media-aritmetica-datos-no-agrupados-y-agrupados",
+        "porcentaje"
+      ],
+      "secuencia_sugerida": 16,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "ítems de expresión y argumentación sin cálculo pesado; el error está en el orden de las operaciones",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dados los pesos porcentuales y las notas parciales conocidas en texto, obtener la expresión que despeja la nota faltante",
+        "Dado un modelo lineal de nota final en texto, obtener si el efecto de subir un factor es exactamente su peso"
+      ],
+      "dominios_vistos": [
+        "nota final ponderada",
+        "puntaje ingreso universidad"
+      ],
+      "conteo_problemas": 2,
+      "errores_frecuentes_patron": [
+        "multiplica por el peso en lugar de dividir al despejar",
+        "cree que el efecto de un factor depende de los otros factores",
+        "suma pesos que no totalizan uno sin normalizar"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "multiplicar cada valor por su peso"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "dividir por la suma de los pesos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "pesos en porcentaje versus proporción"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "despejar un valor desconocido"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "interpretar el peso como tasa de cambio"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplo desarrollado de puntaje ponderado de admisión",
+          "razon": "ejemplo numérico específico de la fuente"
+        }
+      ]
+    },
+    {
+      "id": "propiedades-del-promedio",
+      "nombre": "Propiedades del promedio ante cambios en los datos",
+      "prerrequisitos": [
+        "media-aritmetica-datos-no-agrupados-y-agrupados",
+        "expresiones algebraicas"
+      ],
+      "secuencia_sugerida": 17,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "argumentar",
+        "modelar",
+        "resolver"
+      ],
+      "dificultad": "alto",
+      "base_calibracion_dificultad": "argumentación con cuantificador siempre, sumas totales con variable, alternativas plausibles que solo difieren en la ponderación",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dados dos promedios de grupos con tamaños distintos en texto, obtener cuál afirmación sobre sumas y promedio global es siempre verdadera",
+        "Dada una tabla de calificaciones y una transformación lineal, obtener el nuevo promedio",
+        "Dado un razonamiento que promedia dos promedios en texto, obtener la descripción del error",
+        "Dados un promedio inicial, un tamaño y un promedio meta en texto, obtener la expresión de la suma de los datos agregados",
+        "Dados cambios distintos en promedio y mediana en texto, obtener qué transformación es compatible",
+        "Dados un promedio inicial, datos nuevos con su promedio y el promedio final en texto, obtener la cantidad original de datos"
+      ],
+      "dominios_vistos": [
+        "salarios de sucursales",
+        "ajuste de calificaciones",
+        "puntajes de dos cursos",
+        "tiempos de corredores",
+        "conjunto de datos abstracto"
+      ],
+      "conteo_problemas": 6,
+      "errores_frecuentes_patron": [
+        "promedia promedios sin ponderar por tamaño de grupo",
+        "aplica la transformación a cada dato en vez de usar la propiedad del promedio",
+        "asume que promedio y mediana cambian igual ante cualquier transformación",
+        "cree que un promedio garantiza algo sobre datos individuales",
+        "invierte el orden de la resta entre situación final e inicial"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "sumar una constante desplaza el promedio"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "multiplicar por un factor escala el promedio"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "transformación lineal completa del promedio"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "sensibilidad a valores atípicos"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "suma de desviaciones respecto al promedio es cero"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "promedio global de dos grupos como ponderado"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "recuperar la suma total desde promedio y tamaño"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "razonar sobre agregar o quitar datos"
+        }
+      ]
+    },
+    {
+      "id": "comparacion-media-mediana-moda-y-rango",
+      "nombre": "Comparación entre media, mediana, moda y rango",
+      "prerrequisitos": [
+        "media-aritmetica-datos-no-agrupados-y-agrupados",
+        "ordenamiento de datos"
+      ],
+      "secuencia_sugerida": 18,
+      "unidad_id": "tablas-y-graficos",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "listas cortas, un cálculo por medida; la dificultad está en la argumentación y en los cuantificadores",
+      "representaciones": [
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dada una lista de datos en texto, obtener cuál relación entre media, mediana, moda o rango es verdadera",
+        "Dada una afirmación sobre moda y promedio en texto, obtener si la evaluación es correcta y por qué",
+        "Dada una lista con un dato desconocido y el promedio en texto, obtener la mediana",
+        "Dada una lista de mediciones en texto, obtener la mediana de las desviaciones respecto al promedio",
+        "Dadas dos series de datos en tabla, obtener cuál comparación entre promedios y medianas es verdadera",
+        "Dada una tabla de puntajes, obtener la diferencia entre mediana y promedio"
+      ],
+      "dominios_vistos": [
+        "duración de llamadas",
+        "cigarrillos por jornada",
+        "pH de un lago",
+        "tiempos de ciclista rutas",
+        "puntajes de dardos",
+        "conjunto de enteros"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "cree que el promedio debe ser uno de los datos",
+        "calcula la mediana sin ordenar",
+        "toma la posición de la mediana como su valor",
+        "invierte el orden de una resta pedida",
+        "juzga significativa una diferencia moda-media sin mirar la mediana"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "ordenar y ubicar la mediana para cantidad par e impar"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "identificar la moda"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "rango como máximo menos mínimo"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "comparar media y mediana como indicio de asimetría"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "usar simetría o desviaciones como atajo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "evaluar afirmaciones de necesidad"
+        }
+      ]
+    },
+    {
+      "id": "cuartiles-y-percentiles-calculo",
+      "nombre": "Cálculo de cuartiles y percentiles",
+      "prerrequisitos": [
+        "comparacion-media-mediana-moda-y-rango",
+        "tablas-de-frecuencias-con-datos-agrupados",
+        "fracciones y porcentaje"
+      ],
+      "secuencia_sugerida": 19,
+      "unidad_id": "medidas-de-posicion",
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "algoritmo fijo de tres pasos; la carga está en la convención entero o decimal y en tablas acumuladas",
+      "representaciones": [
+        "tabla-frecuencias",
+        "grafico-barras",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dada una lista de datos en texto, obtener el valor del tercer cuartil",
+        "Dada una lista de datos en texto, obtener cuál percentil supera cierto umbral",
+        "Dada una tabla de frecuencias por intervalos, obtener en qué intervalo cae un cuartil o percentil",
+        "Dada una tabla de frecuencias con valores discretos, obtener cuál afirmación sobre cuartiles, percentil o rango es verdadera",
+        "Dada una tabla de frecuencias con porcentajes incompletos, obtener el menor valor posible de un percentil",
+        "Dado un gráfico de barras de frecuencias, obtener cuál afirmación sobre cuartiles y percentiles es verdadera",
+        "Dada una lista de datos y un índice definido como diferencia de percentiles en texto, obtener su valor",
+        "Dada una tabla de frecuencias, obtener el rango y el segundo cuartil"
+      ],
+      "dominios_vistos": [
+        "variable agrupada por intervalos",
+        "masa de tomates",
+        "correos respondidos por día",
+        "hijos por familia",
+        "horas de reforestación",
+        "número de redes sociales",
+        "precios de cuadros",
+        "muestra pequeña de enteros"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "toma la posición calculada como el valor del cuartil",
+        "olvida ordenar antes de ubicar posiciones",
+        "promedia cuando la posición es decimal o redondea cuando es entera",
+        "afirma un valor exacto de percentil con datos agrupados en intervalos",
+        "busca en la frecuencia absoluta en vez de la acumulada",
+        "confunde rango con el valor máximo"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "interpretar cuartiles como porcentajes acumulados con al menos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "posición del cuartil como fracción del total"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "posición entera: promediar con el dato siguiente"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "posición decimal: subir a la posición siguiente"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "percentil como generalización a centésimos"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "ubicar posición en frecuencia acumulada de tabla"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "localizar intervalo con datos agrupados"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "rango y rango intercuartil"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplos resueltos de cálculo de cuartiles y percentil",
+          "razon": "ejemplos numéricos específicos de la fuente"
+        }
+      ]
+    },
+    {
+      "id": "interpretacion-de-percentiles-en-contexto",
+      "nombre": "Interpretación de percentiles y cuartiles en contexto",
+      "prerrequisitos": [
+        "cuartiles-y-percentiles-calculo"
+      ],
+      "secuencia_sugerida": 20,
+      "unidad_id": "medidas-de-posicion",
+      "habilidades_demre": [
+        "argumentar",
+        "modelar"
+      ],
+      "dificultad": "alto",
+      "base_calibracion_dificultad": "sin cálculo; argumentación con cuantificadores siempre y al menos, distractores por población de referencia",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dado un criterio de elegibilidad expresado como porcentaje de menores ingresos en texto, obtener qué condición con percentiles lo asegura",
+        "Dado un criterio de aprobación relativo al tercer cuartil en texto, obtener cuál afirmación es siempre verdadera",
+        "Dadas afirmaciones generales sobre mediana, cuartiles y rango en texto, obtener cuál es siempre verdadera"
+      ],
+      "dominios_vistos": [
+        "subsidio por ingresos",
+        "subsidio calefacción regional",
+        "examen de admisión empresa",
+        "propiedades generales de datos"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "compara con percentiles de la población equivocada",
+        "invierte la desigualdad del criterio de elegibilidad",
+        "confunde igual al percentil con menor que el percentil",
+        "supone que exactamente un cuarto supera el tercer cuartil",
+        "cree que la mediana siempre es un dato del conjunto"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "percentil como cota con al menos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "identificar la población de referencia"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "traducir criterio verbal a desigualdad con percentil"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "distinguir a lo más de exactamente"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "contraejemplos con datos todos iguales"
+        }
+      ]
+    },
+    {
+      "id": "diagrama-de-caja-lectura-y-construccion",
+      "nombre": "Diagrama de caja: lectura, comparación y construcción",
+      "prerrequisitos": [
+        "cuartiles-y-percentiles-calculo",
+        "interpretacion-de-percentiles-en-contexto"
+      ],
+      "secuencia_sugerida": 21,
+      "unidad_id": "medidas-de-posicion",
+      "habilidades_demre": [
+        "representar",
+        "argumentar",
+        "resolver"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "lectura directa de cinco valores; la carga es el lenguaje de cuantificadores y la construcción con la convención de posiciones",
+      "representaciones": [
+        "diagrama-cajon",
+        "tabla-frecuencias",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dado un diagrama de cajón con cinco valores, obtener cuál afirmación se puede deducir",
+        "Dada una lista ordenada de datos en texto, obtener el diagrama de cajón que la representa",
+        "Dado un diagrama de cajón, obtener cuál afirmación sobre dispersión por tramos es verdadera",
+        "Dados dos diagramas de cajón en un mismo eje, obtener cuál comparación de dispersión, mediana o rango intercuartil es verdadera",
+        "Dados varios diagramas de cajón, obtener cuál afirmación sobre rangos o valores extremos es deducible",
+        "Dada una tabla de frecuencias, obtener el diagrama de cajón asociado"
+      ],
+      "dominios_vistos": [
+        "seguidores en redes sociales",
+        "mascarillas por mes",
+        "aporte municipal clubes deportivos",
+        "horas de trabajo en terreno",
+        "ensayos PAES",
+        "libros leídos al año",
+        "muestras comparadas"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "lee el promedio en un diagrama de caja",
+        "supone que la mediana concentra la mitad de la frecuencia en ese valor",
+        "confunde el ancho de un tramo con cantidad de datos",
+        "afirma que un cuartil es necesariamente un dato de la muestra",
+        "lee exactamente un cuarto donde solo cabe a lo más o al menos",
+        "atribuye dificultad o causas que el diagrama no informa"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "cinco números del resumen"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "ubicar mínimo, cuartiles y máximo en el eje"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "porcentaje aproximado por tramo con al menos y a lo más"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "tramo más ancho como más heterogéneo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "rango y rango intercuartil desde la caja"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "comparar cajas sobre el mismo eje"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "construir la caja desde datos o tabla"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplo resuelto de lectura de caja con lista de afirmaciones",
+          "razon": "las afirmaciones son expresión textual de la fuente"
+        }
+      ]
+    },
+    {
+      "id": "regla-de-laplace-y-complemento",
+      "nombre": "Regla de Laplace, espacio muestral y evento complementario",
+      "prerrequisitos": [
+        "fracciones y porcentaje",
+        "ecuaciones e inecuaciones de primer grado",
+        "tabla de frecuencias"
+      ],
+      "secuencia_sugerida": 22,
+      "unidad_id": "reglas-de-probabilidades",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "conteo directo en un paso; los ítems difíciles agregan un despeje con incógnita en el total",
+      "representaciones": [
+        "tabla-frecuencias",
+        "pictograma",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dada una tabla de probabilidades de un dado cargado, obtener cuál afirmación comparada con un dado común es verdadera",
+        "Dadas varias cajas con bolitas de dos colores en pictograma, obtener en cuál la probabilidad queda entre dos cotas",
+        "Dada una tabla de frecuencias de preferencias, obtener la probabilidad de una de dos categorías",
+        "Dadas frecuencias parciales y la probabilidad del complemento en texto, obtener la frecuencia desconocida",
+        "Dado un dado común en texto, obtener qué evento tiene la misma probabilidad que otro experimento",
+        "Dada una urna con bolitas de varios colores en texto, obtener la probabilidad de no obtener un color",
+        "Dado un cartón de bingo en pictograma, obtener la probabilidad de que el primer número esté en él",
+        "Dada una probabilidad de éxito y la cantidad de fracasos en texto, obtener la cantidad de éxitos del lote",
+        "Dado un total de números y una probabilidad deseada en texto, obtener cuántos números faltan por comprar"
+      ],
+      "dominios_vistos": [
+        "dado cargado",
+        "cajas con bolitas",
+        "fruta preferida",
+        "pasatiempo favorito",
+        "dado y moneda",
+        "urna con bolitas de colores",
+        "cartón de bingo",
+        "paltas para exportación",
+        "rifa con cartones"
+      ],
+      "conteo_problemas": 9,
+      "errores_frecuentes_patron": [
+        "supone que un dado cargado se comporta como uno común",
+        "confunde probabilidad con cantidad de casos",
+        "toma la probabilidad del complemento por la del evento",
+        "olvida que el total incluye la incógnita al despejar",
+        "responde la cantidad total requerida en vez de la faltante"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "experimento aleatorio, espacio muestral y evento"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "probabilidad entre cero y uno, evento seguro e imposible"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "casos favorables sobre totales con equiprobabilidad"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "fracción, decimal y porcentaje equivalentes"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "complemento como uno menos la probabilidad"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "leer probabilidades asignadas en tabla"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "plantear ecuación con probabilidad conocida"
+        }
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "ejemplo DEMRE con cajas dibujadas",
+          "razon": "depende de una figura no reproducible"
+        }
+      ]
+    },
+    {
+      "id": "regla-aditiva-de-probabilidades",
+      "nombre": "Regla aditiva: eventos excluyentes y no excluyentes",
+      "prerrequisitos": [
+        "regla-de-laplace-y-complemento",
+        "unión e intersección de conjuntos"
+      ],
+      "secuencia_sugerida": 23,
+      "unidad_id": "reglas-de-probabilidades",
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "un paso de conteo más la decisión de restar la intersección; ítems de evaluación de procedimientos",
+      "representaciones": [
+        "pictograma",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dada una baraja completa en pictograma, obtener la probabilidad de la unión de dos eventos con intersección no vacía",
+        "Dados tres procedimientos para la probabilidad de una unión en texto, obtener cuál es correcto",
+        "Dado un procedimiento paso a paso para una unión de colores en texto, obtener el paso erróneo o su ausencia"
+      ],
+      "dominios_vistos": [
+        "naipe inglés",
+        "urna con fichas numeradas",
+        "urna con bolitas de colores",
+        "idiomas extranjeros"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "suma probabilidades de eventos no excluyentes sin restar la intersección",
+        "multiplica donde el conector es o",
+        "cree que todo procedimiento presentado contiene un error"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "clasificar excluyentes versus no excluyentes"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "suma directa para excluyentes"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "inclusión y exclusión para no excluyentes"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "contar la intersección listando casos"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "validar procedimientos ajenos"
+        }
+      ]
+    },
+    {
+      "id": "regla-multiplicativa-de-probabilidades",
+      "nombre": "Regla multiplicativa: eventos independientes y dependientes",
+      "prerrequisitos": [
+        "regla-de-laplace-y-complemento",
+        "regla-aditiva-de-probabilidades"
+      ],
+      "secuencia_sugerida": 24,
+      "unidad_id": "reglas-de-probabilidades",
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "dos factores por ítem; la carga es decidir si hay reposición y actualizar los totales",
+      "representaciones": [
+        "pictograma",
+        "sin-representacion"
+      ],
+      "tareas_tipo": [
+        "Dadas extracciones sucesivas sin reposición descritas en texto, obtener la probabilidad de la extracción final",
+        "Dada una ruleta con sectores iguales en pictograma, obtener la probabilidad de repetir un resultado en dos giros",
+        "Dado un experimento compuesto con dado y moneda en texto, obtener cuál afirmación sobre el espacio muestral o probabilidades conjuntas es verdadera",
+        "Dada una urna con fichas numeradas en texto, obtener la probabilidad de una intersección de dos condiciones",
+        "Dados dos dados con distinta cantidad de caras en texto, obtener la expresión algebraica de la probabilidad conjunta"
+      ],
+      "dominios_vistos": [
+        "lápices que no escriben",
+        "ruleta con sectores",
+        "dado y moneda",
+        "urna con fichas numeradas",
+        "dado de n caras"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "no actualiza el espacio muestral tras una extracción sin reposición",
+        "suma en vez de multiplicar para eventos conjuntos",
+        "cuenta mal el tamaño del espacio muestral compuesto",
+        "asume independencia entre condiciones sobre un mismo objeto sin verificarla"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "independientes: producto directo de probabilidades"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "repetición del mismo experimento como potencia"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "dependientes: actualizar casos tras cada extracción"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "probabilidad condicional como segundo factor"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "espacio muestral compuesto por principio multiplicativo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "expresar la probabilidad conjunta con variables"
+        }
+      ]
+    },
+    {
+      "id": "reglas-aditiva-y-multiplicativa-cierre-a",
+      "nombre": "Regla aditiva y multiplicativa con cantidades literales",
+      "prerrequisitos": [
+        "regla-de-laplace",
+        "eventos-independientes",
+        "operaciones-con-fracciones"
+      ],
+      "secuencia_sugerida": 25,
+      "unidad_id": "reglas-de-probabilidades",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "enunciados breves pero con incógnitas literales y varias condiciones solapadas; exige elegir expresión, no calcular",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "expresar probabilidad de un evento y de su complemento con letras"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "multiplicar probabilidades de eventos independientes para secuencias con reposición"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "pasar de al menos uno al complemento de ninguno"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "cruzar dos condiciones solapadas y deducir la intersección por exceso de conteo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "aplicar la regla aditiva restando la intersección en eventos no excluyentes"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas probabilidades literales de dos eventos independientes en texto, obtener la expresión de que ocurra al menos uno",
+        "dada una urna con cantidades literales en texto, obtener la expresión de una secuencia de extracciones con reposición",
+        "dados conteos de dos condiciones solapadas en texto, obtener la afirmación verdadera sobre probabilidades",
+        "dada una colección con dos atributos en texto, obtener la probabilidad de la unión de dos eventos no excluyentes"
+      ],
+      "dominios_vistos": [
+        "aprobación de asignaturas",
+        "tómbola con bolitas",
+        "puntajes de una prueba",
+        "urna con fichas"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "confunde al menos con estrictamente mayor y a lo más con estrictamente menor",
+        "suma probabilidades de eventos no excluyentes sin restar la intersección",
+        "trata extracción con reposición como si fuera sin reposición",
+        "suma en vez de multiplicar para eventos independientes sucesivos"
+      ]
+    },
+    {
+      "id": "espacio-muestral-experimentos-compuestos-a",
+      "nombre": "Espacio muestral de experimentos compuestos y regla multiplicativa",
+      "prerrequisitos": [
+        "regla-de-laplace",
+        "regla-multiplicativa",
+        "reglas-aditiva-y-multiplicativa-cierre-a"
+      ],
+      "secuencia_sugerida": 26,
+      "unidad_id": "reglas-de-probabilidades",
+      "representaciones": [
+        "diagrama-arbol",
+        "tabla-doble-entrada",
+        "grafico-circular"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "dos o tres etapas, conteo exhaustivo de ramas y varios ítems de detectar el paso erróneo en un procedimiento",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "construir el árbol de un experimento de dos etapas"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "contar ramas finales para aplicar Laplace"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "verificar el mismo resultado con la regla multiplicativa"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "tabular sumas de dos dados y comparar frecuencias"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "encadenar etapas sin reposición ajustando el total"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "encadenar probabilidades leídas de dos gráficos circulares"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "auditar un procedimiento y ubicar el primer paso erróneo"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un experimento compuesto en texto, obtener el espacio muestral en diagrama-arbol",
+        "dado un diagrama-arbol, obtener la probabilidad de un evento compuesto por conteo de ramas",
+        "dado un experimento en dos etapas en texto, obtener la probabilidad por regla multiplicativa",
+        "dada una tabla-doble-entrada de sumas de dos dados, obtener el resultado más probable",
+        "dado un procedimiento con pasos en texto, obtener el paso donde se comete el error",
+        "dadas extracciones sucesivas sin reposición en texto, obtener la expresión de la probabilidad conjunta",
+        "dados dos grafico-circular encadenados, obtener la probabilidad de una categoría de segunda etapa"
+      ],
+      "dominios_vistos": [
+        "moneda y dado",
+        "juego con dos dados",
+        "previsión de salud",
+        "tres monedas",
+        "clima en días consecutivos",
+        "notas de un curso"
+      ],
+      "conteo_problemas": 7,
+      "errores_frecuentes_patron": [
+        "asigna a cada resultado elemental la probabilidad de todo el evento favorable",
+        "suma probabilidades de dos eventos con intersección no vacía como si fueran excluyentes",
+        "mantiene el total al extraer sin reposición",
+        "confunde independencia con exclusión mutua",
+        "no reduce la segunda etapa al subconjunto que corresponde"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "gráficos circulares de un ejemplo citado",
+          "razon": "figura no legible en el texto plano; datos inferidos de la solución"
+        }
+      ]
+    },
+    {
+      "id": "diagrama-de-conjuntos-en-probabilidad-a",
+      "nombre": "Diagrama de conjuntos para probabilidad de unión, intersección y complemento",
+      "prerrequisitos": [
+        "regla-de-laplace",
+        "regla-aditiva",
+        "porcentaje-de-una-cantidad"
+      ],
+      "secuencia_sugerida": 27,
+      "unidad_id": "reglas-de-probabilidades",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "dos o tres conjuntos, requiere distinguir solo uno de al menos uno y calcular la región exterior",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "ubicar la intersección antes que las regiones exclusivas"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir solo un conjunto de la totalidad de un conjunto"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "obtener la región exterior como complemento de la unión"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "leer probabilidades marginales y exclusivas desde las regiones"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "extender a tres conjuntos y unir regiones excluyentes"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "trabajar con una región desconocida expresada con una letra"
+        }
+      ],
+      "tareas_tipo": [
+        "dados conteos de inscripción en dos actividades en texto, obtener el complemento de la unión",
+        "dado un esquema de tres conjuntos descrito en texto, obtener la probabilidad de la unión de regiones excluyentes",
+        "dados porcentajes de dos eventos y su intersección en texto, obtener la probabilidad de que no ocurra ninguno",
+        "dados conteos con una cantidad literal en texto, obtener la expresión de la probabilidad de un conjunto",
+        "dado el total y el tamaño de un conjunto en texto, obtener la probabilidad de la región exclusiva restante"
+      ],
+      "dominios_vistos": [
+        "electivos de un curso",
+        "reunión con idiomas",
+        "talleres escolares",
+        "aprobación de dos asignaturas",
+        "sabores de jugo"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "confunde el total de un conjunto con la parte exclusiva",
+        "olvida la región exterior al calcular el complemento",
+        "suma tamaños de conjuntos sin descontar la intersección",
+        "interpreta al menos uno como exactamente uno"
+      ]
+    },
+    {
+      "id": "tabla-doble-entrada-en-probabilidad-a",
+      "nombre": "Tabla de doble entrada para probabilidades conjuntas, marginales y unión",
+      "prerrequisitos": [
+        "regla-de-laplace",
+        "regla-aditiva",
+        "porcentaje-de-una-cantidad"
+      ],
+      "secuencia_sugerida": 28,
+      "unidad_id": "reglas-de-probabilidades",
+      "representaciones": [
+        "tabla-doble-entrada"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "completar totales marginales desde datos parciales, un ítem de argumentos válidos y otro con cantidades literales",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "traducir un enunciado a filas y columnas con categorías excluyentes"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "completar celdas y totales marginales por diferencia"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "leer probabilidad conjunta desde una celda"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "leer probabilidad marginal desde un total"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "aplicar la regla aditiva con celdas y totales"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "evaluar la validez de argumentos que citan la tabla"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "operar la tabla con cantidades literales"
+        }
+      ],
+      "tareas_tipo": [
+        "dados datos cruzados en texto, obtener la tabla-doble-entrada completa con totales marginales",
+        "dada una tabla-doble-entrada, obtener la probabilidad de una intersección de categorías",
+        "dada una tabla-doble-entrada, obtener la expresión de la unión de dos categorías no excluyentes",
+        "dada una tabla-doble-entrada con porcentajes, obtener una probabilidad marginal",
+        "dada una tabla-doble-entrada con cantidades literales, obtener la expresión de una probabilidad conjunta",
+        "dada una tabla-doble-entrada y varios argumentos, obtener el argumento no válido"
+      ],
+      "dominios_vistos": [
+        "vacunación en localidad",
+        "encuesta área de estudios",
+        "edad y género",
+        "mascotas en viviendas",
+        "consolas de videojuegos",
+        "actividad física y horario",
+        "vehículos y tipo de motor",
+        "productos y edades"
+      ],
+      "conteo_problemas": 8,
+      "errores_frecuentes_patron": [
+        "toma un total de fila como si fuera una celda",
+        "suma dos totales sin restar la celda compartida",
+        "confunde probabilidad conjunta con condicional",
+        "usa el total de una categoría en vez del total general como denominador",
+        "categorías no excluyentes al construir la tabla"
+      ]
+    },
+    {
+      "id": "espacios-muestrales-no-equiprobables-a",
+      "nombre": "Espacios muestrales no equiprobables",
+      "prerrequisitos": [
+        "regla-de-laplace",
+        "ecuaciones-de-primer-grado",
+        "razones"
+      ],
+      "secuencia_sugerida": 29,
+      "unidad_id": "reglas-de-probabilidades",
+      "representaciones": [
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "modelar",
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "alto",
+      "base_calibracion_dificultad": "exige plantear una ecuación con incógnita de peso, sumar a uno y luego encadenar etapas o comparar argumentos",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer que Laplace no aplica directamente sobre objetos cargados"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "asignar un peso desconocido y escribir los demás como múltiplos"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "usar que la suma de todas las probabilidades es uno"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reinterpretar los pesos como una urna equiprobable virtual"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "traducir una razón entre probabilidades a fracciones sobre la suma de partes"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "componer un espacio cargado con otro equiprobable en dos etapas"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "criticar justificaciones que aplican Laplace o razones incorrectamente"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas relaciones entre las probabilidades de las caras en texto, obtener la probabilidad de una cara",
+        "dado un dado cargado en texto, obtener la probabilidad de un evento en dos lanzamientos independientes",
+        "dada una razón entre probabilidades en texto, obtener la probabilidad de un resultado",
+        "dados varios procedimientos de estudiantes en texto, obtener cuáles contienen un error conceptual",
+        "dado un experimento en dos etapas con moneda cargada en texto, obtener la probabilidad de un resultado final"
+      ],
+      "dominios_vistos": [
+        "dado cargado",
+        "moneda cargada",
+        "dado con primos y compuestos"
+      ],
+      "conteo_problemas": 6,
+      "errores_frecuentes_patron": [
+        "interpreta la razón entre dos probabilidades como la fracción de la primera",
+        "cuenta los términos de la razón como cantidad de resultados posibles",
+        "aplica Laplace sobre caras físicas sin ponderar",
+        "olvida que todas las probabilidades deben sumar uno",
+        "multiplica el peso de una cara por la cantidad de caras equivocada"
+      ]
+    },
+    {
+      "id": "lectura-de-graficos-y-tablas-de-frecuencia-a",
+      "nombre": "Lectura de gráficos y tablas de frecuencia con porcentajes",
+      "prerrequisitos": [
+        "porcentaje-de-una-cantidad",
+        "frecuencia-absoluta-y-relativa"
+      ],
+      "secuencia_sugerida": 30,
+      "unidad_id": "tablas-y-graficos",
+      "representaciones": [
+        "grafico-barras",
+        "tabla-frecuencias",
+        "grafico-circular"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "argumentar",
+        "resolver"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "un paso de lectura más una conversión porcentaje a cantidad; la tabla incompleta añade una proporción",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "leer frecuencia porcentual de una barra y convertirla a cantidad"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "rechazar afirmaciones que exceden lo que mide la encuesta"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "completar una tabla de frecuencias desde la porcentual acumulada"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "sumar sectores de un gráfico circular por encima de un umbral"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un grafico-barras de frecuencias porcentuales, obtener la afirmación verdadera",
+        "dada una tabla-frecuencias incompleta con porcentual acumulada, obtener un porcentaje acumulado",
+        "dado un grafico-circular con porcentajes, obtener la cantidad de casos por encima de un valor"
+      ],
+      "dominios_vistos": [
+        "géneros de películas",
+        "salto en básquetbol",
+        "juguetes de niños"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "confunde frecuencia porcentual con frecuencia absoluta",
+        "confunde acumulada con frecuencia simple",
+        "extrapola conclusiones a una población no encuestada",
+        "incluye el valor límite al contar más de"
+      ]
+    },
+    {
+      "id": "tendencia-central-y-medidas-de-posicion-a",
+      "nombre": "Media, mediana, moda, cuartiles y diagrama de cajón",
+      "prerrequisitos": [
+        "operaciones-con-fracciones",
+        "ecuaciones-de-primer-grado",
+        "lectura-de-graficos-y-tablas-de-frecuencia-a"
+      ],
+      "secuencia_sugerida": 31,
+      "unidad_id": "medidas-de-posicion",
+      "representaciones": [
+        "grafico-barras",
+        "diagrama-cajon",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "combina condición de bimodalidad con un dato desconocido, despeje literal y cálculo de cuartiles desde frecuencias",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "despejar un valor desconocido desde la fórmula del promedio"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "usar una condición de modas para fijar un dato faltante"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "ordenar y calcular mediana con cantidad par de datos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "pasar de barras a tabla de frecuencias acumuladas"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "ubicar posiciones de cuartiles y decidir promedio o redondeo"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "trazar el diagrama de cajón con mínimo, cuartiles y máximo"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "calcular rango intercuartílico como diferencia de cuartiles"
+        }
+      ],
+      "tareas_tipo": [
+        "dado el promedio y dos valores literales en texto, obtener la expresión del tercer valor",
+        "dado un conjunto con un dato desconocido y condición de bimodalidad en texto, obtener mediana y media",
+        "dado un grafico-barras de frecuencias, obtener el diagrama-cajon correspondiente",
+        "dada una lista ordenada de datos en texto, obtener el rango intercuartílico"
+      ],
+      "dominios_vistos": [
+        "precios de notebooks",
+        "asistencia al teatro",
+        "integrantes de familia"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "multiplica solo un término al despejar desde el promedio",
+        "calcula la mediana sin ordenar los datos",
+        "confunde frecuencia con valor de la variable al ubicar cuartiles",
+        "toma como cuartiles los valores de frecuencia en vez de la variable"
+      ]
+    },
+    {
+      "id": "angulos-y-clasificacion-de-triangulos-a",
+      "nombre": "Ángulos interiores, exteriores y clasificación de triángulos",
+      "prerrequisitos": [
+        "angulos-entre-rectas",
+        "simetria-axial"
+      ],
+      "secuencia_sugerida": 32,
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "dos o tres ecuaciones angulares encadenadas; los ítems de siempre verdadero exigen contraejemplos",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "usar que los interiores suman un llano"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "usar ángulo exterior como suma de interiores no adyacentes"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar ángulos basales iguales en isósceles y equilátero"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "combinar bisectriz o simetría con la suma angular"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "clasificar por lados y por ángulos y refutar con contraejemplos"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una figura-plana con ángulos marcados y una bisectriz, obtener un ángulo desconocido",
+        "dada una figura-plana con triángulo equilátero y un ángulo dado, obtener dos ángulos desconocidos",
+        "dadas condiciones sobre los ángulos interiores en texto, obtener la afirmación siempre verdadera",
+        "dada una desigualdad entre ángulos interiores en texto, obtener la clasificación del triángulo",
+        "dada una figura-plana con puntos simétricos respecto a una recta, obtener el ángulo entre dos rectas"
+      ],
+      "dominios_vistos": [
+        "simetría respecto a recta",
+        "triángulo con bisectriz"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "asume que rectángulo u obtusángulo implica escaleno",
+        "olvida repartir el ángulo bisecado en dos partes iguales",
+        "confunde ángulo exterior con suplemento incorrecto",
+        "no reconoce el isósceles que genera la simetría"
+      ]
+    },
+    {
+      "id": "teorema-de-pitagoras-aplicacion-directa-a",
+      "nombre": "Teorema de Pitágoras, tríos pitagóricos y triángulos notables",
+      "prerrequisitos": [
+        "raices-cuadradas",
+        "potencias",
+        "angulos-y-clasificacion-de-triangulos-a"
+      ],
+      "secuencia_sugerida": 33,
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana",
+        "plano-cartesiano",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "un despeje con raíz; sube cuando hay dos posiciones, cambio de unidad, factorización de raíz o distancia en coordenadas",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "identificar hipotenusa frente al ángulo recto"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "despejar un cateto o la hipotenusa con raíz"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "reconocer tríos pitagóricos y sus múltiplos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "usar razones de los triángulos notables"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "comparar hipotenusas y perímetros sin calcular decimales"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "modelar situaciones con dos configuraciones del mismo triángulo"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "factorizar una raíz para expresar la diagonal"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "aplicar distancia entre puntos en el plano"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una figura-plana con dos medidas de un triángulo rectángulo, obtener la expresión de la hipotenusa",
+        "dada una tabla de catetos en texto, obtener la afirmación verdadera sobre hipotenusas y perímetros",
+        "dadas varias figura-plana con condiciones, obtener aquella donde el segmento mide lo indicado",
+        "dado un cambio de posición de un segmento apoyado en texto, obtener el desplazamiento de la base",
+        "dados tríos de números en texto, obtener cuál no es pitagórico",
+        "dada una figura-plana con altura y base dividida, obtener un lado",
+        "dado un triángulo rectángulo isósceles con hipotenusa conocida en texto, obtener un cateto",
+        "dadas las dimensiones de un rectángulo en texto, obtener la expresión de la diagonal en otra unidad",
+        "dado un esquema de medición con distancia y altura en texto, obtener la expresión de una altura",
+        "dados dos vértices en plano-cartesiano y una longitud, obtener el tercer vértice posible"
+      ],
+      "dominios_vistos": [
+        "repisa con tensores",
+        "dibujo de triángulos",
+        "madero apoyado en pared",
+        "techo de casa",
+        "televisor en pulgadas",
+        "altura de pinos"
+      ],
+      "conteo_problemas": 10,
+      "errores_frecuentes_patron": [
+        "resta cuadrados cuando se busca la hipotenusa",
+        "suma las medidas y luego eleva al cuadrado",
+        "olvida sumar el desfase del observador a la altura",
+        "factoriza mal la raíz al extraer un factor común",
+        "confunde la diferencia de coordenadas con la distancia"
+      ]
+    },
+    {
+      "id": "pitagoras-en-areas-y-figuras-compuestas-a",
+      "nombre": "Altura y área de triángulos isósceles y equiláteros vía Pitágoras",
+      "prerrequisitos": [
+        "teorema-de-pitagoras-aplicacion-directa-a",
+        "area-de-triangulo"
+      ],
+      "secuencia_sugerida": 34,
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "argumentar",
+        "modelar"
+      ],
+      "dificultad": "alto",
+      "base_calibracion_dificultad": "encadena Pitágoras con fórmula de área, raíces no exactas, figuras compuestas y auditoría de procedimientos con fracciones",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "trazar la altura que parte el isósceles en dos rectángulos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "usar la mitad de la base como cateto y la base completa en el área"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "obtener la altura del equilátero desde el lado"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "despejar altura desde un área dada y luego lados faltantes"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "descomponer una figura compuesta en triángulos rectángulos"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "auditar pasos con altura expresada como fracción del lado"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un triángulo rectángulo isósceles con hipotenusa en texto, obtener su área",
+        "dado un procedimiento con pasos en texto, obtener el paso con el primer error",
+        "dada una figura-plana con área conocida y base dividida, obtener el perímetro",
+        "dada una figura-plana compuesta de triángulos rectángulos, obtener el área total",
+        "dado un triángulo equilátero con lado en texto, obtener la altura"
+      ],
+      "dominios_vistos": [
+        "domo geodésico",
+        "figura compuesta de triángulos"
+      ],
+      "conteo_problemas": 5,
+      "errores_frecuentes_patron": [
+        "usa la mitad de la base al calcular el área tras hallarla como cateto",
+        "suma cuadrados en vez de restar al buscar la altura",
+        "olvida extraer la raíz al final",
+        "confunde altura con lado en el equilátero"
+      ]
+    },
+    {
+      "id": "area-y-perimetro-de-poligonos-a",
+      "nombre": "Área y perímetro de polígonos y figuras equivalentes",
+      "prerrequisitos": [
+        "teorema-de-pitagoras-aplicacion-directa-a",
+        "pitagoras-en-areas-y-figuras-compuestas-a",
+        "ecuaciones-de-primer-grado"
+      ],
+      "secuencia_sugerida": 35,
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "base_calibracion_dificultad": "fórmulas directas con un despeje; sube en figuras compuestas, razones entre segmentos y decimales en trapecio",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "distinguir perímetro de área y unidades de cada uno"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar fórmulas de cuadrado, rectángulo, triángulo, rombo, romboide y trapecio"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "despejar una dimensión desde el área conocida"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "contar solo el contorno en figuras formadas por cuadrados"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "trazar alturas para descomponer trapecios y pentágonos"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "calcular área por diferencia entre rectángulo y triángulos"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "comparar figuras equivalentes con igual área o igual perímetro"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un trapecio con área y bases en figura-plana, obtener la altura",
+        "dada una malla de cuadrados en texto, obtener el perímetro de la figura completa",
+        "dado un procedimiento con pasos en texto, obtener el paso con el error",
+        "dada una figura-plana con base y altura, obtener el área de un triángulo",
+        "dado un trapecio isósceles con altura y bases en figura-plana, obtener el perímetro",
+        "dado un paralelogramo con altura y razón de segmentos en figura-plana, obtener el área",
+        "dado un pentágono con ángulos y lados en figura-plana, obtener el perímetro",
+        "dada la igualdad de perímetros entre cuadrado y triángulo equilátero en texto, obtener un área",
+        "dadas las diagonales de un rombo en texto, obtener el área",
+        "dado un triángulo inscrito en un rectángulo en figura-plana, obtener el área por diferencia",
+        "dado un triángulo equilátero con lado en texto, obtener la afirmación verdadera sobre altura y área"
+      ],
+      "dominios_vistos": [
+        "gancho en pared",
+        "malla de cuadrados",
+        "figura de cuadrados congruentes",
+        "señalética con forma de rombo",
+        "jardín triangular",
+        "triángulo inscrito en rectángulo"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "cuenta lados internos al calcular el perímetro de una figura compuesta",
+        "multiplica cantidad de cuadrados por lado como si fuera perímetro",
+        "olvida dividir por dos en triángulo, rombo o trapecio",
+        "usa la diagonal del rombo como si fuera lado",
+        "confunde el lado con la altura en el paralelogramo"
+      ]
+    },
+    {
+      "id": "circunferencia-y-circulo-a",
+      "nombre": "Perímetro de la circunferencia y área de círculo, coronas y sectores",
+      "prerrequisitos": [
+        "area-y-perimetro-de-poligonos-a",
+        "potencias",
+        "expresiones-algebraicas-cuadrado-de-binomio"
+      ],
+      "secuencia_sugerida": 36,
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "alto",
+      "base_calibracion_dificultad": "exige despejar radio desde perímetro, operar con pi simbólico, cuadrado de binomio y regiones por diferencia",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "distinguir circunferencia de círculo y radio de diámetro"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "despejar el radio desde el perímetro y luego calcular el área"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "relacionar razón de áreas con razón de radios"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "calcular regiones por diferencia entre círculo y polígono"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "expresar área de una corona con diámetros"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "expresar área nueva tras un cambio literal del diámetro"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "contar círculos tangentes en un rectángulo y restar áreas"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "comparar perímetro y área de zonas complementarias en un cuadrado"
+        }
+      ],
+      "tareas_tipo": [
+        "dados perímetros de varios círculos en texto, obtener el área total",
+        "dada una relación entre áreas de dos círculos en texto, obtener el radio",
+        "dado un rectángulo inscrito en una circunferencia en figura-plana, obtener el área sombreada",
+        "dado el perímetro de una circunferencia en texto, obtener el área",
+        "dado un cuadrado con cuarto de círculo en figura-plana, obtener la relación verdadera entre zonas",
+        "dado un aumento literal del diámetro en texto, obtener la expresión del área nueva",
+        "dada una bandeja con círculos tangentes en figura-plana, obtener el área no ocupada",
+        "dados diámetros interior y exterior de una corona en texto, obtener la expresión del área",
+        "dado un procedimiento con pasos en texto, obtener el paso con el error"
+      ],
+      "dominios_vistos": [
+        "círculos en patio",
+        "rectángulo inscrito en circunferencia",
+        "hallullas en bandeja",
+        "neumáticos de bicicleta",
+        "cuadrado con cuarto de círculo"
+      ],
+      "conteo_problemas": 9,
+      "errores_frecuentes_patron": [
+        "confunde diámetro con radio al usar la fórmula",
+        "suma radios antes de elevar al cuadrado",
+        "reduce el radio en la misma proporción que el área",
+        "suma exponentes al elevar una potencia a otra potencia",
+        "olvida el cuadrado del término cruzado en un binomio",
+        "cree que zonas de igual perímetro tienen igual área"
+      ],
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "infografía de un sitio externo",
+          "razon": "imagen ajena con etiquetas comerciales; no se describe"
+        }
+      ]
+    },
+    {
+      "id": "area-y-volumen-de-paralelepipedo-y-cubo-a",
+      "nombre": "Área total, volumen y diagonal de paralelepípedo y cubo",
+      "prerrequisitos": [
+        "area-y-perimetro-de-poligonos-a",
+        "teorema-de-pitagoras-aplicacion-directa-a",
+        "potencias"
+      ],
+      "secuencia_sugerida": 37,
+      "unidad_id": "cuerpos-geometricos",
+      "representaciones": [
+        "cuerpo-geometrico"
+      ],
+      "habilidades_demre": [
+        "representar",
+        "resolver"
+      ],
+      "dificultad": "bajo",
+      "base_calibracion_dificultad": "solo teoría en el tramo: definiciones, redes, fórmulas y diagonal espacial; sin ejercicios aún",
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "clasificar poliedros y cuerpos redondos e identificar caras, aristas y vértices"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer la red del paralelepípedo para sumar las seis caras"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular volumen como producto de las tres dimensiones"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "particularizar al cubo con aristas iguales"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "ver el cubo como traslación de un cuadrado"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "obtener la diagonal espacial con Pitágoras en el espacio"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas las tres dimensiones en texto, obtener el área total y el volumen",
+        "dada la arista de un cubo en texto, obtener la diagonal espacial"
+      ],
+      "dominios_vistos": [],
+      "conteo_problemas": 0,
+      "errores_frecuentes_patron": [
+        "cuenta solo tres caras en el área total",
+        "confunde diagonal de una cara con diagonal espacial"
+      ]
+    },
+    {
+      "id": "cubo-y-paralelepipedo-area-volumen",
+      "nombre": "Área y volumen de cubo y paralelepípedo recto",
+      "prerrequisitos": [
+        "area-de-cuadrado-y-rectangulo",
+        "teorema-de-pitagoras",
+        "potencias-y-raices-basicas"
+      ],
+      "secuencia_sugerida": 38,
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "cuerpos-geometricos",
+      "representaciones": [
+        "cuerpo-geometrico",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "contar cubos unitarios en un apilamiento a partir de sus dimensiones"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular volumen de prisma como área basal por altura"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular área total de cubo desde una cara o desde la arista"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "obtener la arista desde la diagonal del cubo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "modelar área y volumen con variables cuando las dimensiones son literales"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "argumentar cambios de área total al unir prismas por una cara"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "relacionar volumen con producto de áreas de caras distintas"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una red y un apilamiento de cubos en cuerpo-geometrico, obtener la cantidad de cubos usados",
+        "dadas las dimensiones de un prisma en texto, obtener su volumen",
+        "dada el área de una cara de un cubo en texto, obtener una expresión para el área total",
+        "dada la diagonal de un cubo en texto, obtener su área total",
+        "dadas las dimensiones de una caja en variables en texto, obtener una expresión algebraica para su área",
+        "dado un cuadrado recortado en las esquinas en figura-plana, obtener una expresión para el volumen de la caja",
+        "dadas las áreas de tres caras distintas en texto, obtener el volumen del paralelepípedo",
+        "dados dos prismas unidos por una cara en cuerpo-geometrico, obtener la justificación de la reducción del área total",
+        "dada una cuadrícula recortable con diagonal conocida en figura-plana, obtener el volumen del cubo armado",
+        "dados dos prismas generados por traslación de figuras planas en cuerpo-geometrico, obtener la razón entre sus volúmenes"
+      ],
+      "dominios_vistos": [
+        "cubos apilados",
+        "pared de bloques de vidrio",
+        "cajas cúbicas para joyas",
+        "caja de pelotas de tenis",
+        "caja de cartón recortada",
+        "chaveta industrial",
+        "cartulina para armar cubo",
+        "bloque de cemento"
+      ],
+      "conteo_problemas": 12,
+      "errores_frecuentes_patron": [
+        "confunde arista con diagonal del cubo",
+        "confunde área de una cara con área total",
+        "cuenta caras compartidas como parte del área del cuerpo unido",
+        "olvida convertir unidades antes de calcular el volumen",
+        "confunde razón de lados con razón de volúmenes"
+      ],
+      "base_calibracion_dificultad": "varios pasos con figuras, dimensiones literales y justificación de propiedades; algunos ítems son cálculo directo"
+    },
+    {
+      "id": "cilindro-circular-recto-area-volumen",
+      "nombre": "Área y volumen del cilindro circular recto",
+      "prerrequisitos": [
+        "area-de-circulo-y-perimetro-de-circunferencia",
+        "cubo-y-paralelepipedo-area-volumen",
+        "fracciones-y-proporciones"
+      ],
+      "secuencia_sugerida": 39,
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "cuerpos-geometricos",
+      "representaciones": [
+        "cuerpo-geometrico",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "reconocer el cilindro como sólido de revolución de un rectángulo"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "identificar área basal, área lateral y área total desde la red"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "calcular volumen como área basal por altura"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "despejar una dimensión desde el volumen conocido"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "trabajar con aproximaciones de pi indicadas en el enunciado"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "componer y restar cilindros en cuerpos huecos o concéntricos"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "comparar volúmenes de cuerpos distintos con dimensiones literales"
+        }
+      ],
+      "tareas_tipo": [
+        "dados el radio y la altura de un cilindro en texto, obtener su área total",
+        "dados el volumen y el radio de un cilindro en texto, obtener su altura",
+        "dado un cilindro con dimensiones en cuerpo-geometrico, obtener el área lateral de una franja parcial",
+        "dado un cilindro hueco con espesor en cuerpo-geometrico, obtener su área total",
+        "dado un cilindro en cuerpo-geometrico, obtener otro cuerpo con igual volumen",
+        "dado un cilindro parcialmente lleno en texto, obtener el volumen que falta",
+        "dados cilindros apilados con diámetros relacionados en cuerpo-geometrico, obtener la pintura necesaria para las áreas laterales",
+        "dada una pieza de cilindros concéntricos en cuerpo-geometrico, obtener su volumen total",
+        "dados dos cilindros con igual altura de líquido en texto, obtener la razón entre las nuevas alturas tras extraer volumen"
+      ],
+      "dominios_vistos": [
+        "vaso milimetrado",
+        "frasco de mermelada",
+        "recipiente de madera torneado",
+        "tubo de PVC",
+        "silo de semillas",
+        "columnas de concreto pintadas",
+        "perno de secciones cilíndricas",
+        "recipientes cilíndricos con agua"
+      ],
+      "conteo_problemas": 11,
+      "errores_frecuentes_patron": [
+        "confunde diámetro con radio",
+        "confunde área lateral con área total",
+        "olvida duplicar el área basal en el área total",
+        "usa unidades no homogéneas antes de operar",
+        "olvida la corona circular al calcular el área de un cuerpo hueco",
+        "confunde razón de diámetros con razón de áreas basales"
+      ],
+      "base_calibracion_dificultad": "contextos técnicos con figura, varios pasos, expresiones con pi y literales; pocos ítems de sustitución directa"
+    },
+    {
+      "id": "vectores-definicion-y-operatoria",
+      "nombre": "Vectores: elementos, operaciones geométricas y analíticas",
+      "prerrequisitos": [
+        "plano-cartesiano-y-coordenadas",
+        "teorema-de-pitagoras",
+        "operatoria-con-enteros-y-fracciones"
+      ],
+      "secuencia_sugerida": 40,
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "plano-cartesiano",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "identificar origen, extremo y punta de flecha de un vector"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "distinguir norma, dirección y sentido"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "sumar vectores por desplazamiento encadenado"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "sumar vectores por regla del paralelogramo"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "ponderar un vector por un escalar y su efecto en módulo y sentido"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "restar vectores como suma con el opuesto"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "escribir componentes a partir de dos puntos"
+        },
+        {
+          "orden": 8,
+          "subhabilidad": "calcular módulo desde las componentes"
+        },
+        {
+          "orden": 9,
+          "subhabilidad": "operar analíticamente suma, resta y ponderación"
+        },
+        {
+          "orden": 10,
+          "subhabilidad": "comparar vectores por dirección, sentido y magnitud usando proporcionalidad de componentes"
+        }
+      ],
+      "tareas_tipo": [
+        "dada una ecuación vectorial con un vector incógnita en texto, obtener sus componentes",
+        "dados dos vectores en plano-cartesiano, obtener cuál igualdad con operaciones entre ellos es verdadera",
+        "dado el módulo y el cuadrante de un vector en texto, obtener componentes posibles",
+        "dados dos vectores con componentes fraccionarias en texto, obtener una combinación lineal",
+        "dados dos puntos en plano-cartesiano, obtener las componentes del vector entre ellos",
+        "dado un vector con componente desconocida y módulo conocido en texto, obtener otro vector con módulo igual a la incógnita",
+        "dadas dos fuerzas opuestas en texto, obtener la representación del vector resultante",
+        "dado un vector genérico en texto, obtener la familia de ponderaciones con sentido opuesto y magnitud acotada",
+        "dados varios vectores y afirmaciones sobre ellos en texto, obtener cuál afirmación es errónea",
+        "dados vectores dibujados en plano-cartesiano, obtener la combinación que produce otro vector"
+      ],
+      "dominios_vistos": [
+        "fuerza neta sobre bloque",
+        "conclusiones de estudiantes sobre vectores",
+        "vectores en cuadrícula"
+      ],
+      "conteo_problemas": 12,
+      "errores_frecuentes_patron": [
+        "resta las componentes en orden invertido al hallar el vector entre dos puntos",
+        "confunde dirección con sentido",
+        "cree que vectores paralelos tienen siempre igual sentido",
+        "olvida el valor absoluto del escalar al comparar magnitudes",
+        "suma magnitudes en vez de componentes cuando los vectores no son colineales",
+        "olvida el signo de las componentes según el cuadrante"
+      ],
+      "base_calibracion_dificultad": "operatoria de pocos pasos, pero varios ítems exigen analizar cuatro afirmaciones o familias de vectores con literales"
+    },
+    {
+      "id": "traslaciones-en-el-plano",
+      "nombre": "Traslaciones en el plano y vector de traslación",
+      "prerrequisitos": [
+        "vectores-definicion-y-operatoria",
+        "plano-cartesiano-y-coordenadas"
+      ],
+      "secuencia_sugerida": 41,
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "plano-cartesiano",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "aplicar un vector a cada vértice para obtener la figura imagen"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "leer el vector de traslación como par de desplazamientos horizontal y vertical"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "obtener el vector desde punto original e imagen"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "componer traslaciones sucesivas sumando vectores"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "traducir indicaciones verbales de desplazamiento a vectores y viceversa"
+        }
+      ],
+      "tareas_tipo": [
+        "dados un punto y un vector de traslación en texto, obtener la imagen",
+        "dada una figura en dos posiciones en figura-plana, obtener la traslación que las relaciona",
+        "dados desplazamientos sucesivos en texto, obtener el desplazamiento equivalente",
+        "dada una pieza en tablero cuadriculado en figura-plana, obtener la secuencia de movimientos hacia una casilla",
+        "dado un vector definido por dos vectores de posición en texto, obtener la imagen de los vértices de un polígono",
+        "dada una circunferencia en plano-cartesiano, obtener un vector que la lleve completa a un cuadrante",
+        "dadas dos traslaciones sucesivas en texto, obtener la distancia entre punto inicial y final",
+        "dada una traslación por un múltiplo de un vector en texto, obtener el vector",
+        "dado un patrón de traslaciones alternadas en texto, obtener una propiedad de los puntos resultantes"
+      ],
+      "dominios_vistos": [
+        "figura en papel cuadriculado",
+        "indicaciones para llegar a tienda",
+        "alfil en tablero de ajedrez",
+        "circunferencia en cuadrícula",
+        "patrón de saltos alternados"
+      ],
+      "conteo_problemas": 10,
+      "errores_frecuentes_patron": [
+        "invierte el signo del vector de traslación",
+        "confunde vector de posición con vector de desplazamiento",
+        "confunde los puntos cardinales con los signos de las componentes",
+        "aplica la traslación a un solo vértice y generaliza mal",
+        "olvida dividir por el escalar cuando la traslación es un múltiplo del vector"
+      ],
+      "base_calibracion_dificultad": "cálculo directo en la mitad de los ítems; el resto encadena traslaciones o exige verificar todos los vértices"
+    },
+    {
+      "id": "rotaciones-en-el-plano-cartesiano",
+      "nombre": "Rotaciones en el plano cartesiano",
+      "prerrequisitos": [
+        "plano-cartesiano-y-coordenadas",
+        "traslaciones-en-el-plano",
+        "angulos-y-sentido-de-giro"
+      ],
+      "secuencia_sugerida": 42,
+      "habilidades_demre": [
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "plano-cartesiano",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "definir centro, ángulo y convención de signo del sentido de giro"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar las reglas de coordenadas para cuartos de vuelta y medio giro con centro en el origen"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar las reglas para giros en sentido horario"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "rotar con centro distinto del origen usando una traslación auxiliar y su inversa"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "reducir giros sucesivos a un giro neto sumando ángulos con signo"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un punto genérico en texto, obtener el cuadrante de su imagen tras un giro",
+        "dado un rectángulo en plano-cartesiano, obtener un vértice de su imagen tras un giro con centro fuera del origen",
+        "dado un triángulo en plano-cartesiano, obtener las abscisas de los vértices tras girar respecto a un punto dado",
+        "dada una figura con sectores sombreados en figura-plana, obtener la posición final tras giros sucesivos"
+      ],
+      "dominios_vistos": [
+        "círculo con sectores sombreados",
+        "rectángulo achurado en cuadrícula"
+      ],
+      "conteo_problemas": 4,
+      "errores_frecuentes_patron": [
+        "intercambia las reglas de giro horario y antihorario",
+        "olvida deshacer la traslación auxiliar cuando el centro no es el origen",
+        "confunde el signo de las coordenadas al girar",
+        "suma ángulos sin considerar el signo del sentido"
+      ],
+      "base_calibracion_dificultad": "pocos ítems, pero la mayoría con centro fuera del origen, lo que exige tres pasos encadenados"
+    },
+    {
+      "id": "simetria-axial-reflexion",
+      "nombre": "Simetría axial: reflexión respecto a una recta",
+      "prerrequisitos": [
+        "plano-cartesiano-y-coordenadas",
+        "angulos-en-triangulos",
+        "area-de-trapecio"
+      ],
+      "secuencia_sugerida": 43,
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "plano-cartesiano",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "definir el eje como mediatriz del segmento entre punto e imagen"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "reconocer ejes de simetría de figuras planas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar reglas de coordenadas para reflexión en los ejes coordenados"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "aplicar reglas para reflexión en las diagonales principal y secundaria"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "reflejar respecto a rectas verticales u horizontales arbitrarias usando igualdad de distancias"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un recorte en papel doblado en figura-plana, obtener la figura al desdoblar",
+        "dada la distancia de un punto a un eje en texto, obtener la distancia entre el punto y su reflejo",
+        "dados cuadriláteros con rectas punteadas en figura-plana, obtener cuál muestra sus ejes de simetría",
+        "dada una recta reflejada respecto a otra en figura-plana, obtener un ángulo del triángulo formado",
+        "dado un triángulo y su reflejo en plano-cartesiano, obtener el área del trapecio formado",
+        "dados dos puntos simétricos respecto a una recta vertical en plano-cartesiano, obtener la abscisa de uno"
+      ],
+      "dominios_vistos": [
+        "recorte de papel doblado",
+        "ejes de simetría de cuadriláteros",
+        "triángulo reflejado en cuadrícula"
+      ],
+      "conteo_problemas": 6,
+      "errores_frecuentes_patron": [
+        "confunde reflexión respecto al eje X con respecto al eje Y",
+        "intercambia las reglas de la diagonal principal y la secundaria",
+        "trata una recta vertical arbitraria como si fuera el eje",
+        "atribuye ejes de simetría a las diagonales de todo cuadrilátero",
+        "olvida que la reflexión conserva ángulos y distancias"
+      ],
+      "base_calibracion_dificultad": "combina reglas de coordenadas con propiedades geométricas de la figura reflejada; varios ítems con figura y literal"
+    },
+    {
+      "id": "simetria-puntual-central",
+      "nombre": "Simetría puntual respecto a un centro",
+      "prerrequisitos": [
+        "simetria-axial-reflexion",
+        "rotaciones-en-el-plano-cartesiano"
+      ],
+      "secuencia_sugerida": 44,
+      "habilidades_demre": [
+        "resolver",
+        "representar"
+      ],
+      "dificultad": "bajo",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "sin-representacion",
+        "plano-cartesiano"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "definir el centro como punto medio entre punto e imagen"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar la regla de coordenadas con centro en el origen"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "aplicar la regla con centro en un punto cualquiera"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer la equivalencia con un medio giro"
+        }
+      ],
+      "tareas_tipo": [
+        "dado un punto con coordenadas fraccionarias en texto, obtener su simétrico respecto al origen",
+        "dados un punto y un centro cualquiera en texto, obtener el simétrico"
+      ],
+      "dominios_vistos": [],
+      "conteo_problemas": 2,
+      "errores_frecuentes_patron": [
+        "aplica la regla del origen aunque el centro sea otro punto",
+        "confunde simetría central con simetría axial",
+        "olvida duplicar las coordenadas del centro en la fórmula general"
+      ],
+      "base_calibracion_dificultad": "sustitución directa en una fórmula; la única complicación son fracciones o un centro distinto del origen"
+    },
+    {
+      "id": "composicion-de-isometrias",
+      "nombre": "Composición de isometrías",
+      "prerrequisitos": [
+        "traslaciones-en-el-plano",
+        "rotaciones-en-el-plano-cartesiano",
+        "simetria-axial-reflexion",
+        "simetria-puntual-central"
+      ],
+      "secuencia_sugerida": 45,
+      "habilidades_demre": [
+        "resolver",
+        "representar",
+        "argumentar"
+      ],
+      "dificultad": "alto",
+      "unidad_id": "transformaciones-isometricas",
+      "representaciones": [
+        "plano-cartesiano",
+        "figura-plana",
+        "sin-representacion"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "aplicar dos isometrías en el orden indicado sobre un punto"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "aplicar secuencias a todos los vértices de una figura"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "verificar paso a paso un procedimiento ajeno y localizar el error"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "reconocer composiciones equivalentes a una isometría dada"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "deducir condiciones generales sobre la imagen de un punto literal"
+        }
+      ],
+      "tareas_tipo": [
+        "dados un punto y dos isometrías sucesivas en texto, obtener las coordenadas de la imagen",
+        "dada una flecha en plano-cartesiano, obtener la secuencia de isometrías que la orienta hacia un punto cardinal",
+        "dado un procedimiento de varias isometrías con un error en texto, obtener el paso erróneo",
+        "dados punto inicial e imagen en texto, obtener la composición correcta entre varias propuestas",
+        "dado un punto genérico de un cuadrante en texto, obtener una condición de su imagen tras giro y traslación",
+        "dado un cuadrado en plano-cartesiano, obtener la imagen tras tres isometrías",
+        "dada una reflexión aplicada respecto a la recta equivocada en texto, obtener el vector que corrige la posición"
+      ],
+      "dominios_vistos": [
+        "puntos cardinales y flecha",
+        "programa de transformaciones geométricas",
+        "problema de libro con pasos",
+        "tarea con reflexión equivocada"
+      ],
+      "conteo_problemas": 10,
+      "errores_frecuentes_patron": [
+        "aplica las transformaciones en orden inverso",
+        "no deshace la traslación auxiliar antes de la siguiente isometría",
+        "confunde el sentido de giro en un paso intermedio",
+        "acepta un paso porque el resultado parcial parece razonable sin verificarlo",
+        "confunde la imagen final con un paso intermedio"
+      ],
+      "base_calibracion_dificultad": "tres o más transformaciones encadenadas, verificación de procedimientos ajenos y condiciones con literales; enunciados largos"
+    },
+    {
+      "id": "area-y-perimetro-figuras-planas-repaso",
+      "nombre": "Repaso: área y perímetro de figuras planas compuestas",
+      "prerrequisitos": [
+        "area-de-cuadrado-y-rectangulo",
+        "area-de-circulo-y-sector-circular",
+        "area-de-trapezio-y-triangulo"
+      ],
+      "secuencia_sugerida": 46,
+      "habilidades_demre": [
+        "resolver",
+        "modelar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "figuras-geometricas",
+      "representaciones": [
+        "figura-plana"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "obtener lado y diagonal de un cuadrado desde su área"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "calcular perímetro del contorno de figuras superpuestas"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "restar áreas de sectores concéntricos"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "despejar una dimensión desde un área total acotada"
+        }
+      ],
+      "tareas_tipo": [
+        "dados dos cuadrados congruentes superpuestos en figura-plana, obtener el perímetro del contorno",
+        "dados arcos concéntricos en figura-plana, obtener el área de la región entre ellos",
+        "dada una figura compuesta con área total acotada en figura-plana, obtener la altura máxima del trapecio"
+      ],
+      "dominios_vistos": [
+        "cuadrados congruentes superpuestos",
+        "arcos concéntricos sombreados",
+        "cartel con trapecio"
+      ],
+      "conteo_problemas": 3,
+      "errores_frecuentes_patron": [
+        "suma segmentos internos al perímetro de la figura unida",
+        "confunde área del sector con área del círculo completo",
+        "olvida restar las áreas ya ocupadas antes de despejar"
+      ],
+      "base_calibracion_dificultad": "figuras compuestas con raíces y pi; dos o tres pasos con lectura de figura"
+    },
+    {
+      "id": "lectura-aplicada-problemas-contextualizados",
+      "nombre": "Lectura aplicada: resolución de problemas contextualizados de varias unidades",
+      "prerrequisitos": [
+        "operatoria-con-enteros",
+        "porcentaje",
+        "reglas-de-probabilidad-basicas",
+        "inecuaciones-de-primer-grado",
+        "sistemas-de-dos-ecuaciones",
+        "traslaciones-en-el-plano"
+      ],
+      "secuencia_sugerida": 47,
+      "habilidades_demre": [
+        "resolver",
+        "modelar",
+        "argumentar",
+        "representar"
+      ],
+      "dificultad": "medio",
+      "unidad_id": "enteros-y-racionales",
+      "representaciones": [
+        "sin-representacion",
+        "figura-plana",
+        "tabla-doble-entrada"
+      ],
+      "subhabilidades_ordenadas": [
+        {
+          "orden": 1,
+          "subhabilidad": "extraer del enunciado las condiciones que restringen los casos"
+        },
+        {
+          "orden": 2,
+          "subhabilidad": "traducir reglas verbales a operaciones con signo"
+        },
+        {
+          "orden": 3,
+          "subhabilidad": "encadenar cantidades anidadas y porcentajes con respuesta entera"
+        },
+        {
+          "orden": 4,
+          "subhabilidad": "auditar procedimientos ajenos paso a paso"
+        },
+        {
+          "orden": 5,
+          "subhabilidad": "modelar costos comparados con ecuaciones e inecuaciones"
+        },
+        {
+          "orden": 6,
+          "subhabilidad": "interpretar el significado de parámetros en un modelo"
+        },
+        {
+          "orden": 7,
+          "subhabilidad": "leer tablas y figuras para validar afirmaciones"
+        }
+      ],
+      "tareas_tipo": [
+        "dadas reglas de puntaje de un juego en texto, obtener el puntaje máximo posible",
+        "dada una secuencia de cartas con signos en texto, obtener el puntaje final",
+        "dadas cantidades anidadas y un porcentaje de pérdida en texto, obtener la cantidad entera de productos",
+        "dado un procedimiento de probabilidad con un error en texto, obtener el paso erróneo",
+        "dadas dos tarifas con cuota fija y precio unitario en texto, obtener la cantidad mínima que conviene",
+        "dadas dos condiciones de masa total en texto, obtener las masas individuales en otra unidad",
+        "dada una fórmula de conteo en texto, obtener el significado de un factor",
+        "dados desplazamientos ortogonales sucesivos en figura-plana, obtener la expresión de la distancia directa",
+        "dada una tabla de límites en tabla-doble-entrada, obtener cuál afirmación es verdadera",
+        "dada una pieza en tablero en figura-plana, obtener la serie de movimientos hacia una casilla"
+      ],
+      "dominios_vistos": [
+        "juego de bolitas y agujeros",
+        "cartas con estrella y corazón",
+        "emprendimiento de bizcochuelos",
+        "monedas y dado",
+        "suscripción de bidones de agua",
+        "control de calidad de mochilas",
+        "contraseñas de tienda en línea",
+        "recorrido casa colegio trabajo",
+        "tabla de velocidades permitidas",
+        "rey en tablero de ajedrez"
+      ],
+      "conteo_problemas": 10,
+      "errores_frecuentes_patron": [
+        "ignora una condición del enunciado al elegir los casos favorables",
+        "olvida que la respuesta debe ser un entero y redondea hacia arriba",
+        "confunde exceder un límite con quedar bajo él",
+        "convierte mal las unidades al final",
+        "confunde el sentido de la desigualdad al comparar costos",
+        "interpreta un factor fijo como variable del modelo"
+      ],
+      "base_calibracion_dificultad": "enunciados largos con varias condiciones; la operatoria es simple pero la comprensión lectora concentra la dificultad",
+      "omitido_por_riesgo_originalidad": [
+        {
+          "elemento": "secuencias de flechas de los movimientos del rey",
+          "razon": "describirlas equivaldría a transcribir las alternativas"
+        },
+        {
+          "elemento": "esquema de calles con distancias",
+          "razon": "la composición del plano es expresiva y no aporta capa abstracta adicional"
+        }
+      ]
+    }
+  ],
+  "notas_para_humano": "[tramo a] Guía terceros: verificar antes de redactar, DEMRE primario. Tramo termina a mitad de ejemplos DEMRE de tablas. Citas DEMRE sin forma ni número. [tramo b] Guía de terceros: doble verificación; DEMRE primario. Tramo parte y termina a mitad de sección. Ejemplos DEMRE sin forma ni número. Promedio mapeado a tablas-y-graficos. [tramo c] Parte y termina a medio concepto. DEMRE solo por proceso, sin forma ni número. Venn ausente en enum. Terceros: doble verificación, riesgo bajo primario. [tramo d] Guía de terceros: doble verificación humana. Tramo empieza a mitad de cuerpos geométricos. DEMRE citado solo por proceso. Lectura aplicada es transversal."
+}
