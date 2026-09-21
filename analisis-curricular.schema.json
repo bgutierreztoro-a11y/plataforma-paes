@@ -79,6 +79,74 @@
             "enum": ["bajo", "medio", "alto"]
           },
           "base_calibracion_dificultad": { "type": "string" },
+          "unidad_id": {
+            "type": "string",
+            "description": "Unidad del mapa de módulos M1 (docs/mapa-modulos-m1.md) a la que pertenece el concepto.",
+            "enum": [
+              "enteros-y-racionales",
+              "porcentaje",
+              "potencias-y-raices",
+              "expresiones-algebraicas",
+              "proporcionalidad",
+              "ecuaciones-e-inecuaciones-primer-grado",
+              "sistemas-2x2",
+              "funcion-lineal-y-afin",
+              "funcion-cuadratica",
+              "figuras-geometricas",
+              "cuerpos-geometricos",
+              "transformaciones-isometricas",
+              "semejanza-y-proporcionalidad",
+              "tablas-y-graficos",
+              "medidas-de-posicion",
+              "reglas-de-probabilidades"
+            ]
+          },
+          "representaciones": {
+            "type": "array",
+            "description": "Formas en que la fuente presenta los datos del concepto. Vocabulario cerrado; nunca se describe la figura concreta.",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "tabla-frecuencias",
+                "tabla-doble-entrada",
+                "grafico-barras",
+                "grafico-circular",
+                "grafico-lineas",
+                "histograma",
+                "pictograma",
+                "grafico-puntos",
+                "diagrama-cajon",
+                "diagrama-arbol",
+                "recta-numerica",
+                "plano-cartesiano",
+                "figura-plana",
+                "cuerpo-geometrico",
+                "sin-representacion"
+              ]
+            }
+          },
+          "tareas_tipo": {
+            "type": "array",
+            "description": "Tipos de tarea abstractos con la forma 'dado X en representación R, obtener Y', 25 palabras o menos. Sin contexto, sin cifras y sin el orden de preguntas de un ejercicio concreto.",
+            "items": {
+              "type": "string",
+              "allOf": [
+                { "pattern": "^\\S+(\\s+\\S+){0,24}$" },
+                { "pattern": "^[Dd]ad[oa]s? .+, obtener .+$" }
+              ]
+            }
+          },
+          "dominios_vistos": {
+            "type": "array",
+            "description": "Palabras sueltas o frases nominales cortas que nombran los contextos que la fuente usa. Solo para evitar colisión de dominio al redactar; nunca el escenario completo.",
+            "items": { "type": "string", "pattern": "^\\S+(\\s+\\S+){0,4}$" }
+          },
+          "conteo_problemas": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Cantidad de problemas o ítems de la fuente que caen en este concepto."
+          },
           "omitido_por_riesgo_originalidad": {
             "type": "array",
             "items": {
@@ -95,6 +163,20 @@
     "notas_para_humano": {
       "type": "string",
       "description": "Advertencias, limitaciones del análisis, o recordatorios de verificación (obligatorio si tipo_fuente es guia_terceros)."
+    },
+    "citas_demre": {
+      "type": "array",
+      "description": "Solo cuando la fuente cita DEMRE de forma explícita (proceso, forma y número de pregunta). anio es el proceso de admisión, como en docs/analisis/frecuencia-demre-v2.json. Nunca se transcribe la pregunta citada.",
+      "items": {
+        "type": "object",
+        "required": ["anio", "forma", "numero"],
+        "additionalProperties": false,
+        "properties": {
+          "anio": { "type": "integer", "minimum": 2020 },
+          "forma": { "type": "string", "pattern": "^[0-9]{3}$" },
+          "numero": { "type": "integer", "minimum": 1 }
+        }
+      }
     }
   }
 }

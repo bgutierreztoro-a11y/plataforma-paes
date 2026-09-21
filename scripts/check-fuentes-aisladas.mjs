@@ -25,7 +25,11 @@ const FORBIDDEN_SUBSTRING = "fuentes-analisis-aisladas";
 
 // Únicos subagentes con permiso documentado para leer la carpeta aislada.
 // Ver CLAUDE.md > "Aislamiento de fuentes externas".
-const ALLOWED_AGENT_TYPES = new Set(["auditor-originalidad", "consulta-fuentes"]);
+const ALLOWED_AGENT_TYPES = new Set([
+  "auditor-originalidad",
+  "consulta-fuentes",
+  "analista-curricular",
+]);
 
 let raw = "";
 process.stdin.setEncoding("utf8");
