@@ -140,8 +140,81 @@ export interface FiguraTablaValores {
   descripcion: string;
 }
 
-/** Cualquier figura de un ítem. Viaja al cliente tal cual. */
-export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores;
+/* ---------- figuras de datos (tablas y gráficos estadísticos, reglas (13) a (17)) ---------- */
+
+export interface EjeCategorias {
+  etiqueta: string;
+}
+
+/** Eje numérico. Sin min, max o paso, el helper (lib/advance/figurasDatos.ts) los calcula desde los datos. */
+export interface EjeValores {
+  etiqueta: string;
+  min?: number;
+  max?: number;
+  paso?: number;
+}
+
+/** Con 2 o más series el nombre es obligatorio: es el canal que las distingue, no el color. */
+export interface SerieDatos {
+  nombre?: string;
+  valores: number[];
+}
+
+/**
+ * Tabla de datos: frecuencias, doble entrada, intervalos como texto. La
+ * primera columna puede ser encabezado de fila. Una celda "?" es la incógnita
+ * que el ítem pide.
+ */
+export interface FiguraTablaDatos {
+  tipo: "tabla-datos";
+  titulo?: string;
+  columnas: string[];
+  filas: (string | number)[][];
+  filaTotal?: (string | number)[];
+}
+
+/** Barras verticales, 1 a 3 series por categoría. */
+export interface FiguraGraficoBarras {
+  tipo: "grafico-barras";
+  categorias: string[];
+  series: SerieDatos[];
+  ejeX: EjeCategorias;
+  ejeY: EjeValores;
+  mostrarValores?: boolean;
+}
+
+/** Histograma de intervalos contiguos; `poligono` traza el polígono de frecuencias sobre las marcas de clase. */
+export interface FiguraHistograma {
+  tipo: "histograma";
+  intervalos: { desde: number; hasta: number }[];
+  frecuencias: number[];
+  ejeX: EjeCategorias;
+  ejeY: EjeValores;
+  poligono?: boolean;
+}
+
+/** Líneas con puntos marcados, 1 a 3 series. Cubre la ojiva. */
+export interface FiguraGraficoLineas {
+  tipo: "grafico-lineas";
+  categorias: string[];
+  series: SerieDatos[];
+  ejeX: EjeCategorias;
+  ejeY: EjeValores;
+}
+
+export type ModoEtiquetaCircular = "porcentaje" | "valor" | "angulo" | "ninguno";
+
+/** Sectores con valor > 0; en porcentaje y angulo cada valor calculado tiene como máximo 1 decimal exacto. */
+export interface FiguraGraficoCircular {
+  tipo: "grafico-circular";
+  sectores: { etiqueta: string; valor: number }[];
+  modoEtiqueta: ModoEtiquetaCircular;
+}
+
+export type FiguraDatos = FiguraTablaDatos | FiguraGraficoBarras | FiguraHistograma | FiguraGraficoLineas | FiguraGraficoCircular;
+
+/** Cualquier figura de un ítem. Viaja al cliente tal cual, salvo el texto de las figuras de datos (lib/advance/banco.ts). */
+export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos;
 
 /** Sin `proveniencia`: no viaja al cliente. `solucion` sí, porque el descarte fatal la muestra al instante. */
 export interface ItemAdvance {

@@ -644,6 +644,29 @@ const MAX_REGIONES = 2;
 const CLAVES_TABLA_VALORES = ['tipo', 'encabezados', 'filas', 'descripcion'];
 const MAX_COLUMNAS_TABLA = 6;
 const MAX_FILAS_TABLA = 8;
+// Figuras de datos (reglas (13) a (17)): tablas y gráficos estadísticos, solo
+// datos, nunca SVG libre. Topes por legibilidad a 380 px, no por el dominio.
+const TIPOS_FIGURA_DATOS = ['tabla-datos', 'grafico-barras', 'histograma', 'grafico-lineas', 'grafico-circular'];
+const CLAVES_TABLA_DATOS = ['tipo', 'titulo', 'columnas', 'filas', 'filaTotal'];
+const MIN_COLUMNAS_TABLA_DATOS = 2;
+const MAX_FILAS_TABLA_DATOS = 10;
+const CLAVES_GRAFICO_BARRAS = ['tipo', 'categorias', 'series', 'ejeX', 'ejeY', 'mostrarValores'];
+const CLAVES_GRAFICO_LINEAS = ['tipo', 'categorias', 'series', 'ejeX', 'ejeY'];
+const CLAVES_HISTOGRAMA = ['tipo', 'intervalos', 'frecuencias', 'ejeX', 'ejeY', 'poligono'];
+const CLAVES_GRAFICO_CIRCULAR = ['tipo', 'sectores', 'modoEtiqueta'];
+const CLAVES_EJE_CATEGORIAS = ['etiqueta'];
+const CLAVES_EJE_VALORES = ['etiqueta', 'min', 'max', 'paso'];
+const CLAVES_SERIE = ['nombre', 'valores'];
+const CLAVES_INTERVALO = ['desde', 'hasta'];
+const CLAVES_SECTOR = ['etiqueta', 'valor'];
+const MAX_CATEGORIAS_BARRAS = 8;
+const MIN_CATEGORIAS_LINEAS = 2;
+const MAX_CATEGORIAS_LINEAS = 10;
+const MAX_SERIES = 3;
+const MAX_INTERVALOS = 10;
+const MIN_SECTORES = 2;
+const MAX_SECTORES = 8;
+const MODOS_ETIQUETA_CIRCULAR = ['porcentaje', 'valor', 'angulo', 'ninguno'];
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -821,7 +844,12 @@ function validarFiguraItem(figura, donde, errores) {
   if (figura && typeof figura === 'object' && !Array.isArray(figura) && figura.tipo !== undefined) {
     if (figura.tipo === 'plano-funcion') return validarPlanoFuncion(figura, donde, errores);
     if (figura.tipo === 'tabla-valores') return validarTablaValores(figura, donde, errores);
-    return errores.push(`${donde}.tipo: debe ser uno de: ${TIPOS_FIGURA_NUEVA.join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
+    if (figura.tipo === 'tabla-datos') return validarTablaDatos(figura, donde, errores);
+    if (figura.tipo === 'grafico-barras') return validarGraficoSeries(figura, donde, errores, CLAVES_GRAFICO_BARRAS, 1, MAX_CATEGORIAS_BARRAS);
+    if (figura.tipo === 'grafico-lineas') return validarGraficoSeries(figura, donde, errores, CLAVES_GRAFICO_LINEAS, MIN_CATEGORIAS_LINEAS, MAX_CATEGORIAS_LINEAS);
+    if (figura.tipo === 'histograma') return validarHistograma(figura, donde, errores);
+    if (figura.tipo === 'grafico-circular') return validarGraficoCircular(figura, donde, errores);
+    return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
     return errores.push(`${donde}: figura debe ser un objeto { plano, descripcion, elementos }`);
@@ -1171,6 +1199,191 @@ function validarTablaValores(figura, donde, errores) {
       });
     });
   }
+}
+
+/* ---------- figuras de datos, reglas (13) a (17) ---------- */
+
+const esObjeto = (v) => v && typeof v === 'object' && !Array.isArray(v);
+
+/** Regla (13): figura `tabla-datos`. Toda fila y filaTotal con el largo de columnas. Todo error. */
+function validarTablaDatos(figura, donde, errores) {
+  clavesSobrantes(figura, CLAVES_TABLA_DATOS, donde, errores);
+  if (figura.titulo !== undefined && !esTexto(figura.titulo)) errores.push(`${donde}.titulo: si está, es texto no vacío`);
+
+  const columnas = figura.columnas;
+  let n = null;
+  if (!Array.isArray(columnas) || columnas.length < MIN_COLUMNAS_TABLA_DATOS || columnas.length > MAX_COLUMNAS_TABLA) {
+    errores.push(`${donde}.columnas: se esperan entre ${MIN_COLUMNAS_TABLA_DATOS} y ${MAX_COLUMNAS_TABLA} columnas`);
+  } else {
+    n = columnas.length;
+    columnas.forEach((c, j) => {
+      if (!esTexto(c)) errores.push(`${donde}.columnas[${j}]: texto no vacío`);
+    });
+  }
+
+  const fila = (f, q) => {
+    if (!Array.isArray(f)) return errores.push(`${q}: debe ser un array de celdas`);
+    if (n !== null && f.length !== n) errores.push(`${q}: tiene ${f.length} celdas y columnas tiene ${n}`);
+    f.forEach((celda, k) => {
+      if (!(typeof celda === 'string' || esNumero(celda))) errores.push(`${q}[${k}]: cada celda es texto o número finito`);
+    });
+  };
+  const filas = figura.filas;
+  if (!Array.isArray(filas) || filas.length < 1 || filas.length > MAX_FILAS_TABLA_DATOS) {
+    errores.push(`${donde}.filas: se esperan entre 1 y ${MAX_FILAS_TABLA_DATOS} filas`);
+  } else {
+    filas.forEach((f, j) => fila(f, `${donde}.filas[${j}]`));
+  }
+  if (figura.filaTotal !== undefined) fila(figura.filaTotal, `${donde}.filaTotal`);
+}
+
+function validarEjeCategorias(eje, q, errores) {
+  if (!esObjeto(eje)) return errores.push(`${q}: debe ser { etiqueta }`);
+  clavesSobrantes(eje, CLAVES_EJE_CATEGORIAS, q, errores);
+  if (!esTexto(eje.etiqueta)) errores.push(`${q}.etiqueta: texto no vacío`);
+}
+
+function validarEjeValores(eje, q, errores) {
+  if (!esObjeto(eje)) return errores.push(`${q}: debe ser { etiqueta, min?, max?, paso? }`);
+  clavesSobrantes(eje, CLAVES_EJE_VALORES, q, errores);
+  if (!esTexto(eje.etiqueta)) errores.push(`${q}.etiqueta: texto no vacío`);
+  for (const k of ['min', 'max', 'paso']) {
+    if (eje[k] !== undefined && !esNumero(eje[k])) errores.push(`${q}.${k}: si está, es número finito`);
+  }
+  if (esNumero(eje.min) && esNumero(eje.max) && eje.min >= eje.max) errores.push(`${q}: min (${eje.min}) debe ser menor que max (${eje.max})`);
+  if (esNumero(eje.paso) && eje.paso <= 0) errores.push(`${q}.paso: debe ser mayor que 0 (recibido: ${eje.paso})`);
+}
+
+/**
+ * Reglas (14) y (16): `grafico-barras` y `grafico-lineas` comparten forma.
+ * Cada serie con el largo de categorias; con 2 o más series, nombre
+ * obligatorio y sin repetir (es lo que las distingue, no el color).
+ */
+function validarGraficoSeries(figura, donde, errores, permitidas, minCategorias, maxCategorias) {
+  clavesSobrantes(figura, permitidas, donde, errores);
+
+  const categorias = figura.categorias;
+  let n = null;
+  if (!Array.isArray(categorias) || categorias.length < minCategorias || categorias.length > maxCategorias) {
+    errores.push(`${donde}.categorias: se esperan entre ${minCategorias} y ${maxCategorias} categorías`);
+  } else {
+    n = categorias.length;
+    categorias.forEach((c, j) => {
+      if (!esTexto(c)) errores.push(`${donde}.categorias[${j}]: texto no vacío`);
+    });
+  }
+
+  const series = figura.series;
+  if (!Array.isArray(series) || series.length < 1 || series.length > MAX_SERIES) {
+    errores.push(`${donde}.series: se esperan entre 1 y ${MAX_SERIES} series`);
+  } else {
+    const nombres = new Map();
+    series.forEach((s, j) => {
+      const q = `${donde}.series[${j}]`;
+      if (!esObjeto(s)) return errores.push(`${q}: debe ser { nombre?, valores }`);
+      clavesSobrantes(s, CLAVES_SERIE, q, errores);
+      if (s.nombre !== undefined) {
+        if (!esTexto(s.nombre)) errores.push(`${q}.nombre: si está, es texto no vacío`);
+        else if (nombres.has(s.nombre)) errores.push(`${q}.nombre: "${s.nombre}" repetido (ya en ${nombres.get(s.nombre)})`);
+        else nombres.set(s.nombre, q);
+      } else if (series.length >= 2) {
+        errores.push(`${q}: con 2 o más series cada una lleva nombre (no se distinguen solo por color)`);
+      }
+      if (!Array.isArray(s.valores)) return errores.push(`${q}.valores: debe ser un array de números`);
+      if (n !== null && s.valores.length !== n) errores.push(`${q}.valores: tiene ${s.valores.length} valores y categorias tiene ${n}`);
+      s.valores.forEach((v, k) => {
+        if (!esNumero(v)) errores.push(`${q}.valores[${k}]: debe ser número finito`);
+      });
+    });
+  }
+
+  validarEjeCategorias(figura.ejeX, `${donde}.ejeX`, errores);
+  validarEjeValores(figura.ejeY, `${donde}.ejeY`, errores);
+  if (figura.mostrarValores !== undefined && typeof figura.mostrarValores !== 'boolean') errores.push(`${donde}.mostrarValores: debe ser booleano`);
+}
+
+/** Regla (15): `histograma`. Intervalos contiguos y crecientes, mismo largo que frecuencias, frecuencias ≥ 0. */
+function validarHistograma(figura, donde, errores) {
+  clavesSobrantes(figura, CLAVES_HISTOGRAMA, donde, errores);
+
+  const intervalos = figura.intervalos;
+  let n = null;
+  if (!Array.isArray(intervalos) || intervalos.length < 1 || intervalos.length > MAX_INTERVALOS) {
+    errores.push(`${donde}.intervalos: se esperan entre 1 y ${MAX_INTERVALOS} intervalos`);
+  } else {
+    n = intervalos.length;
+    intervalos.forEach((it, j) => {
+      const q = `${donde}.intervalos[${j}]`;
+      if (!esObjeto(it)) return errores.push(`${q}: debe ser { desde, hasta }`);
+      clavesSobrantes(it, CLAVES_INTERVALO, q, errores);
+      if (!esNumero(it.desde) || !esNumero(it.hasta)) return errores.push(`${q}: desde y hasta deben ser números finitos`);
+      if (it.desde >= it.hasta) errores.push(`${q}: desde (${it.desde}) debe ser menor que hasta (${it.hasta})`);
+      const anterior = intervalos[j - 1];
+      if (j > 0 && esObjeto(anterior) && esNumero(anterior.hasta) && anterior.hasta !== it.desde) {
+        errores.push(`${q}: desde (${it.desde}) debe ser igual al hasta del intervalo anterior (${anterior.hasta}); los intervalos son contiguos`);
+      }
+    });
+  }
+
+  const frecuencias = figura.frecuencias;
+  if (!Array.isArray(frecuencias)) {
+    errores.push(`${donde}.frecuencias: debe ser un array de números`);
+  } else {
+    if (n !== null && frecuencias.length !== n) errores.push(`${donde}.frecuencias: tiene ${frecuencias.length} valores e intervalos tiene ${n}`);
+    frecuencias.forEach((v, k) => {
+      if (!esNumero(v)) errores.push(`${donde}.frecuencias[${k}]: debe ser número finito`);
+      else if (v < 0) errores.push(`${donde}.frecuencias[${k}]: debe ser mayor o igual a 0 (recibido: ${v})`);
+    });
+  }
+
+  validarEjeCategorias(figura.ejeX, `${donde}.ejeX`, errores);
+  validarEjeValores(figura.ejeY, `${donde}.ejeY`, errores);
+  if (figura.poligono !== undefined && typeof figura.poligono !== 'boolean') errores.push(`${donde}.poligono: debe ser booleano`);
+}
+
+/** Como máximo un decimal, exacto: 12,5 pasa; 12,25 y 33,333… no. */
+const unDecimalExacto = (x) => Math.abs(x * 10 - Math.round(x * 10)) < 1e-9;
+
+/**
+ * Regla (17): `grafico-circular`. Valores > 0; en porcentaje y angulo, cada
+ * valor calculado tiene como máximo 1 decimal exacto, y el error nombra el
+ * sector: una etiqueta como "33,3 %" mentiría sobre un tercio.
+ */
+function validarGraficoCircular(figura, donde, errores) {
+  clavesSobrantes(figura, CLAVES_GRAFICO_CIRCULAR, donde, errores);
+
+  const modo = figura.modoEtiqueta;
+  if (!MODOS_ETIQUETA_CIRCULAR.includes(modo)) errores.push(`${donde}.modoEtiqueta: debe ser uno de: ${MODOS_ETIQUETA_CIRCULAR.join(', ')}`);
+
+  const sectores = figura.sectores;
+  if (!Array.isArray(sectores) || sectores.length < MIN_SECTORES || sectores.length > MAX_SECTORES) {
+    return errores.push(`${donde}.sectores: se esperan entre ${MIN_SECTORES} y ${MAX_SECTORES} sectores`);
+  }
+  let total = 0;
+  let todosValidos = true;
+  sectores.forEach((s, j) => {
+    const q = `${donde}.sectores[${j}]`;
+    if (!esObjeto(s)) {
+      todosValidos = false;
+      return errores.push(`${q}: debe ser { etiqueta, valor }`);
+    }
+    clavesSobrantes(s, CLAVES_SECTOR, q, errores);
+    if (!esTexto(s.etiqueta)) errores.push(`${q}.etiqueta: texto no vacío`);
+    if (!esNumero(s.valor) || s.valor <= 0) {
+      todosValidos = false;
+      errores.push(`${q}.valor: debe ser un número mayor que 0 (recibido: ${JSON.stringify(s.valor)})`);
+    } else total += s.valor;
+  });
+  if (!todosValidos || (modo !== 'porcentaje' && modo !== 'angulo')) return;
+
+  const factor = modo === 'porcentaje' ? 100 : 360;
+  const unidad = modo === 'porcentaje' ? '%' : '°';
+  sectores.forEach((s, j) => {
+    const calculado = (factor * s.valor) / total;
+    if (!unDecimalExacto(calculado)) {
+      errores.push(`${donde}.sectores[${j}]: "${s.etiqueta}" da ${Number(calculado.toFixed(4))}${unidad} en modo ${modo}, y cada valor calculado tiene como máximo 1 decimal exacto`);
+    }
+  });
 }
 
 function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {

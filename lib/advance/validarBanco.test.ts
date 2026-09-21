@@ -324,10 +324,10 @@ describe("figura plano-funcion: regla (11)", () => {
     assert.deepEqual(validar(conFigura(minima)), []);
   });
 
-  it("tipo desconocido falla nombrando los dos tipos y la ausencia", () => {
-    const errores = deLaFigura(validar(conFigura({ tipo: "histograma", descripcion: DESCRIPCION })));
+  it("tipo desconocido falla nombrando los siete tipos y la ausencia", () => {
+    const errores = deLaFigura(validar(conFigura({ tipo: "pictograma", descripcion: DESCRIPCION })));
     assert.deepEqual(errores, [
-      'items[0].figura.tipo: debe ser uno de: plano-funcion, tabla-valores, o ausente para el plano de isometrías (recibido: "histograma")',
+      'items[0].figura.tipo: debe ser uno de: plano-funcion, tabla-valores, tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular, o ausente para el plano de isometrías (recibido: "pictograma")',
     ]);
   });
 
@@ -540,6 +540,274 @@ describe("figura tabla-valores: regla (12)", () => {
     assert.deepEqual(errores, [
       'items[0].figura: clave "titulo" no admitida por el schema',
       "items[0].figura.descripcion: demasiado corta (<30 caracteres)",
+    ]);
+  });
+});
+
+/* Reglas (13) a (17): figuras de datos. Un caso válido por tipo y un caso por
+   cada regla rota, con datos abstractos (categorías A, B, C). */
+const EJE_X = { etiqueta: "Categoría" };
+const EJE_Y = { etiqueta: "Frecuencia" };
+
+const TABLA_DATOS_VALIDA = {
+  tipo: "tabla-datos",
+  titulo: "Frecuencias",
+  columnas: ["Intervalo", "f", "F"],
+  filas: [
+    ["[0, 10[", 4, 4],
+    ["[10, 20[", "?", 11],
+    ["[20, 30[", 9, 20],
+  ],
+  filaTotal: ["Total", 20, ""],
+};
+
+describe("figura tabla-datos: regla (13)", () => {
+  it("una tabla válida pasa, con y sin titulo y filaTotal", () => {
+    assert.deepEqual(validar(conFigura(TABLA_DATOS_VALIDA)), []);
+    assert.deepEqual(validar(conFigura({ tipo: "tabla-datos", columnas: ["A", "B"], filas: [[1, 2]] })), []);
+  });
+
+  it("fila o filaTotal con largo distinto a columnas falla nombrando ambos largos", () => {
+    const errores = deLaFigura(validar(conFigura({ ...TABLA_DATOS_VALIDA, filas: [["a", 1]], filaTotal: ["Total", 1, 2, 3] })));
+    assert.deepEqual(errores, [
+      "items[0].figura.filas[0]: tiene 2 celdas y columnas tiene 3",
+      "items[0].figura.filaTotal: tiene 4 celdas y columnas tiene 3",
+    ]);
+  });
+
+  it("columna vacía, celda no textual ni numérica, titulo vacío y clave sobrante fallan", () => {
+    const figura = { ...TABLA_DATOS_VALIDA, titulo: " ", columnas: ["", "f", "F"], filas: [[null, 1, 2]], filaTotal: undefined, descripcion: "x" };
+    const errores = deLaFigura(validar(conFigura(figura)));
+    assert.deepEqual(errores, [
+      'items[0].figura: clave "descripcion" no admitida por el schema',
+      "items[0].figura.titulo: si está, es texto no vacío",
+      "items[0].figura.columnas[0]: texto no vacío",
+      "items[0].figura.filas[0][0]: cada celda es texto o número finito",
+    ]);
+  });
+
+  it("menos de 2 o más de 6 columnas, y más de 10 filas, fallan", () => {
+    const una = deLaFigura(validar(conFigura({ tipo: "tabla-datos", columnas: ["A"], filas: [[1]] })));
+    assert.deepEqual(una, ["items[0].figura.columnas: se esperan entre 2 y 6 columnas"]);
+    const columnas = ["a", "b", "c", "d", "e", "f", "g"];
+    const filas = Array.from({ length: 11 }, () => columnas.map(() => 1));
+    const muchas = deLaFigura(validar(conFigura({ tipo: "tabla-datos", columnas, filas })));
+    assert.deepEqual(muchas, ["items[0].figura.columnas: se esperan entre 2 y 6 columnas", "items[0].figura.filas: se esperan entre 1 y 10 filas"]);
+  });
+});
+
+const BARRAS_VALIDO = {
+  tipo: "grafico-barras",
+  categorias: ["A", "B", "C"],
+  series: [
+    { nombre: "Serie 1", valores: [4, 7, 2] },
+    { nombre: "Serie 2", valores: [3, 5, 6] },
+  ],
+  ejeX: EJE_X,
+  ejeY: { etiqueta: "Frecuencia", min: 0, max: 8, paso: 2 },
+  mostrarValores: true,
+};
+
+describe("figura grafico-barras: regla (14)", () => {
+  it("un gráfico válido pasa, con una serie sin nombre también", () => {
+    assert.deepEqual(validar(conFigura(BARRAS_VALIDO)), []);
+    assert.deepEqual(validar(conFigura({ tipo: "grafico-barras", categorias: ["A", "B"], series: [{ valores: [1, 2] }], ejeX: EJE_X, ejeY: EJE_Y })), []);
+  });
+
+  it("serie con largo distinto a categorias falla nombrando ambos largos", () => {
+    const figura = { ...BARRAS_VALIDO, series: [{ nombre: "S", valores: [1, 2] }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), ["items[0].figura.series[0].valores: tiene 2 valores y categorias tiene 3"]);
+  });
+
+  it("con 2 o más series, la que no tiene nombre falla; nombre repetido falla", () => {
+    const sinNombre = { ...BARRAS_VALIDO, series: [{ nombre: "S", valores: [1, 2, 3] }, { valores: [1, 2, 3] }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(sinNombre))), ["items[0].figura.series[1]: con 2 o más series cada una lleva nombre (no se distinguen solo por color)"]);
+    const repetido = { ...BARRAS_VALIDO, series: [{ nombre: "S", valores: [1, 2, 3] }, { nombre: "S", valores: [1, 2, 3] }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(repetido))), ['items[0].figura.series[1].nombre: "S" repetido (ya en items[0].figura.series[0])']);
+  });
+
+  it("más de 3 series o más de 8 categorías fallan", () => {
+    const categorias = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+    const serie = (i: number) => ({ nombre: `S${i}`, valores: categorias.map(() => i) });
+    const errores = deLaFigura(validar(conFigura({ ...BARRAS_VALIDO, categorias, series: [1, 2, 3, 4].map(serie) })));
+    assert.deepEqual(errores, ["items[0].figura.categorias: se esperan entre 1 y 8 categorías", "items[0].figura.series: se esperan entre 1 y 3 series"]);
+  });
+
+  it("valor no finito, ejeY con min >= max o paso <= 0, y mostrarValores no booleano fallan", () => {
+    const figura = { ...BARRAS_VALIDO, series: [{ nombre: "S", valores: [1, "2", 3] }], ejeY: { etiqueta: "y", min: 5, max: 5, paso: 0 }, mostrarValores: "sí" };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), [
+      "items[0].figura.series[0].valores[1]: debe ser número finito",
+      "items[0].figura.ejeY: min (5) debe ser menor que max (5)",
+      "items[0].figura.ejeY.paso: debe ser mayor que 0 (recibido: 0)",
+      "items[0].figura.mostrarValores: debe ser booleano",
+    ]);
+  });
+
+  it("eje sin etiqueta o con clave sobrante falla", () => {
+    const figura = { ...BARRAS_VALIDO, ejeX: { etiqueta: "" }, ejeY: { etiqueta: "y", titulo: "z" } };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), [
+      "items[0].figura.ejeX.etiqueta: texto no vacío",
+      'items[0].figura.ejeY: clave "titulo" no admitida por el schema',
+    ]);
+  });
+});
+
+const HISTOGRAMA_VALIDO = {
+  tipo: "histograma",
+  intervalos: [
+    { desde: 0, hasta: 10 },
+    { desde: 10, hasta: 20 },
+    { desde: 20, hasta: 30 },
+  ],
+  frecuencias: [4, 0, 9],
+  ejeX: { etiqueta: "Valor" },
+  ejeY: EJE_Y,
+  poligono: true,
+};
+
+describe("figura histograma: regla (15)", () => {
+  it("un histograma válido pasa, y sin poligono también", () => {
+    assert.deepEqual(validar(conFigura(HISTOGRAMA_VALIDO)), []);
+    assert.deepEqual(validar(conFigura({ ...HISTOGRAMA_VALIDO, poligono: undefined })), []);
+  });
+
+  it("intervalos no contiguos fallan nombrando el hasta anterior", () => {
+    const figura = { ...HISTOGRAMA_VALIDO, intervalos: [{ desde: 0, hasta: 10 }, { desde: 12, hasta: 20 }, { desde: 20, hasta: 30 }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), [
+      "items[0].figura.intervalos[1]: desde (12) debe ser igual al hasta del intervalo anterior (10); los intervalos son contiguos",
+    ]);
+  });
+
+  it("intervalo no creciente falla", () => {
+    const figura = { ...HISTOGRAMA_VALIDO, intervalos: [{ desde: 0, hasta: 10 }, { desde: 10, hasta: 10 }, { desde: 10, hasta: 30 }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), ["items[0].figura.intervalos[1]: desde (10) debe ser menor que hasta (10)"]);
+  });
+
+  it("frecuencias con largo distinto a intervalos falla nombrando ambos largos", () => {
+    const figura = { ...HISTOGRAMA_VALIDO, frecuencias: [4, 7] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), ["items[0].figura.frecuencias: tiene 2 valores e intervalos tiene 3"]);
+  });
+
+  it("frecuencia negativa o no finita falla", () => {
+    const figura = { ...HISTOGRAMA_VALIDO, frecuencias: [4, -1, "9"] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), [
+      "items[0].figura.frecuencias[1]: debe ser mayor o igual a 0 (recibido: -1)",
+      "items[0].figura.frecuencias[2]: debe ser número finito",
+    ]);
+  });
+
+  it("más de 10 intervalos, poligono no booleano y clave sobrante en un intervalo fallan", () => {
+    const intervalos = Array.from({ length: 11 }, (_, i) => ({ desde: i, hasta: i + 1 }));
+    const muchos = deLaFigura(validar(conFigura({ ...HISTOGRAMA_VALIDO, intervalos, frecuencias: intervalos.map(() => 1) })));
+    assert.deepEqual(muchos, ["items[0].figura.intervalos: se esperan entre 1 y 10 intervalos"]);
+    const figura = { ...HISTOGRAMA_VALIDO, intervalos: [{ desde: 0, hasta: 10, marca: 5 }], frecuencias: [1], poligono: 1 };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), [
+      'items[0].figura.intervalos[0]: clave "marca" no admitida por el schema',
+      "items[0].figura.poligono: debe ser booleano",
+    ]);
+  });
+});
+
+const LINEAS_VALIDO = {
+  tipo: "grafico-lineas",
+  categorias: ["10", "20", "30", "40"],
+  series: [
+    { nombre: "Serie 1", valores: [4, 11, 20, 20] },
+    { nombre: "Serie 2", valores: [2, 6, 13, 20] },
+  ],
+  ejeX: { etiqueta: "Borde superior" },
+  ejeY: { etiqueta: "Frecuencia acumulada" },
+};
+
+describe("figura grafico-lineas: regla (16)", () => {
+  it("un gráfico válido pasa, con una serie sin nombre también", () => {
+    assert.deepEqual(validar(conFigura(LINEAS_VALIDO)), []);
+    assert.deepEqual(validar(conFigura({ ...LINEAS_VALIDO, series: [{ valores: [1, 2, 3, 4] }] })), []);
+  });
+
+  it("serie con largo distinto a categorias falla", () => {
+    const figura = { ...LINEAS_VALIDO, series: [{ nombre: "S", valores: [1, 2, 3] }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), ["items[0].figura.series[0].valores: tiene 3 valores y categorias tiene 4"]);
+  });
+
+  it("con 2 o más series, la que no tiene nombre falla", () => {
+    const figura = { ...LINEAS_VALIDO, series: [{ nombre: "S", valores: [1, 2, 3, 4] }, { valores: [1, 2, 3, 4] }] };
+    assert.deepEqual(deLaFigura(validar(conFigura(figura))), ["items[0].figura.series[1]: con 2 o más series cada una lleva nombre (no se distinguen solo por color)"]);
+  });
+
+  it("una sola categoría, más de 10 categorías y mostrarValores (solo de barras) fallan", () => {
+    const una = deLaFigura(validar(conFigura({ ...LINEAS_VALIDO, categorias: ["A"], series: [{ valores: [1] }] })));
+    assert.deepEqual(una, ["items[0].figura.categorias: se esperan entre 2 y 10 categorías"]);
+    const categorias = Array.from({ length: 11 }, (_, i) => `${i}`);
+    const muchas = deLaFigura(validar(conFigura({ ...LINEAS_VALIDO, categorias, series: [{ valores: categorias.map(() => 1) }], mostrarValores: true })));
+    assert.deepEqual(muchas, [
+      'items[0].figura: clave "mostrarValores" no admitida por el schema',
+      "items[0].figura.categorias: se esperan entre 2 y 10 categorías",
+    ]);
+  });
+});
+
+const CIRCULAR_VALIDO = {
+  tipo: "grafico-circular",
+  sectores: [
+    { etiqueta: "A", valor: 12 },
+    { etiqueta: "B", valor: 6 },
+    { etiqueta: "C", valor: 6 },
+  ],
+  modoEtiqueta: "porcentaje",
+};
+
+describe("figura grafico-circular: regla (17)", () => {
+  it("un gráfico válido pasa en los cuatro modos", () => {
+    for (const modoEtiqueta of ["porcentaje", "valor", "angulo", "ninguno"]) {
+      assert.deepEqual(validar(conFigura({ ...CIRCULAR_VALIDO, modoEtiqueta })), [], modoEtiqueta);
+    }
+  });
+
+  it("en modo porcentaje, un sector con más de 1 decimal falla nombrando el sector", () => {
+    const sectores = [{ etiqueta: "A", valor: 1 }, { etiqueta: "B", valor: 1 }, { etiqueta: "C", valor: 1 }];
+    const errores = deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, sectores })));
+    assert.deepEqual(errores, [
+      'items[0].figura.sectores[0]: "A" da 33.3333% en modo porcentaje, y cada valor calculado tiene como máximo 1 decimal exacto',
+      'items[0].figura.sectores[1]: "B" da 33.3333% en modo porcentaje, y cada valor calculado tiene como máximo 1 decimal exacto',
+      'items[0].figura.sectores[2]: "C" da 33.3333% en modo porcentaje, y cada valor calculado tiene como máximo 1 decimal exacto',
+    ]);
+    /* 12,5 % es un decimal exacto: pasa. */
+    assert.deepEqual(validar(conFigura({ ...CIRCULAR_VALIDO, sectores: [{ etiqueta: "A", valor: 1 }, { etiqueta: "B", valor: 7 }] })), []);
+  });
+
+  it("en modo angulo, un sector con más de 1 decimal falla; en valor y ninguno no se comprueba", () => {
+    const sectores = [{ etiqueta: "A", valor: 1 }, { etiqueta: "B", valor: 2 }, { etiqueta: "C", valor: 4 }];
+    const errores = deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, sectores, modoEtiqueta: "angulo" })));
+    assert.deepEqual(
+      errores.map((e) => e.replace(/da [0-9.]+°/, "da N°")),
+      [
+        'items[0].figura.sectores[0]: "A" da N° en modo angulo, y cada valor calculado tiene como máximo 1 decimal exacto',
+        'items[0].figura.sectores[1]: "B" da N° en modo angulo, y cada valor calculado tiene como máximo 1 decimal exacto',
+        'items[0].figura.sectores[2]: "C" da N° en modo angulo, y cada valor calculado tiene como máximo 1 decimal exacto',
+      ],
+    );
+    assert.deepEqual(validar(conFigura({ ...CIRCULAR_VALIDO, sectores, modoEtiqueta: "valor" })), []);
+    assert.deepEqual(validar(conFigura({ ...CIRCULAR_VALIDO, sectores, modoEtiqueta: "ninguno" })), []);
+  });
+
+  it("valor 0 o negativo falla y suspende el chequeo de decimales", () => {
+    const sectores = [{ etiqueta: "A", valor: 0 }, { etiqueta: "B", valor: -2 }, { etiqueta: "C", valor: 1 }];
+    assert.deepEqual(deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, sectores }))), [
+      "items[0].figura.sectores[0].valor: debe ser un número mayor que 0 (recibido: 0)",
+      "items[0].figura.sectores[1].valor: debe ser un número mayor que 0 (recibido: -2)",
+    ]);
+  });
+
+  it("modo fuera del vocabulario, un solo sector, etiqueta vacía y clave sobrante fallan", () => {
+    const modo = deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, modoEtiqueta: "fraccion" })));
+    assert.deepEqual(modo, ["items[0].figura.modoEtiqueta: debe ser uno de: porcentaje, valor, angulo, ninguno"]);
+    const uno = deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, sectores: [{ etiqueta: "A", valor: 1 }] })));
+    assert.deepEqual(uno, ["items[0].figura.sectores: se esperan entre 2 y 8 sectores"]);
+    const sectores = [{ etiqueta: "", valor: 1, color: "rojo" }, { etiqueta: "B", valor: 1 }];
+    assert.deepEqual(deLaFigura(validar(conFigura({ ...CIRCULAR_VALIDO, sectores, modoEtiqueta: "valor" }))), [
+      'items[0].figura.sectores[0]: clave "color" no admitida por el schema',
+      "items[0].figura.sectores[0].etiqueta: texto no vacío",
     ]);
   });
 });

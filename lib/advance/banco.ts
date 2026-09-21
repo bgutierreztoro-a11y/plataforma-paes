@@ -3,7 +3,7 @@ import path from "node:path";
 import { validarDatosBancoAdvance } from "../../scripts/validar-contenido.mjs";
 import { ContenidoInvalidoError } from "../errores.ts";
 import type { ClaveAlternativa, Dificultad, Habilidad } from "../tipos.ts";
-import type { AlternativaAdvance, FiguraItem, ItemAdvance } from "./descarte.ts";
+import type { AlternativaAdvance, EjeCategorias, EjeValores, FiguraItem, ItemAdvance, SerieDatos } from "./descarte.ts";
 import { protegerExpresiones } from "./protegerExpresiones.ts";
 
 /**
@@ -112,7 +112,8 @@ export function obtenerBanco(unidadId: string): Banco | null {
  * viaja (§6.1, descarte fatal). `sinErrorCatalogado` no viaja: es para el
  * revisor, y el cliente solo necesita saber que `errorCatalogado` es null.
  * `figura` viaja tal cual: solo muestra datos del enunciado, nunca la
- * transformación pedida, así que no revela nada.
+ * transformación pedida, así que no revela nada. La excepción es el texto de
+ * las figuras de datos (`figuraParaCliente`).
  *
  * Los cinco campos de texto pasan por `protegerExpresiones` (espacio duro
  * dentro de cada expresión): es el único punto por el que el texto del banco
@@ -128,7 +129,7 @@ export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
     tiempoReferenciaSeg: item.tiempoReferenciaSeg,
     enunciado: protegerExpresiones(item.enunciado),
     solucion: protegerExpresiones(item.solucion),
-    ...(item.figura ? { figura: item.figura } : {}),
+    ...(item.figura ? { figura: figuraParaCliente(item.figura) } : {}),
     alternativas: item.alternativas.map((a): AlternativaAdvance => {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
          satisfacen al tipo. `errorCatalogado` es la excepción: null es un
@@ -152,4 +153,41 @@ export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
       };
     }),
   };
+}
+
+const texto = protegerExpresiones;
+const celda = (c: string | number) => (typeof c === "string" ? texto(c) : c);
+const serie = (s: SerieDatos): SerieDatos => ({ ...(s.nombre !== undefined ? { nombre: texto(s.nombre) } : {}), valores: s.valores });
+const ejeX = (e: EjeCategorias): EjeCategorias => ({ etiqueta: texto(e.etiqueta) });
+const ejeY = (e: EjeValores): EjeValores => ({ ...e, etiqueta: texto(e.etiqueta) });
+
+/**
+ * Las figuras de datos (tabla-datos, grafico-barras, histograma,
+ * grafico-lineas, grafico-circular) llevan texto que se lee en pantalla:
+ * columnas, celdas, categorías, nombres de serie, etiquetas de eje y de sector.
+ * Ese texto pasa por el mismo `protegerExpresiones` que el enunciado, para que
+ * un intervalo como "10 − 20" o una etiqueta "n = 40" no se corte en el
+ * operador. Los números viajan intactos. Las otras tres figuras (isometrías,
+ * plano-funcion, tabla-valores) siguen viajando tal cual, como se firmó.
+ */
+export function figuraParaCliente(figura: FiguraItem): FiguraItem {
+  switch (figura.tipo) {
+    case "tabla-datos":
+      return {
+        ...figura,
+        ...(figura.titulo !== undefined ? { titulo: texto(figura.titulo) } : {}),
+        columnas: figura.columnas.map(texto),
+        filas: figura.filas.map((f) => f.map(celda)),
+        ...(figura.filaTotal ? { filaTotal: figura.filaTotal.map(celda) } : {}),
+      };
+    case "grafico-barras":
+    case "grafico-lineas":
+      return { ...figura, categorias: figura.categorias.map(texto), series: figura.series.map(serie), ejeX: ejeX(figura.ejeX), ejeY: ejeY(figura.ejeY) };
+    case "histograma":
+      return { ...figura, ejeX: ejeX(figura.ejeX), ejeY: ejeY(figura.ejeY) };
+    case "grafico-circular":
+      return { ...figura, sectores: figura.sectores.map((s) => ({ etiqueta: texto(s.etiqueta), valor: s.valor })) };
+    default:
+      return figura;
+  }
 }
