@@ -28,9 +28,11 @@ import { PanelDosPorDos } from "@/components/advance/PanelDosPorDos";
 import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
 import { PlanoFuncion } from "@/components/advance/PlanoFuncion";
 import { TablaValores } from "@/components/advance/TablaValores";
+import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
   COPY_MUESTRA,
+  FIGURAS_DATOS_MUESTRA,
   FIGURAS_MUESTRA,
   GRUPOS_ERRORES_MUESTRA,
   MUESTRA_DESCARTE,
@@ -946,6 +948,26 @@ export default function PaginaDiseno() {
                 )}
               </PorLinea>
             </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Figuras de datos"
+          nota="Las cinco figuras de datos de un ítem Advance (item-advance.schema.json, figuraTablaDatos, figuraGraficoBarras, figuraHistograma, figuraGraficoLineas y figuraGraficoCircular; reglas 13 a 17), montadas por FiguraDeItem entre el enunciado y las alternativas. Solo datos en el JSON, nunca SVG libre: la geometría sale de lib/advance/figurasDatos.ts y el eje numérico usa el mismo Heckbert que los planos de función. SVG estático de 320 de ancho, legible a 380 px; la tabla es una <table> real. Colores solo por tokens: dato en --linea-nav, ejes y texto en tinta, grilla en hairline. Las series se distinguen sin color, por relleno (sólido, rayado, tinte), trazo y marcador, y por su nombre en la leyenda; los sectores del circular alternan relleno y llevan etiqueta directa. role=img con aria-label generado desde los datos. Datos de MUESTRA abstractos (A, B, C) en app/%5Fdesign/muestraDescarte.ts. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6">
+            {FIGURAS_DATOS_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-datos={id}>
+                <Rotulo>{rotulo}</Rotulo>
+                <PorLinea>
+                  {() => (
+                    <div data-figura-datos={id} className="rounded-sm border border-hairline bg-[var(--color-bg)] p-4">
+                      <FiguraDeItem figura={figura} />
+                    </div>
+                  )}
+                </PorLinea>
+              </div>
+            ))}
           </div>
         </Seccion>
 

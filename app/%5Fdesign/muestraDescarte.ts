@@ -1,5 +1,5 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
-import type { FiguraIsometrias, FiguraPlanoFuncion, FiguraTablaValores, ItemAdvance } from "@/lib/advance/descarte";
+import type { FiguraDatos, FiguraIsometrias, FiguraPlanoFuncion, FiguraTablaValores, ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
@@ -515,3 +515,152 @@ export const TABLA_MUESTRA: { id: string; rotulo: string; figura: FiguraTablaVal
     descripcion: "MUESTRA. Tabla de valores de tres funciones y de la diferencia f(x) − g(x) para x de −2 a 3.",
   },
 };
+
+/* Figuras de datos (tabla-datos, grafico-barras, histograma, grafico-lineas,
+   grafico-circular). Datos ABSTRACTOS: categorías A, B, C, series "Serie 1" y
+   "Serie 2", sin dominio. Acá se mide la letra a 380 px, la separación de las
+   series sin color y la colocación de los rótulos del circular. */
+export const FIGURAS_DATOS_MUESTRA: { id: string; rotulo: string; figura: FiguraDatos }[] = [
+  {
+    id: "tabla-frecuencias",
+    rotulo: "tabla-datos · frecuencias con intervalos, incógnita y fila de total",
+    figura: {
+      tipo: "tabla-datos",
+      titulo: "MUESTRA. Tabla de frecuencias",
+      columnas: ["Intervalo", "f", "F"],
+      filas: [
+        ["[0, 10[", 4, 4],
+        ["[10, 20[", 7, 11],
+        ["[20, 30[", "?", 20],
+        ["[30, 40[", 5, 25],
+      ],
+      filaTotal: ["Total", 25, ""],
+    },
+  },
+  {
+    id: "tabla-doble-entrada",
+    rotulo: "tabla-datos · doble entrada, sin título visible",
+    figura: {
+      tipo: "tabla-datos",
+      columnas: ["", "A", "B", "Total"],
+      filas: [
+        ["Grupo 1", 12, 8, 20],
+        ["Grupo 2", 6, 14, 20],
+      ],
+      filaTotal: ["Total", 18, 22, 40],
+    },
+  },
+  {
+    id: "barras-una-serie",
+    rotulo: "grafico-barras · una serie, valores sobre las barras, eje y automático",
+    figura: {
+      tipo: "grafico-barras",
+      categorias: ["A", "B", "C", "D"],
+      series: [{ valores: [12, 7, 15, 4] }],
+      ejeX: { etiqueta: "Categoría" },
+      ejeY: { etiqueta: "Frecuencia" },
+      mostrarValores: true,
+    },
+  },
+  {
+    id: "barras-tres-series",
+    rotulo: "grafico-barras · tres series (sólido, rayado, tinte), leyenda, eje y declarado con paso 5",
+    figura: {
+      tipo: "grafico-barras",
+      categorias: ["A", "B", "C"],
+      series: [
+        { nombre: "Serie 1", valores: [12, 7, 15] },
+        { nombre: "Serie 2", valores: [9, 11, 6] },
+        { nombre: "Serie 3", valores: [4, 14, 10] },
+      ],
+      ejeX: { etiqueta: "Categoría" },
+      ejeY: { etiqueta: "Frecuencia", min: 0, max: 20, paso: 5 },
+    },
+  },
+  {
+    id: "histograma-poligono",
+    rotulo: "histograma · cinco intervalos contiguos, uno vacío, con polígono de frecuencias",
+    figura: {
+      tipo: "histograma",
+      intervalos: [
+        { desde: 0, hasta: 10 },
+        { desde: 10, hasta: 20 },
+        { desde: 20, hasta: 30 },
+        { desde: 30, hasta: 40 },
+        { desde: 40, hasta: 50 },
+      ],
+      frecuencias: [3, 8, 0, 6, 2],
+      ejeX: { etiqueta: "Valor" },
+      ejeY: { etiqueta: "Frecuencia" },
+      poligono: true,
+    },
+  },
+  {
+    id: "lineas-ojiva",
+    rotulo: "grafico-lineas · ojiva de una serie, categorías = bordes superiores",
+    figura: {
+      tipo: "grafico-lineas",
+      categorias: ["10", "20", "30", "40", "50"],
+      series: [{ valores: [3, 11, 11, 17, 19] }],
+      ejeX: { etiqueta: "Borde superior" },
+      ejeY: { etiqueta: "Frecuencia acumulada" },
+    },
+  },
+  {
+    id: "lineas-tres-series",
+    rotulo: "grafico-lineas · tres series (trazo y marcador distintos), leyenda",
+    figura: {
+      tipo: "grafico-lineas",
+      categorias: ["A", "B", "C", "D"],
+      series: [
+        { nombre: "Serie 1", valores: [2, 5, 4, 8] },
+        { nombre: "Serie 2", valores: [6, 3, 7, 5] },
+        { nombre: "Serie 3", valores: [1, 1, 6, 9] },
+      ],
+      ejeX: { etiqueta: "Categoría" },
+      ejeY: { etiqueta: "Valor" },
+    },
+  },
+  {
+    id: "circular-porcentaje",
+    rotulo: "grafico-circular · cuatro sectores en porcentaje (12,5 % es el decimal exacto que admite la regla)",
+    figura: {
+      tipo: "grafico-circular",
+      sectores: [
+        { etiqueta: "A", valor: 4 },
+        { etiqueta: "B", valor: 2 },
+        { etiqueta: "C", valor: 1 },
+        { etiqueta: "D", valor: 1 },
+      ],
+      modoEtiqueta: "porcentaje",
+    },
+  },
+  {
+    id: "circular-angulo",
+    rotulo: "grafico-circular · cinco sectores en ángulo (el quinto no repite el relleno del primero)",
+    figura: {
+      tipo: "grafico-circular",
+      sectores: [
+        { etiqueta: "A", valor: 5 },
+        { etiqueta: "B", valor: 3 },
+        { etiqueta: "C", valor: 2 },
+        { etiqueta: "D", valor: 1 },
+        { etiqueta: "E", valor: 1 },
+      ],
+      modoEtiqueta: "angulo",
+    },
+  },
+  {
+    id: "circular-ninguno",
+    rotulo: "grafico-circular · tres sectores sin texto de modo: el ítem pregunta por la fracción",
+    figura: {
+      tipo: "grafico-circular",
+      sectores: [
+        { etiqueta: "A", valor: 3 },
+        { etiqueta: "B", valor: 2 },
+        { etiqueta: "C", valor: 1 },
+      ],
+      modoEtiqueta: "ninguno",
+    },
+  },
+];
