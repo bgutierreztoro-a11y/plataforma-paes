@@ -678,9 +678,9 @@ const CLAVES_CAJA = ['nombre', 'minimo', 'q1', 'mediana', 'q3', 'maximo', 'rotul
 const CINCO_NUMEROS = ['minimo', 'q1', 'mediana', 'q3', 'maximo'];
 const ORIENTACIONES_CAJON = ['horizontal', 'vertical'];
 const MAX_MARCAS_EJE = MAX_INTERVALOS + 1;
-const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
+const CLAVES_DISTRACTOR = ['clave', 'texto', 'figura', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
-const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
+const CLAVES_CORRECTA = ['clave', 'texto', 'figura', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
 const CLAVES_PROVENIENCIA_ITEM = ['fuenteOrigen', 'referencia', 'notaAdaptacion', 'autor', 'fecha'];
 const CLAVES_PROVENIENCIA_BANCO = ['fuentesAnalisis', 'declaracionOriginalidad', 'autor', 'fecha'];
 
@@ -756,7 +756,15 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
       continue;
     }
     if (!CLAVES.includes(a.clave)) errores.push(`${q}: clave debe ser A, B, C o D (recibido: ${JSON.stringify(a.clave)})`);
-    if (!esTexto(a.texto)) errores.push(`${q}: falta texto`);
+    // Regla (26): el texto puede ir vacío solo si la alternativa trae figura, y
+    // esa figura tiene descripcion: es el nombre accesible del botón.
+    if (a.figura !== undefined) validarFiguraItem(a.figura, `${q}.figura`, errores);
+    if (typeof a.texto !== 'string' || (a.texto.trim() === '' && a.figura === undefined)) {
+      errores.push(`${q}: falta texto`);
+    } else if (a.texto.trim() === '' && !esTexto(a.figura?.descripcion)) {
+      const tipo = a.figura?.tipo ?? 'plano de isometrías';
+      errores.push(`${q}: texto vacío exige una figura con descripcion, que es el nombre accesible del botón; ${tipo} no la trae, así que esta alternativa lleva texto`);
+    }
     if (typeof a.esCorrecta !== 'boolean') {
       errores.push(`${q}: esCorrecta debe ser true o false`);
       continue;
@@ -784,6 +792,12 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
         errores.push(`${q}: feedback, si está, tiene al menos ${MIN_FEEDBACK_PUBLICABLE} caracteres (mismo umbral que en lecciones)`);
       }
     }
+  }
+
+  // Regla (25): alternativas gráficas, las cuatro o ninguna.
+  const conFigura = alts.filter((a) => a && typeof a === 'object' && a.figura !== undefined).length;
+  if (conFigura > 0 && conFigura < alts.length) {
+    errores.push(`${donde}: ${conFigura} de ${alts.length} alternativas llevan figura; van las cuatro o ninguna`);
   }
 
   // Regla (8): piso por ítem. Un ítem con cero distractores mapeados no

@@ -100,6 +100,22 @@ describe("itemParaCliente: la figura viaja íntegra", () => {
     assert.equal("figura" in cliente, false);
   });
 
+  it("alternativas gráficas: la figura de cada alternativa viaja por figuraParaCliente; sin figura no aparece la clave", () => {
+    const conFiguras = itemCon(TABLA);
+    conFiguras.alternativas = conFiguras.alternativas.map((a, i) => ({
+      ...a,
+      texto: "",
+      figura: { ...(CAJON as Extract<FiguraItem, { tipo: "diagrama-cajon" }>), cajas: [{ nombre: `A + ${i}`, minimo: 3, q1: 11, mediana: 11, q3: 24.5, maximo: 38 }] },
+    }));
+    const cliente = itemParaCliente(conFiguras);
+    cliente.alternativas.forEach((a, i) => {
+      assert.equal(a.texto, "");
+      assert.deepEqual(a.figura, figuraParaCliente(conFiguras.alternativas[i].figura as FiguraItem));
+      assert.equal(a.figura?.tipo === "diagrama-cajon" && a.figura.cajas[0].nombre, `A${NBSP}+${NBSP}${i}`);
+    });
+    for (const a of itemParaCliente(itemCon(TABLA)).alternativas) assert.equal("figura" in a, false);
+  });
+
   it("sinErrorCatalogado no viaja y errorCatalogado null se conserva", () => {
     const cliente = itemParaCliente(itemCon(TABLA));
     const b = cliente.alternativas[1];

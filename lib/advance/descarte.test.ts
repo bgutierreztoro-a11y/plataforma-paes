@@ -183,6 +183,36 @@ describe("mezcla: el registro guarda la clave original, nunca la visible", () =>
   });
 });
 
+describe("alternativas gráficas: el registro por ítem no cambia de forma", () => {
+  /* El mismo ítem con las cuatro alternativas como cajón y texto vacío. El
+     reducer no mira ni el texto ni la figura: la secuencia de toques da el
+     mismo estado y el mismo registro, y el descarte sigue irreversible. */
+  const cajon = (mediana: number) => ({
+    tipo: "diagrama-cajon" as const,
+    orientacion: "horizontal" as const,
+    eje: { min: 0, max: 40, paso: 5 },
+    cajas: [{ minimo: 4, q1: 10, mediana, q3: 24, maximo: 35 }],
+    descripcion: `Diagrama de cajón de prueba con mediana ${mediana}.`,
+  });
+  const GRAFICO: ItemAdvance = { ...ITEM, alternativas: ITEM.alternativas.map((a, i) => ({ ...a, texto: "", figura: cajon(12 + 3 * i) })) };
+  const inicialGrafico = () => estadoInicialItem(GRAFICO, T0);
+
+  it("confirmado: mismo registro que el ítem de texto, con las mismas claves y el mismo orden", () => {
+    const secuencia = (e: EstadoItem) => confirmar(descartar(descartar(descartar(e, "D", T0 + 1), "B", T0 + 2), "A", T0 + 3), T0 + 900);
+    const grafico = registroDe(secuencia(inicialGrafico()));
+    assert.deepEqual(grafico, registroDe(secuencia(inicial())));
+    assert.deepEqual(Object.keys(grafico).sort(), ["descarteFatal", "erroresIdentificados", "itemId", "ordenDescartes", "tiempoMs"]);
+  });
+
+  it("descarte fatal: mismo descarteFatal, y volver a tocar una descartada no cambia nada", () => {
+    const fatal = descartar(inicialGrafico(), "C", T0 + 5);
+    assert.equal(fatal.descarteFatal, "A");
+    assert.deepEqual(registroDe(fatal), registroDe(descartar(inicial(), "C", T0 + 5)));
+    const una = descartar(inicialGrafico(), "A", T0 + 1);
+    assert.equal(descartar(una, "A", T0 + 2), una);
+  });
+});
+
 describe("resumen de sesión", () => {
   const registros: RegistroItem[] = [
     { itemId: "i1", ordenDescartes: ["B", "C", "D"], erroresIdentificados: ["falla-1", "falla-2", "falla-3"], descarteFatal: null, tiempoMs: 100 },

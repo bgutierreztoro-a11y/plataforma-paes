@@ -30,6 +30,7 @@ export interface ItemEnDisco {
   alternativas: {
     clave: ClaveAlternativa;
     texto: string;
+    figura?: FiguraItem;
     esCorrecta: boolean;
     errorCatalogado?: string | null;
     sinErrorCatalogado?: { motivo: string; nota: string };
@@ -134,11 +135,14 @@ export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
          satisfacen al tipo. `errorCatalogado` es la excepción: null es un
          valor del contrato y se propaga tal cual, nunca como "". */
+      /* Alternativa gráfica: la figura pasa por el mismo figuraParaCliente que la del ítem. */
+      const figura = a.figura ? { figura: figuraParaCliente(a.figura) } : {};
       if (a.esCorrecta) {
         return {
           clave: a.clave,
           claveOriginal: a.clave,
           texto: protegerExpresiones(a.texto),
+          ...figura,
           esCorrecta: true,
           feedbackDescarteIncorrecto: protegerExpresiones(a.feedbackDescarteIncorrecto ?? ""),
         };
@@ -147,6 +151,7 @@ export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
         clave: a.clave,
         claveOriginal: a.clave,
         texto: protegerExpresiones(a.texto),
+        ...figura,
         esCorrecta: false,
         errorCatalogado: a.errorCatalogado ?? null,
         feedbackDescarte: protegerExpresiones(a.feedbackDescarte ?? ""),

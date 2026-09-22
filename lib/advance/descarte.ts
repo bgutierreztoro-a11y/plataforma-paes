@@ -22,7 +22,10 @@ import type { ClaveAlternativa, Dificultad, Habilidad } from "../tipos.ts";
 interface AlternativaBase {
   clave: ClaveAlternativa;
   claveOriginal: ClaveAlternativa;
+  /** Puede venir vacío solo si hay `figura` con descripcion (regla 26 del validador). */
   texto: string;
+  /** Alternativa gráfica. En un ítem la llevan las cuatro o ninguna (regla 25). */
+  figura?: FiguraItem;
 }
 
 export interface DistractorAdvance extends AlternativaBase {

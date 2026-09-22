@@ -976,6 +976,62 @@ describe("figura diagrama-cajon: separación de rótulos, regla (24)", () => {
   });
 });
 
+/* Reglas (25) y (26): alternativas con figura. Cajones de prueba con datos
+   inventados; cada regla con un caso que la rompe y uno que pasa. */
+const cajonDeAlternativa = (mediana: number) => ({
+  tipo: "diagrama-cajon",
+  orientacion: "horizontal",
+  eje: { min: 0, max: 40, paso: 5 },
+  cajas: [{ minimo: 4, q1: 10, mediana, q3: 24, maximo: 35 }],
+  descripcion: `Diagrama de cajón de prueba con mediana ${mediana}.`,
+});
+
+/** El ítem 1 con cambios por alternativa, en el orden A, B, C (correcta), D. */
+function conAlternativas(cambios: Record<string, unknown>[]) {
+  const base = item(1, TRES);
+  const alternativas = base.alternativas.map((a, i) => ({ ...a, ...cambios[i] }));
+  return banco({ ...base, alternativas } as unknown as ReturnType<typeof item>);
+}
+const graficas = (texto = ""): Record<string, unknown>[] => [12, 15, 18, 21].map((m) => ({ texto, figura: cajonDeAlternativa(m) }));
+
+describe("alternativas con figura: las cuatro o ninguna, regla (25)", () => {
+  it("cuatro alternativas con cajón pasan, con texto vacío o con texto; ninguna también", () => {
+    assert.deepEqual(validar(conAlternativas(graficas())), []);
+    assert.deepEqual(validar(conAlternativas(graficas("Cajón"))), []);
+    assert.deepEqual(validar(conAlternativas([{}, {}, {}, {}])), []);
+  });
+
+  it("tres de cuatro con figura falla nombrando el conteo", () => {
+    const cambios = graficas("Cajón");
+    cambios[3] = {};
+    assert.deepEqual(validar(conAlternativas(cambios)), ["items[0]: 3 de 4 alternativas llevan figura; van las cuatro o ninguna"]);
+  });
+
+  it("la figura de una alternativa se valida con las reglas de su tipo", () => {
+    const cambios = graficas();
+    cambios[1] = { texto: "", figura: { ...cajonDeAlternativa(15), cajas: [{ minimo: 4, q1: 16, mediana: 15, q3: 24, maximo: 35 }] } };
+    assert.deepEqual(validar(conAlternativas(cambios)), [
+      "items[0].B.figura.cajas[0]: q1 (16) debe ser menor o igual que mediana (15); el orden es minimo ≤ q1 ≤ mediana ≤ q3 ≤ maximo",
+    ]);
+  });
+});
+
+describe("alternativas con figura: texto vacío y nombre accesible, regla (26)", () => {
+  it("texto vacío sin figura falla como antes", () => {
+    assert.deepEqual(validar(conAlternativas([{ texto: "" }, {}, {}, {}])), ["items[0].A: falta texto"]);
+    assert.deepEqual(validar(conAlternativas([{ texto: "   " }, {}, {}, {}])), ["items[0].A: falta texto"]);
+  });
+
+  it("texto vacío con una figura sin descripcion falla; con texto pasa", () => {
+    const barras = { tipo: "grafico-barras", categorias: ["A", "B"], series: [{ valores: [3, 5] }], ejeX: { etiqueta: "x" }, ejeY: { etiqueta: "f" } };
+    const sinTexto = [0, 1, 2, 3].map(() => ({ texto: "", figura: barras }));
+    const errores = validar(conAlternativas(sinTexto));
+    assert.deepEqual(errores, ["A", "B", "C", "D"].map((c) => `items[0].${c}: texto vacío exige una figura con descripcion, que es el nombre accesible del botón; grafico-barras no la trae, así que esta alternativa lleva texto`));
+    const conTexto = ["Uno", "Dos", "Tres", "Cuatro"].map((texto) => ({ texto, figura: barras }));
+    assert.deepEqual(validar(conAlternativas(conTexto)), []);
+  });
+});
+
 describe("coberturaErrorCatalogadoBanco", () => {
   it("cuenta distractores, mapeados y los declarados por motivo", () => {
     const b = banco(
