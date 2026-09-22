@@ -840,11 +840,11 @@ describe("figura diagrama-cajon: forma, regla (18)", () => {
     ]);
   });
 
-  it("cero o cinco cajas fallan; con cuatro pasa", () => {
+  it("cero o seis cajas fallan; con cinco pasa", () => {
     const con = (n: number) => Array.from({ length: n }, (_, i) => ({ ...CAJA, nombre: `G${i + 1}` }));
-    assert.deepEqual(deLaFigura(validar(cajon({ cajas: [] }))), ["items[0].figura.cajas: se esperan entre 1 y 4 cajas"]);
-    assert.deepEqual(deLaFigura(validar(cajon({ cajas: con(5) }))), ["items[0].figura.cajas: se esperan entre 1 y 4 cajas"]);
-    assert.deepEqual(validar(cajon({ cajas: con(4) })), []);
+    assert.deepEqual(deLaFigura(validar(cajon({ cajas: [] }))), ["items[0].figura.cajas: se esperan entre 1 y 5 cajas"]);
+    assert.deepEqual(deLaFigura(validar(cajon({ cajas: con(6) }))), ["items[0].figura.cajas: se esperan entre 1 y 5 cajas"]);
+    assert.deepEqual(validar(cajon({ cajas: con(5) })), []);
   });
 
   it("un número no finito, rotulos no booleano, grilla no booleana, nombre largo y clave sobrante fallan", () => {
@@ -918,11 +918,37 @@ describe("figura diagrama-cajon: tope de marcas, regla (22)", () => {
     assert.deepEqual(validar(cajon({ eje: { min: 0, max: 40, paso: 4 }, cajas: [CAJA] })), []);
   });
 
-  it("números del eje que se pisan fallan aunque no pasen el tope", () => {
-    const caja = { minimo: 11000, q1: 12000, mediana: 14000, q3: 16000, maximo: 19000 };
-    const errores = deLaFigura(validar(cajon({ eje: { min: 10000, max: 20000, paso: 1000 }, cajas: [caja] })));
-    assert.deepEqual(errores, ["items[0].figura.eje: los números 10.000 y 11.000 del eje se pisan; agranda el paso"]);
-    assert.deepEqual(validar(cajon({ eje: { min: 10000, max: 20000, paso: 2000 }, cajas: [caja] })), []);
+});
+
+describe("figura diagrama-cajon: marcas según el número más largo, regla (27)", () => {
+  const caja = { minimo: 1100, q1: 1300, mediana: 1450, q3: 1600, maximo: 1900 };
+
+  it("11 marcas de 4 cifras en horizontal no caben; con paso 200 (6 marcas) pasa", () => {
+    const errores = deLaFigura(validar(cajon({ eje: { min: 1000, max: 2000, paso: 100 }, cajas: [caja] })));
+    assert.deepEqual(errores, ["items[0].figura.eje: 11 marcas y con números de 5 caracteres caben 9 en este eje (enunciado, letra de 12 px); agranda el paso"]);
+    assert.deepEqual(validar(cajon({ eje: { min: 1000, max: 2000, paso: 200 }, cajas: [caja] })), []);
+  });
+
+  it("en vertical el límite es la letra de alto: 11 marcas de 4 cifras pasan", () => {
+    assert.deepEqual(validar(cajon({ orientacion: "vertical", eje: { min: 1000, max: 2000, paso: 100 }, cajas: [caja] })), []);
+  });
+
+  it("el mismo eje cabe en el enunciado y no en una alternativa, que es más angosta", () => {
+    const eje = { min: 1000, max: 2000, paso: 125 };
+    assert.deepEqual(validar(cajon({ eje, cajas: [caja] })), []);
+    const alternativas = [0, 1, 2, 3].map((i) => ({ texto: "", figura: { ...CAJON_VALIDO, eje, cajas: [{ ...caja, maximo: 1900 + 10 * i }] } }));
+    const base = item(1, TRES);
+    const conAlternativas = { ...base, alternativas: base.alternativas.map((a, i) => ({ ...a, ...alternativas[i] })) };
+    const errores = validar(banco(conAlternativas as unknown as ReturnType<typeof item>));
+    assert.deepEqual(errores, ["A", "B", "C", "D"].map((c) => `items[0].${c}.figura.eje: 9 marcas y con números de 5 caracteres caben 8 en este eje (alternativa, letra de 12 px); agranda el paso`));
+  });
+
+  it("números más largos dejan menos marcas: 6 cifras con 11 marcas no caben, con 6 sí", () => {
+    const grande = { minimo: 110000, q1: 130000, mediana: 145000, q3: 160000, maximo: 190000 };
+    const errores = deLaFigura(validar(cajon({ eje: { min: 100000, max: 200000, paso: 10000 }, cajas: [grande] })));
+    assert.equal(errores.length, 1);
+    assert.match(errores[0], /^items\[0\]\.figura\.eje: 11 marcas y con números de 7 caracteres caben \d+ en este eje/);
+    assert.deepEqual(validar(cajon({ eje: { min: 100000, max: 200000, paso: 20000 }, cajas: [grande] })), []);
   });
 });
 
@@ -933,6 +959,15 @@ describe("figura diagrama-cajon: nombres, regla (23)", () => {
     const repetido = deLaFigura(validar(cajon({ cajas: [{ ...CAJA, nombre: "A" }, { ...CAJA, nombre: "A" }] })));
     assert.deepEqual(repetido, ['items[0].figura.cajas[1].nombre: "A" repetido (ya en items[0].figura.cajas[0])']);
     assert.deepEqual(validar(cajon({ cajas: [{ ...CAJA, nombre: "A" }, { ...CAJA, nombre: "B" }] })), []);
+  });
+
+  it("en vertical, un nombre que no cabe bajo su caja falla; uno corto pasa", () => {
+    const cinco = (nombre: (i: number) => string) => Array.from({ length: 5 }, (_, i) => ({ ...CAJA, nombre: nombre(i) }));
+    const errores = deLaFigura(validar(cajon({ orientacion: "vertical", cajas: cinco((i) => `Grupo largo ${i}`) })));
+    assert.deepEqual(errores, [0, 1, 2, 3, 4].map((i) => `items[0].figura.cajas[${i}].nombre: "Grupo largo ${i}" no cabe bajo su caja en vertical (enunciado); acórtalo o usa orientación horizontal`));
+    assert.deepEqual(validar(cajon({ orientacion: "vertical", cajas: cinco((i) => `G${i}`) })), []);
+    /* En horizontal los nombres tienen columna propia: el largo pasa. */
+    assert.deepEqual(validar(cajon({ cajas: cinco((i) => `Grupo largo ${i}`) })), []);
   });
 
   it("con una sola caja el nombre es opcional", () => {
@@ -964,14 +999,14 @@ describe("figura diagrama-cajon: separación de rótulos, regla (24)", () => {
   });
 
   it("en vertical con cuatro cajas, un rótulo que no cabe en su carril falla; con cifras cortas pasa", () => {
-    const caja = { minimo: 100, q1: 300, mediana: 500, q3: 700, maximo: 950, rotulos: true };
-    const eje = { min: 0, max: 1000, paso: 200 };
+    const caja = { minimo: 10, q1: 30, mediana: 50, q3: 70, maximo: 95, rotulos: true };
+    const eje = { min: 0, max: 100, paso: 20 };
     const cortas = ["A", "B", "C", "D"].map((nombre) => ({ ...caja, nombre }));
     assert.deepEqual(validar(cajon({ orientacion: "vertical", eje, cajas: cortas })), []);
-    const largas = cortas.map((c) => ({ ...c, minimo: 100.25 }));
+    const largas = cortas.map((c) => ({ ...c, minimo: 10.25 }));
     assert.deepEqual(
       deLaFigura(validar(cajon({ orientacion: "vertical", eje, cajas: largas }))),
-      [0, 1, 2, 3].map((i) => `items[0].figura.cajas[${i}]: el rótulo de 100,25 se sale de su lugar en la figura; quita "rotulos" de esta caja`),
+      [0, 1, 2, 3].map((i) => `items[0].figura.cajas[${i}]: el rótulo de 10,25 se sale de su lugar en la figura; quita "rotulos" de esta caja`),
     );
   });
 });

@@ -25,7 +25,7 @@ import { motivoRechazoDatosTransformacion } from '../lib/transformacionesIsometr
 import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
 import { esTipoGraficoEstadistico, motivoRechazoDatosGrafico } from '../lib/estadistica.ts';
 import { esTipoVisualProbabilidad, motivoRechazoDatosProbabilidad } from '../lib/probabilidad.ts';
-import { MAX_CAJAS, MAX_LARGO_NOMBRE, choqueDeMarcas, choquesDeRotulos, num as numCajon } from '../lib/advance/diagramaCajon.ts';
+import { MAX_CAJAS, MAX_LARGO_NOMBRE, choquesDeRotulos, limiteDeMarcas, nombresQueNoCaben, num as numCajon } from '../lib/advance/diagramaCajon.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -758,7 +758,7 @@ function validarAlternativasDescarte(alts, donde, banco, erroresCatalogados, err
     if (!CLAVES.includes(a.clave)) errores.push(`${q}: clave debe ser A, B, C o D (recibido: ${JSON.stringify(a.clave)})`);
     // Regla (26): el texto puede ir vacío solo si la alternativa trae figura, y
     // esa figura tiene descripcion: es el nombre accesible del botón.
-    if (a.figura !== undefined) validarFiguraItem(a.figura, `${q}.figura`, errores);
+    if (a.figura !== undefined) validarFiguraItem(a.figura, `${q}.figura`, errores, 'alternativa');
     if (typeof a.texto !== 'string' || (a.texto.trim() === '' && a.figura === undefined)) {
       errores.push(`${q}: falta texto`);
     } else if (a.texto.trim() === '' && !esTexto(a.figura?.descripcion)) {
@@ -865,7 +865,7 @@ function validarDeclaracionErrorCatalogado(a, q, banco, erroresCatalogados, erro
  * por su `tipo`; después se cruzan: vértices contra puntos, coordenadas contra
  * el plano, nombres sin repetir. Todo es error.
  */
-function validarFiguraItem(figura, donde, errores) {
+function validarFiguraItem(figura, donde, errores, contexto = 'enunciado') {
   if (figura && typeof figura === 'object' && !Array.isArray(figura) && figura.tipo !== undefined) {
     if (figura.tipo === 'plano-funcion') return validarPlanoFuncion(figura, donde, errores);
     if (figura.tipo === 'tabla-valores') return validarTablaValores(figura, donde, errores);
@@ -874,7 +874,7 @@ function validarFiguraItem(figura, donde, errores) {
     if (figura.tipo === 'grafico-lineas') return validarGraficoSeries(figura, donde, errores, CLAVES_GRAFICO_LINEAS, MIN_CATEGORIAS_LINEAS, MAX_CATEGORIAS_LINEAS);
     if (figura.tipo === 'histograma') return validarHistograma(figura, donde, errores);
     if (figura.tipo === 'grafico-circular') return validarGraficoCircular(figura, donde, errores);
-    if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores);
+    if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores, contexto);
     return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
@@ -1412,20 +1412,23 @@ function validarGraficoCircular(figura, donde, errores) {
   });
 }
 
-/* ---------- diagrama de cajón, reglas (18) a (24) ---------- */
+/* ---------- diagrama de cajón, reglas (18) a (24) y (27) ---------- */
 
 /**
- * Reglas (18) a (24): `diagrama-cajon`. Declarativo: cada caja trae sus cinco
- * números y el eje su ventana; la figura no calcula nada desde datos crudos.
- * (18) forma: orientación, eje, 1 a 4 cajas, cinco números finitos, rotulos
- * booleano, nombre de hasta 14 caracteres, descripcion. (19) orden de los cinco
- * números. (20) todo dentro de la ventana del eje. (21) paso positivo que
- * divide el rango. (22) tope de marcas y números del eje que no se pisan.
- * (23) nombre obligatorio y único con 2 o más cajas. (24) rótulos de valores
- * que no se pisan ni se salen, medidos con la misma geometría que dibuja el
- * componente (lib/advance/diagramaCajon.ts). Todo error.
+ * Reglas (18) a (24) y (27): `diagrama-cajon`. Declarativo: cada caja trae sus
+ * cinco números y el eje su ventana; la figura no calcula nada desde datos
+ * crudos. (18) forma: orientación, eje, 1 a 5 cajas, cinco números finitos,
+ * rotulos booleano, nombre de hasta 14 caracteres, descripcion. (19) orden de
+ * los cinco números. (20) todo dentro de la ventana del eje. (21) paso positivo
+ * que divide el rango. (22) tope de 11 marcas. (23) nombre obligatorio y único
+ * con 2 o más cajas, y en vertical que quepa bajo su caja. (24) rótulos de
+ * valores que no se pisan ni se salen. (27) no más marcas de las que caben con
+ * el número más largo del eje. Las reglas 23, 24 y 27 miden con la misma
+ * geometría que dibuja el componente (lib/advance/diagramaCajon.ts), en la
+ * ubicación de la figura: enunciado o alternativa, que tiene otro ancho.
+ * Todo error.
  */
-function validarDiagramaCajon(figura, donde, errores) {
+function validarDiagramaCajon(figura, donde, errores, contexto = 'enunciado') {
   const antes = errores.length;
   clavesSobrantes(figura, CLAVES_DIAGRAMA_CAJON, donde, errores);
 
@@ -1513,14 +1516,18 @@ function validarDiagramaCajon(figura, donde, errores) {
     cajasValidas = errores.length === antesCajas;
   }
 
-  // (22) números del eje y (24) rótulos: solo sobre una figura que ya pasó lo anterior,
+  // (27), (23) en vertical y (24): solo sobre una figura que ya pasó lo anterior,
   // porque la geometría necesita la ventana, el orden y la orientación sanos.
   if (!ejeValido || !cajasValidas || errores.length !== antes) return;
-  const marcas = choqueDeMarcas(figura);
-  if (marcas) {
-    errores.push(`${donde}.eje: los números ${numCajon(marcas[0])} y ${numCajon(marcas[1])} del eje se pisan; agranda el paso`);
+  const marcas = Math.round((figura.eje.max - figura.eje.min) / figura.eje.paso) + 1;
+  const limite = limiteDeMarcas(figura, contexto);
+  if (marcas > limite.maximo) {
+    errores.push(`${donde}.eje: ${marcas} marcas y con números de ${limite.caracteres} caracteres caben ${limite.maximo} en este eje (${contexto}, letra de 12 px); agranda el paso`);
   }
-  for (const choque of choquesDeRotulos(figura)) {
+  for (const i of nombresQueNoCaben(figura, contexto)) {
+    errores.push(`${donde}.cajas[${i}].nombre: "${figura.cajas[i].nombre}" no cabe bajo su caja en vertical (${contexto}); acórtalo o usa orientación horizontal`);
+  }
+  for (const choque of choquesDeRotulos(figura, contexto)) {
     const q = `${donde}.cajas[${choque.caja}]`;
     if (choque.motivo === 'se-pisan') {
       errores.push(`${q}: los rótulos de ${numCajon(choque.valores[0])} y ${numCajon(choque.valores[1])} se pisan en la figura; quita "rotulos" de esta caja o separa los valores`);

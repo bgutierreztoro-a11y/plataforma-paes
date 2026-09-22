@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import type { FiguraDiagramaCajon } from "./descarte.ts";
-import { ANCHO, anchoTexto, choqueDeMarcas, choquesDeRotulos, geometriaCajon, marcasCajon, valoresRotulados } from "./diagramaCajon.ts";
+import { ANCHO_POR_CONTEXTO, LETRA, anchoTexto, choquesDeRotulos, geometriaCajon, limiteDeMarcas, marcasCajon, nombresQueNoCaben, valoresRotulados } from "./diagramaCajon.ts";
 
 /* Motor del diagrama de cajón. Datos inventados. Lo que se afirma son
    relaciones (orden, contención, simetría), no píxeles: los números exactos
@@ -52,10 +52,17 @@ describe("valoresRotulados: cada valor distinto una sola vez", () => {
 });
 
 describe("geometriaCajon: todo cae dentro del lienzo", () => {
+  it("el viewBox depende de la ubicación: la alternativa es más angosta que el enunciado, y la letra es de 12", () => {
+    assert.equal(LETRA, 12);
+    assert.ok(ANCHO_POR_CONTEXTO.alternativa < ANCHO_POR_CONTEXTO.enunciado);
+    assert.equal(geometriaCajon(base()).ancho, ANCHO_POR_CONTEXTO.enunciado);
+    assert.equal(geometriaCajon(base(), "alternativa").ancho, ANCHO_POR_CONTEXTO.alternativa);
+  });
+
   for (const orientacion of ["horizontal", "vertical"] as const) {
-    it(`${orientacion}: rótulos, cajas y eje dentro de ${ANCHO} de ancho y del alto calculado`, () => {
+    it(`${orientacion}: rótulos, cajas y eje dentro del ancho del viewBox y del alto calculado`, () => {
       const g = geometriaCajon(base({ orientacion, cajas: TRES }));
-      assert.equal(g.ancho, ANCHO);
+      assert.equal(g.ancho, ANCHO_POR_CONTEXTO.enunciado);
       for (const r of g.rotulos) {
         const ancho = anchoTexto(r.texto);
         const izq = r.ancla === "middle" ? r.x - ancho / 2 : r.x;
@@ -119,8 +126,19 @@ describe("choques", () => {
     assert.equal(a.length, 1);
   });
 
-  it("marcas del eje: miles de a mil se pisan a lo ancho, de a dos mil no", () => {
-    assert.deepEqual(choqueDeMarcas(base({ eje: { min: 10000, max: 20000, paso: 1000 }, cajas: [{ minimo: 11000, q1: 12000, mediana: 14000, q3: 16000, maximo: 19000 }] })), [10000, 11000]);
-    assert.equal(choqueDeMarcas(base({ eje: { min: 10000, max: 20000, paso: 2000 }, cajas: [{ minimo: 11000, q1: 12000, mediana: 14000, q3: 16000, maximo: 19000 }] })), null);
+  it("límite de marcas: números más largos dejan menos marcas, la alternativa menos que el enunciado, y en vertical manda la letra", () => {
+    const caja = [{ minimo: 1100, q1: 1300, mediana: 1450, q3: 1600, maximo: 1900 }];
+    const cuatro = base({ eje: { min: 1000, max: 2000, paso: 100 }, cajas: caja });
+    const dos = base({ eje: { min: 10, max: 20, paso: 1 }, cajas: [{ minimo: 11, q1: 13, mediana: 14, q3: 16, maximo: 19 }] });
+    assert.ok(limiteDeMarcas(dos).maximo > limiteDeMarcas(cuatro).maximo);
+    assert.ok(limiteDeMarcas(cuatro, "alternativa").maximo < limiteDeMarcas(cuatro).maximo);
+    assert.equal(limiteDeMarcas(cuatro).caracteres, 5);
+    assert.ok(limiteDeMarcas({ ...cuatro, orientacion: "vertical" }).maximo >= 11);
+  });
+
+  it("nombres en vertical: con cinco carriles un nombre largo no cabe; en horizontal siempre cabe", () => {
+    const cinco = Array.from({ length: 5 }, (_, i) => ({ nombre: `Grupo largo ${i}`, minimo: 4, q1: 12, mediana: 18, q3: 26, maximo: 37 }));
+    assert.deepEqual(nombresQueNoCaben(base({ orientacion: "vertical", cajas: cinco })), [0, 1, 2, 3, 4]);
+    assert.deepEqual(nombresQueNoCaben(base({ cajas: cinco })), []);
   });
 });
