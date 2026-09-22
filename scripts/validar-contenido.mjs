@@ -25,6 +25,7 @@ import { motivoRechazoDatosTransformacion } from '../lib/transformacionesIsometr
 import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
 import { esTipoGraficoEstadistico, motivoRechazoDatosGrafico } from '../lib/estadistica.ts';
 import { esTipoVisualProbabilidad, motivoRechazoDatosProbabilidad } from '../lib/probabilidad.ts';
+import { MAX_CAJAS, MAX_LARGO_NOMBRE, choqueDeMarcas, choquesDeRotulos, num as numCajon } from '../lib/advance/diagramaCajon.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -646,7 +647,7 @@ const MAX_COLUMNAS_TABLA = 6;
 const MAX_FILAS_TABLA = 8;
 // Figuras de datos (reglas (13) a (17)): tablas y gráficos estadísticos, solo
 // datos, nunca SVG libre. Topes por legibilidad a 380 px, no por el dominio.
-const TIPOS_FIGURA_DATOS = ['tabla-datos', 'grafico-barras', 'histograma', 'grafico-lineas', 'grafico-circular'];
+const TIPOS_FIGURA_DATOS = ['tabla-datos', 'grafico-barras', 'histograma', 'grafico-lineas', 'grafico-circular', 'diagrama-cajon'];
 const CLAVES_TABLA_DATOS = ['tipo', 'titulo', 'columnas', 'filas', 'filaTotal'];
 const MIN_COLUMNAS_TABLA_DATOS = 2;
 const MAX_FILAS_TABLA_DATOS = 10;
@@ -667,6 +668,16 @@ const MAX_INTERVALOS = 10;
 const MIN_SECTORES = 2;
 const MAX_SECTORES = 8;
 const MODOS_ETIQUETA_CIRCULAR = ['porcentaje', 'valor', 'angulo', 'ninguno'];
+// Diagrama de cajón (reglas (18) a (24)): declarativo, cinco números por caja y
+// ventana del eje declarada. El tope de marcas es el del histograma, la otra
+// figura de datos con un eje numérico rotulado a lo ancho: 10 intervalos, 11
+// bordes con número.
+const CLAVES_DIAGRAMA_CAJON = ['tipo', 'orientacion', 'eje', 'cajas', 'descripcion'];
+const CLAVES_EJE_CAJON = ['min', 'max', 'paso', 'etiqueta', 'grilla'];
+const CLAVES_CAJA = ['nombre', 'minimo', 'q1', 'mediana', 'q3', 'maximo', 'rotulos'];
+const CINCO_NUMEROS = ['minimo', 'q1', 'mediana', 'q3', 'maximo'];
+const ORIENTACIONES_CAJON = ['horizontal', 'vertical'];
+const MAX_MARCAS_EJE = MAX_INTERVALOS + 1;
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -849,6 +860,7 @@ function validarFiguraItem(figura, donde, errores) {
     if (figura.tipo === 'grafico-lineas') return validarGraficoSeries(figura, donde, errores, CLAVES_GRAFICO_LINEAS, MIN_CATEGORIAS_LINEAS, MAX_CATEGORIAS_LINEAS);
     if (figura.tipo === 'histograma') return validarHistograma(figura, donde, errores);
     if (figura.tipo === 'grafico-circular') return validarGraficoCircular(figura, donde, errores);
+    if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores);
     return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
@@ -1384,6 +1396,124 @@ function validarGraficoCircular(figura, donde, errores) {
       errores.push(`${donde}.sectores[${j}]: "${s.etiqueta}" da ${Number(calculado.toFixed(4))}${unidad} en modo ${modo}, y cada valor calculado tiene como máximo 1 decimal exacto`);
     }
   });
+}
+
+/* ---------- diagrama de cajón, reglas (18) a (24) ---------- */
+
+/**
+ * Reglas (18) a (24): `diagrama-cajon`. Declarativo: cada caja trae sus cinco
+ * números y el eje su ventana; la figura no calcula nada desde datos crudos.
+ * (18) forma: orientación, eje, 1 a 4 cajas, cinco números finitos, rotulos
+ * booleano, nombre de hasta 14 caracteres, descripcion. (19) orden de los cinco
+ * números. (20) todo dentro de la ventana del eje. (21) paso positivo que
+ * divide el rango. (22) tope de marcas y números del eje que no se pisan.
+ * (23) nombre obligatorio y único con 2 o más cajas. (24) rótulos de valores
+ * que no se pisan ni se salen, medidos con la misma geometría que dibuja el
+ * componente (lib/advance/diagramaCajon.ts). Todo error.
+ */
+function validarDiagramaCajon(figura, donde, errores) {
+  const antes = errores.length;
+  clavesSobrantes(figura, CLAVES_DIAGRAMA_CAJON, donde, errores);
+
+  // (18) forma
+  if (!ORIENTACIONES_CAJON.includes(figura.orientacion)) {
+    errores.push(`${donde}.orientacion: debe ser una de: ${ORIENTACIONES_CAJON.join(', ')}`);
+  }
+  if (!esTexto(figura.descripcion)) {
+    errores.push(`${donde}.descripcion: falta (texto alternativo del diagrama, es el <desc> del SVG)`);
+  } else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) {
+    errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+  }
+
+  const eje = figura.eje;
+  let ejeValido = false;
+  if (!esObjeto(eje)) {
+    errores.push(`${donde}.eje: debe ser { min, max, paso, etiqueta?, grilla? }`);
+  } else {
+    const q = `${donde}.eje`;
+    clavesSobrantes(eje, CLAVES_EJE_CAJON, q, errores);
+    const faltan = ['min', 'max', 'paso'].filter((k) => !esNumero(eje[k]));
+    if (faltan.length > 0) errores.push(`${q}: ${faltan.join(', ')} deben ser números finitos (la ventana del eje es obligatoria)`);
+    if (eje.etiqueta !== undefined && !esTexto(eje.etiqueta)) errores.push(`${q}.etiqueta: si está, es texto no vacío`);
+    if (eje.grilla !== undefined && typeof eje.grilla !== 'boolean') errores.push(`${q}.grilla: debe ser booleano`);
+    if (faltan.length === 0) {
+      // (21) ventana creciente y paso positivo que divide el rango
+      const antes21 = errores.length;
+      if (eje.min >= eje.max) errores.push(`${q}: min (${eje.min}) debe ser menor que max (${eje.max})`);
+      if (eje.paso <= 0) errores.push(`${q}.paso: debe ser mayor que 0 (recibido: ${eje.paso})`);
+      else if (eje.min < eje.max) {
+        const divisiones = (eje.max - eje.min) / eje.paso;
+        if (Math.abs(divisiones - Math.round(divisiones)) > 1e-9) {
+          errores.push(`${q}.paso: ${eje.paso} no divide el rango ${eje.max} − ${eje.min} = ${Number((eje.max - eje.min).toFixed(9))} en partes enteras (quedan ${Number(divisiones.toFixed(4))})`);
+        } else {
+          // (22) tope de marcas
+          const marcas = Math.round(divisiones) + 1;
+          if (marcas > MAX_MARCAS_EJE) {
+            errores.push(`${q}: ${marcas} marcas y el tope es ${MAX_MARCAS_EJE} (el mismo del histograma); agranda el paso`);
+          }
+        }
+      }
+      ejeValido = errores.length === antes21;
+    }
+  }
+
+  const cajas = figura.cajas;
+  let cajasValidas = false;
+  if (!Array.isArray(cajas) || cajas.length < 1 || cajas.length > MAX_CAJAS) {
+    errores.push(`${donde}.cajas: se esperan entre 1 y ${MAX_CAJAS} cajas`);
+  } else {
+    const antesCajas = errores.length;
+    const nombres = new Map();
+    cajas.forEach((c, j) => {
+      const q = `${donde}.cajas[${j}]`;
+      if (!esObjeto(c)) return errores.push(`${q}: debe ser { nombre?, minimo, q1, mediana, q3, maximo, rotulos? }`);
+      clavesSobrantes(c, CLAVES_CAJA, q, errores);
+      const noNumericos = CINCO_NUMEROS.filter((k) => !esNumero(c[k]));
+      if (noNumericos.length > 0) errores.push(`${q}: ${noNumericos.join(', ')} deben ser números finitos`);
+      if (c.rotulos !== undefined && typeof c.rotulos !== 'boolean') errores.push(`${q}.rotulos: debe ser booleano`);
+
+      // (23) nombres
+      if (c.nombre !== undefined) {
+        if (!esTexto(c.nombre)) errores.push(`${q}.nombre: si está, es texto no vacío`);
+        else if (c.nombre.length > MAX_LARGO_NOMBRE) errores.push(`${q}.nombre: "${c.nombre}" tiene ${c.nombre.length} caracteres y el tope es ${MAX_LARGO_NOMBRE}`);
+        else if (nombres.has(c.nombre)) errores.push(`${q}.nombre: "${c.nombre}" repetido (ya en ${nombres.get(c.nombre)})`);
+        else nombres.set(c.nombre, q);
+      } else if (cajas.length >= 2) {
+        errores.push(`${q}: con 2 o más cajas cada una lleva nombre (no se distinguen solo por posición ni por color)`);
+      }
+      if (noNumericos.length > 0) return;
+
+      // (19) orden
+      for (let k = 1; k < CINCO_NUMEROS.length; k++) {
+        const a = CINCO_NUMEROS[k - 1];
+        const b = CINCO_NUMEROS[k];
+        if (c[a] > c[b]) errores.push(`${q}: ${a} (${c[a]}) debe ser menor o igual que ${b} (${c[b]}); el orden es minimo ≤ q1 ≤ mediana ≤ q3 ≤ maximo`);
+      }
+      // (20) contención en la ventana
+      if (esObjeto(eje) && esNumero(eje.min) && esNumero(eje.max) && eje.min < eje.max) {
+        for (const k of CINCO_NUMEROS) {
+          if (c[k] < eje.min || c[k] > eje.max) errores.push(`${q}.${k}: ${c[k]} queda fuera del eje [${eje.min}, ${eje.max}]`);
+        }
+      }
+    });
+    cajasValidas = errores.length === antesCajas;
+  }
+
+  // (22) números del eje y (24) rótulos: solo sobre una figura que ya pasó lo anterior,
+  // porque la geometría necesita la ventana, el orden y la orientación sanos.
+  if (!ejeValido || !cajasValidas || errores.length !== antes) return;
+  const marcas = choqueDeMarcas(figura);
+  if (marcas) {
+    errores.push(`${donde}.eje: los números ${numCajon(marcas[0])} y ${numCajon(marcas[1])} del eje se pisan; agranda el paso`);
+  }
+  for (const choque of choquesDeRotulos(figura)) {
+    const q = `${donde}.cajas[${choque.caja}]`;
+    if (choque.motivo === 'se-pisan') {
+      errores.push(`${q}: los rótulos de ${numCajon(choque.valores[0])} y ${numCajon(choque.valores[1])} se pisan en la figura; quita "rotulos" de esta caja o separa los valores`);
+    } else {
+      errores.push(`${q}: el rótulo de ${numCajon(choque.valores[0])} se sale de su lugar en la figura; quita "rotulos" de esta caja`);
+    }
+  }
 }
 
 function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {

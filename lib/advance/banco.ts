@@ -163,8 +163,9 @@ const ejeY = (e: EjeValores): EjeValores => ({ ...e, etiqueta: texto(e.etiqueta)
 
 /**
  * Las figuras de datos (tabla-datos, grafico-barras, histograma,
- * grafico-lineas, grafico-circular) llevan texto que se lee en pantalla:
- * columnas, celdas, categorías, nombres de serie, etiquetas de eje y de sector.
+ * grafico-lineas, grafico-circular, diagrama-cajon) llevan texto que se lee en
+ * pantalla: columnas, celdas, categorías, nombres de serie o de caja, etiquetas
+ * de eje y de sector.
  * Ese texto pasa por el mismo `protegerExpresiones` que el enunciado, para que
  * un intervalo como "10 − 20" o una etiqueta "n = 40" no se corte en el
  * operador. Los números viajan intactos. Las otras tres figuras (isometrías,
@@ -187,6 +188,12 @@ export function figuraParaCliente(figura: FiguraItem): FiguraItem {
       return { ...figura, ejeX: ejeX(figura.ejeX), ejeY: ejeY(figura.ejeY) };
     case "grafico-circular":
       return { ...figura, sectores: figura.sectores.map((s) => ({ etiqueta: texto(s.etiqueta), valor: s.valor })) };
+    case "diagrama-cajon":
+      return {
+        ...figura,
+        eje: { ...figura.eje, ...(figura.eje.etiqueta !== undefined ? { etiqueta: texto(figura.eje.etiqueta) } : {}) },
+        cajas: figura.cajas.map((c) => ({ ...c, ...(c.nombre !== undefined ? { nombre: texto(c.nombre) } : {}) })),
+      };
     default:
       return figura;
   }

@@ -68,11 +68,23 @@ const TABLA: FiguraItem = {
   descripcion: "Tabla de valores de f y g para x entre -1 y 0, datos del ítem.",
 };
 
+const CAJON: FiguraItem = {
+  tipo: "diagrama-cajon",
+  orientacion: "horizontal",
+  eje: { min: 0, max: 40, paso: 5, etiqueta: "minutos", grilla: true },
+  cajas: [
+    { nombre: "Grupo A", minimo: 3, q1: 11, mediana: 11, q3: 24.5, maximo: 38, rotulos: true },
+    { nombre: "Grupo B", minimo: 6, q1: 14, mediana: 19, q3: 27, maximo: 33 },
+  ],
+  descripcion: "Dos diagramas de cajón horizontales de prueba, grupo A y grupo B.",
+};
+
 describe("itemParaCliente: la figura viaja íntegra", () => {
   for (const [nombre, figura] of [
     ["plano de isometrías (sin tipo)", ISOMETRIAS],
     ["plano-funcion con todos los campos", PLANO_FUNCION],
     ["tabla-valores", TABLA],
+    ["diagrama-cajon sin texto con operadores", CAJON],
   ] as const) {
     it(nombre, () => {
       const cliente = itemParaCliente(itemCon(figura));
@@ -154,6 +166,32 @@ describe("figuraParaCliente: el texto de las figuras de datos se protege, los n�
   it("grafico-circular: etiquetas de sector; valores y modo intactos", () => {
     const figura: FiguraItem = { tipo: "grafico-circular", sectores: [{ etiqueta: "A − B", valor: 3 }, { etiqueta: "C", valor: 1 }], modoEtiqueta: "angulo" };
     assert.deepEqual(figuraParaCliente(figura), { tipo: "grafico-circular", sectores: [{ etiqueta: `A${NBSP}−${NBSP}B`, valor: 3 }, { etiqueta: "C", valor: 1 }], modoEtiqueta: "angulo" });
+  });
+
+  it("diagrama-cajon: nombres de caja y unidad del eje; los cinco números, el eje y la descripción intactos", () => {
+    const figura: FiguraItem = {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 0, max: 50, paso: 10, etiqueta: "t (n = 9)", grilla: true },
+      cajas: [
+        { nombre: "A + B", minimo: 4, q1: 12, mediana: 12, q3: 30.5, maximo: 47, rotulos: true },
+        { nombre: "C", minimo: 1, q1: 9, mediana: 20, q3: 26, maximo: 38 },
+      ],
+      descripcion: "Dos diagramas de cajón verticales con datos de prueba, A + B y C.",
+    };
+    assert.deepEqual(figuraParaCliente(figura), {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 0, max: 50, paso: 10, etiqueta: `t (n${NBSP}= 9)`, grilla: true },
+      cajas: [
+        { nombre: `A${NBSP}+${NBSP}B`, minimo: 4, q1: 12, mediana: 12, q3: 30.5, maximo: 47, rotulos: true },
+        { nombre: "C", minimo: 1, q1: 9, mediana: 20, q3: 26, maximo: 38 },
+      ],
+      descripcion: "Dos diagramas de cajón verticales con datos de prueba, A + B y C.",
+    });
+    /* Sin nombre ni etiqueta no aparece ninguna clave nueva. */
+    const sola: FiguraItem = { tipo: "diagrama-cajon", orientacion: "horizontal", eje: { min: 0, max: 10, paso: 2 }, cajas: [{ minimo: 1, q1: 2, mediana: 5, q3: 7, maximo: 9 }], descripcion: "Un diagrama de cajón horizontal de prueba." };
+    assert.deepEqual(figuraParaCliente(sola), sola);
   });
 
   it("las tres figuras anteriores siguen viajando tal cual, aunque tengan texto con operadores", () => {

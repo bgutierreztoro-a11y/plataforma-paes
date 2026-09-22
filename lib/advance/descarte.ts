@@ -211,7 +211,55 @@ export interface FiguraGraficoCircular {
   modoEtiqueta: ModoEtiquetaCircular;
 }
 
-export type FiguraDatos = FiguraTablaDatos | FiguraGraficoBarras | FiguraHistograma | FiguraGraficoLineas | FiguraGraficoCircular;
+/* ---------- diagrama de cajón (figuraDiagramaCajon, reglas (18) a (24)) ---------- */
+
+/**
+ * Eje de valores del cajón. Mismos nombres que `EjeValores` (min, max, paso,
+ * etiqueta), pero con la ventana obligatoria: la figura no calcula nada desde
+ * datos crudos, así que tampoco adivina su escala. `etiqueta` es la unidad y es
+ * opcional; `grilla` traza una línea hairline por marca.
+ */
+export interface EjeCajon {
+  min: number;
+  max: number;
+  paso: number;
+  etiqueta?: string;
+  grilla?: boolean;
+}
+
+/**
+ * Una caja, declarada con sus cinco números. `nombre` es obligatorio y único
+ * con dos o más cajas (es el canal que las distingue, no el color). Con
+ * `rotulos`, cada valor distinto lleva su número una sola vez: si q1 es igual a
+ * la mediana, comparten rótulo.
+ */
+export interface CajaDatos {
+  nombre?: string;
+  minimo: number;
+  q1: number;
+  mediana: number;
+  q3: number;
+  maximo: number;
+  rotulos?: boolean;
+}
+
+/** Diagrama de cajón declarativo: 1 a 4 cajas sobre el mismo eje, horizontal o vertical. */
+export interface FiguraDiagramaCajon {
+  tipo: "diagrama-cajon";
+  orientacion: "horizontal" | "vertical";
+  eje: EjeCajon;
+  cajas: CajaDatos[];
+  /** Texto alternativo real: el <desc> del SVG. */
+  descripcion: string;
+}
+
+export type FiguraDatos =
+  | FiguraTablaDatos
+  | FiguraGraficoBarras
+  | FiguraHistograma
+  | FiguraGraficoLineas
+  | FiguraGraficoCircular
+  | FiguraDiagramaCajon;
 
 /** Cualquier figura de un ítem. Viaja al cliente tal cual, salvo el texto de las figuras de datos (lib/advance/banco.ts). */
 export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos;
