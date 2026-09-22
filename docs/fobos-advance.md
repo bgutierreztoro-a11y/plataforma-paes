@@ -780,7 +780,7 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 
 ---
 
-## 12. Figuras de función (plano-funcion y tabla-valores)
+## 12. Figuras de función (plano-funcion y tabla-valores), diagrama de cajón y alternativas con figura
 
 Infraestructura previa a la unidad 11 (funcion-cuadratica), construida el 2026-09-20 sin escribir ningún ítem. El temario DEMRE M1 pide, para función cuadrática, tablas y gráficos considerando la variación de parámetros y los puntos especiales de la gráfica (vértice, ceros, intersección con los ejes). El plano de isometrías (§2.3, `figuraPlano`) solo dibuja puntos, polígonos, vectores, centros y rectas del enum x=c | y=c | y=x | y=-x; una parábola no era dibujable.
 
@@ -872,6 +872,68 @@ Lo que la galería deja a la vista y no se resuelve acá: sin `ventana` declarad
 ### 12.7 Galería
 
 `/_design`, sección "Planos de función": 13 planos y una tabla con datos de MUESTRA en `app/%5Fdesign/muestraDescarte.ts` (`PLANOS_FUNCION_MUESTRA`, `TABLA_MUESTRA`), con vértices y ceros marcados solo para medir. No viven en `content/` y ningún banco los importa.
+
+### 12.8 Diagrama de cajón (`diagrama-cajon`)
+
+Infraestructura previa a la unidad 13 (medidas-de-posicion), construida el 2026-09-22 sin escribir ningún ítem. El inventario y los conteos que decidieron qué se construye están en `docs/analisis/material-referencia/figuras-medidas-de-posicion.md`: el cajón aparece en 3 preguntas DEMRE y 10 problemas UC, y el temario lo nombra. Atípicos y marca de promedio no se construyeron porque aparecen 0 veces en DEMRE y 0 en UC.
+
+Es declarativo: cada caja trae sus cinco números en el JSON y la figura no calcula ningún cuartil, así que la convención de cálculo (12.10) se decide al escribir el ítem, no en el componente.
+
+```
+tipo: "diagrama-cajon"
+orientacion: "horizontal" | "vertical"
+eje: { min, max, paso, etiqueta?, grilla? }      ventana obligatoria; etiqueta = unidad
+cajas: 1 a 4 de
+  { nombre?, minimo, q1, mediana, q3, maximo, rotulos? }
+  nombre: hasta 14 caracteres, obligatorio y único con 2 o más cajas
+  rotulos: escribe cada valor distinto una vez (q1 igual a la mediana comparte rótulo)
+descripcion: string, ≥ 30 caracteres            el <desc> del SVG
+```
+
+`eje` reusa los nombres de `ejeValores` de las figuras de datos (`min`, `max`, `paso`, `etiqueta`), pero es una definición aparte (`ejeCajon`): acá la ventana es obligatoria y la etiqueta opcional, y cambiar `ejeValores` habría tocado un campo existente.
+
+Reglas del validador (`validarDiagramaCajon` en `scripts/validar-contenido.mjs`), todas error:
+
+- (18) Forma: `orientacion` en el vocabulario; `eje` con `min`, `max` y `paso` finitos, `etiqueta` texto y `grilla` booleano si vienen; 1 a 4 cajas; los cinco números finitos; `rotulos` booleano; `nombre` de hasta 14 caracteres; `descripcion` de 30 o más; sin claves sobrantes.
+- (19) Orden: `minimo ≤ q1 ≤ mediana ≤ q3 ≤ maximo` en cada caja. Iguales está permitido.
+- (20) Contención: los cinco números de cada caja dentro de `[eje.min, eje.max]`.
+- (21) Ventana y paso: `eje.min < eje.max`, `eje.paso > 0` y el paso divide `max − min` en partes enteras.
+- (22) Marcas: a lo más 11 (el tope del histograma, 10 intervalos y 11 bordes con número, la otra figura de datos con un eje numérico rotulado a lo ancho), y los números del eje no se pisan.
+- (23) Nombres: obligatorios y únicos con 2 o más cajas; con una, opcional.
+- (24) Rótulos: con `rotulos`, dos valores distintos de una caja no pueden quedar tan juntos que sus números se pisen, y ningún número puede salir de su fila, su carril o el lienzo. El mensaje sugiere quitar `rotulos`. Valores iguales comparten rótulo y nunca chocan.
+
+La regla (24) mide con la misma geometría que dibuja el componente (`lib/advance/diagramaCajon.ts`: `geometriaCajon`, `choquesDeRotulos`, `choqueDeMarcas`). El SVG se escala entero, así que un choque medido en unidades del viewBox es un choque a 390 px. El ancho de un número se estima en 0,6 em por cifra y 0,3 em por coma o punto, un poco por encima de lo real, así que el aviso llega antes que el choque.
+
+Dibujo (`components/advance/figuras/DiagramaCajon.tsx`): la caja va en `--linea-tinte` con borde `--linea-nav` de 1,5; la mediana en tinta con trazo 3, así que se distingue por grosor y no por color; los bigotes llegan al mínimo y al máximo con remate perpendicular. En horizontal: nombre a la izquierda, q1, mediana y q3 sobre la caja, mínimo y máximo bajo los bigotes, eje abajo y unidad bajo su extremo derecho. En vertical: eje a la izquierda con la unidad arriba, nombre bajo cada carril y los rótulos a la derecha de la caja. La mediana rotulada va en negrita. Accesibilidad como `PlanoFuncion`: `role="img"`, `<title>` generado desde `textos.ts` ("Diagrama de cajón", "Tres diagramas de cajón") y `<desc>` = `descripcion`. `figuraParaCliente` pasa `nombre` y `eje.etiqueta` por `protegerExpresiones` y deja los números intactos.
+
+Galería `/_design`, sección "Diagrama de cajón", en la línea 04 con datos inventados (`CAJONES_MUESTRA`): una caja horizontal rotulada, q1 igual a la mediana, tres verticales leídas del eje, dos verticales rotuladas y cuatro horizontales con valores negativos. Medido a 390 × 844 en claro y oscuro (el repo no tiene tema oscuro y las capturas salen idénticas): 0 desbordes, 0 textos pisados y letra mínima de 9,62 px.
+
+### 12.9 Alternativas con figura
+
+Una alternativa acepta `figura` opcional, de cualquier tipo del `oneOf` de la figura del ítem (definición `figuraAlternativa`). Con figura, `texto` puede ir vacío. El inventario la justifica con 4 problemas UC con cajones como alternativas (0 en DEMRE).
+
+Reglas del validador, todas error:
+
+- (25) En un ítem las cuatro alternativas llevan figura o ninguna la lleva. Cada figura pasa las reglas de su tipo (10 a 24), con la ruta `items[i].<clave>.figura`.
+- (26) Texto vacío solo si hay figura, y esa figura tiene `descripcion`, porque es el nombre accesible del botón. Las figuras de datos sin `descripcion` (`tabla-datos`, `grafico-barras`, `histograma`, `grafico-lineas`, `grafico-circular`) exigen texto.
+
+El descarte sigue irreversible y el registro por ítem no cambia de forma: `ordenDescartes`, `erroresIdentificados` y `descarteFatal` se calculan igual. Lo afirma `lib/advance/descarte.test.ts` con el mismo ítem en versión texto y en versión gráfica. `itemParaCliente` pasa la figura de cada alternativa por `figuraParaCliente`, y la mezcla de alternativas (`lib/advance/seleccion.ts`, spread) la conserva.
+
+Dibujo (`components/advance/FiguraDeAlternativa.tsx`, montado en `AlternativaDescartable` e `ItemTriage`): la figura va en su propia fila, a ancho completo bajo la letra, en un panel `--color-bg`. Si trae `descripcion`, el SVG queda `aria-hidden` y la descripción va en `sr-only` dentro del botón. Descartada (bien o por error): gris y con una diagonal en tinta, sin `opacity`, y el estado se sigue anunciando por texto. A 390 px las alternativas se apilan a ancho completo, los botones gráficos miden de 161 a 255 px de alto (mínimo 44) y el gráfico no se recorta. La letra del cajón dentro de la alternativa queda en 9,38 px en descarte. En la galería de triage baja a 8,37 px por el doble padding del envoltorio.
+
+Lugares que renderizan el texto de una alternativa, revisados uno por uno: `AlternativaDescartable.tsx` (texto y figura), `ItemTriage.tsx` (texto y figura), `EjecutorDescarte.tsx` (delega en `AlternativaDescartable`), `lib/advance/banco.ts` (sanitizador) y `lib/advance/seleccion.ts` (mezcla). `ResultadoDescarte`, `ResultadoTriage` y la solución no muestran alternativas.
+
+Galería `/_design`, sección "Alternativas con gráfico": un ítem de muestra con cuatro cajones y texto vacío (`MUESTRA_CAJON_ALTERNATIVAS`), en descarte cerrado por descarte fatal, en descarte a punto de confirmar y en triage.
+
+### 12.10 Convención de cuartiles y percentiles
+
+Detalle con citas y verificación en `docs/analisis/material-referencia/figuras-medidas-de-posicion.md`, sección "Convención de cuartiles y percentiles".
+
+- Lección gratuita (`lib/estadistica.ts`): Q1 y Q3 son las medianas de las mitades, y con n impar la mediana no entra. El percentil k usa p = k·n/100: si p es entero, se promedian las posiciones p y p + 1; si no, se toma la posición ⌈p⌉.
+- Material UC (Ap2 p. 87 y 88): la posición de Qk es k·n/4, con la misma regla. Una solución usa mitades (S-Ap2 p. 69).
+- DEMRE: no hay soluciones en el corpus. Las dos preguntas con cálculo (2024 regular 113 n.º 62, 2027 invierno 111 n.º 62) tienen datos elegidos para que la convención no cambie la clave.
+
+Con n par y con n ≡ 3 (mód 4) la lección y UC coinciden. Con n ≡ 1 (mód 4) difieren, y la lección se contradice consigo misma: su Q1 por mitades no es su P25. Hallazgo abierto, la lección no se toca. Para los bancos de medidas-de-posicion: un ítem con cuartiles de datos no agrupados evita n ≡ 1 (mód 4) o comprueba que las tres convenciones den lo mismo.
 
 ---
 
