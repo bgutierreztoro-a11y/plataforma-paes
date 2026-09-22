@@ -738,3 +738,62 @@ export const CAJONES_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagra
     },
   },
 ];
+
+/* Alternativas gráficas (reglas 25 y 26): un ítem de MUESTRA con cuatro
+   cajones como alternativas y texto vacío, para descarte y triage. Datos
+   INVENTADOS, n = 8 (par: todas las convenciones de cuartiles coinciden). */
+const cajonAlternativa = (minimo: number, q1: number, mediana: number, q3: number, maximo: number): FiguraDiagramaCajon => ({
+  tipo: "diagrama-cajon",
+  orientacion: "horizontal",
+  eje: { min: 0, max: 25, paso: 5 },
+  cajas: [{ minimo, q1, mediana, q3, maximo, rotulos: true }],
+  descripcion: `Cajón con mínimo ${minimo}, primer cuartil ${String(q1).replace(".", ",")}, mediana ${String(mediana).replace(".", ",")}, tercer cuartil ${String(q3).replace(".", ",")} y máximo ${maximo}.`,
+});
+
+export const MUESTRA_CAJON_ALTERNATIVAS: ItemAdvance = {
+  id: "adv-muestra-cajon",
+  unidadId: "muestra",
+  moduloId: "medidas-de-posicion",
+  habilidad: "representar",
+  dificultad: "media",
+  tiempoReferenciaSeg: 120,
+  enunciado: "MUESTRA. Los datos inventados 3, 7, 8, 11, 14, 16, 19 y 23 ya están ordenados. ¿Cuál diagrama de cajón los representa?",
+  alternativas: [
+    {
+      clave: "A",
+      claveOriginal: "A",
+      texto: "",
+      figura: cajonAlternativa(3, 7, 11, 16, 23),
+      esCorrecta: false,
+      errorCatalogado: "toma-dato-central-sin-promediar",
+      feedbackDescarte: "Toma un solo dato donde hay dos centrales: con n par, cada cuartil es el promedio de dos datos vecinos.",
+    },
+    {
+      clave: "B",
+      claveOriginal: "B",
+      texto: "",
+      figura: cajonAlternativa(3, 7.5, 12.5, 17.5, 23),
+      esCorrecta: true,
+      feedbackDescarteIncorrecto: "Era la correcta: con 8 datos, Q1 = (7 + 8) : 2, la mediana = (11 + 14) : 2 y Q3 = (16 + 19) : 2.",
+    },
+    {
+      clave: "C",
+      claveOriginal: "C",
+      texto: "",
+      figura: cajonAlternativa(3, 8, 13, 18, 23),
+      esCorrecta: false,
+      errorCatalogado: "toma-cuartil-como-fraccion-del-rango",
+      feedbackDescarte: "Reparte el rango de 3 a 23 en cuartos iguales: los cuartiles cortan la lista de datos, no la escala.",
+    },
+    {
+      clave: "D",
+      claveOriginal: "D",
+      texto: "",
+      figura: cajonAlternativa(7, 7.5, 12.5, 17.5, 19),
+      esCorrecta: false,
+      errorCatalogado: null,
+      feedbackDescarte: "Los bigotes llegan al segundo y al penúltimo dato: el cajón va del mínimo, 3, al máximo, 23.",
+    },
+  ],
+  solucion: "Con n = 8: Q1 = (7 + 8) : 2 = 7,5; mediana = (11 + 14) : 2 = 12,5; Q3 = (16 + 19) : 2 = 17,5. Mínimo 3 y máximo 23.",
+};

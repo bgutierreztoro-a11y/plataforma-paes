@@ -1,6 +1,7 @@
 "use client";
 
 import { ALTERNATIVA_BASE, CHIP_BASE } from "@/components/ui/alternativa";
+import { FiguraDeAlternativa } from "@/components/advance/FiguraDeAlternativa";
 import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
@@ -49,7 +50,9 @@ const DECISIONES = ["resuelvo", "marco"] as const;
  * para no robarle lectura a los 20 s.
  *
  * Las alternativas toman `ALTERNATIVA_BASE` y `CHIP_BASE` sin la capa
- * interactiva: son `div`, no `button`, y no responden al dedo.
+ * interactiva: son `div`, no `button`, y no responden al dedo. Una alternativa
+ * gráfica lleva su figura en una fila propia a ancho completo, igual que en
+ * descarte (`FiguraDeAlternativa`).
  */
 export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }: ItemTriageProps) {
   const { triage } = TEXTOS_ADVANCE;
@@ -98,11 +101,12 @@ export function ItemTriage({ item, indice, total, segundos, titulo, onDecidir }:
 
         <ul className="space-y-2.5" aria-label="Alternativas">
           {item.alternativas.map((alt) => (
-            <li key={alt.clave} className={`${ALTERNATIVA_BASE} border border-hairline bg-card`}>
+            <li key={alt.clave} className={`${ALTERNATIVA_BASE} flex-wrap border border-hairline bg-card`}>
               <span aria-hidden="true" className={`${CHIP_BASE} border border-hairline text-secondary`}>
                 {alt.clave}
               </span>
               <span className="min-w-0 flex-1 text-cuerpo-m text-primary">{alt.texto}</span>
+              {alt.figura && <FiguraDeAlternativa figura={alt.figura} />}
             </li>
           ))}
         </ul>

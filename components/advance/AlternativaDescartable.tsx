@@ -1,6 +1,7 @@
 "use client";
 
 import { ALTERNATIVA_BASE, ALTERNATIVA_INTERACTIVA, CHIP_BASE } from "@/components/ui/alternativa";
+import { FiguraDeAlternativa } from "@/components/advance/FiguraDeAlternativa";
 import type { AlternativaAdvance, EstadoAlternativa } from "@/lib/advance/descarte";
 import type { ClaveAlternativa } from "@/lib/tipos";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
@@ -45,6 +46,12 @@ interface AlternativaDescartableProps {
  *   `feedbackDescarteIncorrecto`. El verde dice "era la correcta", que es la
  *   información; la solución la muestra el ejecutor debajo de la lista.
  * - sobreviviente: color del eje, sin tachar. Es la que se confirma.
+ *
+ * Alternativa gráfica (con `figura`, reglas 25 y 26): la figura va en su propia
+ * fila a ancho completo, bajo la letra (`FiguraDeAlternativa`). Descartada, en
+ * gris y con una diagonal en vez del tachado; el estado se sigue anunciando
+ * por texto. Si el texto viene vacío, el nombre del botón es la descripción de
+ * la figura, en sr-only.
  */
 const CLASES_FILA: Record<EstadoAlternativa, string> = {
   intacta: `border border-hairline bg-card ${ALTERNATIVA_INTERACTIVA}`,
@@ -91,6 +98,7 @@ export function AlternativaDescartable({
       >
         {alternativa.texto}
       </span>
+      {alternativa.figura && <FiguraDeAlternativa figura={alternativa.figura} tachada={descartada} />}
 
       {estado === "descartada-correcta" && !alternativa.esCorrecta && (
         <span className="basis-full pl-10">

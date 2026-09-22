@@ -32,6 +32,7 @@ import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
   CAJONES_MUESTRA,
+  MUESTRA_CAJON_ALTERNATIVAS,
   COPY_MUESTRA,
   FIGURAS_DATOS_MUESTRA,
   FIGURAS_MUESTRA,
@@ -985,6 +986,41 @@ export default function PaginaDiseno() {
                 </div>
               </div>
             ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Alternativas con gráfico"
+          nota="Un ítem de MUESTRA con cuatro diagramas de cajón como alternativas y texto vacío (reglas 25 y 26): las cuatro llevan figura o ninguna, y el nombre del botón es la descripción de la figura, en sr-only. La figura va en su propia fila, a ancho completo bajo la letra, en un panel --color-bg. Descartada: gris y una diagonal en tinta, sin opacity, con el estado anunciado por texto como en las de texto. El registro por ítem no cambia de forma. Arriba, descarte cerrado por descarte fatal (A descartada con acierto, B la correcta descartada por error, C y D intactas y deshabilitadas); al medio, a punto de confirmar (tres descartadas, B sobreviviente); abajo, el mismo ítem en triage. Línea 04, datos inventados en app/%5Fdesign/muestraDescarte.ts."
+        >
+          <div className="flex flex-col gap-6" style={estiloDeLinea("04")}>
+            {(
+              [
+                { id: "fatal", rotulo: "Descarte · cerrado por descarte fatal", estados: ["descartada-correcta", "descartada-por-error", "intacta", "intacta"] },
+                { id: "confirmar", rotulo: "Descarte · tres descartadas, queda la correcta", estados: ["descartada-correcta", "sobreviviente", "descartada-correcta", "descartada-correcta"] },
+              ] as { id: string; rotulo: string; estados: EstadoAlternativa[] }[]
+            ).map(({ id, rotulo, estados }) => (
+              <div key={id} className="max-w-md" data-caso-alternativas={id}>
+                <Rotulo>Línea 04 · {rotulo}</Rotulo>
+                <div data-alternativas-graficas={id} className="space-y-2.5 bg-[var(--color-bg)]" role="group" aria-label="Alternativas">
+                  {MUESTRA_CAJON_ALTERNATIVAS.alternativas.map((alt, i) => (
+                    <AlternativaDescartable
+                      key={alt.clave}
+                      alternativa={alt}
+                      estado={estados[i]}
+                      rotuloError={alt.esCorrecta || alt.errorCatalogado === null ? undefined : rotuloDeError(alt.errorCatalogado, 1)}
+                      deshabilitada={id === "fatal"}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="max-w-md" data-caso-alternativas="triage">
+              <Rotulo>Línea 04 · Triage · el mismo ítem, quedan 12 s</Rotulo>
+              <div data-alternativas-graficas="triage" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
+                <ItemTriage item={MUESTRA_CAJON_ALTERNATIVAS} indice={1} total={20} segundos={12} />
+              </div>
+            </div>
           </div>
         </Seccion>
 
