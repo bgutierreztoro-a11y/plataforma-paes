@@ -1,0 +1,1330 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "tablas-y-graficos",
+  "moduloId": "tablas-y-graficos",
+  "titulo": "Representación de datos a través de tablas y gráficos",
+  "items": [
+    {
+      "id": "adv-tablas-y-graficos-001",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "La tabla muestra los edificios de una avenida clasificados por su cantidad de pisos. ¿Cuántos edificios hay en la avenida?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "79",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la cantidad de edificios es la suma de la columna de frecuencias, 13 + 3 + 54 + 9 = 79."
+        },
+        {
+          "clave": "B",
+          "texto": "217",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-frecuencia-con-valor",
+          "feedbackDescarte": "Esa suma cada cantidad de pisos por su frecuencia: 1 · 13 + 2 · 3 + 3 · 54 + 4 · 9 = 217. Eso cuenta pisos, no edificios; los edificios son la suma de la columna de frecuencias."
+        },
+        {
+          "clave": "C",
+          "texto": "78",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa deja un edificio fuera del conteo y suma 79 − 1 = 78. La columna de frecuencias suma 13 + 3 + 54 + 9 = 79, sin descontar nada."
+        },
+        {
+          "clave": "D",
+          "texto": "4",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa cuenta las filas de la tabla, que son las cantidades de pisos distintas (1, 2, 3 y 4), no los edificios. Cada fila agrupa varios edificios: hay que sumar las frecuencias."
+        }
+      ],
+      "solucion": "La columna de frecuencias dice cuántos edificios tienen cada cantidad de pisos: 13 de un piso, 3 de dos, 54 de tres y 9 de cuatro. El total de edificios es la suma de esa columna: 13 + 3 + 54 + 9 = 79. La suma de pisos por frecuencia (217) cuenta pisos, y la cantidad de filas (4) cuenta categorías, no edificios.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "titulo": "Edificios de la avenida",
+        "columnas": [
+          "Cantidad de pisos",
+          "Edificios"
+        ],
+        "filas": [
+          [
+            1,
+            13
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            54
+          ],
+          [
+            4,
+            9
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 57, distractor A",
+        "notaAdaptacion": "Del original (familias de un edificio por cantidad de hijos, frecuencias 6, 3, 2, 3 y 1, se pide el total de familias; clave C = 15 por clavijero y por suma) se conserva la estructura (tabla de frecuencias, pedir n sumando la columna de frecuencias) y el mecanismo de su distractor A = 5 (contar las filas de la tabla, aquí 4 por divide-por-categorias-en-vez-de-n). Cambian el dominio (edificios por cantidad de pisos), las cifras (13, 3, 54, 9; n = 79) y los otros dos distractores (217 por confunde-frecuencia-con-valor y 78 por deja-un-dato-fuera-del-conteo). El distractor 4 es de otra magnitud que la clave; se firmó como una de las dos excepciones del banco porque el mecanismo lo exige y la forma DEMRE lo trae."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-002",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una función de teatro se vendieron 1.100 entradas. La tabla registra las entradas por ubicación, con algunas casillas sin completar. ¿Cuál es la frecuencia relativa de las entradas de platea alta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,63",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa calcula 1 − 0,37 = 0,63, la parte de las entradas que NO son de platea alta. Se pide la parte que sí lo es: 407 de 1.100."
+        },
+        {
+          "clave": "B",
+          "texto": "0,37",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 407 entradas de platea alta sobre las 1.100 vendidas dan 407/1.100 = 0,37."
+        },
+        {
+          "clave": "C",
+          "texto": "0,74",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-equivocado",
+          "feedbackDescarte": "Esa divide 407 por la suma de las dos cantidades visibles en la tabla (407 + 143) y no por n. La frecuencia relativa se calcula sobre el total de entradas vendidas, 1.100, que está en la fila Total."
+        },
+        {
+          "clave": "D",
+          "texto": "37",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-el-factor-cien",
+          "feedbackDescarte": "Esa es el porcentaje escrito como si fuera la frecuencia relativa: 407 de 1.100 es un 37 %, es decir 0,37. Al pasar de porcentaje a decimal hay que dividir por 100."
+        }
+      ],
+      "solucion": "La frecuencia relativa de una ubicación es su frecuencia absoluta dividida por el total de datos, n = 1.100: platea alta tiene 407 entradas, así que 407/1.100 = 0,37. Comprobación con la columna de frecuencias relativas: 0,41 + 0,37 + 0,13 + 0,09 = 1. Las casillas vacías no hacen falta para esta pregunta; el total sí.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "titulo": "Entradas vendidas",
+        "columnas": [
+          "Ubicación",
+          "Entradas",
+          "Frecuencia relativa"
+        ],
+        "filas": [
+          [
+            "Platea baja",
+            "?",
+            0.41
+          ],
+          [
+            "Platea alta",
+            407,
+            "?"
+          ],
+          [
+            "Anfiteatro",
+            143,
+            0.13
+          ],
+          [
+            "Palco",
+            "?",
+            0.09
+          ]
+        ],
+        "filaTotal": [
+          "Total",
+          1100,
+          1
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 56",
+        "notaAdaptacion": "Del original (25 estudiantes por días que tardaron en leer un libro, tabla incompleta con frecuencia absoluta y relativa, se pide la frecuencia absoluta de una fila vacía; clave B = 7 por clavijero y por 25 − 2 − 4 − 9 − 3) se conserva la estructura (tabla de frecuencias con las dos columnas, casillas con signo de interrogación y fila Total). Cambian el dominio (entradas de teatro por ubicación), las cifras (n = 1.100) y lo pedido: la frecuencia relativa de una fila con frecuencia absoluta visible, para que los distractores sean 1 − 0,37 (usa-complemento-del-sector), 407/(407 + 143) (divide-por-total-equivocado) y 37 (olvida-el-factor-cien). El distractor 37 es de otra magnitud que la clave; se firmó como una de las dos excepciones del banco porque el mecanismo lo exige."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-003",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un jardín botánico encuestó a sus 1.650 visitantes de un fin de semana sobre el invernadero que más les gustó; cada persona eligió uno solo. El gráfico circular muestra los resultados. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Exactamente 38 visitantes prefirieron el invernadero de orquídeas.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-sector-como-cantidad-sin-total",
+          "feedbackDescarte": "Esa lee el 38 % del sector como si fueran 38 personas. El porcentaje es una parte del total: 38 % de 1.650 son 627 visitantes."
+        },
+        {
+          "clave": "B",
+          "texto": "1.023 visitantes prefirieron el invernadero de cactus.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa toma 1.650 − 627 = 1.023, los visitantes que NO eligieron orquídeas, y los atribuye a los cactus. Los cactus son el 56 %: 924 visitantes."
+        },
+        {
+          "clave": "C",
+          "texto": "Menos de la vigésima parte de los visitantes prefirió el invernadero de helechos.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la vigésima parte del total es el 5 %, y el sector de helechos es el 2 %, menos que eso."
+        },
+        {
+          "clave": "D",
+          "texto": "El sector del invernadero de bonsáis mide 4°.",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-angulo-con-cien",
+          "feedbackDescarte": "Esa lee el 4 % como 4 grados. El ángulo de un sector es su frecuencia relativa por 360°, no por 100: el 4 % de 360° son 14,4°."
+        }
+      ],
+      "solucion": "El gráfico reparte el 100 % de los 1.650 visitantes: orquídeas 38 %, cactus 56 %, helechos 2 % y bonsáis 4 %. Una vigésima parte es 1/20 = 5 %, y helechos tiene 2 %, menos que eso: la afirmación C es verdadera. Las otras confunden el porcentaje con una cantidad (38 personas), atribuyen a un sector el complemento de otro (1.650 − 627 = 1.023) o convierten el porcentaje a grados con 100 en vez de 360 (el 4 % de 360° son 14,4°).",
+      "figura": {
+        "tipo": "grafico-circular",
+        "sectores": [
+          {
+            "etiqueta": "Orquídeas",
+            "valor": 38
+          },
+          {
+            "etiqueta": "Cactus",
+            "valor": 56
+          },
+          {
+            "etiqueta": "Helechos",
+            "valor": 2
+          },
+          {
+            "etiqueta": "Bonsáis",
+            "valor": 4
+          }
+        ],
+        "modoEtiqueta": "porcentaje"
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 59",
+        "notaAdaptacion": "Del original (encuesta a 50 estudiantes sobre un taller literario, gráfico circular con 30 %, 50 %, 8 %, 8 % y 4 %, cuál afirmación es verdadera comparando fracciones con porcentajes; clave A por clavijero, 30 % es más de la cuarta parte) se conserva la estructura (circular en porcentajes, total en el texto, afirmaciones que traducen fracciones a porcentaje). Cambian el dominio (invernaderos de un jardín botánico), las cifras (1.650; 38/56/2/4 %), la fracción de la clave (vigésima parte) y los tres distractores, que aquí codifican lee-sector-como-cantidad-sin-total, usa-complemento-del-sector y calcula-angulo-con-cien. Los valores de los sectores en el JSON son los porcentajes mismos: las cantidades absolutas no viajan en la figura."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-004",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra los avisos pegados durante una semana en el muro de un ascensor de cerro, clasificados por tema. Para representar los datos en un gráfico circular, ¿cuál de las siguientes expresiones permite calcular el ángulo del sector correspondiente al tema más frecuente?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(9/31) · 100",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-angulo-con-cien",
+          "feedbackDescarte": "Esa calcula con 100 en vez de 360: (9/31) · 100 es el porcentaje de ventas, no su ángulo. El círculo completo mide 360°, así que la frecuencia relativa se multiplica por 360."
+        },
+        {
+          "clave": "B",
+          "texto": "(22/31) · 360",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa usa 31 − 9 = 22, los avisos que NO son de ventas. El sector de ventas se calcula con los 9 avisos de ventas: (9/31) · 360."
+        },
+        {
+          "clave": "C",
+          "texto": "(9/4) · 360",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa divide por 4, el número de temas de la tabla, en vez de por n = 31, el total de avisos. La frecuencia relativa de ventas es 9/31, no 9/4."
+        },
+        {
+          "clave": "D",
+          "texto": "(9/31) · 360",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el tema más frecuente es ventas, con 9 de los 31 avisos, y el ángulo de un sector es su frecuencia relativa por 360°."
+        }
+      ],
+      "solucion": "El total de avisos es 7 + 9 + 8 + 7 = 31 y el tema más frecuente es ventas, con 9. La frecuencia relativa de ventas es 9/31, y el ángulo de su sector es esa fracción de los 360° del círculo: (9/31) · 360. Con 100 en vez de 360 se obtiene el porcentaje, no el ángulo; con 22 se calcula el sector de los otros tres temas; y dividir por 4 confunde la cantidad de categorías con n.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "titulo": "Avisos de la semana",
+        "columnas": [
+          "Tema",
+          "Avisos"
+        ],
+        "filas": [
+          [
+            "Extravíos",
+            7
+          ],
+          [
+            "Ventas",
+            9
+          ],
+          [
+            "Eventos",
+            8
+          ],
+          [
+            "Saludos",
+            7
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-005",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El gráfico circular muestra la distribución de los socios de una cooperativa de agua potable rural según el tipo de medidor que tienen. Se sabe que 66 socios tienen medidor chico. ¿Cuál de las siguientes expresiones permite calcular cuántos socios tienen medidor mediano?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "66 · 0,216",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-equivocado",
+          "feedbackDescarte": "Esa aplica el 21,6 % a los 66 socios del medidor chico, como si 66 fuera el total de la cooperativa. Los 66 son solo el 4,8 %: el total es 66/0,048, y sobre ese total se calcula el 21,6 %."
+        },
+        {
+          "clave": "B",
+          "texto": "66 · 21,6 / 4,8",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el total de socios es 66/0,048 y el medidor mediano es el 0,216 de ese total; 66 · 0,216/0,048 es lo mismo que 66 · 21,6/4,8."
+        },
+        {
+          "clave": "C",
+          "texto": "66 · 21,6 / 0,048",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-el-factor-cien",
+          "feedbackDescarte": "Esa pasa 4,8 % a 0,048 pero deja 21,6 sin dividir por 100. O se trabaja con los dos porcentajes (66 · 21,6/4,8) o con los dos decimales (66 · 0,216/0,048), no mezclados."
+        },
+        {
+          "clave": "D",
+          "texto": "66 · 78,4 / 4,8",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa usa 100 − 21,6 = 78,4, el porcentaje de los socios que NO tienen medidor mediano. El sector pedido es el 21,6 %."
+        }
+      ],
+      "solucion": "Los 66 socios con medidor chico son el 4,8 % del total, así que el total de socios es 66/0,048 = 1.375. El medidor mediano es el 21,6 % de ese total: 0,216 · 1.375 = 297. Como expresión, 66 · 0,216/0,048, que es lo mismo que 66 · 21,6/4,8 porque el factor 100 se cancela.",
+      "figura": {
+        "tipo": "grafico-circular",
+        "sectores": [
+          {
+            "etiqueta": "Chico",
+            "valor": 4.8
+          },
+          {
+            "etiqueta": "Mediano",
+            "valor": 21.6
+          },
+          {
+            "etiqueta": "Grande",
+            "valor": 73.6
+          }
+        ],
+        "modoEtiqueta": "porcentaje"
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-006",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Se preguntó a los 2.125 pasajeros de un ferry por el motivo de su viaje; cada uno eligió una sola opción. El gráfico muestra el porcentaje de pasajeros por motivo. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El 55,2 % de los pasajeros viajó por trabajo.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa toma 100 − 44,8 = 55,2, el porcentaje de los pasajeros que NO viajaron por trabajo. La barra de trabajo marca 44,8 %."
+        },
+        {
+          "clave": "B",
+          "texto": "Entre quienes no viajaron por trabajo, los de trámites son el 42,4 %.",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-equivocado",
+          "feedbackDescarte": "Esa mantiene el 42,4 %, que está calculado sobre los 2.125 pasajeros, como si valiera sobre el grupo de quienes no viajaron por trabajo. Sobre ese grupo (2.125 − 952 = 1.173) los de trámites son 901, cerca de un 76,8 %."
+        },
+        {
+          "clave": "C",
+          "texto": "Más de la mitad de los pasajeros viajó por trámites o por visita.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 42,4 % + 8,8 % = 51,2 %, más de la mitad de los pasajeros."
+        },
+        {
+          "clave": "D",
+          "texto": "Como hay cuatro motivos, cada uno corresponde a un cuarto de los pasajeros.",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa reparte los pasajeros por el número de categorías en vez de leer la frecuencia de cada una. Las barras muestran partes distintas: 44,8 %, 42,4 %, 8,8 % y 4 %."
+        }
+      ],
+      "solucion": "Las barras dan la frecuencia relativa de cada motivo sobre los 2.125 pasajeros: trabajo 44,8 % (952 pasajeros), trámites 42,4 % (901), visita 8,8 % y turismo 4 %. Trámites y visita juntos suman 42,4 % + 8,8 % = 51,2 %, más de la mitad: la afirmación C es verdadera. El 55,2 % es el complemento de trabajo; el 42,4 % de trámites vale sobre el total y no sobre el subgrupo de 1.173 que no viajó por trabajo; y las categorías no reparten el total en partes iguales.",
+      "figura": {
+        "tipo": "grafico-barras",
+        "categorias": [
+          "Trabajo",
+          "Trámites",
+          "Visita",
+          "Turismo"
+        ],
+        "series": [
+          {
+            "valores": [
+              44.8,
+              42.4,
+              8.8,
+              4
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Motivo del viaje"
+        },
+        "ejeY": {
+          "etiqueta": "Porcentaje de pasajeros"
+        },
+        "mostrarValores": true
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-007",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una florería tiene dos sucursales, una en el centro y otra en la costanera. El gráfico muestra los ramos vendidos en un día en cada sucursal, por tipo de flor. Una vendedora afirma que las rosas son más populares en la sucursal del centro, porque ahí vendió más ramos de rosas. ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcta: el centro vendió 43 ramos de rosas y la costanera solo 34.",
+          "esCorrecta": false,
+          "errorCatalogado": "compara-absolutas-de-grupos-distintos",
+          "feedbackDescarte": "Esa compara los conteos de dos sucursales que vendieron cantidades distintas de ramos (91 y 51). Para decir dónde son más populares las rosas hay que comparar la parte que representan en cada sucursal: 43 de 91 contra 34 de 51."
+        },
+        {
+          "clave": "B",
+          "texto": "Es correcta: en la costanera las rosas llegan solo a 34 de 91 ramos.",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-total-equivocado",
+          "feedbackDescarte": "Esa divide los 34 ramos de la costanera por el total del centro (91). Cada sucursal se compara con su propio total: la costanera vendió 51 ramos, y 34 de 51 es más de la mitad."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, porque en las dos sucursales las rosas son 1 de 4 tipos de flor, un cuarto.",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa divide por el número de tipos de flor en vez de por los ramos vendidos. Que haya 4 tipos no significa que cada uno sea un cuarto de las ventas: las frecuencias son distintas en cada sucursal."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta: en la costanera las rosas son 34 de 51 ramos, una parte mayor que 43 de 91 en el centro.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 34/51 es cerca de 0,67 y 43/91 cerca de 0,47; las rosas pesan más en la costanera aunque el centro haya vendido más ramos de rosas."
+        }
+      ],
+      "solucion": "El centro vendió 43 + 45 + 2 + 1 = 91 ramos y la costanera 34 + 9 + 5 + 3 = 51. Como los totales son distintos, los conteos no se comparan directamente: hay que mirar la frecuencia relativa de las rosas en cada sucursal. En el centro es 43/91, cerca de 0,47; en la costanera es 34/51, cerca de 0,67. Las rosas son una parte mayor de las ventas en la costanera, así que la afirmación no es correcta. Comparar 43 contra 34 mezcla grupos de distinto tamaño; dividir 34 por 91 usa el total de la otra sucursal; y \"1 de 4 tipos\" confunde categorías con ramos.",
+      "figura": {
+        "tipo": "grafico-barras",
+        "categorias": [
+          "Rosas",
+          "Lilium",
+          "Girasoles",
+          "Tulipanes"
+        ],
+        "series": [
+          {
+            "nombre": "Centro",
+            "valores": [
+              43,
+              45,
+              2,
+              1
+            ]
+          },
+          {
+            "nombre": "Costanera",
+            "valores": [
+              34,
+              9,
+              5,
+              3
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Tipo de flor"
+        },
+        "ejeY": {
+          "etiqueta": "Ramos vendidos"
+        },
+        "mostrarValores": true
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-008",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un servicio técnico registró los días de espera de las 375 solicitudes de reparación que recibió en un mes. El histograma muestra la cantidad de solicitudes por intervalo de días. ¿Qué porcentaje de las solicitudes esperó entre 14 y menos de 28 días?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "15,2 %",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los intervalos [14, 21[ y [21, 28[ suman 21 + 36 = 57 solicitudes, y 57/375 = 0,152."
+        },
+        {
+          "clave": "B",
+          "texto": "22,4 %",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-intervalo-de-mas-en-el-limite",
+          "feedbackDescarte": "Esa suma también el intervalo [28, 35[, que empieza justo en 28: 21 + 36 + 27 = 84 y 84/375 = 0,224. Las esperas de 28 días o más no cumplen \"menos de 28\"."
+        },
+        {
+          "clave": "C",
+          "texto": "11,4 %",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa divide las 57 solicitudes por 5, el número de intervalos del histograma, y obtiene 11,4. El porcentaje se calcula sobre n = 375 solicitudes, no sobre la cantidad de barras."
+        },
+        {
+          "clave": "D",
+          "texto": "9,6 %",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa cuenta solo el intervalo [21, 28[ y deja fuera las 21 solicitudes de [14, 21[, que también esperaron entre 14 y menos de 28 días: 36/375 = 0,096."
+        }
+      ],
+      "solucion": "Entre 14 y menos de 28 días caen dos intervalos del histograma: [14, 21[ con 21 solicitudes y [21, 28[ con 36. Juntas son 21 + 36 = 57 solicitudes, y sobre las 375 del mes dan 57/375 = 0,152, es decir un 15,2 %. Sumar [28, 35[ cuenta de más (84/375 = 22,4 %); dividir por los 5 intervalos no es una frecuencia relativa (57/5 = 11,4); y contar solo [21, 28[ deja fuera 21 solicitudes (36/375 = 9,6 %).",
+      "figura": {
+        "tipo": "histograma",
+        "intervalos": [
+          {
+            "desde": 0,
+            "hasta": 7
+          },
+          {
+            "desde": 7,
+            "hasta": 14
+          },
+          {
+            "desde": 14,
+            "hasta": 21
+          },
+          {
+            "desde": 21,
+            "hasta": 28
+          },
+          {
+            "desde": 28,
+            "hasta": 35
+          }
+        ],
+        "frecuencias": [
+          129,
+          162,
+          21,
+          36,
+          27
+        ],
+        "ejeX": {
+          "etiqueta": "Días de espera"
+        },
+        "ejeY": {
+          "etiqueta": "Solicitudes"
+        }
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-009",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una cantera se pesaron 83 bolones. El histograma muestra cuántos bolones hay en cada intervalo de masa, en kilogramos. ¿Cuántos bolones pesan menos de 49 kg?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "71",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-intervalo-de-mas-en-el-limite",
+          "feedbackDescarte": "Esa suma también el intervalo [49, 69[, que empieza justo en 49: 15 + 26 + 30 = 71. Un bolón de 49 kg o más no pesa menos de 49 kg."
+        },
+        {
+          "clave": "B",
+          "texto": "42",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-complemento-del-sector",
+          "feedbackDescarte": "Esa cuenta los bolones que NO cumplen la condición: 83 − 41 = 42, los que pesan 49 kg o más. Se piden los que pesan menos."
+        },
+        {
+          "clave": "C",
+          "texto": "41",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los intervalos [9, 29[ y [29, 49[ suman 15 + 26 = 41 bolones, todos con menos de 49 kg."
+        },
+        {
+          "clave": "D",
+          "texto": "49",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-frecuencia-con-valor",
+          "feedbackDescarte": "Esa responde el valor del límite, 49 kg, donde se pide cuántos bolones hay. La cantidad de bolones se lee en la altura de las barras, no en el eje de las masas."
+        }
+      ],
+      "solucion": "Pesan menos de 49 kg los bolones de los intervalos que terminan en 49: [9, 29[ con 15 bolones y [29, 49[ con 26. En total 15 + 26 = 41. El intervalo [49, 69[ empieza en 49 y no entra; los 83 − 41 = 42 restantes son los que pesan 49 kg o más; y 49 es una masa del eje horizontal, no una cantidad de bolones.",
+      "figura": {
+        "tipo": "histograma",
+        "intervalos": [
+          {
+            "desde": 9,
+            "hasta": 29
+          },
+          {
+            "desde": 29,
+            "hasta": 49
+          },
+          {
+            "desde": 49,
+            "hasta": 69
+          },
+          {
+            "desde": 69,
+            "hasta": 89
+          },
+          {
+            "desde": 89,
+            "hasta": 109
+          }
+        ],
+        "frecuencias": [
+          15,
+          26,
+          30,
+          7,
+          5
+        ],
+        "ejeX": {
+          "etiqueta": "Masa (kg)"
+        },
+        "ejeY": {
+          "etiqueta": "Bolones"
+        }
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 54",
+        "notaAdaptacion": "Del original (tabla de edades por intervalos de los trabajadores de una empresa, frecuencias 5, 7, 14, 11 y 13, se pide la mayor cantidad de trabajadores cuya edad no supere los 34 años; clave D = 12 por clavijero y por 5 + 7) se conserva la estructura (datos agrupados en intervalos, contar los que quedan bajo un límite que coincide con un borde de intervalo). Cambian la representación (histograma en vez de tabla), el dominio (masa de bolones de una cantera), las cifras (15, 26, 30, 7, 5; n = 83) y los distractores: 71 por cuenta-intervalo-de-mas-en-el-limite (el espejo del original, que contaba de menos), 42 por usa-complemento-del-sector y 49 por confunde-frecuencia-con-valor."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-010",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "El gráfico de líneas muestra los kilos de cochayuyo que una recolectora secó cada mes, de enero a junio. ¿Cuál fue la variación de la cantidad secada entre marzo y abril?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Bajó 431 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-periodos-al-reves",
+          "feedbackDescarte": "Esa resta al revés, 373 − 804 = −431, y lee el signo como una baja. De marzo (373 kg) a abril (804 kg) la cantidad subió."
+        },
+        {
+          "clave": "B",
+          "texto": "Subió 804 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-valor-final-como-variacion",
+          "feedbackDescarte": "Esa entrega el valor de abril como si fuera la variación. Los 804 kg son lo que se secó en abril; la variación es cuánto cambió respecto de marzo: 804 − 373."
+        },
+        {
+          "clave": "C",
+          "texto": "Subió 1.177 kg",
+          "esCorrecta": false,
+          "errorCatalogado": "acumula-en-vez-de-variar",
+          "feedbackDescarte": "Esa suma marzo y abril, 373 + 804 = 1.177, que es lo secado en los dos meses juntos, no el cambio entre ellos. La variación es la diferencia final menos inicial."
+        },
+        {
+          "clave": "D",
+          "texto": "Subió 431 kg",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la variación es el valor final menos el inicial, 804 − 373 = 431, y como es positiva la cantidad subió."
+        }
+      ],
+      "solucion": "En marzo se secaron 373 kg y en abril 804 kg. La variación entre los dos meses es el valor final menos el inicial: 804 − 373 = 431 kg, positiva, así que subió 431 kg. Restar al revés da −431 y cambia el sentido; 804 es el valor de abril, no el cambio; y 1.177 es la suma de los dos meses.",
+      "figura": {
+        "tipo": "grafico-lineas",
+        "categorias": [
+          "Ene",
+          "Feb",
+          "Mar",
+          "Abr",
+          "May",
+          "Jun"
+        ],
+        "series": [
+          {
+            "valores": [
+              309,
+              221,
+              373,
+              804,
+              707,
+              489
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Mes"
+        },
+        "ejeY": {
+          "etiqueta": "Cochayuyo secado (kg)"
+        }
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-011",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "El gráfico muestra los visitantes que subieron cada día, de lunes a viernes, a dos miradores de un cerro: el mirador norte y el mirador sur. ¿Cuál de las siguientes afirmaciones se deduce del gráfico?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Entre el martes y el miércoles, el mirador norte subió más visitantes que el mirador sur.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el norte pasó de 434 a 496, una subida de 62; el sur pasó de 419 a 466, una subida de 47."
+        },
+        {
+          "clave": "B",
+          "texto": "Entre el miércoles y el jueves, el mirador sur subió 67 visitantes.",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-periodos-al-reves",
+          "feedbackDescarte": "Esa resta al revés: 466 − 399 = 67 leído como subida. El sur pasó de 466 el miércoles a 399 el jueves, así que bajó 67."
+        },
+        {
+          "clave": "C",
+          "texto": "La variación del mirador norte entre el lunes y el martes fue de 597 visitantes.",
+          "esCorrecta": false,
+          "errorCatalogado": "acumula-en-vez-de-variar",
+          "feedbackDescarte": "Esa suma los dos días, 163 + 434 = 597, que es el acumulado de lunes y martes, no el cambio entre ellos. La variación es 434 − 163 = 271."
+        },
+        {
+          "clave": "D",
+          "texto": "Entre el jueves y el viernes, la variación del mirador sur fue de 632 visitantes.",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-valor-final-como-variacion",
+          "feedbackDescarte": "Esa entrega el valor del viernes, 632, como si fuera la variación. El cambio entre jueves y viernes es 632 − 399 = 233."
+        }
+      ],
+      "solucion": "Las variaciones se leen restando el valor final menos el inicial en cada tramo. Entre martes y miércoles: norte 496 − 434 = 62, sur 466 − 419 = 47; el norte subió más, así que A se deduce del gráfico. Entre miércoles y jueves el sur bajó 67 (399 − 466 = −67), no subió. Entre lunes y martes el norte varió 434 − 163 = 271, no 597 (esa es la suma). Entre jueves y viernes el sur varió 632 − 399 = 233; 632 es el valor del viernes.",
+      "figura": {
+        "tipo": "grafico-lineas",
+        "categorias": [
+          "Lun",
+          "Mar",
+          "Mié",
+          "Jue",
+          "Vie"
+        ],
+        "series": [
+          {
+            "nombre": "Mirador norte",
+            "valores": [
+              163,
+              434,
+              496,
+              437,
+              499
+            ]
+          },
+          {
+            "nombre": "Mirador sur",
+            "valores": [
+              207,
+              419,
+              466,
+              399,
+              632
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Día"
+        },
+        "ejeY": {
+          "etiqueta": "Visitantes"
+        }
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-012",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un equipo de mantención reparó 92, 95 y 104 luminarias en tres noches de trabajo, y reparará x luminarias en la cuarta noche. ¿Cuál de las siguientes expresiones permite calcular el promedio de luminarias reparadas por noche en las cuatro noches?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(97 + x)/2",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-promedios-sin-ponderar",
+          "feedbackDescarte": "Esa promedia el promedio de las tres primeras noches (291/3 = 97) con el dato nuevo como si pesaran lo mismo. Las tres noches valen por tres datos y la cuarta por uno: la suma total se divide por 4."
+        },
+        {
+          "clave": "B",
+          "texto": "(291 + x)/4",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la suma de las cuatro noches es 92 + 95 + 104 + x = 291 + x, y se divide por las 4 noches."
+        },
+        {
+          "clave": "C",
+          "texto": "(291 + x)/3",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa suma los cuatro datos pero divide por 3, como si la cuarta noche no contara en n. Con la cuarta noche hay 4 datos y se divide por 4."
+        },
+        {
+          "clave": "D",
+          "texto": "97",
+          "esCorrecta": false,
+          "errorCatalogado": "cree-que-extremo-no-afecta-promedio",
+          "feedbackDescarte": "Esa supone que agregar una noche no cambia el promedio, que seguiría en 291/3 = 97. El promedio de cuatro noches depende de x: solo coincide con 97 si esa noche se reparan exactamente 97 luminarias."
+        }
+      ],
+      "solucion": "El promedio es la suma de todos los datos dividida por la cantidad de datos. Las tres noches conocidas suman 92 + 95 + 104 = 291; con la cuarta, la suma es 291 + x y hay 4 datos: (291 + x)/4. Dividir por 3 deja la cuarta noche fuera de n; (97 + x)/2 le da al dato nuevo el mismo peso que a las tres noches juntas; y 97 es el promedio de solo tres noches.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 44, distractores B y D",
+        "notaAdaptacion": "Del original (estudiante con tres notas 5, 6 y 4 y una cuarta nota x, cuál expresión da el promedio; clave A = (15 + x)/4 por cálculo, sin clavijero) se conserva la estructura (expresión del promedio de cuatro datos con uno desconocido) y el mecanismo de dos de sus distractores: (5 + x)/2 (aquí (97 + x)/2 por promedia-promedios-sin-ponderar) y (15 + x)/3 (aquí (291 + x)/3 por deja-un-dato-fuera-del-conteo). Cambian el dominio (luminarias reparadas por noche), las cifras (92, 95, 104; suma 291, promedio parcial 97) y el tercer distractor: el (15 + x)/2 del original se reemplaza por 97 (cree-que-extremo-no-afecta-promedio), un id que el original no codifica, por decisión firmada en la PARADA."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-013",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un jugador de pinball obtuvo 331, 352 y 355 puntos en tres partidas. Quiere que su promedio en cuatro partidas sea 425 puntos. ¿Cuántos puntos necesita en la cuarta partida?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "425",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-promedio-como-dato-faltante",
+          "feedbackDescarte": "Esa responde el promedio objetivo como si fuera el dato que falta. Si la cuarta partida diera 425, el promedio quedaría bajo 425, porque las tres primeras están por debajo: hace falta más."
+        },
+        {
+          "clave": "B",
+          "texto": "237",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa multiplica el objetivo solo por las 3 partidas conocidas: 3 · 425 − 1.038 = 237. El promedio de 425 es sobre 4 partidas, así que la suma total debe ser 4 · 425."
+        },
+        {
+          "clave": "C",
+          "texto": "504",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-promedios-sin-ponderar",
+          "feedbackDescarte": "Esa promedia el promedio de las tres partidas (1.038/3 = 346) con la cuarta como si pesaran lo mismo: (346 + x)/2 = 425 da x = 504. Las tres partidas valen por tres datos, no por uno."
+        },
+        {
+          "clave": "D",
+          "texto": "662",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cuatro partidas con promedio 425 suman 4 · 425, y las tres conocidas suman 1.038; la cuarta debe aportar 4 · 425 − 1.038 = 662."
+        }
+      ],
+      "solucion": "Si cuatro partidas promedian 425 puntos, su suma es 4 · 425. Las tres partidas conocidas suman 331 + 352 + 355 = 1.038, así que la cuarta debe aportar 4 · 425 − 1.038 = 662 puntos. Comprobación: (1.038 + 662)/4 = 425. Responder 425 confunde el promedio con el dato; 237 usa 3 partidas en vez de 4; y 504 sale de promediar el promedio parcial con el dato nuevo sin ponderar.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2025-regular-113, pregunta 48, distractor B",
+        "notaAdaptacion": "Del original (los números 68, x, 75, 80 y 70 tienen promedio 73, cuál es x; clave C = 72 por cálculo, 5 · 73 − 293 = 72, sin clavijero) se conserva la estructura (dato faltante conocido el promedio objetivo) y el mecanismo de su distractor B = 73 (entregar el promedio mismo como dato faltante, aquí 425 por entrega-promedio-como-dato-faltante). Cambian el dominio (puntos de pinball), las cifras (331, 352, 355; objetivo 425 en 4 partidas; x = 662) y los otros dos distractores (237 por deja-un-dato-fuera-del-conteo y 504 por promedia-promedios-sin-ponderar)."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-014",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una empresa de mudanzas tiene 33 camiones, con un promedio de 39 viajes en el año cada uno, y 44 camionetas, con un promedio de 98 viajes cada una. ¿Cuál de las siguientes afirmaciones es verdadera respecto del promedio de viajes de los 77 vehículos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Está entre 39 y 98, más cerca de 98 que de 39.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el promedio conjunto es (33 · 39 + 44 · 98)/77 = 5.599/77, cerca de 72,7, y queda más cerca de 98 porque las camionetas son 44 contra 33 camiones."
+        },
+        {
+          "clave": "B",
+          "texto": "Es 68,5 viajes.",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-promedios-sin-ponderar",
+          "feedbackDescarte": "Esa promedia los dos promedios como si los grupos fueran del mismo tamaño: (39 + 98)/2 = 68,5. Las 44 camionetas pesan más que los 33 camiones en el promedio conjunto, y el resultado queda por sobre 68,5."
+        },
+        {
+          "clave": "C",
+          "texto": "Es 38,5 viajes.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-frecuencia-con-valor",
+          "feedbackDescarte": "Esa promedia las cantidades de vehículos, (33 + 44)/2 = 38,5, en vez de los viajes. Las frecuencias dicen cuántos vehículos hay en cada grupo; los datos son los viajes, y ningún grupo promedia menos de 39."
+        },
+        {
+          "clave": "D",
+          "texto": "Es 73,7 viajes.",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa divide la suma total de viajes, 5.599, por un vehículo menos (n − 1) en vez de por los 77: así sale cerca de 73,7. Todos los vehículos cuentan en n."
+        }
+      ],
+      "solucion": "La suma total de viajes es 33 · 39 + 44 · 98 = 1.287 + 4.312 = 5.599, repartida entre 33 + 44 = 77 vehículos: 5.599/77, cerca de 72,7 viajes. Ese promedio está entre 39 y 98 y más cerca de 98, porque el grupo de las camionetas es más numeroso. Promediar 39 y 98 sin ponderar da 68,5; promediar las frecuencias 33 y 44 da 38,5, que ni siquiera está entre los dos promedios; y dividir por n − 1 deja un vehículo fuera de n y da cerca de 73,7.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-015",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un circo itinerante dio 7 funciones con un promedio de 87 espectadores por función. La octava función tuvo 99 espectadores. ¿Cuál es el promedio de espectadores por función en las ocho funciones?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "87",
+          "esCorrecta": false,
+          "errorCatalogado": "cree-que-extremo-no-afecta-promedio",
+          "feedbackDescarte": "Esa supone que una sola función no cambia el promedio. Sí lo cambia: los 99 espectadores están por sobre 87, y esa diferencia se reparte entre las ocho funciones."
+        },
+        {
+          "clave": "B",
+          "texto": "88,5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las 7 funciones suman 7 · 87 = 609 espectadores, más 99 son 708 en 8 funciones, y 708/8 = 88,5."
+        },
+        {
+          "clave": "C",
+          "texto": "93",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-promedios-sin-ponderar",
+          "feedbackDescarte": "Esa promedia el 87 con el 99 como si pesaran lo mismo: (87 + 99)/2 = 93. El 87 representa a 7 funciones y el 99 a una sola."
+        },
+        {
+          "clave": "D",
+          "texto": "101,1",
+          "esCorrecta": false,
+          "errorCatalogado": "deja-un-dato-fuera-del-conteo",
+          "feedbackDescarte": "Esa divide la suma de las ocho funciones, 708, por 7 en vez de por 8: 708/7 es cerca de 101,1. Con la octava función hay 8 datos, y ningún promedio puede superar al dato mayor, 99."
+        }
+      ],
+      "solucion": "Las 7 primeras funciones suman 7 · 87 = 609 espectadores. Con la octava, la suma es 609 + 99 = 708 en 8 funciones, y el promedio es 708/8 = 88,5. El promedio sube, pero no salta a 93 (eso sería promediar 87 con 99 sin ponderar) ni se divide por 7 (eso da cerca de 101,1, más que cualquier función, y deja una función fuera de n).",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-016",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La tabla muestra la cantidad de autos de un estacionamiento según su cantidad de puertas, donde a, b y c son las frecuencias de cada fila. ¿Cuál de las siguientes expresiones permite calcular el promedio de puertas por auto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(2 + 3 + 5)/3",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-valores-distintos-sin-ponderar",
+          "feedbackDescarte": "Esa promedia los tres valores distintos de la tabla (2, 3 y 5) sin multiplicar cada uno por su frecuencia. Si hay a autos de 2 puertas, el 2 entra a veces en la suma."
+        },
+        {
+          "clave": "B",
+          "texto": "(a + b + c)/3",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-frecuencia-con-valor",
+          "feedbackDescarte": "Esa promedia las frecuencias en vez de los datos: a, b y c dicen cuántos autos hay de cada tipo, y los datos son las puertas. El promedio pedido es de puertas por auto."
+        },
+        {
+          "clave": "C",
+          "texto": "(2a + 3b + 5c)/(a + b + c)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la suma de puertas es 2a + 3b + 5c y la cantidad de autos es a + b + c."
+        },
+        {
+          "clave": "D",
+          "texto": "(2a + 3b + 5c)/3",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa suma bien las puertas, 2a + 3b + 5c, pero divide por 3, el número de filas de la tabla, en vez de por el total de autos a + b + c."
+        }
+      ],
+      "solucion": "La tabla es una lista abreviada: a autos con 2 puertas aportan 2a puertas, b autos con 3 aportan 3b y c autos con 5 aportan 5c. La suma de puertas es 2a + 3b + 5c y la cantidad de autos es a + b + c, así que el promedio es (2a + 3b + 5c)/(a + b + c). Promediar 2, 3 y 5 ignora las frecuencias; promediar a, b y c promedia conteos, no puertas; y dividir por 3 confunde las filas con n.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "titulo": "Autos del estacionamiento",
+        "columnas": [
+          "Puertas",
+          "Autos"
+        ],
+        "filas": [
+          [
+            2,
+            "a"
+          ],
+          [
+            3,
+            "b"
+          ],
+          [
+            5,
+            "c"
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 59",
+        "notaAdaptacion": "Del original (tabla con valores 0, 1 y 2 y frecuencias literales P, Q y R, cuál expresión da el promedio; clave C = (0 · P + 1 · Q + 2 · R)/(P + Q + R) por clavijero y por fórmula) se conserva la estructura (tabla de frecuencias con frecuencias literales, expresión del promedio ponderado). Cambian el dominio (autos por cantidad de puertas), los valores (2, 3 y 5, para que ningún término se anule) y los tres distractores, que aquí codifican promedia-valores-distintos-sin-ponderar, confunde-frecuencia-con-valor y divide-por-categorias-en-vez-de-n; el original trae R/(P + Q + R), 2R/(P + Q + R) y (P + Q + 2R)/(P + Q + R), que no se reutilizan."
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-017",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Dos cajas contienen velas artesanales: en la primera hay 4 velas con una masa promedio de 277 g y en la segunda hay 5 velas con una masa promedio de 339 g. ¿Cuál de las siguientes expresiones permite calcular la masa promedio de las 9 velas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(4 · 277 + 5 · 339)/(4 + 5)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la masa total es 4 · 277 + 5 · 339 y la cantidad de velas es 4 + 5."
+        },
+        {
+          "clave": "B",
+          "texto": "(277 + 339)/2",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-promedios-sin-ponderar",
+          "feedbackDescarte": "Esa promedia los dos promedios como si las cajas tuvieran la misma cantidad de velas. La segunda caja tiene 5 velas y la primera 4: cada promedio pesa según su cantidad."
+        },
+        {
+          "clave": "C",
+          "texto": "(4 · 277 + 5 · 339)/2",
+          "esCorrecta": false,
+          "errorCatalogado": "divide-por-categorias-en-vez-de-n",
+          "feedbackDescarte": "Esa calcula bien la masa total pero divide por 2, el número de cajas, en vez de por las 9 velas. El promedio es por vela, no por caja."
+        },
+        {
+          "clave": "D",
+          "texto": "(4 + 5)/2",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-frecuencia-con-valor",
+          "feedbackDescarte": "Esa promedia las cantidades de velas de cada caja, que son las frecuencias, en vez de las masas. Las masas se recuperan con promedio por cantidad: 4 · 277 y 5 · 339."
+        }
+      ],
+      "solucion": "Para juntar los dos grupos se recupera la masa total de cada caja con promedio por cantidad: 4 · 277 g y 5 · 339 g. La masa total de las 9 velas es 4 · 277 + 5 · 339, y se divide por 4 + 5 = 9 velas: (4 · 277 + 5 · 339)/(4 + 5). Promediar 277 y 339 sin ponderar ignora que una caja tiene más velas; dividir por 2 confunde cajas con velas; y (4 + 5)/2 promedia frecuencias.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-018",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un afiche compara el precio de una hora de estacionamiento en cuatro estacionamientos de un centro cívico, A, B, C y D, con el gráfico de barras que se muestra, cuyo eje vertical parte de 1.030 pesos. Un conductor afirma: «en el estacionamiento D la hora cuesta casi el doble que en el A». ¿Qué se puede decir de su afirmación?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Es correcta: la barra de D es casi siete veces más alta que la de A, así que cobra muchísimo más.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-altura-en-eje-truncado",
+          "feedbackDescarte": "Esa compara las alturas visibles de las barras, pero el eje parte de 1.030 y no de 0. Sobre 1.030 las barras miden solo lo que sobra por encima de esa base, y eso exagera la diferencia: la real es 229 pesos sobre 1.070, cerca de un 21,4 %."
+        },
+        {
+          "clave": "B",
+          "texto": "No es correcta: D cobra 229 pesos más sobre 1.070, cerca de un 21,4 % más; la barra parece mucho más alta porque el eje no parte de 0.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 1.299 − 1.070 = 229 pesos, y 229/1.070 es cerca de 0,214; un 21,4 % más no es el doble."
+        },
+        {
+          "clave": "C",
+          "texto": "No es correcta, pero por una diferencia aún menor: D cobra apenas un 0,21 % más que A.",
+          "esCorrecta": false,
+          "errorCatalogado": "olvida-el-factor-cien",
+          "feedbackDescarte": "Esa toma el cociente 229/1.070, cerca de 0,214, y lo lee como 0,21 % en vez de multiplicarlo por 100. El 0,214 es la fracción, que como porcentaje es cerca de 21,4 %."
+        },
+        {
+          "clave": "D",
+          "texto": "No es correcta, y el error del afiche es otro: para comparar cuánto cobra cada estacionamiento debió usar un gráfico circular.",
+          "esCorrecta": false,
+          "errorCatalogado": "elige-circular-para-comparar-totales",
+          "feedbackDescarte": "Esa cambia a un gráfico que reparte el 100 % y esconde los precios: un circular no permite leer cuánto cobra cada estacionamiento. Las barras sirven, pero con el eje desde 0."
+        }
+      ],
+      "solucion": "Los precios son 1.070, 1.129, 1.187 y 1.299 pesos. D cobra 1.299 − 1.070 = 229 pesos más que A, y 229/1.070 es cerca de 0,214, un 21,4 % más: lejos del doble. Las barras engañan porque el eje parte de 1.030: sobre esa base, la barra de D mide cerca de 6,7 veces la de A, aunque el precio sea solo un 21,4 % mayor. La altura de una barra solo representa la cantidad cuando el eje empieza en 0. Leer 0,214 como 0,21 % olvida el factor 100, y un gráfico circular no mostraría los precios.",
+      "figura": {
+        "tipo": "grafico-barras",
+        "categorias": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "series": [
+          {
+            "valores": [
+              1070,
+              1129,
+              1187,
+              1299
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Estacionamiento"
+        },
+        "ejeY": {
+          "etiqueta": "Precio de la hora (pesos)",
+          "min": 1030,
+          "paso": 70
+        },
+        "mostrarValores": true
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-019",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "representar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "La tabla muestra los kilómetros de camino que pavimentó cada uno de cuatro contratistas, A, B, C y D, durante un año. Se quiere un gráfico que permita comparar a simple vista cuánto pavimentó cada uno. ¿Cuál de las siguientes representaciones es la adecuada?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Barras verticales, una por contratista, con el eje vertical desde 1.090, para que se note la diferencia.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-altura-en-eje-truncado",
+          "feedbackDescarte": "Esa trunca el eje para exagerar la diferencia: con el eje desde 1.090 la barra de D se vería varias veces más alta que la de A, cuando pavimentó cerca de un 7 % más. La altura representa la cantidad solo si el eje parte de 0."
+        },
+        {
+          "clave": "B",
+          "texto": "Un gráfico de líneas que una los puntos de A, B, C y D, para ver la tendencia.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lineas-para-categorias",
+          "feedbackDescarte": "Esa une categorías que no tienen orden en el tiempo. Entre el contratista A y el B no hay \"entre\": la pendiente de esa línea no significa nada."
+        },
+        {
+          "clave": "C",
+          "texto": "Barras verticales, una por contratista, con el eje vertical desde 0.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cuatro categorías sin orden temporal, una cantidad por categoría, y con el eje desde 0 la altura de cada barra es proporcional a los kilómetros."
+        },
+        {
+          "clave": "D",
+          "texto": "Un gráfico circular por contratista, para comparar los totales.",
+          "esCorrecta": false,
+          "errorCatalogado": "elige-circular-para-comparar-totales",
+          "feedbackDescarte": "Esa usa un gráfico que reparte el 100 % de cada contratista y esconde su total: cuatro círculos completos no dicen quién pavimentó más kilómetros."
+        }
+      ],
+      "solucion": "Hay cuatro categorías sin orden en el tiempo y una cantidad por categoría: la representación adecuada es un gráfico de barras con el eje vertical desde 0, donde la altura de cada barra es proporcional a los kilómetros. Truncar el eje en 1.090 exagera diferencias que son de unos pocos puntos porcentuales; las líneas se usan para periodos consecutivos, no para contratistas; y un circular por contratista reparte el 100 % de cada uno y esconde los totales.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "titulo": "Kilómetros pavimentados en el año",
+        "columnas": [
+          "Contratista",
+          "Kilómetros"
+        ],
+        "filas": [
+          [
+            "A",
+            1101
+          ],
+          [
+            "B",
+            1123
+          ],
+          [
+            "C",
+            1157
+          ],
+          [
+            "D",
+            1178
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-tablas-y-graficos-020",
+      "unidadId": "tablas-y-graficos",
+      "moduloId": "tablas-y-graficos",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un observatorio de insectos contó las mariposas de un sector durante seis semanas. El gráfico de líneas muestra el conteo de cada semana. ¿Cuál de las siguientes afirmaciones describe correctamente el gráfico?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "En la semana 3 el conteo varió 787 mariposas.",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-valor-final-como-variacion",
+          "feedbackDescarte": "Esa entrega el valor de la semana 3 como si fuera una variación. Los 787 son las mariposas contadas esa semana; el cambio respecto de la semana 2 es 787 − 506 = 281."
+        },
+        {
+          "clave": "B",
+          "texto": "Entre la semana 4 y la semana 5 el conteo subió 249 mariposas.",
+          "esCorrecta": false,
+          "errorCatalogado": "resta-periodos-al-reves",
+          "feedbackDescarte": "Esa resta al revés, 813 − 564 = 249, y lee la diferencia como subida. De la semana 4 (813) a la 5 (564) el conteo bajó 249."
+        },
+        {
+          "clave": "C",
+          "texto": "La variación entre la semana 1 y la semana 2 fue de 719 mariposas.",
+          "esCorrecta": false,
+          "errorCatalogado": "acumula-en-vez-de-variar",
+          "feedbackDescarte": "Esa suma las dos semanas, 213 + 506 = 719, que es el acumulado y no el cambio. La variación entre la semana 1 y la 2 es 506 − 213 = 293."
+        },
+        {
+          "clave": "D",
+          "texto": "Entre la semana 2 y la semana 4 el conteo subió 307 mariposas en total.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el conteo pasó de 506 en la semana 2 a 813 en la semana 4, y 813 − 506 = 307."
+        }
+      ],
+      "solucion": "Cada punto es el conteo de una semana: 213, 506, 787, 813, 564 y 567. Una variación entre dos semanas es el valor final menos el inicial. Entre la semana 2 y la 4 el conteo subió 813 − 506 = 307: la afirmación D describe el gráfico. Entre la 4 y la 5 bajó 813 − 564 = 249, no subió; 787 es el valor de la semana 3, no una variación (la variación desde la semana 2 es 281); y 719 es la suma de las dos primeras semanas, no su diferencia (293).",
+      "figura": {
+        "tipo": "grafico-lineas",
+        "categorias": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "series": [
+          {
+            "valores": [
+              213,
+              506,
+              787,
+              813,
+              564,
+              567
+            ]
+          }
+        ],
+        "ejeX": {
+          "etiqueta": "Semana"
+        },
+        "ejeY": {
+          "etiqueta": "Mariposas contadas"
+        }
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-tablas-y-graficos-001: edificios de una avenida por cantidad de pisos, tabla de frecuencias 13, 3, 54, 9; clave n = 79; distractores 217 (suma pisos por frecuencia), 78 (n − 1), 4 (filas)",
+    "adv-tablas-y-graficos-002: teatro, entradas por ubicación (platea baja, platea alta, anfiteatro, palco), tabla incompleta con n = 1.100; platea alta 407, anfiteatro 143, relativas 0,41, 0,13, 0,09; clave 0,37; distractores 0,63, 0,74, 37",
+    "adv-tablas-y-graficos-003: jardín botánico, 1.650 visitantes, invernadero preferido, circular 38/56/2/4 % (orquídeas, cactus, helechos, bonsáis); clave \"menos de la vigésima parte prefirió helechos\"; distractores 38 visitantes, 1.023 visitantes, sector de 4°; intermedios 627, 14,4",
+    "adv-tablas-y-graficos-004: avisos en el muro de un ascensor de cerro por tema, 7, 9, 8, 7 (n = 31); expresión del ángulo del sector más frecuente; clave (9/31) · 360; distractores (9/31) · 100, (22/31) · 360, (9/4) · 360",
+    "adv-tablas-y-graficos-005: cooperativa de agua potable rural, socios por tipo de medidor, circular 4,8/21,6/73,6 %, 66 socios con medidor chico; expresión de los socios con medidor mediano; clave 66 · 21,6/4,8 (= 297, total 1.375); distractores 66 · 0,216, 66 · 21,6/0,048, 66 · 78,4/4,8",
+    "adv-tablas-y-graficos-006: ferry, 2.125 pasajeros, motivo del viaje en barras de porcentaje 44,8/42,4/8,8/4 (trabajo, trámites, visita, turismo); clave \"más de la mitad viajó por trámites o visita\" (51,2 %); distractores 55,2 %, 42,4 % sobre el subgrupo, un cuarto por motivo; intermedios 952, 901, 1.173, 76,8",
+    "adv-tablas-y-graficos-007: florería con sucursales centro y costanera, ramos por tipo de flor en barras dobles, centro 43, 45, 2, 1 (91) y costanera 34, 9, 5, 3 (51); clave \"en la costanera 34 de 51 es una parte mayor que 43 de 91\" (0,67 contra 0,47); distractores 43 contra 34, 34 de 91, un cuarto",
+    "adv-tablas-y-graficos-008: servicio técnico, 375 solicitudes, días de espera en histograma [0,7[ 129, [7,14[ 162, [14,21[ 21, [21,28[ 36, [28,35[ 27; porcentaje entre 14 y menos de 28 días; clave 15,2 % (57/375); distractores 22,4 % (84), 11,4 % (57/5), 9,6 % (36/375)",
+    "adv-tablas-y-graficos-009: cantera, 83 bolones, masa en kg en histograma [9,29[ 15, [29,49[ 26, [49,69[ 30, [69,89[ 7, [89,109[ 5; cuántos pesan menos de 49 kg; clave 41; distractores 71, 42, 49",
+    "adv-tablas-y-graficos-010: recolectora de cochayuyo, kilos secados por mes en líneas 309, 221, 373, 804, 707, 489; variación entre marzo y abril; clave subió 431 kg; distractores bajó 431, subió 804, subió 1.177",
+    "adv-tablas-y-graficos-011: dos miradores de un cerro, visitantes diarios lunes a viernes en dos líneas, norte 163, 434, 496, 437, 499 y sur 207, 419, 466, 399, 632; clave \"entre martes y miércoles el norte subió más\" (62 contra 47); distractores el sur subió 67, variación 597, variación 632; intermedios 271, 233",
+    "adv-tablas-y-graficos-012: equipo de mantención de luminarias, 92, 95 y 104 reparadas en tres noches y x en la cuarta; expresión del promedio; clave (291 + x)/4; distractores (97 + x)/2, (291 + x)/3, 97",
+    "adv-tablas-y-graficos-013: jugador de pinball, puntos 331, 352, 355 y meta de promedio 425 en cuatro partidas; clave 662; distractores 425, 237, 504; intermedios 1.038, 346",
+    "adv-tablas-y-graficos-014: empresa de mudanzas, 33 camiones con promedio 39 viajes y 44 camionetas con promedio 98; afirmación sobre el promedio de los 77 vehículos; clave \"entre 39 y 98, más cerca de 98\" (5.599/77 ≈ 72,7); distractores 68,5, 38,5, 73,7; intermedios 1.287, 4.312",
+    "adv-tablas-y-graficos-015: circo itinerante, 7 funciones con promedio 87 espectadores y octava función con 99; clave 88,5; distractores 87, 93, 101,1 (708/7 redondeado); intermedios 609, 708",
+    "adv-tablas-y-graficos-016: autos de un estacionamiento por cantidad de puertas 2, 3, 5 con frecuencias literales a, b, c; expresión del promedio; clave (2a + 3b + 5c)/(a + b + c); distractores (2 + 3 + 5)/3, (a + b + c)/3, (2a + 3b + 5c)/3",
+    "adv-tablas-y-graficos-017: dos cajas de velas artesanales, 4 velas con promedio 277 g y 5 con promedio 339 g; expresión del promedio conjunto; clave (4 · 277 + 5 · 339)/(4 + 5); distractores (277 + 339)/2, (4 · 277 + 5 · 339)/2, (4 + 5)/2",
+    "adv-tablas-y-graficos-018: afiche con precio de la hora en cuatro estacionamientos de un centro cívico, barras 1.070, 1.129, 1.187, 1.299 pesos con eje desde 1.030; afirmación \"D cuesta casi el doble que A\"; clave \"no: 229 pesos más sobre 1.070, cerca de 21,4 %\"; distractores siete veces más alta (6,7), 0,21 %, circular; intermedios 269, 40, 0,214",
+    "adv-tablas-y-graficos-019: cuatro contratistas, kilómetros pavimentados 1.101, 1.123, 1.157, 1.178 en tabla; elegir la representación; clave barras con eje desde 0; distractores barras con eje desde 1.090, líneas, circular por contratista",
+    "adv-tablas-y-graficos-020: observatorio de insectos, mariposas contadas en seis semanas en líneas 213, 506, 787, 813, 564, 567; descripción correcta del gráfico; clave \"entre la semana 2 y la 4 subió 307\"; distractores varió 787, subió 249, variación 719; intermedios 281, 293"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-invierno-111, 2024-regular-113, 2025-regular-113 y 2026-regular-113 (PDF en ../fuentes-demre-liberadas/)",
+      "docs/analisis/material-referencia/por-unidad.md, sección tablas-y-graficos (dominios vistos, tareas tipo y candidatos de error)"
+    ],
+    "declaracionOriginalidad": "Banco de tablas-y-graficos: 20 ítems, 60 distractores, 20 errores distintos del catálogo content/errores/tablas-y-graficos.json (cobertura 60/60). Proveniencia por fuente: 13 propia, 7 demre-liberada (001 ← 2024-invierno-111/57, 002 ← /56, 003 ← /59, 009 ← 2026-regular-113/54, 012 ← 2025-regular-113/44, 013 ← 2025-regular-113/48, 016 ← 2026-regular-113/59; en todas se conserva la estructura y a lo más el mecanismo de uno o dos distractores, y cambian contexto, cifras y alternativas según la notaAdaptacion de cada ítem). 0 temario-demre. La forma 2027-invierno-111 no se usó (sin PDF ni clavijero). Convenciones firmadas en la PARADA del 2026-09-21: (1) criterio de cifras en dos clases, C1 (clave, alternativas, totales y resultados escritos: enteros 10-99 y decimales de 1 cifra contra las tres lecciones, el cierre y el catálogo de la unidad; enteros ≥ 100 y decimales de 2 o más cifras contra todo content/ y contra las 35 preguntas DEMRE de la unidad) y C2 (datos crudos de figura: sin coincidir con un total de la unidad y sin repetirse dentro del banco); las constantes 100 y 360 no entran al set; ninguna cifra ≥ 10 o decimal se repite entre ítems. (2) Dos intermedios no se escriben porque están ocupados en content/: la suma visible 407 + 143 en 002 y el producto 4 · 425 en 013. (3) Dos excepciones de magnitud, las únicas del banco: 001 D = 4 (número de filas, precedente DEMRE 2024-invierno-111/57 A) y 002 D = 37 (olvida el factor 100). (4) Los sectores de los gráficos circulares (003, 005) llevan como valor el porcentaje mismo; las cantidades absolutas no viajan en la figura. (5) calcula-angulo-con-cien y lee-sector-como-cantidad-sin-total solo aparecen como afirmación (003) o como expresión (004), porque como número siempre quedan fuera de magnitud (×3,6 y ×n/100). (6) Id nuevo cuenta-intervalo-de-mas-en-el-limite firmado desde los candidatos de docs/analisis/material-referencia/por-unidad.md (usos: 008 B, 009 A) y deja-un-dato-fuera-del-conteo ampliada a dejar fuera un grupo completo (uso: 008 D). (7) 012 conserva dos mecanismos del original DEMRE y reemplaza el tercero por cree-que-extremo-no-afecta-promedio. (8) Los respaldos de dominio de cada ítem viven en el plan de la PARADA, no en el repo. Ronda 1 (verificación matemática): PENDIENTE, en hilo /clear. Ronda 2 (originalidad): PENDIENTE, en hilo /clear, con la salida de consultar-fuentes.mjs que corra Benja fuera de la sesión."
+  }
+}

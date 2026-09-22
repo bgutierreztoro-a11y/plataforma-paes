@@ -9,7 +9,10 @@ import { validarDatosBancoAdvance } from "../../scripts/validar-contenido.mjs";
    `itemParaCliente` no altera ninguna figura de los tipos anteriores a las
    figuras de datos. Se afirma la propiedad, no una captura: la comparación
    byte a byte contra la salida previa al cambio se hizo una vez, fuera del
-   repo, al introducir las figuras de datos (2026-09-21, 11 bancos idénticos). */
+   repo, al introducir las figuras de datos (2026-09-21, 11 bancos idénticos).
+   Las figuras de datos (desde el banco de tablas-y-graficos) sí pasan por
+   `protegerExpresiones`: su texto llega igual salvo los espacios duros y sus
+   números llegan idénticos. */
 
 const DIR = path.join(process.cwd(), "content", "advance");
 const unidades = readdirSync(DIR, { withFileTypes: true })
@@ -18,6 +21,16 @@ const unidades = readdirSync(DIR, { withFileTypes: true })
   .sort();
 
 const TIPOS_ANTERIORES = new Set([undefined, "plano-funcion", "tabla-valores"]);
+
+/* Devuelve la figura con U+00A0 → espacio en todo texto, sin tocar números ni forma. */
+function sinEspaciosDuros<T>(valor: T): T {
+  if (typeof valor === "string") return valor.replace(/ /g, " ") as T;
+  if (Array.isArray(valor)) return valor.map(sinEspaciosDuros) as T;
+  if (valor && typeof valor === "object") {
+    return Object.fromEntries(Object.entries(valor).map(([k, v]) => [k, sinEspaciosDuros(v)])) as T;
+  }
+  return valor;
+}
 
 describe("bancos reales de content/advance/", () => {
   it("hay bancos y unidadesConBanco los sirve todos", () => {
@@ -40,10 +53,14 @@ describe("bancos reales de content/advance/", () => {
           assert.equal("figura" in cliente, false);
           return;
         }
-        /* Los bancos existentes solo traen figuras anteriores a las de datos, y esas viajan tal cual. */
-        assert.ok(TIPOS_ANTERIORES.has(item.figura.tipo), `${unidadId} ${item.id}: tipo ${item.figura.tipo}`);
-        assert.equal(figuraParaCliente(item.figura), item.figura);
-        assert.equal(cliente.figura, item.figura);
+        if (TIPOS_ANTERIORES.has(item.figura.tipo)) {
+          /* Las figuras anteriores a las de datos viajan tal cual. */
+          assert.equal(figuraParaCliente(item.figura), item.figura);
+          assert.equal(cliente.figura, item.figura);
+          return;
+        }
+        /* Figura de datos: misma forma y mismos números; el texto solo cambia en espacios duros. */
+        assert.deepEqual(sinEspaciosDuros(cliente.figura), item.figura, `${unidadId} ${item.id}: figura ${item.figura.tipo}`);
       });
     });
   }

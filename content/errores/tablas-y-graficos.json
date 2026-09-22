@@ -79,8 +79,7 @@
     },
     {
       "id": "tablas-y-graficos/cuenta-intervalo-de-mas-en-el-limite",
-      "descripcion": "Al contar cuántos datos cumplen una condición en una tabla o histograma por intervalos, sumar también el intervalo que empieza en el límite cuando la condición no lo incluye: para 'menos de 49' con [29, 49[ y [49, 69[, sumar los de [49, 69[; o para 'entre 14 y menos de 28' sumar también [28, 35[.",
-      "reservado": "Banco Advance de tablas-y-graficos: distractores 008 B (22,4 % con [28,35[ de más) y 009 A (71 con [49,69[ de más); candidatos l.1084 y l.1127 de docs/analisis/material-referencia/por-unidad.md"
+      "descripcion": "Al contar cuántos datos cumplen una condición en una tabla o histograma por intervalos, sumar también el intervalo que empieza en el límite cuando la condición no lo incluye: para 'menos de 49' con [29, 49[ y [49, 69[, sumar los de [49, 69[; o para 'entre 14 y menos de 28' sumar también [28, 35[."
     }
   ]
 }
