@@ -1,6 +1,6 @@
 import { useId } from "react";
 import type { FiguraDiagramaCajon } from "@/lib/advance/descarte";
-import { LETRA, MEDIA_CAJA, MEDIO_REMATE, TICK, geometriaCajon, rotuloDeMarca } from "@/lib/advance/diagramaCajon";
+import { LETRA, TICK, geometriaCajon, rotuloDeMarca, type ContextoCajon } from "@/lib/advance/diagramaCajon";
 import { TEXTOS_ADVANCE } from "@/lib/advance/textos";
 import { DATO, HAIRLINE, HALO, TINTA, TINTE } from "./lienzo";
 
@@ -22,13 +22,22 @@ import { DATO, HAIRLINE, HALO, TINTA, TINTE } from "./lienzo";
  *
  * Accesibilidad como PlanoFuncion: role="img", <title> corto generado y
  * <desc> = descripcion del banco.
+ *
+ * Letra: todo texto (números del eje, rótulos, nombres y unidad) va en LETRA =
+ * 12 unidades, y el viewBox de cada ubicación es igual o menor que su carril
+ * más angosto a 390 px (lib/advance/diagramaCajon.ts), así que no baja de 12
+ * px. Sin medición en cliente: el SVG escala con CSS y el render es el mismo en
+ * servidor y cliente. El ancho máximo evita que en escritorio la figura crezca
+ * sin límite: 26rem en el enunciado, 22rem en una alternativa.
  */
-export function DiagramaCajon({ figura }: { figura: FiguraDiagramaCajon }) {
+const ANCHO_MAXIMO: Record<ContextoCajon, string> = { enunciado: "max-w-[26rem]", alternativa: "max-w-[22rem]" };
+
+export function DiagramaCajon({ figura, contexto = "enunciado" }: { figura: FiguraDiagramaCajon; contexto?: ContextoCajon }) {
   const idBase = useId();
   const idTitulo = `${idBase}-titulo`;
   const idDesc = `${idBase}-desc`;
   const { eje, cajas, orientacion, descripcion } = figura;
-  const g = geometriaCajon(figura);
+  const g = geometriaCajon(figura, contexto);
   const horizontal = orientacion === "horizontal";
 
   /* Punto en (valor, transversal) → (x, y) del viewBox. */
@@ -42,11 +51,11 @@ export function DiagramaCajon({ figura }: { figura: FiguraDiagramaCajon }) {
   return (
     <svg
       viewBox={`0 0 ${g.ancho} ${g.alto}`}
-      className="block h-auto w-full max-w-[26rem]"
+      className={`block h-auto w-full ${ANCHO_MAXIMO[contexto]}`}
       role="img"
       aria-labelledby={`${idTitulo} ${idDesc}`}
       focusable="false"
-      data-diagrama-cajon
+      data-diagrama-cajon={contexto}
     >
       <title id={idTitulo}>{TEXTOS_ADVANCE.figura.cajon(cajas.length)}</title>
       <desc id={idDesc}>{descripcion}</desc>
@@ -90,17 +99,17 @@ export function DiagramaCajon({ figura }: { figura: FiguraDiagramaCajon }) {
         </text>
       )}
 
-      {g.cajas.map(({ caja, centro }, i) => {
+      {g.cajas.map(({ caja, centro, mediaCaja, medioRemate }, i) => {
         const { minimo, q1, mediana, q3, maximo, nombre } = caja;
-        const a = xy(q1, centro - MEDIA_CAJA);
-        const b = xy(q3, centro + MEDIA_CAJA);
+        const a = xy(q1, centro - mediaCaja);
+        const b = xy(q3, centro + mediaCaja);
         return (
           <g key={nombre ?? i} data-elemento="caja" data-caja={i}>
             <g stroke={DATO} strokeWidth="1.5" data-elemento="bigotes">
               <line {...linea(minimo, centro, q1, centro)} />
               <line {...linea(q3, centro, maximo, centro)} />
-              <line {...linea(minimo, centro - MEDIO_REMATE, minimo, centro + MEDIO_REMATE)} data-elemento="remate" />
-              <line {...linea(maximo, centro - MEDIO_REMATE, maximo, centro + MEDIO_REMATE)} data-elemento="remate" />
+              <line {...linea(minimo, centro - medioRemate, minimo, centro + medioRemate)} data-elemento="remate" />
+              <line {...linea(maximo, centro - medioRemate, maximo, centro + medioRemate)} data-elemento="remate" />
             </g>
             <rect
               x={Math.min(a.x, b.x)}
@@ -112,12 +121,12 @@ export function DiagramaCajon({ figura }: { figura: FiguraDiagramaCajon }) {
               strokeWidth="1.5"
               data-elemento="rectangulo"
             />
-            <line {...linea(mediana, centro - MEDIA_CAJA, mediana, centro + MEDIA_CAJA)} stroke={TINTA} strokeWidth="3" data-elemento="mediana" />
+            <line {...linea(mediana, centro - mediaCaja, mediana, centro + mediaCaja)} stroke={TINTA} strokeWidth="3" data-elemento="mediana" />
             {nombre !== undefined && (
               <text
                 {...HALO}
-                x={horizontal ? 4 : centro}
-                y={horizontal ? centro : g.alto - 3}
+                x={horizontal ? g.nombres.x : centro}
+                y={horizontal ? centro : g.nombres.y}
                 dy={horizontal ? "0.35em" : undefined}
                 textAnchor={horizontal ? "start" : "middle"}
                 fontSize={LETRA}

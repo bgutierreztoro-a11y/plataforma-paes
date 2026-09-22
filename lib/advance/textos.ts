@@ -56,7 +56,7 @@ export const TEXTOS_ADVANCE = {
     lineas: "Gráfico de líneas",
     circular: "Gráfico circular",
     /* <title> del diagrama de cajón; el <desc> es la descripcion del banco. */
-    cajon: (n: number) => (n === 1 ? "Diagrama de cajón" : `${["", "", "Dos", "Tres", "Cuatro"][n]} diagramas de cajón`),
+    cajon: (n: number) => (n === 1 ? "Diagrama de cajón" : `${["", "", "Dos", "Tres", "Cuatro", "Cinco"][n]} diagramas de cajón`),
     /* Nombre de una serie sin nombre (solo existe con una serie). */
     serieUnica: "Valores",
     porCategoria: (y: string, x: string) => `${y} por ${x}`,

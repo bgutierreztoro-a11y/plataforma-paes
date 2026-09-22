@@ -44,6 +44,15 @@ const TRES: FiguraDiagramaCajon = {
 const cuenta = (html: string, patron: RegExp) => (html.match(patron) ?? []).length;
 
 describe("DiagramaCajon: render", () => {
+  it("todo texto va en letra de 12 unidades y el viewBox del enunciado es de 320", () => {
+    for (const figura of [UNA, TRES]) {
+      const html = render(figura);
+      assert.match(html, /viewBox="0 0 320 /);
+      const tamanos = [...html.matchAll(/font-size="([0-9.]+)"/g)].map((m) => Number(m[1]));
+      assert.ok(tamanos.length > 0 && tamanos.every((t) => t === 12), tamanos.join(","));
+    }
+  });
+
   it("role=img con <title> corto generado y <desc> igual a la descripción, enlazados por aria-labelledby", () => {
     const html = render(UNA);
     assert.match(html, /<svg[^>]*role="img"[^>]*aria-labelledby="([^"]+)-titulo \1-desc"/);

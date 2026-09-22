@@ -669,6 +669,14 @@ export const FIGURAS_DATOS_MUESTRA: { id: string; rotulo: string; figura: Figura
    y nombres abstractos (Grupo A, B, C, D), sin dominio. Se mide la letra a
    390 px, que los rótulos no se pisen y que el eje y los nombres quepan en las
    dos orientaciones. */
+const CINCO_CAJAS: FiguraDiagramaCajon["cajas"] = [
+  { nombre: "Grupo A", minimo: 4, q1: 12, mediana: 19, q3: 27, maximo: 41, rotulos: true },
+  { nombre: "Grupo B", minimo: 9, q1: 17, mediana: 23, q3: 31, maximo: 46, rotulos: true },
+  { nombre: "Grupo C", minimo: 2, q1: 10, mediana: 16, q3: 22, maximo: 35, rotulos: true },
+  { nombre: "Grupo D", minimo: 13, q1: 21, mediana: 26, q3: 33, maximo: 48, rotulos: true },
+  { nombre: "Grupo E", minimo: 6, q1: 14, mediana: 20, q3: 29, maximo: 38, rotulos: true },
+];
+
 export const CAJONES_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagramaCajon }[] = [
   {
     id: "horizontal-rotulada",
@@ -716,9 +724,9 @@ export const CAJONES_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagra
       eje: { min: 0, max: 100, paso: 20, grilla: true },
       cajas: [
         { nombre: "Grupo A", minimo: 12, q1: 35, mediana: 52, q3: 68, maximo: 91, rotulos: true },
-        { nombre: "Grupo B", minimo: 26, q1: 41, mediana: 47, q3: 73, maximo: 84, rotulos: true },
+        { nombre: "Grupo B", minimo: 26, q1: 41, mediana: 55, q3: 73, maximo: 84, rotulos: true },
       ],
-      descripcion: "MUESTRA. Dos diagramas de cajón verticales. A: 12, 35, 52, 68 y 91. B: 26, 41, 47, 73 y 84.",
+      descripcion: "MUESTRA. Dos diagramas de cajón verticales. A: 12, 35, 52, 68 y 91. B: 26, 41, 55, 73 y 84.",
     },
   },
   {
@@ -735,6 +743,77 @@ export const CAJONES_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagra
         { nombre: "Grupo D", minimo: -9, q1: -3, mediana: 1, q3: 6, maximo: 17 },
       ],
       descripcion: "MUESTRA. Cuatro diagramas de cajón horizontales sobre un eje de −10 a 40 °C, grupos A, B, C y D, para comparar rangos.",
+    },
+  },
+  {
+    id: "cinco-horizontales-rotuladas",
+    rotulo: "cinco cajas horizontales (el tope) con nombres y los cinco valores rotulados",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: 0, max: 50, paso: 10, etiqueta: "horas", grilla: true },
+      cajas: CINCO_CAJAS,
+      descripcion: "MUESTRA. Cinco diagramas de cajón horizontales con sus valores rotulados, grupos A a E, sobre un eje de 0 a 50 horas.",
+    },
+  },
+  {
+    id: "cinco-verticales-rotuladas",
+    rotulo: "cinco cajas verticales (el tope) con nombres y los cinco valores rotulados",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 0, max: 50, paso: 10, etiqueta: "horas", grilla: true },
+      cajas: CINCO_CAJAS,
+      descripcion: "MUESTRA. Cinco diagramas de cajón verticales con sus valores rotulados, grupos A a E, sobre un eje de 0 a 50 horas.",
+    },
+  },
+  {
+    id: "peor-caso-vertical",
+    rotulo: "peor caso de marcas en vertical: 11 marcas de 4 cifras (la regla 27 las admite)",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 1000, max: 2000, paso: 100, etiqueta: "gramos", grilla: true },
+      cajas: [{ minimo: 1120, q1: 1340, mediana: 1470, q3: 1610, maximo: 1880 }],
+      descripcion: "MUESTRA. Un diagrama de cajón vertical sobre un eje de 1.000 a 2.000 gramos con once marcas.",
+    },
+  },
+  {
+    id: "peor-caso-horizontal",
+    rotulo: "peor caso de marcas en horizontal: 11 marcas de 4 cifras no caben (regla 27); la muestra usa el máximo que admite, 9",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: 1000, max: 2000, paso: 125, etiqueta: "gramos", grilla: true },
+      cajas: [{ minimo: 1120, q1: 1340, mediana: 1470, q3: 1610, maximo: 1880 }],
+      descripcion: "MUESTRA. Un diagrama de cajón horizontal sobre un eje de 1.000 a 2.000 gramos con nueve marcas.",
+    },
+  },
+];
+
+/* Peor caso de marcas dentro de una alternativa, donde el viewBox es de 280:
+   una alternativa suelta (intacta) con cada orientación. */
+export const CAJONES_ALTERNATIVA_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagramaCajon }[] = [
+  {
+    id: "alternativa-vertical",
+    rotulo: "en alternativa, vertical: 11 marcas de 4 cifras (la regla 27 las admite)",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 1000, max: 2000, paso: 100, grilla: true },
+      cajas: [{ minimo: 1120, q1: 1340, mediana: 1470, q3: 1610, maximo: 1880 }],
+      descripcion: "MUESTRA. Diagrama de cajón vertical en una alternativa, eje de 1.000 a 2.000 con once marcas.",
+    },
+  },
+  {
+    id: "alternativa-horizontal",
+    rotulo: "en alternativa, horizontal: 11 marcas de 4 cifras no caben (regla 27); la muestra usa el máximo que admite, 8",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: 1000, max: 1700, paso: 100, grilla: true },
+      cajas: [{ minimo: 1060, q1: 1210, mediana: 1330, q3: 1460, maximo: 1650 }],
+      descripcion: "MUESTRA. Diagrama de cajón horizontal en una alternativa, eje de 1.000 a 1.700 con ocho marcas.",
     },
   },
 ];

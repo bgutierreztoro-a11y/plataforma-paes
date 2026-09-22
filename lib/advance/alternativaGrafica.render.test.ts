@@ -55,6 +55,8 @@ describe("alternativa gráfica en descarte", () => {
     assert.match(html, /<span aria-hidden="true" class="block rounded-sm bg-\[var\(--color-bg\)\] p-1"><svg[^>]*data-diagrama-cajon/);
     assert.equal(nombreAccesible(html), DESCRIPCION);
     assert.doesNotMatch(html, /data-marca-descarte/);
+    /* El cajón de una alternativa usa su viewBox angosto (280) y el tope de ancho de alternativa. */
+    assert.match(html, /<svg viewBox="0 0 280 [^"]*" class="block h-auto w-full max-w-\[22rem\]"[^>]*data-diagrama-cajon="alternativa"/);
   });
 
   it("descartada con acierto: gris, diagonal y el estado anunciado por texto", () => {
