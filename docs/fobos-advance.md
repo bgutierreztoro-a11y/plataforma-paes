@@ -780,7 +780,7 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 
 ---
 
-## 12. Figuras de función (plano-funcion y tabla-valores), diagrama de cajón y alternativas con figura
+## 12. Figuras de función (plano-funcion y tabla-valores), figuras de datos, diagrama de cajón y alternativas con figura
 
 Infraestructura previa a la unidad 11 (funcion-cuadratica), construida el 2026-09-20 sin escribir ningún ítem. El temario DEMRE M1 pide, para función cuadrática, tablas y gráficos considerando la variación de parámetros y los puntos especiales de la gráfica (vértice, ceros, intersección con los ejes). El plano de isometrías (§2.3, `figuraPlano`) solo dibuja puntos, polígonos, vectores, centros y rectas del enum x=c | y=c | y=x | y=-x; una parábola no era dibujable.
 
@@ -937,6 +937,29 @@ Detalle con citas y verificación en `docs/analisis/material-referencia/figuras-
 - DEMRE: no hay soluciones en el corpus. Las dos preguntas con cálculo (2024 regular 113 n.º 62, 2027 invierno 111 n.º 62) tienen datos elegidos para que la convención no cambie la clave.
 
 Con n par y con n ≡ 3 (mód 4) la lección y UC coinciden. Con n ≡ 1 (mód 4) difieren, y la lección se contradice consigo misma: su Q1 por mitades no es su P25. Hallazgo abierto, la lección no se toca. Para los bancos de medidas-de-posicion: un ítem con cuartiles de datos no agrupados evita n ≡ 1 (mód 4) o comprueba que las tres convenciones den lo mismo.
+
+### 12.11 Figuras de datos: reglas (13) a (17)
+
+Las cinco figuras de datos de tablas-y-graficos (`tabla-datos`, `grafico-barras`, `histograma`, `grafico-lineas`, `grafico-circular`) entraron al schema y al validador el 2026-09-21 y hasta acá no estaban documentadas en §12. Esta sección las documenta tal como están en `scripts/validar-contenido.mjs`, sin cambiar ninguna regla. Las líneas son las del archivo en el commit que agrega esta sección. Todo es error, nunca advertencia.
+
+Despacho por `tipo` en `validarFiguraItem` (l. 872 a 876). Constantes de las cinco figuras en l. 646 y 650 a 670: columnas de tabla hasta `MAX_COLUMNAS_TABLA` = 6 (l. 646) y desde `MIN_COLUMNAS_TABLA_DATOS` = 2 (l. 652), filas hasta `MAX_FILAS_TABLA_DATOS` = 10 (l. 653), `MAX_CATEGORIAS_BARRAS` = 8 (l. 663), `MIN_CATEGORIAS_LINEAS` = 2 y `MAX_CATEGORIAS_LINEAS` = 10 (l. 664 y 665), `MAX_SERIES` = 3 (l. 666), `MAX_INTERVALOS` = 10 (l. 667), `MIN_SECTORES` = 2 y `MAX_SECTORES` = 8 (l. 668 y 669), y los modos del circular en l. 670. Las claves admitidas por nivel están en l. 651 y 654 a 662. Una clave que no está en su lista es error (`clavesSobrantes`).
+
+Ejes compartidos por barras, histograma y líneas:
+
+- `ejeX` (`validarEjeCategorias`, l. 1266): objeto `{ etiqueta }` con etiqueta de texto no vacío.
+- `ejeY` (`validarEjeValores`, l. 1272): `etiqueta` de texto no vacío. `min`, `max` y `paso` son opcionales y, si vienen, números finitos. Con los dos extremos, `min < max`; si viene `paso`, es mayor que 0. Lo que falta lo calcula `ejeResuelto` en `lib/advance/figurasDatos.ts` con números redondos.
+
+Reglas:
+
+- **(13) `tabla-datos`** (`validarTablaDatos`, l. 1235). `titulo` es opcional y, si viene, es texto no vacío. Entre 2 y 6 `columnas`, cada una de texto no vacío. Entre 1 y 10 `filas`: cada fila es un array con tantas celdas como columnas, y cada celda es texto o número finito. `filaTotal` es opcional, con la misma regla de largo y celdas. Una celda `"?"` es la incógnita del ítem y un intervalo va como texto (`"[10, 20["`).
+- **(14) `grafico-barras`** (`validarGraficoSeries`, l. 1288, llamada con 1 a 8 categorías en l. 873). Categorías de texto no vacío. Entre 1 y 3 `series`, cada una `{ nombre?, valores }`. Con 2 o más series cada una lleva `nombre`, sin repetir, porque es lo que las distingue y no el color. `valores` tiene el largo de `categorias` y números finitos. `mostrarValores`, si viene, es booleano. Más `ejeX` y `ejeY`.
+- **(15) `histograma`** (`validarHistograma`, l. 1332). Entre 1 y 10 `intervalos`, cada uno `{ desde, hasta }` con números finitos y `desde < hasta`. Son contiguos: el `desde` de cada uno es igual al `hasta` del anterior. `frecuencias` tiene el largo de `intervalos`, con números finitos mayores o iguales que 0. `poligono`, si viene, es booleano. Más `ejeX` y `ejeY`.
+- **(16) `grafico-lineas`** (la misma `validarGraficoSeries`, llamada con 2 a 10 categorías en l. 874). Mismas reglas de largo, nombre y ejes que las barras. No admite `mostrarValores`: no está en sus claves (l. 655).
+- **(17) `grafico-circular`** (`validarGraficoCircular`, l. 1378). `modoEtiqueta` es uno de `porcentaje`, `valor`, `angulo` o `ninguno`. Entre 2 y 8 `sectores`, cada uno `{ etiqueta, valor }` con etiqueta de texto no vacío y `valor > 0`. Si todos los valores son válidos y el modo es `porcentaje` o `angulo`, el valor calculado de cada sector (100·v/total o 360·v/total) tiene como máximo 1 decimal exacto. `unDecimalExacto` (l. 1371) lo comprueba con tolerancia 1e-9, y el error nombra el sector. Un valor 0 o negativo suspende ese chequeo.
+
+Ninguna de las cinco lleva `descripcion`. El aria-label se genera desde los datos en `lib/advance/figurasDatos.ts` y la tabla es su propio texto alternativo. Por eso, en una alternativa gráfica, la regla (26) les exige texto. `figuraParaCliente` (`lib/advance/banco.ts`, l. 179) pasa su texto por `protegerExpresiones` y deja los números intactos.
+
+Letra mínima renderizada a 390 × 844 en la galería (2026-09-22, medida con el método de 12.8, sin cambios en estas figuras): 9,62 px en barras, histograma y líneas (números del eje), 11,14 px en el circular y 12,5 px en las tablas.
 
 ---
 
