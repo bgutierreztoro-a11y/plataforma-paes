@@ -1,3 +1,4 @@
+import { DiagramaCajon } from "@/components/advance/figuras/DiagramaCajon";
 import { GraficoBarras } from "@/components/advance/figuras/GraficoBarras";
 import { GraficoCircular } from "@/components/advance/figuras/GraficoCircular";
 import { GraficoLineas } from "@/components/advance/figuras/GraficoLineas";
@@ -33,5 +34,7 @@ export function FiguraDeItem({ figura }: { figura: FiguraItem }) {
       return <GraficoLineas figura={figura} />;
     case "grafico-circular":
       return <GraficoCircular figura={figura} />;
+    case "diagrama-cajon":
+      return <DiagramaCajon figura={figura} />;
   }
 }

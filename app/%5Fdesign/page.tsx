@@ -31,6 +31,7 @@ import { TablaValores } from "@/components/advance/TablaValores";
 import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import type { EstadoAlternativa, RegistroItem } from "@/lib/advance/descarte";
 import {
+  CAJONES_MUESTRA,
   COPY_MUESTRA,
   FIGURAS_DATOS_MUESTRA,
   FIGURAS_MUESTRA,
@@ -966,6 +967,22 @@ export default function PaginaDiseno() {
                     </div>
                   )}
                 </PorLinea>
+              </div>
+            ))}
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Diagrama de cajón"
+          nota="La figura diagrama-cajon de un ítem Advance (item-advance.schema.json, figuraDiagramaCajon; reglas 18 a 24), montada por FiguraDeItem. Declarativa: cada caja trae sus cinco números y el eje su ventana; la figura no calcula cuartiles. Geometría en lib/advance/diagramaCajon.ts, la misma que usa la regla 24 para saber si dos rótulos se pisan. Caja en --linea-tinte con borde --linea-nav, mediana en tinta y más gruesa que el borde, bigotes con remate. Varias cajas se distinguen por su nombre, no por color. Valores iguales comparten un solo rótulo. role=img con <title> generado y <desc> = descripcion. Solo en la línea 04, la de probabilidad y datos. Datos INVENTADOS en app/%5Fdesign/muestraDescarte.ts. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6" style={estiloDeLinea("04")}>
+            {CAJONES_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-cajon={id} className="max-w-md">
+                <Rotulo>Línea 04 · {rotulo}</Rotulo>
+                <div data-figura-cajon={id} className="rounded-sm border border-hairline bg-[var(--color-bg)] p-4">
+                  <FiguraDeItem figura={figura} />
+                </div>
               </div>
             ))}
           </div>

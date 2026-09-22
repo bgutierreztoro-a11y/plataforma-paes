@@ -1,5 +1,5 @@
 import { copyDelCatalogo } from "@/lib/advance/copyDeError";
-import type { FiguraDatos, FiguraIsometrias, FiguraPlanoFuncion, FiguraTablaValores, ItemAdvance } from "@/lib/advance/descarte";
+import type { FiguraDatos, FiguraDiagramaCajon, FiguraIsometrias, FiguraPlanoFuncion, FiguraTablaValores, ItemAdvance } from "@/lib/advance/descarte";
 import type { FasesPorError, RegistroTriage } from "@/lib/advance/triage";
 import type { GrupoDeUnidad, TarjetaDeError } from "@/lib/advance/pantallaErrores";
 import { panelPorHabilidad, type IntentoConHabilidad } from "@/lib/advance/panel";
@@ -661,6 +661,80 @@ export const FIGURAS_DATOS_MUESTRA: { id: string; rotulo: string; figura: Figura
         { etiqueta: "C", valor: 1 },
       ],
       modoEtiqueta: "ninguno",
+    },
+  },
+];
+
+/* Diagrama de cajón (figura diagrama-cajon, reglas 18 a 24). Datos INVENTADOS
+   y nombres abstractos (Grupo A, B, C, D), sin dominio. Se mide la letra a
+   390 px, que los rótulos no se pisen y que el eje y los nombres quepan en las
+   dos orientaciones. */
+export const CAJONES_MUESTRA: { id: string; rotulo: string; figura: FiguraDiagramaCajon }[] = [
+  {
+    id: "horizontal-rotulada",
+    rotulo: "una caja horizontal con los cinco valores rotulados y unidad en el eje",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: 0, max: 40, paso: 5, etiqueta: "minutos" },
+      cajas: [{ minimo: 7, q1: 13, mediana: 18.5, q3: 24, maximo: 36, rotulos: true }],
+      descripcion: "MUESTRA. Diagrama de cajón horizontal: mínimo 7, primer cuartil 13, mediana 18,5, tercer cuartil 24 y máximo 36 minutos.",
+    },
+  },
+  {
+    id: "q1-igual-mediana",
+    rotulo: "q1 igual a la mediana: un solo rótulo compartido, en negrita por ser la mediana",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: 0, max: 60, paso: 10, etiqueta: "puntos", grilla: true },
+      cajas: [{ minimo: 8, q1: 22, mediana: 22, q3: 37, maximo: 55, rotulos: true }],
+      descripcion: "MUESTRA. Diagrama de cajón horizontal donde el primer cuartil y la mediana valen 22; mínimo 8, tercer cuartil 37 y máximo 55 puntos.",
+    },
+  },
+  {
+    id: "tres-verticales",
+    rotulo: "tres cajas verticales con grilla y unidad, valores leídos del eje",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 0, max: 50, paso: 10, etiqueta: "kg", grilla: true },
+      cajas: [
+        { nombre: "Grupo A", minimo: 6, q1: 14, mediana: 21, q3: 27, maximo: 42 },
+        { nombre: "Grupo B", minimo: 11, q1: 19, mediana: 24, q3: 33, maximo: 47 },
+        { nombre: "Grupo C", minimo: 3, q1: 9, mediana: 16, q3: 18, maximo: 29 },
+      ],
+      descripcion: "MUESTRA. Tres diagramas de cajón verticales sobre un eje de 0 a 50 kg, grupos A, B y C, para leer sus valores en el eje.",
+    },
+  },
+  {
+    id: "dos-verticales-rotuladas",
+    rotulo: "dos cajas verticales con rótulos a la derecha de cada caja",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "vertical",
+      eje: { min: 0, max: 100, paso: 20, grilla: true },
+      cajas: [
+        { nombre: "Grupo A", minimo: 12, q1: 35, mediana: 52, q3: 68, maximo: 91, rotulos: true },
+        { nombre: "Grupo B", minimo: 26, q1: 41, mediana: 47, q3: 73, maximo: 84, rotulos: true },
+      ],
+      descripcion: "MUESTRA. Dos diagramas de cajón verticales. A: 12, 35, 52, 68 y 91. B: 26, 41, 47, 73 y 84.",
+    },
+  },
+  {
+    id: "cuatro-horizontales",
+    rotulo: "cuatro cajas horizontales (el tope) con nombres, grilla y valores negativos",
+    figura: {
+      tipo: "diagrama-cajon",
+      orientacion: "horizontal",
+      eje: { min: -10, max: 40, paso: 10, etiqueta: "°C", grilla: true },
+      cajas: [
+        { nombre: "Grupo A", minimo: 4, q1: 15, mediana: 21, q3: 26, maximo: 38 },
+        { nombre: "Grupo B", minimo: -7, q1: 2, mediana: 9, q3: 13, maximo: 24 },
+        { nombre: "Grupo C", minimo: 11, q1: 17, mediana: 19, q3: 23, maximo: 31 },
+        { nombre: "Grupo D", minimo: -9, q1: -3, mediana: 1, q3: 6, maximo: 17 },
+      ],
+      descripcion: "MUESTRA. Cuatro diagramas de cajón horizontales sobre un eje de −10 a 40 °C, grupos A, B, C y D, para comparar rangos.",
     },
   },
 ];
