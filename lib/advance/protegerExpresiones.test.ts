@@ -28,6 +28,11 @@ const CASOS: [string, string][] = [
   ["4uv + 4v²", "4uv⍽+⍽4v²"],
   ["A′ = (7, −6)", "A′⍽= (7, −6)"],
   ["comensales × porción", "comensales⍽×⍽porción"],
+  /* Número y unidad (Unidad 14): la unidad no queda sola en la línea siguiente. */
+  ["El lado mide 3√2 cm y el otro 2,5 m.", "El lado mide 3√2⍽cm y el otro 2,5⍽m."],
+  ["18 cm² de un lado y 4π cm de arco", "18⍽cm² de un lado y 4π⍽cm de arco"],
+  ["(x + 2) cm y 1.250 mm", "(x⍽+⍽2)⍽cm y 1.250⍽mm"],
+  ["3 u² y 0,5 km", "3⍽u² y 0,5⍽km"],
 ];
 
 const SIN_CAMBIO = [
@@ -37,6 +42,9 @@ const SIN_CAMBIO = [
   "Las dos condiciones se resuelven juntas, sin cifras ni signos.",
   "es − dos",
   "de + la",
+  /* Sin espacio no hay corte; una palabra que empieza como unidad no es unidad. */
+  "12π, √13 y cm² quedan igual",
+  "el 5 mide, los 3 metros, 2 unidades y 4 mesas",
 ];
 
 describe("protegerExpresiones", () => {

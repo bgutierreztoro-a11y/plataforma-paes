@@ -16,6 +16,11 @@
  * - Operando: dígito, superíndice, π, `|`, `$`, `√`, paréntesis, `%`, `′`,
  *   o una corrida de 1 o 2 letras que no sea una palabra de la lista
  *   (`mn`, `uv` sí; "es − dos" y "de + la" no).
+ * - Número y unidad (2026-09-23, Unidad 14): U+00A0 entre un número (o π,
+ *   un superíndice o un paréntesis que cierra) y una unidad de longitud, área
+ *   o volumen (mm, cm, dm, m, km, u, con ² o ³), para que "3√2 cm" o "2,5 m"
+ *   no dejen la unidad sola al comienzo de la línea siguiente. La unidad es
+ *   una palabra entera: "5 mide" no cambia.
  * - Tabla (línea que empieza y termina con `|`): intacta, una celda con
  *   espacio duro podría desbordar su columna. "|x − 3| + 2" no es tabla.
  * - Lista (`- `): el marcador queda y el contenido se protege.
@@ -30,12 +35,14 @@ const DER = `(?=[0-9$√π|(]|${LETRAS})`;
 const RE_MULTIPLICACION = / ([×÷·]) /g;
 const RE_SUMA_RESTA = new RegExp(`${IZQ} ([+−]) ${DER}`, "gi");
 const RE_RELACION = new RegExp(`${IZQ} ([=≤≥<>≠])(?= )`, "gi");
+const RE_UNIDAD = /(?<=[0-9²³π)]) (?=(?:mm|cm|dm|km|m|u)[²³]?(?![\p{L}\p{N}]))/gu;
 
 function protegerLinea(linea: string): string {
   return linea
     .replace(RE_MULTIPLICACION, `${NBSP}$1${NBSP}`)
     .replace(RE_SUMA_RESTA, `${NBSP}$1${NBSP}`)
-    .replace(RE_RELACION, `${NBSP}$1`);
+    .replace(RE_RELACION, `${NBSP}$1`)
+    .replace(RE_UNIDAD, NBSP);
 }
 
 export function protegerExpresiones(texto: string): string {
