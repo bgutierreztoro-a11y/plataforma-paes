@@ -21,6 +21,7 @@ import {
   pathArco,
   problemasDeEscala,
   problemasDeMarcas,
+  verticesVisibles,
 } from "./lienzoGeometrico.ts";
 
 /* Motor del lienzo geométrico. Datos inventados. Se afirman relaciones (el
@@ -268,6 +269,26 @@ describe("choquesDeLienzo (regla 33)", () => {
     const justa = base({ ventana: { xMin: 0, xMax: 9, yMin: -1, yMax: 7 } });
     assert.ok(choquesDeLienzo(justa).some((c) => c.clase === "fuera" && c.a === "6 cm"));
     assert.equal(choquesDeLienzo(base()).some((c) => c.clase === "fuera"), false);
+  });
+});
+
+describe("verticesVisibles: lo que un rótulo no puede tapar", () => {
+  it("vértices de polígono, extremos de segmento, centros de sector, marcados y nombrados sí; un centro oculto de circunferencia no", () => {
+    const fig = base({
+      puntos: [
+        ...base().puntos,
+        { nombre: "O", x: 3, y: 2, oculto: true },
+        { nombre: "S", x: 6, y: 5, oculto: true },
+        { nombre: "M", x: 7, y: 5, oculto: true, marca: true },
+        { nombre: "Z", x: 1, y: 1, oculto: true },
+      ],
+      circunferencias: [{ centro: "O", radio: 1 }],
+      arcos: [{ clase: "sector", centro: "S", radio: 0.5, desde: 0, hasta: 90 }],
+      segmentos: [{ desde: "A", hasta: "Z", trazo: "punteado" }],
+    });
+    const v = verticesVisibles(fig);
+    for (const n of ["A", "B", "C", "S", "M", "Z"]) assert.ok(v.has(n), n);
+    assert.equal(v.has("O"), false);
   });
 });
 

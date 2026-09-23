@@ -46,6 +46,7 @@ import {
   RESULTADOS_TRIAGE_MUESTRA,
   TABLA_MUESTRA,
 } from "./muestraDescarte";
+import { LIENZO_ALTERNATIVA_DENSA, LIENZOS_MUESTRA, MUESTRA_LIENZO_ALTERNATIVAS } from "./muestraLienzo";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import { MuestraTriageInteractiva } from "./MuestraTriageInteractiva";
 import {
@@ -1031,6 +1032,66 @@ export default function PaginaDiseno() {
               <Rotulo>Línea 04 · Triage · el mismo ítem, quedan 12 s</Rotulo>
               <div data-alternativas-graficas="triage" className="rounded-sm border border-hairline bg-[var(--color-bg)]">
                 <ItemTriage item={MUESTRA_CAJON_ALTERNATIVAS} indice={1} total={20} segundos={12} />
+              </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Lienzo geométrico"
+          nota="La figura lienzo-geometrico de un ítem Advance (item-advance.schema.json, figuraLienzoGeometrico; reglas 28 a 39), montada por FiguraDeItem entre el enunciado y las alternativas. Geometría plana sin ejes y declarativa: puntos con nombre en coordenadas del mundo dentro de una ventana declarada; la figura no calcula nada del problema. A escala por defecto, con una sola escala fijada por el ancho del carril. Geometría en lib/advance/lienzoGeometrico.ts, la misma que miden las reglas del validador. El viewBox mide lo que el carril real a 390 px (358 en el enunciado, 316 en una alternativa), así que la letra de 12 unidades se ve de 12 px; por eso acá el panel va sin borde lateral ni padding, con el mismo ancho que la ruta. Contorno en --linea-nav y 2 px, auxiliares punteados en tinta y más delgados, rótulos en tinta con halo; regiones por máscara, en dos tramas. role=img con <title> generado y <desc> = descripcion. Solo en la línea 03, la de geometría. Datos INVENTADOS en app/%5Fdesign/muestraLienzo.ts; todos pasan el validador. Sobre --color-bg, el fondo real del body."
+        >
+          <div className="flex flex-col gap-6" style={estiloDeLinea("03")}>
+            {LIENZOS_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-lienzo={id}>
+                <Rotulo>Línea 03 · {rotulo}</Rotulo>
+                <div data-figura-lienzo={id} className="border-y border-hairline bg-[var(--color-bg)] py-3">
+                  <FiguraDeItem figura={figura} />
+                </div>
+              </div>
+            ))}
+            <div data-caso-lienzo="alternativa-densa" className="max-w-2xl">
+              <Rotulo>Línea 03 · Alternativa en sus topes: 12 puntos, 12 segmentos, 5 formas y 10 rótulos, en el panel de 316 px</Rotulo>
+              <div data-figura-lienzo="alternativa-densa" className="bg-[var(--color-bg)]">
+                <AlternativaDescartable
+                  alternativa={{ clave: "A", claveOriginal: "A", texto: "", figura: LIENZO_ALTERNATIVA_DENSA, esCorrecta: false, errorCatalogado: null, feedbackDescarte: "MUESTRA. Alternativa suelta para medir el caso más denso que admite una alternativa." }}
+                  estado="intacta"
+                />
+              </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Alternativas con lienzo"
+          nota="Un ítem de MUESTRA con cuatro lienzos geométricos como alternativas y texto vacío (reglas 25 y 26): las cuatro con la misma ventana, así que van a la misma escala, y el nombre del botón es la descripción de cada figura, en sr-only. El lienzo se monta con contexto alternativa: su viewBox es el panel de 316 px y el validador lo mide ahí. Arriba, descarte cerrado por descarte fatal; al medio, a punto de confirmar; abajo, el mismo ítem en triage, con el carril de la ruta real (358 px a 390). Línea 03, datos inventados en app/%5Fdesign/muestraLienzo.ts."
+        >
+          <div className="flex flex-col gap-6" style={estiloDeLinea("03")}>
+            {(
+              [
+                { id: "fatal", rotulo: "Descarte · cerrado por descarte fatal", estados: ["descartada-correcta", "descartada-por-error", "intacta", "intacta"] },
+                { id: "confirmar", rotulo: "Descarte · tres descartadas, queda la correcta", estados: ["descartada-correcta", "sobreviviente", "descartada-correcta", "descartada-correcta"] },
+              ] as { id: string; rotulo: string; estados: EstadoAlternativa[] }[]
+            ).map(({ id, rotulo, estados }) => (
+              <div key={id} className="max-w-2xl" data-caso-lienzo-alternativas={id}>
+                <Rotulo>Línea 03 · {rotulo}</Rotulo>
+                <div data-alternativas-lienzo={id} className="space-y-2.5 bg-[var(--color-bg)]" role="group" aria-label="Alternativas">
+                  {MUESTRA_LIENZO_ALTERNATIVAS.alternativas.map((alt, i) => (
+                    <AlternativaDescartable
+                      key={alt.clave}
+                      alternativa={alt}
+                      estado={estados[i]}
+                      rotuloError={alt.esCorrecta || alt.errorCatalogado === null ? undefined : rotuloDeError(alt.errorCatalogado, 1)}
+                      deshabilitada={id === "fatal"}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div data-caso-lienzo-alternativas="triage">
+              <Rotulo>Línea 03 · Triage · el mismo ítem, quedan 12 s</Rotulo>
+              <div data-alternativas-lienzo="triage" className="-mx-4 bg-[var(--color-bg)] sm:mx-0">
+                <ItemTriage item={MUESTRA_LIENZO_ALTERNATIVAS} indice={1} total={20} segundos={12} />
               </div>
             </div>
           </div>

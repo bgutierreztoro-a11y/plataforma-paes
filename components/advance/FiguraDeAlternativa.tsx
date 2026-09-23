@@ -1,5 +1,6 @@
 import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
 import { DiagramaCajon } from "@/components/advance/figuras/DiagramaCajon";
+import { LienzoGeometrico } from "@/components/advance/figuras/LienzoGeometrico";
 import type { FiguraItem } from "@/lib/advance/descarte";
 
 interface FiguraDeAlternativaProps {
@@ -24,8 +25,10 @@ interface FiguraDeAlternativaProps {
  *
  * El diagrama de cajón se monta directo con contexto "alternativa": su viewBox
  * es más angosto (280) para que la letra no baje de 12 px en el carril de la
- * alternativa, y el validador lo mide con ese mismo ancho. Las demás figuras
- * pasan por FiguraDeItem sin cambios.
+ * alternativa, y el validador lo mide con ese mismo ancho. El lienzo
+ * geométrico también va con contexto "alternativa": su viewBox es el panel de
+ * 316 px y el validador lo mide ahí. Las demás figuras pasan por FiguraDeItem
+ * sin cambios.
  *
  * Descartada (16e): sin opacity, igual que el texto tachado. Se atenúa a gris
  * (la tinta sigue en tinta, así que el contraste de los números no baja) y
@@ -37,7 +40,13 @@ export function FiguraDeAlternativa({ figura, tachada = false }: FiguraDeAlterna
   return (
     <span className="relative block basis-full" data-alternativa-figura data-tachada={tachada ? "" : undefined}>
       <span aria-hidden={descripcion ? true : undefined} className={`block rounded-sm bg-[var(--color-bg)] p-1 ${tachada ? "grayscale" : ""}`.trim()}>
-        {figura.tipo === "diagrama-cajon" ? <DiagramaCajon figura={figura} contexto="alternativa" /> : <FiguraDeItem figura={figura} />}
+        {figura.tipo === "diagrama-cajon" ? (
+          <DiagramaCajon figura={figura} contexto="alternativa" />
+        ) : figura.tipo === "lienzo-geometrico" ? (
+          <LienzoGeometrico figura={figura} contexto="alternativa" />
+        ) : (
+          <FiguraDeItem figura={figura} />
+        )}
       </span>
       {tachada && (
         <svg

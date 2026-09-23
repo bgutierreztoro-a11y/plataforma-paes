@@ -57,6 +57,10 @@ export const TEXTOS_ADVANCE = {
     circular: "Gráfico circular",
     /* <title> del diagrama de cajón; el <desc> es la descripcion del banco. */
     cajon: (n: number) => (n === 1 ? "Diagrama de cajón" : `${["", "", "Dos", "Tres", "Cuatro", "Cinco"][n]} diagramas de cajón`),
+    /* <title> del lienzo geométrico; el <desc> es la descripcion del banco. La
+       nota va escrita bajo la figura y en el <title> cuando aEscala es false. */
+    lienzo: "Figura geométrica",
+    noAEscala: "Figura referencial, no está a escala",
     /* Nombre de una serie sin nombre (solo existe con una serie). */
     serieUnica: "Valores",
     porCategoria: (y: string, x: string) => `${y} por ${x}`,

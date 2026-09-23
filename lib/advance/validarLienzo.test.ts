@@ -190,8 +190,10 @@ describe("lienzo-geometrico: rótulos que no chocan, regla (33)", () => {
     valida();
   });
 
-  it("un rótulo que tapa un vértice falla nombrando el vértice", () => {
-    const errores = soloFigura(con({ puntos: [...TRIANGULO.puntos, { nombre: "D", x: 4, y: -0.35, oculto: true }] }));
+  it("un rótulo que tapa un vértice falla nombrando el vértice; sobre un centro oculto que no se dibuja, no", () => {
+    valida({ puntos: [...TRIANGULO.puntos, { nombre: "O", x: 3, y: 2, oculto: true }], circunferencias: [{ centro: "O", radio: 1 }], textos: [{ texto: "R", x: 3, y: 2 }] });
+    const puntos = [...TRIANGULO.puntos, { nombre: "D", x: 4, y: -0.35, oculto: true }];
+    const errores = soloFigura(con({ puntos, segmentos: [...TRIANGULO.segmentos, { desde: "C", hasta: "D", trazo: "punteado" }] }));
     assert.ok(errores.includes("items[0].figura: el rótulo «8 cm» tapa el vértice D (enunciado); muévelo con \"ubicacion\" o \"lado\""), errores.join("\n"));
   });
 });

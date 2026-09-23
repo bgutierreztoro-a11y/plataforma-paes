@@ -660,6 +660,23 @@ export interface ChoqueLienzo {
 const seTocan = (a: CajaRotulo, b: CajaRotulo, aire: number) => a.x0 < b.x1 + aire && b.x0 < a.x1 + aire && a.y0 < b.y1 + aire && b.y0 < a.y1 + aire;
 
 /**
+ * Los puntos que se ven como vértice: los de un polígono, los extremos de un
+ * segmento, el vértice de un ángulo, el centro de un sector (ahí llegan sus
+ * radios), los marcados y los que llevan su nombre a la vista. Un punto oculto
+ * que solo es centro de una circunferencia o de un arco no se dibuja: un texto
+ * encima no tapa nada.
+ */
+export function verticesVisibles(figura: FiguraLienzoGeometrico): Set<string> {
+  const v = new Set<string>();
+  for (const p of figura.puntos) if (!p.oculto || p.marca) v.add(p.nombre);
+  for (const pol of figura.poligonos ?? []) pol.vertices.forEach((n) => v.add(n));
+  for (const sg of figura.segmentos ?? []) v.add(sg.desde).add(sg.hasta);
+  for (const a of figura.angulos ?? []) v.add(a.vertice);
+  for (const a of figura.arcos ?? []) if (a.clase === "sector") v.add(a.centro);
+  return v;
+}
+
+/**
  * Regla 33: rótulos que se pisan entre sí, que tapan un vértice o que se salen
  * del lienzo, en el carril de su ubicación. Cada choque nombra los rótulos.
  */
@@ -672,8 +689,10 @@ export function choquesDeLienzo(figura: FiguraLienzoGeometrico, contexto: Contex
       if (seTocan(rs[i].caja, rs[j].caja, AIRE)) choques.push({ clase: "rotulos", a: rs[i].texto, b: rs[j].texto });
     }
   }
+  const visibles = verticesVisibles(figura);
   for (const rot of rs) {
     for (const [nombre, p] of g.puntos) {
+      if (!visibles.has(nombre)) continue;
       const c = rot.caja;
       if (p.x > c.x0 - RADIO_VERTICE && p.x < c.x1 + RADIO_VERTICE && p.y > c.y0 - RADIO_VERTICE && p.y < c.y1 + RADIO_VERTICE) {
         choques.push({ clase: "vertice", a: rot.texto, b: nombre });

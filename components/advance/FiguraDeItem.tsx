@@ -3,6 +3,7 @@ import { GraficoBarras } from "@/components/advance/figuras/GraficoBarras";
 import { GraficoCircular } from "@/components/advance/figuras/GraficoCircular";
 import { GraficoLineas } from "@/components/advance/figuras/GraficoLineas";
 import { Histograma } from "@/components/advance/figuras/Histograma";
+import { LienzoGeometrico } from "@/components/advance/figuras/LienzoGeometrico";
 import { TablaDatos } from "@/components/advance/figuras/TablaDatos";
 import { PlanoFuncion } from "@/components/advance/PlanoFuncion";
 import { PlanoIsometrias } from "@/components/advance/PlanoIsometrias";
@@ -12,7 +13,7 @@ import type { FiguraItem } from "@/lib/advance/descarte";
 /**
  * Despacha la figura de un ítem Advance por `tipo`: sin tipo es el plano de
  * isometrías (los bancos anteriores a plano-funcion), con tipo es una figura
- * de función o una de datos (components/advance/figuras/). Único punto que
+ * de función, una de datos o el lienzo geométrico (components/advance/figuras/). Único punto que
  * conoce los componentes: descarte y triage lo montan entre el enunciado y
  * las alternativas y no saben cuál es cuál.
  */
@@ -36,5 +37,7 @@ export function FiguraDeItem({ figura }: { figura: FiguraItem }) {
       return <GraficoCircular figura={figura} />;
     case "diagrama-cajon":
       return <DiagramaCajon figura={figura} />;
+    case "lienzo-geometrico":
+      return <LienzoGeometrico figura={figura} />;
   }
 }
