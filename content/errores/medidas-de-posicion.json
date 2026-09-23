@@ -19,7 +19,7 @@
     },
     {
       "id": "medidas-de-posicion/confunde-rango-con-intercuartil",
-      "descripcion": "Entregar el rango (máximo − mínimo) donde se pide el rango intercuartil (Q3 − Q1), o al revés: 16 en vez de 6,5."
+      "descripcion": "Entregar el rango (máximo − mínimo) donde se pide el rango intercuartil (Q3 − Q1) o donde se pide la diferencia entre dos percentiles (P90 − P10), o al revés: 16 en vez de 6,5."
     },
     {
       "id": "medidas-de-posicion/lee-cuartil-como-posicion-entera",
