@@ -143,6 +143,16 @@ describe("itemParaCliente: la figura viaja íntegra", () => {
     for (const a of itemParaCliente(itemCon(TABLA)).alternativas) assert.equal("figura" in a, false);
   });
 
+  it("figuraSolucion sigue el camino de la solución: viaja por figuraParaCliente; sin ella no aparece la clave", () => {
+    const conSolucion = { ...itemCon(LIENZO), figuraSolucion: CAJON };
+    const cliente = itemParaCliente(conSolucion);
+    assert.equal(typeof cliente.solucion, "string");
+    assert.deepEqual(cliente.figuraSolucion, figuraParaCliente(CAJON));
+    const datos: FiguraItem = { tipo: "grafico-circular", sectores: [{ etiqueta: "A − B", valor: 3 }, { etiqueta: "C", valor: 1 }], modoEtiqueta: "angulo" };
+    assert.deepEqual(itemParaCliente({ ...itemCon(LIENZO), figuraSolucion: datos }).figuraSolucion, figuraParaCliente(datos));
+    assert.equal("figuraSolucion" in itemParaCliente(itemCon(LIENZO)), false);
+  });
+
   it("sinErrorCatalogado no viaja y errorCatalogado null se conserva", () => {
     const cliente = itemParaCliente(itemCon(TABLA));
     const b = cliente.alternativas[1];

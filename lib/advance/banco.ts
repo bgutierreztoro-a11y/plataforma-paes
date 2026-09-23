@@ -39,6 +39,7 @@ export interface ItemEnDisco {
   }[];
   solucion: string;
   figura?: FiguraItem;
+  figuraSolucion?: FiguraItem;
 }
 
 export interface Banco {
@@ -131,6 +132,9 @@ export function itemParaCliente(item: ItemEnDisco): ItemAdvance {
     enunciado: protegerExpresiones(item.enunciado),
     solucion: protegerExpresiones(item.solucion),
     ...(item.figura ? { figura: figuraParaCliente(item.figura) } : {}),
+    /* La figura de la solución sigue el camino de la solución: viaja siempre
+       que viaja la solución, por el mismo figuraParaCliente que la del ítem. */
+    ...(item.figuraSolucion ? { figuraSolucion: figuraParaCliente(item.figuraSolucion) } : {}),
     alternativas: item.alternativas.map((a): AlternativaAdvance => {
       /* El validador ya garantizó los campos de cada rama; los `?? ""` solo
          satisfacen al tipo. `errorCatalogado` es la excepción: null es un

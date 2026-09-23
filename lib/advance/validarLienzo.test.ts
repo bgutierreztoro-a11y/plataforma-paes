@@ -261,3 +261,24 @@ describe("lienzo-geometrico en alternativas: carril y topes de la alternativa (r
     assert.deepEqual(validarDatosBancoAdvance(banco(item({}, alts))), ["items[0].A.figura: 13 puntos y el tope en alternativa es 12"]);
   });
 });
+
+describe("figuraSolucion: cualquier tipo, medida en la ubicación solución, regla (40)", () => {
+  const conSolucion = (figuraSolucion: unknown) => validarDatosBancoAdvance(banco(item({ figuraSolucion })));
+  it("un lienzo con la altura trazada y un diagrama de cajón pasan", () => {
+    const conAltura = { ...TRIANGULO, puntos: [...TRIANGULO.puntos, { nombre: "H", x: 2.88, y: 3.84, oculto: true }], segmentos: [...TRIANGULO.segmentos, { desde: "A", hasta: "H", trazo: "punteado", rotulo: "h" }] };
+    assert.deepEqual(conSolucion(conAltura), []);
+    const cajon = { tipo: "diagrama-cajon", orientacion: "horizontal", eje: { min: 0, max: 40, paso: 5 }, cajas: [{ minimo: 4, q1: 10, mediana: 15, q3: 24, maximo: 35 }], descripcion: "Diagrama de cajón de prueba para la solución." };
+    assert.deepEqual(conSolucion(cajon), []);
+  });
+
+  it("se valida con las reglas de su tipo, en el carril de la solución, y el error nombra el campo", () => {
+    assert.deepEqual(conSolucion({ tipo: "pictograma" }).map((e) => e.split(":")[0]), ["items[0].figuraSolucion.tipo"]);
+    const errores = conSolucion({ ...TRIANGULO, puntos: [...TRIANGULO.puntos, { nombre: "D", x: 0.15, y: -0.1 }] });
+    assert.ok(errores.some((e) => e.startsWith("items[0].figuraSolucion: los rótulos «A» y «D» se pisan (solucion, letra de 12 px)")), errores.join("\n"));
+  });
+
+  it("sin figuraSolucion el ítem pasa igual y la clave sobrante sigue fallando", () => {
+    assert.deepEqual(validarDatosBancoAdvance(banco(item())), []);
+    assert.deepEqual(validarDatosBancoAdvance(banco(item({ figuraSolucionn: TRIANGULO }))), ['items[0]: clave "figuraSolucionn" no admitida por el schema']);
+  });
+});

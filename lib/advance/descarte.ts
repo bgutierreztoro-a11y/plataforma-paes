@@ -389,6 +389,8 @@ export interface ItemAdvance {
   alternativas: AlternativaAdvance[];
   solucion: string;
   figura?: FiguraItem;
+  /** Figura de la solución (construcción auxiliar). Viaja por el mismo camino que `solucion` y se muestra solo con ella. */
+  figuraSolucion?: FiguraItem;
 }
 
 /* ---------- estado de un ítem ---------- */

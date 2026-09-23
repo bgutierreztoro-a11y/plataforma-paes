@@ -621,7 +621,7 @@ const MIN_ITEMS_BANCO_ADVANCE = 20;
 const MIN_ERRORES_DISTINTOS_ADVANCE = 12;
 
 const CLAVES_BANCO = ['tipo', 'unidadId', 'moduloId', 'titulo', 'items', 'contextosNumericos', 'auditoria', 'proveniencia'];
-const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'figura', 'proveniencia'];
+const CLAVES_ITEM_ADVANCE = ['id', 'unidadId', 'moduloId', 'habilidad', 'dificultad', 'tiempoReferenciaSeg', 'enunciado', 'alternativas', 'solucion', 'figura', 'figuraSolucion', 'proveniencia'];
 // Figura declarativa (regla (10) del $comment del schema). Vocabulario cerrado:
 // la figura muestra los datos del ítem y nunca la transformación pedida.
 const CLAVES_FIGURA = ['plano', 'descripcion', 'elementos'];
@@ -904,7 +904,8 @@ function validarFiguraItem(figura, donde, errores, contexto = 'enunciado') {
     if (figura.tipo === 'grafico-lineas') return validarGraficoSeries(figura, donde, errores, CLAVES_GRAFICO_LINEAS, MIN_CATEGORIAS_LINEAS, MAX_CATEGORIAS_LINEAS);
     if (figura.tipo === 'histograma') return validarHistograma(figura, donde, errores);
     if (figura.tipo === 'grafico-circular') return validarGraficoCircular(figura, donde, errores);
-    if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores, contexto);
+    // El cajón no tiene geometría propia para la solución: ahí se monta como en el enunciado.
+    if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores, contexto === 'alternativa' ? 'alternativa' : 'enunciado');
     if (figura.tipo === 'lienzo-geometrico') return validarLienzoGeometrico(figura, donde, errores, contexto);
     return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS, 'lienzo-geometrico'].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
@@ -1836,6 +1837,8 @@ function validarItemAdvance(item, i, banco, erroresCatalogados, errores) {
   if (!esTexto(item.enunciado)) errores.push(`${p}: falta enunciado`);
   if (!esTexto(item.solucion)) errores.push(`${p}: falta la solución paso a paso`);
   if (item.figura !== undefined) validarFiguraItem(item.figura, `${p}.figura`, errores);
+  // Regla (40): figura de la solución, cualquier tipo, medida en la ubicación solución.
+  if (item.figuraSolucion !== undefined) validarFiguraItem(item.figuraSolucion, `${p}.figuraSolucion`, errores, 'solucion');
 
   validarAlternativasDescarte(item.alternativas, p, banco, erroresCatalogados, errores);
   validarProvenienciaItem(item.proveniencia, p, errores);
