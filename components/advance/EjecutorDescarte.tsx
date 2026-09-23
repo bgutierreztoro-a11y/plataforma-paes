@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AlternativaDescartable } from "@/components/advance/AlternativaDescartable";
 import { FiguraDeItem } from "@/components/advance/FiguraDeItem";
+import { SolucionDescarte } from "@/components/advance/SolucionDescarte";
 import { Boton } from "@/components/ui/linea/Boton";
 import { BarraProgreso } from "@/components/ui/linea/BarraProgreso";
 import { PanelFeedback } from "@/components/ui/PanelFeedback";
-import { TARJETA_LINEA } from "@/components/ui/linea/tarjetas";
 import {
   estadoInicialItem,
   itemCerrado,
@@ -196,17 +196,8 @@ export function EjecutorDescarte({
           </PanelFeedback>
         )}
 
-        {/* La solución no va en `PanelFeedback`: ese panel envuelve a sus hijos
-            en un `<p>` y `TextoEnriquecido` emite párrafos. Misma tarjeta y el
-            mismo rótulo en versalitas, armados a mano sobre `TARJETA_LINEA`. */}
-        {estado.fase === "cerrado-fatal" && (
-          <div role="status" className={`${TARJETA_LINEA} px-[13px] py-3`} data-solucion>
-            <p className="text-etiqueta uppercase text-secondary">{descarte.solucion}</p>
-            <div className="mt-1.5 text-sm leading-relaxed text-primary">
-              <TextoEnriquecido contenido={item.solucion} />
-            </div>
-          </div>
-        )}
+        {/* La solución, con su figura si la trae (figuraSolucion): solo acá. */}
+        {estado.fase === "cerrado-fatal" && <SolucionDescarte solucion={item.solucion} figura={item.figuraSolucion} />}
 
         {cerrado && (
           <Boton variante="linea" onClick={avanzar} data-accion="avanzar">

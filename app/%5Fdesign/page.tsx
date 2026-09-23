@@ -46,7 +46,8 @@ import {
   RESULTADOS_TRIAGE_MUESTRA,
   TABLA_MUESTRA,
 } from "./muestraDescarte";
-import { LIENZO_ALTERNATIVA_DENSA, LIENZOS_MUESTRA, MUESTRA_LIENZO_ALTERNATIVAS } from "./muestraLienzo";
+import { LIENZO_ALTERNATIVA_DENSA, LIENZOS_MUESTRA, MUESTRA_LIENZO_ALTERNATIVAS, SOLUCION_LIENZO_MUESTRA } from "./muestraLienzo";
+import { SolucionDescarte } from "@/components/advance/SolucionDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import { MuestraTriageInteractiva } from "./MuestraTriageInteractiva";
 import {
@@ -1093,6 +1094,18 @@ export default function PaginaDiseno() {
               <div data-alternativas-lienzo="triage" className="-mx-4 bg-[var(--color-bg)] sm:mx-0">
                 <ItemTriage item={MUESTRA_LIENZO_ALTERNATIVAS} indice={1} total={20} segundos={12} />
               </div>
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Figura en la solución"
+          nota="La tarjeta de la solución del descarte fatal (SolucionDescarte), el único lugar donde se ve la solución de un ítem Advance, con figuraSolucion (regla 40): una construcción auxiliar dibujada, acá la altura trazada, que sí puede mostrar la respuesta. Va bajo el rótulo y antes del texto, montada con contexto solucion: el lienzo usa el interior de la tarjeta, 330 px a 390, y su letra sigue en 12 px. Viaja al cliente por el mismo camino que la solución. Línea 03, datos inventados en app/%5Fdesign/muestraLienzo.ts."
+        >
+          <div style={estiloDeLinea("03")} data-caso-solucion="altura">
+            <Rotulo>Línea 03 · Descarte fatal: solución con la altura trazada</Rotulo>
+            <div data-figura-solucion-muestra="altura" className="bg-[var(--color-bg)]">
+              <SolucionDescarte solucion={SOLUCION_LIENZO_MUESTRA.solucion} figura={SOLUCION_LIENZO_MUESTRA.figura} />
             </div>
           </div>
         </Seccion>

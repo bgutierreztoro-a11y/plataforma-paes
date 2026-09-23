@@ -1,4 +1,5 @@
 import type { FiguraLienzoGeometrico, ItemAdvance, PuntoLienzo, SegmentoLienzo } from "@/lib/advance/descarte";
+import { protegerExpresiones } from "@/lib/advance/protegerExpresiones";
 
 /**
  * Muestras del lienzo geométrico para la galería /_design. Datos INVENTADOS,
@@ -450,6 +451,31 @@ export const LIENZO_ALTERNATIVA_DENSA: FiguraLienzoGeometrico = {
   ],
   textos: [{ texto: "R", x: 7.5, y: 3.6 }],
   descripcion: "Rectángulo de 10 cm por 5 cm partido en dos cuadrados, un círculo en cada uno y un cuarto de círculo en B.",
+};
+
+/* Figura de la solución (figuraSolucion): la altura trazada, con la respuesta a la vista. El texto pasa por
+   protegerExpresiones, como en itemParaCliente. */
+export const SOLUCION_LIENZO_MUESTRA: { solucion: string; figura: FiguraLienzoGeometrico } = {
+  solucion: protegerExpresiones("MUESTRA. Se traza la altura desde C: en un triángulo isósceles cae en el punto medio de la base, así que AH = 6 cm. En el triángulo AHC, h = √(10² − 6²) = √64 = 8 cm, y el área es la mitad de 12 · 8, o sea, 48 cm²."),
+  figura: {
+    tipo: "lienzo-geometrico",
+    ventana: { xMin: -1.5, xMax: 13.5, yMin: -1.5, yMax: 9.5 },
+    puntos: [
+      { nombre: "A", x: 0, y: 0 },
+      { nombre: "B", x: 12, y: 0 },
+      { nombre: "C", x: 6, y: 8 },
+      { nombre: "H", x: 6, y: 0 },
+    ],
+    poligonos: [{ vertices: ["A", "B", "C"] }],
+    segmentos: [
+      { desde: "A", hasta: "C", rotulo: "10 cm" },
+      { desde: "B", hasta: "C", rotulo: "10 cm" },
+      { desde: "A", hasta: "H", rotulo: "6 cm" },
+      { desde: "C", hasta: "H", trazo: "punteado", rotulo: "8 cm", lado: "interior" },
+    ],
+    angulos: [{ vertice: "H", desde: "B", hasta: "C", marca: "recto" }],
+    descripcion: "Triángulo isósceles ABC con la altura CH trazada: AH mide 6 cm y la altura, 8 cm.",
+  },
 };
 
 const FEEDBACK = "MUESTRA. Explica por qué esta alternativa no puede ser, con el procedimiento errado que la produce.";

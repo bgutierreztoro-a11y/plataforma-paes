@@ -93,3 +93,27 @@ describe("LienzoGeometrico: contrato de render", () => {
     assert.ok(html.includes(`<span class="sr-only">${RECTANGULO_CON_HUECO.descripcion}</span>`));
   });
 });
+
+describe("SolucionDescarte: la figura de la solución", () => {
+  let renderSolucion: (solucion: string, figura?: FiguraItem) => string;
+  before(async () => {
+    const { renderToStaticMarkup } = await import("react-dom/server");
+    const { createElement } = await import("react");
+    const { SolucionDescarte } = (await import("../../components/advance/SolucionDescarte.tsx")) as { SolucionDescarte: ComponentType<{ solucion: string; figura?: FiguraItem }> };
+    renderSolucion = (solucion, figura) => renderToStaticMarkup(createElement(SolucionDescarte, { solucion, figura }));
+  });
+
+  it("con figuraSolucion, el lienzo va en la tarjeta con el carril de la solución (330) y antes del texto", () => {
+    const html = renderSolucion("Solución de prueba.", RECTANGULO_CON_HUECO);
+    assert.match(html, /data-solucion/);
+    assert.match(html, new RegExp(`data-lienzo-geometrico="solucion"`));
+    assert.match(html, new RegExp(`viewBox="0 0 ${ANCHO_CARRIL.solucion} `));
+    assert.ok(html.indexOf("<svg") < html.indexOf("Solución de prueba."));
+  });
+
+  it("sin figuraSolucion, la tarjeta es la de siempre y no trae SVG", () => {
+    const html = renderSolucion("Solución de prueba.");
+    assert.match(html, /data-solucion/);
+    assert.doesNotMatch(html, /<svg/);
+  });
+});
