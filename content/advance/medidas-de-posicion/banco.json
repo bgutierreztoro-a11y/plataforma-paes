@@ -1,0 +1,1414 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "medidas-de-posicion",
+  "moduloId": "medidas-de-posicion",
+  "titulo": "Medidas de posición",
+  "items": [
+    {
+      "id": "adv-medidas-de-posicion-001",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una panadería pesó 11 hogazas recién horneadas. Estas fueron sus masas, en gramos, en el orden en que salieron del horno: 547, 519, 546, 548, 535, 525, 538, 523, 542, 501 y 539. ¿Cuál es la mediana de las masas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "525 g",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar",
+          "feedbackDescarte": "Ese es el sexto dato de la lista tal como viene, sin ordenar. La mediana es el dato central de la lista ordenada de menor a mayor, y ese dato es 538 g."
+        },
+        {
+          "clave": "B",
+          "texto": "538 g",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con las 11 masas ordenadas de menor a mayor, la sexta queda al centro, con cinco masas bajo ella y cinco sobre ella, y es 538 g."
+        },
+        {
+          "clave": "C",
+          "texto": "533 g",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "Ese es el promedio: la suma de las 11 masas dividida por 11 da 533 g. La mediana no promedia todo, es el dato que queda al centro al ordenar."
+        },
+        {
+          "clave": "D",
+          "texto": "524,5 g",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor es el punto medio entre la menor y la mayor masa: (501 + 548) / 2 = 524,5 g. La mediana se busca entre los datos ordenados, no en la mitad de la escala."
+        }
+      ],
+      "solucion": "Se ordenan las masas: 501, 519, 523, 525, 535, 538, 539, 542, 546, 547 y 548. Con 11 datos, la mediana es el dato del lugar 6, que deja cinco datos a cada lado: 538 g. Tomar el sexto de la lista sin ordenar da 525; el promedio da 533; el punto medio entre 501 y 548 da 524,5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-002",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "En una ciclovía se contaron los ciclistas que pasaron en cada una de 14 horas de un día: 672, 654, 649, 674, 665, 670, 667, 656, 605, 617, 697, 679, 688 y 682. ¿Cuál es la mediana de estos conteos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "667",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-dato-central-sin-promediar",
+          "feedbackDescarte": "Con 14 datos hay dos centrales, el 7.º y el 8.º de la lista ordenada: 667 y 670. Tomar solo 667 deja la mediana sin promediar; la mediana es (667 + 670) / 2 = 668,5."
+        },
+        {
+          "clave": "B",
+          "texto": "661,5",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar",
+          "feedbackDescarte": "Ese valor promedia el 7.º y el 8.º dato de la lista tal como viene, 667 y 656, sin ordenarla. Los datos centrales se buscan en la lista ordenada de menor a mayor."
+        },
+        {
+          "clave": "C",
+          "texto": "662,5",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "Ese es el promedio de los 14 conteos. La mediana no suma todos los datos: es el centro de la lista ordenada, que aquí cae entre 667 y 670."
+        },
+        {
+          "clave": "D",
+          "texto": "668,5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: al ordenar los 14 conteos, los dos centrales son 667 y 670, y la mediana es su promedio, (667 + 670) / 2 = 668,5."
+        }
+      ],
+      "solucion": "Ordenados: 605, 617, 649, 654, 656, 665, 667, 670, 672, 674, 679, 682, 688 y 697. Con 14 datos hay dos centrales, el 7.º y el 8.º, y la mediana es su promedio: (667 + 670) / 2 = 668,5. Tomar solo el 7.º da 667; promediar el 7.º y el 8.º de la lista sin ordenar da 661,5; el promedio de los 14 conteos da 662,5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-003",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una lechería registró los litros de leche que dio cada una de sus 18 vacas en la ordeña de la mañana: 24,8; 18,2; 25,8; 27,7; 28,6; 18,9; 21,9; 29,6; 21,6; 26,8; 23,4; 18,3; 17,8; 29,7; 17,7; 25,7; 19,7 y 21,4. ¿Cuál es el primer cuartil de estos registros?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "18,9 L",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: ordenados los 18 registros, la mitad inferior son los 9 primeros, y su dato central, el 5.º, es 18,9 L."
+        },
+        {
+          "clave": "B",
+          "texto": "18,3 L",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese es el 4.º dato ordenado: sale de truncar 18 / 4 = 4,5 a 4. La convención toma la mediana de los 9 datos menores, que es el 5.º dato, 18,9 L."
+        },
+        {
+          "clave": "C",
+          "texto": "28,6 L",
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar",
+          "feedbackDescarte": "Ese valor sale de partir la lista tal como viene en dos mitades y tomar el dato del medio de la primera, sin ordenar. Primero se ordena; en la lista ordenada el primer cuartil es 18,9 L."
+        },
+        {
+          "clave": "D",
+          "texto": "19,5 L",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "Ese es el promedio de los 9 datos menores. El primer cuartil es la mediana de esa mitad, no su promedio: el 5.º dato ordenado, 18,9 L."
+        }
+      ],
+      "solucion": "Ordenados: 17,7; 17,8; 18,2; 18,3; 18,9; 19,7; 21,4; 21,6; 21,9; 23,4; 24,8; 25,7; 25,8; 26,8; 27,7; 28,6; 29,6 y 29,7. Con 18 datos, la mitad inferior son los 9 primeros y el primer cuartil es su mediana, el 5.º dato: 18,9 L. Truncar la posición 4,5 da el 4.º dato, 18,3; partir la lista sin ordenar da 28,6; promediar la mitad inferior da 19,5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-004",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una piscicultura midió el largo de 7 truchas, en milímetros, y los ordenó de menor a mayor: 704, 709, 731, 764, 773, 796 y 799. ¿Cuál es el rango intercuartil de los largos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "95 mm",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-rango-con-intercuartil",
+          "feedbackDescarte": "Ese es el rango, 799 − 704 = 95 mm: resta el mínimo y el máximo. El rango intercuartil resta los cuartiles, Q3 − Q1 = 796 − 709."
+        },
+        {
+          "clave": "B",
+          "texto": "69 mm",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese valor usa los datos 1.º y 5.º, que salen de truncar las posiciones 1,75 y 5,25. Con 7 datos, Q1 es el 2.º dato (709) y Q3 el 6.º (796)."
+        },
+        {
+          "clave": "C",
+          "texto": "87 mm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: sin la mediana (764), la mitad inferior es 704, 709 y 731, con Q1 = 709; la superior es 773, 796 y 799, con Q3 = 796. Y 796 − 709 = 87 mm."
+        },
+        {
+          "clave": "D",
+          "texto": "47,5 mm",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor es la mitad del rango: toma Q1 y Q3 como puntos a un cuarto y a tres cuartos del camino entre 704 y 799. Los cuartiles son datos de la lista, 709 y 796."
+        }
+      ],
+      "solucion": "Con 7 datos la mediana es el 4.º, 764, y queda fuera de las mitades. Mitad inferior: 704, 709, 731, con Q1 = 709. Mitad superior: 773, 796, 799, con Q3 = 796. Rango intercuartil: 796 − 709 = 87 mm. El rango es 95; truncar las posiciones da 773 − 704 = 69; tomar los cuartiles como fracciones del rango da la mitad del rango, 47,5.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-005",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un concurso escolar de robótica, los 19 prototipos obtuvieron estos puntajes, ordenados de menor a mayor: 806, 815, 827, 828, 846, 852, 853, 854, 862, 868, 875, 877, 879, 883, 885, 886, 887, 896 y 899. Pasan a la final los prototipos con un puntaje mayor que el percentil 70 de los puntajes. ¿Cuál es ese percentil?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "852",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "Ese es el percentil 30: sale de contar el 70 % desde el puntaje mayor. El percentil 70 deja el 70 % de los puntajes abajo y está en la posición 14."
+        },
+        {
+          "clave": "B",
+          "texto": "879",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese puntaje está en la posición 13, que sale de truncar 70 · 19 / 100 = 13,3. Cuando la posición no es entera, la convención sube a la siguiente, la 14."
+        },
+        {
+          "clave": "C",
+          "texto": "871,1",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor toma el percentil como el 70 % del camino entre 806 y 899. El percentil 70 es un puntaje de la lista: el que ocupa la posición 14."
+        },
+        {
+          "clave": "D",
+          "texto": "883",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 70 · 19 / 100 = 13,3 no es entero, así que el percentil 70 es el puntaje de la posición 14, que es 883."
+        }
+      ],
+      "solucion": "Posición del percentil 70: 70 · 19 / 100 = 13,3. No es entera, así que se sube a la posición 14, y el percentil 70 es 883. Contar desde el mayor da el percentil 30, 852 (posición 5,7 que sube a 6); truncar 13,3 a 13 da 879; tomar el 70 % del camino entre 806 y 899 da 806 + 0,7 · (899 − 806) = 871,1.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-006",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una correctora revisó las 30 páginas con errores de un manuscrito y anotó cuántas erratas tenía cada una. La tabla resume sus registros. ¿Cuál es el tercer cuartil de las erratas por página?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese es el dato 22.º, que sale de truncar 3 · 30 / 4 = 22,5. La mitad superior son los datos 16.º a 30.º y su centro es el 23.º, que ya está en 5 erratas."
+        },
+        {
+          "clave": "B",
+          "texto": "5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las páginas acumuladas llegan a 22 con 4 erratas, así que el dato 23.º, centro de la mitad superior, tiene 5 erratas."
+        },
+        {
+          "clave": "C",
+          "texto": "2",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "Ese es el primer cuartil: sale de contar el 75 % desde el valor mayor. El tercer cuartil deja el 75 % de las páginas abajo y cae en 5 erratas."
+        },
+        {
+          "clave": "D",
+          "texto": "4,75",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor toma el cuartil como tres cuartos del camino entre 1 y 6 erratas. El tercer cuartil es un dato de la tabla, no un punto de la escala."
+        }
+      ],
+      "solucion": "Frecuencias acumuladas: 4, 8, 16, 22, 28 y 30. Con 30 datos, la mitad superior son los datos 16.º a 30.º, y su mediana es el 23.º. La acumulada llega a 22 con 4 erratas, así que el 23.º tiene 5: el tercer cuartil es 5. Truncar la posición 22,5 da 4; contar desde el mayor da el primer cuartil, 2; tomar tres cuartos del camino entre 1 y 6 da 4,75.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "columnas": [
+          "Erratas por página",
+          "Páginas"
+        ],
+        "filas": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            2
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-007",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un peaje se registró cuántas personas viajaban en cada uno de 26 autos. La tabla resume los registros. ¿Cuál es la mediana de los ocupantes por auto?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2,5",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las acumuladas llegan a 13 con 2 ocupantes, así que el dato 13.º es 2 y el 14.º es 3; su promedio es 2,5."
+        },
+        {
+          "clave": "B",
+          "texto": "2",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-dato-central-sin-promediar",
+          "feedbackDescarte": "Con 26 autos hay dos datos centrales, el 13.º y el 14.º. El 13.º tiene 2 ocupantes y el 14.º tiene 3: la mediana es su promedio, no uno de los dos."
+        },
+        {
+          "clave": "C",
+          "texto": "3",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "Ese es el promedio de ocupantes, 78 personas en 26 autos. La mediana no reparte el total: es el centro de los datos ordenados, entre 2 y 3."
+        },
+        {
+          "clave": "D",
+          "texto": "3,5",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor es el punto medio entre 1 y 6 ocupantes. La mediana se busca en los 26 datos ordenados, no en la mitad de la escala de valores."
+        }
+      ],
+      "solucion": "Frecuencias acumuladas: 6, 13, 17, 18, 24 y 26. Con 26 datos, los centrales son el 13.º y el 14.º. La acumulada llega a 13 con 2 ocupantes, así que el 13.º es 2 y el 14.º es 3: la mediana es (2 + 3) / 2 = 2,5. Tomar solo el 13.º da 2; el promedio, 78 / 26, da 3; el punto medio entre 1 y 6 da 3,5.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "columnas": [
+          "Ocupantes",
+          "Autos"
+        ],
+        "filas": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            2
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-008",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Durante el próximo año, una empresa sanitaria hará un descuento en la cuenta al 25 % de los hogares con menor consumo de agua de una comuna. ¿Cuál de las siguientes medidas de posición permite determinar el consumo máximo que puede tener un hogar de la comuna para recibir el descuento?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El promedio de los consumos.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "El promedio no deja una parte fija de los hogares abajo: depende de todos los valores. El 25 % de los hogares con menor consumo lo corta el primer cuartil."
+        },
+        {
+          "clave": "B",
+          "texto": "El percentil 75 de los consumos.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "El percentil 75 deja al 75 % de los hogares abajo, o sea, cuenta el 25 % desde el consumo mayor. El descuento es para el 25 % con menor consumo."
+        },
+        {
+          "clave": "C",
+          "texto": "El 25 % del consumo más alto registrado.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos",
+          "feedbackDescarte": "Ese valor es una cuarta parte de un consumo, no una posición en el grupo. El 25 % de los hogares con menor consumo queda en el percentil 25 o bajo él."
+        },
+        {
+          "clave": "D",
+          "texto": "El primer cuartil de los consumos.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el primer cuartil es el percentil 25, el consumo que deja al 25 % de los hogares con un consumo igual o menor. Ese valor es el tope."
+        }
+      ],
+      "solucion": "Los hogares que reciben el descuento son el 25 % con menor consumo. El consumo que deja al 25 % de los hogares en ese valor o bajo él es el percentil 25, que es el primer cuartil: ese es el consumo máximo para recibir el descuento. El percentil 75 cuenta desde el consumo mayor, el promedio no deja una parte fija de los hogares abajo, y el 25 % del consumo más alto es una cantidad de agua, no una posición en el grupo.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 62",
+        "notaAdaptacion": "Del original (una fundación ayuda al 25 % de los hogares con menores ingresos de una comuna y se pregunta qué medida de posición da el ingreso máximo para recibir la ayuda; clave D, el primer cuartil, verificada en el clavijero) se conservan la estructura, la clave y el distractor B (el percentil 75). Cambian el contexto (empresa sanitaria, consumo de agua, descuento en la cuenta) y dos distractores: A, el segundo cuartil, pasa a el promedio de los consumos (confunde-mediana-con-promedio), y C, el percentil 4, pasa a el 25 % del consumo más alto registrado (lee-percentil-como-porcentaje-de-aciertos)."
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-009",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Se midió cuánto duraron las baterías de un lote de linternas, en minutos. El diagrama de cajón resume las duraciones. ¿Cuál de las siguientes afirmaciones describe correctamente el diagrama?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tres cuartas partes de las baterías duraron más de 487 minutos.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "487 minutos es el tercer cuartil: deja el 75 % de las baterías en ese valor o bajo él. Sobre él queda solo la cuarta parte, no tres cuartas partes."
+        },
+        {
+          "clave": "B",
+          "texto": "La caja contiene el 64 % de las baterías.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-caja-como-valores-posibles",
+          "feedbackDescarte": "Ese 64 % es la parte de la escala que ocupa la caja, de 423 a 487 sobre el tramo de 411 a 511. En datos, la caja tiene la mitad de las baterías."
+        },
+        {
+          "clave": "C",
+          "texto": "Una cuarta parte de las baterías duró más de 487 minutos.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 487 minutos es el tercer cuartil, y sobre el tercer cuartil queda la cuarta parte de los datos."
+        },
+        {
+          "clave": "D",
+          "texto": "Hay más baterías en el bigote derecho que en el izquierdo, porque es más largo.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos",
+          "feedbackDescarte": "Cada bigote tiene la cuarta parte de las baterías. El largo muestra qué tan repartidas están las duraciones, no cuántas baterías hay."
+        }
+      ],
+      "solucion": "El tercer cuartil, 487 minutos, deja el 75 % de las baterías en ese valor o bajo él, así que sobre él queda la cuarta parte: esa es la afirmación correcta. La caja tiene siempre la mitad de los datos (el 64 % es la parte de la escala entre 423 y 487), cada bigote tiene la cuarta parte aunque sea más largo, y decir tres cuartas partes sobre 487 cuenta desde el lado equivocado.",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "horizontal",
+        "eje": {
+          "min": 400,
+          "max": 520,
+          "paso": 20,
+          "etiqueta": "min"
+        },
+        "cajas": [
+          {
+            "minimo": 411,
+            "q1": 423,
+            "mediana": 448,
+            "q3": 487,
+            "maximo": 511,
+            "rotulos": true
+          }
+        ],
+        "descripcion": "Diagrama de cajón horizontal de la duración de las baterías, en minutos: mínimo 411, primer cuartil 423, mediana 448, tercer cuartil 487 y máximo 511."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-010",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Los diagramas de cajón muestran la energía, en kWh, que generó cada día durante un mes cada uno de dos parques solares de paneles fotovoltaicos. ¿Cuál de las siguientes afirmaciones se puede deducir de los diagramas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El rango intercuartil del parque 2 es mayor que el del parque 1.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en el parque 1 la caja va de 574 a 797, 223 kWh; en el parque 2 va de 563 a 841, 278 kWh. La caja del parque 2 es más ancha."
+        },
+        {
+          "clave": "B",
+          "texto": "El rango intercuartil del parque 1 es 382 kWh.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-rango-con-intercuartil",
+          "feedbackDescarte": "382 kWh es el rango del parque 1, 889 − 507. El rango intercuartil resta los cuartiles, 797 − 574, y deja fuera los bigotes."
+        },
+        {
+          "clave": "C",
+          "texto": "El parque 1 generó más energía en promedio, porque su mediana es mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "concluye-promedio-desde-mediana",
+          "feedbackDescarte": "El diagrama de cajón no muestra el promedio. Que la mediana del parque 1 sea mayor no dice nada sobre cuál de los dos promedios es mayor."
+        },
+        {
+          "clave": "D",
+          "texto": "En el parque 1 hubo más días en el bigote derecho que en el izquierdo, porque es más largo.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos",
+          "feedbackDescarte": "Cada bigote tiene la cuarta parte de los días. Que el derecho sea más largo dice que esos valores están más repartidos, no que haya más días."
+        }
+      ],
+      "solucion": "Rango intercuartil del parque 1: 797 − 574 = 223 kWh. Del parque 2: 841 − 563 = 278 kWh. Como 278 > 223, el del parque 2 es mayor. El rango del parque 1 (889 − 507 = 382) no es su rango intercuartil; el cajón no muestra promedios; y cada bigote tiene la cuarta parte de los días, sea largo o corto.",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "horizontal",
+        "eje": {
+          "min": 500,
+          "max": 900,
+          "paso": 50,
+          "etiqueta": "kWh"
+        },
+        "cajas": [
+          {
+            "nombre": "Parque 1",
+            "minimo": 507,
+            "q1": 574,
+            "mediana": 671,
+            "q3": 797,
+            "maximo": 889,
+            "rotulos": true
+          },
+          {
+            "nombre": "Parque 2",
+            "minimo": 541,
+            "q1": 563,
+            "mediana": 624,
+            "q3": 841,
+            "maximo": 858,
+            "rotulos": true
+          }
+        ],
+        "descripcion": "Dos diagramas de cajón horizontales sobre la misma escala, en kWh. Parque 1: mínimo 507, primer cuartil 574, mediana 671, tercer cuartil 797 y máximo 889. Parque 2: mínimo 541, primer cuartil 563, mediana 624, tercer cuartil 841 y máximo 858."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-011",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una fábrica registró cuántos ladrillos coció por día cada uno de sus tres hornos durante un mes. Los diagramas de cajón resumen los registros. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "La caja del horno 3 contiene el 59 % de sus días.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-caja-como-valores-posibles",
+          "feedbackDescarte": "Ese 59 % es la parte de la escala del horno 3 que ocupa su caja. En días, toda caja tiene la mitad de los datos, entre el primer y el tercer cuartil."
+        },
+        {
+          "clave": "B",
+          "texto": "El horno 3 tiene el menor rango intercuartil de los tres.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los rangos intercuartiles son 844 − 745 = 99, 830 − 736 = 94 y 861 − 802 = 59 ladrillos; el del horno 3 es el menor."
+        },
+        {
+          "clave": "C",
+          "texto": "El horno 3 coció más ladrillos en promedio que los otros dos, porque su mediana es la mayor.",
+          "esCorrecta": false,
+          "errorCatalogado": "concluye-promedio-desde-mediana",
+          "feedbackDescarte": "El diagrama de cajón no muestra el promedio. Que la mediana del horno 3 sea la mayor no permite decir cuál horno tiene el promedio mayor."
+        },
+        {
+          "clave": "D",
+          "texto": "En el horno 2, el 25 % de los días coció entre 736 y 783 ladrillos.",
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mediana-en-centro-de-caja",
+          "feedbackDescarte": "783 es el centro de la caja del horno 2, a medio camino entre 736 y 830, pero su mediana es 768. El 25 % de los días está entre 736 y 768."
+        }
+      ],
+      "solucion": "Rangos intercuartiles: horno 1, 844 − 745 = 99; horno 2, 830 − 736 = 94; horno 3, 861 − 802 = 59. El menor es el del horno 3. La caja tiene la mitad de los días aunque ocupe el 59 % de la escala; el cajón no muestra promedios; y en el horno 2 el 25 % de los días está entre 736 y la mediana, 768, no hasta el centro de la caja.",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "horizontal",
+        "eje": {
+          "min": 680,
+          "max": 920,
+          "paso": 40,
+          "etiqueta": "ladrillos"
+        },
+        "cajas": [
+          {
+            "nombre": "Horno 1",
+            "minimo": 720,
+            "q1": 745,
+            "mediana": 810,
+            "q3": 844,
+            "maximo": 890,
+            "rotulos": true
+          },
+          {
+            "nombre": "Horno 2",
+            "minimo": 700,
+            "q1": 736,
+            "mediana": 768,
+            "q3": 830,
+            "maximo": 878,
+            "rotulos": true
+          },
+          {
+            "nombre": "Horno 3",
+            "minimo": 790,
+            "q1": 802,
+            "mediana": 834,
+            "q3": 861,
+            "maximo": 890,
+            "rotulos": true
+          }
+        ],
+        "descripcion": "Tres diagramas de cajón horizontales sobre la misma escala, en ladrillos por día. Horno 1: mínimo 720, primer cuartil 745, mediana 810, tercer cuartil 844 y máximo 890. Horno 2: mínimo 700, primer cuartil 736, mediana 768, tercer cuartil 830 y máximo 878. Horno 3: mínimo 790, primer cuartil 802, mediana 834, tercer cuartil 861 y máximo 890."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-012",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Los diagramas de cajón muestran cuántos kilos de limones dio cada árbol en cuatro huertos de limoneros. ¿En cuál de los huertos al menos la mitad de los árboles dio más de 170 kg?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Huerto 1",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos",
+          "feedbackDescarte": "El huerto 1 tiene el bigote superior más largo, pero ese bigote tiene solo la cuarta parte de los árboles. Su mediana está bajo la línea de 170."
+        },
+        {
+          "clave": "B",
+          "texto": "Huerto 2",
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mediana-en-centro-de-caja",
+          "feedbackDescarte": "El centro de la caja del huerto 2 queda sobre 170, pero su mediana está mucho más abajo, cerca del primer cuartil. Menos de la mitad supera 170."
+        },
+        {
+          "clave": "C",
+          "texto": "Huerto 3",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-caja-como-valores-posibles",
+          "feedbackDescarte": "En el huerto 3 más de la mitad de su escala queda sobre 170, pero la escala no son los árboles. Su mediana está bajo la línea de 170."
+        },
+        {
+          "clave": "D",
+          "texto": "Huerto 4",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: en el huerto 4 la mediana queda sobre la línea de 170, así que al menos la mitad de sus árboles dio más de 170 kg."
+        }
+      ],
+      "solucion": "Al menos la mitad de los árboles supera 170 kg cuando la mediana está sobre la línea de 170. Solo la mediana del huerto 4 está sobre ella; las de los huertos 1, 2 y 3 están bajo ella. El bigote largo del huerto 1 tiene la cuarta parte de los árboles, el centro de la caja del huerto 2 no es su mediana, y la escala sobre 170 del huerto 3 no dice cuántos árboles hay ahí.",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "vertical",
+        "eje": {
+          "min": 110,
+          "max": 230,
+          "paso": 20,
+          "etiqueta": "kg",
+          "grilla": true
+        },
+        "cajas": [
+          {
+            "nombre": "Huerto 1",
+            "minimo": 110,
+            "q1": 140,
+            "mediana": 155,
+            "q3": 164,
+            "maximo": 224
+          },
+          {
+            "nombre": "Huerto 2",
+            "minimo": 122,
+            "q1": 152,
+            "mediana": 158,
+            "q3": 200,
+            "maximo": 206
+          },
+          {
+            "nombre": "Huerto 3",
+            "minimo": 156,
+            "q1": 160,
+            "mediana": 164,
+            "q3": 176,
+            "maximo": 196
+          },
+          {
+            "nombre": "Huerto 4",
+            "minimo": 134,
+            "q1": 164,
+            "mediana": 179,
+            "q3": 188,
+            "maximo": 194
+          }
+        ],
+        "descripcion": "Cuatro diagramas de cajón verticales, uno por huerto, sobre un eje de 110 a 230 kg. Huerto 1: mínimo 110, primer cuartil 140, mediana 155, tercer cuartil 164 y máximo 224. Huerto 2: 122, 152, 158, 200 y 206. Huerto 3: 156, 160, 164, 176 y 196. Huerto 4: 134, 164, 179, 188 y 194."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-013",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una librería escolar pesó 6 cuadernos universitarios. Sus masas, en gramos, fueron: 586, 572, 578, 599, 595 y 557. ¿Cuál de los siguientes diagramas de cajón representa estas masas?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 550,
+              "max": 600,
+              "paso": 10,
+              "etiqueta": "g"
+            },
+            "cajas": [
+              {
+                "minimo": 557,
+                "q1": 572,
+                "mediana": 588.5,
+                "q3": 595,
+                "maximo": 599,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 557, primer cuartil 572, mediana 588,5, tercer cuartil 595 y máximo 599."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "calcula-cuartiles-sin-ordenar",
+          "feedbackDescarte": "Esa mediana, 588,5, promedia el 3.º y el 4.º dato de la lista tal como viene, 578 y 599. Ordenados, los datos centrales son 578 y 586."
+        },
+        {
+          "clave": "B",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 550,
+              "max": 600,
+              "paso": 10,
+              "etiqueta": "g"
+            },
+            "cajas": [
+              {
+                "minimo": 557,
+                "q1": 567.5,
+                "mediana": 578,
+                "q3": 588.5,
+                "maximo": 599,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 557, primer cuartil 567,5, mediana 578, tercer cuartil 588,5 y máximo 599."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Esos cuartiles están a un cuarto, a la mitad y a tres cuartos del camino entre 557 y 599. Los cuartiles se buscan en los datos ordenados, no en la escala."
+        },
+        {
+          "clave": "C",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 550,
+              "max": 600,
+              "paso": 10,
+              "etiqueta": "g"
+            },
+            "cajas": [
+              {
+                "minimo": 557,
+                "q1": 572,
+                "mediana": 582,
+                "q3": 595,
+                "maximo": 599,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 557, primer cuartil 572, mediana 582, tercer cuartil 595 y máximo 599."
+          },
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: ordenadas, las masas son 557, 572, 578, 586, 595 y 599; Q1 = 572, mediana (578 + 586) / 2 = 582 y Q3 = 595."
+        },
+        {
+          "clave": "D",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 550,
+              "max": 600,
+              "paso": 10,
+              "etiqueta": "g"
+            },
+            "cajas": [
+              {
+                "minimo": 557,
+                "q1": 572,
+                "mediana": 578,
+                "q3": 595,
+                "maximo": 599,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 557, primer cuartil 572, mediana 578, tercer cuartil 595 y máximo 599."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "toma-dato-central-sin-promediar",
+          "feedbackDescarte": "Esa mediana es solo el 3.er dato ordenado, 578. Con 6 datos hay dos centrales, 578 y 586, y la mediana es su promedio, 582."
+        }
+      ],
+      "solucion": "Ordenadas: 557, 572, 578, 586, 595 y 599. Mitad inferior 557, 572, 578, con Q1 = 572; mitad superior 586, 595, 599, con Q3 = 595; mediana (578 + 586) / 2 = 582. El cajón correcto va de 557 a 599 con cortes en 572, 582 y 595. Promediar los centrales sin ordenar da 588,5; repartir la escala en cuartos da 567,5, 578 y 588,5; tomar solo el 3.er dato como mediana da 578.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-014",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un club de observación registró cuántas especies de aves fueron avistadas con binoculares en cada una de sus 22 salidas. La tabla resume los registros. ¿Cuál de los siguientes diagramas de cajón representa los datos?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 3,
+              "max": 9,
+              "paso": 1,
+              "etiqueta": "especies"
+            },
+            "cajas": [
+              {
+                "minimo": 3,
+                "q1": 4,
+                "mediana": 5,
+                "q3": 8,
+                "maximo": 9,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 3, primer cuartil 4, mediana 5, tercer cuartil 8 y máximo 9."
+          },
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con 22 salidas, Q1 es el dato 6.º (4), la mediana promedia los datos 11.º y 12.º (5 y 5) y Q3 es el dato 17.º (8)."
+        },
+        {
+          "clave": "B",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 3,
+              "max": 9,
+              "paso": 1,
+              "etiqueta": "especies"
+            },
+            "cajas": [
+              {
+                "minimo": 3,
+                "q1": 4,
+                "mediana": 5,
+                "q3": 7,
+                "maximo": 9,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 3, primer cuartil 4, mediana 5, tercer cuartil 7 y máximo 9."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese tercer cuartil, 7, es el dato 16.º, que sale de truncar 3 · 22 / 4 = 16,5. La mitad superior tiene su centro en el dato 17.º, que es 8."
+        },
+        {
+          "clave": "C",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 3,
+              "max": 9,
+              "paso": 1,
+              "etiqueta": "especies"
+            },
+            "cajas": [
+              {
+                "minimo": 3,
+                "q1": 4,
+                "mediana": 6,
+                "q3": 8,
+                "maximo": 9,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 3, primer cuartil 4, mediana 6, tercer cuartil 8 y máximo 9."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mediana-en-centro-de-caja",
+          "feedbackDescarte": "Esa mediana está en el centro de la caja, a medio camino entre 4 y 8. La mediana real es 5: los datos 11.º y 12.º valen 5."
+        },
+        {
+          "clave": "D",
+          "texto": "",
+          "figura": {
+            "tipo": "diagrama-cajon",
+            "orientacion": "horizontal",
+            "eje": {
+              "min": 3,
+              "max": 9,
+              "paso": 1,
+              "etiqueta": "especies"
+            },
+            "cajas": [
+              {
+                "minimo": 3,
+                "q1": 4,
+                "mediana": 5.5,
+                "q3": 8,
+                "maximo": 9,
+                "rotulos": true
+              }
+            ],
+            "descripcion": "Diagrama de cajón con mínimo 3, primer cuartil 4, mediana 5,5, tercer cuartil 8 y máximo 9."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-mediana-con-promedio",
+          "feedbackDescarte": "Esa línea marca el promedio, 5,5, no la mediana. Los datos 11.º y 12.º valen 5, así que la mediana es 5."
+        }
+      ],
+      "solucion": "Acumuladas: 4, 10, 14, 15, 16, 18 y 22. Mitad inferior: datos 1.º a 11.º, con centro en el 6.º, que es 4. Mediana: datos 11.º y 12.º, los dos valen 5. Mitad superior: datos 12.º a 22.º, con centro en el 17.º, que es 8. El cajón va de 3 a 9 con cortes en 4, 5 y 8. Truncar la posición 16,5 da 7 para Q3; el centro de la caja da 6; el promedio da 5,5.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "columnas": [
+          "Especies avistadas",
+          "Salidas"
+        ],
+        "filas": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            9,
+            4
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-015",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una ronda de un torneo juvenil de golf, 15 golfistas hicieron estos golpes: 72, 65, 70, 74, 61, 70, 75, 67, 62, 73, 68, 71, 63, 72 y 66. En golf, menos golpes es mejor. Rocío hizo 67 golpes. ¿Cuál de las siguientes afirmaciones sobre Rocío es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Está en el percentil 60, porque 9 golfistas necesitaron más golpes que ella.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "Ese cálculo cuenta a las 9 golfistas que quedaron sobre ella. El percentil cuenta a las que quedaron en su valor o bajo él: 6 de 15, el 40 %."
+        },
+        {
+          "clave": "B",
+          "texto": "Está en el percentil 40, y el 60 % de las golfistas necesitó más golpes que ella.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: ordenados los golpes, 67 ocupa el lugar 6 de 15, así que el 40 % hizo 67 golpes o menos y las otras 9, el 60 %, hicieron más."
+        },
+        {
+          "clave": "C",
+          "texto": "Está en el percentil 67, porque hizo 67 golpes.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-percentil-con-valor",
+          "feedbackDescarte": "67 es la cantidad de golpes de Rocío, no su percentil. El percentil dice qué parte del grupo quedó en su valor o bajo él."
+        },
+        {
+          "clave": "D",
+          "texto": "Está en el percentil 40, así que quedó entre las golfistas con peor desempeño.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor",
+          "feedbackDescarte": "En golf, menos golpes es mejor. Que solo el 40 % hiciera 67 golpes o menos significa que el 60 % necesitó más: Rocío quedó en el grupo con mejor desempeño."
+        }
+      ],
+      "solucion": "Ordenados: 61, 62, 63, 65, 66, 67, 68, 70, 70, 71, 72, 72, 73, 74 y 75. El 67 ocupa el lugar 6 de 15, así que 6 / 15 = 40 % de las golfistas hizo 67 golpes o menos: Rocío está en el percentil 40, y el 60 % restante necesitó más golpes. Contar a las que quedaron sobre ella da 60; leer sus golpes como percentil da 67; y como menos golpes es mejor, un percentil bajo es buen desempeño.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-016",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En un concurso de ortografía, 34 estudiantes rindieron un dictado de 105 palabras. La tabla muestra cuántas palabras escribió bien cada estudiante. Se premia a quienes igualen o superen el percentil 80 de los puntajes. ¿Cuál es ese percentil?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "77 palabras",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-datos-sobre-en-vez-de-bajo",
+          "feedbackDescarte": "Ese es el percentil 20: sale de contar el 80 % desde el puntaje mayor. El percentil 80 deja el 80 % de los puntajes abajo y cae en 97."
+        },
+        {
+          "clave": "B",
+          "texto": "84 palabras",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos",
+          "feedbackDescarte": "84 es el 80 % de las 105 palabras del dictado. El percentil 80 no es una parte del puntaje máximo: es el puntaje que deja al 80 % del grupo abajo."
+        },
+        {
+          "clave": "C",
+          "texto": "97 palabras",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 80 · 34 / 100 = 27,2 no es entero, así que se toma el dato 28.º; las acumuladas pasan de 23 a 32 en 97 palabras."
+        },
+        {
+          "clave": "D",
+          "texto": "80 palabras",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-percentil-con-valor",
+          "feedbackDescarte": "Ese valor lee el número del percentil como un puntaje: percentil 80 no significa 80 palabras. Hay que ubicar la posición 80 · 34 / 100 = 27,2."
+        }
+      ],
+      "solucion": "Posición: 80 · 34 / 100 = 27,2, que no es entera, así que se toma el dato 28.º. Acumuladas: 7, 11, 15, 19, 23, 32 y 34; el dato 28.º está entre el 24.º y el 32.º, que tienen 97 palabras. El percentil 80 es 97. Contar desde el mayor da el percentil 20, 77; el 80 % de 105 palabras da 84; leer el número del percentil como puntaje da 80.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "columnas": [
+          "Palabras bien escritas",
+          "Estudiantes"
+        ],
+        "filas": [
+          [
+            77,
+            7
+          ],
+          [
+            79,
+            4
+          ],
+          [
+            83,
+            4
+          ],
+          [
+            86,
+            4
+          ],
+          [
+            90,
+            4
+          ],
+          [
+            97,
+            9
+          ],
+          [
+            98,
+            2
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-017",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Los diagramas de cajón muestran los segundos de espera de las llamadas a la línea de atención de dos compañías, Río y Sol, durante una semana. Para quien llama, menos espera es mejor. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "En Sol, una llamada que esperó 699 s está en el percentil 75, así que quedó entre las mejor atendidas.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor",
+          "feedbackDescarte": "Aquí menos espera es mejor. Estar en el percentil 75 de la espera significa que el 75 % esperó eso o menos: esa llamada está entre las que más esperaron."
+        },
+        {
+          "clave": "B",
+          "texto": "Río tiene un tiempo promedio de espera menor que Sol, porque su mediana es menor.",
+          "esCorrecta": false,
+          "errorCatalogado": "concluye-promedio-desde-mediana",
+          "feedbackDescarte": "El diagrama de cajón no muestra el promedio. Que la mediana de Río sea menor no permite concluir cuál compañía tiene la espera promedio menor."
+        },
+        {
+          "clave": "C",
+          "texto": "El rango intercuartil de Sol es 241 s.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-rango-con-intercuartil",
+          "feedbackDescarte": "241 s es el rango de Sol, 772 − 531. El rango intercuartil resta los cuartiles, 699 − 576, y deja fuera los bigotes."
+        },
+        {
+          "clave": "D",
+          "texto": "En Río, el 75 % de las llamadas esperó 562 s o más.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 562 s es el primer cuartil de Río, así que el 25 % de las llamadas esperó eso o menos y el 75 % esperó 562 s o más."
+        }
+      ],
+      "solucion": "En Río, 562 s es el primer cuartil: el 25 % de las llamadas esperó 562 s o menos y el 75 % esperó 562 s o más. Una espera en el percentil 75 está entre las más largas, porque aquí menos es mejor; el cajón no muestra promedios; y 241 s es el rango de Sol (772 − 531), no su rango intercuartil (de 576 a 699).",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "horizontal",
+        "eje": {
+          "min": 500,
+          "max": 800,
+          "paso": 50,
+          "etiqueta": "s"
+        },
+        "cajas": [
+          {
+            "nombre": "Río",
+            "minimo": 515,
+            "q1": 562,
+            "mediana": 607,
+            "q3": 653,
+            "maximo": 734,
+            "rotulos": true
+          },
+          {
+            "nombre": "Sol",
+            "minimo": 531,
+            "q1": 576,
+            "mediana": 641,
+            "q3": 699,
+            "maximo": 772,
+            "rotulos": true
+          }
+        ],
+        "descripcion": "Dos diagramas de cajón horizontales sobre la misma escala, en segundos. Río: mínimo 515, primer cuartil 562, mediana 607, tercer cuartil 653 y máximo 734. Sol: mínimo 531, primer cuartil 576, mediana 641, tercer cuartil 699 y máximo 772."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-018",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una olimpiada de química el puntaje máximo posible era 880 puntos. El diagrama de cajón resume los puntajes de los participantes. ¿Cuál de las siguientes afirmaciones describe correctamente el diagrama?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Obtener 715 puntos equivale a tener correcto el 75 % de la prueba.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-percentil-como-porcentaje-de-aciertos",
+          "feedbackDescarte": "715 es el tercer cuartil: deja al 75 % de los participantes en ese puntaje o bajo él. No es el 75 % de los 880 puntos, que serían 660."
+        },
+        {
+          "clave": "B",
+          "texto": "El 75 % de los participantes obtuvo 645 puntos o más.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 645 es el primer cuartil, así que el 25 % obtuvo ese puntaje o menos y el 75 % obtuvo 645 puntos o más."
+        },
+        {
+          "clave": "C",
+          "texto": "La caja contiene el 56 % de los participantes.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-caja-como-valores-posibles",
+          "feedbackDescarte": "Ese 56 % es la parte de la escala que ocupa la caja, de 645 a 715 sobre el tramo de 603 a 728. En participantes, la caja tiene la mitad."
+        },
+        {
+          "clave": "D",
+          "texto": "Hay más participantes en el bigote izquierdo que en el derecho, porque es más largo.",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-bigote-largo-como-mas-datos",
+          "feedbackDescarte": "Cada bigote tiene la cuarta parte de los participantes. Que el izquierdo sea más largo dice que esos puntajes están más repartidos, no que sean más."
+        }
+      ],
+      "solucion": "El primer cuartil, 645, deja el 25 % de los puntajes en ese valor o bajo él, así que el 75 % de los participantes obtuvo 645 puntos o más. El tercer cuartil, 715, no es el 75 % del máximo (ese sería 660); la caja tiene la mitad de los participantes aunque ocupe el 56 % de la escala; y cada bigote tiene la cuarta parte, sea largo o corto.",
+      "figura": {
+        "tipo": "diagrama-cajon",
+        "orientacion": "horizontal",
+        "eje": {
+          "min": 600,
+          "max": 740,
+          "paso": 20,
+          "etiqueta": "puntos"
+        },
+        "cajas": [
+          {
+            "minimo": 603,
+            "q1": 645,
+            "mediana": 689,
+            "q3": 715,
+            "maximo": 728,
+            "rotulos": true
+          }
+        ],
+        "descripcion": "Diagrama de cajón horizontal de los puntajes: mínimo 603, primer cuartil 645, mediana 689, tercer cuartil 715 y máximo 728."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-019",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "modelar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una biblioteca registró las visitas a su página web durante 23 días. Ordenadas de menor a mayor, fueron: 1.106, 1.134, 1.136, 1.164, 1.294, 1.341, 1.439, 1.507, 1.553, 1.569, 1.598, 1.686, 1.717, 1.725, 1.752, 1.756, 1.779, 1.781, 1.912, 1.922, 1.965, 1.974 y 1.999. Para medir cuánto varían las visitas, la biblioteca usa un índice igual al percentil 90 menos el percentil 10. ¿Cuál es el valor del índice?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "829",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 90 · 23 / 100 = 20,7 sube a la posición 21 (1.965) y 10 · 23 / 100 = 2,3 sube a la 3 (1.136); 1.965 − 1.136 = 829."
+        },
+        {
+          "clave": "B",
+          "texto": "788",
+          "esCorrecta": false,
+          "errorCatalogado": "lee-cuartil-como-posicion-entera",
+          "feedbackDescarte": "Ese valor usa los datos 20.º y 2.º, que salen de truncar 20,7 y 2,3. Cuando la posición no es entera se sube: el percentil 90 es el dato 21.º y el percentil 10, el 3.º."
+        },
+        {
+          "clave": "C",
+          "texto": "714,4",
+          "esCorrecta": false,
+          "errorCatalogado": "toma-cuartil-como-fraccion-del-rango",
+          "feedbackDescarte": "Ese valor toma los percentiles como puntos al 90 % y al 10 % del camino entre 1.106 y 1.999. Los percentiles son datos de la lista, no puntos de la escala."
+        },
+        {
+          "clave": "D",
+          "texto": "893",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-rango-con-intercuartil",
+          "feedbackDescarte": "893 es el rango, 1.999 − 1.106: resta el máximo y el mínimo. El índice pide restar el percentil 90 y el percentil 10."
+        }
+      ],
+      "solucion": "Percentil 90: 90 · 23 / 100 = 20,7, que sube a la posición 21, el dato 1.965. Percentil 10: 10 · 23 / 100 = 2,3, que sube a la posición 3, el dato 1.136. Índice: 1.965 − 1.136 = 829. Truncar las posiciones da 1.922 − 1.134 = 788; tomar el 90 % y el 10 % del camino entre 1.106 y 1.999 da 0,8 · (1.999 − 1.106) = 714,4; el rango da 893.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-medidas-de-posicion-020",
+      "unidadId": "medidas-de-posicion",
+      "moduloId": "medidas-de-posicion",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Se midieron las horas de fraguado de varias muestras de dos adhesivos para cerámica, Andes y Pampa. La tabla muestra el resumen de cinco números de cada adhesivo. Menos horas de fraguado es mejor. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El adhesivo Andes fragua en menos horas en promedio que el Pampa, porque su mediana es menor.",
+          "esCorrecta": false,
+          "errorCatalogado": "concluye-promedio-desde-mediana",
+          "feedbackDescarte": "Cinco números no muestran el promedio. Que la mediana de Andes sea menor no permite concluir que su promedio de horas también lo sea."
+        },
+        {
+          "clave": "B",
+          "texto": "En el Pampa, el 25 % de las muestras fraguó entre 6,6 y 7,5 horas.",
+          "esCorrecta": false,
+          "errorCatalogado": "ubica-mediana-en-centro-de-caja",
+          "feedbackDescarte": "7,5 es el centro de la caja de Pampa, entre 6,6 y 8,4, pero su mediana es 7,3. El 25 % de las muestras está entre 6,6 y 7,3 horas."
+        },
+        {
+          "clave": "C",
+          "texto": "El 75 % de las muestras Andes fraguó en menos horas que la mediana de las Pampa.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el tercer cuartil de Andes es 7,1 h, así que el 75 % de sus muestras fraguó en 7,1 h o menos, bajo la mediana de Pampa, 7,3 h."
+        },
+        {
+          "clave": "D",
+          "texto": "Una muestra Pampa que tardó 8,4 horas está en el percentil 75, así que es de las que fraguaron más rápido.",
+          "esCorrecta": false,
+          "errorCatalogado": "invierte-lectura-cuando-menor-es-mejor",
+          "feedbackDescarte": "Aquí menos horas es mejor. Estar en el percentil 75 significa que el 75 % fraguó en ese tiempo o menos: esa muestra está entre las más lentas."
+        }
+      ],
+      "solucion": "El tercer cuartil de Andes es 7,1 h: el 75 % de sus muestras fraguó en 7,1 h o menos, y 7,1 es menor que la mediana de Pampa, 7,3. Cinco números no dan el promedio; en Pampa el 25 % está entre el primer cuartil, 6,6, y la mediana, 7,3, no hasta el centro de la caja, 7,5; y con menos horas como mejor, el percentil 75 está entre las muestras más lentas.",
+      "figura": {
+        "tipo": "tabla-datos",
+        "columnas": [
+          "Medida",
+          "Andes (h)",
+          "Pampa (h)"
+        ],
+        "filas": [
+          [
+            "Mínimo",
+            5.8,
+            6.1
+          ],
+          [
+            "Primer cuartil",
+            6.3,
+            6.6
+          ],
+          [
+            "Mediana",
+            6.7,
+            7.3
+          ],
+          [
+            "Tercer cuartil",
+            7.1,
+            8.4
+          ],
+          [
+            "Máximo",
+            8.3,
+            9.5
+          ]
+        ]
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-medidas-de-posicion-001: panadería que pesó 11 hogazas recién horneadas, en gramos; la mediana de las masas; clave B = 538",
+    "adv-medidas-de-posicion-002: ciclovía donde se contaron los ciclistas que pasaron en cada una de 14 horas; la mediana de los conteos; clave D = 668,5",
+    "adv-medidas-de-posicion-003: lechería que registró los litros de leche de 18 vacas en una ordeña; el primer cuartil de los litros; clave A = 18,9",
+    "adv-medidas-de-posicion-004: piscicultura que midió el largo de 7 truchas, en milímetros; el rango intercuartil de los largos; clave C = 87",
+    "adv-medidas-de-posicion-005: concurso escolar de robótica: pasan a la final los prototipos con puntaje mayor que el percentil 70 de los 19 puntajes; el percentil 70 de los puntajes (el valor que hay que superar); clave D = 883",
+    "adv-medidas-de-posicion-006: correctora que contó las erratas de 30 páginas con errores de un manuscrito; el tercer cuartil de las erratas por página; clave B = 5",
+    "adv-medidas-de-posicion-007: peaje que registró los ocupantes de cada uno de 26 autos; la mediana de los ocupantes por auto; clave A = 2,5",
+    "adv-medidas-de-posicion-008: empresa sanitaria que hará un descuento al 25 % de los hogares con menor consumo anual de agua; qué medida de posición da el consumo máximo para recibir la rebaja; clave D (afirmación)",
+    "adv-medidas-de-posicion-009: duración de las baterías de un lote de linternas, en minutos; qué afirmación describe correctamente el diagrama (no pide un valor rotulado); clave C (afirmación)",
+    "adv-medidas-de-posicion-010: energía generada por día en dos parques solares, en kWh; qué afirmación se puede deducir de los diagramas (compara grupos); clave A (afirmación)",
+    "adv-medidas-de-posicion-011: ladrillos cocidos por día en tres hornos de una fábrica; qué afirmación es verdadera (compara grupos); clave B (afirmación)",
+    "adv-medidas-de-posicion-012: kilos de limones por árbol en cuatro huertos de limoneros; en cuál huerto al menos la mitad de los árboles dio más de 170 kg; clave D (afirmación)",
+    "adv-medidas-de-posicion-013: masa de 6 cuadernos universitarios de una librería escolar, en gramos; cuál diagrama de cajón representa los datos; clave C = cajón 557, 572, 582, 595, 599",
+    "adv-medidas-de-posicion-014: aves avistadas en cada una de 22 salidas de un club de observación con binoculares; cuál diagrama de cajón representa los datos; clave A = cajón 3, 4, 5, 8, 9",
+    "adv-medidas-de-posicion-015: golpes de 15 golfistas en una ronda de un torneo juvenil de golf; Rocío hizo 67 (menos golpes es mejor); qué afirmación sobre la posición de Rocío es correcta; clave B (afirmación)",
+    "adv-medidas-de-posicion-016: dictado de 105 palabras en un concurso de ortografía; se premia a quienes igualen o superen el percentil 80 de los 34 puntajes; el puntaje del percentil 80 (el mínimo para el premio); clave C = 97",
+    "adv-medidas-de-posicion-017: segundos de espera de las llamadas a la línea de atención de dos compañías, Río y Sol (menos espera es mejor); qué afirmación es verdadera (compara grupos; menor es mejor); clave D (afirmación)",
+    "adv-medidas-de-posicion-018: puntajes de una olimpiada de química con puntaje máximo de 880; qué afirmación describe correctamente el diagrama (no pide un valor rotulado); clave B (afirmación)",
+    "adv-medidas-de-posicion-019: visitas diarias a la página web de una biblioteca durante 23 días; índice de variación = P90 − P10; el valor del índice P90 − P10; clave A = 829",
+    "adv-medidas-de-posicion-020: horas de fraguado de muestras de dos adhesivos para cerámica, Andes y Pampa, resumidas en cinco números (menos horas es mejor); qué afirmación es verdadera (compara grupos; menor es mejor); clave C (afirmación)"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "forma liberada DEMRE 2024-invierno-111, pregunta 62, y su clavijero (PDF en ../fuentes-demre-liberadas/)",
+      "docs/analisis/material-referencia/figuras-medidas-de-posicion.md (formas de figura y convención de cuartiles, clean-room)",
+      "docs/analisis/material-referencia/por-unidad.md, sección medidas-de-posicion (dominios vistos, tareas tipo y candidatos de error)"
+    ],
+    "declaracionOriginalidad": "Banco de medidas-de-posicion: 20 ítems, 60 distractores, 14 errores distintos del catálogo content/errores/medidas-de-posicion.json (cobertura 60/60). compara-cajones-en-escalas-distintas queda sin uso porque una figura declara un solo eje para todas sus cajas. Proveniencia: 19 propia y 1 demre-liberada (008 ← 2024-invierno-111/62, clave D verificada en el clavijero; conserva estructura, clave y distractor B, y cambia contexto y los distractores A y C según su notaAdaptacion). 2024-regular-113 (sin clavijero) y 2027-invierno-111 (sin PDF) no se usaron. Convenciones firmadas en la PARADA del 2026-09-22: (1) cuartiles y percentiles con la convención de la lección (lib/estadistica.ts), y n ≢ 1 (mód 4) en todo conjunto donde se calcula un cuartil o un percentil, para que coincida con la del material UC; 19 de 19 valores coinciden. (2) Criterio de cifras en seis clases: C1 (clave, alternativas y resultados escritos: enteros 10-99 y decimales de 1 cifra contra las tres lecciones, el cierre y el catálogo de la unidad; ≥ 100 y 2 o más decimales contra todo content/), C2 (datos crudos), C3 (n, posiciones, acumuladas y k del percentil), C4 (paso y marcas del eje), K (números de percentil múltiplos de 5 usados como respuesta) y estructurales (25, 50, 75, 100, 0,25, 0,5 y 0,75). Ninguna cifra C1, C2, K ni n se repite entre ítems y ningún n es un total de la unidad. Medido sobre este archivo: 321 cifras visibles, 240 cruzadas, 0 repetidas, 0 colisiones de C1. (3) Datos inventados; nada del material UC entra al banco. (4) 008 va sin datos, como la forma DEMRE: es la única excepción a representar los datos con tabla, lista o diagrama. (5) Ningún ítem pide un valor que su figura rotula. (6) 0 distractores fuera de magnitud. (7) confunde-rango-con-intercuartil se amplió a la diferencia entre dos percentiles (uso: 019 D). (8) La fecha pendiente de docs/mos-v2.md no bloquea el commit. (9) Los contextos principales y sus dos respaldos viven en scratchpad/medidas-de-posicion/plan-banco.md, no en el repo; 004 y 014 usan su primer respaldo porque vivero y sopaipillas ya estaban en otros bancos. Ronda 1 (verificación matemática): PENDIENTE. Ronda 2 (originalidad, consultar-fuentes.mjs sobre los contextos finales y sus respaldos): PENDIENTE."
+  }
+}
