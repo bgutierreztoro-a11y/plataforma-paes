@@ -597,6 +597,8 @@ Sin gráficos. Sin porcentajes decorativos. Reutiliza `FranjaDeItems` para el ec
 
 **Render de expresiones (2026-09-17).** A 390 px las expresiones se partían entre operador y término (medido: 529 cortes de operador en 385 de 2.000 campos de los 10 bancos, 121 en 60 campos solo en sistemas-2x2). `lib/advance/protegerExpresiones.ts` une con U+00A0 los espacios de cada expresión (D6: `× ÷ ·` con espacio duro a los dos lados siempre, aunque los operandos sean palabras; `+ −` solo con operando a ambos lados; relación `= ≤ ≥ < > ≠` con operando a la izquierda: duro antes, normal después; D5: operando = dígito, superíndice, π, `|`, `$`, `√`, paréntesis, `%`, `′` o corrida de 1-2 letras que no sea palabra de la lista es, de, el, la, lo, un, se, si, no, en, al, su, ni, ya, mi, tu, ha, os; tablas intactas, listas con marcador intacto; idempotente) y se aplica en `itemParaCliente` (`lib/advance/banco.ts`) sobre los cinco campos de texto (`enunciado`, `texto`, `feedbackDescarte`, `feedbackDescarteIncorrecto`, `solucion`). Decisión firmada: solo Advance, nunca dentro de `TextoEnriquecido` (`lib/markdownSimple.tsx`), que seguiría rompiendo el aislamiento con las lecciones y no cubre los campos planos. Ningún JSON de `content/` cambia. Métrica de salida (D7): un corte es prohibido si la línea termina en `+ − · × ÷` o empieza con `+ · × ÷` o con una relación que sí tiene operando a la izquierda; no cuentan el menos unario al inicio de línea (seguido de letra, dígito o paréntesis) ni una relación sin operando a la izquierda. Regla para specs: todo spec que cruce texto visible de Advance contra el banco normaliza U+00A0 → espacio antes de comparar (el piloto F2 de `scratchpad/f2-bloque-b/` no lo hace).
 
+**Número y unidad (2026-09-23, Unidad 14).** A 390 px, "3√2 cm", "2,5 m", "18 cm²" y "4π cm" se partían entre el número y la unidad: medido con texto inventado deslizado 60 posiciones por expresión, 3 a 6 cortes por lugar en el enunciado, el texto de una alternativa, el feedback y la solución; "12π", "√13" y "cm²" no se partían nunca. `protegerExpresiones` suma una regla: espacio duro entre un número (o π, un superíndice o un paréntesis que cierra) y una unidad de longitud, área o volumen (mm, cm, dm, m, km, u, con ² o ³) que sea palabra entera ("5 mide" no cambia). Con la regla, 0 cortes. En los bancos ya escritos cambian 84 de 2.600 campos de texto (2.516 quedan iguales), en 8 de los 13 bancos, siempre por un número pegado a su unidad.
+
 ---
 
 ### 6.2 Panel 2×2 (requiere modo clásico)
@@ -780,7 +782,7 @@ Dos que se difieren explícitamente aunque estén en el plan original:
 
 ---
 
-## 12. Figuras de función (plano-funcion y tabla-valores), figuras de datos, diagrama de cajón y alternativas con figura
+## 12. Figuras de función (plano-funcion y tabla-valores), figuras de datos, diagrama de cajón, alternativas con figura, lienzo geométrico y figura de la solución
 
 Infraestructura previa a la unidad 11 (funcion-cuadratica), construida el 2026-09-20 sin escribir ningún ítem. El temario DEMRE M1 pide, para función cuadrática, tablas y gráficos considerando la variación de parámetros y los puntos especiales de la gráfica (vértice, ceros, intersección con los ejes). El plano de isometrías (§2.3, `figuraPlano`) solo dibuja puntos, polígonos, vectores, centros y rectas del enum x=c | y=c | y=x | y=-x; una parábola no era dibujable.
 
@@ -960,6 +962,92 @@ Reglas:
 Ninguna de las cinco lleva `descripcion`. El aria-label se genera desde los datos en `lib/advance/figurasDatos.ts` y la tabla es su propio texto alternativo. Por eso, en una alternativa gráfica, la regla (26) les exige texto. `figuraParaCliente` (`lib/advance/banco.ts`, l. 179) pasa su texto por `protegerExpresiones` y deja los números intactos.
 
 Letra mínima renderizada a 390 × 844 en la galería (2026-09-22, medida con el método de 12.8, sin cambios en estas figuras): 9,62 px en barras, histograma y líneas (números del eje), 11,14 px en el circular y 12,5 px en las tablas.
+
+### 12.12 Lienzo geométrico (`lienzo-geometrico`)
+
+Infraestructura previa a la unidad 14 (figuras-geometricas), construida el 2026-09-23 sin escribir ningún ítem. El temario M1 nombra Pitágoras y el perímetro y el área de triángulos, paralelogramos, trapecios y círculos, y ningún tipo anterior dibuja geometría sin ejes. El inventario y los conteos que decidieron cada rasgo están en `docs/analisis/material-referencia/figuras-geometria-plana.md`.
+
+Declarativo (firmado): coordenadas del mundo con y hacia arriba dentro de una ventana declarada, sin ejes ni números de eje. La figura no calcula nada del problema y muestra los datos del enunciado, nunca la respuesta (12.1).
+
+```
+tipo: "lienzo-geometrico"
+ventana: { xMin, xMax, yMin, yMax }                 obligatoria
+puntos: 1 o más de { nombre, x, y, oculto?, marca?, ubicacion? }
+  nombre: único; su rótulo va hacia afuera de la figura
+  oculto: punto auxiliar, sin rótulo   marca: punto relleno
+  ubicacion: n | ne | e | se | s | so | o | no       ajusta el rótulo
+segmentos?: de { desde, hasta, trazo?, rotulo?, lado?, igualdad?,
+                 paralelismo?, cota?, achurado?, flecha? }
+  trazo: "continuo" (contorno, por defecto) | "punteado" (auxiliar)
+  lado: "exterior" (por defecto) | "interior"       rótulo, cota y achurado
+  igualdad: 1 a 3 rayas   paralelismo: 1 o 2 flechas
+  cota: la medida en una llave   achurado: suelo o muro   flecha: punta en hasta
+poligonos?: de { id?, vertices }                    nombres de punto, 3 o más
+circunferencias?: de { id?, centro, radio }
+arcos?: de { id?, clase: "arco" | "sector", centro, radio, desde, hasta, rotulo? }
+  grados, antihorario desde el eje x positivo, de desde a hasta
+angulos?: de { vertice, desde, hasta, marca: "recto" | "arco", rotulo? }
+  siempre el ángulo menor que 180°
+regiones?: de { formas: [id], huecos?: [id], estilo?: "rayado" | "punteado" }
+cuadricula?: { paso }
+textos?: de { texto, x, y }                          centrado en la coordenada
+aEscala?: false                                      apaga la regla (31) y escribe la nota
+descripcion: string, ≥ 30 caracteres                 el <desc> del SVG
+```
+
+Los rótulos van en texto plano con Unicode (√, π, ², °), sin markdown ni LaTeX. Un lado de un polígono se rotula con un segmento sobre ese lado.
+
+Escala y tamaño. Una sola escala para x e y, fijada por el ancho: la ventana ocupa el carril menos un margen de 20 px por lado y el alto sale de su proporción. Quien escribe el banco controla el tamaño con la ventana, y la regla (34) avisa si la figura pasa de 320 px. El viewBox tiene el ancho del carril real a 390 × 844, medido el 2026-09-23 en `/advance/descarte` y `/advance/triage` (`ANCHO_CARRIL`, `lib/advance/lienzoGeometrico.ts` l. 34): 358 px en el enunciado, 316 px en el panel de una alternativa y 330 px en la tarjeta de la solución. Una unidad del viewBox es un píxel a 390, así que la letra de 12 unidades se ve de 12 px; el ancho máximo del SVG es ese mismo ancho, y en pantallas más anchas la figura no crece.
+
+Rótulos (`geometriaLienzo`, l. 440). El de un punto va al medio del mayor ángulo libre entre los trazos que llegan a él; en un vértice cóncavo, al mayor cuya bisectriz no cae dentro de un polígono (`direccionDeRotulo`, l. 290). El de un segmento va a 5 px del lado de afuera: si el segmento es lado de un polígono, del lado que queda fuera de él; si no, lejos del centro de la figura. Si hay achurado de ese lado, en el mismo segmento o en uno colineal, el rótulo se aparta la banda, y con cota también la llave. El de un ángulo va sobre la bisectriz, más lejos del vértice cuanto más chico es el ángulo, para no tocar los rayos. El de un arco va afuera, en la mitad del barrido. Los textos van centrados en su coordenada.
+
+Dibujo (`components/advance/figuras/LienzoGeometrico.tsx`). Contorno (polígonos, circunferencias, arcos y segmentos continuos) en `--linea-nav` de 2 px; auxiliares punteados en tinta, de 1,25 px y trazo 5 4; marcas (ángulo recto de 10 px, arco de 14 px de radio, rayas, flechas y llave) en tinta de 1,25; cuadrícula en hairline; rótulos en tinta con halo `--color-bg`. Las regiones se componen con una máscara (formas en blanco, huecos en negro), no con evenodd, así que formas superpuestas componen bien. Dos tramas, rayas a 45° y puntos, en `--linea-nav` sobre `--linea-tinte`: se distinguen por trama y no por color. `aEscala: false` escribe "Figura referencial, no está a escala" bajo el dibujo y la suma al `<title>`. Accesibilidad como `PlanoFuncion`: `role="img"`, `<title>` corto generado desde `textos.ts` y `<desc>` = `descripcion`. Los ids de trama y máscara salen de `useId`. `FiguraDeItem` lo despacha, `FiguraDeAlternativa` lo monta con contexto `"alternativa"` y `itemParaCliente` lo pasa tal cual: su texto va en un SVG, que no corta líneas.
+
+Reglas del validador (`validarLienzoGeometrico`, `scripts/validar-contenido.mjs` l. 1588), todas error:
+
+- (28) Forma: ventana con cuatro números finitos, `xMin < xMax` e `yMin < yMax`; al menos un punto con nombre y `x`, `y` finitos; vocabularios cerrados de `trazo`, `lado`, `igualdad`, `paralelismo`, `clase`, `marca`, `estilo` y `ubicacion`; radios mayores que 0; un arco que da la vuelta completa es error (para eso va una circunferencia); `aEscala` solo se declara `false`; todo rótulo, nombre y texto en texto plano, sin `$ \ * _ ^ { } [ ] #` ni comilla invertida; sin claves sobrantes.
+- (29) Nombres de punto únicos, ids de forma únicos entre polígonos, circunferencias y arcos, y toda referencia es un punto de la figura. Un segmento une dos puntos distintos, un polígono tiene al menos 3 vértices distintos y un ángulo, tres puntos distintos.
+- (30) Todo dentro de la ventana: puntos, circunferencias completas, la caja de cada arco o sector (con el centro si es sector) y cada texto. El error nombra lo que queda fuera.
+- (31) A escala, salvo `aEscala: false`. Todo rótulo de longitud parseable calza con la longitud dibujada con error relativo de 1 % o menos (en arcos, la longitud del arco); todo rótulo en grados calza con el ángulo dibujado ± 1° (en un arco, con su barrido); los segmentos con la misma cantidad de rayas de igualdad miden lo mismo (1 %). Parseable: entero, decimal con coma, punto de miles, fracción a/b, √b, a√b, aπ y aπ/b, con unidad opcional mm, cm, m, km o u; con unidades mezcladas manda la primera física y los números sin unidad se leen en ella (`parsearLongitud`, l. 109). Los rótulos con letras que no son unidad no se verifican.
+- (32) A escala o no: la marca de ángulo recto solo va donde el ángulo mide 90° ± 0,5°, los segmentos con la misma marca de paralelismo son paralelos (± 0,5°) y ninguna marca de ángulo cae en un ángulo nulo o llano.
+- (33) En el carril de su ubicación, con letra de 12 px: ningún rótulo pisa a otro, tapa un vértice ni se sale del lienzo, y el mensaje nombra los rótulos. Vértice es un punto que se ve como tal: de un polígono, extremo de un segmento, vértice de un ángulo, centro de un sector, marcado o con su nombre a la vista (`verticesVisibles`, l. 669); un centro oculto de una circunferencia no lo es. Corre solo si (30) pasó.
+- (34) Alto renderizado en ese carril de 320 px o menos.
+- (35) Topes por ubicación (`TOPES`, l. 74), el máximo del inventario: en el enunciado y en la solución, 24 puntos, 24 segmentos (2026 regular n.º 49), 10 formas y 20 rótulos (Ap2 p. 167); en una alternativa, 12, 12, 5 y 10, lo que cabe a 12 px en el panel de 316 px, comprobado en la galería con una alternativa en esos topes. Formas son polígonos, circunferencias y arcos; rótulos, los nombres de punto a la vista, los rótulos de segmento, arco y ángulo, y los textos.
+- (36) Regiones: cada id de `formas` y `huecos` existe, es un polígono, una circunferencia o un sector (no un arco abierto) y no se repite en la región.
+- (37) `descripcion` de 30 o más caracteres.
+- (38) Cuadrícula: paso mayor que 0 y celdas de 8 px o más en el carril.
+- (39) Una cota lleva rótulo.
+
+Las reglas 30 a 35 y 38 miden con `lib/advance/lienzoGeometrico.ts`, la misma geometría que dibuja el componente, importada por el validador como la del cajón. Tests: `lib/advance/lienzoGeometrico.test.ts` (motor), `lib/advance/validarLienzo.test.ts` (cada regla con un caso que la rompe y uno que pasa) y `lib/advance/lienzoGeometrico.render.test.ts` (render).
+
+Galería `/_design`, secciones "Lienzo geométrico" y "Alternativas con lienzo", en la línea 03, con el panel del mismo ancho que la ruta real y datos inventados en `app/%5Fdesign/muestraLienzo.ts`, todos válidos: triángulo rectángulo, L con un lado sin rótulo, rectángulo menos dos semicírculos, cuadrado menos cuatro cuartos, trapecio con altura punteada, cuadrícula, ángulos en grados, igualdad y paralelismo, suelo y muro con cota, textos en dos tramas, punto marcado y flecha, fuera de escala, red de un cubo, triángulos semejantes, el caso de densidad máxima (24, 24, 10 y 20), una alternativa en sus topes y un ítem con cuatro alternativas lienzo en descarte y en triage. Medido a 390 × 844 el 2026-09-23: SVG de 358 px en el enunciado y de 316 px en las alternativas, alto máximo de 293 px, letra mínima de 12 px, 0 rótulos recortados, 0 superpuestos y sin scroll horizontal.
+
+Sin campo nuevo, el contrato dibuja las redes planas de cuerpos (polígonos y circunferencias) y los pares de triángulos semejantes (dos polígonos con arcos de ángulo), la base de cuerpos-geometricos y de semejanza-y-proporcionalidad. Nada 3D. No se construyó: intersección de formas (0 en DEMRE y 0 en UC), circunferencia punteada (1 en UC), el dibujo de objetos ilustrados (el lienzo dibuja su esquema) y los cuerpos 3D.
+
+### 12.13 Figura en la solución (`figuraSolucion`)
+
+Campo opcional a nivel ítem, de cualquier tipo del `oneOf` de figura, para una construcción auxiliar dibujada: altura trazada, figura descompuesta, radio agregado. Se construyó porque los solucionarios UC traen 4 soluciones de la unidad con esa construcción dibujada (S-Ap2 pp. 117, 118, 126 y 169), sobre el umbral de 3. No cambia la forma de ningún campo existente.
+
+- (40) Se valida con las reglas de su tipo en la ubicación solución (`validarItemAdvance`, `scripts/validar-contenido.mjs` l. 1840): el lienzo mide con el carril de 330 px y el diagrama de cajón, que no tiene geometría propia para la solución, como en el enunciado.
+- Puede mostrar la respuesta: la regla 12.1 es solo para la figura del enunciado.
+- Se muestra solo donde se muestra la solución: la tarjeta del descarte fatal, `components/advance/SolucionDescarte.tsx`, que monta `EjecutorDescarte.tsx`. La figura va bajo el rótulo y antes del texto, con contexto `"solucion"`. Triage y las pantallas de resultado no muestran la solución.
+- Viaja al cliente por el mismo camino que la solución, que viaja siempre porque el descarte fatal la muestra al instante (`itemParaCliente`), y por el mismo `figuraParaCliente` que la figura del ítem.
+- El registro por ítem no cambia: `ordenDescartes`, `erroresIdentificados` y `descarteFatal` son los mismos.
+
+Galería `/_design`, sección "Figura en la solución", línea 03: la tarjeta con una altura trazada que muestra la respuesta. Medido a 390 × 844: SVG de 330 px y letra de 12 px.
+
+### 12.14 Convenciones de figuras-geometricas
+
+Detalle con citas de DEMRE, UC y la lección gratuita en `docs/analisis/material-referencia/figuras-geometria-plana.md`, sección "Convenciones de la unidad".
+
+- π: DEMRE lo deja exacto en las cuatro alternativas de las tres preguntas de la unidad con círculo (2024 invierno n.º 42; 2025 regular n.º 57 y 58). Cuando aproxima, el enunciado lo declara, y la única vez que lo hace usa 3 (2024 regular n.º 47). UC usa las dos formas y declara 3. La lección gratuita aproxima siempre con 3,14 y responde en decimales.
+- Área y unidades: cm² y m² con superíndice en DEMRE, UC y la lección; UC también escribe "unidades cuadradas". u² no aparece en DEMRE ni en la lección; el lienzo acepta "u" como unidad de longitud para la cuadrícula.
+- Raíces: DEMRE deja la raíz exacta en las alternativas, simplificada (h√2) o no (√369, √20 + 2√10). UC también. La lección escribe la raíz con su aproximación a una décima.
+- Redondeo: DEMRE y UC no redondean en la unidad; los decimales de las alternativas son exactos.
+- Decimal: coma decimal en DEMRE y en la lección; DEMRE separa miles con espacio y el repo con punto; UC usa también punto decimal en algunas páginas. El parser del lienzo lee coma decimal y punto de miles, no punto decimal.
+- Escala: todas las formas DEMRE dicen "Las figuras que aparecen son solo indicativas". El lienzo va a escala por defecto; una figura fuera de escala declara `aEscala: false` y lleva la nota fija.
+
+Hallazgos abiertos, la lección no se toca: (1) π ≈ 3,14 y respuestas decimales frente a π exacto en DEMRE; (2) raíces con su decimal en alternativas y feedback frente a raíces exactas en DEMRE; (3) la lección redondea √146 de dos maneras (12,1 y 12,08).
 
 ---
 
