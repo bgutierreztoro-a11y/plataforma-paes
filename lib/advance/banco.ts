@@ -174,7 +174,9 @@ const ejeY = (e: EjeValores): EjeValores => ({ ...e, etiqueta: texto(e.etiqueta)
  * Ese texto pasa por el mismo `protegerExpresiones` que el enunciado, para que
  * un intervalo como "10 − 20" o una etiqueta "n = 40" no se corte en el
  * operador. Los números viajan intactos. Las otras tres figuras (isometrías,
- * plano-funcion, tabla-valores) siguen viajando tal cual, como se firmó.
+ * plano-funcion, tabla-valores) siguen viajando tal cual, como se firmó, y el
+ * lienzo geométrico también: todo su texto va en un SVG, que no corta líneas,
+ * y el validador ya midió sus rótulos tal como están en el banco.
  */
 export function figuraParaCliente(figura: FiguraItem): FiguraItem {
   switch (figura.tipo) {

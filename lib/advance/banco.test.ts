@@ -79,12 +79,39 @@ const CAJON: FiguraItem = {
   descripcion: "Dos diagramas de cajón horizontales de prueba, grupo A y grupo B.",
 };
 
+/* Lienzo con todos los campos, rótulos con operadores y raíces: viaja tal
+   cual, sin protegerExpresiones, porque el SVG no corta líneas. */
+const LIENZO: FiguraItem = {
+  tipo: "lienzo-geometrico",
+  ventana: { xMin: -1, xMax: 9, yMin: -1, yMax: 7 },
+  puntos: [
+    { nombre: "A", x: 0, y: 0, ubicacion: "so" },
+    { nombre: "B", x: 8, y: 0 },
+    { nombre: "C", x: 0, y: 6, marca: true },
+    { nombre: "H", x: 3, y: 0, oculto: true },
+  ],
+  segmentos: [
+    { desde: "A", hasta: "B", rotulo: "x + 2", lado: "interior", cota: true, achurado: true },
+    { desde: "C", hasta: "H", trazo: "punteado", igualdad: 1, paralelismo: 1, flecha: true, rotulo: "3√2 cm" },
+  ],
+  poligonos: [{ id: "t", vertices: ["A", "B", "C"] }],
+  circunferencias: [{ id: "c", centro: "C", radio: 0.5 }],
+  arcos: [{ id: "s", clase: "sector", centro: "A", radio: 1, desde: 0, hasta: 90, rotulo: "π/2" }],
+  angulos: [{ vertice: "A", desde: "B", hasta: "C", marca: "recto", rotulo: "90°" }],
+  regiones: [{ formas: ["t"], huecos: ["s", "c"], estilo: "punteado" }],
+  cuadricula: { paso: 1 },
+  textos: [{ texto: "R − 1", x: 2, y: 2 }],
+  aEscala: false,
+  descripcion: "Triángulo ABC de prueba con todos los campos del lienzo geométrico.",
+};
+
 describe("itemParaCliente: la figura viaja íntegra", () => {
   for (const [nombre, figura] of [
     ["plano de isometrías (sin tipo)", ISOMETRIAS],
     ["plano-funcion con todos los campos", PLANO_FUNCION],
     ["tabla-valores", TABLA],
     ["diagrama-cajon sin texto con operadores", CAJON],
+    ["lienzo-geometrico con todos los campos", LIENZO],
   ] as const) {
     it(nombre, () => {
       const cliente = itemParaCliente(itemCon(figura));
@@ -210,9 +237,9 @@ describe("figuraParaCliente: el texto de las figuras de datos se protege, los n�
     assert.deepEqual(figuraParaCliente(sola), sola);
   });
 
-  it("las tres figuras anteriores siguen viajando tal cual, aunque tengan texto con operadores", () => {
+  it("las tres figuras anteriores y el lienzo siguen viajando tal cual, aunque tengan texto con operadores", () => {
     const tabla: FiguraItem = { ...TABLA, encabezados: ["x", "f(x) − g(x)"] } as FiguraItem;
-    for (const figura of [ISOMETRIAS, PLANO_FUNCION, tabla]) {
+    for (const figura of [ISOMETRIAS, PLANO_FUNCION, tabla, LIENZO]) {
       assert.equal(figuraParaCliente(figura), figura);
     }
   });

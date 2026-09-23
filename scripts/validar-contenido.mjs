@@ -26,6 +26,21 @@ import { motivoRechazoDatosSemejanza } from '../lib/semejanza.ts';
 import { esTipoGraficoEstadistico, motivoRechazoDatosGrafico } from '../lib/estadistica.ts';
 import { esTipoVisualProbabilidad, motivoRechazoDatosProbabilidad } from '../lib/probabilidad.ts';
 import { MAX_CAJAS, MAX_LARGO_NOMBRE, choquesDeRotulos, limiteDeMarcas, nombresQueNoCaben, num as numCajon } from '../lib/advance/diagramaCajon.ts';
+import {
+  ALTO_MAXIMO as ALTO_MAXIMO_LIENZO,
+  ANCHO_CARRIL,
+  CELDA_MINIMA,
+  FUERA_DE_TEXTO_PLANO,
+  TOPES as TOPES_LIENZO,
+  altoRenderizado,
+  barridoDe,
+  celdaDeCuadricula,
+  choquesDeLienzo,
+  conteosLienzo,
+  fueraDeVentana,
+  problemasDeEscala,
+  problemasDeMarcas,
+} from '../lib/advance/lienzoGeometrico.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -678,6 +693,21 @@ const CLAVES_CAJA = ['nombre', 'minimo', 'q1', 'mediana', 'q3', 'maximo', 'rotul
 const CINCO_NUMEROS = ['minimo', 'q1', 'mediana', 'q3', 'maximo'];
 const ORIENTACIONES_CAJON = ['horizontal', 'vertical'];
 const MAX_MARCAS_EJE = MAX_INTERVALOS + 1;
+// Lienzo geométrico (reglas (28) a (39)): geometría plana sin ejes,
+// declarativa, a escala por defecto. La geometría que miden las reglas 30 a 35
+// y 38 es la de lib/advance/lienzoGeometrico.ts, la misma que dibuja el
+// componente, en el carril de la ubicación de la figura.
+const CLAVES_LIENZO = ['tipo', 'ventana', 'puntos', 'segmentos', 'poligonos', 'circunferencias', 'arcos', 'angulos', 'regiones', 'cuadricula', 'textos', 'aEscala', 'descripcion'];
+const CLAVES_VENTANA_LIENZO = ['xMin', 'xMax', 'yMin', 'yMax'];
+const CLAVES_PUNTO_LIENZO = ['nombre', 'x', 'y', 'oculto', 'marca', 'ubicacion'];
+const CLAVES_SEGMENTO_LIENZO = ['desde', 'hasta', 'trazo', 'rotulo', 'lado', 'igualdad', 'paralelismo', 'cota', 'achurado', 'flecha'];
+const CLAVES_POLIGONO_LIENZO = ['id', 'vertices'];
+const CLAVES_CIRCUNFERENCIA_LIENZO = ['id', 'centro', 'radio'];
+const CLAVES_ARCO_LIENZO = ['id', 'clase', 'centro', 'radio', 'desde', 'hasta', 'rotulo'];
+const CLAVES_ANGULO_LIENZO = ['vertice', 'desde', 'hasta', 'marca', 'rotulo'];
+const CLAVES_REGION_LIENZO = ['formas', 'huecos', 'estilo'];
+const CLAVES_TEXTO_LIENZO = ['texto', 'x', 'y'];
+const CARDINALES_LIENZO = ['n', 'ne', 'e', 'se', 's', 'so', 'o', 'no'];
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'figura', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'figura', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -875,7 +905,8 @@ function validarFiguraItem(figura, donde, errores, contexto = 'enunciado') {
     if (figura.tipo === 'histograma') return validarHistograma(figura, donde, errores);
     if (figura.tipo === 'grafico-circular') return validarGraficoCircular(figura, donde, errores);
     if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores, contexto);
-    return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
+    if (figura.tipo === 'lienzo-geometrico') return validarLienzoGeometrico(figura, donde, errores, contexto);
+    return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS, 'lienzo-geometrico'].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
     return errores.push(`${donde}: figura debe ser un objeto { plano, descripcion, elementos }`);
@@ -1534,6 +1565,246 @@ function validarDiagramaCajon(figura, donde, errores, contexto = 'enunciado') {
     } else {
       errores.push(`${q}: el rótulo de ${numCajon(choque.valores[0])} se sale de su lugar en la figura; quita "rotulos" de esta caja`);
     }
+  }
+}
+
+/* ---------- lienzo geométrico, reglas (28) a (39) ---------- */
+
+/**
+ * Reglas (28) a (39): `lienzo-geometrico`. Declarativo: puntos con nombre en
+ * coordenadas del mundo dentro de una ventana declarada, y todo lo demás
+ * referido a esos nombres. (28) forma y texto plano. (29) nombres únicos y
+ * referencias que existen. (30) todo dentro de la ventana. (31) a escala: los
+ * rótulos de longitud y de grados calzan con lo dibujado y las marcas de
+ * igualdad unen segmentos iguales; se apaga con aEscala false. (32) siempre:
+ * ángulo recto en 90° ± 0,5° y paralelismo ± 0,5°. (33) rótulos que no se
+ * pisan, no tapan un vértice y no se salen. (34) alto renderizado de 320 px o
+ * menos. (35) topes por ubicación. (36) regiones con ids existentes y de forma
+ * cerrada. (37) descripcion de 30 o más. (38) cuadrícula legible. (39) cota con
+ * rótulo. Las reglas 30 a 35 y 38 miden con lib/advance/lienzoGeometrico.ts en
+ * el carril de la ubicación (enunciado, alternativa o solución). Todo error.
+ */
+function validarLienzoGeometrico(figura, donde, errores, contexto = 'enunciado') {
+  const antes = errores.length;
+  clavesSobrantes(figura, CLAVES_LIENZO, donde, errores);
+  const textoPlano = (valor, q) => {
+    if (!esTexto(valor)) return errores.push(`${q}: texto no vacío`);
+    if (FUERA_DE_TEXTO_PLANO.test(valor)) errores.push(`${q}: "${valor}" va en texto plano con Unicode (√, π, ², °), sin markdown ni LaTeX`);
+  };
+  const lista = (clave, claves, validar) => {
+    const valor = figura[clave];
+    if (valor === undefined) return;
+    if (!Array.isArray(valor)) return errores.push(`${donde}.${clave}: debe ser un array`);
+    valor.forEach((el, j) => {
+      const q = `${donde}.${clave}[${j}]`;
+      if (!esObjeto(el)) return errores.push(`${q}: debe ser un objeto`);
+      clavesSobrantes(el, claves, q, errores);
+      validar(el, q);
+    });
+  };
+  const nombre = (valor, q) => {
+    if (!esTexto(valor)) errores.push(`${q}: nombre de punto no vacío`);
+  };
+  const booleano = (el, clave, q) => {
+    if (el[clave] !== undefined && typeof el[clave] !== 'boolean') errores.push(`${q}.${clave}: debe ser booleano`);
+  };
+  const enVocabulario = (el, clave, vocabulario, q) => {
+    if (el[clave] !== undefined && !vocabulario.includes(el[clave])) errores.push(`${q}.${clave}: debe ser uno de: ${vocabulario.join(', ')}`);
+  };
+  const idOpcional = (el, q) => {
+    if (el.id !== undefined && !esTexto(el.id)) errores.push(`${q}.id: si está, es texto no vacío`);
+  };
+
+  // (28) forma
+  const v = figura.ventana;
+  if (!esObjeto(v)) {
+    errores.push(`${donde}.ventana: falta { xMin, xMax, yMin, yMax }`);
+  } else {
+    clavesSobrantes(v, CLAVES_VENTANA_LIENZO, `${donde}.ventana`, errores);
+    if (!CLAVES_VENTANA_LIENZO.every((k) => esNumero(v[k]))) errores.push(`${donde}.ventana: xMin, xMax, yMin e yMax deben ser números finitos`);
+    else {
+      if (v.xMin >= v.xMax) errores.push(`${donde}.ventana: xMin (${v.xMin}) debe ser menor que xMax (${v.xMax})`);
+      if (v.yMin >= v.yMax) errores.push(`${donde}.ventana: yMin (${v.yMin}) debe ser menor que yMax (${v.yMax})`);
+    }
+  }
+  if (!Array.isArray(figura.puntos) || figura.puntos.length === 0) errores.push(`${donde}.puntos: se espera un array con al menos un punto`);
+  else {
+    lista('puntos', CLAVES_PUNTO_LIENZO, (p, q) => {
+      nombre(p.nombre, `${q}.nombre`);
+      if (esTexto(p.nombre) && FUERA_DE_TEXTO_PLANO.test(p.nombre)) textoPlano(p.nombre, `${q}.nombre`);
+      if (!esNumero(p.x) || !esNumero(p.y)) errores.push(`${q}: x e y deben ser números finitos`);
+      booleano(p, 'oculto', q);
+      booleano(p, 'marca', q);
+      enVocabulario(p, 'ubicacion', CARDINALES_LIENZO, q);
+    });
+  }
+  lista('segmentos', CLAVES_SEGMENTO_LIENZO, (sg, q) => {
+    nombre(sg.desde, `${q}.desde`);
+    nombre(sg.hasta, `${q}.hasta`);
+    enVocabulario(sg, 'trazo', ['continuo', 'punteado'], q);
+    enVocabulario(sg, 'lado', ['exterior', 'interior'], q);
+    enVocabulario(sg, 'igualdad', [1, 2, 3], q);
+    enVocabulario(sg, 'paralelismo', [1, 2], q);
+    for (const k of ['cota', 'achurado', 'flecha']) booleano(sg, k, q);
+    if (sg.rotulo !== undefined) textoPlano(sg.rotulo, `${q}.rotulo`);
+  });
+  lista('poligonos', CLAVES_POLIGONO_LIENZO, (pol, q) => {
+    idOpcional(pol, q);
+    if (!Array.isArray(pol.vertices) || !pol.vertices.every(esTexto)) errores.push(`${q}.vertices: debe ser un array de nombres de punto`);
+  });
+  lista('circunferencias', CLAVES_CIRCUNFERENCIA_LIENZO, (c, q) => {
+    idOpcional(c, q);
+    nombre(c.centro, `${q}.centro`);
+    if (!esNumero(c.radio) || c.radio <= 0) errores.push(`${q}.radio: debe ser un número mayor que 0`);
+  });
+  lista('arcos', CLAVES_ARCO_LIENZO, (a, q) => {
+    idOpcional(a, q);
+    enVocabulario(a, 'clase', ['arco', 'sector'], q);
+    if (a.clase === undefined) errores.push(`${q}.clase: falta (arco o sector)`);
+    nombre(a.centro, `${q}.centro`);
+    if (!esNumero(a.radio) || a.radio <= 0) errores.push(`${q}.radio: debe ser un número mayor que 0`);
+    if (!esNumero(a.desde) || !esNumero(a.hasta)) errores.push(`${q}: desde y hasta deben ser ángulos en grados, números finitos`);
+    else if (barridoDe(a) === 360) errores.push(`${q}: desde (${a.desde}) y hasta (${a.hasta}) dan una vuelta completa; para eso va una circunferencia`);
+    if (a.rotulo !== undefined) textoPlano(a.rotulo, `${q}.rotulo`);
+  });
+  lista('angulos', CLAVES_ANGULO_LIENZO, (ang, q) => {
+    for (const k of ['vertice', 'desde', 'hasta']) nombre(ang[k], `${q}.${k}`);
+    enVocabulario(ang, 'marca', ['recto', 'arco'], q);
+    if (ang.marca === undefined) errores.push(`${q}.marca: falta (recto o arco)`);
+    if (ang.rotulo !== undefined) textoPlano(ang.rotulo, `${q}.rotulo`);
+  });
+  lista('regiones', CLAVES_REGION_LIENZO, (reg, q) => {
+    if (!Array.isArray(reg.formas) || reg.formas.length === 0 || !reg.formas.every(esTexto)) errores.push(`${q}.formas: debe ser un array con al menos un id de forma`);
+    if (reg.huecos !== undefined && (!Array.isArray(reg.huecos) || !reg.huecos.every(esTexto))) errores.push(`${q}.huecos: debe ser un array de ids de forma`);
+    enVocabulario(reg, 'estilo', ['rayado', 'punteado'], q);
+  });
+  lista('textos', CLAVES_TEXTO_LIENZO, (t, q) => {
+    textoPlano(t.texto, `${q}.texto`);
+    if (!esNumero(t.x) || !esNumero(t.y)) errores.push(`${q}: x e y deben ser números finitos`);
+  });
+  if (figura.cuadricula !== undefined) {
+    if (!esObjeto(figura.cuadricula)) errores.push(`${donde}.cuadricula: debe ser { paso }`);
+    else {
+      clavesSobrantes(figura.cuadricula, ['paso'], `${donde}.cuadricula`, errores);
+      if (!esNumero(figura.cuadricula.paso)) errores.push(`${donde}.cuadricula.paso: debe ser un número finito`);
+    }
+  }
+  if (figura.aEscala !== undefined && figura.aEscala !== false) errores.push(`${donde}.aEscala: solo se declara para apagarla (false); a escala es el valor por defecto`);
+
+  // (37) descripcion
+  if (!esTexto(figura.descripcion)) errores.push(`${donde}.descripcion: falta (texto alternativo del lienzo, es el <desc> del SVG)`);
+  else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+
+  // (39) cota con rótulo
+  (figura.segmentos ?? []).forEach((sg, j) => {
+    if (esObjeto(sg) && sg.cota === true && sg.rotulo === undefined) errores.push(`${donde}.segmentos[${j}]: una cota lleva rótulo (la medida que marca la llave)`);
+  });
+
+  if (errores.length !== antes) return;
+
+  // (29) nombres únicos y referencias existentes
+  const nombres = new Set();
+  figura.puntos.forEach((p, j) => {
+    if (nombres.has(p.nombre)) errores.push(`${donde}.puntos[${j}].nombre: "${p.nombre}" repetido`);
+    nombres.add(p.nombre);
+  });
+  const existe = (valor, q) => {
+    if (!nombres.has(valor)) errores.push(`${q}: "${valor}" no es un punto de la figura`);
+  };
+  const ids = new Map();
+  for (const [clave, clase] of [['poligonos', 'poligono'], ['circunferencias', 'circunferencia'], ['arcos', 'arco']]) {
+    (figura[clave] ?? []).forEach((f, j) => {
+      if (f.id === undefined) return;
+      if (ids.has(f.id)) errores.push(`${donde}.${clave}[${j}].id: "${f.id}" repetido (ya en ${ids.get(f.id).donde})`);
+      else ids.set(f.id, { donde: `${clave}[${j}]`, cerrada: clase !== 'arco' || f.clase === 'sector' });
+    });
+  }
+  (figura.segmentos ?? []).forEach((sg, j) => {
+    const q = `${donde}.segmentos[${j}]`;
+    existe(sg.desde, `${q}.desde`);
+    existe(sg.hasta, `${q}.hasta`);
+    if (sg.desde === sg.hasta) errores.push(`${q}: une "${sg.desde}" consigo mismo`);
+  });
+  (figura.poligonos ?? []).forEach((pol, j) => {
+    const q = `${donde}.poligonos[${j}]`;
+    pol.vertices.forEach((vv, k) => existe(vv, `${q}.vertices[${k}]`));
+    if (new Set(pol.vertices).size < 3) errores.push(`${q}.vertices: un polígono tiene al menos 3 vértices distintos`);
+  });
+  (figura.circunferencias ?? []).forEach((c, j) => existe(c.centro, `${donde}.circunferencias[${j}].centro`));
+  (figura.arcos ?? []).forEach((a, j) => existe(a.centro, `${donde}.arcos[${j}].centro`));
+  (figura.angulos ?? []).forEach((ang, j) => {
+    const q = `${donde}.angulos[${j}]`;
+    for (const k of ['vertice', 'desde', 'hasta']) existe(ang[k], `${q}.${k}`);
+    if (new Set([ang.vertice, ang.desde, ang.hasta]).size < 3) errores.push(`${q}: vértice, desde y hasta son tres puntos distintos`);
+  });
+
+  // (36) regiones: ids existentes y de forma cerrada
+  (figura.regiones ?? []).forEach((reg, j) => {
+    const q = `${donde}.regiones[${j}]`;
+    const usados = new Set();
+    for (const [campo, valores] of [['formas', reg.formas], ['huecos', reg.huecos ?? []]]) {
+      valores.forEach((id, k) => {
+        const forma = ids.get(id);
+        if (!forma) errores.push(`${q}.${campo}[${k}]: "${id}" no es el id de un polígono, una circunferencia o un sector de la figura`);
+        else if (!forma.cerrada) errores.push(`${q}.${campo}[${k}]: "${id}" es un arco abierto; una región se arma con polígonos, circunferencias o sectores`);
+        if (usados.has(id)) errores.push(`${q}.${campo}[${k}]: "${id}" repetido en la región`);
+        usados.add(id);
+      });
+    }
+  });
+
+  if (errores.length !== antes) return;
+
+  // (30) todo dentro de la ventana
+  const fuera = fueraDeVentana(figura);
+  for (const que of fuera) errores.push(`${donde}: ${que} queda fuera de la ventana`);
+
+  // (31) a escala
+  const fmt = (x) => Number(x.toFixed(3));
+  for (const pr of problemasDeEscala(figura)) {
+    if (pr.clase === 'igualdad') {
+      errores.push(`${donde}: ${pr.donde} llevan la misma marca de igualdad y miden de ${fmt(pr.esperado)} a ${fmt(pr.dibujado)} (más de 1 %); iguala los largos o declara aEscala false`);
+    } else if (pr.clase === 'grados') {
+      errores.push(`${donde}.${pr.donde}: el rótulo "${pr.rotulo}" pide ${fmt(pr.esperado)}° y el dibujo mide ${fmt(pr.dibujado)}° (más de 1°); corrige las coordenadas o declara aEscala false`);
+    } else {
+      errores.push(`${donde}.${pr.donde}: el rótulo "${pr.rotulo}" pide ${fmt(pr.esperado)} y el dibujo mide ${fmt(pr.dibujado)} (más de 1 %); corrige las coordenadas o declara aEscala false`);
+    }
+  }
+
+  // (32) marcas que valen siempre
+  for (const pr of problemasDeMarcas(figura)) {
+    if (pr.clase === 'recto') errores.push(`${donde}.${pr.donde}: la marca de ángulo recto va en un ángulo de ${fmt(pr.grados)}°; solo va donde el ángulo mide 90° ± 0,5°, a escala o no`);
+    else if (pr.clase === 'llano') errores.push(`${donde}.${pr.donde}: el ángulo mide ${fmt(pr.grados)}°, es nulo o llano y no lleva marca`);
+    else errores.push(`${donde}: ${pr.donde} llevan la misma marca de paralelismo y se desvían ${fmt(pr.grados)}° (más de 0,5°)`);
+  }
+
+  // (34) alto renderizado
+  const alto = altoRenderizado(figura, contexto);
+  if (alto > ALTO_MAXIMO_LIENZO) {
+    errores.push(`${donde}: la figura mide ${Math.round(alto)} px de alto en el carril de ${ANCHO_CARRIL[contexto]} px (${contexto}) y el tope es ${ALTO_MAXIMO_LIENZO}; ensancha la ventana en x o recórtala en y`);
+  }
+
+  // (35) topes
+  const conteo = conteosLienzo(figura);
+  const topes = TOPES_LIENZO[contexto];
+  for (const clave of ['puntos', 'segmentos', 'formas', 'rotulos']) {
+    if (conteo[clave] > topes[clave]) errores.push(`${donde}: ${conteo[clave]} ${clave === 'rotulos' ? 'rótulos' : clave} y el tope en ${contexto} es ${topes[clave]}`);
+  }
+
+  // (38) cuadrícula legible
+  if (figura.cuadricula !== undefined) {
+    const celda = celdaDeCuadricula(figura, contexto);
+    if (!(figura.cuadricula.paso > 0)) errores.push(`${donde}.cuadricula.paso: debe ser mayor que 0`);
+    else if (celda < CELDA_MINIMA) errores.push(`${donde}.cuadricula: celdas de ${fmt(celda)} px en el carril de ${ANCHO_CARRIL[contexto]} px (${contexto}); el mínimo es ${CELDA_MINIMA}, agranda el paso`);
+  }
+
+  // (33) choques de rótulos: solo con todo dentro de la ventana; si no, el
+  // rótulo de lo que quedó fuera repetiría el error de la regla 30.
+  if (fuera.length > 0) return;
+  for (const ch of choquesDeLienzo(figura, contexto)) {
+    if (ch.clase === 'rotulos') errores.push(`${donde}: los rótulos «${ch.a}» y «${ch.b}» se pisan (${contexto}, letra de 12 px); mueve uno con "ubicacion" o "lado", o amplía la ventana`);
+    else if (ch.clase === 'vertice') errores.push(`${donde}: el rótulo «${ch.a}» tapa el vértice ${ch.b} (${contexto}); muévelo con "ubicacion" o "lado"`);
+    else errores.push(`${donde}: el rótulo «${ch.a}» se sale del lienzo (${contexto}); amplía la ventana hacia ese lado`);
   }
 }
 

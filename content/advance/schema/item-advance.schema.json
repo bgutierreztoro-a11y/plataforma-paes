@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "item-advance.schema.json",
   "title": "Banco de ítems Fobos Advance",
-  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase; (10) figura, si está: xMin < xMax e yMin < yMax, todo vértice de poligono existe como punto de la misma figura, todo punto, vector y centro cae dentro del plano, nombres de punto únicos y descripcion presente. (11) figura con tipo plano-funcion: a distinto de 0 en toda parabola; recta con m y b o con por (dos puntos de x distinto), nunca ambas; entre 1 y 3 curvas, hasta 6 puntos, 4 segmentos y 2 regiones; desde < hasta donde vengan; ventana con xMin < xMax e yMin < yMax; rótulos únicos en toda la figura; con 2 o más curvas cada una lleva rotulo; regiones[].curva apunta a una curva existente que no sea recta-vertical; con ventana declarada, todo punto, extremo de segmento, extremo de arco, vértice visible y ejeSimetria.x cae dentro de ella (sin ventana, la automática los contiene por construcción y lo afirma un test del motor). (12) figura con tipo tabla-valores: toda fila con el mismo largo que encabezados, encabezados no vacíos y únicos, hasta 6 columnas y 8 filas. (13) figura con tipo tabla-datos: toda fila y filaTotal con el largo de columnas; columnas no vacías; celdas texto o número finito. (14) figura con tipo grafico-barras: cada serie con el largo de categorias; con 2 o más series, nombre obligatorio y sin repetir; valores finitos; ejeY con min < max si vienen ambos y paso > 0. (15) figura con tipo histograma: intervalos contiguos (hasta de uno = desde del siguiente) y crecientes (desde < hasta), mismo largo que frecuencias, frecuencias finitas y ≥ 0. (16) figura con tipo grafico-lineas: mismas reglas de largo, nombre y ejeY que barras. (17) figura con tipo grafico-circular: cada valor > 0; en modoEtiqueta porcentaje y angulo, cada porcentaje (100·v/total) o ángulo (360·v/total) tiene como máximo 1 decimal exacto, y el validador nombra el sector que falla. (18) figura con tipo diagrama-cajon: orientacion horizontal o vertical; eje con min, max y paso numéricos (la ventana es obligatoria), etiqueta texto y grilla booleano si vienen; entre 1 y 5 cajas; cada caja con minimo, q1, mediana, q3 y maximo finitos, rotulos booleano si viene y nombre de hasta 14 caracteres; descripcion de 30 o más. (19) en cada caja, minimo ≤ q1 ≤ mediana ≤ q3 ≤ maximo. (20) los cinco números de cada caja dentro de [eje.min, eje.max]. (21) eje.min < eje.max, eje.paso > 0 y el paso divide max − min en partes enteras. (22) a lo más 11 marcas en el eje (el tope del histograma: 10 intervalos, 11 bordes). (23) con 2 o más cajas, nombre obligatorio y sin repetir; en vertical, cada nombre cabe bajo su caja. (24) con rotulos, dos valores distintos de una caja no pueden quedar tan juntos que sus rótulos se pisen, ni un rótulo salir de su lugar, medido con la geometría del componente (lib/advance/diagramaCajon.ts); el mensaje sugiere quitar rotulos. Valores iguales comparten un solo rótulo y no chocan. Las reglas 23, 24 y 27 miden en la ubicación de la figura: enunciado (viewBox de 320) o alternativa (viewBox de 280), siempre con letra de 12 px. (25) alternativas con figura: en un mismo ítem las cuatro llevan figura o ninguna la lleva, y cada figura cumple las reglas de su tipo (10 a 24). (26) texto vacío: una alternativa puede traer texto vacío solo si trae figura, y esa figura tiene descripcion, que es el nombre accesible del botón; las figuras de datos sin descripcion (tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular) exigen texto. (27) figura con tipo diagrama-cajon: no más marcas de las que caben en el eje sin que sus números se pisen con letra de 12 px; en horizontal el límite lo fija el número más largo del eje (su ancho más el aire por marca), en vertical una letra de alto más el aire. Todo error, no advertencia.",
+  "$comment": "Schema del producto pago. Valida content/advance/<unidad-id>/banco.json. Referencia: docs/fobos-advance.md secciones 2.3, 5.2 y 6.1. Es deliberadamente más estricto que content/schema/leccion.schema.json: feedbackDescarte es obligatorio en los tres distractores sin excepción (es la pieza de la que depende la mecánica de descarte), feedbackDescarteIncorrecto es obligatorio en la correcta, tiempoReferenciaSeg es obligatorio y proveniencia.fuenteOrigen es obligatoria por ítem. errorCatalogado es nullable desde el 2026-09-13, pero la ausencia se DECLARA, nunca se omite: un distractor sin error mapeado lleva errorCatalogado null y sinErrorCatalogado { motivo, nota }. Motivo del cambio: en las formas liberadas de DEMRE el 26,6 % de los distractores son valores plausibles que no derivan de ningún procedimiento errado escribible (docs/analisis/propuesta-catalogo-transversal.md, categoría D), así que exigir el mapeo en los tres era inalcanzable, no estricto. El banco NO declara catalogoErrores: referencia por id el catálogo canónico del módulo en content/errores/<moduloId>.json y no inventa errores nuevos. Los archivos cuyo nombre empieza con '_' son plantillas y no se validan. Reglas que este schema no puede expresar y que quedan a cargo de scripts/validar-contenido.mjs: (1) exactamente una alternativa con esCorrecta true y exactamente tres distractores; (2) las cuatro claves A, B, C y D presentes y sin repetir; (3) todo errorCatalogado no nulo existe en el catálogo canónico del módulo; (4) item.unidadId e item.moduloId coinciden con los del banco; (5) volumen mínimo por unidad, 20 ítems con cobertura de al menos 12 errores distintos, seccion 5.4; (6) colisión de valores y contextos contra content/lecciones/ y contra el resto de content/advance/; (7) ningún id de ítem se repite dentro del banco, porque el registro de una sesión y la interfaz identifican cada ítem por su id; (8) piso por ítem: al menos 1 de los 3 distractores con errorCatalogado, cero mapeos es error porque ese ítem no alimentaría el diagnóstico; (9) piso por banco: al menos el 60 % de los distractores del banco con errorCatalogado, bajo eso es error, y el validador reporta el porcentaje real de cada banco siempre, aunque pase; (10) figura, si está: xMin < xMax e yMin < yMax, todo vértice de poligono existe como punto de la misma figura, todo punto, vector y centro cae dentro del plano, nombres de punto únicos y descripcion presente. (11) figura con tipo plano-funcion: a distinto de 0 en toda parabola; recta con m y b o con por (dos puntos de x distinto), nunca ambas; entre 1 y 3 curvas, hasta 6 puntos, 4 segmentos y 2 regiones; desde < hasta donde vengan; ventana con xMin < xMax e yMin < yMax; rótulos únicos en toda la figura; con 2 o más curvas cada una lleva rotulo; regiones[].curva apunta a una curva existente que no sea recta-vertical; con ventana declarada, todo punto, extremo de segmento, extremo de arco, vértice visible y ejeSimetria.x cae dentro de ella (sin ventana, la automática los contiene por construcción y lo afirma un test del motor). (12) figura con tipo tabla-valores: toda fila con el mismo largo que encabezados, encabezados no vacíos y únicos, hasta 6 columnas y 8 filas. (13) figura con tipo tabla-datos: toda fila y filaTotal con el largo de columnas; columnas no vacías; celdas texto o número finito. (14) figura con tipo grafico-barras: cada serie con el largo de categorias; con 2 o más series, nombre obligatorio y sin repetir; valores finitos; ejeY con min < max si vienen ambos y paso > 0. (15) figura con tipo histograma: intervalos contiguos (hasta de uno = desde del siguiente) y crecientes (desde < hasta), mismo largo que frecuencias, frecuencias finitas y ≥ 0. (16) figura con tipo grafico-lineas: mismas reglas de largo, nombre y ejeY que barras. (17) figura con tipo grafico-circular: cada valor > 0; en modoEtiqueta porcentaje y angulo, cada porcentaje (100·v/total) o ángulo (360·v/total) tiene como máximo 1 decimal exacto, y el validador nombra el sector que falla. (18) figura con tipo diagrama-cajon: orientacion horizontal o vertical; eje con min, max y paso numéricos (la ventana es obligatoria), etiqueta texto y grilla booleano si vienen; entre 1 y 5 cajas; cada caja con minimo, q1, mediana, q3 y maximo finitos, rotulos booleano si viene y nombre de hasta 14 caracteres; descripcion de 30 o más. (19) en cada caja, minimo ≤ q1 ≤ mediana ≤ q3 ≤ maximo. (20) los cinco números de cada caja dentro de [eje.min, eje.max]. (21) eje.min < eje.max, eje.paso > 0 y el paso divide max − min en partes enteras. (22) a lo más 11 marcas en el eje (el tope del histograma: 10 intervalos, 11 bordes). (23) con 2 o más cajas, nombre obligatorio y sin repetir; en vertical, cada nombre cabe bajo su caja. (24) con rotulos, dos valores distintos de una caja no pueden quedar tan juntos que sus rótulos se pisen, ni un rótulo salir de su lugar, medido con la geometría del componente (lib/advance/diagramaCajon.ts); el mensaje sugiere quitar rotulos. Valores iguales comparten un solo rótulo y no chocan. Las reglas 23, 24 y 27 miden en la ubicación de la figura: enunciado (viewBox de 320) o alternativa (viewBox de 280), siempre con letra de 12 px. (25) alternativas con figura: en un mismo ítem las cuatro llevan figura o ninguna la lleva, y cada figura cumple las reglas de su tipo (10 a 24). (26) texto vacío: una alternativa puede traer texto vacío solo si trae figura, y esa figura tiene descripcion, que es el nombre accesible del botón; las figuras de datos sin descripcion (tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular) exigen texto. (27) figura con tipo diagrama-cajon: no más marcas de las que caben en el eje sin que sus números se pisen con letra de 12 px; en horizontal el límite lo fija el número más largo del eje (su ancho más el aire por marca), en vertical una letra de alto más el aire. (28) figura con tipo lienzo-geometrico: forma; ventana con cuatro números finitos, xMin < xMax e yMin < yMax; al menos un punto con nombre y x, y finitos; vocabularios cerrados (trazo continuo o punteado, lado exterior o interior, igualdad 1 a 3, paralelismo 1 o 2, clase arco o sector, marca recto o arco, estilo rayado o punteado, ubicacion n, ne, e, se, s, so, o, no); radios mayores que 0; un arco no da la vuelta completa; aEscala solo se declara false; todo rótulo, nombre y texto en texto plano con Unicode (√, π, ², °), sin markdown ni LaTeX. (29) nombres de punto únicos, ids de forma únicos, toda referencia (desde, hasta, vértices, centro, vértice de ángulo) es un punto de la figura, un segmento une dos puntos distintos, un polígono tiene al menos 3 vértices distintos y un ángulo, tres puntos distintos. (30) todo dentro de la ventana: puntos, circunferencias completas, arcos y sectores (su caja) y textos. (31) a escala, salvo aEscala false: todo rótulo de longitud parseable (entero, decimal con coma, fracción a/b, √b, a√b, aπ y aπ/b, con unidad opcional cm, m, mm, km o u) calza con la longitud dibujada con error relativo de 1 % o menos (en arcos, la longitud del arco); todo rótulo en grados calza con el ángulo dibujado ± 1°; los segmentos con la misma cantidad de rayas de igualdad miden lo mismo (1 %). Los rótulos con letras que no son unidad no se verifican. (32) a escala o no: la marca de ángulo recto solo va donde el ángulo mide 90° ± 0,5°, los segmentos con la misma marca de paralelismo son paralelos (± 0,5°) y ninguna marca de ángulo cae en un ángulo nulo o llano. (33) en el carril de su ubicación a 390 px, con letra de 12 px: ningún rótulo pisa a otro, tapa un vértice ni se sale del lienzo; el mensaje nombra los rótulos. (34) el alto renderizado en ese carril es de 320 px o menos. (35) topes por ubicación: enunciado y solución 24 puntos, 24 segmentos, 10 formas y 20 rótulos (el máximo del inventario); alternativa 12, 12, 5 y 10. (36) regiones: cada id de formas y huecos existe, es un polígono, una circunferencia o un sector (no un arco abierto) y no se repite en la región. (37) descripcion de 30 o más caracteres. (38) cuadrícula: paso mayor que 0 y celdas de 8 px o más en el carril. (39) una cota lleva rótulo. Las reglas 30 a 35 y 38 miden con lib/advance/lienzoGeometrico.ts, la misma geometría que dibuja el componente, en el ancho del carril de la ubicación: 358 px en el enunciado, 316 px en una alternativa y 330 px en la solución. Todo error, no advertencia.",
   "type": "object",
   "required": ["tipo", "unidadId", "moduloId", "titulo", "items", "proveniencia"],
   "properties": {
@@ -115,7 +115,7 @@
           "description": "Resolución paso a paso, recalculada desde cero. Se muestra al cerrar el ítem por descarte fatal."
         },
         "figura": {
-          "description": "Opcional. Sin tipo es el plano de isometrías (figuraPlano, vocabulario cerrado). Con tipo plano-funcion o tabla-valores es una de las figuras de función; con tipo tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular o diagrama-cajon es una figura de datos (solo datos, nunca SVG libre). El validador despacha por tipo; los bancos anteriores no cambian.",
+          "description": "Opcional. Sin tipo es el plano de isometrías (figuraPlano, vocabulario cerrado). Con tipo plano-funcion o tabla-valores es una de las figuras de función; con tipo tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular o diagrama-cajon es una figura de datos (solo datos, nunca SVG libre); con tipo lienzo-geometrico es geometría plana sin ejes. El validador despacha por tipo; los bancos anteriores no cambian.",
           "oneOf": [
             { "$ref": "#/definitions/figuraPlano" },
             { "$ref": "#/definitions/figuraPlanoFuncion" },
@@ -125,7 +125,8 @@
             { "$ref": "#/definitions/figuraHistograma" },
             { "$ref": "#/definitions/figuraGraficoLineas" },
             { "$ref": "#/definitions/figuraGraficoCircular" },
-            { "$ref": "#/definitions/figuraDiagramaCajon" }
+            { "$ref": "#/definitions/figuraDiagramaCajon" },
+            { "$ref": "#/definitions/figuraLienzoGeometrico" }
           ]
         },
         "proveniencia": { "$ref": "#/definitions/provenienciaItem" }
@@ -596,6 +597,158 @@
       "additionalProperties": false
     },
 
+    "puntoLienzo": {
+      "type": "object",
+      "description": "Punto con nombre único en coordenadas del mundo (y hacia arriba). Su rótulo es el nombre y va hacia afuera de la figura; ubicacion lo ajusta por punto cardinal (o = oeste). oculto calla el nombre (punto auxiliar); marca dibuja un punto relleno.",
+      "required": ["nombre", "x", "y"],
+      "properties": {
+        "nombre": { "type": "string", "minLength": 1 },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "oculto": { "type": "boolean" },
+        "marca": { "type": "boolean" },
+        "ubicacion": { "enum": ["n", "ne", "e", "se", "s", "so", "o", "no"] }
+      },
+      "additionalProperties": false
+    },
+
+    "segmentoLienzo": {
+      "type": "object",
+      "description": "Segmento entre dos puntos. Continuo es contorno; punteado es auxiliar (altura, radio, diagonal) y va más delgado. lado decide de qué lado va lo que acompaña al segmento (rótulo, cota y achurado): exterior por defecto, afuera de la figura. igualdad: 1 a 3 rayas; paralelismo: 1 o 2 flechas. cota pone la medida en una llave separada; achurado dibuja suelo o muro; flecha pone punta en hasta.",
+      "required": ["desde", "hasta"],
+      "properties": {
+        "desde": { "type": "string", "minLength": 1 },
+        "hasta": { "type": "string", "minLength": 1 },
+        "trazo": { "enum": ["continuo", "punteado"] },
+        "rotulo": { "type": "string", "minLength": 1 },
+        "lado": { "enum": ["exterior", "interior"] },
+        "igualdad": { "enum": [1, 2, 3] },
+        "paralelismo": { "enum": [1, 2] },
+        "cota": { "type": "boolean" },
+        "achurado": { "type": "boolean" },
+        "flecha": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "figuraLienzoGeometrico": {
+      "type": "object",
+      "description": "Lienzo geométrico (components/advance/figuras/LienzoGeometrico.tsx): geometría plana sin ejes, declarativa. Coordenadas del mundo con y hacia arriba dentro de una ventana declarada; la figura no calcula nada del problema y muestra los datos del enunciado, nunca la respuesta. A escala por defecto: los rótulos de longitud y de grados calzan con lo dibujado. aEscala false apaga esos chequeos y muestra la nota fija 'Figura referencial, no está a escala'. Reglas (28) a (39) del $comment a cargo del validador.",
+      "required": ["tipo", "ventana", "puntos", "descripcion"],
+      "properties": {
+        "tipo": { "const": "lienzo-geometrico" },
+        "ventana": {
+          "type": "object",
+          "required": ["xMin", "xMax", "yMin", "yMax"],
+          "properties": {
+            "xMin": { "type": "number" },
+            "xMax": { "type": "number" },
+            "yMin": { "type": "number" },
+            "yMax": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "puntos": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/puntoLienzo" } },
+        "segmentos": { "type": "array", "items": { "$ref": "#/definitions/segmentoLienzo" } },
+        "poligonos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["vertices"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "vertices": { "type": "array", "minItems": 3, "items": { "type": "string", "minLength": 1 } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "circunferencias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["centro", "radio"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "centro": { "type": "string", "minLength": 1 },
+              "radio": { "type": "number", "exclusiveMinimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "arcos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Arco o sector: centro, radio y ángulos en grados, antihorario desde el eje x positivo, de desde a hasta. El sector es una forma cerrada y sirve para regiones.",
+            "required": ["clase", "centro", "radio", "desde", "hasta"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "clase": { "enum": ["arco", "sector"] },
+              "centro": { "type": "string", "minLength": 1 },
+              "radio": { "type": "number", "exclusiveMinimum": 0 },
+              "desde": { "type": "number" },
+              "hasta": { "type": "number" },
+              "rotulo": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "angulos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Ángulo en vertice entre los rayos hacia desde y hasta, siempre el menor que 180°. marca recto solo donde mide 90° ± 0,5° (regla 32).",
+            "required": ["vertice", "desde", "hasta", "marca"],
+            "properties": {
+              "vertice": { "type": "string", "minLength": 1 },
+              "desde": { "type": "string", "minLength": 1 },
+              "hasta": { "type": "string", "minLength": 1 },
+              "marca": { "enum": ["recto", "arco"] },
+              "rotulo": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "regiones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Región sombreada: unión de formas menos unión de huecos, por id de polígono, circunferencia o sector. Se compone con máscara, no con evenodd. Dos estilos distinguibles por trama.",
+            "required": ["formas"],
+            "properties": {
+              "formas": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+              "huecos": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+              "estilo": { "enum": ["rayado", "punteado"] }
+            },
+            "additionalProperties": false
+          }
+        },
+        "cuadricula": {
+          "type": "object",
+          "required": ["paso"],
+          "properties": { "paso": { "type": "number", "exclusiveMinimum": 0 } },
+          "additionalProperties": false
+        },
+        "textos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Texto libre centrado en una coordenada del mundo, dentro o junto a una región.",
+            "required": ["texto", "x", "y"],
+            "properties": {
+              "texto": { "type": "string", "minLength": 1 },
+              "x": { "type": "number" },
+              "y": { "type": "number" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "aEscala": { "const": false, "description": "Solo para apagar los chequeos de longitud, grados e igualdad (regla 31). Muestra la nota fija." },
+        "descripcion": { "type": "string", "minLength": 30, "description": "Texto alternativo real: es el <desc> del SVG. El <title> corto lo genera el componente." }
+      },
+      "additionalProperties": false
+    },
+
     "figuraAlternativa": {
       "description": "Figura de una alternativa gráfica: cualquier tipo de la figura del ítem. En un mismo ítem van las cuatro alternativas con figura o ninguna (regla 25). Con figura el texto puede ir vacío, y entonces el nombre accesible del botón sale de figura.descripcion (regla 26).",
       "oneOf": [
@@ -607,7 +760,8 @@
         { "$ref": "#/definitions/figuraHistograma" },
         { "$ref": "#/definitions/figuraGraficoLineas" },
         { "$ref": "#/definitions/figuraGraficoCircular" },
-        { "$ref": "#/definitions/figuraDiagramaCajon" }
+        { "$ref": "#/definitions/figuraDiagramaCajon" },
+        { "$ref": "#/definitions/figuraLienzoGeometrico" }
       ]
     },
 

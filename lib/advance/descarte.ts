@@ -264,8 +264,118 @@ export type FiguraDatos =
   | FiguraGraficoCircular
   | FiguraDiagramaCajon;
 
+/* ---------- lienzo geométrico (figuraLienzoGeometrico) ---------- */
+
+/** Ajuste del rótulo de un punto por punto cardinal: n, noreste, este, … o = oeste. */
+export type CardinalLienzo = "n" | "ne" | "e" | "se" | "s" | "so" | "o" | "no";
+
+/**
+ * Un punto con nombre único en coordenadas del mundo (y hacia arriba). Su
+ * rótulo es el nombre, fuera de la figura; `oculto` lo calla (punto auxiliar)
+ * y `marca` dibuja un punto relleno (un centro, una ficha).
+ */
+export interface PuntoLienzo {
+  nombre: string;
+  x: number;
+  y: number;
+  oculto?: boolean;
+  marca?: boolean;
+  ubicacion?: CardinalLienzo;
+}
+
+/**
+ * Segmento entre dos puntos. Continuo es contorno; punteado es auxiliar
+ * (altura, radio, diagonal). `lado` decide de qué lado va todo lo que se pone
+ * junto al segmento: rótulo, cota y achurado; por defecto afuera de la figura.
+ */
+export interface SegmentoLienzo {
+  desde: string;
+  hasta: string;
+  trazo?: "continuo" | "punteado";
+  rotulo?: string;
+  lado?: "exterior" | "interior";
+  /** Marca de igualdad: 1 a 3 rayas. Segmentos con la misma cantidad miden lo mismo. */
+  igualdad?: 1 | 2 | 3;
+  /** Marca de paralelismo: 1 o 2 flechas. Segmentos con la misma cantidad son paralelos. */
+  paralelismo?: 1 | 2;
+  /** La medida va en una llave separada del segmento, como una cota. */
+  cota?: boolean;
+  /** Suelo o muro: achurado del lado del segmento. */
+  achurado?: boolean;
+  /** Punta de flecha en `hasta`. */
+  flecha?: boolean;
+}
+
+export interface PoligonoLienzo {
+  id?: string;
+  vertices: string[];
+}
+
+export interface CircunferenciaLienzo {
+  id?: string;
+  centro: string;
+  radio: number;
+}
+
+/** Arco o sector: ángulos en grados, antihorario desde el eje x positivo, de `desde` a `hasta`. */
+export interface ArcoLienzo {
+  id?: string;
+  clase: "arco" | "sector";
+  centro: string;
+  radio: number;
+  desde: number;
+  hasta: number;
+  rotulo?: string;
+}
+
+/** Ángulo en `vertice` entre los rayos hacia `desde` y `hasta`; siempre el menor que 180°. */
+export interface AnguloLienzo {
+  vertice: string;
+  desde: string;
+  hasta: string;
+  marca: "recto" | "arco";
+  rotulo?: string;
+}
+
+/** Región sombreada: unión de formas menos unión de huecos, por id. */
+export interface RegionLienzo {
+  formas: string[];
+  huecos?: string[];
+  estilo?: "rayado" | "punteado";
+}
+
+export interface TextoLienzo {
+  texto: string;
+  x: number;
+  y: number;
+}
+
+/**
+ * Lienzo geométrico: geometría plana sin ejes, declarativa. Coordenadas del
+ * mundo en una ventana declarada; la figura no calcula nada del problema. A
+ * escala por defecto (los rótulos de longitud y de grados calzan con lo
+ * dibujado); `aEscala: false` apaga esos chequeos y muestra una nota fija.
+ * Muestra los datos del enunciado, nunca la respuesta.
+ */
+export interface FiguraLienzoGeometrico {
+  tipo: "lienzo-geometrico";
+  ventana: VentanaFuncion;
+  puntos: PuntoLienzo[];
+  segmentos?: SegmentoLienzo[];
+  poligonos?: PoligonoLienzo[];
+  circunferencias?: CircunferenciaLienzo[];
+  arcos?: ArcoLienzo[];
+  angulos?: AnguloLienzo[];
+  regiones?: RegionLienzo[];
+  cuadricula?: { paso: number };
+  textos?: TextoLienzo[];
+  aEscala?: false;
+  /** Texto alternativo real: el <desc> del SVG. */
+  descripcion: string;
+}
+
 /** Cualquier figura de un ítem. Viaja al cliente tal cual, salvo el texto de las figuras de datos (lib/advance/banco.ts). */
-export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos;
+export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos | FiguraLienzoGeometrico;
 
 /** Sin `proveniencia`: no viaja al cliente. `solucion` sí, porque el descarte fatal la muestra al instante. */
 export interface ItemAdvance {
