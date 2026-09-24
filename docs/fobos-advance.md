@@ -1049,6 +1049,54 @@ Detalle con citas de DEMRE, UC y la lección gratuita en `docs/analisis/material
 
 Hallazgos abiertos, la lección no se toca: (1) π ≈ 3,14 y respuestas decimales frente a π exacto en DEMRE; (2) raíces con su decimal en alternativas y feedback frente a raíces exactas en DEMRE; (3) la lección redondea √146 de dos maneras (12,1 y 12,08).
 
+### 12.15 Cuerpo geométrico (`cuerpo-geometrico`)
+
+Infraestructura previa a la unidad 15 (cuerpos-geometricos), construida el 2026-09-24 sin escribir ningún ítem. El temario M1 nombra el área y el volumen de paralelepípedos, cubos y cilindros, y el lienzo no dibuja cuerpos. El inventario y los conteos que decidieron cada rasgo están en `docs/analisis/material-referencia/figuras-cuerpos-geometricos.md`.
+
+Declarativo (firmado): cajas o cilindros rectos, nunca los dos en una figura. La figura no calcula nada del problema y muestra los datos del enunciado, nunca la respuesta (12.1). Las medidas numéricas de las piezas son proporciones del dibujo; los datos son los rótulos de las cotas, y la figura no se promete a escala, como las de DEMRE (12.14).
+
+```
+tipo: "cuerpo-geometrico"
+piezas: 1 a 12 de
+  { cuerpo: "paralelepipedo", largo, alto, ancho, en? }   en: vértice de adelante, abajo, a la izquierda
+  { cuerpo: "cubo", arista, en? }
+  { cuerpo: "cilindro", radio, altura, x? }               misma x: se apilan en el orden del array
+juntas?: boolean                                         uniones entre cajas de un mismo plano
+ocultas?: false                                          apaga las aristas ocultas
+cotas?: hasta 6 de
+  { desde, hasta, rotulo, llave?: false, lado?: "exterior" | "interior" }      de arista
+  { pieza, medida: "radio" | "diametro" | "altura", rotulo, llave?: false,
+    lado?: "arriba" | "abajo" | "izquierda" | "derecha" }                      de cilindro
+descripcion: string, ≥ 30 caracteres                     el <desc> del SVG
+```
+
+Proyección. La caballera del tier gratis, copiada y no importada (`lib/cuerposGeometricos.ts` l. 40 y 44-50): la profundidad sube a 45° hacia la derecha a la mitad de su largo, así que una unidad de fondo corre el dibujo 0,354 a la derecha y 0,354 hacia arriba. La tapa del cilindro no pasa por esa proyección: como en el gratis (l. 248-272), es una elipse de ejes horizontales con alto igual a la mitad del ancho. Por esa diferencia cajas y cilindros no van en una misma figura. Una sola escala para x e y: la fija el ancho del carril (358 px en el enunciado, 330 px en la solución) y baja si el alto pasa de 320 px, así que el alto nunca pasa de 320. Una unidad del viewBox es un píxel a 390 y la letra se ve de 12 px.
+
+Ocultas (`lib/advance/cuerpoGeometrico.ts`). En las cajas, cada arista se parte donde empieza o termina otra caja y donde su dibujo cruza el de otra arista. Cada tramo es pliegue (una esquina) o junta (dos caras en un mismo plano) según cuántos de los cuatro cuadrantes que lo rodean caen dentro de una caja, y es oculto si el rayo desde su punto medio hacia el observador, de dirección (0,354; 0,354; −1), entra a una caja. Una caja sola da las tres ocultas del gratis, las del vértice de atrás, abajo, a la izquierda. En los cilindros, analítico: la base con el arco de atrás punteado, la tapa de arriba de la pila entera, y en una unión el arco de atrás de la tapa de abajo punteado donde cae dentro del dibujo del cilindro de encima; con el de encima chato no se tapa nada. Por defecto las ocultas se dibujan (firmado); `ocultas: false` las apaga, porque DEMRE dibuja 0 de 8. Las juntas ocultas no se dibujan nunca.
+
+Cotas. La de arista va sobre un tramo paralelo a un eje que se ve entero: llave a 5 px del tramo, de 7 px, del lado opuesto al centro del dibujo (`lado: "interior"` lo invierte), con el rótulo 3 px más allá; `llave: false` pone el rótulo a 5 px. La de cilindro: el radio es un segmento del centro de la tapa al borde derecho, con el rótulo encima, como en el gratis; el diámetro lleva llave sobre la tapa o bajo la base; la altura, junto a la generatriz izquierda o derecha. La llave es la del lienzo (`pathLlave`). La ubicación es determinista, sin recolocar: el motor pone y el validador mide. Los rótulos van horizontales.
+
+Dibujo (`components/advance/figuras/CuerpoGeometrico.tsx`). Aristas visibles y tapas en `--linea-nav` de 2 px; ocultas en `--linea-nav` de 1,25 px y trazo 5 4; juntas en `--linea-nav` de 1,25 px, continuas; llaves y radio en tinta de 1,25; rótulos en tinta con halo `--color-bg`. Sin relleno de caras. Accesibilidad como el lienzo: `role="img"`, `<title>` "Cuerpo geométrico" desde `textos.ts` y `<desc>` = `descripcion`, ids desde `useId`. `FiguraDeItem` lo despacha en el enunciado y en la tarjeta de la solución (12.13); no va en alternativas; `itemParaCliente` lo pasa tal cual.
+
+Reglas del validador (`validarCuerpoGeometrico`, `scripts/validar-contenido.mjs`), todas error:
+
+- (41) Forma: `piezas` con al menos una pieza; `cuerpo` paralelepipedo, cubo o cilindro, con medidas finitas mayores que 0; `en` con x, y, z finitos, solo en cajas; `x` solo en cilindros; `juntas` booleano; `ocultas` solo se declara `false`; cada cota es de arista o de cilindro, con sus vocabularios de `medida` y `lado`; `llave` solo se declara `false`; rótulos en texto plano (la misma regla del lienzo); `descripcion` de 30 o más caracteres; sin claves sobrantes.
+- (42) Una sola familia: cajas o cilindros. `juntas` solo con dos o más cajas.
+- (43) Cajas sin cruces (volumen común 0), cada una en el suelo o apoyada en la tapa de otra, y los grupos de cajas separados con 12 px o más de aire en pantalla.
+- (44) Cilindros: los de la misma x se apilan, cada uno más angosto que el de abajo (el inventario no trae el de encima más ancho); las pilas distintas, con 12 px o más de aire.
+- (45) Cotas que existen y se ven: la de arista, paralela a un eje y entera sobre aristas visibles dibujadas (no sobre una oculta, una junta que no se dibuja ni fuera del cuerpo), como pide el gratis (`lib/cuerposGeometricos.ts` l. 120-125); la de cilindro, sobre una pieza que existe, con el lado que va con su medida; radio y diámetro no van en la misma pieza, y dos cotas no marcan lo mismo.
+- (46) Rótulos coherentes con el dibujo, sin prometer escala: entre dos rótulos de longitud legibles (`parsearLongitud`), el mayor no va sobre el tramo más corto y dos iguales van sobre tramos iguales (1 %). Los rótulos con letras no se comparan.
+- (47) Legibilidad a 390 px en el carril: cada medida de una caja de 12 px o más dibujada (la profundidad, a la mitad); cada tramo acotado de 24 px o más; en cada caja, medida mayor sobre menor de 4 o menos; en cada cilindro, altura sobre radio de 0,25 a 8 y tapa de 8 px o más de alto. Los números del gratis (razón 4, de 0,25 a 8) recalculados con letra de 12 px: con razón 4 una profundidad acotada mide 31 px en el enunciado y 27 en la solución; con 6, 21 y 19.
+- (48) Con letra de 12 px, ningún rótulo pisa a otro, a un trazo dibujado (arista visible, oculta o junta, arco de tapa, radio) ni a la llave de otra cota; ninguna llave cruza otra ni corta un trazo; nada se sale del viewBox. Con `ocultas: false` las ocultas no cuentan. Un rótulo sí puede quedar sobre una cara. Corre al final.
+- (49) Topes, el máximo del inventario: 12 piezas (11 bloques en 2024 invierno n.º 45) y 6 cotas (2026 regular n.º 47).
+- (50) No va en una alternativa (0 en DEMRE y 0 en UC).
+
+La (40) no cambia: en `figuraSolucion` el cuerpo mide con el carril de 330 px. Tests: `lib/advance/cuerpoGeometrico.test.ts` (motor), `lib/advance/validarCuerpo.test.ts` (cada regla con el ejemplo que la rompe), `lib/advance/cuerpoGeometrico.render.test.ts` (render) y `lib/advance/muestraCuerpo.test.ts` (galería).
+
+Galería `/_design`, sección "Cuerpo geométrico", línea 03, con datos inventados en `app/%5Fdesign/muestraCuerpo.ts`, todos válidos: paralelepípedo, cubo, cilindro con diámetro, cilindro con radio, la U con seis cotas y ocultas, cilindros apilados, cilindro chato encima, bloques con juntas y sin ocultas, cilindros separados, cota sin llave, los bordes de 12 px, 24 px, razón 4 y altura sobre radio 0,25 y 8, dos redes sobre el lienzo y la U dividida en cubos en la tarjeta de la solución. Medido a 390 × 844 el 2026-09-24: SVG de 358 px en el enunciado y de 330 px en la solución, alto máximo de 320 px, letra de 12 px, 0 rótulos fuera del SVG, 0 superpuestos y sin scroll horizontal.
+
+No se construyó (umbral de la unidad 14, conteos en el inventario): la vista isométrica (pasa el umbral, pero la proyección firmada es la caballera), el cilindro acostado, los huecos con espesor, un cuerpo dentro de otro, la flecha doble con líneas de extensión, los rótulos señalados con flecha, las caras sombreadas, las flechas entre figuras, la red y el cuerpo en una misma figura, los vértices con letras, el líquido hasta un nivel, la diagonal espacial y los cuerpos fuera del temario. Las redes de cuerpos van en `lienzo-geometrico` (12.12).
+
 ---
 
 ## Anexo A. Plantilla de arranque de sesión de CC
