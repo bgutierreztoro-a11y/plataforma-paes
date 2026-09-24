@@ -89,6 +89,70 @@ export async function vigenciasDe(
   );
 }
 
+/** El acceso que cuenta para el recorrido: prueba, cortesía o compra. `m1-libre` (gratis) no cuenta. */
+export interface AccesoVigente {
+  origen: "prueba" | "cortesia" | "compra";
+  vigencia_hasta: Date | null;
+}
+
+async function accesoVigente(usuarioId: string): Promise<AccesoVigente | null> {
+  const filas = await consultar<AccesoVigente>(
+    "accesoVigente",
+    `SELECT origen, vigencia_hasta
+       FROM entitlements
+      WHERE usuario_id = $1
+        AND origen IN ('prueba', 'cortesia', 'compra')
+        AND vigencia_desde <= now()
+        AND (vigencia_hasta IS NULL OR vigencia_hasta > now())
+      ORDER BY CASE origen WHEN 'compra' THEN 0 WHEN 'cortesia' THEN 1 ELSE 2 END,
+               vigencia_hasta DESC NULLS FIRST
+      LIMIT 1`,
+    [usuarioId],
+  );
+  return filas[0] ?? null;
+}
+
+/**
+ * La prueba de 7 días (docs/recorrido-entrada.md, ADR-04). Idempotente: con una prueba,
+ * cortesía o compra vigente no hace nada y la devuelve. Si no, crea 'm1-advance-2027' con
+ * origen 'prueba' por 7 días exactos, con su rastro en la bitácora igual que el webhook.
+ * El índice único de la 011 impide una segunda prueba: si ya tuvo una y venció, devuelve null.
+ * Si dos cargas corren a la vez, la que pierde el INSERT relee y devuelve la de la otra.
+ */
+export async function asegurarPrueba(usuarioId: string): Promise<AccesoVigente | null> {
+  const previo = await accesoVigente(usuarioId);
+  if (previo) return previo;
+  const nuevas = await consultar<AccesoVigente>(
+    "asegurarPrueba",
+    `WITH nuevo AS (
+       INSERT INTO entitlements (usuario_id, producto, origen, vigencia_desde, vigencia_hasta)
+       VALUES ($1, $2, 'prueba', now(), now() + interval '7 days')
+       ON CONFLICT DO NOTHING
+       RETURNING id, usuario_id, producto, origen, vigencia_desde, vigencia_hasta, referencia_pago, creado_en
+     ),
+     auditoria AS (
+       INSERT INTO entitlements_auditoria
+         (entitlement_id, usuario_id, accion, valor_nuevo, actor)
+       SELECT n.id, n.usuario_id, 'creado',
+              jsonb_build_object(
+                'id',              n.id,
+                'usuario_id',      n.usuario_id,
+                'producto',        n.producto,
+                'origen',          n.origen,
+                'vigencia_desde',  n.vigencia_desde,
+                'vigencia_hasta',  n.vigencia_hasta,
+                'referencia_pago', n.referencia_pago,
+                'creado_en',       n.creado_en
+              ),
+              'sistema'
+         FROM nuevo n
+     )
+     SELECT origen, vigencia_hasta FROM nuevo`,
+    [usuarioId, PRODUCTO_ADVANCE],
+  );
+  return nuevas[0] ?? (await accesoVigente(usuarioId));
+}
+
 /**
  * Otorga el acceso gratuito y deja su rastro en la bitácora. Lo llama el
  * webhook en `user.created` (PASO 3). Devuelve true solo si creó un

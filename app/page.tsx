@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PuntoDePartida } from "@/components/PuntoDePartida";
+import { AvisoBienvenida } from "@/components/recorrido/AvisoBienvenida";
 import { ejesDelCamino, temasConNodo } from "@/lib/camino";
 
 export const metadata: Metadata = {
@@ -40,6 +41,7 @@ export default function Portada() {
     <main className="mx-auto flex min-h-full w-full max-w-md flex-1 flex-col justify-center px-4 py-12">
       {/* El rótulo vive acá y no dentro de `PuntoDePartida`: es de la pantalla,
           no de la rama, así que no cambia cuando la rama cambia. */}
+      <AvisoBienvenida />
       <p className="text-etiqueta uppercase text-secondary">Competencia matemática 1</p>
       <div className="mt-2.5">
         <PuntoDePartida temas={temas} kpi={kpi} />

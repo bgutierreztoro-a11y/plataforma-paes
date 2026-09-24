@@ -231,6 +231,8 @@ export default function RootLayout({
           signUpUrl="/registrarse"
           signInFallbackRedirectUrl="/"
           signUpFallbackRedirectUrl="/"
+          /* El registro siempre termina en /bienvenida, venga de donde venga (docs/recorrido-entrada.md, Fase 4). */
+          signUpForceRedirectUrl="/bienvenida"
           localization={localizacion}
           appearance={apariencia}
         >
