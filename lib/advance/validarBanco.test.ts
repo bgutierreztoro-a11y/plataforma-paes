@@ -327,7 +327,7 @@ describe("figura plano-funcion: regla (11)", () => {
   it("tipo desconocido falla nombrando los ocho tipos y la ausencia", () => {
     const errores = deLaFigura(validar(conFigura({ tipo: "pictograma", descripcion: DESCRIPCION })));
     assert.deepEqual(errores, [
-      'items[0].figura.tipo: debe ser uno de: plano-funcion, tabla-valores, tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular, diagrama-cajon, lienzo-geometrico, o ausente para el plano de isometrías (recibido: "pictograma")',
+      'items[0].figura.tipo: debe ser uno de: plano-funcion, tabla-valores, tabla-datos, grafico-barras, histograma, grafico-lineas, grafico-circular, diagrama-cajon, lienzo-geometrico, cuerpo-geometrico, o ausente para el plano de isometrías (recibido: "pictograma")',
     ]);
   });
 

@@ -41,6 +41,14 @@ import {
   problemasDeEscala,
   problemasDeMarcas,
 } from '../lib/advance/lienzoGeometrico.ts';
+import {
+  TOPES_CUERPO,
+  choquesDeCuerpo,
+  problemasDeCoherencia,
+  problemasDeComposicion,
+  problemasDeCotas,
+  problemasDeLegibilidad,
+} from '../lib/advance/cuerpoGeometrico.ts';
 
 // Autolocalización (mismo patrón que consultar-fuentes.mjs y el fix del
 // 2026-08-22 de check-fuentes-aisladas.mjs): el modo sin argumentos (más abajo)
@@ -708,6 +716,18 @@ const CLAVES_ANGULO_LIENZO = ['vertice', 'desde', 'hasta', 'marca', 'rotulo'];
 const CLAVES_REGION_LIENZO = ['formas', 'huecos', 'estilo'];
 const CLAVES_TEXTO_LIENZO = ['texto', 'x', 'y'];
 const CARDINALES_LIENZO = ['n', 'ne', 'e', 'se', 's', 'so', 'o', 'no'];
+// Cuerpo geométrico (reglas (41) a (50)): cajas o cilindros en caballera. Las
+// reglas 43, 44, 47 y 48 miden con lib/advance/cuerpoGeometrico.ts, la misma
+// geometría que dibuja el componente, en el carril de la ubicación.
+const CLAVES_CUERPO = ['tipo', 'piezas', 'juntas', 'ocultas', 'cotas', 'descripcion'];
+const CLAVES_PIEZA_CUERPO = {
+  paralelepipedo: ['cuerpo', 'largo', 'alto', 'ancho', 'en'],
+  cubo: ['cuerpo', 'arista', 'en'],
+  cilindro: ['cuerpo', 'radio', 'altura', 'x'],
+};
+const MEDIDAS_PIEZA_CUERPO = { paralelepipedo: ['largo', 'alto', 'ancho'], cubo: ['arista'], cilindro: ['radio', 'altura'] };
+const CLAVES_COTA_ARISTA = ['desde', 'hasta', 'rotulo', 'llave', 'lado'];
+const CLAVES_COTA_CILINDRO = ['pieza', 'medida', 'rotulo', 'llave', 'lado'];
 const CLAVES_DISTRACTOR = ['clave', 'texto', 'figura', 'esCorrecta', 'errorCatalogado', 'sinErrorCatalogado', 'feedbackDescarte', 'feedback'];
 const CLAVES_SIN_ERROR_CATALOGADO = ['motivo', 'nota'];
 const CLAVES_CORRECTA = ['clave', 'texto', 'figura', 'esCorrecta', 'feedbackDescarteIncorrecto', 'feedback'];
@@ -907,7 +927,8 @@ function validarFiguraItem(figura, donde, errores, contexto = 'enunciado') {
     // El cajón no tiene geometría propia para la solución: ahí se monta como en el enunciado.
     if (figura.tipo === 'diagrama-cajon') return validarDiagramaCajon(figura, donde, errores, contexto === 'alternativa' ? 'alternativa' : 'enunciado');
     if (figura.tipo === 'lienzo-geometrico') return validarLienzoGeometrico(figura, donde, errores, contexto);
-    return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS, 'lienzo-geometrico'].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
+    if (figura.tipo === 'cuerpo-geometrico') return validarCuerpoGeometrico(figura, donde, errores, contexto);
+    return errores.push(`${donde}.tipo: debe ser uno de: ${[...TIPOS_FIGURA_NUEVA, ...TIPOS_FIGURA_DATOS, 'lienzo-geometrico', 'cuerpo-geometrico'].join(', ')}, o ausente para el plano de isometrías (recibido: ${JSON.stringify(figura.tipo)})`);
   }
   if (!figura || typeof figura !== 'object' || Array.isArray(figura)) {
     return errores.push(`${donde}: figura debe ser un objeto { plano, descripcion, elementos }`);
@@ -1806,6 +1827,111 @@ function validarLienzoGeometrico(figura, donde, errores, contexto = 'enunciado')
     if (ch.clase === 'rotulos') errores.push(`${donde}: los rótulos «${ch.a}» y «${ch.b}» se pisan (${contexto}, letra de 12 px); mueve uno con "ubicacion" o "lado", o amplía la ventana`);
     else if (ch.clase === 'vertice') errores.push(`${donde}: el rótulo «${ch.a}» tapa el vértice ${ch.b} (${contexto}); muévelo con "ubicacion" o "lado"`);
     else errores.push(`${donde}: el rótulo «${ch.a}» se sale del lienzo (${contexto}); amplía la ventana hacia ese lado`);
+  }
+}
+
+/* ---------- cuerpo geométrico, reglas (41) a (50) ---------- */
+
+/**
+ * Reglas (41) a (50): `cuerpo-geometrico`. Cajas (paralelepípedos y cubos) o
+ * cilindros rectos en la caballera del tier gratis; las medidas de las piezas
+ * son proporciones del dibujo y los datos son los rótulos. (41) forma y texto
+ * plano. (42) una sola familia. (43) cajas sin cruces, apoyadas y separadas
+ * con aire. (44) pilas que se angostan hacia arriba y separadas con aire. (45)
+ * cotas que existen y se ven. (46) rótulos coherentes con el dibujo. (47)
+ * legibilidad a 390 px. (48) rótulos y llaves que no chocan. (49) topes. (50)
+ * no va en una alternativa. Las reglas 43, 44, 47 y 48 miden con
+ * lib/advance/cuerpoGeometrico.ts en el carril de la ubicación. Todo error.
+ */
+function validarCuerpoGeometrico(figura, donde, errores, contexto = 'enunciado') {
+  // (50) no va en una alternativa
+  if (contexto === 'alternativa') return errores.push(`${donde}: cuerpo-geometrico no va en una alternativa`);
+  const antes = errores.length;
+  clavesSobrantes(figura, CLAVES_CUERPO, donde, errores);
+  const textoPlano = (valor, q) => {
+    if (!esTexto(valor)) return errores.push(`${q}: texto no vacío`);
+    if (FUERA_DE_TEXTO_PLANO.test(valor)) errores.push(`${q}: "${valor}" va en texto plano con Unicode (√, π, ², °), sin markdown ni LaTeX`);
+  };
+  const coordenada = (p, q) => {
+    if (!esObjeto(p)) return errores.push(`${q}: debe ser { x, y, z }`);
+    clavesSobrantes(p, ['x', 'y', 'z'], q, errores);
+    if (!['x', 'y', 'z'].every((k) => esNumero(p[k]))) errores.push(`${q}: x, y y z deben ser números finitos`);
+  };
+
+  // (41) forma
+  if (!Array.isArray(figura.piezas) || figura.piezas.length === 0) errores.push(`${donde}.piezas: se espera un array con al menos una pieza`);
+  else {
+    figura.piezas.forEach((p, i) => {
+      const q = `${donde}.piezas[${i}]`;
+      if (!esObjeto(p)) return errores.push(`${q}: debe ser un objeto`);
+      const claves = CLAVES_PIEZA_CUERPO[p.cuerpo];
+      if (!claves) return errores.push(`${q}.cuerpo: debe ser uno de: ${Object.keys(CLAVES_PIEZA_CUERPO).join(', ')}`);
+      clavesSobrantes(p, claves, q, errores);
+      for (const m of MEDIDAS_PIEZA_CUERPO[p.cuerpo]) {
+        if (!esNumero(p[m]) || p[m] <= 0) errores.push(`${q}.${m}: debe ser un número mayor que 0`);
+      }
+      if (p.en !== undefined) coordenada(p.en, `${q}.en`);
+      if (p.x !== undefined && !esNumero(p.x)) errores.push(`${q}.x: debe ser un número finito`);
+    });
+  }
+  if (figura.juntas !== undefined && typeof figura.juntas !== 'boolean') errores.push(`${donde}.juntas: debe ser booleano`);
+  if (figura.ocultas !== undefined && figura.ocultas !== false) errores.push(`${donde}.ocultas: solo se declara para apagarlas (false); por defecto se dibujan`);
+  if (figura.cotas !== undefined && !Array.isArray(figura.cotas)) errores.push(`${donde}.cotas: debe ser un array`);
+  else {
+    (figura.cotas ?? []).forEach((c, j) => {
+      const q = `${donde}.cotas[${j}]`;
+      if (!esObjeto(c)) return errores.push(`${q}: debe ser un objeto`);
+      const deArista = 'desde' in c || 'hasta' in c;
+      const deCilindro = 'pieza' in c || 'medida' in c;
+      if (deArista === deCilindro) return errores.push(`${q}: una cota es { desde, hasta, rotulo } (de arista) o { pieza, medida, rotulo } (de cilindro)`);
+      if (deArista) {
+        clavesSobrantes(c, CLAVES_COTA_ARISTA, q, errores);
+        coordenada(c.desde, `${q}.desde`);
+        coordenada(c.hasta, `${q}.hasta`);
+        if (c.lado !== undefined && !['exterior', 'interior'].includes(c.lado)) errores.push(`${q}.lado: debe ser uno de: exterior, interior`);
+      } else {
+        clavesSobrantes(c, CLAVES_COTA_CILINDRO, q, errores);
+        if (!Number.isInteger(c.pieza) || c.pieza < 0) errores.push(`${q}.pieza: debe ser un entero de 0 o más (el índice del cilindro en piezas)`);
+        if (!['radio', 'diametro', 'altura'].includes(c.medida)) errores.push(`${q}.medida: debe ser una de: radio, diametro, altura`);
+        if (c.lado !== undefined && !['arriba', 'abajo', 'izquierda', 'derecha'].includes(c.lado)) errores.push(`${q}.lado: debe ser uno de: arriba, abajo, izquierda, derecha`);
+      }
+      if (c.llave !== undefined && c.llave !== false) errores.push(`${q}.llave: solo se declara para quitarla (false); por defecto la cota va con llave`);
+      textoPlano(c.rotulo, `${q}.rotulo`);
+    });
+  }
+  if (!esTexto(figura.descripcion)) errores.push(`${donde}.descripcion: falta (texto alternativo del cuerpo, es el <desc> del SVG)`);
+  else if (figura.descripcion.trim().length < MIN_DESCRIPCION_FIGURA) errores.push(`${donde}.descripcion: demasiado corta (<${MIN_DESCRIPCION_FIGURA} caracteres)`);
+
+  // (49) topes, antes de medir nada
+  if (Array.isArray(figura.piezas) && figura.piezas.length > TOPES_CUERPO.piezas) errores.push(`${donde}: ${figura.piezas.length} piezas y el tope es ${TOPES_CUERPO.piezas}`);
+  if (Array.isArray(figura.cotas) && figura.cotas.length > TOPES_CUERPO.cotas) errores.push(`${donde}: ${figura.cotas.length} cotas y el tope es ${TOPES_CUERPO.cotas}`);
+
+  if (errores.length !== antes) return;
+  const reportar = (problemas) => {
+    for (const pr of problemas) errores.push(`${donde}${pr.donde}: ${pr.mensaje}`);
+  };
+
+  // (42) a (44), la parte sin píxeles: familia, juntas, cruces, apoyo, pilas
+  reportar(problemasDeComposicion(figura));
+  if (errores.length !== antes) return;
+
+  // (45) cotas que existen y se ven
+  reportar(problemasDeCotas(figura));
+  if (errores.length !== antes) return;
+
+  // (46) coherencia; (43), (44) y (47) con píxeles
+  reportar(problemasDeCoherencia(figura));
+  reportar(problemasDeLegibilidad(figura, contexto));
+  if (errores.length !== antes) return;
+
+  // (48) choques: al final, porque sobre una figura con errores los repetiría
+  for (const ch of choquesDeCuerpo(figura, contexto)) {
+    if (ch.clase === 'rotulos') errores.push(`${donde}: los rótulos «${ch.a}» y «${ch.b}» se pisan (${contexto}, letra de 12 px); cambia el lado o pon una cota en otra arista`);
+    else if (ch.clase === 'trazo') errores.push(`${donde}: el rótulo «${ch.a}» pisa un trazo del cuerpo (${contexto}, letra de 12 px); cambia el lado o pon la cota en otra arista`);
+    else if (ch.clase === 'rotulo-llave') errores.push(`${donde}: el rótulo «${ch.a}» pisa la llave de «${ch.b}» (${contexto}); cambia el lado de una de las dos`);
+    else if (ch.clase === 'llaves') errores.push(`${donde}: las llaves de «${ch.a}» y «${ch.b}» se cruzan (${contexto}); cambia el lado de una o pon la cota en otra arista`);
+    else if (ch.clase === 'llave-trazo') errores.push(`${donde}: la llave de «${ch.a}» corta un trazo del cuerpo (${contexto}); cambia el lado, quítala con llave false o pon la cota en otra arista`);
+    else errores.push(`${donde}: el rótulo «${ch.a}» se sale de la figura (${contexto})`);
   }
 }
 

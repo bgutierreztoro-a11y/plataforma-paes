@@ -73,6 +73,8 @@ const cross = (a: Coordenada, b: Coordenada) => a.x * b.y - a.y * b.x;
 const r2 = (v: number) => Math.round(v * 100) / 100;
 const pt = (p: Coordenada) => `${r2(p.x)} ${r2(p.y)}`;
 const fmt = (v: number) => Number(v.toFixed(3));
+/** Número de un mensaje, con coma decimal. */
+const num = (v: number) => String(fmt(v)).replace(".", ",");
 const entre = (a: Coordenada3D, b: Coordenada3D, t: number): Coordenada3D => ({
   x: a.x + (b.x - a.x) * t,
   y: a.y + (b.y - a.y) * t,
@@ -628,7 +630,7 @@ export function problemasDeComposicion(figura: FiguraCuerpoGeometrico): Problema
       for (let j = i + 1; j < cajas.length; j++) {
         const v = volumenComun(cajas[i], cajas[j]);
         if (v > 1e-9 * tam ** 3) {
-          problemas.push({ donde: "", mensaje: `piezas[${cajas[i].pieza}] y piezas[${cajas[j].pieza}] se cruzan (volumen común ${fmt(v)}); las cajas se tocan por una cara o van separadas` });
+          problemas.push({ donde: "", mensaje: `piezas[${cajas[i].pieza}] y piezas[${cajas[j].pieza}] se cruzan (volumen común ${num(v)}); las cajas se tocan por una cara o van separadas` });
         }
       }
     }
@@ -644,7 +646,7 @@ export function problemasDeComposicion(figura: FiguraCuerpoGeometrico): Problema
     for (let i = 1; i < pila.cilindros.length; i++) {
       const [abajo, arriba] = [pila.cilindros[i - 1], pila.cilindros[i]];
       if (arriba.radio >= abajo.radio) {
-        problemas.push({ donde: `.piezas[${arriba.pieza}]`, mensaje: `radio ${fmt(arriba.radio)} sobre un cilindro de radio ${fmt(abajo.radio)}; en una pila cada cilindro es más angosto que el de abajo` });
+        problemas.push({ donde: `.piezas[${arriba.pieza}]`, mensaje: `radio ${num(arriba.radio)} sobre un cilindro de radio ${num(abajo.radio)}; en una pila cada cilindro es más angosto que el de abajo` });
       }
     }
   }
@@ -750,13 +752,13 @@ export function problemasDeCoherencia(figura: FiguraCuerpoGeometrico): ProblemaC
       if (vi === null || vj === null || li === null || lj === null) continue;
       if (Math.abs(vi - vj) <= 1e-9 * Math.max(vi, vj)) {
         if (Math.abs(li - lj) > TOLERANCIA_IGUALES * Math.max(li, lj)) {
-          problemas.push({ donde: "", mensaje: `«${cotas[i].rotulo}» y «${cotas[j].rotulo}» son iguales y sus tramos miden ${fmt(li)} y ${fmt(lj)}; iguala las medidas del dibujo` });
+          problemas.push({ donde: "", mensaje: `«${cotas[i].rotulo}» y «${cotas[j].rotulo}» son iguales y sus tramos miden ${num(li)} y ${num(lj)}; iguala las medidas del dibujo` });
         }
         continue;
       }
       const [M, m] = vi > vj ? [i, j] : [j, i];
       if ((largos[M] as number) < (largos[m] as number) * (1 - 1e-9)) {
-        problemas.push({ donde: "", mensaje: `«${cotas[M].rotulo}» es mayor que «${cotas[m].rotulo}» y su tramo se dibuja más corto (${fmt(largos[M] as number)} contra ${fmt(largos[m] as number)}); ajusta las medidas del dibujo` });
+        problemas.push({ donde: "", mensaje: `«${cotas[M].rotulo}» es mayor que «${cotas[m].rotulo}» y su tramo se dibuja más corto (${num(largos[M] as number)} contra ${num(largos[m] as number)}); ajusta las medidas del dibujo` });
       }
     }
   }
@@ -800,7 +802,7 @@ export function problemasDeLegibilidad(figura: FiguraCuerpoGeometrico, contexto:
   for (let i = 1; i < separados.length; i++) {
     const aire = separados[i][0] - separados[i - 1][1];
     if (aire < SEPARACION_GRUPOS - 1e-9) {
-      problemas.push({ donde: "", mensaje: `dos cuerpos separados quedan a ${fmt(aire)} px ${donde}; el mínimo es ${SEPARACION_GRUPOS}: sepáralos más o júntalos por una cara` });
+      problemas.push({ donde: "", mensaje: `dos cuerpos separados quedan a ${num(aire)} px ${donde}; el mínimo es ${SEPARACION_GRUPOS}: sepáralos más o júntalos por una cara` });
     }
   }
   figura.piezas.forEach((p, i) => {
@@ -808,10 +810,10 @@ export function problemasDeLegibilidad(figura: FiguraCuerpoGeometrico, contexto:
     if (p.cuerpo === "cilindro") {
       const razon = p.altura / p.radio;
       if (razon < ALTURA_RADIO_MIN - 1e-9 || razon > ALTURA_RADIO_MAX + 1e-9) {
-        problemas.push({ donde: q, mensaje: `altura sobre radio = ${fmt(razon)}, fuera de ${ALTURA_RADIO_MIN} a ${ALTURA_RADIO_MAX}` });
+        problemas.push({ donde: q, mensaje: `altura sobre radio = ${num(razon)}, fuera de ${num(ALTURA_RADIO_MIN)} a ${num(ALTURA_RADIO_MAX)}` });
       }
       const ry = ELIPSE * p.radio * s;
-      if (ry < ELIPSE_MINIMA - 1e-9) problemas.push({ donde: q, mensaje: `la tapa mide ${fmt(ry)} px de alto ${donde}; el mínimo es ${ELIPSE_MINIMA}` });
+      if (ry < ELIPSE_MINIMA - 1e-9) problemas.push({ donde: q, mensaje: `la tapa mide ${num(ry)} px de alto ${donde}; el mínimo es ${ELIPSE_MINIMA}` });
       return;
     }
     const medidas: [string, number, number][] =
@@ -826,15 +828,15 @@ export function problemasDeLegibilidad(figura: FiguraCuerpoGeometrico, contexto:
       const mayor = Math.max(p.largo, p.alto, p.ancho);
       const menor = Math.min(p.largo, p.alto, p.ancho);
       if (mayor / menor > RAZON_MAXIMA + 1e-9) {
-        problemas.push({ donde: q, mensaje: `la medida mayor (${fmt(mayor)}) es ${fmt(mayor / menor)} veces la menor (${fmt(menor)}) y el tope es ${RAZON_MAXIMA}` });
+        problemas.push({ donde: q, mensaje: `la medida mayor (${num(mayor)}) es ${num(mayor / menor)} veces la menor (${num(menor)}) y el tope es ${RAZON_MAXIMA}` });
       }
     }
     for (const [nombre, , px] of medidas) {
-      if (px < ARISTA_VISIBLE_MINIMA - 1e-9) problemas.push({ donde: q, mensaje: `${nombre} mide ${fmt(px)} px ${donde}; el mínimo es ${ARISTA_VISIBLE_MINIMA}` });
+      if (px < ARISTA_VISIBLE_MINIMA - 1e-9) problemas.push({ donde: q, mensaje: `${nombre} mide ${num(px)} px ${donde}; el mínimo es ${ARISTA_VISIBLE_MINIMA}` });
     }
   });
   for (const [j, px] of g.largoDeCota) {
-    if (px < ARISTA_ACOTADA_MINIMA - 1e-9) problemas.push({ donde: `.cotas[${j}]`, mensaje: `el tramo acotado mide ${fmt(px)} px ${donde}; el mínimo es ${ARISTA_ACOTADA_MINIMA}` });
+    if (px < ARISTA_ACOTADA_MINIMA - 1e-9) problemas.push({ donde: `.cotas[${j}]`, mensaje: `el tramo acotado mide ${num(px)} px ${donde}; el mínimo es ${ARISTA_ACOTADA_MINIMA}` });
   }
   return problemas;
 }
