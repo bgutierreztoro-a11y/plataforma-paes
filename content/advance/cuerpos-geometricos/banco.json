@@ -1,0 +1,2046 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "cuerpos-geometricos",
+  "moduloId": "cuerpos-geometricos",
+  "titulo": "Cuerpos geométricos",
+  "items": [
+    {
+      "id": "adv-cuerpos-geometricos-001",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una florista quiere saber cuánta agua cabe en un florero cilíndrico de 8 cm de diámetro y 9 cm de altura, y calcula π · 8² · 9. ¿Es correcto su cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Sí, porque en el volumen del cilindro se usa la medida completa de la base, el diámetro de 8 cm.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-radio-con-diametro-cilindro",
+          "feedbackDescarte": "Esa da por bueno π · 8² · 9, que pone el diámetro de 8 cm donde va el radio. En π · r² · h va el radio, 4 cm, la mitad del diámetro."
+        },
+        {
+          "clave": "B",
+          "texto": "No, porque usó el diámetro como radio: con el radio de 4 cm, el volumen es π · 4² · 9 cm³.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el radio es 8 ÷ 2 = 4 cm, así que caben π · 4² · 9 = 144π cm³, no π · 8² · 9 = 576π cm³."
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque el volumen del cilindro se calcula con el contorno de la base: 2 · π · 4 · 9 cm³.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-circunferencia-en-volumen",
+          "feedbackDescarte": "Esa cambia el área de la base por su contorno, 2 · π · 4. Lo que cabe se calcula con el área de la base por la altura: π · 4² · 9."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque lo que cabe en el florero es el área de la base: π · 4² cm³.",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa se queda en el área de la base, π · 4², sin multiplicar por la altura de 9 cm. El agua llena esa base 9 cm hacia arriba: π · 4² · 9."
+        }
+      ],
+      "solucion": "El diámetro mide 8 cm, así que el radio mide 4 cm. Lo que cabe es el área de la base por la altura: π · 4² · 9 = 16π · 9 = 144π cm³. El cálculo de la florista, π · 8² · 9 = 576π cm³, usa el diámetro como radio y da el cuádruple.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-002",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una fábrica envuelve cubitos de caldo en celofán. El costo del celofán de cada cubito se calcula como $3 · k, porque cada cm² del área exterior del cubito lleva $3 de celofán. Si cada cara de un cubito tiene un área de 4 cm², ¿cuál de las siguientes expresiones representa k?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "6 · 2²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el área exterior del cubito son sus 6 caras de 4 cm² cada una, 6 · 4 = 6 · 2² cm², y ese número es k."
+        },
+        {
+          "clave": "B",
+          "texto": "4 · 2²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-tapa-y-base",
+          "feedbackDescarte": "Esa cuenta solo las 4 caras de los lados y olvida la de arriba y la de abajo, que también llevan celofán: el cubito tiene 6 caras."
+        },
+        {
+          "clave": "C",
+          "texto": "3 · 2²",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-solo-caras-visibles",
+          "feedbackDescarte": "Esa cuenta 3 caras, las que se ven en un dibujo del cubito. Las caras opuestas también se envuelven: son 6, no 3."
+        },
+        {
+          "clave": "D",
+          "texto": "2³",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa es el volumen del cubito, 2³ cm³, lo que cabe adentro. El celofán cubre el borde: se paga por el área de las 6 caras, 6 · 2²."
+        }
+      ],
+      "solucion": "Cada cara mide 4 cm², o sea 2² cm², porque la arista mide 2 cm. El celofán cubre las 6 caras, así que el área exterior es 6 · 2² = 24 cm² y el costo es $3 · 24. Por eso k = 6 · 2².",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 48",
+        "notaAdaptacion": "Del original (cajas cúbicas de madera fina para joyas; el precio se calcula como $800 · k, con $800 por cada cm² del área exterior, y el área de una cara es 25 cm²; clave A, 6 · 5², verificada en el clavijero) se conservan la estructura (k es el área exterior total, dada el área de una cara) y la forma de las alternativas (6 · n² y variantes de n). Cambian el contexto (cubitos de caldo envueltos en celofán), el precio ($3), el área de una cara (4 cm², arista 2 cm) y los tres distractores: los del original, 6 · 5⁴, 6 · 5⁶ y 6 · 5¹², no tienen id en el catálogo, y pasan a cuatro caras (omite-tapa-y-base), tres caras (cuenta-solo-caras-visibles) y el volumen del cubo (confunde-superficie-con-volumen)."
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-003",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un ceramista modela un bloque de greda con forma de prisma recto de base cuadrada, de 9 cm de lado y 6 cm de alto, como el de la figura. Si modela otro bloque con todas sus aristas del doble de largo, ¿cuál es el volumen del bloque nuevo?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 9,
+            "alto": 6,
+            "ancho": 9
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "9 cm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 6,
+              "z": 0
+            },
+            "rotulo": "6 cm"
+          },
+          {
+            "desde": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 9,
+              "y": 0,
+              "z": 9
+            },
+            "rotulo": "9 cm"
+          }
+        ],
+        "descripcion": "Bloque con forma de prisma recto de base cuadrada, de 9 cm de lado y 6 cm de alto."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "972 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-el-volumen-por-el-factor",
+          "feedbackDescarte": "Esa multiplica el volumen original, 9 · 9 · 6 = 486 cm³, solo por 2. Al duplicar las tres aristas, el volumen se multiplica por 2 · 2 · 2 = 8."
+        },
+        {
+          "clave": "B",
+          "texto": "1.944 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "escala-el-volumen-por-el-cuadrado-del-factor",
+          "feedbackDescarte": "Esa multiplica 486 cm³ por 2², como si fuera un área. En un volumen las tres medidas se duplican: se multiplica por 2³ = 8."
+        },
+        {
+          "clave": "C",
+          "texto": "3.888 cm³",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el bloque nuevo mide 18 cm, 18 cm y 12 cm, y su volumen es 18 · 18 · 12 = 3.888 cm³, 8 veces los 486 cm³ del original."
+        },
+        {
+          "clave": "D",
+          "texto": "1.512 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa es el área del bloque nuevo, 2 · 18² + 4 · 18 · 12 = 1.512 cm², lo que lo cubre y no lo que ocupa. El volumen es 18 · 18 · 12."
+        }
+      ],
+      "solucion": "Con todas las aristas del doble, el bloque nuevo tiene base de 18 cm por 18 cm y 12 cm de alto. Su volumen es 18 · 18 · 12 = 3.888 cm³. Comparado con el original, 9 · 9 · 6 = 486 cm³, es 8 veces más, porque cada una de las tres medidas se multiplicó por 2.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 44",
+        "notaAdaptacion": "Del original (paralelepípedo recto de base cuadrada de lado 5 cm y altura 8 cm; se aumentan al doble las medidas de sus aristas; clave C, 1600 cm³, verificada en el clavijero, pregunta marcada con asterisco y no considerada para el puntaje) se conservan la estructura y el mecanismo de dos distractores: el volumen multiplicado solo por el factor (400 cm³ en el original) y por su cuadrado (800 cm³). Cambian el contexto (un ceramista y un bloque de greda), las medidas (9 cm y 6 cm), la clave (3.888 cm³) y el tercer distractor: 40000 cm³ del original, sin mecanismo escribible, pasa al área del bloque nuevo (confunde-superficie-con-volumen). Se agrega la figura del bloque original."
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-004",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una marquería despacha un cuadro en una caja de embalaje cerrada, con forma de paralelepípedo, de 3 dm de ancho, 1 dm de fondo y 3,9 dm de alto, parada sobre su cara más chica, como muestra la figura. ¿Cuántos decímetros cuadrados de material tiene la caja?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 3,
+            "alto": 3.9,
+            "ancho": 1
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 3,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "3 dm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 3.9,
+              "z": 0
+            },
+            "rotulo": "3,9 dm"
+          },
+          {
+            "desde": {
+              "x": 3,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 3,
+              "y": 0,
+              "z": 1
+            },
+            "rotulo": "1 dm"
+          }
+        ],
+        "descripcion": "Caja parada sobre su cara más chica: 3 dm de ancho, 1 dm de fondo y 3,9 dm de alto."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "18,6 dm²",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-solo-caras-visibles",
+          "feedbackDescarte": "Esa suma una cara de cada par, 3 · 1 + 1 · 3,9 + 3 · 3,9 = 18,6: son las tres que se ven. La caja tiene seis caras, dos de cada tipo."
+        },
+        {
+          "clave": "B",
+          "texto": "31,2 dm²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-tapa-y-base",
+          "feedbackDescarte": "Esa suma solo las cuatro caras de 3,9 dm de alto y olvida las dos de 3 dm por 1 dm que cierran la caja arriba y abajo."
+        },
+        {
+          "clave": "C",
+          "texto": "15,8 dm²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-aristas-como-superficie",
+          "feedbackDescarte": "Esa suma las medidas, 2 · (3 + 1 + 3,9) = 15,8, que son longitudes de aristas. El material se mide sumando áreas de caras."
+        },
+        {
+          "clave": "D",
+          "texto": "37,2 dm²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: dos caras de 3 · 1 = 3, dos de 1 · 3,9 = 3,9 y dos de 3 · 3,9 = 11,7 dan 2 · (3 + 3,9 + 11,7) = 37,2 dm²."
+        }
+      ],
+      "solucion": "La caja tiene tres pares de caras iguales: dos de 3 dm por 1 dm (3 dm² cada una), dos de 1 dm por 3,9 dm (3,9 dm²) y dos de 3 dm por 3,9 dm (11,7 dm²). El material es 2 · (3 + 3,9 + 11,7) = 2 · 18,6 = 37,2 dm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-005",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un trofeo está formado por un pedestal con forma de paralelepípedo, de 6 cm de largo, 4 cm de fondo y 2 cm de alto, y un cubo de 3 cm de arista pegado encima, como muestra la figura. ¿Cuál es el volumen del trofeo?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 6,
+            "alto": 2,
+            "ancho": 4
+          },
+          {
+            "cuerpo": "cubo",
+            "arista": 3,
+            "en": {
+              "x": 1.5,
+              "y": 2,
+              "z": 0.5
+            }
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 6,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "6 cm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 2,
+              "z": 0
+            },
+            "rotulo": "2 cm"
+          },
+          {
+            "desde": {
+              "x": 6,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 6,
+              "y": 0,
+              "z": 4
+            },
+            "rotulo": "4 cm"
+          },
+          {
+            "desde": {
+              "x": 4.5,
+              "y": 2,
+              "z": 0.5
+            },
+            "hasta": {
+              "x": 4.5,
+              "y": 5,
+              "z": 0.5
+            },
+            "rotulo": "3 cm",
+            "llave": false
+          }
+        ],
+        "descripcion": "Pedestal con forma de paralelepípedo de 6 cm de largo, 4 cm de fondo y 2 cm de alto, con un cubo de 3 cm de arista pegado encima."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "75 cm³",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el pedestal ocupa 6 · 4 · 2 = 48 cm³ y el cubo 3 · 3 · 3 = 27 cm³, en total 75 cm³."
+        },
+        {
+          "clave": "B",
+          "texto": "57 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "triplica-arista-como-volumen",
+          "feedbackDescarte": "Esa calcula el cubo como 3 · 3 = 9 cm³, multiplicando la arista por 3. El volumen del cubo es 3 · 3 · 3 = 27 cm³."
+        },
+        {
+          "clave": "C",
+          "texto": "51 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa toma el pedestal como su base, 6 · 4 = 24, sin multiplicar por su alto de 2 cm. El pedestal ocupa 6 · 4 · 2 = 48 cm³."
+        },
+        {
+          "clave": "D",
+          "texto": "39 cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-dimensiones-como-volumen",
+          "feedbackDescarte": "Esa suma las medidas del pedestal, 6 + 4 + 2 = 12, en vez de multiplicarlas. Su volumen es 6 · 4 · 2 = 48 cm³."
+        }
+      ],
+      "solucion": "El trofeo son dos cuerpos: el pedestal, de volumen 6 · 4 · 2 = 48 cm³, y el cubo, de volumen 3 · 3 · 3 = 27 cm³. Juntos ocupan 48 + 27 = 75 cm³.",
+      "figuraSolucion": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 6,
+            "alto": 2,
+            "ancho": 4
+          },
+          {
+            "cuerpo": "cubo",
+            "arista": 3,
+            "en": {
+              "x": 8.5,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 6,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "6 cm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 2,
+              "z": 0
+            },
+            "rotulo": "2 cm"
+          },
+          {
+            "desde": {
+              "x": 6,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 6,
+              "y": 0,
+              "z": 4
+            },
+            "rotulo": "4 cm"
+          },
+          {
+            "desde": {
+              "x": 8.5,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 11.5,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "3 cm"
+          }
+        ],
+        "descripcion": "El trofeo separado en sus dos piezas: el pedestal de 6 cm por 4 cm por 2 cm y el cubo de 3 cm de arista."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-006",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una marca de infusiones envasa hierbas en cajas cilíndricas cerradas de 8 cm de diámetro y 7,9 cm de altura, como la de la figura. ¿Cuál es el área total de una caja?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cilindro",
+            "radio": 4,
+            "altura": 7.9
+          }
+        ],
+        "cotas": [
+          {
+            "pieza": 0,
+            "medida": "diametro",
+            "rotulo": "8 cm"
+          },
+          {
+            "pieza": 0,
+            "medida": "altura",
+            "rotulo": "7,9 cm"
+          }
+        ],
+        "descripcion": "Cilindro recto de 8 cm de diámetro y 7,9 cm de altura."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "254,4π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-radio-con-diametro-cilindro",
+          "feedbackDescarte": "Esa usa el diámetro, 8 cm, como radio en las tapas y en el manto. El radio es la mitad: 4 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "95,2π cm²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con radio 4 cm, las dos tapas suman 2 · π · 4² = 32π y el manto 2 · π · 4 · 7,9 = 63,2π, en total 95,2π cm²."
+        },
+        {
+          "clave": "C",
+          "texto": "79,2π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-una-sola-tapa-cilindro",
+          "feedbackDescarte": "Esa suma el manto y una sola tapa, π · 4² + 63,2π. La caja está cerrada: tiene tapa y base, dos círculos."
+        },
+        {
+          "clave": "D",
+          "texto": "158,4π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-area-base-en-manto",
+          "feedbackDescarte": "Esa calcula el manto con el área del círculo, π · 4² · 7,9 = 126,4π. El manto desenrollado mide el contorno por la altura: 2 · π · 4 · 7,9."
+        }
+      ],
+      "solucion": "El radio mide 8 ÷ 2 = 4 cm. Las dos tapas miden 2 · π · 4² = 32π cm² y el manto, un rectángulo de 2 · π · 4 cm por 7,9 cm, mide 63,2π cm². El área total es 32π + 63,2π = 95,2π cm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-007",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Un especiero cilíndrico para guardar comino tiene 7 cm de altura y una capacidad de 56π cm³. ¿Cuánto mide el radio de su base?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-circunferencia-en-volumen",
+          "feedbackDescarte": "Esa resuelve 2 · π · r · 7 = 56π, con el contorno de la base en vez de su área. La capacidad es π · r² · 7."
+        },
+        {
+          "clave": "B",
+          "texto": "8 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa resuelve π · r · 7 = 56π, sin elevar el radio al cuadrado. El área de la base es π · r²."
+        },
+        {
+          "clave": "C",
+          "texto": "√8 cm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: π · r² · 7 = 56π da r² = 8, así que r = √8 cm, poco menos de 3 cm."
+        },
+        {
+          "clave": "D",
+          "texto": "√56 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa toma los 56π cm³ como el área de la base, π · r² = 56π, y deja fuera la altura de 7 cm. La capacidad es el área de la base por la altura."
+        }
+      ],
+      "solucion": "La capacidad es el área de la base por la altura: π · r² · 7 = 56π. Al dividir por 7π queda r² = 8, y el radio mide √8 cm, cerca de 2,8 cm.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-008",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un reservorio que se llena desde una acequia tiene forma de paralelepípedo de 8 m de largo, 7 m de ancho y 2 m de profundidad, como muestra la figura. ¿Cuántos litros de agua caben en el reservorio lleno? (1 m³ = 1.000 L)",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 8,
+            "alto": 2,
+            "ancho": 7
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 8,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "8 m"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 2,
+              "z": 0
+            },
+            "rotulo": "2 m"
+          },
+          {
+            "desde": {
+              "x": 8,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 8,
+              "y": 0,
+              "z": 7
+            },
+            "rotulo": "7 m"
+          }
+        ],
+        "descripcion": "Paralelepípedo de 8 m de largo, 7 m de ancho y 2 m de profundidad."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "11.200 L",
+          "esCorrecta": false,
+          "errorCatalogado": "convierte-metros-cubicos-por-cien",
+          "feedbackDescarte": "Esa multiplica los 112 m³ por 100. Un metro cúbico son 1.000 litros: 112 · 1.000 = 112.000 L."
+        },
+        {
+          "clave": "B",
+          "texto": "56.000 L",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa usa solo el fondo, 8 · 7 = 56 m², sin multiplicar por la profundidad de 2 m. El volumen es 8 · 7 · 2 = 112 m³."
+        },
+        {
+          "clave": "C",
+          "texto": "172.000 L",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa calcula el área de las seis caras, 172 m², y la pasa a litros. Lo que cabe es el volumen, 8 · 7 · 2 = 112 m³."
+        },
+        {
+          "clave": "D",
+          "texto": "112.000 L",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el reservorio tiene 8 · 7 · 2 = 112 m³, y como 1 m³ = 1.000 L, caben 112.000 L."
+        }
+      ],
+      "solucion": "El volumen es 8 · 7 · 2 = 112 m³. Cada metro cúbico son 1.000 litros, así que caben 112 · 1.000 = 112.000 L.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-009",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una tapicera cubre por completo con tela un taburete cilíndrico de 17 cm de radio y 41 cm de altura, como el de la figura. ¿Cuántos centímetros cuadrados de tela usa?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cilindro",
+            "radio": 17,
+            "altura": 41
+          }
+        ],
+        "cotas": [
+          {
+            "pieza": 0,
+            "medida": "radio",
+            "rotulo": "17 cm"
+          },
+          {
+            "pieza": 0,
+            "medida": "altura",
+            "rotulo": "41 cm"
+          }
+        ],
+        "descripcion": "Cilindro recto de 17 cm de radio y 41 cm de altura."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "1.972π cm²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las dos caras circulares suman 2 · π · 17² = 578π y la parte curva 2 · π · 17 · 41 = 1.394π, en total 1.972π cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "1.683π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-una-sola-tapa-cilindro",
+          "feedbackDescarte": "Esa suma una sola cara circular, π · 17² = 289π, más la parte curva. El taburete se cubre por completo: arriba y abajo."
+        },
+        {
+          "clave": "C",
+          "texto": "1.394π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-tapa-y-base",
+          "feedbackDescarte": "Esa es solo la parte curva, 2 · π · 17 · 41. Cubrirlo por completo suma también las dos caras circulares, 2 · π · 17²."
+        },
+        {
+          "clave": "D",
+          "texto": "1.428π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa calcula cada cara circular como π · 17, sin elevar el radio al cuadrado. El área de un círculo de radio 17 cm es π · 17² = 289π."
+        }
+      ],
+      "solucion": "Las dos caras circulares miden 2 · π · 17² = 2 · 289π = 578π cm² y la parte curva, 2 · π · 17 · 41 = 1.394π cm². La tela cubre 578π + 1.394π = 1.972π cm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-010",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un barril cilíndrico recoge el agua que baja por una canaleta. Mide 3 dm de radio y 7,6 dm de altura, como el de la figura. ¿Cuántos litros de agua caben en el barril? (Considera π = 3 y 1 dm³ = 1 L)",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cilindro",
+            "radio": 3,
+            "altura": 7.6
+          }
+        ],
+        "cotas": [
+          {
+            "pieza": 0,
+            "medida": "radio",
+            "rotulo": "3 dm"
+          },
+          {
+            "pieza": 0,
+            "medida": "altura",
+            "rotulo": "7,6 dm"
+          }
+        ],
+        "descripcion": "Cilindro recto de 3 dm de radio y 7,6 dm de altura."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "136,8 L",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-circunferencia-en-volumen",
+          "feedbackDescarte": "Esa multiplica el contorno de la base, 2 · 3 · 3 = 18, por la altura. Lo que cabe es el área de la base, 3 · 3² = 27, por 7,6."
+        },
+        {
+          "clave": "B",
+          "texto": "205,2 L",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el área de la base es 3 · 3² = 27 dm² y el volumen 27 · 7,6 = 205,2 dm³, o sea 205,2 L."
+        },
+        {
+          "clave": "C",
+          "texto": "190,8 L",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa es el área del barril, 2 · 3 · 3² + 2 · 3 · 3 · 7,6 = 190,8 dm², lo que lo cubre. Lo que cabe es el volumen: 3 · 3² · 7,6."
+        },
+        {
+          "clave": "D",
+          "texto": "68,4 L",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa calcula la base como 3 · 3 = 9, sin elevar el radio al cuadrado. El área de la base es 3 · 3² = 27 dm²."
+        }
+      ],
+      "solucion": "Con π = 3, el área de la base es 3 · 3² = 27 dm². El volumen es 27 · 7,6 = 205,2 dm³, y como 1 dm³ = 1 L, caben 205,2 L.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-011",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Una heladería vende sorbete en envases cilíndricos de 8 cm de diámetro y 3 cm de altura, como el de la figura. ¿Cuál de las siguientes expresiones representa la cantidad de sorbete, en cm³, que cabe en un envase lleno?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cilindro",
+            "radio": 4,
+            "altura": 3
+          }
+        ],
+        "cotas": [
+          {
+            "pieza": 0,
+            "medida": "diametro",
+            "rotulo": "8 cm"
+          },
+          {
+            "pieza": 0,
+            "medida": "altura",
+            "rotulo": "3 cm"
+          }
+        ],
+        "descripcion": "Cilindro recto de 8 cm de diámetro y 3 cm de altura."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "π · 8² · 3",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-radio-con-diametro-cilindro",
+          "feedbackDescarte": "Esa pone el diámetro, 8 cm, en el área de la base. En π · r² · h va el radio: 8 ÷ 2 = 4 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "π · 4 · 3",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa usa π · 4 como área de la base, sin elevar el radio al cuadrado. El área del círculo es π · 4²."
+        },
+        {
+          "clave": "C",
+          "texto": "π · 4² · 3",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el radio es 4 cm, la base mide π · 4² y el envase lleno tiene π · 4² · 3 cm³."
+        },
+        {
+          "clave": "D",
+          "texto": "π · 4²",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa es solo el área de la base, π · 4², sin multiplicar por la altura de 3 cm. El volumen es la base por la altura."
+        }
+      ],
+      "solucion": "El radio es la mitad del diámetro: 8 ÷ 2 = 4 cm. El volumen es el área de la base por la altura: π · 4² · 3 = 48π cm³.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-012",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "modelar",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Se cubre por completo con forro un baúl con forma de paralelepípedo de 7 dm de largo, 5 dm de fondo y 3 dm de alto, como el de la figura. ¿Cuál de las siguientes expresiones representa la cantidad de forro, en dm², que se usa?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 7,
+            "alto": 3,
+            "ancho": 5
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 7,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "7 dm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 3,
+              "z": 0
+            },
+            "rotulo": "3 dm"
+          },
+          {
+            "desde": {
+              "x": 7,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 7,
+              "y": 0,
+              "z": 5
+            },
+            "rotulo": "5 dm"
+          }
+        ],
+        "descripcion": "Baúl con forma de paralelepípedo de 7 dm de largo, 5 dm de fondo y 3 dm de alto."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7 · 3 + 3 · 5 + 7 · 5",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-solo-caras-visibles",
+          "feedbackDescarte": "Esa suma una cara de cada par, las tres que se ven en el dibujo. Cada una tiene su cara opuesta igual: falta multiplicar por 2."
+        },
+        {
+          "clave": "B",
+          "texto": "2 · (7 + 3 + 5)",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-aristas-como-superficie",
+          "feedbackDescarte": "Esa suma las medidas, 7 + 3 + 5, que son longitudes de aristas. El forro cubre caras: se suman áreas como 7 · 3."
+        },
+        {
+          "clave": "C",
+          "texto": "7 · 3 · 5",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa es el volumen del baúl, 7 · 3 · 5, lo que cabe adentro. El forro se mide con el área de las seis caras."
+        },
+        {
+          "clave": "D",
+          "texto": "2 · (7 · 3 + 3 · 5 + 7 · 5)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: las caras vienen en tres pares, de 7 · 3, 3 · 5 y 7 · 5 dm², y el forro es 2 · (7 · 3 + 3 · 5 + 7 · 5) dm²."
+        }
+      ],
+      "solucion": "El baúl tiene seis caras en tres pares iguales: dos de 7 · 3 dm², dos de 3 · 5 dm² y dos de 7 · 5 dm². El forro cubre las seis: 2 · (7 · 3 + 3 · 5 + 7 · 5) = 2 · 71 = 142 dm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-013",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una fábrica de encurtidos guarda salmuera en una tina con forma de cubo de 2 m de arista, como la de la figura. ¿Cuál de las siguientes expresiones representa la cantidad de litros de salmuera que caben en la tina? (1 m³ = 1.000 L)",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cubo",
+            "arista": 2
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 2,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "2 m"
+          }
+        ],
+        "descripcion": "Cubo de 2 m de arista, apoyado en una de sus caras."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2³ · 1.000",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la tina tiene 2³ m³ y cada metro cúbico son 1.000 L, así que caben 2³ · 1.000 L."
+        },
+        {
+          "clave": "B",
+          "texto": "2³ · 100",
+          "esCorrecta": false,
+          "errorCatalogado": "convierte-metros-cubicos-por-cien",
+          "feedbackDescarte": "Esa multiplica los 2³ m³ por 100. Un metro cúbico son 1.000 litros, no 100."
+        },
+        {
+          "clave": "C",
+          "texto": "2 · 3 · 1.000",
+          "esCorrecta": false,
+          "errorCatalogado": "triplica-arista-como-volumen",
+          "feedbackDescarte": "Esa calcula el volumen del cubo como 2 · 3, la arista por 3. El volumen es la arista multiplicada por sí misma tres veces: 2³."
+        },
+        {
+          "clave": "D",
+          "texto": "2² · 1.000",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa usa el área del fondo, 2², como volumen y deja fuera la altura. La tina tiene 2 · 2 · 2 = 2³ m³."
+        }
+      ],
+      "solucion": "El volumen de la tina es 2 · 2 · 2 = 2³ = 8 m³. Como 1 m³ = 1.000 L, caben 2³ · 1.000 = 8.000 L de salmuera.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-014",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "La figura muestra la plantilla con que se arma un envase cilíndrico cerrado para palomitas de maíz: un rectángulo de 6π cm por 7,4 cm y dos círculos iguales. ¿Cuántos centímetros cúbicos de palomitas caben en el envase armado?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -4.5,
+          "xMax": 22.34955592153876,
+          "yMin": -7.5,
+          "yMax": 15.9
+        },
+        "puntos": [
+          {
+            "nombre": "M1",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M2",
+            "x": 18.84955592153876,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M3",
+            "x": 18.84955592153876,
+            "y": 7.4,
+            "oculto": true
+          },
+          {
+            "nombre": "M4",
+            "x": 0,
+            "y": 7.4,
+            "oculto": true
+          },
+          {
+            "nombre": "O1",
+            "x": 3,
+            "y": 10.4,
+            "oculto": true
+          },
+          {
+            "nombre": "O2",
+            "x": 15.849555921538759,
+            "y": -3,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "vertices": [
+              "M1",
+              "M2",
+              "M3",
+              "M4"
+            ]
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O1",
+            "radio": 3
+          },
+          {
+            "centro": "O2",
+            "radio": 3
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "M4",
+            "hasta": "M3",
+            "rotulo": "6π cm",
+            "cota": true
+          },
+          {
+            "desde": "M1",
+            "hasta": "M4",
+            "rotulo": "7,4 cm"
+          }
+        ],
+        "descripcion": "Plantilla de un cilindro: un rectángulo de 6π cm por 7,4 cm y dos círculos iguales, uno tangente al lado de arriba y otro al lado de abajo, en extremos opuestos."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "44,4π cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-circunferencia-en-volumen",
+          "feedbackDescarte": "Esa multiplica el largo del rectángulo, 6π, por 7,4: es el área del manto, el contorno por la altura. Lo que cabe es el área del círculo por la altura."
+        },
+        {
+          "clave": "B",
+          "texto": "66,6π cm³",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el largo del rectángulo es el contorno del círculo, 2 · π · r = 6π, así que r = 3 cm y caben π · 3² · 7,4 = 66,6π cm³."
+        },
+        {
+          "clave": "C",
+          "texto": "62,4π cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa es el área de la plantilla, 18π + 44,4π = 62,4π cm², el material y no lo que cabe. El volumen es π · 3² · 7,4."
+        },
+        {
+          "clave": "D",
+          "texto": "22,2π cm³",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa calcula la base como π · 3, sin elevar el radio al cuadrado. El área del círculo es π · 3² = 9π."
+        }
+      ],
+      "solucion": "El largo del rectángulo se enrolla alrededor del círculo, así que 2 · π · r = 6π y el radio mide 3 cm. El envase armado mide 7,4 cm de alto y caben π · 3² · 7,4 = 9π · 7,4 = 66,6π cm³.",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -4.5,
+          "xMax": 22.34955592153876,
+          "yMin": -7.5,
+          "yMax": 15.9
+        },
+        "puntos": [
+          {
+            "nombre": "M1",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M2",
+            "x": 18.84955592153876,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M3",
+            "x": 18.84955592153876,
+            "y": 7.4,
+            "oculto": true
+          },
+          {
+            "nombre": "M4",
+            "x": 0,
+            "y": 7.4,
+            "oculto": true
+          },
+          {
+            "nombre": "O1",
+            "x": 3,
+            "y": 10.4,
+            "oculto": true
+          },
+          {
+            "nombre": "O2",
+            "x": 15.849555921538759,
+            "y": -3,
+            "oculto": true
+          },
+          {
+            "nombre": "R2",
+            "x": 18.84955592153876,
+            "y": -3,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "vertices": [
+              "M1",
+              "M2",
+              "M3",
+              "M4"
+            ]
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O1",
+            "radio": 3
+          },
+          {
+            "centro": "O2",
+            "radio": 3
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "M4",
+            "hasta": "M3",
+            "rotulo": "6π cm",
+            "cota": true
+          },
+          {
+            "desde": "M1",
+            "hasta": "M4",
+            "rotulo": "7,4 cm"
+          },
+          {
+            "desde": "O2",
+            "hasta": "R2",
+            "rotulo": "3 cm",
+            "trazo": "punteado",
+            "lado": "interior"
+          }
+        ],
+        "descripcion": "La misma plantilla con el radio de los círculos marcado: 3 cm, porque 2 · π · 3 = 6π."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-015",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La caja de una baraja de naipes tiene forma de paralelepípedo de 9 cm de largo, 6 cm de fondo y 3 cm de alto, como la de la figura. Si se corta por algunas de sus aristas y se extiende sobre una mesa sin superponer partes, ¿cuál de las siguientes descripciones corresponde a la pieza plana que se obtiene?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 9,
+            "alto": 3,
+            "ancho": 6
+          }
+        ],
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "9 cm"
+          },
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 0,
+              "y": 3,
+              "z": 0
+            },
+            "rotulo": "3 cm"
+          },
+          {
+            "desde": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 9,
+              "y": 0,
+              "z": 6
+            },
+            "rotulo": "6 cm"
+          }
+        ],
+        "descripcion": "Caja con forma de paralelepípedo de 9 cm de largo, 6 cm de fondo y 3 cm de alto."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Cuatro rectángulos: dos de 9 cm por 3 cm y dos de 6 cm por 3 cm.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-tapa-y-base",
+          "feedbackDescarte": "Esa deja fuera las dos caras de 9 cm por 6 cm, la tapa y el fondo de la caja. Sin ellas la caja queda abierta arriba y abajo."
+        },
+        {
+          "clave": "B",
+          "texto": "Seis segmentos: dos de 9 cm, dos de 6 cm y dos de 3 cm, que suman 2 · (9 + 6 + 3) cm.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-aristas-como-superficie",
+          "feedbackDescarte": "Esa describe las aristas, 2 · (9 + 6 + 3) cm, que son longitudes. La pieza plana está hecha de caras, que son rectángulos."
+        },
+        {
+          "clave": "C",
+          "texto": "Seis rectángulos: dos de 9 cm por 6 cm, dos de 9 cm por 3 cm y dos de 6 cm por 3 cm.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la caja tiene seis caras en tres pares, dos de 9 por 6, dos de 9 por 3 y dos de 6 por 3, y todas quedan en la pieza plana."
+        },
+        {
+          "clave": "D",
+          "texto": "Tres rectángulos: uno de 9 cm por 6 cm, uno de 9 cm por 3 cm y uno de 6 cm por 3 cm.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-solo-caras-visibles",
+          "feedbackDescarte": "Esa cuenta una cara de cada par, las tres que se ven en el dibujo. Cada una tiene su cara opuesta igual: son seis rectángulos."
+        }
+      ],
+      "solucion": "Al cortar la caja por algunas aristas y extenderla aparecen sus seis caras: dos de 9 cm por 6 cm (fondo y tapa), dos de 9 cm por 3 cm y dos de 6 cm por 3 cm. La figura muestra una de las maneras de extenderla.",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -2.5,
+          "xMax": 32.5,
+          "yMin": -7.5,
+          "yMax": 10.5
+        },
+        "puntos": [
+          {
+            "nombre": "A0",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B0",
+            "x": 0,
+            "y": 3,
+            "oculto": true
+          },
+          {
+            "nombre": "A1",
+            "x": 9,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B1",
+            "x": 9,
+            "y": 3,
+            "oculto": true
+          },
+          {
+            "nombre": "A2",
+            "x": 15,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B2",
+            "x": 15,
+            "y": 3,
+            "oculto": true
+          },
+          {
+            "nombre": "A3",
+            "x": 24,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B3",
+            "x": 24,
+            "y": 3,
+            "oculto": true
+          },
+          {
+            "nombre": "A4",
+            "x": 30,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B4",
+            "x": 30,
+            "y": 3,
+            "oculto": true
+          },
+          {
+            "nombre": "T0",
+            "x": 0,
+            "y": 9,
+            "oculto": true
+          },
+          {
+            "nombre": "T1",
+            "x": 9,
+            "y": 9,
+            "oculto": true
+          },
+          {
+            "nombre": "U0",
+            "x": 0,
+            "y": -6,
+            "oculto": true
+          },
+          {
+            "nombre": "U1",
+            "x": 9,
+            "y": -6,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "vertices": [
+              "A0",
+              "A1",
+              "B1",
+              "B0"
+            ]
+          },
+          {
+            "vertices": [
+              "A1",
+              "A2",
+              "B2",
+              "B1"
+            ]
+          },
+          {
+            "vertices": [
+              "A2",
+              "A3",
+              "B3",
+              "B2"
+            ]
+          },
+          {
+            "vertices": [
+              "A3",
+              "A4",
+              "B4",
+              "B3"
+            ]
+          },
+          {
+            "vertices": [
+              "B0",
+              "B1",
+              "T1",
+              "T0"
+            ]
+          },
+          {
+            "vertices": [
+              "U0",
+              "U1",
+              "A1",
+              "A0"
+            ]
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "T0",
+            "hasta": "T1",
+            "rotulo": "9 cm"
+          },
+          {
+            "desde": "B0",
+            "hasta": "T0",
+            "rotulo": "6 cm"
+          },
+          {
+            "desde": "A4",
+            "hasta": "B4",
+            "rotulo": "3 cm"
+          }
+        ],
+        "descripcion": "Red de la caja: cuatro rectángulos en fila, de 9 cm, 6 cm, 9 cm y 6 cm de largo por 3 cm de alto, y dos rectángulos de 9 cm por 6 cm, uno arriba y otro abajo del primero."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-016",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "representar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una bordadora guarda madejas en una caja cilíndrica cerrada de 6 cm de diámetro y 7 cm de altura, como la de la figura. Si la caja se corta y se extiende sobre una mesa sin superponer partes, ¿cuál de las siguientes descripciones corresponde a la pieza plana completa?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cilindro",
+            "radio": 3,
+            "altura": 7
+          }
+        ],
+        "cotas": [
+          {
+            "pieza": 0,
+            "medida": "diametro",
+            "rotulo": "6 cm"
+          },
+          {
+            "pieza": 0,
+            "medida": "altura",
+            "rotulo": "7 cm"
+          }
+        ],
+        "descripcion": "Cilindro recto de 6 cm de diámetro y 7 cm de altura."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Un rectángulo de 2 · π · 3 cm por 7 cm y un círculo de 3 cm de radio.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-una-sola-tapa-cilindro",
+          "feedbackDescarte": "Esa trae un solo círculo. La caja está cerrada: tiene tapa y base, así que la pieza plana lleva dos círculos."
+        },
+        {
+          "clave": "B",
+          "texto": "Un rectángulo de π · 3² cm por 7 cm y dos círculos de 3 cm de radio.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-area-base-en-manto",
+          "feedbackDescarte": "Esa da al rectángulo un largo de π · 3², el área del círculo. El largo del manto es el contorno de la base, 2 · π · 3."
+        },
+        {
+          "clave": "C",
+          "texto": "Un rectángulo de 2 · π · 6 cm por 7 cm y dos círculos de 6 cm de radio.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-radio-con-diametro-cilindro",
+          "feedbackDescarte": "Esa usa el diámetro, 6 cm, como radio: en el largo del rectángulo y en los círculos. El radio es 3 cm."
+        },
+        {
+          "clave": "D",
+          "texto": "Un rectángulo de 2 · π · 3 cm por 7 cm y dos círculos de 3 cm de radio.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el manto se desenrolla en un rectángulo de 2 · π · 3 cm por 7 cm, y la tapa y la base son dos círculos de 3 cm de radio."
+        }
+      ],
+      "solucion": "El radio es 6 ÷ 2 = 3 cm. La parte curva se extiende en un rectángulo cuyo largo es el contorno de la base, 2 · π · 3 = 6π cm, y cuyo ancho es la altura, 7 cm. La tapa y la base son dos círculos de 3 cm de radio.",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -3.5,
+          "xMax": 21.34955592153876,
+          "yMin": -7.5,
+          "yMax": 15.5
+        },
+        "puntos": [
+          {
+            "nombre": "M1",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M2",
+            "x": 18.84955592153876,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M3",
+            "x": 18.84955592153876,
+            "y": 7,
+            "oculto": true
+          },
+          {
+            "nombre": "M4",
+            "x": 0,
+            "y": 7,
+            "oculto": true
+          },
+          {
+            "nombre": "O1",
+            "x": 3,
+            "y": 10,
+            "oculto": true
+          },
+          {
+            "nombre": "O2",
+            "x": 15.849555921538759,
+            "y": -3,
+            "oculto": true
+          },
+          {
+            "nombre": "R2",
+            "x": 18.84955592153876,
+            "y": -3,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "vertices": [
+              "M1",
+              "M2",
+              "M3",
+              "M4"
+            ]
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O1",
+            "radio": 3
+          },
+          {
+            "centro": "O2",
+            "radio": 3
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "M4",
+            "hasta": "M3",
+            "rotulo": "6π cm",
+            "cota": true
+          },
+          {
+            "desde": "M1",
+            "hasta": "M4",
+            "rotulo": "7 cm"
+          },
+          {
+            "desde": "O2",
+            "hasta": "R2",
+            "rotulo": "3 cm",
+            "trazo": "punteado",
+            "lado": "interior"
+          }
+        ],
+        "descripcion": "Red del cilindro: un rectángulo de 6π cm por 7 cm y dos círculos de 3 cm de radio."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-017",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Para saber cuánta tela se necesita para revestir por completo una sombrerera cilíndrica de 2 dm de radio y 3 dm de altura, un estudiante calcula π · 2² + 2 · π · 2 · 3. ¿Es correcto su cálculo?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "No, porque la sombrerera tiene dos caras circulares: falta sumar otra vez π · 2².",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la sombrerera tiene tapa y base, así que se necesitan 2 · π · 2² + 2 · π · 2 · 3 = 8π + 12π = 20π dm² de tela."
+        },
+        {
+          "clave": "B",
+          "texto": "Sí, porque se suman la tapa circular y la parte curva.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-una-sola-tapa-cilindro",
+          "feedbackDescarte": "Esa da por bueno un solo círculo más la parte curva. Revestirla por completo incluye la tapa y la base: dos círculos."
+        },
+        {
+          "clave": "C",
+          "texto": "No, porque la parte curva se calcula con el área del círculo: π · 2² · 3.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-area-base-en-manto",
+          "feedbackDescarte": "Esa calcula la parte curva como π · 2² · 3, con el área del círculo. La parte curva es un rectángulo de 2 · π · 2 por 3."
+        },
+        {
+          "clave": "D",
+          "texto": "No, porque para revestirla basta con la parte curva: 2 · π · 2 · 3.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-tapa-y-base",
+          "feedbackDescarte": "Esa deja solo la parte curva, sin la tapa ni la base. Revestirla por completo suma también los dos círculos."
+        }
+      ],
+      "solucion": "La sombrerera tiene dos círculos de radio 2 dm y una parte curva de 2 · π · 2 dm por 3 dm. La tela es 2 · π · 2² + 2 · π · 2 · 3 = 8π + 12π = 20π dm². El cálculo del estudiante suma un solo círculo.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-018",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La figura muestra la plantilla con que una chocolatería arma cajas cilíndricas cerradas para bombones: un rectángulo de 8π cm por 8,1 cm y dos círculos de 4 cm de radio. ¿Cuál es el área total de la plantilla?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -4,
+          "xMax": 28.132741228718345,
+          "yMin": -9.5,
+          "yMax": 18.6
+        },
+        "puntos": [
+          {
+            "nombre": "M1",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M2",
+            "x": 25.132741228718345,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "M3",
+            "x": 25.132741228718345,
+            "y": 8.1,
+            "oculto": true
+          },
+          {
+            "nombre": "M4",
+            "x": 0,
+            "y": 8.1,
+            "oculto": true
+          },
+          {
+            "nombre": "O1",
+            "x": 4,
+            "y": 12.1,
+            "oculto": true
+          },
+          {
+            "nombre": "O2",
+            "x": 21.132741228718345,
+            "y": -4,
+            "oculto": true
+          },
+          {
+            "nombre": "R2",
+            "x": 25.132741228718345,
+            "y": -4,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "vertices": [
+              "M1",
+              "M2",
+              "M3",
+              "M4"
+            ]
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O1",
+            "radio": 4
+          },
+          {
+            "centro": "O2",
+            "radio": 4
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "M4",
+            "hasta": "M3",
+            "rotulo": "8π cm",
+            "cota": true
+          },
+          {
+            "desde": "M1",
+            "hasta": "M4",
+            "rotulo": "8,1 cm"
+          },
+          {
+            "desde": "O2",
+            "hasta": "R2",
+            "rotulo": "4 cm",
+            "trazo": "punteado",
+            "lado": "interior"
+          }
+        ],
+        "descripcion": "Plantilla de un cilindro: un rectángulo de 8π cm por 8,1 cm y dos círculos de 4 cm de radio, uno tangente al lado de arriba y otro al lado de abajo, en extremos opuestos."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "80,8π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-una-sola-tapa-cilindro",
+          "feedbackDescarte": "Esa suma un solo círculo, π · 4² = 16π, más el rectángulo. La plantilla trae dos círculos iguales."
+        },
+        {
+          "clave": "B",
+          "texto": "96,8π cm²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los dos círculos suman 2 · π · 4² = 32π y el rectángulo 8π · 8,1 = 64,8π, en total 96,8π cm²."
+        },
+        {
+          "clave": "C",
+          "texto": "161,6π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-area-base-en-manto",
+          "feedbackDescarte": "Esa calcula el rectángulo como π · 4² · 8,1, con el área del círculo. El rectángulo mide 8π por 8,1: 64,8π."
+        },
+        {
+          "clave": "D",
+          "texto": "72,8π cm²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-cuadrado-del-radio-cilindro",
+          "feedbackDescarte": "Esa calcula cada círculo como π · 4, sin elevar el radio al cuadrado. Cada círculo mide π · 4² = 16π."
+        }
+      ],
+      "solucion": "Los dos círculos miden 2 · π · 4² = 32π cm² y el rectángulo, 8π · 8,1 = 64,8π cm². El área total de la plantilla es 32π + 64,8π = 96,8π cm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-019",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una jabonería vende jabones de glicerina de dos formas: un cubo de 4 cm de arista y una barra de 8 cm de largo, 4 cm de fondo y 2 cm de alto, como muestra la figura. ¿Cuál de las siguientes afirmaciones es verdadera?",
+      "figura": {
+        "tipo": "cuerpo-geometrico",
+        "piezas": [
+          {
+            "cuerpo": "cubo",
+            "arista": 4,
+            "en": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "cuerpo": "paralelepipedo",
+            "largo": 8,
+            "alto": 2,
+            "ancho": 4,
+            "en": {
+              "x": 7,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "ocultas": false,
+        "cotas": [
+          {
+            "desde": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "4 cm"
+          },
+          {
+            "desde": {
+              "x": 7,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 15,
+              "y": 0,
+              "z": 0
+            },
+            "rotulo": "8 cm"
+          },
+          {
+            "desde": {
+              "x": 15,
+              "y": 0,
+              "z": 4
+            },
+            "hasta": {
+              "x": 15,
+              "y": 2,
+              "z": 4
+            },
+            "rotulo": "2 cm"
+          },
+          {
+            "desde": {
+              "x": 15,
+              "y": 0,
+              "z": 0
+            },
+            "hasta": {
+              "x": 15,
+              "y": 0,
+              "z": 4
+            },
+            "rotulo": "4 cm"
+          }
+        ],
+        "descripcion": "Dos jabones separados: un cubo de 4 cm de arista y una barra de 8 cm de largo, 4 cm de fondo y 2 cm de alto."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Como los dos tienen el mismo volumen, se necesita la misma cantidad de papel para envolver cada uno.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-superficie-con-volumen",
+          "feedbackDescarte": "Esa decide el papel por el volumen. Los dos ocupan 64 cm³, pero el papel cubre las caras: el cubo tiene 96 cm² y la barra 112 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "La barra tiene más volumen que el cubo, porque 8 + 4 + 2 es mayor que 4 + 4 + 4.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-dimensiones-como-volumen",
+          "feedbackDescarte": "Esa compara las sumas 8 + 4 + 2 y 4 + 4 + 4. El volumen es el producto de las medidas: los dos dan 64 cm³."
+        },
+        {
+          "clave": "C",
+          "texto": "Los dos tienen el mismo volumen, pero la barra necesita más papel para envolverse.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 4 · 4 · 4 = 64 y 8 · 4 · 2 = 64, el mismo volumen; pero el cubo tiene 6 · 16 = 96 cm² y la barra 2 · (32 + 8 + 16) = 112 cm²."
+        },
+        {
+          "clave": "D",
+          "texto": "El cubo tiene menos volumen que la barra, porque su volumen es 4 · 3 y el de la barra es 8 · 4 · 2.",
+          "esCorrecta": false,
+          "errorCatalogado": "triplica-arista-como-volumen",
+          "feedbackDescarte": "Esa calcula el volumen del cubo como 4 · 3, la arista por 3. El volumen del cubo es 4 · 4 · 4 = 64 cm³, igual al de la barra."
+        }
+      ],
+      "solucion": "Volúmenes: el cubo, 4 · 4 · 4 = 64 cm³, y la barra, 8 · 4 · 2 = 64 cm³; son iguales. Áreas: el cubo, 6 · 4² = 96 cm², y la barra, 2 · (8 · 4 + 4 · 2 + 8 · 2) = 2 · 56 = 112 cm². La barra necesita más papel.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-cuerpos-geometricos-020",
+      "unidadId": "cuerpos-geometricos",
+      "moduloId": "cuerpos-geometricos",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una caja con forma de paralelepípedo de 6 cm de largo, 6 cm de ancho y 4 cm de alto se llena, sin dejar espacios, con terrones para endulzar con forma de cubo de 2 cm de arista. ¿Cuál de las siguientes expresiones representa la cantidad de terrones que caben en la caja?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(6 · 6 · 4) ÷ (2 · 3)",
+          "esCorrecta": false,
+          "errorCatalogado": "triplica-arista-como-volumen",
+          "feedbackDescarte": "Esa calcula el volumen de cada terrón como 2 · 3, la arista por 3. Cada terrón ocupa 2 · 2 · 2 = 2³ cm³."
+        },
+        {
+          "clave": "B",
+          "texto": "(6 · 6) ÷ 2²",
+          "esCorrecta": false,
+          "errorCatalogado": "entrega-area-base-como-volumen",
+          "feedbackDescarte": "Esa llena solo una capa: divide el fondo, 6 · 6, por la cara de un terrón, 2². Con 4 cm de alto caben 2 capas iguales."
+        },
+        {
+          "clave": "C",
+          "texto": "(6 + 6 + 4) ÷ 2³",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-dimensiones-como-volumen",
+          "feedbackDescarte": "Esa toma el volumen de la caja como 6 + 6 + 4, la suma de sus medidas. La caja ocupa 6 · 6 · 4 cm³."
+        },
+        {
+          "clave": "D",
+          "texto": "(6 · 6 · 4) ÷ 2³",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la caja ocupa 6 · 6 · 4 = 144 cm³ y cada terrón 2³ = 8 cm³, así que caben (6 · 6 · 4) ÷ 2³ = 18 terrones."
+        }
+      ],
+      "solucion": "La caja ocupa 6 · 6 · 4 = 144 cm³ y cada terrón 2 · 2 · 2 = 8 cm³. Como los terrones llenan la caja sin dejar espacios, caben (6 · 6 · 4) ÷ 2³ = 144 ÷ 8 = 18. Por capas: 3 · 3 = 9 terrones en el fondo y 2 capas.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-cuerpos-geometricos-001: Una florista quiere saber cuánta agua cabe en un florero cilíndrico de 8 cm de diámetro y 9 cm de altura, y calcula π · 8² · 9. Pregunta: ¿Es correcto su cálculo?; clave B = No, porque usó el diámetro como radio: con el radio de 4 cm, el volumen es π · 4² · 9 cm³.",
+    "adv-cuerpos-geometricos-002: Una fábrica envuelve cubitos de caldo en celofán. El costo del celofán de cada cubito se calcula como $3 · k, porque cada cm² del área exterior del cubito lleva $3 de celofán. Si cada cara de un cubito tiene un área de 4 cm², Pregunta: ¿cuál de las siguientes expresiones representa k?; clave A = 6 · 2²",
+    "adv-cuerpos-geometricos-003: Un ceramista modela un bloque de greda con forma de prisma recto de base cuadrada, de 9 cm de lado y 6 cm de alto, como el de la figura. Si modela otro bloque con todas sus aristas del doble de largo, Pregunta: ¿cuál es el volumen del bloque nuevo?; clave C = 3.888 cm³",
+    "adv-cuerpos-geometricos-004: Una marquería despacha un cuadro en una caja de embalaje cerrada, con forma de paralelepípedo, de 3 dm de ancho, 1 dm de fondo y 3,9 dm de alto, parada sobre su cara más chica, como muestra la figura. Pregunta: ¿Cuántos decímetros cuadrados de material tiene la caja?; clave D = 37,2 dm²",
+    "adv-cuerpos-geometricos-005: Un trofeo está formado por un pedestal con forma de paralelepípedo, de 6 cm de largo, 4 cm de fondo y 2 cm de alto, y un cubo de 3 cm de arista pegado encima, como muestra la figura. Pregunta: ¿Cuál es el volumen del trofeo?; clave A = 75 cm³",
+    "adv-cuerpos-geometricos-006: Una marca de infusiones envasa hierbas en cajas cilíndricas cerradas de 8 cm de diámetro y 7,9 cm de altura, como la de la figura. Pregunta: ¿Cuál es el área total de una caja?; clave B = 95,2π cm²",
+    "adv-cuerpos-geometricos-007: Un especiero cilíndrico para guardar comino tiene 7 cm de altura y una capacidad de 56π cm³. Pregunta: ¿Cuánto mide el radio de su base?; clave C = √8 cm",
+    "adv-cuerpos-geometricos-008: Un reservorio que se llena desde una acequia tiene forma de paralelepípedo de 8 m de largo, 7 m de ancho y 2 m de profundidad, como muestra la figura. Pregunta: ¿Cuántos litros de agua caben en el reservorio lleno? (1 m³ = 1.000 L); clave D = 112.000 L",
+    "adv-cuerpos-geometricos-009: Una tapicera cubre por completo con tela un taburete cilíndrico de 17 cm de radio y 41 cm de altura, como el de la figura. Pregunta: ¿Cuántos centímetros cuadrados de tela usa?; clave A = 1.972π cm²",
+    "adv-cuerpos-geometricos-010: Un barril cilíndrico recoge el agua que baja por una canaleta. Mide 3 dm de radio y 7,6 dm de altura, como el de la figura. Pregunta: ¿Cuántos litros de agua caben en el barril? (Considera π = 3 y 1 dm³ = 1 L); clave B = 205,2 L",
+    "adv-cuerpos-geometricos-011: Una heladería vende sorbete en envases cilíndricos de 8 cm de diámetro y 3 cm de altura, como el de la figura. Pregunta: ¿Cuál de las siguientes expresiones representa la cantidad de sorbete, en cm³, que cabe en un envase lleno?; clave C = π · 4² · 3",
+    "adv-cuerpos-geometricos-012: Se cubre por completo con forro un baúl con forma de paralelepípedo de 7 dm de largo, 5 dm de fondo y 3 dm de alto, como el de la figura. Pregunta: ¿Cuál de las siguientes expresiones representa la cantidad de forro, en dm², que se usa?; clave D = 2 · (7 · 3 + 3 · 5 + 7 · 5)",
+    "adv-cuerpos-geometricos-013: Una fábrica de encurtidos guarda salmuera en una tina con forma de cubo de 2 m de arista, como la de la figura. Pregunta: ¿Cuál de las siguientes expresiones representa la cantidad de litros de salmuera que caben en la tina? (1 m³ = 1.000 L); clave A = 2³ · 1.000",
+    "adv-cuerpos-geometricos-014: La figura muestra la plantilla con que se arma un envase cilíndrico cerrado para palomitas de maíz: un rectángulo de 6π cm por 7,4 cm y dos círculos iguales. Pregunta: ¿Cuántos centímetros cúbicos de palomitas caben en el envase armado?; clave B = 66,6π cm³",
+    "adv-cuerpos-geometricos-015: La caja de una baraja de naipes tiene forma de paralelepípedo de 9 cm de largo, 6 cm de fondo y 3 cm de alto, como la de la figura. Si se corta por algunas de sus aristas y se extiende sobre una mesa sin superponer partes, Pregunta: ¿cuál de las siguientes descripciones corresponde a la pieza plana que se obtiene?; clave C = Seis rectángulos: dos de 9 cm por 6 cm, dos de 9 cm por 3 cm y dos de 6 cm por 3 cm.",
+    "adv-cuerpos-geometricos-016: Una bordadora guarda madejas en una caja cilíndrica cerrada de 6 cm de diámetro y 7 cm de altura, como la de la figura. Si la caja se corta y se extiende sobre una mesa sin superponer partes, Pregunta: ¿cuál de las siguientes descripciones corresponde a la pieza plana completa?; clave D = Un rectángulo de 2 · π · 3 cm por 7 cm y dos círculos de 3 cm de radio.",
+    "adv-cuerpos-geometricos-017: Para saber cuánta tela se necesita para revestir por completo una sombrerera cilíndrica de 2 dm de radio y 3 dm de altura, un estudiante calcula π · 2² + 2 · π · 2 · 3. Pregunta: ¿Es correcto su cálculo?; clave A = No, porque la sombrerera tiene dos caras circulares: falta sumar otra vez π · 2².",
+    "adv-cuerpos-geometricos-018: La figura muestra la plantilla con que una chocolatería arma cajas cilíndricas cerradas para bombones: un rectángulo de 8π cm por 8,1 cm y dos círculos de 4 cm de radio. Pregunta: ¿Cuál es el área total de la plantilla?; clave B = 96,8π cm²",
+    "adv-cuerpos-geometricos-019: Una jabonería vende jabones de glicerina de dos formas: un cubo de 4 cm de arista y una barra de 8 cm de largo, 4 cm de fondo y 2 cm de alto, como muestra la figura. Pregunta: ¿Cuál de las siguientes afirmaciones es verdadera?; clave C = Los dos tienen el mismo volumen, pero la barra necesita más papel para envolverse.",
+    "adv-cuerpos-geometricos-020: Una caja con forma de paralelepípedo de 6 cm de largo, 6 cm de ancho y 4 cm de alto se llena, sin dejar espacios, con terrones para endulzar con forma de cubo de 2 cm de arista. Pregunta: ¿Cuál de las siguientes expresiones representa la cantidad de terrones que caben en la caja?; clave D = (6 · 6 · 4) ÷ 2³"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-invierno-111 (pregunta 44) y 2026-regular-113 (pregunta 48), con sus clavijeros (PDF en ../fuentes-demre-liberadas/)",
+      "docs/analisis/frecuencia-demre-v2.json (preguntas de la unidad por forma y verificación)",
+      "docs/analisis/material-referencia/figuras-cuerpos-geometricos.md y por-unidad.md (vistas, cotas y mecanismos de distractor de la unidad; clean-room)"
+    ],
+    "declaracionOriginalidad": "Banco de cuerpos geométricos: 20 ítems, 60 distractores, 15 errores distintos del catálogo content/errores/cuerpos-geometricos.json (los 13 preexistentes y los 2 firmados en la PARADA del 2026-09-24 con su pregunta DEMRE, escala-el-volumen-por-el-factor y escala-el-volumen-por-el-cuadrado-del-factor, de 2024-invierno-111 n.º 44 A y B), 60 de 60 distractores con errorCatalogado y 0 ítems que repitan errorCatalogado entre sus tres distractores, medido con node sobre el archivo final. Reparto: 10 resolver, 5 modelar, 2 representar, 3 argumentar; 4 baja, 12 media, 4 alta; letra correcta 5/5/5/5. Proveniencia por fuente: 18 propia y 2 demre-liberada (002 sobre la pregunta 48 de la forma 2026-regular-113 y 003 sobre la pregunta 44 de la forma 2024-invierno-111; las dos verificadas en el PDF de la forma y con clave confirmada por clavijero; la 44 lleva asterisco en el clavijero porque no puntuó, y se publicó con su clave). 2024-invierno-111 n.º 45 y 2026-regular-113 n.º 47 quedaron fuera porque sus distractores son de conteo de piezas, sin id en el catálogo; las otras 8 preguntas de la unidad no son verificables (2024-regular-113 y 2025-regular-113 no tienen clavijero y 2027-invierno-111 no tiene PDF). Convenciones firmadas en la PARADA (G1 a G11): π exacto en las alternativas de 006, 009, 014 y 018 y π = 3 declarado solo en 010; raíces exactas sin simplificar en 007 (√8 y √56); coma decimal, punto de miles y ÷ como división; datos inventados, sin nada del material UC. Mapeo: confunde-superficie-con-volumen en sus dos sentidos literales (volumen donde se pide material en 002, 012 y 019; área donde se pide lo que cabe en 003, 008, 010 y 014); omite-tapa-y-base en el cilindro es solo el manto (009 y 017); en 005 y 020 el error va en una sola pieza y el resto se calcula bien; entrega-area-base-como-volumen al revés en 007 (la capacidad tomada como área de la base) y como una sola capa en 020; confunde-radio-con-diametro con el diámetro en la fórmula de la tapa en 001, 011 y 016, y en tapas y manto en 006. Figuras: 15 en el enunciado (13 cuerpo-geometrico y 2 redes de cilindro en lienzo-geometrico, 014 y 018) y 4 figuraSolucion (005, 014, 015 y 016); ningún rótulo muestra la clave y todo rótulo es un dato del enunciado. Prueba de ojo: no aplica, ningún ítem con figura pide una longitud dibujada (007, el radio, va sin figura). Magnitud: 2 de 30 distractores escalares fuera de [1/3, 3], los dos del tope firmado y porque el mecanismo lo exige: 003 A (0,25, multiplicar por 2 donde va 2³) y 008 A (0,10, por 100 donde va por 1.000); 010 D y 014 D quedan en el borde 1/3. Cota de contexto: 0 valores imposibles por el enunciado; las cuatro expresiones de 020 evalúan a enteros. Cifras, con el criterio firmado en G1 (entero de 10 a 99 contra las tres lecciones, el cierre y las 12 preguntas DEMRE de la unidad; entero de 100 o más y decimal contra todos los archivos versionados del repo, la unidad y DEMRE de la unidad; 1.000 y 100 como constantes estructurales; ninguna cifra visible repetida entre ítems), barridas con node el 2026-09-24 sobre este archivo: 44 cifras visibles (enunciado, rótulos de las figuras y alternativas), 0 colisiones y 0 repetidas entre ítems; los intermedios de feedbacks y soluciones se reportan y no bloquean. Contextos: scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-24 sobre las 120 palabras clave (dos por contexto, en el principal y los dos respaldos de cada ítem): 15 SI y 105 NO; ningún par tiene sus dos palabras en un mismo documento. Cero recambios: los 20 ítems usan su contexto principal. Los respaldos viven en scratchpad/plan-banco-cuerpos-geometricos.md, no en el repo. Medición a 390 × 844 el 2026-09-24 con Playwright en /advance/descarte/cuerpos-geometricos, con dos visitas por ítem (descartando los tres distractores y descartando la correcta): 19 de 19 figuras vistas (15 del enunciado y 4 de solución), SVG de 358 px en el enunciado y de 330 px en la solución, alto máximo de 320 px, letra mínima de 12 px, 0 rótulos fuera del SVG, 0 rótulos superpuestos, 0 SVG fuera de su contenedor y sin scroll horizontal (ancho de página de 390 px). Ronda 1 (matemática) y Ronda 2 (originalidad) PENDIENTES, en hilos /clear aparte. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}

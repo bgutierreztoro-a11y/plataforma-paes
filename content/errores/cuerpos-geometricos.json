@@ -55,13 +55,11 @@
     },
     {
       "id": "cuerpos-geometricos/escala-el-volumen-por-el-factor",
-      "descripcion": "Al multiplicar todas las aristas de un cuerpo por un mismo factor, multiplicar el volumen solo por ese factor, como si fuera una longitud, en lugar de por el factor al cubo: si las aristas se duplican, dar como volumen nuevo el doble del original cuando es 2 · 2 · 2 = 8 veces el original.",
-      "reservado": "Banco Advance de cuerpos-geometricos: distractor 003 A; mecanismo de 2024-invierno-111 n.º 44 A"
+      "descripcion": "Al multiplicar todas las aristas de un cuerpo por un mismo factor, multiplicar el volumen solo por ese factor, como si fuera una longitud, en lugar de por el factor al cubo: si las aristas se duplican, dar como volumen nuevo el doble del original cuando es 2 · 2 · 2 = 8 veces el original."
     },
     {
       "id": "cuerpos-geometricos/escala-el-volumen-por-el-cuadrado-del-factor",
-      "descripcion": "Al multiplicar todas las aristas de un cuerpo por un mismo factor, multiplicar el volumen por el factor al cuadrado, como si fuera un área, en lugar de por el factor al cubo: si las aristas se duplican, dar como volumen nuevo 4 veces el original cuando es 2 · 2 · 2 = 8 veces el original.",
-      "reservado": "Banco Advance de cuerpos-geometricos: distractor 003 B; mecanismo de 2024-invierno-111 n.º 44 B"
+      "descripcion": "Al multiplicar todas las aristas de un cuerpo por un mismo factor, multiplicar el volumen por el factor al cuadrado, como si fuera un área, en lugar de por el factor al cubo: si las aristas se duplican, dar como volumen nuevo 4 veces el original cuando es 2 · 2 · 2 = 8 veces el original."
     }
   ]
 }
