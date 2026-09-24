@@ -118,7 +118,7 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 
 ### ADR-05: Medición sin cookies de PostHog
 
-**Contexto.** Hoy PostHog guarda todo en memoria, sin cookies, por decisión de privacidad para menores. Hay una sola inicialización, en `components/analytics/PostHogProvider.tsx`; `instrumentation-client.ts` no existe (verificado en la Fase 0).
+**Contexto.** Hoy PostHog guarda todo en memoria, sin cookies, por decisión de privacidad para menores. Hay una sola inicialización, en `components/analytics/PostHogProvider.tsx`; `instrumentation-client.ts` no existe (verificado en la Fase 0). Además, `/privacidad` le promete al alumno que los eventos que van a PostHog no incluyen su correo, su nombre ni su identificador de cuenta.
 
 | | Activar cookies de PostHog | Mantener memoria + cookie propia |
 |---|---|---|
@@ -126,9 +126,9 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 | Privacidad | Peor | Igual que hoy |
 | Cambios | Revisar política e inventario | Mínimos |
 
-**Decisión.** Se mantiene sin cookies de PostHog, y la inicialización actual no cambia: `autocapture: false`, `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`. Se agrega: con sesión iniciada, `identify` con el id de Clerk (un código, nunca correo ni nombre) en cada carga. `reset` al cerrar sesión. El video de origen viaja como propiedad de los eventos desde la cookie `fobos_origen`.
+**Decisión** (Benja, 2026-09-24). Se mantiene sin cookies de PostHog y sin identidad: la inicialización actual no cambia (`autocapture: false`, `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`) y no hay `identify` ni `reset`. Los eventos siguen saliendo anónimos, como promete `/privacidad`. El video de origen viaja como propiedad de los eventos desde la cookie `fobos_origen`. La activación se mide en Neon, no en PostHog: cuentas → `perfil_inicio` → `parada_iniciada_en` → primer descarte en `advance_descartes`.
 
-**Consecuencias.** El embudo "video → cuenta" se lee comparando conteos por video, no persona por persona. Suficiente para saber qué video funciona.
+**Consecuencias.** El embudo "video → cuenta" se lee en PostHog comparando conteos por video, no persona por persona. Suficiente para saber qué video funciona. El de activación sí sigue a cada cuenta, pero con datos que ya viven en Neon, con una consulta SQL que escribe la Fase 8.
 
 ### ADR-06: Fin de la prueba con pantalla de elegir plan
 
@@ -314,9 +314,9 @@ Tipados en `lib/eventos.ts`. Ninguna propiedad acepta correo, nombre, RUT, coleg
 | `elegir_plan_visto` | Carga `/elegir-plan` | `acceso_previo` |
 | `plan_elegido_clic` | Toca una opción | `plan` (base / advance / no_seguir) |
 
-Embudos que Benja arma en PostHog al final:
-1. **Qué video funciona:** `error_publico_visto` → `error_publico_respondido` → `cta_prueba_clic`, separado por `video`. Aparte, `cuenta_creada` con `entrada = video`, contado por `video`.
-2. **Activación:** `cuenta_creada` → `bienvenida_respondida` → `primera_parada_iniciada` → `checklist_item_completado` (item = descarte), separado por `p1`.
+Embudos al final:
+1. **Qué video funciona, en PostHog:** `error_publico_visto` → `error_publico_respondido` → `cta_prueba_clic`, separado por `video`. Aparte, `cuenta_creada` con `entrada = video`, contado por `video`.
+2. **Activación, en Neon:** consulta SQL que escribe la Fase 8 en `docs/`: cuentas (`usuarios`) → `perfil_inicio` → `parada_iniciada_en` no nula → primer descarte en `advance_descartes`, separado por `p1`. Los eventos de activación de PostHog se quedan como conteos anónimos.
 
 ---
 
@@ -345,12 +345,11 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 
 ### Fase 1 · Medición · 🟡 · 1 sesión
 
-**Objetivo.** Los eventos de §6 tipados, `identify`/`reset` según ADR-05 y el inventario de datos. La inicialización de PostHog ya es una sola y no se toca.
+**Objetivo.** Los eventos de §6 tipados y el inventario de datos. Sin `identify` ni `reset` (ADR-05). La inicialización de PostHog ya es una sola y no se toca.
 **Leer.** `components/analytics/PostHogProvider.tsx`, `lib/eventos.ts`, `app/layout.tsx`, `docs/inventario-datos.md`.
 **Hacer.**
 - Agregar los tipos de §6 a `lib/eventos.ts`.
-- Componente que, con sesión, llama `identify(userId)` en cada carga, y `reset` al cerrar sesión.
-- Agregar al inventario de datos el id de Clerk en PostHog y la cookie `fobos_origen`.
+- Agregar al inventario de datos la cookie `fobos_origen` y los eventos del recorrido.
 
 **Aceptación.** En la pestaña Red no hay autocapture ni grabación. Un test falla si un evento acepta `email` o `nombre`. Los eventos existentes siguen saliendo igual.
 
@@ -371,7 +370,7 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 **Objetivo.** CC escribe; Benja revisa y aplica.
 **Hacer.**
 - Constantes `m1-base-2027` y `m1-advance-2027` en `lib/datos/entitlements.ts`, junto a `m1-libre` (Advance incluye Base). La prueba es una fila `m1-advance-2027` con origen `prueba`. El webhook y `m1-libre` no se tocan.
-- Migración nueva: agrega `prueba` a los valores de `entitlements.origen`, con restricción de una sola prueba por usuario. Crea `perfil_inicio` (`usuario_id`, `p1`, `p2`, `p3`, `saltada`, `unidad_origen`, `error_origen`, `video`, `parada_tipo`, `parada_destino`, `creado_en`) con borrado en cascada desde `usuarios` y los permisos mínimos para `app_m1`.
+- Migración nueva: agrega `prueba` a los valores de `entitlements.origen`, con restricción de una sola prueba por usuario. Crea `perfil_inicio` (`usuario_id`, `p1`, `p2`, `p3`, `saltada`, `unidad_origen`, `error_origen`, `video`, `parada_tipo`, `parada_destino`, `parada_iniciada_en` (timestamptz, nula), `creado_en`) con borrado en cascada desde `usuarios` y los permisos mínimos para `app_m1`. El inventario de datos se actualiza en el mismo commit, como exige el propio inventario.
 - `scripts/otorgar-cortesia.mjs <correo> <hasta>`: crea una cortesía `m1-advance-2027` con origen `cortesia` y `vigencia_hasta` exclusiva. Para el amigo, `<hasta>` es 2026-12-01 00:00 hora de Chile (2026-12-01T03:00:00Z). Lo corre Benja.
 
 **Aceptación.** SQL en el diff para revisión. Tests de la restricción de una sola prueba. CC no corre la migración ni el script.
@@ -385,15 +384,16 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 - `/bienvenida` en servidor: asegura usuario (si falta la fila, correo de `currentUser()` y `crearUsuario` + `otorgarEntitlementGratis`, las mismas funciones del webhook, sin insert nuevo), `asegurarPrueba` con el filtro de origen de ADR-04, lee `fobos_origen`. Pantallas: preguntas (2 o 3), "Así funciona Fobos", primera parada. Guardado en `perfil_inicio`, borra la cookie.
 - `lib/recorrido/primeraParada.ts`: función pura con la tabla de §5. Los ids del DAG no siempre coinciden con `lib/modulos.ts` (`enteros-racionales` vs `enteros-y-racionales`): la traducción vive en un solo lugar, con un test que recorre todos los ids del DAG y verifica que existen en `lib/modulos.ts`.
 - `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`): con sesión, dice si hay `perfil_inicio` y qué se recomendó. La portada no redirige: una isla de cliente muestra "Termina tu bienvenida" con link a `/bienvenida` a quien tiene sesión y no tiene `perfil_inicio`.
+- `POST /api/recorrido/inicio`: marca `parada_iniciada_en` una sola vez (si ya tiene fecha, no la cambia). Lo llama la tarjeta de primera parada al tocarla, en `/bienvenida` y en la portada (Fase 5).
 - `/como-funciona` reutiliza la pantalla "Así funciona Fobos".
 - Eventos `cuenta_creada`, `bienvenida_respondida`.
 
-**Aceptación.** Tests de `primeraParada` para todas las combinaciones, incluida "saltó" y Advance apagado. "Me cuestan harto" nunca devuelve Advance. Recargar `/bienvenida` no crea una segunda prueba. Con cortesía no se crea prueba y el encabezado cambia. "Saltar" funciona en cada pregunta. "/" sigue estática en la tabla de rutas del build.
+**Aceptación.** Tests de `primeraParada` para todas las combinaciones, incluida "saltó" y Advance apagado. "Me cuestan harto" nunca devuelve Advance. Recargar `/bienvenida` no crea una segunda prueba. Con cortesía no se crea prueba y el encabezado cambia. "Saltar" funciona en cada pregunta. Tocar la tarjeta de primera parada dos veces deja una sola `parada_iniciada_en`. "/" sigue estática en la tabla de rutas del build.
 
 ### Fase 5 · Portada "Empieza aquí" · 🟡 · 2 sesiones
 
 **Objetivo.** La portada de §4 para alumnos nuevos.
-**Hacer.** Componentes nuevos en `components/recorrido/`, montados desde `app/page.tsx` como islas de cliente que leen `GET /api/recorrido/inicio`, para que "/" siga estática. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir"; el cómo se propone en el plan 🟡 de esta fase. Piezas: tarjeta de primera parada, "Tus primeros pasos" (estado calculado desde la actividad real; "Revisa tus errores" se marca al visitar la página), "Una trampa típica de la PAES", estado de la prueba y link "Cómo funciona Fobos". Evento `primera_parada_iniciada` y `checklist_item_completado`. Si montar algo exige tocar `components/camino/`, CC para y propone otra vía.
+**Hacer.** Componentes nuevos en `components/recorrido/`, montados desde `app/page.tsx` como islas de cliente que leen `GET /api/recorrido/inicio`, para que "/" siga estática. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir"; el cómo se propone en el plan 🟡 de esta fase. Piezas: tarjeta de primera parada, "Tus primeros pasos" (estado calculado desde la actividad real; "Revisa tus errores" se marca al visitar la página), "Una trampa típica de la PAES", estado de la prueba y link "Cómo funciona Fobos". La tarjeta llama `POST /api/recorrido/inicio` (Fase 4) al tocarla. Evento `primera_parada_iniciada` y `checklist_item_completado`. Si montar algo exige tocar `components/camino/`, CC para y propone otra vía.
 **Aceptación.** A 390 px la primera parada se ve sin hacer scroll. La portada de alguien con progreso sigue igual que hoy, más la checklist mientras no esté completa u oculta.
 
 **Al cerrar esta fase:** Benja aplica la migración, corre `otorgar-cortesia` para su amigo, activa `NEXT_PUBLIC_ADVANCE_VISIBLE` y `NEXT_PUBLIC_ADVANCE_DEMO` en Vercel si quiere que vea Advance, y le pasa el link de registro.
@@ -417,7 +417,7 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 2. Puerta B: link directo al registro.
 3. Cortesía: una cuenta con `otorgar-cortesia`.
 
-Después, Benja arma los dos embudos de §6 en PostHog.
+CC escribe además `docs/recorrido-embudo-activacion.md` con la consulta SQL del embudo 2 de §6: cuentas → `perfil_inicio` → `parada_iniciada_en` → primer descarte en `advance_descartes`. Después, Benja arma en PostHog el embudo 1 y corre la consulta en Neon.
 
 ---
 
