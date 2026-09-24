@@ -71,11 +71,11 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 
 **Contexto.** El video necesita un destino que funcione sin cuenta y que use una pregunta real. Los ítems viven en el banco de Advance de porcentaje y el nombre del error en su catálogo.
 
-**Decisión.** Ruta `/error/[unidadId]/[errorId]`. Una lista blanca en `lib/recorrido/erroresPublicos.ts` dice qué errores son públicos y qué ítem usa cada uno (`{ unidadId, errorId, itemId }`). La página lee el ítem y el catálogo que ya existen; no se crea ni se modifica nada en `content/`. Alternativas en orden fijo, sin mezclar, para que coincidan con el video. Cualquier ruta fuera de la lista da 404.
+**Decisión.** Ruta `/error/[unidadId]/[errorId]`. Una lista blanca en `lib/recorrido/erroresPublicos.ts` dice qué errores son públicos, qué ítem usa cada uno y sus textos firmados de §4 (`{ unidadId, errorId, itemId }` más los textos). La página lee el enunciado y las alternativas del banco, y del catálogo solo cuenta los ids para N; no muestra `titulo` ni `descripcion`. No se crea ni se modifica nada en `content/`. Alternativas en orden fijo, sin mezclar, para que coincidan con el video. Cualquier ruta fuera de la lista da 404.
 
 **Opciones consideradas.** Copiar el ítem a un JSON nuevo de contenido público: duplica contenido y exige firma 🔴 por cada página. Marcar ítems como públicos en el banco: toca el schema. La lista en código no toca nada de eso.
 
-**Consecuencias.** Agregar una página nueva es agregar una línea a la lista. El ítem elegido queda visible para cualquiera; se acepta, es uno solo.
+**Consecuencias.** Agregar una página nueva es agregar una entrada a la lista, con sus textos firmados. El ítem elegido queda visible para cualquiera; se acepta, es uno solo.
 
 ### ADR-02: "De dónde vino" en una cookie propia
 
@@ -148,25 +148,31 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 - Encabezado: "La trampa del video" / "Porcentaje · 1 pregunta · sin cuenta"
 - Botón para responder: "Responder"
 
-Después de responder hay tres casos. `[X]` es la letra de la alternativa del error del video, `[C]` la correcta.
+Después de responder hay un caso por alternativa de `adv-porcentaje-019` (A es la del error del video, C la correcta). Estos textos viven en `lib/recorrido/erroresPublicos.ts`, junto al ítem, no en `content/`. La página no muestra ni `titulo` ni `descripcion` del catálogo.
 
-**Eligió la alternativa del error del video:**
+**Eligió la A (la tentadora):**
 > **Elegiste la alternativa más tentadora.**
-> Parece que subir y bajar el mismo porcentaje se cancela. No se cancela: la bajada se calcula sobre un precio más grande, así que baja más de lo que subió.
-> [solución paso a paso del banco]
+> Le quitaste el 34% a $23.450. Suena lógico: subió 34%, le bajas 34% y vuelves. Pero el alza se calculó sobre el precio antiguo, que era más barato. El 34% de $23.450 es más plata, así que bajas de más y llegas a $15.477, por debajo del precio real.
+> Lo que sí funciona: subir 34% es multiplicar por 1,34. Para volver, divides por 1,34.
+> $23.450 ÷ 1,34 = $17.500. Compruébalo: $17.500 × 1,34 = $23.450.
 
-**Eligió la correcta:**
+**Eligió la C (la correcta):**
 > **Bien, no caíste.**
-> La trampa estaba en la [X]: [feedback de ese distractor en el banco].
-> [solución paso a paso del banco]
+> La trampa estaba en la A: quitarle el 34% a $23.450. Así llegas a $15.477, más barato que el precio real, porque el 34% de $23.450 es más plata que el 34% del precio antiguo.
+> La forma segura es dividir por 1,34: $23.450 ÷ 1,34 = $17.500.
 
-**Eligió otra incorrecta:**
+**Eligió la B:**
 > **Esa alternativa viene de otro error, distinto al del video.**
-> [feedback de ese distractor en el banco]
-> La trampa del video estaba en la [X]. La correcta es la [C]:
-> [solución paso a paso del banco]
+> $7.973 es el 34% de $23.450. La cuenta está bien, pero te preguntan cuánto costaba antes, no cuánto es el 34%.
 
-**Cierre, igual en los tres casos:**
+**Eligió la D:**
+> **Esa alternativa viene de otro error, distinto al del video.**
+> Restaste 34 pesos. El alza fue el 34% del precio, que son miles de pesos.
+
+**Después de B o D, siempre:**
+> La trampa del video estaba en la A: bajarle el 34% al precio nuevo. La correcta es la C: $23.450 ÷ 1,34 = $17.500.
+
+**Cierre, igual en todos los casos:**
 > En Fobos, cada alternativa incorrecta tiene detrás un error con nombre. En porcentaje hay [N] más como este.
 
 N = ids del catálogo de porcentaje menos 1, calculado desde el catálogo, nunca escrito a mano.
@@ -353,12 +359,12 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 **Objetivo.** ADR-01 y ADR-02 con los textos de §4.
 **Leer.** La Bitácora de la Fase 0, el banco Advance de porcentaje, su catálogo, `lib/advance/banco.ts`.
 **Hacer.**
-- `lib/recorrido/erroresPublicos.ts` con una entrada: `{ unidadId: "porcentaje", errorId: "deshace-porcentaje-con-mismo-porcentaje", itemId: "adv-porcentaje-019" }` (elegido en la Fase 0; distractor A, correcta C).
-- `app/error/[unidadId]/[errorId]/page.tsx`: sin sesión, alternativas en orden fijo, tres casos de respuesta, cierre con N calculado, botón que guarda `fobos_origen` y va a `/registrarse`. Con sesión, "Ir a Fobos".
+- `lib/recorrido/erroresPublicos.ts` con una entrada: `{ unidadId: "porcentaje", errorId: "deshace-porcentaje-con-mismo-porcentaje", itemId: "adv-porcentaje-019" }` (elegido en la Fase 0; distractor A, correcta C), más los textos firmados de §4.
+- `app/error/[unidadId]/[errorId]/page.tsx`: sin sesión, alternativas en orden fijo, un caso de respuesta por alternativa con los textos de §4, cierre con N calculado, botón que guarda `fobos_origen` y va a `/registrarse`. Con sesión, "Ir a Fobos".
 - Metadatos para la vista previa del link. Se mantiene `noindex`.
 - Eventos `error_publico_visto`, `error_publico_respondido`, `cta_prueba_clic`.
 
-**Aceptación.** Abre sin sesión a 390 px, sin cortes. Los tres casos muestran el feedback correcto del banco (test por caso). El botón aparece solo después de responder. Ruta fuera de la lista da 404. Cero cambios en `content/`.
+**Aceptación.** Abre sin sesión a 390 px, sin cortes. Cada alternativa muestra su texto de §4, y B y D agregan la línea común (test por caso). El botón aparece solo después de responder. Ruta fuera de la lista da 404. Cero cambios en `content/`.
 
 ### Fase 3 · Datos · 🔴 · 1 sesión
 
