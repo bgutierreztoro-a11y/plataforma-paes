@@ -1,3 +1,4 @@
+import { CuerpoGeometrico } from "@/components/advance/figuras/CuerpoGeometrico";
 import { DiagramaCajon } from "@/components/advance/figuras/DiagramaCajon";
 import { GraficoBarras } from "@/components/advance/figuras/GraficoBarras";
 import { GraficoCircular } from "@/components/advance/figuras/GraficoCircular";
@@ -13,7 +14,7 @@ import type { FiguraItem } from "@/lib/advance/descarte";
 /**
  * Despacha la figura de un ítem Advance por `tipo`: sin tipo es el plano de
  * isometrías (los bancos anteriores a plano-funcion), con tipo es una figura
- * de función, una de datos o el lienzo geométrico (components/advance/figuras/). Único punto que
+ * de función, una de datos, el lienzo geométrico o el cuerpo geométrico (components/advance/figuras/). Único punto que
  * conoce los componentes: descarte y triage lo montan entre el enunciado y
  * las alternativas y no saben cuál es cuál. `contexto` "solucion" lo usa la
  * tarjeta de la solución (SolucionDescarte): el lienzo se mide con su carril.
@@ -40,5 +41,7 @@ export function FiguraDeItem({ figura, contexto = "enunciado" }: { figura: Figur
       return <DiagramaCajon figura={figura} />;
     case "lienzo-geometrico":
       return <LienzoGeometrico figura={figura} contexto={contexto} />;
+    case "cuerpo-geometrico":
+      return <CuerpoGeometrico figura={figura} contexto={contexto} />;
   }
 }

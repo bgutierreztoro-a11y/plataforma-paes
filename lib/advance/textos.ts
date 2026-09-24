@@ -61,6 +61,8 @@ export const TEXTOS_ADVANCE = {
        nota va escrita bajo la figura y en el <title> cuando aEscala es false. */
     lienzo: "Figura geométrica",
     noAEscala: "Figura referencial, no está a escala",
+    /* <title> del cuerpo geométrico; el <desc> es la descripcion del banco. */
+    cuerpo: "Cuerpo geométrico",
     /* Nombre de una serie sin nombre (solo existe con una serie). */
     serieUnica: "Valores",
     porCategoria: (y: string, x: string) => `${y} por ${x}`,

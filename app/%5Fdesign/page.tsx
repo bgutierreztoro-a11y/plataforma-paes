@@ -47,6 +47,7 @@ import {
   TABLA_MUESTRA,
 } from "./muestraDescarte";
 import { LIENZO_ALTERNATIVA_DENSA, LIENZOS_MUESTRA, MUESTRA_LIENZO_ALTERNATIVAS, SOLUCION_LIENZO_MUESTRA } from "./muestraLienzo";
+import { CUERPOS_MUESTRA, REDES_CUERPO_MUESTRA, SOLUCION_CUERPO_MUESTRA } from "./muestraCuerpo";
 import { SolucionDescarte } from "@/components/advance/SolucionDescarte";
 import { MuestraDescarteInteractiva } from "./MuestraDescarteInteractiva";
 import { MuestraTriageInteractiva } from "./MuestraTriageInteractiva";
@@ -1106,6 +1107,36 @@ export default function PaginaDiseno() {
             <Rotulo>Línea 03 · Descarte fatal: solución con la altura trazada</Rotulo>
             <div data-figura-solucion-muestra="altura" className="bg-[var(--color-bg)]">
               <SolucionDescarte solucion={SOLUCION_LIENZO_MUESTRA.solucion} figura={SOLUCION_LIENZO_MUESTRA.figura} />
+            </div>
+          </div>
+        </Seccion>
+
+        <Seccion
+          titulo="Cuerpo geométrico"
+          nota="La figura cuerpo-geometrico de un ítem Advance (item-advance.schema.json, figuraCuerpoGeometrico; reglas 41 a 50), montada por FiguraDeItem entre el enunciado y las alternativas, y en la tarjeta de la solución. Cajas o cilindros en la caballera del tier gratis: profundidad hacia arriba a la derecha, a 45° y a la mitad; tapa del cilindro con alto igual a la mitad del ancho. Las medidas de las piezas son proporciones del dibujo; los datos son los rótulos, y la figura no se promete a escala. Geometría en lib/advance/cuerpoGeometrico.ts, la misma que miden las reglas del validador. El viewBox mide lo que el carril real a 390 px (358 en el enunciado, 330 en la solución) y la escala se ajusta para que el alto no pase de 320. Aristas visibles y tapas en --linea-nav de 2 px; ocultas punteadas y más delgadas (ocultas false las apaga); juntas delgadas; llaves y radio en tinta; rótulos en tinta con halo. role=img con <title> generado y <desc> = descripcion. No va en alternativas (regla 50). Las redes de cuerpos van en lienzo-geometrico. Línea 03, datos INVENTADOS en app/%5Fdesign/muestraCuerpo.ts; todos pasan el validador."
+        >
+          <div className="flex flex-col gap-6" style={estiloDeLinea("03")}>
+            {CUERPOS_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-cuerpo={id}>
+                <Rotulo>Línea 03 · {rotulo}</Rotulo>
+                <div data-figura-cuerpo={id} className="border-y border-hairline bg-[var(--color-bg)] py-3">
+                  <FiguraDeItem figura={figura} />
+                </div>
+              </div>
+            ))}
+            {REDES_CUERPO_MUESTRA.map(({ id, rotulo, figura }) => (
+              <div key={id} data-caso-cuerpo={id}>
+                <Rotulo>Línea 03 · {rotulo}</Rotulo>
+                <div data-figura-cuerpo={id} className="border-y border-hairline bg-[var(--color-bg)] py-3">
+                  <FiguraDeItem figura={figura} />
+                </div>
+              </div>
+            ))}
+            <div data-caso-cuerpo="solucion">
+              <Rotulo>Línea 03 · Descarte fatal: solución con la U dividida en cubos (muestra la respuesta, solo va con la solución)</Rotulo>
+              <div data-figura-cuerpo="solucion" className="bg-[var(--color-bg)]">
+                <SolucionDescarte solucion={SOLUCION_CUERPO_MUESTRA.solucion} figura={SOLUCION_CUERPO_MUESTRA.figura} />
+              </div>
             </div>
           </div>
         </Seccion>

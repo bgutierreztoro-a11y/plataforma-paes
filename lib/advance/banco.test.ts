@@ -105,6 +105,19 @@ const LIENZO: FiguraItem = {
   descripcion: "Triángulo ABC de prueba con todos los campos del lienzo geométrico.",
 };
 
+/* Cuerpo con todos los campos: viaja tal cual, como el lienzo (su texto va en un SVG). */
+const CUERPO: FiguraItem = {
+  tipo: "cuerpo-geometrico",
+  piezas: [
+    { cuerpo: "paralelepipedo", largo: 4, alto: 2, ancho: 2 },
+    { cuerpo: "cubo", arista: 2, en: { x: 0, y: 2, z: 0 } },
+  ],
+  juntas: true,
+  ocultas: false,
+  cotas: [{ desde: { x: 0, y: 0, z: 0 }, hasta: { x: 4, y: 0, z: 0 }, rotulo: "x + 2", llave: false, lado: "exterior" }],
+  descripcion: "Caja con un cubo encima, de prueba con todos los campos del cuerpo geométrico.",
+};
+
 describe("itemParaCliente: la figura viaja íntegra", () => {
   for (const [nombre, figura] of [
     ["plano de isometrías (sin tipo)", ISOMETRIAS],
@@ -112,6 +125,7 @@ describe("itemParaCliente: la figura viaja íntegra", () => {
     ["tabla-valores", TABLA],
     ["diagrama-cajon sin texto con operadores", CAJON],
     ["lienzo-geometrico con todos los campos", LIENZO],
+    ["cuerpo-geometrico con todos los campos", CUERPO],
   ] as const) {
     it(nombre, () => {
       const cliente = itemParaCliente(itemCon(figura));
