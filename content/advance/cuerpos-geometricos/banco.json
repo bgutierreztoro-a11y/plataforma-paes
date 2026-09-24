@@ -351,17 +351,16 @@
           },
           {
             "desde": {
-              "x": 4.5,
-              "y": 2,
-              "z": 0.5
+              "x": 1.5,
+              "y": 5,
+              "z": 3.5
             },
             "hasta": {
               "x": 4.5,
               "y": 5,
-              "z": 0.5
+              "z": 3.5
             },
-            "rotulo": "3 cm",
-            "llave": false
+            "rotulo": "3 cm"
           }
         ],
         "descripcion": "Pedestal con forma de paralelepípedo de 6 cm de largo, 4 cm de fondo y 2 cm de alto, con un cubo de 3 cm de arista pegado encima."
