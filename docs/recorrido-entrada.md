@@ -500,3 +500,35 @@ Correcciones:
 - Usuario en `/bienvenida`: correo desde `currentUser()` de Clerk y las mismas funciones del webhook (`crearUsuario` y `otorgarEntitlementGratis`), que ya son idempotentes. Nada de insert nuevo.
 - `enteros-racionales` vs `enteros-y-racionales`: la traducción vive en un solo lugar, con un test que recorre todos los ids del DAG y verifica que existen en `lib/modulos.ts`.
 - Portada: "/" sigue estática. Todo lo personal de las Fases 4 y 5 va en una isla de cliente que consulta `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`). Sin redirect desde la portada: con sesión y sin `perfil_inicio`, la isla muestra "Termina tu bienvenida" con link a `/bienvenida`. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir". Se propone en el plan 🟡 de la Fase 5.
+
+### Fase 1 · 2026-09-24 · parcial, en espera de firma
+
+Commits:
+- `4533de5` docs: textos firmados de la página pública en el plan del recorrido (encargo de Benja antes de la fase).
+- `a847f83` contenido: títulos nuevos para tres errores del catálogo de porcentaje (🔴 firmado por Benja antes de la fase).
+- `caa5008` recorrido: tipos de los eventos del recorrido de entrada, sin datos personales.
+
+Validar / tsc / lint / test:unit:
+- validar: exit 0, 97 archivos OK.
+- tsc (`--noEmit --incremental false`): exit 0, 0 errores.
+- lint (sin `scratchpad/`): exit 0, 0 problemas.
+- test:unit: 803 tests en 133 suites, 803 pass, 0 fail (800 de la línea base más 3 nuevos).
+
+Hecho (plan 🟡 con aprobación anticipada de Benja):
+- Los 11 eventos de §6 tipados en `lib/eventos.ts`, con valores cerrados para resultado, entrada, acceso, respuestas de la bienvenida, tipo de parada, paso de la checklist, sección de ayuda y plan.
+- `video` no es `string`: es `IdVideo`, que solo se obtiene con `leerIdVideo` (`lib/recorrido/video.ts`), con el formato `v001-...` de §4 y un máximo de 60 caracteres. Llega desde la URL, o sea que cualquiera puede escribir ahí lo que quiera.
+- `lib/eventos.test.ts` es un chequeo de tipos: `tsc` falla si una prop de cualquier evento se llama `email`, `correo`, `nombre`, `apellido`, `rut`, `colegio`, `curso`, `telefono`, `direccion`, `fecha_nacimiento` o `usuario_id`, o si un evento acepta claves libres con valor. Probado a mano y revertido: con `email` en `plan_elegido_clic`, `tsc` dio `lib/eventos.test.ts(38,7): error TS2322: Type 'true' is not assignable to type '"email"'.`; con `Record<string, string>` en un evento, dio error en la línea 39.
+- Inventario de datos: cookie `fobos_origen` (marcada "todavía no existe en el código") y los eventos del recorrido, en el mismo commit que los tipos, como exige el inventario.
+- La inicialización de PostHog no se tocó.
+
+Decisiones tomadas:
+- Ids de las respuestas de la bienvenida: p1 `me_cuestan`, `mas_o_menos`, `me_va_bien`; p2 `entender_base`, `practicar_prueba`, `encontrar_errores`; p3 `si`, `no`. `null` significa saltada o no preguntada. La Fase 3 puede reusarlos en `perfil_inicio`.
+- `primera_parada_iniciada.tipo` suma `errores` y `como_funciona`, porque las alternativas de la tarjeta (§5) incluyen "Tus errores" y "Cómo funciona Fobos".
+- `elegir_plan_visto.acceso_previo` suma `ninguno`, para quien llega sin haber tenido acceso.
+- El test de datos personales es de tipos. `node --test` borra los tipos antes de correr, así que el que falla es `tsc`, no `test:unit`. Hacer que falle `test:unit` exigiría correr el compilador de TypeScript dentro del test.
+- Bug en mi propio test, encontrado y arreglado antes del commit: el evento sin props (`Record<string, never>`) metía una clave `string` que se tragaba a `email`, y el chequeo pasaba igual. Ahora solo mira claves con nombre.
+
+Pendiente (en espera de Benja):
+- `identify`/`reset` NO se hizo. `app/privacidad/page.tsx:114-116` dice hoy: "Los eventos que le mandamos a PostHog son anónimos: no incluyen tu correo, tu nombre ni tu identificador de cuenta, y no dejan cookies en tu navegador." Con `identify(userId)` esa frase queda falsa, y es texto legal que firma Benja. Cuando se haga, el inventario también cambia: la fila de PostHog, la línea "nunca `usuario_id`" de los eventos de Advance y los derechos del titular (con identidad, borrar una cuenta exige borrar a esa persona en PostHog).
+- Para la revisión legal de §8: la misma sección de `/privacidad` habla de "tres servicios" (Clerk, Neon, PostHog) y no nombra a Vercel, que el inventario lista como encargado.
+- Build de línea base antes de tocar `PostHogProvider`, para comparar después: "/" estática (○), `/leccion/[id]` SSG (●, 48 rutas), todo `/advance` dinámico (ƒ).
