@@ -19,7 +19,7 @@ import { TARJETA_LINEA } from "@/components/ui/linea/tarjetas";
 import { registrarEvento } from "@/lib/eventos";
 import { resultadoDe, textoDeRespuesta, type ErrorPublico } from "@/lib/recorrido/erroresPublicos";
 import { COOKIE_ORIGEN, DURACION_ORIGEN_SEG, valorCookieOrigen } from "@/lib/recorrido/origen";
-import { leerIdVideo, type IdVideo } from "@/lib/recorrido/video";
+import { CLAVE_ESTADO_VIDEO, videoDeLaVisita, type IdVideo } from "@/lib/recorrido/video";
 import type { ClaveAlternativa } from "@/lib/tipos";
 import { useMontado } from "@/lib/useMontado";
 
@@ -50,10 +50,20 @@ export function PreguntaPublica({
   const video = useRef<IdVideo | null>(null);
   const respuesta = useRef<HTMLDivElement>(null);
 
+  /* Primer efecto: corre antes que el del proveedor, que inicia PostHog, así PostHog nunca ve los parámetros del link. */
+  useEffect(() => {
+    const { video: v, urlLimpia } = videoDeLaVisita(window.history.state, window.location.href);
+    video.current = v;
+    window.history.replaceState(
+      { ...(window.history.state ?? {}), [CLAVE_ESTADO_VIDEO]: v },
+      "",
+      urlLimpia ?? undefined,
+    );
+  }, []);
+
   /* Con `montado` y no al primer efecto: PostHog se inicia en el efecto del proveedor, que corre después que los de sus hijos. */
   useEffect(() => {
     if (!montado) return;
-    video.current = leerIdVideo(new URLSearchParams(window.location.search).get("utm_content"));
     registrarEvento({
       nombre: "error_publico_visto",
       props: { unidad_id: unidadId, error_id: errorId, item_id: itemId, video: video.current },
