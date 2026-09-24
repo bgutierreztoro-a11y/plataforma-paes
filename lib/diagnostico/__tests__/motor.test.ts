@@ -14,6 +14,7 @@ import {
 import { ancestros, centralidad, construirDag, descendientes } from "../dag.ts";
 import { altura, desbloquea, niveles, ordenDeEstudio, ordenTopologico } from "../orden.ts";
 import { todosLosTemas } from "../../modulos.ts";
+import { MODULO_DE_UNIDAD_DAG } from "../../recorrido/unidadesDag.ts";
 import {
   causaDeUnidad,
   crearEstado,
@@ -905,28 +906,12 @@ describe("dag-m1.json", () => {
    * siendo 1 a 1: si aparece o desaparece una unidad de cualquiera de los dos
    * archivos, este test cae.
    *
-   * El mapa va escrito a mano, como todo en este bloque. Derivarlo de los ids
-   * (normalizando guiones, por ejemplo) sería fingir una verificación: pasaría
-   * igual aunque los dos archivos hablaran de temarios distintos.
+   * El mapa va escrito a mano. Derivarlo de los ids (normalizando guiones, por
+   * ejemplo) sería fingir una verificación: pasaría igual aunque los dos
+   * archivos hablaran de temarios distintos. Desde el recorrido de entrada vive
+   * en lib/recorrido/unidadesDag.ts, que lo usa en código; este test lo vigila.
    */
-  const DAG_A_TEMA: Record<string, string> = {
-    "enteros-racionales": "enteros-y-racionales",
-    porcentaje: "porcentaje",
-    "potencias-raices": "potencias-y-raices",
-    "expresiones-algebraicas": "expresiones-algebraicas",
-    proporcionalidad: "proporcionalidad",
-    "ecuaciones-inecuaciones": "ecuaciones-e-inecuaciones-primer-grado",
-    "sistemas-2x2": "sistemas-2x2",
-    "funcion-lineal-afin": "funcion-lineal-y-afin",
-    "funcion-cuadratica": "funcion-cuadratica",
-    "figuras-geometricas": "figuras-geometricas",
-    "cuerpos-geometricos": "cuerpos-geometricos",
-    "transformaciones-isometricas": "transformaciones-isometricas",
-    "semejanza-proporcionalidad": "semejanza-y-proporcionalidad",
-    "tablas-graficos": "tablas-y-graficos",
-    "medidas-posicion": "medidas-de-posicion",
-    "reglas-probabilidad": "reglas-de-probabilidades",
-  };
+  const DAG_A_TEMA = MODULO_DE_UNIDAD_DAG;
 
   test("las 16 unidades del DAG corresponden 1 a 1 con los temas de lib/modulos.ts", () => {
     const idsDag = leerDominio().unidades.map((u) => u.id);
