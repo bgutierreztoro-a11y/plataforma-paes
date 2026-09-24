@@ -51,33 +51,27 @@
     },
     {
       "id": "figuras-geometricas/promedia-medidas-dadas",
-      "descripcion": "Promedia dos medidas dadas de la figura, sumándolas y dividiendo por 2, y entrega ese promedio como la medida pedida, en vez de relacionarlas con la fórmula que corresponde. Por ejemplo, para obtener un cateto conociendo la hipotenusa y el otro cateto, responde la mitad de su suma en lugar de aplicar el teorema de Pitágoras.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 001 A y 006 C; mecanismo de 2024-invierno-111 n.º 41 B"
+      "descripcion": "Promedia dos medidas dadas de la figura, sumándolas y dividiendo por 2, y entrega ese promedio como la medida pedida, en vez de relacionarlas con la fórmula que corresponde. Por ejemplo, para obtener un cateto conociendo la hipotenusa y el otro cateto, responde la mitad de su suma en lugar de aplicar el teorema de Pitágoras."
     },
     {
       "id": "figuras-geometricas/usa-diametro-como-radio",
-      "descripcion": "Pone el diámetro donde la fórmula del círculo pide el radio: calcula el perímetro como 2 × π × diámetro, que es el doble del perímetro real, o usa el diámetro como radio en cualquier otra fórmula del círculo. La fórmula 2 × π × radio ya incluye ese doble, porque el diámetro mide dos radios.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 002 B, 011 A, 014 B, 019 C y 020 A; mecanismo de 2024-invierno-111 n.º 42 D"
+      "descripcion": "Pone el diámetro donde la fórmula del círculo pide el radio: calcula el perímetro como 2 × π × diámetro, que es el doble del perímetro real, o usa el diámetro como radio en cualquier otra fórmula del círculo. La fórmula 2 × π × radio ya incluye ese doble, porque el diámetro mide dos radios."
     },
     {
       "id": "figuras-geometricas/usa-radio-como-diametro",
-      "descripcion": "Pone el radio donde la fórmula del círculo pide el diámetro: calcula el perímetro como π × radio, que es la mitad del perímetro real. La fórmula π × diámetro usa la medida completa de un borde al otro del círculo, no la mitad.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 002 A, 011 B y 020 B; mecanismo de 2024-invierno-111 n.º 42 B"
+      "descripcion": "Pone el radio donde la fórmula del círculo pide el diámetro: calcula el perímetro como π × radio, que es la mitad del perímetro real. La fórmula π × diámetro usa la medida completa de un borde al otro del círculo, no la mitad."
     },
     {
       "id": "figuras-geometricas/suma-la-region-que-se-resta",
-      "descripcion": "En una región que se obtiene quitando piezas a una figura (una región sombreada, una placa con un recorte o una tela con parches encima), suma las áreas de las piezas al área de la figura en vez de restarlas, y entrega un área mayor que la de la figura completa.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 003 B, 012 C y 013 C; mecanismo de 2024-invierno-111 n.º 43 C"
+      "descripcion": "En una región que se obtiene quitando piezas a una figura (una región sombreada, una placa con un recorte o una tela con parches encima), suma las áreas de las piezas al área de la figura en vez de restarlas, y entrega un área mayor que la de la figura completa."
     },
     {
       "id": "figuras-geometricas/despeja-multiplicando",
-      "descripcion": "Al despejar una medida de una fórmula de área, como la altura de un trapecio conocidas su área y sus bases, multiplica el área por el factor que acompaña a la incógnita en vez de dividirla por ese factor.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 004 B; mecanismo de 2026-regular-113 n.º 45 A"
+      "descripcion": "Al despejar una medida de una fórmula de área, como la altura de un trapecio conocidas su área y sus bases, multiplica el área por el factor que acompaña a la incógnita en vez de dividirla por ese factor."
     },
     {
       "id": "figuras-geometricas/pone-dato-en-lugar-de-incognita",
-      "descripcion": "Al despejar una medida de una fórmula de área, reemplaza la incógnita por un dato del problema, por ejemplo pone el área donde va la altura, y entrega el resultado de evaluar la fórmula en vez de despejar la medida pedida.",
-      "reservado": "Banco Advance de figuras-geometricas: distractores 004 C; mecanismo de 2026-regular-113 n.º 45 C"
+      "descripcion": "Al despejar una medida de una fórmula de área, reemplaza la incógnita por un dato del problema, por ejemplo pone el área donde va la altura, y entrega el resultado de evaluar la fórmula en vez de despejar la medida pedida."
     }
   ]
 }

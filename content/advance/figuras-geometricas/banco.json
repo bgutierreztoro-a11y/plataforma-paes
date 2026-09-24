@@ -1,0 +1,3315 @@
+{
+  "tipo": "banco-advance",
+  "unidadId": "figuras-geometricas",
+  "moduloId": "figuras-geometricas",
+  "titulo": "Figuras geométricas",
+  "items": [
+    {
+      "id": "adv-figuras-geometricas-001",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un globo cautivo subió en línea recta vertical desde un punto B del suelo, al que está amarrado. Una persona está en el punto P, a 2 m de B sobre un suelo horizontal, y con un medidor de distancia registra que desde P hasta el globo hay 9 m en línea recta. En la figura se representa la situación. ¿A qué altura h está el globo?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -5.5,
+          "xMax": 8,
+          "yMin": -1.1,
+          "yMax": 9.8
+        },
+        "puntos": [
+          {
+            "nombre": "P",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 2,
+            "y": 0,
+            "ubicacion": "se"
+          },
+          {
+            "nombre": "D",
+            "x": 2,
+            "y": 8.774964387392123,
+            "ubicacion": "ne",
+            "marca": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "P",
+            "hasta": "B",
+            "rotulo": "2 m",
+            "achurado": true
+          },
+          {
+            "desde": "P",
+            "hasta": "D",
+            "rotulo": "9 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "D",
+            "rotulo": "h",
+            "trazo": "punteado"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "B",
+            "desde": "P",
+            "hasta": "D",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Esquema: suelo horizontal de P a B de 2 m; segmento de P al globo D de 9 m; segmento vertical punteado de B a D rotulado h; ángulo recto en B."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5,5 m",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-medidas-dadas",
+          "feedbackDescarte": "Esa es (2 + 9) / 2 = 5,5, el promedio de las dos medidas. La altura no es un promedio: sale de Pitágoras, con los 9 m como hipotenusa."
+        },
+        {
+          "clave": "B",
+          "texto": "√77 m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los 9 m son la hipotenusa y los 2 m un cateto, así que h = √(9² − 2²) = √(81 − 4) = √77 m."
+        },
+        {
+          "clave": "C",
+          "texto": "9 m",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lado-inclinado-como-altura",
+          "feedbackDescarte": "Esa entrega los 9 m del medidor como la altura, pero esa medida va inclinada, de P al globo: es la hipotenusa. La altura es un cateto y mide menos que 9 m."
+        },
+        {
+          "clave": "D",
+          "texto": "√85 m",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-cuadrados-al-buscar-cateto",
+          "feedbackDescarte": "Esa suma los cuadrados, √(9² + 2²) = √85, como si h fuera la hipotenusa. La hipotenusa es la medida de 9 m: h se obtiene restando, √(9² − 2²)."
+        }
+      ],
+      "solucion": "El suelo, la vertical del globo y la medida del medidor forman un triángulo rectángulo con el ángulo recto en B. La hipotenusa es la medida inclinada, PD = 9 m, y un cateto es PB = 2 m. Entonces h² = 9² − 2² = 81 − 4 = 77 y h = √77 m. Como 77 es menor que 81, h mide menos que 9 m, como debe medir un cateto.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 41",
+        "notaAdaptacion": "Del original (una persona mide la altura de un árbol con un medidor de distancia láser: se aleja 12 m por un camino horizontal y el medidor registra 15 m hasta el extremo superior del árbol; clave A, 9 m, verificada en el clavijero) se conservan la estructura, la figura del triángulo rectángulo y el mecanismo de dos distractores: el promedio de las dos medidas (13,5 m en el original) y la medida inclinada entregada como la altura (15 m). Cambian el contexto (globo cautivo y medidor de distancia), las medidas (2 m y 9 m), la clave, que pasa de entera a irracional (√77 m), y el tercer distractor, que conserva su mecanismo (suma los cuadrados) con los datos nuevos: √369 m pasa a √85 m."
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-002",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "El cartabón de un dibujante tiene forma de triángulo rectángulo, con catetos de 5,2 cm y 16,5 cm, y un calado circular inscrito en el triángulo, como muestra la figura. La medida d del diámetro del círculo inscrito en un triángulo rectángulo cumple a + b = c + d, donde a y b son las medidas de los catetos y c la de la hipotenusa. ¿Cuál es el perímetro del calado circular?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -2.6,
+          "xMax": 19.2,
+          "yMin": -2.2,
+          "yMax": 7.4
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 16.5,
+            "y": 0,
+            "ubicacion": "se"
+          },
+          {
+            "nombre": "C",
+            "x": 0,
+            "y": 5.2,
+            "ubicacion": "n"
+          },
+          {
+            "nombre": "O",
+            "x": 2.2,
+            "y": 2.2,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "16,5 cm"
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "5,2 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C"
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O",
+            "radio": 2.2
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Triángulo rectángulo ABC con ángulo recto en A, catetos AB de 16,5 cm y AC de 5,2 cm, hipotenusa BC sin rótulo y una circunferencia inscrita tangente a los tres lados."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "2,2π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-radio-como-diametro",
+          "feedbackDescarte": "Esa pone el radio, 2,2 cm, en π · d, y da la mitad del borde. La fórmula π · d pide el diámetro completo, d = 4,4 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "8,8π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diametro-como-radio",
+          "feedbackDescarte": "Esa pone el diámetro, 4,4 cm, en 2π · r, y da el doble del borde. En 2π · r va el radio, 2,2 cm."
+        },
+        {
+          "clave": "C",
+          "texto": "4,84π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Esa calcula π · r² = π · 2,2² = 4,84π, que es el área del calado, no su borde. El perímetro de un círculo es 2π · r."
+        },
+        {
+          "clave": "D",
+          "texto": "4,4π cm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la hipotenusa mide 17,3 cm, así que d = 5,2 + 16,5 − 17,3 = 4,4 cm y el borde del calado mide π · 4,4 = 4,4π cm."
+        }
+      ],
+      "solucion": "Primero la hipotenusa: c² = 5,2² + 16,5² = 27,04 + 272,25 = 299,29, así que c = 17,3 cm. Con la relación dada, d = a + b − c = 5,2 + 16,5 − 17,3 = 4,4 cm, y el radio mide 2,2 cm. El perímetro del calado es π · d = π · 4,4 = 4,4π cm, lo mismo que 2π · 2,2.",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -2.6,
+          "xMax": 19.2,
+          "yMin": -2.2,
+          "yMax": 7.4
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 16.5,
+            "y": 0,
+            "ubicacion": "se"
+          },
+          {
+            "nombre": "C",
+            "x": 0,
+            "y": 5.2,
+            "ubicacion": "n"
+          },
+          {
+            "nombre": "O",
+            "x": 2.2,
+            "y": 2.2,
+            "oculto": true
+          },
+          {
+            "nombre": "T",
+            "x": 2.2,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "U",
+            "x": 0,
+            "y": 2.2,
+            "oculto": true
+          },
+          {
+            "nombre": "V",
+            "x": 2.8612716763005803,
+            "y": 4.298265895953757,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "16,5 cm"
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "5,2 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "17,3 cm"
+          },
+          {
+            "desde": "O",
+            "hasta": "T",
+            "trazo": "punteado",
+            "rotulo": "2,2 cm",
+            "lado": "interior"
+          },
+          {
+            "desde": "O",
+            "hasta": "U",
+            "trazo": "punteado"
+          },
+          {
+            "desde": "O",
+            "hasta": "V",
+            "trazo": "punteado"
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O",
+            "radio": 2.2
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "El mismo triángulo con la hipotenusa de 17,3 cm y los tres radios punteados desde el centro hasta los puntos de tangencia; el radio mide 2,2 cm."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 42",
+        "notaAdaptacion": "Del original (sin contexto: triángulo rectángulo de catetos 8 cm y 6 cm, con la fórmula de Poncelet a + b = c + d entregada en el enunciado; se pide el perímetro del círculo inscrito; clave C, 4π cm, verificada en el clavijero) se conservan la estructura, la relación entregada (sin el nombre de Poncelet) y el mecanismo de dos distractores: el radio puesto en π · d (2π cm en el original) y el diámetro puesto en 2π · r (8π cm). Cambian el contexto (cartabón de un dibujante con un calado circular), los catetos (5,2 cm y 16,5 cm, hipotenusa 17,3 cm) y la clave (4,4π cm); la alternativa π cm del original, sin un mecanismo escribible, pasa al área del círculo (confunde-circunferencia-con-area), y se agrega una figura."
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-003",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una tapicería fabrica cojines cuadrados de lado p cm y cose en cada esquina un triángulo rectángulo de otra tela, de catetos m cm y n cm, como muestra la figura. Los cuatro triángulos son iguales. ¿Cuál de las siguientes expresiones permite calcular el área S, en cm², de la tela del cojín que queda a la vista?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -2,
+          "xMax": 8,
+          "yMin": -1.5,
+          "yMax": 6.6
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 6,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 6,
+            "y": 6,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 6,
+            "oculto": true
+          },
+          {
+            "nombre": "E",
+            "x": 2,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "F",
+            "x": 0,
+            "y": 1,
+            "oculto": true
+          },
+          {
+            "nombre": "G",
+            "x": 6,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "H",
+            "x": 5,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "I",
+            "x": 4,
+            "y": 6,
+            "oculto": true
+          },
+          {
+            "nombre": "J",
+            "x": 6,
+            "y": 5,
+            "oculto": true
+          },
+          {
+            "nombre": "K",
+            "x": 0,
+            "y": 4,
+            "oculto": true
+          },
+          {
+            "nombre": "L",
+            "x": 1,
+            "y": 6,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "p",
+            "cota": true
+          },
+          {
+            "desde": "A",
+            "hasta": "E",
+            "rotulo": "m",
+            "lado": "interior"
+          },
+          {
+            "desde": "A",
+            "hasta": "F",
+            "rotulo": "n"
+          },
+          {
+            "desde": "E",
+            "hasta": "F"
+          },
+          {
+            "desde": "G",
+            "hasta": "H"
+          },
+          {
+            "desde": "I",
+            "hasta": "J"
+          },
+          {
+            "desde": "K",
+            "hasta": "L"
+          }
+        ],
+        "poligonos": [
+          {
+            "id": "cojin",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "t1",
+            "vertices": [
+              "A",
+              "E",
+              "F"
+            ]
+          },
+          {
+            "id": "t2",
+            "vertices": [
+              "B",
+              "G",
+              "H"
+            ]
+          },
+          {
+            "id": "t3",
+            "vertices": [
+              "C",
+              "I",
+              "J"
+            ]
+          },
+          {
+            "id": "t4",
+            "vertices": [
+              "D",
+              "K",
+              "L"
+            ]
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "E",
+            "hasta": "F",
+            "marca": "recto"
+          },
+          {
+            "vertice": "B",
+            "desde": "G",
+            "hasta": "H",
+            "marca": "recto"
+          },
+          {
+            "vertice": "C",
+            "desde": "I",
+            "hasta": "J",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "K",
+            "hasta": "L",
+            "marca": "recto"
+          }
+        ],
+        "regiones": [
+          {
+            "formas": [
+              "cojin"
+            ],
+            "huecos": [
+              "t1",
+              "t2",
+              "t3",
+              "t4"
+            ],
+            "estilo": "rayado"
+          }
+        ],
+        "descripcion": "Cuadrado de lado p con un triángulo rectángulo en cada esquina, de catetos m y n; la región rayada es el cuadrado sin los cuatro triángulos."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "S = p² − 4mn",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa toma cada triángulo como m · n, sin dividir por 2, y resta 4mn. Cada triángulo rectángulo de catetos m y n tiene área m · n / 2, y los cuatro suman 2mn."
+        },
+        {
+          "clave": "B",
+          "texto": "S = p² + 2mn",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-la-region-que-se-resta",
+          "feedbackDescarte": "Esa suma las cuatro esquinas al cuadrado en vez de restarlas. La tela a la vista es el cuadrado menos los cuatro triángulos: su área es menor que p²."
+        },
+        {
+          "clave": "C",
+          "texto": "S = p² − 2mn",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el cuadrado mide p², cada triángulo m · n / 2 y los cuatro juntos 4 · m · n / 2 = 2mn; queda S = p² − 2mn."
+        },
+        {
+          "clave": "D",
+          "texto": "S = 2p − 2mn",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa calcula el área del cuadrado como 2p, el doble del lado. El área de un cuadrado de lado p es p · p = p²."
+        }
+      ],
+      "solucion": "La tela a la vista es el cuadrado menos los cuatro triángulos de las esquinas. Cuadrado: p · p = p². Cada triángulo rectángulo, de catetos m y n: m · n / 2. Los cuatro: 4 · m · n / 2 = 2mn. Entonces S = p² − 2mn.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2024-invierno-111, pregunta 43",
+        "notaAdaptacion": "Del original (una fábrica elabora espejos cuadrados de lado p con triángulos rectángulos de madera iguales, de catetos m y n, sobrepuestos en las esquinas; se pide la fórmula del área S del vidrio que se ve; clave D, p² − 2mn, verificada en el clavijero) se conservan la estructura, las letras p, m y n, la clave y el mecanismo de dos distractores: p² − 4mn (omite la mitad) y p² + 2mn (suma las piezas en vez de restarlas). Cambian el contexto (cojines de una tapicería con triángulos de otra tela) y el tercer distractor: p² + 4mn junta dos errores en una alternativa y pasa a 2p − 2mn (duplica-en-vez-de-elevar-al-cuadrado). La figura rotula p, m y n y marca los cuatro ángulos rectos."
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-004",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La cara lateral de una jardinera de cemento tiene forma de trapecio rectángulo y un área de 0,455 m². Sus lados paralelos miden 0,4 m y 1 m, como muestra la figura. ¿Cuál es la altura h de la jardinera?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -0.45,
+          "xMax": 1.45,
+          "yMin": -0.3,
+          "yMax": 0.95
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 0.4,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 1,
+            "y": 0.65,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 0.65,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "0,4 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "C"
+          },
+          {
+            "desde": "C",
+            "hasta": "D",
+            "rotulo": "1 m"
+          },
+          {
+            "desde": "D",
+            "hasta": "A",
+            "rotulo": "h"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "A",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Trapecio rectángulo con el lado izquierdo vertical rotulado h y ángulos rectos arriba y abajo a la izquierda; base inferior de 0,4 m y base superior de 1 m."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "0,65 m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: 0,455 = (0,4 + 1) · h / 2, así que h = 2 · 0,455 / 1,4 = 0,91 / 1,4 = 0,65 m."
+        },
+        {
+          "clave": "B",
+          "texto": "0,637 m",
+          "esCorrecta": false,
+          "errorCatalogado": "despeja-multiplicando",
+          "feedbackDescarte": "Esa multiplica el área por la suma de las bases, 0,455 · 1,4 = 0,637. Para despejar h de A = (a + b) · h / 2 hay que dividir: h = 2A / (a + b)."
+        },
+        {
+          "clave": "C",
+          "texto": "0,3185 m",
+          "esCorrecta": false,
+          "errorCatalogado": "pone-dato-en-lugar-de-incognita",
+          "feedbackDescarte": "Esa pone el área donde va la altura, (0,4 + 1) · 0,455 / 2 = 0,3185, y evalúa la fórmula en vez de despejar. La altura es la incógnita: h = 2 · 0,455 / 1,4."
+        },
+        {
+          "clave": "D",
+          "texto": "0,325 m",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa despeja sin el 2 de la fórmula, 0,455 / 1,4 = 0,325, como si el área fuera (a + b) · h. El área del trapecio es (a + b) · h / 2."
+        }
+      ],
+      "solucion": "El área de un trapecio es (a + b) · h / 2, con a y b las medidas de los lados paralelos. Entonces 0,455 = (0,4 + 1) · h / 2. Despejando, h = 2 · 0,455 / 1,4 = 0,91 / 1,4 = 0,65 m. Comprobación: (0,4 + 1) · 0,65 / 2 = 0,455.",
+      "proveniencia": {
+        "fuenteOrigen": "demre-liberada",
+        "referencia": "2026-regular-113, pregunta 45",
+        "notaAdaptacion": "Del original (sin contexto: trapecio rectángulo de área 0,76 m² con bases de 0,6 m y 1,3 m rotuladas en la figura; se pide la altura; clave B, 0,80 m, verificada en el clavijero) se conservan la estructura y el mecanismo de los tres distractores: multiplica el área por la suma de las bases (1,444 m en el original), pone el área en el lugar de la altura (0,722 m) y omite la división por 2 (0,40 m). Cambian el contexto (cara lateral de una jardinera de cemento), el área (0,455 m²), las bases (0,4 m y 1 m) y la clave (0,65 m). La figura rotula h y marca los dos ángulos rectos."
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-005",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Junto a los columpios de un parque hay un resbalín con una rampa recta. El extremo superior de la rampa está 1 m sobre el suelo y su extremo inferior está a 2 m, medidos en horizontal, del punto del suelo que queda justo bajo el extremo superior, como muestra la figura. ¿Cuánto mide el largo x de la rampa?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.4,
+          "xMax": 3.4,
+          "yMin": -0.6,
+          "yMax": 1.7
+        },
+        "puntos": [
+          {
+            "nombre": "Q",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 1,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 2,
+            "y": 0,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "Q",
+            "hasta": "B",
+            "rotulo": "2 m",
+            "achurado": true
+          },
+          {
+            "desde": "Q",
+            "hasta": "A",
+            "rotulo": "1 m"
+          },
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "x"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "Q",
+            "desde": "B",
+            "hasta": "A",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Esquema del resbalín: suelo horizontal de 2 m, altura vertical de 1 m con ángulo recto en el suelo y rampa inclinada rotulada x."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "3 m",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa suma los lados, 1 + 2 = 3, como si la rampa midiera lo mismo que el camino por la vertical y el suelo. La rampa es la hipotenusa: x = √(1² + 2²)."
+        },
+        {
+          "clave": "B",
+          "texto": "√6 m",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa calcula 1² como 2 · 1 y 2² como 2 · 2, y llega a √(2 + 4) = √6. Elevar al cuadrado es multiplicar el número por sí mismo: 1² = 1 y 2² = 4."
+        },
+        {
+          "clave": "C",
+          "texto": "√5 m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la rampa es la hipotenusa de un triángulo rectángulo de catetos 1 m y 2 m, así que x = √(1² + 2²) = √(1 + 4) = √5 m."
+        },
+        {
+          "clave": "D",
+          "texto": "5 m",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-raiz-final-pitagoras",
+          "feedbackDescarte": "Esa llega a 1² + 2² = 5 y se olvida de la raíz. 5 es x², no x: la rampa mide √5 m."
+        }
+      ],
+      "solucion": "La vertical de 1 m, el tramo de 2 m sobre el suelo y la rampa forman un triángulo rectángulo con el ángulo recto en Q. La rampa es la hipotenusa: x² = 1² + 2² = 1 + 4 = 5, así que x = √5 m. Como 4 < 5 < 9, la rampa mide entre 2 m y 3 m: más que el cateto mayor y menos que la suma de los catetos.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-006",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Un carpintero corta una cuña de madera con forma de triángulo rectángulo. Su lado más largo mide 9 cm y uno de sus catetos mide 1 cm, como muestra la figura. ¿Cuánto mide el otro cateto, x?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1,
+          "xMax": 10,
+          "yMin": -1.1,
+          "yMax": 2.2
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 8.94427190999916,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 0,
+            "y": 1,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "x"
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "1 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "9 cm"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Triángulo rectángulo con ángulo recto abajo a la izquierda: cateto vertical de 1 cm, hipotenusa de 9 cm y cateto horizontal rotulado x."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "4√5 cm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: x = √(9² − 1²) = √(81 − 1) = √80, y como 80 = 16 · 5, √80 = 4√5 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "8 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa resta los lados, 9 − 1 = 8, sin elevarlos al cuadrado. Pitágoras resta cuadrados: x = √(9² − 1²)."
+        },
+        {
+          "clave": "C",
+          "texto": "5 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "promedia-medidas-dadas",
+          "feedbackDescarte": "Esa es (9 + 1) / 2 = 5, el promedio de las dos medidas. El cateto no es un promedio: sale de Pitágoras, x = √(9² − 1²)."
+        },
+        {
+          "clave": "D",
+          "texto": "4 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa calcula 9² como 2 · 9 y 1² como 2 · 1, y llega a √(18 − 2) = √16 = 4. Elevar al cuadrado es multiplicar por sí mismo: 9² = 81 y 1² = 1."
+        }
+      ],
+      "solucion": "El lado más largo de un triángulo rectángulo es la hipotenusa: 9 cm. Entonces x² = 9² − 1² = 81 − 1 = 80 y x = √80. Como 80 = 16 · 5, √80 = √16 · √5 = 4√5 cm, un poco menos que la hipotenusa, como debe medir un cateto.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-007",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "En una casa de veraneo se instalará un toldo con forma de triángulo equilátero de 4 m de lado, como muestra la figura. ¿Cuál es el área del toldo?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.2,
+          "xMax": 5.2,
+          "yMin": -1,
+          "yMax": 4.3
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 4,
+            "y": 0,
+            "ubicacion": "se"
+          },
+          {
+            "nombre": "C",
+            "x": 2,
+            "y": 3.4641016151377544,
+            "ubicacion": "n"
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "4 m",
+            "igualdad": 1
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "4 m",
+            "igualdad": 1
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "4 m",
+            "igualdad": 1
+          }
+        ],
+        "descripcion": "Triángulo equilátero ABC de 4 m de lado, con los tres lados rotulados y marcados como iguales."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lado-inclinado-como-altura",
+          "feedbackDescarte": "Esa usa un lado de 4 m como si fuera la altura: 4 · 4 / 2 = 8. La altura va del vértice al punto medio de la base y mide menos que el lado: √(4² − 2²)."
+        },
+        {
+          "clave": "B",
+          "texto": "8√3 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa es 4 · 2√3 = 8√3, base por altura sin dividir por 2. El área de un triángulo es base · altura / 2."
+        },
+        {
+          "clave": "C",
+          "texto": "4 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa calcula la altura como 4 − 2 = 2, restando los lados sin elevarlos al cuadrado. Con Pitágoras la altura es √(4² − 2²) = 2√3 m."
+        },
+        {
+          "clave": "D",
+          "texto": "4√3 m²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la altura cae en el punto medio de la base, h = √(4² − 2²) = √12 = 2√3 m, y el área es 4 · 2√3 / 2 = 4√3 m²."
+        }
+      ],
+      "solucion": "En un triángulo equilátero la altura cae en el punto medio de la base y la divide en dos tramos de 2 m. En el triángulo rectángulo que queda, la hipotenusa es un lado de 4 m: h² = 4² − 2² = 16 − 4 = 12, así que h = √12 = 2√3 m. El área es base · altura / 2 = 4 · 2√3 / 2 = 4√3 m².",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.2,
+          "xMax": 5.2,
+          "yMin": -1,
+          "yMax": 4.3
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 4,
+            "y": 0,
+            "ubicacion": "se"
+          },
+          {
+            "nombre": "C",
+            "x": 2,
+            "y": 3.4641016151377544,
+            "ubicacion": "n"
+          },
+          {
+            "nombre": "M",
+            "x": 2,
+            "y": 0,
+            "ubicacion": "s"
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "M",
+            "rotulo": "2 m",
+            "lado": "exterior"
+          },
+          {
+            "desde": "M",
+            "hasta": "B"
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "4 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "C"
+          },
+          {
+            "desde": "C",
+            "hasta": "M",
+            "trazo": "punteado",
+            "rotulo": "2√3 m",
+            "lado": "interior"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "M",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "El mismo triángulo con la altura punteada desde C hasta el punto medio M de la base: AM mide 2 m, AC 4 m y la altura 2√3 m."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-008",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Una orfebre hace un broche con forma de paralelogramo ABCD. El lado AB mide 1 cm, la altura del paralelogramo mide 1,5 cm y el vértice C está 1,5 cm a la derecha de B, medidos en horizontal, como muestra la figura. La orfebre quiere rodear el broche con un hilo de plata. ¿Cuánto mide el perímetro del broche?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "aEscala": false,
+        "ventana": {
+          "xMin": -0.9,
+          "xMax": 3.6,
+          "yMin": -0.7,
+          "yMax": 2.4
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "ubicacion": "so"
+          },
+          {
+            "nombre": "B",
+            "x": 1,
+            "y": 0,
+            "ubicacion": "s"
+          },
+          {
+            "nombre": "C",
+            "x": 2.6263,
+            "y": 1.6263,
+            "ubicacion": "ne"
+          },
+          {
+            "nombre": "D",
+            "x": 1.6263,
+            "y": 1.6263,
+            "ubicacion": "no"
+          },
+          {
+            "nombre": "H",
+            "x": 2.6263,
+            "y": 0,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "1 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C"
+          },
+          {
+            "desde": "C",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "A"
+          },
+          {
+            "desde": "B",
+            "hasta": "H",
+            "trazo": "punteado",
+            "rotulo": "1,5 cm"
+          },
+          {
+            "desde": "H",
+            "hasta": "C",
+            "trazo": "punteado",
+            "rotulo": "1,5 cm",
+            "lado": "exterior"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "H",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Paralelogramo ABCD con AB de 1 cm; desde B se prolonga la base con un tramo punteado de 1,5 cm hasta H y desde H sube la altura punteada de 1,5 cm hasta C, con ángulo recto en H. Figura referencial, no está a escala."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "5 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-altura-como-lado-inclinado",
+          "feedbackDescarte": "Esa toma la altura, 1,5 cm, como la medida de los lados inclinados: 2 · 1 + 2 · 1,5 = 5. Cada lado inclinado es la hipotenusa de un triángulo de catetos 1,5 cm y 1,5 cm, y mide más que la altura."
+        },
+        {
+          "clave": "B",
+          "texto": "(2 + 3√2) cm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cada lado inclinado mide √(1,5² + 1,5²) = √4,5 = 1,5√2 cm, y el perímetro es 2 · 1 + 2 · 1,5√2 = (2 + 3√2) cm."
+        },
+        {
+          "clave": "C",
+          "texto": "8 cm",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa calcula el lado inclinado como 1,5 + 1,5 = 3, sumando los catetos sin elevarlos al cuadrado. Con Pitágoras mide √(1,5² + 1,5²)."
+        },
+        {
+          "clave": "D",
+          "texto": "(2 + 2√6) cm",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa calcula 1,5² como 2 · 1,5 = 3, y el lado inclinado le da √(3 + 3) = √6. Elevar al cuadrado es multiplicar por sí mismo: 1,5 · 1,5 = 2,25."
+        }
+      ],
+      "solucion": "El lado BC es la hipotenusa del triángulo rectángulo BHC, de catetos 1,5 cm (el tramo horizontal) y 1,5 cm (la altura). BC² = 1,5² + 1,5² = 2,25 + 2,25 = 4,5, así que BC = √4,5 = 1,5√2 cm. En un paralelogramo los lados opuestos miden lo mismo: AB = CD = 1 cm y BC = DA = 1,5√2 cm. Perímetro: 2 · 1 + 2 · 1,5√2 = (2 + 3√2) cm.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-009",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El corte de una zanja de drenaje tiene forma de trapecio isósceles: el fondo mide 2,7 m, la zanja tiene 3 m de profundidad y cada pared se abre 3 m hacia afuera, medidos en horizontal, como muestra la figura. Se cubrirán el fondo y las dos paredes con geomembrana. En el corte, ¿cuánto mide el contorno formado por el fondo y las dos paredes?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "aEscala": false,
+        "ventana": {
+          "xMin": -2.4,
+          "xMax": 10.5,
+          "yMin": -3.6,
+          "yMax": 1.2
+        },
+        "puntos": [
+          {
+            "nombre": "G",
+            "x": -1.6,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "P",
+            "x": 2.687,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 2.687,
+            "y": -2.687,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 5.387,
+            "y": -2.687,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 8.074,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "K",
+            "x": 9.674,
+            "y": 0,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "G",
+            "hasta": "A",
+            "achurado": true
+          },
+          {
+            "desde": "D",
+            "hasta": "K",
+            "achurado": true
+          },
+          {
+            "desde": "A",
+            "hasta": "B"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "2,7 m"
+          },
+          {
+            "desde": "C",
+            "hasta": "D"
+          },
+          {
+            "desde": "A",
+            "hasta": "P",
+            "trazo": "punteado",
+            "rotulo": "3 m"
+          },
+          {
+            "desde": "P",
+            "hasta": "B",
+            "trazo": "punteado",
+            "rotulo": "3 m",
+            "lado": "interior"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "P",
+            "desde": "A",
+            "hasta": "B",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Corte de la zanja: suelo achurado a ambos lados; paredes inclinadas y fondo de 2,7 m; desde el borde izquierdo, un tramo horizontal punteado de 3 m y la profundidad punteada de 3 m, con ángulo recto entre ellos. Figura referencial, no está a escala."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "8,7 m",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-altura-como-lado-inclinado",
+          "feedbackDescarte": "Esa toma la profundidad, 3 m, como la medida de cada pared: 2,7 + 2 · 3 = 8,7. Cada pared va inclinada y es la hipotenusa de un triángulo de catetos 3 m y 3 m: mide más que 3 m."
+        },
+        {
+          "clave": "B",
+          "texto": "14,7 m",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa calcula cada pared como 3 + 3 = 6, sumando los catetos sin elevarlos al cuadrado. Con Pitágoras cada pared mide √(3² + 3²)."
+        },
+        {
+          "clave": "C",
+          "texto": "(2,7 + 6√2) m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: cada pared mide √(3² + 3²) = √18 = 3√2 m, y el contorno es 2,7 + 2 · 3√2 = (2,7 + 6√2) m."
+        },
+        {
+          "clave": "D",
+          "texto": "(2,7 + 4√3) m",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa calcula 3² como 2 · 3 = 6, y cada pared le da √(6 + 6) = √12 = 2√3. Elevar al cuadrado es 3 · 3 = 9: cada pared mide √18."
+        }
+      ],
+      "solucion": "Cada pared es la hipotenusa de un triángulo rectángulo de catetos 3 m (la profundidad) y 3 m (lo que se abre en horizontal). Pared² = 3² + 3² = 9 + 9 = 18, así que cada pared mide √18 = 3√2 m. El contorno es el fondo más las dos paredes: 2,7 + 2 · 3√2 = (2,7 + 6√2) m.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-010",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "argumentar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Al desplegar un origami, un pliegue deja marcado un triángulo de lados √3 cm, √6 cm y 3 cm. Tomás afirma que ese triángulo es rectángulo. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "Tomás tiene razón, porque (√3)² + (√6)² = 3 + 6 = 9, que es igual a 3².",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el lado mayor es 3 y (√3)² + (√6)² = 3 + 6 = 9 = 3², así que el triángulo es rectángulo."
+        },
+        {
+          "clave": "B",
+          "texto": "Tomás se equivoca, porque √3 + √6 no es igual a 3.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa compara la suma de los lados, √3 + √6, con el lado mayor. El criterio de Pitágoras compara cuadrados: (√3)² + (√6)² con 3²."
+        },
+        {
+          "clave": "C",
+          "texto": "Tomás se equivoca, porque (√3 + √6)² no es igual a 3².",
+          "esCorrecta": false,
+          "errorCatalogado": "eleva-suma-de-catetos",
+          "feedbackDescarte": "Esa eleva al cuadrado la suma de los dos lados menores, (√3 + √6)², en vez de sumar sus cuadrados. El criterio es (√3)² + (√6)² = 3²."
+        },
+        {
+          "clave": "D",
+          "texto": "Tomás se equivoca, porque 2 · √3 + 2 · √6 no es igual a 2 · 3.",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa cambia cada cuadrado por el doble: 2 · √3 en vez de (√3)². Elevar al cuadrado es multiplicar por sí mismo: (√3)² = 3 y (√6)² = 6."
+        }
+      ],
+      "solucion": "Un triángulo es rectángulo si el cuadrado del lado mayor es igual a la suma de los cuadrados de los otros dos. El lado mayor es 3, porque √3 y √6 son menores que √9 = 3. (√3)² + (√6)² = 3 + 6 = 9 y 3² = 9: se cumple, así que el triángulo es rectángulo y Tomás tiene razón. Sumar los lados, elevar su suma o doblarlos en vez de elevarlos no sirve para decidirlo.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-011",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "baja",
+      "tiempoReferenciaSeg": 80,
+      "enunciado": "Cada cara de un yoyó es un círculo de 3,6 cm de diámetro, como muestra la figura. Se pegará una cinta alrededor de todo el borde de una de las caras, sin tapar el cordel. ¿Cuánto mide el borde de esa cara?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -3,
+          "xMax": 3,
+          "yMin": -2.3,
+          "yMax": 2.3
+        },
+        "puntos": [
+          {
+            "nombre": "O",
+            "x": 0,
+            "y": 0,
+            "oculto": true,
+            "marca": true
+          },
+          {
+            "nombre": "A",
+            "x": -1.8,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 1.8,
+            "y": 0,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "3,6 cm",
+            "lado": "interior"
+          }
+        ],
+        "circunferencias": [
+          {
+            "centro": "O",
+            "radio": 1.8
+          }
+        ],
+        "descripcion": "Circunferencia de la tapa con un diámetro horizontal trazado y rotulado 3,6 cm."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "7,2π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diametro-como-radio",
+          "feedbackDescarte": "Esa pone el diámetro, 3,6 cm, en 2π · r: 2π · 3,6 = 7,2π, el doble del borde. En 2π · r va el radio, 1,8 cm."
+        },
+        {
+          "clave": "B",
+          "texto": "1,8π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-radio-como-diametro",
+          "feedbackDescarte": "Esa pone el radio, 1,8 cm, en π · d: π · 1,8 = 1,8π, la mitad del borde. En π · d va el diámetro completo, 3,6 cm."
+        },
+        {
+          "clave": "C",
+          "texto": "3,24π cm",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Esa calcula π · r² = π · 1,8² = 3,24π, que es el área de la cara, no su borde. El borde de un círculo es 2π · r."
+        },
+        {
+          "clave": "D",
+          "texto": "3,6π cm",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el borde de un círculo mide π · d = π · 3,6 = 3,6π cm, lo mismo que 2π · 1,8."
+        }
+      ],
+      "solucion": "El borde de un círculo es su perímetro: π · d, o 2π · r. Con d = 3,6 cm, el radio es 1,8 cm y el borde mide π · 3,6 = 2π · 1,8 = 3,6π cm.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-012",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La cubierta de un vanitorio es un rectángulo de 55 cm por 47 cm al que se le recortó, en uno de sus lados de 47 cm, un semicírculo de 22 cm de radio para el lavamanos, como muestra la figura. ¿Cuál de las siguientes expresiones permite calcular el área, en cm², de la cubierta que queda después del recorte?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -8,
+          "xMax": 68,
+          "yMin": -8,
+          "yMax": 53
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 55,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 55,
+            "y": 47,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 47,
+            "oculto": true
+          },
+          {
+            "nombre": "M",
+            "x": 0,
+            "y": 23.5,
+            "oculto": true,
+            "marca": true
+          },
+          {
+            "nombre": "R",
+            "x": 22,
+            "y": 23.5,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "55 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "47 cm"
+          },
+          {
+            "desde": "C",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "A"
+          },
+          {
+            "desde": "M",
+            "hasta": "R",
+            "trazo": "punteado",
+            "rotulo": "22 cm",
+            "lado": "interior"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "B",
+            "desde": "C",
+            "hasta": "A",
+            "marca": "recto"
+          },
+          {
+            "vertice": "C",
+            "desde": "D",
+            "hasta": "B",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "A",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "poligonos": [
+          {
+            "id": "cubierta",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ],
+        "arcos": [
+          {
+            "id": "recorte",
+            "clase": "sector",
+            "centro": "M",
+            "radio": 22,
+            "desde": -90,
+            "hasta": 90
+          }
+        ],
+        "regiones": [
+          {
+            "formas": [
+              "cubierta"
+            ],
+            "huecos": [
+              "recorte"
+            ],
+            "estilo": "rayado"
+          }
+        ],
+        "descripcion": "Rectángulo de 55 cm por 47 cm con un semicírculo recortado en el lado izquierdo, de 22 cm de radio y centro en ese lado; la región rayada es lo que queda de la cubierta."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "55 · 47 − π · 22²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa resta el círculo completo, π · 22², pero el recorte es un semicírculo: su área es la mitad, π · 22² / 2."
+        },
+        {
+          "clave": "B",
+          "texto": "55 · 47 − π · 22² / 2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el rectángulo mide 55 · 47 cm² y el recorte es medio círculo de radio 22 cm, de área π · 22² / 2, que se resta."
+        },
+        {
+          "clave": "C",
+          "texto": "55 · 47 + π · 22² / 2",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-la-region-que-se-resta",
+          "feedbackDescarte": "Esa suma el semicírculo al rectángulo en vez de restarlo. El recorte quita material: el área que queda es menor que 55 · 47."
+        },
+        {
+          "clave": "D",
+          "texto": "55 · 47 − π · 22",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Esa resta π · 22, que es la mitad del borde del círculo, una longitud y no un área. El área de medio círculo es π · 22² / 2."
+        }
+      ],
+      "solucion": "La cubierta que queda es el rectángulo menos el semicírculo recortado. Rectángulo: 55 · 47 cm². Un círculo de radio 22 cm tiene área π · 22²; el semicírculo, la mitad: π · 22² / 2. Área que queda: 55 · 47 − π · 22² / 2, en cm².",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -8,
+          "xMax": 68,
+          "yMin": -8,
+          "yMax": 53
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 55,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 55,
+            "y": 47,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 47,
+            "oculto": true
+          },
+          {
+            "nombre": "M",
+            "x": 0,
+            "y": 23.5,
+            "oculto": true,
+            "marca": true
+          },
+          {
+            "nombre": "R",
+            "x": 22,
+            "y": 23.5,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "55 cm"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "47 cm"
+          },
+          {
+            "desde": "C",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "A"
+          },
+          {
+            "desde": "M",
+            "hasta": "R",
+            "trazo": "punteado",
+            "rotulo": "22 cm",
+            "lado": "interior"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "B",
+            "desde": "C",
+            "hasta": "A",
+            "marca": "recto"
+          },
+          {
+            "vertice": "C",
+            "desde": "D",
+            "hasta": "B",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "A",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "poligonos": [
+          {
+            "id": "cubierta",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ],
+        "arcos": [
+          {
+            "id": "recorte",
+            "clase": "sector",
+            "centro": "M",
+            "radio": 22,
+            "desde": -90,
+            "hasta": 90
+          }
+        ],
+        "regiones": [
+          {
+            "formas": [
+              "cubierta"
+            ],
+            "estilo": "rayado"
+          },
+          {
+            "formas": [
+              "recorte"
+            ],
+            "estilo": "punteado"
+          }
+        ],
+        "descripcion": "Descomposición: el rectángulo completo de 55 cm por 47 cm, rayado, y el semicírculo de 22 cm de radio, punteado, que se resta."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-013",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "A una plancha de terciado rectangular de 3,1 m por 2 m se le cortó una esquina con sierra, con un corte recto de 3 m que quita un triángulo rectángulo con un cateto de 1 m sobre el lado de 2 m, como muestra la figura. ¿Cuál es el área de la plancha que queda?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -0.9,
+          "xMax": 4.2,
+          "yMin": -0.7,
+          "yMax": 2.6
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 3.1,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 3.1,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "E",
+            "x": 0.2715728752538098,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "F",
+            "x": 3.1,
+            "y": 1,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "id": "plancha",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "corte",
+            "vertices": [
+              "C",
+              "E",
+              "F"
+            ]
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "C",
+            "desde": "E",
+            "hasta": "F",
+            "marca": "recto"
+          },
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "B",
+            "desde": "F",
+            "hasta": "A",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "A",
+            "hasta": "E",
+            "marca": "recto"
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "3,1 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "F"
+          },
+          {
+            "desde": "F",
+            "hasta": "C",
+            "trazo": "punteado",
+            "rotulo": "1 m"
+          },
+          {
+            "desde": "C",
+            "hasta": "E",
+            "trazo": "punteado"
+          },
+          {
+            "desde": "E",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "A",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "E",
+            "hasta": "F",
+            "rotulo": "3 m",
+            "lado": "interior"
+          }
+        ],
+        "regiones": [
+          {
+            "formas": [
+              "plancha"
+            ],
+            "huecos": [
+              "corte"
+            ],
+            "estilo": "rayado"
+          }
+        ],
+        "descripcion": "Rectángulo de 3,1 m por 2 m sin la esquina superior derecha: el corte recto mide 3 m y el cateto vertical del triángulo quitado mide 1 m; ángulo recto en la esquina quitada."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(6,2 − √2) m²",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el otro cateto mide √(3² − 1²) = √8 = 2√2 m, el triángulo cortado 1 · 2√2 / 2 = √2 m², y queda 3,1 · 2 − √2 = (6,2 − √2) m²."
+        },
+        {
+          "clave": "B",
+          "texto": "(6,2 − 2√2) m²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa resta el triángulo como 1 · 2√2, cateto por cateto sin dividir por 2. El área del triángulo cortado es 1 · 2√2 / 2 = √2 m²."
+        },
+        {
+          "clave": "C",
+          "texto": "(6,2 + √2) m²",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-la-region-que-se-resta",
+          "feedbackDescarte": "Esa suma el triángulo cortado al rectángulo en vez de restarlo. El corte quita madera: lo que queda mide menos que 3,1 · 2 = 6,2 m²."
+        },
+        {
+          "clave": "D",
+          "texto": "4,7 m²",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lado-inclinado-como-altura",
+          "feedbackDescarte": "Esa usa el corte de 3 m como si fuera el otro cateto: 6,2 − 1 · 3 / 2 = 4,7. El corte es la hipotenusa; el otro cateto mide √(3² − 1²) = 2√2 m."
+        }
+      ],
+      "solucion": "El área que queda es la del rectángulo menos la del triángulo cortado. Rectángulo: 3,1 · 2 = 6,2 m². El triángulo es rectángulo, con hipotenusa de 3 m (el corte) y un cateto de 1 m; el otro cateto mide √(3² − 1²) = √(9 − 1) = √8 = 2√2 m. Área del triángulo: 1 · 2√2 / 2 = √2 m². Área que queda: (6,2 − √2) m².",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -0.9,
+          "xMax": 4.2,
+          "yMin": -0.7,
+          "yMax": 2.6
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 3.1,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 3.1,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "E",
+            "x": 0.2715728752538098,
+            "y": 2,
+            "oculto": true
+          },
+          {
+            "nombre": "F",
+            "x": 3.1,
+            "y": 1,
+            "oculto": true
+          }
+        ],
+        "poligonos": [
+          {
+            "id": "plancha",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "corte",
+            "vertices": [
+              "C",
+              "E",
+              "F"
+            ]
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "C",
+            "desde": "E",
+            "hasta": "F",
+            "marca": "recto"
+          },
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "B",
+            "desde": "F",
+            "hasta": "A",
+            "marca": "recto"
+          },
+          {
+            "vertice": "D",
+            "desde": "A",
+            "hasta": "E",
+            "marca": "recto"
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "3,1 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "F"
+          },
+          {
+            "desde": "F",
+            "hasta": "C",
+            "rotulo": "1 m"
+          },
+          {
+            "desde": "C",
+            "hasta": "E",
+            "rotulo": "2√2 m"
+          },
+          {
+            "desde": "E",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "A",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "E",
+            "hasta": "F",
+            "rotulo": "3 m",
+            "lado": "interior"
+          }
+        ],
+        "regiones": [
+          {
+            "formas": [
+              "plancha"
+            ],
+            "huecos": [
+              "corte"
+            ],
+            "estilo": "rayado"
+          },
+          {
+            "formas": [
+              "corte"
+            ],
+            "estilo": "punteado"
+          }
+        ],
+        "descripcion": "El triángulo quitado, punteado, con el cateto horizontal calculado de 2√2 m, junto al cateto de 1 m y la hipotenusa de 3 m."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-014",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "resolver",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "La boca de un túnel subterráneo está formada por un rectángulo de 4,6 m de ancho y 1,7 m de alto, con un semicírculo encima cuyo diámetro es el lado superior del rectángulo, como muestra la figura. Se instalará una franja de luces por todo el contorno de la boca: el piso, las dos paredes y el arco. ¿Cuánto mide ese contorno?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -2.6,
+          "xMax": 7.2,
+          "yMin": -0.8,
+          "yMax": 4.6
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 4.6,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 4.6,
+            "y": 1.7,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 1.7,
+            "oculto": true
+          },
+          {
+            "nombre": "M",
+            "x": 2.3,
+            "y": 1.7,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "4,6 m",
+            "achurado": true
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "1,7 m"
+          },
+          {
+            "desde": "A",
+            "hasta": "D"
+          },
+          {
+            "desde": "D",
+            "hasta": "C",
+            "trazo": "punteado"
+          }
+        ],
+        "arcos": [
+          {
+            "clase": "arco",
+            "centro": "M",
+            "radio": 2.3,
+            "desde": 0,
+            "hasta": 180
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "B",
+            "desde": "A",
+            "hasta": "C",
+            "marca": "recto"
+          },
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "D",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Boca del túnel: piso de 4,6 m, paredes verticales de 1,7 m con ángulo recto en el piso y un arco semicircular encima; el lado superior del rectángulo va punteado."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "(17,2 + 2,3π) m",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-borde-interior-en-figura-compuesta",
+          "feedbackDescarte": "Esa suma el contorno de cada pieza por separado: el rectángulo completo y el semicírculo con su diámetro. La unión de 4,6 m queda contada dos veces y no es borde de la boca."
+        },
+        {
+          "clave": "B",
+          "texto": "(8 + 4,6π) m",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diametro-como-radio",
+          "feedbackDescarte": "Esa pone el diámetro, 4,6 m, donde va el radio, y el arco le da 4,6π, el doble. Medio círculo de radio 2,3 m mide 2π · 2,3 / 2 = 2,3π m."
+        },
+        {
+          "clave": "C",
+          "texto": "(8 + 2,3π) m",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: piso y paredes suman 4,6 + 2 · 1,7 = 8 m, y el arco es medio círculo de radio 2,3 m: 2π · 2,3 / 2 = 2,3π m."
+        },
+        {
+          "clave": "D",
+          "texto": "(8 + 2,645π) m",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Esa usa el área: π · 2,3² / 2 = 2,645π es la superficie del semicírculo, no su borde. El arco mide la mitad de 2π · 2,3."
+        }
+      ],
+      "solucion": "El contorno de la boca es el piso, las dos paredes y el arco; el lado de arriba del rectángulo queda por dentro y no se cuenta. Piso y paredes: 4,6 + 1,7 + 1,7 = 8 m. El arco es medio círculo de diámetro 4,6 m, o sea de radio 2,3 m: 2π · 2,3 / 2 = 2,3π m. Contorno: (8 + 2,3π) m.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-015",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "La tarima para una ceremonia de graduación tiene forma de trapecio isósceles, con bases de 6 m y 2 m y lados iguales de 3 m, como muestra la figura. Para calcular su área, Paula escribió:\n\nPaso 1: cada lado inclinado avanza en horizontal (6 − 2) dividido por 2, es decir, 2 m.\nPaso 2: la altura es √(3² − 2²) = √5 m.\nPaso 3: el área es (6 + 2) · √5 = 8√5 m².\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1,
+          "xMax": 7,
+          "yMin": -0.9,
+          "yMax": 3
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 6,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 4,
+            "y": 2.23606797749979,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 2,
+            "y": 2.23606797749979,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "6 m"
+          },
+          {
+            "desde": "D",
+            "hasta": "C",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "A",
+            "hasta": "D",
+            "rotulo": "3 m",
+            "igualdad": 1
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "3 m",
+            "igualdad": 1
+          }
+        ],
+        "descripcion": "Trapecio isósceles con base mayor de 6 m abajo, base menor de 2 m arriba y lados inclinados iguales de 3 m."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El procedimiento de Paula es correcto.",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa acepta el paso 3, pero Paula multiplicó la suma de las bases por la altura sin dividir por 2. El área de un trapecio es (6 + 2) · √5 / 2."
+        },
+        {
+          "clave": "B",
+          "texto": "El paso 2 tiene un error: la altura del trapecio es el lado inclinado, 3 m.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lado-inclinado-como-altura",
+          "feedbackDescarte": "Esa toma el lado inclinado de 3 m como la altura. La altura es vertical y es un cateto del triángulo que forma ese lado: mide menos que 3 m."
+        },
+        {
+          "clave": "C",
+          "texto": "El paso 2 tiene un error: la altura del trapecio es 3 − 2 = 1 m.",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa calcula la altura como 3 − 2, restando sin elevar al cuadrado. El paso 2 de Paula está bien: la altura es √(3² − 2²) = √5 m."
+        },
+        {
+          "clave": "D",
+          "texto": "El paso 3 tiene un error: el área es la mitad de (6 + 2) · √5, es decir, 4√5 m².",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los pasos 1 y 2 están bien, pero el área de un trapecio lleva la división por 2: (6 + 2) · √5 / 2 = 4√5 m²."
+        }
+      ],
+      "solucion": "Paso 1: al trazar las alturas desde la base menor quedan dos triángulos rectángulos iguales, cada uno con un cateto de (6 − 2) / 2 = 2 m; está bien. Paso 2: con la hipotenusa de 3 m, la altura es √(3² − 2²) = √(9 − 4) = √5 m; está bien. Paso 3: el área de un trapecio es (base mayor + base menor) · altura / 2 = (6 + 2) · √5 / 2 = 4√5 m². Paula no dividió por 2: el error está en el paso 3.",
+      "figuraSolucion": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1,
+          "xMax": 7,
+          "yMin": -0.9,
+          "yMax": 3
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 6,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 4,
+            "y": 2.23606797749979,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 2,
+            "y": 2.23606797749979,
+            "oculto": true
+          },
+          {
+            "nombre": "P",
+            "x": 2,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "Q",
+            "x": 4,
+            "y": 0,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "P",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "P",
+            "hasta": "Q"
+          },
+          {
+            "desde": "Q",
+            "hasta": "B",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "D",
+            "hasta": "C",
+            "rotulo": "2 m"
+          },
+          {
+            "desde": "A",
+            "hasta": "D",
+            "rotulo": "3 m"
+          },
+          {
+            "desde": "B",
+            "hasta": "C"
+          },
+          {
+            "desde": "D",
+            "hasta": "P",
+            "trazo": "punteado",
+            "rotulo": "√5 m",
+            "lado": "interior"
+          },
+          {
+            "desde": "C",
+            "hasta": "Q",
+            "trazo": "punteado"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "P",
+            "desde": "A",
+            "hasta": "D",
+            "marca": "recto"
+          },
+          {
+            "vertice": "Q",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "El mismo trapecio con las dos alturas punteadas: cada una deja un tramo de 2 m en la base mayor y mide √5 m."
+      },
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-016",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "Un banderín para una fonda tiene forma de triángulo rectángulo. Su lado más largo mide c cm y uno de sus catetos mide a cm, como muestra la figura. ¿Cuál de las siguientes expresiones representa el área del banderín, en cm²?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.2,
+          "xMax": 7.6,
+          "yMin": -0.9,
+          "yMax": 3.9
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 6.324555320336759,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 0,
+            "y": 3,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B"
+          },
+          {
+            "desde": "A",
+            "hasta": "C",
+            "rotulo": "a"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "rotulo": "c"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "A",
+            "desde": "B",
+            "hasta": "C",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Triángulo rectángulo con ángulo recto abajo a la izquierda: cateto vertical rotulado a, hipotenusa rotulada c y cateto horizontal sin rótulo."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "a · √(a² − c²) / 2",
+          "esCorrecta": false,
+          "errorCatalogado": "trata-cateto-como-hipotenusa",
+          "feedbackDescarte": "Esa despeja como si el cateto a fuera la hipotenusa y escribe a² − c². La hipotenusa es c, el lado más largo: el otro cateto es √(c² − a²)."
+        },
+        {
+          "clave": "B",
+          "texto": "a · √(c² − a²) / 2",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el otro cateto mide √(c² − a²), y los dos catetos son base y altura: el área es a · √(c² − a²) / 2."
+        },
+        {
+          "clave": "C",
+          "texto": "a · √(c² + a²) / 2",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-cuadrados-al-buscar-cateto",
+          "feedbackDescarte": "Esa suma los cuadrados, c² + a², como si el cateto que falta fuera la hipotenusa. c ya es la hipotenusa: el otro cateto se obtiene restando, √(c² − a²)."
+        },
+        {
+          "clave": "D",
+          "texto": "a · √(c² − a²)",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Esa multiplica los dos catetos sin dividir por 2. El área de un triángulo es base · altura / 2: a · √(c² − a²) / 2."
+        }
+      ],
+      "solucion": "En un triángulo rectángulo el lado más largo es la hipotenusa, c. El otro cateto, b, cumple a² + b² = c², así que b = √(c² − a²). Los catetos son perpendiculares, así que sirven como base y altura: el área es a · b / 2 = a · √(c² − a²) / 2, en cm².",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-017",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Para un tapiz de patchwork se necesitan retazos de tela con forma de triángulo y 3 cm² de área. ¿Cuál de los siguientes triángulos tiene un área de 3 cm²?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -1.4,
+              "xMax": 5.6,
+              "yMin": -0.7,
+              "yMax": 4.3
+            },
+            "puntos": [
+              {
+                "nombre": "A",
+                "x": 0,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "B",
+                "x": 5,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "C",
+                "x": 3,
+                "y": 0.6,
+                "oculto": true
+              },
+              {
+                "nombre": "H",
+                "x": 3,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "A",
+                "hasta": "B",
+                "rotulo": "5 cm"
+              },
+              {
+                "desde": "B",
+                "hasta": "C"
+              },
+              {
+                "desde": "C",
+                "hasta": "A"
+              },
+              {
+                "desde": "C",
+                "hasta": "H",
+                "trazo": "punteado",
+                "rotulo": "0,6 cm",
+                "lado": "interior"
+              }
+            ],
+            "angulos": [
+              {
+                "vertice": "H",
+                "desde": "B",
+                "hasta": "C",
+                "marca": "recto"
+              }
+            ],
+            "descripcion": "Triángulo de base 5 cm con altura punteada de 0,6 cm."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "omite-mitad-en-area",
+          "feedbackDescarte": "Ese tiene base 5 cm y altura 0,6 cm: 5 · 0,6 = 3 es base por altura sin dividir por 2. Su área es 5 · 0,6 / 2 = 1,5 cm²."
+        },
+        {
+          "clave": "B",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -1.4,
+              "xMax": 5.6,
+              "yMin": -0.7,
+              "yMax": 4.3
+            },
+            "puntos": [
+              {
+                "nombre": "A",
+                "x": 0,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "B",
+                "x": 2.5,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "C",
+                "x": 1.3266499161421599,
+                "y": 2,
+                "oculto": true
+              },
+              {
+                "nombre": "H",
+                "x": 1.3266499161421599,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "A",
+                "hasta": "B",
+                "rotulo": "2,5 cm"
+              },
+              {
+                "desde": "B",
+                "hasta": "C"
+              },
+              {
+                "desde": "A",
+                "hasta": "C",
+                "rotulo": "2,4 cm"
+              },
+              {
+                "desde": "C",
+                "hasta": "H",
+                "trazo": "punteado",
+                "rotulo": "2 cm",
+                "lado": "exterior"
+              }
+            ],
+            "angulos": [
+              {
+                "vertice": "H",
+                "desde": "B",
+                "hasta": "C",
+                "marca": "recto"
+              }
+            ],
+            "descripcion": "Triángulo de base 2,5 cm, un lado inclinado de 2,4 cm y altura punteada de 2 cm."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "usa-lado-inclinado-como-altura",
+          "feedbackDescarte": "Ese da 3 si se usa el lado inclinado de 2,4 cm como altura: 2,5 · 2,4 / 2 = 3. La altura es la punteada, 2 cm, y el área es 2,5 · 2 / 2 = 2,5 cm²."
+        },
+        {
+          "clave": "C",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -1.4,
+              "xMax": 5.6,
+              "yMin": -0.7,
+              "yMax": 4.3
+            },
+            "puntos": [
+              {
+                "nombre": "A",
+                "x": 0,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "B",
+                "x": 2.4,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "C",
+                "x": 0.9,
+                "y": 2.5,
+                "oculto": true
+              },
+              {
+                "nombre": "H",
+                "x": 0.9,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "A",
+                "hasta": "B",
+                "rotulo": "2,4 cm"
+              },
+              {
+                "desde": "B",
+                "hasta": "C"
+              },
+              {
+                "desde": "C",
+                "hasta": "A"
+              },
+              {
+                "desde": "C",
+                "hasta": "H",
+                "trazo": "punteado",
+                "rotulo": "2,5 cm",
+                "lado": "interior"
+              }
+            ],
+            "angulos": [
+              {
+                "vertice": "H",
+                "desde": "B",
+                "hasta": "C",
+                "marca": "recto"
+              }
+            ],
+            "descripcion": "Triángulo de base 2,4 cm con altura punteada de 2,5 cm."
+          },
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: la base de 2,4 cm y la altura de 2,5 cm, perpendicular a la base, dan 2,4 · 2,5 / 2 = 3 cm²."
+        },
+        {
+          "clave": "D",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -1.4,
+              "xMax": 5.6,
+              "yMin": -0.7,
+              "yMax": 4.3
+            },
+            "puntos": [
+              {
+                "nombre": "A",
+                "x": 0,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "B",
+                "x": 2,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "C",
+                "x": 1,
+                "y": 3.872983346207417,
+                "oculto": true
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "A",
+                "hasta": "B",
+                "rotulo": "2 cm"
+              },
+              {
+                "desde": "A",
+                "hasta": "C",
+                "rotulo": "4 cm"
+              },
+              {
+                "desde": "B",
+                "hasta": "C",
+                "rotulo": "4 cm"
+              }
+            ],
+            "descripcion": "Triángulo isósceles de base 2 cm y lados iguales de 4 cm, sin altura dibujada."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Ese da 3 si la altura se calcula como 4 − 1 = 3, restando sin elevar al cuadrado. La altura es √(4² − 1²) = √15 cm, y el área, √15 cm², es más que 3 cm²."
+        }
+      ],
+      "solucion": "El área de un triángulo es base · altura / 2, con la altura perpendicular a la base. El de base 2,4 cm y altura 2,5 cm: 2,4 · 2,5 / 2 = 3 cm². El de base 5 cm y altura 0,6 cm: 5 · 0,6 / 2 = 1,5 cm². El de base 2,5 cm, lado de 2,4 cm y altura 2 cm: 2,5 · 2 / 2 = 2,5 cm². El isósceles de base 2 cm y lados de 4 cm tiene altura √(4² − 1²) = √15 cm y área 2 · √15 / 2 = √15 cm², que no es 3.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-018",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "modelar",
+      "dificultad": "media",
+      "tiempoReferenciaSeg": 120,
+      "enunciado": "El cable de una tirolesa une dos plataformas. La plataforma de partida está h metros más alta que la de llegada y la distancia horizontal entre ambas es d metros, como muestra la figura. Si el cable queda tenso y recto, ¿cuál de las siguientes expresiones representa su largo x, en metros?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.8,
+          "xMax": 9.8,
+          "yMin": -0.9,
+          "yMax": 5.8
+        },
+        "puntos": [
+          {
+            "nombre": "S",
+            "x": -1,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "T",
+            "x": 9,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "G",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 5,
+            "ubicacion": "n",
+            "marca": true
+          },
+          {
+            "nombre": "P",
+            "x": 8,
+            "y": 5,
+            "oculto": true
+          },
+          {
+            "nombre": "K",
+            "x": 8,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 8,
+            "y": 1,
+            "ubicacion": "ne",
+            "marca": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "S",
+            "hasta": "T",
+            "achurado": true
+          },
+          {
+            "desde": "G",
+            "hasta": "A"
+          },
+          {
+            "desde": "K",
+            "hasta": "B"
+          },
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "x",
+            "lado": "exterior"
+          },
+          {
+            "desde": "A",
+            "hasta": "P",
+            "trazo": "punteado",
+            "rotulo": "d"
+          },
+          {
+            "desde": "P",
+            "hasta": "B",
+            "trazo": "punteado",
+            "rotulo": "h"
+          }
+        ],
+        "angulos": [
+          {
+            "vertice": "P",
+            "desde": "A",
+            "hasta": "B",
+            "marca": "recto"
+          }
+        ],
+        "descripcion": "Esquema: suelo achurado, una torre alta con la plataforma A y una torre baja con la plataforma B; el cable va de A a B rotulado x; tramo horizontal punteado d desde A y tramo vertical punteado h hasta B, con ángulo recto entre ellos."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "x = √(d² + h²)",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: el cable, la distancia horizontal d y el desnivel h forman un triángulo rectángulo, y el cable es la hipotenusa: x = √(d² + h²)."
+        },
+        {
+          "clave": "B",
+          "texto": "x = d + h",
+          "esCorrecta": false,
+          "errorCatalogado": "suma-lados-en-vez-de-cuadrados",
+          "feedbackDescarte": "Esa suma las dos distancias, d + h, como si el cable siguiera el camino horizontal y después el vertical. El cable recto es la hipotenusa: √(d² + h²)."
+        },
+        {
+          "clave": "C",
+          "texto": "x = √(2d + 2h)",
+          "esCorrecta": false,
+          "errorCatalogado": "duplica-en-vez-de-elevar-al-cuadrado",
+          "feedbackDescarte": "Esa cambia cada cuadrado por el doble: 2d en vez de d² y 2h en vez de h². Elevar al cuadrado es multiplicar por sí mismo: d · d y h · h."
+        },
+        {
+          "clave": "D",
+          "texto": "x = d² + h²",
+          "esCorrecta": false,
+          "errorCatalogado": "omite-raiz-final-pitagoras",
+          "feedbackDescarte": "Esa llega a d² + h² y no saca la raíz. Esa suma es x², el cuadrado del largo; el largo es √(d² + h²)."
+        }
+      ],
+      "solucion": "El desnivel h es vertical y la distancia d es horizontal, así que forman un ángulo recto. El cable tenso une las dos plataformas en línea recta y es la hipotenusa del triángulo rectángulo de catetos d y h. Por Pitágoras, x² = d² + h², y x = √(d² + h²) metros.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-019",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "argumentar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Una alfombra tiene forma de rectángulo con un semicírculo en cada extremo: los dos tramos rectos del borde miden 2,1 m cada uno y cada semicírculo tiene 0,8 m de radio, como muestra la figura. Para saber cuánto ribete se necesita para coser todo el borde, Diego escribió:\n\nPaso 1: los dos semicírculos juntos forman un círculo de 0,8 m de radio.\nPaso 2: el borde de ese círculo mide π · 0,8² = 0,64π m.\nPaso 3: todo el borde mide 2 · 2,1 + 0,64π = 4,2 + 0,64π m.\n\n¿Cuál de las siguientes afirmaciones es correcta?",
+      "figura": {
+        "tipo": "lienzo-geometrico",
+        "ventana": {
+          "xMin": -1.5,
+          "xMax": 3.6,
+          "yMin": -0.6,
+          "yMax": 2.2
+        },
+        "puntos": [
+          {
+            "nombre": "A",
+            "x": 0,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "B",
+            "x": 2.1,
+            "y": 0,
+            "oculto": true
+          },
+          {
+            "nombre": "C",
+            "x": 2.1,
+            "y": 1.6,
+            "oculto": true
+          },
+          {
+            "nombre": "D",
+            "x": 0,
+            "y": 1.6,
+            "oculto": true
+          },
+          {
+            "nombre": "M",
+            "x": 0,
+            "y": 0.8,
+            "oculto": true
+          },
+          {
+            "nombre": "N",
+            "x": 2.1,
+            "y": 0.8,
+            "oculto": true,
+            "marca": true
+          },
+          {
+            "nombre": "R",
+            "x": 2.9000000000000004,
+            "y": 0.8,
+            "oculto": true
+          }
+        ],
+        "segmentos": [
+          {
+            "desde": "A",
+            "hasta": "B",
+            "rotulo": "2,1 m"
+          },
+          {
+            "desde": "D",
+            "hasta": "C"
+          },
+          {
+            "desde": "N",
+            "hasta": "R",
+            "trazo": "punteado",
+            "rotulo": "0,8 m",
+            "lado": "interior"
+          },
+          {
+            "desde": "A",
+            "hasta": "D",
+            "trazo": "punteado"
+          },
+          {
+            "desde": "B",
+            "hasta": "C",
+            "trazo": "punteado"
+          }
+        ],
+        "arcos": [
+          {
+            "clase": "arco",
+            "centro": "M",
+            "radio": 0.8,
+            "desde": 90,
+            "hasta": 270
+          },
+          {
+            "clase": "arco",
+            "centro": "N",
+            "radio": 0.8,
+            "desde": -90,
+            "hasta": 90
+          }
+        ],
+        "descripcion": "Borde de la alfombra: dos tramos rectos horizontales de 2,1 m y un semicírculo en cada extremo; uno de los radios, punteado, mide 0,8 m; las uniones entre el rectángulo y los semicírculos van punteadas."
+      },
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "El procedimiento de Diego es correcto.",
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Esa acepta el paso 2, pero π · 0,8² es el área del círculo, no su borde. El borde de un círculo de radio 0,8 m mide 2π · 0,8."
+        },
+        {
+          "clave": "B",
+          "texto": "El paso 2 tiene un error: el borde del círculo mide 2π · 0,8 = 1,6π m.",
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: los pasos 1 y 3 están bien planteados, pero el borde de un círculo es 2π · r = 2π · 0,8 = 1,6π m, no π · r²; el borde total es (4,2 + 1,6π) m."
+        },
+        {
+          "clave": "C",
+          "texto": "El paso 2 tiene un error: el borde del círculo mide 2π · 1,6 = 3,2π m.",
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diametro-como-radio",
+          "feedbackDescarte": "Esa pone el diámetro, 1,6 m, donde va el radio en 2π · r, y da el doble del borde. Con radio 0,8 m el borde es 2π · 0,8 = 1,6π m."
+        },
+        {
+          "clave": "D",
+          "texto": "El paso 3 tiene un error: también hay que sumar los dos diámetros de 1,6 m donde los semicírculos se juntan con el rectángulo.",
+          "esCorrecta": false,
+          "errorCatalogado": "cuenta-borde-interior-en-figura-compuesta",
+          "feedbackDescarte": "Esa suma las dos uniones de 1,6 m entre los semicírculos y el rectángulo. Esas líneas quedan por dentro de la alfombra: no son borde y no llevan ribete."
+        }
+      ],
+      "solucion": "Paso 1: los dos semicírculos de radio 0,8 m forman un círculo completo de radio 0,8 m; está bien. Paso 2: el borde de un círculo es 2π · r = 2π · 0,8 = 1,6π m; Diego calculó π · 0,8², que es el área, así que el error está aquí. Paso 3, con el borde correcto: 2 · 2,1 + 1,6π = (4,2 + 1,6π) m. Las uniones entre el rectángulo y los semicírculos quedan por dentro y no se cuentan.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    },
+    {
+      "id": "adv-figuras-geometricas-020",
+      "unidadId": "figuras-geometricas",
+      "moduloId": "figuras-geometricas",
+      "habilidad": "representar",
+      "dificultad": "alta",
+      "tiempoReferenciaSeg": 160,
+      "enunciado": "Para un medallón circular con grabado se necesita que el borde mida 8π cm. ¿Cuál de los siguientes medallones tiene un borde de 8π cm?",
+      "alternativas": [
+        {
+          "clave": "A",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -9,
+              "xMax": 9,
+              "yMin": -9,
+              "yMax": 9
+            },
+            "puntos": [
+              {
+                "nombre": "O",
+                "x": 0,
+                "y": 0,
+                "oculto": true,
+                "marca": true
+              },
+              {
+                "nombre": "P",
+                "x": -2,
+                "y": 0,
+                "oculto": true
+              },
+              {
+                "nombre": "Q",
+                "x": 2,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "circunferencias": [
+              {
+                "centro": "O",
+                "radio": 2
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "P",
+                "hasta": "Q",
+                "rotulo": "4 cm",
+                "lado": "interior"
+              }
+            ],
+            "descripcion": "Círculo con un diámetro trazado de 4 cm."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "usa-diametro-como-radio",
+          "feedbackDescarte": "Ese tiene 4 cm de diámetro, o sea 2 cm de radio: da 8π solo si el diámetro se pone donde va el radio, 2π · 4. Su borde real mide π · 4 = 4π cm."
+        },
+        {
+          "clave": "B",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -9,
+              "xMax": 9,
+              "yMin": -9,
+              "yMax": 9
+            },
+            "puntos": [
+              {
+                "nombre": "O",
+                "x": 0,
+                "y": 0,
+                "oculto": true,
+                "marca": true
+              },
+              {
+                "nombre": "R",
+                "x": 8,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "circunferencias": [
+              {
+                "centro": "O",
+                "radio": 8
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "O",
+                "hasta": "R",
+                "rotulo": "8 cm",
+                "lado": "interior"
+              }
+            ],
+            "descripcion": "Círculo con un radio trazado de 8 cm."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "usa-radio-como-diametro",
+          "feedbackDescarte": "Ese tiene 8 cm de radio: da 8π solo si el radio se pone donde va el diámetro, π · 8. Su borde real mide 2π · 8 = 16π cm."
+        },
+        {
+          "clave": "C",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -9,
+              "xMax": 9,
+              "yMin": -9,
+              "yMax": 9
+            },
+            "puntos": [
+              {
+                "nombre": "O",
+                "x": 0,
+                "y": 0,
+                "oculto": true,
+                "marca": true
+              },
+              {
+                "nombre": "R",
+                "x": 2.8284271247461903,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "circunferencias": [
+              {
+                "centro": "O",
+                "radio": 2.8284271247461903
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "O",
+                "hasta": "R",
+                "rotulo": "2√2 cm",
+                "lado": "interior"
+              }
+            ],
+            "descripcion": "Círculo con un radio trazado de 2√2 cm."
+          },
+          "esCorrecta": false,
+          "errorCatalogado": "confunde-circunferencia-con-area",
+          "feedbackDescarte": "Ese tiene radio 2√2 cm: π · (2√2)² = 8π es su área, no su borde. Su borde mide 2π · 2√2 = 4√2 π cm, y 4√2 es menor que 8."
+        },
+        {
+          "clave": "D",
+          "texto": "",
+          "figura": {
+            "tipo": "lienzo-geometrico",
+            "ventana": {
+              "xMin": -9,
+              "xMax": 9,
+              "yMin": -9,
+              "yMax": 9
+            },
+            "puntos": [
+              {
+                "nombre": "O",
+                "x": 0,
+                "y": 0,
+                "oculto": true,
+                "marca": true
+              },
+              {
+                "nombre": "R",
+                "x": 4,
+                "y": 0,
+                "oculto": true
+              }
+            ],
+            "circunferencias": [
+              {
+                "centro": "O",
+                "radio": 4
+              }
+            ],
+            "segmentos": [
+              {
+                "desde": "O",
+                "hasta": "R",
+                "rotulo": "4 cm",
+                "lado": "interior"
+              }
+            ],
+            "descripcion": "Círculo con un radio trazado de 4 cm."
+          },
+          "esCorrecta": true,
+          "feedbackDescarteIncorrecto": "Esta sí podía ser: con radio 4 cm, el borde mide 2π · 4 = 8π cm."
+        }
+      ],
+      "solucion": "El borde de un círculo es 2π · r. Para que mida 8π cm, 2π · r = 8π, así que r = 4 cm: el medallón de radio 4 cm cumple. El de diámetro 4 cm tiene radio 2 cm y borde 4π cm; el de radio 8 cm tiene borde 16π cm; el de radio 2√2 cm tiene área 8π cm², pero su borde mide 4√2 π cm.",
+      "proveniencia": {
+        "fuenteOrigen": "propia"
+      }
+    }
+  ],
+  "contextosNumericos": [
+    "adv-figuras-geometricas-001: globo cautivo amarrado en B; desde P, a 2 m de B, un medidor registra 9 m en línea recta hasta el globo; altura h del globo; clave B = √77 m",
+    "adv-figuras-geometricas-002: cartabón de un dibujante con forma de triángulo rectángulo de catetos 5,2 cm y 16,5 cm (hipotenusa 17,3 cm) y un calado circular inscrito; perímetro del calado; clave D = 4,4π cm",
+    "adv-figuras-geometricas-003: cojín cuadrado de lado p con un triángulo rectángulo de otra tela, de catetos m y n, cosido en cada esquina; expresión del área de tela a la vista; clave C = p² − 2mn",
+    "adv-figuras-geometricas-004: cara lateral de una jardinera de cemento con forma de trapecio rectángulo, de área 0,455 m² y lados paralelos de 0,4 m y 1 m; altura h; clave A = 0,65 m",
+    "adv-figuras-geometricas-005: rampa recta de un resbalín junto a los columpios de un parque, con el extremo superior a 1 m del suelo y 2 m de avance horizontal; largo x de la rampa; clave C = √5 m",
+    "adv-figuras-geometricas-006: cuña de carpintero con forma de triángulo rectángulo, de lado más largo 9 cm y un cateto de 1 cm; el otro cateto x; clave A = 4√5 cm",
+    "adv-figuras-geometricas-007: toldo con forma de triángulo equilátero de 4 m de lado para una casa de veraneo; área del toldo; clave D = 4√3 m²",
+    "adv-figuras-geometricas-008: broche de una orfebre con forma de paralelogramo ABCD, con AB de 1 cm, altura de 1,5 cm y C a 1,5 cm de B en horizontal; perímetro del broche; clave B = (2 + 3√2) cm",
+    "adv-figuras-geometricas-009: corte de una zanja de drenaje con forma de trapecio isósceles, fondo de 2,7 m, 3 m de profundidad y paredes que se abren 3 m en horizontal, cubierto con geomembrana; contorno del fondo y las dos paredes; clave C = (2,7 + 6√2) m",
+    "adv-figuras-geometricas-010: triángulo marcado por un pliegue al desplegar un origami, de lados √3 cm, √6 cm y 3 cm; si es rectángulo, como afirma Tomás; clave A (afirmación)",
+    "adv-figuras-geometricas-011: cinta alrededor del borde de una cara circular de un yoyó, de 3,6 cm de diámetro; perímetro de la cara; clave D = 3,6π cm",
+    "adv-figuras-geometricas-012: cubierta rectangular de un vanitorio de 55 cm por 47 cm con un recorte semicircular de 22 cm de radio para el lavamanos; expresión del área que queda; clave B = 55 · 47 − π · 22² / 2",
+    "adv-figuras-geometricas-013: plancha de terciado de 3,1 m por 2 m a la que se le corta con sierra una esquina triangular, con un corte de 3 m y un cateto de 1 m; área que queda; clave A = (6,2 − √2) m²",
+    "adv-figuras-geometricas-014: boca de un túnel subterráneo formada por un rectángulo de 4,6 m de ancho y 1,7 m de alto con un semicírculo encima; contorno de la boca (piso, paredes y arco); clave C = (8 + 2,3π) m",
+    "adv-figuras-geometricas-015: tarima para una graduación con forma de trapecio isósceles de bases 6 m y 2 m y lados iguales de 3 m; qué paso del cálculo del área de Paula falla; clave D (afirmación)",
+    "adv-figuras-geometricas-016: banderín para una fonda con forma de triángulo rectángulo, de lado más largo c y un cateto a; expresión del área; clave B = a · √(c² − a²) / 2",
+    "adv-figuras-geometricas-017: retazos triangulares de 3 cm² para un tapiz de patchwork; cuál de cuatro triángulos dibujados tiene 3 cm² de área; clave C = triángulo de base 2,4 cm y altura 2,5 cm",
+    "adv-figuras-geometricas-018: cable tenso de una tirolesa entre dos plataformas, con desnivel h y distancia horizontal d; expresión del largo x del cable; clave A = √(d² + h²)",
+    "adv-figuras-geometricas-019: ribete en todo el borde de una alfombra con forma de rectángulo con un semicírculo en cada extremo, tramos rectos de 2,1 m y radio 0,8 m; qué paso del cálculo de Diego falla; clave B (afirmación)",
+    "adv-figuras-geometricas-020: medallón circular con grabado cuyo borde debe medir 8π cm; cuál de cuatro círculos dibujados tiene ese borde; clave D = círculo de radio 4 cm"
+  ],
+  "proveniencia": {
+    "fuentesAnalisis": [
+      "temario DEMRE M1",
+      "formas liberadas DEMRE 2024-invierno-111 (preguntas 41, 42 y 43) y 2026-regular-113 (pregunta 45), con sus clavijeros (PDF en ../fuentes-demre-liberadas/)",
+      "docs/analisis/frecuencia-demre-v2.json (preguntas de la unidad por forma y verificación)",
+      "docs/analisis/material-referencia/figuras-geometria-plana.md (convenciones de π, raíces, decimales y escala, y mecanismos de distractor de la unidad; clean-room)"
+    ],
+    "declaracionOriginalidad": "PENDIENTE Ronda 1 y Ronda 2. Banco de figuras geométricas: 20 ítems, 60 distractores, 17 errores distintos del catálogo content/errores/figuras-geometricas.json (11 preexistentes y los 6 firmados en la PARADA del 2026-09-23 con su pregunta DEMRE: promedia-medidas-dadas, usa-diametro-como-radio, usa-radio-como-diametro, suma-la-region-que-se-resta, despeja-multiplicando y pone-dato-en-lugar-de-incognita; usa-lado-inclinado-como-altura se amplió a entregar el lado inclinado como la altura que se pide), 60 de 60 distractores con errorCatalogado y 0 ítems que repitan errorCatalogado entre sus tres distractores, medido con node sobre el archivo final. asume-trio-pitagorico queda sin uso: con las cifras libres no aparece un casi trío natural. Reparto: 11 resolver, 4 modelar, 2 representar, 3 argumentar; 4 baja, 11 media, 5 alta; letra correcta 5/5/5/5. Proveniencia por fuente: 16 propia y 4 demre-liberada (001, 002 y 003 sobre las preguntas 41, 42 y 43 de la forma 2024-invierno-111, y 004 sobre la pregunta 45 de la forma 2026-regular-113; las cuatro verificadas en el PDF de la forma y con clave confirmada por clavijero; se conservan la estructura y el mecanismo de los distractores que indica la notaAdaptacion de cada una, y cambian contexto y cifras; el texto de esas cuatro preguntas se leyó después de fijar las 16 filas propias). Las otras 11 preguntas de la unidad quedaron fuera por no verificables: 2024-regular-113 y 2025-regular-113 no tienen clavijero y 2027-invierno-111 no tiene PDF. 0 temario-demre. Convenciones firmadas en la PARADA del 2026-09-23 (G1 a G15, con una segunda vuelta): π exacto en todas las alternativas, raíces exactas y simplificadas, coma decimal y datos inventados, sin nada del material UC. Pitágoras es el cálculo central en 6 ítems (001, 005, 006, 010, 016 y 018), con resultado irracional en 3 (001, 005 y 006), y aparece dentro de otros 7. El único trío entero del banco es 52-165-173, escalado a 5,2, 16,5 y 17,3 en 002; ninguna familia de trío de las lecciones, el cierre o transformaciones-isometricas aparece. Figuras: 17 ítems con lienzo-geometrico en el enunciado, 15 a escala y 2 con aEscala false (008 y 009); 2 ítems con lienzo en las cuatro alternativas (017 y 020, con la misma ventana en las cuatro); 5 con figuraSolucion (002, 007, 012, 013 y 015); 1 sin figura (010: una figura a escala mostraría el ángulo recto). 30 figuras en total. La figura del enunciado muestra los datos y nunca la respuesta, y marca todo ángulo recto. Prueba de ojo (segunda vuelta de la PARADA): en los 9 ítems cuya incógnita es una longitud dibujada en el enunciado (001, 002, 004, 005, 006, 008, 009, 011 y 014), al menos un distractor queda dentro de ±15 % de lo dibujado, sin un rótulo visible entre medio, así que la clave no se reconoce midiendo la figura. 008 y 009 no tenían datos que cumplieran esa prueba junto con la cota y el criterio de cifras, y van con aEscala false: la altura y el desplazamiento se dibujan de modo que el lado inclinado quede entre la clave y el distractor de duplica-en-vez-de-elevar-al-cuadrado. Magnitud: 0 de 36 distractores escalares con razón fuera de [1/3, 3] respecto de la clave. Cota geométrica: 13 de los 30 distractores de los 10 ítems con una cota definida por el enunciado (un cateto menor que la hipotenusa, un área que queda menor que la figura completa, un arco mayor que su diámetro) caen fuera de ella, y ningún ítem tiene sus tres distractores fuera. Cifras, con el criterio de dos niveles firmado (entero de 10 a 99 y decimal de una cifra contra las tres lecciones y el cierre de la unidad; entero de 100 o más y decimal de dos o más cifras contra la unidad y los 13 bancos anteriores; ninguna cifra visible repetida entre ítems), barridas con node el 2026-09-23 sobre este archivo: 43 cifras visibles (enunciado, alternativas y rótulos de figura), 0 colisiones y 0 repetidas entre ítems. En feedbacks, soluciones, figuras de la solución y descripciones hay 20 cifras que no son visibles en su ítem (15 valores distintos), casi todas pasos de Pitágoras: 15 están ocupadas en la unidad o en otro banco, 4 valores se repiten entre ítems (81, 16, 18 y 12) y 1,5, el área de un triángulo descartado en 017, es visible en 008; se reportan y no bloquean. Las notas de adaptación citan cifras de los originales: 0,6 y 0,8 (base y clave de 2026-regular-113/45) son visibles en 017 y 019, ítems sin relación con esa pregunta, y 12 y 15 (medidas de 2024-invierno-111/41) aparecen solo como intermedios en 007, 009 y 017; el criterio firmado no cruza contra las preguntas DEMRE. Contextos: scripts/consultar-fuentes.mjs corrido por Benja fuera de la sesión el 2026-09-23 sobre las 120 palabras clave (dos por contexto, en el principal y los dos respaldos de cada ítem), en 41 corridas: 21 SI y 99 NO. Ningún contexto tiene sus dos palabras en un mismo documento; en dos, las dos palabras dan SI pero en documentos distintos (014 principal, túnel y subterráneo; 018 respaldo 2, tensor y carpa). Cero recambios: los 20 ítems usan su contexto principal. Los respaldos viven en scratchpad/figuras-geometricas/plan-banco.md, no en el repo. Medición a 390 × 844 el 2026-09-23 con Playwright en /advance/descarte/figuras-geometricas, con dos visitas por ítem (descartando los tres distractores y descartando la correcta): 30 de 30 figuras vistas (17 del enunciado, 8 de alternativas y 5 de solución), SVG de 358 px en el enunciado, 316 px en las alternativas y 330 px en la solución, alto máximo de 316 px, letra mínima de 12 px, 0 rótulos fuera del SVG, 0 rótulos superpuestos, 0 SVG fuera de su contenedor, sin scroll horizontal (ancho de página de 390 px) y la nota «Figura referencial, no está a escala» en 008 y 009. Esta declaración se reescribe al cerrar cada ronda."
+  }
+}
