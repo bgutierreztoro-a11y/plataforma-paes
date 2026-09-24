@@ -1,6 +1,6 @@
 # Recorrido de entrada de Fobos
 
-Plan de construcción para Claude Code. Versión 1, septiembre 2026.
+Plan de construcción para Claude Code. Versión 1.1, septiembre 2026.
 Vive en `docs/recorrido-entrada.md`. Es la única fuente de verdad de este trabajo: CC no depende del historial del chat, depende de este archivo y de su Bitácora (§9).
 
 ---
@@ -39,7 +39,7 @@ agrega tu entrada a la Bitácora y commitéala con docs:. Sin push.
 
 Hay dos puertas. Después de crear la cuenta, todos pasan por lo mismo.
 
-**Puerta A, con video.** Video en Instagram → link (bio hoy, DM con ReplyRush más adelante) → página pública del error, sin cuenta → responde → botón "Empieza tu prueba gratuita de 7 días" → cuenta con Clerk → bienvenida con 3 preguntas → "Así funciona Fobos" → primera parada → portada "Empieza aquí".
+**Puerta A, con video.** Video en Instagram → link (bio hoy, DM con ReplyRush más adelante) → página pública del error, sin cuenta → responde → botón "Empieza tu prueba gratuita de 7 días" → cuenta con Clerk en `/registrarse` (correo con código) → bienvenida con 3 preguntas → "Así funciona Fobos" → primera parada → portada "Empieza aquí".
 
 **Puerta B, sin video.** Link directo, landing o correo de apertura, o un amigo con cortesía → cuenta con Clerk → bienvenida con 2 preguntas → "Así funciona Fobos" → primera parada → portada "Empieza aquí".
 
@@ -59,7 +59,7 @@ Lo que NO entra: tour de tarjetas al entrar, rachas, XP, badges, confeti, planes
 - Pensado para celular, 390 px de ancho.
 - Textos en español chileno, sin voseo, sin guiones largos como conectores.
 - No hay pasarela de pago todavía. La pantalla de elegir plan se construye igual, con los botones en estado "próximamente".
-- Advance está detrás de `NEXT_PUBLIC_ADVANCE_VISIBLE`. Para que alguien lo vea en producción, Benja lo activa en Vercel.
+- Advance está detrás de `NEXT_PUBLIC_ADVANCE_VISIBLE`. Para que alguien lo vea en producción, Benja lo activa en Vercel. Durante el piloto el acceso sale de `NEXT_PUBLIC_ADVANCE_DEMO`, igual para todos; pasa a `entitlements` en la Fase 7.
 
 ---
 
@@ -79,11 +79,11 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 
 ### ADR-02: "De dónde vino" en una cookie propia
 
-**Contexto.** El alumno sale del sitio para crear su cuenta con Google y vuelve. Hay que recordar si venía de un video y de cuál.
+**Contexto.** Entre la página pública y `/bienvenida` el alumno pasa por `/registrarse` y por su correo para leer el código, a veces en otra pestaña o más tarde. Hay que recordar si venía de un video y de cuál.
 
 **Decisión.** Al tocar el botón de la página pública se guarda la cookie `fobos_origen` con tres datos: unidad, error y video (el `utm_content` del link). Dura 7 días. No tiene nada personal. `/bienvenida` la lee, la guarda en la base y la borra. Sin cookie, la bienvenida sigue la puerta B.
 
-**Consecuencias.** Funciona igual con Google o con correo. Se anota en `docs/inventario-datos.md`.
+**Consecuencias.** Funciona aunque el alumno termine el registro en otra pestaña o vuelva dentro de los 7 días. Se anota en `docs/inventario-datos.md`.
 
 ### ADR-03: Respuestas de la bienvenida en Neon, no en Clerk
 
@@ -96,7 +96,7 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 | Borrado de cuenta | Aparte | Cae con la cuenta, como el resto |
 | Encaje con lo que ya existe | Nuevo patrón | Mismo patrón que `entitlements` |
 
-**Decisión.** Tabla `perfil_inicio`. "Ya hizo la bienvenida" significa "existe su fila". La portada revisa eso en el servidor y, si no existe, manda a `/bienvenida`. No se usa metadata de Clerk.
+**Decisión.** Tabla `perfil_inicio`. "Ya hizo la bienvenida" significa "existe su fila". La portada no redirige y "/" sigue estática: una isla de cliente consulta `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`) y, con sesión y sin fila, muestra "Termina tu bienvenida" con link a `/bienvenida`. No se usa metadata de Clerk.
 
 **Consecuencias.** Un solo lugar para los datos del alumno. Requiere una migración 🔴.
 
@@ -110,13 +110,15 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 | Riesgo | Carrera: el alumno entra antes que el acceso | Ninguno si es idempotente |
 | Complejidad | Media | Baja |
 
-**Decisión.** `asegurarPrueba(userId)` corre en el servidor al cargar `/bienvenida`. Es idempotente: si el usuario ya tiene cualquier acceso vigente (prueba, cortesía o compra), no hace nada. Si no, crea una fila en `entitlements` con origen `prueba`, 7 días exactos desde ese momento. Si la fila de `usuarios` todavía no existe porque el webhook no llegó, se crea con el mismo upsert que usa el webhook. Una restricción en la base impide dos pruebas para el mismo usuario.
+**Decisión.** `asegurarPrueba(userId)` corre en el servidor al cargar `/bienvenida`. Es idempotente: si el usuario ya tiene una fila vigente con origen `prueba`, `cortesia` o `compra`, no hace nada. `m1-libre` (origen `gratis`) no cuenta: todo alumno con cuenta la tiene y nunca vence. Si no, crea una fila `m1-advance-2027` con origen `prueba`, 7 días exactos desde ese momento. Si la fila de `usuarios` todavía no existe porque el webhook no llegó, toma el correo de `currentUser()` de Clerk y llama a las mismas funciones del webhook (`crearUsuario` y `otorgarEntitlementGratis`), que ya son idempotentes. Nada de insert nuevo. Una restricción en la base impide dos pruebas para el mismo usuario.
 
-**Consecuencias.** Tu amigo recibe una cortesía hasta el 30 de noviembre con un script que corre Benja; como ya tiene acceso vigente, no se le crea prueba, pero igual pasa por la bienvenida.
+**Productos** (fijados en la Fase 0). `m1-base-2027` y `m1-advance-2027`; Advance incluye Base. Van como constantes en `lib/datos/entitlements.ts`, junto a `m1-libre`. El webhook y `m1-libre` no se tocan.
+
+**Consecuencias.** Tu amigo recibe una cortesía `m1-advance-2027`, origen `cortesia`, con `vigencia_hasta` 2026-12-01 00:00 hora de Chile (2026-12-01T03:00:00Z), exclusiva: vale todo el 30 de noviembre. La crea un script que corre Benja; como ya tiene acceso vigente, no se le crea prueba, pero igual pasa por la bienvenida. Durante el piloto la fila de prueba se escribe, pero Advance sigue abriéndose con `NEXT_PUBLIC_ADVANCE_DEMO`; empieza a leer `entitlements` en la Fase 7.
 
 ### ADR-05: Medición sin cookies de PostHog
 
-**Contexto.** Hoy PostHog guarda todo en memoria, sin cookies, por decisión de privacidad para menores. Hay dos inicializaciones en el repo (`instrumentation-client.ts` y `PostHogProvider`) y hay que dejar una sola.
+**Contexto.** Hoy PostHog guarda todo en memoria, sin cookies, por decisión de privacidad para menores. Hay una sola inicialización, en `components/analytics/PostHogProvider.tsx`; `instrumentation-client.ts` no existe (verificado en la Fase 0).
 
 | | Activar cookies de PostHog | Mantener memoria + cookie propia |
 |---|---|---|
@@ -124,15 +126,17 @@ Estado de todas: **Propuesto**. Decide: **Benja**.
 | Privacidad | Peor | Igual que hoy |
 | Cambios | Revisar política e inventario | Mínimos |
 
-**Decisión.** Se mantiene sin cookies de PostHog. Una sola inicialización con `autocapture: false`, `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`. Con sesión iniciada, `identify` con el id de Clerk (un código, nunca correo ni nombre) en cada carga. `reset` al cerrar sesión. El video de origen viaja como propiedad de los eventos desde la cookie `fobos_origen`.
+**Decisión.** Se mantiene sin cookies de PostHog, y la inicialización actual no cambia: `autocapture: false`, `capture_pageview: false`, `disable_session_recording: true`, `persistence: "memory"`. Se agrega: con sesión iniciada, `identify` con el id de Clerk (un código, nunca correo ni nombre) en cada carga. `reset` al cerrar sesión. El video de origen viaja como propiedad de los eventos desde la cookie `fobos_origen`.
 
 **Consecuencias.** El embudo "video → cuenta" se lee comparando conteos por video, no persona por persona. Suficiente para saber qué video funciona.
 
 ### ADR-06: Fin de la prueba con pantalla de elegir plan
 
+**Estado.** En espera hasta que exista pasarela de pago. Su primer paso es un commit `docs:` que actualiza CLAUDE.md y MOS §9 al modelo comercial vigente (Base y Advance de pago, con prueba de 7 días), con texto que firma Benja. Hasta ese commit, ninguna fase de la 1 a la 6 cierra lecciones: "la cuenta es opcional" sigue valiendo.
+
 **Decisión.** Toda página de lecciones, diagnóstico, cierre y Advance revisa en el servidor si hay acceso vigente (`lib/recorrido/acceso.ts`). Sin acceso, redirige a `/elegir-plan`. El progreso nunca se borra. Mientras no haya pasarela, los botones de plan muestran "El pago se habilita pronto. Te avisamos por correo."
 
-**Consecuencias.** Esto cierra el acceso libre que existía. Se puede construir ya; su efecto real llega cuando haya alumnos con prueba. El chequeo va en las páginas (`app/...`), no en los componentes protegidos.
+**Consecuencias.** Esto cierra el acceso libre que existía; por eso va después del commit `docs:` de arriba. Su efecto real llega cuando haya alumnos con prueba. El chequeo va en las páginas (`app/...`), no en los componentes protegidos.
 
 ---
 
@@ -167,7 +171,7 @@ Después de responder hay tres casos. `[X]` es la letra de la alternativa del er
 
 N = ids del catálogo de porcentaje menos 1, calculado desde el catálogo, nunca escrito a mano.
 
-- Botón: **"Empieza tu prueba gratuita de 7 días"**
+- Botón: **"Empieza tu prueba gratuita de 7 días"**. Lleva a `/registrarse`.
 - Bajo el botón: "Al terminar eliges si sigues con Base, con Advance o si prefieres no seguir. No se cobra nada automáticamente."
 - Si ya tiene sesión, el botón dice "Ir a Fobos" y lleva a la portada.
 - Pie: el disclaimer del layout (independiente de DEMRE) ya cubre la página.
@@ -180,6 +184,7 @@ N = ids del catálogo de porcentaje menos 1, calculado desde el catálogo, nunca
 
 ### Registro
 
+- En `/registrarse`: correo con código y `PuertaDeEdad`, sin login social.
 - Título: "Crea tu cuenta y empieza tu prueba de 7 días"
 - Bajo el formulario de Clerk: "Al terminar eliges si sigues con Base, con Advance o si prefieres no seguir. No se cobra nada automáticamente."
 
@@ -334,10 +339,9 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 
 ### Fase 1 · Medición · 🟡 · 1 sesión
 
-**Objetivo.** Una sola inicialización de PostHog según ADR-05 y los eventos de §6 tipados.
-**Leer.** `instrumentation-client.ts`, `components/analytics/PostHogProvider.tsx`, `lib/eventos.ts`, `app/layout.tsx`, `docs/inventario-datos.md`.
+**Objetivo.** Los eventos de §6 tipados, `identify`/`reset` según ADR-05 y el inventario de datos. La inicialización de PostHog ya es una sola y no se toca.
+**Leer.** `components/analytics/PostHogProvider.tsx`, `lib/eventos.ts`, `app/layout.tsx`, `docs/inventario-datos.md`.
 **Hacer.**
-- Dejar una sola inicialización, con la configuración de ADR-05. Mantener el proxy `/ingest` si existe.
 - Agregar los tipos de §6 a `lib/eventos.ts`.
 - Componente que, con sesión, llama `identify(userId)` en cada carga, y `reset` al cerrar sesión.
 - Agregar al inventario de datos el id de Clerk en PostHog y la cookie `fobos_origen`.
@@ -349,8 +353,8 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 **Objetivo.** ADR-01 y ADR-02 con los textos de §4.
 **Leer.** La Bitácora de la Fase 0, el banco Advance de porcentaje, su catálogo, `lib/advance/banco.ts`.
 **Hacer.**
-- `lib/recorrido/erroresPublicos.ts` con una entrada: el ítem que eligió Benja.
-- `app/error/[unidadId]/[errorId]/page.tsx`: sin sesión, alternativas en orden fijo, tres casos de respuesta, cierre con N calculado, botón que guarda `fobos_origen` y va al registro. Con sesión, "Ir a Fobos".
+- `lib/recorrido/erroresPublicos.ts` con una entrada: `{ unidadId: "porcentaje", errorId: "deshace-porcentaje-con-mismo-porcentaje", itemId: "adv-porcentaje-019" }` (elegido en la Fase 0; distractor A, correcta C).
+- `app/error/[unidadId]/[errorId]/page.tsx`: sin sesión, alternativas en orden fijo, tres casos de respuesta, cierre con N calculado, botón que guarda `fobos_origen` y va a `/registrarse`. Con sesión, "Ir a Fobos".
 - Metadatos para la vista previa del link. Se mantiene `noindex`.
 - Eventos `error_publico_visto`, `error_publico_respondido`, `cta_prueba_clic`.
 
@@ -360,8 +364,9 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 
 **Objetivo.** CC escribe; Benja revisa y aplica.
 **Hacer.**
+- Constantes `m1-base-2027` y `m1-advance-2027` en `lib/datos/entitlements.ts`, junto a `m1-libre` (Advance incluye Base). La prueba es una fila `m1-advance-2027` con origen `prueba`. El webhook y `m1-libre` no se tocan.
 - Migración nueva: agrega `prueba` a los valores de `entitlements.origen`, con restricción de una sola prueba por usuario. Crea `perfil_inicio` (`usuario_id`, `p1`, `p2`, `p3`, `saltada`, `unidad_origen`, `error_origen`, `video`, `parada_tipo`, `parada_destino`, `creado_en`) con borrado en cascada desde `usuarios` y los permisos mínimos para `app_m1`.
-- `scripts/otorgar-cortesia.mjs <correo> <hasta>`: crea una cortesía. Lo corre Benja.
+- `scripts/otorgar-cortesia.mjs <correo> <hasta>`: crea una cortesía `m1-advance-2027` con origen `cortesia` y `vigencia_hasta` exclusiva. Para el amigo, `<hasta>` es 2026-12-01 00:00 hora de Chile (2026-12-01T03:00:00Z). Lo corre Benja.
 
 **Aceptación.** SQL en el diff para revisión. Tests de la restricción de una sola prueba. CC no corre la migración ni el script.
 
@@ -370,32 +375,33 @@ Estimación total: unas 14 sesiones. Tu amigo puede entrar al terminar la Fase 5
 **Objetivo.** ADR-03 y ADR-04, la bienvenida completa y la regla de §5.
 **Leer.** Bitácora de las fases 0 a 3, rutas de Clerk, `lib/datos/entitlements.ts`.
 **Hacer.**
-- Registro que siempre termina en `/bienvenida`. Inicio de sesión que termina en la portada.
-- `/bienvenida` en servidor: asegura usuario, `asegurarPrueba`, lee `fobos_origen`. Pantallas: preguntas (2 o 3), "Así funciona Fobos", primera parada. Guardado en `perfil_inicio`, borra la cookie.
-- `lib/recorrido/primeraParada.ts`: función pura con la tabla de §5.
-- La portada manda a `/bienvenida` a quien tiene sesión y no tiene `perfil_inicio`.
+- Registro en `/registrarse` (correo con código y `PuertaDeEdad`, sin login social) que siempre termina en `/bienvenida`: `signUpForceRedirectUrl="/bienvenida"` en `ClerkProvider` (prop verificada en `@clerk/nextjs` 7.6.0, `node_modules/@clerk/shared/dist/types/redirects.d.ts:93`). El inicio de sesión sigue con `signInFallbackRedirectUrl="/"`.
+- `/bienvenida` en servidor: asegura usuario (si falta la fila, correo de `currentUser()` y `crearUsuario` + `otorgarEntitlementGratis`, las mismas funciones del webhook, sin insert nuevo), `asegurarPrueba` con el filtro de origen de ADR-04, lee `fobos_origen`. Pantallas: preguntas (2 o 3), "Así funciona Fobos", primera parada. Guardado en `perfil_inicio`, borra la cookie.
+- `lib/recorrido/primeraParada.ts`: función pura con la tabla de §5. Los ids del DAG no siempre coinciden con `lib/modulos.ts` (`enteros-racionales` vs `enteros-y-racionales`): la traducción vive en un solo lugar, con un test que recorre todos los ids del DAG y verifica que existen en `lib/modulos.ts`.
+- `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`): con sesión, dice si hay `perfil_inicio` y qué se recomendó. La portada no redirige: una isla de cliente muestra "Termina tu bienvenida" con link a `/bienvenida` a quien tiene sesión y no tiene `perfil_inicio`.
 - `/como-funciona` reutiliza la pantalla "Así funciona Fobos".
 - Eventos `cuenta_creada`, `bienvenida_respondida`.
 
-**Aceptación.** Tests de `primeraParada` para todas las combinaciones, incluida "saltó" y Advance apagado. "Me cuestan harto" nunca devuelve Advance. Recargar `/bienvenida` no crea una segunda prueba. Con cortesía no se crea prueba y el encabezado cambia. "Saltar" funciona en cada pregunta.
+**Aceptación.** Tests de `primeraParada` para todas las combinaciones, incluida "saltó" y Advance apagado. "Me cuestan harto" nunca devuelve Advance. Recargar `/bienvenida` no crea una segunda prueba. Con cortesía no se crea prueba y el encabezado cambia. "Saltar" funciona en cada pregunta. "/" sigue estática en la tabla de rutas del build.
 
 ### Fase 5 · Portada "Empieza aquí" · 🟡 · 2 sesiones
 
 **Objetivo.** La portada de §4 para alumnos nuevos.
-**Hacer.** Componentes nuevos en `components/recorrido/`, montados desde `app/page.tsx`: tarjeta de primera parada, "Tus primeros pasos" (estado calculado desde la actividad real; "Revisa tus errores" se marca al visitar la página), "Una trampa típica de la PAES", estado de la prueba y link "Cómo funciona Fobos". Evento `primera_parada_iniciada` y `checklist_item_completado`. Si montar algo exige tocar `components/camino/`, CC para y propone otra vía.
+**Hacer.** Componentes nuevos en `components/recorrido/`, montados desde `app/page.tsx` como islas de cliente que leen `GET /api/recorrido/inicio`, para que "/" siga estática. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir"; el cómo se propone en el plan 🟡 de esta fase. Piezas: tarjeta de primera parada, "Tus primeros pasos" (estado calculado desde la actividad real; "Revisa tus errores" se marca al visitar la página), "Una trampa típica de la PAES", estado de la prueba y link "Cómo funciona Fobos". Evento `primera_parada_iniciada` y `checklist_item_completado`. Si montar algo exige tocar `components/camino/`, CC para y propone otra vía.
 **Aceptación.** A 390 px la primera parada se ve sin hacer scroll. La portada de alguien con progreso sigue igual que hoy, más la checklist mientras no esté completa u oculta.
 
-**Al cerrar esta fase:** Benja aplica la migración, corre `otorgar-cortesia` para su amigo, activa Advance en Vercel si quiere que lo vea, y le pasa el link de registro.
+**Al cerrar esta fase:** Benja aplica la migración, corre `otorgar-cortesia` para su amigo, activa `NEXT_PUBLIC_ADVANCE_VISIBLE` y `NEXT_PUBLIC_ADVANCE_DEMO` en Vercel si quiere que vea Advance, y le pasa el link de registro.
 
 ### Fase 6 · Ayudas y pantallas vacías · 🟡 · 1 sesión
 
 **Hacer.** Componente de ayuda que se muestra una vez por sección (se recuerda en `localStorage`), montado en descarte de Advance, tus errores y diagnóstico. Pantalla vacía de tus errores. Evento `ayuda_cerrada`. Si el diagnóstico vive en una carpeta protegida, la ayuda se monta desde la página.
 **Aceptación.** Ninguna ayuda aparece dos veces. Cada pantalla vacía tiene un solo botón.
 
-### Fase 7 · Acceso y fin de prueba · 🟡 · 2 sesiones
+### Fase 7 · Acceso y fin de prueba · 🟡 · 2 sesiones · en espera
 
+**Estado.** En espera hasta que exista pasarela de pago (ADR-06).
 **Objetivo.** ADR-06.
-**Hacer.** `lib/recorrido/acceso.ts` con `accesoVigente(userId)`. Chequeo en las páginas de lecciones, diagnóstico, cierre y Advance: sin sesión, al registro; sin acceso vigente, a `/elegir-plan`. Aviso del día 6. Pantalla `/elegir-plan` con los textos de §4. Eventos `prueba_aviso_visto`, `elegir_plan_visto`, `plan_elegido_clic`.
+**Hacer.** Primero, un commit `docs:` que actualiza CLAUDE.md y MOS §9 al modelo vigente, con texto que firma Benja. Después: Advance pasa de `NEXT_PUBLIC_ADVANCE_DEMO` a `entitlements`: `estadoAdvance()` lee las vigencias de `m1-advance-2027` y las traduce con `estadoTemporada()`; Advance incluye Base. `lib/recorrido/acceso.ts` con `accesoVigente(userId)`. Chequeo en las páginas de lecciones, diagnóstico, cierre y Advance: sin sesión, al registro; sin acceso vigente, a `/elegir-plan`. Aviso del día 6. Pantalla `/elegir-plan` con los textos de §4. Eventos `prueba_aviso_visto`, `elegir_plan_visto`, `plan_elegido_clic`.
 **Aceptación.** Con reloj simulado: día 7 con acceso, día 8 a `/elegir-plan` con el progreso intacto. Vigencia hasta exclusiva. Cortesía hasta el 30 de noviembre sin aviso de prueba. Ningún texto con urgencia.
 
 ### Fase 8 · Prueba completa · 🟢 · 1 sesión
