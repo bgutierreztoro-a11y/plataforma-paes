@@ -589,6 +589,48 @@ Resuelto por Benja después de la fase:
 
 Pendiente: nada de la Fase 2.
 
-### Fase 3 · 2026-09-24 · escrita, en revisión de Benja (🔴)
+### Fase 3 · 2026-09-24 · firmada por Benja, pendiente de aplicar
 
-Sin commit todavía. Archivos: `db/migraciones/011_recorrido_prueba_y_perfil.sql`, `scripts/otorgar-cortesia.mjs`, `lib/datos/entitlements.ts` (constantes `PRODUCTO_BASE`, `PRODUCTO_ADVANCE` y origen `prueba`), `lib/datos/migracion011.test.ts`, `docs/inventario-datos.md` (4.3, 4.7 nueva y supresión). CC no corrió la migración ni el script contra Neon; el script solo se probó con argumentos inválidos, que cortan antes de leer `.env.local` y de conectarse.
+Commits: `36cfded` recorrido: migración 011 y script de cortesía (Fase 3). La aplica Benja con `npm run migrar` (antes, `npm run migrar -- --estado` debe listar la 011 como PENDIENTE). Archivos: `db/migraciones/011_recorrido_prueba_y_perfil.sql`, `scripts/otorgar-cortesia.mjs`, `lib/datos/entitlements.ts` (constantes `PRODUCTO_BASE`, `PRODUCTO_ADVANCE` y origen `prueba`), `lib/datos/migracion011.test.ts`, `docs/inventario-datos.md` (4.3, 4.7 nueva y supresión). CC no corrió la migración ni el script contra Neon; el script solo se probó con argumentos inválidos, que cortan antes de leer `.env.local` y de conectarse.
+
+### Fase 4 · 2026-09-24 · código hecho, prueba con sesión pendiente de la 011
+
+Commits:
+- `b5cb791` recorrido: primera parada, flujo y textos de la bienvenida, con el mapa DAG a módulo en un solo lugar.
+- `2ddbbba` recorrido: bienvenida con prueba de 7 días, perfil_inicio y registro que termina en /bienvenida.
+
+Validar / tsc / lint / test:unit:
+- validar: exit 0, 97 archivos OK.
+- tsc (`--noEmit --incremental false`): exit 0, 0 errores.
+- lint (sin `scratchpad/`): exit 0, 0 problemas.
+- test:unit: 944 tests en 172 suites, 944 pass, 0 fail (31 nuevos de esta fase; el resto del aumento es de otra sesión de Advance).
+
+Hecho (plan 🟡 con aprobación anticipada de Benja):
+- `ClerkProvider` con `signUpForceRedirectUrl="/bienvenida"`; el inicio de sesión sigue en `signInFallbackRedirectUrl="/"`.
+- `/bienvenida` (dinámica): sin sesión manda a `/registrarse`; con `perfil_inicio` manda a "/". Si no, asegura la fila de `usuarios` (`asegurarUsuario`: correo de `currentUser()`, `crearUsuario` y `otorgarEntitlementGratis`), asegura la prueba (`asegurarPrueba` en `lib/datos/entitlements.ts`) y lee `fobos_origen`.
+- `asegurarPrueba`: con prueba, cortesía o compra vigente la devuelve sin tocar nada (`m1-libre` no cuenta); si no, crea `m1-advance-2027` origen `prueba` por 7 días con su rastro en la bitácora, igual que el webhook. Si ya tuvo una prueba y venció, el índice de la 011 impide otra y devuelve null.
+- Pantallas (`components/recorrido/Bienvenida.tsx`): preguntas con "1 de N", "Saltar" y "Prefiero explorar por mi cuenta"; "Así funciona Fobos" (`AsiFunciona.tsx`, también en `/como-funciona`); tarjeta de primera parada (`TarjetaPrimeraParada.tsx`, lista para la portada de la Fase 5).
+- `POST /api/recorrido/bienvenida`: valida el cuerpo (solo valores cerrados), calcula la parada en el servidor, guarda `perfil_inicio` (la primera escritura gana), borra la cookie y devuelve la tarjeta. `GET` y `POST /api/recorrido/inicio`: si hay perfil y qué se recomendó; marcar `parada_iniciada_en` una sola vez.
+- `lib/recorrido/primeraParada.ts`: la tabla de §5, pura. `lib/recorrido/unidadesDag.ts`: el mapa DAG a módulo, que antes vivía solo dentro de `motor.test.ts`; ese test ahora lo importa y sigue exigiendo que sea 1 a 1.
+- Portada: isla `AvisoBienvenida` con "Termina tu bienvenida" para quien tiene sesión y no tiene perfil. "/" sigue estática.
+- Eventos `cuenta_creada` (una vez por pestaña), `bienvenida_respondida` (al guardar) y `primera_parada_iniciada` (al tocar la tarjeta o una alternativa). Inventario de datos actualizado.
+- `/vista-previa/bienvenida`: las preguntas y cuatro tarjetas con el contenido real, sin sesión, sin base y sin analítica.
+
+Verificado:
+- Tests: todas las combinaciones de `primeraParada` (con y sin origen, p3 sí, no y saltada, Advance prendido y apagado), "Me cuestan harto" nunca devuelve Advance, la tabla fila por fila, "Saltar" en cada pregunta de las dos puertas, encabezado de prueba y de cortesía (la del amigo dice "hasta el 30 de noviembre"), textos idénticos a §4 y cuerpo de la API.
+- Build: la tabla de rutas suma `ƒ /bienvenida`, `ƒ /api/recorrido/bienvenida`, `ƒ /api/recorrido/inicio` y `○ /como-funciona`; "/" sigue `○`.
+- Navegador, 390 px, sin sesión: `/bienvenida` manda a `/registrarse`; las tres APIs responden 401; la portada no muestra el aviso; `/como-funciona` sin cortes. En la vista previa, el flujo 1 de 3, 2 de 3, 3 de 3 funciona, el encabezado va solo arriba de la primera, y las tarjetas muestran, por ejemplo, "Descarte en Advance · Porcentaje · Línea 01 · unos 10 minutos" y "Lección · Enteros y racionales · Línea 01 · unos 22 minutos".
+
+Decisiones tomadas:
+- "Saltar" deja esa pregunta en null y avanza; `saltada` es true si se saltó alguna o si eligió explorar por su cuenta. Con p1 o p2 en null se usa la fila "Saltó" de §5, salvo "Me cuestan harto", que manda siempre.
+- El origen cuenta salvo que responda "No" en la pregunta 3; saltarla no lo descarta.
+- Cuando una caída a Diagnóstico repite paradas, las alternativas se rellenan con lección de base, diagnóstico o cómo funciona hasta la cantidad de la tabla (sin esto, "me va bien + errores" con Advance apagado quedaba sin alternativas).
+- Descarte sin banco para la unidad cae a Diagnóstico, igual que con Advance apagado.
+- La tarjeta se recalcula desde las respuestas guardadas; `perfil_inicio` guarda lo que se recomendó al momento, que es lo que mide el embudo.
+- Tocar una alternativa también marca `parada_iniciada_en`; el evento distingue con `fue_la_recomendada`.
+- Minutos: lección, los de la lección; diagnóstico, 5 (lo que anuncia la portada); descarte, 5 ítems por el promedio de `tiempoReferenciaSeg` del banco.
+
+Pendiente:
+- Benja: aplicar la 011. Hasta entonces `/bienvenida` falla con sesión, porque `perfil_inicio` no existe.
+- Después de la 011, prueba con sesión real (Benja, en su navegador): registrarse desde la página pública y sin ella; recargar `/bienvenida` a mitad de las preguntas (no debe crear una segunda prueba); cuenta con cortesía (no crea prueba y el encabezado dice "hasta el 30 de noviembre"); tocar la tarjeta dos veces (una sola `parada_iniciada_en`).
+- Textos sin firma, para Benja: el estado de error de la bienvenida ("No pudimos guardar tus respuestas. Revisa tu conexión e inténtalo de nuevo." y "Intentar de nuevo"), y el motivo de dos combinaciones que §4 no cubre (me va bien + practicar con descarte, y encontrar errores sin origen), que hoy van sin motivo.
