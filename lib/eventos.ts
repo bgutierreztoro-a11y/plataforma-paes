@@ -8,6 +8,22 @@ import type {
 import type { FaseError } from "@/lib/advance/dominio";
 import type { PayloadTriageDecision } from "@/lib/advance/triage";
 import type { EstadoNodo } from "@/lib/estadoNodo";
+import type { IdVideo } from "@/lib/recorrido/video";
+
+/* ---------- valores cerrados del recorrido de entrada (docs/recorrido-entrada.md §4 y §6) ---------- */
+export type ResultadoErrorPublico = "correcta" | "tentadora" | "otra";
+export type EntradaRecorrido = "video" | "directa";
+export type AccesoRecorrido = "prueba" | "cortesia" | "compra";
+/** Bienvenida, pregunta 1: "¿Cómo te llevas con las matemáticas?" */
+export type RespuestaP1 = "me_cuestan" | "mas_o_menos" | "me_va_bien";
+/** Bienvenida, pregunta 2: "¿Qué quieres hacer primero?" */
+export type RespuestaP2 = "entender_base" | "practicar_prueba" | "encontrar_errores";
+/** Bienvenida, pregunta 3 (solo puerta A): "¿Sigues con porcentaje?" */
+export type RespuestaP3 = "si" | "no";
+export type TipoParada = "leccion" | "diagnostico" | "descarte" | "errores" | "como_funciona";
+export type PasoChecklist = "primera_parada" | "diagnostico" | "descarte" | "errores";
+export type SeccionAyuda = "descarte" | "errores" | "diagnostico";
+export type PlanElegido = "base" | "advance" | "no_seguir";
 
 export type Evento =
   | { nombre: "leccion_inicio"; props: { leccion_id: string } }
@@ -111,7 +127,56 @@ export type Evento =
      calcula (función pura con test). El veredicto no viaja: se calcula en
      runtime y no se guarda ni se mide (D17). Sin PII: id de contenido, la
      decisión y milisegundos. */
-  | { nombre: "advance_triage_decision"; props: PayloadTriageDecision };
+  | { nombre: "advance_triage_decision"; props: PayloadTriageDecision }
+  /* ---------- recorrido de entrada (docs/recorrido-entrada.md §6) ---------- */
+  | {
+      nombre: "error_publico_visto";
+      props: { unidad_id: string; error_id: string; item_id: string; video: IdVideo | null };
+    }
+  | {
+      nombre: "error_publico_respondido";
+      props: {
+        unidad_id: string;
+        error_id: string;
+        item_id: string;
+        resultado: ResultadoErrorPublico;
+        video: IdVideo | null;
+      };
+    }
+  | {
+      nombre: "cta_prueba_clic";
+      props: {
+        unidad_id: string;
+        error_id: string;
+        resultado: ResultadoErrorPublico;
+        video: IdVideo | null;
+      };
+    }
+  | {
+      nombre: "cuenta_creada";
+      props: { entrada: EntradaRecorrido; video: IdVideo | null; acceso: AccesoRecorrido };
+    }
+  /* null: pregunta saltada, o la 3 en la puerta B, donde no se hace. */
+  | {
+      nombre: "bienvenida_respondida";
+      props: {
+        p1: RespuestaP1 | null;
+        p2: RespuestaP2 | null;
+        p3: RespuestaP3 | null;
+        saltada: boolean;
+        entrada: EntradaRecorrido;
+      };
+    }
+  /* `destino`: ruta interna armada por el código (`/leccion/porcentaje-concepto`), nunca texto del alumno. */
+  | {
+      nombre: "primera_parada_iniciada";
+      props: { tipo: TipoParada; destino: string; fue_la_recomendada: boolean };
+    }
+  | { nombre: "checklist_item_completado"; props: { item: PasoChecklist } }
+  | { nombre: "ayuda_cerrada"; props: { seccion: SeccionAyuda } }
+  | { nombre: "prueba_aviso_visto"; props: Record<string, never> }
+  | { nombre: "elegir_plan_visto"; props: { acceso_previo: AccesoRecorrido | "ninguno" } }
+  | { nombre: "plan_elegido_clic"; props: { plan: PlanElegido } };
 
 /**
  * Envía a PostHog solo si hay clave configurada; siempre loguea a consola en

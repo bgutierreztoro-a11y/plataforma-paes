@@ -1,6 +1,6 @@
 # Inventario de datos
 
-Qué se guarda, dónde, para qué y por cuánto tiempo. Requisito de la Ley 21.719 (vigente el 1 de diciembre de 2026) y del MOS §7.5; tarea 3.3 de `docs/fobos-advance.md` §4 F3. Documento, no código: describe lo que el repo hace hoy, verificado contra `db/migraciones/`, `lib/datos/`, `lib/progresoLocal.ts`, `components/analytics/PostHogProvider.tsx` y `app/api/webhooks/clerk/route.ts` el 2026-09-14. Cuando el código y este documento se contradigan, gana el código y este documento se corrige.
+Qué se guarda, dónde, para qué y por cuánto tiempo. Requisito de la Ley 21.719 (vigente el 1 de diciembre de 2026) y del MOS §7.5; tarea 3.3 de `docs/fobos-advance.md` §4 F3. Documento, no código: describe lo que el repo hace hoy, verificado contra `db/migraciones/`, `lib/datos/`, `lib/progresoLocal.ts`, `components/analytics/PostHogProvider.tsx` y `app/api/webhooks/clerk/route.ts` el 2026-09-14; `lib/eventos.ts` y la cookie `fobos_origen`, el 2026-09-24. Cuando el código y este documento se contradigan, gana el código y este documento se corrige.
 
 Principio que ordena todo: **desempeño sí, identidad no** (MOS §7.5). La identidad vive en un solo lugar (Clerk y su espejo `usuarios`); todo lo demás cuelga de un id opaco.
 
@@ -24,6 +24,7 @@ Ninguna tabla de desempeño, ninguna clave de `localStorage`, ningún evento de 
 | Resultado del diagnóstico de la sesión y conteo de errores en la sesión | Memoria de la pestaña (`lib/progresoSesion.ts`) | Comparación pre/post dentro de la misma sesión y el "te ha pasado N veces" | Muere al recargar o cerrar la pestaña |
 | `sesion_id` de una sesión de descarte o de triage (uuid aleatorio) | Memoria del componente, generado al montar la sesión | Que un reenvío del mismo cierre no duplique filas en la base | Muere al salir de la pantalla |
 | Cookies de sesión de Clerk | Cookies del dominio, puestas por Clerk | Mantener la sesión iniciada | Según la configuración de sesión de Clerk; no las administra el repo |
+| Origen del recorrido: unidad, error y video (el `utm_content` del link, que solo pasa si calza con el formato `v001-...` de `lib/recorrido/video.ts`). Nada personal | Cookie propia `fobos_origen` | Saber si la cuenta vino de un video y de cuál (`docs/recorrido-entrada.md`, ADR-02) | 7 días, o hasta que `/bienvenida` la lea, la guarde y la borre. **Todavía no existe en el código**: la escribe la Fase 2 del recorrido de entrada |
 
 La analítica no escribe nada en el dispositivo: PostHog corre con `persistence: "memory"`, sin cookies ni `localStorage` (`components/analytics/PostHogProvider.tsx`).
 
@@ -85,7 +86,7 @@ Nombre y sha256 de cada migración aplicada. Sin datos de personas. Solo la toca
 | Clerk | Email, código de verificación, nombre opcional, metadatos de sesión (IP, agente de usuario) que Clerk registra por su cuenta | Cuentas y sesiones. Único proveedor de identidad; sin login social | La que fije Clerk; al borrar la cuenta en Clerk se dispara `user.deleted` hacia la base (4.1) |
 | Neon | Todo lo de la sección 4 | Base de datos | La de la sección 4, más los respaldos automáticos de Neon según su plan |
 | Vercel | Logs de funciones: prefijos `[advance-sesion]`, `[advance-triage]`, `[webhook-clerk]`, `[BORRADO-PENDIENTE]` con el id opaco de Clerk y mensajes de error saneados (`lib/datos/db.ts` nunca vuelca el objeto del driver, que trae la cadena de conexión) | Diagnosticar fallos | La rotación del plan de Vercel; el repo no la configura. Ningún log es registro durable: la fuente de verdad es la base |
-| PostHog | Eventos de producto declarados en `lib/eventos.ts` y en CLAUDE.md, con ids de lección, ítem, paso, unidad, error del catálogo, tiempos y contadores. Sin autocapture, sin grabación de sesión, sin `identify()`: cada carga de página es un visitante anónimo nuevo | Medir aprendizaje y uso (MOS §8) | La del proyecto de PostHog. Sin identidad, no hay nada que borrar a pedido de un titular |
+| PostHog | Eventos de producto declarados en `lib/eventos.ts` y en CLAUDE.md, con ids de lección, ítem, paso, unidad, error del catálogo, tiempos y contadores. Los del recorrido de entrada (tipados; se emiten desde la Fase 2) suman respuestas cerradas de la bienvenida y `video`, el id del video de origen validado por `lib/recorrido/video.ts`. `lib/eventos.test.ts` hace fallar `tsc` si un evento acepta correo, nombre, RUT, colegio u otra clave personal. Sin autocapture, sin grabación de sesión, sin `identify()`: cada carga de página es un visitante anónimo nuevo | Medir aprendizaje y uso (MOS §8) | La del proyecto de PostHog. Sin identidad, no hay nada que borrar a pedido de un titular |
 
 Los eventos de Advance llevan `unidad_id`, `item_id`, la `clave` original del JSON, el id de error dominante del catálogo, decisiones de triage, tiempos y contadores por fase; nunca `usuario_id` ni `sesion_id` (`docs/fobos-advance.md` §8).
 
