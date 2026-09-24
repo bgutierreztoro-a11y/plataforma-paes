@@ -542,3 +542,43 @@ Hallazgos:
 - `/privacidad` habla de "tres servicios" (Clerk, Neon, PostHog) y no nombra a Vercel, que el inventario lista como encargado. Frase de corrección propuesta a Benja, pendiente de su firma. Vercel corre en `iad1` (Washington, EE. UU.), según el despliegue de producción `dpl_C4j9YBjwFJXhGStmro5827Grk3mo`.
 
 Pendiente: nada de la Fase 1.
+
+### Fase 2 · 2026-09-24
+
+Commits:
+- `3b41e1f` recorrido: página pública del error con la pregunta del video y la cookie de origen.
+
+Validar / tsc / lint / test:unit:
+- validar: exit 0, 97 archivos OK.
+- tsc (`--noEmit --incremental false`): exit 0, 0 errores.
+- lint (sin `scratchpad/`): exit 0, 0 problemas.
+- test:unit: 814 tests en 137 suites, 814 pass, 0 fail (803 de la Fase 1 más 11 nuevos).
+
+Hecho (plan 🟡 con aprobación anticipada de Benja):
+- `lib/recorrido/erroresPublicos.ts`: la lista blanca con una entrada (`porcentaje`, `deshace-porcentaje-con-mismo-porcentaje`, `adv-porcentaje-019`), los textos firmados de §4 y dos funciones puras: `resultadoDe` y `textoDeRespuesta`.
+- `app/error/[unidadId]/[errorId]/page.tsx`: estática, con `generateStaticParams` y `dynamicParams = false`, así que cualquier otra ruta da 404. Lee enunciado y alternativas con `obtenerBanco`; N sale de `catalogoCompletoDelModulo` (12 ids menos 1 = 11, medido hoy). Los textos pasan por `protegerExpresiones` (espacio duro junto a `÷`, `×` e `=`), para que una cuenta no se parta a 390 px. Metadatos: título absoluto, descripción y vista previa con el rótulo de §4, `noindex`.
+- `components/recorrido/PreguntaPublica.tsx`: isla de cliente. Alternativas en el orden del banco, con las clases de `components/ui/alternativa.ts` y el mismo criterio que `ItemPAES` (al responder se marca solo la elegida). "Responder" queda deshabilitado sin elección. Después: el texto del caso, el cierre con N y, sin sesión, "Empieza tu prueba gratuita de 7 días" hacia `/registrarse` con la nota de §4; con sesión, "Ir a Fobos" hacia "/". La sesión se lee con `Show` de Clerk en el cliente, así la ruta sigue estática.
+- Cookie `fobos_origen`: `unidad|error|video` (`lib/recorrido/origen.ts`), 7 días, `Path=/`, `SameSite=Lax` y `Secure` en https. Se escribe al tocar el botón de la prueba. `leerCookieOrigen` queda lista para la Fase 4 y descarta lo que no nombre una página de la lista.
+- Eventos: `error_publico_visto` cuando `montado` pasa a verdadero (PostHog se inicia en el efecto del proveedor, que corre después de los de sus hijos; disparar en el primer efecto lo perdería), `error_publico_respondido` al responder y `cta_prueba_clic` al tocar el botón de la prueba.
+- Inventario de datos actualizado en el mismo commit.
+
+Tests nuevos (11): la entrada contra el banco y el catálogo reales (la tentadora es la alternativa de ese error, hay un texto por alternativa, el ítem no tiene figuras, las cifras de los textos son las de las alternativas); los textos son idénticos a los de §4 de este plan; un test por caso A, B, C y D; fuera de la lista no hay página; la cookie se lee igual que se escribe y descarta valores ajenos.
+
+Verificado en el navegador (Playwright, 390 px, servidor de desarrollo):
+- Los cuatro casos muestran su texto; B y D terminan con la línea común. Antes de responder no existe el botón de la prueba; después aparece. "Responder" está deshabilitado sin elección. El documento mide 375 px de ancho, sin scroll horizontal, y la captura de página completa no muestra cortes.
+- Consola: los tres eventos con `video: v001-deshace-porcentaje` y `resultado` `tentadora`, `otra`, `correcta` y `otra`.
+- Al tocar el botón en el caso A navega a `/registrarse` y deja `fobos_origen=porcentaje|deshace-porcentaje-con-mismo-porcentaje|v001-deshace-porcentaje`, `SameSite=Lax`, 7 días.
+- `/error/porcentaje/suma-porcentajes-sucesivos` responde 404.
+- Build: la tabla de rutas es la de la línea base más `● /error/[unidadId]/[errorId]` (1 ruta). El HTML trae `title`, `description`, `og:title`, `og:description` y `robots: noindex, nofollow`.
+- Cero cambios en `content/`.
+
+Decisiones tomadas:
+- Un texto por alternativa más `lineaTrasOtra`, en vez de "tres casos": los textos firmados son distintos para B y D.
+- `etiquetaUnidad` y `unidadEnFrase` van en la entrada, para que la página no escriba "porcentaje" a mano.
+- Si el ítem de una entrada no está en el banco, el build falla; no se sirve un 404 silencioso.
+- Como en `ItemPAES`, no se pinta la correcta cuando el alumno eligió otra: el texto dice cuál es.
+- Título de la pestaña con `title.absolute`: la plantilla del layout le agregaría "— Plataforma M1".
+
+Pendiente (lo decide Benja):
+- `$current_url`: PostHog agrega por su cuenta la URL completa a cada evento, y en esta página trae los `utm_*` tal como vienen en el link. Ver la PARADA de esta fase.
+- La frase de `/privacidad` que suma a Vercel, pendiente de firma.
