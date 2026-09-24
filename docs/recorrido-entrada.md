@@ -501,12 +501,13 @@ Correcciones:
 - `enteros-racionales` vs `enteros-y-racionales`: la traducción vive en un solo lugar, con un test que recorre todos los ids del DAG y verifica que existen en `lib/modulos.ts`.
 - Portada: "/" sigue estática. Todo lo personal de las Fases 4 y 5 va en una isla de cliente que consulta `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`). Sin redirect desde la portada: con sesión y sin `perfil_inicio`, la isla muestra "Termina tu bienvenida" con link a `/bienvenida`. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir". Se propone en el plan 🟡 de la Fase 5.
 
-### Fase 1 · 2026-09-24 · parcial, en espera de firma
+### Fase 1 · 2026-09-24
 
 Commits:
 - `4533de5` docs: textos firmados de la página pública en el plan del recorrido (encargo de Benja antes de la fase).
 - `a847f83` contenido: títulos nuevos para tres errores del catálogo de porcentaje (🔴 firmado por Benja antes de la fase).
 - `caa5008` recorrido: tipos de los eventos del recorrido de entrada, sin datos personales.
+- `dd5802d` docs: plan del recorrido sin identify, activación medida en Neon.
 
 Validar / tsc / lint / test:unit:
 - validar: exit 0, 97 archivos OK.
@@ -528,7 +529,16 @@ Decisiones tomadas:
 - El test de datos personales es de tipos. `node --test` borra los tipos antes de correr, así que el que falla es `tsc`, no `test:unit`. Hacer que falle `test:unit` exigiría correr el compilador de TypeScript dentro del test.
 - Bug en mi propio test, encontrado y arreglado antes del commit: el evento sin props (`Record<string, never>`) metía una clave `string` que se tragaba a `email`, y el chequeo pasaba igual. Ahora solo mira claves con nombre.
 
-Pendiente (en espera de Benja):
-- `identify`/`reset` NO se hizo. `app/privacidad/page.tsx:114-116` dice hoy: "Los eventos que le mandamos a PostHog son anónimos: no incluyen tu correo, tu nombre ni tu identificador de cuenta, y no dejan cookies en tu navegador." Con `identify(userId)` esa frase queda falsa, y es texto legal que firma Benja. Cuando se haga, el inventario también cambia: la fila de PostHog, la línea "nunca `usuario_id`" de los eventos de Advance y los derechos del titular (con identidad, borrar una cuenta exige borrar a esa persona en PostHog).
-- Para la revisión legal de §8: la misma sección de `/privacidad` habla de "tres servicios" (Clerk, Neon, PostHog) y no nombra a Vercel, que el inventario lista como encargado.
-- Build de línea base antes de tocar `PostHogProvider`, para comparar después: "/" estática (○), `/leccion/[id]` SSG (●, 48 rutas), todo `/advance` dinámico (ƒ).
+Resuelto por Benja:
+- Sin `identify` ni `reset` (opción 2). `app/privacidad/page.tsx:114-116` promete que los eventos de PostHog no incluyen el identificador de cuenta, y esa frase queda como está. La activación se mide en Neon: el plan se actualizó en `dd5802d` (ADR-05, §6, Fases 1, 3, 4, 5 y 8). `PostHogProvider.tsx` no se tocó.
+
+Aceptación "en la pestaña Red no hay autocapture ni grabación", verificada en el navegador (Playwright, 390 px):
+- Producción (`plataforma-paes.vercel.app/`, envíos a `/ingest/` cortados antes de salir para no ensuciar PostHog): pidió `config.js`, `config`, `flags` y un lote `/e/`. El lote traía un solo evento, `portada_vista` con `rama`; sin `$autocapture` ni `$pageview`, y sin pedidos al grabador de sesión. Tras borrar una cookie `ph_…` vieja del perfil del navegador (escrita cerca del 2026-07-09, el día en que se creó el proyecto en Vercel), la portada no volvió a escribir cookies ni `localStorage` de PostHog.
+- Local: `leccion_inicio` y `paso_inicio` se disparan igual que antes (consola `[analytics]`).
+
+Hallazgos:
+- `.env.local` local tiene `[SENSITIVE]` como valor literal en 19 variables, entre ellas `NEXT_PUBLIC_POSTHOG_KEY` y `NEXT_PUBLIC_POSTHOG_HOST`. Viene de un `vercel env pull` del 2026-09-11 (trae las `VERCEL_*`): las variables marcadas sensibles en Vercel llegan así. En local, PostHog arma rutas como `/leccion/[SENSITIVE]/array/[SENSITIVE]/config.js` y responde 404, así que en desarrollo no sale ningún evento. En producción está bien. Para probar analítica en local, Benja debe reponer esos dos valores (son públicos: los muestra el panel de PostHog). No es código del repo.
+- PostHog agrega solo `$current_url` a cada evento, con la URL completa. En la página pública eso incluye el `utm_content` crudo, aunque la prop `video` pase por `leerIdVideo`. Queda para decidir en la Fase 2.
+- `/privacidad` habla de "tres servicios" (Clerk, Neon, PostHog) y no nombra a Vercel, que el inventario lista como encargado. Frase de corrección propuesta a Benja, pendiente de su firma. Vercel corre en `iad1` (Washington, EE. UU.), según el despliegue de producción `dpl_C4j9YBjwFJXhGStmro5827Grk3mo`.
+
+Pendiente: nada de la Fase 1.
