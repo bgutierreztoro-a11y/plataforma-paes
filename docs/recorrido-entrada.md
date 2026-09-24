@@ -426,7 +426,9 @@ CC escribe además `docs/recorrido-embudo-activacion.md` con la consulta SQL del
 - ReplyRush para el comentario a DM: pendiente, se ve en otro chat.
 - Pasarela de pago y el cobro real de los planes.
 - Clerk en producción y dominio propio.
-- Revisión legal corta (Ley 21.719) de la analítica y la política de privacidad antes de abrir.
+- Revisión legal corta (Ley 21.719) de la analítica y la política de privacidad antes de abrir. Lista para esa revisión:
+  - Términos §15.2 dicen "sin cookies persistentes de seguimiento o publicidad". La cookie `fobos_origen` dura 7 días y guarda de qué video vino la visita, sin identificar a nadie: confirmar que no choca con esa frase.
+  - `/privacidad` titula una sección "Si no creas cuenta, no guardamos nada" y dice "no mandamos nada a ningún servidor". Sin cuenta igual salen eventos anónimos a PostHog, registros técnicos a Vercel (con la IP) y se guarda la cookie de origen: revisar el título y esa frase.
 - Más páginas públicas de error: una línea por video en la lista blanca.
 - Panel 2×2: sigue fuera de producción. En `/_design`, con las cuatro líneas lado a lado, la columna derecha de cada panel se sale de su tarjeta; se arregla cuando el panel tenga llamador real.
 
@@ -579,6 +581,14 @@ Decisiones tomadas:
 - Como en `ItemPAES`, no se pinta la correcta cuando el alumno eligió otra: el texto dice cuál es.
 - Título de la pestaña con `title.absolute`: la plantilla del layout le agregaría "— Plataforma M1".
 
-Pendiente (lo decide Benja):
-- `$current_url`: PostHog agrega por su cuenta la URL completa a cada evento, y en esta página trae los `utm_*` tal como vienen en el link. Ver la PARADA de esta fase.
-- La frase de `/privacidad` que suma a Vercel, pendiente de firma.
+Resuelto por Benja después de la fase:
+- `/privacidad` (`14b9312`): nombra a Vercel ("como la dirección IP de quien entra") y suma la frase de la cookie de origen, textos firmados. La duda de los términos §15.2 pasó a la lista de revisión legal de §8.
+- `$current_url`, opción b (`2fcc15e`): en el primer efecto de la página, antes de que el proveedor inicie PostHog, `videoDeLaVisita` (`lib/recorrido/video.ts`) toma el `utm_content` solo si calza con `^v\d{3}-[a-z0-9-]+$` (y 60 caracteres como máximo), lo guarda en `history.state` y limpia la dirección con `history.replaceState`. Al recargar, el video sale de `history.state`. Test: un `utm_content` con correo no llega al video, a la dirección ni a la cookie.
+- Verificado en el navegador: con el link bueno la dirección queda sin parámetros y el video sobrevive a la recarga; con `utm_content=juan.perez@gmail.com&email=…`, los eventos llevan `video: null` y la cookie queda `porcentaje|deshace-porcentaje-con-mismo-porcentaje|`. Capturé los envíos a PostHog antes de que salieran, los descomprimí y los revisé: `$current_url` iba sin parámetros, `utm_content` iba nulo y ningún evento contenía "@" ni "juan".
+- `test:unit` después de `2fcc15e`: 908 tests, 908 pass (incluye tests nuevos de otra sesión de Advance).
+
+Pendiente: nada de la Fase 2.
+
+### Fase 3 · 2026-09-24 · escrita, en revisión de Benja (🔴)
+
+Sin commit todavía. Archivos: `db/migraciones/011_recorrido_prueba_y_perfil.sql`, `scripts/otorgar-cortesia.mjs`, `lib/datos/entitlements.ts` (constantes `PRODUCTO_BASE`, `PRODUCTO_ADVANCE` y origen `prueba`), `lib/datos/migracion011.test.ts`, `docs/inventario-datos.md` (4.3, 4.7 nueva y supresión). CC no corrió la migración ni el script contra Neon; el script solo se probó con argumentos inválidos, que cortan antes de leer `.env.local` y de conectarse.
