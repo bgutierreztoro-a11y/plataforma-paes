@@ -14,12 +14,18 @@ import { consultar } from "./db";
 /** Lecciones gratuitas. Se otorga solo en user.created. */
 export const PRODUCTO_LIBRE = "m1-libre";
 
-/** Espejo de db/migraciones/004_entitlements.sql. */
+/** Fobos Base, ciclo PAES 2027 (docs/recorrido-entrada.md, ADR-04). */
+export const PRODUCTO_BASE = "m1-base-2027";
+
+/** Fobos Advance, ciclo PAES 2027. Incluye Base. La prueba de 7 días y las cortesías son de este producto. */
+export const PRODUCTO_ADVANCE = "m1-advance-2027";
+
+/** Espejo de db/migraciones/004_entitlements.sql y 011 (origen 'prueba'). */
 export interface FilaEntitlement {
   id: string;
   usuario_id: string;
   producto: string;
-  origen: "gratis" | "cortesia" | "compra";
+  origen: "gratis" | "cortesia" | "compra" | "prueba";
   vigencia_desde: Date;
   vigencia_hasta: Date | null;
   referencia_pago: string | null;

@@ -57,7 +57,7 @@ Retención: hasta la baja. Al llegar `user.deleted`, el webhook reemplaza `email
 
 | Tabla | Qué guarda | Para qué | Retención |
 |---|---|---|---|
-| `entitlements` | Por usuario: producto (`m1-libre` hoy), origen (`gratis`, `cortesia`, `compra`), vigencia desde y hasta, referencia de pago (nula, sin uso), `notas` (texto interno, nulo salvo cortesías otorgadas a mano) | Decidir si una cuenta tiene acceso a un producto (`tieneAcceso`). Es también donde vive la temporada de Advance, ver 4.5 | Hasta la baja, con cascada cuando exista la 007 |
+| `entitlements` | Por usuario: producto (`m1-libre`; desde la 011 también `m1-base-2027` y `m1-advance-2027`), origen (`gratis`, `cortesia`, `compra` y, desde la 011, `prueba`: una sola por usuario), vigencia desde y hasta, referencia de pago (nula, sin uso), `notas` (texto interno, nulo salvo cortesías otorgadas a mano) | Decidir si una cuenta tiene acceso a un producto (`tieneAcceso`). Es también donde vive la temporada de Advance, ver 4.5 | Hasta la baja, con cascada cuando exista la 007 |
 | `entitlements_auditoria` | Bitácora append-only de cada alta, extensión o revocación: retrato de la fila de entitlements en jsonb, actor, instante | Resolver disputas de acceso y de cobro | Indefinida a propósito, sin FK: sobrevive al borrado de la cuenta. El retrato excluye `notas` por diseño (`lib/datos/entitlements.ts`) |
 
 Riesgo conocido y anotado: `entitlements.notas` es texto libre y puede contener datos de terceros ("cortesía para el hermano de la profesora"). La 007 tiene que decidir qué pasa con esa columna al borrar. Hasta entonces, la regla operativa es no escribir en `notas` nada que identifique a una persona.
@@ -79,6 +79,12 @@ No hay tabla `temporada` (decisión del 2026-09-14, registrada en `docs/fobos-ad
 
 Nombre y sha256 de cada migración aplicada. Sin datos de personas. Solo la toca el rol dueño.
 
+### 4.7 Recorrido de entrada: tabla `perfil_inicio` (011)
+
+| Qué guarda | Para qué | Retención |
+|---|---|---|
+| Una fila por cuenta: respuestas cerradas de la bienvenida (`p1`, `p2`, `p3`, `saltada`), unidad, error y video de origen (desde la cookie `fobos_origen`), la primera parada recomendada (tipo y ruta interna), cuándo tocó esa parada (`parada_iniciada_en`) y la fecha de creación. Sin texto libre ni datos personales: los valores están cerrados por CHECK | Saber si ya hizo la bienvenida, mostrarle su primera parada y medir la activación en Neon, persona por persona, sin identificar a nadie en PostHog (`docs/recorrido-entrada.md`, ADR-03 y ADR-05) | Hasta la baja: `ON DELETE CASCADE` desde `usuarios`, efectivo cuando exista la 007 |
+
 ## 5. En terceros
 
 | Encargado | Qué recibe | Para qué | Retención |
@@ -94,7 +100,7 @@ Los eventos de Advance llevan `unidad_id`, `item_id`, la `clave` original del JS
 
 - **Acceso y portabilidad:** todo lo de una cuenta se obtiene con una consulta por `usuario_id` sobre las tablas de la sección 4. No existe pantalla ni exportación automática.
 - **Rectificación:** el correo y el nombre se corrigen en Clerk y llegan por `user.updated`. El desempeño no se rectifica: es un registro de lo que pasó.
-- **Supresión:** borrar la cuenta en Clerk neutraliza la PII en `usuarios` de inmediato (4.1). El desempeño queda bajo un id opaco que ya no apunta a nadie hasta que exista la 007, que debe borrar en cascada `progreso_lecciones`, `respuestas`, `entitlements` y, por `usuario_id`, `advance_descartes` y `advance_triage`. La bitácora `entitlements_auditoria` se conserva a propósito.
+- **Supresión:** borrar la cuenta en Clerk neutraliza la PII en `usuarios` de inmediato (4.1). El desempeño queda bajo un id opaco que ya no apunta a nadie hasta que exista la 007, que debe borrar en cascada `progreso_lecciones`, `respuestas`, `entitlements`, `perfil_inicio` y, por `usuario_id`, `advance_descartes` y `advance_triage`. La bitácora `entitlements_auditoria` se conserva a propósito.
 - **Consentimiento del apoderado:** exigido por el MOS §7.5 para menores. Fuera del código; parte de la política de privacidad (3.2, Benja).
 
 ## 7. Lo que este inventario deja pendiente de firma
