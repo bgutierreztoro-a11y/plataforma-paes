@@ -432,4 +432,59 @@ Decisiones tomadas:
 Pendiente:
 ```
 
-(vacía)
+### Fase 0 · 2026-09-24
+
+Commits: 837e474 docs: plan del recorrido de entrada, versión 1. Esta entrada va en el commit siguiente y la versión 1.1 del plan en el que le sigue.
+
+Validar / tsc / lint / test:unit:
+- validar: exit 0, 97 archivos OK. Cobertura de `errorCatalogado` en bancos Advance: 60/60 en 13 bancos; `reglas-de-probabilidades` 59/60 (98,3 %, 1 sin mapear por `valor-plausible-no-derivable`).
+- tsc (`--noEmit --incremental false`): exit 0, 0 errores.
+- lint: exit 0, 0 problemas en el repo. Con `scratchpad/` (sin trackear) suben a 76 (1 error, 75 warnings), todos dentro de `scratchpad/`.
+- test:unit: 800 tests en 131 suites, 800 pass, 0 fail.
+
+Respuestas:
+
+1. **Versiones y rutas con sesión.** `next` 16.2.11 y `@clerk/nextjs` 7.6.0 (`package.json:17-19`). `proxy.ts:19` usa `clerkMiddleware()` sin proteger ninguna ruta. `auth()` aparece en `app/advance/errores/page.tsx:43`, `app/advance/errores/[unidadId]/[errorId]/page.tsx:51`, `app/advance/triage/[unidadId]/page.tsx:56`, `app/api/advance/sesion/route.ts:34` y `app/api/advance/triage/route.ts:34`. Sin sesión, esas páginas muestran una pantalla de ingreso y las API responden 401. `/advance/descarte/[unidadId]` no llama `auth()`. El resto del sitio es público.
+2. **Registro e inicio de sesión.** `/ingresar` monta `<SignIn routing="hash">` (`app/ingresar/page.tsx:24`). `/registrarse` monta `PuertaDeEdad` (`app/registrarse/page.tsx:19`), que muestra `<SignUp routing="hash">` después de la casilla de 16 años (`components/cuenta/PuertaDeEdad.tsx:59`). La redirección sale de las props de `ClerkProvider` en `app/layout.tsx:229-233`: `signInUrl="/ingresar"`, `signUpUrl="/registrarse"`, `signInFallbackRedirectUrl="/"` y `signUpFallbackRedirectUrl="/"`. No hay variables `NEXT_PUBLIC_CLERK_*_URL` en `.env.example` ni en `.env.local`. Solo correo con código, sin login social.
+3. **Filas de `usuarios`.** Webhook en `app/api/webhooks/clerk/route.ts:75-90`. `user.created` llama a `crearUsuario` (`lib/datos/usuarios.ts:30-44`: `INSERT ... ON CONFLICT (id) DO NOTHING`) y a `otorgarEntitlementGratis` (`lib/datos/entitlements.ts:115-146`: `m1-libre`, origen `gratis`, `ON CONFLICT DO NOTHING`, con fila de auditoría). `usuarios.email` es `NOT NULL UNIQUE` (`db/migraciones/001_usuarios.sql:15`).
+4. **`entitlements`.** `origen`: `CHECK (origen IN ('gratis', 'cortesia', 'compra'))` en `004_entitlements.sql:52-53`, mismo tipo en `entitlements.ts:22`. `producto`: en código solo `m1-libre` (`entitlements.ts:15`); `m1-2027` aparece solo en el comentario de `004_entitlements.sql:9`. El producto de Advance todavía no existe (`lib/advance/temporada.ts:19-21`). `tieneAcceso` (`entitlements.ts:41-57`) busca alguna fila del producto con `vigencia_desde <= now()` y `vigencia_hasta` nula o `> now()`; hoy nadie la llama. Advance no lee la base: `estadoAdvance()` (`lib/advance/acceso.ts:18-20`) devuelve el estado según `NEXT_PUBLIC_ADVANCE_DEMO`. La temporada se deriva con `estadoTemporada()` (`temporada.ts:41-54`), función pura sobre `vigenciasDe` (`entitlements.ts:71-84`), todavía sin conectar.
+5. **PostHog.** Hay una sola inicialización, en `components/analytics/PostHogProvider.tsx:14-22`, montada en `app/layout.tsx:247`, con `autocapture: false`, `capture_pageview: false`, `disable_session_recording: true` y `persistence: "memory"`. `instrumentation-client.ts` no existe. No hay `identify` ni `reset` en el repo. Los eventos salen por `lib/eventos.ts:123`. El proxy `/ingest` está en los rewrites de `next.config.ts` y fuera del matcher de `proxy.ts:29`.
+6. **Portada.** `app/page.tsx` no mira la sesión: con o sin cuenta muestra lo mismo. `PuntoDePartida` (`components/PuntoDePartida.tsx:101-151`) elige la rama con el progreso guardado en el dispositivo. Sin progreso: "Antes de partir, una medición", con "Hacer la medición" (`/diagnostico`) y "Prefiero elegir yo la línea" (`/camino`) (`PuntoDePartida.tsx:266-279`).
+7. **Progreso de lecciones.** Siempre en `localStorage`, clave `pm1:progreso:v1` (`lib/progresoLocal.ts:31`), con o sin sesión. `guardarProgreso` (`lib/datos/progreso.ts:72`) y `migrarProgresoLocal` (`lib/datos/progreso.ts:205`) existen, pero nadie los llama. Advance sí guarda en Neon con sesión: `POST /api/advance/sesion` y `POST /api/advance/triage` (`components/advance/SesionDescarte.tsx:29`, `components/advance/SesionTriage.tsx:33`).
+8. **N.** `content/errores/porcentaje.json` tiene 12 ids. N = 11.
+9. **Ítems con distractor `deshace-porcentaje-con-mismo-porcentaje`** en `content/advance/porcentaje/banco.json`, los cinco con proveniencia `propia`:
+   - `items[0] adv-porcentaje-001`: "Una cantidad bajó un 48% y quedó en 650." Distractor A, correcta B.
+   - `items[5] adv-porcentaje-006`: "Unos audífonos tenían un 18% de descuento y se pagaron $73.800 por ellos." Distractor C, correcta D.
+   - `items[13] adv-porcentaje-014`: "Una planta medía H cm. En primavera creció un 38% y luego aumentó un 3% respecto de la altura alcanzada." Distractor A, correcta C.
+   - `items[15] adv-porcentaje-016`: "Una polera tenía un 32% de descuento y se pagaron C pesos por ella." Distractor A, correcta D.
+   - `items[18] adv-porcentaje-019`: "Un plan de datos móviles subió un 34% y ahora cuesta $23.450 al mes." Distractor A, correcta C.
+
+   Elección de Benja: `adv-porcentaje-019`.
+10. **Primera estación y rutas.** La primera estación de la Línea 01 sin prerrequisitos es `enteros-racionales` (`content/diagnostico/dag-m1.json`, `unidades[0]`, la única de Números sin prerrequisitos). En `lib/modulos.ts:190` ese módulo se llama `enteros-y-racionales`. Lección de base de porcentaje: `/leccion/porcentaje-concepto` (`lib/modulos.ts:210`). Lección de base de enteros: `/leccion/enteros-operar-y-ordenar` (`lib/modulos.ts:196`). Diagnóstico: `/diagnostico`. Descarte: `/advance/descarte/porcentaje`. Errores: `/advance/errores`. Todo `/advance` da 404 sin `NEXT_PUBLIC_ADVANCE_VISIBLE=1`.
+11. **Línea base.** La de "Validar / tsc / lint / test:unit" al comienzo de esta entrada.
+
+Decisiones tomadas:
+- Lint medido también sin `scratchpad/`, para separar lo que no está en git.
+- tsc con `--incremental false`, para no escribir `tsconfig.tsbuildinfo`.
+- Cero cambios de código.
+
+Pendiente:
+- Nada de la Fase 0. Lo que la fase dejó abierto quedó resuelto abajo y se aplica en la versión 1.1 del plan.
+
+#### Resoluciones de Benja (2026-09-24)
+
+1. **Ítem público:** `adv-porcentaje-019` (plan de datos, subió 34%, distractor A, correcta C). Va en la lista blanca de la Fase 2.
+2. **Prueba:** `asegurarPrueba` cuenta solo filas vigentes con origen `prueba`, `cortesia` o `compra`. `m1-libre` (origen `gratis`) no cuenta.
+3. **Advance en el piloto:** sigue con `NEXT_PUBLIC_ADVANCE_DEMO`. Conectarlo a `entitlements` pasa a la Fase 7. Los ids de producto se fijan ahora porque las Fases 3 y 4 escriben filas:
+   - `m1-base-2027` y `m1-advance-2027`. Advance incluye Base.
+   - Prueba: una fila `m1-advance-2027`, origen `prueba`, 7 días desde la creación.
+   - Cortesía: `m1-advance-2027`, origen `cortesia`, `vigencia_hasta` 2026-12-01 00:00 hora de Chile, exclusiva.
+   - Constantes en `lib/datos/entitlements.ts` junto a `m1-libre`. El webhook y `m1-libre` no se tocan.
+4. **Fase 7:** se mantiene, porque el modelo comercial vigente es Base y Advance de pago con prueba de 7 días. Queda en espera hasta que exista pasarela. Su primer paso es un commit `docs:` que actualiza CLAUDE.md y MOS §9 al modelo vigente, con texto que firma Benja. Hasta entonces ninguna fase de la 1 a la 6 cierra lecciones: "la cuenta es opcional" sigue valiendo.
+5. **Sin login social:** se quedan correo con código y `PuertaDeEdad`. Se saca "Google" del plan. El botón de la página pública va a `/registrarse`. El registro termina en `/bienvenida` forzando la redirección de sign-up en `ClerkProvider` (`signUpForceRedirectUrl`, verificado en `@clerk/nextjs` 7.6.0: `node_modules/@clerk/shared/dist/types/redirects.d.ts:93`). El sign-in sigue cayendo en "/".
+
+Correcciones:
+- PostHog: una sola inicialización. La Fase 1 queda en tipos de eventos, `identify`/`reset` e inventario de datos.
+- Usuario en `/bienvenida`: correo desde `currentUser()` de Clerk y las mismas funciones del webhook (`crearUsuario` y `otorgarEntitlementGratis`), que ya son idempotentes. Nada de insert nuevo.
+- `enteros-racionales` vs `enteros-y-racionales`: la traducción vive en un solo lugar, con un test que recorre todos los ids del DAG y verifica que existen en `lib/modulos.ts`.
+- Portada: "/" sigue estática. Todo lo personal de las Fases 4 y 5 va en una isla de cliente que consulta `GET /api/recorrido/inicio` (mismo patrón que `/api/advance`). Sin redirect desde la portada: con sesión y sin `perfil_inicio`, la isla muestra "Termina tu bienvenida" con link a `/bienvenida`. Con perfil y sin progreso local, la tarjeta de primera parada reemplaza la rama "sin progreso" de `PuntoDePartida`: no pueden quedar dos bloques de "por dónde partir". Se propone en el plan 🟡 de la Fase 5.
