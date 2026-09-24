@@ -374,8 +374,80 @@ export interface FiguraLienzoGeometrico {
   descripcion: string;
 }
 
+/** Punto del espacio: x a la derecha, y hacia arriba, z hacia el fondo. */
+export interface Coordenada3D {
+  x: number;
+  y: number;
+  z: number;
+}
+
+/** Caja recta: largo en x, alto en y, ancho (la profundidad) en z. */
+export interface PiezaParalelepipedo {
+  cuerpo: "paralelepipedo";
+  largo: number;
+  alto: number;
+  ancho: number;
+  /** Vértice de adelante, abajo, a la izquierda. Por defecto el origen. */
+  en?: Coordenada3D;
+}
+
+export interface PiezaCubo {
+  cuerpo: "cubo";
+  arista: number;
+  en?: Coordenada3D;
+}
+
+/** Cilindro recto de eje vertical en x (por defecto 0). Misma x: se apilan en el orden del array. */
+export interface PiezaCilindro {
+  cuerpo: "cilindro";
+  radio: number;
+  altura: number;
+  x?: number;
+}
+
+export type PiezaCuerpo = PiezaParalelepipedo | PiezaCubo | PiezaCilindro;
+
+/** Medida de un tramo de arista de las cajas, paralelo a un eje y visible entero. */
+export interface CotaArista {
+  desde: Coordenada3D;
+  hasta: Coordenada3D;
+  rotulo: string;
+  /** false pone el rótulo junto a la arista, sin llave. */
+  llave?: false;
+  lado?: "exterior" | "interior";
+}
+
+/** Medida de un cilindro por su índice en `piezas`. */
+export interface CotaCilindro {
+  pieza: number;
+  medida: "radio" | "diametro" | "altura";
+  rotulo: string;
+  llave?: false;
+  lado?: "arriba" | "abajo" | "izquierda" | "derecha";
+}
+
+export type CotaCuerpo = CotaArista | CotaCilindro;
+
+/**
+ * Cuerpo geométrico en perspectiva caballera: cajas o cilindros, nunca los
+ * dos. Las medidas de las piezas son proporciones del dibujo; los datos son
+ * los rótulos de las cotas, y la figura no se promete a escala. Muestra los
+ * datos del enunciado, nunca la respuesta.
+ */
+export interface FiguraCuerpoGeometrico {
+  tipo: "cuerpo-geometrico";
+  piezas: PiezaCuerpo[];
+  /** Dibuja en trazo fino las uniones visibles entre cajas de un mismo plano. */
+  juntas?: boolean;
+  /** Solo para apagar las ocultas (DEMRE no las dibuja). Por defecto se dibujan. */
+  ocultas?: false;
+  cotas?: CotaCuerpo[];
+  /** Texto alternativo real: el <desc> del SVG. */
+  descripcion: string;
+}
+
 /** Cualquier figura de un ítem. Viaja al cliente tal cual, salvo el texto de las figuras de datos (lib/advance/banco.ts). */
-export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos | FiguraLienzoGeometrico;
+export type FiguraItem = FiguraIsometrias | FiguraPlanoFuncion | FiguraTablaValores | FiguraDatos | FiguraLienzoGeometrico | FiguraCuerpoGeometrico;
 
 /** Sin `proveniencia`: no viaja al cliente. `solucion` sí, porque el descarte fatal la muestra al instante. */
 export interface ItemAdvance {

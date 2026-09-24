@@ -261,7 +261,7 @@ function extension(d: Coordenada, ancho: number, alto: number): number {
   return (Math.abs(d.x) * ancho) / 2 + (Math.abs(d.y) * alto) / 2;
 }
 
-function rotuloEn(texto: string, ancla: Coordenada, d: Coordenada, distancia: number, origen: RotuloLienzo["origen"]): RotuloLienzo {
+export function rotuloEn(texto: string, ancla: Coordenada, d: Coordenada, distancia: number, origen: RotuloLienzo["origen"]): RotuloLienzo {
   const ancho = anchoTexto(texto, LETRA);
   const c = add(ancla, mul(d, distancia + extension(d, ancho, ALTO_ROTULO)));
   return { texto, x: c.x, y: c.y, caja: { x0: c.x - ancho / 2, y0: c.y - ALTO_ROTULO / 2, x1: c.x + ancho / 2, y1: c.y + ALTO_ROTULO / 2 }, origen };
@@ -379,7 +379,7 @@ function colinealesQueSeTocan(a1: Coordenada, a2: Coordenada, b1: Coordenada, b2
 }
 
 /** Llave de cota entre a y b, con la punta hacia n a `alto` del segmento a-b. */
-function pathLlave(a: Coordenada, b: Coordenada, n: Coordenada, alto: number): string {
+export function pathLlave(a: Coordenada, b: Coordenada, n: Coordenada, alto: number): string {
   const t = unit(sub(b, a));
   const m = mul(add(a, b), 0.5);
   const q = Math.min(alto, len(sub(b, a)) / 4);
