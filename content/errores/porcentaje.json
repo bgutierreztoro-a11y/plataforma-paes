@@ -15,7 +15,7 @@
     {
       "id": "porcentaje/trata-porcentaje-como-cantidad-fija",
       "descripcion": "Tratar el porcentaje como una cantidad fija en vez de una proporción del total: sumar o restar el número del porcentaje directamente (150 + 40 en vez de 150 × 1,40; 80 − 25 en vez de 80 × 0,75), o creer que «el 30%» significa siempre «30 unidades», sin importar cuál sea el total.",
-      "titulo": "Tratar el porcentaje como una cantidad fija",
+      "titulo": "Tratar el % como número suelto",
       "apoyo": "El 30% no son 30 unidades: depende del total.",
       "repaso": {
         "camino": "Sumas o restas el número del porcentaje directo: 150 + 40 en vez de 150 × 1,40.",
@@ -70,7 +70,7 @@
     {
       "id": "porcentaje/deshace-porcentaje-con-mismo-porcentaje",
       "descripcion": "Deshacer un cambio porcentual aplicando el mismo porcentaje en sentido contrario, en vez de dividir por el factor: ante «subió un 25% y quedó en $X», calcular X × 0,75 (bajarle un 25%) en lugar de X ÷ 1,25. Cubre también las divisiones mal elegidas una vez entendido que hay que dividir: X ÷ 0,25 o X ÷ 0,75 en vez de X ÷ 1,25. Distinto de suma-porcentajes-sucesivos, que compone DOS cambios sucesivos hacia adelante: acá hay un solo cambio y lo que se pide es reconstruir el valor de partida desde el de llegada.",
-      "titulo": "Volver al precio original",
+      "titulo": "Deshacer un % con el mismo %",
       "apoyo": "Si subió un 25%, no se deshace bajándole un 25%.",
       "repaso": {
         "camino": "Subió un 25% y quedó en X, entonces calculas X × 0,75.",
@@ -81,7 +81,7 @@
     {
       "id": "porcentaje/responde-otra-magnitud-porcentaje",
       "descripcion": "Entregar una magnitud distinta de la pedida, habiendo calculado bien: responder el resultado (350 × 0,3 = 105) cuando la pregunta pide el factor (0,3), o aplicar el p% al valor final cuando se pide el valor original (P × 0,20 en vez de P ÷ 0,80). La operación ejecutada es correcta y no hay error de conversión, de composición ni de inversión: lo que falla es la lectura de qué objeto se está preguntando. Distinto de responde-parte-en-vez-de-total, donde el procedimiento quedó incompleto y falta un paso para recomponer el total: acá el procedimiento está completo y bien hecho, pero responde otra pregunta.",
-      "titulo": "Responder otra magnitud",
+      "titulo": "Calcular bien, pero otra cosa",
       "apoyo": "El cálculo está bien, pero no es lo que preguntaban.",
       "repaso": {
         "camino": "Piden el factor (0,3) y respondes 350 × 0,3 = 105.",
