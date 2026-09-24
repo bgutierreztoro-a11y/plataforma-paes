@@ -54,6 +54,11 @@ export default function Privacidad() {
           borras los datos del navegador, usas modo incógnito o cambias de teléfono, se pierde —
           no hay copia en ninguna parte. Esa es exactamente la razón por la que existe la cuenta.
         </p>
+        <p>
+          Si llegas desde el link de un video, guardamos en tu navegador, por 7 días como máximo,
+          qué pregunta respondiste y de qué video venías. No guarda tu nombre, tu correo ni nada
+          que te identifique: sirve para saber qué videos traen gente a Fobos.
+        </p>
       </Seccion>
 
       <Seccion titulo="Qué guardamos si creas cuenta">
@@ -106,14 +111,16 @@ export default function Privacidad() {
           quién vendérselos.
         </p>
         <p>
-          Sí usamos tres servicios externos para que la plataforma funcione, y es justo que sepas
-          cuáles: <strong className="font-medium text-ink">Clerk</strong> guarda tu correo y tu
+          Sí usamos cuatro servicios externos para que la plataforma funcione, y es justo que sepas
+          cuáles: <strong className="font-medium text-ink">Vercel</strong> publica la plataforma
+          en internet y guarda por un tiempo registros técnicos de su funcionamiento, como la
+          dirección IP de quien entra, <strong className="font-medium text-ink">Clerk</strong> guarda tu correo y tu
           nombre para manejar el inicio de sesión,{" "}
           <strong className="font-medium text-ink">Neon</strong> aloja la base de datos donde queda
           tu progreso, y <strong className="font-medium text-ink">PostHog</strong> registra qué
           pasos de la lección se usan más. Los eventos que le mandamos a PostHog son anónimos: no
           incluyen tu correo, tu nombre ni tu identificador de cuenta, y no dejan cookies en tu
-          navegador. Los tres servicios alojan la información en servidores de Estados Unidos.
+          navegador. Los cuatro servicios alojan la información en servidores de Estados Unidos.
         </p>
       </Seccion>
 
